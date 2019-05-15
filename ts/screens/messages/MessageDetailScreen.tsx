@@ -14,12 +14,10 @@ import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import {
   loadMessageWithRelations,
-  setMessageReadState,
-  setNumberMessagesUnread
+  setMessageReadState
 } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { badgeSelector } from "../../store/reducers/entities/messages/badge";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -32,8 +30,7 @@ import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
 type MessageDetailScreenNavigationParams = {
   messageId: string;
 };
-// tslint:disable-next-line: no-let
-let badgeNumber = 0;
+
 type OwnProps = NavigationScreenProps<MessageDetailScreenNavigationParams>;
 
 type Props = OwnProps &
@@ -258,7 +255,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     if (pot.isSome(potMessage) && !maybeRead.getOrElse(true)) {
       // Set the message read state to TRUE
       this.props.setMessageReadState(true);
-      this.props.updateBadgeNumber();
     }
   };
 
@@ -283,7 +279,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  badgeNumber = badgeSelector(state);
   const messageId = ownProps.navigation.getParam("messageId");
   const maybeMessageState = fromNullable(
     messageStateByIdSelector(messageId)(state)
@@ -323,10 +318,7 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
       dispatch(setMessageReadState(messageId, isRead)),
     navigateToServiceDetailsScreen: (
       params: InferNavigationParams<typeof ServiceDetailsScreen>
-    ) => dispatch(navigateToServiceDetailsScreen(params)),
-    updateBadgeNumber: () => {
-      dispatch(setNumberMessagesUnread(badgeNumber - 1));
-    }
+    ) => dispatch(navigateToServiceDetailsScreen(params))
   };
 };
 

@@ -8,7 +8,6 @@ import { createSelector } from "reselect";
 
 import { isDefined } from "../../../../utils/guards";
 import { Action } from "../../../actions/types";
-import badgeReducer, { BadgeNumberState } from "./badge";
 import messagesAllIdsReducer, {
   messagesAllIdsSelector,
   MessagesAllIdsState
@@ -25,14 +24,12 @@ import messagesIdsByServiceIdReducer, {
 export type MessagesState = Readonly<{
   byId: MessageStateById;
   allIds: MessagesAllIdsState; // FIXME: is this used?
-  badge: BadgeNumberState;
   idsByServiceId: MessagesIdsByServiceId;
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
   byId: messagesByIdReducer,
   allIds: messagesAllIdsReducer,
-  badge: badgeReducer,
   idsByServiceId: messagesIdsByServiceIdReducer
 });
 

@@ -1,5 +1,4 @@
 import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 import debounce from "lodash/debounce";
 import {
   Button,
@@ -25,13 +24,11 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import {
   loadMessages,
-  setMessagesArchivedState,
-  setNumberMessagesUnread
+  setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
-import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -95,18 +92,6 @@ const renderTabBar = (props: any) => {
 };
 
 /**
- * Filter only the messages that are unreaded.
- */
-const generateMessagesStateUnreadedArray = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
-): ReadonlyArray<MessageState> =>
-  pot.getOrElse(
-    pot.map(potMessagesState, _ =>
-      _.filter(messageState => !messageState.isRead)
-    ),
-    []
-  );
-/**
  * A screen that contains all the Tabs related to messages.
  */
 class MessagesHomeScreen extends React.Component<Props, State> {
@@ -121,20 +106,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   public componentDidMount() {
     this.props.refreshMessages();
   }
-
-  public componentDidUpdate(prevProps: Props) {
-    const badgeNumberPrev = generateMessagesStateUnreadedArray(
-      prevProps.lexicallyOrderedMessagesState
-    ).filter(obj => !obj.isRead).length;
-    const badgeNumber = generateMessagesStateUnreadedArray(
-      this.props.lexicallyOrderedMessagesState
-    ).filter(obj => !obj.isRead).length;
-
-    if (badgeNumberPrev !== badgeNumber) {
-      this.props.updateBadgeNumber(badgeNumber);
-    }
-  }
-
   public render() {
     const { searchText } = this.state;
 
@@ -307,9 +278,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   updateMessagesArchivedState: (
     ids: ReadonlyArray<string>,
     archived: boolean
-  ) => dispatch(setMessagesArchivedState(ids, archived)),
-  updateBadgeNumber: (messagesUnread: number) =>
-    dispatch(setNumberMessagesUnread(messagesUnread))
+  ) => dispatch(setMessagesArchivedState(ids, archived))
 });
 
 export default connect(
