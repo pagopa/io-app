@@ -44,7 +44,7 @@ export function* loadSessionInformationSaga(
   // we got a valid response but its status code is describing an error
   const errorMsgDefault = "Invalid server response";
   const error: string =
-    response.isRight() && response.value.status === 400
+    response.value.status === 400
       ? response.value.value.title || errorMsgDefault
       : errorMsgDefault;
   yield put(sessionInformationLoadFailure(error));

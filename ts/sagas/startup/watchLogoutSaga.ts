@@ -27,18 +27,20 @@ export function* watchLogoutSaga(
     // FIXME: if there's no connectivity to the backend, this request will
     //        block for a while.
     const response: SagaCallReturnType<typeof logout> = yield call(logout, {});
-    if (response.isRight() && response.value.status === 200) {
-      yield put(logoutSuccess(action.payload));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(logoutSuccess(action.payload));
+      } else {
+        // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
+        const error = Error(
+          response.value.status === 500 && response.value.value.title
+            ? response.value.value.title
+            : "Unknown error"
+        );
+        yield put(logoutFailure(error));
+      }
     } else {
-      // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
-      const error: Error = response.isRight()
-        ? Error(
-            response.value.status === 500 && response.value.value.title
-              ? response.value.value.title
-              : "Unknown error"
-          )
-        : Error(readableReport(response.value));
-      yield put(logoutFailure(error));
+      yield put(logoutFailure(Error(readableReport(response.value))));
     }
     // Force the login by expiring the session
     // FIXME: possibly reset the navigation stack as the watcher of
