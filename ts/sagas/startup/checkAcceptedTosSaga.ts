@@ -4,9 +4,9 @@ import { put, select, take } from "redux-saga/effects";
 
 import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
+import { profileUpsert } from "../../store/actions/profile";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { profileUpsert } from '../../store/actions/profile';
 
 export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
   const profileState: ReturnType<typeof profileSelector> = yield select<
@@ -30,5 +30,4 @@ export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
 
   // Here we wait the user accept the ToS
   yield take(profileUpsert.request);
-
 }
