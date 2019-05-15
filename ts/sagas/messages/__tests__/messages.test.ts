@@ -1,4 +1,6 @@
 import { left, right } from "fp-ts/lib/Either";
+
+import * as t from "io-ts";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 
@@ -35,8 +37,21 @@ describe("messages", () => {
       testSaga(fetchMessage, getMessage, { id: testMessageId1 })
         .next()
         // Return undefined as getMessage response
-        .next(undefined)
-        .returns(left(Error()));
+        .next(
+          left([
+            t.getValidationError(
+              "some error occurred",
+              t.getDefaultContext(t.null)
+            )
+          ])
+        )
+        .returns(
+          left(
+            Error(
+              'value ["some error occurred"] at [root] is not a valid [null]'
+            )
+          )
+        );
     });
 
     it("should only return the error if the getMessage response status is not 200", () => {
@@ -45,7 +60,7 @@ describe("messages", () => {
       testSaga(fetchMessage, getMessage, { id: testMessageId1 })
         .next()
         // Return 500 with an error message as getMessage response
-        .next({ status: 500, value: { title: error.message } })
+        .next(right({ status: 500, value: { title: error.message } }))
         .returns(left(error));
     });
 
@@ -54,7 +69,7 @@ describe("messages", () => {
       testSaga(fetchMessage, getMessage, { id: testMessageId1 })
         .next()
         // Return 500 with an error message as getMessage response
-        .next({ status: 200, value: testMessageWithContent1 })
+        .next(right({ status: 200, value: testMessageWithContent1 }))
         .returns(right(toMessageWithContentPO(testMessageWithContent1)));
     });
   });
