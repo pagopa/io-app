@@ -1,10 +1,8 @@
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 
-import { GetPaymentInfoT } from "../../../definitions/backend/requestTypes";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import {
