@@ -70,10 +70,10 @@ const reducer = (
           is_webhook_enabled: updated.is_webhook_enabled === true,
           preferred_languages: updated.preferred_languages,
           blocked_inbox_or_channels: updated.blocked_inbox_or_channels,
+          accepted_tos_version: updated.accepted_tos_version,
           // FIXME: remove the cast after the following bug has been fixed:
           //        https://www.pivotaltracker.com/story/show/159802090
-          version: newVersion as NonNegativeInteger, // tslint:disable-line:no-useless-cast
-          accepted_tos_version: updated.accepted_tos_version
+          version: newVersion as NonNegativeInteger // tslint:disable-line:no-useless-cast
         });
       } else {
         // We can't merge an updated profile if we haven't loaded a full

@@ -185,8 +185,15 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // Start the watchAbortOnboardingSaga
     const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
 
+    // Start watching for profile update requests as the checkProfileEnabledSaga
+    // may need to update the profile.
+    yield fork(
+      watchProfileUpsertRequestsSaga,
+      backendClient.createOrUpdateProfile
+    );
+
     // Ask user to accept ToS
-    yield call(checkAcceptedTosSaga, backendClient.createOrUpdateProfile);
+    yield call(checkAcceptedTosSaga);
 
     storedPin = yield call(checkConfiguredPinSaga);
     yield call(checkAcknowledgedFingerprintSaga);
@@ -206,9 +213,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
         yield put(startApplicationInitialization());
         return;
       }
-      // Check if the user accepted ToS. If true, check if they are the last ToS version
-      // and evenly ask to accept the new version of ToS
-      yield call(checkAcceptedTosSaga, backendClient.createOrUpdateProfile);
     }
   }
 
@@ -233,10 +237,10 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
-  yield fork(
-    watchProfileUpsertRequestsSaga,
-    backendClient.createOrUpdateProfile
-  );
+  // yield fork(
+  //  watchProfileUpsertRequestsSaga,
+  //  backendClient.createOrUpdateProfile
+  // );
 
   // Check that profile is up to date (e.g. inbox enabled)
   yield call(checkProfileEnabledSaga, userProfile);

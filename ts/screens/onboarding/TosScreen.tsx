@@ -6,8 +6,10 @@ import { connect } from "react-redux";
 import AbortOnboardingModal from "../../components/AbortOnboardingModal";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Markdown from "../../components/ui/Markdown";
+import { tosVersion } from "../../config";
 import I18n from "../../i18n";
-import { abortOnboarding, tosAccept } from "../../store/actions/onboarding";
+import { abortOnboarding } from "../../store/actions/onboarding";
+import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 
 type OwnProps = {
@@ -55,7 +57,13 @@ class TosScreen extends React.PureComponent<Props, State> {
             <Button
               block={true}
               primary={true}
-              onPress={() => dispatch(tosAccept())}
+              onPress={() =>
+                dispatch(
+                  profileUpsert.request({
+                    accepted_tos_version: tosVersion
+                  })
+                )
+              }
             >
               <Text>{I18n.t("onboarding.tos.continue")}</Text>
             </Button>

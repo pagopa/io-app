@@ -57,7 +57,7 @@ export function* loadProfile(
 }
 
 // A saga to update the Profile.
-export function* createOrUpdateProfileSaga(
+function* createOrUpdateProfileSaga(
   createOrUpdateProfile: TypeofApiCall<UpsertProfileT>,
   action: ActionType<typeof profileUpsert["request"]>
 ): Iterator<Effect> {
@@ -79,21 +79,20 @@ export function* createOrUpdateProfileSaga(
   // FIXME: perhaps this is responsibility of the caller?
   const newProfile: ExtendedProfile = currentProfile.has_profile
     ? {
-        accepted_tos_version: currentProfile.accepted_tos_version,
         is_inbox_enabled: currentProfile.is_inbox_enabled,
         is_webhook_enabled: currentProfile.is_webhook_enabled,
         version: currentProfile.version,
         email: currentProfile.email,
         preferred_languages: currentProfile.preferred_languages,
         blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
+        accepted_tos_version: currentProfile.accepted_tos_version,
         ...action.payload
       }
     : {
         is_inbox_enabled: false,
         is_webhook_enabled: false,
         ...action.payload,
-        version: 0,
-        accepted_tos_version: 0
+        version: 0
       };
 
   const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
@@ -102,6 +101,11 @@ export function* createOrUpdateProfileSaga(
       extendedProfile: newProfile
     }
   );
+
+  console.log("request payload: ");
+  console.log(newProfile);
+  console.log("response:");
+  console.log(response);
 
   if (response && response.status === 401) {
     // on 401, expire the current session and restart the authentication flow
