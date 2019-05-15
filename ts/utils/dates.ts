@@ -62,7 +62,6 @@ export function format(
 * DateFromISOStringType is a codec to encode (date -> string) and decode (string -> date) a date in iso format
 */
 export class DateFromISOStringType extends t.Type<Date, string, unknown> {
-  readonly _tag: "DateFromISOStringType" = "DateFromISOStringType";
   constructor() {
     super(
       "DateFromISOString",
