@@ -162,8 +162,7 @@ export function* setFavouriteWalletRequestHandler(
     // FIXME: currently there is no way to unset a favourite wallet
     return;
   }
-  const setFavouriteWallet = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.favouriteWallet(pagoPaToken, favouriteWalletId);
+  const setFavouriteWallet = pagoPaClient.favouriteWallet(favouriteWalletId);
 
   const request = pmSessionManager.withRefresh(setFavouriteWallet);
   try {
@@ -469,10 +468,9 @@ export function* paymentExecutePaymentRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentExecutePayment["request"]>
 ): Iterator<Effect> {
-  const apiPostPayment = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.postPayment(pagoPaToken, action.payload.idPayment, {
-      data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
-    });
+  const apiPostPayment = pagoPaClient.postPayment(action.payload.idPayment, {
+    data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
+  });
   const postPaymentWithRefresh = pmSessionManager.withRefresh(apiPostPayment);
   try {
     const response: SagaCallReturnType<
@@ -502,8 +500,7 @@ export function* paymentDeletePaymentRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentDeletePayment["request"]>
 ): Iterator<Effect> {
-  const apiPostPayment = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.deletePayment(pagoPaToken, action.payload.paymentId);
+  const apiPostPayment = pagoPaClient.deletePayment(action.payload.paymentId);
   const request = pmSessionManager.withRefresh(apiPostPayment);
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);

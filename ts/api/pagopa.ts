@@ -198,19 +198,17 @@ type FavouriteWalletUsingPOSTTExtra = MapResponseType<
   WalletResponse
 >;
 
-const favouriteWallet: (
-  pagoPaToken: PaymentManagerToken
-) => FavouriteWalletUsingPOSTTExtra = pagoPaToken => ({
+const favouriteWallet: FavouriteWalletUsingPOSTTExtra = {
   method: "post",
   url: ({ id }) => `/v1/wallet/${id}/actions/favourite`,
   query: () => ({}),
   body: () => "",
   headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
+    ParamAuthorizationBearerHeaderProducer,
     ApiHeaderJson
   ),
   response_decoder: favouriteWalletUsingPOSTDecoder(WalletResponse)
-});
+};
 
 // Remove this patch once SIA has fixed the spec.
 // @see https://www.pivotaltracker.com/story/show/161113136
@@ -243,33 +241,28 @@ type PayUsingPOSTTExtra = MapResponseType<
   TransactionResponse
 >;
 
-const postPayment: (
-  pagoPaToken: PaymentManagerToken
-) => PayUsingPOSTTExtra = pagoPaToken => ({
+const postPayment: PayUsingPOSTTExtra = {
   method: "post",
   url: ({ id }) => `/v1/payments/${id}/actions/pay`,
   query: () => ({}),
   body: ({ payRequest }) => JSON.stringify(payRequest),
   headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
+    ParamAuthorizationBearerHeaderProducer,
     ApiHeaderJson
   ),
   response_decoder: payUsingPOSTDecoder(TransactionResponse)
-});
+};
 
-const deletePayment: (
-  pagoPaToken: PaymentManagerToken
-) => DeleteBySessionCookieExpiredUsingDELETET = pagoPaToken => ({
+const deletePayment: DeleteBySessionCookieExpiredUsingDELETET = {
   method: "delete",
   url: ({ id }) => `/v1/payments/${id}/actions/delete`,
   query: () => ({}),
-  body: () => "",
   headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
+    ParamAuthorizationBearerHeaderProducer,
     ApiHeaderJson
   ),
   response_decoder: constantEmptyDecoder
-});
+};
 
 type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
   PayCreditCardVerificationUsingPOSTT,
@@ -377,34 +370,34 @@ export function PaymentManagerClient(
         walletRequest
       }),
     favouriteWallet: (
-      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<FavouriteWalletUsingPOSTTExtra>["id"]
     ) =>
-      withBearerToken(
-        walletToken,
-        createFetchRequestForApi(favouriteWallet(pagoPaToken), options)
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(favouriteWallet, options)
+        )
       )({
         id
       }),
     postPayment: (
-      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<PayUsingPOSTT>["id"],
       payRequest: TypeofApiParams<PayUsingPOSTT>["payRequest"]
     ) =>
-      withBearerToken(
-        walletToken,
-        createFetchRequestForApi(postPayment(pagoPaToken), altOptions)
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(postPayment, altOptions)
+        )
       )({
         id,
         payRequest
       }),
     deletePayment: (
-      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<DeleteBySessionCookieExpiredUsingDELETET>["id"]
     ) =>
-      withBearerToken(
-        walletToken,
-        createFetchRequestForApi(deletePayment(pagoPaToken), options)
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(deletePayment, options)
+        )
       )({
         id
       }),
