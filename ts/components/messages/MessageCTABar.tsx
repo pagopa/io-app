@@ -1,6 +1,6 @@
 import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
-import { Button, H1, Icon, Text, View } from "native-base";
+import { Button, H3, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet, ViewStyle } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
@@ -126,14 +126,17 @@ const styles = StyleSheet.create({
   },
 
   selectCalendaModalHeader: {
-    marginBottom: 25
+    lineHeight: 40
   }
 });
 
 const SelectCalendarModalHeader = (
-  <H1 style={styles.selectCalendaModalHeader}>
-    {I18n.t("messages.cta.reminderCalendarSelect")}
-  </H1>
+  <View>
+    <H3 style={styles.selectCalendaModalHeader}>
+      {I18n.t("messages.cta.reminderCalendarSelect")}
+    </H3>
+    <View spacer={true} large={true} />
+  </View>
 );
 
 class MessageCTABar extends React.PureComponent<Props, State> {
