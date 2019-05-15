@@ -194,10 +194,9 @@ export function* updateWalletPspRequestHandler(
   // of wallets (which will contain the updated PSP)
   const { wallet, idPsp } = action.payload;
 
-  const apiUpdateWalletPsp = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.updateWalletPsp(pagoPaToken, wallet.idWallet, {
-      data: { idPsp }
-    });
+  const apiUpdateWalletPsp = pagoPaClient.updateWalletPsp(wallet.idWallet, {
+    data: { idPsp }
+  });
   const updateWalletPspWithRefresh = pmSessionManager.withRefresh(
     apiUpdateWalletPsp
   );
@@ -391,12 +390,10 @@ export function* paymentFetchPspsForWalletRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentFetchPspsForPaymentId["request"]>
 ) {
-  const apiGetPspList = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.getPspList(
-      pagoPaToken,
-      action.payload.idPayment,
-      action.payload.idWallet
-    );
+  const apiGetPspList = pagoPaClient.getPspList(
+    action.payload.idPayment,
+    action.payload.idWallet
+  );
   const getPspListWithRefresh = pmSessionManager.withRefresh(apiGetPspList);
   try {
     const response: SagaCallReturnType<

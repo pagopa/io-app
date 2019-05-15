@@ -12,10 +12,10 @@ import {
   RequestHeaders,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
+import { Omit } from "italia-ts-commons/lib/types";
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
-
 import {
   activatePaymentDefaultDecoder,
   ActivatePaymentT,
@@ -43,7 +43,6 @@ import {
 
 import { SessionToken } from "../types/SessionToken";
 import { defaultRetryingFetch } from "../utils/fetch";
-import { withBearerToken } from "../utils/request";
 
 /**
  * Here we have to redefine the auto-generated UserProfile type since the
@@ -236,43 +235,35 @@ export function BackendClient(
     response_decoder: getActivationStatusDefaultDecoder()
   };
 
+  // withBearerToken injects the field 'Baerer' with value token into the parameter P
+  // of the f function
+  const withBearerToken = <P extends { Bearer: string }, R>(
+    f: (p: P) => Promise<R>
+  ) => async (po: Omit<P, "Bearer">): Promise<R> => {
+    const params = Object.assign({ Bearer: String(token) }, po) as P;
+    return f(params);
+  };
+
   return {
-    getSession: withBearerToken(
-      token,
-      createFetchRequestForApi(getSessionT, options)
-    ),
-    getService: withBearerToken(
-      token,
-      createFetchRequestForApi(getServiceT, options)
-    ),
+    getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
+    getService: withBearerToken(createFetchRequestForApi(getServiceT, options)),
     getVisibleServices: withBearerToken(
-      token,
       createFetchRequestForApi(getVisibleServicesT, options)
     ),
     getMessages: withBearerToken(
-      token,
       createFetchRequestForApi(getMessagesT, options)
     ),
-    getMessage: withBearerToken(
-      token,
-      createFetchRequestForApi(getMessageT, options)
-    ),
-    getProfile: withBearerToken(
-      token,
-      createFetchRequestForApi(getProfileT, options)
-    ),
+    getMessage: withBearerToken(createFetchRequestForApi(getMessageT, options)),
+    getProfile: withBearerToken(createFetchRequestForApi(getProfileT, options)),
     createOrUpdateProfile: withBearerToken(
-      token,
       createFetchRequestForApi(createOrUpdateProfileT, options)
     ),
     createOrUpdateInstallation: withBearerToken(
-      token,
       createFetchRequestForApi(createOrUpdateInstallationT, options)
     ),
-    logout: withBearerToken(token, createFetchRequestForApi(logoutT, options)),
+    logout: withBearerToken(createFetchRequestForApi(logoutT, options)),
     getVerificaRpt: createFetchRequestForApi(verificaRptT, options),
     postAttivaRpt: withBearerToken(
-      token,
       createFetchRequestForApi(attivaRptT, options)
     ),
     getPaymentId: createFetchRequestForApi(getPaymentIdT, options)

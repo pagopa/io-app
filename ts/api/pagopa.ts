@@ -30,7 +30,6 @@ import { TransactionListResponse } from "../types/pagopa";
 import { TransactionResponse } from "../types/pagopa";
 import { WalletListResponse } from "../types/pagopa";
 import { WalletResponse } from "../types/pagopa";
-import { withBearerToken } from "../utils/request";
 
 import {
   addWalletCreditCardUsingPOSTDecoder,
@@ -157,9 +156,7 @@ type GetPspListUsingGETTExtra = MapResponseType<
   PspListResponse
 >;
 
-const getPspList: (
-  pagoPaToken: PaymentManagerToken
-) => GetPspListUsingGETTExtra = pagoPaToken => ({
+const getPspList: GetPspListUsingGETTExtra = {
   method: "get",
   url: () => "/v1/psps",
   query: ({ idPayment, idWallet }) =>
@@ -173,9 +170,9 @@ const getPspList: (
           paymentType: "CREDIT_CARD",
           idPayment
         },
-  headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+  headers: ParamAuthorizationBearerHeaderProducer,
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
-});
+};
 
 type UpdateWalletUsingPUTTExtra = MapResponseType<
   UpdateWalletUsingPUTT,
@@ -183,19 +180,17 @@ type UpdateWalletUsingPUTTExtra = MapResponseType<
   WalletResponse
 >;
 
-const updateWalletPsp: (
-  pagoPaToken: PaymentManagerToken
-) => UpdateWalletUsingPUTTExtra = pagoPaToken => ({
+const updateWalletPsp: UpdateWalletUsingPUTTExtra = {
   method: "put",
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
   headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
+    ParamAuthorizationBearerHeaderProducer,
     ApiHeaderJson
   ),
   response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
-});
+};
 
 type FavouriteWalletUsingPOSTTExtra = MapResponseType<
   FavouriteWalletUsingPOSTT,
@@ -356,13 +351,11 @@ export function PaymentManagerClient(
         id
       }),
     getPspList: (
-      pagoPaToken: PaymentManagerToken,
       idPayment: TypeofApiParams<GetPspListUsingGETTExtra>["idPayment"],
       idWallet?: TypeofApiParams<GetPspListUsingGETTExtra>["idWallet"]
     ) =>
-      withBearerToken(
-        walletToken,
-        createFetchRequestForApi(getPspList(pagoPaToken), options)
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(getPspList, options))
       )(
         idWallet
           ? {
@@ -372,13 +365,13 @@ export function PaymentManagerClient(
           : { idPayment }
       ),
     updateWalletPsp: (
-      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<UpdateWalletUsingPUTT>["id"],
       walletRequest: TypeofApiParams<UpdateWalletUsingPUTT>["walletRequest"]
     ) =>
-      withBearerToken(
-        walletToken,
-        createFetchRequestForApi(updateWalletPsp(pagoPaToken), options)
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(updateWalletPsp, options)
+        )
       )({
         id,
         walletRequest
