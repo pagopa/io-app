@@ -3,13 +3,13 @@ import { Effect } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
-import I18n from "../../i18n";
 import { loadMessageWithRelations } from "../../store/actions/messages";
 import { loadService } from "../../store/actions/services";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
 import { loadMessage } from "../messages/messages";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 
 /**
  * Load message with related entities (ex. the sender service).
@@ -30,11 +30,7 @@ export function* loadMessageWithRelationsSaga(
   );
 
   if (messageOrError.isLeft()) {
-    yield put(
-      loadMessageWithRelations.failure(
-        new Error(I18n.t("global.actions.retry"))
-      )
-    );
+    yield put(loadMessageWithRelations.failure(messageOrError.value));
     return;
   }
 

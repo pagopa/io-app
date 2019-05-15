@@ -266,6 +266,8 @@ export function BackendClient(
     postAttivaRpt: withBearerToken(
       createFetchRequestForApi(attivaRptT, options)
     ),
-    getPaymentId: createFetchRequestForApi(getPaymentIdT, options)
+    getPaymentId: withBearerToken(
+      createFetchRequestForApi(getPaymentIdT, options)
+    )
   };
 }

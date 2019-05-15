@@ -67,9 +67,7 @@ export function* fetchWalletsRequestHandler(
       if (getResponse.value.status === 200) {
         yield put(fetchWalletsSuccess(getResponse.value.value.data));
       } else {
-        yield put(
-          fetchWalletsFailure(Error(`status code: ${getResponse.value.status}`))
-        );
+        yield put(fetchWalletsFailure(Error("Generic error")));
       }
     } else {
       yield put(fetchWalletsFailure(Error(readableReport(getResponse.value))));
@@ -88,25 +86,17 @@ export function* fetchTransactionsRequestHandler(
 ): Iterator<Effect> {
   const request = pmSessionManager.withRefresh(pagoPaClient.getTransactions);
   try {
-    const response: SagaCallReturnType<typeof request> | undefined = yield call(
-      request
-    );
-    if (response) {
-      if (response.isRight()) {
-        if (response.value.status === 200) {
-          yield put(fetchTransactionsSuccess(response.value.value.data));
-        } else {
-          yield put(
-            fetchTransactionsFailure(
-              Error(`status code: ${response.value.status}`)
-            )
-          );
-        }
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(fetchTransactionsSuccess(response.value.value.data));
       } else {
-        yield put(
-          fetchTransactionsFailure(Error(readableReport(response.value)))
-        );
+        yield put(fetchTransactionsFailure(Error("Generic error")));
       }
+    } else {
+      yield put(
+        fetchTransactionsFailure(Error(readableReport(response.value)))
+      );
     }
   } catch (error) {
     yield put(fetchTransactionsFailure(error));
@@ -125,21 +115,17 @@ export function* fetchTransactionRequestHandler(
     pagoPaClient.getTransaction(action.payload)
   );
   try {
-    const response: SagaCallReturnType<typeof request> | undefined = yield call(
-      request
-    );
-    if (response) {
-      if (response.isRight()) {
-        if (response.value.status === 200) {
-          yield put(fetchTransactionSuccess(response.value.value.data));
-        } else {
-          throw Error(`status code ${response.value.status}`);
-        }
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(fetchTransactionSuccess(response.value.value.data));
       } else {
-        yield put(
-          fetchTransactionFailure(new Error(readableReport(response.value)))
-        );
+        throw Error("Generic error");
       }
+    } else {
+      yield put(
+        fetchTransactionFailure(new Error(readableReport(response.value)))
+      );
     }
   } catch (error) {
     yield put(fetchTransactionFailure(error));
@@ -168,10 +154,10 @@ export function* setFavouriteWalletRequestHandler(
       if (response.value.status === 200) {
         yield put(setFavouriteWalletSuccess(response.value.value.data));
       } else {
-        throw Error(`status code ${response.value.status}`);
+        throw Error("Generic error");
       }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch (error) {
     yield put(setFavouriteWalletFailure(error));
@@ -235,14 +221,14 @@ export function* updateWalletPspRequestHandler(
             }
           } else {
             // oops, the wallet is not there anymore!
-            throw Error(`Error - status code ${getResponse.value.status}`);
+            throw Error("Generic error");
           }
         } else {
           throw Error(readableReport(getResponse.value));
         }
       } else {
         // oops, the wallet is not there anymore!
-        throw Error(`Error - status code ${response.value.status}`);
+        throw Error("Generic error");
       }
     } else {
       throw Error(readableReport(response.value));
@@ -295,14 +281,14 @@ export function* deleteWalletRequestHandler(
               action.payload.onSuccess(successAction);
             }
           } else {
-            throw Error(`Error - status code ${getResponse.value.status}`);
+            throw Error("Generic error");
           }
         } else {
           throw Error(readableReport(getResponse.value));
         }
       }
     } else {
-      throw Error();
+      throw Error(readableReport(deleteResponse.value));
     }
   } catch (e) {
     const failureAction = deleteWalletFailure(e);
@@ -370,10 +356,14 @@ export function* payCreditCardVerificationRequestHandler(
       boardPayWithRefresh
     );
 
-    if (response.isRight() && response.value.status === 200) {
-      yield put(payCreditCardVerificationSuccess(response.value.value));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(payCreditCardVerificationSuccess(response.value.value));
+      } else {
+        throw Error("Generic error");
+      }
     } else {
-      throw Error(response.isLeft() ? readableReport(response.value) : "");
+      throw Error(readableReport(response.value));
     }
   } catch {
     yield put(payCreditCardVerificationFailure(Error("GENERIC_ERROR")));
@@ -406,6 +396,8 @@ export function* paymentFetchPspsForWalletRequestHandler(
         if (action.payload.onSuccess) {
           action.payload.onSuccess(successAction);
         }
+      } else {
+        throw Error("Generic error");
       }
     } else {
       throw Error(readableReport(response.value));
@@ -476,15 +468,21 @@ export function* paymentExecutePaymentRequestHandler(
       typeof postPaymentWithRefresh
     > = yield call(postPaymentWithRefresh);
 
-    if (response && response.isRight() && response.value.status === 200) {
-      const newTransaction = response.value.value.data;
-      const successAction = paymentExecutePayment.success(newTransaction);
-      yield put(successAction);
-      if (action.payload.onSuccess) {
-        action.payload.onSuccess(successAction);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        const newTransaction = response.value.value.data;
+        const successAction = paymentExecutePayment.success(newTransaction);
+        yield put(successAction);
+        if (action.payload.onSuccess) {
+          action.payload.onSuccess(successAction);
+        }
+      } else {
+        throw Error("Generic error");
       }
     } else {
-      yield put(paymentExecutePayment.failure(Error("GENERIC_ERROR")));
+      yield put(
+        paymentExecutePayment.failure(Error(readableReport(response.value)))
+      );
     }
   } catch {
     yield put(paymentExecutePayment.failure(Error("GENERIC_ERROR")));
@@ -504,14 +502,14 @@ export function* paymentDeletePaymentRequestHandler(
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
 
-    if (response.isRight() && response.value.status === 200) {
-      yield put(paymentDeletePayment.success());
-    } else {
-      if (response.isLeft()) {
-        throw Error(readableReport(response.value));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(paymentDeletePayment.success());
       } else {
-        throw Error();
+        throw Error("Generic error");
       }
+    } else {
+      throw Error(readableReport(response.value));
     }
   } catch {
     yield put(paymentDeletePayment.failure());
@@ -550,6 +548,8 @@ export function* paymentVerificaRequestHandler(
         // Verifica failed with a 500, that usually means there was an error
         // interacting with Pagopa that we can interpret
         yield put(paymentVerifica.failure(response.value.value.detail));
+      } else {
+        throw Error("Generic error");
       }
     } else {
       throw Error(readableReport(response.value));
@@ -592,6 +592,8 @@ export function* paymentAttivaRequestHandler(
       } else if (response.value.status === 500) {
         // Attiva failed
         yield put(paymentAttiva.failure(response.value.value.detail));
+      } else {
+        throw Error("Generic error");
       }
     } else {
       throw Error(readableReport(response.value));
@@ -608,7 +610,7 @@ export function* paymentAttivaRequestHandler(
  * Polls the backend for the paymentId linked to the payment context code
  */
 export function* paymentIdPollingRequestHandler(
-  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
+  getPaymentIdApi: ReturnType<typeof BackendClient>["getPaymentId"],
   action: ActionType<typeof paymentIdPolling["request"]>
 ) {
   // successfully request the payment activation
@@ -623,8 +625,7 @@ export function* paymentIdPollingRequestHandler(
       getPaymentIdApi,
       {
         codiceContestoPagamento: action.payload.codiceContestoPagamento,
-        test: isPagoPATestEnabled,
-        Bearer: ""
+        test: isPagoPATestEnabled
       }
     );
     if (response.isRight()) {
@@ -634,6 +635,8 @@ export function* paymentIdPollingRequestHandler(
       } else if (response.value.status === 400) {
         // Attiva failed
         yield put(paymentIdPolling.failure("PAYMENT_ID_TIMEOUT"));
+      } else {
+        throw Error("Generic error");
       }
     } else {
       throw Error(readableReport(response.value));
