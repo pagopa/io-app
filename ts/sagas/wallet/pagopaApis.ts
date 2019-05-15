@@ -68,17 +68,14 @@ export function* fetchWalletsRequestHandler(
         yield put(fetchWalletsSuccess(getResponse.value.value.data));
       } else {
         yield put(
-          fetchWalletsFailure(
-            Error(`Error - status code ${getResponse.value.status}`)
-          )
+          fetchWalletsFailure(Error(`status code: ${getResponse.value.status}`))
         );
       }
     } else {
-      // FIXME: show relevant error
       yield put(fetchWalletsFailure(Error(readableReport(getResponse.value))));
     }
-  } catch (e) {
-    yield put(fetchWalletsFailure(Error("Generic error")));
+  } catch (error) {
+    yield put(fetchWalletsFailure(error));
   }
 }
 
@@ -101,18 +98,18 @@ export function* fetchTransactionsRequestHandler(
         } else {
           yield put(
             fetchTransactionsFailure(
-              new Error(`Error - status code ${response.value.status}`)
+              Error(`status code: ${response.value.status}`)
             )
-          ); // FIXME show relevant error (see story below)
+          );
         }
       } else {
         yield put(
-          fetchTransactionsFailure(new Error(readableReport(response.value)))
-        ); // FIXME show relevant error (see story below)
+          fetchTransactionsFailure(Error(readableReport(response.value)))
+        );
       }
     }
-  } catch {
-    yield put(fetchTransactionsFailure(new Error("Generic error")));
+  } catch (error) {
+    yield put(fetchTransactionsFailure(error));
   }
 }
 
@@ -136,7 +133,7 @@ export function* fetchTransactionRequestHandler(
         if (response.value.status === 200) {
           yield put(fetchTransactionSuccess(response.value.value.data));
         } else {
-          throw Error(`Error - status code ${response.value.status}`);
+          throw Error(`status code ${response.value.status}`);
         }
       } else {
         yield put(
@@ -144,8 +141,8 @@ export function* fetchTransactionRequestHandler(
         );
       }
     }
-  } catch {
-    yield put(fetchTransactionFailure(new Error("Generic error")));
+  } catch (error) {
+    yield put(fetchTransactionFailure(error));
   }
 }
 
@@ -167,13 +164,17 @@ export function* setFavouriteWalletRequestHandler(
   const request = pmSessionManager.withRefresh(setFavouriteWallet);
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
-    if (response.isRight() && response.value.status === 200) {
-      yield put(setFavouriteWalletSuccess(response.value.value.data));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(setFavouriteWalletSuccess(response.value.value.data));
+      } else {
+        throw Error(`status code ${response.value.status}`);
+      }
     } else {
       throw Error();
     }
-  } catch {
-    yield put(setFavouriteWalletFailure(Error()));
+  } catch (error) {
+    yield put(setFavouriteWalletFailure(error));
   }
 }
 
