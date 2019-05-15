@@ -245,6 +245,7 @@ export function* updateWalletPspRequestHandler(
  *
  * TODO: consider avoiding the fetch, let the appliction logic decide
  */
+// tslint:disable-next-line: cognitive-complexity
 export function* deleteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
@@ -256,34 +257,33 @@ export function* deleteWalletRequestHandler(
   const getWalletsWithRefresh = pmSessionManager.withRefresh(
     pagoPaClient.getWallets
   );
-
   try {
     const deleteResponse: SagaCallReturnType<
       typeof deleteWalletWithRefresh
     > = yield call(deleteWalletWithRefresh);
-    if (deleteResponse.isRight()) {
-      if (deleteResponse.value.status === 200) {
-        const getResponse: SagaCallReturnType<
-          typeof getWalletsWithRefresh
-        > = yield call(getWalletsWithRefresh);
-        if (getResponse.isRight()) {
-          if (getResponse.value.status === 200) {
-            const successAction = deleteWalletSuccess(
-              getResponse.value.value.data
-            );
-            yield put(successAction);
-            if (action.payload.onSuccess) {
-              action.payload.onSuccess(successAction);
-            }
-          } else {
-            throw Error("Generic error");
-          }
-        } else {
-          throw Error(readableReport(getResponse.value));
+    if (deleteResponse.isRight() && deleteResponse.value.status === 200) {
+      const getResponse: SagaCallReturnType<
+        typeof getWalletsWithRefresh
+      > = yield call(getWalletsWithRefresh);
+      if (getResponse.isRight() && getResponse.value.status === 200) {
+        const successAction = deleteWalletSuccess(getResponse.value.value.data);
+        yield put(successAction);
+        if (action.payload.onSuccess) {
+          action.payload.onSuccess(successAction);
         }
+      } else {
+        throw Error(
+          getResponse.isLeft()
+            ? readableReport(getResponse.value)
+            : "Generic Error"
+        );
       }
     } else {
-      throw Error(readableReport(deleteResponse.value));
+      throw Error(
+        deleteResponse.isLeft()
+          ? readableReport(deleteResponse.value)
+          : "Generic Error"
+      );
     }
   } catch (e) {
     const failureAction = deleteWalletFailure(e);
