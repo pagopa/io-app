@@ -6,7 +6,6 @@ import * as t from "io-ts";
 * NumberFromStringType is a codec to encode (number -> string) and decode (string -> number) a date in iso format
 */
 export class NumberFromStringType extends t.Type<number, string> {
-  readonly _tag: "NumberFromStringType" = "NumberFromStringType";
   constructor() {
     super(
       "NumberFromString",
