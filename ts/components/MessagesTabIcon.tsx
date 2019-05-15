@@ -87,9 +87,10 @@ class MessagesTabIcon extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  messagesUnread: getNumberMessagesUnread(
-    lexicallyOrderedMessagesStateSelector(state)
-  )
+  messagesUnread:
+    getNumberMessagesUnread(lexicallyOrderedMessagesStateSelector(state)) < 99
+      ? getNumberMessagesUnread(lexicallyOrderedMessagesStateSelector(state))
+      : 99
 });
 
 export default connect(mapStateToProps)(MessagesTabIcon);
