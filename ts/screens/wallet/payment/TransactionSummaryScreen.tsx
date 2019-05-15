@@ -275,9 +275,11 @@ const mapStateToProps = (state: GlobalState) => {
   // we need to show the spinner when the data is in the loading state
   // and also while the logic is processing one step's response and
   // starting the next step's loading request
+  const isLoadingVerifica = pot.isLoading(verifica);
+  const isLoadingAttiva = pot.isLoading(attiva);
   const isLoading =
-    pot.isLoading(verifica) ||
-    pot.isLoading(attiva) ||
+    isLoadingVerifica ||
+    isLoadingAttiva ||
     (error.isNone() && pot.isSome(attiva) && pot.isNone(paymentId)) ||
     pot.isLoading(paymentId) ||
     (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
@@ -288,10 +290,16 @@ const mapStateToProps = (state: GlobalState) => {
       pot.isNone(psps)) ||
     (maybeFavoriteWallet.isSome() && pot.isLoading(psps));
 
+  const loadingCaption = isLoadingVerifica
+    ? I18n.t("wallet.firstTransactionSummary.loadingMessage.verification")
+    : isLoadingAttiva
+      ? I18n.t("wallet.firstTransactionSummary.loadingMessage.activation")
+      : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
+
   return {
     error,
-    // TODO: show different loading messages for each loading state
     isLoading,
+    loadingCaption,
     potVerifica: verifica,
     maybeFavoriteWallet
   };
