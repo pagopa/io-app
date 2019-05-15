@@ -262,7 +262,9 @@ export function BackendClient(
       createFetchRequestForApi(createOrUpdateInstallationT, options)
     ),
     logout: withBearerToken(createFetchRequestForApi(logoutT, options)),
-    getVerificaRpt: createFetchRequestForApi(verificaRptT, options),
+    getVerificaRpt: withBearerToken(
+      createFetchRequestForApi(verificaRptT, options)
+    ),
     postAttivaRpt: withBearerToken(
       createFetchRequestForApi(attivaRptT, options)
     ),

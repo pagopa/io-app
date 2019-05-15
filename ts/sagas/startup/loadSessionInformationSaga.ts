@@ -40,7 +40,7 @@ export function* loadSessionInformationSaga(
   if (response.value.status === 200) {
     // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
     yield put(sessionInformationLoadSuccess(response.value.value));
-    return some(response.value);
+    return some(response.value.value);
   }
 
   // we got a valid response but its status code is describing an error

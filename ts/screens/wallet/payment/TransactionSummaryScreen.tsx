@@ -439,7 +439,7 @@ const mapErrorCodeToMessage = (
     case "PAYMENT_ID_TIMEOUT":
       return I18n.t("wallet.errors.MISSING_PAYMENT_ID");
     default:
-      return I18n.t("wallet.errors.GENERIC_ERROR");
+      return "undefined error";
   }
 };
 
