@@ -31,7 +31,9 @@ export function* loadSessionInformationSaga(
 
   // Ko we got an error
   if (response.isLeft()) {
-    yield put(sessionInformationLoadFailure(readableReport(response.value)));
+    yield put(
+      sessionInformationLoadFailure(Error(readableReport(response.value)))
+    );
     return none;
   }
 

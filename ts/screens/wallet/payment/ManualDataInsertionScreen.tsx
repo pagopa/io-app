@@ -38,6 +38,7 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
+import { NumberFromString } from "../../../utils/number";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -51,7 +52,7 @@ type State = Readonly<{
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
   delocalizedAmount: Option<
-    ReturnType<typeof AmountInEuroCentsFromNumber.decode>
+    ReturnType<typeof AmountInEuroCentsFromString.decode>
   >;
 }>;
 
@@ -61,9 +62,9 @@ const styles = StyleSheet.create({
   }
 });
 
-//const AmountInEuroCentsFromString = NumberFromString.pipe(
-//  AmountInEuroCentsFromNumber
-//);
+const AmountInEuroCentsFromString = NumberFromString.pipe(
+  AmountInEuroCentsFromNumber
+);
 
 class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -209,7 +210,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                         value.replace(this.decimalSeparatorRe, ".")
                       )
                         .filter(NonEmptyString.is)
-                        .map(_ => AmountInEuroCentsFromNumber.decode(_))
+                        .map(_ => AmountInEuroCentsFromString.decode(_))
                     })
                   }
                 />
