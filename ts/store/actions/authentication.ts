@@ -52,7 +52,7 @@ export const sessionInformationLoadSuccess = createStandardAction(
 
 export const sessionInformationLoadFailure = createAction(
   "SESSION_INFO_LOAD_FAILURE",
-  resolve => (error: string) => resolve(error, true)
+  resolve => (error: Error) => resolve(error, true)
 );
 
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
