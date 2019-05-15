@@ -122,6 +122,9 @@ profile:
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
+    debugMode: Modalità debug
+    pagoPaEnv: Ambiente PagoPA di Test
+    pagoPAEnvAlert: La modifica richiede il reboot dell'app
 navigation:
   messages: Messaggi
   profile: Profilo
@@ -288,9 +291,9 @@ wallet:
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
   walletLoadMessage: Carico i metodi di pagamento...
-  walletLoadFailure: Non è stato possibile caricare i metodi di pagamento.
+  walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
-  transactionsLoadFailure: Non è stato possibile caricare lo storico delle transazioni.
+  transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile
@@ -387,6 +390,10 @@ wallet:
     updateInfo: Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     moreInfo: Per saperne di più
+    loadingMessage:
+      activation: Sto avvisando l'ente creditore, attendi qualche secondo..
+      verification: Sto verificando lo stato e l'importo del tuo avviso..
+      generic: Sto terminando le operazioni di verifica del tuo avviso, attendi qualche secondo..
   errorTransaction:
     submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
   insertManually:
