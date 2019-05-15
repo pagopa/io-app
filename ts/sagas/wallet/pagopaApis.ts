@@ -521,7 +521,7 @@ export function* paymentDeletePaymentRequestHandler(
  * Handles paymentVerificaRequest
  */
 export function* paymentVerificaRequestHandler(
-  getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
+  getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"],
   action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
