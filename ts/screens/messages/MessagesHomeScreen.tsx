@@ -2,11 +2,11 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import debounce from "lodash/debounce";
 import {
   Button,
-  DefaultTabBar,
   Icon,
   Input,
   Item,
   Tab,
+  TabHeading,
   Tabs,
   Text,
   View
@@ -48,8 +48,21 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  tabContainerStyle: {
-    elevation: 0
+  tabBarContainer: {
+    elevation: 0,
+    height: 40
+  },
+  tabBarContent: {
+    fontSize: customVariables.fontSizeSmall
+  },
+  tabBarUnderline: {
+    backgroundColor: customVariables.tabUnderlineColor,
+    borderBottomWidth: 2
+  },
+  tabBarUnderlineActive: {
+    height: 2,
+    marginBottom: -2,
+    backgroundColor: customVariables.contentPrimaryBackground
   },
   noSearchBarText: {
     flex: 1,
@@ -57,8 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   shadowContainer: {
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: customVariables.contentPadding
+    backgroundColor: "#FFFFFF"
   },
   shadow: {
     width: "100%",
@@ -82,17 +94,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderTabBar = (props: any) => {
-  return (
-    <React.Fragment>
-      <DefaultTabBar {...props} />
-      <View style={styles.shadowContainer}>
-        <View style={styles.shadow} />
-      </View>
-    </React.Fragment>
-  );
-};
-
 /**
  * A screen that contains all the Tabs related to messages.
  */
@@ -108,6 +109,12 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   public componentDidMount() {
     this.props.refreshMessages();
   }
+
+  private renderShadow = () => (
+    <View style={styles.shadowContainer}>
+      <View style={styles.shadow} />
+    </View>
+  );
 
   public render() {
     const { searchText } = this.state;
@@ -159,10 +166,19 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
     return (
       <Tabs
-        renderTabBar={renderTabBar}
-        tabContainerStyle={styles.tabContainerStyle}
+        tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
+        tabBarUnderlineStyle={styles.tabBarUnderlineActive}
       >
-        <Tab heading={I18n.t("messages.tab.inbox")}>
+        <Tab
+          heading={
+            <TabHeading>
+              <Text style={styles.tabBarContent}>
+                {I18n.t("messages.tab.inbox")}
+              </Text>
+            </TabHeading>
+          }
+        >
+          {this.renderShadow()}
           <MessagesInbox
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
@@ -173,7 +189,16 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           />
         </Tab>
         {DEADLINES_TAB_ENABLED && (
-          <Tab heading={I18n.t("messages.tab.deadlines")}>
+          <Tab
+            heading={
+              <TabHeading>
+                <Text style={styles.tabBarContent}>
+                  {I18n.t("messages.tab.deadlines")}
+                </Text>
+              </TabHeading>
+            }
+          >
+            {this.renderShadow()}
             <MessagesDeadlines
               messagesState={lexicallyOrderedMessagesState}
               onRefresh={refreshMessages}
@@ -182,7 +207,16 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           </Tab>
         )}
 
-        <Tab heading={I18n.t("messages.tab.archive")}>
+        <Tab
+          heading={
+            <TabHeading>
+              <Text style={styles.tabBarContent}>
+                {I18n.t("messages.tab.archive")}
+              </Text>
+            </TabHeading>
+          }
+        >
+          {this.renderShadow()}
           <MessagesArchive
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
