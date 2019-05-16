@@ -22,7 +22,7 @@ import { connect } from "react-redux";
 
 import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import { TopHeader } from "../../components/screens/TopHeader";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -203,7 +203,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         title={I18n.t("profile.main.screenTitle")}
         appLogo={true}
       >
-        <TopHeader
+        <ScreenContentHeader
           title={I18n.t("profile.main.screenTitle")}
           icon={require("../../../img/icons/gears.png")}
           subtitle={I18n.t("profile.main.screenSubtitle")}

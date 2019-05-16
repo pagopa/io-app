@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { ComponentProps } from "../../types/react";
 import BaseScreenComponent from "./BaseScreenComponent";
-import { TopHeader } from "./TopHeader";
+import { ScreenContentHeader } from "./ScreenContentHeader";
 
 interface OwnProps {
   headerTitle?: string;
@@ -15,7 +15,7 @@ type BaseScreenComponentProps =
   | "headerBody";
 
 type Props = OwnProps &
-  Pick<ComponentProps<typeof TopHeader>, "title"> &
+  Pick<ComponentProps<typeof ScreenContentHeader>, "title"> &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
 
 /**

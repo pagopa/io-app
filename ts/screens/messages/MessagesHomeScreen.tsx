@@ -19,7 +19,7 @@ import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
-import { TopHeader } from "../../components/screens/TopHeader";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -164,7 +164,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         }
       >
         {!searchText.isSome() && (
-          <TopHeader
+          <ScreenContentHeader
             title={I18n.t("messages.contentTitle")}
             icon={require("../../../img/icons/message-icon.png")}
           />

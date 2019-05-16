@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export class TopHeader extends React.PureComponent<Props> {
+export class ScreenContentHeader extends React.PureComponent<Props> {
   public render() {
     const { banner, subtitle } = this.props;
 
@@ -43,7 +43,6 @@ export class TopHeader extends React.PureComponent<Props> {
           }
           icon={this.props.icon}
         />
-
         {subtitle && (
           <View style={styles.subheaderContainer}>
             <Text>{subtitle}</Text>

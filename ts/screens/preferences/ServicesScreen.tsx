@@ -14,7 +14,7 @@ import debounce from "lodash/debounce";
 
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { TopHeader } from "../../components/screens/TopHeader";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import ServiceSectionListComponent from "../../components/services/ServiceSectionListComponent";
 import ServicesSearch from "../../components/services/ServicesSearch";
@@ -96,7 +96,7 @@ class ServicesScreen extends React.Component<Props, State> {
         }}
       >
         {!searchText.isSome() && (
-          <TopHeader
+          <ScreenContentHeader
             title={I18n.t("services.title")}
             subtitle={I18n.t("services.subTitle")}
           />

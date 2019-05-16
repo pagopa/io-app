@@ -6,7 +6,7 @@ import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { TopHeader } from "../../components/screens/TopHeader";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -107,7 +107,7 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
           )
         }}
       >
-        <TopHeader
+        <ScreenContentHeader
           title={I18n.t("biometric_recognition.title")}
           subtitle={I18n.t("biometric_recognition.subTitle")}
         />

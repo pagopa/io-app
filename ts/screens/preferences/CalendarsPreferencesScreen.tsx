@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 
 import * as pot from "italia-ts-commons/lib/pot";
 
-import { TopHeader } from "../../components/screens/TopHeader";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -121,7 +121,7 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
         title={I18n.t("preferences.list.preferred_calendar.title")}
         goBack={this.props.navigation.goBack}
       >
-        <TopHeader
+        <ScreenContentHeader
           title={I18n.t("preferences.list.preferred_calendar.title")}
           subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
         />
