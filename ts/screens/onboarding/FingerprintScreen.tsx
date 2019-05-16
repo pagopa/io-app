@@ -1,18 +1,18 @@
-import { Button, Content, Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import I18n from "../../i18n";
-import { Dispatch } from "../../store/actions/types";
-
 import AbortOnboardingModal from "../../components/AbortOnboardingModal";
+import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import I18n from "../../i18n";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   abortOnboarding,
   fingerprintAcknowledge
 } from "../../store/actions/onboarding";
+import { Dispatch } from "../../store/actions/types";
 
 type NavigationParams = {
   biometryType: BiometrySimpleType;
@@ -84,10 +84,11 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
         title={I18n.t("onboarding.fingerprint.title")}
-        icon={this.renderIcon(biometryType)}
-        fixedHeader={true}
       >
-        <Content noPadded={true}>
+        <ScreenContent
+          title={I18n.t("onboarding.fingerprint.title")}
+          icon={this.renderIcon(biometryType)}
+        >
           <View content={true}>
             <Text>
               {biometryType !== "NOT_ENROLLED"
@@ -99,7 +100,7 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
                 : I18n.t("onboarding.fingerprint.body.notEnrolledText")}
             </Text>
           </View>
-        </Content>
+        </ScreenContent>
         <View footer={true}>
           <Button
             block={true}

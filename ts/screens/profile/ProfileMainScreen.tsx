@@ -22,6 +22,7 @@ import { connect } from "react-redux";
 
 import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { TopHeader } from "../../components/screens/TopHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -200,13 +201,19 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         title={I18n.t("profile.main.screenTitle")}
-        icon={require("../../../img/icons/gears.png")}
-        subtitle={I18n.t("profile.main.screenSubtitle")}
-        banner={
-          isExperimentalFeaturesEnabled ? ExperimentalFeaturesBanner : undefined
-        }
         appLogo={true}
       >
+        <TopHeader
+          title={I18n.t("profile.main.screenTitle")}
+          icon={require("../../../img/icons/gears.png")}
+          subtitle={I18n.t("profile.main.screenSubtitle")}
+          banner={
+            isExperimentalFeaturesEnabled
+              ? ExperimentalFeaturesBanner
+              : undefined
+          }
+        />
+
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>

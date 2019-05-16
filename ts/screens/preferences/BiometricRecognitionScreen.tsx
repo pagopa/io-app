@@ -1,24 +1,22 @@
+import { Button, Text } from "native-base";
 import * as React from "react";
+import { Linking, Platform, Switch, View } from "react-native";
+import AndroidOpenSettings from "react-native-android-open-settings";
+import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { Linking, Platform, Switch, View } from "react-native";
-
-import { Button, Text } from "native-base";
-import TouchID, { AuthenticationError } from "react-native-touch-id";
-
-import AndroidOpenSettings from "react-native-android-open-settings";
-import I18n from "../../i18n";
-import { showToast } from "../../utils/showToast";
-
-import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
-
+import { TopHeader } from "../../components/screens/TopHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import Markdown from "../../components/ui/Markdown";
+import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
-import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { authenticateConfig } from "../../utils/biometric";
+import { showToast } from "../../utils/showToast";
+
+import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { GlobalState } from "../../store/reducers/types";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -102,7 +100,6 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
       <TopScreenComponent
         title={I18n.t("biometric_recognition.title")}
         goBack={this.goBack}
-        subtitle={I18n.t("biometric_recognition.subTitle")}
         contextualHelp={{
           title: I18n.t("biometric_recognition.title"),
           body: () => (
@@ -110,6 +107,10 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
           )
         }}
       >
+        <TopHeader
+          title={I18n.t("biometric_recognition.title")}
+          subtitle={I18n.t("biometric_recognition.subTitle")}
+        />
         <View
           style={{
             width: "100%",

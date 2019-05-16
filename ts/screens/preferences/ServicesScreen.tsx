@@ -2,17 +2,19 @@
  * Screen displaying the list of available services. The user can
  * access the service detail by pressing on the related list item.
  */
-import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import debounce from "lodash/debounce";
 import { Button, Icon, Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { none, Option, some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import debounce from "lodash/debounce";
+
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { TopHeader } from "../../components/screens/TopHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import ServiceSectionListComponent from "../../components/services/ServiceSectionListComponent";
 import ServicesSearch from "../../components/services/ServicesSearch";
@@ -88,12 +90,17 @@ class ServicesScreen extends React.Component<Props, State> {
       <TopScreenComponent
         title={I18n.t("services.title")}
         goBack={this.goBack}
-        subtitle={I18n.t("services.subTitle")}
         contextualHelp={{
           title: I18n.t("services.title"),
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
       >
+        {!searchText.isSome() && (
+          <TopHeader
+            title={I18n.t("services.title")}
+            subtitle={I18n.t("services.subTitle")}
+          />
+        )}
         {searchText.isSome() ? (
           <Item style={styles.ioSearch}>
             <Input

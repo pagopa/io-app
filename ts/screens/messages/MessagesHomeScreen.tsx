@@ -19,6 +19,7 @@ import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
+import { TopHeader } from "../../components/screens/TopHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -133,9 +134,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
-        icon={require("../../../img/icons/message-icon.png")}
         appLogo={true}
-        hideHeader={searchText.isSome()}
         headerBody={
           searchText.isSome() ? (
             <Item>
@@ -164,6 +163,13 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           )
         }
       >
+        {!searchText.isSome() && (
+          <TopHeader
+            title={I18n.t("messages.contentTitle")}
+            icon={require("../../../img/icons/message-icon.png")}
+          />
+        )}
+
         {searchText.isSome() ? this.renderSearch() : this.renderTabs()}
       </TopScreenComponent>
     );

@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { ImageSourcePropType, StyleSheet } from "react-native";
@@ -28,9 +27,11 @@ const styles = StyleSheet.create({
 
 export class TopHeader extends React.PureComponent<Props> {
   public render() {
+    const { banner, subtitle } = this.props;
+
     return (
       <React.Fragment>
-        {this.props.banner && (
+        {banner && (
           <React.Fragment>
             {this.props.banner}
             <View spacer={true} />
@@ -42,14 +43,13 @@ export class TopHeader extends React.PureComponent<Props> {
           }
           icon={this.props.icon}
         />
-        <View style={styles.subheaderContainer}>
-          {this.props.subtitle && <Text>{this.props.subtitle}</Text>}
-          {this.props.onMoreLinkPress && (
-            <Text link={true} onPress={this.props.onMoreLinkPress}>
-              {I18n.t("preferences.moreLinkText")}
-            </Text>
-          )}
-        </View>
+
+        {subtitle && (
+          <View style={styles.subheaderContainer}>
+            <Text>{subtitle}</Text>
+            <View spacer={true} large={true} />
+          </View>
+        )}
       </React.Fragment>
     );
   }

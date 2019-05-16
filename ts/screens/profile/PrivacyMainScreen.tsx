@@ -1,24 +1,13 @@
-import {
-  Body,
-  Content,
-  H3,
-  List,
-  ListItem,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Body, H3, List, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
+import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-
 import I18n from "../../i18n";
-
 import ROUTES from "../../navigation/routes";
-
 import variables from "../../theme/variables";
 
 const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
@@ -43,9 +32,11 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
   <TopScreenComponent
     goBack={() => props.navigation.goBack()}
     title={I18n.t("profile.main.screenTitle")}
-    subtitle={I18n.t("profile.main.mainPrivacy.screenSubtitle")}
   >
-    <Content noPadded={true}>
+    <ScreenContent
+      title={I18n.t("profile.main.screenTitle")}
+      subtitle={I18n.t("profile.main.mainPrivacy.screenSubtitle")}
+    >
       <List withContentLateralPadding={true}>
         <ListItem
           onPress={() => props.navigation.navigate(ROUTES.PROFILE_PRIVACY)}
@@ -103,6 +94,6 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
           </Right>
         </ListItem>
       </List>
-    </Content>
+    </ScreenContent>
   </TopScreenComponent>
 );
