@@ -86,7 +86,7 @@ export default class CardComponent extends React.Component<Props> {
 
   private handleFavoritePress = () => {
     if (
-      this.props.type === "Full" &&
+      (this.props.type === "Full" || this.props.type === "Header") &&
       this.props.onSetFavorite !== undefined &&
       this.props.isFavorite !== undefined &&
       !pot.isLoading(this.props.isFavorite) &&

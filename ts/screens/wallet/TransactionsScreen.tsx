@@ -2,6 +2,7 @@
  * This screen dispalys a list of transactions
  * from a specific credit card
  */
+import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -14,8 +15,10 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { setFavouriteWalletRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
+import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import { Transaction, Wallet } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
@@ -39,6 +42,10 @@ const styles = StyleSheet.create({
 class TransactionsScreen extends React.Component<Props> {
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
+    const isFavorite = pot.map(
+      this.props.favoriteWallet,
+      _ => _ === selectedWallet.idWallet
+    );
     const headerContents = (
       <View>
         <View style={styles.walletBannerText}>
@@ -57,8 +64,14 @@ class TransactionsScreen extends React.Component<Props> {
           <CardComponent
             type="Header"
             wallet={selectedWallet}
-            hideFavoriteIcon={true}
-            hideMenu={true}
+            hideFavoriteIcon={false}
+            hideMenu={false}
+            isFavorite={isFavorite}
+            onSetFavorite={(willBeFavorite: boolean) =>
+              this.props.setFavoriteWallet(
+                willBeFavorite ? selectedWallet.idWallet : undefined
+              )
+            }
           />
         }
       >
@@ -81,7 +94,8 @@ class TransactionsScreen extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   transactions: getWalletTransactionsCreator(
     ownProps.navigation.getParam("selectedWallet").idWallet
-  )(state)
+  )(state),
+  favoriteWallet: getFavoriteWalletId(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -91,7 +105,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         transaction,
         isPaymentCompletedTransaction: false
       })
-    )
+    ),
+  setFavoriteWallet: (walletId?: number) =>
+    dispatch(setFavouriteWalletRequest(walletId))
 });
 
 export default connect(
