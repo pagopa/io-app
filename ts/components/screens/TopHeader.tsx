@@ -10,15 +10,13 @@ type Props = Readonly<{
   title: string;
   icon?: ImageSourcePropType;
   subtitle?: string;
-  onMoreLinkPress?: () => void;
   banner?: React.ReactNode;
 }>;
 
 const styles = StyleSheet.create({
   subheaderContainer: {
     paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding,
-    paddingBottom: variables.spacerLargeHeight
+    paddingRight: variables.contentPadding
   },
   screenHeaderHeading: {
     flex: 1,
