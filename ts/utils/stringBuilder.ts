@@ -1,3 +1,4 @@
+import * as I18n from "i18n-js";
 import { Wallet } from "../types/pagopa";
 
 /**
@@ -13,7 +14,10 @@ export const centsToAmount = (cents: number): number =>
   cents / Math.pow(10, DISPLAYED_DIGITS);
 
 export const formatNumberAmount = (amount: number): string =>
-  `${amount.toFixed(DISPLAYED_DIGITS)} €`;
+  `${I18n.toNumber(amount, {
+    precision: DISPLAYED_DIGITS,
+    separator: I18n.t("global.localization.decimalSeparator")
+  })} €`;
 
 export const buildExpirationDate = (w: Wallet): string =>
   `${w.creditCard.expireMonth}/${w.creditCard.expireYear}`;
