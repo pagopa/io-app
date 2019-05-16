@@ -193,7 +193,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     );
 
     // Ask user to accept ToS
-    yield call(checkAcceptedTosSaga);
+    yield call(checkAcceptedTosSaga, userProfile);
 
     storedPin = yield call(checkConfiguredPinSaga);
     yield call(checkAcknowledgedFingerprintSaga);

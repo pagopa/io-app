@@ -1,26 +1,18 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { Effect } from "redux-saga";
-import { put, select, take } from "redux-saga/effects";
+import { put, take } from "redux-saga/effects";
 
+import { UserProfileUnion } from "../../api/backend";
 import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
 import { profileUpsert } from "../../store/actions/profile";
-import { profileSelector } from "../../store/reducers/profile";
-import { GlobalState } from "../../store/reducers/types";
 
-export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
-  const profileState: ReturnType<typeof profileSelector> = yield select<
-    GlobalState
-  >(profileSelector);
-
-  if (pot.isNone(profileState)) {
-    return;
-  }
-
+export function* checkAcceptedTosSaga(
+  userProfile: UserProfileUnion
+): IterableIterator<Effect> {
   if (
-    "accepted_tos_version" in profileState.value &&
-    profileState.value.accepted_tos_version &&
-    profileState.value.accepted_tos_version === tosVersion
+    "accepted_tos_version" in userProfile &&
+    userProfile.accepted_tos_version &&
+    userProfile.accepted_tos_version === tosVersion
   ) {
     return;
   }
