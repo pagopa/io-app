@@ -14,13 +14,13 @@ describe("should convert a string representin a number into a number", () => {
   });
 
   it("should convert an float number in its string representation", () => {
-    const integer = 100.2;
-    expect(NumberFromString.encode(integer)).toBe("100.2");
+    const float = 100.2;
+    expect(NumberFromString.encode(float)).toBe("100.2");
   });
 
   it("should convert a float representing a integer number in number object", () => {
-    const integer = "100.2";
-    const validation = NumberFromString.decode(integer);
+    const float = "100.2";
+    const validation = NumberFromString.decode(float);
     expect(isRight(validation)).toBeTruthy();
   });
 
