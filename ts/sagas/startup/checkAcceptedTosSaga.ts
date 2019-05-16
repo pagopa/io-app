@@ -20,6 +20,6 @@ export function* checkAcceptedTosSaga(
   // Navigate to the TosScreen
   yield put(navigateToTosScreen);
 
-  // Here we wait the user accept the ToS
+  // Wait the user accept the ToS
   yield take(profileUpsert.request);
 }

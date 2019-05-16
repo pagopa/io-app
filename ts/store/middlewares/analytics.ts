@@ -42,7 +42,6 @@ import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
 } from "../actions/notifications";
-import { tosAccept } from "../actions/onboarding";
 import { createPinSuccess } from "../actions/pinset";
 import {
   profileLoadFailure,
@@ -217,7 +216,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(identificationPinReset):
     // onboarding
     case getType(analyticsOnboardingStarted):
-    case getType(tosAccept):
     case getType(createPinSuccess):
     // profile
     case getType(profileLoadFailure):
