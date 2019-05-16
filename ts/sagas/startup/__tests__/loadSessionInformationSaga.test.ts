@@ -1,6 +1,7 @@
+import { left, right } from "fp-ts/lib/Either";
+import * as t from "io-ts";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-
 import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
@@ -13,10 +14,13 @@ import { loadSessionInformationSaga } from "../loadSessionInformationSaga";
 describe("loadSessionInformationSaga", () => {
   it("should emit the session on valid response from backend", () => {
     const getSession = jest.fn();
-    const aPublicSession = {} as PublicSession;
+    const aPublicSession = { walletToken: "ciao" } as PublicSession;
     return expectSaga(loadSessionInformationSaga, getSession)
       .provide([
-        [matchers.call.fn(getSession), { status: 200, value: aPublicSession }]
+        [
+          matchers.call.fn(getSession),
+          right({ status: 200, value: aPublicSession })
+        ]
       ])
       .put(sessionInformationLoadSuccess(aPublicSession))
       .run();
@@ -28,10 +32,19 @@ describe("loadSessionInformationSaga", () => {
       .provide([
         [
           matchers.call.fn(getSession),
-          { status: 400, value: { title: "Error" } }
+          left([
+            t.getValidationError(
+              "some error occurred",
+              t.getDefaultContext(t.null)
+            )
+          ])
         ]
       ])
-      .put(sessionInformationLoadFailure(Error("Error")))
+      .put(
+        sessionInformationLoadFailure(
+          Error('value ["some error occurred"] at [root] is not a valid [null]')
+        )
+      )
       .run();
   });
 });

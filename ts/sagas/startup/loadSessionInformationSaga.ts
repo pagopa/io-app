@@ -28,7 +28,6 @@ export function* loadSessionInformationSaga(
     getSession,
     {}
   );
-
   // Ko we got an error
   if (response.isLeft()) {
     yield put(
