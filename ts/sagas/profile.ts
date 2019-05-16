@@ -102,11 +102,6 @@ function* createOrUpdateProfileSaga(
     }
   );
 
-  console.log("request payload: ");
-  console.log(newProfile);
-  console.log("response:");
-  console.log(response);
-
   if (response && response.status === 401) {
     // on 401, expire the current session and restart the authentication flow
     yield put(sessionExpired());
