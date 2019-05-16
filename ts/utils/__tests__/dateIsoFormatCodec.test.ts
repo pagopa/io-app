@@ -1,5 +1,5 @@
 import { isRight } from "fp-ts/lib/Either";
-import { DateFromISOString } from "../../utils/dates";
+import { DateFromISOString } from "../dates";
 
 describe("should convert a ISO string into a date object and a date object into ISO string representation", () => {
   it("should convert a date in its ISO string representation", () => {
