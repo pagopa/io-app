@@ -235,13 +235,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
   );
 
-  // Start watching for profile update requests as the checkProfileEnabledSaga
-  // may need to update the profile.
-  // yield fork(
-  //  watchProfileUpsertRequestsSaga,
-  //  backendClient.createOrUpdateProfile
-  // );
-
   // Check that profile is up to date (e.g. inbox enabled)
   yield call(checkProfileEnabledSaga, userProfile);
 
