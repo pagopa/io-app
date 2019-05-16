@@ -1,7 +1,7 @@
+import { right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { put } from "redux-saga/effects";
-
 import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import {
@@ -104,7 +104,7 @@ describe("watchLoadMessages", () => {
         .next({})
         .call(getMessages, {})
         // Return an error message as getMessages response
-        .next({ status: 500, value: { title: "Backend error" } })
+        .next(right({ status: 500, value: { title: "Backend error" } }))
         .put(loadMessagesAction.failure("Backend error"))
         .next()
         .next()
@@ -125,11 +125,11 @@ describe("watchLoadMessages", () => {
         .next({})
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
-        .next({ status: 200, value: testMessages })
+        .next(right({ status: 200, value: testMessages }))
         .put(loadMessagesAction.success(testMessages.items.map(_ => _.id)))
         .next()
         .all([put(loadService.request("5a563817fcc896087002ea46c49a"))])
-        .next({ status: 200, value: testServicePublic })
+        .next(right({ status: 200, value: testServicePublic }))
         .all([
           put(loadMessageAction.request(testMessages.items[1] as any)),
           put(loadMessageAction.request(testMessages.items[0] as any))
@@ -155,7 +155,7 @@ describe("watchLoadMessages", () => {
         } as ReturnType<typeof servicesByIdSelector>)
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
-        .next({ status: 200, value: testMessages })
+        .next(right({ status: 200, value: testMessages }))
         .put(loadMessagesAction.success(testMessages.items.map(_ => _.id)))
         .next()
         // Do not load any new services
