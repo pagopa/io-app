@@ -2,7 +2,7 @@
 
 import * as t from "io-ts";
 
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
+import { NonNegativeInteger, NonNegativeNumber } from "italia-ts-commons/lib/numbers";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
@@ -33,9 +33,8 @@ const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 // Default number of workers to fetch message.
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
-export const tosVersion: NonNegativeInteger = parseInt(
-  Config.TOS_VERSION
-) as NonNegativeInteger;
+// version of ToS
+export const tosVersion: NonNegativeNumber = 1 as NonNegativeNumber;
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
