@@ -54,16 +54,16 @@
       "sha1": "d7400c6281103fe59ad56afc656167c05e3f6d1c"
     },
     {
+      "path": "assets/fonts/Ionicons/Ionicons.ttf",
+      "sha1": "991bb7fac9709cd58da37901770efd4703c542ed"
+    },
+    {
       "path": "assets/fonts/RobotoMono/LICENSE.txt",
       "sha1": "47b573e3824cd5e02a1a3ae99e2735b49e0256e4"
     },
     {
       "path": "assets/fonts/RobotoMono/RobotoMono-Regular.ttf",
       "sha1": "69a65c2b797d2fa124b4c709097e761b7857a035"
-    },
-    {
-      "path": "assets/fonts/Ionicons/Ionicons.ttf",
-      "sha1": "991bb7fac9709cd58da37901770efd4703c542ed"
     }
   ]
 }

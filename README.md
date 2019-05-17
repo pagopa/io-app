@@ -311,7 +311,7 @@ To update the icon-font to a new version, it is necessary to extract and correct
 * `selection.json` contained in the archive root, to be placed in [ts/theme/font-icons/io-icon-font/](ts/theme/font-icons/io-icon-font).
 * `io-icon-font.ttf` contained in the directory fonts archive, to be placed in [assets/fonts/io-icon-font/](assets/fonts/io-icon-font).
 
-Once the two files have been copied, it is necessary to update the link of the asset by running:
+Once the two files have been copied, it is necessary to update the link of the asset by installing globally and running:
 
 ```
 $ react-native-asset
