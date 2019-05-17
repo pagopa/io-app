@@ -4,7 +4,7 @@
  * add new ones
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, H1, Left, Right, Text, View } from "native-base";
+import { Button, Content, H1, H3, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
@@ -28,6 +28,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
@@ -63,12 +64,26 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
 
+  brandDarkGray: {
+    color: variables.brandDarkGray
+  },
+
   bordercColorBrandGray: {
     borderColor: variables.brandGray
   },
 
   colorBrandGray: {
     color: variables.brandGray
+  },
+
+  whiteContent: {
+    backgroundColor: variables.colorWhite,
+    flex: 1
+  },
+
+  noBottomPadding: {
+    padding: variables.contentPadding,
+    paddingBottom: 0
   }
 });
 
@@ -159,16 +174,20 @@ class WalletHomeScreen extends React.Component<Props, never> {
   private errorWalletsHeader() {
     return (
       <View>
-        {this.header()}
-        <View spacer={true} />
-        <Text note={true} white={true} style={styles.inLineSpace}>
+        {this.withCardsHeader()}
+        <View spacer={true} large={true} />
+        <Text style={[styles.white, styles.inLineSpace]}>
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
         <View spacer={true} />
-        <Button block={true} danger={true} onPress={this.props.loadWallets}>
-          <Text style={styles.colorBrandGray}>
-            {I18n.t("global.buttons.retry")}
-          </Text>
+        <Button
+          block={true}
+          light={true}
+          bordered={true}
+          small={true}
+          onPress={this.props.loadWallets}
+        >
+          <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
         </Button>
         <View spacer={true} />
       </View>
@@ -198,6 +217,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <WalletLayout
         title={DEFAULT_APPLICATION_NAME}
         headerContents={headerContents}
+        isPagoPATestEnabled={this.props.isPagoPATestEnabled}
         displayedWallets={
           wallets.length === 0 ? null : (
             <CardsFan
@@ -216,19 +236,28 @@ class WalletHomeScreen extends React.Component<Props, never> {
         allowGoBack={false}
       >
         {pot.isError(potTransactions) ? (
-          <React.Fragment>
+          <Content
+            scrollEnabled={false}
+            style={[styles.noBottomPadding, styles.whiteContent]}
+          >
             <View spacer={true} />
-            <Text note={true} white={true} style={styles.inLineSpace}>
+            <H3>{I18n.t("wallet.transactions")}</H3>
+            <View spacer={true} large={true} />
+            <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
               {I18n.t("wallet.transactionsLoadFailure")}
             </Text>
+            <View spacer={true} />
             <Button
               block={true}
-              danger={true}
+              light={true}
+              bordered={true}
+              small={true}
               onPress={this.props.loadTransactions}
             >
-              <Text>{I18n.t("global.buttons.retry")}</Text>
+              <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
             </Button>
-          </React.Fragment>
+            <View spacer={true} large={true} />
+          </Content>
         ) : (
           <TransactionsList
             title={I18n.t("wallet.latestTransactions")}
@@ -249,7 +278,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
-  potTransactions: latestTransactionsSelector(state)
+  potTransactions: latestTransactionsSelector(state),
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

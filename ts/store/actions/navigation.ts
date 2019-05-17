@@ -22,6 +22,7 @@ import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScr
 import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
+import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErrorScreen";
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
@@ -112,6 +113,14 @@ export const navigateToPaymentTransactionSummaryScreen = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+    params
+  });
+
+export const navigateToPaymentTransactionErrorScreen = (
+  params: InferNavigationParams<typeof TransactionErrorScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_TRANSACTION_ERROR,
     params
   });
 
