@@ -17,6 +17,7 @@ import h6Theme from "./components/H6";
 import headerTheme from "./components/Header";
 import iconFontTheme from "./components/IconFont";
 import itemTheme from "./components/Item";
+import labelTheme from "./components/Label";
 import listTheme from "./components/List";
 import listItemTheme from "./components/ListItem";
 import maskedInputTheme from "./components/MaskedInput";
@@ -61,6 +62,9 @@ const theme = (): Theme => {
     },
     "NativeBase.Item": {
       ...itemTheme()
+    },
+    "NativeBase.Label": {
+      ...labelTheme()
     },
     "NativeBase.Text": {
       ...textTheme()

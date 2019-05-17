@@ -146,8 +146,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
-            <Form>
+            {/* Native Base Form has a padding by design. So if we want to remove the left padding
+                we need to override the items's style (https://github.com/GeekyAnts/NativeBase/issues/630)
+            */}
+            <Form style={{ flex: 1, alignItems: "flex-start" }}>
               <Item
+                style={{ marginLeft: 0 }}
                 floatingLabel={true}
                 error={this.state.paymentNoticeNumber
                   .map(isLeft)
@@ -170,6 +174,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 />
               </Item>
               <Item
+                style={{ marginLeft: 0 }}
                 floatingLabel={true}
                 error={this.state.organizationFiscalCode
                   .map(isLeft)
@@ -192,6 +197,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 />
               </Item>
               <Item
+                style={{ marginLeft: 0 }}
                 floatingLabel={true}
                 error={this.state.delocalizedAmount
                   .map(isLeft)
