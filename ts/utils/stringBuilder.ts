@@ -1,4 +1,4 @@
-import * as I18n from "i18n-js";
+import I18n from "../i18n";
 import { Wallet } from "../types/pagopa";
 
 /**
