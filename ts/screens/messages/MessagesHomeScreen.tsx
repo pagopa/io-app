@@ -56,12 +56,13 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSizeSmall
   },
   tabBarUnderline: {
-    backgroundColor: customVariables.tabUnderlineColor,
-    borderBottomWidth: 2
+    borderBottomColor: customVariables.tabUnderlineColor,
+    borderBottomWidth: customVariables.tabUnderlineHeight
   },
   tabBarUnderlineActive: {
-    height: 2,
-    marginBottom: -2,
+    height: customVariables.tabUnderlineHeight,
+    // borders do not overlap eachother, but stack naturally
+    marginBottom: -customVariables.tabUnderlineHeight,
     backgroundColor: customVariables.contentPrimaryBackground
   },
   noSearchBarText: {
