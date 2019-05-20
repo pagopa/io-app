@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { MessageDetail } from "../../components/messages/MessageDetail";
+import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
@@ -216,9 +216,10 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     service: pot.Pot<ServicePublic, Error>,
     paymentByRptId: Props["paymentByRptId"]
   ) => {
+    const { isDebugModeEnabled } = this.props;
     return (
       <Content noPadded={true}>
-        <MessageDetail
+        <MessageDetailComponent
           message={message}
           paymentByRptId={paymentByRptId}
           service={service}
@@ -227,6 +228,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
               ? () => this.onServiceLinkPressHandler(service.value)
               : undefined
           }
+          isDebugModeEnabled={isDebugModeEnabled}
         />
       </Content>
     );
@@ -305,7 +307,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     maybeRead,
     potMessage,
     potService,
-    paymentByRptId: state.entities.paymentByRptId
+    paymentByRptId: state.entities.paymentByRptId,
+    isDebugModeEnabled: state.debug.isDebugModeEnabled
   };
 };
 
