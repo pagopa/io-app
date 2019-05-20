@@ -59,6 +59,10 @@ type State = Readonly<{
 const styles = StyleSheet.create({
   whiteBg: {
     backgroundColor: variables.colorWhite
+  },
+  form: {
+    flex: 1,
+    alignItems: "flex-start"
   }
 });
 
@@ -149,7 +153,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             {/* Native Base Form has a padding by design. So if we want to remove the left padding
                 we need to override the items's style (https://github.com/GeekyAnts/NativeBase/issues/630)
             */}
-            <Form style={{ flex: 1, alignItems: "flex-start" }}>
+            <Form style={styles.form}>
               <Item
                 style={{ marginLeft: 0 }}
                 floatingLabel={true}
