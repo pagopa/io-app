@@ -1,6 +1,5 @@
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
-
 import { UserProfileUnion } from "../../api/backend";
 import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
@@ -10,6 +9,7 @@ export function* checkAcceptedTosSaga(
   userProfile: UserProfileUnion
 ): IterableIterator<Effect> {
   if (
+    userProfile.has_profile &&
     "accepted_tos_version" in userProfile &&
     userProfile.accepted_tos_version &&
     userProfile.accepted_tos_version === tosVersion
