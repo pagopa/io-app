@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import IconFont from "../../components/ui/IconFont";
 import AppHeader from "../ui/AppHeader";
 
+import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
@@ -37,7 +38,12 @@ export class BaseHeader extends React.PureComponent<Props> {
       <AppHeader primary={this.props.primary}>
         {goBack && (
           <Left>
-            <GoBackButton testID="back-button" onPress={goBack} />
+            <GoBackButton
+              testID="back-button"
+              onPress={goBack}
+              accessible={true}
+              accessibilityLabel={I18n.t("global.buttons.back")}
+            />
           </Left>
         )}
         <Body style={goBack ? {} : styles.noLeft}>
