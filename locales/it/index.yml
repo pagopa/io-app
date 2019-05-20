@@ -20,6 +20,7 @@ global:
     retry: Riprova
     back: Indietro
     confirm: Conferma
+    close: Chiudi
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -389,6 +390,12 @@ wallet:
     updateInfo: Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     moreInfo: Per saperne di più
+    loadingMessage:
+      activation: Sto avvisando l'ente creditore, attendi qualche secondo..
+      verification: Sto verificando lo stato e l'importo del tuo avviso..
+      generic: Sto terminando le operazioni di verifica del tuo avviso, attendi qualche secondo..
+  errorTransaction:
+    submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
   insertManually:
     header: Inserisci dati avviso
     title: Inserisci i dati dell'avviso
@@ -459,13 +466,13 @@ wallet:
     title: Perché devo pagare le commissioni?
     text: !include why_a_fee.md
   errors:
-    PAYMENT_DUPLICATED: Questo avviso è già stato pagato.
+    PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poichè questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
     PAYMENT_UNKNOWN: Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.
-    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su PagoPA.
+    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su PagoPA, il pagamento non può essere effettuato.
     GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
     MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
 saveCard:
