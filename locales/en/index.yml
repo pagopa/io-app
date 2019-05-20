@@ -586,6 +586,7 @@ biometric_recognition:
   switchLabel: Enable biometric recognition
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
+  needed_to_disable: Recognition required to disable
 services:
   headerTitle: Services
   title: Available services
