@@ -130,6 +130,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               onPress={this.onSearchEnable}
               transparent={true}
               style={styles.ioSearch}
+              accessible={true}
+              accessibilityLabel={I18n.t("global.actions.search")}
             >
               <IconFont name="io-search" />
             </Button>
