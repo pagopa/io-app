@@ -15,7 +15,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
@@ -37,7 +36,6 @@ import customVariables from "../../theme/variables";
 
 // Used to disable the Deadlines tab
 const DEADLINES_TAB_ENABLED = false;
-
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -310,7 +308,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshMessages: () => dispatch(loadMessages.request()),
+  refreshMessages: () => {
+    dispatch(loadMessages.request());
+  },
   navigateToMessageDetail: (messageId: string) =>
     dispatch(navigateToMessageDetailScreenAction({ messageId })),
   updateMessagesArchivedState: (
