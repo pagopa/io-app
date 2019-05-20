@@ -54,15 +54,10 @@ export const setMessagesArchivedState = createAction(
     resolve({ ids, archived })
 );
 
-export const setNumberMessagesUnread = createStandardAction(
-  "SET_NUMBER_MESSAGES_UNREAD"
-)<number>();
-
 export type MessagesActions =
   | ActionType<typeof loadMessage>
   | ActionType<typeof loadMessageWithRelations>
   | ActionType<typeof loadMessages>
   | ActionType<typeof loadMessagesCancel>
   | ActionType<typeof setMessageReadState>
-  | ActionType<typeof setMessagesArchivedState>
-  | ActionType<typeof setNumberMessagesUnread>;
+  | ActionType<typeof setMessagesArchivedState>;

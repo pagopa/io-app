@@ -60,4 +60,15 @@ export const lexicallyOrderedMessagesStateSelector = createSelector(
     )
 );
 
+export const messagesUnreadSelector = createSelector(
+  lexicallyOrderedMessagesStateSelector,
+  potMessagesState =>
+    pot.getOrElse(
+      pot.map(potMessagesState, _ =>
+        _.filter(messageState => !messageState.isRead)
+      ),
+      []
+    ).length
+);
+
 export default reducer;

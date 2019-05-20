@@ -1,10 +1,8 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { Badge, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
-import { lexicallyOrderedMessagesStateSelector } from "../store/reducers/entities/messages";
-import { MessageState } from "../store/reducers/entities/messages/messagesById";
+import { messagesUnreadSelector } from "../store/reducers/entities/messages";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
@@ -12,7 +10,7 @@ import IconFont from "./ui/IconFont";
 type OwnProps = {
   color?: string;
 };
-
+const MAX_BADGE_VALUE = 99;
 const styles = StyleSheet.create({
   textBadgeStyle: {
     fontSize: 10,
@@ -24,7 +22,8 @@ const styles = StyleSheet.create({
     height: 19,
     width: 19,
     textAlign: "center",
-    paddingRight: 3
+    paddingRight: 3,
+    top: Platform.OS === "ios" ? 0 : undefined
   },
   badgeStyle: {
     backgroundColor: variables.brandPrimary,
@@ -43,24 +42,11 @@ const styles = StyleSheet.create({
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
 /**
- * Filters the list of messages and returns the number of unread messages.
- */
-const getNumberMessagesUnread = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
-): number =>
-  pot.getOrElse(
-    pot.map(potMessagesState, _ =>
-      _.filter(messageState => !messageState.isRead)
-    ),
-    []
-  ).length;
-
-/**
  * Message icon add badge.
  */
 class MessagesTabIcon extends React.PureComponent<Props> {
   public render() {
-    const { color, messagesUnread } = this.props;
+    const { color, badgeValue } = this.props;
     return (
       <View>
         <IconFont
@@ -68,29 +54,22 @@ class MessagesTabIcon extends React.PureComponent<Props> {
           size={variables.iconSize3}
           color={color}
         />
-        {messagesUnread > 0 ? (
-          Platform.OS === "ios" ? (
-            <Badge style={styles.badgeStyle}>
-              <Text style={[styles.textBadgeStyle, { top: 0 }]}>
-                {messagesUnread}
-              </Text>
-            </Badge>
-          ) : (
-            <Badge style={styles.badgeStyle}>
-              <Text style={styles.textBadgeStyle}>{messagesUnread}</Text>
-            </Badge>
-          )
+        {badgeValue > 0 ? (
+          <Badge style={styles.badgeStyle}>
+            <Text style={[styles.textBadgeStyle]}>{badgeValue}</Text>
+          </Badge>
         ) : null}
       </View>
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  messagesUnread:
-    getNumberMessagesUnread(lexicallyOrderedMessagesStateSelector(state)) < 99
-      ? getNumberMessagesUnread(lexicallyOrderedMessagesStateSelector(state))
-      : 99
-});
+function mapStateToProps(state: GlobalState) {
+  const messagesUnread = messagesUnreadSelector(state);
+  return {
+    badgeValue:
+      messagesUnread < MAX_BADGE_VALUE ? messagesUnread : MAX_BADGE_VALUE
+  };
+}
 
 export default connect(mapStateToProps)(MessagesTabIcon);

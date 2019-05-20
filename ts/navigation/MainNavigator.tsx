@@ -1,3 +1,10 @@
+/**
+ * Main navigator, handling the navigation within
+ * the app *after* the login has occurred. This takes
+ * care of displaying a tab navigator with the
+ * appropriate icons
+ */
+
 import * as React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import {
@@ -79,30 +86,6 @@ const styles = StyleSheet.create({
     shadowRadius: variables.footerShadowRadius,
     // Android shadow
     elevation: variables.footerElevation
-  },
-  textBadgeStyle: {
-    fontSize: 10,
-    fontFamily: "Titillium Web",
-    fontWeight: "bold",
-    color: "white",
-    flex: 1,
-    position: "absolute",
-    height: 19,
-    width: 19,
-    textAlign: "center",
-    paddingRight: 3
-  },
-  badgeStyle: {
-    backgroundColor: variables.brandPrimary,
-    borderColor: "white",
-    borderWidth: 2,
-    position: "absolute",
-    elevation: 0.1,
-    shadowColor: "white",
-    height: 19,
-    width: 19,
-    left: 12,
-    bottom: 10
   }
 });
 
