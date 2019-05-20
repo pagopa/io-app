@@ -4403,15 +4403,9 @@ instabug-reactnative@8.2.2:
   resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-8.2.2.tgz#4db16684018c95e7804005a37f3ccd260e36eb84"
   integrity sha512-U6KWma32CcIVe0szBkN+t0HxFr/B+r4Cj58LU3vHX3xoDEWFfepeB5Qo49wUfHSeuJ5u9+74maHDehnTRNr7yw==
 
-invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
+invariant@2.2.4, invariant@^2.2.0, invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
-  dependencies:
-    loose-envify "^1.0.0"
-
-invariant@^2.2.0:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.3.tgz#1a827dfde7dcbd7c323f0ca826be8fa7c5e9d688"
   dependencies:
     loose-envify "^1.0.0"
 
@@ -7502,10 +7496,10 @@ react-native-vector-icons@^6.4.2:
     prop-types "^15.6.2"
     yargs "^13.2.2"
 
-react-native-webview@^5.7.2:
-  version "5.7.2"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-5.7.2.tgz#dd9def5001e782cf3aae558d9add50533d26f51d"
-  integrity sha512-sBErRnlNGHRrSTbcrmamly6DVmth3kgoInQujlvypSo0YsaVe/NRQs3wVDt5EZWg0GUwHQr+qACzOf0qeUMFVg==
+react-native-webview@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-6.0.2.tgz#10ea3156e14605f2798288417ce6ee20386510c8"
+  integrity sha512-9f9tFb5IyadK0D7yKWZt3CkFk23l+BDTnUz9a12yWO9gzotQ6dpwItSbc0oGqJVGuOQLpOMsWq+QiWuzKLsLPQ==
   dependencies:
     escape-string-regexp "1.0.5"
     invariant "2.2.4"
