@@ -117,6 +117,8 @@ profile:
       confirmTitle: Experimental features
       confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
       bannerMessage: You are using experimental features that may be incomplete or unstable.
+    pagoPaEnvironment:
+      alertMessage: The application must be restarted for the changes to take effect.
     accountSectionHeader: Account
     appVersion: App Version
     backendVersion: Backend Version
@@ -413,7 +415,7 @@ wallet:
   noTransactions: There are no transactions.
   noNewTransactions: There are no new transactions.
   noneTransactions: There are no transactions
-  noTransactionsInWalletHome: You never used IO neither to pay nor to log in with an user registered on PagoPA, check your messages.
+  noTransactionsInWalletHome: You haven't executed any operation yet.
   noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
   moreInfo: Learn more
   payNotice: Pay notice
@@ -586,6 +588,7 @@ biometric_recognition:
   switchLabel: Enable biometric recognition
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
+  needed_to_disable: Recognition required to disable
 services:
   headerTitle: Services
   title: Available services

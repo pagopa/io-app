@@ -233,6 +233,9 @@ const customVariables = Object.assign(materialVariables, {
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
 
+  // Input
+  inputNormalWeight: "400" as FontWeight,
+
   // Spacer
   spacerHeight: 16,
   spacerLargeHeight: 24,
@@ -247,6 +250,8 @@ const customVariables = Object.assign(materialVariables, {
 
   // Tabs
   tabDefaultBg: "#FFFFFF",
+  tabUnderlineColor: "#F6F6F6",
+  tabUnderlineHeight: 2,
   topTabBarTextColor: "#5C6F82",
   topTabBarActiveTextColor: "#0066CC",
 

@@ -8,7 +8,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-
 import { NavigationEvents } from "react-navigation";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -42,7 +41,6 @@ const keyExtractor = (_: MessageState) => _.meta.id;
 class MessageListComponent extends React.Component<Props> {
   private renderItem = (info: ListRenderItemInfo<MessageState>) => {
     const { meta } = info.item;
-
     const service = this.props.servicesById[meta.sender_service_id];
 
     return (
@@ -76,7 +74,6 @@ class MessageListComponent extends React.Component<Props> {
       paymentByRptId,
       ListEmptyComponent
     } = this.props;
-
     const refreshControl = (
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
     );

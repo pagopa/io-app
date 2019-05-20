@@ -121,6 +121,8 @@ profile:
       confirmTitle: Funzionalità sperimentali
       confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
       bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
+    pagoPaEnvironment:
+      alertMessage: È necessario il riavvio dell'applicazione affinchè le modifiche abbiano effetto.
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
@@ -422,7 +424,7 @@ wallet:
   noTransactions: Non ci sono operazioni.
   noNewTransactions: Non ci sono nuove operazioni.
   noneTransactions: Nessuna operazione
-  noTransactionsInWalletHome: Non hai ancora pagato nulla con IO o utilizzato un utente registrato su PagoPA, controlla i tuoi messaggi.
+  noTransactionsInWalletHome: Non hai ancora fatto nessuna operazione.
   noTransactionsInTransactionsScreen: Non hai ancora utilizzato questo metodo di pagamento per pagare tramite IO o pagoPA. In questa lista vedrai solo le operazioni eseguite con questo metodo.
   moreInfo: Per saperne di più
   payNotice: Paga un avviso
@@ -598,6 +600,7 @@ biometric_recognition:
   switchLabel: Attiva il riconoscimento biometrico
   enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
   enroll_btnLabel: Vai alle impostazioni
+  needed_to_disable: Riconoscimento richiesto per disabilitare
 services:
   headerTitle: Servizi
   title: Elenco dei servizi
