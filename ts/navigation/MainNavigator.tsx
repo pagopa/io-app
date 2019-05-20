@@ -15,6 +15,7 @@ import {
   StackActions
 } from "react-navigation";
 
+import ProfileTabIcon from "../components/ProfileTabIcon";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
@@ -98,7 +99,8 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.PAYMENT_TRANSACTION_SUMMARY,
   ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
   ROUTES.PAYMENT_PICK_PSP,
-  ROUTES.PAYMENT_PICK_PAYMENT_METHOD
+  ROUTES.PAYMENT_PICK_PAYMENT_METHOD,
+  ROUTES.PAYMENT_TRANSACTION_ERROR
 ];
 
 const getTabBarVisibility = (
@@ -164,6 +166,15 @@ const navigation = createBottomTabNavigator(
       tabBarIcon: (options: { tintColor: string | null; focused: boolean }) => {
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
+
+        if (iconName === ROUTE_ICON.PROFILE_NAVIGATOR) {
+          return (
+            <ProfileTabIcon
+              size={variables.iconSize3}
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
         return (
           <IconFont
             name={iconName}

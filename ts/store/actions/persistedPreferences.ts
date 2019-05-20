@@ -1,6 +1,7 @@
 /**
  * Action types and action creator related to persisted preferences
  */
+
 import { Calendar } from "react-native-calendar-events";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
@@ -16,8 +17,19 @@ export const serviceAlertDisplayedOnceSuccess = createStandardAction(
   "SERVICE_ALERT_DISPLAYED_ONCE_SUCCESS"
 )<{ wasServiceAlertDisplayedOnce: boolean }>();
 
+export const preferencesPagoPaTestEnvironmentSetEnabled = createStandardAction(
+  "PREFERENCES_PAGOPA_TEST_ENVIRONMENT_SET_ENABLED"
+)<{ isPagoPATestEnabled: boolean }>();
+
+export const preferencesExperimentalFeaturesSetEnabled = createStandardAction(
+  "PREFERENCES_EXPERIMENTAL_FEATURES_SET_ENABLED"
+)<boolean>();
+
 export type PersistedPreferencesActions = ActionType<
+  // tslint:disable-next-line: max-union-size
   | typeof preferenceFingerprintIsEnabledSaveSuccess
   | typeof preferredCalendarSaveSuccess
   | typeof serviceAlertDisplayedOnceSuccess
+  | typeof preferencesPagoPaTestEnvironmentSetEnabled
+  | typeof preferencesExperimentalFeaturesSetEnabled
 >;
