@@ -247,6 +247,8 @@ const customVariables = Object.assign(materialVariables, {
 
   // Tabs
   tabDefaultBg: "#FFFFFF",
+  tabUnderlineColor: "#F6F6F6",
+  tabUnderlineHeight: 2,
   topTabBarTextColor: "#5C6F82",
   topTabBarActiveTextColor: "#0066CC",
 
