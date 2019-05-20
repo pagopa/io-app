@@ -1,10 +1,7 @@
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
-import TouchID, {
-  AuthenticateConfig,
-  AuthenticationError
-} from "react-native-touch-id";
+import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -23,6 +20,7 @@ import {
 import { ReduxProps } from "./store/actions/types";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
+import { authenticateConfig } from "./utils/biometric";
 
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
@@ -90,16 +88,6 @@ const renderIdentificationByBiometryState = (
 };
 
 const onRequestCloseHandler = () => undefined;
-
-const authenticateConfig: AuthenticateConfig = {
-  title: I18n.t("identification.biometric.popup.title"),
-  sensorDescription: I18n.t("identification.biometric.popup.sensorDescription"),
-  cancelText: I18n.t("global.buttons.cancel"),
-  fallbackLabel: I18n.t("identification.biometric.popup.fallbackLabel"),
-  imageColor: variables.contentPrimaryBackground,
-  imageErrorColor: variables.brandDanger,
-  unifiedErrors: true
-};
 
 const styles = StyleSheet.create({
   identificationMessage: {
