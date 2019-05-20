@@ -233,6 +233,9 @@ const customVariables = Object.assign(materialVariables, {
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
 
+  // Input
+  inputNormalWeight: "400" as FontWeight,
+
   // Spacer
   spacerHeight: 16,
   spacerLargeHeight: 24,
