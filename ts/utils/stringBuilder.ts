@@ -14,10 +14,12 @@ export const centsToAmount = (cents: number): number =>
   cents / Math.pow(10, DISPLAYED_DIGITS);
 
 export const formatNumberAmount = (amount: number): string =>
-  `${I18n.toNumber(amount, {
+  I18n.toCurrency(amount, {
     precision: DISPLAYED_DIGITS,
-    separator: I18n.t("global.localization.decimalSeparator")
-  })} €`;
+    separator: I18n.t("global.localization.decimalSeparator"),
+    unit: "€",
+    format: "%n %u"
+  });
 
 export const buildExpirationDate = (w: Wallet): string =>
   `${w.creditCard.expireMonth}/${w.creditCard.expireYear}`;
