@@ -14,17 +14,15 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
 
-import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 
 import I18n from "../../../i18n";
@@ -46,6 +44,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentTransactionErrorScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
@@ -67,7 +66,7 @@ export type NavigationParams = Readonly<{
 }>;
 
 type ReduxMergedProps = Readonly<{
-  onRetry?: () => void;
+  onRetry: () => void;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -77,7 +76,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReduxMergedProps &
   OwnProps;
 
-const formatMdRecipient = (e: EnteBeneficiario): string => {
+const formatTextRecipient = (e: EnteBeneficiario): string => {
   const denomUnitOper = fromNullable(e.denomUnitOperBeneficiario)
     .map(d => ` - ${d}`)
     .getOrElse("");
@@ -95,21 +94,10 @@ const formatMdRecipient = (e: EnteBeneficiario): string => {
     .map(p => `(${p})`)
     .getOrElse("");
 
-  return `**${I18n.t("wallet.firstTransactionSummary.entity")}**\n
-${e.denominazioneBeneficiario}${denomUnitOper}\n
+  return `${e.denominazioneBeneficiario}${denomUnitOper}\n
 ${address}${civicNumber}\n
 ${cap}${city}${province}`;
 };
-
-const formatMdPaymentReason = (p: string): string =>
-  `**${I18n.t("wallet.firstTransactionSummary.object")}**\n
-${cleanTransactionDescription(p)}`;
-
-const formatMdInfoRpt = (r: RptId): string =>
-  `**${I18n.t("payment.IUV")}:** ${PaymentNoticeNumberFromString.encode(
-    r.paymentNoticeNumber
-  )}\n
-**${I18n.t("payment.recipientFiscalCode")}:** ${r.organizationFiscalCode}`;
 
 class TransactionSummaryScreen extends React.Component<Props> {
   public componentDidMount() {
@@ -128,6 +116,9 @@ class TransactionSummaryScreen extends React.Component<Props> {
       error
         .filter(_ => _ === "PAYMENT_DUPLICATED")
         .map(_ => this.props.onDuplicatedPayment());
+      if (error.isSome()) {
+        this.props.navigateToPaymentTransactionError(error, this.props.onRetry);
+      }
     }
   }
 
@@ -218,23 +209,38 @@ class TransactionSummaryScreen extends React.Component<Props> {
           )}
 
           <View content={true}>
-            <Markdown>
+            <Text bold={true}>
+              {I18n.t("wallet.firstTransactionSummary.entity")}
+            </Text>
+            <Text>
               {pot
                 .toOption(potVerifica)
                 .mapNullable(_ => _.enteBeneficiario)
-                .map(formatMdRecipient)
-                .getOrElse("...")}
-            </Markdown>
+                .map(formatTextRecipient)
+                .getOrElse("...")
+                .trim()}
+            </Text>
             <View spacer={true} />
-            <Markdown>
+            <Text bold={true}>
+              {I18n.t("wallet.firstTransactionSummary.object")}
+            </Text>
+            <Text>
               {pot
                 .toOption(potVerifica)
                 .mapNullable(_ => _.causaleVersamento)
-                .map(formatMdPaymentReason)
                 .getOrElse("...")}
-            </Markdown>
+            </Text>
             <View spacer={true} />
-            <Markdown>{formatMdInfoRpt(rptId)}</Markdown>
+            <Text>
+              <Text bold={true}>{`${I18n.t("payment.IUV")}: `}</Text>
+              {PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)}
+            </Text>
+            <Text>
+              <Text bold={true}>{`${I18n.t(
+                "payment.recipientFiscalCode"
+              )}: `}</Text>
+              {rptId.organizationFiscalCode}
+            </Text>
             <View spacer={true} />
           </View>
         </Content>
@@ -312,6 +318,19 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const dispatchPaymentVerificaRequest = () =>
     dispatch(paymentVerifica.request(rptId));
 
+  const onCancel = () => {
+    // on cancel:
+    // navigate to the wallet home
+    dispatch(navigateToWalletHome());
+    // delete the active payment from PagoPA
+    dispatch(runDeleteActivePaymentSaga());
+    // reset the payment state
+    dispatch(paymentInitializeState());
+  };
+
+  // navigateToMessageDetail: (messageId: string) =>
+  // dispatch(navigateToMessageDetailScreenAction({ messageId }))
+
   const startOrResumePayment = (
     verifica: PaymentRequestsGetResponse,
     maybeFavoriteWallet: ReturnType<
@@ -346,23 +365,34 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       })
     );
 
+  const navigateToPaymentTransactionError = (
+    error: Option<
+      PayloadForAction<
+        | typeof paymentVerifica["failure"]
+        | typeof paymentAttiva["failure"]
+        | typeof paymentIdPolling["failure"]
+      >
+    >,
+    onRetry: () => void
+  ) =>
+    dispatch(
+      navigateToPaymentTransactionErrorScreen({
+        error,
+        onCancel,
+        onRetry
+      })
+    );
+
   return {
     dispatchPaymentVerificaRequest,
+    navigateToPaymentTransactionError,
     startOrResumePayment,
     goBack: () => {
       props.navigation.goBack();
       // reset the payment state
       dispatch(paymentInitializeState());
     },
-    onCancel: () => {
-      // on cancel:
-      // navigate to the wallet home
-      dispatch(navigateToWalletHome());
-      // delete the active payment from PagoPA
-      dispatch(runDeleteActivePaymentSaga());
-      // reset the payment state
-      dispatch(paymentInitializeState());
-    },
+    onCancel,
     onRetryWithPotVerifica: (
       potVerifica: ReturnType<typeof mapStateToProps>["potVerifica"],
       maybeFavoriteWallet: ReturnType<
@@ -388,68 +418,26 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
 const mergeProps = (
   stateProps: ReturnType<typeof mapStateToProps>,
   dispatchProps: ReturnType<typeof mapDispatchToProps>,
-  ownProps: {}
+  ownProps: OwnProps
 ) => {
-  // we allow to retry the operation on a temporary unavailability of the remote
-  // system, a timeout while waiting for the payment ID and for generic errors
-  // (e.g. timeouts)
-  const canRetry = stateProps.error
-    .filter(
-      _ =>
-        _ === "PAYMENT_UNAVAILABLE" ||
-        _ === "PAYMENT_ID_TIMEOUT" ||
-        _ === undefined
-    )
-    .isSome();
-  const baseProps = {
+  const onRetry = () => {
+    dispatchProps.onRetryWithPotVerifica(
+      stateProps.potVerifica,
+      stateProps.maybeFavoriteWallet
+    );
+  };
+  return {
     ...stateProps,
     ...dispatchProps,
-    ...ownProps
+    ...ownProps,
+    ...{
+      onRetry
+    }
   };
-  return canRetry
-    ? {
-        ...baseProps,
-        onRetry: () =>
-          dispatchProps.onRetryWithPotVerifica(
-            stateProps.potVerifica,
-            stateProps.maybeFavoriteWallet
-          )
-      }
-    : baseProps;
-};
-
-const mapErrorCodeToMessage = (
-  error: ReturnType<typeof mapStateToProps>["error"]["_A"]
-): string => {
-  switch (error) {
-    case "PAYMENT_DUPLICATED":
-      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
-    case "INVALID_AMOUNT":
-      return I18n.t("wallet.errors.INVALID_AMOUNT");
-    case "PAYMENT_ONGOING":
-      return I18n.t("wallet.errors.PAYMENT_ONGOING");
-    case "PAYMENT_EXPIRED":
-      return I18n.t("wallet.errors.PAYMENT_EXPIRED");
-    case "PAYMENT_UNAVAILABLE":
-      return I18n.t("wallet.errors.PAYMENT_UNAVAILABLE");
-    case "PAYMENT_UNKNOWN":
-      return I18n.t("wallet.errors.PAYMENT_UNKNOWN");
-    case "DOMAIN_UNKNOWN":
-      return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
-    case "PAYMENT_ID_TIMEOUT":
-      return I18n.t("wallet.errors.MISSING_PAYMENT_ID");
-    default:
-      return I18n.t("wallet.errors.GENERIC_ERROR");
-  }
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(
-  withErrorModal(
-    withLoadingSpinner(TransactionSummaryScreen),
-    mapErrorCodeToMessage
-  )
-);
+)(withLoadingSpinner(TransactionSummaryScreen));
