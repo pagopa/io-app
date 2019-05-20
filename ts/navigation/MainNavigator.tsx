@@ -14,7 +14,7 @@ import {
   NavigationState,
   StackActions
 } from "react-navigation";
-
+import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
@@ -25,7 +25,6 @@ import PreferencesNavigator from "./PreferencesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import WalletNavigator from "./WalletNavigator";
-
 type Routes = keyof typeof ROUTES;
 
 type RouteLabelMap = { [key in Routes]?: string };
@@ -113,7 +112,6 @@ const getTabBarVisibility = (
   if (NoTabBarRoutes.indexOf(routeName) !== -1) {
     return false;
   }
-
   return true;
 };
 
@@ -166,7 +164,13 @@ const navigation = createBottomTabNavigator(
       tabBarIcon: (options: { tintColor: string | null; focused: boolean }) => {
         const { routeName } = nav.state;
         const iconName: string = getIcon(routeName);
-
+        if (routeName === ROUTES.MESSAGES_NAVIGATOR) {
+          return (
+            <MessagesTabIcon
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
         if (iconName === ROUTE_ICON.PROFILE_NAVIGATOR) {
           return (
             <ProfileTabIcon
@@ -174,14 +178,15 @@ const navigation = createBottomTabNavigator(
               color={options.tintColor === null ? undefined : options.tintColor}
             />
           );
+        } else {
+          return (
+            <IconFont
+              name={iconName}
+              size={variables.iconSize3}
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
         }
-        return (
-          <IconFont
-            name={iconName}
-            size={variables.iconSize3}
-            color={options.tintColor === null ? undefined : options.tintColor}
-          />
-        );
       },
       tabBarOnPress: options => {
         if (options.navigation.state.index > 0) {
