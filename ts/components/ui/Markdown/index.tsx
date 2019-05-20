@@ -88,13 +88,8 @@ ul, ol {
 }
 
 a {
-  border-radius: ${customVariables.borderRadiusBase}px;
-  font-weight: 600;
-  padding: 0 8px;
-  background-color: ${customVariables.textLinkColor};
-  box-shadow: inset 0 1px 0 1px ${customVariables.colorWhite};
-  color: ${customVariables.colorWhite};
-  text-decoration: none;
+  font-weight: ${customVariables.textLinkWeight};
+  color: ${customVariables.textMessageDetailLinkColor};
 }
 
 div.custom-block.io-demo-block {
