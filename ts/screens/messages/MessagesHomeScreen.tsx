@@ -176,7 +176,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           <Tab heading={I18n.t("messages.tab.deadlines")}>
             <MessagesDeadlines
               messagesState={lexicallyOrderedMessagesState}
-              onRefresh={refreshMessages}
               navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>

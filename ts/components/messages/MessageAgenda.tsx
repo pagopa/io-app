@@ -2,12 +2,11 @@ import { format } from "date-fns";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
-  NativeScrollEvent,
-  NativeSyntheticEvent,
   Platform,
   SectionList,
   SectionListData,
   SectionListRenderItem,
+  SectionListScrollParams,
   StyleSheet
 } from "react-native";
 
@@ -19,6 +18,7 @@ import MessageAgendaItem from "./MessageAgendaItem";
 
 const styles = StyleSheet.create({
   listHeaderWrapper: {
+    height: 70,
     paddingHorizontal: customVariables.contentPadding,
     paddingTop: 24,
     paddingBottom: 8
@@ -30,17 +30,23 @@ const styles = StyleSheet.create({
 
   sectionHeaderWrapper: {
     height: 48,
-    paddingTop: 8 * 2.5,
+    paddingTop: 19,
     paddingHorizontal: customVariables.contentPadding,
     backgroundColor: customVariables.colorWhite
   },
   sectionHeaderText: {
-    paddingBottom: 8 * 1.5,
+    paddingBottom: 9,
     fontSize: 18,
     lineHeight: 20,
     color: customVariables.brandDarkestGray,
     borderBottomWidth: 1,
     borderBottomColor: customVariables.brandLightGray
+  },
+
+  itemEmptyWrapper: {
+    height: 100,
+    paddingHorizontal: customVariables.contentPadding,
+    justifyContent: "center"
   },
 
   itemSeparator: {
@@ -50,17 +56,17 @@ const styles = StyleSheet.create({
   }
 });
 
-const keyExtractor = (_: MessageWithContentAndDueDatePO) => _.id;
-
-const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
-
 // Used to calculate the cell item layouts.
 const SECTION_HEADER_HEIGHT = 50;
 const ITEM_SEPARATOR_HEIGHT = 1;
 const ITEM_HEIGHT = 100;
 
+export type FakeItem = {
+  fake: true;
+};
+
 export type MessageAgendaSection = SectionListData<
-  MessageWithContentAndDueDatePO
+  MessageWithContentAndDueDatePO | FakeItem
 >;
 
 // tslint:disable-next-line: readonly-array
@@ -74,13 +80,13 @@ export type ItemLayout = {
 
 type SelectedSectionListProps = Pick<
   ComponentProps<SectionList<MessageAgendaSection>>,
-  "refreshing" | "onRefresh" | "onContentSizeChange"
+  "refreshing" | "onContentSizeChange"
 >;
 
 type OwnProps = {
   sections: Sections;
   onPressItem: (id: string) => void;
-  onPastDataRequest: () => void;
+  onMoreDataRequest: () => void;
 };
 
 type Props = OwnProps & SelectedSectionListProps;
@@ -90,6 +96,23 @@ type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
   isRefreshButtonVisible: boolean;
 };
+
+const isFakeItem = (item: any): item is FakeItem => {
+  return item.fake;
+};
+
+const keyExtractor = (
+  _: MessageWithContentAndDueDatePO | FakeItem,
+  index: number
+) => (isFakeItem(_) ? `item-${index}` : _.id);
+
+const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
+
+const FakeItemComponent = (
+  <View style={styles.itemEmptyWrapper}>
+    <Text>{I18n.t("reminders.emptyMonth")}</Text>
+  </View>
+);
 
 /**
  * Generate item layouts from sections.
@@ -102,11 +125,12 @@ type State = {
  */
 const generateItemLayouts = (sections: Sections) => {
   // tslint:disable-next-line: no-let
-  let offset = 0;
+  let offset = 70;
   // tslint:disable-next-line: no-let
   let index = 0;
   // tslint:disable-next-line: readonly-array
   const itemLayouts: ItemLayout[] = [];
+
   sections.forEach(section => {
     // Push the info about the SECTION_HEADER cell.
     itemLayouts.push({
@@ -120,17 +144,17 @@ const generateItemLayouts = (sections: Sections) => {
 
     section.data.forEach((_, dataIndex, data) => {
       // Push the info about the ITEM + ITEM_SEPARATOR cell.
-      const heightAndOffset =
-        dataIndex === data.length - 1
-          ? ITEM_HEIGHT
-          : ITEM_HEIGHT + ITEM_SEPARATOR_HEIGHT;
+      const isLastItem = dataIndex === data.length - 1;
+      const height = isLastItem
+        ? ITEM_HEIGHT
+        : ITEM_HEIGHT + ITEM_SEPARATOR_HEIGHT;
       itemLayouts.push({
-        length: heightAndOffset,
+        length: height,
         offset,
         index
       });
 
-      offset += heightAndOffset;
+      offset += height;
       index++;
     });
 
@@ -143,7 +167,6 @@ const generateItemLayouts = (sections: Sections) => {
       index
     });
 
-    offset += 0;
     index++;
   });
 
@@ -155,7 +178,6 @@ const generateItemLayouts = (sections: Sections) => {
  */
 class MessageAgenda extends React.PureComponent<Props, State> {
   private sectionListRef = React.createRef<any>();
-  private canShowRefreshButton = false;
 
   constructor(props: Props) {
     super(props);
@@ -164,33 +186,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       isRefreshButtonVisible: false
     };
   }
-
-  private handleScrollBeginDrag = (
-    event: NativeSyntheticEvent<NativeScrollEvent>
-  ) => {
-    this.canShowRefreshButton = true;
-  };
-
-  private handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    this.canShowRefreshButton = false;
-    const { isRefreshButtonVisible } = this.state;
-
-    if (
-      isRefreshButtonVisible &&
-      event.nativeEvent.velocity &&
-      event.nativeEvent.velocity.y > 0
-    ) {
-      this.setState({
-        isRefreshButtonVisible: false
-      });
-    }
-  };
-
-  private handleMomentumScrollBegin = () => {
-    if (this.canShowRefreshButton) {
-      this.setState({ isRefreshButtonVisible: true });
-    }
-  };
 
   public static getDerivedStateFromProps(
     nextProps: Props,
@@ -209,11 +204,16 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   private renderListHeader = () => {
-    const { isRefreshButtonVisible } = this.state;
+    const { onMoreDataRequest } = this.props;
 
     return (
       <View style={styles.listHeaderWrapper}>
-        <Button block={true} primary={true} small={true}>
+        <Button
+          block={true}
+          primary={true}
+          small={true}
+          onPress={onMoreDataRequest}
+        >
           <Text style={styles.listHeaderButtonText}>
             carica le scadenze del periodo precedente
           </Text>
@@ -223,19 +223,32 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   };
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
+    const isFake = info.section.fake;
     return (
       <View style={styles.sectionHeaderWrapper}>
         <Text style={styles.sectionHeaderText}>
-          {format(info.section.title, I18n.t("global.dateFormats.dayAndMonth"))}
+          {format(
+            info.section.title,
+            I18n.t(
+              isFake
+                ? "global.dateFormats.month"
+                : "global.dateFormats.dayAndMonth"
+            )
+          )}
         </Text>
       </View>
     );
   };
 
   private renderItem: SectionListRenderItem<
-    MessageWithContentAndDueDatePO
+    MessageWithContentAndDueDatePO | FakeItem
   > = info => {
     const message = info.item;
+
+    if (isFakeItem(message)) {
+      return FakeItemComponent;
+    }
+
     return (
       <MessageAgendaItem
         id={message.id}
@@ -246,45 +259,33 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     );
   };
 
-  private getItemLayout = (_: Sections | null, index: number) =>
-    this.state.itemLayouts[index];
+  private getItemLayout = (_: Sections | null, index: number) => {
+    return this.state.itemLayouts[index];
+  };
 
   public render() {
-    const { sections, refreshing, onRefresh, onContentSizeChange } = this.props;
+    const { sections, refreshing, onContentSizeChange } = this.props;
     return (
-      <View>
-        <SectionList
-          ref={this.sectionListRef}
-          scrollEventThrottle={16}
-          onScrollBeginDrag={this.handleScrollBeginDrag}
-          onScroll={this.handleOnScroll}
-          onMomentumScrollBegin={this.handleMomentumScrollBegin}
-          // Forwarded props
-          sections={sections}
-          refreshing={refreshing}
-          onContentSizeChange={onContentSizeChange}
-          stickySectionHeadersEnabled={true}
-          keyExtractor={keyExtractor}
-          ItemSeparatorComponent={ItemSeparatorComponent}
-          renderSectionHeader={this.renderSectionHeader}
-          renderItem={this.renderItem}
-          getItemLayout={this.getItemLayout}
-          overScrollMode="always"
-          ListHeaderComponent={this.renderListHeader}
-        />
-      </View>
+      <SectionList
+        ref={this.sectionListRef}
+        // Forwarded props
+        ListHeaderComponent={this.renderListHeader}
+        renderSectionHeader={this.renderSectionHeader}
+        renderItem={this.renderItem}
+        ItemSeparatorComponent={ItemSeparatorComponent}
+        sections={sections}
+        refreshing={refreshing}
+        onContentSizeChange={onContentSizeChange}
+        stickySectionHeadersEnabled={true}
+        keyExtractor={keyExtractor}
+        getItemLayout={this.getItemLayout}
+      />
     );
   }
 
-  public scrollToSectionsIndex = (sectionsIndex: number) => {
+  public scrollToLocation = (params: SectionListScrollParams) => {
     if (this.sectionListRef.current !== null) {
-      this.sectionListRef.current.scrollToLocation({
-        sectionIndex: sectionsIndex,
-        itemIndex: 0,
-        viewOffset: 50,
-        viewPosition: 1,
-        animated: true
-      });
+      this.sectionListRef.current.scrollToLocation(params);
     }
   };
 }

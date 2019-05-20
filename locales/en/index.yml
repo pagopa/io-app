@@ -3,6 +3,7 @@ global:
   localization:
     decimalSeparator: "."
   dateFormats:
+    month: "MMMM"
     dayAndMonth: "dddd D MMMM"
   jserror:
     title: Unexpected error occurred
@@ -556,3 +557,5 @@ identification:
       title: Identification required
       sensorDescription: Touch sensor
       fallbackLabel: Use the PIN
+reminders:
+  emptyMonth: No reminders for this month
