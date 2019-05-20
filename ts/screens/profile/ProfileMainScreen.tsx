@@ -24,6 +24,7 @@ import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBan
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
+import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
@@ -146,6 +147,15 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     } else {
       this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
     }
+  };
+
+  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
+    this.props.setPagoPATestEnabled(enabled);
+    this.props.showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
   };
 
   private confirmResetAlert = () =>
@@ -278,7 +288,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
                 <Switch
                   value={this.props.isPagoPATestEnabled}
-                  onValueChange={this.props.setPagoPATestEnabled}
+                  onValueChange={this.onPagoPAEnvironmentToggle}
                 />
               </View>
             </ListItem>
