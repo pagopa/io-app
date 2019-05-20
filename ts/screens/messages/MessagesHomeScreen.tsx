@@ -106,6 +106,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   public componentDidMount() {
     this.props.refreshMessages();
   }
+
   public render() {
     const { searchText } = this.state;
 
