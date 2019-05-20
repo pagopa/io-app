@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
     alignItems: "flex-start"
+  },
+  itemNoLeftMargin: {
+    marginLeft: 0
   }
 });
 
@@ -155,7 +158,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             */}
             <Form style={styles.form}>
               <Item
-                style={{ marginLeft: 0 }}
+                style={styles.itemNoLeftMargin}
                 floatingLabel={true}
                 error={this.state.paymentNoticeNumber
                   .map(isLeft)
@@ -178,7 +181,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 />
               </Item>
               <Item
-                style={{ marginLeft: 0 }}
+                style={styles.itemNoLeftMargin}
                 floatingLabel={true}
                 error={this.state.organizationFiscalCode
                   .map(isLeft)
@@ -201,7 +204,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 />
               </Item>
               <Item
-                style={{ marginLeft: 0 }}
+                style={styles.itemNoLeftMargin}
                 floatingLabel={true}
                 error={this.state.delocalizedAmount
                   .map(isLeft)
