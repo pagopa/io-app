@@ -12,6 +12,7 @@ import messagesAllIdsReducer, {
   messagesAllIdsSelector,
   MessagesAllIdsState
 } from "./messagesAllIds";
+
 import messagesByIdReducer, {
   messagesStateByIdSelector,
   MessageStateById
@@ -34,7 +35,7 @@ const reducer = combineReducers<MessagesState, Action>({
 
 // Selectors
 
-/**
+/**-
  * Returns array of messages IDs inversely lexically ordered.
  */
 export const lexicallyOrderedMessagesIds = createSelector(
@@ -57,6 +58,17 @@ export const lexicallyOrderedMessagesStateSelector = createSelector(
     pot.map(potIds, ids =>
       ids.map(messageId => messageStateById[messageId]).filter(isDefined)
     )
+);
+
+export const messagesUnreadSelector = createSelector(
+  lexicallyOrderedMessagesStateSelector,
+  potMessagesState =>
+    pot.getOrElse(
+      pot.map(potMessagesState, _ =>
+        _.filter(messageState => !messageState.isRead)
+      ),
+      []
+    ).length
 );
 
 export default reducer;

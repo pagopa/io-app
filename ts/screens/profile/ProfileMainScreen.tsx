@@ -24,6 +24,7 @@ import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBan
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
+import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
@@ -34,7 +35,10 @@ import {
   sessionExpired
 } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
-import { preferencesExperimentalFeaturesSetEnabled } from "../../store/actions/persistedPreferences";
+import {
+  preferencesExperimentalFeaturesSetEnabled,
+  preferencesPagoPaTestEnvironmentSetEnabled
+} from "../../store/actions/persistedPreferences";
 import { startPinReset } from "../../store/actions/pinset";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -43,6 +47,7 @@ import {
   isLoggedInWithSessionInfo
 } from "../../store/reducers/authentication";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
@@ -142,6 +147,15 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     } else {
       this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
     }
+  };
+
+  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
+    this.props.setPagoPATestEnabled(enabled);
+    this.props.showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
   };
 
   private confirmResetAlert = () =>
@@ -265,7 +279,23 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
             <ListItem>
               <View style={styles.debugModeSection}>
-                <Text>Debug mode</Text>
+                <View>
+                  <Text style={styles.itemLeftText}>
+                    {I18n.t("profile.main.pagoPaEnv")}
+                  </Text>
+                  <Text>{I18n.t("profile.main.pagoPAEnvAlert")}</Text>
+                </View>
+
+                <Switch
+                  value={this.props.isPagoPATestEnabled}
+                  onValueChange={this.onPagoPAEnvironmentToggle}
+                />
+              </View>
+            </ListItem>
+
+            <ListItem>
+              <View style={styles.debugModeSection}>
+                <Text>{I18n.t("profile.main.debugMode")}</Text>
                 <Switch
                   value={this.props.isDebugModeEnabled}
                   onValueChange={this.props.setDebugModeEnabled}
@@ -409,6 +439,7 @@ const mapStateToProps = (state: GlobalState) => ({
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
   isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isExperimentalFeaturesEnabled:
     state.persistedPreferences.isExperimentalFeaturesEnabled
 });
@@ -420,6 +451,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
+  setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
+    dispatch(
+      preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
+    ),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
     dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
 });

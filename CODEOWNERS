@@ -1,9 +1,5 @@
 # see https://help.github.com/en/articles/about-code-owners#example-of-a-codeowners-file
 
-* @cloudify
+* @cloudify @fpersico @undermaken
 
-/ts/ @cloudify @fpersico @undermaken
-/ios/ @cloudify @fpersico @undermaken
-/android/ @cloudify @fpersico @undermaken
-
-/locales/ @cloudify @matteodesanti
+/locales/ @cloudify @matteodesanti @fpersico @undermaken
