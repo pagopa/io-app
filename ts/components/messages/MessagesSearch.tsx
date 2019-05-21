@@ -9,7 +9,7 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { messageContainsText } from "../../utils/messages";
 import { serviceContainsText } from "../../utils/services";
-import MessageListComponent from "./MessageListComponent";
+import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -24,8 +24,8 @@ type OwnProps = {
 };
 
 type Props = Pick<
-  ComponentProps<typeof MessageListComponent>,
-  "servicesById" | "paymentByRptId" | "onRefresh"
+  ComponentProps<typeof MessageList>,
+  "servicesById" | "paymentsByRptId" | "onRefresh"
 > &
   OwnProps;
 
@@ -146,9 +146,9 @@ class MessagesSearch extends React.PureComponent<Props, State> {
 
     return (
       <View style={styles.listWrapper}>
-        <MessageListComponent
+        <MessageList
           {...this.props}
-          messages={filteredMessageStates}
+          messageStates={filteredMessageStates}
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnPressItem}
           refreshing={isLoading || isFiltering}
