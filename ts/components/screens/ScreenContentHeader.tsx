@@ -31,23 +31,21 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
 
     return (
       <React.Fragment>
-        {banner && (
-          <React.Fragment>
-            {this.props.banner}
-            <View spacer={true} />
-          </React.Fragment>
-        )}
+        {banner && <React.Fragment>{this.props.banner}</React.Fragment>}
+        <View spacer={true} />
         <ScreenHeader
           heading={
             <H1 style={styles.screenHeaderHeading}>{this.props.title}</H1>
           }
           icon={this.props.icon}
         />
-        {subtitle && (
+        {subtitle ? (
           <View style={styles.subheaderContainer}>
             <Text>{subtitle}</Text>
             <View spacer={true} large={true} />
           </View>
+        ) : (
+          <View spacer={true} />
         )}
       </React.Fragment>
     );
