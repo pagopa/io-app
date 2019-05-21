@@ -13,13 +13,21 @@ import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
+import {
+  navigateToTransactionDetailsScreen,
+  navigateToWalletHome,
+  navigateToWalletList
+} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { setFavouriteWalletRequest } from "../../store/actions/wallet/wallets";
+import {
+  deleteWalletRequest,
+  setFavouriteWalletRequest
+} from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import { Transaction, Wallet } from "../../types/pagopa";
+import { showToast } from "../../utils/showToast";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -72,6 +80,7 @@ class TransactionsScreen extends React.Component<Props> {
                 willBeFavorite ? selectedWallet.idWallet : undefined
               )
             }
+            onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
           />
         }
       >
@@ -107,7 +116,24 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     ),
   setFavoriteWallet: (walletId?: number) =>
-    dispatch(setFavouriteWalletRequest(walletId))
+    dispatch(setFavouriteWalletRequest(walletId)),
+  deleteWallet: (walletId: number) =>
+    dispatch(
+      deleteWalletRequest({
+        walletId,
+        onSuccess: action => {
+          showToast(I18n.t("wallet.delete.successful"), "success");
+          if (action.payload.length > 0) {
+            dispatch(navigateToWalletList());
+          } else {
+            dispatch(navigateToWalletHome());
+          }
+        },
+        onFailure: _ => {
+          showToast(I18n.t("wallet.delete.failed"), "danger");
+        }
+      })
+    )
 });
 
 export default connect(

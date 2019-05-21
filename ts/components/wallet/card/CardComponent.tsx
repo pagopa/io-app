@@ -78,7 +78,10 @@ export default class CardComponent extends React.Component<Props> {
         {
           text: I18n.t("global.buttons.ok"),
           style: "destructive",
-          onPress: this.props.type === "Full" ? this.props.onDelete : undefined
+          onPress:
+            this.props.type === "Full" || this.props.type === "Header"
+              ? this.props.onDelete
+              : undefined
         }
       ],
       { cancelable: false }
