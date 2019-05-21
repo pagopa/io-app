@@ -233,6 +233,9 @@ const customVariables = Object.assign(materialVariables, {
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
 
+  // Input
+  inputNormalWeight: "400" as FontWeight,
+
   // Spacer
   spacerHeight: 16,
   spacerLargeHeight: 24,
@@ -254,6 +257,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // Animations
   shineColor: "#C1CCD6",
+  activeOpacity: 0.25,
 
   // Spacing
   spacingBase: 8
