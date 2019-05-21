@@ -17,6 +17,7 @@ interface OwnProps {
   contextualHelp?: ContextualHelpProps;
   primary?: boolean;
   headerBody?: React.ReactNode;
+  isSearchAvailable?: boolean;
 }
 
 type Props = OwnProps;
@@ -47,7 +48,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       goBack,
       headerTitle,
       contextualHelp,
-      headerBody
+      headerBody,
+      isSearchAvailable
     } = this.props;
     return (
       <Container>
@@ -56,6 +58,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           goBack={goBack}
           headerTitle={headerTitle}
           onShowHelp={contextualHelp ? this.showHelp : undefined}
+          isSearchAvailable={isSearchAvailable ? isSearchAvailable : undefined}
           body={headerBody}
         />
         {this.props.children}

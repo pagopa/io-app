@@ -8,6 +8,7 @@ import { TopHeader } from "./TopHeader";
 interface OwnProps {
   headerTitle?: string;
   hideHeader?: boolean;
+  isSearchAvailable?: boolean;
 }
 
 type Props = OwnProps &
@@ -32,7 +33,8 @@ class TopScreenComponent extends React.PureComponent<Props> {
       contextualHelp,
       banner,
       headerBody,
-      hideHeader
+      hideHeader,
+      isSearchAvailable
     } = this.props;
     return (
       <BaseScreenComponent
@@ -40,6 +42,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}
         headerBody={headerBody}
+        isSearchAvailable={isSearchAvailable}
       >
         {!hideHeader && (
           <TopHeader

@@ -124,30 +124,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
         icon={require("../../../img/icons/message-icon.png")}
-        hideHeader={searchText.isSome()}
-        headerBody={
-          searchText.isSome() ? (
-            <Item>
-              <Input
-                placeholder={I18n.t("global.actions.search")}
-                value={searchText.value}
-                onChangeText={this.onSearchTextChange}
-                autoFocus={true}
-              />
-              <Icon name="cross" onPress={this.onSearchDisable} />
-            </Item>
-          ) : (
-            <Button
-              onPress={this.onSearchEnable}
-              transparent={true}
-              style={styles.ioSearch}
-              accessible={true}
-              accessibilityLabel={I18n.t("global.actions.search")}
-            >
-              <IconFont name="io-search" />
-            </Button>
-          )
-        }
+        isSearchAvailable={true}
       >
         {searchText.isSome() ? this.renderSearch() : this.renderTabs()}
       </TopScreenComponent>

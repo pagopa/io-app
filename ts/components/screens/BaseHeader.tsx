@@ -9,6 +9,7 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
+import SearchButton from "../SearchButton";
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -27,13 +28,20 @@ interface OwnProps {
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
   body?: React.ReactNode;
+  isSearchAvailable?: boolean;
 }
 
 type Props = OwnProps;
 
 export class BaseHeader extends React.PureComponent<Props> {
   public render() {
-    const { goBack, headerTitle, onShowHelp, body } = this.props;
+    const {
+      goBack,
+      headerTitle,
+      onShowHelp,
+      body,
+      isSearchAvailable
+    } = this.props;
     return (
       <AppHeader primary={this.props.primary}>
         {goBack && (
@@ -71,6 +79,7 @@ export class BaseHeader extends React.PureComponent<Props> {
               <IconFont name="io-question" />
             </Button>
           )}
+          {isSearchAvailable && <SearchButton />}
         </Right>
       </AppHeader>
     );
