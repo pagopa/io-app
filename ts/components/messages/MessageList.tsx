@@ -9,6 +9,7 @@ import {
   RefreshControl,
   StyleSheet
 } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
@@ -174,6 +175,14 @@ const MessageListItemPlaceholder = (
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 class MessageList extends React.Component<Props, State> {
+  private flatListRef = React.createRef<FlatList<MessageState>>();
+
+  private scrollToTop = () => {
+    if (this.flatListRef.current && this.props.messageStates.length > 0) {
+      this.flatListRef.current.scrollToIndex({ animated: false, index: 0 });
+    }
+  };
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -290,18 +299,22 @@ class MessageList extends React.Component<Props, State> {
     );
 
     return (
-      <FlatList
-        scrollEnabled={true}
-        data={messageStates}
-        extraData={{ servicesById, paymentsByRptId }}
-        keyExtractor={keyExtractor}
-        refreshControl={refreshControl}
-        initialNumToRender={10}
-        ItemSeparatorComponent={ItemSeparatorComponent}
-        ListEmptyComponent={ListEmptyComponent}
-        renderItem={this.renderItem}
-        getItemLayout={this.getItemLayout}
-      />
+      <React.Fragment>
+        <NavigationEvents onWillFocus={this.scrollToTop} />
+        <FlatList
+          ref={this.flatListRef}
+          scrollEnabled={true}
+          data={messageStates}
+          extraData={{ servicesById, paymentsByRptId }}
+          keyExtractor={keyExtractor}
+          refreshControl={refreshControl}
+          initialNumToRender={10}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+          ListEmptyComponent={ListEmptyComponent}
+          renderItem={this.renderItem}
+          getItemLayout={this.getItemLayout}
+        />
+      </React.Fragment>
     );
   }
 }
