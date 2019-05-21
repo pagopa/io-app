@@ -86,8 +86,12 @@ export type FakeItem = {
   fake: true;
 };
 
+export type MessageWithContentAndDueDatePOAndReadStatus = MessageWithContentAndDueDatePO & {
+  isRead: boolean;
+};
+
 export type MessageAgendaSection = SectionListData<
-  MessageWithContentAndDueDatePO | FakeItem
+  MessageWithContentAndDueDatePOAndReadStatus | FakeItem
 >;
 
 // tslint:disable-next-line: readonly-array
@@ -125,7 +129,7 @@ const isFakeItem = (item: any): item is FakeItem => {
 };
 
 const keyExtractor = (
-  _: MessageWithContentAndDueDatePO | FakeItem,
+  _: MessageWithContentAndDueDatePOAndReadStatus | FakeItem,
   index: number
 ) => (isFakeItem(_) ? `item-${index}` : _.id);
 
@@ -281,7 +285,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   };
 
   private renderItem: SectionListRenderItem<
-    MessageWithContentAndDueDatePO | FakeItem
+    MessageWithContentAndDueDatePOAndReadStatus | FakeItem
   > = info => {
     if (isFakeItem(info.item)) {
       return FakeItemComponent;
@@ -290,9 +294,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     const message = info.item;
     const { paymentsByRptId, onPressItem, onLongPressItem } = this.props;
 
-    if (isFakeItem(message)) {
-      return FakeItemComponent;
-    }
+    const isRead = message.isRead;
+
     const potService = this.props.servicesById[message.sender_service_id];
 
     const service =
@@ -316,7 +319,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
     return (
       <MessageListItem
-        isRead={true}
+        isRead={isRead}
         message={message}
         service={service}
         payment={payment}

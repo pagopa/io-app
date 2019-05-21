@@ -16,12 +16,13 @@ import { SectionListScrollParams, StyleSheet } from "react-native";
 
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
-import {
-  isMessageWithContentAndDueDatePO,
-  MessageWithContentAndDueDatePO
-} from "../../types/MessageWithContentAndDueDatePO";
+import { isMessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
 import { ComponentProps } from "../../types/react";
-import MessageAgenda, { MessageAgendaSection, Sections } from "./MessageAgenda";
+import MessageAgenda, {
+  MessageAgendaSection,
+  MessageWithContentAndDueDatePOAndReadStatus,
+  Sections
+} from "./MessageAgenda";
 
 // How many past months to load in batch
 const PAST_DATA_MONTHS = 3;
@@ -64,14 +65,17 @@ const generateSections = (
       potMessagesState,
       _ =>
         // tslint:disable-next-line:readonly-array
-        _.reduce<MessageWithContentAndDueDatePO[]>(
+        _.reduce<MessageWithContentAndDueDatePOAndReadStatus[]>(
           (accumulator, messageState) => {
             const message = messageState.message;
             if (
               pot.isSome(message) &&
               isMessageWithContentAndDueDatePO(message.value)
             ) {
-              accumulator.push(message.value);
+              accumulator.push({
+                ...message.value,
+                isRead: messageState.isRead
+              });
             }
 
             return accumulator;
@@ -79,8 +83,8 @@ const generateSections = (
           []
         )
           // Sort by due_date
-          .sort((d1, d2) =>
-            compareAsc(d1.content.due_date, d2.content.due_date)
+          .sort((m1, m2) =>
+            compareAsc(m1.content.due_date, m2.content.due_date)
           )
           // Now we have an array of messages sorted by due_date.
           // To create groups (by due_date day) we can just iterate the array and
