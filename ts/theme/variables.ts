@@ -260,6 +260,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // Animations
   shineColor: "#C1CCD6",
+  activeOpacity: 0.25,
 
   // Spacing
   spacingBase: 8

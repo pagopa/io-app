@@ -498,6 +498,10 @@ messages:
   refresh: Pull down to refresh
   loading: Loading Messages...
   yesterday: yesterday
+  errorLoading:
+    details: Error loading message details
+    senderService:  Sender service unknown
+    senderInfo: Service info unknown
   cta:
     archive: Archive
     unarchive: Unarchive
@@ -622,3 +626,9 @@ identification:
       title: Identification required
       sensorDescription: Touch sensor
       fallbackLabel: Use the PIN
+calendarEvents:
+  calendarSelect: In which calendar you want to add the event?
+  removeRequest: 
+    title: Are you sure you want to remove this event?
+    ok: Remove event
+    cancel: Cancel the operation
