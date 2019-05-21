@@ -171,9 +171,7 @@ class MessageListItem extends React.PureComponent<Props> {
         >
           <View style={styles.headerWrapper}>
             {!isRead && (
-              <View style={styles.headerLeft}>
-                {!isRead && MessageUnreadIcon}
-              </View>
+              <View style={styles.headerLeft}>{MessageUnreadIcon}</View>
             )}
             <View style={styles.headerCenter}>
               <Text numberOfLines={1} style={styles.serviceOrganizationName}>
