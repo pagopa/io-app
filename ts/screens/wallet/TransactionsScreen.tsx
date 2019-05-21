@@ -2,7 +2,8 @@
  * This screen dispalys a list of transactions
  * from a specific credit card
  */
-import { Text, View } from "native-base";
+import * as pot from "italia-ts-commons/lib/pot";
+import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
@@ -12,11 +13,22 @@ import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
-import { navigateToTransactionDetailsScreen } from "../../store/actions/navigation";
+import {
+  navigateToTransactionDetailsScreen,
+  navigateToWalletHome,
+  navigateToWalletList
+} from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import {
+  deleteWalletRequest,
+  setFavouriteWalletRequest
+} from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
+import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
+import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
+import { showToast } from "../../utils/showToast";
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -33,12 +45,37 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "flex-end",
     flexDirection: "row"
+  },
+  noBottomPadding: {
+    padding: variables.contentPadding,
+    paddingBottom: 0
+  },
+  whiteContent: {
+    backgroundColor: variables.colorWhite,
+    flex: 1
   }
 });
+
+const ListEmptyComponent = (
+  <Content
+    scrollEnabled={false}
+    style={[styles.noBottomPadding, styles.whiteContent]}
+  >
+    <View spacer={true} />
+    <H3>{I18n.t("wallet.noneTransactions")}</H3>
+    <View spacer={true} />
+    <Text>{I18n.t("wallet.noTransactionsInTransactionsScreen")}</Text>
+    <View spacer={true} large={true} />
+  </Content>
+);
 
 class TransactionsScreen extends React.Component<Props> {
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
+    const isFavorite = pot.map(
+      this.props.favoriteWallet,
+      _ => _ === selectedWallet.idWallet
+    );
     const headerContents = (
       <View>
         <View style={styles.walletBannerText}>
@@ -57,8 +94,15 @@ class TransactionsScreen extends React.Component<Props> {
           <CardComponent
             type="Header"
             wallet={selectedWallet}
-            hideFavoriteIcon={true}
-            hideMenu={true}
+            hideFavoriteIcon={false}
+            hideMenu={false}
+            isFavorite={isFavorite}
+            onSetFavorite={(willBeFavorite: boolean) =>
+              this.props.setFavoriteWallet(
+                willBeFavorite ? selectedWallet.idWallet : undefined
+              )
+            }
+            onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
           />
         }
       >
@@ -69,9 +113,7 @@ class TransactionsScreen extends React.Component<Props> {
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
           }
-          noTransactionsDetailsMessage={I18n.t(
-            "wallet.noTransactionsInTransactionsScreen"
-          )}
+          ListEmptyComponent={ListEmptyComponent}
         />
       </WalletLayout>
     );
@@ -81,7 +123,8 @@ class TransactionsScreen extends React.Component<Props> {
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   transactions: getWalletTransactionsCreator(
     ownProps.navigation.getParam("selectedWallet").idWallet
-  )(state)
+  )(state),
+  favoriteWallet: getFavoriteWalletId(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -90,6 +133,25 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       navigateToTransactionDetailsScreen({
         transaction,
         isPaymentCompletedTransaction: false
+      })
+    ),
+  setFavoriteWallet: (walletId?: number) =>
+    dispatch(setFavouriteWalletRequest(walletId)),
+  deleteWallet: (walletId: number) =>
+    dispatch(
+      deleteWalletRequest({
+        walletId,
+        onSuccess: action => {
+          showToast(I18n.t("wallet.delete.successful"), "success");
+          if (action.payload.length > 0) {
+            dispatch(navigateToWalletList());
+          } else {
+            dispatch(navigateToWalletHome());
+          }
+        },
+        onFailure: _ => {
+          showToast(I18n.t("wallet.delete.failed"), "danger");
+        }
       })
     )
 });

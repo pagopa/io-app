@@ -47,10 +47,20 @@ class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
       this.props.isDebugModeEnabled && (
         <React.Fragment>
           <Button onPress={this.handleIBChatPress} transparent={true}>
-            <IconFont name="io-chat" color={this.props.color} />
+            <IconFont
+              name="io-chat"
+              color={this.props.color}
+              accessible={true}
+              accessibilityLabel="io-chat"
+            />
           </Button>
           <Button onPress={this.handleIBBugPress} transparent={true}>
-            <IconFont name="io-bug" color={this.props.color} />
+            <IconFont
+              name="io-bug"
+              color={this.props.color}
+              accessible={true}
+              accessibilityLabel="io-bug"
+            />
           </Button>
         </React.Fragment>
       )
