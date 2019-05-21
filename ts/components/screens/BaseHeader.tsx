@@ -50,11 +50,11 @@ export class BaseHeader extends React.PureComponent<Props> {
           goBack && (
             <Left>
               <GoBackButton
-              testID="back-button"
-              onPress={goBack}
-              accessible={true}
-              accessibilityLabel={I18n.t("global.buttons.back")}
-            />
+                testID="back-button"
+                onPress={goBack}
+                accessible={true}
+                accessibilityLabel={I18n.t("global.buttons.back")}
+              />
             </Left>
           )
         )}
