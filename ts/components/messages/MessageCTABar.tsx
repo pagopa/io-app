@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { Button, H1, Icon, Text, View } from "native-base";
@@ -225,6 +226,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
           width={calendarIconComponentSize}
           month={capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
+          time={format(dueDate, "HH:mm")}
           backgroundColor={variables.brandDarkGray}
           textColor={variables.colorWhite}
         />

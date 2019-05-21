@@ -6,6 +6,7 @@ type Props = {
   width: number;
   month: string;
   day: string;
+  time: string;
   backgroundColor: string;
   textColor: string;
 };
@@ -17,6 +18,7 @@ class CalendarIconComponent extends React.PureComponent<Props, never> {
       height,
       month,
       day,
+      time,
       backgroundColor,
       textColor
     } = this.props;
@@ -32,9 +34,9 @@ class CalendarIconComponent extends React.PureComponent<Props, never> {
             textAnchor="middle"
             alignmentBaseline="central"
             x="50%"
-            y="30%"
+            y="25%"
             fill={textColor}
-            fontSize={12}
+            fontSize={10}
           >
             {month}
           </Text>
@@ -42,11 +44,21 @@ class CalendarIconComponent extends React.PureComponent<Props, never> {
             textAnchor="middle"
             alignmentBaseline="central"
             x="50%"
-            y="65%"
+            y="55%"
             fill={textColor}
-            fontSize={20}
+            fontSize={12}
           >
             {day}
+          </Text>
+          <Text
+            textAnchor="middle"
+            alignmentBaseline="central"
+            x="50%"
+            y="85%"
+            fill={textColor}
+            fontSize={8}
+          >
+            {time}
           </Text>
         </G>
       </Svg>
