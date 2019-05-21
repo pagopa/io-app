@@ -14,14 +14,14 @@ import { logosForService } from "../../utils/services";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
-import MessageCTABarComponent from "./MessageCTABarComponent";
+import MessageCTABar from "./MessageCTABar";
 import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
 import MessageMarkdown from "./MessageMarkdown";
 
 type OwnProps = {
   message: MessageWithContentPO;
-  paymentsByRptId: PaymentByRptIdState;
   potService: pot.Pot<ServicePublic, Error>;
+  paymentsByRptId: PaymentByRptIdState;
   onServiceLinkPress?: () => void;
 };
 
@@ -72,8 +72,8 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
   public render() {
     const {
       message,
-      paymentsByRptId,
       potService,
+      paymentsByRptId,
       onServiceLinkPress
     } = this.props;
 
@@ -133,11 +133,11 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
         </View>
 
         {messageNeedsCTABar(message) && (
-          <MessageCTABarComponent
+          <MessageCTABar
             message={message}
             service={service}
-            containerStyle={styles.ctaBarContainer}
             payment={payment}
+            containerStyle={styles.ctaBarContainer}
           />
         )}
 

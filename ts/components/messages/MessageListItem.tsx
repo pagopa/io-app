@@ -14,7 +14,7 @@ import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
 import IconFont from "../ui/IconFont";
-import MessageCTABarComponent from "./MessageCTABarComponent";
+import MessageCTABar from "./MessageCTABar";
 
 type Props = {
   isRead: boolean;
@@ -213,7 +213,7 @@ class MessageListItem extends React.PureComponent<Props> {
 
           {messageNeedsCTABar(message) && (
             <View style={styles.footerWrapper}>
-              <MessageCTABarComponent
+              <MessageCTABar
                 message={message}
                 service={service}
                 payment={payment}

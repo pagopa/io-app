@@ -136,7 +136,7 @@ const SelectCalendarModalHeader = (
   </H1>
 );
 
-class MessageCTABarComponent extends React.PureComponent<Props, State> {
+class MessageCTABar extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -468,4 +468,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(MessageCTABarComponent));
+)(withLightModalContext(MessageCTABar));
