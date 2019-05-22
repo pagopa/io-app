@@ -3,7 +3,6 @@ import { Middleware } from "redux";
 
 import { navigationRestore } from "../actions/navigation";
 import {
-  navigationHistoryEmpty,
   navigationHistoryPop,
   navigationHistoryPush,
   navigationHistoryReset
@@ -63,9 +62,8 @@ export function createNavigationHistoryMiddleware(): Middleware<
         // Get the current navigation history
         const currentNavigationHistory = store.getState().navigationHistory;
 
-        // If the history is empty we dispatch the empty event and return
+        // If the history is empty we just need to return
         if (currentNavigationHistory.length === 0) {
-          store.dispatch(navigationHistoryEmpty());
           return;
         }
 
