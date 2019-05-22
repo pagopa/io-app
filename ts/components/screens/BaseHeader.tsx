@@ -5,11 +5,14 @@ import { StyleSheet } from "react-native";
 import IconFont from "../../components/ui/IconFont";
 import AppHeader from "../ui/AppHeader";
 
+import { connect } from "react-redux";
 import I18n from "../../i18n";
+import { isSearchEnabledSelector } from "../../store/reducers/search";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
-import SearchButton from "../SearchButton";
+import SearchButton from "../search/SearchButton";
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -31,16 +34,17 @@ interface OwnProps {
   isSearchAvailable?: boolean;
 }
 
-type Props = OwnProps;
+type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
-export class BaseHeader extends React.PureComponent<Props> {
+class BaseHeaderComponent extends React.PureComponent<Props> {
   public render() {
     const {
       goBack,
       headerTitle,
       onShowHelp,
       body,
-      isSearchAvailable
+      isSearchAvailable,
+      isSearchEnabled
     } = this.props;
     return (
       <AppHeader primary={this.props.primary}>
@@ -69,19 +73,26 @@ export class BaseHeader extends React.PureComponent<Props> {
           )}
         </Body>
         <Right>
-          <InstabugButtons />
-          {onShowHelp && (
-            <Button
-              onPress={onShowHelp}
-              style={styles.helpButton}
-              transparent={true}
-            >
-              <IconFont name="io-question" />
-            </Button>
-          )}
+          {!isSearchEnabled && <InstabugButtons />}
+          {onShowHelp &&
+            !isSearchEnabled && (
+              <Button
+                onPress={onShowHelp}
+                style={styles.helpButton}
+                transparent={true}
+              >
+                <IconFont name="io-question" />
+              </Button>
+            )}
           {isSearchAvailable && <SearchButton />}
         </Right>
       </AppHeader>
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState) => ({
+  isSearchEnabled: isSearchEnabledSelector(state)
+});
+
+export const BaseHeader = connect(mapStateToProps)(BaseHeaderComponent);
