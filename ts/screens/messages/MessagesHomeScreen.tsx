@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 1,
     // Android shadow
-    elevation: 5
+    elevation: 5,
+    marginTop: -1
   },
   ioSearch: {
     // Corrects the position of the font icon inside the button
