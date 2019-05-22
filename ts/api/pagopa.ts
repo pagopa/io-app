@@ -15,6 +15,7 @@ import {
   ioResponseDecoder,
   MapResponseType,
   ReplaceRequestParams,
+  RequestHeaderProducer,
   RequestHeaders,
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
@@ -90,9 +91,7 @@ type GetTransactionsUsingGETTExtra = MapResponseType<
   TransactionListResponse
 >;
 
-const ParamAuthorizationBearerHeaderProducer = <
-  P extends { readonly Bearer: string }
->(
+const ParamAuthorizationBearerHeader = <P extends { readonly Bearer: string }>(
   p: P
 ): RequestHeaders<"Authorization"> => {
   return {
@@ -100,11 +99,20 @@ const ParamAuthorizationBearerHeaderProducer = <
   };
 };
 
+const ParamAuthorizationBearerHeaderProducer = <
+  P extends { readonly Bearer: string }
+>(): RequestHeaderProducer<P, "Authorization"> => {
+  return (p: P): RequestHeaders<"Authorization"> =>
+    ParamAuthorizationBearerHeader(p);
+};
+
+const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
+
 const getTransactions: GetTransactionsUsingGETTExtra = {
   method: "get",
   url: () => "/v1/transactions",
   query: () => ({}),
-  headers: ParamAuthorizationBearerHeaderProducer,
+  headers: ParamAuthorizationBearerHeader,
   response_decoder: getTransactionsUsingGETDecoder(TransactionListResponse)
 };
 
@@ -118,7 +126,7 @@ const getTransaction: GetTransactionUsingGETTExtra = {
   method: "get",
   url: ({ id }) => `/v1/transactions/${id}`,
   query: () => ({}),
-  headers: ParamAuthorizationBearerHeaderProducer,
+  headers: ParamAuthorizationBearerHeader,
   response_decoder: getTransactionUsingGETDecoder(TransactionResponse)
 };
 
@@ -132,7 +140,7 @@ const getWallets: GetWalletsUsingGETExtraT = {
   method: "get",
   url: () => "/v1/wallet",
   query: () => ({}),
-  headers: ParamAuthorizationBearerHeaderProducer,
+  headers: ParamAuthorizationBearerHeader,
   response_decoder: getWalletsUsingGETDecoder(WalletListResponse)
 };
 
@@ -170,7 +178,7 @@ const getPspList: GetPspListUsingGETTExtra = {
           paymentType: "CREDIT_CARD",
           idPayment
         },
-  headers: ParamAuthorizationBearerHeaderProducer,
+  headers: ParamAuthorizationBearerHeader,
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
 };
 
@@ -185,10 +193,7 @@ const updateWalletPsp: UpdateWalletUsingPUTTExtra = {
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
-  headers: composeHeaderProducers(
-    ParamAuthorizationBearerHeaderProducer,
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
 };
 
@@ -203,10 +208,7 @@ const favouriteWallet: FavouriteWalletUsingPOSTTExtra = {
   url: ({ id }) => `/v1/wallet/${id}/actions/favourite`,
   query: () => ({}),
   body: () => "",
-  headers: composeHeaderProducers(
-    ParamAuthorizationBearerHeaderProducer,
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: favouriteWalletUsingPOSTDecoder(WalletResponse)
 };
 
@@ -223,10 +225,7 @@ const addWalletCreditCard: AddWalletCreditCardUsingPOSTTExtra = {
   url: () => "/v1/wallet/cc",
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
-  headers: composeHeaderProducers(
-    ParamAuthorizationBearerHeaderProducer,
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: composeResponseDecoders(
     addWalletCreditCardUsingPOSTDecoder(WalletResponse),
     ioResponseDecoder<422, PagoPAErrorResponse>(422, PagoPAErrorResponse)
@@ -244,10 +243,7 @@ const postPayment: PayUsingPOSTTExtra = {
   url: ({ id }) => `/v1/payments/${id}/actions/pay`,
   query: () => ({}),
   body: ({ payRequest }) => JSON.stringify(payRequest),
-  headers: composeHeaderProducers(
-    ParamAuthorizationBearerHeaderProducer,
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: payUsingPOSTDecoder(TransactionResponse)
 };
 
@@ -255,10 +251,7 @@ const deletePayment: DeleteBySessionCookieExpiredUsingDELETET = {
   method: "delete",
   url: ({ id }) => `/v1/payments/${id}/actions/delete`,
   query: () => ({}),
-  headers: composeHeaderProducers(
-    ParamAuthorizationBearerHeaderProducer,
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: constantEmptyDecoder
 };
 
@@ -273,10 +266,7 @@ const boardPay: PayCreditCardVerificationUsingPOSTTExtra = {
   url: () => "/v1/payments/cc/actions/pay",
   query: () => ({}),
   body: ({ payRequest }) => JSON.stringify(payRequest),
-  headers: composeHeaderProducers(
-    ParamAuthorizationBearerHeaderProducer,
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: payCreditCardVerificationUsingPOSTDecoder(
     TransactionResponse
   )
@@ -286,7 +276,7 @@ const deleteWallet: DeleteWalletUsingDELETET = {
   method: "delete",
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
-  headers: ParamAuthorizationBearerHeaderProducer,
+  headers: ParamAuthorizationBearerHeader,
   response_decoder: constantEmptyDecoder
 };
 

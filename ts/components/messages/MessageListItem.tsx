@@ -1,9 +1,9 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { DateFromISOString } from "io-ts-types";
 import { CheckBox, Text, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, TouchableHighlight } from "react-native";
 import Svg, { Circle } from "react-native-svg";
+import { DateFromISOString } from "../../utils/dates";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
