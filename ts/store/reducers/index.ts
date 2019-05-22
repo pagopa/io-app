@@ -16,7 +16,6 @@ import contentReducer from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import entitiesReducer from "./entities";
-import { exitAppReducer } from "./exitApp";
 import identificationReducer from "./identification";
 import installationReducer from "./installation";
 import navigationReducer from "./navigation";
@@ -81,8 +80,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   notifications: notificationsReducer,
   profile: profileReducer,
   entities: entitiesReducer,
-  debug: debugReducer,
-  exitApp: exitAppReducer
+  debug: debugReducer
 });
 
 export function createRootReducer(
