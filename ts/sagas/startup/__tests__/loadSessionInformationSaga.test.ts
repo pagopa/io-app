@@ -14,7 +14,7 @@ import { loadSessionInformationSaga } from "../loadSessionInformationSaga";
 describe("loadSessionInformationSaga", () => {
   it("should emit the session on valid response from backend", () => {
     const getSession = jest.fn();
-    const aPublicSession = { walletToken: "ciao" } as PublicSession;
+    const aPublicSession = { walletToken: "walletToken" } as PublicSession;
     return expectSaga(loadSessionInformationSaga, getSession)
       .provide([
         [
