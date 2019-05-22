@@ -67,14 +67,15 @@ const generateSections = (
       _ =>
         // tslint:disable-next-line:readonly-array
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
-          const message = messageState.message;
+          const { isRead, isArchived, message } = messageState;
           if (
+            !isArchived &&
             pot.isSome(message) &&
             isMessageWithContentAndDueDatePO(message.value)
           ) {
             accumulator.push(
               Tuple2(message.value, {
-                isRead: messageState.isRead
+                isRead
               })
             );
           }
