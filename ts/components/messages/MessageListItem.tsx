@@ -151,9 +151,10 @@ class MessageListItem extends React.PureComponent<Props> {
       departmentName: _.department_name
     }));
 
-    const uiDate = DateFromISOString.decode(message.created_at)
-      .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
-      .getOrElse(message.created_at.toISOString());
+    const uiDate = convertDateToWordDistance(
+      message.created_at,
+      I18n.t("messages.yesterday")
+    );
 
     return (
       <TouchableHighlight
