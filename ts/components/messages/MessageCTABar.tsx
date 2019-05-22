@@ -24,7 +24,7 @@ import {
   CalendarEvent,
   calendarEventByMessageIdSelector
 } from "../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
+import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { checkAndRequestPermission } from "../../utils/calendar";
@@ -265,7 +265,9 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   }
 
   private renderPaymentCTA(
-    paymentData: NonNullable<CreatedMessageWithContent["content"]["payment_data"]>,
+    paymentData: NonNullable<
+      CreatedMessageWithContent["content"]["payment_data"]
+    >,
     service?: ServicePublic,
     payment?: PaidReason
   ) {

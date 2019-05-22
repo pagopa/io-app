@@ -10,7 +10,7 @@ import I18n from "../../i18n";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
 import IconFont from "../ui/IconFont";
@@ -18,7 +18,7 @@ import MessageCTABar from "./MessageCTABar";
 
 type Props = {
   isRead: boolean;
-  message: MessageWithContentPO;
+  message: CreatedMessageWithContent;
   service?: ServicePublic;
   payment?: PaidReason;
   onPress: (id: string) => void;
@@ -153,7 +153,7 @@ class MessageListItem extends React.PureComponent<Props> {
 
     const uiDate = DateFromISOString.decode(message.created_at)
       .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
-      .getOrElse(message.created_at);
+      .getOrElse(message.created_at.toISOString());
 
     return (
       <TouchableHighlight

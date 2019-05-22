@@ -15,14 +15,20 @@ export function messageContainsText(
   );
 }
 
-export function messageNeedsDueDateCTA(message: MessageWithContentPO): boolean {
+export function messageNeedsDueDateCTA(
+  message: CreatedMessageWithContent
+): boolean {
   return message.content.due_date !== undefined;
 }
 
-export function messageNeedsPaymentCTA(message: MessageWithContentPO): boolean {
+export function messageNeedsPaymentCTA(
+  message: CreatedMessageWithContent
+): boolean {
   return message.content.payment_data !== undefined;
 }
 
-export function messageNeedsCTABar(message: MessageWithContentPO): boolean {
+export function messageNeedsCTABar(
+  message: CreatedMessageWithContent
+): boolean {
   return messageNeedsDueDateCTA(message) || messageNeedsPaymentCTA(message);
 }
