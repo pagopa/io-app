@@ -20,8 +20,8 @@ import MessageMarkdown from "./MessageMarkdown";
 
 type OwnProps = {
   message: CreatedMessageWithContent;
-  potService: pot.Pot<ServicePublic, Error>;
   paymentsByRptId: PaymentByRptIdState;
+  potService: pot.Pot<ServicePublic, Error>;
   onServiceLinkPress?: () => void;
 };
 
