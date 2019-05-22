@@ -213,14 +213,14 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   private renderFullState = (
     message: MessageWithContentPO,
     service: pot.Pot<ServicePublic, Error>,
-    paymentByRptId: Props["paymentByRptId"]
+    paymentsByRptId: Props["paymentsByRptId"]
   ) => {
     return (
       <Content noPadded={true}>
         <MessageDetailComponent
           message={message}
-          paymentByRptId={paymentByRptId}
-          service={service}
+          paymentsByRptId={paymentsByRptId}
+          potService={service}
           onServiceLinkPress={
             pot.isSome(service)
               ? () => this.onServiceLinkPressHandler(service.value)
@@ -233,10 +233,14 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   // TODO: Add a Provider and an HOC to manage multiple render states in a simpler way.
   private renderCurrentState = () => {
-    const { potMessage, potService, paymentByRptId } = this.props;
+    const { potMessage, potService, paymentsByRptId } = this.props;
 
     if (pot.isSome(potMessage)) {
-      return this.renderFullState(potMessage.value, potService, paymentByRptId);
+      return this.renderFullState(
+        potMessage.value,
+        potService,
+        paymentsByRptId
+      );
     }
     if (pot.isLoading(potMessage)) {
       return this.renderLoadingState();
@@ -303,7 +307,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     maybeRead,
     potMessage,
     potService,
-    paymentByRptId: state.entities.paymentByRptId
+    paymentsByRptId: state.entities.paymentByRptId
   };
 };
 

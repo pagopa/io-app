@@ -11,7 +11,7 @@ import {
   InjectedWithMessagesSelectionProps,
   withMessagesSelection
 } from "../helpers/withMessagesSelection";
-import MessageListComponent from "./MessageListComponent";
+import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -60,8 +60,8 @@ type OwnProps = {
 };
 
 type Props = Pick<
-  ComponentProps<typeof MessageListComponent>,
-  "servicesById" | "paymentByRptId" | "onRefresh"
+  ComponentProps<typeof MessageList>,
+  "servicesById" | "paymentsByRptId" | "onRefresh"
 > &
   OwnProps &
   InjectedWithMessagesSelectionProps;
@@ -103,7 +103,7 @@ const ListEmptyComponent = (
 
 /**
  * A component to render a list of visible (not yet archived) messages.
- * It acts like a wrapper for the MessageListComponent, filtering the messages
+ * It acts like a wrapper for the MessageList component, filtering the messages
  * and adding the messages selection and archiving management.
  */
 class MessagesInbox extends React.PureComponent<Props, State> {
@@ -166,9 +166,9 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             </Button>
           </View>
         )}
-        <MessageListComponent
+        <MessageList
           {...this.props}
-          messages={this.state.filteredMessageStates}
+          messageStates={this.state.filteredMessageStates}
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnLongPressItem}
           refreshing={isLoading}
