@@ -3,7 +3,8 @@ global:
   localization:
     decimalSeparator: "."
   dateFormats:
-    month: "MMMM"
+    monthYear: "MMMM YYYY"
+    dayMonthYear: "dddd D MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "MM/DD" 
   jserror:

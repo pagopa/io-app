@@ -24,7 +24,7 @@ import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
 const LIST_HEADER_HEIGHT = 70;
-const SECTION_HEADER_HEIGHT = 50;
+const SECTION_HEADER_HEIGHT = 48;
 const ITEM_HEIGHT = 158;
 const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
@@ -62,13 +62,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding,
     backgroundColor: customVariables.colorWhite
   },
-  sectionHeaderText: {
-    paddingBottom: 9,
-    fontSize: 18,
-    lineHeight: 20,
-    color: customVariables.brandDarkestGray,
+  sectionHeaderContent: {
+    paddingBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: customVariables.brandLightGray
+  },
+  sectionHeaderText: {
+    fontSize: 18,
+    lineHeight: 20,
+    color: customVariables.brandDarkestGray
   },
 
   // Items
@@ -76,6 +78,9 @@ const styles = StyleSheet.create({
     height: FAKE_ITEM_HEIGHT,
     paddingHorizontal: customVariables.contentPadding,
     justifyContent: "center"
+  },
+  itemEmptyText: {
+    color: customVariables.brandDarkestGray
   },
   itemSeparator: {
     height: ITEM_SEPARATOR_HEIGHT,
@@ -218,7 +223,9 @@ const ListEmptyComponent = (
 
 const FakeItemComponent = (
   <View style={styles.itemEmptyWrapper}>
-    <Text bold={true}>{I18n.t("reminders.emptyMonth")}</Text>
+    <Text bold={true} style={styles.itemEmptyText}>
+      {I18n.t("reminders.emptyMonth")}
+    </Text>
   </View>
 );
 
@@ -274,16 +281,18 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     const isFake = info.section.fake;
     return (
       <View style={styles.sectionHeaderWrapper}>
-        <Text style={styles.sectionHeaderText}>
-          {format(
-            info.section.title,
-            I18n.t(
-              isFake
-                ? "global.dateFormats.month"
-                : "global.dateFormats.dayAndMonth"
-            )
-          )}
-        </Text>
+        <View style={styles.sectionHeaderContent}>
+          <Text style={styles.sectionHeaderText}>
+            {format(
+              info.section.title,
+              I18n.t(
+                isFake
+                  ? "global.dateFormats.monthYear"
+                  : "global.dateFormats.dayMonthYear"
+              )
+            )}
+          </Text>
+        </View>
       </View>
     );
   };
@@ -361,6 +370,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         stickySectionHeadersEnabled={true}
         keyExtractor={keyExtractor}
         getItemLayout={this.getItemLayout}
+        bounces={false}
       />
     );
   }
