@@ -1,16 +1,15 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { DateFromISOString } from "io-ts-types";
 import { CheckBox, Text, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, TouchableHighlight } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
 import IconFont from "../ui/IconFont";
