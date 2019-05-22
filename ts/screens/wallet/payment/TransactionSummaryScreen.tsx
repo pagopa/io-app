@@ -434,6 +434,41 @@ const mergeProps = (
       onRetry
     }
   };
+  return canRetry
+    ? {
+        ...baseProps,
+        onRetry: () =>
+          dispatchProps.onRetryWithPotVerifica(
+            stateProps.potVerifica,
+            stateProps.maybeFavoriteWallet
+          )
+      }
+    : baseProps;
+};
+
+const mapErrorCodeToMessage = (
+  error: ReturnType<typeof mapStateToProps>["error"]["_A"]
+): string => {
+  switch (error) {
+    case "PAYMENT_DUPLICATED":
+      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
+    case "INVALID_AMOUNT":
+      return I18n.t("wallet.errors.INVALID_AMOUNT");
+    case "PAYMENT_ONGOING":
+      return I18n.t("wallet.errors.PAYMENT_ONGOING");
+    case "PAYMENT_EXPIRED":
+      return I18n.t("wallet.errors.PAYMENT_EXPIRED");
+    case "PAYMENT_UNAVAILABLE":
+      return I18n.t("wallet.errors.PAYMENT_UNAVAILABLE");
+    case "PAYMENT_UNKNOWN":
+      return I18n.t("wallet.errors.PAYMENT_UNKNOWN");
+    case "DOMAIN_UNKNOWN":
+      return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
+    case "PAYMENT_ID_TIMEOUT":
+      return I18n.t("wallet.errors.MISSING_PAYMENT_ID");
+    default:
+      return "undefined error";
+  }
 };
 
 export default connect(
