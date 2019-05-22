@@ -10,6 +10,7 @@ import {
 } from "date-fns";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { View } from "native-base";
 import React from "react";
 import { SectionListScrollParams, StyleSheet } from "react-native";
@@ -19,8 +20,8 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import { isMessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
 import { ComponentProps } from "../../types/react";
 import MessageAgenda, {
+  MessageAgendaItem,
   MessageAgendaSection,
-  MessageWithContentAndDueDatePOAndReadStatus,
   Sections
 } from "./MessageAgenda";
 
@@ -65,26 +66,27 @@ const generateSections = (
       potMessagesState,
       _ =>
         // tslint:disable-next-line:readonly-array
-        _.reduce<MessageWithContentAndDueDatePOAndReadStatus[]>(
-          (accumulator, messageState) => {
-            const message = messageState.message;
-            if (
-              pot.isSome(message) &&
-              isMessageWithContentAndDueDatePO(message.value)
-            ) {
-              accumulator.push({
-                ...message.value,
+        _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
+          const message = messageState.message;
+          if (
+            pot.isSome(message) &&
+            isMessageWithContentAndDueDatePO(message.value)
+          ) {
+            accumulator.push(
+              Tuple2(message.value, {
                 isRead: messageState.isRead
-              });
-            }
+              })
+            );
+          }
 
-            return accumulator;
-          },
-          []
-        )
+          return accumulator;
+        }, [])
           // Sort by due_date
-          .sort((m1, m2) =>
-            compareAsc(m1.content.due_date, m2.content.due_date)
+          .sort((messageAgendaItem1, messageAgendaItem2) =>
+            compareAsc(
+              messageAgendaItem1.e1.content.due_date,
+              messageAgendaItem2.e1.content.due_date
+            )
           )
           // Now we have an array of messages sorted by due_date.
           // To create groups (by due_date day) we can just iterate the array and
@@ -97,10 +99,12 @@ const generateSections = (
             // tslint:disable-next-line:readonly-array
             sections: MessageAgendaSection[];
           }>(
-            (accumulator, message) => {
+            (accumulator, messageAgendaItem) => {
               // As title of the section we use the ISOString rapresentation
               // of the due_date day.
-              const title = startOfDay(message.content.due_date).toISOString();
+              const title = startOfDay(
+                messageAgendaItem.e1.content.due_date
+              ).toISOString();
               if (
                 accumulator.lastTitle.isNone() ||
                 title !== accumulator.lastTitle.value
@@ -108,7 +112,7 @@ const generateSections = (
                 // We need to create a new section
                 const newSection = {
                   title,
-                  data: [message]
+                  data: [messageAgendaItem]
                 };
                 return {
                   lastTitle: some(title),
@@ -121,7 +125,7 @@ const generateSections = (
                 const prevSection = accumulator.sections.pop() as MessageAgendaSection;
                 const newSection = {
                   title,
-                  data: [...prevSection.data, message]
+                  data: [...prevSection.data, messageAgendaItem]
                 };
                 return {
                   lastTitle: some(title),
@@ -298,6 +302,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     this.props.navigateToMessageDetail(id);
   };
 
+  private handleOnLongPressItem = () => 0;
+
   private onLoadMoreDataRequest = () => {
     const { sections, maybeLastLoadedStartOfMonthTime } = this.state;
 
@@ -404,7 +410,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { messagesState } = this.props;
+    const { messagesState, servicesById, paymentsByRptId } = this.props;
     const { isWorking, sectionsToRender } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
@@ -412,12 +418,13 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     return (
       <View style={styles.listWrapper}>
         <MessageAgenda
-          {...this.props}
           ref={this.messageAgendaRef}
           sections={sectionsToRender}
+          servicesById={servicesById}
+          paymentsByRptId={paymentsByRptId}
           refreshing={isRefreshing}
           onPressItem={this.handleOnPressItem}
-          onLongPressItem={() => 0}
+          onLongPressItem={this.handleOnLongPressItem}
           onMoreDataRequest={this.onLoadMoreDataRequest}
           onContentSizeChange={this.onContentSizeChange}
         />

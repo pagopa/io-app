@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import * as pot from "italia-ts-commons/lib/pot";
+import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
@@ -86,12 +87,17 @@ export type FakeItem = {
   fake: true;
 };
 
-export type MessageWithContentAndDueDatePOAndReadStatus = MessageWithContentAndDueDatePO & {
+export type MessageAgendaItemMetadata = {
   isRead: boolean;
 };
 
+export type MessageAgendaItem = ITuple2<
+  MessageWithContentAndDueDatePO,
+  MessageAgendaItemMetadata
+>;
+
 export type MessageAgendaSection = SectionListData<
-  MessageWithContentAndDueDatePOAndReadStatus | FakeItem
+  MessageAgendaItem | FakeItem
 >;
 
 // tslint:disable-next-line: readonly-array
@@ -128,10 +134,8 @@ const isFakeItem = (item: any): item is FakeItem => {
   return item.fake;
 };
 
-const keyExtractor = (
-  _: MessageWithContentAndDueDatePOAndReadStatus | FakeItem,
-  index: number
-) => (isFakeItem(_) ? `item-${index}` : _.id);
+const keyExtractor = (_: MessageAgendaItem | FakeItem, index: number) =>
+  isFakeItem(_) ? `item-${index}` : _.e1.id;
 
 /**
  * Generate item layouts from sections.
@@ -144,7 +148,7 @@ const keyExtractor = (
  */
 const generateItemLayouts = (sections: Sections) => {
   // tslint:disable-next-line: no-let
-  let offset = 70;
+  let offset = LIST_HEADER_HEIGHT;
   // tslint:disable-next-line: no-let
   let index = 0;
   // tslint:disable-next-line: readonly-array
@@ -285,16 +289,15 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   };
 
   private renderItem: SectionListRenderItem<
-    MessageWithContentAndDueDatePOAndReadStatus | FakeItem
+    MessageAgendaItem | FakeItem
   > = info => {
     if (isFakeItem(info.item)) {
       return FakeItemComponent;
     }
 
-    const message = info.item;
+    const message = info.item.e1;
+    const { isRead } = info.item.e2;
     const { paymentsByRptId, onPressItem, onLongPressItem } = this.props;
-
-    const isRead = message.isRead;
 
     const potService = this.props.servicesById[message.sender_service_id];
 
