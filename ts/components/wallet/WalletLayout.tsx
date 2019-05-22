@@ -19,6 +19,7 @@ import {
 } from "native-base";
 import * as React from "react";
 import {
+  Animated,
   Image,
   ScrollView,
   StyleProp,
@@ -54,6 +55,22 @@ const styles = StyleSheet.create({
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
+  },
+
+  animatedSubHeader: {
+    position: 'absolute',
+    top: 90, // header height TODO: get as variables if possible
+    left: 0, 
+    right: 0,
+    backgroundColor: variables.colorWhite,
+    overflow: 'hidden',
+  }, 
+
+  animatedSubHeaderContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: variables.contentPadding
   }
 });
 
@@ -65,9 +82,25 @@ type Props = Readonly<{
   displayedWallets?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
   isPagoPATestEnabled?: boolean;
+  fixedSubHeader?: React.ReactNode;
+  interpolationVars?: Array<number>;
 }>;
 
-export default class WalletLayout extends React.Component<Props> {
+type State = Readonly<{
+  scrollY: Animated.Value;
+}>
+
+const INITIAL_STATE = {
+  scrollY: new Animated.Value(0),
+
+};
+
+export default class WalletLayout extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = INITIAL_STATE;
+    
+  }
   private WalletLayoutRef = React.createRef<ScrollView>();
   private scrollToTop = () => {
     if (this.WalletLayoutRef.current) {
@@ -76,6 +109,14 @@ export default class WalletLayout extends React.Component<Props> {
   };
 
   public render(): React.ReactNode {
+
+    const { interpolationVars } = this.props; 
+    const subHeaderHeight = interpolationVars && interpolationVars.length === 3 ? this.state.scrollY.interpolate({
+      inputRange: [interpolationVars[1] - interpolationVars[2], interpolationVars[1] + interpolationVars[2]],
+      outputRange: [0, interpolationVars[0]],
+      extrapolate: 'clamp',
+    }) : 0;
+
     return (
       <Container>
         <AppHeader style={styles.darkGrayBg} noLeft={!this.props.allowGoBack}>
@@ -101,13 +142,17 @@ export default class WalletLayout extends React.Component<Props> {
             <InstabugButtons color={variables.colorWhite} />
           </Right>
         </AppHeader>
-
+ 
         <ScrollView
           bounces={false}
           style={
             this.props.contentStyle ? this.props.contentStyle : styles.whiteBg
           }
           ref={this.WalletLayoutRef}
+          scrollEventThrottle={16}
+              onScroll={Animated.event(
+                [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
+          )}
         >
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <Content
@@ -119,6 +164,11 @@ export default class WalletLayout extends React.Component<Props> {
           </Content>
           {this.props.children}
         </ScrollView>
+        
+        <Animated.View style={[styles.animatedSubHeader, {height: subHeaderHeight}]}>
+                  {this.props.fixedSubHeader}
+        </Animated.View>
+
         {this.props.onNewPaymentPress && (
           <View footer={true}>
             <Button block={true} onPress={this.props.onNewPaymentPress}>
