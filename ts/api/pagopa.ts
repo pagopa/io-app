@@ -144,15 +144,13 @@ const getWallets: GetWalletsUsingGETExtraT = {
   response_decoder: getWalletsUsingGETDecoder(WalletListResponse)
 };
 
-const checkPayment: (
-  pagoPaToken: PaymentManagerToken
-) => CheckPaymentUsingGETT = pagoPaToken => ({
+const checkPayment: CheckPaymentUsingGETT = {
   method: "get",
   url: ({ id }) => `/v1/payments/${id}/actions/check`,
   query: () => ({}),
-  headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+  headers: ParamAuthorizationBearerHeaderProducer,
   response_decoder: checkPaymentUsingGETDefaultDecoder()
-});
+};
 
 type GetPspListUsingGETTExtra = MapResponseType<
   ReplaceRequestParams<
@@ -320,11 +318,8 @@ export function PaymentManagerClient(
           createFetchRequestForApi(getTransaction, options)
         )
       )({ id }),
-    checkPayment: (
-      pagoPaToken: PaymentManagerToken,
-      id: TypeofApiParams<CheckPaymentUsingGETT>["id"]
-    ) =>
-      createFetchRequestForApi(checkPayment(pagoPaToken), altOptions)({
+    checkPayment: (id: TypeofApiParams<CheckPaymentUsingGETT>["id"]) =>
+      createFetchRequestForApi(checkPayment, altOptions)({
         id
       }),
     getPspList: (

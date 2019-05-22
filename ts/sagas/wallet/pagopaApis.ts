@@ -419,8 +419,7 @@ export function* paymentCheckRequestHandler(
   // FIXME: we should not use default pagopa client for checkpayment, need to
   //        a client that doesn't retry on failure!!! checkpayment is NOT
   //        idempotent, the 2nd time it will error!
-  const apiCheckPayment = (token: PaymentManagerToken) =>
-    pagoPaClient.checkPayment(token, action.payload);
+  const apiCheckPayment = () => pagoPaClient.checkPayment(action.payload);
   const checkPaymentWithRefresh = pmSessionManager.withRefresh(apiCheckPayment);
   try {
     const response: SagaCallReturnType<
