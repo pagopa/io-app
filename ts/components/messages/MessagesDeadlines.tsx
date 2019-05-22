@@ -17,7 +17,7 @@ import { SectionListScrollParams, StyleSheet } from "react-native";
 
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
-import { isMessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
+import { isMessageWithContentAndDueDatePO } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
 import MessageAgenda, {
   MessageAgendaItem,
