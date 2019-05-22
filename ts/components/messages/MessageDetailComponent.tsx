@@ -9,7 +9,6 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
-import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
@@ -20,8 +19,8 @@ import MessageMarkdown from "./MessageMarkdown";
 
 type OwnProps = {
   message: CreatedMessageWithContent;
-  potService: pot.Pot<ServicePublic, Error>;
-  paymentsByRptId: PaymentByRptIdState;
+  paymentByRptId: PaymentByRptIdState;
+  service: pot.Pot<ServicePublic, Error>;
   onServiceLinkPress?: () => void;
 };
 

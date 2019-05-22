@@ -15,7 +15,7 @@ import IconFont from "../ui/IconFont";
 
 type OwnProps = {
   message: CreatedMessageWithContent;
-  service?: ServicePublic;
+  service: pot.Pot<ServicePublic, Error>;
   onServiceLinkPress?: () => void;
 };
 
