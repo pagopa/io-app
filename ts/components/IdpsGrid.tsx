@@ -54,6 +54,8 @@ const renderItem = (props: Props) => (
   return (
     <Button
       key={item.id}
+      accessible={true}
+      accessibilityLabel={item.name}
       style={styles.gridItem}
       transparent={true}
       block={true}

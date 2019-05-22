@@ -2,6 +2,7 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
 const DEFAULT_OVERLAY_OPACITY = 0.7;
+const DEFAULT_BACKGROUND_COLOR = "#fff";
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   foreground?: React.ReactNode;
   opacity?: number;
+  backgroundColor?: string;
 }>;
 
 /**
@@ -43,12 +45,19 @@ export const Overlay: React.SFC<Props> = props => (
               props.opacity !== undefined
                 ? props.opacity
                 : DEFAULT_OVERLAY_OPACITY
+          },
+          {
+            backgroundColor:
+              props.backgroundColor !== undefined
+                ? props.backgroundColor
+                : DEFAULT_BACKGROUND_COLOR
           }
         ]}
       >
         {props.foreground}
       </View>
     )}
+
     <View style={[styles.container, styles.back]}>{props.children}</View>
   </View>
 );

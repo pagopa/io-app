@@ -63,6 +63,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "transparent"
   },
+  emptyListWrapper: {
+    padding: variables.contentPadding,
+    alignItems: "center"
+  },
+  emptyListContentTitle: {
+    paddingBottom: variables.contentPadding / 2,
+    fontSize: variables.fontSizeSmall
+  },
 
   brandDarkGray: {
     color: variables.brandDarkGray
@@ -86,6 +94,19 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   }
 });
+
+const ListEmptyComponent = (
+  <Content scrollEnabled={false} noPadded={true}>
+    <View style={styles.emptyListWrapper}>
+      <Text style={styles.emptyListContentTitle}>
+        {I18n.t("wallet.noTransactionsInWalletHome")}
+      </Text>
+      <Image
+        source={require("../../../img/messages/empty-transaction-list-icon.png")}
+      />
+    </View>
+  </Content>
+);
 
 /**
  * Wallet Home Screen
@@ -266,9 +287,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
             navigateToTransactionDetails={
               this.props.navigateToTransactionDetailsScreen
             }
-            noTransactionsDetailsMessage={I18n.t(
-              "wallet.noTransactionsInWalletHome"
-            )}
+            ListEmptyComponent={ListEmptyComponent}
           />
         )}
       </WalletLayout>
