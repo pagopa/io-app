@@ -78,11 +78,10 @@ class SearchButton extends React.Component<Props, State> {
   };
 
   private updateDebouncedSearchText = debounce((text: string) => {
-    const { searchText } = this.state;
     this.setState({
       debouncedSearchText: some(text)
     });
-    this.props.dispatchSearchText(searchText);
+    this.props.dispatchSearchText(this.state.debouncedSearchText);
   }, 300);
 
   private onSearchDisable = () => {
