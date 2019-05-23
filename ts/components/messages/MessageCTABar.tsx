@@ -2,10 +2,11 @@ import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { Button, H1, Icon, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet, ViewStyle } from "react-native";
+import { Alert, Linking, Platform, StyleSheet, ViewStyle } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 
+import AndroidOpenSettings from "react-native-android-open-settings";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { NavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
@@ -27,7 +28,10 @@ import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import { checkAndRequestPermission } from "../../utils/calendar";
+import {
+  checkAndRequestPermission,
+  isCalendarPermissionsDenied
+} from "../../utils/calendar";
 import {
   formatDateAsDay,
   formatDateAsMonth,
@@ -154,6 +158,14 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     }
   }
 
+  private openAppSettings = () => {
+    if (Platform.OS === "ios") {
+      Linking.openURL("app-settings:").catch(_ => undefined);
+    } else {
+      AndroidOpenSettings.appDetailsSettings();
+    }
+  };
+
   private renderReminderCTA(
     dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
     useShortLabel: boolean
@@ -173,8 +185,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const onPressHandler = () => {
       // Check the authorization status
       checkAndRequestPermission()
-        .then(hasPermission => {
-          if (hasPermission) {
+        .then(calendarioPermission => {
+          if (calendarioPermission.authorized) {
             if (calendarEvent && isEventInCalendar) {
               // If the event is in the calendar prompt an alert and ask for confirmation
               Alert.alert(
@@ -212,6 +224,29 @@ class MessageCTABar extends React.PureComponent<Props, State> {
                 />
               );
             }
+          } else if (!calendarioPermission.asked) {
+            // Authorized is false (denied, restricted or undetermined)
+            // If the user denied permission previously (not in this session)
+            // prompt an alert to inform that his calendar permissions could have been turned off
+            Alert.alert(
+              I18n.t("messages.cta.calendarPermDenied.title"),
+              undefined,
+              [
+                {
+                  text: I18n.t("messages.cta.calendarPermDenied.cancel"),
+                  style: "cancel"
+                },
+                {
+                  text: I18n.t("messages.cta.calendarPermDenied.ok"),
+                  style: "default",
+                  onPress: () => {
+                    // open app settings to turn on the calendar permissions
+                    this.openAppSettings();
+                  }
+                }
+              ],
+              { cancelable: true }
+            );
           }
         })
         // No permission to add/remove the reminder

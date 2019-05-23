@@ -534,6 +534,10 @@ messages:
     reminderRemoveSuccess: "Promemoria eliminato"
     reminderRemoveFailure: "Error durante l'eliminazione del promemoria, riprova per piacere"
     preferenceCalendarSelect: "Seleziona un calendario predefinito"
+    calendarPermDenied:
+      title: "Sembra che i permessi per accedere al calendario siano stati negati"
+      ok: "Abilita i permessi"
+      cancel: "Annulla"
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."

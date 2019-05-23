@@ -524,6 +524,10 @@ messages:
     reminderRemoveSuccess: "Reminder removed"
     reminderRemoveFailure: "Error removing reminder, please retry"
     preferenceCalendarSelect: "Select a default calendar"
+    calendarPermDenied:
+      title: "It seems calendar permissions has been denied"
+      ok: "Enable permissions"
+      cancel: "Cancel"
     errors:
       fetchCalendars: Error fetching calendars
     helper: "IO will remember this choice, you can change it from the preference pane."
