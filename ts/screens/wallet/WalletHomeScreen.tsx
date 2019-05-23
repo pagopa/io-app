@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 
 import { none } from "fp-ts/lib/Option";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
-import H5 from '../../components/ui/H5';
+import H5 from "../../components/ui/H5";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
@@ -96,9 +96,9 @@ const styles = StyleSheet.create({
   },
 
   animatedSubHeaderContent: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between",
     paddingHorizontal: variables.contentPadding
   }
 });
@@ -203,21 +203,28 @@ class WalletHomeScreen extends React.Component<Props, never> {
   private fixedSubHeader() {
     return (
       <View>
-        <View spacer={true}/>
+        <View spacer={true} />
         <View style={styles.animatedSubHeaderContent}>
-          <H5 style={styles.brandDarkGray}>{I18n.t("wallet.latestTransactions")}</H5>
+          <H5 style={styles.brandDarkGray}>
+            {I18n.t("wallet.latestTransactions")}
+          </H5>
           <Text>{I18n.t("wallet.total")}</Text>
         </View>
-        <View spacer={true}/>
+        <View spacer={true} />
       </View>
     );
   }
 
-  private AnimatedViewHeight: number = variables.h5LineHeight + 2 * variables.spacerWidth;
-    // TODO (pr): insert a more detailed value for topContentHeight
-  private topContentHeight: number =  250;
+  private AnimatedViewHeight: number =
+    variables.h5LineHeight + 2 * variables.spacerWidth;
+  // TODO (pr): insert a more detailed value for topContentHeight
+  private topContentHeight: number = 250;
   private topContentHeightOffset: number = 40;
-  private interpolationVars: Array<number> = [this.AnimatedViewHeight, this.topContentHeight, this.topContentHeightOffset];
+  private interpolationVars: ReadonlyArray<number> = [
+    this.AnimatedViewHeight,
+    this.topContentHeight,
+    this.topContentHeightOffset
+  ];
 
   private errorWalletsHeader() {
     return (
@@ -260,7 +267,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         : wallets.length > 0
           ? this.withCardsHeader()
           : this.withoutCardsHeader();
-          
+
     return (
       <WalletLayout
         title={DEFAULT_APPLICATION_NAME}
@@ -287,11 +294,13 @@ class WalletHomeScreen extends React.Component<Props, never> {
       >
         {pot.isError(potTransactions) ? (
           <Content
-          scrollEnabled={false}
-          style={[styles.noBottomPadding, styles.whiteContent]}
+            scrollEnabled={false}
+            style={[styles.noBottomPadding, styles.whiteContent]}
           >
             <View spacer={true} />
-            <H5 style={styles.brandDarkGray}>{I18n.t("wallet.transactions")}</H5>
+            <H5 style={styles.brandDarkGray}>
+              {I18n.t("wallet.transactions")}
+            </H5>
             <View spacer={true} large={true} />
             <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
               {I18n.t("wallet.transactionsLoadFailure")}

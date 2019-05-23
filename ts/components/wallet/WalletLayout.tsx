@@ -58,18 +58,18 @@ const styles = StyleSheet.create({
   },
 
   animatedSubHeader: {
-    position: 'absolute',
+    position: "absolute",
     top: 90, // header height TODO: get as variables if possible
-    left: 0, 
+    left: 0,
     right: 0,
     backgroundColor: variables.colorWhite,
-    overflow: 'hidden',
-  }, 
+    overflow: "hidden"
+  },
 
   animatedSubHeaderContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: variables.contentPadding
   }
 });
@@ -83,23 +83,21 @@ type Props = Readonly<{
   contentStyle?: StyleProp<ViewStyle>;
   isPagoPATestEnabled?: boolean;
   fixedSubHeader?: React.ReactNode;
-  interpolationVars?: Array<number>;
+  interpolationVars?: ReadonlyArray<number>;
 }>;
 
 type State = Readonly<{
   scrollY: Animated.Value;
-}>
+}>;
 
 const INITIAL_STATE = {
-  scrollY: new Animated.Value(0),
-
+  scrollY: new Animated.Value(0)
 };
 
 export default class WalletLayout extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = INITIAL_STATE;
-    
   }
   private WalletLayoutRef = React.createRef<ScrollView>();
   private scrollToTop = () => {
@@ -109,13 +107,18 @@ export default class WalletLayout extends React.Component<Props, State> {
   };
 
   public render(): React.ReactNode {
-
-    const { interpolationVars } = this.props; 
-    const subHeaderHeight = interpolationVars && interpolationVars.length === 3 ? this.state.scrollY.interpolate({
-      inputRange: [interpolationVars[1] - interpolationVars[2], interpolationVars[1] + interpolationVars[2]],
-      outputRange: [0, interpolationVars[0]],
-      extrapolate: 'clamp',
-    }) : 0;
+    const { interpolationVars } = this.props;
+    const subHeaderHeight =
+      interpolationVars && interpolationVars.length === 3
+        ? this.state.scrollY.interpolate({
+            inputRange: [
+              interpolationVars[1] - interpolationVars[2],
+              interpolationVars[1] + interpolationVars[2]
+            ],
+            outputRange: [0, interpolationVars[0]],
+            extrapolate: "clamp"
+          })
+        : 0;
 
     return (
       <Container>
@@ -142,7 +145,7 @@ export default class WalletLayout extends React.Component<Props, State> {
             <InstabugButtons color={variables.colorWhite} />
           </Right>
         </AppHeader>
- 
+
         <ScrollView
           bounces={false}
           style={
@@ -150,9 +153,9 @@ export default class WalletLayout extends React.Component<Props, State> {
           }
           ref={this.WalletLayoutRef}
           scrollEventThrottle={16}
-              onScroll={Animated.event(
-                [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}]
-          )}
+          onScroll={Animated.event([
+            { nativeEvent: { contentOffset: { y: this.state.scrollY } } }
+          ])}
         >
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <Content
@@ -164,9 +167,11 @@ export default class WalletLayout extends React.Component<Props, State> {
           </Content>
           {this.props.children}
         </ScrollView>
-        
-        <Animated.View style={[styles.animatedSubHeader, {height: subHeaderHeight}]}>
-                  {this.props.fixedSubHeader}
+
+        <Animated.View
+          style={[styles.animatedSubHeader, { height: subHeaderHeight }]}
+        >
+          {this.props.fixedSubHeader}
         </Animated.View>
 
         {this.props.onNewPaymentPress && (
