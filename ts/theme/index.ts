@@ -16,6 +16,7 @@ import h5Theme from "./components/H5";
 import h6Theme from "./components/H6";
 import headerTheme from "./components/Header";
 import iconFontTheme from "./components/IconFont";
+import inputTheme from "./components/Input";
 import itemTheme from "./components/Item";
 import listTheme from "./components/List";
 import listItemTheme from "./components/ListItem";
@@ -64,6 +65,9 @@ const theme = (): Theme => {
     },
     "NativeBase.Text": {
       ...textTheme()
+    },
+    "NativeBase.Input": {
+      ...inputTheme()
     },
     "UIComponent.TextWithIcon": {
       ...textWithIconTheme()
