@@ -230,6 +230,7 @@ class Markdown extends React.PureComponent<Props, State> {
                 onLoadEnd={this.handleLoadEnd}
                 onMessage={this.handleWebViewMessage}
                 showsVerticalScrollIndicator={false}
+                useWebKit={false}
               />
             </View>
           </ScrollView>
