@@ -177,6 +177,13 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // tslint:disable-next-line:no-let
   let storedPin: PinString;
 
+  // Start watching for profile update requests as the checkProfileEnabledSaga
+  // may need to update the profile.
+  yield fork(
+    watchProfileUpsertRequestsSaga,
+    backendClient.createOrUpdateProfile
+  );
+
   if (!previousSessionToken || isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no PIN set, thus we need
@@ -185,14 +192,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // Start the watchAbortOnboardingSaga
     const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
 
-    // Start watching for profile update requests as the checkProfileEnabledSaga
-    // may need to update the profile.
-    yield fork(
-      watchProfileUpsertRequestsSaga,
-      backendClient.createOrUpdateProfile
-    );
-
-    // Ask user to accept ToS
+    // Ask to accept ToS if it is the first access on IO or if there is a new available version
     yield call(checkAcceptedTosSaga, userProfile);
 
     storedPin = yield call(checkConfiguredPinSaga);
@@ -213,6 +213,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
         yield put(startApplicationInitialization());
         return;
       }
+      // Ask to accept ToS if there is a new available version
+      yield call(checkAcceptedTosSaga, userProfile);
     }
   }
 
