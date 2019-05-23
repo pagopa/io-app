@@ -29,8 +29,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import {
-  checkAndRequestPermission,
-  isCalendarPermissionsDenied
+  checkAndRequestPermission
 } from "../../utils/calendar";
 import {
   formatDateAsDay,
