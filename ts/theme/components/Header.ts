@@ -109,11 +109,17 @@ export default (): Theme => {
 
     minHeight: variables.appHeaderHeight + getStatusBarHeight(true),
     borderBottomWidth: variables.headerBorderBottomWidth,
-    elevation: 0,
     paddingHorizontal: variables.appHeaderPaddingHorizontal,
+    /* iOS */
+    // shadowOpacity: 0,
+    shadowOffset: {
+      height: 0,
+      width: 0
+    },
+    shadowRadius: 0,
     shadowColor: undefined,
-    shadowOffset: undefined,
-    shadowOpacity: undefined,
-    shadowRadius: undefined
+    flexDirection: "row",
+    /* Android */
+    elevation: 0
   };
 };
