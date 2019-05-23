@@ -4,7 +4,7 @@
  * add new ones
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, H1, H3, Left, Right, Text, View } from "native-base";
+import { Button, Content, H1, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
