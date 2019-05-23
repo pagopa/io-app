@@ -3,7 +3,6 @@ import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 
-import { ComponentProps } from "../../types/react";
 import { ContextualHelp } from "../ContextualHelp";
 import { BaseHeader } from "./BaseHeader";
 
@@ -21,7 +20,7 @@ interface OwnProps {
 type BaseHeaderProps = "appLogo" | "primary" | "goBack" | "headerTitle";
 
 type Props = OwnProps &
-  Pick<ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
+  Pick<React.ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
 
 interface State {
   isHelpVisible: boolean;
