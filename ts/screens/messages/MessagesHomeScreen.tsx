@@ -26,8 +26,6 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
-// Used to disable the Deadlines tab
-const DEADLINES_TAB_ENABLED = false;
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -108,6 +106,7 @@ class MessagesHomeScreen extends React.Component<Props> {
    */
   private renderTabs = () => {
     const {
+      isExperimentalFeaturesEnabled,
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
@@ -140,7 +139,7 @@ class MessagesHomeScreen extends React.Component<Props> {
             navigateToMessageDetail={navigateToMessageDetail}
           />
         </Tab>
-        {DEADLINES_TAB_ENABLED && (
+        {isExperimentalFeaturesEnabled && (
           <Tab
             heading={
               <TabHeading>
@@ -153,7 +152,8 @@ class MessagesHomeScreen extends React.Component<Props> {
             {this.renderShadow()}
             <MessagesDeadlines
               messagesState={lexicallyOrderedMessagesState}
-              onRefresh={refreshMessages}
+              servicesById={servicesById}
+              paymentsByRptId={paymentsByRptId}
               navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>
@@ -215,6 +215,8 @@ class MessagesHomeScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  isExperimentalFeaturesEnabled:
+    state.persistedPreferences.isExperimentalFeaturesEnabled,
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state),
