@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   paymentReason: string;
   currentAmount: AmountInEuroCents;
-  recipient: string;
+  recipient: EnteBeneficiario;
   onCancel: () => void;
 }>;
 
@@ -66,7 +66,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
       </Row>
       <Row>
         <Col size={2}>
-          <Text white={true}>{props.recipient}</Text>
+          <Text white={true}>{props.recipient.denominazioneBeneficiario}</Text>
           <View spacer={true} />
         </Col>
         <Right>

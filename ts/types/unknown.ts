@@ -10,6 +10,7 @@ import {
 } from "../utils/input";
 
 const UNKNOWN_STRING = "?";
+const UNKNOWN_EMPTY_STRING = "";
 const UNKNOWN_NUMBER = -1;
 const UNKNOWN_DATE = new Date("?");
 
@@ -24,6 +25,19 @@ export const UNKNOWN_RECIPIENT: EnteBeneficiario = {
   localitaBeneficiario: UNKNOWN_STRING,
   provinciaBeneficiario: UNKNOWN_STRING,
   nazioneBeneficiario: UNKNOWN_STRING
+};
+
+export const UNKNOWN_RECIPIENT_EMPTY: EnteBeneficiario = {
+  identificativoUnivocoBeneficiario: UNKNOWN_EMPTY_STRING,
+  denominazioneBeneficiario: UNKNOWN_EMPTY_STRING,
+  codiceUnitOperBeneficiario: UNKNOWN_EMPTY_STRING,
+  denomUnitOperBeneficiario: UNKNOWN_EMPTY_STRING,
+  indirizzoBeneficiario: UNKNOWN_EMPTY_STRING,
+  civicoBeneficiario: UNKNOWN_EMPTY_STRING,
+  capBeneficiario: UNKNOWN_EMPTY_STRING,
+  localitaBeneficiario: UNKNOWN_EMPTY_STRING,
+  provinciaBeneficiario: UNKNOWN_EMPTY_STRING,
+  nazioneBeneficiario: UNKNOWN_EMPTY_STRING
 };
 
 const UNKNOWN_CARD_PAN = "****************" as CreditCardPan;
