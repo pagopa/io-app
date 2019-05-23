@@ -141,8 +141,7 @@
   "resolutions": {
     "@types/react": "16.7.18",
     "@types/prop-types": "15.5.5",
-    "io-ts-types/io-ts": "1.4.2",
-    "italia-utils/nunjucks/chokidar/fsevents": "1.2.4"
+    "io-ts-types/io-ts": "1.4.2"
   },
   "rnpm": {
     "assets": [
