@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Button, Input, Item } from "native-base";
-import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import {
   clearSearchText,
@@ -15,16 +14,6 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
-
-const styles = StyleSheet.create({
-  searchSection: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  input: {
-    flex: 1
-  }
-});
 
 interface OwnProps {
   color?: string;
@@ -51,9 +40,8 @@ class SearchButton extends React.Component<Props, State> {
     return (
       <React.Fragment>
         {searchText.isSome() ? (
-          <Item style={styles.searchSection}>
+          <Item>
             <Input
-              style={styles.input}
               placeholder={I18n.t("global.actions.search")}
               value={searchText.value}
               onChangeText={this.onSearchTextChange}

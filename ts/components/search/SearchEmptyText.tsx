@@ -7,8 +7,7 @@ import customVariables from "../../theme/variables";
 const styles = StyleSheet.create({
   contentWrapper: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: "center"
   },
   message: {
     fontSize: customVariables.fontSizeBase,
@@ -21,6 +20,7 @@ export class SearchEmptyText extends React.PureComponent {
   public render() {
     return (
       <View style={styles.contentWrapper}>
+        <View spacer={true} extralarge={true} />
         <View spacer={true} extralarge={true} />
 
         <Image source={require("../../../img/search/search-icon.png")} />

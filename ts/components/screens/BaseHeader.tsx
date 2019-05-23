@@ -47,7 +47,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       isSearchEnabled
     } = this.props;
     return (
-      <AppHeader primary={this.props.primary}>
+      <AppHeader primary={this.props.primary} noShadow={isSearchEnabled}>
         {goBack && (
           <Left>
             <GoBackButton
@@ -58,20 +58,22 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
             />
           </Left>
         )}
-        <Body style={goBack ? {} : styles.noLeft}>
-          {body ? (
-            body
-          ) : headerTitle ? (
-            <Text white={this.props.primary} numberOfLines={1}>
-              {headerTitle}
-            </Text>
-          ) : (
-            <IconFont
-              name="io-logo"
-              color={this.props.primary ? "white" : variables.brandPrimary}
-            />
-          )}
-        </Body>
+        {!isSearchEnabled && (
+          <Body style={goBack ? {} : styles.noLeft}>
+            {body ? (
+              body
+            ) : headerTitle ? (
+              <Text white={this.props.primary} numberOfLines={1}>
+                {headerTitle}
+              </Text>
+            ) : (
+              <IconFont
+                name="io-logo"
+                color={this.props.primary ? "white" : variables.brandPrimary}
+              />
+            )}
+          </Body>
+        )}
         <Right>
           {!isSearchEnabled && <InstabugButtons />}
           {onShowHelp &&
