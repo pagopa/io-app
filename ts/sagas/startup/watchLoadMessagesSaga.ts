@@ -73,10 +73,12 @@ export function* loadMessages(
       } else if (response.value.status !== 200) {
         // TODO: provide status code along with message in error
         const error =
-          response.value.status === 500 ? response.value.value.title || "" : "";
+          response.value.status === 500 && response.value.value.title
+            ? response.value.value.title
+            : "";
         yield put(loadMessagesAction.failure(error));
       } else {
-        // 200
+        // 200 ok
         yield put(
           loadMessagesAction.success(response.value.value.items.map(_ => _.id))
         );

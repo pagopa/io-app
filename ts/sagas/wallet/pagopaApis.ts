@@ -118,9 +118,7 @@ export function* fetchTransactionRequestHandler(
         throw Error("Generic error");
       }
     } else {
-      yield put(
-        fetchTransactionFailure(new Error(readableReport(response.value)))
-      );
+      throw Error(readableReport(response.value));
     }
   } catch (error) {
     yield put(fetchTransactionFailure(error));

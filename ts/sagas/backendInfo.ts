@@ -40,9 +40,11 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
       backendInfoResponse.isRight() &&
       backendInfoResponse.value.status === 200
     ) {
-      const version = backendInfoResponse.value.value.version;
-      yield put(backendInfoLoadSuccess({ version }));
-      setInstabugUserAttribute("backendVersion", version);
+      yield put(backendInfoLoadSuccess(backendInfoResponse.value.value));
+      setInstabugUserAttribute(
+        "backendVersion",
+        backendInfoResponse.value.value.version
+      );
       // tslint:disable-next-line:saga-yield-return-type
       yield call(startTimer, BACKEND_INFO_LOAD_INTERVAL);
     } else {

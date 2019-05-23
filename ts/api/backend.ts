@@ -137,7 +137,7 @@ export function BackendClient(
     method: "get",
     url: () => "/api/v1/session",
     query: _ => ({}),
-    headers: tokenHeaderProducer,
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: getSessionStateDefaultDecoder()
   };
 
