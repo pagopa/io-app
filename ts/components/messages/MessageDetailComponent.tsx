@@ -153,13 +153,26 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
               </View>
               <View style={styles.messageIDBtnContainer}>
                 <Button
-                  widget={true}
                   light={true}
                   bordered={true}
                   primary={true}
                   onPress={() => clipboardSetStringWithFeedback(message.id)}
+                  style={{
+                    height: variables.btnWidgetHeight,
+                    paddingTop: 1,
+                    paddingBottom: 2
+                  }}
                 >
-                  <Text>{I18n.t("clipboard.copyText")}</Text>
+                  <Text
+                    style={{
+                      fontSize: variables.fontSizeSmall,
+                      lineHeight: variables.btnXSmallLineHeight,
+                      paddingRight: 8,
+                      paddingLeft: 8
+                    }}
+                  >
+                    {I18n.t("clipboard.copyText")}
+                  </Text>
                 </Button>
               </View>
             </View>
