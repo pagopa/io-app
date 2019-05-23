@@ -5,7 +5,6 @@ import * as React from "react";
 import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -214,14 +213,14 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   private renderFullState = (
     message: MessageWithContentPO,
     service: pot.Pot<ServicePublic, Error>,
-    paymentByRptId: Props["paymentByRptId"]
+    paymentsByRptId: Props["paymentsByRptId"]
   ) => {
     return (
       <Content noPadded={true}>
         <MessageDetailComponent
           message={message}
-          paymentByRptId={paymentByRptId}
-          service={service}
+          paymentsByRptId={paymentsByRptId}
+          potService={service}
           onServiceLinkPress={
             pot.isSome(service)
               ? () => this.onServiceLinkPressHandler(service.value)
@@ -234,10 +233,14 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   // TODO: Add a Provider and an HOC to manage multiple render states in a simpler way.
   private renderCurrentState = () => {
-    const { potMessage, potService, paymentByRptId } = this.props;
+    const { potMessage, potService, paymentsByRptId } = this.props;
 
     if (pot.isSome(potMessage)) {
-      return this.renderFullState(potMessage.value, potService, paymentByRptId);
+      return this.renderFullState(
+        potMessage.value,
+        potService,
+        paymentsByRptId
+      );
     }
     if (pot.isLoading(potMessage)) {
       return this.renderLoadingState();
@@ -281,7 +284,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
-
   const maybeMessageState = fromNullable(
     messageStateByIdSelector(messageId)(state)
   );
@@ -305,7 +307,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     maybeRead,
     potMessage,
     potService,
-    paymentByRptId: state.entities.paymentByRptId
+    paymentsByRptId: state.entities.paymentByRptId
   };
 };
 
