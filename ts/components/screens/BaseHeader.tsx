@@ -48,16 +48,17 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     } = this.props;
     return (
       <AppHeader primary={this.props.primary} noShadow={isSearchEnabled}>
-        {goBack && (
-          <Left>
-            <GoBackButton
-              testID="back-button"
-              onPress={goBack}
-              accessible={true}
-              accessibilityLabel={I18n.t("global.buttons.back")}
-            />
-          </Left>
-        )}
+        {goBack &&
+          !isSearchEnabled && (
+            <Left>
+              <GoBackButton
+                testID="back-button"
+                onPress={goBack}
+                accessible={true}
+                accessibilityLabel={I18n.t("global.buttons.back")}
+              />
+            </Left>
+          )}
         {!isSearchEnabled && (
           <Body style={goBack ? {} : styles.noLeft}>
             {body ? (

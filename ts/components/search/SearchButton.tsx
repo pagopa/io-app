@@ -46,6 +46,7 @@ class SearchButton extends React.Component<Props, State> {
               value={searchText.value}
               onChangeText={this.onSearchTextChange}
               autoFocus={true}
+              onEndEditing={this.onSearchDisable}
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}
