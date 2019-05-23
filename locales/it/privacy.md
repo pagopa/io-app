@@ -1,5 +1,3 @@
-# Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
-
 (art. 13 del Regolamento UE n. 2016/679)
   
 ## Informazioni chiave 

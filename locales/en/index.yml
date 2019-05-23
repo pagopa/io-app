@@ -95,6 +95,8 @@ profile:
     privacy:
       title: Privacy
       description: Export data, delete account
+      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+      updated: It is required to accept the new version of Terms and Conditions
       text: !include privacy.md
     termsAndConditions:
       title: Terms and Conditions
