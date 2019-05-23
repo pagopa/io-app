@@ -114,6 +114,8 @@ const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
     psp => ("0".repeat(10) + `${psp.fixedCost.amount}`) as AmountInEuroCents
   );
 
+const UNKNOWN_BENIFICIARIO = "";
+
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const verifica = this.props.navigation.getParam("verifica");
@@ -149,7 +151,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <PaymentBannerComponent
             currentAmount={currentAmount}
             paymentReason={paymentReason}
-            recipient={recipient || UNKNOWN_RECIPIENT}
+            recipient={
+              recipient
+                ? recipient.denominazioneBeneficiario
+                : UNKNOWN_BENIFICIARIO
+            }
             onCancel={this.props.onCancel}
           />
           <View style={styles.paddedLR}>
