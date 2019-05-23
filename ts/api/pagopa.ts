@@ -6,7 +6,6 @@ import { flip } from "fp-ts/lib/function";
 import {
   AddResponseType,
   ApiHeaderJson,
-  AuthorizationBearerHeaderProducer,
   basicErrorResponseDecoder,
   composeHeaderProducers,
   composeResponseDecoders,
