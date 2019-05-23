@@ -7,12 +7,10 @@ import {
   Platform,
   StatusBar
 } from "react-native";
-import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
-import ExitAppComponent from "./components/ExitAppComponent";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
@@ -78,8 +76,6 @@ class RootContainer extends React.PureComponent<Props> {
     }
 
     AppState.addEventListener("change", this.handleApplicationActivity);
-    // Hide splash screen
-    SplashScreen.hide();
   }
 
   public componentWillUnmount() {
@@ -115,13 +111,6 @@ class RootContainer extends React.PureComponent<Props> {
     }
   }
 
-  /**
-   * exitApp will be called if user press twice back when
-   * navigation history is empty. Remember BackHandler.exitApp() works
-   * on Android platforms (and others) but not on iOS platforms
-   */
-  private exitApp = () => BackHandler.exitApp();
-
   public render() {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
@@ -138,7 +127,6 @@ class RootContainer extends React.PureComponent<Props> {
         <Navigation />
         <IdentificationModal />
         <LightModalRoot />
-        <ExitAppComponent exitApp={this.exitApp} />
       </Root>
     );
   }
