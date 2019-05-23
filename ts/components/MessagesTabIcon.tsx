@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     height: 19,
     width: 19,
     textAlign: "center",
-    paddingRight: 3,
+    paddingRight: 4,
     top: Platform.OS === "ios" ? 0 : undefined
   },
   badgeStyle: {
