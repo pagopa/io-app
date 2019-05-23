@@ -28,9 +28,7 @@ import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { MessageWithContentPO } from "../../types/MessageWithContentPO";
-import {
-  checkAndRequestPermission
-} from "../../utils/calendar";
+import { checkAndRequestPermission } from "../../utils/calendar";
 import {
   formatDateAsDay,
   formatDateAsMonth,
