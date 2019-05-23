@@ -1,21 +1,34 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import I18n from "../../i18n";
+import customVariables from "../../theme/variables";
 
 const styles = StyleSheet.create({
-  noSearchBarText: {
+  contentWrapper: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
+  },
+  message: {
+    fontSize: customVariables.fontSizeBase,
+    paddingTop: customVariables.contentPadding,
+    textAlign: "center"
   }
 });
 
 export class SearchEmptyText extends React.PureComponent {
   public render() {
     return (
-      <View style={styles.noSearchBarText}>
-        <Text>{I18n.t("global.search.invalidSearchBarText")}</Text>
+      <View style={styles.contentWrapper}>
+        <View spacer={true} extralarge={true} />
+
+        <Image source={require("../../../img/search/search-icon.png")} />
+        <View spacer={true} />
+
+        <Text style={styles.message}>
+          {I18n.t("global.search.invalidSearchBarText")}
+        </Text>
       </View>
     );
   }

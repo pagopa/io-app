@@ -1,9 +1,11 @@
+import color from "color";
 import debounce from "lodash/debounce";
 import * as React from "react";
 import { connect } from "react-redux";
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { Button, Icon, Input, Item } from "native-base";
+import { Button, Input, Item } from "native-base";
+import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import {
   clearSearchText,
@@ -11,7 +13,18 @@ import {
   updateSearchText
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
+import variables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
+
+const styles = StyleSheet.create({
+  searchSection: {
+    flex: 1,
+    flexDirection: "row"
+  },
+  input: {
+    flex: 1
+  }
+});
 
 interface OwnProps {
   color?: string;
@@ -38,14 +51,25 @@ class SearchButton extends React.Component<Props, State> {
     return (
       <React.Fragment>
         {searchText.isSome() ? (
-          <Item>
+          <Item style={styles.searchSection}>
             <Input
+              style={styles.input}
               placeholder={I18n.t("global.actions.search")}
               value={searchText.value}
               onChangeText={this.onSearchTextChange}
               autoFocus={true}
+              placeholderTextColor={color(variables.brandGray)
+                .darken(0.2)
+                .string()}
             />
-            <Icon name="cross" onPress={this.onSearchDisable} />
+            <Button onPress={this.onSearchDisable} transparent={true}>
+              <IconFont
+                name="io-close"
+                color={this.props.color}
+                accessible={true}
+                accessibilityLabel={I18n.t("global.buttons.close")}
+              />
+            </Button>
           </Item>
         ) : (
           <Button onPress={this.handleSearchPress} transparent={true}>
