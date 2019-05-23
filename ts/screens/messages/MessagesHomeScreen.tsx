@@ -33,8 +33,6 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
-// Used to disable the Deadlines tab
-const DEADLINES_TAB_ENABLED = false;
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -84,7 +82,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 1,
     // Android shadow
-    elevation: 5
+    elevation: 5,
+    marginTop: -1
   },
   ioSearch: {
     // Corrects the position of the font icon inside the button
@@ -156,6 +155,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
    */
   private renderTabs = () => {
     const {
+      isExperimentalFeaturesEnabled,
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
@@ -188,7 +188,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             navigateToMessageDetail={navigateToMessageDetail}
           />
         </Tab>
-        {DEADLINES_TAB_ENABLED && (
+        {isExperimentalFeaturesEnabled && (
           <Tab
             heading={
               <TabHeading>
@@ -201,7 +201,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             {this.renderShadow()}
             <MessagesDeadlines
               messagesState={lexicallyOrderedMessagesState}
-              onRefresh={refreshMessages}
+              servicesById={servicesById}
+              paymentsByRptId={paymentsByRptId}
               navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>
@@ -301,6 +302,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  isExperimentalFeaturesEnabled:
+    state.persistedPreferences.isExperimentalFeaturesEnabled,
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state)
