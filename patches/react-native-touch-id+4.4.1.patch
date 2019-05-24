@@ -23,56 +23,6 @@ patch-package
              NSString *errorReason = [self getErrorReason:error];
              NSLog(@"Authentication failed: %@", errorReason);
              
---- a/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintAuthModule.java
-+++ b/node_modules/react-native-touch-id/android/src/main/java/com/rnfingerprint/FingerprintAuthModule.java
-@@ -20,6 +20,8 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
- 
-     private static final String FRAGMENT_TAG = "fingerprint_dialog";
- 
-+    // fingerprintDialog now is a class instance, so we handle its lifecycle
-+    private FingerprintDialog fingerprintDialog;
-     private KeyguardManager keyguardManager;
-     private boolean isAppActive;
- 
-@@ -27,7 +29,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
- 
-     public FingerprintAuthModule(final ReactApplicationContext reactContext) {
-         super(reactContext);
--
-         reactContext.addLifecycleEventListener(this);
-     }
- 
-@@ -69,6 +70,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
-     @ReactMethod
-     public void authenticate(final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback) {
-         final Activity activity = getCurrentActivity();
-+        // if fingerprintDialog is not null and it has beeen dismissed on onPause we will show it 
-+        if (inProgress && fingerprintDialog != null && activity != null) {
-+           fingerprintDialog.show(activity.getFragmentManager(), FRAGMENT_TAG);
-+           return;
-+        }
-         if (inProgress || !isAppActive || activity == null) {
-             return;
-         }
-@@ -96,7 +102,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
- 
-         final DialogResultHandler drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback);
- 
--        final FingerprintDialog fingerprintDialog = new FingerprintDialog();
-+        fingerprintDialog = new FingerprintDialog();
-         fingerprintDialog.setCryptoObject(cryptoObject);
-         fingerprintDialog.setReasonForAuthentication(reason);
-         fingerprintDialog.setAuthConfig(authConfig);
-@@ -149,6 +155,9 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
-     @Override
-     public void onHostPause() {
-         isAppActive = false;
-+        // if the fingerprintDialog is showing dismiss it.
-+        if (inProgress && fingerprintDialog != null && getCurrentActivity() != null) 
-+            fingerprintDialog.dismiss();
-     }
- 
-     @Override
 --- a/node_modules/react-native-touch-id/index.d.ts
 +++ b/node_modules/react-native-touch-id/index.d.ts
 @@ -2,12 +2,12 @@ declare module 'react-native-touch-id' {
