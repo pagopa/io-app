@@ -1,11 +1,12 @@
 import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
-import { Button, H1, Icon, Text, View } from "native-base";
+import { Button, H3, Icon, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet, ViewStyle } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { NavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
@@ -26,7 +27,6 @@ import {
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import {
   formatDateAsDay,
@@ -46,7 +46,7 @@ import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 
 type OwnProps = {
-  message: MessageWithContentPO;
+  message: CreatedMessageWithContent;
   service?: ServicePublic;
   payment?: PaidReason;
   containerStyle?: ViewStyle;
@@ -126,14 +126,17 @@ const styles = StyleSheet.create({
   },
 
   selectCalendaModalHeader: {
-    marginBottom: 25
+    lineHeight: 40
   }
 });
 
 const SelectCalendarModalHeader = (
-  <H1 style={styles.selectCalendaModalHeader}>
-    {I18n.t("messages.cta.reminderCalendarSelect")}
-  </H1>
+  <View>
+    <H3 style={styles.selectCalendaModalHeader}>
+      {I18n.t("messages.cta.reminderCalendarSelect")}
+    </H3>
+    <View spacer={true} large={true} />
+  </View>
 );
 
 class MessageCTABar extends React.PureComponent<Props, State> {
@@ -155,7 +158,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   }
 
   private renderReminderCTA(
-    dueDate: NonNullable<MessageWithContentPO["content"]["due_date"]>,
+    dueDate: NonNullable<CreatedMessageWithContent["content"]["due_date"]>,
     useShortLabel: boolean
   ) {
     const {
@@ -265,7 +268,9 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   }
 
   private renderPaymentCTA(
-    paymentData: NonNullable<MessageWithContentPO["content"]["payment_data"]>,
+    paymentData: NonNullable<
+      CreatedMessageWithContent["content"]["payment_data"]
+    >,
     service?: ServicePublic,
     payment?: PaidReason
   ) {
@@ -383,7 +388,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   };
 
   private addReminderToCalendar = (
-    message: MessageWithContentPO,
+    message: CreatedMessageWithContent,
     dueDate: Date
   ) => (calendar: Calendar) => {
     const title = I18n.t("messages.cta.reminderTitle", {

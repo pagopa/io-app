@@ -2,11 +2,11 @@
  * Generic utilities for messages
  */
 
-import { MessageWithContentPO } from "../types/MessageWithContentPO";
+import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
 export function messageContainsText(
-  message: MessageWithContentPO,
+  message: CreatedMessageWithContent,
   searchText: string
 ) {
   return (
@@ -15,14 +15,20 @@ export function messageContainsText(
   );
 }
 
-export function messageNeedsDueDateCTA(message: MessageWithContentPO): boolean {
+export function messageNeedsDueDateCTA(
+  message: CreatedMessageWithContent
+): boolean {
   return message.content.due_date !== undefined;
 }
 
-export function messageNeedsPaymentCTA(message: MessageWithContentPO): boolean {
+export function messageNeedsPaymentCTA(
+  message: CreatedMessageWithContent
+): boolean {
   return message.content.payment_data !== undefined;
 }
 
-export function messageNeedsCTABar(message: MessageWithContentPO): boolean {
+export function messageNeedsCTABar(
+  message: CreatedMessageWithContent
+): boolean {
   return messageNeedsDueDateCTA(message) || messageNeedsPaymentCTA(message);
 }

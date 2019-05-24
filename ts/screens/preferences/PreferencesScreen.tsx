@@ -1,33 +1,27 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { Content, List, ListItem } from "native-base";
+import { List, ListItem } from "native-base";
 import * as React from "react";
-
 import { Alert } from "react-native";
-
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import { fromNullable } from "fp-ts/lib/Option";
-
+import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
 
+import PreferenceItem from "../../components/PreferenceItem";
+import ScreenContent from "../../components/screens/ScreenContent";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
-
+import ROUTES from "../../navigation/routes";
+import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
+import {
+  navigateToCalendarPreferenceScreen,
+  navigateToFingerprintPreferenceScreen
+} from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-
-import PreferenceItem from "../../components/PreferenceItem";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
-
-import ROUTES from "../../navigation/routes";
-
 import { checkCalendarPermission } from "../../utils/calendar";
-
-import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { getLocalePrimary } from "../../utils/locale";
-
-import { navigateToFingerprintPreferenceScreen } from "../../store/actions/navigation";
-import { navigateToCalendarPreferenceScreen } from "../../store/actions/navigation";
 
 const unavailableAlert = () =>
   Alert.alert(
@@ -144,12 +138,12 @@ class PreferencesScreen extends React.Component<Props, State> {
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 
     return (
-      <TopScreenComponent
-        title={I18n.t("preferences.title")}
-        icon={require("../../../img/icons/gears.png")}
-        subtitle={I18n.t("preferences.subtitle")}
-      >
-        <Content noPadded={true}>
+      <TopScreenComponent title={I18n.t("preferences.title")} appLogo={true}>
+        <ScreenContent
+          title={I18n.t("preferences.title")}
+          subtitle={I18n.t("preferences.subtitle")}
+          icon={require("../../../img/icons/gears.png")}
+        >
           <List withContentLateralPadding={true}>
             <ListItem
               onPress={() =>
@@ -221,7 +215,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               />
             </ListItem>
           </List>
-        </Content>
+        </ScreenContent>
       </TopScreenComponent>
     );
   }
