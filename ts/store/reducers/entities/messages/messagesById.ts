@@ -11,6 +11,7 @@ import { CreatedMessageWithoutContent } from "../../../../../definitions/backend
 import { MessageWithContentPO } from "../../../../types/MessageWithContentPO";
 import {
   loadMessage,
+  removeMessages,
   setMessageReadState,
   setMessagesArchivedState
 } from "../../../actions/messages";
@@ -74,6 +75,13 @@ const reducer = (
           message: pot.noneError(action.payload.error)
         }
       };
+    }
+    case getType(removeMessages): {
+      const clonedState = { ...state };
+      const ids = action.payload;
+      // tslint:disable-next-line: no-object-mutation
+      ids.forEach(id => delete clonedState[id]);
+      return clonedState;
     }
     case getType(setMessageReadState): {
       const { id, read } = action.payload;
