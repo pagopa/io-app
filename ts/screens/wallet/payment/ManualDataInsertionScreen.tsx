@@ -60,11 +60,8 @@ const styles = StyleSheet.create({
   whiteBg: {
     backgroundColor: variables.colorWhite
   },
-  form: {
-    flex: 1,
-    alignItems: "flex-start"
-  },
-  itemNoLeftMargin: {
+
+  noLeftMargin: {
     marginLeft: 0
   }
 });
@@ -156,9 +153,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             {/* Native Base Form has a padding by design. So if we want to remove the left padding
                 we need to override the items's style (https://github.com/GeekyAnts/NativeBase/issues/630)
             */}
-            <Form style={styles.form}>
+            <Form>
               <Item
-                style={styles.itemNoLeftMargin}
+                style={styles.noLeftMargin}
                 floatingLabel={true}
                 error={this.state.paymentNoticeNumber
                   .map(isLeft)
@@ -181,7 +178,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 />
               </Item>
               <Item
-                style={styles.itemNoLeftMargin}
+                style={styles.noLeftMargin}
                 floatingLabel={true}
                 error={this.state.organizationFiscalCode
                   .map(isLeft)
@@ -204,7 +201,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 />
               </Item>
               <Item
-                style={styles.itemNoLeftMargin}
+                style={styles.noLeftMargin}
                 floatingLabel={true}
                 error={this.state.delocalizedAmount
                   .map(isLeft)
