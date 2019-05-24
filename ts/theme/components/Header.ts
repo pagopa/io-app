@@ -25,7 +25,14 @@ export default (): Theme => {
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3
       },
-      paddingLeft: 0,
+      "NativeBase.ViewNB": {
+        padding: 0,
+        paddingLeft: variables.iconSizeBase / 2,
+        justifyContent: "center",
+        width: (variables.iconSizeBase * 5) / 3,
+        height: (variables.iconSizeBase * 5) / 3
+      },
+      padding: 0,
       minWidth: 40,
       flex: 0
     },
@@ -44,7 +51,26 @@ export default (): Theme => {
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3
       },
-      flex: 1
+      "NativeBase.Item": {
+        "NativeBase.Input": {
+          height: 40
+        },
+        borderBottomWidth: 0,
+        "NativeBase.Button": {
+          minWidth: 40,
+          alignSelf: "flex-start",
+          justifyContent: "center",
+          width: (variables.iconSizeBase * 5) / 3,
+          height: (variables.iconSizeBase * 5) / 3,
+          padding: variables.iconSizeBase / 4,
+          "NativeBase.Icon": {
+            marginHorizontal: 0
+          }
+        }
+      },
+      flex: 1,
+      height: 40,
+      justifyContent: "center"
     },
 
     "NativeBase.Right": {
@@ -83,11 +109,17 @@ export default (): Theme => {
 
     minHeight: variables.appHeaderHeight + getStatusBarHeight(true),
     borderBottomWidth: variables.headerBorderBottomWidth,
-    elevation: 0,
     paddingHorizontal: variables.appHeaderPaddingHorizontal,
+    /* iOS */
+    // shadowOpacity: 0,
+    shadowOffset: {
+      height: 0,
+      width: 0
+    },
+    shadowRadius: 0,
     shadowColor: undefined,
-    shadowOffset: undefined,
-    shadowOpacity: undefined,
-    shadowRadius: undefined
+    flexDirection: "row",
+    /* Android */
+    elevation: 0
   };
 };
