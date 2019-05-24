@@ -7,8 +7,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
+import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithoutContent } from "../../../../../definitions/backend/CreatedMessageWithoutContent";
-import { MessageWithContentPO } from "../../../../types/MessageWithContentPO";
 import {
   loadMessage,
   removeMessages,
@@ -23,7 +23,7 @@ export type MessageState = {
   meta: CreatedMessageWithoutContent;
   isRead: boolean;
   isArchived: boolean;
-  message: pot.Pot<MessageWithContentPO, string | undefined>;
+  message: pot.Pot<CreatedMessageWithContent, string | undefined>;
 };
 
 // An object containing MessageWithContentPO keyed by id

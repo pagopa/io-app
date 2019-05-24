@@ -15,7 +15,6 @@ import {
   MessageState
 } from "../../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
-import { toMessageWithContentPO } from "../../../types/MessageWithContentPO";
 import { loadMessages } from "../../startup/watchLoadMessagesSaga";
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
@@ -42,7 +41,7 @@ const testMessageMeta1: MessageState = {
   },
   isRead: false,
   isArchived: false,
-  message: pot.some(toMessageWithContentPO(testMessageWithContent1))
+  message: pot.some(testMessageWithContent1)
 };
 
 const testMessageWithContent2: CreatedMessageWithContent = {
@@ -65,7 +64,7 @@ const testMessageMeta2: MessageState = {
   },
   isRead: false,
   isArchived: false,
-  message: pot.some(toMessageWithContentPO(testMessageWithContent2))
+  message: pot.some(testMessageWithContent2)
 };
 
 const testServicePublic = {
