@@ -9,6 +9,7 @@ import {
   loadMessages as loadMessagesAction
 } from "../../../store/actions/messages";
 import { loadService } from "../../../store/actions/services";
+import { messagesAllIdsSelector } from "../../../store/reducers/entities/messages/messagesAllIds";
 import {
   messagesStateByIdSelector,
   MessageState
@@ -95,6 +96,9 @@ describe("watchLoadMessages", () => {
       const getService = jest.fn();
       testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
+        .select(messagesAllIdsSelector)
+        // Return an empty pot array as messagesAllIdsSelector response
+        .next(pot.some([]))
         .select(messagesStateByIdSelector)
         // Return an empty object as messagesByIdSelectors response
         .next({})
@@ -116,6 +120,9 @@ describe("watchLoadMessages", () => {
       const getService = jest.fn();
       testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
+        .select(messagesAllIdsSelector)
+        // Return an empty pot array as messagesAllIdsSelector response
+        .next(pot.some([]))
         .select(messagesStateByIdSelector)
         // Return an empty object as messagesByIdSelectors response (no message already stored)
         .next({})
@@ -141,6 +148,9 @@ describe("watchLoadMessages", () => {
       const getService = jest.fn();
       testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
+        .select(messagesAllIdsSelector)
+        // Return an empty pot array as messagesAllIdsSelector response
+        .next(pot.some([]))
         .select(messagesStateByIdSelector)
         // Return an object as messagesByIdSelectors response
         .next({
