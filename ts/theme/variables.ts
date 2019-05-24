@@ -211,6 +211,7 @@ const customVariables = Object.assign(materialVariables, {
   titleHeaderPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
+  headerFontColor: "#000000",
   headerBodyFontWeight: "600" as FontWeight,
   toolbarDefaultBg: "#FFFFFF",
   get toolbarTextColor(): ThemeSimpleValue {
