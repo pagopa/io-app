@@ -19,7 +19,7 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import { MessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
+import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
@@ -97,7 +97,7 @@ export type MessageAgendaItemMetadata = {
 };
 
 export type MessageAgendaItem = ITuple2<
-  MessageWithContentAndDueDatePO,
+  CreatedMessageWithContentAndDueDate,
   MessageAgendaItemMetadata
 >;
 
