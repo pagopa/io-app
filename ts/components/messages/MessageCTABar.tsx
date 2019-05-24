@@ -1,6 +1,6 @@
 import { fromNullable, isSome } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
-import { Button, H3, Icon, Text, View } from "native-base";
+import { Button, H3, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet, ViewStyle } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
@@ -243,13 +243,13 @@ class MessageCTABar extends React.PureComponent<Props, State> {
           >
             {isEventInCalendar ? (
               <IconFont
-                name="io-tick-big"
+                name={"io-tick-big"}
                 style={styles.reminderButtonIcon}
                 color={variables.contentPrimaryBackground}
               />
             ) : (
-              <Icon
-                name={"plus"}
+              <IconFont
+                name={"io-plus"}
                 style={styles.reminderButtonIcon}
                 color={variables.contentPrimaryBackground}
               />

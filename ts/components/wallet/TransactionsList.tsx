@@ -21,6 +21,7 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
+import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
@@ -63,7 +64,11 @@ const styles = StyleSheet.create({
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
     const isNew = false; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
-    const datetime: string = `${item.created.toLocaleDateString()} - ${item.created.toLocaleTimeString()}`;
+    const datetime: string = `${formatDateAsLocal(
+      item.created,
+      true,
+      true
+    )} - ${item.created.toLocaleTimeString()}`;
     return (
       <Row>
         <Left>
