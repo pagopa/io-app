@@ -2,7 +2,6 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import debounce from "lodash/debounce";
 import {
   Button,
-  Icon,
   Input,
   Item,
   Tab,
@@ -143,9 +142,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                 onChangeText={this.onSearchTextChange}
                 autoFocus={true}
               />
-              <Button onPress={this.onSearchDisable} transparent={true}>
-                <Icon style={styles.searchDisableIcon} name="cross" />
-              </Button>
+              <IconFont name="io-close" onPress={this.onSearchDisable} />
             </Item>
           ) : (
             <View style={styles.ioSearchContainer}>
