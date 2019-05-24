@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Text, View } from "native-base";
@@ -19,7 +20,7 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import { MessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
+import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
@@ -97,7 +98,7 @@ export type MessageAgendaItemMetadata = {
 };
 
 export type MessageAgendaItem = ITuple2<
-  MessageWithContentAndDueDatePO,
+  CreatedMessageWithContentAndDueDate,
   MessageAgendaItemMetadata
 >;
 
@@ -126,6 +127,7 @@ type OwnProps = {
   onPressItem: (id: string) => void;
   onLongPressItem: (id: string) => void;
   onMoreDataRequest: () => void;
+  selectedMessageIds: Option<Set<string>>;
 };
 
 type Props = OwnProps & SelectedSectionListProps;
@@ -306,7 +308,12 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
     const message = info.item.e1;
     const { isRead } = info.item.e2;
-    const { paymentsByRptId, onPressItem, onLongPressItem } = this.props;
+    const {
+      paymentsByRptId,
+      onPressItem,
+      onLongPressItem,
+      selectedMessageIds
+    } = this.props;
 
     const potService = this.props.servicesById[message.sender_service_id];
 
@@ -337,8 +344,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         payment={payment}
         onPress={onPressItem}
         onLongPress={onLongPressItem}
-        isSelectionModeEnabled={false}
-        isSelected={false}
+        isSelectionModeEnabled={selectedMessageIds.isSome()}
+        isSelected={selectedMessageIds
+          .map(_ => _.has(message.id))
+          .getOrElse(false)}
       />
     );
   };

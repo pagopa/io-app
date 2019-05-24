@@ -11,14 +11,20 @@ import {
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { View } from "native-base";
+import { Button, Text, View } from "native-base";
 import React from "react";
 import { SectionListScrollParams, StyleSheet } from "react-native";
 
+import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
-import { isMessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
+import customVariables from "../../theme/variables";
+import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
+import {
+  InjectedWithMessagesSelectionProps,
+  withMessagesSelection
+} from "../helpers/withMessagesSelection";
 import MessageAgenda, {
   MessageAgendaItem,
   MessageAgendaSection,
@@ -31,19 +37,43 @@ const PAST_DATA_MONTHS = 3;
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
+  },
+
+  buttonBar: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: "row",
+    zIndex: 1,
+    justifyContent: "space-around",
+    backgroundColor: customVariables.brandLightGray,
+    padding: 10
+  },
+  buttonBarPrimaryButton: {
+    flex: 8,
+    marginLeft: 10
+  },
+  buttonBarSecondaryButton: {
+    flex: 4
   }
 });
 
 type OwnProps = {
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   navigateToMessageDetail: (id: string) => void;
+  setMessagesArchivedState: (
+    ids: ReadonlyArray<string>,
+    archived: boolean
+  ) => void;
 };
 
 type Props = Pick<
   ComponentProps<typeof MessageAgenda>,
   "servicesById" | "paymentsByRptId"
 > &
-  OwnProps;
+  OwnProps &
+  InjectedWithMessagesSelectionProps;
 
 type State = {
   isWorking: boolean;
@@ -71,7 +101,7 @@ const generateSections = (
           if (
             !isArchived &&
             pot.isSome(message) &&
-            isMessageWithContentAndDueDatePO(message.value)
+            isCreatedMessageWithContentAndDueDate(message.value)
           ) {
             accumulator.push(
               Tuple2(message.value, {
@@ -233,9 +263,6 @@ const selectInitialSectionsToRender = (
 ): Sections => {
   const sectionsToRender: Sections = [];
 
-  // Select future data (calendar events from today)
-  sectionsToRender.push(...selectFutureData(sections));
-
   if (maybeLastLoadedStartOfMonthTime.isSome()) {
     // Select past months data
     const lastLoadedStartOfMonthTime = maybeLastLoadedStartOfMonthTime.value;
@@ -249,6 +276,9 @@ const selectInitialSectionsToRender = (
     // Select current month remaining data
     sectionsToRender.push(...selectCurrentMonthRemainingData(sections));
   }
+
+  // Select future data (calendar events from today)
+  sectionsToRender.push(...selectFutureData(sections));
 
   return sectionsToRender;
 };
@@ -300,10 +330,26 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   };
 
   private handleOnPressItem = (id: string) => {
-    this.props.navigateToMessageDetail(id);
+    if (this.props.selectedMessageIds.isSome()) {
+      // Is the selection mode is active a simple "press" must act as
+      // a "longPress" (select the item).
+      this.handleOnLongPressItem(id);
+    } else {
+      this.props.navigateToMessageDetail(id);
+    }
   };
 
-  private handleOnLongPressItem = () => 0;
+  private handleOnLongPressItem = (id: string) => {
+    this.props.toggleMessageSelection(id);
+  };
+
+  private archiveMessages = () => {
+    this.props.resetSelection();
+    this.props.setMessagesArchivedState(
+      this.props.selectedMessageIds.map(_ => Array.from(_)).getOrElse([]),
+      true
+    );
+  };
 
   private onLoadMoreDataRequest = () => {
     const { sections, maybeLastLoadedStartOfMonthTime } = this.state;
@@ -411,19 +457,47 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { messagesState, servicesById, paymentsByRptId } = this.props;
+    const {
+      messagesState,
+      servicesById,
+      paymentsByRptId,
+      selectedMessageIds,
+      resetSelection
+    } = this.props;
     const { isWorking, sectionsToRender } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
 
     return (
       <View style={styles.listWrapper}>
+        {selectedMessageIds.isSome() && (
+          <View style={styles.buttonBar}>
+            <Button
+              block={true}
+              bordered={true}
+              light={true}
+              onPress={resetSelection}
+              style={styles.buttonBarSecondaryButton}
+            >
+              <Text>{I18n.t("global.buttons.cancel")}</Text>
+            </Button>
+            <Button
+              block={true}
+              style={styles.buttonBarPrimaryButton}
+              disabled={selectedMessageIds.value.size === 0}
+              onPress={this.archiveMessages}
+            >
+              <Text>{I18n.t("messages.cta.archive")}</Text>
+            </Button>
+          </View>
+        )}
         <MessageAgenda
           ref={this.messageAgendaRef}
           sections={sectionsToRender}
           servicesById={servicesById}
           paymentsByRptId={paymentsByRptId}
           refreshing={isRefreshing}
+          selectedMessageIds={selectedMessageIds}
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnLongPressItem}
           onMoreDataRequest={this.onLoadMoreDataRequest}
@@ -434,4 +508,4 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   }
 }
 
-export default MessagesDeadlines;
+export default withMessagesSelection(MessagesDeadlines);
