@@ -18,24 +18,23 @@ type CalendarAuthorization = { authorized: boolean; asked: boolean };
 export async function checkAndRequestPermission(): Promise<
   CalendarAuthorization
 > {
-  const notAuthorizedAndAsked = { authorized: false, asked: false };
   try {
     const status = await RNCalendarEvents.authorizationStatus();
     // If the user already selected to deny permission just return false
     if (status === "denied") {
-      return notAuthorizedAndAsked;
+      return { authorized: false, asked: false };
     }
 
     // If the permission is already granted return true
     if (status === "authorized") {
-      return notAuthorizedAndAsked;
+      return { authorized: true, asked: false };
     }
 
     // In other cases ask the authorization
     const newStatus = await RNCalendarEvents.authorizeEventStore();
     return { authorized: newStatus === "authorized", asked: true };
   } catch (error) {
-    return notAuthorizedAndAsked;
+    return { authorized: false, asked: false };
   }
 }
 
