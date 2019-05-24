@@ -3,6 +3,8 @@ global:
   localization:
     decimalSeparator: ","
   dateFormats:
+    monthYear: "MMMM YYYY"
+    dayMonthYear: "dddd D MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD/MM"
   jserror:
@@ -544,7 +546,7 @@ messages:
   deadlines:
     emptyMessage: 
       title: Non hai scadenze in programma.
-      subtitle: Scorri verso il basso questa pagina per vedere le scadenze già trascorse.
+      subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
@@ -641,3 +643,6 @@ calendarEvents:
     title: Sei sicuro di voler rimuovere l'evento?
     ok: Rimuovi evento
     cancel: Annulla l'operazione
+reminders:
+  emptyMonth: Non ci sono scadenze in questo mese
+  loadMoreData: carica le scadenze del periodo precedente
