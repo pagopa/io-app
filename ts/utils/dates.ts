@@ -32,13 +32,18 @@ export function formatDateAsReminder(
  */
 export function formatDateAsLocal(
   date: Date,
-  includeYear: boolean = false
+  includeYear: boolean = false,
+  extendedYear: boolean = false
 ): ReturnType<typeof dateFnsFormat> {
-  return includeYear
+  return extendedYear
     ? format(date, I18n.t("global.dateFormats.dayMonth")) +
         "/" +
+        format(date, "YYYY")
+    : includeYear
+      ? format(date, I18n.t("global.dateFormats.dayMonth")) +
+        "/" +
         format(date, "YY")
-    : format(date, I18n.t("global.dateFormats.dayMonth"));
+      : format(date, I18n.t("global.dateFormats.dayMonth"));
 }
 
 export function format(

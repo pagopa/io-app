@@ -287,7 +287,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     return (
       <Modal onRequestClose={onRequestCloseHandler}>
-        <BaseScreenComponent primary={true} contextualHelp={contextualHelp}>
+        <BaseScreenComponent
+          primary={true}
+          contextualHelp={contextualHelp}
+          appLogo={true}
+        >
           <StatusBar
             barStyle="light-content"
             backgroundColor={variables.contentPrimaryBackground}

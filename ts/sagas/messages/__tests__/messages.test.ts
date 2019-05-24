@@ -6,7 +6,6 @@ import { testSaga } from "redux-saga-test-plan";
 
 import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import { loadMessage as loadMessageAction } from "../../../store/actions/messages";
-import { toMessageWithContentPO } from "../../../types/MessageWithContentPO";
 import { fetchMessage, loadMessage } from "../messages";
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
@@ -68,9 +67,9 @@ describe("messages", () => {
       const getMessage = jest.fn();
       testSaga(fetchMessage, getMessage, { id: testMessageId1 })
         .next()
-        // Return 500 with an error message as getMessage response
+        // Return 200 with a valid value as getMessage response
         .next(right({ status: 200, value: testMessageWithContent1 }))
-        .returns(right(toMessageWithContentPO(testMessageWithContent1)));
+        .returns(right(testMessageWithContent1));
     });
   });
 
@@ -80,11 +79,11 @@ describe("messages", () => {
       testSaga(loadMessage, getMessage, { id: testMessageId1 })
         .next()
         .next({
-          message: pot.some(toMessageWithContentPO(testMessageWithContent1))
+          message: pot.some(testMessageWithContent1)
         })
         .returns(
           right({
-            message: pot.some(toMessageWithContentPO(testMessageWithContent1))
+            message: pot.some(testMessageWithContent1)
           })
         );
     });
@@ -117,14 +116,10 @@ describe("messages", () => {
         .next()
         .call(fetchMessage, getMessage, { id: testMessageId1 })
         // Return 200 with a valid message as getMessage response
-        .next(right(toMessageWithContentPO(testMessageWithContent1)))
-        .put(
-          loadMessageAction.success(
-            toMessageWithContentPO(testMessageWithContent1)
-          )
-        )
+        .next(right(testMessageWithContent1))
+        .put(loadMessageAction.success(testMessageWithContent1))
         .next()
-        .returns(right(toMessageWithContentPO(testMessageWithContent1)));
+        .returns(right(testMessageWithContent1));
     });
   });
 });

@@ -59,6 +59,10 @@ type State = Readonly<{
 const styles = StyleSheet.create({
   whiteBg: {
     backgroundColor: variables.colorWhite
+  },
+
+  noLeftMargin: {
+    marginLeft: 0
   }
 });
 
@@ -148,6 +152,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
             <Form>
               <Item
+                style={styles.noLeftMargin}
                 floatingLabel={true}
                 error={this.state.paymentNoticeNumber
                   .map(isLeft)
@@ -170,6 +175,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 />
               </Item>
               <Item
+                style={styles.noLeftMargin}
                 floatingLabel={true}
                 error={this.state.organizationFiscalCode
                   .map(isLeft)
@@ -192,6 +198,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 />
               </Item>
               <Item
+                style={styles.noLeftMargin}
                 floatingLabel={true}
                 error={this.state.delocalizedAmount
                   .map(isLeft)
