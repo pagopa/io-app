@@ -28,13 +28,16 @@ export function withLoadingSpinner<
   class WithLoadingSpinner extends React.Component<P> {
     public render() {
       const { isLoading, loadingCaption, loadingOpacity } = this.props;
-      const opacityProps = {
-        opacity: 1,
-        backgroundColor: `rgba(255,255,255,${loadingOpacity})`
-      };
+      const overlayProps =
+        loadingOpacity !== undefined
+          ? {
+              opacity: 1,
+              backgroundColor: `rgba(255,255,255,${loadingOpacity})`
+            }
+          : undefined;
       return (
         <Overlay
-          {...(loadingOpacity !== undefined ? opacityProps : undefined)}
+          {...overlayProps}
           foreground={
             isLoading ? (
               <BoxedRefreshIndicator
