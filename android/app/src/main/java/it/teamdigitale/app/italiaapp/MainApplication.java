@@ -22,7 +22,6 @@ import com.RNTextInputMask.RNTextInputMaskPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import org.reactnative.camera.RNCameraPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.oblador.keychain.KeychainPackage;
 import com.facebook.react.ReactNativeHost;
@@ -62,7 +61,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
         new SplashScreenReactPackage(),
         new ReactNativeExceptionHandlerPackage(),
         new RNCameraPackage(),
-        new VectorIconsPackage(),
         new ReactNativePushNotificationPackage(),
         new KeychainPackage(),
         new RNI18nPackage(),
