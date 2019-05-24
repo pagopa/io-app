@@ -8,7 +8,8 @@ import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 
 const styles = StyleSheet.create({
-  contentContainer: { flex: 1, justifyContent: "center" }
+  contentContainer: { flex: 1, justifyContent: "center" },
+  rightOnly: { flex: 1 }
 });
 
 type Props = {
@@ -22,7 +23,7 @@ class AbortOnboardingModal extends React.PureComponent<Props> {
       <Modal visible={true} onRequestClose={this.props.onClose}>
         <Container>
           <AppHeader noLeft={true}>
-            <Right>
+            <Right style={styles.rightOnly}>
               <Button transparent={true} onPress={this.props.onClose}>
                 <IconFont name="io-close" />
               </Button>

@@ -18,7 +18,6 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import customVariables from "../../theme/variables";
-import { toMessageWithContentPO } from "../../types/MessageWithContentPO";
 import { messageNeedsCTABar } from "../../utils/messages";
 import MessageListItem from "./MessageListItem";
 
@@ -224,7 +223,7 @@ class MessageList extends React.Component<Props, State> {
     // The idea is to fill data with error strings to have it printed as shown
     // in mockups.
     const message = pot.isNone(potMessage)
-      ? toMessageWithContentPO({
+      ? ({
           ...meta,
           created_at: new Date(meta.created_at),
           content: { subject: I18n.t("messages.errorLoading.details") }
