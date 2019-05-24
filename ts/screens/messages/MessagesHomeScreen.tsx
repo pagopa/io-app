@@ -19,6 +19,7 @@ import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -86,9 +87,21 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginTop: -1
   },
+  ioSearchContainer: {
+    width: "100%",
+    flex: 1
+  },
   ioSearch: {
-    // Corrects the position of the font icon inside the button
-    paddingHorizontal: 2
+    paddingHorizontal: 6,
+    alignSelf: "flex-end",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: 40,
+    height: 40,
+    minWidth: 40
+  },
+  searchDisableIcon: {
+    color: customVariables.headerFontColor
   }
 });
 
@@ -120,8 +133,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
-        icon={require("../../../img/icons/message-icon.png")}
-        hideHeader={searchText.isSome()}
+        appLogo={true}
         headerBody={
           searchText.isSome() ? (
             <Item>
@@ -131,21 +143,32 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                 onChangeText={this.onSearchTextChange}
                 autoFocus={true}
               />
-              <Icon name="cross" onPress={this.onSearchDisable} />
+              <Button onPress={this.onSearchDisable} transparent={true}>
+                <Icon style={styles.searchDisableIcon} name="cross" />
+              </Button>
             </Item>
           ) : (
-            <Button
-              onPress={this.onSearchEnable}
-              transparent={true}
-              style={styles.ioSearch}
-              accessible={true}
-              accessibilityLabel={I18n.t("global.actions.search")}
-            >
-              <IconFont name="io-search" />
-            </Button>
+            <View style={styles.ioSearchContainer}>
+              <Button
+                onPress={this.onSearchEnable}
+                transparent={true}
+                style={styles.ioSearch}
+                accessible={true}
+                accessibilityLabel={I18n.t("global.actions.search")}
+              >
+                <IconFont name="io-search" />
+              </Button>
+            </View>
           )
         }
       >
+        {!searchText.isSome() && (
+          <ScreenContentHeader
+            title={I18n.t("messages.contentTitle")}
+            icon={require("../../../img/icons/message-icon.png")}
+          />
+        )}
+
         {searchText.isSome() ? this.renderSearch() : this.renderTabs()}
       </TopScreenComponent>
     );

@@ -1,6 +1,5 @@
 import {
   Button,
-  H1,
   H3,
   Left,
   List,
@@ -8,10 +7,11 @@ import {
   Right,
   Switch,
   Text,
-  Toast
+  Toast,
+  View
 } from "native-base";
 import * as React from "react";
-import { Alert, Platform, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
@@ -22,6 +22,7 @@ import { connect } from "react-redux";
 
 import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   modalHeader: {
-    marginBottom: 25
+    lineHeight: 40
   }
 });
 
@@ -114,9 +115,12 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         onCancel={this.props.hideModal}
         onOptionSelected={this.logout}
         header={
-          <H1 style={styles.modalHeader}>
-            {I18n.t("profile.logout.cta.header")}
-          </H1>
+          <View>
+            <H3 style={styles.modalHeader}>
+              {I18n.t("profile.logout.cta.header")}
+            </H3>
+            <View spacer={true} large={true} />
+          </View>
         }
       />
     );
@@ -197,12 +201,19 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         title={I18n.t("profile.main.screenTitle")}
-        icon={require("../../../img/icons/gears.png")}
-        subtitle={I18n.t("profile.main.screenSubtitle")}
-        banner={
-          isExperimentalFeaturesEnabled ? ExperimentalFeaturesBanner : undefined
-        }
+        appLogo={true}
       >
+        <ScreenContentHeader
+          title={I18n.t("profile.main.screenTitle")}
+          icon={require("../../../img/icons/gears.png")}
+          subtitle={I18n.t("profile.main.screenSubtitle")}
+          banner={
+            isExperimentalFeaturesEnabled
+              ? ExperimentalFeaturesBanner
+              : undefined
+          }
+        />
+
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
