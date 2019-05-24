@@ -8,15 +8,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { TypeofApiCall } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select } from "redux-saga/effects";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { GetUserMessageT } from "../../../definitions/backend/requestTypes";
 import { loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { GlobalState } from "../../store/reducers/types";
-import {
-  MessageWithContentPO,
-  toMessageWithContentPO
-} from "../../types/MessageWithContentPO";
 import { SagaCallReturnType } from "../../types/utils";
 
 /**
@@ -25,7 +22,7 @@ import { SagaCallReturnType } from "../../types/utils";
 export function* loadMessage(
   getMessage: TypeofApiCall<GetUserMessageT>,
   meta: CreatedMessageWithoutContent
-): IterableIterator<Effect | Either<Error, MessageWithContentPO>> {
+): IterableIterator<Effect | Either<Error, CreatedMessageWithContent>> {
   // Load the messages already in the redux store
   const cachedMessage: ReturnType<
     ReturnType<typeof messageStateByIdSelector>
@@ -63,7 +60,7 @@ export function* loadMessage(
 export function* fetchMessage(
   getMessage: TypeofApiCall<GetUserMessageT>,
   meta: CreatedMessageWithoutContent
-): IterableIterator<Effect | Either<Error, MessageWithContentPO>> {
+): IterableIterator<Effect | Either<Error, CreatedMessageWithContent>> {
   try {
     const response: SagaCallReturnType<typeof getMessage> = yield call(
       getMessage,
@@ -79,9 +76,7 @@ export function* fetchMessage(
       return left(Error(error));
     }
 
-    // Return the new message converted to plain object
-    const messageWithContentPO = toMessageWithContentPO(response.value);
-    return right(messageWithContentPO);
+    return right(response.value);
   } catch (error) {
     // Return the error
     return left(error);
