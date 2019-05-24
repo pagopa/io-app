@@ -1,7 +1,6 @@
 import { Button, Text } from "native-base";
 import * as React from "react";
-import { Linking, Platform, Switch, View } from "react-native";
-import AndroidOpenSettings from "react-native-android-open-settings";
+import { Switch, View } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -15,9 +14,9 @@ import { authenticateConfig } from "../../utils/biometric";
 import { showToast } from "../../utils/showToast";
 
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
-import { openAppSecuritySettings } from "../../utils/appSettings";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
+import { openAppSecuritySettings } from "../../utils/appSettings";
 
 type OwnProps = NavigationInjectedProps;
 
