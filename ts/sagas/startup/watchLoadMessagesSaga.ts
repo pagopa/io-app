@@ -25,9 +25,11 @@ import {
   loadMessage as loadMessageAction,
   loadMessages as loadMessagesAction,
   loadMessagesCancel,
-  loadMessagesCancelled
+  loadMessagesCancelled,
+  removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
 import { loadService } from "../../store/actions/services";
+import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
 import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -45,6 +47,12 @@ export function* loadMessages(
   // We are using try...finally to manage task cancellation
   // @https://redux-saga.js.org/docs/advanced/TaskCancellation.html
   try {
+    // Load already cached messages ids from the store
+    const potCachedMessagesAllIds: ReturnType<
+      typeof messagesAllIdsSelector
+    > = yield select<GlobalState>(messagesAllIdsSelector);
+    const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
+
     // Load already cached messages from the store
     const cachedMessagesById: ReturnType<
       typeof messagesStateByIdSelector
@@ -78,9 +86,19 @@ export function* loadMessages(
       // Dispatch failure action
       yield put(loadMessagesAction.failure(error || ""));
     } else {
-      yield put(
-        loadMessagesAction.success(response.value.items.map(_ => _.id))
+      const responseItemsIds = response.value.items.map(_ => _.id);
+      yield put(loadMessagesAction.success(responseItemsIds));
+
+      // Calculate the ids of the message no more visible that we need
+      // to remove from the cache.
+      const messagesIdsToRemoveFromCache = cachedMessagesAllIds.filter(
+        _ => responseItemsIds.indexOf(_) < 0
       );
+      // Remove the details of the no more visible messages from the
+      // redux store.
+      if (messagesIdsToRemoveFromCache.length > 0) {
+        yield put(removeMessagesAction(messagesIdsToRemoveFromCache));
+      }
 
       // The Backend returns the items from the oldest to the latest
       // but we want to process them from latest to oldest so we
