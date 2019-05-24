@@ -27,7 +27,10 @@ import {
 } from "react-native";
 
 import { NavigationEvents } from "react-navigation";
+import { connect } from "react-redux";
 import I18n from "../../i18n";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
@@ -57,17 +60,18 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = Readonly<{
+type OwnProps = Readonly<{
   title: string;
   headerContents?: React.ReactNode;
   onNewPaymentPress?: () => void;
   allowGoBack: boolean;
   displayedWallets?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
-  isPagoPATestEnabled?: boolean;
 }>;
 
-export default class WalletLayout extends React.Component<Props> {
+type Props = ReturnType<typeof mapStateToProps> & OwnProps;
+
+class WalletLayout extends React.Component<Props> {
   private WalletLayoutRef = React.createRef<ScrollView>();
   private scrollToTop = () => {
     if (this.WalletLayoutRef.current) {
@@ -131,3 +135,9 @@ export default class WalletLayout extends React.Component<Props> {
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState) => ({
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
+});
+
+export default connect(mapStateToProps)(WalletLayout);
