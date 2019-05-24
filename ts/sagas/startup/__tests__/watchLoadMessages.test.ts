@@ -9,6 +9,7 @@ import {
   loadMessages as loadMessagesAction
 } from "../../../store/actions/messages";
 import { loadService } from "../../../store/actions/services";
+import { messagesAllIdsSelector } from "../../../store/reducers/entities/messages/messagesAllIds";
 import {
   messagesStateByIdSelector,
   MessageState
@@ -16,7 +17,6 @@ import {
 import { servicesByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { toMessageWithContentPO } from "../../../types/MessageWithContentPO";
 import { loadMessages } from "../../startup/watchLoadMessagesSaga";
-import { messagesAllIdsSelector } from '../../../store/reducers/entities/messages/messagesAllIds';
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testMessageId2 = "01CD4QN3Q2KS2T791PPMT2H9DM";
