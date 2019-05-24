@@ -17,7 +17,7 @@ import { SectionListScrollParams, StyleSheet } from "react-native";
 
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
-import { isMessageWithContentAndDueDatePO } from "../../types/CreatedMessageWithContentAndDueDate";
+import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
 import MessageAgenda, {
   MessageAgendaItem,
@@ -71,7 +71,7 @@ const generateSections = (
           if (
             !isArchived &&
             pot.isSome(message) &&
-            isMessageWithContentAndDueDatePO(message.value)
+            isCreatedMessageWithContentAndDueDate(message.value)
           ) {
             accumulator.push(
               Tuple2(message.value, {

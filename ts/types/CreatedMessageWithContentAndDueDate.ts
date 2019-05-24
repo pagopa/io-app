@@ -16,6 +16,6 @@ export type CreatedMessageWithContentAndDueDate = t.TypeOf<
   typeof CreatedMessageWithContentAndDueDate
 >;
 
-export const isMessageWithContentAndDueDatePO = (
+export const isCreatedMessageWithContentAndDueDate = (
   _: CreatedMessageWithContent
 ): _ is CreatedMessageWithContentAndDueDate => _.content.due_date !== undefined;
