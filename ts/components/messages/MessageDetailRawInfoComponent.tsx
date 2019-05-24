@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -8,15 +7,15 @@ import {
 } from "react-native";
 import { format } from "../../utils/dates";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import IconFont from "../ui/IconFont";
 
 type OwnProps = {
-  message: MessageWithContentPO;
-  service: pot.Pot<ServicePublic, Error>;
+  message: CreatedMessageWithContent;
+  service?: ServicePublic;
   onServiceLinkPress?: () => void;
 };
 
@@ -76,27 +75,27 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
               </Text>
               {format(message.created_at, "dddd D MMMM YYYY")}
             </Text>
-            {pot.isSome(service) && (
+            {service && (
               <React.Fragment>
                 <Text>
                   <Text bold={true}>{`${I18n.t(
                     "messageDetails.rawInfoLabels.organizationName"
                   )}: `}</Text>
-                  {service.value.organization_name}
+                  {service.organization_name}
                 </Text>
 
                 <Text>
                   <Text bold={true}>{`${I18n.t(
                     "messageDetails.rawInfoLabels.departmentName"
                   )}: `}</Text>
-                  {service.value.department_name}
+                  {service.department_name}
                 </Text>
 
                 <Text link={true} onPress={onServiceLinkPress}>
                   <Text bold={true}>{`${I18n.t(
                     "messageDetails.rawInfoLabels.serviceName"
                   )}: `}</Text>
-                  {service.value.service_name}
+                  {service.service_name}
                 </Text>
 
                 <Text>
