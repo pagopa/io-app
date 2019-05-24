@@ -12,14 +12,15 @@ interface ContextualHelpProps {
 }
 
 interface OwnProps {
-  headerTitle?: string;
-  goBack?: React.ComponentProps<typeof BaseHeader>["goBack"];
   contextualHelp?: ContextualHelpProps;
-  primary?: boolean;
   headerBody?: React.ReactNode;
+  appLogo?: boolean;
 }
 
-type Props = OwnProps;
+type BaseHeaderProps = "appLogo" | "primary" | "goBack" | "headerTitle";
+
+type Props = OwnProps &
+  Pick<React.ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
 
 interface State {
   isHelpVisible: boolean;
@@ -43,11 +44,12 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {
-      primary,
-      goBack,
-      headerTitle,
+      appLogo,
       contextualHelp,
-      headerBody
+      goBack,
+      headerBody,
+      headerTitle,
+      primary
     } = this.props;
     return (
       <Container>
@@ -57,6 +59,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           headerTitle={headerTitle}
           onShowHelp={contextualHelp ? this.showHelp : undefined}
           body={headerBody}
+          appLogo={appLogo}
         />
         {this.props.children}
         {contextualHelp && (
