@@ -12,7 +12,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
-import SearchButton from "../search/SearchButton";
+import SearchButton, { SearchType } from "../search/SearchButton";
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -33,80 +33,89 @@ interface OwnProps {
   // A property to set a custom AppHeader body
   body?: React.ReactNode;
   isSearchAvailable?: boolean;
+  searchType?: SearchType;
 }
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
 class BaseHeaderComponent extends React.PureComponent<Props> {
-  // tslint:disable-next-line: cognitive-complexity
   public render() {
-    const {
-      appLogo,
-      goBack,
-      headerTitle,
-      onShowHelp,
-      body,
-      isSearchAvailable,
-      isSearchEnabled
-    } = this.props;
+    const { goBack, headerTitle, body, isSearchEnabled } = this.props;
     return (
-      <AppHeader primary={this.props.primary}>
-        {!isSearchEnabled &&
-          (appLogo ? (
-            <Left>
-              <View>
-                <IconFont
-                  name="io-logo"
-                  color={this.props.primary ? "white" : variables.brandPrimary}
-                />
-              </View>
-            </Left>
-          ) : (
-            goBack && (
-              <Left>
-                <GoBackButton
-                  testID="back-button"
-                  onPress={goBack}
-                  accessible={true}
-                  accessibilityLabel={I18n.t("global.buttons.back")}
-                />
-              </Left>
-            )
-          ))}
+      <AppHeader primary={this.props.primary} noShadow={isSearchEnabled}>
+        {this.renderLeft()}
 
         {!isSearchEnabled && (
           <Body style={goBack ? {} : styles.noLeft}>
-            {body ? (
-              body
-            ) : headerTitle ? (
-              <Text white={this.props.primary} numberOfLines={1}>
-                {headerTitle}
-              </Text>
-            ) : (
-              <IconFont
-                name="io-logo"
-                color={this.props.primary ? "white" : variables.brandPrimary}
-              />
-            )}
+            {body
+              ? body
+              : headerTitle && (
+                  <Text white={this.props.primary} numberOfLines={1}>
+                    {headerTitle}
+                  </Text>
+                )}
           </Body>
         )}
-        <Right>
-          {!isSearchEnabled && <InstabugButtons />}
-          {onShowHelp &&
-            !isSearchEnabled && (
-              <Button
-                onPress={onShowHelp}
-                style={styles.helpButton}
-                transparent={true}
-              >
-                <IconFont name="io-question" />
-              </Button>
-            )}
-          {isSearchAvailable && <SearchButton />}
-        </Right>
+
+        {this.renderRight()}
       </AppHeader>
     );
   }
+
+  private renderRight = () => {
+    const {
+      isSearchEnabled,
+      onShowHelp,
+      isSearchAvailable,
+      searchType
+    } = this.props;
+
+    return (
+      <Right>
+        {!isSearchEnabled && <InstabugButtons />}
+        {onShowHelp &&
+          !isSearchEnabled && (
+            <Button
+              onPress={onShowHelp}
+              style={styles.helpButton}
+              transparent={true}
+            >
+              <IconFont name="io-question" />
+            </Button>
+          )}
+        {isSearchAvailable && <SearchButton searchType={searchType} />}
+      </Right>
+    );
+  };
+
+  private renderLeft = () => {
+    const { isSearchEnabled, appLogo, goBack, primary } = this.props;
+
+    return (
+      !isSearchEnabled &&
+      (appLogo ? (
+        <Left>
+          <View>
+            <IconFont
+              name="io-logo"
+              color={primary ? "white" : variables.brandPrimary}
+            />
+          </View>
+        </Left>
+      ) : (
+        goBack && (
+          <Left>
+            <GoBackButton
+              testID="back-button"
+              onPress={goBack}
+              accessible={true}
+              accessibilityLabel={I18n.t("global.buttons.back")}
+            />
+          </Left>
+        )
+      ))
+    );
+  };
 }
 
 const mapStateToProps = (state: GlobalState) => ({

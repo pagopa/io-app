@@ -10,6 +10,7 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { SearchType } from "../../components/search/SearchButton";
 import { SearchEmptyText } from "../../components/search/SearchEmptyText";
 import ServiceSectionListComponent from "../../components/services/ServiceSectionListComponent";
 import ServicesSearch from "../../components/services/ServicesSearch";
@@ -20,7 +21,7 @@ import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
-  isSearchEnabledSelector,
+  isSearchServicesEnabledSelector,
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
@@ -67,6 +68,7 @@ class ServicesScreen extends React.Component<Props> {
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
         isSearchAvailable={true}
+        searchType={SearchType.Services}
       >
         {!isSearchEnabled && (
           <ScreenContentHeader
@@ -151,7 +153,7 @@ const mapStateToProps = (state: GlobalState) => {
     sections,
     isLoading,
     searchText: searchTextSelector(state),
-    isSearchEnabled: isSearchEnabledSelector(state)
+    isSearchEnabled: isSearchServicesEnabledSelector(state)
   };
 };
 

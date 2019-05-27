@@ -8,15 +8,22 @@ import { Button, Input, Item } from "native-base";
 import I18n from "../../i18n";
 import {
   clearSearchText,
-  searchEnabled,
+  searchMessagesEnabled,
+  searchServicesEnabled,
   updateSearchText
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
 
+export enum SearchType {
+  Services,
+  Messages
+}
+
 interface OwnProps {
   color?: string;
+  searchType?: SearchType;
 }
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
@@ -102,17 +109,26 @@ class SearchButton extends React.Component<Props, State> {
       searchText: none,
       debouncedSearchText: none
     });
-    this.props.dispatchClearSearchText();
     this.props.dispatchSearchEnabled(false);
+    this.props.dispatchClearSearchText();
   };
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   dispatchSearchText: (searchText: Option<string>) =>
     dispatch(updateSearchText(searchText)),
   dispatchClearSearchText: () => dispatch(clearSearchText()),
-  dispatchSearchEnabled: (isSearchEnabled: boolean) =>
-    dispatch(searchEnabled(isSearchEnabled))
+  dispatchSearchEnabled: (isSearchEnabled: boolean) => {
+    const searchType = props.searchType;
+    switch (searchType) {
+      case SearchType.Messages:
+        dispatch(searchMessagesEnabled(isSearchEnabled));
+        break;
+      case SearchType.Services:
+        dispatch(searchServicesEnabled(isSearchEnabled));
+        break;
+    }
+  }
 });
 
 export default connect(

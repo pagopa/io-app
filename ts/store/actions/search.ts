@@ -5,7 +5,13 @@
 import { Option } from "fp-ts/lib/Option";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-export const searchEnabled = createStandardAction("SEARCH_ENABLED")<boolean>();
+export const searchMessagesEnabled = createStandardAction(
+  "SEARCH_MESSAGES_ENABLED"
+)<boolean>();
+
+export const searchServicesEnabled = createStandardAction(
+  "SEARCH_SERVICES_ENABLED"
+)<boolean>();
 
 export const updateSearchText = createStandardAction("UPDATE_SEARCH_TEXT")<
   Option<string>
@@ -14,6 +20,7 @@ export const updateSearchText = createStandardAction("UPDATE_SEARCH_TEXT")<
 export const clearSearchText = createStandardAction("CLEAR_SEARCH_TEXT")();
 
 export type SearchActions =
-  | ActionType<typeof searchEnabled>
+  | ActionType<typeof searchMessagesEnabled>
+  | ActionType<typeof searchServicesEnabled>
   | ActionType<typeof updateSearchText>
   | ActionType<typeof clearSearchText>;

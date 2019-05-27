@@ -9,6 +9,7 @@ import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { SearchType } from "../../components/search/SearchButton";
 import { SearchEmptyText } from "../../components/search/SearchEmptyText";
 import I18n from "../../i18n";
 import {
@@ -21,7 +22,7 @@ import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/enti
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import {
-  isSearchEnabledSelector,
+  isSearchMessagesEnabledSelector,
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
@@ -98,6 +99,7 @@ class MessagesHomeScreen extends React.Component<Props> {
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
         isSearchAvailable={true}
+        searchType={SearchType.Messages}
         appLogo={true}
       >
         {!isSearchEnabled && (
@@ -232,7 +234,7 @@ const mapStateToProps = (state: GlobalState) => ({
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state),
   searchText: searchTextSelector(state),
-  isSearchEnabled: isSearchEnabledSelector(state)
+  isSearchEnabled: isSearchMessagesEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
