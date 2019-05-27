@@ -7,6 +7,7 @@ import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { SearchEmptyText } from "../../components/search/SearchEmptyText";
 import I18n from "../../i18n";
@@ -65,7 +66,11 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 1,
     // Android shadow
-    elevation: 5
+    elevation: 5,
+    marginTop: -1
+  },
+  searchDisableIcon: {
+    color: customVariables.headerFontColor
   }
 });
 
@@ -92,10 +97,15 @@ class MessagesHomeScreen extends React.Component<Props> {
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
-        icon={require("../../../img/icons/message-icon.png")}
         isSearchAvailable={true}
-        hideHeader={isSearchEnabled}
+        appLogo={true}
       >
+        {!isSearchEnabled && (
+          <ScreenContentHeader
+            title={I18n.t("messages.contentTitle")}
+            icon={require("../../../img/icons/message-icon.png")}
+          />
+        )}
         {isSearchEnabled ? this.renderSearch() : this.renderTabs()}
       </TopScreenComponent>
     );
@@ -154,6 +164,7 @@ class MessagesHomeScreen extends React.Component<Props> {
               messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
               paymentsByRptId={paymentsByRptId}
+              setMessagesArchivedState={updateMessagesArchivedState}
               navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>

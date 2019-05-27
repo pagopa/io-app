@@ -6,9 +6,9 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { SearchEmptyText } from "../../components/search/SearchEmptyText";
 import ServiceSectionListComponent from "../../components/services/ServiceSectionListComponent";
@@ -62,14 +62,18 @@ class ServicesScreen extends React.Component<Props> {
       <TopScreenComponent
         title={I18n.t("services.title")}
         goBack={this.goBack}
-        subtitle={I18n.t("services.subTitle")}
         contextualHelp={{
           title: I18n.t("services.title"),
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
         isSearchAvailable={true}
-        hideHeader={isSearchEnabled}
       >
+        {!isSearchEnabled && (
+          <ScreenContentHeader
+            title={I18n.t("services.title")}
+            subtitle={I18n.t("services.subTitle")}
+          />
+        )}
         {isSearchEnabled ? this.renderSearch() : this.renderList()}
       </TopScreenComponent>
     );

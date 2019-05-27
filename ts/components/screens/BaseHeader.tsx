@@ -1,4 +1,4 @@
-import { Body, Button, Left, Right, Text } from "native-base";
+import { Body, Button, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
@@ -28,6 +28,7 @@ interface OwnProps {
   headerTitle?: string;
   goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
   primary?: boolean;
+  appLogo?: boolean;
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
   body?: React.ReactNode;
@@ -39,6 +40,7 @@ type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 class BaseHeaderComponent extends React.PureComponent<Props> {
   public render() {
     const {
+      appLogo,
       goBack,
       headerTitle,
       onShowHelp,
@@ -47,18 +49,30 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       isSearchEnabled
     } = this.props;
     return (
-      <AppHeader primary={this.props.primary} noShadow={isSearchEnabled}>
-        {goBack &&
-          !isSearchEnabled && (
+      <AppHeader primary={this.props.primary}>
+        {!isSearchEnabled &&
+          (appLogo ? (
             <Left>
-              <GoBackButton
-                testID="back-button"
-                onPress={goBack}
-                accessible={true}
-                accessibilityLabel={I18n.t("global.buttons.back")}
-              />
+              <View>
+                <IconFont
+                  name="io-logo"
+                  color={this.props.primary ? "white" : variables.brandPrimary}
+                />
+              </View>
             </Left>
-          )}
+          ) : (
+            goBack && (
+              <Left>
+                <GoBackButton
+                  testID="back-button"
+                  onPress={goBack}
+                  accessible={true}
+                  accessibilityLabel={I18n.t("global.buttons.back")}
+                />
+              </Left>
+            )
+          ))}
+
         {!isSearchEnabled && (
           <Body style={goBack ? {} : styles.noLeft}>
             {body ? (

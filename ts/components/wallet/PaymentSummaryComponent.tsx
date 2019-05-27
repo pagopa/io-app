@@ -6,7 +6,7 @@ import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber
 } from "italia-pagopa-commons/lib/pagopa";
-import { H1, H3, Icon, Text, View } from "native-base";
+import { H1, H3, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -14,6 +14,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { formatNumberAmount } from "../../utils/stringBuilder";
+import IconFont from "../ui/IconFont";
 
 type Props =
   | Readonly<{
@@ -143,10 +144,9 @@ class PaymentSummaryComponent extends React.Component<Props> {
               )}
             </Text>
             {amountIsUpdated && (
-              <Icon
+              <IconFont
                 style={[styles.white, styles.iconStyle]}
-                name="alert-circle"
-                type="Feather"
+                name={"io-notice"}
               />
             )}
           </View>,

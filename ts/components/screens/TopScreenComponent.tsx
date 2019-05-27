@@ -1,22 +1,23 @@
 import * as React from "react";
 
 import { ComponentProps } from "../../types/react";
-
 import BaseScreenComponent from "./BaseScreenComponent";
-import { TopHeader } from "./TopHeader";
+import { ScreenContentHeader } from "./ScreenContentHeader";
 
 interface OwnProps {
   headerTitle?: string;
-  hideHeader?: boolean;
   isSearchAvailable?: boolean;
 }
 
+type BaseScreenComponentProps =
+  | "appLogo"
+  | "goBack"
+  | "contextualHelp"
+  | "headerBody";
+
 type Props = OwnProps &
-  ComponentProps<typeof TopHeader> &
-  Pick<
-    ComponentProps<typeof BaseScreenComponent>,
-    "goBack" | "contextualHelp" | "headerBody"
-  >;
+  Pick<ComponentProps<typeof ScreenContentHeader>, "title"> &
+  Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
 
 /**
  * Wraps a BaseScreenComponent with a title and a subtitle
@@ -24,35 +25,24 @@ type Props = OwnProps &
 class TopScreenComponent extends React.PureComponent<Props> {
   public render() {
     const {
+      appLogo,
       goBack,
-      icon,
       title,
-      subtitle,
       headerTitle,
-      onMoreLinkPress,
       contextualHelp,
-      banner,
       headerBody,
-      hideHeader,
       isSearchAvailable
     } = this.props;
+
     return (
       <BaseScreenComponent
+        appLogo={appLogo}
         goBack={goBack}
         headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}
         headerBody={headerBody}
         isSearchAvailable={isSearchAvailable}
       >
-        {!hideHeader && (
-          <TopHeader
-            icon={icon}
-            title={title}
-            subtitle={subtitle}
-            onMoreLinkPress={onMoreLinkPress}
-            banner={banner}
-          />
-        )}
         {this.props.children}
       </BaseScreenComponent>
     );

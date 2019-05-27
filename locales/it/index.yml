@@ -175,7 +175,6 @@ authentication:
     paragraph2: Se ti va, lasciaci il tuo indirizzo email per ricevere promemoria
       e aggiornamenti su questa app
     paragraph3: Proseguendo dichiari di accettare le
-    moreLinkText: Per saperne di più
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
   spid_information:
@@ -233,7 +232,6 @@ onboarding:
       entrando con SPID.
     pinInfoSelected: Questo codice ti verrà richiesto ogni volta che aprirai l’app
       e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive.
-    moreLinkText: Per saperne di più.
     continue: Continua
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
@@ -573,7 +571,6 @@ preferences:
   title: Preferenze
   subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
     Amministrazione.
-  moreLinkText: Per saperne di più.
   list:
     biometric_recognition: Riconoscimento biometrico
     biometric_recognition_status: 

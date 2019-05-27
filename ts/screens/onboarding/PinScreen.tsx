@@ -3,8 +3,9 @@
  */
 
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, H1, Text, View } from "native-base";
+import { Button, Content, H3, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -59,6 +60,10 @@ type State = {
   showAbortOnboardingModal: boolean;
 };
 
+const styles = StyleSheet.create({
+  header: { lineHeight: 40 }
+});
+
 class PinScreen extends React.Component<Props, State> {
   private pinConfirmComponent: Pinpad | null = null;
 
@@ -112,9 +117,15 @@ class PinScreen extends React.Component<Props, State> {
   // Render a different header when the user need to confirm the PIN
   public renderContentHeader(pinState: PinState) {
     if (pinState.state === "PinUnselected") {
-      return <H1>{I18n.t("onboarding.pin.contentTitle")}</H1>;
+      return (
+        <H3 style={styles.header}>{I18n.t("onboarding.pin.contentTitle")}</H3>
+      );
     } else {
-      return <H1>{I18n.t("onboarding.pin.contentTitleConfirm")}</H1>;
+      return (
+        <H3 style={styles.header}>
+          {I18n.t("onboarding.pin.contentTitleConfirm")}
+        </H3>
+      );
     }
   }
 
