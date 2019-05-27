@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
     fontSize: variables.fontSizeSmaller
   },
   messageIDBtnContainer: {
-    width: 48,
     flex: 0,
     marginBottom: 5,
     height: variables.lineHeightBase

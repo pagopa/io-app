@@ -1,7 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { CheckBox, Text, View } from "native-base";
 import React from "react";
-import { Platform, StyleSheet, TouchableHighlight } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
@@ -156,12 +156,10 @@ class MessageListItem extends React.PureComponent<Props> {
     );
 
     return (
-      <TouchableHighlight
+      <TouchableOpacity
+        style={styles.highlight}
         onPress={this.handlePress}
         onLongPress={this.handleLongPress}
-        style={styles.highlight}
-        underlayColor={customVariables.colorWhite}
-        activeOpacity={customVariables.activeOpacity}
       >
         <View
           style={[
@@ -221,7 +219,7 @@ class MessageListItem extends React.PureComponent<Props> {
             </View>
           )}
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 }
