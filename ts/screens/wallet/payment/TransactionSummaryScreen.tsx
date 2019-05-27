@@ -176,6 +176,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
     // when empty, it means we're still loading the verifica response
     const { potVerifica } = this.props;
 
+    const maybeEnteBeneficiario = pot
+      .toOption(potVerifica)
+      .mapNullable(_ => _.enteBeneficiario)
+      .map(formatTextRecipient);
+
     return (
       <BaseScreenComponent
         goBack={true}
@@ -209,18 +214,16 @@ class TransactionSummaryScreen extends React.Component<Props> {
           )}
 
           <View content={true}>
-            <Text bold={true}>
-              {I18n.t("wallet.firstTransactionSummary.entity")}
-            </Text>
-            <Text>
-              {pot
-                .toOption(potVerifica)
-                .mapNullable(_ => _.enteBeneficiario)
-                .map(formatTextRecipient)
-                .getOrElse("...")
-                .trim()}
-            </Text>
-            <View spacer={true} />
+            {maybeEnteBeneficiario.isSome() && (
+              <React.Fragment>
+                <Text bold={true}>
+                  {I18n.t("wallet.firstTransactionSummary.entity")}
+                </Text>
+                <Text>{maybeEnteBeneficiario.value.trim()}</Text>
+                <View spacer={true} />
+              </React.Fragment>
+            )}
+
             <Text bold={true}>
               {I18n.t("wallet.firstTransactionSummary.object")}
             </Text>
