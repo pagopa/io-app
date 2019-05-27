@@ -38,6 +38,7 @@ interface OwnProps {
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
 class BaseHeaderComponent extends React.PureComponent<Props> {
+  // tslint:disable-next-line: cognitive-complexity
   public render() {
     const {
       appLogo,
