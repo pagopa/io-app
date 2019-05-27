@@ -9,7 +9,6 @@ export function* checkAcceptedTosSaga(
   userProfile: UserProfileUnion
 ): IterableIterator<Effect> {
   if (
-    userProfile.has_profile &&
     "accepted_tos_version" in userProfile &&
     userProfile.accepted_tos_version &&
     userProfile.accepted_tos_version === tosVersion
