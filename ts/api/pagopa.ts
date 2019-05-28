@@ -6,7 +6,6 @@ import { flip } from "fp-ts/lib/function";
 import {
   AddResponseType,
   ApiHeaderJson,
-  basicErrorResponseDecoder,
   composeHeaderProducers,
   composeResponseDecoders,
   constantResponseDecoder,
@@ -65,11 +64,11 @@ const constantEmptyDecoder = composeResponseDecoders(
   composeResponseDecoders(
     composeResponseDecoders(
       constantResponseDecoder(200, undefined),
-      basicErrorResponseDecoder<204>(204)
+      constantResponseDecoder<undefined, 204>(204, undefined)
     ),
-    basicErrorResponseDecoder<401>(401)
+    constantResponseDecoder<undefined, 401>(401, undefined)
   ),
-  basicErrorResponseDecoder<403>(403)
+  constantResponseDecoder<undefined, 403>(403, undefined)
 );
 
 const getSession: MapResponseType<
