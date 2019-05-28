@@ -71,6 +71,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: variables.contentPadding
+  },
+
+  level1: {
+    zIndex: 100
+  },
+
+  level2: {
+    zIndex: -50
+  },
+
+  level3: {
+    zIndex: -100
+    
   }
 });
 
@@ -99,30 +112,35 @@ export default class WalletLayout extends React.Component<Props, State> {
     super(props);
     this.state = INITIAL_STATE;
   }
-  private WalletLayoutRef = React.createRef<ScrollView>();
+
+  private scrollableContentRef = React.createRef<any>();
+
   private scrollToTop = () => {
-    if (this.WalletLayoutRef.current) {
-      this.WalletLayoutRef.current.scrollTo({ x: 0, y: 0, animated: false });
-    }
+    this.scrollableContentRef.current.getNode().scrollTo({ y: 0 });
   };
 
   public render(): React.ReactNode {
     const { interpolationVars } = this.props;
-    const subHeaderHeight =
+
+    const subHeaderTranslaction =
       interpolationVars && interpolationVars.length === 3
         ? this.state.scrollY.interpolate({
             inputRange: [
+              0,
               interpolationVars[1] - interpolationVars[2],
               interpolationVars[1] + interpolationVars[2]
             ],
-            outputRange: [0, interpolationVars[0]],
+            outputRange: [-interpolationVars[0], 0, 0],
             extrapolate: "clamp"
           })
         : 0;
 
     return (
       <Container>
-        <AppHeader style={styles.darkGrayBg} noLeft={!this.props.allowGoBack}>
+        <AppHeader
+          style={[styles.darkGrayBg, styles.level1]}
+          noLeft={!this.props.allowGoBack}
+        >
           {this.props.allowGoBack && (
             <Left>
               <GoBackButton white={true} style={styles.noalias} />
@@ -146,16 +164,18 @@ export default class WalletLayout extends React.Component<Props, State> {
           </Right>
         </AppHeader>
 
-        <ScrollView
+        <Animated.ScrollView
           bounces={false}
-          style={
+          style={[
+            styles.level3,
             this.props.contentStyle ? this.props.contentStyle : styles.whiteBg
-          }
-          ref={this.WalletLayoutRef}
-          scrollEventThrottle={16}
-          onScroll={Animated.event([
-            { nativeEvent: { contentOffset: { y: this.state.scrollY } } }
-          ])}
+          ]}
+          ref={this.scrollableContentRef}
+          scrollEventThrottle={1}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+            { useNativeDriver: true }
+          )}
         >
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <Content
@@ -166,10 +186,20 @@ export default class WalletLayout extends React.Component<Props, State> {
             {this.props.displayedWallets}
           </Content>
           {this.props.children}
-        </ScrollView>
+        </Animated.ScrollView>
 
         <Animated.View
-          style={[styles.animatedSubHeader, { height: subHeaderHeight }]}
+          style={[
+            styles.level2,
+            styles.animatedSubHeader,
+            {
+              transform: [
+                {
+                  translateY: subHeaderTranslaction
+                }
+              ]
+            }
+          ]}
         >
           {this.props.fixedSubHeader}
         </Animated.View>
