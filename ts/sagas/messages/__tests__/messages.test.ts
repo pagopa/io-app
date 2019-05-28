@@ -33,21 +33,18 @@ describe("messages", () => {
 
     it("should only return an empty error if the getMessage response is undefined (can't be decoded)", () => {
       const getMessage = jest.fn();
+      const validatorError = {
+        value: "some error occurred",
+        context: [{ key: "", type: t.string }]
+      };
       testSaga(fetchMessage, getMessage, { id: testMessageId1 })
         .next()
         // Return undefined as getMessage response
-        .next(
-          left([
-            t.getValidationError(
-              "some error occurred",
-              t.getDefaultContext(t.null)
-            )
-          ])
-        )
+        .next(left([validatorError]))
         .returns(
           left(
             Error(
-              'value ["some error occurred"] at [root] is not a valid [null]'
+              'value ["some error occurred"] at [root] is not a valid [string]'
             )
           )
         );
