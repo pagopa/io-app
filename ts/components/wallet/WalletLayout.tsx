@@ -21,7 +21,6 @@ import * as React from "react";
 import {
   Animated,
   Image,
-  ScrollView,
   StyleProp,
   StyleSheet,
   ViewStyle
@@ -82,8 +81,7 @@ const styles = StyleSheet.create({
   },
 
   level3: {
-    zIndex: -100
-    
+    zIndex: -100  
   }
 });
 
