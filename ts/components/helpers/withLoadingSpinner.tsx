@@ -19,13 +19,25 @@ const styles = StyleSheet.create({
  * @param spinnerProps Props to pass to the spinner component
  */
 export function withLoadingSpinner<
-  P extends Readonly<{ isLoading: boolean; loadingCaption?: string }>
+  P extends Readonly<{
+    isLoading: boolean;
+    loadingCaption?: string;
+    loadingOpacity?: number;
+  }>
 >(WrappedComponent: React.ComponentType<P>) {
   class WithLoadingSpinner extends React.Component<P> {
     public render() {
-      const { isLoading, loadingCaption } = this.props;
+      const { isLoading, loadingCaption, loadingOpacity } = this.props;
+      const overlayProps =
+        loadingOpacity !== undefined
+          ? {
+              opacity: 1,
+              backgroundColor: `rgba(255,255,255,${loadingOpacity})`
+            }
+          : undefined;
       return (
         <Overlay
+          {...overlayProps}
           foreground={
             isLoading ? (
               <BoxedRefreshIndicator
