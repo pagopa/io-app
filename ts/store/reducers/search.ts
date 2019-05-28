@@ -5,7 +5,7 @@ import { getType } from "typesafe-actions";
 
 import { none, Option } from "fp-ts/lib/Option";
 import {
-  clearSearchText,
+  resetSearch,
   searchMessagesEnabled,
   searchServicesEnabled,
   updateSearchText
@@ -62,7 +62,7 @@ const reducer = (
     case getType(updateSearchText):
       return { ...state, searchText: action.payload };
 
-    case getType(clearSearchText):
+    case getType(resetSearch):
       return INITIAL_STATE;
 
     default:

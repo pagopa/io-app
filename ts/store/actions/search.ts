@@ -17,10 +17,10 @@ export const updateSearchText = createStandardAction("UPDATE_SEARCH_TEXT")<
   Option<string>
 >();
 
-export const clearSearchText = createStandardAction("CLEAR_SEARCH_TEXT")();
+export const resetSearch = createStandardAction("RESET_SEARCH")();
 
 export type SearchActions =
   | ActionType<typeof searchMessagesEnabled>
   | ActionType<typeof searchServicesEnabled>
   | ActionType<typeof updateSearchText>
-  | ActionType<typeof clearSearchText>;
+  | ActionType<typeof resetSearch>;

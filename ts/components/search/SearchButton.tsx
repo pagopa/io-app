@@ -5,9 +5,10 @@ import { connect } from "react-redux";
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Button, Input, Item } from "native-base";
+import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
 import {
-  clearSearchText,
+  resetSearch,
   searchMessagesEnabled,
   searchServicesEnabled,
   updateSearchText
@@ -17,8 +18,8 @@ import variables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
 
 export enum SearchType {
-  Services,
-  Messages
+  Messages,
+  Services
 }
 
 interface OwnProps {
@@ -48,12 +49,12 @@ class SearchButton extends React.Component<Props, State> {
       <React.Fragment>
         {searchText.isSome() ? (
           <Item>
+            <NavigationEvents onWillBlur={this.onSearchDisable} />
             <Input
               placeholder={I18n.t("global.actions.search")}
               value={searchText.value}
               onChangeText={this.onSearchTextChange}
               autoFocus={true}
-              onEndEditing={this.onSearchDisable}
               placeholderTextColor={color(variables.brandGray)
                 .darken(0.2)
                 .string()}
@@ -109,15 +110,14 @@ class SearchButton extends React.Component<Props, State> {
       searchText: none,
       debouncedSearchText: none
     });
-    this.props.dispatchSearchEnabled(false);
-    this.props.dispatchClearSearchText();
+    this.props.dispatchResetSearch();
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   dispatchSearchText: (searchText: Option<string>) =>
     dispatch(updateSearchText(searchText)),
-  dispatchClearSearchText: () => dispatch(clearSearchText()),
+  dispatchResetSearch: () => dispatch(resetSearch()),
   dispatchSearchEnabled: (isSearchEnabled: boolean) => {
     const searchType = props.searchType;
     switch (searchType) {
