@@ -224,6 +224,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
               paymentsByRptId={paymentsByRptId}
+              setMessagesArchivedState={updateMessagesArchivedState}
               navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>
