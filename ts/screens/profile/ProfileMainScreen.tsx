@@ -70,17 +70,17 @@ const styles = StyleSheet.create({
   itemLeftText: {
     alignSelf: "flex-start"
   },
-  experimentalFeaturesSection: {
+  developerSectionItem: {
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   },
-  debugModeSection: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
+  developerSectionItemLeft: {
+    flex: 1
+  },
+  developerSectionItemRight: {
+    flex: 0
   },
   modalHeader: {
     lineHeight: 40
@@ -277,7 +277,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
-              <View style={styles.experimentalFeaturesSection}>
+              <View style={styles.developerSectionItem}>
                 <Text>
                   {I18n.t("profile.main.experimentalFeatures.confirmTitle")}
                 </Text>
@@ -289,23 +289,27 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
-              <View style={styles.debugModeSection}>
-                <View>
+              <View style={styles.developerSectionItem}>
+                <View style={styles.developerSectionItemLeft}>
                   <Text style={styles.itemLeftText}>
                     {I18n.t("profile.main.pagoPaEnv")}
                   </Text>
-                  <Text>{I18n.t("profile.main.pagoPAEnvAlert")}</Text>
-                </View>
 
-                <Switch
-                  value={this.props.isPagoPATestEnabled}
-                  onValueChange={this.onPagoPAEnvironmentToggle}
-                />
+                  <Text style={styles.itemLeftText}>
+                    {I18n.t("profile.main.pagoPAEnvAlert")}
+                  </Text>
+                </View>
+                <View style={styles.developerSectionItemRight}>
+                  <Switch
+                    value={this.props.isPagoPATestEnabled}
+                    onValueChange={this.onPagoPAEnvironmentToggle}
+                  />
+                </View>
               </View>
             </ListItem>
 
             <ListItem>
-              <View style={styles.debugModeSection}>
+              <View style={styles.developerSectionItem}>
                 <Text>{I18n.t("profile.main.debugMode")}</Text>
                 <Switch
                   value={this.props.isDebugModeEnabled}
