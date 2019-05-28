@@ -18,24 +18,16 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import {
-  Image,
-  ScrollView,
-  StyleProp,
-  StyleSheet,
-  ViewStyle
-} from "react-native";
+import { ScrollView, StyleProp, StyleSheet, ViewStyle } from "react-native";
 
 import { NavigationEvents } from "react-navigation";
-import { connect } from "react-redux";
 import I18n from "../../i18n";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";
+import PagoPALogo from "./PagoPALogo";
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -60,7 +52,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type OwnProps = Readonly<{
+type Props = Readonly<{
   title: string;
   headerContents?: React.ReactNode;
   onNewPaymentPress?: () => void;
@@ -69,9 +61,7 @@ type OwnProps = Readonly<{
   contentStyle?: StyleProp<ViewStyle>;
 }>;
 
-type Props = ReturnType<typeof mapStateToProps> & OwnProps;
-
-class WalletLayout extends React.Component<Props> {
+export default class WalletLayout extends React.Component<Props> {
   private WalletLayoutRef = React.createRef<ScrollView>();
   private scrollToTop = () => {
     if (this.WalletLayoutRef.current) {
@@ -89,17 +79,7 @@ class WalletLayout extends React.Component<Props> {
             </Left>
           )}
           <Body>
-            {this.props.isPagoPATestEnabled ? (
-              <Image
-                style={{ resizeMode: "contain", width: 60 }}
-                source={require("../../../img/wallet/logo-pagopa-test.png")}
-              />
-            ) : (
-              <Image
-                style={{ resizeMode: "contain", width: 40 }}
-                source={require("../../../img/wallet/logo-pagopa.png")}
-              />
-            )}
+            <PagoPALogo />
           </Body>
           <Right>
             <InstabugButtons color={variables.colorWhite} />
@@ -135,9 +115,3 @@ class WalletLayout extends React.Component<Props> {
     );
   }
 }
-
-const mapStateToProps = (state: GlobalState) => ({
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
-});
-
-export default connect(mapStateToProps)(WalletLayout);
