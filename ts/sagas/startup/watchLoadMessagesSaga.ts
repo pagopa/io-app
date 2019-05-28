@@ -41,6 +41,7 @@ import { uniqueItem } from "../../utils/enumerables";
  * The messages returned by the Backend are filtered so the application downloads
  * only the details of the messages and services not already in the redux store.
  */
+// tslint:disable-next-line: cognitive-complexity
 export function* loadMessages(
   getMessages: ReturnType<typeof BackendClient>["getMessages"]
 ): IterableIterator<Effect> {
