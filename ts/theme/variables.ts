@@ -123,6 +123,7 @@ const customVariables = Object.assign(materialVariables, {
   },
   // Content
   contentPadding: 24,
+  contentPaddingLarge: 48,
   contentBackground: "#FFFFFF",
   contentAlternativeBackground: "#F5F6F7",
   contentPrimaryBackground: "#0073E6",
