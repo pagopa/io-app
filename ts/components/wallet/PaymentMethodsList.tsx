@@ -30,12 +30,16 @@ type IPaymentMethod = Readonly<{
   name: string;
   maxFee: string;
   icon: any;
+  implemented: boolean;
 }>;
 
 const styles = StyleSheet.create({
   listItem: {
     marginLeft: 0,
     paddingRight: 0
+  },
+  disabled: {
+    opacity: 0.75
   }
 });
 
@@ -55,6 +59,12 @@ const AddMethodStyle = StyleSheet.create({
       .darken(0.35)
       .string()
   },
+  notImplementedText: {
+    fontSize: variables.fontSizeSmaller,
+    color: color(variables.colorWhite)
+      .darken(0.35)
+      .string()
+  },
   centeredContents: {
     alignItems: "center"
   }
@@ -67,19 +77,22 @@ class PaymentMethodsList extends React.Component<Props, never> {
         onPress: this.props.navigateToAddCreditCard,
         name: I18n.t("wallet.methods.card.name"),
         maxFee: I18n.t("wallet.methods.card.maxFee"),
-        icon: "io-48-card"
+        icon: "io-48-card",
+        implemented: true
       },
       {
         name: I18n.t("wallet.methods.bank.name"),
         maxFee: I18n.t("wallet.methods.bank.maxFee"),
         icon: "io-48-bank",
-        onPress: unavailableAlert // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
+        onPress: unavailableAlert, // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
+        implemented: false
       },
       {
         name: I18n.t("wallet.methods.mobile.name"),
         maxFee: I18n.t("wallet.methods.mobile.maxFee"),
         icon: "io-48-phone",
-        onPress: unavailableAlert // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
+        onPress: unavailableAlert, // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
+        implemented: false
       }
     ];
     return (
@@ -92,10 +105,14 @@ class PaymentMethodsList extends React.Component<Props, never> {
           keyExtractor={item => item.name}
           renderItem={itemInfo => (
             <ListItem
-              style={[AddMethodStyle.paymentMethodEntry, styles.listItem]}
+              style={[
+                AddMethodStyle.paymentMethodEntry,
+                styles.listItem,
+                itemInfo.item.implemented ? {} : styles.disabled
+              ]}
               onPress={itemInfo.item.onPress}
             >
-              <Left>
+              <Left style={itemInfo.item.implemented ? {} : styles.disabled}>
                 <Grid>
                   <Row>
                     <Text bold={true}>{itemInfo.item.name}</Text>
@@ -105,12 +122,23 @@ class PaymentMethodsList extends React.Component<Props, never> {
                       {itemInfo.item.maxFee}
                     </Text>
                   </Row>
+                  {!itemInfo.item.implemented && (
+                    <Row>
+                      <Text style={AddMethodStyle.notImplementedText}>
+                        {I18n.t("wallet.methods.notImplemented")}
+                      </Text>
+                    </Row>
+                  )}
                 </Grid>
               </Left>
               <Right style={AddMethodStyle.centeredContents}>
                 <IconFont
                   name={itemInfo.item.icon}
-                  color={variables.brandPrimary}
+                  color={
+                    itemInfo.item.implemented
+                      ? variables.brandPrimary
+                      : variables.brandDarkGray
+                  }
                   size={variables.iconSize6}
                 />
               </Right>
