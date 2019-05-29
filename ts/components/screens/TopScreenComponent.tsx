@@ -9,6 +9,7 @@ interface OwnProps {
 }
 
 type BaseScreenComponentProps =
+  | "dark"
   | "appLogo"
   | "goBack"
   | "contextualHelp"
@@ -24,6 +25,7 @@ type Props = OwnProps &
 class TopScreenComponent extends React.PureComponent<Props> {
   public render() {
     const {
+      dark,
       appLogo,
       goBack,
       title,
@@ -35,6 +37,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
     return (
       <BaseScreenComponent
         appLogo={appLogo}
+        dark={dark}
         goBack={goBack}
         headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}

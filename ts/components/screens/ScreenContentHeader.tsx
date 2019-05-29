@@ -10,6 +10,7 @@ type Props = Readonly<{
   icon?: ImageSourcePropType;
   subtitle?: string;
   banner?: React.ReactNode;
+  dark?: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -31,22 +32,26 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
 
     return (
       <React.Fragment>
-        {banner && <React.Fragment>{this.props.banner}</React.Fragment>}
-        <View spacer={true} />
-        <ScreenHeader
-          heading={
-            <H1 style={styles.screenHeaderHeading}>{this.props.title}</H1>
-          }
-          icon={this.props.icon}
-        />
-        {subtitle ? (
-          <View style={styles.subheaderContainer}>
-            <Text>{subtitle}</Text>
-            <View spacer={true} large={true} />
-          </View>
-        ) : (
+        <View style={ this.props.dark && {backgroundColor: variables.brandDarkGray}}>
+          {banner && <React.Fragment>{this.props.banner}</React.Fragment>}
           <View spacer={true} />
-        )}
+          <ScreenHeader
+            heading={
+              <H1 style={[styles.screenHeaderHeading, this.props.dark && {color: variables.colorWhite}]}>{this.props.title}</H1>
+            }
+            icon={this.props.icon}
+            dark={this.props.dark}
+          />
+          {subtitle ? (
+            <View style={styles.subheaderContainer}>
+              <Text>{subtitle}</Text>
+              <View spacer={true} large={true} />
+            </View>
+          ) : (
+            <View spacer={true} />
+          )}
+        </View>
+        
       </React.Fragment>
     );
   }

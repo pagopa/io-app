@@ -1,4 +1,4 @@
-import { Container } from "native-base";
+import { Container, View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
@@ -15,9 +15,10 @@ interface OwnProps {
   contextualHelp?: ContextualHelpProps;
   headerBody?: React.ReactNode;
   appLogo?: boolean;
+  dark?: boolean;
 }
 
-type BaseHeaderProps = "appLogo" | "primary" | "goBack" | "headerTitle";
+type BaseHeaderProps = "dark" | "appLogo" | "primary" | "goBack" | "headerTitle";
 
 type Props = OwnProps &
   Pick<React.ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
@@ -44,6 +45,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {
+      dark,
       appLogo,
       contextualHelp,
       goBack,
@@ -55,13 +57,18 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       <Container>
         <BaseHeader
           primary={primary}
+          dark={dark}
           goBack={goBack}
           headerTitle={headerTitle}
           onShowHelp={contextualHelp ? this.showHelp : undefined}
           body={headerBody}
           appLogo={appLogo}
         />
-        {this.props.children}
+
+        <View style={{zIndex: -100}}>
+          {this.props.children}
+        </View>
+        
         {contextualHelp && (
           <ContextualHelp
             title={contextualHelp.title}

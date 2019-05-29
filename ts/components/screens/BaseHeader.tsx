@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
 });
 
 interface OwnProps {
+  dark?: boolean;
   headerTitle?: string;
   goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
   primary?: boolean;
@@ -34,9 +35,9 @@ type Props = OwnProps;
 
 export class BaseHeader extends React.PureComponent<Props> {
   public render() {
-    const { appLogo, goBack, headerTitle, onShowHelp, body } = this.props;
+    const {appLogo, goBack, headerTitle, onShowHelp, body } = this.props;
     return (
-      <AppHeader primary={this.props.primary}>
+      <AppHeader primary={this.props.primary} dark={this.props.dark}>
         {appLogo ? (
           <Left>
             <View>
