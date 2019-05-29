@@ -174,7 +174,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
           transactionWallet ? (
             <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
           ) : (
-            undefined
+            <RotatedCards cardType="Preview" />
           )
         }
         allowGoBack={!isPaymentCompletedTransaction}
