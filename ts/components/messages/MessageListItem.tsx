@@ -1,16 +1,15 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { DateFromISOString } from "io-ts-types";
 import { CheckBox, Text, View } from "native-base";
 import React from "react";
-import { Platform, StyleSheet, TouchableHighlight } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
 import IconFont from "../ui/IconFont";
@@ -18,7 +17,7 @@ import MessageCTABar from "./MessageCTABar";
 
 type Props = {
   isRead: boolean;
-  message: MessageWithContentPO;
+  message: CreatedMessageWithContent;
   service?: ServicePublic;
   payment?: PaidReason;
   onPress: (id: string) => void;
@@ -151,17 +150,16 @@ class MessageListItem extends React.PureComponent<Props> {
       departmentName: _.department_name
     }));
 
-    const uiDate = DateFromISOString.decode(message.created_at)
-      .map(_ => convertDateToWordDistance(_, I18n.t("messages.yesterday")))
-      .getOrElse(message.created_at);
+    const uiDate = convertDateToWordDistance(
+      message.created_at,
+      I18n.t("messages.yesterday")
+    );
 
     return (
-      <TouchableHighlight
+      <TouchableOpacity
+        style={styles.highlight}
         onPress={this.handlePress}
         onLongPress={this.handleLongPress}
-        style={styles.highlight}
-        underlayColor={customVariables.colorWhite}
-        activeOpacity={customVariables.activeOpacity}
       >
         <View
           style={[
@@ -221,7 +219,7 @@ class MessageListItem extends React.PureComponent<Props> {
             </View>
           )}
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 }

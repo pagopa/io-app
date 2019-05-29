@@ -2,7 +2,6 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import debounce from "lodash/debounce";
 import {
   Button,
-  Icon,
   Input,
   Item,
   Tab,
@@ -19,6 +18,7 @@ import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -34,8 +34,6 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
-// Used to disable the Deadlines tab
-const DEADLINES_TAB_ENABLED = false;
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -85,11 +83,24 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 1,
     // Android shadow
-    elevation: 5
+    elevation: 5,
+    marginTop: -1
+  },
+  ioSearchContainer: {
+    width: "100%",
+    flex: 1
   },
   ioSearch: {
-    // Corrects the position of the font icon inside the button
-    paddingHorizontal: 2
+    paddingHorizontal: 6,
+    alignSelf: "flex-end",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: 40,
+    height: 40,
+    minWidth: 40
+  },
+  searchDisableIcon: {
+    color: customVariables.headerFontColor
   }
 });
 
@@ -121,8 +132,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
-        icon={require("../../../img/icons/message-icon.png")}
-        hideHeader={searchText.isSome()}
+        appLogo={true}
         headerBody={
           searchText.isSome() ? (
             <Item>
@@ -132,21 +142,30 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                 onChangeText={this.onSearchTextChange}
                 autoFocus={true}
               />
-              <Icon name="cross" onPress={this.onSearchDisable} />
+              <IconFont name="io-close" onPress={this.onSearchDisable} />
             </Item>
           ) : (
-            <Button
-              onPress={this.onSearchEnable}
-              transparent={true}
-              style={styles.ioSearch}
-              accessible={true}
-              accessibilityLabel={I18n.t("global.actions.search")}
-            >
-              <IconFont name="io-search" />
-            </Button>
+            <View style={styles.ioSearchContainer}>
+              <Button
+                onPress={this.onSearchEnable}
+                transparent={true}
+                style={styles.ioSearch}
+                accessible={true}
+                accessibilityLabel={I18n.t("global.actions.search")}
+              >
+                <IconFont name="io-search" />
+              </Button>
+            </View>
           )
         }
       >
+        {!searchText.isSome() && (
+          <ScreenContentHeader
+            title={I18n.t("messages.contentTitle")}
+            icon={require("../../../img/icons/message-icon.png")}
+          />
+        )}
+
         {searchText.isSome() ? this.renderSearch() : this.renderTabs()}
       </TopScreenComponent>
     );
@@ -157,6 +176,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
    */
   private renderTabs = () => {
     const {
+      isExperimentalFeaturesEnabled,
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
@@ -189,7 +209,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             navigateToMessageDetail={navigateToMessageDetail}
           />
         </Tab>
-        {DEADLINES_TAB_ENABLED && (
+        {isExperimentalFeaturesEnabled && (
           <Tab
             heading={
               <TabHeading>
@@ -202,7 +222,9 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             {this.renderShadow()}
             <MessagesDeadlines
               messagesState={lexicallyOrderedMessagesState}
-              onRefresh={refreshMessages}
+              servicesById={servicesById}
+              paymentsByRptId={paymentsByRptId}
+              setMessagesArchivedState={updateMessagesArchivedState}
               navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>
@@ -302,6 +324,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  isExperimentalFeaturesEnabled:
+    state.persistedPreferences.isExperimentalFeaturesEnabled,
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state)
