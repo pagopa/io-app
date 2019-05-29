@@ -304,6 +304,7 @@ wallet:
   delete:
     successful: Carta cancellata correttamente
     failed: Impossibile cancellare la carta
+    alert: 'Attenzione: il metodo di pagamento è stato rimosso dal portafoglio'
   newPaymentMethod:
     add: aggiungi
     addButton: Aggiungi un metodo
