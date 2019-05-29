@@ -28,7 +28,6 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
@@ -238,7 +237,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <WalletLayout
         title={DEFAULT_APPLICATION_NAME}
         headerContents={headerContents}
-        isPagoPATestEnabled={this.props.isPagoPATestEnabled}
         displayedWallets={
           wallets.length === 0 ? null : (
             <CardsFan
@@ -297,8 +295,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
-  potTransactions: latestTransactionsSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
+  potTransactions: latestTransactionsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
