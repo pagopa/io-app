@@ -8,7 +8,7 @@ import { Button, Input, Item } from "native-base";
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
 import {
-  resetSearch,
+  disableSearch,
   searchMessagesEnabled,
   searchServicesEnabled,
   updateSearchText
@@ -99,10 +99,14 @@ class SearchButton extends React.Component<Props, State> {
   };
 
   private updateDebouncedSearchText = debounce((text: string) => {
-    this.setState({
-      debouncedSearchText: some(text)
-    });
-    this.props.dispatchSearchText(this.state.debouncedSearchText);
+    this.setState(
+      {
+        debouncedSearchText: some(text)
+      },
+      () => {
+        this.props.dispatchSearchText(this.state.debouncedSearchText);
+      }
+    );
   }, 300);
 
   private onSearchDisable = () => {
@@ -110,14 +114,14 @@ class SearchButton extends React.Component<Props, State> {
       searchText: none,
       debouncedSearchText: none
     });
-    this.props.dispatchResetSearch();
+    this.props.dispatchDisableSearch();
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   dispatchSearchText: (searchText: Option<string>) =>
     dispatch(updateSearchText(searchText)),
-  dispatchResetSearch: () => dispatch(resetSearch()),
+  dispatchDisableSearch: () => dispatch(disableSearch()),
   dispatchSearchEnabled: (isSearchEnabled: boolean) => {
     const searchType = props.searchType;
     switch (searchType) {
