@@ -1,22 +1,22 @@
+import { Button, Text } from "native-base";
 import * as React from "react";
+import { Linking, Platform, Switch, View } from "react-native";
+import AndroidOpenSettings from "react-native-android-open-settings";
+import TouchID, { AuthenticationError } from "react-native-touch-id";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { NavigationInjectedProps } from "react-navigation";
-
-import { Linking, Platform, Switch, View } from "react-native";
-
-import { Button, Text } from "native-base";
-
-import AndroidOpenSettings from "react-native-android-open-settings";
-import I18n from "../../i18n";
-
-import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
-
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import Markdown from "../../components/ui/Markdown";
+import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
+import { authenticateConfig } from "../../utils/biometric";
+import { showToast } from "../../utils/showToast";
+
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { GlobalState } from "../../store/reducers/types";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -74,6 +74,25 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
     }
   };
 
+  private setBiometricPreference = (biometricPreference: boolean): void => {
+    if (biometricPreference) {
+      // if user asks to enable biometric then call enable action directly
+      this.props.setFingerprintPreference(biometricPreference);
+      return;
+    }
+    // if user asks to disable biometric recnognition is required to proceed
+    TouchID.authenticate(
+      I18n.t("identification.biometric.popup.reason"),
+      authenticateConfig
+    )
+      .then(() => this.props.setFingerprintPreference(biometricPreference))
+      .catch((_: AuthenticationError) =>
+        // this toast will be show either if recognition fails (mismatch or user aborts)
+        // or if meanwhile user disables biometric recognition in OS settings
+        showToast(I18n.t("biometric_recognition.needed_to_disable"), "danger")
+      );
+  };
+
   public render() {
     const { isFingerprintAvailable } = this.state;
 
@@ -81,7 +100,6 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
       <TopScreenComponent
         title={I18n.t("biometric_recognition.title")}
         goBack={this.goBack}
-        subtitle={I18n.t("biometric_recognition.subTitle")}
         contextualHelp={{
           title: I18n.t("biometric_recognition.title"),
           body: () => (
@@ -89,6 +107,10 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
           )
         }}
       >
+        <ScreenContentHeader
+          title={I18n.t("biometric_recognition.title")}
+          subtitle={I18n.t("biometric_recognition.subTitle")}
+        />
         <View
           style={{
             width: "100%",
@@ -101,7 +123,7 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
           <Text>{I18n.t("biometric_recognition.switchLabel")}</Text>
           <Switch
             value={this.props.isFingerprintEnabled}
-            onValueChange={this.props.setFingerprintPreference}
+            onValueChange={this.setBiometricPreference}
             disabled={!isFingerprintAvailable}
           />
         </View>

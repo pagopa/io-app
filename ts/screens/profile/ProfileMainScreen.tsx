@@ -1,6 +1,5 @@
 import {
   Button,
-  H1,
   H3,
   Left,
   List,
@@ -8,10 +7,11 @@ import {
   Right,
   Switch,
   Text,
-  Toast
+  Toast,
+  View
 } from "native-base";
 import * as React from "react";
-import { Alert, Platform, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
@@ -22,8 +22,10 @@ import { connect } from "react-redux";
 
 import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
+import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
@@ -68,20 +70,20 @@ const styles = StyleSheet.create({
   itemLeftText: {
     alignSelf: "flex-start"
   },
-  experimentalFeaturesSection: {
+  developerSectionItem: {
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   },
-  debugModeSection: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
+  developerSectionItemLeft: {
+    flex: 1
+  },
+  developerSectionItemRight: {
+    flex: 0
   },
   modalHeader: {
-    marginBottom: 25
+    lineHeight: 40
   }
 });
 
@@ -113,9 +115,12 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         onCancel={this.props.hideModal}
         onOptionSelected={this.logout}
         header={
-          <H1 style={styles.modalHeader}>
-            {I18n.t("profile.logout.cta.header")}
-          </H1>
+          <View>
+            <H3 style={styles.modalHeader}>
+              {I18n.t("profile.logout.cta.header")}
+            </H3>
+            <View spacer={true} large={true} />
+          </View>
         }
       />
     );
@@ -146,6 +151,15 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     } else {
       this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
     }
+  };
+
+  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
+    this.props.setPagoPATestEnabled(enabled);
+    this.props.showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
   };
 
   private confirmResetAlert = () =>
@@ -187,12 +201,19 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         title={I18n.t("profile.main.screenTitle")}
-        icon={require("../../../img/icons/gears.png")}
-        subtitle={I18n.t("profile.main.screenSubtitle")}
-        banner={
-          isExperimentalFeaturesEnabled ? ExperimentalFeaturesBanner : undefined
-        }
+        appLogo={true}
       >
+        <ScreenContentHeader
+          title={I18n.t("profile.main.screenTitle")}
+          icon={require("../../../img/icons/gears.png")}
+          subtitle={I18n.t("profile.main.screenSubtitle")}
+          banner={
+            isExperimentalFeaturesEnabled
+              ? ExperimentalFeaturesBanner
+              : undefined
+          }
+        />
+
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
@@ -256,7 +277,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
-              <View style={styles.experimentalFeaturesSection}>
+              <View style={styles.developerSectionItem}>
                 <Text>
                   {I18n.t("profile.main.experimentalFeatures.confirmTitle")}
                 </Text>
@@ -268,23 +289,27 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             </ListItem>
 
             <ListItem>
-              <View style={styles.debugModeSection}>
-                <View>
+              <View style={styles.developerSectionItem}>
+                <View style={styles.developerSectionItemLeft}>
                   <Text style={styles.itemLeftText}>
                     {I18n.t("profile.main.pagoPaEnv")}
                   </Text>
-                  <Text>{I18n.t("profile.main.pagoPAEnvAlert")}</Text>
-                </View>
 
-                <Switch
-                  value={this.props.isPagoPATestEnabled}
-                  onValueChange={this.props.setPagoPATestEnabled}
-                />
+                  <Text style={styles.itemLeftText}>
+                    {I18n.t("profile.main.pagoPAEnvAlert")}
+                  </Text>
+                </View>
+                <View style={styles.developerSectionItemRight}>
+                  <Switch
+                    value={this.props.isPagoPATestEnabled}
+                    onValueChange={this.onPagoPAEnvironmentToggle}
+                  />
+                </View>
               </View>
             </ListItem>
 
             <ListItem>
-              <View style={styles.debugModeSection}>
+              <View style={styles.developerSectionItem}>
                 <Text>{I18n.t("profile.main.debugMode")}</Text>
                 <Switch
                   value={this.props.isDebugModeEnabled}

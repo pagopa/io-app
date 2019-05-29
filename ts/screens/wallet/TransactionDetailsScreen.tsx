@@ -36,6 +36,7 @@ import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
+import { formatDateAsLocal } from "./../../utils/dates";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -221,7 +222,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             )}
             {this.labelValueRow(
               I18n.t("wallet.date"),
-              transaction.created.toLocaleDateString()
+              formatDateAsLocal(transaction.created, true)
             )}
             {this.labelValueRow(
               I18n.t("wallet.time"),

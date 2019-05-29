@@ -2,11 +2,10 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import debounce from "lodash/debounce";
 import {
   Button,
-  DefaultTabBar,
-  Icon,
   Input,
   Item,
   Tab,
+  TabHeading,
   Tabs,
   Text,
   View
@@ -15,11 +14,11 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -35,9 +34,6 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
-// Used to disable the Deadlines tab
-const DEADLINES_TAB_ENABLED = false;
-
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -48,8 +44,22 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  tabContainerStyle: {
-    elevation: 0
+  tabBarContainer: {
+    elevation: 0,
+    height: 40
+  },
+  tabBarContent: {
+    fontSize: customVariables.fontSizeSmall
+  },
+  tabBarUnderline: {
+    borderBottomColor: customVariables.tabUnderlineColor,
+    borderBottomWidth: customVariables.tabUnderlineHeight
+  },
+  tabBarUnderlineActive: {
+    height: customVariables.tabUnderlineHeight,
+    // borders do not overlap eachother, but stack naturally
+    marginBottom: -customVariables.tabUnderlineHeight,
+    backgroundColor: customVariables.contentPrimaryBackground
   },
   noSearchBarText: {
     flex: 1,
@@ -57,8 +67,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   shadowContainer: {
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: customVariables.contentPadding
+    backgroundColor: "#FFFFFF"
   },
   shadow: {
     width: "100%",
@@ -74,24 +83,26 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowOpacity: 1,
     // Android shadow
-    elevation: 5
+    elevation: 5,
+    marginTop: -1
+  },
+  ioSearchContainer: {
+    width: "100%",
+    flex: 1
   },
   ioSearch: {
-    // Corrects the position of the font icon inside the button
-    paddingHorizontal: 2
+    paddingHorizontal: 6,
+    alignSelf: "flex-end",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: 40,
+    height: 40,
+    minWidth: 40
+  },
+  searchDisableIcon: {
+    color: customVariables.headerFontColor
   }
 });
-
-const renderTabBar = (props: any) => {
-  return (
-    <React.Fragment>
-      <DefaultTabBar {...props} />
-      <View style={styles.shadowContainer}>
-        <View style={styles.shadow} />
-      </View>
-    </React.Fragment>
-  );
-};
 
 /**
  * A screen that contains all the Tabs related to messages.
@@ -109,14 +120,19 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     this.props.refreshMessages();
   }
 
+  private renderShadow = () => (
+    <View style={styles.shadowContainer}>
+      <View style={styles.shadow} />
+    </View>
+  );
+
   public render() {
     const { searchText } = this.state;
 
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
-        icon={require("../../../img/icons/message-icon.png")}
-        hideHeader={searchText.isSome()}
+        appLogo={true}
         headerBody={
           searchText.isSome() ? (
             <Item>
@@ -126,19 +142,30 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                 onChangeText={this.onSearchTextChange}
                 autoFocus={true}
               />
-              <Icon name="cross" onPress={this.onSearchDisable} />
+              <IconFont name="io-close" onPress={this.onSearchDisable} />
             </Item>
           ) : (
-            <Button
-              onPress={this.onSearchEnable}
-              transparent={true}
-              style={styles.ioSearch}
-            >
-              <IconFont name="io-search" />
-            </Button>
+            <View style={styles.ioSearchContainer}>
+              <Button
+                onPress={this.onSearchEnable}
+                transparent={true}
+                style={styles.ioSearch}
+                accessible={true}
+                accessibilityLabel={I18n.t("global.actions.search")}
+              >
+                <IconFont name="io-search" />
+              </Button>
+            </View>
           )
         }
       >
+        {!searchText.isSome() && (
+          <ScreenContentHeader
+            title={I18n.t("messages.contentTitle")}
+            icon={require("../../../img/icons/message-icon.png")}
+          />
+        )}
+
         {searchText.isSome() ? this.renderSearch() : this.renderTabs()}
       </TopScreenComponent>
     );
@@ -149,6 +176,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
    */
   private renderTabs = () => {
     const {
+      isExperimentalFeaturesEnabled,
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
@@ -159,34 +187,63 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
     return (
       <Tabs
-        renderTabBar={renderTabBar}
-        tabContainerStyle={styles.tabContainerStyle}
+        tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
+        tabBarUnderlineStyle={styles.tabBarUnderlineActive}
       >
-        <Tab heading={I18n.t("messages.tab.inbox")}>
+        <Tab
+          heading={
+            <TabHeading>
+              <Text style={styles.tabBarContent}>
+                {I18n.t("messages.tab.inbox")}
+              </Text>
+            </TabHeading>
+          }
+        >
+          {this.renderShadow()}
           <MessagesInbox
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
-            paymentByRptId={paymentsByRptId}
+            paymentsByRptId={paymentsByRptId}
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
           />
         </Tab>
-        {DEADLINES_TAB_ENABLED && (
-          <Tab heading={I18n.t("messages.tab.deadlines")}>
+        {isExperimentalFeaturesEnabled && (
+          <Tab
+            heading={
+              <TabHeading>
+                <Text style={styles.tabBarContent}>
+                  {I18n.t("messages.tab.deadlines")}
+                </Text>
+              </TabHeading>
+            }
+          >
+            {this.renderShadow()}
             <MessagesDeadlines
               messagesState={lexicallyOrderedMessagesState}
-              onRefresh={refreshMessages}
+              servicesById={servicesById}
+              paymentsByRptId={paymentsByRptId}
+              setMessagesArchivedState={updateMessagesArchivedState}
               navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>
         )}
 
-        <Tab heading={I18n.t("messages.tab.archive")}>
+        <Tab
+          heading={
+            <TabHeading>
+              <Text style={styles.tabBarContent}>
+                {I18n.t("messages.tab.archive")}
+              </Text>
+            </TabHeading>
+          }
+        >
+          {this.renderShadow()}
           <MessagesArchive
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
-            paymentByRptId={paymentsByRptId}
+            paymentsByRptId={paymentsByRptId}
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
@@ -219,7 +276,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             <MessagesSearch
               messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
-              paymentByRptId={paymentsByRptId}
+              paymentsByRptId={paymentsByRptId}
               onRefresh={refreshMessages}
               navigateToMessageDetail={navigateToMessageDetail}
               searchText={_}
@@ -267,13 +324,17 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  isExperimentalFeaturesEnabled:
+    state.persistedPreferences.isExperimentalFeaturesEnabled,
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshMessages: () => dispatch(loadMessages.request()),
+  refreshMessages: () => {
+    dispatch(loadMessages.request());
+  },
   navigateToMessageDetail: (messageId: string) =>
     dispatch(navigateToMessageDetailScreenAction({ messageId })),
   updateMessagesArchivedState: (

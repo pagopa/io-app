@@ -14,7 +14,7 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -23,7 +23,6 @@ import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiar
 
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import Markdown from "../../../components/ui/Markdown";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 
 import I18n from "../../../i18n";
@@ -77,7 +76,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReduxMergedProps &
   OwnProps;
 
-const formatMdRecipient = (e: EnteBeneficiario): string => {
+const formatTextRecipient = (e: EnteBeneficiario): string => {
   const denomUnitOper = fromNullable(e.denomUnitOperBeneficiario)
     .map(d => ` - ${d}`)
     .getOrElse("");
@@ -95,21 +94,10 @@ const formatMdRecipient = (e: EnteBeneficiario): string => {
     .map(p => `(${p})`)
     .getOrElse("");
 
-  return `**${I18n.t("wallet.firstTransactionSummary.entity")}**\n
-${e.denominazioneBeneficiario}${denomUnitOper}\n
+  return `${e.denominazioneBeneficiario}${denomUnitOper}\n
 ${address}${civicNumber}\n
 ${cap}${city}${province}`;
 };
-
-const formatMdPaymentReason = (p: string): string =>
-  `**${I18n.t("wallet.firstTransactionSummary.object")}**\n
-${cleanTransactionDescription(p)}`;
-
-const formatMdInfoRpt = (r: RptId): string =>
-  `**${I18n.t("payment.IUV")}:** ${PaymentNoticeNumberFromString.encode(
-    r.paymentNoticeNumber
-  )}\n
-**${I18n.t("payment.recipientFiscalCode")}:** ${r.organizationFiscalCode}`;
 
 class TransactionSummaryScreen extends React.Component<Props> {
   public componentDidMount() {
@@ -188,6 +176,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
     // when empty, it means we're still loading the verifica response
     const { potVerifica } = this.props;
 
+    const maybeEnteBeneficiario = pot
+      .toOption(potVerifica)
+      .mapNullable(_ => _.enteBeneficiario)
+      .map(formatTextRecipient);
+
     return (
       <BaseScreenComponent
         goBack={true}
@@ -221,23 +214,36 @@ class TransactionSummaryScreen extends React.Component<Props> {
           )}
 
           <View content={true}>
-            <Markdown>
-              {pot
-                .toOption(potVerifica)
-                .mapNullable(_ => _.enteBeneficiario)
-                .map(formatMdRecipient)
-                .getOrElse("...")}
-            </Markdown>
-            <View spacer={true} />
-            <Markdown>
+            {maybeEnteBeneficiario.isSome() && (
+              <React.Fragment>
+                <Text bold={true}>
+                  {I18n.t("wallet.firstTransactionSummary.entity")}
+                </Text>
+                <Text>{maybeEnteBeneficiario.value.trim()}</Text>
+                <View spacer={true} />
+              </React.Fragment>
+            )}
+
+            <Text bold={true}>
+              {I18n.t("wallet.firstTransactionSummary.object")}
+            </Text>
+            <Text>
               {pot
                 .toOption(potVerifica)
                 .mapNullable(_ => _.causaleVersamento)
-                .map(formatMdPaymentReason)
                 .getOrElse("...")}
-            </Markdown>
+            </Text>
             <View spacer={true} />
-            <Markdown>{formatMdInfoRpt(rptId)}</Markdown>
+            <Text>
+              <Text bold={true}>{`${I18n.t("payment.IUV")}: `}</Text>
+              {PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)}
+            </Text>
+            <Text>
+              <Text bold={true}>{`${I18n.t(
+                "payment.recipientFiscalCode"
+              )}: `}</Text>
+              {rptId.organizationFiscalCode}
+            </Text>
             <View spacer={true} />
           </View>
         </Content>
@@ -303,6 +309,7 @@ const mapStateToProps = (state: GlobalState) => {
     error,
     isLoading,
     loadingCaption,
+    loadingOpacity: 0.95,
     potVerifica: verifica,
     maybeFavoriteWallet
   };

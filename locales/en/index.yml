@@ -3,6 +3,8 @@ global:
   localization:
     decimalSeparator: "."
   dateFormats:
+    monthYear: "MMMM YYYY"
+    dayMonthYear: "dddd D MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "MM/DD" 
   jserror:
@@ -115,6 +117,8 @@ profile:
       confirmTitle: Experimental features
       confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
       bannerMessage: You are using experimental features that may be incomplete or unstable.
+    pagoPaEnvironment:
+      alertMessage: The application must be restarted for the changes to take effect.
     accountSectionHeader: Account
     appVersion: App Version
     backendVersion: Backend Version
@@ -165,7 +169,6 @@ authentication:
     paragraph2: If you like, leave us your email address to receive reminders and
       updates on this app
     paragraph3: Continuing you declare to accept the
-    moreLinkText: To know more
     tosLinkText: rules on the processing of personal data
     continue: Continue
   spid_information:
@@ -223,7 +226,6 @@ onboarding:
       with SPID.
     pinInfoSelected: This code will be requested each time you open the app and when
       you need to view sensitive data or make dispositive transactions.
-    moreLinkText: Get more info
     continue: Continue
     reset: Change the code
     confirmValid: thanks, you can continue
@@ -411,7 +413,7 @@ wallet:
   noTransactions: There are no transactions.
   noNewTransactions: There are no new transactions.
   noneTransactions: There are no transactions
-  noTransactionsInWalletHome: You never used IO neither to pay nor to log in with an user registered on PagoPA, check your messages.
+  noTransactionsInWalletHome: You haven't executed any operation yet.
   noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
   moreInfo: Learn more
   payNotice: Pay notice
@@ -496,6 +498,10 @@ messages:
   refresh: Pull down to refresh
   loading: Loading Messages...
   yesterday: yesterday
+  errorLoading:
+    details: Error loading message details
+    senderService:  Sender service unknown
+    senderInfo: Service info unknown
   cta:
     archive: Archive
     unarchive: Unarchive
@@ -530,7 +536,7 @@ messages:
   deadlines:
     emptyMessage: 
       title: You haven't any scheduled deadline.
-      subtitle:  Pull down this page to check out past deadlines.
+      subtitle:  Use the button above to check out past deadlines.
 messageDetails:
   headerTitle: Message
   emptyMessage: No content
@@ -553,7 +559,6 @@ notifications:
 preferences:
   title: Preferences
   subtitle: This settings will be used by all services of the Public Amministration.
-  moreLinkText: Get more info.
   list:
     biometric_recognition: Biometric recognition
     biometric_recognition_status: 
@@ -584,6 +589,7 @@ biometric_recognition:
   switchLabel: Enable biometric recognition
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
+  needed_to_disable: Recognition required to disable
 services:
   headerTitle: Services
   title: Available services
@@ -619,3 +625,12 @@ identification:
       title: Identification required
       sensorDescription: Touch sensor
       fallbackLabel: Use the PIN
+calendarEvents:
+  calendarSelect: In which calendar you want to add the event?
+  removeRequest: 
+    title: Are you sure you want to remove this event?
+    ok: Remove event
+    cancel: Cancel the operation
+reminders:
+  emptyMonth: No reminders for this month
+  loadMoreData: loads the deadlines of the previous period

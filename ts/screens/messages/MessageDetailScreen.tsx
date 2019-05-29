@@ -6,6 +6,7 @@ import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -23,7 +24,6 @@ import { messageStateByIdSelector } from "../../store/reducers/entities/messages
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
 import { InferNavigationParams } from "../../types/react";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import ServiceDetailsScreen from "../preferences/ServiceDetailsScreen";
@@ -212,21 +212,23 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    * Used when we have all data to properly render the content of the screen.
    */
   private renderFullState = (
-    message: MessageWithContentPO,
+    message: CreatedMessageWithContent,
     service: pot.Pot<ServicePublic, Error>,
-    paymentByRptId: Props["paymentByRptId"]
+    paymentsByRptId: Props["paymentsByRptId"]
   ) => {
+    const { isDebugModeEnabled } = this.props;
     return (
       <Content noPadded={true}>
         <MessageDetailComponent
           message={message}
-          paymentByRptId={paymentByRptId}
-          service={service}
+          paymentsByRptId={paymentsByRptId}
+          potService={service}
           onServiceLinkPress={
             pot.isSome(service)
               ? () => this.onServiceLinkPressHandler(service.value)
               : undefined
           }
+          isDebugModeEnabled={isDebugModeEnabled}
         />
       </Content>
     );
@@ -234,10 +236,14 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   // TODO: Add a Provider and an HOC to manage multiple render states in a simpler way.
   private renderCurrentState = () => {
-    const { potMessage, potService, paymentByRptId } = this.props;
+    const { potMessage, potService, paymentsByRptId } = this.props;
 
     if (pot.isSome(potMessage)) {
-      return this.renderFullState(potMessage.value, potService, paymentByRptId);
+      return this.renderFullState(
+        potMessage.value,
+        potService,
+        paymentsByRptId
+      );
     }
     if (pot.isLoading(potMessage)) {
       return this.renderLoadingState();
@@ -281,7 +287,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
-
   const maybeMessageState = fromNullable(
     messageStateByIdSelector(messageId)(state)
   );
@@ -305,7 +310,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     maybeRead,
     potMessage,
     potService,
-    paymentByRptId: state.entities.paymentByRptId
+    paymentsByRptId: state.entities.paymentByRptId,
+    isDebugModeEnabled: state.debug.isDebugModeEnabled
   };
 };
 
