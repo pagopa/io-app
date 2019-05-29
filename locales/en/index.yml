@@ -299,6 +299,7 @@ wallet:
   delete:
     successful: Card successfully deleted
     failed: The card could not be deleted
+    alert: 'Warning: the payment method had been removed from wallet'
   newPaymentMethod:
     add: add
     addButton: Add a new method

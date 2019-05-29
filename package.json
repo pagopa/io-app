@@ -147,6 +147,7 @@
     "assets": [
       "./assets/fonts/TitilliumWeb",
       "./assets/fonts/io-icon-font",
+      "./assets/fonts/Ionicons",
       "./assets/fonts/RobotoMono"
     ]
   },
