@@ -1,7 +1,7 @@
 import * as t from "io-ts";
+import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-
 import { ContentClient } from "../api/content";
 
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
@@ -18,7 +18,7 @@ const contentClient = ContentClient();
  */
 function getServiceMetadata(
   serviceId: ServiceId
-): Promise<t.Validation<ServiceMetadata>> {
+): Promise<t.Validation<BasicResponseType<ServiceMetadata>>> {
   return new Promise((resolve, _) =>
     contentClient
       .getService({ serviceId })
@@ -43,9 +43,9 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       serviceId
     );
 
-    if (response.isRight()) {
+    if (response.isRight() && response.value.status === 200) {
       yield put(
-        contentServiceLoad.success({ serviceId, data: response.value })
+        contentServiceLoad.success({ serviceId, data: response.value.value })
       );
     } else {
       yield put(contentServiceLoad.failure(serviceId));
