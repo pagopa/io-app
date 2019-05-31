@@ -16,7 +16,14 @@ type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
  */
 class ScreenContent extends React.PureComponent<Props> {
   public render() {
-    const { title, icon, subtitle, banner, hideHeader, darkHeader } = this.props;
+    const {
+      title,
+      icon,
+      subtitle,
+      banner,
+      hideHeader,
+      darkHeader
+    } = this.props;
 
     return (
       <Content noPadded={true}>

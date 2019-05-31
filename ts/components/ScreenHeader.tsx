@@ -3,7 +3,7 @@ import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
-import customVariables from '../theme/variables';
+import customVariables from "../theme/variables";
 
 type Props = {
   heading: React.ReactNode;
@@ -33,7 +33,7 @@ class ScreenHeader extends React.Component<Props> {
     const { heading, icon, dark } = this.props;
 
     return (
-      <View style={ dark && {backgroundColor:customVariables.brandDarkGray}}>
+      <View style={dark && { backgroundColor: customVariables.brandDarkGray }}>
         {heading}
         {icon && (
           <View style={styles.container}>

@@ -18,7 +18,12 @@ interface OwnProps {
   dark?: boolean;
 }
 
-type BaseHeaderProps = "dark" | "appLogo" | "primary" | "goBack" | "headerTitle";
+type BaseHeaderProps =
+  | "dark"
+  | "appLogo"
+  | "primary"
+  | "goBack"
+  | "headerTitle";
 
 type Props = OwnProps &
   Pick<React.ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
@@ -65,8 +70,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           appLogo={appLogo}
         />
 
-          {this.props.children}
-        
+        {this.props.children}
+
         {contextualHelp && (
           <ContextualHelp
             title={contextualHelp.title}

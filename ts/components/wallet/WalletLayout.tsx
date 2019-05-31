@@ -18,12 +18,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { 
-  Animated,
-  StyleProp, 
-  StyleSheet, 
-  ViewStyle 
-} from "react-native";
+import { Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -80,7 +75,7 @@ const styles = StyleSheet.create({
   },
 
   level3: {
-    zIndex: -100  
+    zIndex: -100
   }
 });
 

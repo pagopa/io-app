@@ -32,12 +32,23 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
 
     return (
       <React.Fragment>
-        <View style={ this.props.dark && {backgroundColor: variables.brandDarkGray}}>
+        <View
+          style={
+            this.props.dark && { backgroundColor: variables.brandDarkGray }
+          }
+        >
           {banner && <React.Fragment>{this.props.banner}</React.Fragment>}
           <View spacer={true} />
           <ScreenHeader
             heading={
-              <H1 style={[styles.screenHeaderHeading, this.props.dark && {color: variables.colorWhite}]}>{this.props.title}</H1>
+              <H1
+                style={[
+                  styles.screenHeaderHeading,
+                  this.props.dark && { color: variables.colorWhite }
+                ]}
+              >
+                {this.props.title}
+              </H1>
             }
             icon={this.props.icon}
             dark={this.props.dark}
@@ -51,7 +62,6 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
             <View spacer={true} />
           )}
         </View>
-        
       </React.Fragment>
     );
   }
