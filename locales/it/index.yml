@@ -31,13 +31,13 @@ global:
     profile: profilo
   actions:
     retry: Si è verificato un errore, si prega di riprovare
-    search: Cerca
+    search: Testo da cercare
   remoteStates:
     loading: In caricamento...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
   search:
-    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
+    invalidSearchBarText: Inserisci almeno tre caratteri
   localNotifications:
     spidLogin:
       title: Ricordati di accedere ad IO!

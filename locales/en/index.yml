@@ -30,13 +30,13 @@ global:
     profile: profile
   actions:
     retry: An error occurred, please retry
-    search: Search
+    search: Text to search
   remoteStates:
     loading: Loading...
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
   search:
-    invalidSearchBarText: Enter at least three characters in the search bar.
+    invalidSearchBarText: Enter at least three characters
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
