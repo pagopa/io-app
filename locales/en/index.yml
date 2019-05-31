@@ -297,6 +297,7 @@ wallet:
   delete:
     successful: Card successfully deleted
     failed: The card could not be deleted
+    alert: 'Warning: the payment method had been removed from wallet'
   newPaymentMethod:
     add: add
     addButton: Add a new method
@@ -431,6 +432,7 @@ wallet:
     mobile:
       name: Other payment methods
       maxFee: Paypal, Satispay, etc.
+    notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
     labels:
