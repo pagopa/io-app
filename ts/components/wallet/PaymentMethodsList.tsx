@@ -119,7 +119,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
                         {itemInfo.item.maxFee}
                       </Text>
                     </Row>
-                    {!itemInfo.item.implemented && (
+                    {isItemDisabled && (
                       <Row>
                         <Badge primary={true}>
                           <Text style={AddMethodStyle.notImplementedText}>
@@ -134,9 +134,9 @@ class PaymentMethodsList extends React.Component<Props, never> {
                   <IconFont
                     name={itemInfo.item.icon}
                     color={
-                      itemInfo.item.implemented
-                        ? variables.brandPrimary
-                        : variables.brandLightGray
+                      isItemDisabled
+                        ? variables.brandLightGray
+                        : variables.brandPrimary
                     }
                     size={variables.iconSize6}
                   />
