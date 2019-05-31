@@ -6,7 +6,7 @@
  */
 
 import color from "color";
-import { Left, ListItem, Right, Text, View } from "native-base";
+import { Badge, Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, FlatList, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
@@ -50,9 +50,6 @@ const unavailableAlert = () =>
   );
 
 const AddMethodStyle = StyleSheet.create({
-  paymentMethodEntry: {
-    height: 75
-  },
   transactionText: {
     fontSize: variables.fontSizeSmaller,
     color: color(variables.colorWhite)
@@ -60,10 +57,7 @@ const AddMethodStyle = StyleSheet.create({
       .string()
   },
   notImplementedText: {
-    fontSize: variables.fontSizeSmaller,
-    color: color(variables.colorWhite)
-      .darken(0.35)
-      .string()
+    fontSize: variables.fontSizeSmaller
   },
   centeredContents: {
     alignItems: "center"
@@ -103,47 +97,53 @@ class PaymentMethodsList extends React.Component<Props, never> {
           removeClippedSubviews={false}
           data={paymentMethods}
           keyExtractor={item => item.name}
-          renderItem={itemInfo => (
-            <ListItem
-              style={[
-                AddMethodStyle.paymentMethodEntry,
-                styles.listItem,
-                itemInfo.item.implemented ? {} : styles.disabled
-              ]}
-              onPress={itemInfo.item.onPress}
-            >
-              <Left style={itemInfo.item.implemented ? {} : styles.disabled}>
-                <Grid>
-                  <Row>
-                    <Text bold={true}>{itemInfo.item.name}</Text>
-                  </Row>
-                  <Row>
-                    <Text style={AddMethodStyle.transactionText}>
-                      {itemInfo.item.maxFee}
-                    </Text>
-                  </Row>
-                  {!itemInfo.item.implemented && (
+          renderItem={itemInfo => {
+            const isItemDisabled = !itemInfo.item.implemented;
+            const disabledStyle = isItemDisabled ? styles.disabled : {};
+            return (
+              <ListItem
+                style={[styles.listItem]}
+                onPress={itemInfo.item.onPress}
+              >
+                <Left>
+                  <Grid>
                     <Row>
-                      <Text style={AddMethodStyle.notImplementedText}>
-                        {I18n.t("wallet.methods.notImplemented")}
+                      <Text bold={true} style={disabledStyle}>
+                        {itemInfo.item.name}
                       </Text>
                     </Row>
-                  )}
-                </Grid>
-              </Left>
-              <Right style={AddMethodStyle.centeredContents}>
-                <IconFont
-                  name={itemInfo.item.icon}
-                  color={
-                    itemInfo.item.implemented
-                      ? variables.brandPrimary
-                      : variables.brandDarkGray
-                  }
-                  size={variables.iconSize6}
-                />
-              </Right>
-            </ListItem>
-          )}
+                    <Row>
+                      <Text
+                        style={[AddMethodStyle.transactionText, disabledStyle]}
+                      >
+                        {itemInfo.item.maxFee}
+                      </Text>
+                    </Row>
+                    {!itemInfo.item.implemented && (
+                      <Row>
+                        <Badge primary={true}>
+                          <Text style={AddMethodStyle.notImplementedText}>
+                            {I18n.t("wallet.methods.notImplemented")}
+                          </Text>
+                        </Badge>
+                      </Row>
+                    )}
+                  </Grid>
+                </Left>
+                <Right style={AddMethodStyle.centeredContents}>
+                  <IconFont
+                    name={itemInfo.item.icon}
+                    color={
+                      itemInfo.item.implemented
+                        ? variables.brandPrimary
+                        : variables.brandLightGray
+                    }
+                    size={variables.iconSize6}
+                  />
+                </Right>
+              </ListItem>
+            );
+          }}
         />
         <View spacer={true} large={true} />
         <Text link={true} onPress={this.props.showHelp}>
