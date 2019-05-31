@@ -8,7 +8,7 @@
 import color from "color";
 import { Badge, Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -26,11 +26,11 @@ type OwnProps = Readonly<{
 type Props = OwnProps & ContextualHelpInjectedProps;
 
 type IPaymentMethod = Readonly<{
-  onPress: () => void;
   name: string;
   maxFee: string;
   icon: any;
   implemented: boolean;
+  onPress?: () => void;
 }>;
 
 const styles = StyleSheet.create({
@@ -42,12 +42,6 @@ const styles = StyleSheet.create({
     opacity: 0.75
   }
 });
-
-const unavailableAlert = () =>
-  Alert.alert(
-    I18n.t("wallet.pickPaymentMethod.unavailable.title"),
-    I18n.t("wallet.pickPaymentMethod.unavailable.message")
-  );
 
 const AddMethodStyle = StyleSheet.create({
   transactionText: {
@@ -82,14 +76,12 @@ class PaymentMethodsList extends React.Component<Props, never> {
         name: I18n.t("wallet.methods.bank.name"),
         maxFee: I18n.t("wallet.methods.bank.maxFee"),
         icon: "io-48-bank",
-        onPress: unavailableAlert, // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
         implemented: false
       },
       {
         name: I18n.t("wallet.methods.mobile.name"),
         maxFee: I18n.t("wallet.methods.mobile.maxFee"),
         icon: "io-48-phone",
-        onPress: unavailableAlert, // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
         implemented: false
       }
     ];
