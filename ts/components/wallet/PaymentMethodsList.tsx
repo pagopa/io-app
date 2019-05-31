@@ -56,8 +56,12 @@ const AddMethodStyle = StyleSheet.create({
       .darken(0.35)
       .string()
   },
+  notImplementedBadge: {
+    height: 18
+  },
   notImplementedText: {
-    fontSize: variables.fontSizeSmaller
+    fontSize: 10,
+    lineHeight: 14
   },
   centeredContents: {
     alignItems: "center"
@@ -121,7 +125,10 @@ class PaymentMethodsList extends React.Component<Props, never> {
                     </Row>
                     {isItemDisabled && (
                       <Row>
-                        <Badge primary={true}>
+                        <Badge
+                          primary={true}
+                          style={AddMethodStyle.notImplementedBadge}
+                        >
                           <Text style={AddMethodStyle.notImplementedText}>
                             {I18n.t("wallet.methods.notImplemented")}
                           </Text>
