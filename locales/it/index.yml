@@ -441,6 +441,7 @@ wallet:
     mobile:
       name: Altri metodi di pagamento
       maxFee: Paypal, Satispay, etc.
+    notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
     labels:
