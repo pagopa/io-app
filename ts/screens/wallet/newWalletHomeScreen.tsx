@@ -363,7 +363,6 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
           {transactionContent}
         </AnimatedScreenContent>
 
-        {/** TODO: make it being alwais be at bottom -- flexgrow to animatedscrollview */}  
         <View footer={true}>
             <Button block={true} 
               onPress={pot.isSome(potWallets)
