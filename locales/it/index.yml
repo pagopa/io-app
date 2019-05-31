@@ -310,7 +310,7 @@ wallet:
     addButton: Aggiungi un metodo
     addDescription: Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
       ecc.) per non doverli inserire ad ogni transazione
-    successful: Carta aggiunta con successo
+    successful: Grazie, il nuovo metodo di pagamento è stato inserito
     failed: Impossibile aggiungere la carta
     failedCardAlreadyExists: La carta che stai inserendo è già presente
   textMsg:
