@@ -216,6 +216,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     service: pot.Pot<ServicePublic, Error>,
     paymentsByRptId: Props["paymentsByRptId"]
   ) => {
+    const { isDebugModeEnabled } = this.props;
     return (
       <Content noPadded={true}>
         <MessageDetailComponent
@@ -227,6 +228,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
               ? () => this.onServiceLinkPressHandler(service.value)
               : undefined
           }
+          isDebugModeEnabled={isDebugModeEnabled}
         />
       </Content>
     );
@@ -308,7 +310,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     maybeRead,
     potMessage,
     potService,
-    paymentsByRptId: state.entities.paymentByRptId
+    paymentsByRptId: state.entities.paymentByRptId,
+    isDebugModeEnabled: state.debug.isDebugModeEnabled
   };
 };
 

@@ -1,16 +1,4 @@
-import { none, Option, some } from "fp-ts/lib/Option";
-import debounce from "lodash/debounce";
-import {
-  Button,
-  Icon,
-  Input,
-  Item,
-  Tab,
-  TabHeading,
-  Tabs,
-  Text,
-  View
-} from "native-base";
+import { Tab, TabHeading, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -21,7 +9,8 @@ import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import IconFont from "../../components/ui/IconFont";
+import { SearchType } from "../../components/search/SearchButton";
+import { SearchEmptyText } from "../../components/search/SearchEmptyText";
 import I18n from "../../i18n";
 import {
   loadMessages,
@@ -32,17 +21,16 @@ import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import {
+  isSearchMessagesEnabledSelector,
+  searchTextSelector
+} from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
-type State = {
-  searchText: Option<string>;
-  debouncedSearchText: Option<string>;
-};
 
 const styles = StyleSheet.create({
   tabBarContainer: {
@@ -61,11 +49,6 @@ const styles = StyleSheet.create({
     // borders do not overlap eachother, but stack naturally
     marginBottom: -customVariables.tabUnderlineHeight,
     backgroundColor: customVariables.contentPrimaryBackground
-  },
-  noSearchBarText: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
   },
   shadowContainer: {
     backgroundColor: "#FFFFFF"
@@ -87,19 +70,6 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginTop: -1
   },
-  ioSearchContainer: {
-    width: "100%",
-    flex: 1
-  },
-  ioSearch: {
-    paddingHorizontal: 6,
-    alignSelf: "flex-end",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: 40,
-    height: 40,
-    minWidth: 40
-  },
   searchDisableIcon: {
     color: customVariables.headerFontColor
   }
@@ -108,13 +78,9 @@ const styles = StyleSheet.create({
 /**
  * A screen that contains all the Tabs related to messages.
  */
-class MessagesHomeScreen extends React.Component<Props, State> {
+class MessagesHomeScreen extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      searchText: none,
-      debouncedSearchText: none
-    };
   }
 
   public componentDidMount() {
@@ -128,48 +94,21 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   );
 
   public render() {
-    const { searchText } = this.state;
-
+    const { isSearchEnabled } = this.props;
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
+        isSearchAvailable={true}
+        searchType={SearchType.Messages}
         appLogo={true}
-        headerBody={
-          searchText.isSome() ? (
-            <Item>
-              <Input
-                placeholder={I18n.t("global.actions.search")}
-                value={searchText.value}
-                onChangeText={this.onSearchTextChange}
-                autoFocus={true}
-              />
-              <Button onPress={this.onSearchDisable} transparent={true}>
-                <Icon style={styles.searchDisableIcon} name="cross" />
-              </Button>
-            </Item>
-          ) : (
-            <View style={styles.ioSearchContainer}>
-              <Button
-                onPress={this.onSearchEnable}
-                transparent={true}
-                style={styles.ioSearch}
-                accessible={true}
-                accessibilityLabel={I18n.t("global.actions.search")}
-              >
-                <IconFont name="io-search" />
-              </Button>
-            </View>
-          )
-        }
       >
-        {!searchText.isSome() && (
+        {!isSearchEnabled && (
           <ScreenContentHeader
             title={I18n.t("messages.contentTitle")}
             icon={require("../../../img/icons/message-icon.png")}
           />
         )}
-
-        {searchText.isSome() ? this.renderSearch() : this.renderTabs()}
+        {isSearchEnabled ? this.renderSearch() : this.renderTabs()}
       </TopScreenComponent>
     );
   }
@@ -227,6 +166,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
               paymentsByRptId={paymentsByRptId}
+              setMessagesArchivedState={updateMessagesArchivedState}
               navigateToMessageDetail={navigateToMessageDetail}
             />
           </Tab>
@@ -267,13 +207,11 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       navigateToMessageDetail
     } = this.props;
 
-    const { debouncedSearchText } = this.state;
-
-    return debouncedSearchText
+    return this.props.searchText
       .map(
         _ =>
           _.length < 3 ? (
-            this.renderInvalidSearchBarText()
+            <SearchEmptyText />
           ) : (
             <MessagesSearch
               messagesState={lexicallyOrderedMessagesState}
@@ -285,43 +223,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             />
           )
       )
-      .getOrElse(this.renderInvalidSearchBarText());
-  };
-
-  private renderInvalidSearchBarText = () => {
-    return (
-      <View style={styles.noSearchBarText}>
-        <Text>{I18n.t("global.search.invalidSearchBarText")}</Text>
-      </View>
-    );
-  };
-
-  private onSearchEnable = () => {
-    this.setState({
-      searchText: some("")
-    });
-  };
-
-  private onSearchTextChange = (text: string) => {
-    this.setState({
-      searchText: some(text)
-    });
-    this.updateDebouncedSearchText(text);
-  };
-
-  private updateDebouncedSearchText = debounce(
-    (text: string) =>
-      this.setState({
-        debouncedSearchText: some(text)
-      }),
-    300
-  );
-
-  private onSearchDisable = () => {
-    this.setState({
-      searchText: none,
-      debouncedSearchText: none
-    });
+      .getOrElse(<SearchEmptyText />);
   };
 }
 
@@ -330,7 +232,9 @@ const mapStateToProps = (state: GlobalState) => ({
     state.persistedPreferences.isExperimentalFeaturesEnabled,
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
-  paymentsByRptId: paymentsByRptIdSelector(state)
+  paymentsByRptId: paymentsByRptIdSelector(state),
+  searchText: searchTextSelector(state),
+  isSearchEnabled: isSearchMessagesEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

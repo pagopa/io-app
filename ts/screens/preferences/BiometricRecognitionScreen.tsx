@@ -1,7 +1,6 @@
 import { Button, Text } from "native-base";
 import * as React from "react";
-import { Linking, Platform, Switch, View } from "react-native";
-import AndroidOpenSettings from "react-native-android-open-settings";
+import { Switch, View } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -17,6 +16,7 @@ import { showToast } from "../../utils/showToast";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
+import { openAppSecuritySettings } from "../../utils/appSettings";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -65,14 +65,6 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
       _ => undefined
     );
   }
-
-  private openAppSettings = () => {
-    if (Platform.OS === "ios") {
-      Linking.openURL("App-prefs:root=General").catch(_ => undefined);
-    } else {
-      AndroidOpenSettings.securitySettings();
-    }
-  };
 
   private setBiometricPreference = (biometricPreference: boolean): void => {
     if (biometricPreference) {
@@ -140,7 +132,7 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
             >
               {I18n.t("biometric_recognition.enroll_cta")}
             </Text>
-            <Button onPress={this.openAppSettings}>
+            <Button onPress={openAppSecuritySettings}>
               <Text>{I18n.t("biometric_recognition.enroll_btnLabel")}</Text>
             </Button>
           </View>
