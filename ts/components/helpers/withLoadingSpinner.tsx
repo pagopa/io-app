@@ -1,7 +1,8 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
-import { Text } from "native-base";
+import { Button, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import { Overlay } from "../ui/Overlay";
@@ -23,11 +24,17 @@ export function withLoadingSpinner<
     isLoading: boolean;
     loadingCaption?: string;
     loadingOpacity?: number;
+    onCancel?: any;
   }>
 >(WrappedComponent: React.ComponentType<P>) {
   class WithLoadingSpinner extends React.Component<P> {
     public render() {
-      const { isLoading, loadingCaption, loadingOpacity } = this.props;
+      const {
+        isLoading,
+        loadingCaption,
+        loadingOpacity,
+        onCancel
+      } = this.props;
       const overlayProps =
         loadingOpacity !== undefined
           ? {
@@ -45,6 +52,11 @@ export function withLoadingSpinner<
                   <Text alignCenter={true} style={styles.textCaption}>
                     {loadingCaption ? loadingCaption : ""}
                   </Text>
+                }
+                action={
+                  <Button onPress={onCancel} style={{ alignSelf: "center" }}>
+                    <Text>{I18n.t("global.buttons.cancel")}</Text>
+                  </Button>
                 }
               />
             ) : (
