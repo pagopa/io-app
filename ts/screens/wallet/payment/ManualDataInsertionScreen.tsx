@@ -17,7 +17,6 @@ import { connect } from "react-redux";
 
 import { isLeft, isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
-import { NumberFromString } from "io-ts-types";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -39,6 +38,7 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
+import { NumberFromString } from "../../../utils/number";
 
 type OwnProps = NavigationInjectedProps;
 
