@@ -1,13 +1,9 @@
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 
-import {
-  ActivatePaymentT,
-  GetActivationStatusT,
-  GetPaymentInfoT
-} from "../../../definitions/backend/requestTypes";
+import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import {
   paymentAttiva,
@@ -62,14 +58,17 @@ export function* fetchWalletsRequestHandler(
   const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
   try {
     const getResponse: SagaCallReturnType<typeof request> = yield call(request);
-    if (getResponse !== undefined && getResponse.status === 200) {
-      yield put(fetchWalletsSuccess(getResponse.value.data));
+    if (getResponse.isRight()) {
+      if (getResponse.value.status === 200) {
+        yield put(fetchWalletsSuccess(getResponse.value.value.data));
+      } else {
+        yield put(fetchWalletsFailure(Error("Generic error")));
+      }
     } else {
-      // FIXME: show relevant error
-      yield put(fetchWalletsFailure(Error("Generic error")));
+      yield put(fetchWalletsFailure(Error(readableReport(getResponse.value))));
     }
-  } catch {
-    yield put(fetchWalletsFailure(Error("Generic error")));
+  } catch (error) {
+    yield put(fetchWalletsFailure(error));
   }
 }
 
@@ -82,16 +81,20 @@ export function* fetchTransactionsRequestHandler(
 ): Iterator<Effect> {
   const request = pmSessionManager.withRefresh(pagoPaClient.getTransactions);
   try {
-    const response: SagaCallReturnType<typeof request> | undefined = yield call(
-      request
-    );
-    if (response !== undefined && response.status === 200) {
-      yield put(fetchTransactionsSuccess(response.value.data));
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(fetchTransactionsSuccess(response.value.value.data));
+      } else {
+        yield put(fetchTransactionsFailure(Error("Generic error")));
+      }
     } else {
-      yield put(fetchTransactionsFailure(new Error("Generic error"))); // FIXME show relevant error (see story below)
+      yield put(
+        fetchTransactionsFailure(Error(readableReport(response.value)))
+      );
     }
-  } catch {
-    yield put(fetchTransactionsFailure(new Error("Generic error")));
+  } catch (error) {
+    yield put(fetchTransactionsFailure(error));
   }
 }
 
@@ -103,20 +106,22 @@ export function* fetchTransactionRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchTransactionRequest>
 ): Iterator<Effect> {
-  const getTransaction = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.getTransaction(pagoPaToken, action.payload);
-  const request = pmSessionManager.withRefresh(getTransaction);
+  const request = pmSessionManager.withRefresh(
+    pagoPaClient.getTransaction(action.payload)
+  );
   try {
-    const response: SagaCallReturnType<typeof request> | undefined = yield call(
-      request
-    );
-    if (response !== undefined && response.status === 200) {
-      yield put(fetchTransactionSuccess(response.value.data));
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(fetchTransactionSuccess(response.value.value.data));
+      } else {
+        throw Error("Generic error");
+      }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
-  } catch {
-    yield put(fetchTransactionFailure(new Error("Generic error")));
+  } catch (error) {
+    yield put(fetchTransactionFailure(error));
   }
 }
 
@@ -133,19 +138,22 @@ export function* setFavouriteWalletRequestHandler(
     // FIXME: currently there is no way to unset a favourite wallet
     return;
   }
-  const setFavouriteWallet = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.favouriteWallet(pagoPaToken, favouriteWalletId);
+  const setFavouriteWallet = pagoPaClient.favouriteWallet(favouriteWalletId);
 
   const request = pmSessionManager.withRefresh(setFavouriteWallet);
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
-    if (response !== undefined && response.status === 200) {
-      yield put(setFavouriteWalletSuccess(response.value.data));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(setFavouriteWalletSuccess(response.value.value.data));
+      } else {
+        throw Error("Generic error");
+      }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
-  } catch {
-    yield put(setFavouriteWalletFailure(Error()));
+  } catch (error) {
+    yield put(setFavouriteWalletFailure(error));
   }
 }
 
@@ -165,10 +173,9 @@ export function* updateWalletPspRequestHandler(
   // of wallets (which will contain the updated PSP)
   const { wallet, idPsp } = action.payload;
 
-  const apiUpdateWalletPsp = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.updateWalletPsp(pagoPaToken, wallet.idWallet, {
-      data: { idPsp }
-    });
+  const apiUpdateWalletPsp = pagoPaClient.updateWalletPsp(wallet.idWallet, {
+    data: { idPsp }
+  });
   const updateWalletPspWithRefresh = pmSessionManager.withRefresh(
     apiUpdateWalletPsp
   );
@@ -182,35 +189,42 @@ export function* updateWalletPspRequestHandler(
       typeof updateWalletPspWithRefresh
     > = yield call(updateWalletPspWithRefresh);
 
-    if (response !== undefined && response.status === 200) {
-      const getResponse: SagaCallReturnType<
-        typeof getWalletsWithRefresh
-      > = yield call(getWalletsWithRefresh);
-      if (getResponse !== undefined && getResponse.status === 200) {
-        // look for the updated wallet
-        const updatedWallet = getResponse.value.data.find(
-          _ => _.idWallet === wallet.idWallet
-        );
-        if (updatedWallet !== undefined) {
-          // the wallet is still there, we can proceed
-          const successAction = paymentUpdateWalletPsp.success({
-            wallets: getResponse.value.data,
-            updatedWallet: response.value.data
-          });
-          yield put(successAction);
-          if (action.payload.onSuccess) {
-            // signal the callee if requested
-            action.payload.onSuccess(successAction);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        const getResponse: SagaCallReturnType<
+          typeof getWalletsWithRefresh
+        > = yield call(getWalletsWithRefresh);
+        if (getResponse.isRight()) {
+          if (getResponse.value.status === 200) {
+            // look for the updated wallet
+            const updatedWallet = getResponse.value.value.data.find(
+              _ => _.idWallet === wallet.idWallet
+            );
+            if (updatedWallet !== undefined) {
+              // the wallet is still there, we can proceed
+              const successAction = paymentUpdateWalletPsp.success({
+                wallets: getResponse.value.value.data,
+                updatedWallet: response.value.value.data
+              });
+              yield put(successAction);
+              if (action.payload.onSuccess) {
+                // signal the callee if requested
+                action.payload.onSuccess(successAction);
+              }
+            }
+          } else {
+            // oops, the wallet is not there anymore!
+            throw Error("Generic error");
           }
         } else {
-          // oops, the wallet is not there anymore!
-          throw Error();
+          throw Error(readableReport(getResponse.value));
         }
       } else {
-        throw Error();
+        // oops, the wallet is not there anymore!
+        throw Error("Generic error");
       }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     const failureAction = paymentUpdateWalletPsp.failure(
@@ -229,41 +243,48 @@ export function* updateWalletPspRequestHandler(
  *
  * TODO: consider avoiding the fetch, let the appliction logic decide
  */
+// tslint:disable-next-line: cognitive-complexity
 export function* deleteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof deleteWalletRequest>
 ): Iterator<Effect> {
-  const deleteWalletApi = (token: PaymentManagerToken) =>
-    pagoPaClient.deleteWallet(token, action.payload.walletId);
+  const deleteWalletApi = pagoPaClient.deleteWallet(action.payload.walletId);
   const deleteWalletWithRefresh = pmSessionManager.withRefresh(deleteWalletApi);
 
   const getWalletsWithRefresh = pmSessionManager.withRefresh(
     pagoPaClient.getWallets
   );
-
   try {
     const deleteResponse: SagaCallReturnType<
       typeof deleteWalletWithRefresh
     > = yield call(deleteWalletWithRefresh);
-    if (deleteResponse !== undefined && deleteResponse.status === 200) {
+    if (deleteResponse.isRight() && deleteResponse.value.status === 200) {
       const getResponse: SagaCallReturnType<
         typeof getWalletsWithRefresh
       > = yield call(getWalletsWithRefresh);
-      if (getResponse !== undefined && getResponse.status === 200) {
-        const successAction = deleteWalletSuccess(getResponse.value.data);
+      if (getResponse.isRight() && getResponse.value.status === 200) {
+        const successAction = deleteWalletSuccess(getResponse.value.value.data);
         yield put(successAction);
         if (action.payload.onSuccess) {
           action.payload.onSuccess(successAction);
         }
       } else {
-        throw Error();
+        throw Error(
+          getResponse.isLeft()
+            ? readableReport(getResponse.value)
+            : "Generic Error"
+        );
       }
     } else {
-      throw Error();
+      throw Error(
+        deleteResponse.isLeft()
+          ? readableReport(deleteResponse.value)
+          : "Generic Error"
+      );
     }
-  } catch {
-    const failureAction = deleteWalletFailure(Error("Generic error"));
+  } catch (e) {
+    const failureAction = deleteWalletFailure(e);
     yield put(failureAction);
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);
@@ -279,8 +300,9 @@ export function* addWalletCreditCardRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof addWalletCreditCardRequest>
 ) {
-  const boardCreditCard = (token: PaymentManagerToken) =>
-    pagoPaClient.addWalletCreditCard(token, action.payload.creditcard);
+  const boardCreditCard = pagoPaClient.addWalletCreditCard(
+    action.payload.creditcard
+  );
   const boardCreditCardWithRefresh = pmSessionManager.withRefresh(
     boardCreditCard
   );
@@ -290,16 +312,19 @@ export function* addWalletCreditCardRequestHandler(
       typeof boardCreditCardWithRefresh
     > = yield call(boardCreditCardWithRefresh);
 
-    if (response !== undefined && response.status === 200) {
-      yield put(addWalletCreditCardSuccess(response.value));
-    } else if (
-      response !== undefined &&
-      response.status === 422 &&
-      response.value.message === "creditcard.already_exists"
-    ) {
-      yield put(addWalletCreditCardFailure("ALREADY_EXISTS"));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(addWalletCreditCardSuccess(response.value.value));
+      } else if (
+        response.value.status === 422 &&
+        response.value.value.message === "creditcard.already_exists"
+      ) {
+        yield put(addWalletCreditCardFailure("ALREADY_EXISTS"));
+      } else {
+        throw Error();
+      }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     yield put(addWalletCreditCardFailure("GENERIC_ERROR"));
@@ -314,22 +339,24 @@ export function* payCreditCardVerificationRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof payCreditCardVerificationRequest>
 ) {
-  const boardPay = (token: PaymentManagerToken) =>
-    pagoPaClient.payCreditCardVerification(
-      token,
-      action.payload.payRequest,
-      action.payload.language
-    );
+  const boardPay = pagoPaClient.payCreditCardVerification(
+    action.payload.payRequest,
+    action.payload.language
+  );
   const boardPayWithRefresh = pmSessionManager.withRefresh(boardPay);
   try {
     const response: SagaCallReturnType<typeof boardPayWithRefresh> = yield call(
       boardPayWithRefresh
     );
 
-    if (response !== undefined && response.status === 200) {
-      yield put(payCreditCardVerificationSuccess(response.value));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(payCreditCardVerificationSuccess(response.value.value));
+      } else {
+        throw Error("Generic error");
+      }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     yield put(payCreditCardVerificationFailure(Error("GENERIC_ERROR")));
@@ -344,27 +371,29 @@ export function* paymentFetchPspsForWalletRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentFetchPspsForPaymentId["request"]>
 ) {
-  const apiGetPspList = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.getPspList(
-      pagoPaToken,
-      action.payload.idPayment,
-      action.payload.idWallet
-    );
+  const apiGetPspList = pagoPaClient.getPspList(
+    action.payload.idPayment,
+    action.payload.idWallet
+  );
   const getPspListWithRefresh = pmSessionManager.withRefresh(apiGetPspList);
   try {
     const response: SagaCallReturnType<
       typeof getPspListWithRefresh
     > = yield call(getPspListWithRefresh);
-    if (response !== undefined && response.status === 200) {
-      const successAction = paymentFetchPspsForPaymentId.success(
-        response.value.data
-      );
-      yield put(successAction);
-      if (action.payload.onSuccess) {
-        action.payload.onSuccess(successAction);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        const successAction = paymentFetchPspsForPaymentId.success(
+          response.value.value.data
+        );
+        yield put(successAction);
+        if (action.payload.onSuccess) {
+          action.payload.onSuccess(successAction);
+        }
+      } else {
+        throw Error("Generic error");
       }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     const failureAction = paymentFetchPspsForPaymentId.failure(
@@ -388,23 +417,26 @@ export function* paymentCheckRequestHandler(
   // FIXME: we should not use default pagopa client for checkpayment, need to
   //        a client that doesn't retry on failure!!! checkpayment is NOT
   //        idempotent, the 2nd time it will error!
-  const apiCheckPayment = (token: PaymentManagerToken) =>
-    pagoPaClient.checkPayment(token, action.payload);
+  const apiCheckPayment = () => pagoPaClient.checkPayment(action.payload);
   const checkPaymentWithRefresh = pmSessionManager.withRefresh(apiCheckPayment);
   try {
     const response: SagaCallReturnType<
       typeof checkPaymentWithRefresh
     > = yield call(checkPaymentWithRefresh);
-    if (
-      response !== undefined &&
-      (response.status === 200 || (response.status as number) === 422)
-    ) {
-      // TODO: remove the cast of response.status to number as soon as the
-      //       paymentmanager specs include the 422 status.
-      //       https://www.pivotaltracker.com/story/show/161053093
-      yield put(paymentCheck.success(true));
+    if (response.isRight()) {
+      if (
+        response.value.status === 200 ||
+        (response.value.status as number) === 422
+      ) {
+        // TODO: remove the cast of response.status to number as soon as the
+        //       paymentmanager specs include the 422 status.
+        //       https://www.pivotaltracker.com/story/show/161053093
+        yield put(paymentCheck.success(true));
+      } else {
+        yield put(paymentCheck.failure(response.value));
+      }
     } else {
-      yield put(paymentCheck.failure(response));
+      yield put(paymentCheck.failure(undefined));
     }
   } catch {
     yield put(paymentCheck.failure(undefined));
@@ -419,25 +451,30 @@ export function* paymentExecutePaymentRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentExecutePayment["request"]>
 ): Iterator<Effect> {
-  const apiPostPayment = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.postPayment(pagoPaToken, action.payload.idPayment, {
-      data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
-    });
+  const apiPostPayment = pagoPaClient.postPayment(action.payload.idPayment, {
+    data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
+  });
   const postPaymentWithRefresh = pmSessionManager.withRefresh(apiPostPayment);
   try {
     const response: SagaCallReturnType<
       typeof postPaymentWithRefresh
     > = yield call(postPaymentWithRefresh);
 
-    if (response !== undefined && response.status === 200) {
-      const newTransaction = response.value.data;
-      const successAction = paymentExecutePayment.success(newTransaction);
-      yield put(successAction);
-      if (action.payload.onSuccess) {
-        action.payload.onSuccess(successAction);
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        const newTransaction = response.value.value.data;
+        const successAction = paymentExecutePayment.success(newTransaction);
+        yield put(successAction);
+        if (action.payload.onSuccess) {
+          action.payload.onSuccess(successAction);
+        }
+      } else {
+        throw Error("Generic error");
       }
     } else {
-      yield put(paymentExecutePayment.failure(Error("GENERIC_ERROR")));
+      yield put(
+        paymentExecutePayment.failure(Error(readableReport(response.value)))
+      );
     }
   } catch {
     yield put(paymentExecutePayment.failure(Error("GENERIC_ERROR")));
@@ -452,16 +489,19 @@ export function* paymentDeletePaymentRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentDeletePayment["request"]>
 ): Iterator<Effect> {
-  const apiPostPayment = (pagoPaToken: PaymentManagerToken) =>
-    pagoPaClient.deletePayment(pagoPaToken, action.payload.paymentId);
+  const apiPostPayment = pagoPaClient.deletePayment(action.payload.paymentId);
   const request = pmSessionManager.withRefresh(apiPostPayment);
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
 
-    if (response !== undefined && response.status === 200) {
-      yield put(paymentDeletePayment.success());
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        yield put(paymentDeletePayment.success());
+      } else {
+        throw Error("Generic error");
+      }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     yield put(paymentDeletePayment.failure());
@@ -476,7 +516,7 @@ export function* paymentDeletePaymentRequestHandler(
  * Handles paymentVerificaRequest
  */
 export function* paymentVerificaRequestHandler(
-  getVerificaRpt: TypeofApiCall<GetPaymentInfoT>,
+  getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"],
   action: ActionType<typeof paymentVerifica["request"]>
 ) {
   try {
@@ -491,16 +531,19 @@ export function* paymentVerificaRequestHandler(
         test: isPagoPATestEnabled
       }
     );
-    if (response !== undefined && response.status === 200) {
-      // Verifica succeeded
-      yield put(paymentVerifica.success(response.value));
-    } else if (response !== undefined && response.status === 500) {
-      // Verifica failed with a 500, that usually means there was an error
-      // interacting with Pagopa that we can interpret
-      yield put(paymentVerifica.failure(response.value.detail));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        // Verifica succeeded
+        yield put(paymentVerifica.success(response.value.value));
+      } else if (response.value.status === 500) {
+        // Verifica failed with a 500, that usually means there was an error
+        // interacting with Pagopa that we can interpret
+        yield put(paymentVerifica.failure(response.value.value.detail));
+      } else {
+        throw Error("Generic error");
+      }
     } else {
-      // unknown error
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     // Probably a timeout
@@ -512,7 +555,7 @@ export function* paymentVerificaRequestHandler(
  * Handles paymentAttivaRequest
  */
 export function* paymentAttivaRequestHandler(
-  postAttivaRpt: TypeofApiCall<ActivatePaymentT>,
+  postAttivaRpt: ReturnType<typeof BackendClient>["postAttivaRpt"],
   action: ActionType<typeof paymentAttiva["request"]>
 ) {
   try {
@@ -533,14 +576,18 @@ export function* paymentAttivaRequestHandler(
         test: isPagoPATestEnabled
       }
     );
-    if (response !== undefined && response.status === 200) {
-      // Attiva succeeded
-      yield put(paymentAttiva.success(response.value));
-    } else if (response !== undefined && response.status === 500) {
-      // Attiva failed
-      yield put(paymentAttiva.failure(response.value.detail));
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        // Attiva succeeded
+        yield put(paymentAttiva.success(response.value.value));
+      } else if (response.value.status === 500) {
+        // Attiva failed
+        yield put(paymentAttiva.failure(response.value.value.detail));
+      } else {
+        throw Error("Generic error");
+      }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     // Probably a timeout
@@ -554,7 +601,7 @@ export function* paymentAttivaRequestHandler(
  * Polls the backend for the paymentId linked to the payment context code
  */
 export function* paymentIdPollingRequestHandler(
-  getPaymentIdApi: TypeofApiCall<GetActivationStatusT>,
+  getPaymentIdApi: ReturnType<typeof BackendClient>["getPaymentId"],
   action: ActionType<typeof paymentIdPolling["request"]>
 ) {
   // successfully request the payment activation
@@ -572,14 +619,18 @@ export function* paymentIdPollingRequestHandler(
         test: isPagoPATestEnabled
       }
     );
-    if (response !== undefined && response.status === 200) {
+    if (response.isRight()) {
       // Attiva succeeded
-      yield put(paymentIdPolling.success(response.value.idPagamento));
-    } else if (response !== undefined && response.status === 400) {
-      // Attiva failed
-      yield put(paymentIdPolling.failure("PAYMENT_ID_TIMEOUT"));
+      if (response.value.status === 200) {
+        yield put(paymentIdPolling.success(response.value.value.idPagamento));
+      } else if (response.value.status === 400) {
+        // Attiva failed
+        yield put(paymentIdPolling.failure("PAYMENT_ID_TIMEOUT"));
+      } else {
+        throw Error("Generic error");
+      }
     } else {
-      throw Error();
+      throw Error(readableReport(response.value));
     }
   } catch {
     yield put(paymentIdPolling.failure(undefined));
