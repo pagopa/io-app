@@ -129,6 +129,7 @@ export default class TransactionsList extends React.Component<Props> {
     if (pot.isLoading(this.props.transactions)) {
       return (
         <BoxedRefreshIndicator
+          white={true}
           caption={<Text>{I18n.t("wallet.transactionsLoadMessage")}</Text>}
         />
       );

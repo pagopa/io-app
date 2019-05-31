@@ -3,16 +3,22 @@
  * a "pay notice" button and payment methods info/button to
  * add new ones
  */
+import { none } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
+import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Text, View, Content } from "native-base";
-import { Grid, Row } from "react-native-easy-grid";
-import { none } from "fp-ts/lib/Option";
 
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
+import H5 from "../../components/ui/H5";
+import IconFont from "../../components/ui/IconFont";
+import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
+import CardsFan from "../../components/wallet/card/CardsFan";
+import TransactionsList from "../../components/wallet/TransactionsList";
+import WalletLayoutNew from "../../components/wallet/WalletLayoutNew";
 import I18n from "../../i18n";
 import {
   navigateToPaymentScanQrCode,
@@ -27,16 +33,8 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
-import { Transaction } from "../../types/pagopa";
 import variables from "../../theme/variables";
-import { AddPaymentMethodButton } from '../../components/wallet/AddPaymentMethodButton';
-import BoxedRefreshIndicator from '../../components/ui/BoxedRefreshIndicator';
-import CardsFan from '../../components/wallet/card/CardsFan';
-import H5 from '../../components/ui/H5';
-import IconFont from '../../components/ui/IconFont'
-import TransactionsList from '../../components/wallet/TransactionsList';
-import AnimatedScreenContent from '../../components/AnimatedScreenContent';
-import PagoPALogo from '../../components/wallet/PagoPALogo';
+import { Transaction, Wallet } from "../../types/pagopa";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -47,84 +45,78 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-    flex: {
-      alignItems: "flex-end",
-      justifyContent: "space-between"
-    },
-  
-    inLineSpace: {
-      lineHeight: 20
-    },
-  
-    white: {
-      color: variables.colorWhite
-    },
-  
-    container: {
-      flex: 1,
-      alignItems: "flex-start",
-      justifyContent: "center",
-      backgroundColor: "transparent"
-    },
+  inLineSpace: {
+    lineHeight: 20
+  },
 
-    flex1: {
-      flex: 1
-    },
+  white: {
+    color: variables.colorWhite
+  },
 
-    flexRow: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between"
-    },
+  container: {
+    flex: 1,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    backgroundColor: "transparent"
+  },
 
-    emptyListWrapper: {
-      padding: variables.contentPadding,
-      alignItems: "center"
-    },
-    emptyListContentTitle: {
-      paddingBottom: variables.contentPadding / 2,
-      fontSize: variables.fontSizeSmall
-    },
-  
-    bordercColorBrandGray: {
-      borderColor: variables.brandGray
-    },
-  
-    colorBrandGray: {
-      color: variables.brandGray
-    },
+  flex1: {
+    flex: 1
+  },
 
-    brandDarkGray: {
-      color: variables.brandDarkGray
-    },
+  flexRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
 
-    brandLightGray: {
-      color: variables.brandLightGray
-    },
-  
-    whiteBg: {
-      backgroundColor: variables.colorWhite,
-    },
+  emptyListWrapper: {
+    padding: variables.contentPadding,
+    alignItems: "center"
+  },
 
-    noBottomPadding: {
-      padding: variables.contentPadding,
-      paddingBottom: 0
-    },
-  
-    animatedSubHeaderContent: {
-      flexDirection: "row",
-      alignItems: "baseline",
-      justifyContent: "space-between",
-      paddingHorizontal: variables.contentPadding
-    },
+  emptyListContentTitle: {
+    paddingBottom: variables.contentPadding / 2,
+    fontSize: variables.fontSizeSmall
+  },
+
+  bordercColorBrandGray: {
+    borderColor: variables.brandGray
+  },
+
+  colorBrandGray: {
+    color: variables.brandGray
+  },
+
+  brandDarkGray: {
+    color: variables.brandDarkGray
+  },
+
+  brandLightGray: {
+    color: variables.brandLightGray
+  },
+
+  whiteBg: {
+    backgroundColor: variables.colorWhite
+  },
+
+  noBottomPadding: {
+    padding: variables.contentPadding,
+    paddingBottom: 0
+  },
+
+  animatedSubHeaderContent: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between",
+    paddingHorizontal: variables.contentPadding
+  }
 });
-
 
 /**
  * Wallet Home Screen
  */
 class NewWalletHomeScreen extends React.Component<Props, never> {
-  
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
@@ -133,28 +125,28 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
     this.props.loadTransactions();
   }
 
-  private cardsHeader() {
+  private cardHeader() {
     return (
       <View style={styles.flexRow}>
-          <View>
-            <H5 style={styles.brandLightGray}>
-              {I18n.t("wallet.paymentMethods")}
-            </H5>
-          </View>
-          <View>
-            <AddPaymentMethodButton
-              onPress={this.props.navigateToWalletAddPaymentMethod}
-            />
-          </View>
+        <View>
+          <H5 style={styles.brandLightGray}>
+            {I18n.t("wallet.paymentMethods")}
+          </H5>
+        </View>
+        <View>
+          <AddPaymentMethodButton
+            onPress={this.props.navigateToWalletAddPaymentMethod}
+          />
+        </View>
       </View>
     );
   }
 
   private cardPreview(wallets: any) {
-    return(
+    return (
       <View>
-        {this.cardsHeader()}
-        <View spacer={true}/>
+        {this.cardHeader()}
+        <View spacer={true} />
         <CardsFan
           wallets={
             wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
@@ -162,8 +154,7 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
           navigateToWalletList={this.props.navigateToWalletList}
         />
       </View>
-      
-    )
+    );
   }
 
   private withoutCardsHeader() {
@@ -201,7 +192,6 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
   private loadingWalletsHeader() {
     return (
       <View>
-
         <BoxedRefreshIndicator
           caption={
             <Text white={true} style={styles.inLineSpace}>
@@ -216,7 +206,7 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
   private errorWalletsHeader() {
     return (
       <View>
-        {this.cardsHeader()}
+        {this.cardHeader()}
         <View spacer={true} />
         <Text style={[styles.white, styles.inLineSpace]}>
           {I18n.t("wallet.walletLoadFailure")}
@@ -252,15 +242,13 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
   }
 
   private transactionError() {
-    return(
+    return (
       <Content
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
       >
         <View spacer={true} />
-        <H5 style={styles.brandDarkGray}>
-          {I18n.t("wallet.transactions")}
-        </H5>
+        <H5 style={styles.brandDarkGray}>{I18n.t("wallet.transactions")}</H5>
         <View spacer={true} large={true} />
         <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
           {I18n.t("wallet.transactionsLoadFailure")}
@@ -277,10 +265,10 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
         </Button>
         <View spacer={true} large={true} />
       </Content>
-    )
-  };
+    );
+  }
 
-  private ListEmptyComponent(){
+  private listEmptyComponent() {
     return (
       <Content scrollEnabled={false} noPadded={true}>
         <View style={styles.emptyListWrapper}>
@@ -292,11 +280,13 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
           />
         </View>
       </Content>
-    )
-  }; 
-    
-  private transactionList( potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>  ) {
-    return(
+    );
+  }
+
+  private transactionList(
+    potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
+  ) {
+    return (
       <TransactionsList
         title={I18n.t("wallet.latestTransactions")}
         totalAmount={I18n.t("wallet.total")}
@@ -304,13 +294,30 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
-        ListEmptyComponent={this.ListEmptyComponent}
+        ListEmptyComponent={this.listEmptyComponent}
       />
-    )
-  };
+    );
+  }
+
+  private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
+    return (
+      <Button
+        block={true}
+        onPress={
+          pot.isSome(potWallets)
+            ? this.props.navigateToPaymentScanQrCode
+            : undefined
+        }
+      >
+        <IconFont name="io-qr" style={styles.white} />
+        <Text>{I18n.t("wallet.payNotice")}</Text>
+      </Button>
+    );
+  }
 
   // TODO: insert a more detailed value for appheader height
-  private animatedViewHeight: number = variables.h5LineHeight + 2 * variables.spacerWidth; //
+  private animatedViewHeight: number =
+    variables.h5LineHeight + 2 * variables.spacerWidth; //
   // TODO: insert a more detailed value for topContentHeight
   private topContentHeight: number = 450;
   private topContentHeightOffset: number = 40;
@@ -321,7 +328,6 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
   ];
 
   public render(): React.ReactNode {
-
     const { potWallets, potTransactions } = this.props;
     const wallets = pot.getOrElse(potWallets, []);
     const headerContent = pot.isLoading(potWallets)
@@ -331,49 +337,24 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
         : wallets.length > 0
           ? this.cardPreview(wallets)
           : this.withoutCardsHeader();
-    
-    const transactionContent = pot.isError(potTransactions) ? (
-      this.transactionError()
-    ) : (
-      this.transactionList(potTransactions)
-    );
-    
+
+    const transactionContent = pot.isError(potTransactions)
+      ? this.transactionError()
+      : this.transactionList(potTransactions);
+
+    const footerContent = this.footerButton(potWallets);
+
     return (
-      <TopScreenComponent
-        goBack={false}
+      <WalletLayoutNew
         title={I18n.t("wallet.wallet")}
-        dark={true}
-        headerBody={
-          <PagoPALogo/>
-        }
+        allowGoBack={false}
+        fixedSubHeader={this.fixedSubHeader()} // TODO: evaluate what can be included directly into the component
+        interpolationVars={this.interpolationVars} // TODO: make it dynamic with header extent
+        topContent={headerContent}
+        footerContent={footerContent}
       >
-        <AnimatedScreenContent
-          title={I18n.t("wallet.wallet")}
-          icon={require("../../../img/wallet/bank.png")}
-          dark={true}
-          fixedSubHeader={this.fixedSubHeader()} //TODO: evaluate what can be included directly into the component
-          headerContentHeight={1}
-          interpolationVars={this.interpolationVars} //TODO: make it dynamic with header extent
-        >
-
-          <View style={{backgroundColor: variables.brandDarkGray, paddingHorizontal: variables.contentPadding}}>
-            <View spacer={true}/>
-            {headerContent}
-          </View>
-          {transactionContent}
-        </AnimatedScreenContent>
-
-        <View footer={true}>
-            <Button block={true} 
-              onPress={pot.isSome(potWallets)
-              ? this.props.navigateToPaymentScanQrCode
-              : undefined}>
-              <IconFont name="io-qr" style={{ color: variables.colorWhite }} />
-              <Text>{I18n.t("wallet.payNotice")}</Text>
-            </Button>
-          </View>
-
-      </TopScreenComponent>
+        {transactionContent}
+      </WalletLayoutNew>
     );
   }
 }
