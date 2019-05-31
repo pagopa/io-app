@@ -34,10 +34,9 @@ import BoxedRefreshIndicator from '../../components/ui/BoxedRefreshIndicator';
 import CardsFan from '../../components/wallet/card/CardsFan';
 import H5 from '../../components/ui/H5';
 import IconFont from '../../components/ui/IconFont'
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import TransactionsList from '../../components/wallet/TransactionsList';
 import AnimatedScreenContent from '../../components/AnimatedScreenContent';
-import { Wallet } from '../../../definitions/pagopa/Wallet';
+import PagoPALogo from '../../components/wallet/PagoPALogo';
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -345,10 +344,7 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
         title={I18n.t("wallet.wallet")}
         dark={true}
         headerBody={
-          <Image
-            style={{ resizeMode: "contain", width: 60 }}
-            source={require("../../../img/wallet/logo-pagopa-test.png")} //TODO: insert here the new pagopalogo component not Image
-          />
+          <PagoPALogo/>
         }
       >
         <AnimatedScreenContent

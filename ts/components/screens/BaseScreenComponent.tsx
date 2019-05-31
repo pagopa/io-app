@@ -65,9 +65,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           appLogo={appLogo}
         />
 
-        <View style={{zIndex: -100}}>
           {this.props.children}
-        </View>
         
         {contextualHelp && (
           <ContextualHelp

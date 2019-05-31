@@ -67,8 +67,9 @@ export default class AnimatedScreenContent extends React.Component<Props, State>
             : 0;
     
         return(
-            <View style={{paddingBottom: customVariables.contentPadding}}>
+            <React.Fragment>
                 <Animated.ScrollView
+                    bounces={false}
                     ref={this.scrollableContentRef}
                     scrollEventThrottle={1}
                     onScroll={
@@ -85,9 +86,9 @@ export default class AnimatedScreenContent extends React.Component<Props, State>
                         icon={this.props.icon}
                         dark={this.props.dark}
                     />
-                    
-                    {this.props.children}
 
+                    {this.props.children}
+                   
                 </Animated.ScrollView>
 
                 <Animated.View
@@ -102,7 +103,7 @@ export default class AnimatedScreenContent extends React.Component<Props, State>
                             <View style={interpolationVars && {height: interpolationVars[0] }}/>
                             {this.props.fixedSubHeader}
                 </Animated.View>
-            </View>
+            </React.Fragment>
         
     )};
     
