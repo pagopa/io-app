@@ -31,7 +31,7 @@ describe("messages", () => {
         .call(getMessage, { id: testMessageId1 });
     });
 
-    it("should only return an empty error if the getMessage response is undefined (can't be decoded)", () => {
+    it("should only return an `Either` holding a `Left` validatorError if the getMessage response gets an error", () => {
       const getMessage = jest.fn();
       const validatorError = {
         value: "some error occurred",
@@ -39,7 +39,7 @@ describe("messages", () => {
       };
       testSaga(fetchMessage, getMessage, { id: testMessageId1 })
         .next()
-        // Return undefined as getMessage response
+        // Return a new `Either` holding a `Left` validatorError as getMessage response
         .next(left([validatorError]))
         .returns(
           left(

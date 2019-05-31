@@ -53,8 +53,7 @@ export function* updateInstallationSaga(
    */
   if (response.isLeft()) {
     yield put(updateNotificationInstallationFailure());
-    return;
+    return undefined;
   }
-
   return response.value.status;
 }
