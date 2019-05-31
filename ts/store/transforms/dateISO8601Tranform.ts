@@ -64,6 +64,9 @@ const encoder: TransformIn<any, string> = (value: any, _: string): any =>
 const decoder: TransformOut<string, any> = (value: any, _: string): any =>
   encodeDateToISO8601String(value);
 
+/**
+ * date tasformer will be applied only to entities (whitelist)
+ */
 export const DateISO8601Transform = createTransform(encoder, decoder, {
   whitelist: ["entities"]
 });
