@@ -18,14 +18,12 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import {
+import { 
   Animated,
-  Image,
-  StyleProp,
-  StyleSheet,
-  ViewStyle
+  StyleProp, 
+  StyleSheet, 
+  ViewStyle 
 } from "react-native";
-
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -33,6 +31,7 @@ import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
 import AppHeader from "../ui/AppHeader";
 import IconFont from "../ui/IconFont";
+import PagoPALogo from "./PagoPALogo";
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -92,7 +91,6 @@ type Props = Readonly<{
   allowGoBack: boolean;
   displayedWallets?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
-  isPagoPATestEnabled?: boolean;
   fixedSubHeader?: React.ReactNode;
   interpolationVars?: ReadonlyArray<number>;
 }>;
@@ -145,17 +143,7 @@ export default class WalletLayout extends React.Component<Props, State> {
             </Left>
           )}
           <Body>
-            {this.props.isPagoPATestEnabled ? (
-              <Image
-                style={{ resizeMode: "contain", width: 60 }}
-                source={require("../../../img/wallet/logo-pagopa-test.png")}
-              />
-            ) : (
-              <Image
-                style={{ resizeMode: "contain", width: 40 }}
-                source={require("../../../img/wallet/logo-pagopa.png")}
-              />
-            )}
+            <PagoPALogo />
           </Body>
           <Right>
             <InstabugButtons color={variables.colorWhite} />
