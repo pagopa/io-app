@@ -8,7 +8,7 @@
 import color from "color";
 import { Badge, Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -55,7 +55,7 @@ const AddMethodStyle = StyleSheet.create({
   },
   notImplementedText: {
     fontSize: 10,
-    lineHeight: 14
+    lineHeight: Platform.OS === "ios" ? 14 : 16
   },
   centeredContents: {
     alignItems: "center"
