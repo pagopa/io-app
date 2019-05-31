@@ -58,8 +58,7 @@ export function withLoadingSpinner<
                     <Button
                       onPress={onCancel}
                       style={{
-                        alignSelf: "center",
-                        display: shouldDisplayCancelButton
+                        alignSelf: "center"
                       }}
                     >
                       <Text>{I18n.t("global.buttons.cancel")}</Text>
