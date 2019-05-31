@@ -22,6 +22,8 @@ import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import { ComponentProps } from "../../../types/react";
 
+import ImagePicker from "react-native-image-picker";
+import * as ReaderQR from "react-native-lewin-qrcode";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
@@ -63,6 +65,16 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     backgroundColor: "transparent"
+  },
+
+  button: {
+    flex: 1,
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginTop: -20,
+    width: screenWidth - variables.contentPadding * 2,
+    backgroundColor: variables.colorWhite
   },
 
   camera: {
@@ -137,6 +149,31 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
   };
 
+  /**
+   * Start image chooser
+   */
+  private showImagePicker = () => {
+    const options = {
+      storageOptions: {
+        skipBackup: true,
+        path: "images"
+      }
+    };
+    // Open Image Library
+    ImagePicker.launchImageLibrary(options, response => {
+      const path = response.path ? response.path : response.uri;
+      if (path != null) {
+        ReaderQR.readerQR(path)
+          .then((data: string) => {
+            this.onQrCodeData(data);
+          })
+          .catch(() => {
+            this.onInvalidQrCode();
+          });
+      }
+    });
+  };
+
   public constructor(props: Props) {
     super(props);
     this.state = {
@@ -207,7 +244,14 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               }
               bottomContent={
                 <View>
-                  <View spacer={true} large={true} />
+                  <Button
+                    onPress={this.showImagePicker}
+                    style={styles.button}
+                    bordered={true}
+                  >
+                    <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
+                  </Button>
+                  <View spacer={true} />
                   <Text style={[styles.padded, styles.centerText]}>
                     {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
                   </Text>
