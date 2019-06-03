@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardComponent from "../../components/wallet/card/CardComponent";
-import WalletLayout from "../../components/wallet/WalletLayout";
+import WalletLayoutOld from "../../components/wallet/WalletLayoutOld";
 import I18n from "../../i18n";
 import {
   navigateToWalletAddPaymentMethod,
@@ -97,7 +97,7 @@ class WalletsScreenOld extends React.Component<Props> {
     );
 
     return (
-      <WalletLayout
+      <WalletLayoutOld
         title={I18n.t("wallet.paymentMethods")}
         headerContents={headerContents}
         allowGoBack={true}
@@ -112,7 +112,7 @@ class WalletsScreenOld extends React.Component<Props> {
             extraData={{ favoriteWallet }}
           />
         </Content>
-      </WalletLayout>
+      </WalletLayoutOld>
     );
   }
 }

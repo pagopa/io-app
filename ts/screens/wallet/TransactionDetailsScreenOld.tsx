@@ -26,7 +26,7 @@ import {
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
-import WalletLayout from "../../components/wallet/WalletLayout";
+import WalletLayoutOld from "../../components/wallet/WalletLayoutOld";
 import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -167,7 +167,7 @@ class TransactionDetailsScreenOld extends React.Component<Props> {
       : undefined;
 
     return (
-      <WalletLayout
+      <WalletLayoutOld
         title={I18n.t("wallet.transaction")}
         headerContents={this.getSubHeader(isPaymentCompletedTransaction)}
         displayedWallets={
@@ -230,7 +230,7 @@ class TransactionDetailsScreenOld extends React.Component<Props> {
             )}
           </Grid>
         </Content>
-      </WalletLayout>
+      </WalletLayoutOld>
     );
   }
 }

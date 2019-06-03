@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 
 import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
-import WalletLayout from "../../components/wallet/WalletLayout";
+import WalletLayoutOld from "../../components/wallet/WalletLayoutOld";
 import I18n from "../../i18n";
 import {
   navigateToTransactionDetailsScreen,
@@ -86,7 +86,7 @@ class TransactionsScreenOld extends React.Component<Props> {
     );
 
     return (
-      <WalletLayout
+      <WalletLayoutOld
         title={I18n.t("wallet.paymentMethod")}
         allowGoBack={true}
         headerContents={headerContents}
@@ -115,7 +115,7 @@ class TransactionsScreenOld extends React.Component<Props> {
           }
           ListEmptyComponent={ListEmptyComponent}
         />
-      </WalletLayout>
+      </WalletLayoutOld>
     );
   }
 }

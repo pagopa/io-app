@@ -17,7 +17,7 @@ import H5 from "../../components/ui/H5";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
-import WalletLayout from "../../components/wallet/WalletLayout";
+import WalletLayoutOld from "../../components/wallet/WalletLayoutOld";
 import { DEFAULT_APPLICATION_NAME } from "../../config";
 import I18n from "../../i18n";
 import {
@@ -270,7 +270,7 @@ class WalletHomeScreenOld extends React.Component<Props, never> {
           : this.withoutCardsHeader();
 
     return (
-      <WalletLayout
+      <WalletLayoutOld
         title={DEFAULT_APPLICATION_NAME}
         headerContents={headerContents}
         displayedWallets={
@@ -328,7 +328,7 @@ class WalletHomeScreenOld extends React.Component<Props, never> {
             ListEmptyComponent={ListEmptyComponent}
           />
         )}
-      </WalletLayout>
+      </WalletLayoutOld>
     );
   }
 }
