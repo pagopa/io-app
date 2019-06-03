@@ -230,6 +230,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(profileUpsert.failure):
     // messages
     case getType(loadMessages.request):
+    case getType(loadMessages.failure):
     case getType(loadMessages.success):
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
