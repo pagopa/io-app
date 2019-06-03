@@ -55,7 +55,7 @@ export class BaseHeader extends React.PureComponent<Props> {
                 onPress={goBack}
                 accessible={true}
                 accessibilityLabel={I18n.t("global.buttons.back")}
-                white={dark && true}
+                white={dark}
               />
             </Left>
           )
