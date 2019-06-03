@@ -1,4 +1,6 @@
 import { left, right } from "fp-ts/lib/Either";
+
+import * as t from "io-ts";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 
@@ -29,13 +31,23 @@ describe("messages", () => {
         .call(getMessage, { id: testMessageId1 });
     });
 
-    it("should only return an empty error if the getMessage response is undefined (can't be decoded)", () => {
+    it("should only return an `Either` holding a `Left` validatorError if the getMessage response gets an error", () => {
       const getMessage = jest.fn();
+      const validatorError = {
+        value: "some error occurred",
+        context: [{ key: "", type: t.string }]
+      };
       testSaga(fetchMessage, getMessage, { id: testMessageId1 })
         .next()
-        // Return undefined as getMessage response
-        .next(undefined)
-        .returns(left(Error()));
+        // Return a new `Either` holding a `Left` validatorError as getMessage response
+        .next(left([validatorError]))
+        .returns(
+          left(
+            Error(
+              'value ["some error occurred"] at [root] is not a valid [string]'
+            )
+          )
+        );
     });
 
     it("should only return the error if the getMessage response status is not 200", () => {
@@ -44,7 +56,7 @@ describe("messages", () => {
       testSaga(fetchMessage, getMessage, { id: testMessageId1 })
         .next()
         // Return 500 with an error message as getMessage response
-        .next({ status: 500, value: { title: error.message } })
+        .next(right({ status: 500, value: { title: error.message } }))
         .returns(left(error));
     });
 
@@ -52,8 +64,8 @@ describe("messages", () => {
       const getMessage = jest.fn();
       testSaga(fetchMessage, getMessage, { id: testMessageId1 })
         .next()
-        // Return 500 with an error message as getMessage response
-        .next({ status: 200, value: testMessageWithContent1 })
+        // Return 200 with a valid value as getMessage response
+        .next(right({ status: 200, value: testMessageWithContent1 }))
         .returns(right(testMessageWithContent1));
     });
   });

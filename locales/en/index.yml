@@ -30,13 +30,13 @@ global:
     profile: profile
   actions:
     retry: An error occurred, please retry
-    search: Search
+    search: Text to search
   remoteStates:
     loading: Loading...
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
   search:
-    invalidSearchBarText: Enter at least three characters in the search bar.
+    invalidSearchBarText: Enter at least three characters
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
@@ -434,6 +434,7 @@ wallet:
     mobile:
       name: Other payment methods
       maxFee: Paypal, Satispay, etc.
+    notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
     labels:
@@ -523,6 +524,10 @@ messages:
     reminderRemoveSuccess: "Reminder removed"
     reminderRemoveFailure: "Error removing reminder, please retry"
     preferenceCalendarSelect: "Select a default calendar"
+    calendarPermDenied:
+      title: "It seems calendar permissions has been denied"
+      ok: "Enable permissions"
+      cancel: "Cancel"
     errors:
       fetchCalendars: Error fetching calendars
     helper: "IO will remember this choice, you can change it from the preference pane."
