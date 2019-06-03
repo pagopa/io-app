@@ -27,6 +27,7 @@ import {
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
+import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 
 /**
@@ -82,8 +83,8 @@ const rootPersistConfig: PersistConfig = {
     "persistedPreferences",
     "installation"
   ],
-  // all sections above are persisted and rehydrated through this transform
-  transforms: [DateISO8601Transform]
+  // Transform functions used to manipulate state on store/rehydrate
+  transforms: [DateISO8601Transform, PotTransform]
 };
 
 const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
