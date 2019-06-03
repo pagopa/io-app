@@ -91,12 +91,20 @@ const styles = StyleSheet.create({
 });
 
 class TransactionDetailsScreen extends React.Component<Props> {
+  private displayedWallet(transactionWallet: any) {
+    return transactionWallet ? (
+      <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
+    ) : (
+      <RotatedCards cardType="Preview" />
+    );
+  }
+
   /**
    * It provides the proper header to the screen. If isTransactionStarted
    * (the user displays the screen during the process of identify and accept a transaction)
    * then the "Thank you message" is displayed
    */
-  private getSubHeader(paymentCompleted: boolean) {
+  private topContent(paymentCompleted: boolean, transactionWallet: any) {
     return paymentCompleted ? (
       <View>
         <Grid>
@@ -113,6 +121,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
           </Col>
           <Col size={1} />
         </Grid>
+        {this.displayedWallet(transactionWallet)}
       </View>
     ) : (
       <View spacer={true} />
@@ -160,8 +169,6 @@ class TransactionDetailsScreen extends React.Component<Props> {
       centsToAmount(transaction.grandTotal.amount)
     );
 
-    // FIXME: in case the wallet for this transaction has been deleted, display
-    //        a message in the wallet layout instead of an empty space
     const transactionWallet = this.props.wallets
       ? this.props.wallets[transaction.idWallet]
       : undefined;
@@ -169,15 +176,12 @@ class TransactionDetailsScreen extends React.Component<Props> {
     return (
       <WalletLayout
         title={I18n.t("wallet.transaction")}
-        headerContents={this.getSubHeader(isPaymentCompletedTransaction)}
-        displayedWallets={
-          transactionWallet ? (
-            <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
-          ) : (
-            <RotatedCards cardType="Preview" />
-          )
-        }
         allowGoBack={!isPaymentCompletedTransaction}
+        topContent={this.topContent(
+          isPaymentCompletedTransaction,
+          transactionWallet
+        )}
+        hideHeader={true}
       >
         <Content
           scrollEnabled={false}

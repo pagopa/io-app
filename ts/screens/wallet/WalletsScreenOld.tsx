@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardComponent from "../../components/wallet/card/CardComponent";
-import WalletLayoutNew from "../../components/wallet/WalletLayoutNew";
+import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
   navigateToWalletAddPaymentMethod,
@@ -57,7 +57,7 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-class WalletsScreenNew extends React.Component<Props> {
+class WalletsScreenOld extends React.Component<Props> {
   private renderWallet = (info: ListRenderItemInfo<Wallet>) => {
     const item = info.item;
     const isFavorite = pot.map(
@@ -80,30 +80,26 @@ class WalletsScreenNew extends React.Component<Props> {
     );
   };
 
-  private topContent() {
-    return (
-      <React.Fragment>
-        <View style={styles.headerContainer}>
-          <Left>
-            <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
-          </Left>
-          <Right>
-            <AddPaymentMethodButton
-              onPress={this.props.navigateToWalletAddPaymentMethod}
-            />
-          </Right>
-        </View>
-      </React.Fragment>
-    );
-  }
-
   public render(): React.ReactNode {
     const { favoriteWallet } = this.props;
 
+    const headerContents = (
+      <View style={styles.headerContainer}>
+        <Left>
+          <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
+        </Left>
+        <Right>
+          <AddPaymentMethodButton
+            onPress={this.props.navigateToWalletAddPaymentMethod}
+          />
+        </Right>
+      </View>
+    );
+
     return (
-      <WalletLayoutNew
+      <WalletLayout
         title={I18n.t("wallet.paymentMethods")}
-        topContent={this.topContent()}
+        headerContents={headerContents}
         allowGoBack={true}
         contentStyle={styles.brandDarkGrayBg}
       >
@@ -116,7 +112,7 @@ class WalletsScreenNew extends React.Component<Props> {
             extraData={{ favoriteWallet }}
           />
         </Content>
-      </WalletLayoutNew>
+      </WalletLayout>
     );
   }
 }
@@ -159,4 +155,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLoadingSpinner(WalletsScreenNew));
+)(withLoadingSpinner(WalletsScreenOld));

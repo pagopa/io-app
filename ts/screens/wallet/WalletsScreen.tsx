@@ -80,26 +80,30 @@ class WalletsScreen extends React.Component<Props> {
     );
   };
 
+  private topContent() {
+    return (
+      <React.Fragment>
+        <View style={styles.headerContainer}>
+          <Left>
+            <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
+          </Left>
+          <Right>
+            <AddPaymentMethodButton
+              onPress={this.props.navigateToWalletAddPaymentMethod}
+            />
+          </Right>
+        </View>
+      </React.Fragment>
+    );
+  }
+
   public render(): React.ReactNode {
     const { favoriteWallet } = this.props;
-
-    const headerContents = (
-      <View style={styles.headerContainer}>
-        <Left>
-          <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
-        </Left>
-        <Right>
-          <AddPaymentMethodButton
-            onPress={this.props.navigateToWalletAddPaymentMethod}
-          />
-        </Right>
-      </View>
-    );
 
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethods")}
-        headerContents={headerContents}
+        topContent={this.topContent()}
         allowGoBack={true}
         contentStyle={styles.brandDarkGrayBg}
       >

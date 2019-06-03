@@ -35,7 +35,7 @@ type Props = OwnProps;
 
 export class BaseHeader extends React.PureComponent<Props> {
   public render() {
-    const { appLogo, goBack, headerTitle, onShowHelp, body } = this.props;
+    const { appLogo, goBack, headerTitle, onShowHelp, body, dark } = this.props;
     return (
       <AppHeader primary={this.props.primary} dark={this.props.dark}>
         {appLogo ? (
@@ -55,6 +55,7 @@ export class BaseHeader extends React.PureComponent<Props> {
                 onPress={goBack}
                 accessible={true}
                 accessibilityLabel={I18n.t("global.buttons.back")}
+                white={dark && true}
               />
             </Left>
           )

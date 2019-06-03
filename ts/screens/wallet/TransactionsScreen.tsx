@@ -70,41 +70,50 @@ const ListEmptyComponent = (
 );
 
 class TransactionsScreen extends React.Component<Props> {
+  private headerContent(
+    selectedWallet: Wallet,
+    isFavorite: pot.Pot<boolean, Error>
+  ) {
+    return (
+      <React.Fragment>
+        <View>
+          <View style={styles.walletBannerText}>
+            <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
+          </View>
+          <View spacer={true} />
+        </View>
+
+        <CardComponent
+          type="Header"
+          wallet={selectedWallet}
+          hideFavoriteIcon={false}
+          hideMenu={false}
+          isFavorite={isFavorite}
+          onSetFavorite={(willBeFavorite: boolean) =>
+            this.props.setFavoriteWallet(
+              willBeFavorite ? selectedWallet.idWallet : undefined
+            )
+          }
+          onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
+        />
+      </React.Fragment>
+    );
+  }
+
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
+
     const isFavorite = pot.map(
       this.props.favoriteWallet,
       _ => _ === selectedWallet.idWallet
-    );
-    const headerContents = (
-      <View>
-        <View style={styles.walletBannerText}>
-          <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
-        </View>
-        <View spacer={true} />
-      </View>
     );
 
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
         allowGoBack={true}
-        headerContents={headerContents}
-        displayedWallets={
-          <CardComponent
-            type="Header"
-            wallet={selectedWallet}
-            hideFavoriteIcon={false}
-            hideMenu={false}
-            isFavorite={isFavorite}
-            onSetFavorite={(willBeFavorite: boolean) =>
-              this.props.setFavoriteWallet(
-                willBeFavorite ? selectedWallet.idWallet : undefined
-              )
-            }
-            onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
-          />
-        }
+        topContent={this.headerContent(selectedWallet, isFavorite)}
+        hideHeader={true}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
