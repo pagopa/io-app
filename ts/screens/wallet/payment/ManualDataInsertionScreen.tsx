@@ -40,7 +40,11 @@ import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 
-type OwnProps = NavigationInjectedProps;
+type NavigationParams = {
+  isInvalidAmount?: boolean;
+};
+
+type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
@@ -54,6 +58,7 @@ type State = Readonly<{
   delocalizedAmount: Option<
     ReturnType<typeof AmountInEuroCentsFromString.decode>
   >;
+  inputAmountValue: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -76,8 +81,16 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     this.state = {
       paymentNoticeNumber: none,
       organizationFiscalCode: none,
-      delocalizedAmount: none
+      delocalizedAmount: none,
+      inputAmountValue: ""
     };
+  }
+
+  public async componentWillReceiveProps(nextProps: Props) {
+    const isInvalidAmount = nextProps.navigation.getParam("isInvalidAmount");
+    if (isInvalidAmount) {
+      this.setState({ inputAmountValue: "", delocalizedAmount: none });
+    }
   }
 
   private decimalSeparatorRe = RegExp(
@@ -211,8 +224,10 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <Input
                   keyboardType={"numeric"}
                   maxLength={10}
+                  value={this.state.inputAmountValue}
                   onChangeText={value =>
                     this.setState({
+                      inputAmountValue: value,
                       delocalizedAmount: some(
                         value.replace(this.decimalSeparatorRe, ".")
                       )

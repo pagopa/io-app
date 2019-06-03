@@ -262,7 +262,9 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateToPaymentManualDataInsertion: () =>
-    dispatch(navigateToPaymentManualDataInsertion()),
+    dispatch(
+      navigateToPaymentManualDataInsertion({ isInvalidAmount: undefined })
+    ),
   runPaymentTransactionSummarySaga: (
     rptId: RptId,
     initialAmount: AmountInEuroCents

@@ -41,6 +41,7 @@ import { GlobalState } from "../../../store/reducers/types";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
+import { detailEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   navigateToPaymentPickPaymentMethodScreen,
@@ -113,11 +114,12 @@ class TransactionSummaryScreen extends React.Component<Props> {
     // already completed for this notice, we update the payment state so that
     // the notice result paid
     if (error.toUndefined() !== prevProps.error.toUndefined()) {
-      error
-        .filter(_ => _ === "PAYMENT_DUPLICATED")
-        .map(_ => this.props.onDuplicatedPayment());
+      // error
+      //   .filter(_ => _ === "PAYMENT_DUPLICATED")
+      //   .map(_ => this.props.onDuplicatedPayment());
       if (error.isSome()) {
-        this.props.navigateToPaymentTransactionError(error, this.props.onRetry);
+        const mockError = some(detailEnum.INVALID_AMOUNT);
+        this.props.navigateToPaymentTransactionError(mockError, this.props.onRetry);
       }
     }
   }
