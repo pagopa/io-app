@@ -8,8 +8,8 @@ import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { UserProfileUnion } from "../api/backend";
-import I18n from "../i18n";
 import { BackendClient } from "../api/backend";
+import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
 import {
   profileLoadFailure,
