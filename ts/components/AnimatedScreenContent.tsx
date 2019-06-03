@@ -5,7 +5,13 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { Animated, Platform, StyleSheet } from "react-native";
+import {
+  Animated,
+  Platform,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { NavigationEvents } from "react-navigation";
 import customVariables from "../theme/variables";
@@ -15,8 +21,9 @@ import { ScreenContentHeader } from "./screens/ScreenContentHeader";
 type OwnProps = Readonly<{
   ListEmptyComponent?: React.ReactNode;
   fixedSubHeader?: React.ReactNode;
-  interpolationVars?: ReadonlyArray<number>; // top header width, header content width, desired offset
+  interpolationVars?: ReadonlyArray<number>; // top header width, header content width, desired offset for animation
   hideHeader?: boolean;
+  contentStyle?: StyleProp<ViewStyle>;
 }>;
 
 type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
@@ -62,8 +69,17 @@ export default class AnimatedScreenContent extends React.Component<
       : customVariables.appHeaderHeight;
 
   public render(): React.ReactNode {
-    const { interpolationVars } = this.props;
+    const { interpolationVars, contentStyle } = this.props;
 
+    /**
+     * The object referred as subHeader will be animated at scroll so that
+     * - the sub-header will be hidden until the top content will be displayed
+     * (the height of the content at the top has to be expressed as interpolationVars[1])
+     * - the sub-header will appears scrolling from top to bottom covering its height
+     * (subheader height has to be expressed as interpolationVars[0])
+     * - the velocity of the animation can be managed by setting the desired offset
+     * (offset has to be expressed as interpolationVars[2])
+     */
     const subHeaderTranslaction =
       interpolationVars && interpolationVars.length === 3
         ? this.state.scrollY.interpolate({
@@ -80,7 +96,7 @@ export default class AnimatedScreenContent extends React.Component<
     return (
       <React.Fragment>
         <Animated.ScrollView
-          style={{ zIndex: -2 }}
+          style={[{ zIndex: -2 }, contentStyle]}
           bounces={false}
           ref={this.scrollableContentRef}
           scrollEventThrottle={1}

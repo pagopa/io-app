@@ -22,9 +22,9 @@ type Props = Readonly<{
   fixedSubHeader?: React.ReactNode;
   interpolationVars?: ReadonlyArray<number>;
   topContent?: React.ReactNode;
-  contentStyle?: StyleProp<ViewStyle>;
   hideHeader?: boolean;
   footerContent?: React.ReactNode;
+  contentStyle?: StyleProp<ViewStyle>;
 }>;
 
 const styles = StyleSheet.create({
@@ -43,7 +43,8 @@ export default class WalletLayoutNew extends React.Component<Props> {
       interpolationVars,
       topContent,
       hideHeader,
-      footerContent
+      footerContent,
+      contentStyle
     } = this.props;
 
     return (
@@ -60,6 +61,7 @@ export default class WalletLayoutNew extends React.Component<Props> {
           dark={true}
           fixedSubHeader={fixedSubHeader}
           interpolationVars={interpolationVars}
+          contentStyle={contentStyle}
         >
           <View style={styles.headerContents}>
             <View spacer={true} />
