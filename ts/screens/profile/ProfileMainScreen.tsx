@@ -203,17 +203,17 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         title={I18n.t("profile.main.screenTitle")}
         appLogo={true}
       >
-          <ScreenContentHeader
-            title={I18n.t("profile.main.screenTitle")}
-            icon={require("../../../img/icons/gears.png")}
-            subtitle={I18n.t("profile.main.screenSubtitle")}
-            banner={
-              isExperimentalFeaturesEnabled
-                ? ExperimentalFeaturesBanner
-                : undefined
-            }
-          />
-          
+        <ScreenContentHeader
+          title={I18n.t("profile.main.screenTitle")}
+          icon={require("../../../img/icons/gears.png")}
+          subtitle={I18n.t("profile.main.screenSubtitle")}
+          banner={
+            isExperimentalFeaturesEnabled
+              ? ExperimentalFeaturesBanner
+              : undefined
+          }
+        />
+
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
@@ -438,7 +438,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             )}
           </List>
         </ScrollView>
-
       </TopScreenComponent>
     );
   }

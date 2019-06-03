@@ -3,12 +3,13 @@
  * from a specific credit card
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H3, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import H5 from "../../components/ui/H5";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
@@ -42,7 +43,6 @@ type Props = OwnProps &
 
 const styles = StyleSheet.create({
   walletBannerText: {
-    height: 50,
     alignItems: "flex-end",
     flexDirection: "row"
   },
@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "baseline",
     justifyContent: "space-between",
-    paddingHorizontal: variables.contentPadding
+    paddingHorizontal: variables.contentPadding,
+    backgroundColor: variables.colorWhite
   },
 
   brandDarkGray: {
@@ -75,7 +76,7 @@ const ListEmptyComponent = (
     style={[styles.noBottomPadding, styles.whiteContent]}
   >
     <View spacer={true} />
-    <H3>{I18n.t("wallet.noneTransactions")}</H3>
+    <H5>{I18n.t("wallet.noneTransactions")}</H5>
     <View spacer={true} />
     <Text>{I18n.t("wallet.noTransactionsInTransactionsScreen")}</Text>
     <View spacer={true} large={true} />
@@ -90,10 +91,10 @@ class TransactionsScreen extends React.Component<Props> {
     return (
       <React.Fragment>
         <View>
+          <View spacer={true} large={true} />
           <View style={styles.walletBannerText}>
             <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
           </View>
-          <View spacer={true} />
         </View>
 
         <CardComponent
@@ -113,6 +114,36 @@ class TransactionsScreen extends React.Component<Props> {
     );
   }
 
+  private fixedSubHeader() {
+    return (
+      <View>
+        <View spacer={true} />
+        <View style={styles.subHeaderContent}>
+          <H5 style={styles.brandDarkGray}>
+            {I18n.t("wallet.latestTransactions")}
+          </H5>
+          <Text>{I18n.t("wallet.total")}</Text>
+        </View>
+        <View spacer={true} />
+      </View>
+    );
+  }
+
+  /**
+   *  TODO: insert a more detailed value for appheader height
+   * (see blocker: https://www.pivotaltracker.com/n/projects/2048617/stories/166154544)
+   */
+  private animatedViewHeight: number =
+    variables.h5LineHeight + 2 * variables.spacerWidth; //
+  // TODO: insert a more detailed value for topContentHeight
+  private topContentHeight: number = 450;
+  private topContentHeightOffset: number = 40;
+  private interpolationVars: ReadonlyArray<number> = [
+    this.animatedViewHeight,
+    this.topContentHeight,
+    this.topContentHeightOffset
+  ];
+
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
 
@@ -127,6 +158,8 @@ class TransactionsScreen extends React.Component<Props> {
         allowGoBack={true}
         topContent={this.headerContent(selectedWallet, isFavorite)}
         hideHeader={true}
+        fixedSubHeader={this.fixedSubHeader()}
+        interpolationVars={this.interpolationVars}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
