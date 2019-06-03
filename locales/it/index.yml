@@ -31,13 +31,13 @@ global:
     profile: profilo
   actions:
     retry: Si è verificato un errore, si prega di riprovare
-    search: Cerca
+    search: Testo da cercare
   remoteStates:
     loading: In caricamento...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
   search:
-    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
+    invalidSearchBarText: Inserisci almeno tre caratteri
   localNotifications:
     spidLogin:
       title: Ricordati di accedere ad IO!
@@ -533,6 +533,10 @@ messages:
     reminderRemoveSuccess: "Promemoria eliminato"
     reminderRemoveFailure: "Error durante l'eliminazione del promemoria, riprova per piacere"
     preferenceCalendarSelect: "Seleziona un calendario predefinito"
+    calendarPermDenied:
+      title: "Sembra che i permessi per accedere al calendario siano stati negati"
+      ok: "Abilita i permessi"
+      cancel: "Annulla"
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."

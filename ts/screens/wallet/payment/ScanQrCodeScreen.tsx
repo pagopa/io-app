@@ -6,14 +6,7 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Container, Text, Toast, View } from "native-base";
 import * as React from "react";
-import {
-  Dimensions,
-  Linking,
-  Platform,
-  ScrollView,
-  StyleSheet
-} from "react-native";
-import AndroidOpenSettings from "react-native-android-open-settings";
+import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -34,6 +27,7 @@ import {
 } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
+import { openAppSettings } from "../../../utils/appSettings";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 
 type OwnProps = NavigationInjectedProps;
@@ -193,14 +187,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
   private handleWillBlur = () => this.setState({ isFocused: false });
 
-  private openAppSettings = () => {
-    if (Platform.OS === "ios") {
-      Linking.openURL("app-settings://notification/IO").catch(_ => undefined);
-    } else {
-      AndroidOpenSettings.appDetailsSettings();
-    }
-  };
-
   public render(): React.ReactNode {
     const primaryButtonProps = {
       block: true,
@@ -281,7 +267,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                   </Text>
 
                   <Button
-                    onPress={this.openAppSettings}
+                    onPress={openAppSettings}
                     style={styles.notAuthorizedBtn}
                   >
                     <Text>
