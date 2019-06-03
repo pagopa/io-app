@@ -294,7 +294,7 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
-        ListEmptyComponent={this.listEmptyComponent}
+        ListEmptyComponent={this.listEmptyComponent()}
       />
     );
   }
@@ -348,8 +348,8 @@ class NewWalletHomeScreen extends React.Component<Props, never> {
       <WalletLayoutNew
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
-        fixedSubHeader={this.fixedSubHeader()} // TODO: evaluate what can be included directly into the component
-        interpolationVars={this.interpolationVars} // TODO: make it dynamic with header extent
+        fixedSubHeader={this.fixedSubHeader()}
+        interpolationVars={this.interpolationVars}
         topContent={headerContent}
         footerContent={footerContent}
       >
