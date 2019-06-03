@@ -1,11 +1,14 @@
 import * as React from "react";
 
 import { ComponentProps } from "../../types/react";
+import { SearchType } from "../search/SearchButton";
 import BaseScreenComponent from "./BaseScreenComponent";
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
 interface OwnProps {
   headerTitle?: string;
+  isSearchAvailable?: boolean;
+  searchType?: SearchType;
 }
 
 type BaseScreenComponentProps =
@@ -29,7 +32,9 @@ class TopScreenComponent extends React.PureComponent<Props> {
       title,
       headerTitle,
       contextualHelp,
-      headerBody
+      headerBody,
+      isSearchAvailable,
+      searchType
     } = this.props;
 
     return (
@@ -39,6 +44,8 @@ class TopScreenComponent extends React.PureComponent<Props> {
         headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}
         headerBody={headerBody}
+        isSearchAvailable={isSearchAvailable}
+        searchType={searchType}
       >
         {this.props.children}
       </BaseScreenComponent>

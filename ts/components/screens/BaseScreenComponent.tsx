@@ -4,6 +4,7 @@ import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 
 import { ContextualHelp } from "../ContextualHelp";
+import { SearchType } from "../search/SearchButton";
 import { BaseHeader } from "./BaseHeader";
 
 interface ContextualHelpProps {
@@ -15,6 +16,8 @@ interface OwnProps {
   contextualHelp?: ContextualHelpProps;
   headerBody?: React.ReactNode;
   appLogo?: boolean;
+  isSearchAvailable?: boolean;
+  searchType?: SearchType;
 }
 
 type BaseHeaderProps = "appLogo" | "primary" | "goBack" | "headerTitle";
@@ -49,7 +52,9 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       goBack,
       headerBody,
       headerTitle,
-      primary
+      primary,
+      isSearchAvailable,
+      searchType
     } = this.props;
     return (
       <Container>
@@ -58,6 +63,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           goBack={goBack}
           headerTitle={headerTitle}
           onShowHelp={contextualHelp ? this.showHelp : undefined}
+          isSearchAvailable={isSearchAvailable}
+          searchType={searchType}
           body={headerBody}
           appLogo={appLogo}
         />
