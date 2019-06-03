@@ -1,17 +1,17 @@
-import { Body, Left, Right, Text, View, Button } from "native-base";
+import { Body, Button, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import IconFont from "../../components/ui/IconFont";
-import AppHeader from "../ui/AppHeader";
 import I18n from "../../i18n";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
+import { InstabugButtons } from "../InstabugButtons";
 import SearchButton, { SearchType } from "../search/SearchButton";
-import { InstabugButtons } from '../InstabugButtons';
+import AppHeader from "../ui/AppHeader";
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -42,7 +42,11 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   public render() {
     const { goBack, headerTitle, body, isSearchEnabled, dark } = this.props;
     return (
-      <AppHeader primary={this.props.primary} noShadow={isSearchEnabled} dark={dark}>
+      <AppHeader
+        primary={this.props.primary}
+        noShadow={isSearchEnabled}
+        dark={dark}
+      >
         {this.renderLeft()}
 
         {!isSearchEnabled && (

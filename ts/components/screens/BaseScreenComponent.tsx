@@ -27,9 +27,9 @@ type BaseHeaderProps =
   | "primary"
   | "goBack"
   | "headerTitle"
-  | "onShowHelp" 
-  | "body" 
-  | "isSearchAvailable" 
+  | "onShowHelp"
+  | "body"
+  | "isSearchAvailable"
   | "searchType";
 
 type Props = OwnProps &
