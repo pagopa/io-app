@@ -46,13 +46,26 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     flexDirection: "row"
   },
+
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
   },
+
   whiteContent: {
     backgroundColor: variables.colorWhite,
     flex: 1
+  },
+
+  subHeaderContent: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between",
+    paddingHorizontal: variables.contentPadding
+  },
+
+  brandDarkGray: {
+    color: variables.brandDarkGray
   }
 });
 
