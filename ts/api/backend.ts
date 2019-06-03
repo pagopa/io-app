@@ -1,7 +1,6 @@
 import * as t from "io-ts";
 import {
   ApiHeaderJson,
-  AuthorizationBearerHeaderProducer,
   composeHeaderProducers,
   composeResponseDecoders as compD,
   constantResponseDecoder as constD,
@@ -9,13 +8,14 @@ import {
   ioResponseDecoder as ioD,
   IPostApiRequestType,
   IResponseType,
+  RequestHeaderProducer,
+  RequestHeaders,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
-
+import { Omit } from "italia-ts-commons/lib/types";
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
-
 import {
   activatePaymentDefaultDecoder,
   ActivatePaymentT,
@@ -42,7 +42,6 @@ import {
 } from "../../definitions/backend/requestTypes";
 
 import { SessionToken } from "../types/SessionToken";
-
 import { defaultRetryingFetch } from "../utils/fetch";
 
 /**
@@ -102,11 +101,21 @@ function baseResponseDecoder<R, O = R>(
  */
 
 export type LogoutT = IPostApiRequestType<
-  {},
+  { readonly Bearer: string },
   "Authorization" | "Content-Type",
   never,
   BaseResponseType<SuccessResponse>
 >;
+
+function ParamAuthorizationBearerHeaderProducer<
+  P extends { readonly Bearer: string }
+>(): RequestHeaderProducer<P, "Authorization"> {
+  return (p: P): RequestHeaders<"Authorization"> => {
+    return {
+      Authorization: `Bearer ${p.Bearer}`
+    };
+  };
+}
 
 //
 // Create client
@@ -122,7 +131,7 @@ export function BackendClient(
     fetchApi
   };
 
-  const tokenHeaderProducer = AuthorizationBearerHeaderProducer(token);
+  const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
   const getSessionT: GetSessionStateT = {
     method: "get",
@@ -226,24 +235,41 @@ export function BackendClient(
     response_decoder: getActivationStatusDefaultDecoder()
   };
 
+  // withBearerToken injects the field 'Baerer' with value token into the parameter P
+  // of the f function
+  const withBearerToken = <P extends { Bearer: string }, R>(
+    f: (p: P) => Promise<R>
+  ) => async (po: Omit<P, "Bearer">): Promise<R> => {
+    const params = Object.assign({ Bearer: String(token) }, po) as P;
+    return f(params);
+  };
+
   return {
-    getSession: createFetchRequestForApi(getSessionT, options),
-    getService: createFetchRequestForApi(getServiceT, options),
-    getVisibleServices: createFetchRequestForApi(getVisibleServicesT, options),
-    getMessages: createFetchRequestForApi(getMessagesT, options),
-    getMessage: createFetchRequestForApi(getMessageT, options),
-    getProfile: createFetchRequestForApi(getProfileT, options),
-    createOrUpdateProfile: createFetchRequestForApi(
-      createOrUpdateProfileT,
-      options
+    getSession: withBearerToken(createFetchRequestForApi(getSessionT, options)),
+    getService: withBearerToken(createFetchRequestForApi(getServiceT, options)),
+    getVisibleServices: withBearerToken(
+      createFetchRequestForApi(getVisibleServicesT, options)
     ),
-    createOrUpdateInstallation: createFetchRequestForApi(
-      createOrUpdateInstallationT,
-      options
+    getMessages: withBearerToken(
+      createFetchRequestForApi(getMessagesT, options)
     ),
-    logout: createFetchRequestForApi(logoutT, options),
-    getVerificaRpt: createFetchRequestForApi(verificaRptT, options),
-    postAttivaRpt: createFetchRequestForApi(attivaRptT, options),
-    getPaymentId: createFetchRequestForApi(getPaymentIdT, options)
+    getMessage: withBearerToken(createFetchRequestForApi(getMessageT, options)),
+    getProfile: withBearerToken(createFetchRequestForApi(getProfileT, options)),
+    createOrUpdateProfile: withBearerToken(
+      createFetchRequestForApi(createOrUpdateProfileT, options)
+    ),
+    createOrUpdateInstallation: withBearerToken(
+      createFetchRequestForApi(createOrUpdateInstallationT, options)
+    ),
+    logout: withBearerToken(createFetchRequestForApi(logoutT, options)),
+    getVerificaRpt: withBearerToken(
+      createFetchRequestForApi(verificaRptT, options)
+    ),
+    postAttivaRpt: withBearerToken(
+      createFetchRequestForApi(attivaRptT, options)
+    ),
+    getPaymentId: withBearerToken(
+      createFetchRequestForApi(getPaymentIdT, options)
+    )
   };
 }
