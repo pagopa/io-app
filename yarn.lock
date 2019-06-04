@@ -6829,6 +6829,11 @@ react-native-i18n@^2.0.15:
   dependencies:
     i18n-js "3.0.11"
 
+react-native-image-picker@^0.28.1:
+  version "0.28.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.28.1.tgz#1127460522e0c9741fc62f3d040271d298fb6a6e"
+  integrity sha512-CW2dm+cjsdW2fjBW2WD/cSufNG0x0UpljwGHrjSzyB0TckoW+tjYv44UWtckCWxr1JtCg+QrYDO/MzlRyFcjwQ==
+
 react-native-iphone-x-helper@^1.0.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.0.tgz#9f8a376eb00bc712115abff4420318a0063fa796"
@@ -6846,6 +6851,11 @@ react-native-keychain@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-native-keychain/-/react-native-keychain-3.1.1.tgz#119cbf734d8dceaf80de82ee979a4db268fbc380"
   integrity sha512-+qZn6uRevd/rdyzuh4YBBhjhv/hxj+N408+vD8/otnsZ+c3mcc2FmRw3n+n2g0Z6tfgfT30jVETe6ZhfcER7yQ==
+
+react-native-lewin-qrcode@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-lewin-qrcode/-/react-native-lewin-qrcode-1.0.2.tgz#360e78a9ce6ed861a9711a5a35e3b1ecffe8d452"
+  integrity sha512-kjF/hEfAPrlxTviW/mZjhsKCHQ7yUJAaoV8964J5XHZtBc0JxybHsqcA2qF3JU8XyqerzITaXyb1Zf2/Zh2+OQ==
 
 react-native-mixpanel@^1.1.1:
   version "1.1.1"

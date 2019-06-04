@@ -459,6 +459,7 @@ wallet:
   acceptedCards: Carte accettate
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
+    chooser: Carica immagine dalla galleria
     wrongQrCode: Non è un QR Code PagoPA!
     byCameraTitle: QR Code avviso
     cameraUsageInfo: Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure

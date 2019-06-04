@@ -450,6 +450,7 @@ wallet:
   acceptedCards: Accepted cards
   chooseMethod: Select the desired method
   QRtoPay:
+    chooser: Pick image from gallery
     wrongQrCode: Not a PagoPA QR Code!
     byCameraTitle: Notice QR Code
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
