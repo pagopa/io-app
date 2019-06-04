@@ -12,11 +12,12 @@ import {
   StyleSheet,
   ViewStyle
 } from "react-native";
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { NavigationEvents } from "react-navigation";
-import customVariables from "../theme/variables";
-import { ComponentProps } from "../types/react";
-import { ScreenContentHeader } from "./screens/ScreenContentHeader";
+
+import customVariables from "../../theme/variables";
+import { ComponentProps } from "../../types/react";
+import { ScreenContentHeader } from "./ScreenContentHeader";
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 type OwnProps = Readonly<{
   ListEmptyComponent?: React.ReactNode;
@@ -65,7 +66,7 @@ export default class AnimatedScreenContent extends React.Component<
   // TODO: define how to properly get the header height
   private headerHeight: number =
     Platform.OS === "ios"
-      ? customVariables.appHeaderHeight + getStatusBarHeight(true)
+      ? customVariables.appHeaderHeight +  getStatusBarHeight(true)
       : customVariables.appHeaderHeight;
 
   public render(): React.ReactNode {
@@ -120,7 +121,7 @@ export default class AnimatedScreenContent extends React.Component<
 
         <Animated.View
           style={[
-            { zIndex: -1 },
+            //{ zIndex: -1 },
             styles.animatedSubHeader,
             {
               transform: [{ translateY: subHeaderTranslaction }]

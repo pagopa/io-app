@@ -12,7 +12,7 @@ import { View } from "native-base";
 import * as React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import customVariables from "../../theme/variables";
-import AnimatedScreenContent from "../AnimatedScreenContent";
+import AnimatedScreenContent from "../screens/AnimatedScreenContent";
 import TopScreenComponent from "../screens/TopScreenComponent";
 import PagoPALogo from "./PagoPALogo";
 
