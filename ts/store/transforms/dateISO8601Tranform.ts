@@ -5,7 +5,7 @@ import { createTransform, TransformIn, TransformOut } from "redux-persist";
  */
 
 const dataReplacer = (_: any, value: any): any => {
-  if (value instanceof Date) {
+  if (value !== undefined && value instanceof Date) {
     return value.toISOString();
   }
   return value;
