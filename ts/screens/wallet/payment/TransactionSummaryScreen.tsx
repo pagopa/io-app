@@ -109,10 +109,10 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   public componentDidUpdate(prevProps: Props) {
     const { error, potVerifica } = this.props;
-    // in case the verifica returns an error indicating the payment has been
-    // already completed for this notice, we update the payment state so that
-    // the notice result paid
     if (error.toUndefined() !== prevProps.error.toUndefined()) {
+      // in case the verifica returns an error indicating the payment has been
+      // already completed for this notice, we update the payment state so that
+      // the notice result paid
       error
         .filter(_ => _ === "PAYMENT_DUPLICATED")
         .map(_ => this.props.onDuplicatedPayment());
@@ -121,10 +121,10 @@ class TransactionSummaryScreen extends React.Component<Props> {
       }
     } else if (
       potVerifica !== prevProps.potVerifica &&
-      pot.isNone(potVerifica)
+      pot.isError(potVerifica)
     ) {
       this.props.navigateToPaymentTransactionError(
-        some(undefined),
+        some(potVerifica.error),
         this.props.onRetry
       );
     }
