@@ -1,9 +1,11 @@
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { IdentificationCancelData } from "../../store/reducers/identification";
 
 import I18n from "../../i18n";
+import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
 import { PIN_LENGTH } from "../../utils/constants";
@@ -15,11 +17,16 @@ interface Props {
   activeColor: string;
   delayOnFailureMillis?: number;
   clearOnInvalid?: boolean;
+  isFingerprintEnabled?: boolean;
+  biometryType?: boolean;
+  identificationCancelData?: IdentificationCancelData;
   compareWithCode?: string;
   inactiveColor: string;
   buttonType: ComponentProps<typeof KeyPad>["buttonType"];
   onFulfill: (code: PinString, isValid: boolean) => void;
   onCancel?: () => void;
+  onPinResetHandler?: () => void;
+  onFingerPrintRequest?: () => void;
 }
 
 interface State {
@@ -31,6 +38,11 @@ const styles = StyleSheet.create({
   placeholderContainer: {
     flexDirection: "row",
     justifyContent: "center"
+  },
+  text: {
+    alignSelf: "center",
+    justifyContent: "center",
+    color: variables.colorWhite
   }
 });
 
@@ -75,7 +87,11 @@ class Pinpad extends React.PureComponent<Props, State> {
             I18n.t("global.buttons.cancel").toUpperCase(),
             this.props.onCancel
           )
-        : undefined,
+        : Tuple2(
+            // set the fingerprint image
+            "fingerprint-onboarding-icon.png",
+            () => this.props.onFingerPrintRequest
+          ),
       Tuple2("0", () => this.handlePinDigit("0")),
       Tuple2("<", this.deleteLastDigit)
     ]
@@ -161,6 +177,19 @@ class Pinpad extends React.PureComponent<Props, State> {
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <View spacer={true} extralarge={true} />
+        {this.props.identificationCancelData === undefined && (
+          <React.Fragment>
+            <Text
+              primary={true}
+              onPress={this.props.onPinResetHandler}
+              style={styles.text}
+            >
+              {I18n.t("pin_login.pin.reset.button")}
+            </Text>
+            <View spacer={true} large={true} />
+          </React.Fragment>
+        )}
+        <View spacer={true} />
         <ShakeAnimation duration={600} ref={this.shakeAnimationRef}>
           <KeyPad
             digits={this.pinPadDigits}

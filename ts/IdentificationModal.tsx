@@ -285,6 +285,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       dispatch(identificationPinReset());
     };
 
+    const onFingerprintRequest = () => {
+      this.onFingerprintRequest(
+        this.onIdentificationSuccessHandler,
+        this.onIdentificationFailureHandler
+      )
+    };
+
     return (
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
@@ -324,6 +331,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               {identificationMessage}
             </Text>
             <Pinpad
+              onFingerPrintRequest={onFingerprintRequest}
+              onPinResetHandler={onPinResetHandler}
+              identificationCancelData={identificationCancelData}
               compareWithCode={pin as string}
               activeColor={"white"}
               inactiveColor={"white"}
@@ -348,22 +358,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             {renderIdentificationByBiometryState(identificationByBiometryState)}
             <View spacer={true} large={true} />
 
-            {identificationCancelData === undefined && (
-              <React.Fragment>
-                <Button block={true} primary={true} onPress={onPinResetHandler}>
-                  <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
-                </Button>
-                <View spacer={true} large={true} />
-              </React.Fragment>
-            )}
-
-            <Text alignCenter={true} style={styles.resetPinMessage}>
-              {identificationCancelData !== undefined
-                ? I18n.t("identification.resetPinFromProfileMessage")
-                : I18n.t("identification.resetPinMessage")}
-            </Text>
-
-            <View spacer={true} extralarge={true} />
           </Content>
         </BaseScreenComponent>
       </Modal>
