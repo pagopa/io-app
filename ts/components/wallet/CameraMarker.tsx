@@ -1,7 +1,8 @@
-import { Col, Grid, Icon, Row, View } from "native-base";
+import { Col, Grid, Row, View } from "native-base";
 import * as React from "react";
 
 import { StyleSheet } from "react-native";
+import IconFont from "../ui/IconFont";
 
 import variables from "../../theme/variables";
 
@@ -109,7 +110,7 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
       <View style={styles.rectangle}>
         {iconName && (
           <View style={styles.iconContainer}>
-            <Icon
+            <IconFont
               name={iconName}
               style={[
                 styles.icon,
