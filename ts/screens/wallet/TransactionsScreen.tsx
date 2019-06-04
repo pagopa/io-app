@@ -57,8 +57,7 @@ const styles = StyleSheet.create({
   },
 
   whiteBg: {
-    backgroundColor: variables.colorWhite,
-    
+    backgroundColor: variables.colorWhite
   },
 
   subHeaderContent: {
