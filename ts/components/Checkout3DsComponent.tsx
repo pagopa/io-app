@@ -1,6 +1,7 @@
 import { Container } from "native-base";
 import * as React from "react";
-import { NavState, StyleSheet, View, WebView } from "react-native";
+import { NavState, StyleSheet, View } from "react-native";
+import { WebView } from "react-native-webview";
 import { RefreshIndicator } from "./ui/RefreshIndicator";
 
 type Props = Readonly<{
@@ -56,6 +57,7 @@ export default class Checkout3DsComponent extends React.Component<
     return (
       <Container>
         <WebView
+          textZoom={100}
           source={{ uri: url }}
           onNavigationStateChange={this.navigationStateChanged}
           javaScriptEnabled={true}

@@ -1,9 +1,13 @@
-import { View } from "native-base";
+import I18n from 'i18n-js';
+import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { Wallet } from "../../../types/pagopa";
+import CreditCardStyles from "./../card/CardComponent.style";
+import {CreditCardStyles as CreditCardStyles2} from "./../card/style";
 import CardComponent from "./CardComponent";
+import Logo from './Logo';
 
 const styles = StyleSheet.create({
   firstCard: {
@@ -36,31 +40,65 @@ const styles = StyleSheet.create({
 interface Props {
   // tslint-prettier doesn't yet support the readonly tuple syntax
   // tslint:disable-next-line:prettier
-  wallets: readonly [Wallet] | readonly [Wallet, Wallet];
+  wallets?: readonly [Wallet] | readonly [Wallet, Wallet];
   cardType: "Preview";
 }
 
 export class RotatedCards extends React.PureComponent<Props, {}> {
+  
+  private emptyCardPreview(): React.ReactNode {
+    const FOUR_UNICODE_CIRCLES = "\u25cf".repeat(4);
+    const HIDDEN_CREDITCARD_NUMBERS = `${FOUR_UNICODE_CIRCLES} `.repeat(4);
+    return(
+      <View style={[styles.firstCard, styles.containerOneCard]}>
+        <View style={[CreditCardStyles.card,CreditCardStyles.flatBottom]}>
+          <View style={[CreditCardStyles.cardInner, CreditCardStyles.row]}>
+            <View
+              style={[CreditCardStyles.row, CreditCardStyles.numberArea]} 
+            >
+              <Text style={[CreditCardStyles2.smallTextStyle]}>
+                {`${HIDDEN_CREDITCARD_NUMBERS}`}
+              </Text>
+            </View>
+            <View style={CreditCardStyles.cardLogo}>
+              <Logo/>
+            </View>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
   public render() {
     const { wallets, cardType } = this.props;
 
     return (
-      <View
-        style={
-          wallets.length === 2
-            ? styles.containerTwoCards
-            : styles.containerOneCard
-        }
-      >
-        <View style={styles.firstCard}>
-          <CardComponent type={cardType} wallet={wallets[0]} />
-        </View>
-        {typeof wallets[1] !== "undefined" && (
-          <View style={styles.secondCard}>
-            <CardComponent type={cardType} wallet={wallets[1]} />
+      wallets === undefined 
+      ? (
+        <View>
+          <Text white={true}>
+            {I18n.t("wallet.delete.alert")}
+          </Text> 
+          {this.emptyCardPreview()}
+        </View> 
+      ) : (
+        <View
+          style={
+            wallets.length === 2
+              ? styles.containerTwoCards
+              : styles.containerOneCard
+          }
+        >
+          <View style={styles.firstCard}>
+            <CardComponent type={cardType} wallet={wallets[0]} />
           </View>
-        )}
-      </View>
+          {typeof wallets[1] !== "undefined" && (
+            <View style={styles.secondCard}>
+              <CardComponent type={cardType} wallet={wallets[1]} />
+            </View>
+          )}
+        </View>
+      )  
     );
   }
 }

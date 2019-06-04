@@ -25,6 +25,7 @@ import onboardingReducer from "./onboarding";
 import persistedPreferencesReducer from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
+import searchReducer from "./search";
 import { GlobalState } from "./types";
 import walletReducer from "./wallet";
 
@@ -80,7 +81,8 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   notifications: notificationsReducer,
   profile: profileReducer,
   entities: entitiesReducer,
-  debug: debugReducer
+  debug: debugReducer,
+  search: searchReducer
 });
 
 export function createRootReducer(
