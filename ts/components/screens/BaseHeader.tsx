@@ -93,7 +93,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   };
 
   private renderLeft = () => {
-    const { isSearchEnabled, appLogo, goBack, primary } = this.props;
+    const { isSearchEnabled, appLogo, goBack, primary, dark } = this.props;
 
     return (
       !isSearchEnabled &&
@@ -114,6 +114,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               onPress={goBack}
               accessible={true}
               accessibilityLabel={I18n.t("global.buttons.back")}
+              white={dark}
             />
           </Left>
         )
