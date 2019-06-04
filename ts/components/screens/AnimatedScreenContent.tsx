@@ -10,14 +10,15 @@ import {
   Platform,
   StyleProp,
   StyleSheet,
-  ViewStyle
+  ViewStyle,
+  StatusBar
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 
-import customVariables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { ScreenContentHeader } from "./ScreenContentHeader";
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { isIphoneX } from 'react-native-iphone-x-helper';
+import customVariables from '../../theme/variables';
 
 type OwnProps = Readonly<{
   ListEmptyComponent?: React.ReactNode;
@@ -66,8 +67,10 @@ export default class AnimatedScreenContent extends React.Component<
   // TODO: define how to properly get the header height
   private headerHeight: number =
     Platform.OS === "ios"
-      ? customVariables.appHeaderHeight +  getStatusBarHeight(true)
-      : customVariables.appHeaderHeight;
+      ? isIphoneX() 
+        ? customVariables.appHeaderHeight + 42 
+        : customVariables.appHeaderHeight + 18
+      : StatusBar.currentHeight ? customVariables.appHeaderHeight + StatusBar.currentHeight : customVariables.appHeaderHeight;
 
   public render(): React.ReactNode {
     const { interpolationVars, contentStyle } = this.props;
@@ -89,7 +92,7 @@ export default class AnimatedScreenContent extends React.Component<
               interpolationVars[1] - interpolationVars[2],
               interpolationVars[1] + interpolationVars[2]
             ],
-            outputRange: [-interpolationVars[0], 0, 0],
+            outputRange: [-interpolationVars[0], -interpolationVars[0], 0],
             extrapolate: "clamp"
           })
         : 0;
@@ -121,7 +124,7 @@ export default class AnimatedScreenContent extends React.Component<
 
         <Animated.View
           style={[
-            //{ zIndex: -1 },
+            { zIndex: -1 },
             styles.animatedSubHeader,
             {
               transform: [{ translateY: subHeaderTranslaction }]

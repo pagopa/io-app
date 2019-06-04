@@ -322,7 +322,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
   private animatedViewHeight: number =
     variables.h5LineHeight + 2 * variables.spacerWidth; //
   // TODO: insert a more detailed value for topContentHeight
-  private topContentHeight: number = 450;
+  private topContentHeight: number = 250;
   private topContentHeightOffset: number = 40;
   private interpolationVars: ReadonlyArray<number> = [
     this.animatedViewHeight,
