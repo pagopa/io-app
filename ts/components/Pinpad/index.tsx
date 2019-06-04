@@ -87,11 +87,13 @@ class Pinpad extends React.PureComponent<Props, State> {
             I18n.t("global.buttons.cancel").toUpperCase(),
             this.props.onCancel
           )
-        : Tuple2(
-            // set the fingerprint image
-            "fingerprint-onboarding-icon.png",
-            () => this.props.onFingerPrintRequest
-          ),
+        : this.props.isFingerprintEnabled && this.props.biometryType
+          ? Tuple2(
+              // set the fingerprint image
+              "fingerprint-onboarding-icon.png",
+              () => this.props.onFingerPrintRequest
+            )
+          : undefined,
       Tuple2("0", () => this.handlePinDigit("0")),
       Tuple2("<", this.deleteLastDigit)
     ]

@@ -57,7 +57,7 @@ const renderIdentificationByPinState = (
   if (identificationByPinState === "failure") {
     return (
       <React.Fragment>
-        <View spacer={true} extralarge={true} />
+        <View spacer={true} />
         <TextWithIcon danger={true}>
           <IconFont name="io-close" color={"white"} />
           <Text white={true}>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
@@ -304,24 +304,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             backgroundColor={variables.contentPrimaryBackground}
           />
           <Content primary={true}>
-            {isFingerprintEnabled &&
-              biometryType && (
-                <React.Fragment>
-                  <Button
-                    block={true}
-                    primary={true}
-                    onPress={() =>
-                      this.onFingerprintRequest(
-                        this.onIdentificationSuccessHandler,
-                        this.onIdentificationFailureHandler
-                      )
-                    }
-                  >
-                    <Text>{this.renderBiometryType(biometryType)}</Text>
-                  </Button>
-                  <View spacer={true} />
-                </React.Fragment>
-              )}
             <View spacer={true} />
             <Text
               bold={true}
