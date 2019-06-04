@@ -27,7 +27,7 @@ interface Props {
   onFulfill: (code: PinString, isValid: boolean) => void;
   onCancel?: () => void;
   onPinResetHandler?: () => void;
-  onFingerPrintReq: () => void;
+  onFingerPrintReq?: () => void;
 }
 
 interface State {
@@ -105,7 +105,9 @@ class Pinpad extends React.PureComponent<Props, State> {
             I18n.t("global.buttons.cancel").toUpperCase(),
             this.props.onCancel
           )
-        : this.props.isFingerprintEnabled && this.props.biometryType
+        : this.props.isFingerprintEnabled &&
+          this.props.biometryType &&
+          this.props.onFingerPrintReq
           ? Tuple2(
               // set the image name
               this.renderBiometryType(this.props.biometryType),
