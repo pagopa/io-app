@@ -1,4 +1,4 @@
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
