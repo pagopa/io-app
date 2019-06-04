@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import { IdentificationCancelData } from "../../store/reducers/identification";
 
 import I18n from "../../i18n";
+import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
@@ -17,8 +18,8 @@ interface Props {
   activeColor: string;
   delayOnFailureMillis?: number;
   clearOnInvalid?: boolean;
-  isFingerprintEnabled?: boolean;
-  biometryType?: boolean;
+  isFingerprintEnabled?: any;
+  biometryType?: any;
   identificationCancelData?: IdentificationCancelData;
   compareWithCode?: string;
   inactiveColor: string;
@@ -26,7 +27,7 @@ interface Props {
   onFulfill: (code: PinString, isValid: boolean) => void;
   onCancel?: () => void;
   onPinResetHandler?: () => void;
-  onFingerPrintRequest?: () => void;
+  onFingerPrintReq: () => void;
 }
 
 interface State {
@@ -56,6 +57,23 @@ class Pinpad extends React.PureComponent<Props, State> {
   // Utility array of as many elements as how many digits the pin has.
   // Its map method will be used to render the pin's placeholders.
   private placeholderPositions: ReadonlyArray<undefined>;
+
+  /**
+   * Print the only BiometrySimplePrintableType values that are passed to the UI
+   * @param biometrySimplePrintableType
+   */
+  private renderBiometryType(
+    biometryPrintableSimpleType: BiometryPrintableSimpleType
+  ): string {
+    switch (biometryPrintableSimpleType) {
+      case "FINGERPRINT":
+        return "fingerprint-onboarding-icon.png";
+      case "FACE_ID":
+        return "faceid-onboarding-icon.png";
+      case "TOUCH_ID":
+        return "fingerprint-onboarding-icon.png";
+    }
+  }
 
   private deleteLastDigit = () =>
     this.setState(prev => ({
@@ -89,9 +107,9 @@ class Pinpad extends React.PureComponent<Props, State> {
           )
         : this.props.isFingerprintEnabled && this.props.biometryType
           ? Tuple2(
-              // set the fingerprint image
-              "fingerprint-onboarding-icon.png",
-              () => this.props.onFingerPrintRequest
+              // set the image name
+              this.renderBiometryType(this.props.biometryType),
+              this.props.onFingerPrintReq
             )
           : undefined,
       Tuple2("0", () => this.handlePinDigit("0")),

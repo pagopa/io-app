@@ -158,6 +158,8 @@ class PinScreen extends React.Component<Props, State> {
        */
       return (
         <Pinpad
+          // tslint:disable-next-line: no-empty
+          onFingerPrintReq={() => {}}
           inactiveColor={variables.brandLightGray}
           activeColor={variables.brandDarkGray}
           onFulfill={this.onPinFulfill}
@@ -171,6 +173,8 @@ class PinScreen extends React.Component<Props, State> {
       return (
         <React.Fragment>
           <Pinpad
+            // tslint:disable-next-line: no-empty
+            onFingerPrintReq={() => {}}
             inactiveColor={variables.brandLightGray}
             activeColor={variables.brandDarkGray}
             compareWithCode={pinState.pin}

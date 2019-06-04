@@ -146,7 +146,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
    * 3. Current status of biometry recognition system, provided by querying
    * the library in charge.
    *
-   * @param {boolean} updateBiometrySupportProp – This flag is needed because
+   * @param {boolean} updateBiometrySupportProp – This flag is needed because
    * this funciton can be run from several contexts: when it is called while
    * the app is returning foreground from background, biometry support status
    * has to be updated in case of system preferences changes.
@@ -229,23 +229,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     dispatch(identificationFailure());
   };
 
-  /**
-   * Print the only BiometrySimplePrintableType values that are passed to the UI
-   * @param biometrySimplePrintableType
-   */
-  private renderBiometryType(
-    biometryPrintableSimpleType: BiometryPrintableSimpleType
-  ): string {
-    switch (biometryPrintableSimpleType) {
-      case "FINGERPRINT":
-        return I18n.t("identification.biometric.fingerprintType");
-      case "FACE_ID":
-        return I18n.t("onboarding.fingerprint.body.enrolledType.faceId");
-      case "TOUCH_ID":
-        return I18n.t("onboarding.fingerprint.body.enrolledType.touchId");
-    }
-  }
-
   public render() {
     const { identificationState, isFingerprintEnabled, dispatch } = this.props;
 
@@ -285,13 +268,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       dispatch(identificationPinReset());
     };
 
-    const onFingerprintRequest = () => {
-      this.onFingerprintRequest(
-        this.onIdentificationSuccessHandler,
-        this.onIdentificationFailureHandler
-      )
-    };
-
     return (
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
@@ -304,7 +280,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             backgroundColor={variables.contentPrimaryBackground}
           />
           <Content primary={true}>
-            <View spacer={true} />
             <Text
               bold={true}
               alignCenter={true}
@@ -313,9 +288,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               {identificationMessage}
             </Text>
             <Pinpad
-              onFingerPrintRequest={onFingerprintRequest}
               onPinResetHandler={onPinResetHandler}
-              identificationCancelData={identificationCancelData}
+              isFingerprintEnabled={isFingerprintEnabled}
+              biometryType={biometryType}
+              onFingerPrintReq={() =>
+                this.onFingerprintRequest(
+                  this.onIdentificationSuccessHandler,
+                  this.onIdentificationFailureHandler
+                )
+              }
               compareWithCode={pin as string}
               activeColor={"white"}
               inactiveColor={"white"}
@@ -340,6 +321,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             {renderIdentificationByBiometryState(identificationByBiometryState)}
             <View spacer={true} large={true} />
 
+            {/*  <Text alignCenter={true} style={styles.resetPinMessage}>
+              {identificationCancelData !== undefined
+                ? I18n.t("identification.resetPinFromProfileMessage")
+                : I18n.t("identification.resetPinMessage")}
+            </Text>
+ */}
+            <View spacer={true} extralarge={true} />
           </Content>
         </BaseScreenComponent>
       </Modal>

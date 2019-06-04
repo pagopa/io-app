@@ -69,10 +69,11 @@ const renderPinCol = (
         primary={buttonType === "primary"}
         light={buttonType === "light"}
       >
-        {label !== "fingerprint-onboarding-icon.png" ? (
+        {!label.endsWith(".png") ? (
           <Text
             style={[
-              styles.buttonTextBase, style === "digit"
+              styles.buttonTextBase,
+              style === "digit"
                 ? styles.buttonTextDigit
                 : styles.buttonTextLabel,
               style === "label" && buttonType === "primary" ? styles.white : {}
@@ -80,6 +81,11 @@ const renderPinCol = (
           >
             {label}
           </Text>
+        ) : label === "faceid-onboarding-icon.png" ? (
+          <Image
+            source={require("../../../img/icons/faceid-onboarding-icon.png")}
+            style={{ width: 40, height: 48 }}
+          />
         ) : (
           <Image
             source={require("../../../img/icons/fingerprint-onboarding-icon.png")}
