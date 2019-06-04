@@ -46,8 +46,8 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-            new QRScanReaderPackage(),
-            new ImagePickerPackage(),
+        new QRScanReaderPackage(),
+        new ImagePickerPackage(),
         new FlagSecurePackage(),
         new RNFSPackage(),
         new AndroidOpenSettingsPackage(),
