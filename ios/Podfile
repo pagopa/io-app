@@ -54,6 +54,8 @@ target 'ItaliaApp' do
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+  
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
 end
 

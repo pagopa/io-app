@@ -1,6 +1,7 @@
 import { Badge, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
+import PushNotification from "react-native-push-notification";
 import { connect } from "react-redux";
 import { messagesUnreadSelector } from "../store/reducers/entities/messages";
 import { GlobalState } from "../store/reducers/types";
@@ -66,10 +67,13 @@ class MessagesTabIcon extends React.PureComponent<Props> {
 
 function mapStateToProps(state: GlobalState) {
   const messagesUnread = messagesUnreadSelector(state);
-  return {
-    badgeValue:
-      messagesUnread < MAX_BADGE_VALUE ? messagesUnread : MAX_BADGE_VALUE
-  };
+
+  const badgeValue =
+    messagesUnread < MAX_BADGE_VALUE ? messagesUnread : MAX_BADGE_VALUE;
+
+  PushNotification.setApplicationIconBadgeNumber(badgeValue);
+
+  return { badgeValue };
 }
 
 export default connect(mapStateToProps)(MessagesTabIcon);

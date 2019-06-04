@@ -85,3 +85,7 @@
 
 -keep class com.google.android.gms.** { *; }
 -dontwarn com.google.android.gms.**
+
+# react-native-shortcut-badgeì
+# Further info here https://github.com/leolin310148/ShortcutBadger/issues/46
+-keep class me.leolin.shortcutbadger.impl.** { <init>(...); }

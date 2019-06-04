@@ -10,6 +10,7 @@ import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
 import com.lewin.qrcode.QRScanReaderPackage;
 import com.imagepicker.ImagePickerPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.kristiansorens.flagsecure.FlagSecurePackage;
 import com.rnfs.RNFSPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
@@ -48,6 +49,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
         new MainReactPackage(),
         new QRScanReaderPackage(),
         new ImagePickerPackage(),
+        new VectorIconsPackage(),
         new FlagSecurePackage(),
         new RNFSPackage(),
         new AndroidOpenSettingsPackage(),
