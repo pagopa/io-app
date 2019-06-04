@@ -17,6 +17,7 @@ import {
 import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
 import IconFont from "../components/ui/IconFont";
+import WalletTabIcon from "../components/WalletTabIcon";
 import { newHomeServicesEnabled } from "../config";
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
@@ -169,6 +170,13 @@ const navigation = createBottomTabNavigator(
         if (routeName === ROUTES.MESSAGES_NAVIGATOR) {
           return (
             <MessagesTabIcon
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
+        if (iconName === ROUTE_ICON.WALLET_HOME) {
+          return (
+            <WalletTabIcon
               color={options.tintColor === null ? undefined : options.tintColor}
             />
           );
