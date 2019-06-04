@@ -52,9 +52,13 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
 
-  whiteContent: {
-    backgroundColor: variables.colorWhite,
+  flex1: {
     flex: 1
+  },
+
+  whiteBg: {
+    backgroundColor: variables.colorWhite,
+    
   },
 
   subHeaderContent: {
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
 const ListEmptyComponent = (
   <Content
     scrollEnabled={false}
-    style={[styles.noBottomPadding, styles.whiteContent]}
+    style={[styles.noBottomPadding, styles.whiteBg]}
   >
     <View spacer={true} />
     <H5>{I18n.t("wallet.noneTransactions")}</H5>
@@ -116,7 +120,7 @@ class TransactionsScreen extends React.Component<Props> {
 
   private fixedSubHeader() {
     return (
-      <View>
+      <View style={[styles.whiteBg, styles.flex1]}>
         <View spacer={true} />
         <View style={styles.subHeaderContent}>
           <H5 style={styles.brandDarkGray}>
@@ -129,14 +133,9 @@ class TransactionsScreen extends React.Component<Props> {
     );
   }
 
-  /**
-   *  TODO: insert a more detailed value for appheader height
-   * (see blocker: https://www.pivotaltracker.com/n/projects/2048617/stories/166154544)
-   */
   private animatedViewHeight: number =
-    variables.h5LineHeight + 2 * variables.spacerWidth; //
-  // TODO: insert a more detailed value for topContentHeight
-  private topContentHeight: number = 450;
+    variables.h5LineHeight + 2 * variables.spacerWidth;
+  private topContentHeight: number = 250;
   private topContentHeightOffset: number = 40;
   private interpolationVars: ReadonlyArray<number> = [
     this.animatedViewHeight,
