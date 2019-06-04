@@ -41,9 +41,9 @@ import { GlobalState } from "../../../store/reducers/types";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
-import { detailEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
+  navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentTransactionErrorScreen,
   navigateToWalletHome
@@ -64,6 +64,7 @@ const basePrimaryButtonProps = {
 export type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
+  isManualPaymentInsertion?: boolean;
 }>;
 
 type ReduxMergedProps = Readonly<{
@@ -114,12 +115,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
     // already completed for this notice, we update the payment state so that
     // the notice result paid
     if (error.toUndefined() !== prevProps.error.toUndefined()) {
-      // error
-      //   .filter(_ => _ === "PAYMENT_DUPLICATED")
-      //   .map(_ => this.props.onDuplicatedPayment());
+      error
+        .filter(_ => _ === "PAYMENT_DUPLICATED")
+        .map(_ => this.props.onDuplicatedPayment());
       if (error.isSome()) {
-        const mockError = some(detailEnum.INVALID_AMOUNT);
-        this.props.navigateToPaymentTransactionError(mockError, this.props.onRetry);
+        this.props.navigateToPaymentTransactionError(error, this.props.onRetry);
       }
     }
   }
@@ -320,6 +320,9 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const rptId = props.navigation.getParam("rptId");
   const initialAmount = props.navigation.getParam("initialAmount");
+  const isManualPaymentInsertion = props.navigation.getParam(
+    "isManualPaymentInsertion"
+  );
 
   const dispatchPaymentVerificaRequest = () =>
     dispatch(paymentVerifica.request(rptId));
@@ -389,9 +392,17 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       })
     );
 
+  const dispatchNavigateToPaymentManualDataInsertion = () =>
+    dispatch(
+      navigateToPaymentManualDataInsertion({
+        isInvalidAmount: isManualPaymentInsertion
+      })
+    );
+
   return {
     dispatchPaymentVerificaRequest,
     navigateToPaymentTransactionError,
+    dispatchNavigateToPaymentManualDataInsertion,
     startOrResumePayment,
     goBack: () => {
       props.navigation.goBack();
@@ -427,10 +438,16 @@ const mergeProps = (
   ownProps: OwnProps
 ) => {
   const onRetry = () => {
-    dispatchProps.onRetryWithPotVerifica(
-      stateProps.potVerifica,
-      stateProps.maybeFavoriteWallet
-    );
+    // If the error is INVALID_AMOUNT and the user has manually entered the data of notice
+    // go back to the screen to allow the user to modify the data
+    if (stateProps.error.toUndefined() === "INVALID_AMOUNT") {
+      dispatchProps.dispatchNavigateToPaymentManualDataInsertion();
+    } else {
+      dispatchProps.onRetryWithPotVerifica(
+        stateProps.potVerifica,
+        stateProps.maybeFavoriteWallet
+      );
+    }
   };
   return {
     ...stateProps,

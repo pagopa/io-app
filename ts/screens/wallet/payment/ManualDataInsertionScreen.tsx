@@ -261,7 +261,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       navigateToPaymentTransactionSummaryScreen({
         rptId,
-        initialAmount
+        initialAmount,
+        isManualPaymentInsertion: true
       })
     );
   }

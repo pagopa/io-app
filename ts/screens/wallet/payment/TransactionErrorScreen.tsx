@@ -202,17 +202,10 @@ class TransactionErrorScreen extends React.Component<Props> {
   private onPressRetry = () => {
     const navigationParams = this.props.navigation.state.params;
     if (navigationParams !== undefined) {
-      const error = this.props.navigation.getParam("error");
-      // If the error is INVALID_AMOUNT and the user has manually entered the data of notice
-      // go back to the screen to allow the user to modify the data
-      if (error.toUndefined() === "INVALID_AMOUNT") {
-        this.props.navigateToPaymentManualDataInsertion(true);
-      } else {
-        // Go back in TransactionSummaryScreen
-        this.props.navigation.goBack();
-        // Retry the payment
-        navigationParams.onRetry();
-      }
+      // Go back in TransactionSummaryScreen
+      this.props.navigation.goBack();
+      // Retry the payment
+      navigationParams.onRetry();
     }
   };
 }
