@@ -68,8 +68,8 @@ export default class AnimatedScreenContent extends React.Component<
   private headerHeight: number =
     Platform.OS === "ios"
       ? isIphoneX()
-        ? customVariables.appHeaderHeight + 48
-        : customVariables.appHeaderHeight + 18
+        ? customVariables.appHeaderHeight + 42 + 6
+        : customVariables.appHeaderHeight + 18 + 6
       : StatusBar.currentHeight
         ? customVariables.appHeaderHeight + StatusBar.currentHeight
         : customVariables.appHeaderHeight;
