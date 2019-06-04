@@ -108,7 +108,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-    const { error } = this.props;
+    const { error, potVerifica } = this.props;
     // in case the verifica returns an error indicating the payment has been
     // already completed for this notice, we update the payment state so that
     // the notice result paid
@@ -119,6 +119,14 @@ class TransactionSummaryScreen extends React.Component<Props> {
       if (error.isSome()) {
         this.props.navigateToPaymentTransactionError(error, this.props.onRetry);
       }
+    } else if (
+      potVerifica !== prevProps.potVerifica &&
+      pot.isNone(potVerifica)
+    ) {
+      this.props.navigateToPaymentTransactionError(
+        some(undefined),
+        this.props.onRetry
+      );
     }
   }
 
