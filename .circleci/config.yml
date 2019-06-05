@@ -430,7 +430,10 @@ jobs:
       # store detox artifacts
       - store_artifacts:
           path: /tmp/detox_artifacts
+
   specs_diff:
+    orbs:
+      slack: circleci/slack@3.2.0
     docker:
       - image: circleci/android:api-23-node8-alpha
     steps:
@@ -501,7 +504,7 @@ workflows:
   nightly-pagopa-spec-check:
     triggers:
       - schedule:
-          cron: "05 11 * * *"
+          cron: "15 11 * * *"
           filters:
             branches:
               only:
