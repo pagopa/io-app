@@ -71,8 +71,9 @@ install_node_modules: &install_node_modules
 #
 # Build pipeline
 #
-
-version: 2
+orbs:
+  slack: circleci/slack@3.2.0
+version: 2.1
 jobs:
 
   # Compile typescript
@@ -429,9 +430,7 @@ jobs:
       - store_artifacts:
           path: /tmp/detox_artifacts
 
-        
   specs_diff:
-    version: 2.1
     docker:
       - image: circleci/android:api-23-node8-alpha
     steps:
@@ -444,8 +443,6 @@ jobs:
           success_message: "pagopa production and test specification have no difference"
           failure_message: "it seems pagopa production and test specifications have some differences"
           webhook: "https://hooks.slack.com/services/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"
-orbs:
-  slack: circleci/slack@3.2.0
 workflows:
   version: 2
   build:
@@ -503,7 +500,7 @@ workflows:
   nightly-pagopa-spec-check:
     triggers:
       - schedule:
-          cron: "37 11 * * *"
+          cron: "46 11 * * *"
           filters:
             branches:
               only:
