@@ -623,6 +623,7 @@ serviceDetail:
 identification:
   messageFingerPrint: "Use the fingerprint or enter the PIN"
   messageFaceID: "Use FaceID or enter the PIN"
+  messageEnterPin: "Enter the PIN"
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint

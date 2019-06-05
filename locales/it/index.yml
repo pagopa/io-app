@@ -635,6 +635,7 @@ serviceDetail:
 identification:
   messageFingerPrint: "Appoggia l'impronta o inserisci il codice PIN"
   messageFaceID: "Usa FaceID o inserisci il codice PIN"
+  messageEnterPin: "Inserisci il codice PIN"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale

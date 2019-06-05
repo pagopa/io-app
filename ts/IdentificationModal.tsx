@@ -103,6 +103,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     width: "80%"
+  },
+  pinPad: {
+    justifyContent: "center",
+    flexGrow: 1
   }
 });
 
@@ -279,7 +283,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             barStyle="light-content"
             backgroundColor={variables.contentPrimaryBackground}
           />
-          <Content primary={true}>
+          <Content primary={true} contentContainerStyle={styles.pinPad}>
             <Text
               bold={true}
               alignCenter={true}
@@ -320,7 +324,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             {renderIdentificationByPinState(identificationByPinState)}
             {renderIdentificationByBiometryState(identificationByBiometryState)}
 
-            <View spacer={true} extralarge={true} />
+            <View spacer={true} large={true} />
           </Content>
         </BaseScreenComponent>
       </Modal>
@@ -340,7 +344,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       case "TOUCH_ID":
         return I18n.t("identification.messageFingerPrint");
       default:
-        return "";
+        return I18n.t("identification.messageEnterPin");
     }
   }
 
