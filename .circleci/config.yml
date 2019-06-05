@@ -3,8 +3,6 @@
 #
 
 # shared
-orbs:
-  slack: circleci/slack@3.2.0
 
 defaults: &defaults
   working_directory: ~/italia-app
@@ -432,8 +430,6 @@ jobs:
           path: /tmp/detox_artifacts
 
   specs_diff:
-    orbs:
-      slack: circleci/slack@3.2.0
     docker:
       - image: circleci/android:api-23-node8-alpha
     steps:
@@ -446,7 +442,8 @@ jobs:
           success_message: "pagopa production and test specification have no difference"
           failure_message: "it seems pagopa production and test specifications have some differences"
           webhook: "https://hooks.slack.com/services/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"
-
+orbs:
+  slack: circleci/slack@3.2.0
 workflows:
   version: 2
   build:
@@ -504,7 +501,7 @@ workflows:
   nightly-pagopa-spec-check:
     triggers:
       - schedule:
-          cron: "15 11 * * *"
+          cron: "32 11 * * *"
           filters:
             branches:
               only:
