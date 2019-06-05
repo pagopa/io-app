@@ -23,7 +23,7 @@ import { ScreenContentHeader } from "./ScreenContentHeader";
 type OwnProps = Readonly<{
   ListEmptyComponent?: React.ReactNode;
   fixedSubHeader?: React.ReactNode;
-  interpolationVars?: ReadonlyArray<number>; // top header width, header content width, desired offset for animation
+  interpolationVars?: ReadonlyArray<number>; // dynamic sub-header width, top content width, desired offset for animation
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
 }>;
@@ -44,6 +44,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     overflow: "hidden"
+  },
+
+  level1: {
+    zIndex: -1
+  },
+
+  level2: {
+    zIndex: -2
   }
 });
 
@@ -102,7 +110,7 @@ export default class AnimatedScreenContent extends React.Component<
     return (
       <React.Fragment>
         <Animated.ScrollView
-          style={[{ zIndex: -2 }, contentStyle]}
+          style={[styles.level2, contentStyle]}
           bounces={false}
           ref={this.scrollableContentRef}
           scrollEventThrottle={1}
@@ -126,7 +134,7 @@ export default class AnimatedScreenContent extends React.Component<
 
         <Animated.View
           style={[
-            { zIndex: -1 },
+            styles.level1,
             styles.animatedSubHeader,
             {
               transform: [{ translateY: subHeaderTranslaction }]

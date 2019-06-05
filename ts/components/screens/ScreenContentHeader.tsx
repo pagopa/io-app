@@ -23,6 +23,12 @@ const styles = StyleSheet.create({
     fontSize: variables.fontSize4,
     lineHeight: 40,
     marginRight: variables.contentPadding
+  },
+  darkGrayBg: {
+    backgroundColor: variables.brandDarkGray
+  },
+  white: {
+    color: variables.colorWhite
   }
 });
 
@@ -32,11 +38,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
 
     return (
       <React.Fragment>
-        <View
-          style={
-            this.props.dark && { backgroundColor: variables.brandDarkGray }
-          }
-        >
+        <View style={this.props.dark && styles.darkGrayBg}>
           {banner && <React.Fragment>{this.props.banner}</React.Fragment>}
           <View spacer={true} />
           <ScreenHeader
@@ -44,7 +46,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
               <H1
                 style={[
                   styles.screenHeaderHeading,
-                  this.props.dark && { color: variables.colorWhite }
+                  this.props.dark && styles.white
                 ]}
               >
                 {this.props.title}
