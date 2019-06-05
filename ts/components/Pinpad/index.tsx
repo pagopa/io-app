@@ -202,7 +202,7 @@ class Pinpad extends React.PureComponent<Props, State> {
             <Text
               primary={true}
               onPress={this.props.onPinResetHandler}
-              style={[styles.text]}
+              style={styles.text}
             >
               {I18n.t("pin_login.pin.reset.button")}
             </Text>
