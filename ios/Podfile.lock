@@ -16,6 +16,8 @@ PODS:
     - React
   - react-native-config (0.11.7):
     - React
+  - react-native-image-picker (0.28.1):
+    - React
   - react-native-mixpanel (0.0.6):
     - Mixpanel
     - React
@@ -78,6 +80,7 @@ DEPENDENCIES:
   - react-native-calendar-events (from `../node_modules/react-native-calendar-events`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-config (from `../node_modules/react-native-config`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -118,6 +121,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
     :path: "../node_modules/react-native-mixpanel"
   react-native-splash-screen:
@@ -150,6 +155,7 @@ SPEC CHECKSUMS:
   react-native-calendar-events: 667f4141959b3f90c44cd328396c1488f216922d
   react-native-camera: 74c7513056d1513686286a0d54426083ca8a0088
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
+  react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-webview: 8360713396efdaee1528d0afcaaaa844b14fd2f2
@@ -163,6 +169,6 @@ SPEC CHECKSUMS:
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   yoga: 1a492113f66a35e9e583bb0434f4b8cc668dd839
 
-PODFILE CHECKSUM: 8fc0e56ac41f6c3342d76d9358c1778f86ad9873
+PODFILE CHECKSUM: ee4e1facbb9931cd6f1678cbd0b856a7bf07355c
 
 COCOAPODS: 1.6.1

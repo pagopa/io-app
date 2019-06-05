@@ -2,11 +2,10 @@
  * pagoPA backend client, with functions
  * to call the different API available
  */
+import { flip } from "fp-ts/lib/function";
 import {
   AddResponseType,
   ApiHeaderJson,
-  AuthorizationBearerHeaderProducer,
-  basicErrorResponseDecoder,
   composeHeaderProducers,
   composeResponseDecoders,
   constantResponseDecoder,
@@ -14,9 +13,11 @@ import {
   ioResponseDecoder,
   MapResponseType,
   ReplaceRequestParams,
+  RequestHeaderProducer,
+  RequestHeaders,
   TypeofApiParams
 } from "italia-ts-commons/lib/requests";
-
+import { Omit } from "italia-ts-commons/lib/types";
 import {
   NullableWallet,
   PagoPAErrorResponse,
@@ -63,11 +64,11 @@ const constantEmptyDecoder = composeResponseDecoders(
   composeResponseDecoders(
     composeResponseDecoders(
       constantResponseDecoder(200, undefined),
-      basicErrorResponseDecoder<204>(204)
+      constantResponseDecoder<undefined, 204>(204, undefined)
     ),
-    basicErrorResponseDecoder<401>(401)
+    constantResponseDecoder<undefined, 401>(401, undefined)
   ),
-  basicErrorResponseDecoder<403>(403)
+  constantResponseDecoder<undefined, 403>(403, undefined)
 );
 
 const getSession: MapResponseType<
@@ -88,15 +89,30 @@ type GetTransactionsUsingGETTExtra = MapResponseType<
   TransactionListResponse
 >;
 
-const getTransactions: (
-  pagoPaToken: PaymentManagerToken
-) => GetTransactionsUsingGETTExtra = pagoPaToken => ({
+const ParamAuthorizationBearerHeader = <P extends { readonly Bearer: string }>(
+  p: P
+): RequestHeaders<"Authorization"> => {
+  return {
+    Authorization: `Bearer ${p.Bearer}`
+  };
+};
+
+const ParamAuthorizationBearerHeaderProducer = <
+  P extends { readonly Bearer: string }
+>(): RequestHeaderProducer<P, "Authorization"> => {
+  return (p: P): RequestHeaders<"Authorization"> =>
+    ParamAuthorizationBearerHeader(p);
+};
+
+const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
+
+const getTransactions: GetTransactionsUsingGETTExtra = {
   method: "get",
   url: () => "/v1/transactions",
   query: () => ({}),
-  headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+  headers: ParamAuthorizationBearerHeader,
   response_decoder: getTransactionsUsingGETDecoder(TransactionListResponse)
-});
+};
 
 type GetTransactionUsingGETTExtra = MapResponseType<
   GetTransactionUsingGETT,
@@ -104,15 +120,13 @@ type GetTransactionUsingGETTExtra = MapResponseType<
   TransactionResponse
 >;
 
-const getTransaction: (
-  pagoPaToken: PaymentManagerToken
-) => GetTransactionUsingGETTExtra = pagoPaToken => ({
+const getTransaction: GetTransactionUsingGETTExtra = {
   method: "get",
   url: ({ id }) => `/v1/transactions/${id}`,
   query: () => ({}),
-  headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+  headers: ParamAuthorizationBearerHeader,
   response_decoder: getTransactionUsingGETDecoder(TransactionResponse)
-});
+};
 
 type GetWalletsUsingGETExtraT = MapResponseType<
   GetWalletsUsingGETT,
@@ -120,25 +134,21 @@ type GetWalletsUsingGETExtraT = MapResponseType<
   WalletListResponse
 >;
 
-const getWallets: (
-  pagoPaToken: PaymentManagerToken
-) => GetWalletsUsingGETExtraT = pagoPaToken => ({
+const getWallets: GetWalletsUsingGETExtraT = {
   method: "get",
   url: () => "/v1/wallet",
   query: () => ({}),
-  headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+  headers: ParamAuthorizationBearerHeader,
   response_decoder: getWalletsUsingGETDecoder(WalletListResponse)
-});
+};
 
-const checkPayment: (
-  pagoPaToken: PaymentManagerToken
-) => CheckPaymentUsingGETT = pagoPaToken => ({
+const checkPayment: CheckPaymentUsingGETT = {
   method: "get",
   url: ({ id }) => `/v1/payments/${id}/actions/check`,
   query: () => ({}),
-  headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+  headers: ParamAuthorizationBearerHeaderProducer,
   response_decoder: checkPaymentUsingGETDefaultDecoder()
-});
+};
 
 type GetPspListUsingGETTExtra = MapResponseType<
   ReplaceRequestParams<
@@ -150,9 +160,7 @@ type GetPspListUsingGETTExtra = MapResponseType<
   PspListResponse
 >;
 
-const getPspList: (
-  pagoPaToken: PaymentManagerToken
-) => GetPspListUsingGETTExtra = pagoPaToken => ({
+const getPspList: GetPspListUsingGETTExtra = {
   method: "get",
   url: () => "/v1/psps",
   query: ({ idPayment, idWallet }) =>
@@ -166,9 +174,9 @@ const getPspList: (
           paymentType: "CREDIT_CARD",
           idPayment
         },
-  headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+  headers: ParamAuthorizationBearerHeader,
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
-});
+};
 
 type UpdateWalletUsingPUTTExtra = MapResponseType<
   UpdateWalletUsingPUTT,
@@ -176,19 +184,14 @@ type UpdateWalletUsingPUTTExtra = MapResponseType<
   WalletResponse
 >;
 
-const updateWalletPsp: (
-  pagoPaToken: PaymentManagerToken
-) => UpdateWalletUsingPUTTExtra = pagoPaToken => ({
+const updateWalletPsp: UpdateWalletUsingPUTTExtra = {
   method: "put",
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
-  headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: updateWalletUsingPUTDecoder(WalletResponse)
-});
+};
 
 type FavouriteWalletUsingPOSTTExtra = MapResponseType<
   FavouriteWalletUsingPOSTT,
@@ -196,19 +199,14 @@ type FavouriteWalletUsingPOSTTExtra = MapResponseType<
   WalletResponse
 >;
 
-const favouriteWallet: (
-  pagoPaToken: PaymentManagerToken
-) => FavouriteWalletUsingPOSTTExtra = pagoPaToken => ({
+const favouriteWallet: FavouriteWalletUsingPOSTTExtra = {
   method: "post",
   url: ({ id }) => `/v1/wallet/${id}/actions/favourite`,
   query: () => ({}),
   body: () => "",
-  headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: favouriteWalletUsingPOSTDecoder(WalletResponse)
-});
+};
 
 // Remove this patch once SIA has fixed the spec.
 // @see https://www.pivotaltracker.com/story/show/161113136
@@ -218,22 +216,17 @@ type AddWalletCreditCardUsingPOSTTExtra = MapResponseType<
   WalletResponse
 >;
 
-const addWalletCreditCard: (
-  pagoPaToken: PaymentManagerToken
-) => AddWalletCreditCardUsingPOSTTExtra = pagoPaToken => ({
+const addWalletCreditCard: AddWalletCreditCardUsingPOSTTExtra = {
   method: "post",
   url: () => "/v1/wallet/cc",
   query: () => ({}),
   body: ({ walletRequest }) => JSON.stringify(walletRequest),
-  headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: composeResponseDecoders(
     addWalletCreditCardUsingPOSTDecoder(WalletResponse),
     ioResponseDecoder<422, PagoPAErrorResponse>(422, PagoPAErrorResponse)
   )
-});
+};
 
 type PayUsingPOSTTExtra = MapResponseType<
   PayUsingPOSTT,
@@ -241,33 +234,22 @@ type PayUsingPOSTTExtra = MapResponseType<
   TransactionResponse
 >;
 
-const postPayment: (
-  pagoPaToken: PaymentManagerToken
-) => PayUsingPOSTTExtra = pagoPaToken => ({
+const postPayment: PayUsingPOSTTExtra = {
   method: "post",
   url: ({ id }) => `/v1/payments/${id}/actions/pay`,
   query: () => ({}),
   body: ({ payRequest }) => JSON.stringify(payRequest),
-  headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: payUsingPOSTDecoder(TransactionResponse)
-});
+};
 
-const deletePayment: (
-  pagoPaToken: PaymentManagerToken
-) => DeleteBySessionCookieExpiredUsingDELETET = pagoPaToken => ({
+const deletePayment: DeleteBySessionCookieExpiredUsingDELETET = {
   method: "delete",
   url: ({ id }) => `/v1/payments/${id}/actions/delete`,
   query: () => ({}),
-  body: () => "",
-  headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: constantEmptyDecoder
-});
+};
 
 type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
   PayCreditCardVerificationUsingPOSTT,
@@ -275,31 +257,33 @@ type PayCreditCardVerificationUsingPOSTTExtra = MapResponseType<
   TransactionResponse
 >;
 
-const boardPay: (
-  pagoPaToken: PaymentManagerToken
-) => PayCreditCardVerificationUsingPOSTTExtra = pagoPaToken => ({
+const boardPay: PayCreditCardVerificationUsingPOSTTExtra = {
   method: "post",
   url: () => "/v1/payments/cc/actions/pay",
   query: () => ({}),
   body: ({ payRequest }) => JSON.stringify(payRequest),
-  headers: composeHeaderProducers(
-    AuthorizationBearerHeaderProducer(pagoPaToken),
-    ApiHeaderJson
-  ),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   response_decoder: payCreditCardVerificationUsingPOSTDecoder(
     TransactionResponse
   )
-});
+};
 
-const deleteWallet: (
-  pagoPaToken: PaymentManagerToken
-) => DeleteWalletUsingDELETET = pagoPaToken => ({
+const deleteWallet: DeleteWalletUsingDELETET = {
   method: "delete",
   url: ({ id }) => `/v1/wallet/${id}`,
   query: () => ({}),
-  headers: AuthorizationBearerHeaderProducer(pagoPaToken),
+  headers: ParamAuthorizationBearerHeader,
   response_decoder: constantEmptyDecoder
-});
+};
+
+const withPaymentManagerToken = <P extends { Bearer: string }, R>(
+  f: (p: P) => Promise<R>
+) => (token: PaymentManagerToken) => async (
+  po: Omit<P, "Bearer">
+): Promise<R> => {
+  const params = Object.assign({ Bearer: String(token) }, po) as P;
+  return f(params);
+};
 
 export function PaymentManagerClient(
   baseUrl: string,
@@ -318,27 +302,31 @@ export function PaymentManagerClient(
     getSession: (
       wt: string // wallet token
     ) => createFetchRequestForApi(getSession, options)({ token: wt }),
-    getWallets: (pagoPaToken: PaymentManagerToken) =>
-      createFetchRequestForApi(getWallets(pagoPaToken), options)({}),
-    getTransactions: (pagoPaToken: PaymentManagerToken) =>
-      createFetchRequestForApi(getTransactions(pagoPaToken), options)({}),
-    getTransaction: (
-      pagoPaToken: PaymentManagerToken,
-      id: TypeofApiParams<GetTransactionUsingGETT>["id"]
-    ) => createFetchRequestForApi(getTransaction(pagoPaToken), options)({ id }),
-    checkPayment: (
-      pagoPaToken: PaymentManagerToken,
-      id: TypeofApiParams<CheckPaymentUsingGETT>["id"]
-    ) =>
-      createFetchRequestForApi(checkPayment(pagoPaToken), altOptions)({
+    getWallets: flip(
+      withPaymentManagerToken(createFetchRequestForApi(getWallets, options))
+    )({}),
+    getTransactions: flip(
+      withPaymentManagerToken(
+        createFetchRequestForApi(getTransactions, options)
+      )
+    )({}),
+    getTransaction: (id: TypeofApiParams<GetTransactionUsingGETT>["id"]) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(getTransaction, options)
+        )
+      )({ id }),
+    checkPayment: (id: TypeofApiParams<CheckPaymentUsingGETT>["id"]) =>
+      createFetchRequestForApi(checkPayment, altOptions)({
         id
       }),
     getPspList: (
-      pagoPaToken: PaymentManagerToken,
       idPayment: TypeofApiParams<GetPspListUsingGETTExtra>["idPayment"],
       idWallet?: TypeofApiParams<GetPspListUsingGETTExtra>["idWallet"]
     ) =>
-      createFetchRequestForApi(getPspList(pagoPaToken), options)(
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(getPspList, options))
+      )(
         idWallet
           ? {
               idPayment,
@@ -347,46 +335,58 @@ export function PaymentManagerClient(
           : { idPayment }
       ),
     updateWalletPsp: (
-      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<UpdateWalletUsingPUTT>["id"],
       walletRequest: TypeofApiParams<UpdateWalletUsingPUTT>["walletRequest"]
     ) =>
-      createFetchRequestForApi(updateWalletPsp(pagoPaToken), options)({
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(updateWalletPsp, options)
+        )
+      )({
         id,
         walletRequest
       }),
     favouriteWallet: (
-      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<FavouriteWalletUsingPOSTTExtra>["id"]
     ) =>
-      createFetchRequestForApi(favouriteWallet(pagoPaToken), options)({
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(favouriteWallet, options)
+        )
+      )({
         id
       }),
     postPayment: (
-      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<PayUsingPOSTT>["id"],
       payRequest: TypeofApiParams<PayUsingPOSTT>["payRequest"]
     ) =>
-      createFetchRequestForApi(postPayment(pagoPaToken), altOptions)({
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(postPayment, altOptions)
+        )
+      )({
         id,
         payRequest
       }),
     deletePayment: (
-      pagoPaToken: PaymentManagerToken,
       id: TypeofApiParams<DeleteBySessionCookieExpiredUsingDELETET>["id"]
     ) =>
-      createFetchRequestForApi(deletePayment(pagoPaToken), options)({
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(deletePayment, options)
+        )
+      )({
         id
       }),
-    addWalletCreditCard: (
-      pagoPaToken: PaymentManagerToken,
-      wallet: NullableWallet
-    ) =>
-      createFetchRequestForApi(addWalletCreditCard(pagoPaToken), options)({
+    addWalletCreditCard: (wallet: NullableWallet) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(addWalletCreditCard, options)
+        )
+      )({
         walletRequest: { data: wallet }
       }),
     payCreditCardVerification: (
-      pagoPaToken: PaymentManagerToken,
       payRequest: TypeofApiParams<
         PayCreditCardVerificationUsingPOSTT
       >["payRequest"],
@@ -394,15 +394,16 @@ export function PaymentManagerClient(
         PayCreditCardVerificationUsingPOSTT
       >["language"]
     ) =>
-      createFetchRequestForApi(boardPay(pagoPaToken), altOptions)({
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(boardPay, altOptions))
+      )({
         payRequest,
         language
       }),
-    deleteWallet: (
-      pagoPaToken: PaymentManagerToken,
-      id: TypeofApiParams<DeleteWalletUsingDELETET>["id"]
-    ) =>
-      createFetchRequestForApi(deleteWallet(pagoPaToken), options)({
+    deleteWallet: (id: TypeofApiParams<DeleteWalletUsingDELETET>["id"]) =>
+      flip(
+        withPaymentManagerToken(createFetchRequestForApi(deleteWallet, options))
+      )({
         id
       })
   };

@@ -6,14 +6,7 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Container, Text, Toast, View } from "native-base";
 import * as React from "react";
-import {
-  Dimensions,
-  Linking,
-  Platform,
-  ScrollView,
-  StyleSheet
-} from "react-native";
-import AndroidOpenSettings from "react-native-android-open-settings";
+import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -22,6 +15,8 @@ import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import { ComponentProps } from "../../../types/react";
 
+import ImagePicker from "react-native-image-picker";
+import * as ReaderQR from "react-native-lewin-qrcode";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
@@ -32,6 +27,7 @@ import {
 } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
+import { openAppSettings } from "../../../utils/appSettings";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 
 type OwnProps = NavigationInjectedProps;
@@ -63,6 +59,16 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
     backgroundColor: "transparent"
+  },
+
+  button: {
+    flex: 1,
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginTop: -20,
+    width: screenWidth - variables.contentPadding * 2,
+    backgroundColor: variables.colorWhite
   },
 
   camera: {
@@ -137,6 +143,31 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
   };
 
+  /**
+   * Start image chooser
+   */
+  private showImagePicker = () => {
+    const options = {
+      storageOptions: {
+        skipBackup: true,
+        path: "images"
+      }
+    };
+    // Open Image Library
+    ImagePicker.launchImageLibrary(options, response => {
+      const path = response.path ? response.path : response.uri;
+      if (path != null) {
+        ReaderQR.readerQR(path)
+          .then((data: string) => {
+            this.onQrCodeData(data);
+          })
+          .catch(() => {
+            this.onInvalidQrCode();
+          });
+      }
+    });
+  };
+
   public constructor(props: Props) {
     super(props);
     this.state = {
@@ -155,14 +186,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   private handleDidFocus = () => this.setState({ isFocused: true });
 
   private handleWillBlur = () => this.setState({ isFocused: false });
-
-  private openAppSettings = () => {
-    if (Platform.OS === "ios") {
-      Linking.openURL("app-settings://notification/IO").catch(_ => undefined);
-    } else {
-      AndroidOpenSettings.appDetailsSettings();
-    }
-  };
 
   public render(): React.ReactNode {
     const primaryButtonProps = {
@@ -207,7 +230,14 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               }
               bottomContent={
                 <View>
-                  <View spacer={true} large={true} />
+                  <Button
+                    onPress={this.showImagePicker}
+                    style={styles.button}
+                    bordered={true}
+                  >
+                    <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
+                  </Button>
+                  <View spacer={true} />
                   <Text style={[styles.padded, styles.centerText]}>
                     {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
                   </Text>
@@ -237,7 +267,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                   </Text>
 
                   <Button
-                    onPress={this.openAppSettings}
+                    onPress={openAppSettings}
                     style={styles.notAuthorizedBtn}
                   >
                     <Text>

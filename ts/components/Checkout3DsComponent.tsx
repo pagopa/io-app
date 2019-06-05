@@ -59,6 +59,7 @@ export default class Checkout3DsComponent extends React.Component<
       <Container>
         <WebView
           style={styles.webViewStyle}
+          textZoom={100}
           source={{ uri: url }}
           onNavigationStateChange={this.navigationStateChanged}
           javaScriptEnabled={true}
