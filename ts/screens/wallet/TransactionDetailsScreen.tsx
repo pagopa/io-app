@@ -105,26 +105,30 @@ class TransactionDetailsScreen extends React.Component<Props> {
    * then the "Thank you message" is displayed
    */
   private topContent(paymentCompleted: boolean, transactionWallet: any) {
-    return paymentCompleted ? (
-      <View>
-        <Grid>
-          <Col size={1} />
-          <Col size={5} style={styles.alignCenter}>
-            <View spacer={true} />
-            <Row>
-              <H1 style={styles.white}>{I18n.t("wallet.thanks")}</H1>
-            </Row>
-            <Row>
-              <Text white={true}>{I18n.t("wallet.endPayment")}</Text>
-            </Row>
-            <View spacer={true} />
-          </Col>
-          <Col size={1} />
-        </Grid>
+    return (
+      <React.Fragment>
+        {paymentCompleted ? (
+          <View>
+            <Grid>
+              <Col size={1} />
+              <Col size={5} style={styles.alignCenter}>
+                <View spacer={true} />
+                <Row>
+                  <H1 style={styles.white}>{I18n.t("wallet.thanks")}</H1>
+                </Row>
+                <Row>
+                  <Text white={true}>{I18n.t("wallet.endPayment")}</Text>
+                </Row>
+                <View spacer={true} />
+              </Col>
+              <Col size={1} />
+            </Grid>
+          </View>
+        ) : (
+          <View spacer={true} />
+        )}
         {this.displayedWallet(transactionWallet)}
-      </View>
-    ) : (
-      <View spacer={true} />
+      </React.Fragment>
     );
   }
 
