@@ -21,6 +21,9 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: "contain",
     width: "100%"
+  },
+  darkGrayBg: {
+    backgroundColor: customVariables.brandDarkGray
   }
 });
 
@@ -33,7 +36,7 @@ class ScreenHeader extends React.Component<Props> {
     const { heading, icon, dark } = this.props;
 
     return (
-      <View style={dark && { backgroundColor: customVariables.brandDarkGray }}>
+      <View style={dark && styles.darkGrayBg}>
         {heading}
         {icon && (
           <View style={styles.container}>
