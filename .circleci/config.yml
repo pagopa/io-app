@@ -501,11 +501,11 @@ workflows:
   nightly-pagopa-spec-check:
     triggers:
       - schedule:
-          cron: "40 10 * * *"
+          cron: "03 11 * * *"
           filters:
             branches:
               only:
-                - master
+                - 165800423-cci-alert-pagopa-specs-
     jobs:
       - specs_diff
 
