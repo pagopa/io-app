@@ -2,7 +2,6 @@ import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { IdentificationCancelData } from "../../store/reducers/identification";
 
 import I18n from "../../i18n";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
@@ -20,7 +19,6 @@ interface Props {
   clearOnInvalid?: boolean;
   isFingerprintEnabled?: any;
   biometryType?: any;
-  identificationCancelData?: IdentificationCancelData;
   compareWithCode?: string;
   inactiveColor: string;
   buttonType: ComponentProps<typeof KeyPad>["buttonType"];
@@ -199,12 +197,12 @@ class Pinpad extends React.PureComponent<Props, State> {
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <View spacer={true} extralarge={true} />
-        {this.props.identificationCancelData === undefined && (
+        {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <Text
               primary={true}
               onPress={this.props.onPinResetHandler}
-              style={styles.text}
+              style={[styles.text]}
             >
               {I18n.t("pin_login.pin.reset.button")}
             </Text>

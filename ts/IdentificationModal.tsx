@@ -251,7 +251,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     const identificationMessage = identificationGenericData
       ? identificationGenericData.message
-      : I18n.t("identification.message");
+      : this.renderBiometryType();
 
     /**
      * Create handlers merging default internal actions (to manage the identification state)
@@ -319,19 +319,29 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             />
             {renderIdentificationByPinState(identificationByPinState)}
             {renderIdentificationByBiometryState(identificationByBiometryState)}
-            <View spacer={true} large={true} />
 
-            {/*  <Text alignCenter={true} style={styles.resetPinMessage}>
-              {identificationCancelData !== undefined
-                ? I18n.t("identification.resetPinFromProfileMessage")
-                : I18n.t("identification.resetPinMessage")}
-            </Text>
- */}
             <View spacer={true} extralarge={true} />
           </Content>
         </BaseScreenComponent>
       </Modal>
     );
+  }
+
+  /**
+   * Print the only BiometrySimplePrintableType values that are passed to the UI
+   * @param biometrySimplePrintableType
+   */
+  private renderBiometryType(): string {
+    switch (this.state.biometryType) {
+      case "FINGERPRINT":
+        return I18n.t("identification.messageFingerPrint");
+      case "FACE_ID":
+        return I18n.t("identification.messageFaceID");
+      case "TOUCH_ID":
+        return I18n.t("identification.messageFingerPrint");
+      default:
+        return "";
+    }
   }
 
   private onPinFullfill = (

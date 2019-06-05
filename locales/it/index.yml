@@ -633,9 +633,8 @@ serviceDetail:
   disableTitle: "Vuoi davvero disattivare il servizio?"
   disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
 identification:
-  message: "Appoggia l'impronta o inserisci il codice PIN"
-  resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
-  resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".
+  messageFingerPrint: "Appoggia l'impronta o inserisci il codice PIN"
+  messageFaceID: "Usa FaceID o inserisci il codice PIN"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
