@@ -7,7 +7,7 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import { Modal, Switch } from "react-native";
+import { Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -167,18 +167,14 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
         />
-        <Modal
-          animationType="fade"
-          transparent={false}
-          visible={this.props.checkout3dsUrl.isSome()}
-        >
+        <View>
           {this.props.checkout3dsUrl.isSome() && (
             <Checkout3DsComponent
               url={this.props.checkout3dsUrl.value}
               onCheckout3dsSuccess={this.props.creditCardCheckout3dsSuccess}
             />
           )}
-        </Modal>
+        </View>
       </BaseScreenComponent>
     );
   }

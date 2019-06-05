@@ -1,6 +1,7 @@
 import { Container } from "native-base";
 import * as React from "react";
-import { NavState, StyleSheet, View, WebView } from "react-native";
+import { NavState, StyleSheet, View } from "react-native";
+import { WebView } from "react-native-webview";
 import { RefreshIndicator } from "./ui/RefreshIndicator";
 
 type Props = Readonly<{
@@ -22,6 +23,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000
+  },
+  webViewStyle: {
+    backgroundColor: "transparent"
   }
 });
 
@@ -42,9 +46,7 @@ export default class Checkout3DsComponent extends React.Component<
   private navigationStateChanged = (navState: NavState) => {
     // pagoPA-designated URL for exiting the webview
     // (visisted when the user taps the "close" button)
-    const exitUrl = "/wallet/loginMethod";
-
-    if (navState.url !== undefined && navState.url.includes(exitUrl)) {
+    if (navState.url !== undefined) {
       // time to leave, trigger the appropriate action
       // to let the saga know that it can wrap things up
       this.props.onCheckout3dsSuccess();
@@ -56,6 +58,7 @@ export default class Checkout3DsComponent extends React.Component<
     return (
       <Container>
         <WebView
+          style={styles.webViewStyle}
           source={{ uri: url }}
           onNavigationStateChange={this.navigationStateChanged}
           javaScriptEnabled={true}
