@@ -21,6 +21,34 @@ export enum ErrorSearchType {
   NoResultsFound
 }
 
+/**
+ * Print the icon according to current error type
+ * @param errorType
+ */
+export const renderIconErrorSearch = (errorType: ErrorSearchType) => {
+  switch (errorType) {
+    case ErrorSearchType.InvalidSearchBarText:
+      return require("../../../img/search/search-icon.png");
+    case ErrorSearchType.NoResultsFound:
+      return require("../../../img/search/beer-mug.png");
+  }
+};
+
+/**
+ * Convert the error type into a user-readable string
+ * @param errorType
+ */
+export const renderMessageErrorSearch = (
+  errorType: ErrorSearchType
+): string => {
+  switch (errorType) {
+    case ErrorSearchType.InvalidSearchBarText:
+      return I18n.t("global.search.invalidSearchBarText");
+    case ErrorSearchType.NoResultsFound:
+      return I18n.t("global.search.noResultsFound");
+  }
+};
+
 type Props = {
   errorType: ErrorSearchType;
 };
@@ -33,36 +61,13 @@ export class SearchErrorMessage extends React.PureComponent<Props> {
         <View spacer={true} extralarge={true} />
         <View spacer={true} extralarge={true} />
 
-        <Image source={this.renderIcon(errorType)} />
+        <Image source={renderIconErrorSearch(errorType)} />
         <View spacer={true} />
 
-        <Text style={styles.message}>{this.renderMessage(errorType)}</Text>
+        <Text style={styles.message}>
+          {renderMessageErrorSearch(errorType)}
+        </Text>
       </View>
     );
-  }
-
-  /**
-   * Print the icon according to current error type
-   */
-  private renderIcon(errorType: ErrorSearchType) {
-    switch (errorType) {
-      case ErrorSearchType.InvalidSearchBarText:
-        return require("../../../img/search/search-icon.png");
-      case ErrorSearchType.NoResultsFound:
-        return require("../../../img/search/beer-mug.png");
-    }
-  }
-
-  /**
-   * Convert the error type into a user-readable string
-   * @param error
-   */
-  private renderMessage(errorType: ErrorSearchType) {
-    switch (errorType) {
-      case ErrorSearchType.InvalidSearchBarText:
-        return I18n.t("global.search.invalidSearchBarText");
-      case ErrorSearchType.NoResultsFound:
-        return I18n.t("global.search.noResultsFound");
-    }
   }
 }
