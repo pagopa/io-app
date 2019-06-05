@@ -71,6 +71,7 @@ install_node_modules: &install_node_modules
 #
 # Build pipeline
 #
+
 orbs:
   slack: circleci/slack@3.2.0
 version: 2.1
@@ -443,6 +444,7 @@ jobs:
           success_message: "pagopa production and test specification have no difference"
           failure_message: "it seems pagopa production and test specifications have some differences"
           webhook: "https://hooks.slack.com/services/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"
+
 workflows:
   version: 2
   build:
@@ -498,13 +500,12 @@ workflows:
             branches:
               only: master
   nightly-pagopa-spec-check:
-    triggers:
-      - schedule:
-          cron: "46 11 * * *"
-          filters:
-            branches:
-              only:
-                - 165800423-cci-alert-pagopa-specs-
-    jobs:
-      - specs_diff
-
+      triggers:
+        - schedule:
+            cron: "55 11 * * *"
+            filters:
+              branches:
+                only:
+                  - master
+      jobs:
+        - specs_diff
