@@ -24,7 +24,7 @@ NO_CHANGES_REGEX='.*.*<.*"host": ".*",.*---.*>.*"host": ".*",'
 printf "### COMPARING SWAGGER DEFINITIONS ###\n\n"
 printf "%14s $PAGOPA_API_URL_PREFIX\n" "production:" 
 printf "%14s $PAGOPA_API_URL_PREFIX_TEST\n" "test:" 
-OK_MSG="pagopa production and test specification have no difference"
+OK_MSG="pagopa production and test specification have no differences"
 
 DIFF=$(diff -w -B <(curl -s $PAGOPA_API_URL_PREFIX | python -m json.tool) <(curl -s $PAGOPA_API_URL_PREFIX_TEST | python -m json.tool))
 printf "\n\n"

@@ -74,7 +74,7 @@ install_node_modules: &install_node_modules
 
 orbs:
   slack: circleci/slack@3.2.0
-version: 2
+version: 2.1
 jobs:
 
   # Compile typescript
@@ -439,11 +439,6 @@ jobs:
       - run:
           name: check api specs alignment
           command: ./scripts/api_check.sh
-      - slack/status:
-          mentions: "Matteo Boschi"
-          success_message: "pagopa production and test specification have no difference"
-          failure_message: "it seems pagopa production and test specifications have some differences"
-          webhook: "https://hooks.slack.com/services/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"
 
 workflows:
   version: 2
@@ -502,7 +497,7 @@ workflows:
   nightly-pagopa-spec-check:
       triggers:
         - schedule:
-            cron: "55 11 * * *"
+            cron: "30 12 * * *"
             filters:
               branches:
                 only:
