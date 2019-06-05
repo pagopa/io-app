@@ -429,7 +429,7 @@ jobs:
       - store_artifacts:
           path: /tmp/detox_artifacts
 
-  specs_diff:
+  pagopa_specs_diff:
     docker:
       - image: circleci/android:api-23-node8-alpha
     steps:
@@ -492,13 +492,13 @@ workflows:
           filters:
             branches:
               only: master
-  nightly-pagopa-spec-check:
+  nightly-pagopa-specs-check:
       triggers:
         - schedule:
-            cron: "38 12 * * *"
+            cron: "43 12 * * *"
             filters:
               branches:
                 only:
                   - 165800423-cci-alert-pagopa-specs-
       jobs:
-        - specs_diff
+        - pagopa_specs_diff
