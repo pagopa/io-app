@@ -38,6 +38,7 @@ global:
   notImplemented: NON IMPLEMENTATO
   search:
     invalidSearchBarText: Inserisci almeno tre caratteri
+    noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
   localNotifications:
     spidLogin:
       title: Ricordati di accedere ad IO!

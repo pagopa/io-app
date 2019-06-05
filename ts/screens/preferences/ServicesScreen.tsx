@@ -11,7 +11,10 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { SearchType } from "../../components/search/SearchButton";
-import { SearchEmptyText } from "../../components/search/SearchEmptyText";
+import {
+  ErrorSearchType,
+  SearchErrorMessage
+} from "../../components/search/SearchErrorMessage";
 import ServiceSectionListComponent from "../../components/services/ServiceSectionListComponent";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import Markdown from "../../components/ui/Markdown";
@@ -104,7 +107,9 @@ class ServicesScreen extends React.Component<Props> {
       .map(
         _ =>
           _.length < 3 ? (
-            <SearchEmptyText />
+            <SearchErrorMessage
+              errorType={ErrorSearchType.InvalidSearchBarText}
+            />
           ) : (
             <ServicesSearch
               sectionsState={sections}
@@ -115,7 +120,9 @@ class ServicesScreen extends React.Component<Props> {
             />
           )
       )
-      .getOrElse(<SearchEmptyText />);
+      .getOrElse(
+        <SearchErrorMessage errorType={ErrorSearchType.InvalidSearchBarText} />
+      );
   };
 }
 

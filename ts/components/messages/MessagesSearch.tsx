@@ -9,6 +9,10 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { messageContainsText } from "../../utils/messages";
 import { serviceContainsText } from "../../utils/services";
+import {
+  ErrorSearchType,
+  SearchErrorMessage
+} from "../search/SearchErrorMessage";
 import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
@@ -144,7 +148,7 @@ class MessagesSearch extends React.PureComponent<Props, State> {
 
     const filteredMessageStates = pot.getOrElse(potFilteredMessageStates, []);
 
-    return (
+    return filteredMessageStates.length > 0 ? (
       <View style={styles.listWrapper}>
         <MessageList
           {...this.props}
@@ -155,6 +159,8 @@ class MessagesSearch extends React.PureComponent<Props, State> {
           selectedMessageIds={none}
         />
       </View>
+    ) : (
+      <SearchErrorMessage errorType={ErrorSearchType.NoResultsFound} />
     );
   }
 
