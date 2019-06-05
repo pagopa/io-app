@@ -429,7 +429,9 @@ jobs:
       - store_artifacts:
           path: /tmp/detox_artifacts
 
+        
   specs_diff:
+    version: 2.1
     docker:
       - image: circleci/android:api-23-node8-alpha
     steps:
@@ -501,7 +503,7 @@ workflows:
   nightly-pagopa-spec-check:
     triggers:
       - schedule:
-          cron: "32 11 * * *"
+          cron: "37 11 * * *"
           filters:
             branches:
               only:
