@@ -436,7 +436,7 @@ jobs:
       - checkout
       - run:
           name: check api specs alignment
-          command: ./scripts/api_check.sh
+          command: ./scripts/pagopa_api_check.sh
 
 workflows:
   version: 2
@@ -495,7 +495,7 @@ workflows:
   nightly-pagopa-spec-check:
       triggers:
         - schedule:
-            cron: "35 12 * * *"
+            cron: "38 12 * * *"
             filters:
               branches:
                 only:
