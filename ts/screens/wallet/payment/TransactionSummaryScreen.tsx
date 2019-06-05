@@ -404,6 +404,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     navigateToPaymentTransactionError,
     dispatchNavigateToPaymentManualDataInsertion,
     startOrResumePayment,
+    isManualPaymentInsertion,
     goBack: () => {
       props.navigation.goBack();
       // reset the payment state
@@ -440,7 +441,10 @@ const mergeProps = (
   const onRetry = () => {
     // If the error is INVALID_AMOUNT and the user has manually entered the data of notice
     // go back to the screen to allow the user to modify the data
-    if (stateProps.error.toUndefined() === "INVALID_AMOUNT") {
+    if (
+      stateProps.error.toUndefined() === "INVALID_AMOUNT" &&
+      dispatchProps.isManualPaymentInsertion
+    ) {
       dispatchProps.dispatchNavigateToPaymentManualDataInsertion();
     } else {
       dispatchProps.onRetryWithPotVerifica(
