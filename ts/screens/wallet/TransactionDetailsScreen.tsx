@@ -33,7 +33,7 @@ import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
-import { Transaction } from "../../types/pagopa";
+import { Transaction, Wallet } from "../../types/pagopa";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { formatDateAsLocal } from "./../../utils/dates";
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 });
 
 class TransactionDetailsScreen extends React.Component<Props> {
-  private displayedWallet(transactionWallet: any) {
+  private displayedWallet(transactionWallet: Wallet | undefined) {
     return transactionWallet ? (
       <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
     ) : (
@@ -104,7 +104,10 @@ class TransactionDetailsScreen extends React.Component<Props> {
    * (the user displays the screen during the process of identify and accept a transaction)
    * then the "Thank you message" is displayed
    */
-  private topContent(paymentCompleted: boolean, transactionWallet: any) {
+  private topContent(
+    paymentCompleted: boolean,
+    transactionWallet: Wallet | undefined
+  ) {
     return (
       <React.Fragment>
         {paymentCompleted ? (
