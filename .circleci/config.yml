@@ -501,7 +501,7 @@ workflows:
   nightly-pagopa-spec-check:
     triggers:
       - schedule:
-          cron: "30 10 * * *"
+          cron: "40 10 * * *"
           filters:
             branches:
               only:
