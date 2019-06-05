@@ -72,9 +72,7 @@ install_node_modules: &install_node_modules
 # Build pipeline
 #
 
-orbs:
-  slack: circleci/slack@3.2.0
-version: 2.1
+version: 2
 jobs:
 
   # Compile typescript
