@@ -24,19 +24,33 @@ NO_CHANGES_REGEX='.*.*<.*"host": ".*",.*---.*>.*"host": ".*",'
 printf "### COMPARING SWAGGER DEFINITIONS ###\n\n"
 printf "%14s $PAGOPA_API_URL_PREFIX\n" "production:" 
 printf "%14s $PAGOPA_API_URL_PREFIX_TEST\n" "test:" 
-OK_MSG="pagopa production and test specification have no differences"
-
+OK_MSG="✅ pagopa production and test specification have no differences"
+SEND_MSG=$OK_MSG
+SEND_EXIT=0
+# mention matteo boschi slack account
+MB_SLACK="<@UGP1H4GLR>" 
 DIFF=$(diff -w -B <(curl -s $PAGOPA_API_URL_PREFIX | python -m json.tool) <(curl -s $PAGOPA_API_URL_PREFIX_TEST | python -m json.tool))
 printf "\n\n"
 if [ -n "$DIFF" ]; then
     if [[ $DIFF =~ $NO_CHANGES_REGEX ]]; then
-        echo $OK_MSG
-        exit 0
+        printf $OK_MSG
     else
-        printf "ko. It seems PROD and DEV have different specs\n\n$DIFF"
-        exit 1
+        KO_MSG="⚠️ ko. It seems *PROD* and *DEV* pagoPa specs are different $DIFF $MB_SLACK"
+        printf $KO_MSG
+        SEND_MSG="$KO_MSG"
+        SEND_EXIT=1
     fi
-else
-    echo $OK_MSG
-    exit 0
 fi
+#send slack notification
+channel="#io-status"
+mesg=$SEND_MSG
+user="Pagopa Specs Checker"
+res=$(curl -s \
+    -X POST \
+    -d "token=${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-}" \
+    -d "channel=${channel}" \
+    -d "text=${mesg}" \
+    -d "username=${user}" \
+    -d "icon_url=https://a.slack-edge.com/41b0a/img/plugins/circleci/service_48.png" \
+    https://slack.com/api/chat.postMessage
+)
