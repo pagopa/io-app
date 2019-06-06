@@ -17,7 +17,6 @@ while IFS= read -r line; do
         PAGOPA_API_URL_PREFIX_TEST="$PAGOPA_API_URL_PREFIX_TEST$PAGOPA_API_URL_SUFFIX"
     fi
 done < "$input"
-PAGOPA_API_URL_PREFIX_TEST="https://api.myjson.com/bins/fh9c4"
 # regex pattern to handle only hosts url difference
 NO_CHANGES_REGEX='.*.*<.*"host": ".*",.*---.*>.*"host": ".*",'
 
