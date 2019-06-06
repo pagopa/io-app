@@ -492,13 +492,16 @@ workflows:
           filters:
             branches:
               only: master
+  # nightly workflow to check pagopa specs (runs only on master branch)
+  # if prod and dev specs are different
+  # a slack notification will be sent on channel #io-status
   nightly-pagopa-specs-check:
       triggers:
         - schedule:
-            cron: "32 14 * * *"
+            cron: "0 03 * * *"
             filters:
               branches:
                 only:
-                  - 165800423-cci-alert-pagopa-specs-
+                  - master
       jobs:
         - pagopa_specs_diff

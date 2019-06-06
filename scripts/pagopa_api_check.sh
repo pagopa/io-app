@@ -24,7 +24,7 @@ NO_CHANGES_REGEX='.*.*<.*"host": ".*",.*---.*>.*"host": ".*",'
 printf "### COMPARING SWAGGER DEFINITIONS ###\n\n"
 printf "%14s $PAGOPA_API_URL_PREFIX\n" "production:" 
 printf "%14s $PAGOPA_API_URL_PREFIX_TEST\n" "test:" 
-OK_MSG="✅ pagopa production and test specification have no differences"
+OK_MSG="✅ pagopa production and test specifications have no differences"
 SEND_MSG=$OK_MSG
 SEND_EXIT=0
 # mention matteo boschi slack account
@@ -35,7 +35,7 @@ if [ -n "$DIFF" ]; then
     if [[ $DIFF =~ $NO_CHANGES_REGEX ]]; then
         printf $OK_MSG
     else
-        KO_MSG="⚠️ ko. It seems *PROD* and *DEV* pagoPa specs are different $DIFF $MB_SLACK"
+        KO_MSG="$MB_SLACK ⚠️ ko. It seems *PROD* and *DEV* pagoPa specifications are different $DIFF"
         printf $KO_MSG
         SEND_MSG="$KO_MSG"
         SEND_EXIT=1
