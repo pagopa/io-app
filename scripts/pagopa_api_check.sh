@@ -45,12 +45,4 @@ fi
 channel="#io-status"
 mesg=$SEND_MSG
 user="Pagopa Specs Checker"
-res=$(curl -s \
-    -X POST \
-    -d "token=${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-}" \
-    -d "channel=${channel}" \
-    -d "text=${mesg}" \
-    -d "username=${user}" \
-    -d "icon_url=https://a.slack-edge.com/41b0a/img/plugins/circleci/service_48.png" \
-    https://slack.com/api/chat.postMessage
-)
+res=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"Allow me to reintroduce myself!", "channel" : "${channel}"}' ${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-})
