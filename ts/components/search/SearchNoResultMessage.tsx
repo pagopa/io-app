@@ -16,10 +16,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export enum ErrorSearchType {
-  InvalidSearchBarText,
-  NoResultsFound
-}
+type ErrorSearchType = "InvalidSearchBarText" | "NoResultsFound";
 
 /**
  * Print the icon according to current error type
@@ -27,9 +24,9 @@ export enum ErrorSearchType {
  */
 export const renderIconErrorSearch = (errorType: ErrorSearchType) => {
   switch (errorType) {
-    case ErrorSearchType.InvalidSearchBarText:
+    case "InvalidSearchBarText":
       return require("../../../img/search/search-icon.png");
-    case ErrorSearchType.NoResultsFound:
+    case "NoResultsFound":
       return require("../../../img/search/beer-mug.png");
   }
 };
@@ -42,9 +39,9 @@ export const renderMessageErrorSearch = (
   errorType: ErrorSearchType
 ): string => {
   switch (errorType) {
-    case ErrorSearchType.InvalidSearchBarText:
+    case "InvalidSearchBarText":
       return I18n.t("global.search.invalidSearchBarText");
-    case ErrorSearchType.NoResultsFound:
+    case "NoResultsFound":
       return I18n.t("global.search.noResultsFound");
   }
 };
@@ -53,7 +50,7 @@ type Props = {
   errorType: ErrorSearchType;
 };
 
-export class SearchErrorMessage extends React.PureComponent<Props> {
+export class SearchNoResultMessage extends React.PureComponent<Props> {
   public render() {
     const { errorType } = this.props;
     return (

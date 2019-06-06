@@ -10,11 +10,8 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import { SearchType } from "../../components/search/SearchButton";
-import {
-  ErrorSearchType,
-  SearchErrorMessage
-} from "../../components/search/SearchErrorMessage";
+import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
+import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import ServiceSectionListComponent from "../../components/services/ServiceSectionListComponent";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import Markdown from "../../components/ui/Markdown";
@@ -71,7 +68,7 @@ class ServicesScreen extends React.Component<Props> {
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
         isSearchAvailable={true}
-        searchType={SearchType.Services}
+        searchType="Services"
       >
         {!isSearchEnabled && (
           <ScreenContentHeader
@@ -106,10 +103,8 @@ class ServicesScreen extends React.Component<Props> {
     return searchText
       .map(
         _ =>
-          _.length < 3 ? (
-            <SearchErrorMessage
-              errorType={ErrorSearchType.InvalidSearchBarText}
-            />
+          _.length < MIN_CHARACTER_SEARCH_TEXT ? (
+            <SearchNoResultMessage errorType="InvalidSearchBarText" />
           ) : (
             <ServicesSearch
               sectionsState={sections}
@@ -120,9 +115,7 @@ class ServicesScreen extends React.Component<Props> {
             />
           )
       )
-      .getOrElse(
-        <SearchErrorMessage errorType={ErrorSearchType.InvalidSearchBarText} />
-      );
+      .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
   };
 }
 

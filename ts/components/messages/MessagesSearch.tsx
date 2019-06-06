@@ -9,10 +9,7 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { messageContainsText } from "../../utils/messages";
 import { serviceContainsText } from "../../utils/services";
-import {
-  ErrorSearchType,
-  SearchErrorMessage
-} from "../search/SearchErrorMessage";
+import { SearchNoResultMessage } from "../search/SearchNoResultMessage";
 import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
@@ -160,7 +157,7 @@ class MessagesSearch extends React.PureComponent<Props, State> {
         />
       </View>
     ) : (
-      <SearchErrorMessage errorType={ErrorSearchType.NoResultsFound} />
+      <SearchNoResultMessage errorType="NoResultsFound" />
     );
   }
 
