@@ -34,13 +34,14 @@ if [ -n "$DIFF" ]; then
     if [[ $DIFF =~ $NO_CHANGES_REGEX ]]; then
         echo $SEND_MSG
     else
-        KO_MSG="⚠⚠⚠ $MB_SLACK ko. It seems *PROD* and *DEV* pagoPa specifications are different"
+        KO_MSG="⚠ $MB_SLACK ko. It seems *PROD* and *DEV* pagoPa specifications are different"
         echo $KO_MSG
-        SEND_MSG="$KO_MSG"
+        echo $DIFF
+        SEND_MSG=$KO_MSG
         SEND_EXIT=1
     fi
 fi
 #send slack notification
 channel="#io-status"
-#res=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"'$msg'", "channel" : "'$channel'"}' https://hooks.slack.com/services/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)
 res=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' https://hooks.slack.com/services/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)
+exit $SEND_EXIT
