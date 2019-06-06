@@ -45,4 +45,4 @@ fi
 channel="#io-status"
 mesg=$SEND_MSG
 user="Pagopa Specs Checker"
-res=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"Allow me to reintroduce myself!", "channel" : "${channel}"}' ${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-})
+res=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"Allow me to reintroduce myself!", "channel" : "$channel"}' ${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-})
