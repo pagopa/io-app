@@ -11,10 +11,7 @@ import { connect } from "react-redux";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import {
-  navigateToPaymentManualDataInsertion,
-  navigateToWalletHome
-} from "../../../store/actions/navigation";
+import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentAttiva,
@@ -211,7 +208,6 @@ class TransactionErrorScreen extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateToPaymentManualDataInsertion: (isInvalidAmount: boolean) =>
     dispatch(navigateToPaymentManualDataInsertion({ isInvalidAmount }))
 });
