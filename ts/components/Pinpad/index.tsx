@@ -196,7 +196,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         <View style={styles.placeholderContainer}>
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
-        <View spacer={true} extralarge={true} />
+        <View spacer={true} large={true} />
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <Text
