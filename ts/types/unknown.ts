@@ -16,19 +16,6 @@ const UNKNOWN_NUMBER = -1;
 const UNKNOWN_DATE = new Date("?");
 
 export const UNKNOWN_RECIPIENT: EnteBeneficiario = {
-  identificativoUnivocoBeneficiario: UNKNOWN_STRING,
-  denominazioneBeneficiario: UNKNOWN_STRING,
-  codiceUnitOperBeneficiario: UNKNOWN_STRING,
-  denomUnitOperBeneficiario: UNKNOWN_STRING,
-  indirizzoBeneficiario: UNKNOWN_STRING,
-  civicoBeneficiario: UNKNOWN_STRING,
-  capBeneficiario: UNKNOWN_STRING,
-  localitaBeneficiario: UNKNOWN_STRING,
-  provinciaBeneficiario: UNKNOWN_STRING,
-  nazioneBeneficiario: UNKNOWN_STRING
-};
-
-export const UNKNOWN_RECIPIENT_EMPTY: EnteBeneficiario = {
   identificativoUnivocoBeneficiario: UNKNOWN_EMPTY_STRING,
   denominazioneBeneficiario: UNKNOWN_EMPTY_STRING,
   codiceUnitOperBeneficiario: UNKNOWN_EMPTY_STRING,

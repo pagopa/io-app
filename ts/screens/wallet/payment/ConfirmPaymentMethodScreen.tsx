@@ -52,7 +52,7 @@ import {
   Transaction,
   Wallet
 } from "../../../types/pagopa";
-import { UNKNOWN_RECIPIENT_EMPTY } from "../../../types/unknown";
+import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
@@ -149,7 +149,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <PaymentBannerComponent
             currentAmount={currentAmount}
             paymentReason={paymentReason}
-            recipient={recipient || UNKNOWN_RECIPIENT_EMPTY}
+            recipient={recipient || UNKNOWN_RECIPIENT}
             onCancel={this.props.onCancel}
           />
           <View style={styles.paddedLR}>
