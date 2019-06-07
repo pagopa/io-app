@@ -15,7 +15,7 @@ import { GlobalState } from "../reducers/types";
 
 /**
  * if the user presses back button twice in a time window of exitConfirmThreshold milliseconds
- * then exitApp event will be raised
+ * then app will be closed
  */
 const exitConfirmThreshold = 2000 as Millisecond;
 
