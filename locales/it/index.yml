@@ -517,6 +517,8 @@ messages:
   cta:
     archive: Archivia
     unarchive: Ripristina
+    payment:
+      expired: Pagamento scaduto
     pay: Paga € {{amount}}
     paid: Pagato € {{amount}}
     reminder: Promemoria

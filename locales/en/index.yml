@@ -507,6 +507,8 @@ messages:
   cta:
     archive: Archive
     unarchive: Unarchive
+    payment:
+      expired: Payment expired
     pay: Pay € {{amount}}
     paid: Paid € {{amount}}
     reminder: Reminder
