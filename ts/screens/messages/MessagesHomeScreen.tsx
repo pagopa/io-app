@@ -1,6 +1,6 @@
 import { Tab, TabHeading, Tabs, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Animated, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import MessagesArchive from "../../components/messages/MessagesArchive";
@@ -31,6 +31,13 @@ import customVariables from "../../theme/variables";
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
+
+type State = {
+  currentTab: number;
+};
+
+// Scroll range is directly influenced by floating header height
+const SCROLL_RANGE_FOR_ANIMATION = 72;
 
 const styles = StyleSheet.create({
   tabBarContainer: {
@@ -75,13 +82,23 @@ const styles = StyleSheet.create({
   }
 });
 
+const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 /**
  * A screen that contains all the Tabs related to messages.
  */
-class MessagesHomeScreen extends React.Component<Props> {
+class MessagesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    this.state = {
+      currentTab: 0
+    };
   }
+
+  public animatedScrollPositions: ReadonlyArray<Animated.Value> = [
+    new Animated.Value(0),
+    new Animated.Value(0),
+    new Animated.Value(0)
+  ];
 
   public componentDidMount() {
     this.props.refreshMessages();
@@ -103,12 +120,16 @@ class MessagesHomeScreen extends React.Component<Props> {
         appLogo={true}
       >
         {!isSearchEnabled && (
-          <ScreenContentHeader
-            title={I18n.t("messages.contentTitle")}
-            icon={require("../../../img/icons/message-icon.png")}
-          />
+          <React.Fragment>
+            <ScreenContentHeader
+              title={I18n.t("messages.contentTitle")}
+              icon={require("../../../img/icons/message-icon.png")}
+              fixed={true}
+            />
+            {this.renderTabs()}
+          </React.Fragment>
         )}
-        {isSearchEnabled ? this.renderSearch() : this.renderTabs()}
+        {isSearchEnabled && this.renderSearch()}
       </TopScreenComponent>
     );
   }
@@ -128,9 +149,34 @@ class MessagesHomeScreen extends React.Component<Props> {
     } = this.props;
 
     return (
-      <Tabs
+      <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+        onChangeTab={(evt: any) => {
+          this.setState({ currentTab: evt.i });
+        }}
+        initialPage={0}
+        style={{
+          transform: [
+            {
+              translateY: this.animatedScrollPositions[
+                this.state.currentTab
+              ].interpolate({
+                inputRange: [
+                  0,
+                  SCROLL_RANGE_FOR_ANIMATION / 2,
+                  SCROLL_RANGE_FOR_ANIMATION
+                ],
+                outputRange: [
+                  SCROLL_RANGE_FOR_ANIMATION,
+                  SCROLL_RANGE_FOR_ANIMATION / 4,
+                  0
+                ],
+                extrapolate: "clamp"
+              })
+            }
+          ]
+        }}
       >
         <Tab
           heading={
@@ -149,6 +195,44 @@ class MessagesHomeScreen extends React.Component<Props> {
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
+            animated={{
+              onScroll: Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: {
+                        y: this.animatedScrollPositions[0]
+                      }
+                    }
+                  }
+                ],
+                { useNativeDriver: true }
+              ),
+              scrollEventThrottle: 8 // target is 120fps
+            }}
+            paddingForAnimation={true}
+            AnimatedCTAStyle={{
+              transform: [
+                {
+                  translateY: this.animatedScrollPositions[
+                    this.state.currentTab
+                  ].interpolate({
+                    inputRange: [
+                      0,
+                      SCROLL_RANGE_FOR_ANIMATION / 2,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    outputRange: [
+                      0,
+
+                      SCROLL_RANGE_FOR_ANIMATION * 0.75,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    extrapolate: "clamp"
+                  })
+                }
+              ]
+            }}
           />
         </Tab>
         {isExperimentalFeaturesEnabled && (
@@ -189,9 +273,49 @@ class MessagesHomeScreen extends React.Component<Props> {
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
+            animated={{
+              onScroll: Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: {
+                        y: isExperimentalFeaturesEnabled
+                          ? this.animatedScrollPositions[2]
+                          : this.animatedScrollPositions[1]
+                      }
+                    }
+                  }
+                ],
+                { useNativeDriver: true }
+              ),
+              scrollEventThrottle: 8 // target is 120fps
+            }}
+            paddingForAnimation={true}
+            AnimatedCTAStyle={{
+              transform: [
+                {
+                  translateY: this.animatedScrollPositions[
+                    this.state.currentTab
+                  ].interpolate({
+                    inputRange: [
+                      0,
+                      SCROLL_RANGE_FOR_ANIMATION / 2,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    outputRange: [
+                      0,
+
+                      SCROLL_RANGE_FOR_ANIMATION * 0.75,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    extrapolate: "clamp"
+                  })
+                }
+              ]
+            }}
           />
         </Tab>
-      </Tabs>
+      </AnimatedTabs>
     );
   };
 
