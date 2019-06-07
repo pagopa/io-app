@@ -1,15 +1,30 @@
+import { Millisecond } from "italia-ts-commons/lib/units";
+import { Toast } from "native-base";
+import { BackHandler } from "react-native";
 import { NavigationActions, StackActions } from "react-navigation";
 import { Middleware } from "redux";
-
+import I18n from "../../i18n";
 import { navigationRestore } from "../actions/navigation";
 import {
-  navigationHistoryEmpty,
   navigationHistoryPop,
   navigationHistoryPush,
   navigationHistoryReset
 } from "../actions/navigationHistory";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import { GlobalState } from "../reducers/types";
+
+/**
+ * if the user presses back button twice in a time window of exitConfirmThreshold milliseconds
+ * then exitApp event will be raised
+ */
+const exitConfirmThreshold = 2000 as Millisecond;
+
+/**
+ * exitApp will be called if user press twice back when
+ * navigation history is empty. Remember BackHandler.exitApp() works
+ * on Android platforms (and others) but not on iOS platforms
+ */
+const exitApp = () => BackHandler.exitApp();
 
 // tslint:disable-next-line:cognitive-complexity
 export function createNavigationHistoryMiddleware(): Middleware<
@@ -18,6 +33,8 @@ export function createNavigationHistoryMiddleware(): Middleware<
 > {
   // tslint:disable-next-line:no-let
   let firstRun = true;
+  // tslint:disable-next-line:no-let
+  let exitRequestTime: Millisecond = 0 as Millisecond;
 
   return (store: MiddlewareAPI) => (next: Dispatch) => (action: Action) => {
     switch (action.type) {
@@ -63,9 +80,19 @@ export function createNavigationHistoryMiddleware(): Middleware<
         // Get the current navigation history
         const currentNavigationHistory = store.getState().navigationHistory;
 
-        // If the history is empty we dispatch the empty event and return
+        // If the history is empty ask to user to press back again or
+        // check if we have to close the app
         if (currentNavigationHistory.length === 0) {
-          store.dispatch(navigationHistoryEmpty());
+          const now = new Date().getTime() as Millisecond;
+          const elaspedTime = now - exitRequestTime;
+          exitRequestTime = now;
+          if (elaspedTime < exitConfirmThreshold) {
+            // close previous toasts showing before close the app
+            Toast.hide();
+            exitApp();
+          } else {
+            Toast.show({ text: I18n.t("exit.pressAgain") });
+          }
           return;
         }
 

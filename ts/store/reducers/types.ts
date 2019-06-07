@@ -9,7 +9,6 @@ import { ContentState } from "./content";
 import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
-import { ExitAppState } from "./exitApp";
 import { IdentificationState } from "./identification";
 import { InstallationState } from "./installation";
 import { NavigationHistoryState } from "./navigationHistory";
@@ -45,7 +44,6 @@ export type GlobalState = Readonly<{
   identification: IdentificationState;
   installation: InstallationState;
   debug: DebugState;
-  exitApp: ExitAppState;
   search: SearchState;
 }>;
 
