@@ -65,10 +65,6 @@ const getPaymentIdFromGlobalState = (state: GlobalState) =>
 export const isPaymentOngoingSelector = (state: GlobalState) =>
   getPaymentIdFromGlobalState(state).isSome();
 
-export const entrypointPaymentRouteSelector = (
-  state: GlobalState
-): string | undefined => state.wallet.payment.entrypointRoute;
-
 const PAYMENT_INITIAL_STATE: PaymentState = {
   verifica: pot.none,
   attiva: pot.none,
