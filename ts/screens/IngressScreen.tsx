@@ -30,7 +30,7 @@ type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: variables.contentPadding,
+    paddingTop: variables.contentPaddingLarge,
     backgroundColor: variables.brandPrimary
   }
 });

@@ -18,6 +18,7 @@ import { OnboardingState } from "./onboarding";
 import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
+import { SearchState } from "./search";
 import { WalletState } from "./wallet";
 
 type NetworkState = Readonly<{
@@ -45,6 +46,7 @@ export type GlobalState = Readonly<{
   installation: InstallationState;
   debug: DebugState;
   exitApp: ExitAppState;
+  search: SearchState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

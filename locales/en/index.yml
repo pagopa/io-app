@@ -30,13 +30,13 @@ global:
     profile: profile
   actions:
     retry: An error occurred, please retry
-    search: Search
+    search: Text to search
   remoteStates:
     loading: Loading...
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
   search:
-    invalidSearchBarText: Enter at least three characters in the search bar.
+    invalidSearchBarText: Enter at least three characters
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
@@ -299,6 +299,7 @@ wallet:
   delete:
     successful: Card successfully deleted
     failed: The card could not be deleted
+    alert: 'Warning: the payment method had been removed from wallet'
   newPaymentMethod:
     add: add
     addButton: Add a new method
@@ -433,6 +434,7 @@ wallet:
     mobile:
       name: Other payment methods
       maxFee: Paypal, Satispay, etc.
+    notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
     labels:
@@ -448,6 +450,7 @@ wallet:
   acceptedCards: Accepted cards
   chooseMethod: Select the desired method
   QRtoPay:
+    chooser: Pick image from gallery
     wrongQrCode: Not a PagoPA QR Code!
     byCameraTitle: Notice QR Code
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
@@ -522,6 +525,10 @@ messages:
     reminderRemoveSuccess: "Reminder removed"
     reminderRemoveFailure: "Error removing reminder, please retry"
     preferenceCalendarSelect: "Select a default calendar"
+    calendarPermDenied:
+      title: "It seems calendar permissions has been denied"
+      ok: "Enable permissions"
+      cancel: "Cancel"
     errors:
       fetchCalendars: Error fetching calendars
     helper: "IO will remember this choice, you can change it from the preference pane."
@@ -614,7 +621,7 @@ serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
   disableTitle: "Do you really want to disable the service?"
-  disableMsg: "Rememer, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
+  disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
 identification:
   message: "Enter the PIN"
   resetPinMessage: To reset your PIN you will have to login again with your SPID account.

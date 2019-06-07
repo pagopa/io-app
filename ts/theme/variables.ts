@@ -123,6 +123,7 @@ const customVariables = Object.assign(materialVariables, {
   },
   // Content
   contentPadding: 24,
+  contentPaddingLarge: 48,
   contentBackground: "#FFFFFF",
   contentAlternativeBackground: "#F5F6F7",
   contentPrimaryBackground: "#0073E6",
@@ -234,6 +235,9 @@ const customVariables = Object.assign(materialVariables, {
   textNormalWeight: "400" as FontWeight,
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
+
+  // Label
+  labelNormalWeight: "400" as FontWeight,
 
   // Input
   inputNormalWeight: "400" as FontWeight,

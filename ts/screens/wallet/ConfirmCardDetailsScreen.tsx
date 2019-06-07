@@ -11,6 +11,7 @@ import { Modal, Switch } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import Checkout3DsComponent from "../../components/Checkout3DsComponent";
@@ -91,7 +92,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
     const wallet = {
       creditCard,
-      type: "CREDIT_CARD",
+      type: TypeEnum.CREDIT_CARD,
       idWallet: -1, // FIXME: no magic numbers
       psp: undefined
     };
