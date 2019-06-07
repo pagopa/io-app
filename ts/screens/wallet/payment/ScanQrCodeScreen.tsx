@@ -29,6 +29,7 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { openAppSettings } from "../../../utils/appSettings";
 import { decodePagoPaQrCode } from "../../../utils/payment";
+import { showToast } from "../../../utils/showToast";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -116,10 +117,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    * Handles invalid PagoPA QR codes
    */
   private onInvalidQrCode = () => {
-    Toast.show({
-      text: I18n.t("wallet.QRtoPay.wrongQrCode"),
-      type: "danger"
-    });
+    showToast(I18n.t("wallet.QRtoPay.wrongQrCode"), "danger");
 
     this.setState({
       scanningState: "INVALID"
