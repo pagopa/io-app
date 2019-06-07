@@ -40,9 +40,9 @@ const cardMapIcon: { [key in string]: any } = {
  * for more info check https://www.pivotaltracker.com/story/show/165067615
  * @param wallet the wallet objects from which retrieve the credit card icon
  */
-const getCardIconFromBrandLogo = (wallet: Wallet) => {
+const getCardIconFromBrandLogo = (wallet?: Wallet) => {
   const defaultCardIcon = require("../../../../img/wallet/cards-icons/unknown.png");
-  if (!wallet.creditCard.brandLogo) {
+  if (!wallet || !wallet.creditCard.brandLogo) {
     return defaultCardIcon;
   }
   const imageName = getResourceNameFromUrl(wallet.creditCard.brandLogo);
@@ -60,13 +60,17 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  item: Wallet;
+  item?: Wallet;
 }>;
 
 const Logo: React.SFC<Props> = props => (
   <Image
     style={styles.issuerLogo}
-    source={getCardIconFromBrandLogo(props.item)}
+    source={
+      props.item
+        ? getCardIconFromBrandLogo(props.item)
+        : getCardIconFromBrandLogo()
+    }
   />
 );
 

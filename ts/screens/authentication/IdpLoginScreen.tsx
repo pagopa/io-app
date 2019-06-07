@@ -225,6 +225,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       >
         {!hasError && (
           <WebView
+            textZoom={100}
             source={{ uri: loginUri }}
             onError={this.handleLoadingError}
             javaScriptEnabled={true}
