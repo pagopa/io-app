@@ -2,31 +2,29 @@
  * Screen displaying the list of available services. The user can
  * access the service detail by pressing on the related list item.
  */
-import { Button, Icon, Input, Item, Text, View } from "native-base";
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
-import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import debounce from "lodash/debounce";
-
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { SearchType } from "../../components/search/SearchButton";
+import { SearchEmptyText } from "../../components/search/SearchEmptyText";
 import ServiceSectionListComponent from "../../components/services/ServiceSectionListComponent";
 import ServicesSearch from "../../components/services/ServicesSearch";
-import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import {
+  isSearchServicesEnabledSelector,
+  searchTextSelector
+} from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
@@ -38,34 +36,9 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReduxProps &
   OwnProps;
 
-type State = {
-  searchText: Option<string>;
-  debouncedSearchText: Option<string>;
-};
-
-const styles = StyleSheet.create({
-  listItem: {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
-  },
-  noSearchBarText: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  ioSearch: {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
-  }
-});
-
-class ServicesScreen extends React.Component<Props, State> {
+class ServicesScreen extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      searchText: none,
-      debouncedSearchText: none
-    };
   }
   private goBack = () => this.props.navigation.goBack();
 
@@ -84,7 +57,7 @@ class ServicesScreen extends React.Component<Props, State> {
   }
 
   public render() {
-    const { searchText } = this.state;
+    const { isSearchEnabled } = this.props;
 
     return (
       <TopScreenComponent
@@ -94,36 +67,16 @@ class ServicesScreen extends React.Component<Props, State> {
           title: I18n.t("services.title"),
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
+        isSearchAvailable={true}
+        searchType={SearchType.Services}
       >
-        {!searchText.isSome() && (
+        {!isSearchEnabled && (
           <ScreenContentHeader
             title={I18n.t("services.title")}
             subtitle={I18n.t("services.subTitle")}
           />
         )}
-        {searchText.isSome() ? (
-          <Item style={styles.ioSearch}>
-            <Input
-              placeholder={I18n.t("global.actions.search")}
-              value={searchText.value}
-              onChangeText={this.onSearchTextChange}
-              autoFocus={true}
-            />
-            <Icon name="cross" onPress={this.onSearchDisable} />
-          </Item>
-        ) : (
-          <Button
-            onPress={this.onSearchEnable}
-            transparent={true}
-            style={styles.ioSearch}
-            accessible={true}
-            accessibilityLabel={I18n.t("global.actions.search")}
-          >
-            <IconFont name="io-search" />
-          </Button>
-        )}
-
-        {searchText.isSome() ? this.renderSearch() : this.renderList()}
+        {isSearchEnabled ? this.renderSearch() : this.renderList()}
       </TopScreenComponent>
     );
   }
@@ -145,15 +98,13 @@ class ServicesScreen extends React.Component<Props, State> {
    * Render ServicesSearch component.
    */
   private renderSearch = () => {
-    const { refreshServices, sections } = this.props;
+    const { refreshServices, sections, searchText } = this.props;
 
-    const { debouncedSearchText } = this.state;
-
-    return debouncedSearchText
+    return searchText
       .map(
         _ =>
           _.length < 3 ? (
-            this.renderInvalidSearchBarText()
+            <SearchEmptyText />
           ) : (
             <ServicesSearch
               sectionsState={sections}
@@ -164,43 +115,7 @@ class ServicesScreen extends React.Component<Props, State> {
             />
           )
       )
-      .getOrElse(this.renderInvalidSearchBarText());
-  };
-
-  private renderInvalidSearchBarText = () => {
-    return (
-      <View style={styles.noSearchBarText}>
-        <Text>{I18n.t("global.search.invalidSearchBarText")}</Text>
-      </View>
-    );
-  };
-
-  private onSearchEnable = () => {
-    this.setState({
-      searchText: some("")
-    });
-  };
-
-  private onSearchTextChange = (text: string) => {
-    this.setState({
-      searchText: some(text)
-    });
-    this.updateDebouncedSearchText(text);
-  };
-
-  private updateDebouncedSearchText = debounce(
-    (text: string) =>
-      this.setState({
-        debouncedSearchText: some(text)
-      }),
-    300
-  );
-
-  private onSearchDisable = () => {
-    this.setState({
-      searchText: none,
-      debouncedSearchText: none
-    });
+      .getOrElse(<SearchEmptyText />);
   };
 }
 
@@ -236,7 +151,9 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     profile: state.profile,
     sections,
-    isLoading
+    isLoading,
+    searchText: searchTextSelector(state),
+    isSearchEnabled: isSearchServicesEnabledSelector(state)
   };
 };
 

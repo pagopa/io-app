@@ -34,7 +34,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>15</string>
+    <string>16</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSRequiresIPhoneOS</key>
@@ -65,7 +65,7 @@
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>The app needs NSPhotoLibraryAddUsageDescription permission</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>The app needs NSPhotoLibraryUsageDescription permission</string>
+    <string>IO needs access to the Photos to scan QR codes</string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
     <key>NSAppleMusicUsageDescription</key>

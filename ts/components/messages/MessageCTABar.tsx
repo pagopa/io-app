@@ -27,6 +27,7 @@ import {
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import {
   formatDateAsDay,
@@ -176,8 +177,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const onPressHandler = () => {
       // Check the authorization status
       checkAndRequestPermission()
-        .then(hasPermission => {
-          if (hasPermission) {
+        .then(calendarPermission => {
+          if (calendarPermission.authorized) {
             if (calendarEvent && isEventInCalendar) {
               // If the event is in the calendar prompt an alert and ask for confirmation
               Alert.alert(
@@ -215,6 +216,29 @@ class MessageCTABar extends React.PureComponent<Props, State> {
                 />
               );
             }
+          } else if (!calendarPermission.asked) {
+            // Authorized is false (denied, restricted or undetermined)
+            // If the user denied permission previously (not in this session)
+            // prompt an alert to inform that his calendar permissions could have been turned off
+            Alert.alert(
+              I18n.t("messages.cta.calendarPermDenied.title"),
+              undefined,
+              [
+                {
+                  text: I18n.t("messages.cta.calendarPermDenied.cancel"),
+                  style: "cancel"
+                },
+                {
+                  text: I18n.t("messages.cta.calendarPermDenied.ok"),
+                  style: "default",
+                  onPress: () => {
+                    // open app settings to turn on the calendar permissions
+                    openAppSettings();
+                  }
+                }
+              ],
+              { cancelable: true }
+            );
           }
         })
         // No permission to add/remove the reminder
