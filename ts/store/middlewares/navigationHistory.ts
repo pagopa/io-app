@@ -86,9 +86,9 @@ export function createNavigationHistoryMiddleware(): Middleware<
           const now = new Date().getTime() as Millisecond;
           const elaspedTime = now - exitRequestTime;
           exitRequestTime = now;
+          // close previous toast showing before close the app or show a new toast
+          Toast.hide();
           if (elaspedTime < exitConfirmThreshold) {
-            // close previous toasts showing before close the app
-            Toast.hide();
             exitApp();
           } else {
             Toast.show({ text: I18n.t("exit.pressAgain") });
