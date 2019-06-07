@@ -10,6 +10,7 @@ import {
   paymentExecutePayment,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
+  paymentInitializeEntryPointRoute,
   paymentInitializeState,
   paymentVerifica
 } from "../../actions/wallet/payment";
@@ -52,6 +53,7 @@ export type PaymentState = Readonly<{
     typeof pollTransactionSagaCompleted,
     false
   >;
+  entrypointRoute?: string;
 }>;
 
 /**
@@ -63,6 +65,10 @@ const getPaymentIdFromGlobalState = (state: GlobalState) =>
 export const isPaymentOngoingSelector = (state: GlobalState) =>
   getPaymentIdFromGlobalState(state).isSome();
 
+export const entrypointPaymentRouteSelector = (
+  state: GlobalState
+): string | undefined => state.wallet.payment.entrypointRoute;
+
 const PAYMENT_INITIAL_STATE: PaymentState = {
   verifica: pot.none,
   attiva: pot.none,
@@ -70,7 +76,8 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   check: pot.none,
   psps: pot.none,
   transaction: pot.none,
-  confirmedTransaction: pot.none
+  confirmedTransaction: pot.none,
+  entrypointRoute: undefined
 };
 
 /**
@@ -84,7 +91,12 @@ const reducer = (
     // start a new payment from scratch
     case getType(paymentInitializeState):
       return PAYMENT_INITIAL_STATE;
-
+    // tracking of the route from which the payment started
+    case getType(paymentInitializeEntryPointRoute):
+      return {
+        ...state,
+        entrypointRoute: action.payload
+      };
     //
     // verifica
     //
