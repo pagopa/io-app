@@ -83,7 +83,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   profile: profileReducer,
   entities: entitiesReducer,
   debug: debugReducer,
-  search: searchReducer
+  search: searchReducer,
   exitApp: exitAppReducer
 });
 
