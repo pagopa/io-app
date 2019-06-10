@@ -12,7 +12,7 @@
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, H3, Text, View } from "native-base";
+import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -23,6 +23,7 @@ import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
+import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
@@ -77,6 +78,10 @@ const styles = StyleSheet.create({
 
   white: {
     color: variables.colorWhite
+  },
+
+  brandDarkGray: {
+    color: variables.brandDarkGray
   },
 
   whiteContent: {
@@ -157,13 +162,41 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
-    const transaction = this.props.navigation.getParam("transaction");
+    /*const transaction = this.props.navigation.getParam("transaction");
 
     // whether this transaction is the result of a just completed payment
     const isPaymentCompletedTransaction = this.props.navigation.getParam(
       "isPaymentCompletedTransaction",
       false
-    );
+    );*/
+
+    const isPaymentCompletedTransaction = false;
+    const transaction: Transaction = {
+      accountingStatus: 1,
+      amount: { amount: 20000 },
+      created: new Date(2018, 10, 30, 13, 12, 22, 30),
+      description: "descrizione",
+      error: false,
+      fee: { amount: 1 },
+      grandTotal: { amount: 20100 },
+      id: 123,
+      idPayment: 1,
+      idPsp: 2,
+      idStatus: 3,
+      idWallet: 4,
+      merchant: "merchant",
+      nodoIdPayment: "nodoIdPayment",
+      paymentModel: 5,
+      spcNodeDescription: "spcNodeDescription",
+      spcNodeStatus: 6,
+      statusMessage: "statusMessage",
+      success: true,
+      token: "token",
+      updated: undefined,
+      urlCheckout3ds: "urlCheckout3ds",
+      urlRedirectPSP: "urlRedirectPSP"
+    };
+
     const amount = formatNumberAmount(centsToAmount(transaction.amount.amount));
     const fee = formatNumberAmount(
       centsToAmount(
@@ -197,17 +230,22 @@ class TransactionDetailsScreen extends React.Component<Props> {
         >
           <Grid>
             <Row style={styles.titleRow}>
-              <H3>{I18n.t("wallet.transactionDetails")}</H3>
+              <H5 style={styles.brandDarkGray}>
+                {I18n.t("wallet.transactionDetails")}
+              </H5>
               <IconFont
                 name="io-close"
                 size={variables.iconSizeBase}
                 onPress={this.props.navigateToWalletHome}
+                style={{ color: variables.brandDarkGray }}
               />
             </Row>
             <View spacer={true} large={true} />
             {this.labelValueRow(
               I18n.t("wallet.total"),
-              <H3 style={styles.value}>{totalAmount}</H3>
+              <H5 style={[styles.value, styles.brandDarkGray]}>
+                {totalAmount}
+              </H5>
             )}
             {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
             {this.labelValueRow(
