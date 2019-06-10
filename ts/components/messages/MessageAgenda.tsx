@@ -301,7 +301,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     this.overScrollAnim.setValue(0);
     Animated.timing(this.overScrollAnim, {
       toValue: HEADER_SCROLL_DISTANCE,
-      duration: 200,
+      duration: 100,
       easing: Easing.linear,
       useNativeDriver: true
     }).start();
@@ -312,7 +312,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       this.setState({ readyToStartAnim: false });
       Animated.timing(this.overScrollAnim, {
         toValue: 0,
-        duration: 200,
+        duration: 100,
         easing: Easing.linear,
         useNativeDriver: true
       }).start();
