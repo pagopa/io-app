@@ -27,6 +27,7 @@ import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErro
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
+import { entrypointRouteSelector } from "../reducers/wallet/payment";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -172,7 +173,7 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
   });
 
 export const navigateToEntrypointPayment = (): NavigationAction => {
-  const routeName = store.getState().wallet.payment.entrypointRoute;
+  const routeName = entrypointRouteSelector(store.getState());
   // if the payment was initiated from the message list or detail go back
   if (
     routeName === ROUTES.MESSAGES_HOME ||
