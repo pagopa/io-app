@@ -20,6 +20,7 @@ import {
   runPollTransactionSaga
 } from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
+import { statement } from '@babel/template';
 
 // TODO: instead of keeping one single state, it would me more correct to keep
 //       a state for each rptid - this will make unnecessary to reset the state
@@ -64,6 +65,9 @@ const getPaymentIdFromGlobalState = (state: GlobalState) =>
 
 export const isPaymentOngoingSelector = (state: GlobalState) =>
   getPaymentIdFromGlobalState(state).isSome();
+
+export const entrypointRouteSelector = (state: GlobalState) =>
+  state.wallet.payment.entrypointRoute;
 
 const PAYMENT_INITIAL_STATE: PaymentState = {
   verifica: pot.none,
