@@ -135,46 +135,7 @@ export default class TransactionsList extends React.Component<Props> {
       );
     }
 
-    const mocTransaction: Transaction = {
-      accountingStatus: 1,
-      amount: { amount: 20000 },
-      created: new Date(2018, 10, 30, 13, 12, 22, 30),
-      description: "descrizione",
-      error: false,
-      fee: { amount: 1 },
-      grandTotal: { amount: 20100 },
-      id: 123,
-      idPayment: 1,
-      idPsp: 2,
-      idStatus: 3,
-      idWallet: 4,
-      merchant: "merchant",
-      nodoIdPayment: "nodoIdPayment",
-      paymentModel: 5,
-      spcNodeDescription: "spcNodeDescription",
-      spcNodeStatus: 6,
-      statusMessage: "statusMessage",
-      success: true,
-      token: "token",
-      updated: undefined,
-      urlCheckout3ds: "urlCheckout3ds",
-      urlRedirectPSP: "urlRedirectPSP"
-    };
-
-    const transactions: ReadonlyArray<any> = [
-      mocTransaction,
-      mocTransaction,
-      mocTransaction,
-      mocTransaction,
-      mocTransaction,
-      mocTransaction,
-      mocTransaction,
-      mocTransaction,
-      mocTransaction,
-      mocTransaction
-    ];
-
-    // const transactions = pot.getOrElse(this.props.transactions, []);
+    const transactions = pot.getOrElse(this.props.transactions, []);
 
     return transactions.length === 0 && ListEmptyComponent ? (
       ListEmptyComponent

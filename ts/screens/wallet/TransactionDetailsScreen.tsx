@@ -162,40 +162,13 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
-    /*const transaction = this.props.navigation.getParam("transaction");
+    const transaction = this.props.navigation.getParam("transaction");
 
     // whether this transaction is the result of a just completed payment
     const isPaymentCompletedTransaction = this.props.navigation.getParam(
       "isPaymentCompletedTransaction",
       false
-    );*/
-
-    const isPaymentCompletedTransaction = false;
-    const transaction: Transaction = {
-      accountingStatus: 1,
-      amount: { amount: 20000 },
-      created: new Date(2018, 10, 30, 13, 12, 22, 30),
-      description: "descrizione",
-      error: false,
-      fee: { amount: 1 },
-      grandTotal: { amount: 20100 },
-      id: 123,
-      idPayment: 1,
-      idPsp: 2,
-      idStatus: 3,
-      idWallet: 4,
-      merchant: "merchant",
-      nodoIdPayment: "nodoIdPayment",
-      paymentModel: 5,
-      spcNodeDescription: "spcNodeDescription",
-      spcNodeStatus: 6,
-      statusMessage: "statusMessage",
-      success: true,
-      token: "token",
-      updated: undefined,
-      urlCheckout3ds: "urlCheckout3ds",
-      urlRedirectPSP: "urlRedirectPSP"
-    };
+    );
 
     const amount = formatNumberAmount(centsToAmount(transaction.amount.amount));
     const fee = formatNumberAmount(
