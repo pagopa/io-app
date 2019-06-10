@@ -43,9 +43,9 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
+  navigateToEntrypointPayment,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen,
-  navigateToWalletHome
+  navigateToPaymentTransactionErrorScreen
 } from "../../../store/actions/navigation";
 import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
 import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
@@ -324,8 +324,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
 
   const onCancel = () => {
     // on cancel:
-    // navigate to the wallet home
-    dispatch(navigateToWalletHome());
+    // navigate to entrypoint of payment or wallet home
+    dispatch(navigateToEntrypointPayment());
     // delete the active payment from PagoPA
     dispatch(runDeleteActivePaymentSaga());
     // reset the payment state

@@ -101,7 +101,7 @@ const reducer = (
         // a verifica operation will generate a new codice contesto pagamento
         // effectively starting a new payment session, thus we also invalidate
         // the rest of the payment state
-        ...PAYMENT_INITIAL_STATE,
+        ...state,
         verifica: pot.noneLoading
       };
     case getType(paymentVerifica.success):
