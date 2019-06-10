@@ -15,6 +15,7 @@ import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 
+import { store } from "../../App";
 import ServiceDetailsScreen from "../../screens/preferences/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
@@ -169,6 +170,24 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
     routeName: ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
     params
   });
+
+export const navigateToEntrypointPayment = (): NavigationAction => {
+  const routeName = store.getState().wallet.payment.entrypointRoute;
+  // if the payment was initiated from the message list or detail go back
+  if (
+    routeName === ROUTES.MESSAGES_HOME ||
+    routeName === ROUTES.MESSAGE_DETAIL
+  ) {
+    return NavigationActions.navigate({
+      routeName
+    });
+  } else {
+    // Otherwise go to wallet home
+    return NavigationActions.navigate({
+      routeName: ROUTES.WALLET_HOME
+    });
+  }
+};
 
 export const navigateToWalletHome = () =>
   NavigationActions.navigate({
