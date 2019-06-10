@@ -9,8 +9,8 @@ import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import { SearchType } from "../../components/search/SearchButton";
-import { SearchEmptyText } from "../../components/search/SearchEmptyText";
+import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
+import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import I18n from "../../i18n";
 import {
   loadMessages,
@@ -99,7 +99,7 @@ class MessagesHomeScreen extends React.Component<Props> {
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
         isSearchAvailable={true}
-        searchType={SearchType.Messages}
+        searchType="Messages"
         appLogo={true}
       >
         {!isSearchEnabled && (
@@ -210,8 +210,8 @@ class MessagesHomeScreen extends React.Component<Props> {
     return this.props.searchText
       .map(
         _ =>
-          _.length < 3 ? (
-            <SearchEmptyText />
+          _.length < MIN_CHARACTER_SEARCH_TEXT ? (
+            <SearchNoResultMessage errorType="InvalidSearchBarText" />
           ) : (
             <MessagesSearch
               messagesState={lexicallyOrderedMessagesState}
@@ -223,7 +223,7 @@ class MessagesHomeScreen extends React.Component<Props> {
             />
           )
       )
-      .getOrElse(<SearchEmptyText />);
+      .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
   };
 }
 
