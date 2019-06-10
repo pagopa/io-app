@@ -91,6 +91,7 @@ profile:
       dati personali, etc."
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
+    clearCache: Elimina cache
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
       confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.

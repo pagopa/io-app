@@ -89,6 +89,7 @@ profile:
     screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    clearCache: Clear cache
     resetPin:
       confirmTitle: Are you sure you want to reset your PIN?
       confirmMsg: You will be asked again to log in with SPID.
