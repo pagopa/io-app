@@ -17,10 +17,9 @@ import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
 
-export enum SearchType {
-  Messages,
-  Services
-}
+export const MIN_CHARACTER_SEARCH_TEXT = 3;
+
+export type SearchType = "Messages" | "Services";
 
 interface OwnProps {
   color?: string;
@@ -125,10 +124,10 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   dispatchSearchEnabled: (isSearchEnabled: boolean) => {
     const searchType = props.searchType;
     switch (searchType) {
-      case SearchType.Messages:
+      case "Messages":
         dispatch(searchMessagesEnabled(isSearchEnabled));
         break;
-      case SearchType.Services:
+      case "Services":
         dispatch(searchServicesEnabled(isSearchEnabled));
         break;
     }
