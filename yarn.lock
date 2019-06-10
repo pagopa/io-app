@@ -6905,11 +6905,6 @@ react-native-sha256@1.2.3:
   resolved "https://registry.yarnpkg.com/react-native-sha256/-/react-native-sha256-1.2.3.tgz#59eaa2c260882ed1e4de94c88e0383726cddc40c"
   integrity sha512-3KQBrAKnB8BAhQuyIBg4p1vsCU6A4LPCTjdNDhFomIaCaDLswEyb4GZoyGWPooTPyKVGd8aCR4pd7/Js9o1ySQ==
 
-react-native-shortcutbadger@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-shortcutbadger/-/react-native-shortcutbadger-0.2.0.tgz#f6faff53945dd8a4f2f5c8607c6857e2ce06b078"
-  integrity sha1-9vr/U5Rd2KTy9chgfGhX4s4GsHg=
-
 react-native-splash-screen@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
