@@ -3,6 +3,7 @@ import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { MIN_CHARACTER_SEARCH_TEXT } from "./SearchButton";
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -40,7 +41,9 @@ export const renderMessageErrorSearch = (
 ): string => {
   switch (errorType) {
     case "InvalidSearchBarText":
-      return I18n.t("global.search.invalidSearchBarText");
+      return I18n.t("global.search.invalidSearchBarText", {
+        minCharacter: MIN_CHARACTER_SEARCH_TEXT
+      });
     case "NoResultsFound":
       return I18n.t("global.search.noResultsFound");
   }
