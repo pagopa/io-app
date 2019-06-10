@@ -13,12 +13,14 @@ const styles = StyleSheet.create({
 
 interface Props {
   caption?: React.ReactNode;
+  action?: React.ReactNode;
 }
 
 const BoxedRefreshIndicator: React.SFC<Props> = props => (
   <View style={styles.refreshBox}>
     <RefreshIndicator />
     {props.caption ? props.caption : null}
+    {props.action ? props.action : null}
   </View>
 );
 
