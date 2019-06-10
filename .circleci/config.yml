@@ -498,10 +498,10 @@ workflows:
   nightly-pagopa-specs-check:
       triggers:
         - schedule:
-            cron: "38 10 * * *"
+            cron: "42 10 * * *"
             filters:
               branches:
                 only:
-                  - 166232591-show-button-on-overscroll
+                  - 165800423-cci-alert-pagopa-specs-
       jobs:
         - pagopa_specs_diff
