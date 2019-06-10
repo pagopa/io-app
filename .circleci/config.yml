@@ -430,8 +430,6 @@ jobs:
           path: /tmp/detox_artifacts
 
   pagopa_specs_diff:
-    docker:
-      - image: circleci/android:api-23-node8-alpha
     steps:
       - checkout
       - run:
@@ -498,10 +496,10 @@ workflows:
   nightly-pagopa-specs-check:
       triggers:
         - schedule:
-            cron: "0 03 * * *"
+            cron: "34 10 * * *"
             filters:
               branches:
                 only:
-                  - master
+                  - 166232591-show-button-on-overscroll
       jobs:
         - pagopa_specs_diff
