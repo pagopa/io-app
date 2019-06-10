@@ -164,7 +164,6 @@ class TransactionDetailsScreen extends React.Component<Props> {
       "isPaymentCompletedTransaction",
       false
     );
-
     const amount = formatNumberAmount(centsToAmount(transaction.amount.amount));
     const fee = formatNumberAmount(
       centsToAmount(
@@ -177,6 +176,8 @@ class TransactionDetailsScreen extends React.Component<Props> {
       centsToAmount(transaction.grandTotal.amount)
     );
 
+    // FIXME: in case the wallet for this transaction has been deleted, display
+    //        a message in the wallet layout instead of an empty space
     const transactionWallet = this.props.wallets
       ? this.props.wallets[transaction.idWallet]
       : undefined;
@@ -198,9 +199,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         >
           <Grid>
             <Row style={styles.titleRow}>
-              <H3>
-                {I18n.t("wallet.transactionDetails")}
-              </H3>
+              <H3>{I18n.t("wallet.transactionDetails")}</H3>
               <IconFont
                 name="io-close"
                 size={variables.iconSizeBase}
@@ -210,9 +209,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             <View spacer={true} large={true} />
             {this.labelValueRow(
               I18n.t("wallet.total"),
-              <H3 style={styles.value}>
-                {totalAmount}
-              </H3>
+              <H3 style={styles.value}>{totalAmount}</H3>
             )}
             {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
             {this.labelValueRow(
