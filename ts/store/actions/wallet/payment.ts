@@ -28,7 +28,7 @@ export const paymentInitializeState = createStandardAction(
 /**
  * Track the route from which the payment is initiated
  */
-export const paymentInitializeEntryPointRoute = createStandardAction(
+export const paymentInitializeEntrypointRoute = createStandardAction(
   "PAYMENT_ENTRYPOINT_ROUTE_NAME"
 )<string>();
 
@@ -224,7 +224,7 @@ export const runStartOrResumePaymentActivationSaga = createStandardAction(
  */
 export type PaymentActions =
   | ActionType<typeof paymentInitializeState>
-  | ActionType<typeof paymentInitializeEntryPointRoute>
+  | ActionType<typeof paymentInitializeEntrypointRoute>
   | ActionType<typeof paymentUpdateWalletPsp>
   | ActionType<typeof paymentVerifica>
   | ActionType<typeof paymentAttiva>

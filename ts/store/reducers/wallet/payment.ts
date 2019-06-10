@@ -10,7 +10,7 @@ import {
   paymentExecutePayment,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
-  paymentInitializeEntryPointRoute,
+  paymentInitializeEntrypointRoute,
   paymentInitializeState,
   paymentVerifica
 } from "../../actions/wallet/payment";
@@ -20,7 +20,6 @@ import {
   runPollTransactionSaga
 } from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
-import { statement } from '@babel/template';
 
 // TODO: instead of keeping one single state, it would me more correct to keep
 //       a state for each rptid - this will make unnecessary to reset the state
@@ -92,7 +91,7 @@ const reducer = (
     case getType(paymentInitializeState):
       return PAYMENT_INITIAL_STATE;
     // tracking of the route from which the payment started
-    case getType(paymentInitializeEntryPointRoute):
+    case getType(paymentInitializeEntrypointRoute):
       return {
         ...state,
         entrypointRoute: action.payload
