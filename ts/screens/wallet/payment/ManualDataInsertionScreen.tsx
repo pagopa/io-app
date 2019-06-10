@@ -86,9 +86,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     };
   }
 
-  public async componentWillReceiveProps(nextProps: Props) {
-    const isInvalidAmount = nextProps.navigation.getParam("isInvalidAmount");
-    if (isInvalidAmount) {
+  public componentDidUpdate(prevProps: Props) {
+    const prevIsInvalidAmount = prevProps.navigation.getParam(
+      "isInvalidAmount"
+    );
+    const isInvalidAmount = this.props.navigation.getParam("isInvalidAmount");
+    if (prevIsInvalidAmount !== isInvalidAmount && isInvalidAmount) {
       this.setState({ inputAmountValue: "", delocalizedAmount: none });
     }
   }
@@ -251,12 +254,15 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateToTransactionSummary: (
     rptId: RptId,
     initialAmount: AmountInEuroCents
   ) => {
+    if (props.navigation.getParam("isInvalidAmount")) {
+      props.navigation.setParams({ isInvalidAmount: false });
+    }
     dispatch(paymentInitializeState());
     dispatch(
       navigateToPaymentTransactionSummaryScreen({
