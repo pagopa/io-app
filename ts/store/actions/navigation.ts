@@ -211,7 +211,7 @@ export const navigateToPaymentScanQrCode = () =>
   });
 
 export const navigateToPaymentManualDataInsertion = (
-  params: InferNavigationParams<typeof ManualDataInsertionScreen>
+  params?: InferNavigationParams<typeof ManualDataInsertionScreen>
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
