@@ -52,24 +52,8 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
 
-  flex1: {
-    flex: 1
-  },
-
   whiteBg: {
     backgroundColor: variables.colorWhite
-  },
-
-  subHeaderContent: {
-    flexDirection: "row",
-    alignItems: "baseline",
-    justifyContent: "space-between",
-    paddingHorizontal: variables.contentPadding,
-    backgroundColor: variables.colorWhite
-  },
-
-  brandDarkGray: {
-    color: variables.brandDarkGray
   }
 });
 
@@ -117,31 +101,6 @@ class TransactionsScreen extends React.Component<Props> {
     );
   }
 
-  private fixedSubHeader() {
-    return (
-      <View style={[styles.whiteBg, styles.flex1]}>
-        <View spacer={true} />
-        <View style={styles.subHeaderContent}>
-          <H5 style={styles.brandDarkGray}>
-            {I18n.t("wallet.latestTransactions")}
-          </H5>
-          <Text>{I18n.t("wallet.total")}</Text>
-        </View>
-        <View spacer={true} />
-      </View>
-    );
-  }
-
-  private animatedViewHeight: number =
-    variables.h5LineHeight + 2 * variables.spacerWidth;
-  private topContentHeight: number = 250;
-  private topContentHeightOffset: number = 40;
-  private interpolationVars: ReadonlyArray<number> = [
-    this.animatedViewHeight,
-    this.topContentHeight,
-    this.topContentHeightOffset
-  ];
-
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
 
@@ -156,8 +115,7 @@ class TransactionsScreen extends React.Component<Props> {
         allowGoBack={true}
         topContent={this.headerContent(selectedWallet, isFavorite)}
         hideHeader={true}
-        fixedSubHeader={this.fixedSubHeader()}
-        interpolationVars={this.interpolationVars}
+        hasDynamicSubHeader={true}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}

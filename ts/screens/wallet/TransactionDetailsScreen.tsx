@@ -189,6 +189,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
           transactionWallet
         )}
         hideHeader={true}
+        hasDynamicSubHeader={false}
       >
         <Content
           scrollEnabled={false}

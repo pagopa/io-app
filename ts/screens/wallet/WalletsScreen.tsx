@@ -106,6 +106,7 @@ class WalletsScreen extends React.Component<Props> {
         topContent={this.topContent()}
         allowGoBack={true}
         contentStyle={styles.brandDarkGrayBg}
+        hasDynamicSubHeader={false}
       >
         <Content style={[styles.padded, styles.brandDarkGrayBg]}>
           <FlatList

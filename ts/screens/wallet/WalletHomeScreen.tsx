@@ -103,13 +103,6 @@ const styles = StyleSheet.create({
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
-  },
-
-  animatedSubHeaderContent: {
-    flexDirection: "row",
-    alignItems: "baseline",
-    justifyContent: "space-between",
-    paddingHorizontal: variables.contentPadding
   }
 });
 
@@ -226,21 +219,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private fixedSubHeader() {
-    return (
-      <View style={styles.whiteBg}>
-        <View spacer={true} />
-        <View style={styles.animatedSubHeaderContent}>
-          <H5 style={styles.brandDarkGray}>
-            {I18n.t("wallet.latestTransactions")}
-          </H5>
-          <Text>{I18n.t("wallet.total")}</Text>
-        </View>
-        <View spacer={true} />
-      </View>
-    );
-  }
-
   private transactionError() {
     return (
       <Content
@@ -315,16 +293,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private animatedViewHeight: number =
-    variables.h5LineHeight + 2 * variables.spacerWidth;
-  private topContentHeight: number = 250;
-  private topContentHeightOffset: number = 40;
-  private interpolationVars: ReadonlyArray<number> = [
-    this.animatedViewHeight,
-    this.topContentHeight,
-    this.topContentHeightOffset
-  ];
-
   public render(): React.ReactNode {
     const { potWallets, potTransactions } = this.props;
     const wallets = pot.getOrElse(potWallets, []);
@@ -346,8 +314,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <WalletLayout
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
-        fixedSubHeader={this.fixedSubHeader()}
-        interpolationVars={this.interpolationVars}
+        hasDynamicSubHeader={true}
         topContent={headerContent}
         footerContent={footerContent}
       >

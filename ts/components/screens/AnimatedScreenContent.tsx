@@ -22,8 +22,10 @@ import { ScreenContentHeader } from "./ScreenContentHeader";
 
 type OwnProps = Readonly<{
   ListEmptyComponent?: React.ReactNode;
-  fixedSubHeader?: React.ReactNode;
-  interpolationVars?: ReadonlyArray<number>; // dynamic sub-header width, top content width, desired offset for animation
+  dynamicSubHeader: React.ReactNode;
+  dynamicSubHeaderHeight: number;
+  topContentHeight: number;
+  animationOffset: number;
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
 }>;
@@ -83,29 +85,28 @@ export default class AnimatedScreenContent extends React.Component<
         : customVariables.appHeaderHeight;
 
   public render(): React.ReactNode {
-    const { interpolationVars, contentStyle } = this.props;
+    const {
+      dynamicSubHeaderHeight,
+      topContentHeight,
+      animationOffset,
+      contentStyle
+    } = this.props;
 
     /**
      * The object referred as subHeader will be animated at scroll so that
      * - the sub-header will be hidden until the top content will be displayed
-     * (the height of the content at the top has to be expressed as interpolationVars[1])
      * - the sub-header will appears scrolling from top to bottom covering its height
-     * (subheader height has to be expressed as interpolationVars[0])
      * - the velocity of the animation can be managed by setting the desired offset
-     * (offset has to be expressed as interpolationVars[2])
      */
-    const subHeaderTranslaction =
-      interpolationVars && interpolationVars.length === 3
-        ? this.state.scrollY.interpolate({
-            inputRange: [
-              0,
-              interpolationVars[1] - interpolationVars[2],
-              interpolationVars[1] + interpolationVars[2]
-            ],
-            outputRange: [-interpolationVars[0], -interpolationVars[0], 0],
-            extrapolate: "clamp"
-          })
-        : 0;
+    const subHeaderTranslation = this.state.scrollY.interpolate({
+      inputRange: [
+        0,
+        topContentHeight - animationOffset,
+        topContentHeight + animationOffset
+      ],
+      outputRange: [-dynamicSubHeaderHeight, -dynamicSubHeaderHeight, 0],
+      extrapolate: "clamp"
+    });
 
     return (
       <React.Fragment>
@@ -113,7 +114,7 @@ export default class AnimatedScreenContent extends React.Component<
           style={[styles.level2, contentStyle]}
           bounces={false}
           ref={this.scrollableContentRef}
-          scrollEventThrottle={1}
+          scrollEventThrottle={16}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
             { useNativeDriver: true }
@@ -137,12 +138,12 @@ export default class AnimatedScreenContent extends React.Component<
             styles.level1,
             styles.animatedSubHeader,
             {
-              transform: [{ translateY: subHeaderTranslaction }]
+              transform: [{ translateY: subHeaderTranslation }]
             }
           ]}
         >
           <View style={{ marginTop: this.headerHeight }}>
-            {this.props.fixedSubHeader}
+            {this.props.dynamicSubHeader}
           </View>
         </Animated.View>
       </React.Fragment>
