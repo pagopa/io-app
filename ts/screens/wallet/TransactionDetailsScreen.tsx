@@ -12,7 +12,7 @@
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, Text, View, H3 } from "native-base";
+import { Content, H1, H3, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
