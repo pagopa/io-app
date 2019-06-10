@@ -67,6 +67,7 @@ export type NavigationParams = Readonly<{
 
 type ReduxMergedProps = Readonly<{
   onRetry: () => void;
+  onCancel: () => void;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -117,7 +118,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
         .filter(_ => _ === "PAYMENT_DUPLICATED")
         .map(_ => this.props.onDuplicatedPayment());
       if (error.isSome()) {
-        this.props.navigateToPaymentTransactionError(error, this.props.onRetry);
+        this.props.navigateToPaymentTransactionError(
+          error,
+          this.props.onRetry,
+          this.props.onCancel
+        );
       }
     } else if (
       potVerifica !== prevProps.potVerifica &&
@@ -125,7 +130,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
     ) {
       this.props.navigateToPaymentTransactionError(
         some(potVerifica.error),
-        this.props.onRetry
+        this.props.onRetry,
+        this.props.onCancel
       );
     }
   }
@@ -319,7 +325,8 @@ const mapStateToProps = (state: GlobalState) => {
     loadingCaption,
     loadingOpacity: 0.95,
     potVerifica: verifica,
-    maybeFavoriteWallet
+    maybeFavoriteWallet,
+    state
   };
 };
 
@@ -330,10 +337,10 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const dispatchPaymentVerificaRequest = () =>
     dispatch(paymentVerifica.request(rptId));
 
-  const onCancel = () => {
+  const dispatchOnCancel = (state: GlobalState) => {
     // on cancel:
     // navigate to entrypoint of payment or wallet home
-    dispatch(navigateToEntrypointPayment());
+    dispatch(navigateToEntrypointPayment(state));
     // delete the active payment from PagoPA
     dispatch(runDeleteActivePaymentSaga());
     // reset the payment state
@@ -385,7 +392,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         | typeof paymentIdPolling["failure"]
       >
     >,
-    onRetry: () => void
+    onRetry: () => void,
+    onCancel: () => void
   ) =>
     dispatch(
       navigateToPaymentTransactionErrorScreen({
@@ -404,7 +412,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       // reset the payment state
       dispatch(paymentInitializeState());
     },
-    onCancel,
+    dispatchOnCancel,
     onRetryWithPotVerifica: (
       potVerifica: ReturnType<typeof mapStateToProps>["potVerifica"],
       maybeFavoriteWallet: ReturnType<
@@ -438,12 +446,16 @@ const mergeProps = (
       stateProps.maybeFavoriteWallet
     );
   };
+  const onCancel = () => {
+    dispatchProps.dispatchOnCancel(stateProps.state);
+  };
   return {
     ...stateProps,
     ...dispatchProps,
     ...ownProps,
     ...{
-      onRetry
+      onRetry,
+      onCancel
     }
   };
 };

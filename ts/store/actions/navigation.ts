@@ -15,7 +15,6 @@ import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 
-import { store } from "../../App";
 import ServiceDetailsScreen from "../../screens/preferences/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
@@ -27,6 +26,7 @@ import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErro
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
+import { GlobalState } from "../reducers/types";
 import { entrypointRouteSelector } from "../reducers/wallet/payment";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
@@ -172,8 +172,10 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
     params
   });
 
-export const navigateToEntrypointPayment = (): NavigationAction => {
-  const routeName = entrypointRouteSelector(store.getState());
+export const navigateToEntrypointPayment = (
+  state: GlobalState
+): NavigationAction => {
+  const routeName = entrypointRouteSelector(state);
   // if the payment was initiated from the message list or detail go back
   if (
     routeName === ROUTES.MESSAGES_HOME ||
