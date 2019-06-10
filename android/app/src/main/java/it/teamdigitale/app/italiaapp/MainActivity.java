@@ -7,17 +7,12 @@ import android.support.v7.app.AlertDialog;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
-import com.facebook.react.ReactPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import com.calendarevents.CalendarEventsPackage;
 import org.devio.rn.splashscreen.SplashScreen;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.util.List;
-import java.util.Arrays;
-import com.facebook.react.shell.MainReactPackage;
-import com.yangqiong.shortcutbadger.ShortcutBadgerPackage;
 
 public class MainActivity extends ReactActivity {
 
@@ -74,14 +69,6 @@ public class MainActivity extends ReactActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
       CalendarEventsPackage.onRequestPermissionsResult(requestCode, permissions, grantResults);
       super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    // Setup badge library showoff
-    protected List<ReactPackage> getPackages() {
-        return Arrays.<ReactPackage>asList(
-            new MainReactPackage(),
-            new ShortcutBadgerPackage()
-        );
     }
 
     /**
