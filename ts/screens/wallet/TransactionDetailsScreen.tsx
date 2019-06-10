@@ -12,7 +12,7 @@
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, Text, View } from "native-base";
+import { Content, H1, Text, View, H3 } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -23,7 +23,6 @@ import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
-import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
@@ -78,10 +77,6 @@ const styles = StyleSheet.create({
 
   white: {
     color: variables.colorWhite
-  },
-
-  brandDarkGray: {
-    color: variables.brandDarkGray
   },
 
   whiteContent: {
@@ -203,22 +198,21 @@ class TransactionDetailsScreen extends React.Component<Props> {
         >
           <Grid>
             <Row style={styles.titleRow}>
-              <H5 style={styles.brandDarkGray}>
+              <H3>
                 {I18n.t("wallet.transactionDetails")}
-              </H5>
+              </H3>
               <IconFont
                 name="io-close"
                 size={variables.iconSizeBase}
                 onPress={this.props.navigateToWalletHome}
-                style={{ color: variables.brandDarkGray }}
               />
             </Row>
             <View spacer={true} large={true} />
             {this.labelValueRow(
               I18n.t("wallet.total"),
-              <H5 style={[styles.value, styles.brandDarkGray]}>
+              <H3 style={styles.value}>
                 {totalAmount}
-              </H5>
+              </H3>
             )}
             {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
             {this.labelValueRow(
