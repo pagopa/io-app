@@ -416,7 +416,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         paid={paid}
         messagePaymentExpirationInfo={messagePaymentExpirationInfo}
         small={small}
-        disabled={disabled}
+        disabled={onPressHandler === undefined}
         onPress={onPressHandler}
       />
     );
