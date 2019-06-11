@@ -155,8 +155,13 @@ type OwnProps = {
 type Props = OwnProps & SelectedSectionListProps;
 
 type State = {
-  isAnimStarted: boolean;
-  readyToStartAnim: boolean;
+  /*
+  Animation states when show and gone load-data button:
+  none -> stopped
+  some -> started
+  loading -> ready
+  */
+  potAnim: pot.Pot<any, any>;
   scrollY: Animated.Value;
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
@@ -272,27 +277,25 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   public handleRelease() {
-    if (this.state.readyToStartAnim && !this.state.isAnimStarted) {
+    if (pot.isLoading(this.state.potAnim) && !pot.isSome(this.state.potAnim)) {
       // start animation
-      this.setState({ isAnimStarted: true });
+      this.setState({ potAnim: pot.some(this.state.potAnim) });
       this.animateOverScroll();
     }
-    return this.setState({ readyToStartAnim: false });
   }
 
   private handleScroll(pullDownDistance: any) {
     if (pullDownDistance.value <= MIN_PULLDOWN_DISTANCE) {
-      return this.setState({ readyToStartAnim: true });
+      this.setState({ potAnim: pot.toLoading(this.state.potAnim) });
     } else {
       this.animateCloseOverScroll();
-      this.setState({ isAnimStarted: false });
-      return this.setState({ readyToStartAnim: false });
+      this.setState({ potAnim: pot.none });
     }
   }
 
   private handleDragMove() {
-    if (this.state.readyToStartAnim && !this.state.isAnimStarted) {
-      this.setState({ isAnimStarted: true });
+    if (pot.isLoading(this.state.potAnim) && !pot.isSome(this.state.potAnim)) {
+      this.setState({ potAnim: pot.some(this.state.potAnim) });
       this.animateOverScroll();
     }
   }
@@ -308,8 +311,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   };
 
   private animateCloseOverScroll = () => {
-    if (this.state.isAnimStarted) {
-      this.setState({ readyToStartAnim: false });
+    if (pot.isSome(this.state.potAnim)) {
+      this.setState({ potAnim: pot.none });
       Animated.timing(this.overScrollAnim, {
         toValue: 0,
         duration: 100,
@@ -322,9 +325,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      // refreshing: false,
-      isAnimStarted: false,
-      readyToStartAnim: true,
+      potAnim: pot.none,
       scrollY: new Animated.Value(0),
       itemLayouts: []
     };
@@ -456,6 +457,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           ]}
         >
           <Button
+            style={styles.button}
             block={true}
             primary={true}
             small={true}
