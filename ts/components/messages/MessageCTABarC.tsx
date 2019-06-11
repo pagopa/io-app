@@ -1,65 +1,62 @@
+import { format, isToday } from "date-fns";
+import { fromNullable, Option } from "fp-ts/lib/Option";
+import { capitalize } from "lodash";
+import { H3, Text, View } from "native-base";
 import React from "react";
+import { Alert, StyleSheet } from "react-native";
+import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { PaidReason } from "../../store/reducers/entities/payments";
-import { withLightModalContext } from "../helpers/withLightModalContext";
-import { LightModalContextInterface } from "../ui/LightModal";
-import { GlobalState } from "../../store/reducers/types";
-import {
-  calendarEventByMessageIdSelector,
-  CalendarEvent
-} from "../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { checkAndRequestPermission } from "../../utils/calendar";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-import { View, Button, Text, H3 } from "native-base";
-import CalendarIconComponent from "../CalendarIconComponent";
-import { capitalize } from "lodash";
-import {
-  formatDateAsMonth,
-  formatDateAsDay,
-  formatDateAsReminder
-} from "../../utils/dates";
-import variables from "../../theme/variables";
-import IconFont from "../ui/IconFont";
 import I18n from "../../i18n";
+import { NavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import {
-  RemoveCalendarEventPayload,
-  removeCalendarEvent,
+  addCalendarEvent,
   AddCalendarEventPayload,
-  addCalendarEvent
+  removeCalendarEvent,
+  RemoveCalendarEventPayload
 } from "../../store/actions/calendarEvents";
-import { Dispatch } from "../../store/actions/types";
-import { StyleSheet, Alert, TabBarIOS } from "react-native";
-import SelectCalendarModal from "../SelectCalendarModal";
-import { openAppSettings } from "../../utils/appSettings";
-import { showToast } from "../../utils/showToast";
+import {
+  navigateToMessageDetailScreenAction,
+  navigateToPaymentTransactionSummaryScreen
+} from "../../store/actions/navigation";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
-import CalendarEventButton from "./CalendarEventButton";
-import PaymentButton from "./PaymentButton";
-import {
-  getAmountFromPaymentAmount,
-  getRptIdFromNoticeNumber,
-  formatPaymentAmount
-} from "../../utils/payment";
-import { IWithinRangeIntegerTag } from "italia-ts-commons/lib/numbers";
-import { fromNullable, Option } from "fp-ts/lib/Option";
-import {
-  getMessagePaymentExpirationInfo,
-  MessagePaymentExpirationInfo,
-  isExpirable,
-  isExpired
-} from "../../utils/messages";
-import { format, isToday } from "date-fns";
+import { Dispatch } from "../../store/actions/types";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import {
-  navigateToPaymentTransactionSummaryScreen,
-  navigateToMessageDetailScreenAction
-} from "../../store/actions/navigation";
-import { NavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
+  CalendarEvent,
+  calendarEventByMessageIdSelector
+} from "../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
+import { PaidReason } from "../../store/reducers/entities/payments";
+import { GlobalState } from "../../store/reducers/types";
+import variables from "../../theme/variables";
+import { openAppSettings } from "../../utils/appSettings";
+import { checkAndRequestPermission } from "../../utils/calendar";
+import {
+  formatDateAsDay,
+  formatDateAsMonth,
+  formatDateAsReminder
+} from "../../utils/dates";
+import {
+  getMessagePaymentExpirationInfo,
+  isExpirable,
+  isExpired,
+  MessagePaymentExpirationInfo
+} from "../../utils/messages";
+import {
+  formatPaymentAmount,
+  getAmountFromPaymentAmount,
+  getRptIdFromNoticeNumber
+} from "../../utils/payment";
+import { showToast } from "../../utils/showToast";
+import CalendarIconComponent from "../CalendarIconComponent";
+import { withLightModalContext } from "../helpers/withLightModalContext";
+import SelectCalendarModal from "../SelectCalendarModal";
 import StyledIconFont from "../ui/IconFont";
-import { toHumanSize } from "i18n-js";
+import { LightModalContextInterface } from "../ui/LightModal";
+import CalendarEventButton from "./CalendarEventButton";
+import PaymentButton from "./PaymentButton";
 
 type OwnProps = {
   message: CreatedMessageWithContent;
@@ -80,36 +77,6 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    display: "flex",
-    flex: 1,
-    flexDirection: "row"
-  },
-
-  ctaButton: {
-    flex: 1,
-    paddingHorizontal: 16
-  },
-  ctaButtonText: {
-    paddingRight: 0,
-    paddingLeft: 0
-  },
-  ctaButtonTextWithLeftIcon: {
-    marginLeft: 4,
-    paddingRight: 0,
-    paddingLeft: 0,
-    lineHeight: 20
-  },
-
-  calendarEventCTAWrapper: {
-    display: "flex",
-    flex: 1,
-    flexDirection: "row"
-  },
-  calendarEventCTAButton: {
-    marginLeft: 8
-  },
-
   selectCalendaModalHeader: {
     lineHeight: 40
   },

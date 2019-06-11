@@ -89,41 +89,30 @@ export function getMessagePaymentExpirationInfo(
   return { kind: "UNEXPIRABLE", noticeNumber: notice_number, amount };
 }
 
-export function isUnexpirable(
+export const isUnexpirable = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-): messagePaymentExpirationInfo is MessagePaymentUnexpirable {
-  return messagePaymentExpirationInfo.kind === "UNEXPIRABLE";
-}
+): messagePaymentExpirationInfo is MessagePaymentExpirable =>
+  messagePaymentExpirationInfo.kind === "UNEXPIRABLE";
 
-export function isExpirable(
+export const isExpirable = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-): messagePaymentExpirationInfo is MessagePaymentExpirable {
-  return messagePaymentExpirationInfo.kind === "EXPIRABLE";
-}
+): messagePaymentExpirationInfo is MessagePaymentExpirable =>
+  messagePaymentExpirationInfo.kind === "EXPIRABLE";
 
-export function isValid(
+export const isValid = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-) {
-  return (
-    isExpirable(messagePaymentExpirationInfo) &&
-    messagePaymentExpirationInfo.expireStatus === "VALID"
-  );
-}
+) =>
+  isExpirable(messagePaymentExpirationInfo) &&
+  messagePaymentExpirationInfo.expireStatus === "VALID";
 
-export function isExpiring(
+export const isExpiring = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-) {
-  return (
-    isExpirable(messagePaymentExpirationInfo) &&
-    messagePaymentExpirationInfo.expireStatus === "EXPIRING"
-  );
-}
+) =>
+  isExpirable(messagePaymentExpirationInfo) &&
+  messagePaymentExpirationInfo.expireStatus === "EXPIRING";
 
-export function isExpired(
+export const isExpired = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-) {
-  return (
-    isExpirable(messagePaymentExpirationInfo) &&
-    messagePaymentExpirationInfo.expireStatus === "EXPIRED"
-  );
-}
+) =>
+  isExpirable(messagePaymentExpirationInfo) &&
+  messagePaymentExpirationInfo.expireStatus === "EXPIRED";
