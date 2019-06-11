@@ -1,6 +1,6 @@
 import { Button, Text } from "native-base";
 import React, { ComponentProps } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -25,14 +25,15 @@ const baseStyles = StyleSheet.create({
   },
 
   icon: {
-    lineHeight: 32
+    lineHeight: 24
   },
 
   text: {
     paddingRight: 0,
+    paddingBottom: Platform.OS === "android" ? 0 : 0,
     paddingLeft: 0,
     fontSize: 14,
-    lineHeight: 32
+    lineHeight: 20
   }
 });
 
