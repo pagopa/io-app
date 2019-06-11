@@ -36,7 +36,8 @@ global:
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
   search:
-    invalidSearchBarText: Enter at least three characters
+    invalidSearchBarText: Enter at least {{minCharacter}} characters
+    noResultsFound: "There are no results for this search: try something else."
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
