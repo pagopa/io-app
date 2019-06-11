@@ -35,22 +35,19 @@ export default (): Theme => {
     },
 
     ".xsmall": {
+      height: variables.btnXSmallHeight,
       "NativeBase.Text": {
-        lineHeight: 32,
-        fontSize: variables.btnXSmallFontSize
+        fontSize: variables.btnSmallFontSize,
+        lineHeight: variables.btnXSmallLineHeight
       },
       "NativeBase.Icon": {
-        lineHeight: 32,
-        fontSize: variables.btnXSmallFontSize
+        fontSize: variables.btnSmallFontSize,
+        paddingTop: 1
       },
       "UIComponent.IconFont": {
-        lineHeight: 32,
-        fontSize: variables.btnXSmallFontSize
-      },
-
-      height: variables.btnXSmallHeight,
-      paddingTop: 0,
-      paddingBottom: 0
+        fontSize: variables.btnSmallFontSize,
+        paddingTop: 1
+      }
     },
 
     ".small": {
@@ -85,25 +82,6 @@ export default (): Theme => {
     },
 
     ".white": { backgroundColor: "#FFFFFF" },
-
-    ".primary": {
-      "NativeBase.Icon": {
-        color: variables.colorWhite
-      },
-      "UIComponent.IconFont": {
-        color: variables.colorWhite
-      }
-    },
-
-    ".danger": {
-      "NativeBase.Icon": {
-        color: variables.colorWhite
-      },
-      "UIComponent.IconFont": {
-        color: variables.colorWhite
-      }
-    },
-
     ".cancel": {
       backgroundColor: variables.brandDarkGray,
       "NativeBase.Text": {

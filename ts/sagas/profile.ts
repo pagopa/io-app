@@ -52,8 +52,6 @@ export function* loadProfile(
       ? response.value.value
       : Error(I18n.t("profile.errors.load"));
   } catch (error) {
-    console.log("Error", error);
-
     yield put(profileLoadFailure(error));
   }
   return none;

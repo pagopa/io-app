@@ -7,7 +7,6 @@ import getTheme from "native-base/src/theme/components";
 
 import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";
-import calendarEventButtonTheme from "./components/CalendarEventButton";
 import contentTheme from "./components/Content";
 import h1Theme from "./components/H1";
 import h2Theme from "./components/H2";
@@ -24,7 +23,6 @@ import listTheme from "./components/List";
 import listItemTheme from "./components/ListItem";
 import maskedInputTheme from "./components/MaskedInput";
 import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
-import paymentButtonTheme from "./components/PaymentButton";
 import preferenceItemTheme from "./components/PreferenceItem";
 import screenHeaderTheme from "./components/ScreenHeader";
 import textTheme from "./components/Text";
@@ -104,12 +102,6 @@ const theme = (): Theme => {
     },
     "UIComponent.MaskedInput": {
       ...maskedInputTheme()
-    },
-    "UIComponent.CalendarEventButton": {
-      ...calendarEventButtonTheme()
-    },
-    "UIComponent.PaymentButton": {
-      ...paymentButtonTheme()
     }
   };
 

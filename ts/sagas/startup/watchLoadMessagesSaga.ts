@@ -70,8 +70,6 @@ export function* loadMessages(
       {}
     );
 
-    console.log("Response", response);
-
     if (response.isLeft()) {
       throw Error(readableReport(response.value));
     }
@@ -143,8 +141,6 @@ export function* loadMessages(
       }
     }
   } catch (error) {
-    console.log("Error", error);
-
     // Dispatch failure action
     yield put(loadMessagesAction.failure(error.message));
   } finally {
