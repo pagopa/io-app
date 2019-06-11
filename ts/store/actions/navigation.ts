@@ -175,14 +175,16 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
 export const navigateToEntrypointPayment = (
   state: GlobalState
 ): NavigationAction => {
-  const routeName = entrypointRouteSelector(state);
+  const entrypointRoute = entrypointRouteSelector(state);
+  const routeName = entrypointRoute ? entrypointRoute.name : undefined;
+  const key = entrypointRoute ? entrypointRoute.key : undefined;
   // if the payment was initiated from the message list or detail go back
   if (
     routeName === ROUTES.MESSAGES_HOME ||
     routeName === ROUTES.MESSAGE_DETAIL
   ) {
-    return NavigationActions.navigate({
-      routeName
+    return NavigationActions.back({
+      key
     });
   } else {
     // Otherwise go to wallet home

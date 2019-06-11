@@ -4,7 +4,10 @@ import {
   paymentInitializeEntrypointRoute,
   paymentInitializeState
 } from "../store/actions/wallet/payment";
-import { getCurrentRouteName } from "../store/middlewares/analytics";
+import {
+  getCurrentRouteKey,
+  getCurrentRouteName
+} from "../store/middlewares/analytics";
 import { GlobalState } from "../store/reducers/types";
 
 /**
@@ -14,8 +17,14 @@ export function* watchPaymentInitializeSaga(): Iterator<Effect> {
   yield takeEvery(getType(paymentInitializeState), function*() {
     const nav: GlobalState["nav"] = yield select<GlobalState>(_ => _.nav);
     const currentRouteName = getCurrentRouteName(nav);
-    if (currentRouteName !== undefined) {
-      yield put(paymentInitializeEntrypointRoute(currentRouteName));
+    const currentRouteKey = getCurrentRouteKey(nav);
+    if (currentRouteName !== undefined && currentRouteKey !== undefined) {
+      yield put(
+        paymentInitializeEntrypointRoute({
+          name: currentRouteName,
+          key: currentRouteKey
+        })
+      );
     }
   });
 }

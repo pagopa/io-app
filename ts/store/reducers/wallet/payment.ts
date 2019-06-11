@@ -21,6 +21,11 @@ import {
 } from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
 
+export type EntrypointRoute = Readonly<{
+  name: string;
+  key: string;
+}>;
+
 // TODO: instead of keeping one single state, it would me more correct to keep
 //       a state for each rptid - this will make unnecessary to reset the state
 //       at the beginning of a new payment flow.
@@ -53,7 +58,7 @@ export type PaymentState = Readonly<{
     typeof pollTransactionSagaCompleted,
     false
   >;
-  entrypointRoute?: string;
+  entrypointRoute?: EntrypointRoute;
 }>;
 
 /**

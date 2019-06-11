@@ -59,6 +59,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
       }
 
       case NavigationActions.BACK: {
+        const routeKey = action.key;
         // Get the current navigation history
         const currentNavigationHistory = store.getState().navigationHistory;
 
@@ -67,15 +68,26 @@ export function createNavigationHistoryMiddleware(): Middleware<
           return;
         }
 
-        // Get the previous navigation state
         const previousNavigationState = {
           ...currentNavigationHistory[currentNavigationHistory.length - 1]
         };
 
-        // Pop the last element from the history
-        store.dispatch(navigationHistoryPop());
-        // Dispatch an action to restore the previous state
-        store.dispatch(navigationRestore(previousNavigationState));
+        // If the action contains the key where to come back
+        // Remove all the screens following the screen from history
+        // tslint:disable-next-line: no-all-duplicated-branches
+        if (routeKey !== undefined && routeKey !== null) {
+          // TODO pop to routeKey string
+          // Pop the last element from the history
+          store.dispatch(navigationHistoryPop());
+          // Dispatch an action to restore the previous state
+          store.dispatch(navigationRestore(previousNavigationState));
+          // tslint:disable-next-line: no-duplicated-branches
+        } else {
+          // Pop the last element from the history
+          store.dispatch(navigationHistoryPop());
+          // Dispatch an action to restore the previous state
+          store.dispatch(navigationRestore(previousNavigationState));
+        }
       }
 
       default:

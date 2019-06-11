@@ -26,6 +26,7 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import { identificationRequest } from "../../../store/actions/identification";
 import {
+  navigateToEntrypointPayment,
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
   navigateToTransactionDetailsScreen,
@@ -66,7 +67,11 @@ type NavigationParams = Readonly<{
   psps: ReadonlyArray<Psp>;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type ReduxMergedProps = Readonly<{
+  onCancelNavigateToEntrypointPayment: () => void;
+}>;
+
+type OwnProps = NavigationInjectedProps<NavigationParams> & ReduxMergedProps;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -280,19 +285,24 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   }
 }
 
-const mapStateToProps = ({ wallet }: GlobalState) => ({
+const mapStateToProps = (state: GlobalState) => ({
   isLoading:
-    pot.isLoading(wallet.payment.transaction) ||
-    pot.isLoading(wallet.payment.confirmedTransaction),
-  error: pot.isError(wallet.payment.transaction)
-    ? some(wallet.payment.transaction.error.message)
-    : none
+    pot.isLoading(state.wallet.payment.transaction) ||
+    pot.isLoading(state.wallet.payment.confirmedTransaction),
+  error: pot.isError(state.wallet.payment.transaction)
+    ? some(state.wallet.payment.transaction.error.message)
+    : none,
+  state
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const onTransactionTimeout = () => {
     dispatch(navigateToWalletHome());
     showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
+  };
+
+  const dispatchNavigateToEntrypointPayment = (state: GlobalState) => {
+    dispatch(navigateToEntrypointPayment(state));
   };
 
   const onTransactionValid = (tx: Transaction) => {
@@ -320,8 +330,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {
       // on failure:
-      // navigate to the wallet home
-      dispatch(navigateToWalletHome());
+      // navigate to entrypoint of payment or wallet home
+      props.onCancelNavigateToEntrypointPayment();
       // signal faliure
       dispatch(paymentCompletedFailure());
       // delete the active payment from PagoPA
@@ -401,8 +411,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         buttonIndex => {
           if (buttonIndex === 0) {
             // on cancel:
-            // navigate to the wallet home
-            dispatch(navigateToWalletHome());
+            // navigate to entrypoint of payment or wallet home
+            props.onCancelNavigateToEntrypointPayment();
             // delete the active payment from PagoPA
             dispatch(runDeleteActivePaymentSaga());
             // reset the payment state
@@ -416,13 +426,33 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       );
     },
     runAuthorizationAndPayment,
-    onRetry: runAuthorizationAndPayment
+    onRetry: runAuthorizationAndPayment,
+    dispatchNavigateToEntrypointPayment
+  };
+};
+
+const mergeProps = (
+  stateProps: ReturnType<typeof mapStateToProps>,
+  dispatchProps: ReturnType<typeof mapDispatchToProps>,
+  ownProps: OwnProps
+) => {
+  const onCancelNavigateToEntrypointPayment = () => {
+    dispatchProps.dispatchNavigateToEntrypointPayment(stateProps.state);
+  };
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    ...{
+      onCancelNavigateToEntrypointPayment
+    }
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(
   withContextualHelp(
     withErrorModal(
