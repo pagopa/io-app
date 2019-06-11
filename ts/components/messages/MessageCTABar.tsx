@@ -1,4 +1,4 @@
-import { format, isToday } from "date-fns";
+import { isToday } from "date-fns";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { H3, Text, View } from "native-base";
@@ -34,6 +34,7 @@ import variables from "../../theme/variables";
 import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import {
+  format,
   formatDateAsDay,
   formatDateAsMonth,
   formatDateAsReminder
@@ -642,57 +643,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       </React.Fragment>
     );
   }
-
-  /*
-  public render2() {
-    const { message, small } = this.props;
-
-    const messagePaymentExpirationState = getMessagePaymentExpirationState(
-      message
-    );
-
-    const paymentButton = this.renderPaymentButton(
-      messagePaymentExpirationState
-    );
-
-    const calendarIcon = this.renderCalendarIcon();
-
-    const calendarEventButton =
-      messagePaymentExpirationState === "EXPIRED"
-        ? null
-        : this.renderCalendarEventButton(paymentButton !== null);
-
-    if (
-      calendarIcon !== null ||
-      calendarEventButton !== null ||
-      paymentButton !== null
-    ) {
-      return (
-        <React.Fragment>
-          <View style={[styles.mainContainer]}>
-            {calendarIcon !== null && (
-              <React.Fragment>
-                {calendarIcon}
-                <View style={{ marginLeft: 8 }} />
-                {messagePaymentExpirationState !== "EXPIRED" && (
-                  <React.Fragment>
-                    {calendarEventButton}
-                    <View style={{ marginLeft: 8 }} />
-                  </React.Fragment>
-                )}
-              </React.Fragment>
-            )}
-
-            {paymentButton}
-          </View>
-          {this.renderBottomContainer(messagePaymentExpirationState)}
-        </React.Fragment>
-      );
-    }
-
-    return null;
-  }
-  */
 }
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
