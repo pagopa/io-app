@@ -286,10 +286,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   private handleScroll(pullDownDistance: any) {
     if (pullDownDistance.value <= MIN_PULLDOWN_DISTANCE) {
-      this.setState({ potAnim: pot.toLoading(this.state.potAnim) });
+      return this.setState({ potAnim: pot.toLoading(this.state.potAnim) });
     } else {
       this.animateCloseOverScroll();
-      this.setState({ potAnim: pot.none });
+      return this.setState({ potAnim: pot.none });
     }
   }
 
@@ -298,6 +298,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       this.setState({ potAnim: pot.some(this.state.potAnim) });
       this.animateOverScroll();
     }
+    return true;
   }
 
   private animateOverScroll = () => {
@@ -457,7 +458,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           ]}
         >
           <Button
-            style={styles.button}
             block={true}
             primary={true}
             small={true}
