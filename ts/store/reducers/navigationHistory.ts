@@ -6,6 +6,7 @@ import { NavigationState } from "react-navigation";
 import { getType } from "typesafe-actions";
 
 import {
+  navigationHistoryMultiplePop,
   navigationHistoryPop,
   navigationHistoryPush,
   navigationHistoryReset
@@ -29,6 +30,9 @@ const reducer = (
 
     case getType(navigationHistoryPop):
       return state.slice(0, -1);
+
+    case getType(navigationHistoryMultiplePop):
+      return state.slice(0, -action.payload);
 
     default:
       return state;

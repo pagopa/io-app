@@ -1,8 +1,13 @@
-import { NavigationActions, StackActions } from "react-navigation";
+import {
+  NavigationActions,
+  NavigationRoute,
+  StackActions
+} from "react-navigation";
 import { Middleware } from "redux";
 
 import { navigationRestore } from "../actions/navigation";
 import {
+  navigationHistoryMultiplePop,
   navigationHistoryPop,
   navigationHistoryPush,
   navigationHistoryReset
@@ -57,9 +62,9 @@ export function createNavigationHistoryMiddleware(): Middleware<
         store.dispatch(navigationHistoryReset());
         return next(action);
       }
-
       case NavigationActions.BACK: {
         const routeKey = action.key;
+
         // Get the current navigation history
         const currentNavigationHistory = store.getState().navigationHistory;
 
@@ -72,16 +77,36 @@ export function createNavigationHistoryMiddleware(): Middleware<
           ...currentNavigationHistory[currentNavigationHistory.length - 1]
         };
 
-        // If the action contains the key where to come back
-        // Remove all the screens following the screen from history
-        // tslint:disable-next-line: no-all-duplicated-branches
         if (routeKey !== undefined && routeKey !== null) {
-          // TODO pop to routeKey string
-          // Pop the last element from the history
-          store.dispatch(navigationHistoryPop());
-          // Dispatch an action to restore the previous state
-          store.dispatch(navigationRestore(previousNavigationState));
-          // tslint:disable-next-line: no-duplicated-branches
+          const isSingleBack = !navigationStateRoutesContainsKey(
+            previousNavigationState.routes,
+            routeKey
+          );
+          if (isSingleBack) {
+            // Pop the last element from the history
+            store.dispatch(navigationHistoryPop());
+            // Dispatch an action to restore the previous state
+            store.dispatch(navigationRestore(previousNavigationState));
+          } else {
+            const index = currentNavigationHistory.findIndex(
+              navigationState => {
+                return navigationStateRoutesContainsKey(
+                  navigationState.routes,
+                  routeKey
+                );
+              }
+            );
+            const nPop = currentNavigationHistory.length - index;
+
+            const backNavigationState = {
+              ...currentNavigationHistory[index]
+            };
+
+            // Pop to route
+            store.dispatch(navigationHistoryMultiplePop(nPop));
+            // Dispatch an action to restore the state where go back
+            store.dispatch(navigationRestore(backNavigationState));
+          }
         } else {
           // Pop the last element from the history
           store.dispatch(navigationHistoryPop());
@@ -94,4 +119,30 @@ export function createNavigationHistoryMiddleware(): Middleware<
         return next(action);
     }
   };
+}
+
+/*
+* Check if the route key is present in routes of navigation state
+*/
+function navigationStateRoutesContainsKey(
+  routes: ReadonlyArray<NavigationRoute>,
+  routeKey: string
+): boolean {
+  const index = routes.findIndex(r => {
+    return (
+      // Check if the route is the one we want
+      r.key === routeKey ||
+      // Or if this is a nested Navigator route, recursively check to see if
+      // its children match
+      !!(r.routes && navigationStateRoutesContainsKey(r.routes, routeKey))
+    );
+  });
+
+  // If we didn't find the route, then return immediately
+  if (index === -1) {
+    return false;
+  } else {
+    // Found
+    return true;
+  }
 }

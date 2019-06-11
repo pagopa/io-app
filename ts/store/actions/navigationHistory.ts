@@ -13,8 +13,14 @@ export const navigationHistoryPop = createStandardAction(
   "NAVIGATION_HISTORY_POP"
 )();
 
+export const navigationHistoryMultiplePop = createStandardAction(
+  "NAVIGATION_HISTORY_MULTIPLE_POP"
+)<number>();
+
 export type NavigationHistoryActions = ActionType<
+  // tslint:disable-next-line: max-union-size
   | typeof navigationHistoryPush
   | typeof navigationHistoryReset
   | typeof navigationHistoryPop
+  | typeof navigationHistoryMultiplePop
 >;
