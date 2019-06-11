@@ -40,7 +40,8 @@ global:
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
   search:
-    invalidSearchBarText: Enter at least three characters
+    invalidSearchBarText: Enter at least {{minCharacter}} characters
+    noResultsFound: "There are no results for this search: try something else."
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
@@ -452,6 +453,7 @@ wallet:
   acceptedCards: Accepted cards
   chooseMethod: Select the desired method
   QRtoPay:
+    chooser: Pick image from gallery
     wrongQrCode: Not a PagoPA QR Code!
     byCameraTitle: Notice QR Code
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
@@ -638,7 +640,7 @@ serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
   disableTitle: "Do you really want to disable the service?"
-  disableMsg: "Rememer, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
+  disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
 identification:
   message: "Enter the PIN"
   resetPinMessage: To reset your PIN you will have to login again with your SPID account.
