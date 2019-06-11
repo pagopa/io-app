@@ -18,7 +18,6 @@ import { MultiImage } from "../ui/MultiImage";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
 import MessageMarkdown from "./MessageMarkdown";
-import MessageCTABarC from './MessageCTABarC';
 
 type OwnProps = {
   message: CreatedMessageWithContent;
@@ -187,7 +186,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
         </View>
 
         {messageNeedsCTABar(message) && (
-          <MessageCTABarC
+          <MessageCTABar
             message={message}
             service={service}
             payment={payment}
