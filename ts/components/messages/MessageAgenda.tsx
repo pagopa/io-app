@@ -161,7 +161,7 @@ type State = {
   some -> started
   loading -> ready
   */
-  potAnim: pot.Pot<any, any>;
+  potAnim: pot.Pot<true, Error>;
   scrollY: Animated.Value;
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
@@ -277,16 +277,17 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   public handleRelease() {
-    if (pot.isLoading(this.state.potAnim) && !pot.isSome(this.state.potAnim)) {
+    if (pot.isLoading(this.state.potAnim)) {
       // start animation
-      this.setState({ potAnim: pot.some(this.state.potAnim) });
       this.animateOverScroll();
     }
   }
 
   private handleScroll(pullDownDistance: any) {
     if (pullDownDistance.value <= MIN_PULLDOWN_DISTANCE) {
-      return this.setState({ potAnim: pot.toLoading(this.state.potAnim) });
+      if (pot.isNone(this.state.potAnim)) {
+        return this.setState({ potAnim: pot.noneLoading });
+      }
     } else {
       this.animateCloseOverScroll();
       return this.setState({ potAnim: pot.none });
@@ -294,8 +295,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   private handleDragMove() {
-    if (pot.isLoading(this.state.potAnim) && !pot.isSome(this.state.potAnim)) {
-      this.setState({ potAnim: pot.some(this.state.potAnim) });
+    if (pot.isLoading(this.state.potAnim)) {
       this.animateOverScroll();
     }
     return true;
@@ -303,9 +303,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   private animateOverScroll = () => {
     this.overScrollAnim.setValue(0);
+    this.setState({ potAnim: pot.some(true) });
     Animated.timing(this.overScrollAnim, {
       toValue: HEADER_SCROLL_DISTANCE,
-      duration: 100,
+      duration: 50,
       easing: Easing.linear,
       useNativeDriver: true
     }).start();
@@ -316,7 +317,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       this.setState({ potAnim: pot.none });
       Animated.timing(this.overScrollAnim, {
         toValue: 0,
-        duration: 100,
+        duration: 50,
         easing: Easing.linear,
         useNativeDriver: true
       }).start();
