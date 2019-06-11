@@ -1,9 +1,9 @@
 import { Button, Text } from "native-base";
-import { connectStyle } from "native-base-shoutem-theme";
-import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import React, { ComponentProps } from "react";
+import { StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
+import customVariables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
 
 type Props = {
@@ -11,29 +11,123 @@ type Props = {
   small?: boolean;
   disabled?: boolean;
   onPress: ComponentProps<typeof Button>["onPress"];
+  useShortLabel?: boolean;
 };
+
+const baseStyles = StyleSheet.create({
+  button: {
+    flex: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 0,
+    paddingBottom: 0,
+    height: 40
+  },
+
+  icon: {
+    lineHeight: 32
+  },
+
+  text: {
+    paddingRight: 0,
+    paddingLeft: 0,
+    fontSize: 14,
+    lineHeight: 32
+  }
+});
+
+const validStyles = StyleSheet.create({
+  button: {
+    backgroundColor: customVariables.colorWhite,
+    borderWidth: 1,
+    borderColor: customVariables.brandPrimary
+  },
+
+  icon: {
+    color: customVariables.brandPrimary
+  },
+
+  text: {
+    color: customVariables.brandPrimary
+  }
+});
+
+const smallStyles = StyleSheet.create({
+  button: {
+    height: 32
+  },
+
+  icon: {},
+
+  text: {}
+});
+
+const disabledStyles = StyleSheet.create({
+  button: {
+    backgroundColor: "#b5b5b5",
+    borderWidth: 0
+  },
+
+  icon: {
+    color: customVariables.colorWhite
+  },
+
+  text: {
+    color: customVariables.colorWhite
+  }
+});
 
 class CalendarEventButton extends React.PureComponent<Props> {
   public render() {
-    const { isEventInDeviceCalendar, small, onPress } = this.props;
+    const {
+      isEventInDeviceCalendar,
+      small,
+      disabled,
+      onPress,
+      useShortLabel
+    } = this.props;
 
-    const buttonIcon = isEventInDeviceCalendar ? (
-      <IconFont name={"io-tick-big"} />
-    ) : (
-      <IconFont name={"io-plus"} />
-    );
+    const iconName = isEventInDeviceCalendar ? "io-tick-big" : "io-plus";
 
     return (
-      <Button onPress={onPress}>
-        {buttonIcon}
-        <Text>{I18n.t("messages.cta.reminderShort")}</Text>
+      <Button
+        disabled={disabled}
+        onPress={onPress}
+        style={[
+          baseStyles.button,
+          validStyles.button,
+          small && smallStyles.button,
+          disabled && disabledStyles.button
+        ]}
+      >
+        {small && (
+          <IconFont
+            name={iconName}
+            style={[
+              baseStyles.icon,
+              validStyles.icon,
+              small && smallStyles.icon,
+              disabled && disabledStyles.icon
+            ]}
+          />
+        )}
+        <Text
+          style={[
+            baseStyles.text,
+            validStyles.text,
+            small && smallStyles.text,
+            disabled && disabledStyles.text
+          ]}
+        >
+          {I18n.t(
+            useShortLabel
+              ? "messages.cta.reminderShort"
+              : "messages.cta.reminder"
+          )}
+        </Text>
       </Button>
     );
   }
 }
 
-export default connectStyle(
-  "UIComponent.CalendarEventButton",
-  {},
-  mapPropsToStyleNames
-)(CalendarEventButton);
+export default CalendarEventButton;

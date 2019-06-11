@@ -28,7 +28,7 @@ export default (): Theme => ({
         color: variables.brandLightGray
       },
 
-      borderColor: variables.brandLightGray
+      borderWidth: 0
     }
   },
 
@@ -38,13 +38,13 @@ export default (): Theme => ({
     },
 
     "NativeBase.Text": {
-      marginLeft: 4,
+      //marginLeft: 4,
       paddingRight: 0,
       paddingLeft: 0,
       color: variables.brandPrimary
     },
 
-    flex: 1,
+    flex: 5,
     justifyContent: "center",
     alignItems: "center",
     padding: 0,
