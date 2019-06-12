@@ -360,7 +360,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
               I18n.t(
                 isFake
                   ? "global.dateFormats.monthYear"
-                  : "global.dateFormats.dayMonthYear"
+                  : "global.dateFormats.weekdayDayMonthYear"
               )
             )}
           </Text>
