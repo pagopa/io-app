@@ -196,7 +196,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         <View style={styles.placeholderContainer}>
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
-        <View spacer={true} large={true} />
+        <View spacer={true} />
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <Text
@@ -206,7 +206,7 @@ class Pinpad extends React.PureComponent<Props, State> {
             >
               {I18n.t("pin_login.pin.reset.button")}
             </Text>
-            <View spacer={true} large={true} />
+            <View spacer={true} />
           </React.Fragment>
         )}
         <View spacer={true} />

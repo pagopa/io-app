@@ -57,7 +57,6 @@ const renderIdentificationByPinState = (
   if (identificationByPinState === "failure") {
     return (
       <React.Fragment>
-        <View spacer={true} />
         <TextWithIcon danger={true}>
           <IconFont name="io-close" color={"white"} />
           <Text white={true}>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
