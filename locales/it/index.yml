@@ -2,11 +2,15 @@
 global:
   localization:
     decimalSeparator: ","
+  date:
+    today: "oggi"
+    tomorrow: "domani"
   dateFormats:
     monthYear: "MMMM YYYY"
-    dayMonthYear: "dddd D MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD/MM"
+    dayMonthYear: "D MMMM YYYY"
+    weekdayDayMonthYear: "dddd D MMMM YYYY"
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
@@ -37,7 +41,8 @@ global:
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
   search:
-    invalidSearchBarText: Inserisci almeno tre caratteri
+    invalidSearchBarText: Inserisci almeno {{minCharacter}} caratteri
+    noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
   localNotifications:
     spidLogin:
       title: Ricordati di accedere ad IO!
@@ -519,6 +524,22 @@ messages:
   cta:
     archive: Archivia
     unarchive: Ripristina
+    payment:
+      expired: Pagamento scaduto
+      validAlert:
+        block1: Puoi pagare questo avviso fino alle
+        block2: "{{time}} del {{day}}."
+      expiringAlert:
+        block1: Questo avviso
+        block2: scade {{todayOrTomorrow}}
+        block3: alle
+      expiredAlert:
+        block1: Il pagamento di
+        block2: € {{amount}}
+        block3: è
+        block4: scaduto
+        block5: alle
+        block6: del
     pay: Paga € {{amount}}
     paid: Pagato € {{amount}}
     reminder: Promemoria
@@ -598,7 +619,7 @@ preferences:
   preferencesHelp: !include preferences_home_help.md
   unavailable:
     title: Questa preferenza è impostata nel tuo profilo SPID
-    message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nell profilo SPID del tuo identity provider, e poi dovrai nuovamente loggarti nell'app
+    message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
   language:
     title: Questa preferenza è impostata nelle preferenze di sistema
     message: IO eredita la lingua dal sistema operativo del tuo dispositivo

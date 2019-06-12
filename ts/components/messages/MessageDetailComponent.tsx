@@ -190,7 +190,6 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
             message={message}
             service={service}
             payment={payment}
-            containerStyle={styles.ctaBarContainer}
           />
         )}
 
