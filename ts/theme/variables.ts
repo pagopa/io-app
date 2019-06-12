@@ -266,7 +266,11 @@ const customVariables = Object.assign(materialVariables, {
   activeOpacity: 0.25,
 
   // Spacing
-  spacingBase: 8
+  spacingBase: 8,
+
+  // IconFont
+  selectedColor: "#0073E6",
+  unselectedColor: "#5C6F82"
 });
 
 export default customVariables;
