@@ -218,8 +218,8 @@ class MessageListItem extends React.PureComponent<Props> {
                 message={message}
                 service={service}
                 payment={payment}
-                disabled={isSelectionModeEnabled}
                 small={true}
+                disabled={isSelectionModeEnabled}
               />
             </View>
           )}
