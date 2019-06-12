@@ -13,6 +13,7 @@ import * as React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import customVariables from "../../theme/variables";
 import AnimatedScreenContent from "../screens/AnimatedScreenContent";
+import ScreenContent from "../screens/ScreenContent";
 import TopScreenComponent from "../screens/TopScreenComponent";
 import H5 from "../ui/H5";
 import PagoPALogo from "./PagoPALogo";
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
 
 export default class WalletLayout extends React.Component<Props> {
   private dynamicSubHeader() {
-    return this.props.hasDynamicSubHeader ? (
+    return (
       <View style={[styles.whiteBg, styles.flex1]}>
         <View spacer={true} />
         <View style={styles.subHeaderContent}>
@@ -67,8 +68,19 @@ export default class WalletLayout extends React.Component<Props> {
         </View>
         <View spacer={true} />
       </View>
-    ) : (
-      []
+    );
+  }
+
+  private screenContent() {
+    return (
+      <React.Fragment>
+        <View style={styles.headerContents}>
+          <View spacer={true} />
+          {this.props.topContent}
+        </View>
+
+        {this.props.children}
+      </React.Fragment>
     );
   }
 
@@ -76,7 +88,6 @@ export default class WalletLayout extends React.Component<Props> {
     const {
       title,
       allowGoBack,
-      topContent,
       hideHeader,
       footerContent,
       contentStyle
@@ -89,26 +100,33 @@ export default class WalletLayout extends React.Component<Props> {
         dark={true}
         headerBody={<PagoPALogo />}
       >
-        <AnimatedScreenContent
-          hideHeader={hideHeader}
-          title={title ? title : I18n.t("wallet.wallet")} // riverifica su altri screen
-          icon={require("../../../img/wallet/bank.png")} // verifica se utilizzato
-          dark={true}
-          dynamicSubHeader={this.dynamicSubHeader()}
-          dynamicSubHeaderHeight={
-            customVariables.h5LineHeight + 2 * customVariables.spacerWidth
-          }
-          topContentHeight={250}
-          animationOffset={40}
-          contentStyle={contentStyle}
-        >
-          <View style={styles.headerContents}>
-            <View spacer={true} />
-            {topContent}
-          </View>
-
-          {this.props.children}
-        </AnimatedScreenContent>
+        {this.props.hasDynamicSubHeader ? (
+          <AnimatedScreenContent
+            hideHeader={hideHeader}
+            title={title ? title : I18n.t("wallet.wallet")}
+            icon={require("../../../img/wallet/bank.png")}
+            dark={true}
+            contentStyle={contentStyle}
+            dynamicSubHeader={this.dynamicSubHeader()}
+            topContentHeight={250}
+            animationOffset={40}
+            dynamicSubHeaderHeight={
+              customVariables.h5LineHeight + 2 * customVariables.spacerWidth
+            }
+          >
+            {this.screenContent()}
+          </AnimatedScreenContent>
+        ) : (
+          <ScreenContent
+            hideHeader={hideHeader}
+            title={title ? title : I18n.t("wallet.wallet")}
+            icon={require("../../../img/wallet/bank.png")}
+            dark={true}
+            contentStyle={contentStyle}
+          >
+            {this.screenContent()}
+          </ScreenContent>
+        )}
 
         {footerContent && <View footer={true}>{footerContent}</View>}
       </TopScreenComponent>

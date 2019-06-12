@@ -54,6 +54,10 @@ const styles = StyleSheet.create({
 
   whiteBg: {
     backgroundColor: variables.colorWhite
+  },
+
+  brandDarkGray: {
+    color: variables.brandDarkGray
   }
 });
 
@@ -62,8 +66,7 @@ const ListEmptyComponent = (
     scrollEnabled={false}
     style={[styles.noBottomPadding, styles.whiteBg]}
   >
-    <View spacer={true} />
-    <H5>{I18n.t("wallet.noneTransactions")}</H5>
+    <H5 style={styles.brandDarkGray}>{I18n.t("wallet.noneTransactions")}</H5>
     <View spacer={true} />
     <Text>{I18n.t("wallet.noTransactionsInTransactionsScreen")}</Text>
     <View spacer={true} large={true} />

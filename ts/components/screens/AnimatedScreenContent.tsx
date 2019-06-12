@@ -21,7 +21,6 @@ import { ComponentProps } from "../../types/react";
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
 type OwnProps = Readonly<{
-  ListEmptyComponent?: React.ReactNode;
   dynamicSubHeader: React.ReactNode;
   dynamicSubHeaderHeight: number;
   topContentHeight: number;

@@ -16,7 +16,6 @@ interface OwnProps {
   contextualHelp?: ContextualHelpProps;
   headerBody?: React.ReactNode;
   appLogo?: boolean;
-  dark?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
 }

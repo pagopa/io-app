@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
   },
 
   padded: {
-    padding: variables.contentPadding
+    paddingHorizontal: variables.contentPadding,
+    paddingTop: 0
   }
 });
 
@@ -83,6 +84,7 @@ class WalletsScreen extends React.Component<Props> {
   private topContent() {
     return (
       <React.Fragment>
+        <View spacer={true} large={true} />
         <View style={styles.headerContainer}>
           <Left>
             <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
@@ -105,6 +107,7 @@ class WalletsScreen extends React.Component<Props> {
         title={I18n.t("wallet.paymentMethods")}
         topContent={this.topContent()}
         allowGoBack={true}
+        hideHeader={true}
         contentStyle={styles.brandDarkGrayBg}
         hasDynamicSubHeader={false}
       >
