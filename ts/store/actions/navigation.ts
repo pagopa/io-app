@@ -178,6 +178,7 @@ export const navigateToEntrypointPayment = (
   const entrypointRoute = entrypointRouteSelector(state);
   const routeName = entrypointRoute ? entrypointRoute.name : undefined;
   const key = entrypointRoute ? entrypointRoute.key : undefined;
+  console.log("*************** NAVIGATE TO ENTRYPOINT PAYMENT ***************");
   // if the payment was initiated from the message list or detail go back
   if (
     routeName === ROUTES.MESSAGES_HOME ||

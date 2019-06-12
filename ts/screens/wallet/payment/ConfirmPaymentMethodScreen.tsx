@@ -297,7 +297,7 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const onTransactionTimeout = () => {
-    dispatch(navigateToWalletHome());
+    dispatch(paymentInitializeState());
     showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
   };
 
