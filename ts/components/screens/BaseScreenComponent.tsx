@@ -20,7 +20,16 @@ interface OwnProps {
   searchType?: SearchType;
 }
 
-type BaseHeaderProps = "appLogo" | "primary" | "goBack" | "headerTitle";
+type BaseHeaderProps =
+  | "dark"
+  | "appLogo"
+  | "primary"
+  | "goBack"
+  | "headerTitle"
+  | "onShowHelp"
+  | "body"
+  | "isSearchAvailable"
+  | "searchType";
 
 type Props = OwnProps &
   Pick<React.ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
@@ -47,6 +56,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {
+      dark,
       appLogo,
       contextualHelp,
       goBack,
@@ -60,6 +70,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       <Container>
         <BaseHeader
           primary={primary}
+          dark={dark}
           goBack={goBack}
           headerTitle={headerTitle}
           onShowHelp={contextualHelp ? this.showHelp : undefined}
@@ -68,7 +79,9 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           body={headerBody}
           appLogo={appLogo}
         />
+
         {this.props.children}
+
         {contextualHelp && (
           <ContextualHelp
             title={contextualHelp.title}
