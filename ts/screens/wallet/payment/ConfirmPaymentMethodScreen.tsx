@@ -29,8 +29,7 @@ import {
   navigateToEntrypointPayment,
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
-  navigateToTransactionDetailsScreen,
-  navigateToWalletHome
+  navigateToTransactionDetailsScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -296,13 +295,13 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
+  const dispatchNavigateToEntrypointPayment = (state: GlobalState) => {
+    dispatch(navigateToEntrypointPayment(state));
+  };
+
   const onTransactionTimeout = () => {
     dispatch(paymentInitializeState());
     showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
-  };
-
-  const dispatchNavigateToEntrypointPayment = (state: GlobalState) => {
-    dispatch(navigateToEntrypointPayment(state));
   };
 
   const onTransactionValid = (tx: Transaction) => {
