@@ -2,11 +2,15 @@
 global:
   localization:
     decimalSeparator: "."
+  date:
+    today: "today"
+    tomorrow: "tomorrow"
   dateFormats:
     monthYear: "MMMM YYYY"
-    dayMonthYear: "dddd D MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "MM/DD" 
+    dayMonthYear: "D MMMM YYYY"
+    weekdayDayMonthYear: "dddd D MMMM YYYY"
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -92,6 +96,7 @@ profile:
     screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    clearCache: Clear cache
     resetPin:
       confirmTitle: Are you sure you want to reset your PIN?
       confirmMsg: You will be asked again to log in with SPID.
@@ -511,6 +516,22 @@ messages:
   cta:
     archive: Archive
     unarchive: Unarchive
+    payment:
+      expired: Payment expired
+      validAlert:
+        block1: You can pay this notice until
+        block2: "{{time}} of {{day}}."
+      expiringAlert:
+        block1: This notice
+        block2: expire {{todayOrTomorrow}}
+        block3: at
+      expiredAlert:
+        block1: The notice of
+        block2: € {{amount}}
+        block3: is
+        block4: expired
+        block5: at
+        block6: of
     pay: Pay € {{amount}}
     paid: Paid € {{amount}}
     reminder: Reminder
