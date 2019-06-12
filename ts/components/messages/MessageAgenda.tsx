@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { Option } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Text, View } from "native-base";
@@ -157,11 +157,11 @@ type Props = OwnProps & SelectedSectionListProps;
 type State = {
   /*
   Animation states when show and gone load-data button:
-  none -> stopped
-  some -> started
-  loading -> ready
+  none = notReady
+  some(false) = readyAndNotStarted
+  some(true) = readyAndStarted
   */
-  potAnim: pot.Pot<true, Error>;
+  isAnimReadyAndStarted: Option<boolean>;
   scrollY: Animated.Value;
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
@@ -277,7 +277,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   public handleRelease() {
-    if (pot.isLoading(this.state.potAnim)) {
+    if (!this.state.isAnimReadyAndStarted) {
       // start animation
       this.animateOverScroll();
     }
@@ -285,17 +285,17 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   private handleScroll(pullDownDistance: any) {
     if (pullDownDistance.value <= MIN_PULLDOWN_DISTANCE) {
-      if (pot.isNone(this.state.potAnim)) {
-        return this.setState({ potAnim: pot.noneLoading });
+      if (this.state.isAnimReadyAndStarted.isNone) {
+        return this.setState({ isAnimReadyAndStarted: some(false) });
       }
     } else {
       this.animateCloseOverScroll();
-      return this.setState({ potAnim: pot.none });
+      return this.setState({ isAnimReadyAndStarted: none });
     }
   }
 
   private handleDragMove() {
-    if (pot.isLoading(this.state.potAnim)) {
+    if (!this.state.isAnimReadyAndStarted) {
       this.animateOverScroll();
     }
     return true;
@@ -303,7 +303,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   private animateOverScroll = () => {
     this.overScrollAnim.setValue(0);
-    this.setState({ potAnim: pot.some(true) });
+    this.setState({ isAnimReadyAndStarted: some(true) });
     Animated.timing(this.overScrollAnim, {
       toValue: HEADER_SCROLL_DISTANCE,
       duration: 50,
@@ -313,8 +313,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   };
 
   private animateCloseOverScroll = () => {
-    if (pot.isSome(this.state.potAnim)) {
-      this.setState({ potAnim: pot.none });
+    if (this.state.isAnimReadyAndStarted) {
+      this.setState({ isAnimReadyAndStarted: none });
       Animated.timing(this.overScrollAnim, {
         toValue: 0,
         duration: 50,
@@ -327,7 +327,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      potAnim: pot.none,
+      isAnimReadyAndStarted: none,
       scrollY: new Animated.Value(0),
       itemLayouts: []
     };
