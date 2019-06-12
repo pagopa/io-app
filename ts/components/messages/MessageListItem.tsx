@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { CheckBox, Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, TouchableOpacity } from "react-native";
 import Svg, { Circle } from "react-native-svg";
@@ -9,6 +9,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { makeFontStyleObject } from "../../theme/fonts";
+import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
@@ -155,6 +156,12 @@ class MessageListItem extends React.PureComponent<Props> {
       I18n.t("messages.yesterday")
     );
 
+    const iconName = isSelected ? "io-checkbox-on" : "io-checkbox-off";
+
+    const iconColor = isSelected
+      ? variables.selectedColor
+      : variables.unselectedColor;
+
     return (
       <TouchableOpacity
         style={styles.highlight}
@@ -192,11 +199,9 @@ class MessageListItem extends React.PureComponent<Props> {
             </View>
             <View style={styles.contentRight}>
               {isSelectionModeEnabled ? (
-                <CheckBox
-                  onPress={this.handleLongPress}
-                  checked={isSelected}
-                  style={styles.selectionCheckbox}
-                />
+                <Button onPress={this.handleLongPress} transparent={true}>
+                  <IconFont name={iconName} color={iconColor} />
+                </Button>
               ) : (
                 <IconFont
                   name="io-right"
@@ -213,8 +218,8 @@ class MessageListItem extends React.PureComponent<Props> {
                 message={message}
                 service={service}
                 payment={payment}
-                disabled={isSelectionModeEnabled}
                 small={true}
+                disabled={isSelectionModeEnabled}
               />
             </View>
           )}
