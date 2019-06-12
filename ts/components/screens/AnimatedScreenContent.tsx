@@ -7,6 +7,7 @@ import { View } from "native-base";
 import * as React from "react";
 import {
   Animated,
+  LayoutChangeEvent,
   Platform,
   StatusBar,
   StyleProp,
@@ -22,7 +23,6 @@ import { ScreenContentHeader } from "./ScreenContentHeader";
 
 type OwnProps = Readonly<{
   dynamicSubHeader: React.ReactNode;
-  dynamicSubHeaderHeight: number;
   topContentHeight: number;
   animationOffset: number;
   hideHeader?: boolean;
@@ -33,10 +33,12 @@ type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
 
 type State = Readonly<{
   scrollY: Animated.Value;
+  dynamicSubHeaderHeight: number;
 }>;
 
 const INITIAL_STATE = {
-  scrollY: new Animated.Value(0)
+  scrollY: new Animated.Value(0),
+  dynamicSubHeaderHeight: 0
 };
 
 const styles = StyleSheet.create({
@@ -84,12 +86,7 @@ export default class AnimatedScreenContent extends React.Component<
         : customVariables.appHeaderHeight;
 
   public render(): React.ReactNode {
-    const {
-      dynamicSubHeaderHeight,
-      topContentHeight,
-      animationOffset,
-      contentStyle
-    } = this.props;
+    const { topContentHeight, animationOffset, contentStyle } = this.props;
 
     /**
      * The object referred as subHeader will be animated at scroll so that
@@ -103,7 +100,11 @@ export default class AnimatedScreenContent extends React.Component<
         topContentHeight - animationOffset,
         topContentHeight + animationOffset
       ],
-      outputRange: [-dynamicSubHeaderHeight, -dynamicSubHeaderHeight, 0],
+      outputRange: [
+        -this.state.dynamicSubHeaderHeight,
+        -this.state.dynamicSubHeaderHeight,
+        0
+      ],
       extrapolate: "clamp"
     });
 
@@ -133,6 +134,11 @@ export default class AnimatedScreenContent extends React.Component<
         </Animated.ScrollView>
 
         <Animated.View
+          onLayout={(event: LayoutChangeEvent) =>
+            this.setState({
+              dynamicSubHeaderHeight: event.nativeEvent.layout.height
+            })
+          }
           style={[
             styles.level1,
             styles.animatedSubHeader,
