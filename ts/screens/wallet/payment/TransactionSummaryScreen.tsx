@@ -47,7 +47,10 @@ import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentTransactionErrorScreen
 } from "../../../store/actions/navigation";
-import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
+import {
+  getFavoriteWallet,
+  walletsSelector
+} from "../../../store/reducers/wallet/wallets";
 import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { PayloadForAction } from "../../../types/utils";
 import { AmountToImporto } from "../../../utils/amounts";
@@ -155,7 +158,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 
   private renderFooterButtons() {
-    const { potVerifica, maybeFavoriteWallet } = this.props;
+    const { potVerifica, maybeFavoriteWallet, hasWallets } = this.props;
 
     const primaryButtonProps =
       pot.isSome(potVerifica) &&
@@ -166,7 +169,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
             onPress: () =>
               this.props.startOrResumePayment(
                 potVerifica.value,
-                maybeFavoriteWallet
+                maybeFavoriteWallet,
+                hasWallets
               )
           }
         : {
@@ -319,6 +323,8 @@ const mapStateToProps = (state: GlobalState) => {
       ? I18n.t("wallet.firstTransactionSummary.loadingMessage.activation")
       : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
+  const hasWallets = pot.getOrElse(walletsSelector(state), []).length !== 0;
+
   return {
     error,
     isLoading,
@@ -326,7 +332,8 @@ const mapStateToProps = (state: GlobalState) => {
     loadingOpacity: 0.95,
     potVerifica: verifica,
     maybeFavoriteWallet,
-    state
+    state,
+    hasWallets
   };
 };
 
@@ -354,7 +361,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     verifica: PaymentRequestsGetResponse,
     maybeFavoriteWallet: ReturnType<
       typeof mapStateToProps
-    >["maybeFavoriteWallet"]
+    >["maybeFavoriteWallet"],
+    hasWallets: ReturnType<typeof mapStateToProps>["hasWallets"]
   ) =>
     dispatch(
       runStartOrResumePaymentActivationSaga({
@@ -379,7 +387,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
                   idPayment
                 })
               );
-            }
+            },
+            hasWallets
           )
       })
     );
@@ -417,10 +426,15 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       potVerifica: ReturnType<typeof mapStateToProps>["potVerifica"],
       maybeFavoriteWallet: ReturnType<
         typeof mapStateToProps
-      >["maybeFavoriteWallet"]
+      >["maybeFavoriteWallet"],
+      hasWallets: ReturnType<typeof mapStateToProps>["hasWallets"]
     ) => {
       if (pot.isSome(potVerifica)) {
-        startOrResumePayment(potVerifica.value, maybeFavoriteWallet);
+        startOrResumePayment(
+          potVerifica.value,
+          maybeFavoriteWallet,
+          hasWallets
+        );
       } else {
         dispatchPaymentVerificaRequest();
       }
@@ -443,7 +457,8 @@ const mergeProps = (
   const onRetry = () => {
     dispatchProps.onRetryWithPotVerifica(
       stateProps.potVerifica,
-      stateProps.maybeFavoriteWallet
+      stateProps.maybeFavoriteWallet,
+      stateProps.hasWallets
     );
   };
   const onCancel = () => {
