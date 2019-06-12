@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: variables.colorWhite,
     fontSize: 16,
-    lineHeight: 21,
-    width: "70%"
+    lineHeight: 18,
+    width: "100%"
   },
   resetPinMessage: {
     alignSelf: "center",
