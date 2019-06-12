@@ -295,13 +295,13 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const dispatchNavigateToEntrypointPayment = (state: GlobalState) => {
-    dispatch(navigateToEntrypointPayment(state));
+  const onTransactionTimeout = () => {
+    props.onCancelNavigateToEntrypointPayment();
+    showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
   };
 
-  const onTransactionTimeout = () => {
-    dispatch(paymentInitializeState());
-    showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
+  const dispatchNavigateToEntrypointPayment = (state: GlobalState) => {
+    dispatch(navigateToEntrypointPayment(state));
   };
 
   const onTransactionValid = (tx: Transaction) => {
