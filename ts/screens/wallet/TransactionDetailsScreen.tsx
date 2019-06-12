@@ -34,7 +34,7 @@ import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
-import { Transaction } from "../../types/pagopa";
+import { Transaction, Wallet } from "../../types/pagopa";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { formatDateAsLocal } from "./../../utils/dates";
@@ -96,31 +96,47 @@ const styles = StyleSheet.create({
 });
 
 class TransactionDetailsScreen extends React.Component<Props> {
+  private displayedWallet(transactionWallet: Wallet | undefined) {
+    return transactionWallet ? (
+      <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
+    ) : (
+      <RotatedCards cardType="Preview" />
+    );
+  }
+
   /**
    * It provides the proper header to the screen. If isTransactionStarted
    * (the user displays the screen during the process of identify and accept a transaction)
    * then the "Thank you message" is displayed
    */
-  private getSubHeader(paymentCompleted: boolean) {
-    return paymentCompleted ? (
-      <View>
-        <Grid>
-          <Col size={1} />
-          <Col size={5} style={styles.alignCenter}>
-            <View spacer={true} />
-            <Row>
-              <H1 style={styles.white}>{I18n.t("wallet.thanks")}</H1>
-            </Row>
-            <Row>
-              <Text white={true}>{I18n.t("wallet.endPayment")}</Text>
-            </Row>
-            <View spacer={true} />
-          </Col>
-          <Col size={1} />
-        </Grid>
-      </View>
-    ) : (
-      <View spacer={true} />
+  private topContent(
+    paymentCompleted: boolean,
+    transactionWallet: Wallet | undefined
+  ) {
+    return (
+      <React.Fragment>
+        {paymentCompleted ? (
+          <View>
+            <Grid>
+              <Col size={1} />
+              <Col size={5} style={styles.alignCenter}>
+                <View spacer={true} />
+                <Row>
+                  <H1 style={styles.white}>{I18n.t("wallet.thanks")}</H1>
+                </Row>
+                <Row>
+                  <Text white={true}>{I18n.t("wallet.endPayment")}</Text>
+                </Row>
+                <View spacer={true} />
+              </Col>
+              <Col size={1} />
+            </Grid>
+          </View>
+        ) : (
+          <View spacer={true} />
+        )}
+        {this.displayedWallet(transactionWallet)}
+      </React.Fragment>
     );
   }
 
@@ -172,15 +188,13 @@ class TransactionDetailsScreen extends React.Component<Props> {
     return (
       <WalletLayout
         title={I18n.t("wallet.transaction")}
-        headerContents={this.getSubHeader(isPaymentCompletedTransaction)}
-        displayedWallets={
-          transactionWallet ? (
-            <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
-          ) : (
-            <RotatedCards cardType="Preview" />
-          )
-        }
         allowGoBack={!isPaymentCompletedTransaction}
+        topContent={this.topContent(
+          isPaymentCompletedTransaction,
+          transactionWallet
+        )}
+        hideHeader={true}
+        hasDynamicSubHeader={false}
       >
         <Content
           scrollEnabled={false}
