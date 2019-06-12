@@ -421,7 +421,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                     small={true}
                     onPress={this.handleClearCachePress}
                   >
-                    <Text>Clear cache</Text>
+                    <Text>{I18n.t("profile.main.clearCache")}</Text>
                   </Button>
                 </ListItem>
 
