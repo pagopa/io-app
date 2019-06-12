@@ -108,17 +108,25 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-    const { error } = this.props;
-    // in case the verifica returns an error indicating the payment has been
-    // already completed for this notice, we update the payment state so that
-    // the notice result paid
+    const { error, potVerifica } = this.props;
     if (error.toUndefined() !== prevProps.error.toUndefined()) {
+      // in case the verifica returns an error indicating the payment has been
+      // already completed for this notice, we update the payment state so that
+      // the notice result paid
       error
         .filter(_ => _ === "PAYMENT_DUPLICATED")
         .map(_ => this.props.onDuplicatedPayment());
       if (error.isSome()) {
         this.props.navigateToPaymentTransactionError(error, this.props.onRetry);
       }
+    } else if (
+      potVerifica !== prevProps.potVerifica &&
+      pot.isError(potVerifica)
+    ) {
+      this.props.navigateToPaymentTransactionError(
+        some(potVerifica.error),
+        this.props.onRetry
+      );
     }
   }
 
@@ -176,6 +184,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
     // when empty, it means we're still loading the verifica response
     const { potVerifica } = this.props;
 
+    const maybeEnteBeneficiario = pot
+      .toOption(potVerifica)
+      .mapNullable(_ => _.enteBeneficiario)
+      .map(formatTextRecipient);
+
     return (
       <BaseScreenComponent
         goBack={true}
@@ -209,18 +222,16 @@ class TransactionSummaryScreen extends React.Component<Props> {
           )}
 
           <View content={true}>
-            <Text bold={true}>
-              {I18n.t("wallet.firstTransactionSummary.entity")}
-            </Text>
-            <Text>
-              {pot
-                .toOption(potVerifica)
-                .mapNullable(_ => _.enteBeneficiario)
-                .map(formatTextRecipient)
-                .getOrElse("...")
-                .trim()}
-            </Text>
-            <View spacer={true} />
+            {maybeEnteBeneficiario.isSome() && (
+              <React.Fragment>
+                <Text bold={true}>
+                  {I18n.t("wallet.firstTransactionSummary.entity")}
+                </Text>
+                <Text>{maybeEnteBeneficiario.value.trim()}</Text>
+                <View spacer={true} />
+              </React.Fragment>
+            )}
+
             <Text bold={true}>
               {I18n.t("wallet.firstTransactionSummary.object")}
             </Text>

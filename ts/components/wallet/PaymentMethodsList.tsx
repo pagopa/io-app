@@ -6,9 +6,9 @@
  */
 
 import color from "color";
-import { Left, ListItem, Right, Text, View } from "native-base";
+import { Badge, Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, FlatList, StyleSheet } from "react-native";
+import { FlatList, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -26,34 +26,36 @@ type OwnProps = Readonly<{
 type Props = OwnProps & ContextualHelpInjectedProps;
 
 type IPaymentMethod = Readonly<{
-  onPress: () => void;
   name: string;
   maxFee: string;
   icon: any;
+  implemented: boolean;
+  onPress?: () => void;
 }>;
 
 const styles = StyleSheet.create({
   listItem: {
     marginLeft: 0,
     paddingRight: 0
+  },
+  disabled: {
+    opacity: 0.75
   }
 });
 
-const unavailableAlert = () =>
-  Alert.alert(
-    I18n.t("wallet.pickPaymentMethod.unavailable.title"),
-    I18n.t("wallet.pickPaymentMethod.unavailable.message")
-  );
-
 const AddMethodStyle = StyleSheet.create({
-  paymentMethodEntry: {
-    height: 75
-  },
   transactionText: {
     fontSize: variables.fontSizeSmaller,
     color: color(variables.colorWhite)
       .darken(0.35)
       .string()
+  },
+  notImplementedBadge: {
+    height: 18
+  },
+  notImplementedText: {
+    fontSize: 10,
+    lineHeight: Platform.OS === "ios" ? 14 : 16
   },
   centeredContents: {
     alignItems: "center"
@@ -67,19 +69,20 @@ class PaymentMethodsList extends React.Component<Props, never> {
         onPress: this.props.navigateToAddCreditCard,
         name: I18n.t("wallet.methods.card.name"),
         maxFee: I18n.t("wallet.methods.card.maxFee"),
-        icon: "io-48-card"
+        icon: "io-48-card",
+        implemented: true
       },
       {
         name: I18n.t("wallet.methods.bank.name"),
         maxFee: I18n.t("wallet.methods.bank.maxFee"),
         icon: "io-48-bank",
-        onPress: unavailableAlert // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
+        implemented: false
       },
       {
         name: I18n.t("wallet.methods.mobile.name"),
         maxFee: I18n.t("wallet.methods.mobile.maxFee"),
         icon: "io-48-phone",
-        onPress: unavailableAlert // TODO: handle when destination is available @https://www.pivotaltracker.com/story/show/157588719
+        implemented: false
       }
     ];
     return (
@@ -90,32 +93,56 @@ class PaymentMethodsList extends React.Component<Props, never> {
           removeClippedSubviews={false}
           data={paymentMethods}
           keyExtractor={item => item.name}
-          renderItem={itemInfo => (
-            <ListItem
-              style={[AddMethodStyle.paymentMethodEntry, styles.listItem]}
-              onPress={itemInfo.item.onPress}
-            >
-              <Left>
-                <Grid>
-                  <Row>
-                    <Text bold={true}>{itemInfo.item.name}</Text>
-                  </Row>
-                  <Row>
-                    <Text style={AddMethodStyle.transactionText}>
-                      {itemInfo.item.maxFee}
-                    </Text>
-                  </Row>
-                </Grid>
-              </Left>
-              <Right style={AddMethodStyle.centeredContents}>
-                <IconFont
-                  name={itemInfo.item.icon}
-                  color={variables.brandPrimary}
-                  size={variables.iconSize6}
-                />
-              </Right>
-            </ListItem>
-          )}
+          renderItem={itemInfo => {
+            const isItemDisabled = !itemInfo.item.implemented;
+            const disabledStyle = isItemDisabled ? styles.disabled : {};
+            return (
+              <ListItem
+                style={[styles.listItem]}
+                onPress={itemInfo.item.onPress}
+              >
+                <Left>
+                  <Grid>
+                    <Row>
+                      <Text bold={true} style={disabledStyle}>
+                        {itemInfo.item.name}
+                      </Text>
+                    </Row>
+                    <Row>
+                      <Text
+                        style={[AddMethodStyle.transactionText, disabledStyle]}
+                      >
+                        {itemInfo.item.maxFee}
+                      </Text>
+                    </Row>
+                    {isItemDisabled && (
+                      <Row>
+                        <Badge
+                          primary={true}
+                          style={AddMethodStyle.notImplementedBadge}
+                        >
+                          <Text style={AddMethodStyle.notImplementedText}>
+                            {I18n.t("wallet.methods.notImplemented")}
+                          </Text>
+                        </Badge>
+                      </Row>
+                    )}
+                  </Grid>
+                </Left>
+                <Right style={AddMethodStyle.centeredContents}>
+                  <IconFont
+                    name={itemInfo.item.icon}
+                    color={
+                      isItemDisabled
+                        ? variables.brandLightGray
+                        : variables.brandPrimary
+                    }
+                    size={variables.iconSize6}
+                  />
+                </Right>
+              </ListItem>
+            );
+          }}
         />
         <View spacer={true} large={true} />
         <Text link={true} onPress={this.props.showHelp}>
