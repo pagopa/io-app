@@ -73,6 +73,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
           return;
         }
 
+        // Get the previous navigation state
         const previousNavigationState = {
           ...currentNavigationHistory[currentNavigationHistory.length - 1]
         };
@@ -88,6 +89,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
             // Dispatch an action to restore the previous state
             store.dispatch(navigationRestore(previousNavigationState));
           } else {
+            // Search for the index where the route is present for the first time
             const index = currentNavigationHistory.findIndex(
               navigationState => {
                 return navigationStateRoutesContainsKey(
@@ -96,6 +98,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
                 );
               }
             );
+            // Calculate the number of pop to do for return to the route
             const nPop = currentNavigationHistory.length - index;
 
             const backNavigationState = {
@@ -124,7 +127,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
 /*
 * Check if the route key is present in routes of navigation state
 */
-function navigationStateRoutesContainsKey(
+export function navigationStateRoutesContainsKey(
   routes: ReadonlyArray<NavigationRoute>,
   routeKey: string
 ): boolean {
@@ -138,11 +141,6 @@ function navigationStateRoutesContainsKey(
     );
   });
 
-  // If we didn't find the route, then return immediately
-  if (index === -1) {
-    return false;
-  } else {
-    // Found
-    return true;
-  }
+  const notFound = -1;
+  return index !== notFound;
 }
