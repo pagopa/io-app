@@ -12,7 +12,11 @@
 import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import {
+  NavigationEventPayload,
+  NavigationEvents,
+  NavigationInjectedProps
+} from "react-navigation";
 import { connect } from "react-redux";
 
 import { isLeft, isRight } from "fp-ts/lib/Either";
@@ -86,15 +90,15 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     };
   }
 
-  public componentDidUpdate(prevProps: Props) {
-    const prevIsInvalidAmount = prevProps.navigation.getParam(
-      "isInvalidAmount"
-    );
-    const isInvalidAmount = this.props.navigation.getParam("isInvalidAmount");
-    if (prevIsInvalidAmount !== isInvalidAmount && isInvalidAmount) {
+  private handleWillFocus = (payload: NavigationEventPayload) => {
+    const isInvalidAmount =
+      payload.state.params !== undefined
+        ? payload.state.params.isInvalidAmount
+        : false;
+    if (isInvalidAmount) {
       this.setState({ inputAmountValue: "", delocalizedAmount: none });
     }
-  }
+  };
 
   private decimalSeparatorRe = RegExp(
     `\\${I18n.t("global.localization.decimalSeparator")}`,
@@ -162,6 +166,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         goBack={true}
         headerTitle={I18n.t("wallet.insertManually.header")}
       >
+        <NavigationEvents onWillFocus={this.handleWillFocus} />
         <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
@@ -254,15 +259,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateToTransactionSummary: (
     rptId: RptId,
     initialAmount: AmountInEuroCents
   ) => {
-    if (props.navigation.getParam("isInvalidAmount")) {
-      props.navigation.setParams({ isInvalidAmount: false });
-    }
     dispatch(paymentInitializeState());
     dispatch(
       navigateToPaymentTransactionSummaryScreen({
