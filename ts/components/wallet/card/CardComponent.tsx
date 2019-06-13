@@ -195,9 +195,9 @@ export default class CardComponent extends React.Component<Props> {
       return null;
     }
 
-    const expirationDate = buildExpirationDate(wallet);
-    const isExpired = isExpiredCard(wallet);
-
+    const expirationDate = buildExpirationDate(wallet.creditCard!);
+    const isExpired = isExpiredCard(wallet.creditCard!);
+    // credit card undefined check made by caller
     return (
       <View
         style={[styles.columns, styles.paddedTop, styles.body]}
@@ -218,7 +218,7 @@ export default class CardComponent extends React.Component<Props> {
           </Text>
 
           <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
-            {wallet.creditCard.holder.toUpperCase()}
+            {wallet.creditCard!.holder.toUpperCase()}
           </Text>
         </View>
 
@@ -271,7 +271,7 @@ export default class CardComponent extends React.Component<Props> {
     const hasFlatBottom =
       this.props.type === "Preview" || this.props.type === "Header";
 
-    return (
+    return wallet.creditCard === undefined ? null : (
       <View
         style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
       >
