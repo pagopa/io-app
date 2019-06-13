@@ -4,7 +4,7 @@
  */
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { Wallet, CreditCard } from "../../../types/pagopa";
+import { CreditCard, Wallet } from "../../../types/pagopa";
 import { CreditCardType } from "../../../types/pagopa";
 import { getResourceNameFromUrl } from "../../../utils/url";
 
@@ -39,7 +39,7 @@ const defaultCardIcon = require("../../../../img/wallet/cards-icons/unknown.png"
  * Consider to evaluate the field "brand" instead of "brandLogo"
  * because it should contain only the name of the credit card type
  * for more info check https://www.pivotaltracker.com/story/show/165067615
- * @param wallet the wallet objects from which retrieve the credit card icon
+ * @param creditcard the creditcard objects from which retrieve the icon
  */
 const getCardIconFromBrandLogo = (creditcard: CreditCard) => {
   if (!creditcard.brandLogo) {
