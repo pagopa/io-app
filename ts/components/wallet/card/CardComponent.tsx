@@ -17,7 +17,7 @@ import {
 import I18n from "../../../i18n";
 
 import variables from "../../../theme/variables";
-import { Wallet, CreditCard } from "../../../types/pagopa";
+import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { isExpiredCard } from "../../../utils/wallet";
 import IconFont from "../../ui/IconFont";
