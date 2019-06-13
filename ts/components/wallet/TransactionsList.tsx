@@ -6,13 +6,13 @@ import {
   Body,
   Content,
   Grid,
-  H3,
   Left,
   List,
   ListItem,
   Right,
   Row,
-  Text
+  Text,
+  View
 } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -25,6 +25,7 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
+import H5 from "../ui/H5";
 
 type Props = Readonly<{
   title: string;
@@ -54,6 +55,16 @@ const styles = StyleSheet.create({
   whiteContent: {
     backgroundColor: variables.colorWhite,
     flex: 1
+  },
+
+  subHeaderContent: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between"
+  },
+
+  brandDarkGray: {
+    color: variables.brandDarkGray
   }
 });
 
@@ -118,6 +129,7 @@ export default class TransactionsList extends React.Component<Props> {
     if (pot.isLoading(this.props.transactions)) {
       return (
         <BoxedRefreshIndicator
+          white={true}
           caption={<Text>{I18n.t("wallet.transactionsLoadMessage")}</Text>}
         />
       );
@@ -133,15 +145,16 @@ export default class TransactionsList extends React.Component<Props> {
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteContent]}
       >
+        <View>
+          <View style={styles.subHeaderContent}>
+            <H5 style={styles.brandDarkGray}>
+              {I18n.t("wallet.latestTransactions")}
+            </H5>
+            <Text>{I18n.t("wallet.total")}</Text>
+          </View>
+        </View>
+
         <Grid>
-          <Row>
-            <Left>
-              <H3>{this.props.title}</H3>
-            </Left>
-            <Right>
-              <Text>{this.props.totalAmount}</Text>
-            </Right>
-          </Row>
           <Row>
             <List
               scrollEnabled={false}
