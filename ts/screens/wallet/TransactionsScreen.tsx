@@ -3,12 +3,13 @@
  * from a specific credit card
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H3, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import H5 from "../../components/ui/H5";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
@@ -42,27 +43,30 @@ type Props = OwnProps &
 
 const styles = StyleSheet.create({
   walletBannerText: {
-    height: 50,
     alignItems: "flex-end",
     flexDirection: "row"
   },
+
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
   },
-  whiteContent: {
-    backgroundColor: variables.colorWhite,
-    flex: 1
+
+  whiteBg: {
+    backgroundColor: variables.colorWhite
+  },
+
+  brandDarkGray: {
+    color: variables.brandDarkGray
   }
 });
 
 const ListEmptyComponent = (
   <Content
     scrollEnabled={false}
-    style={[styles.noBottomPadding, styles.whiteContent]}
+    style={[styles.noBottomPadding, styles.whiteBg]}
   >
-    <View spacer={true} />
-    <H3>{I18n.t("wallet.noneTransactions")}</H3>
+    <H5 style={styles.brandDarkGray}>{I18n.t("wallet.noneTransactions")}</H5>
     <View spacer={true} />
     <Text>{I18n.t("wallet.noTransactionsInTransactionsScreen")}</Text>
     <View spacer={true} large={true} />
@@ -70,41 +74,51 @@ const ListEmptyComponent = (
 );
 
 class TransactionsScreen extends React.Component<Props> {
+  private headerContent(
+    selectedWallet: Wallet,
+    isFavorite: pot.Pot<boolean, Error>
+  ) {
+    return (
+      <React.Fragment>
+        <View>
+          <View spacer={true} large={true} />
+          <View style={styles.walletBannerText}>
+            <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
+          </View>
+        </View>
+
+        <CardComponent
+          type="Header"
+          wallet={selectedWallet}
+          hideFavoriteIcon={false}
+          hideMenu={false}
+          isFavorite={isFavorite}
+          onSetFavorite={(willBeFavorite: boolean) =>
+            this.props.setFavoriteWallet(
+              willBeFavorite ? selectedWallet.idWallet : undefined
+            )
+          }
+          onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
+        />
+      </React.Fragment>
+    );
+  }
+
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
+
     const isFavorite = pot.map(
       this.props.favoriteWallet,
       _ => _ === selectedWallet.idWallet
-    );
-    const headerContents = (
-      <View>
-        <View style={styles.walletBannerText}>
-          <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
-        </View>
-        <View spacer={true} />
-      </View>
     );
 
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
         allowGoBack={true}
-        headerContents={headerContents}
-        displayedWallets={
-          <CardComponent
-            type="Header"
-            wallet={selectedWallet}
-            hideFavoriteIcon={false}
-            hideMenu={false}
-            isFavorite={isFavorite}
-            onSetFavorite={(willBeFavorite: boolean) =>
-              this.props.setFavoriteWallet(
-                willBeFavorite ? selectedWallet.idWallet : undefined
-              )
-            }
-            onDelete={() => this.props.deleteWallet(selectedWallet.idWallet)}
-          />
-        }
+        topContent={this.headerContent(selectedWallet, isFavorite)}
+        hideHeader={true}
+        hasDynamicSubHeader={true}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
