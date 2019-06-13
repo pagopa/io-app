@@ -115,6 +115,12 @@ function* createOrUpdateProfileSaga(
     return;
   }
 
+  // TODO: Implement logic when a 429 persist from upstream API
+  if (response.value.status === 429) {
+    yield put(sessionExpired());
+    return;
+  }
+
   if (response.value.status !== 200) {
     // We got a error, send a SESSION_UPSERT_FAILURE action
     const error: Error = Error(
