@@ -1,15 +1,13 @@
 /**
  * A saga to manage notifications
  */
-import {
-  TypeofApiCall,
-  TypeOfApiResponseStatus
-} from "italia-ts-commons/lib/requests";
+import { TypeOfApiResponseStatus } from "italia-ts-commons/lib/requests";
 import { Platform } from "react-native";
 import { call, Effect, put, select } from "redux-saga/effects";
 
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { CreateOrUpdateInstallationT } from "../../definitions/backend/requestTypes";
+import { BackendClient } from "../api/backend";
 import { updateNotificationInstallationFailure } from "../store/actions/notifications";
 import { notificationsInstallationSelector } from "../store/reducers/notifications/installation";
 import { GlobalState } from "../store/reducers/types";
@@ -24,7 +22,9 @@ const notificationsPlatform: PlatformEnum = Platform.select({
  * This generator function calls the ProxyApi `installation` endpoint
  */
 export function* updateInstallationSaga(
-  createOrUpdateInstallation: TypeofApiCall<CreateOrUpdateInstallationT>
+  createOrUpdateInstallation: ReturnType<
+    typeof BackendClient
+  >["createOrUpdateInstallation"]
 ): Iterator<
   Effect | TypeOfApiResponseStatus<CreateOrUpdateInstallationT> | undefined
 > {
@@ -49,11 +49,11 @@ export function* updateInstallationSaga(
   });
 
   /**
-   * If the response is undefined (can't be decoded) or the status is not 200 dispatch a failure action
+   * If the response isLeft (got an error) dispatch a failure action
    */
-  if (response === undefined || response.status !== 200) {
+  if (response.isLeft()) {
     yield put(updateNotificationInstallationFailure());
+    return undefined;
   }
-
-  return response === undefined ? undefined : response.status;
+  return response.value.status;
 }

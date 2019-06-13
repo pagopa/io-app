@@ -1,5 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import customVariables from "../../theme/variables";
 import { RefreshIndicator } from "./RefreshIndicator";
 
 const styles = StyleSheet.create({
@@ -8,17 +9,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
+  },
+
+  whiteBg: {
+    backgroundColor: customVariables.colorWhite
   }
 });
 
 interface Props {
   caption?: React.ReactNode;
+  white?: boolean;
+  action?: React.ReactNode;
 }
 
 const BoxedRefreshIndicator: React.SFC<Props> = props => (
-  <View style={styles.refreshBox}>
+  <View style={[styles.refreshBox, props.white && styles.whiteBg]}>
     <RefreshIndicator />
     {props.caption ? props.caption : null}
+    {props.action ? props.action : null}
   </View>
 );
 

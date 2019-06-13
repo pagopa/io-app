@@ -47,7 +47,10 @@ import {
   navigateToPaymentTransactionErrorScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
-import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
+import {
+  getFavoriteWallet,
+  walletsSelector
+} from "../../../store/reducers/wallet/wallets";
 import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { PayloadForAction } from "../../../types/utils";
 import { AmountToImporto } from "../../../utils/amounts";
@@ -108,17 +111,25 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-    const { error } = this.props;
-    // in case the verifica returns an error indicating the payment has been
-    // already completed for this notice, we update the payment state so that
-    // the notice result paid
+    const { error, potVerifica } = this.props;
     if (error.toUndefined() !== prevProps.error.toUndefined()) {
+      // in case the verifica returns an error indicating the payment has been
+      // already completed for this notice, we update the payment state so that
+      // the notice result paid
       error
         .filter(_ => _ === "PAYMENT_DUPLICATED")
         .map(_ => this.props.onDuplicatedPayment());
       if (error.isSome()) {
         this.props.navigateToPaymentTransactionError(error, this.props.onRetry);
       }
+    } else if (
+      potVerifica !== prevProps.potVerifica &&
+      pot.isError(potVerifica)
+    ) {
+      this.props.navigateToPaymentTransactionError(
+        some(potVerifica.error),
+        this.props.onRetry
+      );
     }
   }
 
@@ -141,7 +152,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 
   private renderFooterButtons() {
-    const { potVerifica, maybeFavoriteWallet } = this.props;
+    const { potVerifica, maybeFavoriteWallet, hasWallets } = this.props;
 
     const primaryButtonProps =
       pot.isSome(potVerifica) &&
@@ -152,7 +163,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
             onPress: () =>
               this.props.startOrResumePayment(
                 potVerifica.value,
-                maybeFavoriteWallet
+                maybeFavoriteWallet,
+                hasWallets
               )
           }
         : {
@@ -305,13 +317,16 @@ const mapStateToProps = (state: GlobalState) => {
       ? I18n.t("wallet.firstTransactionSummary.loadingMessage.activation")
       : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
+  const hasWallets = pot.getOrElse(walletsSelector(state), []).length !== 0;
+
   return {
     error,
     isLoading,
     loadingCaption,
     loadingOpacity: 0.95,
     potVerifica: verifica,
-    maybeFavoriteWallet
+    maybeFavoriteWallet,
+    hasWallets
   };
 };
 
@@ -339,7 +354,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     verifica: PaymentRequestsGetResponse,
     maybeFavoriteWallet: ReturnType<
       typeof mapStateToProps
-    >["maybeFavoriteWallet"]
+    >["maybeFavoriteWallet"],
+    hasWallets: ReturnType<typeof mapStateToProps>["hasWallets"]
   ) =>
     dispatch(
       runStartOrResumePaymentActivationSaga({
@@ -364,7 +380,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
                   idPayment
                 })
               );
-            }
+            },
+            hasWallets
           )
       })
     );
@@ -401,10 +418,15 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       potVerifica: ReturnType<typeof mapStateToProps>["potVerifica"],
       maybeFavoriteWallet: ReturnType<
         typeof mapStateToProps
-      >["maybeFavoriteWallet"]
+      >["maybeFavoriteWallet"],
+      hasWallets: ReturnType<typeof mapStateToProps>["hasWallets"]
     ) => {
       if (pot.isSome(potVerifica)) {
-        startOrResumePayment(potVerifica.value, maybeFavoriteWallet);
+        startOrResumePayment(
+          potVerifica.value,
+          maybeFavoriteWallet,
+          hasWallets
+        );
       } else {
         dispatchPaymentVerificaRequest();
       }
@@ -427,7 +449,8 @@ const mergeProps = (
   const onRetry = () => {
     dispatchProps.onRetryWithPotVerifica(
       stateProps.potVerifica,
-      stateProps.maybeFavoriteWallet
+      stateProps.maybeFavoriteWallet,
+      stateProps.hasWallets
     );
   };
   return {
