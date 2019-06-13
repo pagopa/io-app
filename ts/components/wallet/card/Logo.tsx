@@ -4,7 +4,7 @@
  */
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { CreditCard, Wallet } from "../../../types/pagopa";
+import { CreditCard } from "../../../types/pagopa";
 import { CreditCardType } from "../../../types/pagopa";
 import { getResourceNameFromUrl } from "../../../utils/url";
 
@@ -60,17 +60,13 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  item?: Wallet;
+  item?: CreditCard;
 }>;
 
 const Logo: React.SFC<Props> = props => (
   <Image
     style={styles.issuerLogo}
-    source={
-      props.item && props.item.creditCard
-        ? getCardIconFromBrandLogo(props.item.creditCard)
-        : defaultCardIcon
-    }
+    source={props.item ? getCardIconFromBrandLogo(props.item) : defaultCardIcon}
   />
 );
 

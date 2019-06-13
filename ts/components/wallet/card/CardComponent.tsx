@@ -17,7 +17,7 @@ import {
 import I18n from "../../../i18n";
 
 import variables from "../../../theme/variables";
-import { Wallet } from "../../../types/pagopa";
+import { Wallet, CreditCard } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { isExpiredCard } from "../../../utils/wallet";
 import IconFont from "../../ui/IconFont";
@@ -177,10 +177,10 @@ export default class CardComponent extends React.Component<Props> {
       );
     }
 
-    if (this.props.type === "Preview") {
+    if (this.props.type === "Preview" && wallet.creditCard !== undefined) {
       return (
         <View style={styles.cardLogo}>
-          <Logo item={wallet} />
+          <Logo item={wallet.creditCard} />
         </View>
       );
     }
@@ -188,16 +188,16 @@ export default class CardComponent extends React.Component<Props> {
     return null;
   }
 
-  private renderBody() {
-    const { type, wallet } = this.props;
+  private renderBody(creditCard: CreditCard) {
+    const { type } = this.props;
 
     if (type === "Preview") {
       return null;
     }
 
-    const expirationDate = buildExpirationDate(wallet.creditCard!);
-    const isExpired = isExpiredCard(wallet.creditCard!);
-    // credit card undefined check made by caller
+    const expirationDate = buildExpirationDate(creditCard);
+    const isExpired = isExpiredCard(creditCard);
+
     return (
       <View
         style={[styles.columns, styles.paddedTop, styles.body]}
@@ -218,12 +218,12 @@ export default class CardComponent extends React.Component<Props> {
           </Text>
 
           <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
-            {wallet.creditCard!.holder.toUpperCase()}
+            {creditCard.holder.toUpperCase()}
           </Text>
         </View>
 
         <View style={styles.cardLogo}>
-          <Logo item={wallet} />
+          <Logo item={creditCard} />
         </View>
       </View>
     );
@@ -295,7 +295,7 @@ export default class CardComponent extends React.Component<Props> {
             </View>
           </View>
 
-          {this.renderBody()}
+          {this.renderBody(wallet.creditCard)}
         </View>
 
         {this.renderFooterRow()}
