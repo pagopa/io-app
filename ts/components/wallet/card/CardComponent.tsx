@@ -177,7 +177,7 @@ export default class CardComponent extends React.Component<Props> {
       );
     }
 
-    if (this.props.type === "Preview" && wallet.creditCard !== undefined) {
+    if (this.props.type === "Preview") {
       return (
         <View style={styles.cardLogo}>
           <Logo item={wallet.creditCard} />
