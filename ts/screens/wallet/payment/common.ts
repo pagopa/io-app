@@ -1,6 +1,6 @@
 // tslint:disable:parameters-max-number
 
-import { Option } from "fp-ts/lib/Option";
+import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ActionType } from "typesafe-actions";
 
@@ -8,7 +8,8 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import {
   navigateToPaymentConfirmPaymentMethodScreen,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentPickPspScreen
+  navigateToPaymentPickPspScreen,
+  navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -72,7 +73,8 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
   maybeSelectedWallet: Option<Wallet>,
   // NO_PSPS_AVAILABLE: the wallet cannot be used for this payment
   // FETCH_PSPS_FAILURE: fetching the PSPs for this wallet has failed
-  onFailure: (reason: "NO_PSPS_AVAILABLE" | "FETCH_PSPS_FAILURE") => void
+  onFailure: (reason: "NO_PSPS_AVAILABLE" | "FETCH_PSPS_FAILURE") => void,
+  hasWallets: boolean = true
 ) => {
   if (maybeSelectedWallet.isSome()) {
     const selectedWallet = maybeSelectedWallet.value;
@@ -152,14 +154,28 @@ export const dispatchPickPspOrConfirm = (dispatch: Dispatch) => (
       })
     );
   } else {
-    // the user didn't select yet a wallet, ask the user to select one
-    dispatch(
-      navigateToPaymentPickPaymentMethodScreen({
-        rptId,
-        initialAmount,
-        verifica,
-        idPayment
-      })
-    );
+    if (hasWallets) {
+      // the user didn't select yet a wallet, ask the user to select one
+      dispatch(
+        navigateToPaymentPickPaymentMethodScreen({
+          rptId,
+          initialAmount,
+          verifica,
+          idPayment
+        })
+      );
+    } else {
+      // the user never add a wallet, ask the user to add a new one
+      dispatch(
+        navigateToWalletAddPaymentMethod({
+          inPayment: some({
+            rptId,
+            initialAmount,
+            verifica,
+            idPayment
+          })
+        })
+      );
+    }
   }
 };
