@@ -35,8 +35,21 @@ function retryingFetch(
     maxRetries,
     exponentialBackoff
   );
+  const retryWithTransient429s: typeof retryLogic = (t, shouldAbort?) =>
+    retryLogic(
+      // when the result of the task is a Response with status 429,
+      // map it to a transient error
+      t.chain(r =>
+        fromEither(
+          r.status === 429
+            ? left<TransientError, never>(TransientError)
+            : right<never, Response>(r)
+        )
+      ),
+      shouldAbort
+    );
   // TODO: remove the cast once we upgrade to tsc >= 3.1
-  return retriableFetch(retryLogic)(timeoutFetch as typeof fetch);
+  return retriableFetch(retryWithTransient429s)(timeoutFetch as typeof fetch);
 }
 
 /**
