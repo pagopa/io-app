@@ -9,6 +9,7 @@ declare module "native-base" {
   namespace NativeBase {
     interface Header {
       primary?: boolean;
+      dark?: boolean;
     }
   }
 }
@@ -89,6 +90,17 @@ export default (): Theme => {
 
     ".primary": {
       backgroundColor: variables.contentPrimaryBackground,
+      "NativeBase.Right": {
+        "NativeBase.Button": {
+          "UIComponent.IconFont": {
+            color: variables.brandPrimaryInverted
+          }
+        }
+      }
+    },
+
+    ".dark": {
+      backgroundColor: variables.brandDarkGray,
       "NativeBase.Right": {
         "NativeBase.Button": {
           "UIComponent.IconFont": {
