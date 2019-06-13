@@ -24,16 +24,18 @@ const styles = StyleSheet.create({
     transform: [
       { perspective: 700 },
       { rotateX: "-20deg" },
-      { translateY: -(58 / 2 + 20) * (1 - Math.cos(20)) },
+      { translateY: -(58 / 2 + 20) * (1 - Math.cos(20)) }, // card preview height: 58
       { scaleX: 0.98 }
     ],
     zIndex: -10
   },
   containerOneCard: {
-    marginBottom: -4
+    marginBottom: -4,
+    marginTop: -(58 / 2) * (1 - Math.cos(20)) 
   },
   containerTwoCards: {
-    marginBottom: -(58 / 2 + 1)
+    marginBottom: -(58 / 2 + 1),
+    marginTop: -(58 / 2) * (1 - Math.cos(20))
   }
 });
 
