@@ -149,6 +149,7 @@ class MessagesHomeScreen extends React.Component<Props> {
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
+            isExperimentalFeaturesEnabled={isExperimentalFeaturesEnabled}
           />
         </Tab>
         {isExperimentalFeaturesEnabled && (

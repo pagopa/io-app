@@ -515,6 +515,8 @@ messages:
   cta:
     archive: Archive
     unarchive: Unarchive
+    selectAll: Select all
+    deselectAll: Deselect all
     payment:
       expired: Payment expired
       validAlert:

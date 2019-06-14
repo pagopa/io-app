@@ -525,6 +525,8 @@ messages:
   cta:
     archive: Archivia
     unarchive: Ripristina
+    selectAll: Seleziona tutti
+    deselectAll: Deseleziona tutti
     payment:
       expired: Pagamento scaduto
       validAlert:

@@ -1,16 +1,23 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import hoistNonReactStatics from "hoist-non-react-statics";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Omit } from "italia-ts-commons/lib/types";
 import React from "react";
+import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 
 type State = {
   selectedMessageIds: Option<Set<string>>;
+  isAllMessagesSelected: boolean;
 };
 
 export type InjectedWithMessagesSelectionProps = {
   selectedMessageIds: Option<Set<string>>;
   toggleMessageSelection: (id: string) => void;
   resetSelection: () => void;
+  toggleAllMessagesSelection: (
+    potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+  ) => void;
+  isAllMessagesSelected: boolean;
 };
 
 /**
@@ -26,12 +33,13 @@ export function withMessagesSelection<
     constructor(props: Omit<P, keyof InjectedWithMessagesSelectionProps>) {
       super(props);
       this.state = {
-        selectedMessageIds: none
+        selectedMessageIds: none,
+        isAllMessagesSelected: false
       };
     }
 
     public render() {
-      const { selectedMessageIds } = this.state;
+      const { isAllMessagesSelected, selectedMessageIds } = this.state;
 
       return (
         <WrappedComponent
@@ -39,6 +47,8 @@ export function withMessagesSelection<
           selectedMessageIds={selectedMessageIds}
           toggleMessageSelection={this.toggleMessageSelection}
           resetSelection={this.resetSelection}
+          toggleAllMessagesSelection={this.toggleAllMessagesSelection}
+          isAllMessagesSelected={isAllMessagesSelected}
         />
       );
     }
@@ -59,6 +69,31 @@ export function withMessagesSelection<
           })
           .getOrElse({ selectedMessageIds: some(new Set().add(id)) });
       });
+    };
+
+    // A function to add/remove all messages in the selectedMessageIds Set.
+    private toggleAllMessagesSelection = (
+      potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+    ) => {
+      const { isAllMessagesSelected } = this.state;
+      const allMessagesIds = pot.getOrElse(
+        pot.map(potMessagesState, _ =>
+          _.map(messageState => messageState.meta.id)
+        ),
+        []
+      );
+      const newSelectedMessageIds = new Set(allMessagesIds);
+      if (isAllMessagesSelected) {
+        this.setState({
+          selectedMessageIds: some(new Set()),
+          isAllMessagesSelected: false
+        });
+      } else {
+        this.setState({
+          selectedMessageIds: some(newSelectedMessageIds),
+          isAllMessagesSelected: true
+        });
+      }
     };
 
     private resetSelection = () => {

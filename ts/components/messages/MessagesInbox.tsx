@@ -57,6 +57,7 @@ type OwnProps = {
     ids: ReadonlyArray<string>,
     archived: boolean
   ) => void;
+  isExperimentalFeaturesEnabled: boolean;
 };
 
 type Props = Pick<
@@ -141,7 +142,12 @@ class MessagesInbox extends React.PureComponent<Props, State> {
 
   public render() {
     const isLoading = pot.isLoading(this.props.messagesState);
-    const { selectedMessageIds, resetSelection } = this.props;
+    const {
+      selectedMessageIds,
+      resetSelection,
+      isExperimentalFeaturesEnabled,
+      isAllMessagesSelected
+    } = this.props;
 
     return (
       <View style={styles.listWrapper}>
@@ -156,6 +162,21 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
+            {isExperimentalFeaturesEnabled && (
+              <Button
+                block={true}
+                style={styles.buttonBarPrimaryButton}
+                onPress={this.toggleAllMessagesSelection}
+              >
+                <Text>
+                  {I18n.t(
+                    isAllMessagesSelected
+                      ? "messages.cta.deselectAll"
+                      : "messages.cta.selectAll"
+                  )}
+                </Text>
+              </Button>
+            )}
             <Button
               block={true}
               style={styles.buttonBarPrimaryButton}
@@ -191,6 +212,10 @@ class MessagesInbox extends React.PureComponent<Props, State> {
 
   private handleOnLongPressItem = (id: string) => {
     this.props.toggleMessageSelection(id);
+  };
+
+  private toggleAllMessagesSelection = () => {
+    this.props.toggleAllMessagesSelection(this.props.messagesState);
   };
 
   private archiveMessages = () => {
