@@ -325,7 +325,7 @@ const mapStateToProps = (state: GlobalState) => {
     error,
     isLoading,
     loadingCaption,
-    loadingOpacity: 0.95,
+    loadingOpacity: 0.98,
     potVerifica: verifica,
     maybeFavoriteWallet,
     hasWallets
