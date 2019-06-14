@@ -12,7 +12,11 @@
 import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { NavigationInjectedProps } from "react-navigation";
+import {
+  NavigationEventPayload,
+  NavigationEvents,
+  NavigationInjectedProps
+} from "react-navigation";
 import { connect } from "react-redux";
 
 import { isLeft, isRight } from "fp-ts/lib/Either";
@@ -40,7 +44,11 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { NumberFromString } from "../../../utils/number";
 
-type OwnProps = NavigationInjectedProps;
+type NavigationParams = {
+  isInvalidAmount?: boolean;
+};
+
+type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
@@ -54,6 +62,7 @@ type State = Readonly<{
   delocalizedAmount: Option<
     ReturnType<typeof AmountInEuroCentsFromString.decode>
   >;
+  inputAmountValue: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -76,9 +85,20 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     this.state = {
       paymentNoticeNumber: none,
       organizationFiscalCode: none,
-      delocalizedAmount: none
+      delocalizedAmount: none,
+      inputAmountValue: ""
     };
   }
+
+  private handleWillFocus = (payload: NavigationEventPayload) => {
+    const isInvalidAmount =
+      payload.state.params !== undefined
+        ? payload.state.params.isInvalidAmount
+        : false;
+    if (isInvalidAmount) {
+      this.setState({ inputAmountValue: "", delocalizedAmount: none });
+    }
+  };
 
   private decimalSeparatorRe = RegExp(
     `\\${I18n.t("global.localization.decimalSeparator")}`,
@@ -146,6 +166,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         goBack={true}
         headerTitle={I18n.t("wallet.insertManually.header")}
       >
+        <NavigationEvents onWillFocus={this.handleWillFocus} />
         <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
@@ -211,8 +232,10 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <Input
                   keyboardType={"numeric"}
                   maxLength={10}
+                  value={this.state.inputAmountValue}
                   onChangeText={value =>
                     this.setState({
+                      inputAmountValue: value,
                       delocalizedAmount: some(
                         value.replace(this.decimalSeparatorRe, ".")
                       )
@@ -246,7 +269,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       navigateToPaymentTransactionSummaryScreen({
         rptId,
-        initialAmount
+        initialAmount,
+        isManualPaymentInsertion: true
       })
     );
   }
