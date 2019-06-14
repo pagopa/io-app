@@ -80,9 +80,7 @@ export default class AnimatedScreenContent extends React.Component<
       ? isIphoneX()
         ? customVariables.appHeaderHeight + 42
         : customVariables.appHeaderHeight + 18
-      : StatusBar.currentHeight
-        ? customVariables.appHeaderHeight + StatusBar.currentHeight
-        : customVariables.appHeaderHeight;
+      : customVariables.appHeaderHeight;
 
   public render(): React.ReactNode {
     const { topContentHeight, animationOffset, contentStyle } = this.props;
@@ -100,8 +98,8 @@ export default class AnimatedScreenContent extends React.Component<
         topContentHeight + animationOffset
       ],
       outputRange: [
-        -this.state.dynamicSubHeaderHeight,
-        -this.state.dynamicSubHeaderHeight,
+        -this.state.dynamicSubHeaderHeight - this.headerHeight,
+        -this.state.dynamicSubHeaderHeight ,
         0
       ],
       extrapolate: "clamp"
@@ -134,6 +132,7 @@ export default class AnimatedScreenContent extends React.Component<
 
         <Animated.View
           onLayout={(event: LayoutChangeEvent) =>
+            this.state.dynamicSubHeaderHeight === 0 &&
             this.setState({
               dynamicSubHeaderHeight: event.nativeEvent.layout.height
             })
