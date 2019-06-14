@@ -1,3 +1,4 @@
+import { none, Option, some } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Toast } from "native-base";
 import { BackHandler } from "react-native";
@@ -34,9 +35,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
   // tslint:disable-next-line:no-let
   let firstRun = true;
   // tslint:disable-next-line:no-let
-  let exitRequestTime: Millisecond = 0 as Millisecond;
-  // tslint:disable-next-line:no-let
-  let isExitRequest = false;
+  let lastExitRequestTime: Option<Millisecond> = none;
 
   return (store: MiddlewareAPI) => (next: Dispatch) => (action: Action) => {
     switch (action.type) {
@@ -81,25 +80,27 @@ export function createNavigationHistoryMiddleware(): Middleware<
       case NavigationActions.BACK: {
         // Get the current navigation history
         const currentNavigationHistory = store.getState().navigationHistory;
-
         // If the history is empty ask to user to press back again or
         // check if we have to close the app
         if (currentNavigationHistory.length === 0) {
           const now = new Date().getTime() as Millisecond;
-          const elaspedTime = now - exitRequestTime;
-          exitRequestTime = now;
+          const elaspedTime =
+            now - lastExitRequestTime.getOrElse(0 as Millisecond);
           // close previous toast showing before close the app or show a new toast
           Toast.hide();
-          if (isExitRequest && elaspedTime < exitConfirmThreshold) {
-            isExitRequest = false;
+          if (
+            lastExitRequestTime.isSome() &&
+            elaspedTime < exitConfirmThreshold
+          ) {
+            lastExitRequestTime = none;
             exitApp();
           } else {
             Toast.show({ text: I18n.t("exit.pressAgain") });
           }
-          isExitRequest = true;
+          lastExitRequestTime = some(now);
           return;
         }
-        isExitRequest = false;
+        lastExitRequestTime = none;
 
         // Get the previous navigation state
         const previousNavigationState = {
