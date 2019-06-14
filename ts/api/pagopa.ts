@@ -147,9 +147,9 @@ const fixWalletPspTagsValues = (w: any) => {
     // tslint:disable-next-line: no-object-mutation
     w.psp = {
       ...w.psp,
-      tags: w.psp.tags.filter((t: any) => {
-        if (typeof t === "string" && duplicates.indexOf(t) === -1) {
-          duplicates.push(t);
+      tags: w.psp.tags.filter((item: any) => {
+        if (typeof item === "string" && duplicates.indexOf(item) === -1) {
+          duplicates.push(item);
           return true;
         }
         return false;
