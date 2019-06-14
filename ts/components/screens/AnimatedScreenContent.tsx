@@ -75,12 +75,11 @@ export default class AnimatedScreenContent extends React.Component<
       .scrollTo({ y: 0, animated: false });
   };
 
-  // TODO: define how to properly get the header height
   private headerHeight: number =
     Platform.OS === "ios"
       ? isIphoneX()
-        ? customVariables.appHeaderHeight + 42 + 6
-        : customVariables.appHeaderHeight + 18 + 6
+        ? customVariables.appHeaderHeight + 42
+        : customVariables.appHeaderHeight + 18
       : StatusBar.currentHeight
         ? customVariables.appHeaderHeight + StatusBar.currentHeight
         : customVariables.appHeaderHeight;
