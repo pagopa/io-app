@@ -43,6 +43,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
+  navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentTransactionErrorScreen,
   navigateToWalletHome
@@ -66,6 +67,7 @@ const basePrimaryButtonProps = {
 export type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
+  isManualPaymentInsertion?: boolean;
 }>;
 
 type ReduxMergedProps = Readonly<{
@@ -323,7 +325,7 @@ const mapStateToProps = (state: GlobalState) => {
     error,
     isLoading,
     loadingCaption,
-    loadingOpacity: 0.95,
+    loadingOpacity: 0.98,
     potVerifica: verifica,
     maybeFavoriteWallet,
     hasWallets
@@ -333,6 +335,9 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const rptId = props.navigation.getParam("rptId");
   const initialAmount = props.navigation.getParam("initialAmount");
+  const isManualPaymentInsertion = props.navigation.getParam(
+    "isManualPaymentInsertion"
+  );
 
   const dispatchPaymentVerificaRequest = () =>
     dispatch(paymentVerifica.request(rptId));
@@ -404,10 +409,19 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       })
     );
 
+  const dispatchNavigateToPaymentManualDataInsertion = () =>
+    dispatch(
+      navigateToPaymentManualDataInsertion({
+        isInvalidAmount: isManualPaymentInsertion
+      })
+    );
+
   return {
     dispatchPaymentVerificaRequest,
     navigateToPaymentTransactionError,
+    dispatchNavigateToPaymentManualDataInsertion,
     startOrResumePayment,
+    isManualPaymentInsertion,
     goBack: () => {
       props.navigation.goBack();
       // reset the payment state
@@ -447,11 +461,20 @@ const mergeProps = (
   ownProps: OwnProps
 ) => {
   const onRetry = () => {
-    dispatchProps.onRetryWithPotVerifica(
-      stateProps.potVerifica,
-      stateProps.maybeFavoriteWallet,
-      stateProps.hasWallets
-    );
+    // If the error is INVALID_AMOUNT and the user has manually entered the data of notice
+    // go back to the screen to allow the user to modify the data
+    if (
+      stateProps.error.toUndefined() === "INVALID_AMOUNT" &&
+      dispatchProps.isManualPaymentInsertion
+    ) {
+      dispatchProps.dispatchNavigateToPaymentManualDataInsertion();
+    } else {
+      dispatchProps.onRetryWithPotVerifica(
+        stateProps.potVerifica,
+        stateProps.maybeFavoriteWallet,
+        stateProps.hasWallets
+      );
+    }
   };
   return {
     ...stateProps,
