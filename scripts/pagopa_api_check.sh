@@ -20,8 +20,6 @@ done < "$input"
 # regex pattern to handle only hosts url difference
 NO_CHANGES_REGEX='.*.*<.*"host": ".*",.*---.*>.*"host": ".*",'
 
-PAGOPA_API_URL_PREFIX_TEST="https://api.myjson.com/bins/fh9c4"
-
 printf "### COMPARING SWAGGER DEFINITIONS ###\n\n"
 printf "%14s $PAGOPA_API_URL_PREFIX\n" "production:" 
 printf "%14s $PAGOPA_API_URL_PREFIX_TEST\n" "test:" 
