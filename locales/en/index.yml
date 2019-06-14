@@ -252,7 +252,7 @@ pin_login:
   pin:
     pinInfo: Enter the PIN
     reset:
-      button: I forgot my PIN
+      button: Did you forget the PIN?
       button_short: Reset PIN
       tip: To reset your PIN you will have to login again with your SPID account.
       tip_short: You will have to login again.
@@ -644,9 +644,9 @@ serviceDetail:
   disableTitle: "Do you really want to disable the service?"
   disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
 identification:
-  message: "Enter the PIN"
-  resetPinMessage: To reset your PIN you will have to login again with your SPID account.
-  resetPinFromProfileMessage: To reset your PIN you need to cancel the transaction and select "Reset PIN" from the "Profile" section.
+  messageFingerPrint: "Use the fingerprint or enter the PIN"
+  messageFaceID: "Use FaceID or enter the PIN"
+  messageEnterPin: "Enter the PIN"
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint
