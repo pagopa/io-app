@@ -35,6 +35,8 @@ export function createNavigationHistoryMiddleware(): Middleware<
   let firstRun = true;
   // tslint:disable-next-line:no-let
   let exitRequestTime: Millisecond = 0 as Millisecond;
+  // tslint:disable-next-line:no-let
+  let isExitRequest = false;
 
   return (store: MiddlewareAPI) => (next: Dispatch) => (action: Action) => {
     switch (action.type) {
@@ -88,13 +90,16 @@ export function createNavigationHistoryMiddleware(): Middleware<
           exitRequestTime = now;
           // close previous toast showing before close the app or show a new toast
           Toast.hide();
-          if (elaspedTime < exitConfirmThreshold) {
+          if (isExitRequest && elaspedTime < exitConfirmThreshold) {
+            isExitRequest = false;
             exitApp();
           } else {
             Toast.show({ text: I18n.t("exit.pressAgain") });
           }
+          isExitRequest = true;
           return;
         }
+        isExitRequest = false;
 
         // Get the previous navigation state
         const previousNavigationState = {
