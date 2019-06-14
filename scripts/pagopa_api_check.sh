@@ -43,5 +43,5 @@ if [ -n "$DIFF" ]; then
 fi
 #send slack notification
 channel="#io-status"
-res=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' https://hooks.slack.com/services/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)
+res=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' ${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-})
 exit $SEND_EXIT

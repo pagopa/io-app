@@ -498,10 +498,10 @@ workflows:
   nightly-pagopa-specs-check:
       triggers:
         - schedule:
-            cron: "0 03 * * *"
+            cron: "34 15 * * *"
             filters:
               branches:
                 only:
-                  - master
+                  - 165800423-cci-alert-pagopa-specs-
       jobs:
         - pagopa_specs_diff
