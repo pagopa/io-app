@@ -9,7 +9,6 @@ import {
   Animated,
   LayoutChangeEvent,
   Platform,
-  StatusBar,
   StyleProp,
   StyleSheet,
   ViewStyle
