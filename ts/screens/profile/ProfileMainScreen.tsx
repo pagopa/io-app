@@ -1,3 +1,4 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import {
   Button,
   H3,
@@ -21,6 +22,7 @@ import {
 import { connect } from "react-redux";
 
 import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
+import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -49,6 +51,7 @@ import {
 } from "../../store/reducers/authentication";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
@@ -84,6 +87,10 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     lineHeight: 40
+  },
+  fcItem: {
+    flex: 1,
+    paddingRight: 0
   }
 });
 
@@ -196,7 +203,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       walletToken,
       notificationToken,
       notificationId,
-      isExperimentalFeaturesEnabled
+      isExperimentalFeaturesEnabled,
+      profile
     } = this.props;
     return (
       <TopScreenComponent
@@ -217,9 +225,15 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
+            {isExperimentalFeaturesEnabled &&
+              profile && (
+                <ListItem first={true} style={styles.fcItem}>
+                  <FiscalCodeComponent profile={profile} />
+                </ListItem>
+              )}
             {/* Privacy */}
             <ListItem
-              first={true}
+              first={!isExperimentalFeaturesEnabled}
               onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
             >
               <Left style={styles.itemLeft}>
@@ -456,7 +470,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isDebugModeEnabled: state.debug.isDebugModeEnabled,
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isExperimentalFeaturesEnabled:
-    state.persistedPreferences.isExperimentalFeaturesEnabled
+    state.persistedPreferences.isExperimentalFeaturesEnabled,
+  profile: pot.getOrElse(profileSelector(state), null)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
