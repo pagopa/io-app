@@ -99,7 +99,7 @@ export default class AnimatedScreenContent extends React.Component<
       ],
       outputRange: [
         -this.state.dynamicSubHeaderHeight - this.headerHeight,
-        -this.state.dynamicSubHeaderHeight ,
+        -this.state.dynamicSubHeaderHeight - this.headerHeight,
         0
       ],
       extrapolate: "clamp"
