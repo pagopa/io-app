@@ -30,6 +30,8 @@ import { TransactionResponse } from "../types/pagopa";
 import { WalletListResponse } from "../types/pagopa";
 import { WalletResponse } from "../types/pagopa";
 
+import * as t from "io-ts";
+import * as r from "italia-ts-commons/lib/requests";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -45,7 +47,6 @@ import {
   GetTransactionsUsingGETT,
   getTransactionUsingGETDecoder,
   GetTransactionUsingGETT,
-  getWalletsUsingGETDecoder,
   GetWalletsUsingGETT,
   payCreditCardVerificationUsingPOSTDecoder,
   PayCreditCardVerificationUsingPOSTT,
@@ -56,7 +57,6 @@ import {
   updateWalletUsingPUTDecoder,
   UpdateWalletUsingPUTT
 } from "../../definitions/pagopa/requestTypes";
-
 /**
  * A decoder that ignores the content of the payload and only decodes the status
  */
@@ -134,12 +134,53 @@ type GetWalletsUsingGETExtraT = MapResponseType<
   WalletListResponse
 >;
 
+/**
+ * TODO: temporary patch. Remove this patch once SIA has fixed the spec.
+ * @see https://www.pivotaltracker.com/story/show/166665367
+ * This patch is due because 'tags' field (an array of strings) in psp objects
+ * often contains mixed (and duplicated too) values
+ * e.g tags = ["value1",null,null]
+ * Psp codec fails decoding 'tags' having these values, so this getPatchedWalletsUsingGETDecoder alterates the
+ * payload just before the decoding phase making 'tags' an empty array
+ */
+const getPatchedWalletsUsingGETDecoder = <A, O>(type: t.Type<A, O>) => {
+  return r.composeResponseDecoders(
+    r.composeResponseDecoders(
+      r.composeResponseDecoders(
+        r.ioResponseDecoder<200, (typeof type)["_A"], (typeof type)["_O"]>(
+          200,
+          type,
+          payload => {
+            if (payload && payload.data && Array.isArray(payload.data)) {
+              // iterate all wallets and if a wallet has a psp
+              // check for tags field and make it an empty array
+              const newData = payload.data.map((w: any) => {
+                if (w.psp !== undefined && w.psp.tags !== undefined) {
+                  // tslint:disable-next-line: no-object-mutation
+                  w.psp = { ...w.psp, tags: [] };
+                }
+                return w;
+              });
+              // tslint:disable-next-line: no-object-mutation
+              payload.data = newData;
+            }
+            return payload;
+          }
+        ),
+        r.constantResponseDecoder<undefined, 401>(401, undefined)
+      ),
+      r.constantResponseDecoder<undefined, 403>(403, undefined)
+    ),
+    r.constantResponseDecoder<undefined, 404>(404, undefined)
+  );
+};
+
 const getWallets: GetWalletsUsingGETExtraT = {
   method: "get",
   url: () => "/v1/wallet",
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getWalletsUsingGETDecoder(WalletListResponse)
+  response_decoder: getPatchedWalletsUsingGETDecoder(WalletListResponse)
 };
 
 const checkPayment: CheckPaymentUsingGETT = {
