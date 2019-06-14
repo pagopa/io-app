@@ -135,6 +135,34 @@ type GetWalletsUsingGETExtraT = MapResponseType<
 >;
 
 /**
+ *
+ * sanitaze psp tags if it is an array with values (avoid no string value and duplicates)
+ * otheriwise set tags as an empty array
+ * @param w the wallet object
+ */
+const fixWalletPspTagsValues = (w: any) => {
+  if (Array.isArray(w.psp.tags)) {
+    // tslint:disable-next-line: readonly-array
+    const duplicates: string[] = [];
+    // tslint:disable-next-line: no-object-mutation
+    w.psp = {
+      ...w.psp,
+      tags: w.psp.tags.filter((t: any) => {
+        if (typeof t === "string" && duplicates.indexOf(t) === -1) {
+          duplicates.push(t);
+          return true;
+        }
+        return false;
+      })
+    };
+  } else {
+    // tslint:disable-next-line: no-object-mutation
+    w.psp = { ...w.psp, tags: [] };
+  }
+  return w;
+};
+
+/**
  * TODO: temporary patch. Remove this patch once SIA has fixed the spec.
  * @see https://www.pivotaltracker.com/story/show/166665367
  * This patch is due because 'tags' field (an array of strings) in psp objects
@@ -156,8 +184,7 @@ const getPatchedWalletsUsingGETDecoder = <A, O>(type: t.Type<A, O>) => {
               // check for tags field and make it an empty array
               const newData = payload.data.map((w: any) => {
                 if (w.psp !== undefined && w.psp.tags !== undefined) {
-                  // tslint:disable-next-line: no-object-mutation
-                  w.psp = { ...w.psp, tags: [] };
+                  return fixWalletPspTagsValues(w);
                 }
                 return w;
               });
