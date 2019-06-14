@@ -269,7 +269,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     return (
       <TransactionsList
         title={I18n.t("wallet.latestTransactions")}
-        totalAmount={I18n.t("wallet.total")}
+        amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
