@@ -110,9 +110,6 @@ export default class WalletLayout extends React.Component<Props> {
             dynamicSubHeader={this.dynamicSubHeader()}
             topContentHeight={250}
             animationOffset={40}
-            dynamicSubHeaderHeight={
-              customVariables.h5LineHeight + 2 * customVariables.spacerWidth
-            }
           >
             {this.screenContent()}
           </AnimatedScreenContent>
