@@ -1,9 +1,11 @@
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
+import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
+import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
 import { PIN_LENGTH } from "../../utils/constants";
@@ -15,11 +17,15 @@ interface Props {
   activeColor: string;
   delayOnFailureMillis?: number;
   clearOnInvalid?: boolean;
+  isFingerprintEnabled?: any;
+  biometryType?: any;
   compareWithCode?: string;
   inactiveColor: string;
   buttonType: ComponentProps<typeof KeyPad>["buttonType"];
   onFulfill: (code: PinString, isValid: boolean) => void;
   onCancel?: () => void;
+  onPinResetHandler?: () => void;
+  onFingerPrintReq?: () => void;
 }
 
 interface State {
@@ -31,6 +37,11 @@ const styles = StyleSheet.create({
   placeholderContainer: {
     flexDirection: "row",
     justifyContent: "center"
+  },
+  text: {
+    alignSelf: "center",
+    justifyContent: "center",
+    color: variables.colorWhite
   }
 });
 
@@ -44,6 +55,23 @@ class Pinpad extends React.PureComponent<Props, State> {
   // Utility array of as many elements as how many digits the pin has.
   // Its map method will be used to render the pin's placeholders.
   private placeholderPositions: ReadonlyArray<undefined>;
+
+  /**
+   * Print the only BiometrySimplePrintableType values that are passed to the UI
+   * @param biometrySimplePrintableType
+   */
+  private renderBiometryType(
+    biometryPrintableSimpleType: BiometryPrintableSimpleType
+  ): string {
+    switch (biometryPrintableSimpleType) {
+      case "FINGERPRINT":
+        return "fingerprint-onboarding-icon.png";
+      case "FACE_ID":
+        return "faceid-onboarding-icon.png";
+      case "TOUCH_ID":
+        return "fingerprint-onboarding-icon.png";
+    }
+  }
 
   private deleteLastDigit = () =>
     this.setState(prev => ({
@@ -75,7 +103,15 @@ class Pinpad extends React.PureComponent<Props, State> {
             I18n.t("global.buttons.cancel").toUpperCase(),
             this.props.onCancel
           )
-        : undefined,
+        : this.props.isFingerprintEnabled &&
+          this.props.biometryType &&
+          this.props.onFingerPrintReq
+          ? Tuple2(
+              // set the image name
+              this.renderBiometryType(this.props.biometryType),
+              this.props.onFingerPrintReq
+            )
+          : undefined,
       Tuple2("0", () => this.handlePinDigit("0")),
       Tuple2("<", this.deleteLastDigit)
     ]
@@ -160,7 +196,20 @@ class Pinpad extends React.PureComponent<Props, State> {
         <View style={styles.placeholderContainer}>
           {this.placeholderPositions.map(this.renderPlaceholder)}
         </View>
-        <View spacer={true} extralarge={true} />
+        <View spacer={true} />
+        {this.props.onPinResetHandler !== undefined && (
+          <React.Fragment>
+            <Text
+              primary={true}
+              onPress={this.props.onPinResetHandler}
+              style={styles.text}
+            >
+              {I18n.t("pin_login.pin.reset.button")}
+            </Text>
+            <View spacer={true} />
+          </React.Fragment>
+        )}
+        <View spacer={true} />
         <ShakeAnimation duration={600} ref={this.shakeAnimationRef}>
           <KeyPad
             digits={this.pinPadDigits}
