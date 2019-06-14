@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 /**
  * Delay for reactivating the QR scanner after a scan
  */
-const QRCODE_SCANNER_REACTIVATION_TIME_MS = 1000;
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
