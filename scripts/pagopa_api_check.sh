@@ -20,6 +20,8 @@ done < "$input"
 # regex pattern to handle only hosts url difference
 NO_CHANGES_REGEX='.*.*<.*"host": ".*",.*---.*>.*"host": ".*",'
 
+PAGOPA_API_URL_PREFIX_TEST="https://api.myjson.com/bins/fh9c4"
+
 printf "### COMPARING SWAGGER DEFINITIONS ###\n\n"
 printf "%14s $PAGOPA_API_URL_PREFIX\n" "production:" 
 printf "%14s $PAGOPA_API_URL_PREFIX_TEST\n" "test:" 
@@ -35,13 +37,13 @@ if [ -n "$DIFF" ]; then
         echo $SEND_MSG
     else
         KO_MSG="⚠ $MB_SLACK ko. It seems *PROD* and *DEV* pagoPa specifications are different"
-        echo $KO_MSG
+        echo "It seems PROD and DEV pagoPa specifications are different"
         echo $DIFF
         SEND_MSG=$KO_MSG
         SEND_EXIT=1
+        #send slack notification
+        channel="#io-status"
+        res=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' ${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-})
     fi
 fi
-#send slack notification
-channel="#io-status"
-res=$(curl -s -X POST -H 'Content-type: application/json' --data '{"text":"'"$SEND_MSG"'", "channel" : "'$channel'"}' ${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-})
 exit $SEND_EXIT
