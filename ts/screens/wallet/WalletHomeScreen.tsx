@@ -118,7 +118,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     this.props.loadTransactions();
   }
 
-  private cardHeader() {
+  private cardHeader(isError: boolean = false) {
     return (
       <View style={styles.flexRow}>
         <View>
@@ -126,11 +126,13 @@ class WalletHomeScreen extends React.Component<Props, never> {
             {I18n.t("wallet.paymentMethods")}
           </H5>
         </View>
-        <View>
-          <AddPaymentMethodButton
-            onPress={this.props.navigateToWalletAddPaymentMethod}
-          />
-        </View>
+        {!isError && (
+          <View>
+            <AddPaymentMethodButton
+              onPress={this.props.navigateToWalletAddPaymentMethod}
+            />
+          </View>
+        )}
       </View>
     );
   }
@@ -199,7 +201,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
   private errorWalletsHeader() {
     return (
       <View>
-        {this.cardHeader()}
+        {this.cardHeader(true)}
         <View spacer={true} />
         <Text style={[styles.white, styles.inLineSpace]}>
           {I18n.t("wallet.walletLoadFailure")}
