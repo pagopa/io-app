@@ -1,8 +1,6 @@
-[![CircleCI](https://circleci.com/gh/teamdigitale/italia-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/italia-app)
+[![CircleCI](https://circleci.com/gh/teamdigitale/io-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/io-app)
 
-[![codecov](https://codecov.io/gh/teamdigitale/italia-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/italia-app)
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/d813b789c3a2085bd8f4/maintainability)](https://codeclimate.com/github/teamdigitale/italia-app/maintainability)
+[![codecov](https://codecov.io/gh/teamdigitale/io-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/io-app)
 
 # The mobile app of the Digital Citizenship project
 
