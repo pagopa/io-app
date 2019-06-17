@@ -76,19 +76,19 @@ export function withMessagesSelection<
       potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
     ) => {
       const { isAllMessagesSelected } = this.state;
-      const allMessagesIds = pot.getOrElse(
-        pot.map(potMessagesState, _ =>
-          _.map(messageState => messageState.meta.id)
-        ),
-        []
-      );
-      const newSelectedMessageIds = new Set(allMessagesIds);
       if (isAllMessagesSelected) {
         this.setState({
           selectedMessageIds: some(new Set()),
           isAllMessagesSelected: false
         });
       } else {
+        const allMessagesIds = pot.getOrElse(
+          pot.map(potMessagesState, _ =>
+            _.map(messageState => messageState.meta.id)
+          ),
+          []
+        );
+        const newSelectedMessageIds = new Set(allMessagesIds);
         this.setState({
           selectedMessageIds: some(newSelectedMessageIds),
           isAllMessagesSelected: true
@@ -98,7 +98,8 @@ export function withMessagesSelection<
 
     private resetSelection = () => {
       this.setState({
-        selectedMessageIds: none
+        selectedMessageIds: none,
+        isAllMessagesSelected: false
       });
     };
   }

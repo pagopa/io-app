@@ -169,6 +169,7 @@ class MessagesHomeScreen extends React.Component<Props> {
               paymentsByRptId={paymentsByRptId}
               setMessagesArchivedState={updateMessagesArchivedState}
               navigateToMessageDetail={navigateToMessageDetail}
+              isExperimentalFeaturesEnabled={isExperimentalFeaturesEnabled}
             />
           </Tab>
         )}

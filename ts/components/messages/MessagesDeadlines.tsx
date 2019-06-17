@@ -66,6 +66,7 @@ type OwnProps = {
     ids: ReadonlyArray<string>,
     archived: boolean
   ) => void;
+  isExperimentalFeaturesEnabled: boolean;
 };
 
 type Props = Pick<
@@ -343,6 +344,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     this.props.toggleMessageSelection(id);
   };
 
+  private toggleAllMessagesSelection = () => {
+    this.props.toggleAllMessagesSelection(this.props.messagesState);
+  };
+
   private archiveMessages = () => {
     this.props.resetSelection();
     this.props.setMessagesArchivedState(
@@ -462,7 +467,9 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       servicesById,
       paymentsByRptId,
       selectedMessageIds,
-      resetSelection
+      resetSelection,
+      isExperimentalFeaturesEnabled,
+      isAllMessagesSelected
     } = this.props;
     const { isWorking, sectionsToRender } = this.state;
 
@@ -481,6 +488,21 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
+            {isExperimentalFeaturesEnabled && (
+              <Button
+                block={true}
+                style={styles.buttonBarSecondaryButton}
+                onPress={this.toggleAllMessagesSelection}
+              >
+                <Text>
+                  {I18n.t(
+                    isAllMessagesSelected
+                      ? "messages.cta.deselectAll"
+                      : "messages.cta.selectAll"
+                  )}
+                </Text>
+              </Button>
+            )}
             <Button
               block={true}
               style={styles.buttonBarPrimaryButton}
