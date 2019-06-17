@@ -207,7 +207,7 @@ const customVariables = Object.assign(materialVariables, {
   },
 
   // Header
-  appHeaderHeight: 40,
+  appHeaderHeight: 56,
   appHeaderPaddingHorizontal: 12,
   titleHeaderPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
@@ -266,7 +266,11 @@ const customVariables = Object.assign(materialVariables, {
   activeOpacity: 0.25,
 
   // Spacing
-  spacingBase: 8
+  spacingBase: 8,
+
+  // IconFont
+  selectedColor: "#0073E6",
+  unselectedColor: "#5C6F82"
 });
 
 export default customVariables;

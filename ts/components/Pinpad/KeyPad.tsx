@@ -1,7 +1,7 @@
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import variables from "../../theme/variables";
 
 type Digit = ITuple2<string, () => void> | undefined;
@@ -69,15 +69,29 @@ const renderPinCol = (
         primary={buttonType === "primary"}
         light={buttonType === "light"}
       >
-        <Text
-          style={[
-            styles.buttonTextBase,
-            style === "digit" ? styles.buttonTextDigit : styles.buttonTextLabel,
-            style === "label" && buttonType === "primary" ? styles.white : {}
-          ]}
-        >
-          {label}
-        </Text>
+        {!label.endsWith(".png") ? (
+          <Text
+            style={[
+              styles.buttonTextBase,
+              style === "digit"
+                ? styles.buttonTextDigit
+                : styles.buttonTextLabel,
+              style === "label" && buttonType === "primary" ? styles.white : {}
+            ]}
+          >
+            {label}
+          </Text>
+        ) : label === "faceid-onboarding-icon.png" ? (
+          <Image
+            source={require("../../../img/icons/faceid-onboarding-icon.png")}
+            style={{ width: 40, height: 48 }}
+          />
+        ) : (
+          <Image
+            source={require("../../../img/icons/fingerprint-onboarding-icon.png")}
+            style={{ width: 40, height: 48 }}
+          />
+        )}
       </Button>
     </Col>
   );

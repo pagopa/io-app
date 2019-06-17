@@ -4,7 +4,7 @@
  */
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Button, Container, Text, Toast, View } from "native-base";
+import { Button, Container, Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
@@ -29,6 +29,7 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { openAppSettings } from "../../../utils/appSettings";
 import { decodePagoPaQrCode } from "../../../utils/payment";
+import { showToast } from "../../../utils/showToast";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
 /**
  * Delay for reactivating the QR scanner after a scan
  */
-const QRCODE_SCANNER_REACTIVATION_TIME_MS = 1000;
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
@@ -116,10 +117,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    * Handles invalid PagoPA QR codes
    */
   private onInvalidQrCode = () => {
-    Toast.show({
-      text: I18n.t("wallet.QRtoPay.wrongQrCode"),
-      type: "danger"
-    });
+    showToast(I18n.t("wallet.QRtoPay.wrongQrCode"), "danger");
 
     this.setState({
       scanningState: "INVALID"

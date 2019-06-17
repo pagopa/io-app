@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
   },
 
   padded: {
-    padding: variables.contentPadding
+    paddingHorizontal: variables.contentPadding,
+    paddingTop: 0
   }
 });
 
@@ -80,28 +81,35 @@ class WalletsScreen extends React.Component<Props> {
     );
   };
 
+  private topContent() {
+    return (
+      <React.Fragment>
+        <View spacer={true} large={true} />
+        <View style={styles.headerContainer}>
+          <Left>
+            <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
+          </Left>
+          <Right>
+            <AddPaymentMethodButton
+              onPress={this.props.navigateToWalletAddPaymentMethod}
+            />
+          </Right>
+        </View>
+      </React.Fragment>
+    );
+  }
+
   public render(): React.ReactNode {
     const { favoriteWallet } = this.props;
-
-    const headerContents = (
-      <View style={styles.headerContainer}>
-        <Left>
-          <Text white={true}>{I18n.t("wallet.creditDebitCards")}</Text>
-        </Left>
-        <Right>
-          <AddPaymentMethodButton
-            onPress={this.props.navigateToWalletAddPaymentMethod}
-          />
-        </Right>
-      </View>
-    );
 
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethods")}
-        headerContents={headerContents}
+        topContent={this.topContent()}
         allowGoBack={true}
+        hideHeader={true}
         contentStyle={styles.brandDarkGrayBg}
+        hasDynamicSubHeader={false}
       >
         <Content style={[styles.padded, styles.brandDarkGrayBg]}>
           <FlatList
