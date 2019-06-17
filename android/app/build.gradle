@@ -192,6 +192,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-community_async-storage')
     implementation project(':react-native-lewin-qrcode')
     implementation project(':react-native-image-picker')
     compile project(':react-native-flag-secure-android')

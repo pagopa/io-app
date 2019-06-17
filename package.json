@@ -21,6 +21,7 @@
     "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:content-definitions generate:locales"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.5.0",
     "abort-controller": "^1.0.2",
     "async-mutex": "^0.1.3",
     "buffer": "^4.9.1",
