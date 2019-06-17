@@ -3,6 +3,7 @@
  */
 import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
+import { AppState } from "react-native";
 import {
   ActivityIndicator,
   InteractionManager,
@@ -169,6 +170,8 @@ type Props = OwnProps & ReduxProps;
 type State = {
   html?: string;
   htmlBodyHeight: number;
+  webviewKey: number;
+  appState: string;
 };
 
 class Markdown extends React.PureComponent<Props, State> {
@@ -178,7 +181,9 @@ class Markdown extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       html: undefined,
-      htmlBodyHeight: 0
+      htmlBodyHeight: 0,
+      webviewKey: 0,
+      appState: AppState.currentState
     };
   }
 
@@ -186,6 +191,8 @@ class Markdown extends React.PureComponent<Props, State> {
     const { children, animated, onError, cssStyle } = this.props;
 
     this.compileMarkdownAsync(children, animated, onError, cssStyle);
+
+    AppState.addEventListener("change", this.handleAppStateChange);
   }
 
   public componentDidUpdate(prevProps: Props) {
@@ -195,6 +202,32 @@ class Markdown extends React.PureComponent<Props, State> {
     // If the children changes we need to re-compile it
     if (children !== prevChildren) {
       this.compileMarkdownAsync(children, animated, onError, cssStyle);
+    }
+  }
+
+  public componentWillUnmount(): void {
+    AppState.removeEventListener("change", this.handleAppStateChange);
+  }
+
+  public backgroundState(state: string) {
+    return state.match(/inactive|background/);
+  }
+
+  public handleAppStateChange = (nextAppState: string) => {
+    if (
+      this.backgroundState(this.state.appState) &&
+      nextAppState === "active"
+    ) {
+      this.reloadWebView();
+    }
+    this.setState({ appState: nextAppState });
+  };
+
+  private reloadWebView() {
+    if (Platform.OS === "ios") {
+      this.setState({
+        webviewKey: this.state.webviewKey + 1
+      });
     }
   }
 
@@ -219,6 +252,7 @@ class Markdown extends React.PureComponent<Props, State> {
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
             <View style={containerStyle}>
               <WebView
+                key={this.state.webviewKey}
                 ref={this.webViewRef}
                 scrollEnabled={false}
                 overScrollMode={"never"}
@@ -230,7 +264,6 @@ class Markdown extends React.PureComponent<Props, State> {
                 onLoadEnd={this.handleLoadEnd}
                 onMessage={this.handleWebViewMessage}
                 showsVerticalScrollIndicator={false}
-                useWebKit={false}
               />
             </View>
           </ScrollView>
