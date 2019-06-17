@@ -7,17 +7,18 @@ import React, { ComponentProps } from "react";
 import {
   Animated,
   Dimensions,
-  Easing,
   Image,
   Platform,
   SectionList,
   SectionListData,
   SectionListRenderItem,
   SectionListScrollParams,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from "react-native";
 import variables from "../../theme/variables";
 
+import * as RNP from "react-native-pull";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -33,9 +34,6 @@ const SECTION_HEADER_HEIGHT = 48;
 const ITEM_HEIGHT = 158;
 const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
-// Used to animate button refresh
-const HEADER_SCROLL_DISTANCE = 42 + variables.contentPadding;
-const MIN_PULLDOWN_DISTANCE = 1;
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -106,8 +104,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     marginTop: variables.contentPadding,
-    width: screenWidth - variables.contentPadding * 2,
-    backgroundColor: variables.colorWhite
+    width: screenWidth - variables.contentPadding * 2
+  },
+  scrollList: {
+    backgroundColor: variables.colorWhite,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   }
 });
 
@@ -155,11 +160,7 @@ type OwnProps = {
 type Props = OwnProps & SelectedSectionListProps;
 
 type State = {
-  /*
-  Animation states when show and gone load-data button:
-  */
-  animationState: "NOTREADY" | "READY" | "STARTED";
-  scrollY: Animated.Value;
+  isButtonVisible: boolean;
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
 };
@@ -263,74 +264,24 @@ const FakeItemComponent = (
  */
 class MessageAgenda extends React.PureComponent<Props, State> {
   private sectionListRef = React.createRef<any>();
-  private overScrollAnim: Animated.Value;
 
-  public componentDidMount() {
-    this.state.scrollY.addListener(value => this.handleScroll(value));
+  public onPullRelease() {
+    this.setState({ isButtonVisible: true });
   }
 
-  public componentWillUnmount() {
-    this.state.scrollY.removeAllListeners();
+  public onPullEnd() {
+    this.setState({ isButtonVisible: false });
   }
-
-  public handleRelease() {
-    if (this.state.animationState === "READY") {
-      // start animation
-      this.animateOverScroll();
-    }
-  }
-
-  private handleScroll(pullDownDistance: any) {
-    if (pullDownDistance.value <= MIN_PULLDOWN_DISTANCE) {
-      if (this.state.animationState === "NOTREADY") {
-        return this.setState({ animationState: "READY" });
-      }
-    } else {
-      this.animateCloseOverScroll();
-      return this.setState({ animationState: "NOTREADY" });
-    }
-  }
-
-  private handleDragMove() {
-    if (this.state.animationState === "READY") {
-      this.animateOverScroll();
-    }
-    return true;
-  }
-
-  private animateOverScroll = () => {
-    this.overScrollAnim.setValue(0);
-    this.setState({ animationState: "STARTED" });
-    Animated.timing(this.overScrollAnim, {
-      toValue: HEADER_SCROLL_DISTANCE,
-      duration: 50,
-      easing: Easing.linear,
-      useNativeDriver: true
-    }).start();
-  };
-
-  private animateCloseOverScroll = () => {
-    if (this.state.animationState === "STARTED") {
-      this.setState({ animationState: "NOTREADY" });
-      Animated.timing(this.overScrollAnim, {
-        toValue: 0,
-        duration: 50,
-        easing: Easing.linear,
-        useNativeDriver: true
-      }).start();
-    }
-  };
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      animationState: "NOTREADY",
-      scrollY: new Animated.Value(0),
+      isButtonVisible: false,
       itemLayouts: []
     };
-    this.overScrollAnim = new Animated.Value(0);
-    this.handleDragMove = this.handleDragMove.bind(this);
-    this.handleRelease = this.handleRelease.bind(this);
+    this.onPullRelease = this.onPullRelease.bind(this);
+    this.onPullEnd = this.onPullEnd.bind(this);
+    this.loadMoreData = this.loadMoreData.bind(this);
   }
 
   public static getDerivedStateFromProps(
@@ -347,6 +298,12 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     }
 
     return null;
+  }
+
+  private loadMoreData() {
+    if (this.state.isButtonVisible) {
+      this.props.onMoreDataRequest();
+    }
   }
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
@@ -426,6 +383,23 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return this.state.itemLayouts[index];
   };
 
+  private topIndicatorRender() {
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          height: 60
+        }}
+      >
+        <Button block={true} primary={true} small={true} style={styles.button}>
+          <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
+        </Button>
+      </View>
+    );
+  }
+
   public render() {
     const {
       sections,
@@ -435,70 +409,47 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       onContentSizeChange
     } = this.props;
 
-    const { onMoreDataRequest } = this.props;
-
-    const marginTopAnim = this.overScrollAnim.interpolate({
-      inputRange: [0, HEADER_SCROLL_DISTANCE],
-      outputRange: [0, HEADER_SCROLL_DISTANCE],
-      extrapolate: "clamp"
-    });
-
-    const marginTopList = sections.length === 0 ? 0 : -HEADER_SCROLL_DISTANCE;
-
     return (
       <View style={styles.fill}>
-        <Animated.View
-          style={[
-            {
-              useNativeDriver: true
-            },
-            styles.button
-          ]}
-        >
-          <Button
-            block={true}
-            primary={true}
-            small={true}
-            onPress={onMoreDataRequest}
-          >
-            <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
-          </Button>
-        </Animated.View>
-
-        <Animated.SectionList
-          ref={this.sectionListRef}
-          onResponderMove={this.handleDragMove}
-          onResponderRelease={this.handleRelease}
-          onScrollEndDrag={this.handleRelease}
-          ListEmptyComponent={ListEmptyComponent}
-          renderSectionHeader={this.renderSectionHeader}
-          renderItem={this.renderItem}
-          ItemSeparatorComponent={ItemSeparatorComponent}
-          sections={sections}
-          extraData={{ servicesById, paymentsByRptId }}
-          refreshing={refreshing}
-          onContentSizeChange={onContentSizeChange}
-          stickySectionHeadersEnabled={true}
-          keyExtractor={keyExtractor}
-          getItemLayout={this.getItemLayout}
-          bounces={true}
-          style={[
-            {
-              useNativeDriver: true,
-              transform: [{ translateY: marginTopAnim }]
-            },
-            {
-              flex: 1,
-              marginTop: marginTopList,
-              backgroundColor: variables.colorWhite
-            }
-          ]}
-          scrollEventThrottle={8}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
-            { useNativeDriver: true }
-          )}
+        <TouchableOpacity
+          onPress={this.loadMoreData}
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "transparent",
+            height: 60
+          }}
         />
+        <RNP.PullView
+          onPullRelease={this.onPullRelease}
+          onPushing={this.onPullEnd}
+          style={styles.scrollList}
+          topIndicatorRender={this.topIndicatorRender}
+        >
+          <Animated.SectionList
+            ref={this.sectionListRef}
+            ListEmptyComponent={ListEmptyComponent}
+            renderSectionHeader={this.renderSectionHeader}
+            renderItem={this.renderItem}
+            ItemSeparatorComponent={ItemSeparatorComponent}
+            sections={sections}
+            extraData={{ servicesById, paymentsByRptId }}
+            refreshing={refreshing}
+            onContentSizeChange={onContentSizeChange}
+            stickySectionHeadersEnabled={true}
+            keyExtractor={keyExtractor}
+            getItemLayout={this.getItemLayout}
+            bounces={false}
+            style={[
+              {
+                flex: 1,
+                backgroundColor: variables.colorWhite
+              }
+            ]}
+            scrollEventThrottle={8}
+          />
+        </RNP.PullView>
       </View>
     );
   }
