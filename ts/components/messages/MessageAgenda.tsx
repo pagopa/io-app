@@ -261,7 +261,7 @@ const FakeItemComponent = (
  * A component to render messages with due_date in a agenda like form.
  */
 class MessageAgenda extends React.PureComponent<Props, State> {
-  //Ref to section list
+  // Ref to section list
   private sectionListRef = React.createRef<any>();
 
   constructor(props: Props) {
