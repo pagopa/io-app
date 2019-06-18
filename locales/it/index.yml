@@ -56,6 +56,8 @@ clipboard:
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
+exit:
+  pressAgain: premi ancora per uscire
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
@@ -258,7 +260,7 @@ pin_login:
   pin:
     pinInfo: Inserisci il PIN
     reset:
-      button: Ho dimenticato il PIN
+      button: PIN dimenticato?
       button_short: Reimposta PIN
       tip: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità
         SPID.
@@ -415,6 +417,7 @@ wallet:
     amount: Importo (€)
     proceed: Procedi con il pagamento
   total: Totale
+  amount: Importo
   payAmount: Importo da pagare
   transactionFee: Costo operazione
   why: Perché?
@@ -655,9 +658,9 @@ serviceDetail:
   disableTitle: "Vuoi davvero disattivare il servizio?"
   disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
 identification:
-  message: "Inserisci il PIN"
-  resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
-  resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".
+  messageFingerPrint: "Appoggia l'impronta o inserisci il codice PIN"
+  messageFaceID: "Usa FaceID o inserisci il codice PIN"
+  messageEnterPin: "Inserisci il codice PIN"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale

@@ -94,7 +94,11 @@ export type Psp = t.TypeOf<typeof Psp>;
  * A refined Wallet
  */
 export const Wallet = repP(
-  repP(reqP(reqP(WalletPagoPA, "idWallet"), "type"), "creditCard", CreditCard),
+  repP(
+    reqP(reqP(WalletPagoPA, "idWallet"), "type"),
+    "creditCard",
+    t.union([CreditCard, t.undefined])
+  ),
   "psp",
   t.union([Psp, t.undefined]),
   "Wallet"
