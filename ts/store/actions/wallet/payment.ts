@@ -33,6 +33,13 @@ export const paymentInitializeEntrypointRoute = createStandardAction(
   "PAYMENT_ENTRYPOINT_ROUTE"
 )<EntrypointRoute>();
 
+/**
+ * For back to entrypoint (where the payment is initiated)
+ */
+export const backToEntrypointPayment = createStandardAction(
+  "BACK_TO_PAYMENT_ENTRYPOINT_ROUTE"
+)();
+
 //
 // verifica
 //
@@ -226,6 +233,7 @@ export const runStartOrResumePaymentActivationSaga = createStandardAction(
 export type PaymentActions =
   | ActionType<typeof paymentInitializeState>
   | ActionType<typeof paymentInitializeEntrypointRoute>
+  | ActionType<typeof backToEntrypointPayment>
   | ActionType<typeof paymentUpdateWalletPsp>
   | ActionType<typeof paymentVerifica>
   | ActionType<typeof paymentAttiva>

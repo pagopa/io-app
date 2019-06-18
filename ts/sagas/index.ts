@@ -11,7 +11,10 @@ import { startupSaga } from "./startup";
 import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 import { apiUrlPrefix } from "../config";
-import { watchPaymentInitializeSaga } from "./watchPaymentInitializeSaga";
+import {
+  watchBackToEntrypointPaymentSaga,
+  watchPaymentInitializeSaga
+} from "./wallet";
 
 // Parameters used by the withNetworkConnectivity HOC of react-native-offline.
 // We use `withRedux: true` to store the network status in the redux store.
@@ -32,6 +35,7 @@ export default function* root(): Iterator<Effect> {
     call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),
     call(watchContentServiceLoadSaga),
-    call(watchPaymentInitializeSaga)
+    call(watchPaymentInitializeSaga),
+    call(watchBackToEntrypointPaymentSaga)
   ]);
 }
