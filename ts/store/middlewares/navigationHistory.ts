@@ -11,7 +11,6 @@ import { Middleware } from "redux";
 import I18n from "../../i18n";
 import { navigationRestore } from "../actions/navigation";
 import {
-  navigationHistoryMultiplePop,
   navigationHistoryPop,
   navigationHistoryPush,
   navigationHistoryReset
@@ -141,7 +140,7 @@ export function createNavigationHistoryMiddleware(): Middleware<
             };
 
             // Pop to route
-            store.dispatch(navigationHistoryMultiplePop(nPop));
+            store.dispatch(navigationHistoryPop(nPop));
             // Dispatch an action to restore the state where go back
             store.dispatch(navigationRestore(backNavigationState));
           }
