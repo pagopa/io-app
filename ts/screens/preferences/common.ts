@@ -22,6 +22,42 @@ const EMAIL_CHANNEL = "EMAIL";
 const PUSH_CHANNEL = "WEBHOOK";
 
 /**
+ * Provide new  BlockedInboxOrChannels object to disable
+ * a list of services
+ */
+export function getBlockedChannelsforServicesList(
+  servicesId: ReadonlyArray<string>,
+  profile: ProfileState
+): BlockedInboxOrChannels {
+  const profileBlockedChannels = pot
+    .toOption(profile)
+    .mapNullable(
+      userProfile =>
+        InitializedProfile.is(userProfile)
+          ? userProfile.blocked_inbox_or_channels
+          : null
+    )
+    .getOrElse({});
+
+  const newblockedChannels: BlockedInboxOrChannels = {};
+
+  servicesId.forEach(id => {
+    const channels =
+      Object.keys(profileBlockedChannels).indexOf(id) !== -1
+        ? profileBlockedChannels[id]
+        : [];
+    const updatedChannels =
+      channels.indexOf(INBOX_CHANNEL) === -1
+        ? channels.concat(INBOX_CHANNEL)
+        : channels;
+    // tslint:disable-next-line no-object-mutation
+    newblockedChannels[id] = updatedChannels;
+  });
+
+  return newblockedChannels;
+}
+
+/**
  * Finds out which channels are enabled in the profile for the provided service
  */
 export function getEnabledChannelsForService(

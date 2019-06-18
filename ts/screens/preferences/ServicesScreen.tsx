@@ -3,9 +3,12 @@
  * access the service detail by pressing on the related list item.
  */
 import * as pot from "italia-ts-commons/lib/pot";
+import { Button, Text } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
+import { Alert } from "react-native";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -18,15 +21,19 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
+import { profileUpsert } from "../../store/actions/profile";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { ProfileState } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
+import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
+import { getBlockedChannelsforServicesList } from "./common";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationInjectedProps;
@@ -49,6 +56,29 @@ class ServicesScreen extends React.Component<Props> {
     this.props.navigateToServiceDetailsScreen({
       service
     });
+  };
+
+  private getAllServiceDisabled = () => {
+    Alert.alert(
+      "Disattiva tutti i servizi",
+      "Sei sicuro di voler disabilitare tutti i servizi?",
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.ok"),
+          style: "destructive",
+          onPress: () => {
+            this.props.disableAllServices(
+              this.props.servicesId,
+              this.props.profile
+            );
+          }
+        }
+      ]
+    );
   };
 
   public componentDidMount() {
@@ -76,6 +106,17 @@ class ServicesScreen extends React.Component<Props> {
             subtitle={I18n.t("services.subTitle")}
           />
         )}
+
+        {this.props.isExperimentalFeaturesEnabled &&
+          !this.props.isLoading && (
+            <Button
+              style={{ marginHorizontal: customVariables.contentPadding }}
+              onPress={this.getAllServiceDisabled}
+            >
+              <Text>Disabilita tutti</Text>
+            </Button>
+          )}
+
         {isSearchEnabled ? this.renderSearch() : this.renderList()}
       </TopScreenComponent>
     );
@@ -148,12 +189,17 @@ const mapStateToProps = (state: GlobalState) => {
   const isLoading =
     pot.isLoading(state.entities.services.visible) || isAnyServiceLoading;
 
+  const isExperimentalFeaturesEnabled =
+    state.persistedPreferences.isExperimentalFeaturesEnabled;
+
   return {
     profile: state.profile,
     sections,
+    servicesId: Object.keys(services.byId),
     isLoading,
     searchText: searchTextSelector(state),
-    isSearchEnabled: isSearchServicesEnabledSelector(state)
+    isSearchEnabled: isSearchServicesEnabledSelector(state),
+    isExperimentalFeaturesEnabled
   };
 };
 
@@ -163,7 +209,22 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(contentServiceLoad.request(serviceId)),
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => dispatch(navigateToServiceDetailsScreen(params))
+  ) => dispatch(navigateToServiceDetailsScreen(params)),
+
+  disableAllServices: (
+    servicesId: ReadonlyArray<string>,
+    profile: ProfileState
+  ) => {
+    const newBlockedChannels = getBlockedChannelsforServicesList(
+      servicesId,
+      profile
+    );
+    dispatch(
+      profileUpsert.request({
+        blocked_inbox_or_channels: newBlockedChannels
+      })
+    );
+  }
 });
 
 export default connect(
