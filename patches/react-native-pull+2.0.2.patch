@@ -1,0 +1,85 @@
+diff --git a/node_modules/react-native-pull/PullView.js b/node_modules/react-native-pull/PullView.js
+index 54404ff..4ff55b4 100644
+--- a/node_modules/react-native-pull/PullView.js
++++ b/node_modules/react-native-pull/PullView.js
+@@ -65,7 +65,7 @@ export default class extends Pullable {
+ 
+     getScrollable(refreshControl) {
+         return (
+-            <ScrollView ref={(c) => {this.scroll = c;}} refreshControl={refreshControl} scrollEnabled={this.state.scrollEnabled} onScroll={this.onScroll}>
++            <ScrollView ref={(c) => {this.scroll = c;}} refreshControl={refreshControl} scrollEnabled={this.state.scrollEnabled} onScroll={this.onScroll} {...this.props}>
+                 {this.props.children}
+             </ScrollView>
+         );
+diff --git a/node_modules/react-native-pull/Pullable.js b/node_modules/react-native-pull/Pullable.js
+index 1c647a7..f0e9232 100644
+--- a/node_modules/react-native-pull/Pullable.js
++++ b/node_modules/react-native-pull/Pullable.js
+@@ -3,16 +3,12 @@
+ import React, { Component } from 'react';
+ import {
+     View,
+-    Text,
+-    RefreshControl,
+     PanResponder,
+     Animated,
+     Easing,
+-    Dimensions,
+-    ActivityIndicator
++    Button,
+ } from 'react-native';
+ 
+-import i18n from './i18n';
+ import styles from './style/index.js';
+ 
+ // const padding = 2; //scrollview与外面容器的距离
+@@ -173,7 +169,11 @@ export default class extends Component {
+ 
+     resetDefaultXYHandler() {
+         this.flag = defaultFlag;
+-        this.state.pullPan.setValue(this.defaultXY);
++        Animated.timing(this.state.pullPan, {
++            toValue: this.defaultXY,
++            easing: Easing.linear,
++            duration: this.duration
++        }).start();
+     }
+ 
+     componentWillUpdate(nextProps, nextState) {
+@@ -218,28 +218,15 @@ export default class extends Component {
+     make changes directly to a component without using state/props to trigger a re-render of the entire subtree
+     */
+     defaultTopIndicatorRender(pulling, pullok, pullrelease, gesturePosition) {
+-        setTimeout(() => {
+-            if (pulling) {
+-                this.txtPulling && this.txtPulling.setNativeProps({style: styles.show});
+-                this.txtPullok && this.txtPullok.setNativeProps({style: styles.hide});
+-                this.txtPullrelease && this.txtPullrelease.setNativeProps({style: styles.hide});
+-            } else if (pullok) {
+-                this.txtPulling && this.txtPulling.setNativeProps({style: styles.hide});
+-                this.txtPullok && this.txtPullok.setNativeProps({style: styles.show});
+-                this.txtPullrelease && this.txtPullrelease.setNativeProps({style: styles.hide});
+-            } else if (pullrelease) {
+-                this.txtPulling && this.txtPulling.setNativeProps({style: styles.hide});
+-                this.txtPullok && this.txtPullok.setNativeProps({style: styles.hide});
+-                this.txtPullrelease && this.txtPullrelease.setNativeProps({style: styles.show});
+-            }
+-        }, 1);
+         return (
+-            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: defaultTopIndicatorHeight}}>
+-                <ActivityIndicator size="small" color="gray" />
+-                <Text ref={(c) => {this.txtPulling = c;}} style={styles.hide}>{i18n.pulling}</Text>
+-                <Text ref={(c) => {this.txtPullok = c;}} style={styles.hide}>{i18n.pullok}</Text>
+-                <Text ref={(c) => {this.txtPullrelease = c;}} style={styles.hide}>{i18n.pullrelease}</Text>
+-            </View>
++            <View
++                style={{
++                flexDirection: "row",
++                justifyContent: "center",
++                alignItems: "center",
++                height: 60
++                }}
++            />
+         );
+     }
+ }

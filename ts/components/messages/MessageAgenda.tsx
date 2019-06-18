@@ -5,7 +5,6 @@ import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
-  Animated,
   Dimensions,
   Image,
   Platform,
@@ -13,8 +12,7 @@ import {
   SectionListData,
   SectionListRenderItem,
   SectionListScrollParams,
-  StyleSheet,
-  TouchableOpacity
+  StyleSheet
 } from "react-native";
 import variables from "../../theme/variables";
 
@@ -36,6 +34,7 @@ const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
 
 const screenWidth = Dimensions.get("screen").width;
+const topIndicatorHeight = 70;
 
 const styles = StyleSheet.create({
   // List
@@ -301,9 +300,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   private loadMoreData() {
-    if (this.state.isButtonVisible) {
-      this.props.onMoreDataRequest();
-    }
+    this.props.onMoreDataRequest();
   }
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
@@ -390,10 +387,17 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
-          height: 60
+          height: topIndicatorHeight
         }}
       >
-        <Button block={true} primary={true} small={true} style={styles.button}>
+        <Button
+          block={true}
+          primary={true}
+          small={true}
+          bordered={true}
+          style={styles.button}
+          onPress={this.loadMoreData}
+        >
           <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
         </Button>
       </View>
@@ -411,23 +415,16 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
     return (
       <View style={styles.fill}>
-        <TouchableOpacity
-          onPress={this.loadMoreData}
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "transparent",
-            height: 60
-          }}
-        />
         <RNP.PullView
           onPullRelease={this.onPullRelease}
           onPushing={this.onPullEnd}
           style={styles.scrollList}
+          loadMoreData={this.loadMoreData}
           topIndicatorRender={this.topIndicatorRender}
+          topIndicatorHeight={topIndicatorHeight}
+          sectionsLength={sections.length}
         >
-          <Animated.SectionList
+          <SectionList
             ref={this.sectionListRef}
             ListEmptyComponent={ListEmptyComponent}
             renderSectionHeader={this.renderSectionHeader}
@@ -456,7 +453,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   public scrollToLocation = (params: SectionListScrollParams) => {
     if (this.sectionListRef.current !== null) {
-      this.sectionListRef.current.getNode().scrollToLocation(params);
+      this.sectionListRef.current.scrollToLocation(params);
     }
   };
 }
