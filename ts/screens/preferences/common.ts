@@ -1,7 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 
 import { ProfileState } from "../../store/reducers/profile";
-
 import { BlockedInboxOrChannels } from "../../../definitions/backend/BlockedInboxOrChannels";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
@@ -113,7 +112,9 @@ export const getBlockedChannels = (
 
   // returned the merged current blocked channels with the blocked channels for
   // this service
-  return {
+  return blockedChannelsForService.length === 0 ? {
+    ...profileBlockedChannels
+  } : {
     ...profileBlockedChannels,
     [serviceId]: blockedChannelsForService
   };
