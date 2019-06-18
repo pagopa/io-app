@@ -44,6 +44,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   navigateToEntrypointPayment,
+  navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentTransactionErrorScreen
 } from "../../../store/actions/navigation";
