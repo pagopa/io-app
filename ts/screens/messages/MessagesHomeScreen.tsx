@@ -57,26 +57,6 @@ const styles = StyleSheet.create({
     marginBottom: -customVariables.tabUnderlineHeight,
     backgroundColor: customVariables.contentPrimaryBackground
   },
-  shadowContainer: {
-    backgroundColor: "#FFFFFF"
-  },
-  shadow: {
-    width: "100%",
-    height: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: customVariables.brandGray,
-    // iOS shadow
-    shadowColor: customVariables.footerShadowColor,
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowRadius: 5,
-    shadowOpacity: 1,
-    // Android shadow
-    elevation: 5,
-    marginTop: -1
-  },
   searchDisableIcon: {
     color: customVariables.headerFontColor
   }
@@ -104,11 +84,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     this.props.refreshMessages();
   }
 
-  private renderShadow = () => (
-    <View style={styles.shadowContainer}>
-      <View style={styles.shadow} />
-    </View>
-  );
 
   public render() {
     const { isSearchEnabled } = this.props;
@@ -187,7 +162,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          {this.renderShadow()}
           <MessagesInbox
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
@@ -245,7 +219,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               </TabHeading>
             }
           >
-            {this.renderShadow()}
             <MessagesDeadlines
               messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
@@ -265,7 +238,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          {this.renderShadow()}
           <MessagesArchive
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
