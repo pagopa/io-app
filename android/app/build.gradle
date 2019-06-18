@@ -218,7 +218,7 @@ dependencies {
     compile "com.google.android.gms:play-services-gcm:8.1.0"
     compile "com.android.support:multidex:1.0.3"
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+    //implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation ("com.facebook.react:react-native:0.59.9") { force = true } // From node_modules
 }
 
