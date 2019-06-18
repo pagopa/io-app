@@ -11,6 +11,7 @@ type Props = Readonly<{
   subtitle?: string;
   banner?: React.ReactNode;
   fixed?: boolean;
+  dark?: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -29,23 +30,32 @@ const styles = StyleSheet.create({
     top: variables.appHeaderHeight + getStatusBarHeight(true),
     right: 0,
     left: 0
+  },
+  darkGrayBg: {
+    backgroundColor: variables.brandDarkGray
+  },
+  white: {
+    color: variables.colorWhite
   }
 });
 
 export class ScreenContentHeader extends React.PureComponent<Props> {
   public render() {
-    const { banner, subtitle, fixed } = this.props;
+    const { banner, subtitle, fixed, dark, icon } = this.props;
 
     return (
-      <View style={fixed ? styles.fixedPosition : {}}>
-        {banner && <React.Fragment>{this.props.banner}</React.Fragment>}
+      <View style={[fixed && styles.fixedPosition, dark && styles.darkGrayBg]}>
+        {banner && <React.Fragment>{banner}</React.Fragment>}
         <View>
           <View spacer={true} />
           <ScreenHeader
             heading={
-              <H1 style={styles.screenHeaderHeading}>{this.props.title}</H1>
+              <H1 style={[styles.screenHeaderHeading, dark && styles.white]}>
+                {this.props.title}
+              </H1>
             }
-            icon={this.props.icon}
+            icon={icon}
+            dark={dark}
           />
           {subtitle ? (
             <View style={styles.subheaderContainer}>

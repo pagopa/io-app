@@ -15,6 +15,7 @@ import { Col, Grid, Row } from "react-native-easy-grid";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
+import { UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { formatNumberAmount } from "../../utils/stringBuilder";
 
 const styles = StyleSheet.create({
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   paymentReason: string;
   currentAmount: AmountInEuroCents;
-  recipient: EnteBeneficiario;
+  recipient?: EnteBeneficiario;
   onCancel: () => void;
 }>;
 
@@ -47,6 +48,8 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
   const currentAmount = formatNumberAmount(
     AmountInEuroCentsFromNumber.encode(props.currentAmount)
   );
+
+  const recipient = props.recipient || UNKNOWN_RECIPIENT;
 
   return (
     <Grid style={[styles.topContainer, styles.paddedLR]}>
@@ -66,7 +69,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
       </Row>
       <Row>
         <Col size={2}>
-          <Text white={true}>{props.recipient.denominazioneBeneficiario}</Text>
+          <Text white={true}>{recipient.denominazioneBeneficiario}</Text>
           <View spacer={true} />
         </Col>
         <Right>

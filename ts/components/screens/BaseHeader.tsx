@@ -1,11 +1,9 @@
 import { Body, Button, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { connect } from "react-redux";
 
 import IconFont from "../../components/ui/IconFont";
-import AppHeader from "../ui/AppHeader";
-
-import { connect } from "react-redux";
 import I18n from "../../i18n";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
@@ -13,6 +11,7 @@ import variables from "../../theme/variables";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
 import SearchButton, { SearchType } from "../search/SearchButton";
+import AppHeader from "../ui/AppHeader";
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -25,6 +24,7 @@ const styles = StyleSheet.create({
 });
 
 interface OwnProps {
+  dark?: boolean;
   headerTitle?: string;
   goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
   primary?: boolean;
@@ -40,9 +40,13 @@ type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
 class BaseHeaderComponent extends React.PureComponent<Props> {
   public render() {
-    const { goBack, headerTitle, body, isSearchEnabled } = this.props;
+    const { goBack, headerTitle, body, isSearchEnabled, dark } = this.props;
     return (
-      <AppHeader primary={this.props.primary} noShadow={isSearchEnabled}>
+      <AppHeader
+        primary={this.props.primary}
+        noShadow={isSearchEnabled}
+        dark={dark}
+      >
         {this.renderLeft()}
 
         {!isSearchEnabled && (
@@ -89,7 +93,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   };
 
   private renderLeft = () => {
-    const { isSearchEnabled, appLogo, goBack, primary } = this.props;
+    const { isSearchEnabled, appLogo, goBack, primary, dark } = this.props;
 
     return (
       !isSearchEnabled &&
@@ -110,6 +114,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               onPress={goBack}
               accessible={true}
               accessibilityLabel={I18n.t("global.buttons.back")}
+              white={dark}
             />
           </Left>
         )
