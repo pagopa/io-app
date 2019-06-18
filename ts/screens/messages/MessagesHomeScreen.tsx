@@ -1,4 +1,5 @@
-import { Tab, TabHeading, Tabs, Text, View } from "native-base";
+import * as pot from "italia-ts-commons/lib/pot";
+import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
 import { Animated, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -34,6 +35,7 @@ type Props = NavigationScreenProps &
 
 type State = {
   currentTab: number;
+  hasRefreshedOnceUp: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -70,20 +72,46 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      currentTab: 0
+      currentTab: 0,
+      hasRefreshedOnceUp: false
     };
   }
 
-  public animatedScrollPositions: ReadonlyArray<Animated.Value> = [
+  private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
     new Animated.Value(0),
     new Animated.Value(0),
     new Animated.Value(0)
   ];
 
+  // tslint:disable-next-line: readonly-array
+  public scollPositions: number[] = [0, 0, 0];
+
   public componentDidMount() {
     this.props.refreshMessages();
   }
 
+  public componentDidUpdate(prevprops: Props, prevstate: State) {
+    // saving current list scroll position to enable header animation
+    // when shifting between tabs
+    if (prevstate.currentTab !== this.state.currentTab) {
+      this.animatedScrollPositions.map((_, i) => {
+        // when current tab changes, listeners are not kept, so it is needed to
+        // assign them again.
+        this.animatedScrollPositions[i].removeAllListeners();
+        this.animatedScrollPositions[i].addListener(animatedValue => {
+          // tslint:disable-next-line: no-object-mutation
+          this.scollPositions[i] = animatedValue.value;
+        });
+      });
+    }
+    if (
+      pot.isLoading(prevprops.lexicallyOrderedMessagesState) &&
+      !pot.isLoading(this.props.lexicallyOrderedMessagesState) &&
+      !prevstate.hasRefreshedOnceUp
+    ) {
+      this.setState({ hasRefreshedOnceUp: true });
+    }
+  }
 
   public render() {
     const { isSearchEnabled } = this.props;
@@ -134,21 +162,26 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         style={{
           transform: [
             {
-              translateY: this.animatedScrollPositions[
-                this.state.currentTab
-              ].interpolate({
-                inputRange: [
-                  0,
-                  SCROLL_RANGE_FOR_ANIMATION / 2,
-                  SCROLL_RANGE_FOR_ANIMATION
-                ],
-                outputRange: [
-                  SCROLL_RANGE_FOR_ANIMATION,
-                  SCROLL_RANGE_FOR_ANIMATION / 4,
-                  0
-                ],
-                extrapolate: "clamp"
-              })
+              // hasRefreshedOnceUp is used to avoid unwanted refresh of
+              // animation after a new set of messages is received from
+              // backend at first load
+              translateY: this.state.hasRefreshedOnceUp
+                ? this.animatedScrollPositions[
+                    this.state.currentTab
+                  ].interpolate({
+                    inputRange: [
+                      0,
+                      SCROLL_RANGE_FOR_ANIMATION / 2,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    outputRange: [
+                      SCROLL_RANGE_FOR_ANIMATION,
+                      SCROLL_RANGE_FOR_ANIMATION / 4,
+                      0
+                    ],
+                    extrapolate: "clamp"
+                  })
+                : SCROLL_RANGE_FOR_ANIMATION
             }
           ]
         }}
@@ -180,7 +213,9 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                     }
                   }
                 ],
-                { useNativeDriver: true }
+                {
+                  useNativeDriver: true
+                }
               ),
               scrollEventThrottle: 8 // target is 120fps
             }}
