@@ -159,7 +159,6 @@ type OwnProps = {
 type Props = OwnProps & SelectedSectionListProps;
 
 type State = {
-  isButtonVisible: boolean;
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
 };
@@ -264,22 +263,11 @@ const FakeItemComponent = (
 class MessageAgenda extends React.PureComponent<Props, State> {
   private sectionListRef = React.createRef<any>();
 
-  public onPullRelease() {
-    this.setState({ isButtonVisible: true });
-  }
-
-  public onPullEnd() {
-    this.setState({ isButtonVisible: false });
-  }
-
   constructor(props: Props) {
     super(props);
     this.state = {
-      isButtonVisible: false,
       itemLayouts: []
     };
-    this.onPullRelease = this.onPullRelease.bind(this);
-    this.onPullEnd = this.onPullEnd.bind(this);
     this.loadMoreData = this.loadMoreData.bind(this);
   }
 
@@ -415,9 +403,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
     return (
       <View style={styles.fill}>
+        {sections.length === 0 && this.topIndicatorRender()}
         <RNP.PullView
-          onPullRelease={this.onPullRelease}
-          onPushing={this.onPullEnd}
           style={styles.scrollList}
           loadMoreData={this.loadMoreData}
           topIndicatorRender={this.topIndicatorRender}
@@ -441,7 +428,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             style={[
               {
                 flex: 1,
-                backgroundColor: variables.colorWhite
+                backgroundColor: variables.colorWhite,
+                marginTop: sections.length === 0 ? topIndicatorHeight : 0
               }
             ]}
             scrollEventThrottle={8}

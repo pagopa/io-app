@@ -12,7 +12,7 @@ index 54404ff..4ff55b4 100644
              </ScrollView>
          );
 diff --git a/node_modules/react-native-pull/Pullable.js b/node_modules/react-native-pull/Pullable.js
-index 1c647a7..f0e9232 100644
+index 1c647a7..658e2da 100644
 --- a/node_modules/react-native-pull/Pullable.js
 +++ b/node_modules/react-native-pull/Pullable.js
 @@ -3,16 +3,12 @@
@@ -33,7 +33,16 @@ index 1c647a7..f0e9232 100644
  import styles from './style/index.js';
  
  // const padding = 2; //scrollview与外面容器的距离
-@@ -173,7 +169,11 @@ export default class extends Component {
+@@ -118,8 +114,6 @@ export default class extends Component {
+             if (!this.flag.pullrelease) {
+                 if (this.props.onPullRelease) {
+                      this.props.onPullRelease(this.resolveHandler);
+-                } else {
+-                    setTimeout(() => {this.resetDefaultXYHandler()}, 3000);
+                 }
+             }
+             this.setFlag(flagPullrelease); //完成下拉，已松开
+@@ -173,7 +167,11 @@ export default class extends Component {
  
      resetDefaultXYHandler() {
          this.flag = defaultFlag;
@@ -46,7 +55,16 @@ index 1c647a7..f0e9232 100644
      }
  
      componentWillUpdate(nextProps, nextState) {
-@@ -218,28 +218,15 @@ export default class extends Component {
+@@ -206,7 +204,7 @@ export default class extends Component {
+ 
+     renderTopIndicator() {
+         let { pulling, pullok, pullrelease } = this.flag;
+-        if (this.props.topIndicatorRender == null) {
++        if (this.props.topIndicatorRender == null || this.props.sectionsLength === 0) {
+             return this.defaultTopIndicatorRender(pulling, pullok, pullrelease, this.gesturePosition);
+         } else {
+             return this.props.topIndicatorRender(pulling, pullok, pullrelease, this.gesturePosition);
+@@ -218,28 +216,15 @@ export default class extends Component {
      make changes directly to a component without using state/props to trigger a re-render of the entire subtree
      */
      defaultTopIndicatorRender(pulling, pullok, pullrelease, gesturePosition) {
@@ -77,7 +95,7 @@ index 1c647a7..f0e9232 100644
 +                flexDirection: "row",
 +                justifyContent: "center",
 +                alignItems: "center",
-+                height: 60
++                height: this.topIndicatorHeight
 +                }}
 +            />
          );
