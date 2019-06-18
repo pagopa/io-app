@@ -122,7 +122,7 @@ class TransactionsScreen extends React.Component<Props> {
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
-          totalAmount={I18n.t("wallet.total")}
+          amount={I18n.t("wallet.amount")}
           transactions={this.props.transactions}
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen

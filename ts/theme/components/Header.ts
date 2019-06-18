@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
@@ -70,22 +69,25 @@ export default (): Theme => {
         }
       },
       flex: 1,
-      height: 40,
       justifyContent: "center"
     },
 
     "NativeBase.Right": {
       "NativeBase.Button": {
-        minWidth: 40,
         ".transparent": {
-          marginRight: 0,
+          margin: 0,
           padding: variables.iconSizeBase / 4
+        },
+        "UIComponent.IconFont": {
+          fontSize: 24
         },
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3,
-        padding: variables.iconSizeBase / 4
+        padding: variables.iconSizeBase / 3,
+        justifyContent: "center"
       },
-      flex: 0
+      flex: 0,
+      justifyContent: "center"
     },
 
     ".primary": {
@@ -119,9 +121,14 @@ export default (): Theme => {
       }
     },
 
-    minHeight: variables.appHeaderHeight + getStatusBarHeight(true),
+    justifyContent: "center",
+    height:
+      Platform.OS === "ios"
+        ? variables.appHeaderHeight + 18
+        : variables.appHeaderHeight,
     borderBottomWidth: variables.headerBorderBottomWidth,
-    paddingHorizontal: variables.appHeaderPaddingHorizontal,
+    paddingLeft: variables.appHeaderPaddingHorizontal,
+    paddingRight: variables.appHeaderPaddingHorizontal,
     /* iOS */
     // shadowOpacity: 0,
     shadowOffset: {
