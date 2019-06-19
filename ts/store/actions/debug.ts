@@ -1,3 +1,4 @@
+import { dismissType } from "instabug-reactnative";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 /**
@@ -11,7 +12,7 @@ export type InstabugReport = {
  * instabug report dismission i.e. canceled, submit etc.
  */
 export type InstabugDismiss = {
-  how: string;
+  how: dismissType;
 };
 
 /**

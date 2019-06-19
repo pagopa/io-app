@@ -1,14 +1,20 @@
-import { BugReporting, Chats } from "instabug-reactnative";
-import * as React from "react";
-import { connect } from "react-redux";
+import {
+  BugReporting,
+  Chats,
+  dismissType,
+  Replies,
+  reportType
+} from "instabug-reactnative";
 
 import { Button } from "native-base";
-import { Dispatch } from "../store/actions/types";
-import { GlobalState } from "../store/reducers/types";
+import * as React from "react";
+import { connect } from "react-redux";
 import {
   instabugReportClosed,
   instabugReportOpened
-} from "./../store/actions/debug";
+} from "../store/actions/debug";
+import { Dispatch } from "../store/actions/types";
+import { GlobalState } from "../store/reducers/types";
 import IconFont from "./ui/IconFont";
 
 interface OwnProps {
@@ -19,14 +25,24 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps &
   ReturnType<typeof mapDispatchToProps>;
 
+const InstabugReportBug = "bug";
+const InstabugReportChat = "chat";
+
 class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
   private handleIBChatPress = () => {
-    this.props.dispatchIBReportOpen("chat");
-    Chats.show();
+    this.props.dispatchIBReportOpen(InstabugReportChat);
+    // Check if there are previous chat
+    Replies.hasChats(hasChats => {
+      if (hasChats) {
+        Replies.show();
+      } else {
+        Chats.show();
+      }
+    });
   };
 
   private handleIBBugPress = () => {
-    this.props.dispatchIBReportOpen("bug");
+    this.props.dispatchIBReportOpen(InstabugReportBug);
     BugReporting.showWithOptions(BugReporting.reportType.bug, [
       BugReporting.option.commentFieldRequired
     ]);
@@ -36,8 +52,13 @@ class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
     // Register to the instabug dismiss event. (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
     // This event is fired when chat or bug screen is dismissed
     BugReporting.onSDKDismissedHandler(
-      (dismissType: string, reportType: string): void => {
-        this.props.dispatchIBReportClosed(reportType, dismissType);
+      (dismiss: dismissType, report: reportType): void => {
+        this.props.dispatchIBReportClosed(
+          report === BugReporting.reportType.bug
+            ? InstabugReportBug
+            : InstabugReportChat,
+          dismiss
+        );
       }
     );
   }
@@ -75,7 +96,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIBReportOpen: (type: string) =>
     dispatch(instabugReportOpened({ type })),
-  dispatchIBReportClosed: (type: string, how: string) =>
+  dispatchIBReportClosed: (type: string, how: dismissType) =>
     dispatch(instabugReportClosed({ type, how }))
 });
 
