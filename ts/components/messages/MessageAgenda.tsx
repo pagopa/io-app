@@ -405,37 +405,32 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return (
       <View style={styles.fill}>
         {sections.length === 0 && this.topIndicatorRender()}
-        <RNP.PullView
-          style={styles.scrollList}
+        <RNP.PullSectionList
           loadMoreData={this.loadMoreData}
           topIndicatorRender={this.topIndicatorRender}
           topIndicatorHeight={topIndicatorHeight}
           sectionsLength={sections.length}
-        >
-          <SectionList
-            ref={this.sectionListRef}
-            ListEmptyComponent={ListEmptyComponent}
-            renderSectionHeader={this.renderSectionHeader}
-            renderItem={this.renderItem}
-            ItemSeparatorComponent={ItemSeparatorComponent}
-            sections={sections}
-            extraData={{ servicesById, paymentsByRptId }}
-            refreshing={refreshing}
-            onContentSizeChange={onContentSizeChange}
-            stickySectionHeadersEnabled={true}
-            keyExtractor={keyExtractor}
-            getItemLayout={this.getItemLayout}
-            bounces={false}
-            style={[
-              {
-                flex: 1,
-                backgroundColor: variables.colorWhite,
-                marginTop: sections.length === 0 ? topIndicatorHeight : 0
-              }
-            ]}
-            scrollEventThrottle={8}
-          />
-        </RNP.PullView>
+          ref={this.sectionListRef}
+          ListEmptyComponent={ListEmptyComponent}
+          renderSectionHeader={this.renderSectionHeader}
+          renderItem={this.renderItem}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+          sections={sections}
+          extraData={{ servicesById, paymentsByRptId }}
+          refreshing={refreshing}
+          onContentSizeChange={onContentSizeChange}
+          stickySectionHeadersEnabled={true}
+          keyExtractor={keyExtractor}
+          getItemLayout={this.getItemLayout}
+          bounces={false}
+          style={[
+            {
+              marginTop: sections.length === 0 ? topIndicatorHeight : 0
+            },
+            styles.scrollList
+          ]}
+          scrollEventThrottle={8}
+        />
       </View>
     );
   }
