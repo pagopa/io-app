@@ -1,7 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import { Animated, StyleSheet } from "react-native";
+import { Animated, Platform, StyleSheet } from "react-native";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
+
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import MessagesArchive from "../../components/messages/MessagesArchive";
@@ -39,7 +41,11 @@ type State = {
 };
 
 // Scroll range is directly influenced by floating header height
-const SCROLL_RANGE_FOR_ANIMATION = 72;
+const SCROLL_RANGE_FOR_ANIMATION =
+  customVariables.appHeaderHeight +
+  (Platform.OS === "ios"
+    ? getStatusBarHeight(true)
+    : customVariables.spacerHeight);
 
 const styles = StyleSheet.create({
   tabBarContainer: {
@@ -233,7 +239,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                     ],
                     outputRange: [
                       0,
-
                       SCROLL_RANGE_FOR_ANIMATION * 0.75,
                       SCROLL_RANGE_FOR_ANIMATION
                     ],
@@ -311,7 +316,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                     ],
                     outputRange: [
                       0,
-
                       SCROLL_RANGE_FOR_ANIMATION * 0.75,
                       SCROLL_RANGE_FOR_ANIMATION
                     ],
