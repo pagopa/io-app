@@ -135,29 +135,22 @@ type GetWalletsUsingGETExtraT = MapResponseType<
 >;
 
 /**
- *
- * sanitaze psp tags if it is an array with values (avoid no string value and duplicates)
- * otheriwise set tags as an empty array
- * @param w the wallet object
+ * it sanitizes psp tags avoiding no string value and string duplicates
+ * @param w wallet object
  */
 const fixWalletPspTagsValues = (w: any) => {
-  if (Array.isArray(w.psp.tags)) {
-    // tslint:disable-next-line: readonly-array
-    const duplicates: string[] = [];
-    // tslint:disable-next-line: no-object-mutation
-    w.psp = {
-      ...w.psp,
-      tags: w.psp.tags.filter((item: any) => {
-        if (typeof item === "string" && duplicates.indexOf(item) === -1) {
-          duplicates.push(item);
-          return true;
-        }
-        return false;
-      })
+  const decoder = t.readonly(t.union([t.string, t.unknown]));
+  if (w.psp && decoder.decode(w.psp.tags).isRight()) {
+    return {
+      ...w,
+      psp: {
+        ...w.psp,
+        tags: w.psp.tags.filter(
+          (item: any, idx: number) =>
+            typeof item === "string" && w.psp.tags.indexOf(item) === idx
+        )
+      }
     };
-  } else {
-    // tslint:disable-next-line: no-object-mutation
-    w.psp = { ...w.psp, tags: [] };
   }
   return w;
 };
@@ -165,14 +158,16 @@ const fixWalletPspTagsValues = (w: any) => {
 /**
  * TODO: temporary patch. Remove this patch once SIA has fixed the spec.
  * @see https://www.pivotaltracker.com/story/show/166665367
- * This patch is due because 'tags' field (an array of strings) in psp objects
+ * This patch is needed because 'tags' field (an array of strings) in psp objects
  * often contains mixed (and duplicated too) values
  * e.g tags = ["value1",null,null]
  * Psp codec fails decoding 'tags' having these values, so this getPatchedWalletsUsingGETDecoder alterates the
  * payload just before the decoding phase making 'tags' an empty array
  */
-const getPatchedWalletsUsingGETDecoder = <A, O>(type: t.Type<A, O>) => {
-  return r.composeResponseDecoders(
+const getPatchedWalletsUsingGETDecoder = <O>(
+  type: t.Type<WalletListResponse, O>
+) =>
+  r.composeResponseDecoders(
     r.composeResponseDecoders(
       r.composeResponseDecoders(
         r.ioResponseDecoder<200, (typeof type)["_A"], (typeof type)["_O"]>(
@@ -182,12 +177,9 @@ const getPatchedWalletsUsingGETDecoder = <A, O>(type: t.Type<A, O>) => {
             if (payload && payload.data && Array.isArray(payload.data)) {
               // iterate all wallets and if a wallet has a psp
               // check for tags field and make it an empty array
-              const newData = payload.data.map((w: any) => {
-                if (w.psp !== undefined && w.psp.tags !== undefined) {
-                  return fixWalletPspTagsValues(w);
-                }
-                return w;
-              });
+              const newData = payload.data.map((w: any) =>
+                fixWalletPspTagsValues(w)
+              );
               // tslint:disable-next-line: no-object-mutation
               payload.data = newData;
             }
@@ -200,7 +192,6 @@ const getPatchedWalletsUsingGETDecoder = <A, O>(type: t.Type<A, O>) => {
     ),
     r.constantResponseDecoder<undefined, 404>(404, undefined)
   );
-};
 
 const getWallets: GetWalletsUsingGETExtraT = {
   method: "get",
