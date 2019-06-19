@@ -634,8 +634,7 @@ biometric_recognition:
   enroll_btnLabel: Vai alle impostazioni
   needed_to_disable: Riconoscimento richiesto per disabilitare
 services:
-  headerTitle: Servizi
-  title: Elenco servizi
+  title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: Il servizio è attivo
