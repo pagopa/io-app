@@ -3,12 +3,10 @@
  * access the service detail by pressing on the related list item.
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Text } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { Alert } from "react-native";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -30,10 +28,9 @@ import {
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
-import { getBlockedChannelsforServicesList } from "./common";
+import { getChannelsforServicesList } from "./common";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationInjectedProps;
@@ -56,29 +53,6 @@ class ServicesScreen extends React.Component<Props> {
     this.props.navigateToServiceDetailsScreen({
       service
     });
-  };
-
-  private getAllServiceDisabled = () => {
-    Alert.alert(
-      "Disattiva tutti i servizi",
-      "Sei sicuro di voler disabilitare tutti i servizi?",
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.ok"),
-          style: "destructive",
-          onPress: () => {
-            this.props.disableAllServices(
-              this.props.servicesId,
-              this.props.profile
-            );
-          }
-        }
-      ]
-    );
   };
 
   public componentDidMount() {
@@ -106,16 +80,6 @@ class ServicesScreen extends React.Component<Props> {
             subtitle={I18n.t("services.subTitle")}
           />
         )}
-
-        {this.props.isExperimentalFeaturesEnabled &&
-          !this.props.isLoading && (
-            <Button
-              style={{ marginHorizontal: customVariables.contentPadding }}
-              onPress={this.getAllServiceDisabled}
-            >
-              <Text>Disabilita tutti</Text>
-            </Button>
-          )}
 
         {isSearchEnabled ? this.renderSearch() : this.renderList()}
       </TopScreenComponent>
@@ -195,7 +159,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     profile: state.profile,
     sections,
-    servicesId: Object.keys(services.byId),
+    allServicesId: Object.keys(services.byId),
     isLoading,
     searchText: searchTextSelector(state),
     isSearchEnabled: isSearchServicesEnabledSelector(state),
@@ -211,13 +175,18 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => dispatch(navigateToServiceDetailsScreen(params)),
 
+  /**
+   * TODO: implement graphycal to trigger all the services being disabled at once
+   * 
+   */
   disableAllServices: (
-    servicesId: ReadonlyArray<string>,
+    allServicesId: ReadonlyArray<string>,
     profile: ProfileState
   ) => {
-    const newBlockedChannels = getBlockedChannelsforServicesList(
-      servicesId,
-      profile
+    const newBlockedChannels = getChannelsforServicesList(
+      allServicesId,
+      profile,
+      false
     );
     dispatch(
       profileUpsert.request({
