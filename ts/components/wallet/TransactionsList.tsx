@@ -33,7 +33,7 @@ type Props = Readonly<{
   transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
   navigateToTransactionDetails: (transaction: Transaction) => void;
   ListEmptyComponent?: React.ReactNode;
-  unreadTransactions : ReadonlyArray<Transaction>;
+  unreadTransactions: ReadonlyArray<Transaction>;
 }>;
 
 const styles = StyleSheet.create({
@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
 
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
-    const isNew = (this.props.unreadTransactions.filter((_)=> _.id === item.id).length !== 0);//isReadTransaction(read, item.id);//item;// TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
+    const isNew =
+      this.props.unreadTransactions.filter(_ => _.id === item.id).length !== 0; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
     const datetime: string = `${formatDateAsLocal(
       item.created,
       true,
@@ -137,34 +138,10 @@ export default class TransactionsList extends React.Component<Props> {
         />
       );
     }
-
-    //const transactions = pot.getOrElse(this.props.transactions, []);
-    const transactions : ReadonlyArray<Transaction> = [{
-      accountingStatus: 1,
-      amount: { amount: 20000 },
-      created: new Date(2018, 10, 30, 13, 12, 22, 30),
-      description: "descrizione",
-      error: false,
-      fee: { amount: 1 },
-      grandTotal: { amount: 20100 },
-      id: 123,
-      idPayment: 1,
-      idPsp: 2,
-      idStatus: 3,
-      idWallet: 4,
-      merchant: "merchant",
-      nodoIdPayment: "nodoIdPayment",
-      paymentModel: 5,
-      spcNodeDescription: "spcNodeDescription",
-      spcNodeStatus: 6,
-      statusMessage: "statusMessage",
-      success: true,
-      token: "token",
-      updated: undefined,
-      urlCheckout3ds: "urlCheckout3ds",
-      urlRedirectPSP: "urlRedirectPSP"
-    }];
-
+    const transactions: ReadonlyArray<Transaction> = pot.getOrElse(
+      this.props.transactions,
+      []
+    );
     return transactions.length === 0 && ListEmptyComponent ? (
       ListEmptyComponent
     ) : (

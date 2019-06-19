@@ -69,7 +69,10 @@ function mapStateToProps(state: GlobalState) {
   const transactions = getUnreadTransactions(state);
   // TODO modify here to get WALLET TRANSACTIONS UNREAD
   return {
-    badgeValue: Math.min(pot.getOrElse(transactions, []).length, MAX_BADGE_VALUE)
+    badgeValue: Math.min(
+      pot.getOrElse(transactions, []).length,
+      MAX_BADGE_VALUE
+    )
   };
 }
 

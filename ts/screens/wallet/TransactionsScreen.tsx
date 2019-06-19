@@ -25,12 +25,15 @@ import {
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { getWalletTransactionsCreator, getUnreadTransactions } from "../../store/reducers/wallet/transactions";
+import {
+  getUnreadTransactions,
+  getWalletTransactionsCreator
+} from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
+import { readTransaction } from "../../store/actions/wallet/transactions";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
-import { readTransaction } from '../../store/actions/wallet/transactions';
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -141,7 +144,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state),
   favoriteWallet: getFavoriteWalletId(state),
-  unreadTransactions: pot.getOrElse(getUnreadTransactions(state),[])
+  unreadTransactions: pot.getOrElse(getUnreadTransactions(state), [])
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -152,7 +155,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         transaction,
         isPaymentCompletedTransaction: false
       })
-    )
+    );
   },
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),

@@ -19,9 +19,9 @@ export const fetchTransactionsFailure = createStandardAction(
   "FETCH_TRANSACTIONS_FAILURE"
 )<Error>();
 
-export const readTransaction = createStandardAction(
-  "READ_TRANSACTION"
-)<Transaction>();
+export const readTransaction = createStandardAction("READ_TRANSACTION")<
+  Transaction
+>();
 
 //
 // fetch a single transaction

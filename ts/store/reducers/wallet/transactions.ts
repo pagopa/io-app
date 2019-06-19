@@ -24,7 +24,7 @@ const MAX_TRANSACTIONS_IN_LIST = 50;
 
 export type TransactionsState = Readonly<{
   transactions: pot.Pot<IndexedById<Transaction>, Error>;
-  read: Set<number>
+  read: Set<number>;
 }>;
 
 // added list of read trans IDs
@@ -43,6 +43,10 @@ export const getTransactions = (state: GlobalState) =>
       ) as ReadonlyArray<Transaction>
   );
 
+// Search transaction number in Set of read transactions
+export const isReadTransaction = (state: GlobalState, txid: number) =>
+  state.wallet.transactions.read.has(txid);
+
 // filter only unread transactions to account for the residual number
 export const getUnreadTransactions = (state: GlobalState) =>
   pot.map(
@@ -52,13 +56,6 @@ export const getUnreadTransactions = (state: GlobalState) =>
         _ => _ !== undefined && !isReadTransaction(state, _.id)
       ) as ReadonlyArray<Transaction> // ridurre a array di ID
   );
-
-/**
- * Search in list of transactions read, the transaction 
- * in exam and return thus if read transaction or not
- */
-export const isReadTransaction = (state: GlobalState, txid: number) => (state.wallet.transactions.read.has(txid) );
-
 
 export const getWalletTransactionsCreator = (idWallet: number) => (
   state: GlobalState
