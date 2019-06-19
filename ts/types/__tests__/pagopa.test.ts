@@ -122,6 +122,16 @@ const validWallet: { [key: string]: any } = {
   lastUsage: "2018-08-07T15:50:08Z"
 };
 
+const validWalletNoCreditCard: { [key: string]: any } = {
+  idWallet: 2345,
+  type: "EXTERNAL_PS",
+  favourite: false,
+  psp: validPsp,
+  idPsp: validPsp.id,
+  pspEditable: true,
+  lastUsage: "2018-08-07T15:50:08Z"
+};
+
 // has no id
 const invalidWallet = Object.keys(validWallet)
   .filter(k => k !== "idWallet")
@@ -231,6 +241,11 @@ describe("Wallet", () => {
   it("should accept a valid Wallet", () => {
     expect(Wallet.decode(validWallet).isRight()).toBeTruthy();
   });
+
+  it("should accept a valid Wallet that contains no credit card", () => {
+    expect(Wallet.decode(validWalletNoCreditCard).isRight()).toBeTruthy();
+  });
+
   it("should NOT accept an invalid Wallet", () => {
     expect(Wallet.decode(invalidWallet).isRight()).toBeFalsy();
   });
