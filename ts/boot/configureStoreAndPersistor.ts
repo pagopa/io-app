@@ -1,4 +1,4 @@
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
@@ -26,6 +26,8 @@ import {
 } from "../store/reducers";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
+import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
+import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 
 /**
@@ -80,7 +82,9 @@ const rootPersistConfig: PersistConfig = {
     "debug",
     "persistedPreferences",
     "installation"
-  ]
+  ],
+  // Transform functions used to manipulate state on store/rehydrate
+  transforms: [DateISO8601Transform, PotTransform]
 };
 
 const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<

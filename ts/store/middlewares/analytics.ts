@@ -36,6 +36,7 @@ import {
   loadMessage,
   loadMessages,
   loadMessagesCancel,
+  removeMessages,
   setMessageReadState
 } from "../actions/messages";
 import {
@@ -182,6 +183,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         reason: action.payload
       });
 
+    // Messages actions with properties
+    case getType(removeMessages): {
+      return mp.track(action.type, action.payload);
+    }
     case getType(setMessageReadState): {
       if (action.payload.read === true) {
         setInstabugUserAttribute("lastSeenMessageID", action.payload.id);
@@ -225,6 +230,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(profileUpsert.failure):
     // messages
     case getType(loadMessages.request):
+    case getType(loadMessages.failure):
     case getType(loadMessages.success):
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):

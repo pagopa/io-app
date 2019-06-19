@@ -31,7 +31,6 @@ target 'ItaliaApp' do
 
   pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
@@ -53,6 +52,10 @@ target 'ItaliaApp' do
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
   pod 'RNFS', :path => '../node_modules/react-native-fs'
+
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
 end
 

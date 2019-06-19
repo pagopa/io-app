@@ -9,7 +9,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { MessageWithContentPO } from "../../types/MessageWithContentPO";
+import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 
@@ -19,7 +19,7 @@ export const loadMessage = createAsyncAction(
   "MESSAGE_LOAD_FAILURE"
 )<
   CreatedMessageWithoutContent,
-  MessageWithContentPO,
+  CreatedMessageWithContent,
   { id: string; error?: string }
 >();
 
@@ -43,6 +43,10 @@ export const loadMessagesCancelled = createStandardAction(
   "MESSAGES_LOAD_CANCELLED"
 )();
 
+export const removeMessages = createStandardAction("MESSAGES_REMOVE")<
+  ReadonlyArray<string>
+>();
+
 export const setMessageReadState = createAction(
   "MESSAGES_SET_READ",
   resolve => (id: string, read: boolean) => resolve({ id, read }, { id, read })
@@ -59,5 +63,6 @@ export type MessagesActions =
   | ActionType<typeof loadMessageWithRelations>
   | ActionType<typeof loadMessages>
   | ActionType<typeof loadMessagesCancel>
+  | ActionType<typeof removeMessages>
   | ActionType<typeof setMessageReadState>
   | ActionType<typeof setMessagesArchivedState>;

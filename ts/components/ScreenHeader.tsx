@@ -2,13 +2,30 @@ import { View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import { Image, ImageSourcePropType } from "react-native";
+import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 
 type Props = {
   heading: React.ReactNode;
   icon?: ImageSourcePropType;
+  dark?: boolean;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    position: "absolute",
+    right: 0,
+    width: 48,
+    zIndex: -1
+  },
+  image: {
+    resizeMode: "contain",
+    width: "100%"
+  },
+  darkGrayBg: {
+    backgroundColor: customVariables.brandDarkGray
+  }
+});
 
 /**
  * Component that implements the screen header with heading to the left
@@ -16,20 +33,14 @@ type Props = {
  */
 class ScreenHeader extends React.Component<Props> {
   public render() {
-    const { heading, icon } = this.props;
+    const { heading, icon, dark } = this.props;
 
     return (
-      <View>
+      <View style={dark && styles.darkGrayBg}>
         {heading}
         {icon && (
-          <View>
-            <Image
-              source={icon}
-              style={{
-                height: customVariables.h1FontSize * 2,
-                resizeMode: "contain"
-              }}
-            />
+          <View style={styles.container}>
+            <Image source={icon} style={styles.image} />
           </View>
         )}
       </View>

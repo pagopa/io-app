@@ -12,7 +12,7 @@
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, H3, Text, View } from "native-base";
+import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -23,6 +23,7 @@ import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
+import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
@@ -33,7 +34,7 @@ import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
-import { Transaction } from "../../types/pagopa";
+import { Transaction, Wallet } from "../../types/pagopa";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { formatDateAsLocal } from "./../../utils/dates";
@@ -79,6 +80,10 @@ const styles = StyleSheet.create({
     color: variables.colorWhite
   },
 
+  brandDarkGray: {
+    color: variables.brandDarkGray
+  },
+
   whiteContent: {
     backgroundColor: variables.colorWhite,
     flex: 1
@@ -91,31 +96,47 @@ const styles = StyleSheet.create({
 });
 
 class TransactionDetailsScreen extends React.Component<Props> {
+  private displayedWallet(transactionWallet: Wallet | undefined) {
+    return transactionWallet ? (
+      <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
+    ) : (
+      <RotatedCards cardType="Preview" />
+    );
+  }
+
   /**
    * It provides the proper header to the screen. If isTransactionStarted
    * (the user displays the screen during the process of identify and accept a transaction)
    * then the "Thank you message" is displayed
    */
-  private getSubHeader(paymentCompleted: boolean) {
-    return paymentCompleted ? (
-      <View>
-        <Grid>
-          <Col size={1} />
-          <Col size={5} style={styles.alignCenter}>
-            <View spacer={true} />
-            <Row>
-              <H1 style={styles.white}>{I18n.t("wallet.thanks")}</H1>
-            </Row>
-            <Row>
-              <Text white={true}>{I18n.t("wallet.endPayment")}</Text>
-            </Row>
-            <View spacer={true} />
-          </Col>
-          <Col size={1} />
-        </Grid>
-      </View>
-    ) : (
-      <View spacer={true} />
+  private topContent(
+    paymentCompleted: boolean,
+    transactionWallet: Wallet | undefined
+  ) {
+    return (
+      <React.Fragment>
+        {paymentCompleted ? (
+          <View>
+            <Grid>
+              <Col size={1} />
+              <Col size={5} style={styles.alignCenter}>
+                <View spacer={true} />
+                <Row>
+                  <H1 style={styles.white}>{I18n.t("wallet.thanks")}</H1>
+                </Row>
+                <Row>
+                  <Text white={true}>{I18n.t("wallet.endPayment")}</Text>
+                </Row>
+                <View spacer={true} />
+              </Col>
+              <Col size={1} />
+            </Grid>
+          </View>
+        ) : (
+          <View spacer={true} />
+        )}
+        {this.displayedWallet(transactionWallet)}
+      </React.Fragment>
     );
   }
 
@@ -160,8 +181,6 @@ class TransactionDetailsScreen extends React.Component<Props> {
       centsToAmount(transaction.grandTotal.amount)
     );
 
-    // FIXME: in case the wallet for this transaction has been deleted, display
-    //        a message in the wallet layout instead of an empty space
     const transactionWallet = this.props.wallets
       ? this.props.wallets[transaction.idWallet]
       : undefined;
@@ -169,15 +188,13 @@ class TransactionDetailsScreen extends React.Component<Props> {
     return (
       <WalletLayout
         title={I18n.t("wallet.transaction")}
-        headerContents={this.getSubHeader(isPaymentCompletedTransaction)}
-        displayedWallets={
-          transactionWallet ? (
-            <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
-          ) : (
-            undefined
-          )
-        }
         allowGoBack={!isPaymentCompletedTransaction}
+        topContent={this.topContent(
+          isPaymentCompletedTransaction,
+          transactionWallet
+        )}
+        hideHeader={true}
+        hasDynamicSubHeader={false}
       >
         <Content
           scrollEnabled={false}
@@ -185,17 +202,20 @@ class TransactionDetailsScreen extends React.Component<Props> {
         >
           <Grid>
             <Row style={styles.titleRow}>
-              <H3>{I18n.t("wallet.transactionDetails")}</H3>
+              <H5 style={styles.brandDarkGray}>
+                {I18n.t("wallet.transactionDetails")}
+              </H5>
               <IconFont
                 name="io-close"
                 size={variables.iconSizeBase}
                 onPress={this.props.navigateToWalletHome}
+                style={styles.brandDarkGray}
               />
             </Row>
             <View spacer={true} large={true} />
             {this.labelValueRow(
               I18n.t("wallet.total"),
-              <H3 style={styles.value}>{totalAmount}</H3>
+              <H5 style={styles.value}>{totalAmount}</H5>
             )}
             {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
             {this.labelValueRow(

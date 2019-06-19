@@ -5,6 +5,7 @@ import { SectionListData } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ProfileState } from "../../store/reducers/profile";
 import { serviceContainsText } from "../../utils/services";
+import { SearchNoResultMessage } from "../search/SearchNoResultMessage";
 import ServiceSectionListComponent from "./ServiceSectionListComponent";
 
 type OwnProps = {
@@ -148,7 +149,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
       []
     );
 
-    return (
+    return filteredServiceSectionsStates.length > 0 ? (
       <ServiceSectionListComponent
         {...this.props}
         sections={filteredServiceSectionsStates}
@@ -157,6 +158,8 @@ class ServicesSearch extends React.PureComponent<Props, State> {
         onRefresh={onRefresh}
         onSelect={this.handleOnServiceSelect}
       />
+    ) : (
+      <SearchNoResultMessage errorType="NoResultsFound" />
     );
   }
 

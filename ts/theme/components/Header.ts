@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
@@ -9,6 +8,7 @@ declare module "native-base" {
   namespace NativeBase {
     interface Header {
       primary?: boolean;
+      dark?: boolean;
     }
   }
 }
@@ -25,7 +25,14 @@ export default (): Theme => {
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3
       },
-      paddingLeft: 0,
+      "NativeBase.ViewNB": {
+        padding: 0,
+        paddingLeft: variables.iconSizeBase / 2,
+        justifyContent: "center",
+        width: (variables.iconSizeBase * 5) / 3,
+        height: (variables.iconSizeBase * 5) / 3
+      },
+      padding: 0,
       minWidth: 40,
       flex: 0
     },
@@ -44,25 +51,58 @@ export default (): Theme => {
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3
       },
-      flex: 1
+      "NativeBase.Item": {
+        "NativeBase.Input": {
+          height: 40
+        },
+        borderBottomWidth: 0,
+        "NativeBase.Button": {
+          minWidth: 40,
+          alignSelf: "flex-start",
+          justifyContent: "center",
+          width: (variables.iconSizeBase * 5) / 3,
+          height: (variables.iconSizeBase * 5) / 3,
+          padding: variables.iconSizeBase / 4,
+          "NativeBase.Icon": {
+            marginHorizontal: 0
+          }
+        }
+      },
+      flex: 1,
+      justifyContent: "center"
     },
 
     "NativeBase.Right": {
       "NativeBase.Button": {
-        minWidth: 40,
         ".transparent": {
-          marginRight: 0,
+          margin: 0,
           padding: variables.iconSizeBase / 4
+        },
+        "UIComponent.IconFont": {
+          fontSize: 24
         },
         width: (variables.iconSizeBase * 5) / 3,
         height: (variables.iconSizeBase * 5) / 3,
-        padding: variables.iconSizeBase / 4
+        padding: variables.iconSizeBase / 3,
+        justifyContent: "center"
       },
-      flex: 0
+      flex: 0,
+      justifyContent: "center"
     },
 
     ".primary": {
       backgroundColor: variables.contentPrimaryBackground,
+      "NativeBase.Right": {
+        "NativeBase.Button": {
+          "UIComponent.IconFont": {
+            color: variables.brandPrimaryInverted
+          }
+        }
+      }
+    },
+
+    ".dark": {
+      backgroundColor: variables.brandDarkGray,
       "NativeBase.Right": {
         "NativeBase.Button": {
           "UIComponent.IconFont": {
@@ -81,13 +121,24 @@ export default (): Theme => {
       }
     },
 
-    minHeight: variables.appHeaderHeight + getStatusBarHeight(true),
+    justifyContent: "center",
+    height:
+      Platform.OS === "ios"
+        ? variables.appHeaderHeight + 18
+        : variables.appHeaderHeight,
     borderBottomWidth: variables.headerBorderBottomWidth,
-    elevation: 0,
-    paddingHorizontal: variables.appHeaderPaddingHorizontal,
+    paddingLeft: variables.appHeaderPaddingHorizontal,
+    paddingRight: variables.appHeaderPaddingHorizontal,
+    /* iOS */
+    // shadowOpacity: 0,
+    shadowOffset: {
+      height: 0,
+      width: 0
+    },
+    shadowRadius: 0,
     shadowColor: undefined,
-    shadowOffset: undefined,
-    shadowOpacity: undefined,
-    shadowRadius: undefined
+    flexDirection: "row",
+    /* Android */
+    elevation: 0
   };
 };

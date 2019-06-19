@@ -2,9 +2,15 @@
 global:
   localization:
     decimalSeparator: ","
+  date:
+    today: "oggi"
+    tomorrow: "domani"
   dateFormats:
+    monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD/MM"
+    dayMonthYear: "D MMMM YYYY"
+    weekdayDayMonthYear: "dddd D MMMM YYYY"
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
@@ -29,13 +35,14 @@ global:
     profile: profilo
   actions:
     retry: Si è verificato un errore, si prega di riprovare
-    search: Cerca
+    search: Testo da cercare
   remoteStates:
     loading: In caricamento...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
   search:
-    invalidSearchBarText: Inserisci almeno tre caratteri nella barra di ricerca.
+    invalidSearchBarText: Inserisci almeno {{minCharacter}} caratteri
+    noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
   localNotifications:
     spidLogin:
       title: Ricordati di accedere ad IO!
@@ -49,6 +56,8 @@ clipboard:
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
+exit:
+  pressAgain: premi ancora per uscire
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
@@ -89,6 +98,7 @@ profile:
       dati personali, etc."
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
+    clearCache: Elimina cache
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
       confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
@@ -173,7 +183,6 @@ authentication:
     paragraph2: Se ti va, lasciaci il tuo indirizzo email per ricevere promemoria
       e aggiornamenti su questa app
     paragraph3: Proseguendo dichiari di accettare le
-    moreLinkText: Per saperne di più
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
   spid_information:
@@ -231,7 +240,6 @@ onboarding:
       entrando con SPID.
     pinInfoSelected: Questo codice ti verrà richiesto ogni volta che aprirai l’app
       e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive.
-    moreLinkText: Per saperne di più.
     continue: Continua
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
@@ -252,7 +260,7 @@ pin_login:
   pin:
     pinInfo: Inserisci il PIN
     reset:
-      button: Ho dimenticato il PIN
+      button: PIN dimenticato?
       button_short: Reimposta PIN
       tip: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità
         SPID.
@@ -304,6 +312,7 @@ wallet:
   delete:
     successful: Carta cancellata correttamente
     failed: Impossibile cancellare la carta
+    alert: 'Attenzione: il metodo di pagamento è stato rimosso dal portafoglio'
   newPaymentMethod:
     add: aggiungi
     addButton: Aggiungi un metodo
@@ -408,6 +417,7 @@ wallet:
     amount: Importo (€)
     proceed: Procedi con il pagamento
   total: Totale
+  amount: Importo
   payAmount: Importo da pagare
   transactionFee: Costo operazione
   why: Perché?
@@ -440,6 +450,7 @@ wallet:
     mobile:
       name: Altri metodi di pagamento
       maxFee: Paypal, Satispay, etc.
+    notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
     labels:
@@ -455,10 +466,11 @@ wallet:
   acceptedCards: Carte accettate
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
+    chooser: Carica immagine dalla galleria
     wrongQrCode: Non è un QR Code PagoPA!
     byCameraTitle: QR Code avviso
     cameraUsageInfo: Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
-      inserisci manualmente i dati identificativi (IUV e codive ente/azienda).
+      inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
     setManually: Inserisci i dati manualmente
     enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
     cameraUsagePerissionInfobox:
@@ -515,6 +527,22 @@ messages:
   cta:
     archive: Archivia
     unarchive: Ripristina
+    payment:
+      expired: Pagamento scaduto
+      validAlert:
+        block1: Puoi pagare questo avviso fino alle
+        block2: "{{time}} del {{day}}."
+      expiringAlert:
+        block1: Questo avviso
+        block2: scade {{todayOrTomorrow}}
+        block3: alle
+      expiredAlert:
+        block1: Il pagamento di
+        block2: € {{amount}}
+        block3: è
+        block4: scaduto
+        block5: alle
+        block6: del
     pay: Paga € {{amount}}
     paid: Pagato € {{amount}}
     reminder: Promemoria
@@ -530,6 +558,10 @@ messages:
     reminderRemoveSuccess: "Promemoria eliminato"
     reminderRemoveFailure: "Error durante l'eliminazione del promemoria, riprova per piacere"
     preferenceCalendarSelect: "Seleziona un calendario predefinito"
+    calendarPermDenied:
+      title: "Sembra che i permessi per accedere al calendario siano stati negati"
+      ok: "Abilita i permessi"
+      cancel: "Annulla"
     errors:
       fetchCalendars: Errore durante il recupero dei calendari
     helper: "IO ricorderà d'ora in poi questa scelta: potrai modificarla dalle preferenze dell'app."
@@ -546,7 +578,7 @@ messages:
   deadlines:
     emptyMessage: 
       title: Non hai scadenze in programma.
-      subtitle: Scorri verso il basso questa pagina per vedere le scadenze già trascorse.
+      subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
@@ -571,7 +603,6 @@ preferences:
   title: Preferenze
   subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
     Amministrazione.
-  moreLinkText: Per saperne di più.
   list:
     biometric_recognition: Riconoscimento biometrico
     biometric_recognition_status: 
@@ -591,7 +622,7 @@ preferences:
   preferencesHelp: !include preferences_home_help.md
   unavailable:
     title: Questa preferenza è impostata nel tuo profilo SPID
-    message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nell profilo SPID del tuo identity provider, e poi dovrai nuovamente loggarti nell'app
+    message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
   language:
     title: Questa preferenza è impostata nelle preferenze di sistema
     message: IO eredita la lingua dal sistema operativo del tuo dispositivo
@@ -627,9 +658,9 @@ serviceDetail:
   disableTitle: "Vuoi davvero disattivare il servizio?"
   disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
 identification:
-  message: "Inserisci il PIN"
-  resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
-  resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".
+  messageFingerPrint: "Appoggia l'impronta o inserisci il codice PIN"
+  messageFaceID: "Usa FaceID o inserisci il codice PIN"
+  messageEnterPin: "Inserisci il codice PIN"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
@@ -644,3 +675,6 @@ calendarEvents:
     title: Sei sicuro di voler rimuovere l'evento?
     ok: Rimuovi evento
     cancel: Annulla l'operazione
+reminders:
+  emptyMonth: Non ci sono scadenze in questo mese
+  loadMoreData: carica le scadenze del periodo precedente

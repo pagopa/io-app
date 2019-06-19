@@ -1,7 +1,8 @@
-import { Col, Grid, Icon, Row, View } from "native-base";
+import { Col, Grid, Row, View } from "native-base";
 import * as React from "react";
 
 import { StyleSheet } from "react-native";
+import IconFont from "../ui/IconFont";
 
 import variables from "../../theme/variables";
 
@@ -19,7 +20,11 @@ type Props = {
  */
 export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
   const iconName =
-    state === "INVALID" ? "times" : state === "VALID" ? "check" : undefined;
+    state === "INVALID"
+      ? "io-close"
+      : state === "VALID"
+        ? "io-tick-big"
+        : undefined;
 
   const sideLength = screenWidth / 2;
 
@@ -105,8 +110,7 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
       <View style={styles.rectangle}>
         {iconName && (
           <View style={styles.iconContainer}>
-            <Icon
-              type="FontAwesome"
+            <IconFont
               name={iconName}
               style={[
                 styles.icon,

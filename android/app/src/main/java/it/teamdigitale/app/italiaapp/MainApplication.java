@@ -8,6 +8,9 @@ import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.lewin.qrcode.QRScanReaderPackage;
+import com.imagepicker.ImagePickerPackage;
 import com.kristiansorens.flagsecure.FlagSecurePackage;
 import com.rnfs.RNFSPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
@@ -22,7 +25,6 @@ import com.RNTextInputMask.RNTextInputMaskPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import org.reactnative.camera.RNCameraPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.oblador.keychain.KeychainPackage;
 import com.facebook.react.ReactNativeHost;
@@ -45,6 +47,9 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new AsyncStoragePackage(),
+        new QRScanReaderPackage(),
+        new ImagePickerPackage(),
         new FlagSecurePackage(),
         new RNFSPackage(),
         new AndroidOpenSettingsPackage(),
@@ -62,7 +67,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
         new SplashScreenReactPackage(),
         new ReactNativeExceptionHandlerPackage(),
         new RNCameraPackage(),
-        new VectorIconsPackage(),
         new ReactNativePushNotificationPackage(),
         new KeychainPackage(),
         new RNI18nPackage(),

@@ -1,30 +1,46 @@
 import { format } from "date-fns";
-import { Text, View } from "native-base";
-import React from "react";
+import { Option } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { Button, Text, View } from "native-base";
+import React, { ComponentProps } from "react";
 import {
+  Animated,
+  Dimensions,
+  Easing,
   Image,
+  Platform,
   SectionList,
   SectionListData,
   SectionListRenderItem,
+  SectionListScrollParams,
   StyleSheet
 } from "react-native";
+import variables from "../../theme/variables";
 
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
+import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
+import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
+import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import { MessageWithContentAndDueDatePO } from "../../types/MessageWithContentAndDueDatePO";
-import H5 from "../ui/H5";
-import MessageAgendaItem from "./MessageAgendaItem";
+import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
+import MessageListItem from "./MessageListItem";
+
+// Used to calculate the cell item layouts.
+const LIST_HEADER_HEIGHT = 70;
+const SECTION_HEADER_HEIGHT = 48;
+const ITEM_HEIGHT = 158;
+const FAKE_ITEM_HEIGHT = 75;
+const ITEM_SEPARATOR_HEIGHT = 1;
+// Used to animate button refresh
+const HEADER_SCROLL_DISTANCE = 42 + variables.contentPadding;
+const MIN_PULLDOWN_DISTANCE = 1;
+
+const screenWidth = Dimensions.get("screen").width;
 
 const styles = StyleSheet.create({
-  sectionHeader: {
-    paddingHorizontal: customVariables.contentPadding,
-    paddingVertical: customVariables.contentPadding / 2,
-    backgroundColor: customVariables.brandLightGray
-  },
-  itemSeparator: {
-    height: 1,
-    backgroundColor: customVariables.brandLightGray
-  },
+  // List
   emptyListWrapper: {
     padding: customVariables.contentPadding,
     alignItems: "center"
@@ -36,26 +52,188 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingTop: customVariables.contentPadding,
     fontSize: customVariables.fontSizeSmall
+  },
+
+  // ListHeader
+  listHeaderWrapper: {
+    height: LIST_HEADER_HEIGHT,
+    paddingHorizontal: customVariables.contentPadding,
+    paddingTop: 24,
+    paddingBottom: 8
+  },
+  listHeaderButtonText: {
+    ...makeFontStyleObject(Platform.select)
+  },
+
+  // SectionHeader
+  sectionHeaderWrapper: {
+    height: SECTION_HEADER_HEIGHT,
+    paddingTop: 19,
+    paddingHorizontal: customVariables.contentPadding,
+    backgroundColor: customVariables.colorWhite
+  },
+  sectionHeaderContent: {
+    paddingBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: customVariables.brandLightGray
+  },
+  sectionHeaderText: {
+    fontSize: 18,
+    lineHeight: 20,
+    color: customVariables.brandDarkestGray
+  },
+
+  // Items
+  itemEmptyWrapper: {
+    height: FAKE_ITEM_HEIGHT,
+    paddingHorizontal: customVariables.contentPadding,
+    justifyContent: "center"
+  },
+  itemEmptyText: {
+    color: customVariables.brandDarkestGray
+  },
+  itemSeparator: {
+    height: ITEM_SEPARATOR_HEIGHT,
+    backgroundColor: customVariables.brandLightGray
+  },
+
+  // animation scrollview
+  fill: {
+    flex: 1
+  },
+  button: {
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginTop: variables.contentPadding,
+    width: screenWidth - variables.contentPadding * 2,
+    backgroundColor: variables.colorWhite
   }
 });
 
-const keyExtractor = (_: MessageWithContentAndDueDatePO) => _.id;
+export type FakeItem = {
+  fake: true;
+};
 
-const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
+export type MessageAgendaItemMetadata = {
+  isRead: boolean;
+};
 
-export type MessageAgendaSection = SectionListData<
-  MessageWithContentAndDueDatePO
+export type MessageAgendaItem = ITuple2<
+  CreatedMessageWithContentAndDueDate,
+  MessageAgendaItemMetadata
 >;
 
-type Props = {
-  // Can't use ReadonlyArray because of the SectionList section prop
-  // typescript definition.
-  // tslint:disable-next-line:readonly-array
-  sections: MessageAgendaSection[];
-  isRefreshing: boolean;
-  onRefresh: () => void;
-  onPressItem: (id: string) => void;
+export type MessageAgendaSection = SectionListData<
+  MessageAgendaItem | FakeItem
+>;
+
+// tslint:disable-next-line: readonly-array
+export type Sections = MessageAgendaSection[];
+
+export type ItemLayout = {
+  length: number;
+  offset: number;
+  index: number;
 };
+
+type SelectedSectionListProps = Pick<
+  ComponentProps<SectionList<MessageAgendaSection>>,
+  "refreshing" | "onContentSizeChange"
+>;
+
+type OwnProps = {
+  sections: Sections;
+  servicesById: ServicesByIdState;
+  paymentsByRptId: PaymentByRptIdState;
+  onPressItem: (id: string) => void;
+  onLongPressItem: (id: string) => void;
+  onMoreDataRequest: () => void;
+  selectedMessageIds: Option<Set<string>>;
+};
+
+type Props = OwnProps & SelectedSectionListProps;
+
+type State = {
+  /*
+  Animation states when show and gone load-data button:
+  */
+  animationState: "NOTREADY" | "READY" | "STARTED";
+  scrollY: Animated.Value;
+  itemLayouts: ReadonlyArray<ItemLayout>;
+  prevSections?: Sections;
+};
+
+const isFakeItem = (item: any): item is FakeItem => {
+  return item.fake;
+};
+
+const keyExtractor = (_: MessageAgendaItem | FakeItem, index: number) =>
+  isFakeItem(_) ? `item-${index}` : _.e1.id;
+
+/**
+ * Generate item layouts from sections.
+ * The VirtualizedSectionList react-native component create cells for:
+ * - SECTION_HEADER
+ * - ITEM + ITEM_SEPARATOR (NOTE: A single cell for both)
+ * - SECTION_FOOTER
+ *
+ * Here we calculate the ItemLayout for each cell.
+ */
+const generateItemLayouts = (sections: Sections) => {
+  // tslint:disable-next-line: no-let
+  let offset = LIST_HEADER_HEIGHT;
+  // tslint:disable-next-line: no-let
+  let index = 0;
+  // tslint:disable-next-line: readonly-array
+  const itemLayouts: ItemLayout[] = [];
+
+  sections.forEach(section => {
+    // Push the info about the SECTION_HEADER cell.
+    itemLayouts.push({
+      length: SECTION_HEADER_HEIGHT,
+      offset,
+      index
+    });
+
+    offset += SECTION_HEADER_HEIGHT;
+    index++;
+
+    section.data.forEach((_, dataIndex, data) => {
+      // Push the info about the ITEM + ITEM_SEPARATOR cell.
+      const isFake = isFakeItem(_);
+      const isLastItem = dataIndex === data.length - 1;
+
+      const itemHeight = isFake ? FAKE_ITEM_HEIGHT : ITEM_HEIGHT;
+      const cellHeight = isLastItem
+        ? itemHeight
+        : itemHeight + ITEM_SEPARATOR_HEIGHT;
+      itemLayouts.push({
+        length: cellHeight,
+        offset,
+        index
+      });
+
+      offset += cellHeight;
+      index++;
+    });
+
+    // Push the info about the SECTION_FOOTER cell.
+    // NOTE: VirtualizedSectionList component creates a cell instance for
+    // the SECTION_FOOTER even when not rendered.
+    itemLayouts.push({
+      length: 0,
+      offset,
+      index
+    });
+
+    index++;
+  });
+
+  return itemLayouts;
+};
+
+const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 const ListEmptyComponent = (
   <View style={styles.emptyListWrapper}>
@@ -72,51 +250,263 @@ const ListEmptyComponent = (
   </View>
 );
 
+const FakeItemComponent = (
+  <View style={styles.itemEmptyWrapper}>
+    <Text bold={true} style={styles.itemEmptyText}>
+      {I18n.t("reminders.emptyMonth")}
+    </Text>
+  </View>
+);
+
 /**
  * A component to render messages with due_date in a agenda like form.
  */
-class MessageAgenda extends React.PureComponent<Props> {
-  public render() {
-    const { sections, isRefreshing, onRefresh } = this.props;
-    return (
-      <SectionList
-        sections={sections}
-        keyExtractor={keyExtractor}
-        stickySectionHeadersEnabled={true}
-        alwaysBounceVertical={false}
-        ItemSeparatorComponent={ItemSeparatorComponent}
-        refreshing={isRefreshing}
-        onRefresh={onRefresh}
-        renderSectionHeader={this.renderSectionHeader}
-        renderItem={this.renderItem}
-        ListEmptyComponent={ListEmptyComponent}
-      />
-    );
+class MessageAgenda extends React.PureComponent<Props, State> {
+  private sectionListRef = React.createRef<any>();
+  private overScrollAnim: Animated.Value;
+
+  public componentDidMount() {
+    this.state.scrollY.addListener(value => this.handleScroll(value));
+  }
+
+  public componentWillUnmount() {
+    this.state.scrollY.removeAllListeners();
+  }
+
+  public handleRelease() {
+    if (this.state.animationState === "READY") {
+      // start animation
+      this.animateOverScroll();
+    }
+  }
+
+  private handleScroll(pullDownDistance: any) {
+    if (pullDownDistance.value <= MIN_PULLDOWN_DISTANCE) {
+      if (this.state.animationState === "NOTREADY") {
+        return this.setState({ animationState: "READY" });
+      }
+    } else {
+      this.animateCloseOverScroll();
+      return this.setState({ animationState: "NOTREADY" });
+    }
+  }
+
+  private handleDragMove() {
+    if (this.state.animationState === "READY") {
+      this.animateOverScroll();
+    }
+    return true;
+  }
+
+  private animateOverScroll = () => {
+    this.overScrollAnim.setValue(0);
+    this.setState({ animationState: "STARTED" });
+    Animated.timing(this.overScrollAnim, {
+      toValue: HEADER_SCROLL_DISTANCE,
+      duration: 50,
+      easing: Easing.linear,
+      useNativeDriver: true
+    }).start();
+  };
+
+  private animateCloseOverScroll = () => {
+    if (this.state.animationState === "STARTED") {
+      this.setState({ animationState: "NOTREADY" });
+      Animated.timing(this.overScrollAnim, {
+        toValue: 0,
+        duration: 50,
+        easing: Easing.linear,
+        useNativeDriver: true
+      }).start();
+    }
+  };
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      animationState: "NOTREADY",
+      scrollY: new Animated.Value(0),
+      itemLayouts: []
+    };
+    this.overScrollAnim = new Animated.Value(0);
+    this.handleDragMove = this.handleDragMove.bind(this);
+    this.handleRelease = this.handleRelease.bind(this);
+  }
+
+  public static getDerivedStateFromProps(
+    nextProps: Props,
+    prevState: State
+  ): Partial<State> | null {
+    const { sections } = nextProps;
+    const { prevSections } = prevState;
+    if (sections !== prevSections) {
+      return {
+        prevSections: sections,
+        itemLayouts: generateItemLayouts(sections)
+      };
+    }
+
+    return null;
   }
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
+    const isFake = info.section.fake;
     return (
-      <H5 style={styles.sectionHeader}>
-        {format(
-          info.section.title,
-          I18n.t("global.dateFormats.dayAndMonth")
-        ).toUpperCase()}
-      </H5>
+      <View style={styles.sectionHeaderWrapper}>
+        <View style={styles.sectionHeaderContent}>
+          <Text style={styles.sectionHeaderText}>
+            {format(
+              info.section.title,
+              I18n.t(
+                isFake
+                  ? "global.dateFormats.monthYear"
+                  : "global.dateFormats.weekdayDayMonthYear"
+              )
+            )}
+          </Text>
+        </View>
+      </View>
     );
   };
 
   private renderItem: SectionListRenderItem<
-    MessageWithContentAndDueDatePO
+    MessageAgendaItem | FakeItem
   > = info => {
-    const message = info.item;
+    if (isFakeItem(info.item)) {
+      return FakeItemComponent;
+    }
+
+    const message = info.item.e1;
+    const { isRead } = info.item.e2;
+    const {
+      paymentsByRptId,
+      onPressItem,
+      onLongPressItem,
+      selectedMessageIds
+    } = this.props;
+
+    const potService = this.props.servicesById[message.sender_service_id];
+
+    const service =
+      potService !== undefined
+        ? pot.isNone(potService)
+          ? ({
+              organization_name: I18n.t("messages.errorLoading.senderService"),
+              department_name: I18n.t("messages.errorLoading.senderInfo")
+            } as ServicePublic)
+          : pot.toUndefined(potService)
+        : undefined;
+
+    const payment =
+      message.content.payment_data !== undefined && service !== undefined
+        ? paymentsByRptId[
+            `${service.organization_fiscal_code}${
+              message.content.payment_data.notice_number
+            }`
+          ]
+        : undefined;
+
     return (
-      <MessageAgendaItem
-        id={message.id}
-        subject={message.content.subject}
-        due_date={message.content.due_date}
-        onPress={this.props.onPressItem}
+      <MessageListItem
+        isRead={isRead}
+        message={message}
+        service={service}
+        payment={payment}
+        onPress={onPressItem}
+        onLongPress={onLongPressItem}
+        isSelectionModeEnabled={selectedMessageIds.isSome()}
+        isSelected={selectedMessageIds
+          .map(_ => _.has(message.id))
+          .getOrElse(false)}
       />
     );
+  };
+
+  private getItemLayout = (_: Sections | null, index: number) => {
+    return this.state.itemLayouts[index];
+  };
+
+  public render() {
+    const {
+      sections,
+      servicesById,
+      paymentsByRptId,
+      refreshing,
+      onContentSizeChange
+    } = this.props;
+
+    const { onMoreDataRequest } = this.props;
+
+    const marginTopAnim = this.overScrollAnim.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE],
+      outputRange: [0, HEADER_SCROLL_DISTANCE],
+      extrapolate: "clamp"
+    });
+
+    const marginTopList = sections.length === 0 ? 0 : -HEADER_SCROLL_DISTANCE;
+
+    return (
+      <View style={styles.fill}>
+        <Animated.View
+          style={[
+            {
+              useNativeDriver: true
+            },
+            styles.button
+          ]}
+        >
+          <Button
+            block={true}
+            primary={true}
+            small={true}
+            onPress={onMoreDataRequest}
+          >
+            <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
+          </Button>
+        </Animated.View>
+
+        <Animated.SectionList
+          ref={this.sectionListRef}
+          onResponderMove={this.handleDragMove}
+          onResponderRelease={this.handleRelease}
+          onScrollEndDrag={this.handleRelease}
+          ListEmptyComponent={ListEmptyComponent}
+          renderSectionHeader={this.renderSectionHeader}
+          renderItem={this.renderItem}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+          sections={sections}
+          extraData={{ servicesById, paymentsByRptId }}
+          refreshing={refreshing}
+          onContentSizeChange={onContentSizeChange}
+          stickySectionHeadersEnabled={true}
+          keyExtractor={keyExtractor}
+          getItemLayout={this.getItemLayout}
+          bounces={true}
+          style={[
+            {
+              useNativeDriver: true,
+              transform: [{ translateY: marginTopAnim }]
+            },
+            {
+              flex: 1,
+              marginTop: marginTopList,
+              backgroundColor: variables.colorWhite
+            }
+          ]}
+          scrollEventThrottle={8}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+            { useNativeDriver: true }
+          )}
+        />
+      </View>
+    );
+  }
+
+  public scrollToLocation = (params: SectionListScrollParams) => {
+    if (this.sectionListRef.current !== null) {
+      this.sectionListRef.current.getNode().scrollToLocation(params);
+    }
   };
 }
 

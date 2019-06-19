@@ -20,6 +20,7 @@ const customVariables = Object.assign(materialVariables, {
   // Button
   btnTextFontWeight: "700" as FontWeight,
   btnHeight: 48,
+  btnWidgetHeight: 24,
   btnFontSize: 16,
   btnXSmallHeight: 32,
   btnXSmallLineHeight: 20,
@@ -122,6 +123,7 @@ const customVariables = Object.assign(materialVariables, {
   },
   // Content
   contentPadding: 24,
+  contentPaddingLarge: 48,
   contentBackground: "#FFFFFF",
   contentAlternativeBackground: "#F5F6F7",
   contentPrimaryBackground: "#0073E6",
@@ -205,11 +207,12 @@ const customVariables = Object.assign(materialVariables, {
   },
 
   // Header
-  appHeaderHeight: 40,
+  appHeaderHeight: 56,
   appHeaderPaddingHorizontal: 12,
   titleHeaderPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
+  headerFontColor: "#000000",
   headerBodyFontWeight: "600" as FontWeight,
   toolbarDefaultBg: "#FFFFFF",
   get toolbarTextColor(): ThemeSimpleValue {
@@ -232,6 +235,9 @@ const customVariables = Object.assign(materialVariables, {
   textNormalWeight: "400" as FontWeight,
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
+
+  // Label
+  labelNormalWeight: "400" as FontWeight,
 
   // Input
   inputNormalWeight: "400" as FontWeight,
@@ -260,7 +266,11 @@ const customVariables = Object.assign(materialVariables, {
   activeOpacity: 0.25,
 
   // Spacing
-  spacingBase: 8
+  spacingBase: 8,
+
+  // IconFont
+  selectedColor: "#0073E6",
+  unselectedColor: "#5C6F82"
 });
 
 export default customVariables;

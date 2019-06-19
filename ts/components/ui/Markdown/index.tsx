@@ -253,6 +253,7 @@ class Markdown extends React.PureComponent<Props, State> {
             <View style={containerStyle}>
               <WebView
                 key={this.state.webviewKey}
+                textZoom={100}
                 ref={this.webViewRef}
                 scrollEnabled={false}
                 overScrollMode={"never"}

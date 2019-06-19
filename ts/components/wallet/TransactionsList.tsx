@@ -6,13 +6,13 @@ import {
   Body,
   Content,
   Grid,
-  H3,
   Left,
   List,
   ListItem,
   Right,
   Row,
-  Text
+  Text,
+  View
 } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -21,13 +21,15 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
+import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
+import H5 from "../ui/H5";
 
 type Props = Readonly<{
   title: string;
-  totalAmount: string;
+  amount: string;
   transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
   navigateToTransactionDetails: (transaction: Transaction) => void;
   ListEmptyComponent?: React.ReactNode;
@@ -53,6 +55,16 @@ const styles = StyleSheet.create({
   whiteContent: {
     backgroundColor: variables.colorWhite,
     flex: 1
+  },
+
+  subHeaderContent: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    justifyContent: "space-between"
+  },
+
+  brandDarkGray: {
+    color: variables.brandDarkGray
   }
 });
 
@@ -63,7 +75,11 @@ const styles = StyleSheet.create({
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
     const isNew = false; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
-    const datetime: string = `${item.created.toLocaleDateString()} - ${item.created.toLocaleTimeString()}`;
+    const datetime: string = `${formatDateAsLocal(
+      item.created,
+      true,
+      true
+    )} - ${item.created.toLocaleTimeString()}`;
     return (
       <Row>
         <Left>
@@ -113,6 +129,7 @@ export default class TransactionsList extends React.Component<Props> {
     if (pot.isLoading(this.props.transactions)) {
       return (
         <BoxedRefreshIndicator
+          white={true}
           caption={<Text>{I18n.t("wallet.transactionsLoadMessage")}</Text>}
         />
       );
@@ -128,15 +145,16 @@ export default class TransactionsList extends React.Component<Props> {
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteContent]}
       >
+        <View>
+          <View style={styles.subHeaderContent}>
+            <H5 style={styles.brandDarkGray}>
+              {I18n.t("wallet.latestTransactions")}
+            </H5>
+            <Text>{I18n.t("wallet.amount")}</Text>
+          </View>
+        </View>
+
         <Grid>
-          <Row>
-            <Left>
-              <H3>{this.props.title}</H3>
-            </Left>
-            <Right>
-              <Text>{this.props.totalAmount}</Text>
-            </Right>
-          </Row>
           <Row>
             <List
               scrollEnabled={false}

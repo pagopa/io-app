@@ -1,5 +1,6 @@
 import { AmountInEuroCents } from "italia-pagopa-commons/lib/pagopa";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
+import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { Amount } from "../types/pagopa";
 import { Wallet } from "../types/pagopa";
 import {
@@ -10,20 +11,21 @@ import {
 } from "../utils/input";
 
 const UNKNOWN_STRING = "?";
+const UNKNOWN_EMPTY_STRING = "";
 const UNKNOWN_NUMBER = -1;
 const UNKNOWN_DATE = new Date("?");
 
 export const UNKNOWN_RECIPIENT: EnteBeneficiario = {
-  identificativoUnivocoBeneficiario: UNKNOWN_STRING,
-  denominazioneBeneficiario: UNKNOWN_STRING,
-  codiceUnitOperBeneficiario: UNKNOWN_STRING,
-  denomUnitOperBeneficiario: UNKNOWN_STRING,
-  indirizzoBeneficiario: UNKNOWN_STRING,
-  civicoBeneficiario: UNKNOWN_STRING,
-  capBeneficiario: UNKNOWN_STRING,
-  localitaBeneficiario: UNKNOWN_STRING,
-  provinciaBeneficiario: UNKNOWN_STRING,
-  nazioneBeneficiario: UNKNOWN_STRING
+  identificativoUnivocoBeneficiario: UNKNOWN_EMPTY_STRING,
+  denominazioneBeneficiario: UNKNOWN_EMPTY_STRING,
+  codiceUnitOperBeneficiario: UNKNOWN_EMPTY_STRING,
+  denomUnitOperBeneficiario: UNKNOWN_EMPTY_STRING,
+  indirizzoBeneficiario: UNKNOWN_EMPTY_STRING,
+  civicoBeneficiario: UNKNOWN_EMPTY_STRING,
+  capBeneficiario: UNKNOWN_EMPTY_STRING,
+  localitaBeneficiario: UNKNOWN_EMPTY_STRING,
+  provinciaBeneficiario: UNKNOWN_EMPTY_STRING,
+  nazioneBeneficiario: UNKNOWN_EMPTY_STRING
 };
 
 const UNKNOWN_CARD_PAN = "****************" as CreditCardPan;
@@ -52,7 +54,7 @@ export const UNKNOWN_CARD: Wallet = {
     pan: UNKNOWN_CARD_PAN,
     securityCode: UNKNOWN_SECURITY_CODE
   },
-  type: "CREDIT_CARD",
+  type: TypeEnum.CREDIT_CARD,
   favourite: false,
   idPsp: UNKNOWN_NUMBER,
   idWallet: UNKNOWN_NUMBER,

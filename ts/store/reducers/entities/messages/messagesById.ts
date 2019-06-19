@@ -7,10 +7,11 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
+import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithoutContent } from "../../../../../definitions/backend/CreatedMessageWithoutContent";
-import { MessageWithContentPO } from "../../../../types/MessageWithContentPO";
 import {
   loadMessage,
+  removeMessages,
   setMessageReadState,
   setMessagesArchivedState
 } from "../../../actions/messages";
@@ -22,7 +23,7 @@ export type MessageState = {
   meta: CreatedMessageWithoutContent;
   isRead: boolean;
   isArchived: boolean;
-  message: pot.Pot<MessageWithContentPO, string | undefined>;
+  message: pot.Pot<CreatedMessageWithContent, string | undefined>;
 };
 
 // An object containing MessageWithContentPO keyed by id
@@ -74,6 +75,13 @@ const reducer = (
           message: pot.noneError(action.payload.error)
         }
       };
+    }
+    case getType(removeMessages): {
+      const clonedState = { ...state };
+      const ids = action.payload;
+      // tslint:disable-next-line: no-object-mutation
+      ids.forEach(id => delete clonedState[id]);
+      return clonedState;
     }
     case getType(setMessageReadState): {
       const { id, read } = action.payload;
