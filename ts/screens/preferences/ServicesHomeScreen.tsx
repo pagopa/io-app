@@ -36,12 +36,11 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReduxProps &
   OwnProps;
 
-class ServicesScreen extends React.Component<Props> {
+class ServicesHomeScreen extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
-  private goBack = () => this.props.navigation.goBack();
-
+  
   private onServiceSelect = (service: ServicePublic) => {
     // when a service gets selected, before navigating to the service detail
     // screen, we issue a contentServiceLoad to refresh the service metadata
@@ -62,18 +61,19 @@ class ServicesScreen extends React.Component<Props> {
     return (
       <TopScreenComponent
         title={I18n.t("services.title")}
-        goBack={this.goBack}
         contextualHelp={{
           title: I18n.t("services.title"),
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
         isSearchAvailable={true}
         searchType="Services"
+        appLogo={true}
       >
         {!isSearchEnabled && (
           <ScreenContentHeader
             title={I18n.t("services.title")}
             subtitle={I18n.t("services.subTitle")}
+            icon={require("../../../img/icons/service-icon.png")}
           />
         )}
         {isSearchEnabled ? this.renderSearch() : this.renderList()}
@@ -169,4 +169,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ServicesScreen);
+)(ServicesHomeScreen);

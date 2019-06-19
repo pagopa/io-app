@@ -33,6 +33,7 @@ global:
     documents: documenti
     preferences: preferenze
     profile: profilo
+    services: servizi
   actions:
     retry: Si è verificato un errore, si prega di riprovare
     search: Testo da cercare
@@ -610,8 +611,6 @@ preferences:
       disabled: Disabilitato
     email: Indirizzo email
     mobile_phone: Numero di telefono
-    services: Elenco dei servizi
-    services_description: Attiva/disattiva i tuoi servizi di IO
     language: Lingua
     digitalDomicile: Domicilio digitale
     preferred_calendar:
@@ -636,7 +635,7 @@ biometric_recognition:
   needed_to_disable: Riconoscimento richiesto per disabilitare
 services:
   headerTitle: Servizi
-  title: Elenco dei servizi
+  title: Elenco servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: Il servizio è attivo

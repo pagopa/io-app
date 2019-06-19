@@ -5,25 +5,17 @@ import ROUTES from "./routes";
 import BiometricRecognitionScreen from "../screens/preferences/BiometricRecognitionScreen";
 import CalendarsPreferencesScreen from "../screens/preferences/CalendarsPreferencesScreen";
 import PreferencesScreen from "../screens/preferences/PreferencesScreen";
-import ServiceDetailsScreen from "../screens/preferences/ServiceDetailsScreen";
-import ServicesScreen from "../screens/preferences/ServicesScreen";
 
 const PreferencesNavigator = createStackNavigator(
   {
     [ROUTES.PREFERENCES_HOME]: {
       screen: PreferencesScreen
     },
-    [ROUTES.PREFERENCES_SERVICES]: {
-      screen: ServicesScreen
-    },
     [ROUTES.PREFERENCES_BIOMETRIC_RECOGNITION]: {
       screen: BiometricRecognitionScreen
     },
     [ROUTES.PREFERENCES_CALENDAR]: {
       screen: CalendarsPreferencesScreen
-    },
-    [ROUTES.PREFERENCES_SERVICE_DETAIL]: {
-      screen: ServiceDetailsScreen
     }
   },
   {
