@@ -4,8 +4,11 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import React from "react";
 import {
+  Animated,
   FlatList,
   ListRenderItemInfo,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   RefreshControl,
   StyleSheet
 } from "react-native";
@@ -27,6 +30,13 @@ type ItemLayout = {
   index: number;
 };
 
+type AnimatedProps = {
+  animated?: {
+    onScroll: (_: NativeSyntheticEvent<NativeScrollEvent>) => void;
+    scrollEventThrottle?: number;
+  };
+};
+
 type OwnProps = {
   messageStates: ReadonlyArray<MessageState>;
   servicesById: ServicesByIdState;
@@ -41,7 +51,7 @@ type OwnProps = {
   >["ListEmptyComponent"];
 };
 
-type Props = OwnProps;
+type Props = OwnProps & AnimatedProps;
 
 type State = {
   prevMessageStates?: ReadonlyArray<MessageState>;
@@ -172,13 +182,16 @@ const MessageListItemPlaceholder = (
 );
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 class MessageList extends React.Component<Props, State> {
-  private flatListRef = React.createRef<FlatList<MessageState>>();
+  private flatListRef = React.createRef<typeof AnimatedFlatList>();
 
   private scrollToTop = () => {
     if (this.flatListRef.current && this.props.messageStates.length > 0) {
-      this.flatListRef.current.scrollToIndex({ animated: false, index: 0 });
+      this.flatListRef.current
+        .getNode()
+        .scrollToIndex({ animated: false, index: 0 });
     }
   };
 
@@ -285,6 +298,7 @@ class MessageList extends React.Component<Props, State> {
 
   public render() {
     const {
+      animated,
       messageStates,
       servicesById,
       refreshing,
@@ -300,7 +314,7 @@ class MessageList extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <NavigationEvents onWillFocus={this.scrollToTop} />
-        <FlatList
+        <AnimatedFlatList
           ref={this.flatListRef}
           scrollEnabled={true}
           data={messageStates}
@@ -308,10 +322,14 @@ class MessageList extends React.Component<Props, State> {
           keyExtractor={keyExtractor}
           refreshControl={refreshControl}
           initialNumToRender={10}
+          scrollEventThrottle={
+            animated ? animated.scrollEventThrottle : undefined
+          }
           ItemSeparatorComponent={ItemSeparatorComponent}
           ListEmptyComponent={ListEmptyComponent}
           renderItem={this.renderItem}
           getItemLayout={this.getItemLayout}
+          onScroll={animated ? animated.onScroll : undefined}
         />
       </React.Fragment>
     );
