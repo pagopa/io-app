@@ -177,7 +177,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
   /**
    * TODO: implement graphycal to trigger all the services being disabled at once
-   * 
+   *       https://www.pivotaltracker.com/n/projects/2048617/stories/166763719
    */
   disableAllServices: (
     allServicesId: ReadonlyArray<string>,

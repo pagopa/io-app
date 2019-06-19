@@ -1,9 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
 
-import { ProfileState } from "../../store/reducers/profile";
 import { BlockedInboxOrChannels } from "../../../definitions/backend/BlockedInboxOrChannels";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { ProfileState } from "../../store/reducers/profile";
 
 /**
  * The enabled/disabled state of each channel.
@@ -21,8 +21,8 @@ const EMAIL_CHANNEL = "EMAIL";
 const PUSH_CHANNEL = "WEBHOOK";
 
 /**
- * Provide new BlockedInboxOrChannels object to disable 
- * or enable (if enableListedServices is true) 
+ * Provide new BlockedInboxOrChannels object to disable
+ * or enable (if enableListedServices is true)
  * a list of services (listed as servicesId)
  */
 export function getChannelsforServicesList(
@@ -37,9 +37,8 @@ export function getChannelsforServicesList(
         InitializedProfile.is(userProfile)
           ? userProfile.blocked_inbox_or_channels
           : null
-    ).getOrElse({});
-
-  let newblockedChannels: BlockedInboxOrChannels = {};
+    )
+    .getOrElse({});
 
   servicesId.forEach(id => {
     const channels =
@@ -49,20 +48,20 @@ export function getChannelsforServicesList(
 
     const updatedBlockedChannels =
       channels.indexOf(INBOX_CHANNEL) === -1
-        ? enableListedServices 
+        ? enableListedServices
           ? channels
           : channels.concat(INBOX_CHANNEL)
-        : enableListedServices 
+        : enableListedServices
           ? channels.filter(item => item !== INBOX_CHANNEL)
           : channels;
-  
-    updatedBlockedChannels.length !== 0 
-      ? newblockedChannels[id] = updatedBlockedChannels 
-      : null;
 
+    if (updatedBlockedChannels.length !== 0) {
+      // tslint:disable-next-line no-object-mutation
+      profileBlockedChannels[id] = updatedBlockedChannels;
+    }
   });
 
-  return newblockedChannels;
+  return profileBlockedChannels;
 }
 
 /**
@@ -102,7 +101,7 @@ export const getBlockedChannels = (
   serviceId: ServiceId
 ) => (enabled: EnabledChannels): BlockedInboxOrChannels => {
   // get the current blocked channels from the profile
-  let profileBlockedChannels = pot
+  const profileBlockedChannels = pot
     .toOption(potProfile)
     .mapNullable(
       profile =>
@@ -119,11 +118,13 @@ export const getBlockedChannels = (
     !enabled.email ? EMAIL_CHANNEL : ""
   ].filter(_ => _ !== "");
 
-  blockedChannelsForService.length === 0 
-   ? delete profileBlockedChannels[serviceId]
-   : profileBlockedChannels[serviceId] = blockedChannelsForService;
+  blockedChannelsForService.length === 0
+    ? // tslint:disable-next-line no-object-mutation
+      delete profileBlockedChannels[serviceId]
+    : // tslint:disable-next-line no-object-mutation
+      (profileBlockedChannels[serviceId] = blockedChannelsForService);
 
   return {
     ...profileBlockedChannels
-  }
+  };
 };
