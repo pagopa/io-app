@@ -76,9 +76,8 @@ class ServiceSectionListComponent extends React.Component<Props> {
       <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
     );
 
-    const sortedSections = sections.sort((a, b) =>
-      (a.title || "").localeCompare(b.title)
-    );
+    const sortedSections = [...sections].reverse();
+    sortedSections.sort((a, b) => (a.title || "").localeCompare(b.title));
 
     return (
       <SectionList
