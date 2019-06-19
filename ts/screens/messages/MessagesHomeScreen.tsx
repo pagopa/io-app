@@ -84,7 +84,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   ];
 
   // tslint:disable-next-line: readonly-array
-  public scollPositions: number[] = [0, 0, 0];
+  private scollPositions: number[] = [0, 0, 0];
 
   public componentDidMount() {
     this.props.refreshMessages();
