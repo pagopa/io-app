@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -44,7 +44,9 @@ type State = {
 const SCROLL_RANGE_FOR_ANIMATION =
   customVariables.appHeaderHeight +
   (Platform.OS === "ios"
-    ? getStatusBarHeight(true)
+    ? isIphoneX()
+      ? 18
+      : getStatusBarHeight(true)
     : customVariables.spacerHeight);
 
 const styles = StyleSheet.create({

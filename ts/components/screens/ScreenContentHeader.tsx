@@ -1,7 +1,7 @@
 import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { ImageSourcePropType, Platform, StyleSheet } from "react-native";
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import { isIphoneX } from "react-native-iphone-x-helper";
 
 import variables from "../../theme/variables";
 import ScreenHeader from "../ScreenHeader";
@@ -28,8 +28,11 @@ const styles = StyleSheet.create({
   fixedPosition: {
     position: "absolute",
     top:
-      variables.appHeaderHeight +
-      (Platform.OS === "ios" ? getStatusBarHeight(true) : 0),
+      Platform.OS === "ios"
+        ? isIphoneX()
+          ? variables.appHeaderHeight + 42
+          : variables.appHeaderHeight + 18
+        : variables.appHeaderHeight,
     right: 0,
     left: 0
   },
