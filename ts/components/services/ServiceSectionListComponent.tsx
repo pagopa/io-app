@@ -76,12 +76,11 @@ class ServiceSectionListComponent extends React.Component<Props> {
       <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
     );
 
-    const sortedSections = [...sections].reverse();
-    sortedSections.sort((a, b) => (a.title || "").localeCompare(b.title));
+    sections.sort((a, b) => (a.title || "").localeCompare(b.title));
 
     return (
       <SectionList
-        sections={sortedSections}
+        sections={sections}
         renderItem={this.renderServiceItem}
         renderSectionHeader={this.renderServiceSectionHeader}
         keyExtractor={this.getServiceKey}
