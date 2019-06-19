@@ -40,7 +40,7 @@ class ServicesHomeScreen extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
-  
+
   private onServiceSelect = (service: ServicePublic) => {
     // when a service gets selected, before navigating to the service detail
     // screen, we issue a contentServiceLoad to refresh the service metadata

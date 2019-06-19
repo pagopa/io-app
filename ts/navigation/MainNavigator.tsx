@@ -21,10 +21,10 @@ import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
-import ServicesNavigator from "./ServicesNavigator";
 import PreferencesNavigator from "./PreferencesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
+import ServicesNavigator from "./ServicesNavigator";
 import WalletNavigator from "./WalletNavigator";
 type Routes = keyof typeof ROUTES;
 
