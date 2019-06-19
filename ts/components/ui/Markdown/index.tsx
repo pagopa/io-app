@@ -3,7 +3,7 @@
  */
 import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
-import { AppState } from "react-native";
+import { AppState, AppStateStatus } from "react-native";
 import {
   ActivityIndicator,
   InteractionManager,
@@ -209,15 +209,8 @@ class Markdown extends React.PureComponent<Props, State> {
     AppState.removeEventListener("change", this.handleAppStateChange);
   }
 
-  public backgroundState(state: string) {
-    return state.match(/inactive|background/);
-  }
-
-  public handleAppStateChange = (nextAppState: string) => {
-    if (
-      this.backgroundState(this.state.appState) &&
-      nextAppState === "active"
-    ) {
+  public handleAppStateChange = (nextAppState: AppStateStatus) => {
+    if (this.state.appState !== "active" && nextAppState === "active") {
       this.reloadWebView();
     }
     this.setState({ appState: nextAppState });
