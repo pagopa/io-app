@@ -175,13 +175,12 @@ const getPatchedWalletsUsingGETDecoder = <O>(
           type,
           payload => {
             if (payload && payload.data && Array.isArray(payload.data)) {
-              // iterate all wallets and if a wallet has a psp
-              // check for tags field and make it an empty array
+              // sanitize wallets from values with type different
+              // from string contained in psp.tags arrays
               const newData = payload.data.map((w: any) =>
                 fixWalletPspTagsValues(w)
               );
-              // tslint:disable-next-line: no-object-mutation
-              payload.data = newData;
+              return { ...payload, data: newData };
             }
             return payload;
           }
