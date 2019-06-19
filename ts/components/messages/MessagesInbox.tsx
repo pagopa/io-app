@@ -29,6 +29,18 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.brandLightGray,
     padding: 10
   },
+  buttonBarLeft: {
+    flex: 2
+  },
+  buttonBarRight: {
+    flex: 2
+  },
+  buttonBarCenter: {
+    flex: 2,
+    backgroundColor: customVariables.colorWhite,
+    marginLeft: 10,
+    marginRight: 10
+  },
   buttonBarPrimaryButton: {
     flex: 8,
     marginLeft: 10
@@ -158,14 +170,19 @@ class MessagesInbox extends React.PureComponent<Props, State> {
               bordered={true}
               light={true}
               onPress={resetSelection}
-              style={styles.buttonBarSecondaryButton}
+              style={
+                isExperimentalFeaturesEnabled
+                  ? styles.buttonBarLeft
+                  : styles.buttonBarSecondaryButton
+              }
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
             {isExperimentalFeaturesEnabled && (
               <Button
                 block={true}
-                style={styles.buttonBarPrimaryButton}
+                bordered={true}
+                style={styles.buttonBarCenter}
                 onPress={this.toggleAllMessagesSelection}
               >
                 <Text>
@@ -179,7 +196,11 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             )}
             <Button
               block={true}
-              style={styles.buttonBarPrimaryButton}
+              style={
+                isExperimentalFeaturesEnabled
+                  ? styles.buttonBarRight
+                  : styles.buttonBarPrimaryButton
+              }
               disabled={selectedMessageIds.value.size === 0}
               onPress={this.archiveMessages}
             >
