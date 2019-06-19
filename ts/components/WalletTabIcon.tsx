@@ -4,7 +4,7 @@ import React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 import { GlobalState } from "../store/reducers/types";
-import { getTransactions } from "../store/reducers/wallet/transactions";
+import { getUnreadTransactions } from "../store/reducers/wallet/transactions";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 
@@ -66,7 +66,7 @@ class WalletTabIcon extends React.PureComponent<Props> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  const transactions = getTransactions(state);
+  const transactions = getUnreadTransactions(state);
   // TODO modify here to get WALLET TRANSACTIONS UNREAD
   return {
     badgeValue:

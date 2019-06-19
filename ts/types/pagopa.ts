@@ -127,9 +127,9 @@ export const Transaction = repP(
               "idPayment"
             ),
             "idWallet"
+            ),
+            "merchant"
           ),
-          "merchant"
-        ),
         "statusMessage"
       ),
       "amount",

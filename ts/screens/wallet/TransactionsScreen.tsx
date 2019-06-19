@@ -25,11 +25,12 @@ import {
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
+import { getWalletTransactionsCreator, getUnreadTransactions } from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
+import { readTransaction } from '../../store/actions/wallet/transactions';
 
 type NavigationParams = Readonly<{
   selectedWallet: Wallet;
@@ -127,6 +128,7 @@ class TransactionsScreen extends React.Component<Props> {
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
           }
+          unreadTransactions={this.props.unreadTransactions}
           ListEmptyComponent={ListEmptyComponent}
         />
       </WalletLayout>
@@ -138,17 +140,20 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   transactions: getWalletTransactionsCreator(
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state),
-  favoriteWallet: getFavoriteWalletId(state)
+  favoriteWallet: getFavoriteWalletId(state),
+  unreadTransactions: pot.getOrElse(getUnreadTransactions(state),[])
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToTransactionDetailsScreen: (transaction: Transaction) =>
+  navigateToTransactionDetailsScreen: (transaction: Transaction) => {
+    dispatch(readTransaction(transaction));
     dispatch(
       navigateToTransactionDetailsScreen({
         transaction,
         isPaymentCompletedTransaction: false
       })
-    ),
+    )
+  },
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
   deleteWallet: (walletId: number) =>
