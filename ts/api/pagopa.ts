@@ -156,13 +156,14 @@ const fixWalletPspTagsValues = (w: any) => {
 };
 
 /**
- * TODO: temporary patch. Remove this patch once SIA has fixed the spec.
- * @see https://www.pivotaltracker.com/story/show/166665367
+ *
  * This patch is needed because 'tags' field (an array of strings) in psp objects
  * often contains mixed (and duplicated too) values
  * e.g tags = ["value1",null,null]
  * Psp codec fails decoding 'tags' having these values, so this getPatchedWalletsUsingGETDecoder alterates the
  * payload just before the decoding phase making 'tags' an empty array
+ * TODO: temporary patch. Remove this patch once SIA has fixed the spec.
+ * @see https://www.pivotaltracker.com/story/show/166665367
  */
 const getPatchedWalletsUsingGETDecoder = <O>(
   type: t.Type<WalletListResponse, O>
