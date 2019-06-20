@@ -1,10 +1,4 @@
-import {
-  BugReporting,
-  Chats,
-  dismissType,
-  Replies,
-  reportType
-} from "instabug-reactnative";
+import { BugReporting, Chats, Replies } from "instabug-reactnative";
 
 import { Button } from "native-base";
 import * as React from "react";
@@ -25,12 +19,14 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps &
   ReturnType<typeof mapDispatchToProps>;
 
-const InstabugReportBug = "bug";
-const InstabugReportChat = "chat";
+type State = {
+  instabugReportType: "bug" | "chat" | "undefined";
+};
 
-class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
+class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
-    this.props.dispatchIBReportOpen(InstabugReportChat);
+    this.setState({ instabugReportType: "chat" });
+    this.props.dispatchIBReportOpen(this.state.instabugReportType);
     // Check if there are previous chat
     Replies.hasChats(hasChats => {
       if (hasChats) {
@@ -42,23 +38,30 @@ class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
   };
 
   private handleIBBugPress = () => {
-    this.props.dispatchIBReportOpen(InstabugReportBug);
+    this.setState({ instabugReportType: "bug" });
+    this.props.dispatchIBReportOpen(this.state.instabugReportType);
     BugReporting.showWithOptions(BugReporting.reportType.bug, [
       BugReporting.option.commentFieldRequired
     ]);
   };
 
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      instabugReportType: "undefined"
+    };
+  }
   public componentDidMount() {
     // Register to the instabug dismiss event. (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
     // This event is fired when chat or bug screen is dismissed
     BugReporting.onSDKDismissedHandler(
-      (dismiss: dismissType, report: reportType): void => {
-        this.props.dispatchIBReportClosed(
-          report === BugReporting.reportType.bug
-            ? InstabugReportBug
-            : InstabugReportChat,
-          dismiss
-        );
+      (dismiss: string): void => {
+        if (this.state.instabugReportType !== "undefined") {
+          this.props.dispatchIBReportClosed(
+            this.state.instabugReportType,
+            dismiss
+          );
+        }
       }
     );
   }
@@ -96,7 +99,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIBReportOpen: (type: string) =>
     dispatch(instabugReportOpened({ type })),
-  dispatchIBReportClosed: (type: string, how: dismissType) =>
+  dispatchIBReportClosed: (type: string, how: string) =>
     dispatch(instabugReportClosed({ type, how }))
 });
 

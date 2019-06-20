@@ -27,7 +27,7 @@ export const initialiseInstabug = () => {
   Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.none]);
 
   // Set primary color for iOS. The Android's counterpart is inside MainApplication.java
-  Instabug.setPrimaryColor(variables.instabugColorInt);
+  Instabug.setPrimaryColor(variables.contentPrimaryBackground);
 
   Instabug.setColorTheme(Instabug.colorTheme.light);
 

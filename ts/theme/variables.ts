@@ -270,10 +270,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // IconFont
   selectedColor: "#0073E6",
-  unselectedColor: "#5C6F82",
-
-  // Instabug UI
-  instabugColorInt: 7595775
+  unselectedColor: "#5C6F82"
 });
 
 export default customVariables;
