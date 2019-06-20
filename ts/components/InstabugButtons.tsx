@@ -1,5 +1,6 @@
 import { BugReporting, Chats, Replies } from "instabug-reactnative";
 
+import { none, Option, some } from "fp-ts/lib/Option";
 import { Button } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -20,13 +21,13 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  instabugReportType: "bug" | "chat" | "undefined";
+  instabugReportType: Option<string>;
 };
 
 class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
     const chat = "chat";
-    this.setState({ instabugReportType: chat });
+    this.setState({ instabugReportType: some(chat) });
     this.props.dispatchIBReportOpen(chat);
     // Check if there are previous chat
     Replies.hasChats(hasChats => {
@@ -40,7 +41,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
 
   private handleIBBugPress = () => {
     const bug = "bug";
-    this.setState({ instabugReportType: bug });
+    this.setState({ instabugReportType: some(bug) });
     this.props.dispatchIBReportOpen(bug);
     BugReporting.showWithOptions(BugReporting.reportType.bug, [
       BugReporting.option.commentFieldRequired
@@ -50,7 +51,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      instabugReportType: "undefined"
+      instabugReportType: none
     };
   }
   public componentDidMount() {
@@ -60,9 +61,9 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
       (dismiss: string, _: string): void => {
         // We don't use the report parameter because it always returns bugs.
         // We need to differentiate the type of report then use instabugReportType
-        if (this.state.instabugReportType !== "undefined") {
+        if (this.state.instabugReportType.isSome()) {
           this.props.dispatchIBReportClosed(
-            this.state.instabugReportType,
+            this.state.instabugReportType.value,
             dismiss
           );
         }
