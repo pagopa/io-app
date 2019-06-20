@@ -123,13 +123,13 @@ class Pinpad extends React.PureComponent<Props, State> {
       I18n.t("pin_login.forgetPin.confirmMsg"),
       [
         {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
+          text: I18n.t("global.buttons.confirm"),
+          style: "default",
+          onPress: this.props.onPinResetHandler
         },
         {
-          text: I18n.t("global.buttons.confirm"),
-          style: "destructive",
-          onPress: this.props.onPinResetHandler
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
         }
       ],
       { cancelable: false }
