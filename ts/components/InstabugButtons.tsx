@@ -59,7 +59,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
     // This event is fired when chat or bug screen is dismissed
     BugReporting.onSDKDismissedHandler(
       (dismiss: string, _: string): void => {
-        // Due an Instabug library bug, we cant't use the report parameter because it always returns "bug".
+        // Due an Instabug library bug, we can't use the report parameter because it always has "bug" as value.
         // We need to differentiate the type of report then use instabugReportType
         if (this.state.instabugReportType.isSome()) {
           this.props.dispatchIBReportClosed(
