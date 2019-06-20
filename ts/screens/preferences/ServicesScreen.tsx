@@ -90,6 +90,7 @@ class ServicesScreen extends React.Component<Props> {
         isRefreshing={this.props.isLoading}
         onRefresh={this.props.refreshServices}
         onSelect={this.onServiceSelect}
+        isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
       />
     );
   };
@@ -153,7 +154,9 @@ const mapStateToProps = (state: GlobalState) => {
     sections,
     isLoading,
     searchText: searchTextSelector(state),
-    isSearchEnabled: isSearchServicesEnabledSelector(state)
+    isSearchEnabled: isSearchServicesEnabledSelector(state),
+    isExperimentalFeaturesEnabled:
+      state.persistedPreferences.isExperimentalFeaturesEnabled
   };
 };
 

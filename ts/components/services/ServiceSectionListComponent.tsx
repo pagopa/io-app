@@ -8,10 +8,12 @@ import {
   StyleSheet
 } from "react-native";
 
-import { H3, ListItem } from "native-base";
+import { H3, ListItem, View } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
+import H5 from "../ui/H5";
+import { NewServiceListItem } from "./NewServiceListItem";
 import { ServiceListItem } from "./ServiceListItem";
 
 type OwnProps = {
@@ -23,6 +25,7 @@ type OwnProps = {
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
+  isExperimentalFeaturesEnabled?: boolean;
 };
 
 type Props = OwnProps;
@@ -31,6 +34,17 @@ const styles = StyleSheet.create({
   listItem: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
+  },
+  organizationName: {
+    fontWeight: "400",
+    flex: 1
+  },
+  organization: {
+    paddingTop: variables.spacerWidth,
+    paddingBottom: 0,
+    paddingHorizontal: variables.contentPadding,
+    alignItems: "center",
+    borderBottomWidth: 0
   }
 });
 
@@ -40,13 +54,20 @@ const styles = StyleSheet.create({
 class ServiceSectionListComponent extends React.Component<Props> {
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
-  ) => (
-    <ServiceListItem
-      item={itemInfo.item}
-      profile={this.props.profile}
-      onSelect={this.props.onSelect}
-    />
-  );
+  ) =>
+    this.props.isExperimentalFeaturesEnabled ? (
+      <NewServiceListItem
+        item={itemInfo.item}
+        profile={this.props.profile}
+        onSelect={this.props.onSelect}
+      />
+    ) : (
+      <ServiceListItem
+        item={itemInfo.item}
+        profile={this.props.profile}
+        onSelect={this.props.onSelect}
+      />
+    );
 
   private getServiceKey = (
     potService: pot.Pot<ServicePublic, Error>,
@@ -63,11 +84,26 @@ class ServiceSectionListComponent extends React.Component<Props> {
 
   private renderServiceSectionHeader = (info: {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
-  }): React.ReactNode => (
-    <ListItem itemHeader={true} style={styles.listItem}>
-      <H3>{info.section.title}</H3>
-    </ListItem>
-  );
+  }): React.ReactNode =>
+    this.props.isExperimentalFeaturesEnabled ? (
+      <ListItem style={styles.organization}>
+        {/* TODO: introduce organization logo and alignment from https://github.com/teamdigitale/io-app/pull/1155 */}
+        <View
+          style={{
+            width: 32,
+            height: 32,
+            backgroundColor: "pink",
+            marginRight: variables.spacingBase,
+            alignSelf: "flex-start"
+          }}
+        />
+        <H5 style={styles.organizationName}>{info.section.title}</H5>
+      </ListItem>
+    ) : (
+      <ListItem itemHeader={true} style={styles.listItem}>
+        <H3>{info.section.title}</H3>
+      </ListItem>
+    );
 
   public render() {
     const { sections, isRefreshing, onRefresh } = this.props;
