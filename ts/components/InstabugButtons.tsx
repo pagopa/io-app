@@ -25,8 +25,9 @@ type State = {
 
 class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
-    this.setState({ instabugReportType: "chat" });
-    this.props.dispatchIBReportOpen(this.state.instabugReportType);
+    const chat = "chat";
+    this.setState({ instabugReportType: chat });
+    this.props.dispatchIBReportOpen(chat);
     // Check if there are previous chat
     Replies.hasChats(hasChats => {
       if (hasChats) {
@@ -38,8 +39,9 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   };
 
   private handleIBBugPress = () => {
-    this.setState({ instabugReportType: "bug" });
-    this.props.dispatchIBReportOpen(this.state.instabugReportType);
+    const bug = "bug";
+    this.setState({ instabugReportType: bug });
+    this.props.dispatchIBReportOpen(bug);
     BugReporting.showWithOptions(BugReporting.reportType.bug, [
       BugReporting.option.commentFieldRequired
     ]);
@@ -55,7 +57,9 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
     // Register to the instabug dismiss event. (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
     // This event is fired when chat or bug screen is dismissed
     BugReporting.onSDKDismissedHandler(
-      (dismiss: string): void => {
+      (dismiss: string, _: string): void => {
+        // We don't use the report parameter because it always returns bugs.
+        // We need to differentiate the type of report then use instabugReportType
         if (this.state.instabugReportType !== "undefined") {
           this.props.dispatchIBReportClosed(
             this.state.instabugReportType,

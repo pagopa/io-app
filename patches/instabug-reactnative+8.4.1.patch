@@ -1,5 +1,5 @@
 diff --git a/node_modules/instabug-reactnative/index.d.ts b/node_modules/instabug-reactnative/index.d.ts
-index 4123516..880cbed 100644
+index 09ec669..04e9e94 100644
 --- a/node_modules/instabug-reactnative/index.d.ts
 +++ b/node_modules/instabug-reactnative/index.d.ts
 @@ -14,7 +14,7 @@ export namespace BugReporting {
@@ -7,7 +7,7 @@ index 4123516..880cbed 100644
    function onInvokeHandler(preInvocationHandler: () => void): void;
    function onReportSubmitHandler(preSendingHandler: () => void): void;
 -  function onSDKDismissedHandler(postInvocationHandler: (dismiss: dismissType, report: reportType) => void): void;
-+  function onSDKDismissedHandler(postInvocationHandler: (dismiss: string) => void): void;
++  function onSDKDismissedHandler(postInvocationHandler: (dismiss: string, report: string) => void): void;
    function setPromptOptionsEnabled(
      chat: boolean,
      bug: boolean,
