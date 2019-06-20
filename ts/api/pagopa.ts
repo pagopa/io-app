@@ -139,13 +139,13 @@ type GetWalletsUsingGETExtraT = MapResponseType<
  * @param w wallet object
  */
 const fixWalletPspTagsValues = (w: unknown) => {
-  const decoder = t.partial({
-    psp: t.partial({
+  const decoder = t.interface({
+    psp: t.interface({
       tags: t.readonlyArray(t.unknown)
     })
   });
   const decoded = decoder.decode(w);
-  if (decoded.isRight() && decoded.value.psp && decoded.value.psp.tags) {
+  if (decoded.isRight()) {
     const psp = decoded.value.psp;
     const tags = decoded.value.psp.tags;
     return {
