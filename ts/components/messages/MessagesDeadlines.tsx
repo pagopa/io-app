@@ -26,6 +26,7 @@ import {
   withMessagesSelection
 } from "../helpers/withMessagesSelection";
 import MessageAgenda, {
+  isFakeItem,
   MessageAgendaItem,
   MessageAgendaSection,
   Sections
@@ -96,6 +97,7 @@ type State = {
   sectionsToRender: Sections;
   maybeLastLoadedStartOfMonthTime: Option<number>;
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
+  allMessageIdsState: Set<string>;
 };
 
 /**
@@ -353,11 +355,18 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   };
 
   private handleOnLongPressItem = (id: string) => {
-    this.props.toggleMessageSelection(id);
+    const { allMessageIdsState } = this.state;
+    this.props.toggleMessageSelection(
+      id,
+      allMessageIdsState.size > 0 ? some(allMessageIdsState) : none
+    );
   };
 
   private toggleAllMessagesSelection = () => {
-    this.props.toggleAllMessagesSelection(this.props.messagesState);
+    const { allMessageIdsState } = this.state;
+    this.props.toggleAllMessagesSelection(
+      allMessageIdsState.size > 0 ? some(allMessageIdsState) : none
+    );
   };
 
   private archiveMessages = () => {
@@ -413,6 +422,12 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
               ...moreSectionsToRender,
               ...prevState.sectionsToRender
             ],
+            allMessageIdsState: new Set([
+              ...this.generateMessagesIdsFromMessageAgendaSection(
+                moreSectionsToRender
+              ),
+              ...prevState.allMessageIdsState
+            ]),
             maybeLastLoadedStartOfMonthTime: some(
               startOfMonth(
                 subMonths(lastLoadedStartOfMonthTime, PAST_DATA_MONTHS)
@@ -430,7 +445,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       isWorking: true,
       sections: [],
       sectionsToRender: [],
-      maybeLastLoadedStartOfMonthTime: none
+      maybeLastLoadedStartOfMonthTime: none,
+      allMessageIdsState: new Set()
     };
   }
 
@@ -446,7 +462,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     this.setState({
       isWorking: false,
       sections,
-      sectionsToRender
+      sectionsToRender,
+      allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
+        sectionsToRender
+      )
     });
   }
 
@@ -468,9 +487,28 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       this.setState({
         isWorking: false,
         sections,
-        sectionsToRender
+        sectionsToRender,
+        allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
+          sectionsToRender
+        )
       });
     }
+  }
+
+  private generateMessagesIdsFromMessageAgendaSection(
+    sections: Sections
+  ): Set<string> {
+    // tslint:disable-next-line: readonly-array
+    const messagesIds: string[] = [];
+    sections.forEach(messageAgendaSection =>
+      messageAgendaSection.data.forEach(item => {
+        const idMessage = !isFakeItem(item) ? item.e1.id : undefined;
+        if (idMessage !== undefined) {
+          messagesIds.push(idMessage);
+        }
+      })
+    );
+    return messagesIds.length > 0 ? new Set(messagesIds) : new Set();
   }
 
   public render() {

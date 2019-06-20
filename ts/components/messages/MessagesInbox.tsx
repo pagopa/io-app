@@ -3,6 +3,7 @@ import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import { Image, StyleSheet } from "react-native";
 
+import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
@@ -84,6 +85,7 @@ type State = {
   filteredMessageStates: ReturnType<
     typeof generateMessagesStateNotArchivedArray
   >;
+  allMessageIdsState: Option<Set<string>>;
 };
 
 /**
@@ -132,11 +134,14 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     if (lastMessagesState !== nextProps.messagesState) {
       // The list was updated, we need to re-apply the filter and
       // save the result in the state.
+      const messagesStateNotArchived = generateMessagesStateNotArchivedArray(
+        nextProps.messagesState
+      );
+      const allMessagesIdsArray = messagesStateNotArchived.map(_ => _.meta.id);
       return {
-        filteredMessageStates: generateMessagesStateNotArchivedArray(
-          nextProps.messagesState
-        ),
-        lastMessagesState: nextProps.messagesState
+        filteredMessageStates: messagesStateNotArchived,
+        lastMessagesState: nextProps.messagesState,
+        allMessageIdsState: some(new Set(allMessagesIdsArray))
       };
     }
 
@@ -148,7 +153,8 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       lastMessagesState: pot.none,
-      filteredMessageStates: []
+      filteredMessageStates: [],
+      allMessageIdsState: none
     };
   }
 
@@ -160,7 +166,6 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       isExperimentalFeaturesEnabled,
       isAllMessagesSelected
     } = this.props;
-
     return (
       <View style={styles.listWrapper}>
         {selectedMessageIds.isSome() && (
@@ -232,11 +237,11 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   };
 
   private handleOnLongPressItem = (id: string) => {
-    this.props.toggleMessageSelection(id);
+    this.props.toggleMessageSelection(id, this.state.allMessageIdsState);
   };
 
   private toggleAllMessagesSelection = () => {
-    this.props.toggleAllMessagesSelection(this.props.messagesState);
+    this.props.toggleAllMessagesSelection(this.state.allMessageIdsState);
   };
 
   private archiveMessages = () => {

@@ -518,7 +518,7 @@ messages:
     archive: Archive
     unarchive: Unarchive
     selectAll: All
-    deselectAll: Anyone
+    deselectAll: None
     payment:
       expired: Payment expired
       validAlert:
