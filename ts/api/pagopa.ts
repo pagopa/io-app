@@ -138,16 +138,23 @@ type GetWalletsUsingGETExtraT = MapResponseType<
  * it sanitizes psp tags avoiding no string value and string duplicates
  * @param w wallet object
  */
-const fixWalletPspTagsValues = (w: any) => {
-  const decoder = t.readonly(t.union([t.string, t.unknown]));
-  if (w.psp && decoder.decode(w.psp.tags).isRight()) {
+const fixWalletPspTagsValues = (w: unknown) => {
+  const decoder = t.partial({
+    psp: t.partial({
+      tags: t.readonlyArray(t.unknown)
+    })
+  });
+  const decoded = decoder.decode(w);
+  if (decoded.isRight() && decoded.value.psp && decoded.value.psp.tags) {
+    const psp = decoded.value.psp;
+    const tags = decoded.value.psp.tags;
     return {
-      ...w,
+      ...decoded.value,
       psp: {
-        ...w.psp,
-        tags: w.psp.tags.filter(
+        ...psp,
+        tags: tags.filter(
           (item: any, idx: number) =>
-            typeof item === "string" && w.psp.tags.indexOf(item) === idx
+            typeof item === "string" && tags.indexOf(item) === idx
         )
       }
     };
