@@ -1,4 +1,4 @@
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import { applyMiddleware, compose, createStore, Reducer } from "redux";

@@ -1,15 +1,16 @@
 import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { ImageSourcePropType, StyleSheet } from "react-native";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 import variables from "../../theme/variables";
 import ScreenHeader from "../ScreenHeader";
-
 type Props = Readonly<{
   title: string;
   icon?: ImageSourcePropType;
   subtitle?: string;
   banner?: React.ReactNode;
+  fixed?: boolean;
   dark?: boolean;
 }>;
 
@@ -24,6 +25,12 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     marginRight: variables.contentPadding
   },
+  fixedPosition: {
+    position: "absolute",
+    top: variables.appHeaderHeight + getStatusBarHeight(true),
+    right: 0,
+    left: 0
+  },
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
   },
@@ -34,26 +41,21 @@ const styles = StyleSheet.create({
 
 export class ScreenContentHeader extends React.PureComponent<Props> {
   public render() {
-    const { banner, subtitle } = this.props;
+    const { banner, subtitle, fixed, dark, icon } = this.props;
 
     return (
-      <React.Fragment>
-        <View style={this.props.dark && styles.darkGrayBg}>
-          {banner && <React.Fragment>{this.props.banner}</React.Fragment>}
+      <View style={[fixed && styles.fixedPosition, dark && styles.darkGrayBg]}>
+        {banner && <React.Fragment>{banner}</React.Fragment>}
+        <View>
           <View spacer={true} />
           <ScreenHeader
             heading={
-              <H1
-                style={[
-                  styles.screenHeaderHeading,
-                  this.props.dark && styles.white
-                ]}
-              >
+              <H1 style={[styles.screenHeaderHeading, dark && styles.white]}>
                 {this.props.title}
               </H1>
             }
-            icon={this.props.icon}
-            dark={this.props.dark}
+            icon={icon}
+            dark={dark}
           />
           {subtitle ? (
             <View style={styles.subheaderContainer}>
@@ -64,7 +66,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
             <View spacer={true} />
           )}
         </View>
-      </React.Fragment>
+      </View>
     );
   }
 }
