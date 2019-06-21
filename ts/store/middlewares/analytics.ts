@@ -93,6 +93,7 @@ import {
 // tslint:disable-next-line: no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
+  // tslint:disable-next-line: no-big-function
 ): Promise<any> => {
   switch (action.type) {
     //
