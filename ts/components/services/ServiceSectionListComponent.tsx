@@ -45,6 +45,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: variables.contentPadding,
     alignItems: "center",
     borderBottomWidth: 0
+  },
+  organizationIcon: {
+    marginRight: variables.spacingBase,
+    marginBottom: 2, // To reduce misalignment due to bug on font
+    alignSelf: "flex-start"
   }
 });
 
@@ -89,13 +94,11 @@ class ServiceSectionListComponent extends React.Component<Props> {
       <ListItem style={styles.organization}>
         {/* TODO: introduce organization logo and alignment from https://github.com/teamdigitale/io-app/pull/1155 */}
         <View
-          style={{
+          style={[{
             width: 32,
             height: 32,
             backgroundColor: "pink",
-            marginRight: variables.spacingBase,
-            alignSelf: "flex-start"
-          }}
+          }, styles.organizationIcon]}
         />
         <H5 style={styles.organizationName}>{info.section.title}</H5>
       </ListItem>
