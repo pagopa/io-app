@@ -4,6 +4,7 @@ import { Animated, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 
@@ -51,6 +52,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     };
   }
 
+  private goBack = () => this.props.navigation.goBack();
+
   private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
     new Animated.Value(0),
     new Animated.Value(0),
@@ -78,11 +81,14 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   public render() {
     return (
+      // TODO: Remove back when this screen will be accessible from the tabBar
       <TopScreenComponent
         title={I18n.t("services.headerTitle")}
-        isSearchAvailable={true}
-        searchType="Messages"
-        appLogo={true}
+        goBack={this.goBack}
+        contextualHelp={{
+          title: I18n.t("services.headerTitle"),
+          body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
+        }}
       >
         <React.Fragment>
           <ScreenContentHeader
