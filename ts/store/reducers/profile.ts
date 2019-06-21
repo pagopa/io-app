@@ -81,7 +81,7 @@ const reducer = (
       }
 
     case getType(profileUpsert.failure):
-      return pot.toError(state, action.payload);
+      return pot.toError(state, Error(action.payload));
 
     default:
       return state;
