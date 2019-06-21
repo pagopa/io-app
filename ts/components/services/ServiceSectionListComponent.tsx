@@ -94,11 +94,14 @@ class ServiceSectionListComponent extends React.Component<Props> {
       <ListItem style={styles.organization}>
         {/* TODO: introduce organization logo and alignment from https://github.com/teamdigitale/io-app/pull/1155 */}
         <View
-          style={[{
-            width: 32,
-            height: 32,
-            backgroundColor: "pink",
-          }, styles.organizationIcon]}
+          style={[
+            {
+              width: 32,
+              height: 32,
+              backgroundColor: "pink"
+            },
+            styles.organizationIcon
+          ]}
         />
         <H5 style={styles.organizationName}>{info.section.title}</H5>
       </ListItem>
