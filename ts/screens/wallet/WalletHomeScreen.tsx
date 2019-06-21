@@ -337,7 +337,7 @@ const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  unreadTransactions: pot.getOrElse(getUnreadTransactions(state),[])
+  unreadTransactions: pot.getOrElse(getUnreadTransactions(state), [])
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

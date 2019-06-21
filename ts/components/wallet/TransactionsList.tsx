@@ -106,21 +106,19 @@ export default class TransactionsList extends React.Component<Props> {
         <Body>
           <Grid>
             {this.renderDate(item)}
-
-              <Row>
-                <Left>
-                  <Text>{paymentReason}</Text>
-                </Left>
-                <Right>
-                  <Text>{amount}</Text>
-                </Right>
-              </Row>
-              <Row>
-                <Left>
-                  <Text note={true}>{recipient}</Text>
-                </Left>
-              </Row>
-
+            <Row>
+              <Left>
+                <Text>{paymentReason}</Text>
+              </Left>
+              <Right>
+                <Text>{amount}</Text>
+              </Right>
+            </Row>
+            <Row>
+              <Left>
+                <Text note={true}>{recipient}</Text>
+              </Left>
+            </Row>
           </Grid>
         </Body>
       </ListItem>
