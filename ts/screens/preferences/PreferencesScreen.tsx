@@ -12,12 +12,11 @@ import PreferenceItem from "../../components/PreferenceItem";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
-  navigateToFingerprintPreferenceScreen,
-  navigateToServicesHomeScreen,
-  navigateToServicesPreferencesScreen
+  navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
@@ -120,7 +119,7 @@ class PreferencesScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const { potProfile, isExperimentalFeaturesEnabled } = this.props;
+    const { potProfile } = this.props;
     const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
     const profileData = potProfile
@@ -147,10 +146,8 @@ class PreferencesScreen extends React.Component<Props, State> {
         >
           <List withContentLateralPadding={true}>
             <ListItem
-              onPress={
-                isExperimentalFeaturesEnabled
-                  ? this.props.navigateToServicesHomeScreen
-                  : this.props.navigateToServicesPreferencesScreen
+              onPress={() =>
+                this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES)
               }
             >
               <PreferenceItem
@@ -228,19 +225,14 @@ const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
   potProfile: pot.toOption(state.profile),
   isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-  preferredCalendar: state.persistedPreferences.preferredCalendar,
-  isExperimentalFeaturesEnabled:
-    state.persistedPreferences.isExperimentalFeaturesEnabled
+  preferredCalendar: state.persistedPreferences.preferredCalendar
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToFingerprintPreferenceScreen: () =>
     dispatch(navigateToFingerprintPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
-    dispatch(navigateToCalendarPreferenceScreen()),
-  navigateToServicesHomeScreen: () => dispatch(navigateToServicesHomeScreen()),
-  navigateToServicesPreferencesScreen: () =>
-    dispatch(navigateToServicesPreferencesScreen())
+    dispatch(navigateToCalendarPreferenceScreen())
 });
 
 export default connect(

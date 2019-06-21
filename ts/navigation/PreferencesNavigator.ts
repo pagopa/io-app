@@ -7,7 +7,6 @@ import CalendarsPreferencesScreen from "../screens/preferences/CalendarsPreferen
 import PreferencesScreen from "../screens/preferences/PreferencesScreen";
 import ServiceDetailsScreen from "../screens/preferences/ServiceDetailsScreen";
 import ServicesScreen from "../screens/preferences/ServicesScreen";
-import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 
 const PreferencesNavigator = createStackNavigator(
   {
@@ -25,9 +24,6 @@ const PreferencesNavigator = createStackNavigator(
     },
     [ROUTES.PREFERENCES_SERVICE_DETAIL]: {
       screen: ServiceDetailsScreen
-    },
-    [ROUTES.SERVICES_HOME]: {
-      screen: ServicesHomeScreen
     }
   },
   {

@@ -65,9 +65,6 @@ const ROUTES = {
   PROFILE_PRIVACY: "PROFILE_PRIVACY",
   PROFILE_PRIVACY_MAIN: "PROFILE_PRIVACY_MAIN",
 
-  // Services
-  SERVICES_HOME: "SERVICES_HOME",
-
   // Used when the App is in background
   BACKGROUND: "BACKGROUND"
 };
