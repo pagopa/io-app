@@ -43,7 +43,7 @@ export const logoutSuccess = createStandardAction("LOGOUT_SUCCESS")<
 
 export const logoutFailure = createAction(
   "LOGOUT_FAILURE",
-  resolve => (error: Error) => resolve(error, true)
+  resolve => (error: string) => resolve(error, true)
 );
 
 export const sessionInformationLoadSuccess = createStandardAction(

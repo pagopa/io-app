@@ -14,7 +14,7 @@ export const updateNotificationsInstallationToken = createStandardAction(
 
 export const updateNotificationInstallationFailure = createStandardAction(
   "NOTIFICATIONS_INSTALLATION_UPDATE_FAILURE"
-)();
+)<string>();
 
 export const updateNotificationsPendingMessage = createAction(
   "NOTIFICATIONS_PENDING_MESSAGE_UPDATE",

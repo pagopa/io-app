@@ -20,7 +20,7 @@ export const loadVisibleServices = createAsyncAction(
   "SERVICES_VISIBLE_LOAD_REQUEST",
   "SERVICES_VISIBLE_LOAD_SUCCESS",
   "SERVICES_VISIBLE_LOAD_FAILURE"
-)<void, PaginatedServiceTupleCollection["items"], void>();
+)<void, PaginatedServiceTupleCollection["items"], string>();
 
 //
 // load single service

@@ -123,9 +123,9 @@ export function* loadVisibleServicesRequestHandler(
       yield put(sessionExpired());
       return;
     } else {
-      throw Error();
+      throw Error(`response status ${response.value.status}`);
     }
-  } catch {
-    yield put(loadVisibleServices.failure());
+  } catch (e) {
+    yield put(loadVisibleServices.failure(e.message));
   }
 }

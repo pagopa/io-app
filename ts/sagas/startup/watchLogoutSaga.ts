@@ -32,15 +32,14 @@ export function* watchLogoutSaga(
         yield put(logoutSuccess(action.payload));
       } else {
         // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
-        const error = Error(
+        const error =
           response.value.status === 500 && response.value.value.title
             ? response.value.value.title
-            : "Unknown error"
-        );
+            : "Unknown error";
         yield put(logoutFailure(error));
       }
     } else {
-      yield put(logoutFailure(Error(readableReport(response.value))));
+      yield put(logoutFailure(readableReport(response.value)));
     }
     // Force the login by expiring the session
     // FIXME: possibly reset the navigation stack as the watcher of

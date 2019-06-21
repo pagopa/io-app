@@ -171,6 +171,15 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
           kind: action.payload.kind
         });
       }
+
+    // service failures
+    case getType(loadService.failure):
+    case getType(loadVisibleServices.failure):
+    // profile failures
+    case getType(profileLoadFailure):
+    case getType(profileUpsert.failure):
+    case getType(updateNotificationInstallationFailure):
+    case getType(logoutFailure):
     //
     // Wallet / payment failure actions (reason in the payload)
     //
@@ -212,7 +221,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(sessionExpired):
     case getType(sessionInvalid):
     case getType(logoutSuccess):
-    case getType(logoutFailure):
+
     // identification
     case getType(identificationRequest):
     case getType(identificationStart):
@@ -225,9 +234,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(tosAccept.success):
     case getType(createPinSuccess):
     // profile
-    case getType(profileLoadFailure):
+
     case getType(profileUpsert.success):
-    case getType(profileUpsert.failure):
+
     // messages
     case getType(loadMessages.request):
     case getType(loadMessages.failure):
@@ -238,10 +247,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // services
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):
-    case getType(loadVisibleServices.failure):
     case getType(loadService.request):
     case getType(loadService.success):
-    case getType(loadService.failure):
     // content
     case getType(contentServiceLoad.success):
     // wallet
@@ -284,7 +291,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentDeletePayment.failure):
     // other
     case getType(updateNotificationsInstallationToken):
-    case getType(updateNotificationInstallationFailure):
       return mp.track(action.type);
   }
   return Promise.resolve();

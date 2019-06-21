@@ -38,7 +38,7 @@ export const paymentVerifica = createAsyncAction(
 )<
   RptId,
   PaymentRequestsGetResponse,
-  keyof typeof PaymentProblemErrorEnum | undefined
+  keyof typeof PaymentProblemErrorEnum | string
 >();
 
 //
@@ -59,7 +59,7 @@ export const paymentAttiva = createAsyncAction(
 )<
   paymentAttivaRequestPayload,
   PaymentActivationsPostResponse,
-  PaymentProblemErrorEnum | undefined
+  PaymentProblemErrorEnum | string
 >();
 
 //

@@ -29,9 +29,9 @@ export function* loadServiceRequestHandler(
     if (response.value.status === 200) {
       yield put(loadService.success(response.value.value));
     } else {
-      throw Error();
+      throw Error(`response status ${response.value.status}`);
     }
-  } catch {
-    yield put(loadService.failure(action.payload));
+  } catch (e) {
+    yield put(loadService.failure(e.message));
   }
 }

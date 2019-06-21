@@ -5,6 +5,7 @@ import { TypeOfApiResponseStatus } from "italia-ts-commons/lib/requests";
 import { Platform } from "react-native";
 import { call, Effect, put, select } from "redux-saga/effects";
 
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { CreateOrUpdateInstallationT } from "../../definitions/backend/requestTypes";
 import { BackendClient } from "../api/backend";
@@ -52,7 +53,9 @@ export function* updateInstallationSaga(
    * If the response isLeft (got an error) dispatch a failure action
    */
   if (response.isLeft()) {
-    yield put(updateNotificationInstallationFailure());
+    yield put(
+      updateNotificationInstallationFailure(readableReport(response.value))
+    );
     return undefined;
   }
   return response.value.status;

@@ -23,7 +23,7 @@ export const profileLoadSuccess = createStandardAction("PROFILE_LOAD_SUCCESS")<
 
 export const profileLoadFailure = createAction(
   "PROFILE_LOAD_FAILURE",
-  resolve => (error: Error) => resolve(error, { error: true })
+  resolve => (error: string) => resolve(error, { error: true })
 );
 
 type ProfileUpsertPayload = Partial<Omit<ExtendedProfile, "version">>;
@@ -32,7 +32,7 @@ export const profileUpsert = createAsyncAction(
   "PROFILE_UPSERT_REQUEST",
   "PROFILE_UPSERT_SUCCESS",
   "PROFILE_UPSERT_FAILURE"
-)<ProfileUpsertPayload, InitializedProfile, Error>();
+)<ProfileUpsertPayload, InitializedProfile, string>();
 
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 

@@ -540,14 +540,14 @@ export function* paymentVerificaRequestHandler(
         // interacting with Pagopa that we can interpret
         yield put(paymentVerifica.failure(response.value.value.detail));
       } else {
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
       throw Error(readableReport(response.value));
     }
-  } catch {
+  } catch (e) {
     // Probably a timeout
-    yield put(paymentVerifica.failure(undefined));
+    yield put(paymentVerifica.failure(e.message));
   }
 }
 
@@ -584,14 +584,14 @@ export function* paymentAttivaRequestHandler(
         // Attiva failed
         yield put(paymentAttiva.failure(response.value.value.detail));
       } else {
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
       throw Error(readableReport(response.value));
     }
-  } catch {
+  } catch (e) {
     // Probably a timeout
-    yield put(paymentAttiva.failure(undefined));
+    yield put(paymentAttiva.failure(e.message));
   }
 }
 

@@ -48,11 +48,9 @@ export function* loadProfile(
       // the session
       yield put(sessionExpired());
     }
-    throw response
-      ? response.value.value
-      : Error(I18n.t("profile.errors.load"));
+    throw Error(`response status ${response.value.status}`);
   } catch (error) {
-    yield put(profileLoadFailure(error));
+    yield put(profileLoadFailure(error.message));
   }
   return none;
 }
@@ -105,7 +103,7 @@ function* createOrUpdateProfileSaga(
   );
 
   if (response.isLeft()) {
-    yield put(profileUpsert.failure(new Error(readableReport(response.value))));
+    yield put(profileUpsert.failure(readableReport(response.value)));
     return;
   }
 
@@ -117,9 +115,7 @@ function* createOrUpdateProfileSaga(
 
   if (response.value.status !== 200) {
     // We got a error, send a SESSION_UPSERT_FAILURE action
-    const error: Error = Error(
-      response.value.value.title || I18n.t("profile.errors.upsert")
-    );
+    const error = response.value.value.title || I18n.t("profile.errors.upsert");
 
     yield put(profileUpsert.failure(error));
   } else {
