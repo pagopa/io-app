@@ -20,7 +20,7 @@ export const fetchWalletsSuccess = createStandardAction("WALLETS_LOAD_SUCCESS")<
 >();
 
 export const fetchWalletsFailure = createStandardAction("WALLETS_LOAD_FAILURE")<
-  Error
+  string
 >();
 
 export const addWalletCreditCardInit = createStandardAction(

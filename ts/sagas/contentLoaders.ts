@@ -8,9 +8,9 @@ import { Service as ServiceMetadata } from "../../definitions/content/Service";
 
 import { contentServiceLoad } from "../store/actions/content";
 
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { SagaCallReturnType } from "../types/utils";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 
 const contentClient = ContentClient();
 

@@ -22,6 +22,7 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
+import { backendInfoLoadFailure } from "../actions/backendInfo";
 import { contentServiceLoad } from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
@@ -89,7 +90,6 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
-import { backendInfoLoadFailure } from "../actions/backendInfo";
 // tslint:disable-next-line:cognitive-complexity
 // tslint:disable-next-line: no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -167,7 +167,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
           kind: action.payload.kind
         });
       }
-
     // service failures
     case getType(loadService.failure):
     case getType(loadVisibleServices.failure):
@@ -176,10 +175,12 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(profileUpsert.failure):
     case getType(updateNotificationInstallationFailure):
     case getType(logoutFailure):
-    // backend info
+    // backend info failures
     case getType(backendInfoLoadFailure):
-    // content
+    // content failures
     case getType(contentServiceLoad.failure):
+    // wallet failures
+    case getType(fetchWalletsFailure):
     //
     // Wallet / payment failure actions (reason in the payload)
     //
@@ -189,6 +190,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentIdPolling.failure):
     case getType(paymentCheck.failure):
       return mp.track(action.type, {
+        // contains failure details as a string
         reason: action.payload
       });
 
@@ -253,7 +255,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(contentServiceLoad.success):
     // wallet
     case getType(fetchWalletsRequest):
-    case getType(fetchWalletsFailure):
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(payCreditCardVerificationRequest):

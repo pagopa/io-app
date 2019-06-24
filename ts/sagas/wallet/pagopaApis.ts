@@ -62,13 +62,13 @@ export function* fetchWalletsRequestHandler(
       if (getResponse.value.status === 200) {
         yield put(fetchWalletsSuccess(getResponse.value.value.data));
       } else {
-        yield put(fetchWalletsFailure(Error("Generic error")));
+        throw Error(`response status ${getResponse.value.status}`);
       }
     } else {
-      yield put(fetchWalletsFailure(Error(readableReport(getResponse.value))));
+      throw Error(readableReport(getResponse.value));
     }
   } catch (error) {
-    yield put(fetchWalletsFailure(error));
+    yield put(fetchWalletsFailure(error.message));
   }
 }
 
@@ -226,10 +226,8 @@ export function* updateWalletPspRequestHandler(
     } else {
       throw Error(readableReport(response.value));
     }
-  } catch {
-    const failureAction = paymentUpdateWalletPsp.failure(
-      Error("Generic error")
-    );
+  } catch (error) {
+    const failureAction = paymentUpdateWalletPsp.failure(error.message);
     yield put(failureAction);
     if (action.payload.onFailure) {
       // signal the callee if requested
