@@ -14,7 +14,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -60,6 +60,11 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
 
+  valueImage: {
+    justifyContent: "flex-end",
+    alignItems: "flex-end"
+  },
+
   align: {
     textAlign: "right"
   },
@@ -92,6 +97,11 @@ const styles = StyleSheet.create({
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
+  },
+
+  pspLogo: {
+    width: 100,
+    height: 30
   }
 });
 
@@ -161,6 +171,25 @@ class TransactionDetailsScreen extends React.Component<Props> {
     );
   }
 
+  /**
+   * It provides the proper format to the listed content by using flex layout
+   */
+  private labelImageRow(
+    label: string | React.ReactElement<any>,
+    value: string | React.ReactElement<Image>,
+    labelIsNote: boolean = true
+  ): React.ReactNode {
+    return (
+      <Col>
+        <View spacer={true} />
+        <Row style={{ alignItems: "center" }}>
+          <Text note={labelIsNote}>{label}</Text>
+          <View style={[styles.value, styles.valueImage]}>{value}</View>
+        </Row>
+      </Col>
+    );
+  }
+
   public render(): React.ReactNode {
     const transaction = this.props.navigation.getParam("transaction");
 
@@ -184,6 +213,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
     const transactionWallet = this.props.wallets
       ? this.props.wallets[transaction.idWallet]
       : undefined;
+
+    const transactionPSP =
+      transactionWallet !== undefined ? transactionWallet.psp : undefined;
 
     return (
       <WalletLayout
@@ -248,6 +280,37 @@ class TransactionDetailsScreen extends React.Component<Props> {
               I18n.t("wallet.time"),
               transaction.created.toLocaleTimeString()
             )}
+
+            {transactionPSP && transactionPSP.logoPSP
+              ? this.labelImageRow(
+                  I18n.t("wallet.psp"),
+                  <Image
+                    style={styles.pspLogo}
+                    resizeMode="contain"
+                    source={{ uri: transactionPSP.logoPSP }}
+                  />
+                )
+              : transactionPSP && transactionPSP.businessName
+                ? this.labelValueRow(
+                    I18n.t("wallet.psp"),
+                    transactionPSP.businessName
+                  )
+                : undefined}
+            {transactionPSP && transactionPSP.serviceLogo
+              ? this.labelImageRow(
+                  I18n.t("wallet.paymentMethod"),
+                  <Image
+                    style={styles.pspLogo}
+                    resizeMode="contain"
+                    source={{ uri: transactionPSP.serviceLogo }}
+                  />
+                )
+              : transactionPSP && transactionPSP.serviceName
+                ? this.labelValueRow(
+                    I18n.t("wallet.paymentMethod"),
+                    transactionPSP.serviceName
+                  )
+                : undefined}
           </Grid>
         </Content>
       </WalletLayout>
