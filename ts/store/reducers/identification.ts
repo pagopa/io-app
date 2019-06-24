@@ -30,6 +30,7 @@ type IdentificationUnidentifiedState = {
 type IdentificationStartedState = {
   kind: "started";
   pin: PinString;
+  canResetPin: boolean;
   identificationGenericData?: IdentificationGenericData;
   identificationCancelData?: IdentificationCancelData;
   identificationSuccessData?: IdentificationSuccessData;
