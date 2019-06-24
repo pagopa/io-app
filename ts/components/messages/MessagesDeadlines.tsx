@@ -347,18 +347,21 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   };
 
   private handleOnLongPressItem = (id: string) => {
-    const { allMessageIdsState } = this.state;
-    this.props.toggleMessageSelection(
-      id,
-      allMessageIdsState.size > 0 ? some(allMessageIdsState) : none
-    );
+    this.props.toggleMessageSelection(id);
   };
 
   private toggleAllMessagesSelection = () => {
     const { allMessageIdsState } = this.state;
-    this.props.toggleAllMessagesSelection(
-      allMessageIdsState.size > 0 ? some(allMessageIdsState) : none
-    );
+    const { selectedMessageIds } = this.props;
+    if (selectedMessageIds.isSome()) {
+      this.props.setSelectedMessageIds(
+        some(
+          allMessageIdsState.size === selectedMessageIds.value.size
+            ? new Set()
+            : allMessageIdsState
+        )
+      );
+    }
   };
 
   private archiveMessages = () => {
@@ -509,10 +512,9 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       servicesById,
       paymentsByRptId,
       selectedMessageIds,
-      resetSelection,
-      isAllMessagesSelected
+      resetSelection
     } = this.props;
-    const { isWorking, sectionsToRender } = this.state;
+    const { allMessageIdsState, isWorking, sectionsToRender } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
 
@@ -537,7 +539,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             >
               <Text>
                 {I18n.t(
-                  isAllMessagesSelected
+                  selectedMessageIds.value.size === allMessageIdsState.size
                     ? "messages.cta.deselectAll"
                     : "messages.cta.selectAll"
                 )}

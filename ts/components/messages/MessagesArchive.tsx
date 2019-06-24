@@ -167,47 +167,49 @@ class MessagesArchive extends React.PureComponent<Props, State> {
       animated,
       AnimatedCTAStyle,
       selectedMessageIds,
-      resetSelection,
-      isAllMessagesSelected
+      resetSelection
     } = this.props;
+    const { allMessageIdsState } = this.state;
 
     return (
       <View style={styles.listWrapper}>
-        {selectedMessageIds.isSome() && (
-          <Animated.View style={[styles.buttonBar, AnimatedCTAStyle]}>
-            <Button
-              block={true}
-              bordered={true}
-              light={true}
-              onPress={resetSelection}
-              style={styles.buttonBarLeft}
-            >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </Button>
-            <Button
-              block={true}
-              bordered={true}
-              style={styles.buttonBarCenter}
-              onPress={this.toggleAllMessagesSelection}
-            >
-              <Text>
-                {I18n.t(
-                  isAllMessagesSelected
-                    ? "messages.cta.deselectAll"
-                    : "messages.cta.selectAll"
-                )}
-              </Text>
-            </Button>
-            <Button
-              block={true}
-              style={styles.buttonBarRight}
-              disabled={selectedMessageIds.value.size === 0}
-              onPress={this.unarchiveMessages}
-            >
-              <Text>{I18n.t("messages.cta.unarchive")}</Text>
-            </Button>
-          </Animated.View>
-        )}
+        {selectedMessageIds.isSome() &&
+          allMessageIdsState.isSome() && (
+            <Animated.View style={[styles.buttonBar, AnimatedCTAStyle]}>
+              <Button
+                block={true}
+                bordered={true}
+                light={true}
+                onPress={resetSelection}
+                style={styles.buttonBarLeft}
+              >
+                <Text>{I18n.t("global.buttons.cancel")}</Text>
+              </Button>
+              <Button
+                block={true}
+                bordered={true}
+                style={styles.buttonBarCenter}
+                onPress={this.toggleAllMessagesSelection}
+              >
+                <Text>
+                  {I18n.t(
+                    selectedMessageIds.value.size ===
+                    allMessageIdsState.value.size
+                      ? "messages.cta.deselectAll"
+                      : "messages.cta.selectAll"
+                  )}
+                </Text>
+              </Button>
+              <Button
+                block={true}
+                style={styles.buttonBarRight}
+                disabled={selectedMessageIds.value.size === 0}
+                onPress={this.unarchiveMessages}
+              >
+                <Text>{I18n.t("messages.cta.unarchive")}</Text>
+              </Button>
+            </Animated.View>
+          )}
         <MessageList
           {...this.props}
           messageStates={this.state.filteredMessageStates}
@@ -233,11 +235,19 @@ class MessagesArchive extends React.PureComponent<Props, State> {
   };
 
   private handleOnLongPressItem = (id: string) => {
-    this.props.toggleMessageSelection(id, this.state.allMessageIdsState);
+    this.props.toggleMessageSelection(id);
   };
 
   private toggleAllMessagesSelection = () => {
-    this.props.toggleAllMessagesSelection(this.state.allMessageIdsState);
+    const { allMessageIdsState } = this.state;
+    const { selectedMessageIds } = this.props;
+    if (allMessageIdsState.isSome() && selectedMessageIds.isSome()) {
+      this.props.setSelectedMessageIds(
+        allMessageIdsState.value.size === selectedMessageIds.value.size
+          ? some(new Set())
+          : allMessageIdsState
+      );
+    }
   };
 
   private unarchiveMessages = () => {

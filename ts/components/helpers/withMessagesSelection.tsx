@@ -1,22 +1,17 @@
-import { isSome, none, Option, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import { Omit } from "italia-ts-commons/lib/types";
 import React from "react";
 
 type State = {
   selectedMessageIds: Option<Set<string>>;
-  isAllMessagesSelected: boolean;
 };
 
 export type InjectedWithMessagesSelectionProps = {
   selectedMessageIds: Option<Set<string>>;
-  toggleMessageSelection: (
-    id: string,
-    allMessagesIds: Option<Set<string>>
-  ) => void;
+  toggleMessageSelection: (id: string) => void;
   resetSelection: () => void;
-  toggleAllMessagesSelection: (allMessagesIds: Option<Set<string>>) => void;
-  isAllMessagesSelected: boolean;
+  setSelectedMessageIds: (newSelectedMessageIds: Option<Set<string>>) => void;
 };
 
 /**
@@ -32,34 +27,25 @@ export function withMessagesSelection<
     constructor(props: Omit<P, keyof InjectedWithMessagesSelectionProps>) {
       super(props);
       this.state = {
-        selectedMessageIds: none,
-        isAllMessagesSelected: false
+        selectedMessageIds: none
       };
     }
 
     public render() {
-      const { isAllMessagesSelected, selectedMessageIds } = this.state;
+      const { selectedMessageIds } = this.state;
       return (
         <WrappedComponent
           {...this.props as P}
           selectedMessageIds={selectedMessageIds}
           toggleMessageSelection={this.toggleMessageSelection}
           resetSelection={this.resetSelection}
-          toggleAllMessagesSelection={this.toggleAllMessagesSelection}
-          isAllMessagesSelected={isAllMessagesSelected}
+          setSelectedMessageIds={this.setSelectedMessageIds}
         />
       );
     }
 
     // A function to add/remove an id from the selectedMessageIds Set.
-    private toggleMessageSelection = (
-      id: string,
-      allMessagesIds: Option<Set<string>>
-    ) => {
-      const allMessageIdsSize = isSome(allMessagesIds)
-        ? allMessagesIds.value.size
-        : 0;
-
+    private toggleMessageSelection = (id: string) => {
       this.setState(({ selectedMessageIds }) => {
         return selectedMessageIds
           .map(_ => {
@@ -69,41 +55,26 @@ export function withMessagesSelection<
               : newSelectedMessageIds.add(id);
 
             return {
-              selectedMessageIds: some(newSelectedMessageIds),
-              isAllMessagesSelected:
-                newSelectedMessageIds.size > 0 &&
-                newSelectedMessageIds.size === allMessageIdsSize
+              selectedMessageIds: some(newSelectedMessageIds)
             };
           })
           .getOrElse({
-            selectedMessageIds: some(new Set().add(id)),
-            isAllMessagesSelected: allMessageIdsSize === 1
+            selectedMessageIds: some(new Set().add(id))
           });
       });
     };
 
-    // A function to add/remove all messages in the selectedMessageIds Set.
-    private toggleAllMessagesSelection = (
-      allMessagesIds: Option<Set<string>>
+    private setSelectedMessageIds = (
+      newSelectedMessageIds: Option<Set<string>>
     ) => {
-      const { isAllMessagesSelected } = this.state;
-      if (isAllMessagesSelected) {
-        this.setState({
-          selectedMessageIds: some(new Set()),
-          isAllMessagesSelected: false
-        });
-      } else {
-        this.setState({
-          selectedMessageIds: allMessagesIds,
-          isAllMessagesSelected: true
-        });
-      }
+      this.setState({
+        selectedMessageIds: newSelectedMessageIds
+      });
     };
 
     private resetSelection = () => {
       this.setState({
-        selectedMessageIds: none,
-        isAllMessagesSelected: false
+        selectedMessageIds: none
       });
     };
   }
