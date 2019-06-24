@@ -141,7 +141,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
     return (
       <BaseScreenComponent
-        goBack={true}
+        goBack={this.props.onCancel}
         headerTitle={I18n.t("wallet.ConfirmPayment.header")}
       >
         <Content noPadded={true}>
@@ -353,6 +353,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const runAuthorizationAndPayment = () =>
     dispatch(
       identificationRequest(
+        false,
         {
           message: I18n.t("wallet.ConfirmPayment.identificationMessage")
         },
