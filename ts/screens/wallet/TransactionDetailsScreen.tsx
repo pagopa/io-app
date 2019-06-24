@@ -191,6 +191,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
+    const { isExperimentalFeaturesEnabled } = this.props;
     const transaction = this.props.navigation.getParam("transaction");
 
     // whether this transaction is the result of a just completed payment
@@ -280,37 +281,38 @@ class TransactionDetailsScreen extends React.Component<Props> {
               I18n.t("wallet.time"),
               transaction.created.toLocaleTimeString()
             )}
-
-            {transactionPSP && transactionPSP.logoPSP
-              ? this.labelImageRow(
-                  I18n.t("wallet.psp"),
-                  <Image
-                    style={styles.pspLogo}
-                    resizeMode="contain"
-                    source={{ uri: transactionPSP.logoPSP }}
-                  />
-                )
-              : transactionPSP && transactionPSP.businessName
-                ? this.labelValueRow(
+            {isExperimentalFeaturesEnabled &&
+              (transactionPSP && transactionPSP.logoPSP
+                ? this.labelImageRow(
                     I18n.t("wallet.psp"),
-                    transactionPSP.businessName
+                    <Image
+                      style={styles.pspLogo}
+                      resizeMode="contain"
+                      source={{ uri: transactionPSP.logoPSP }}
+                    />
                   )
-                : undefined}
-            {transactionPSP && transactionPSP.serviceLogo
-              ? this.labelImageRow(
-                  I18n.t("wallet.paymentMethod"),
-                  <Image
-                    style={styles.pspLogo}
-                    resizeMode="contain"
-                    source={{ uri: transactionPSP.serviceLogo }}
-                  />
-                )
-              : transactionPSP && transactionPSP.serviceName
-                ? this.labelValueRow(
+                : transactionPSP && transactionPSP.businessName
+                  ? this.labelValueRow(
+                      I18n.t("wallet.psp"),
+                      transactionPSP.businessName
+                    )
+                  : undefined)}
+            {isExperimentalFeaturesEnabled &&
+              (transactionPSP && transactionPSP.serviceLogo
+                ? this.labelImageRow(
                     I18n.t("wallet.paymentMethod"),
-                    transactionPSP.serviceName
+                    <Image
+                      style={styles.pspLogo}
+                      resizeMode="contain"
+                      source={{ uri: transactionPSP.serviceLogo }}
+                    />
                   )
-                : undefined}
+                : transactionPSP && transactionPSP.serviceName
+                  ? this.labelValueRow(
+                      I18n.t("wallet.paymentMethod"),
+                      transactionPSP.serviceName
+                    )
+                  : undefined)}
           </Grid>
         </Content>
       </WalletLayout>
@@ -323,7 +325,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  wallets: pot.toUndefined(getWalletsById(state))
+  wallets: pot.toUndefined(getWalletsById(state)),
+  isExperimentalFeaturesEnabled:
+    state.persistedPreferences.isExperimentalFeaturesEnabled
 });
 
 export default connect(
