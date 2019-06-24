@@ -10,6 +10,7 @@ import { contentServiceLoad } from "../store/actions/content";
 
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { SagaCallReturnType } from "../types/utils";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 
 const contentClient = ContentClient();
 
@@ -48,7 +49,14 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
         contentServiceLoad.success({ serviceId, data: response.value.value })
       );
     } else {
-      yield put(contentServiceLoad.failure(serviceId));
+      const errorDescription = response.isLeft()
+        ? readableReport(response.value)
+        : `response status ${response.value.status}`;
+      yield put(
+        contentServiceLoad.failure(
+          `${errorDescription} - serviceId ${serviceId}`
+        )
+      );
     }
   });
 }

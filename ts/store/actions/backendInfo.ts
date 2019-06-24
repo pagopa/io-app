@@ -7,7 +7,7 @@ import { ServerInfo } from "../../../definitions/backend/ServerInfo";
 
 export const backendInfoLoadFailure = createStandardAction(
   "BACKEND_INFO_LOAD_FAILURE"
-)<Error>();
+)<string>();
 
 export const backendInfoLoadSuccess = createStandardAction(
   "BACKEND_INFO_LOAD_SUCCESS"

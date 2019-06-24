@@ -89,6 +89,7 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
+import { backendInfoLoadFailure } from "../actions/backendInfo";
 // tslint:disable-next-line:cognitive-complexity
 // tslint:disable-next-line: no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -123,13 +124,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(idpLoginUrlChanged):
       return mp.track(action.type, {
         SPID_URL: action.payload.url
-      });
-    //
-    // Content actions (with properties)
-    //
-    case getType(contentServiceLoad.failure):
-      return mp.track(action.type, {
-        serviceId: action.payload
       });
     //
     // Wallet actions (with properties)
@@ -182,6 +176,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(profileUpsert.failure):
     case getType(updateNotificationInstallationFailure):
     case getType(logoutFailure):
+    // backend info
+    case getType(backendInfoLoadFailure):
+    // content
+    case getType(contentServiceLoad.failure):
     //
     // Wallet / payment failure actions (reason in the payload)
     //

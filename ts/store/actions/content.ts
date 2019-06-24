@@ -7,6 +7,6 @@ export const contentServiceLoad = createAsyncAction(
   "CONTENT_SERVICE_LOAD_REQUEST",
   "CONTENT_SERVICE_LOAD_SUCCESS",
   "CONTENT_SERVICE_LOAD_FAILURE"
-)<ServiceId, { serviceId: ServiceId; data: ServiceMetadata }, ServiceId>();
+)<ServiceId, { serviceId: ServiceId; data: ServiceMetadata }, string>();
 
 export type ContentActions = ActionType<typeof contentServiceLoad>;

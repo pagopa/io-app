@@ -1,6 +1,7 @@
 import * as t from "io-ts";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, fork, put } from "redux-saga/effects";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { BackendPublicClient } from "../api/backendPublic";
@@ -48,7 +49,12 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
       // tslint:disable-next-line:saga-yield-return-type
       yield call(startTimer, BACKEND_INFO_LOAD_INTERVAL);
     } else {
-      yield put(backendInfoLoadFailure(new Error("Cannot read server info")));
+      const errorDescription = backendInfoResponse.isLeft()
+        ? readableReport(backendInfoResponse.value)
+        : `response status ${backendInfoResponse.value.status}`;
+
+      yield put(backendInfoLoadFailure(errorDescription));
+
       // tslint:disable-next-line:saga-yield-return-type
       yield call(startTimer, BACKEND_INFO_RETRY_INTERVAL);
     }
