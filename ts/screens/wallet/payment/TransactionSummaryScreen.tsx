@@ -29,6 +29,7 @@ import I18n from "../../../i18n";
 
 import { Dispatch } from "../../../store/actions/types";
 import {
+  backToEntrypointPayment,
   paymentAttiva,
   paymentCompletedSuccess,
   paymentIdPolling,
@@ -45,8 +46,7 @@ import { PaymentRequestsGetResponse } from "../../../../definitions/backend/Paym
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen,
-  navigateToWalletHome
+  navigateToPaymentTransactionErrorScreen
 } from "../../../store/actions/navigation";
 import {
   getFavoriteWallet,
@@ -383,8 +383,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
 
   const onCancel = () => {
     // on cancel:
-    // navigate to the wallet home
-    dispatch(navigateToWalletHome());
+    // navigate to entrypoint of payment or wallet home
+    dispatch(backToEntrypointPayment());
     // delete the active payment from PagoPA
     dispatch(runDeleteActivePaymentSaga());
     // reset the payment state
