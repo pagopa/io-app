@@ -271,6 +271,9 @@ pin_login:
     help:
       title: Accesso con PIN
       content: !include pin_unlock_help.md
+  forgetPin:
+    confirmTitle: Hai dimenticato il PIN?
+    confirmMsg: Per poter scegliere un nuovo PIN dovrai fare di nuovo accesso con SPID.
 forms:
   validators:
     required: Valore richiesto
