@@ -264,6 +264,9 @@ pin_login:
     help:
       title: Access with PIN
       content: !include pin_unlock_help.md
+  forgetPin:
+    confirmTitle: Did you forget the PIN?
+    confirmMsg: To be able to choose a new PIN you will need to log in again with SPID.
 forms:
   validators:
     required: Required value
@@ -517,6 +520,8 @@ messages:
   cta:
     archive: Archive
     unarchive: Unarchive
+    selectAll: All
+    deselectAll: None
     payment:
       expired: Payment expired
       validAlert:
