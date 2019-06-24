@@ -279,7 +279,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
+  private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, string>) {
     return (
       <Button
         block={true}
