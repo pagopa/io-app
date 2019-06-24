@@ -13,6 +13,7 @@ export const IO_INTERNAL_LINK_PREFIX = "ioit://";
 const ALLOWED_ROUTE_NAMES: ReadonlyArray<string> = [
   ROUTES.MESSAGES_HOME,
   ROUTES.PREFERENCES_HOME,
+  ROUTES.PREFERENCES_SERVICES,
   ROUTES.SERVICES_HOME,
   ROUTES.PROFILE_MAIN,
   ROUTES.PROFILE_PRIVACY,
@@ -33,7 +34,11 @@ export function handleInternalLink(dispatch: Dispatch, href: string) {
   getInternalRoute(href).map(routeName =>
     dispatch(
       NavigationActions.navigate({
-        routeName
+        routeName:
+          // filtering legacy routes
+          routeName === ROUTES.PREFERENCES_SERVICES
+            ? ROUTES.SERVICES_HOME
+            : routeName
       })
     )
   );
