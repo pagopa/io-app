@@ -145,21 +145,21 @@ const fixWalletPspTagsValues = (w: unknown) => {
     })
   });
   const decoded = decoder.decode(w);
-  if (decoded.isRight()) {
-    const psp = decoded.value.psp;
-    const tags = decoded.value.psp.tags;
-    return {
-      ...decoded.value,
-      psp: {
-        ...psp,
-        tags: tags.filter(
-          (item: any, idx: number) =>
-            typeof item === "string" && tags.indexOf(item) === idx
-        )
-      }
-    };
+  if (decoded.isLeft()) {
+    return w;
   }
-  return w;
+  const psp = decoded.value.psp;
+  const tags = decoded.value.psp.tags;
+  return {
+    ...decoded.value,
+    psp: {
+      ...psp,
+      tags: tags.filter(
+        (item: any, idx: number) =>
+          typeof item === "string" && tags.indexOf(item) === idx
+      )
+    }
+  };
 };
 
 /**
