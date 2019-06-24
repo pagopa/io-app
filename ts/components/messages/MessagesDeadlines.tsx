@@ -62,13 +62,6 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.colorWhite,
     marginLeft: 10,
     marginRight: 10
-  },
-  buttonBarPrimaryButton: {
-    flex: 8,
-    marginLeft: 10
-  },
-  buttonBarSecondaryButton: {
-    flex: 4
   }
 });
 
@@ -79,7 +72,6 @@ type OwnProps = {
     ids: ReadonlyArray<string>,
     archived: boolean
   ) => void;
-  isExperimentalFeaturesEnabled: boolean;
 };
 
 type Props = Pick<
@@ -518,7 +510,6 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       paymentsByRptId,
       selectedMessageIds,
       resetSelection,
-      isExperimentalFeaturesEnabled,
       isAllMessagesSelected
     } = this.props;
     const { isWorking, sectionsToRender } = this.state;
@@ -534,37 +525,27 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
               bordered={true}
               light={true}
               onPress={resetSelection}
-              style={
-                isExperimentalFeaturesEnabled
-                  ? styles.buttonBarLeft
-                  : styles.buttonBarSecondaryButton
-              }
+              style={styles.buttonBarLeft}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
-            {isExperimentalFeaturesEnabled && (
-              <Button
-                block={true}
-                bordered={true}
-                style={styles.buttonBarCenter}
-                onPress={this.toggleAllMessagesSelection}
-              >
-                <Text>
-                  {I18n.t(
-                    isAllMessagesSelected
-                      ? "messages.cta.deselectAll"
-                      : "messages.cta.selectAll"
-                  )}
-                </Text>
-              </Button>
-            )}
             <Button
               block={true}
-              style={
-                isExperimentalFeaturesEnabled
-                  ? styles.buttonBarRight
-                  : styles.buttonBarPrimaryButton
-              }
+              bordered={true}
+              style={styles.buttonBarCenter}
+              onPress={this.toggleAllMessagesSelection}
+            >
+              <Text>
+                {I18n.t(
+                  isAllMessagesSelected
+                    ? "messages.cta.deselectAll"
+                    : "messages.cta.selectAll"
+                )}
+              </Text>
+            </Button>
+            <Button
+              block={true}
+              style={styles.buttonBarRight}
               disabled={selectedMessageIds.value.size === 0}
               onPress={this.archiveMessages}
             >

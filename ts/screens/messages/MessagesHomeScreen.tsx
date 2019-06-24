@@ -202,7 +202,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
-            isExperimentalFeaturesEnabled={isExperimentalFeaturesEnabled}
             animated={{
               onScroll: Animated.event(
                 [
@@ -261,7 +260,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               paymentsByRptId={paymentsByRptId}
               setMessagesArchivedState={updateMessagesArchivedState}
               navigateToMessageDetail={navigateToMessageDetail}
-              isExperimentalFeaturesEnabled={isExperimentalFeaturesEnabled}
             />
           </Tab>
         )}
@@ -282,7 +280,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
-            isExperimentalFeaturesEnabled={isExperimentalFeaturesEnabled}
             animated={{
               onScroll: Animated.event(
                 [
