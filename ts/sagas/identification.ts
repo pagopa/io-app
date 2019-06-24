@@ -72,6 +72,7 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
  */
 export function* startAndReturnIdentificationResult(
   pin: PinString,
+  canResetPin: boolean = true,
   identificationGenericData?: IdentificationGenericData,
   identificationCancelData?: IdentificationCancelData,
   identificationSuccessData?: IdentificationSuccessData
@@ -79,6 +80,7 @@ export function* startAndReturnIdentificationResult(
   yield put(
     identificationStart(
       pin,
+      canResetPin,
       identificationGenericData,
       identificationCancelData,
       identificationSuccessData
@@ -96,6 +98,7 @@ function* startAndHandleIdentificationResult(
   yield put(
     identificationStart(
       pin,
+      identificationRequestAction.payload.canResetPin,
       identificationRequestAction.payload.identificationGenericData,
       identificationRequestAction.payload.identificationCancelData,
       identificationRequestAction.payload.identificationSuccessData
