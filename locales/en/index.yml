@@ -520,6 +520,8 @@ messages:
   cta:
     archive: Archive
     unarchive: Unarchive
+    selectAll: All
+    deselectAll: None
     payment:
       expired: Payment expired
       validAlert:

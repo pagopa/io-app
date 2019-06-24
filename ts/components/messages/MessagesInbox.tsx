@@ -3,6 +3,7 @@ import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import { Animated, Image, StyleSheet } from "react-native";
 
+import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
@@ -29,12 +30,17 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.brandLightGray,
     padding: 10
   },
-  buttonBarPrimaryButton: {
-    flex: 8,
-    marginLeft: 10
+  buttonBarLeft: {
+    flex: 2
   },
-  buttonBarSecondaryButton: {
-    flex: 4
+  buttonBarRight: {
+    flex: 2
+  },
+  buttonBarCenter: {
+    flex: 2,
+    backgroundColor: customVariables.colorWhite,
+    marginLeft: 10,
+    marginRight: 10
   },
   emptyListWrapper: {
     padding: customVariables.contentPadding,
@@ -85,6 +91,7 @@ type State = {
   filteredMessageStates: ReturnType<
     typeof generateMessagesStateNotArchivedArray
   >;
+  allMessageIdsState: Option<Set<string>>;
 };
 
 /**
@@ -134,11 +141,14 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     if (lastMessagesState !== nextProps.messagesState) {
       // The list was updated, we need to re-apply the filter and
       // save the result in the state.
+      const messagesStateNotArchived = generateMessagesStateNotArchivedArray(
+        nextProps.messagesState
+      );
+      const allMessagesIdsArray = messagesStateNotArchived.map(_ => _.meta.id);
       return {
-        filteredMessageStates: generateMessagesStateNotArchivedArray(
-          nextProps.messagesState
-        ),
-        lastMessagesState: nextProps.messagesState
+        filteredMessageStates: messagesStateNotArchived,
+        lastMessagesState: nextProps.messagesState,
+        allMessageIdsState: some(new Set(allMessagesIdsArray))
       };
     }
 
@@ -150,7 +160,8 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       lastMessagesState: pot.none,
-      filteredMessageStates: []
+      filteredMessageStates: [],
+      allMessageIdsState: none
     };
   }
 
@@ -162,30 +173,47 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       selectedMessageIds,
       resetSelection
     } = this.props;
+    const { allMessageIdsState } = this.state;
 
     return (
       <View style={styles.listWrapper}>
-        {selectedMessageIds.isSome() && (
-          <Animated.View style={[styles.buttonBar, AnimatedCTAStyle]}>
-            <Button
-              block={true}
-              bordered={true}
-              light={true}
-              onPress={resetSelection}
-              style={styles.buttonBarSecondaryButton}
-            >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </Button>
-            <Button
-              block={true}
-              style={styles.buttonBarPrimaryButton}
-              disabled={selectedMessageIds.value.size === 0}
-              onPress={this.archiveMessages}
-            >
-              <Text>{I18n.t("messages.cta.archive")}</Text>
-            </Button>
-          </Animated.View>
-        )}
+        {selectedMessageIds.isSome() &&
+          allMessageIdsState.isSome() && (
+            <Animated.View style={[styles.buttonBar, AnimatedCTAStyle]}>
+              <Button
+                block={true}
+                bordered={true}
+                light={true}
+                onPress={resetSelection}
+                style={styles.buttonBarLeft}
+              >
+                <Text>{I18n.t("global.buttons.cancel")}</Text>
+              </Button>
+              <Button
+                block={true}
+                bordered={true}
+                style={styles.buttonBarCenter}
+                onPress={this.toggleAllMessagesSelection}
+              >
+                <Text>
+                  {I18n.t(
+                    selectedMessageIds.value.size ===
+                    allMessageIdsState.value.size
+                      ? "messages.cta.deselectAll"
+                      : "messages.cta.selectAll"
+                  )}
+                </Text>
+              </Button>
+              <Button
+                block={true}
+                style={styles.buttonBarRight}
+                disabled={selectedMessageIds.value.size === 0}
+                onPress={this.archiveMessages}
+              >
+                <Text>{I18n.t("messages.cta.archive")}</Text>
+              </Button>
+            </Animated.View>
+          )}
         <MessageList
           {...this.props}
           messageStates={this.state.filteredMessageStates}
@@ -212,6 +240,18 @@ class MessagesInbox extends React.PureComponent<Props, State> {
 
   private handleOnLongPressItem = (id: string) => {
     this.props.toggleMessageSelection(id);
+  };
+
+  private toggleAllMessagesSelection = () => {
+    const { allMessageIdsState } = this.state;
+    const { selectedMessageIds } = this.props;
+    if (allMessageIdsState.isSome() && selectedMessageIds.isSome()) {
+      this.props.setSelectedMessageIds(
+        allMessageIdsState.value.size === selectedMessageIds.value.size
+          ? some(new Set())
+          : allMessageIdsState
+      );
+    }
   };
 
   private archiveMessages = () => {

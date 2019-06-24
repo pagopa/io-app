@@ -530,6 +530,8 @@ messages:
   cta:
     archive: Archivia
     unarchive: Ripristina
+    selectAll: Tutti
+    deselectAll: Nessuno
     payment:
       expired: Pagamento scaduto
       validAlert:
