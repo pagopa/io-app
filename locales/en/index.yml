@@ -189,18 +189,18 @@ authentication:
       all the services of the Public Administration with a single Digital Identity
       (username and password).
     paragraph2-part1: 'SPID allows you to do online what was possible only in person:
-      so, to register at SPID you will'
-    paragraph2-bold: certiify your identity
+      so, to register at SPID you will '
+    paragraph2-bold: certify your identity
     paragraph2-part2: 'completing your recognition through an Identity Provider. Here
       what you shall do:'
     point1-value: '1'
-    point1-content: " Choose your \nIdentity Provider"
+    point1-content: "Choose your Identity Provider"
     point2-value: '2'
-    point2-content: " Insert your personal data and your mobile phone"
+    point2-content: "Insert your personal data and your mobile phone"
     point3-value: '3'
-    point3-content: " Upload a copy of your identity papers"
+    point3-content: "Upload a copy of your identity papers"
     point4-value: '4'
-    point4-content: " Complete the \nrecognition"
+    point4-content: "Complete the recognition"
     knowMore: Learn more on spid.gov.it
   idp_selection:
     headerTitle: Home

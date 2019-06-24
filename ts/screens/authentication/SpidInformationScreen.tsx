@@ -36,7 +36,8 @@ type Props = OwnProps & ContextualHelpInjectedProps;
 const styles = StyleSheet.create({
   value: {
     alignSelf: "flex-start",
-    color: variables.brandPrimary
+    color: variables.brandPrimary,
+    paddingTop: 2
   },
   row: {
     flexDirection: "row",
