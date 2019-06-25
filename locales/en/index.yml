@@ -32,6 +32,7 @@ global:
     documents: documents
     preferences: preferences
     profile: profile
+    services: services
   actions:
     retry: An error occurred, please retry
     search: Text to search
@@ -603,8 +604,6 @@ preferences:
       disabled: Disabled
     email: Email address
     mobile_phone: Mobile number
-    services: List of services
-    services_description: Enable/disable your services on IO
     language: Language
     digitalDomicile: Digital domicile
     preferred_calendar:
@@ -628,8 +627,7 @@ biometric_recognition:
   enroll_btnLabel: Go to settings
   needed_to_disable: Recognition required to disable
 services:
-  headerTitle: Services
-  title: Available services
+  title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: The service is enabled

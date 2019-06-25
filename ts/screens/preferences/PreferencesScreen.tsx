@@ -12,7 +12,6 @@ import PreferenceItem from "../../components/PreferenceItem";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
@@ -145,17 +144,6 @@ class PreferencesScreen extends React.Component<Props, State> {
           icon={require("../../../img/icons/gears.png")}
         >
           <List withContentLateralPadding={true}>
-            <ListItem
-              onPress={() =>
-                this.props.navigation.navigate(ROUTES.PREFERENCES_SERVICES)
-              }
-            >
-              <PreferenceItem
-                kind="action"
-                title={I18n.t("preferences.list.services")}
-                valuePreview={I18n.t("preferences.list.services_description")}
-              />
-            </ListItem>
             {isFingerprintAvailable && (
               <ListItem
                 onPress={this.props.navigateToFingerprintPreferenceScreen}

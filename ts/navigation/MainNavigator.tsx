@@ -24,6 +24,7 @@ import MessageNavigator from "./MessagesNavigator";
 import PreferencesNavigator from "./PreferencesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
+import ServicesNavigator from "./ServicesNavigator";
 import WalletNavigator from "./WalletNavigator";
 type Routes = keyof typeof ROUTES;
 
@@ -33,6 +34,7 @@ const ROUTE_LABEL: RouteLabelMap = {
   WALLET_HOME: I18n.t("global.navigator.wallet"),
   DOCUMENTS_HOME: I18n.t("global.navigator.documents"),
   PREFERENCES_HOME: I18n.t("global.navigator.preferences"),
+  SERVICES_NAVIGATOR: I18n.t("global.navigator.services"),
   PROFILE_NAVIGATOR: I18n.t("global.navigator.profile")
 };
 
@@ -41,6 +43,7 @@ const ROUTE_ICON: RouteIconMap = {
   MESSAGES_NAVIGATOR: "io-messaggi",
   WALLET_HOME: "io-portafoglio",
   DOCUMENTS_HOME: "io-documenti",
+  SERVICES_NAVIGATOR: "io-servizi",
   PREFERENCES_HOME: "io-preferenze",
   PROFILE_NAVIGATOR: "io-profilo"
 };
@@ -131,6 +134,9 @@ const navigation = createBottomTabNavigator(
     // [ROUTES.DOCUMENTS_HOME]: {
     //   screen: PlaceholderScreen
     // },
+    [ROUTES.SERVICES_NAVIGATOR]: {
+      screen: ServicesNavigator
+    },
     [ROUTES.PREFERENCES_HOME]: {
       screen: PreferencesNavigator
     },
