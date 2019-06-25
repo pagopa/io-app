@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import variables from "../../theme/variables";
 
-import * as RNP from "react-native-pull";
+import { PullSectionList } from "react-native-pull";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -405,7 +405,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return (
       <View style={styles.fill}>
         {sections.length === 0 && this.topIndicatorRender()}
-        <RNP.PullSectionList
+        <PullSectionList
           loadMoreData={this.loadMoreData}
           topIndicatorRender={this.topIndicatorRender}
           topIndicatorHeight={topIndicatorHeight}
