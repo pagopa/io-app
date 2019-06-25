@@ -163,7 +163,7 @@ type State = {
   prevSections?: Sections;
 };
 
-const isFakeItem = (item: any): item is FakeItem => {
+export const isFakeItem = (item: any): item is FakeItem => {
   return item.fake;
 };
 
