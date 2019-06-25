@@ -31,7 +31,6 @@ import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
-import { ContextualHelpInjectedProps } from "../../../components/helpers/withContextualHelp";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -52,9 +51,7 @@ type NavigationParams = {
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = OwnProps &
-  ReturnType<typeof mapDispatchToProps> &
-  ContextualHelpInjectedProps;
+type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = Readonly<{
   paymentNoticeNumber: Option<
