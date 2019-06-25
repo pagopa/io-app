@@ -90,23 +90,23 @@ export const navigateToServiceDetailsScreen = (
   params: InferNavigationParams<typeof ServiceDetailsScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_SERVICE_DETAIL,
+    routeName: ROUTES.SERVICE_DETAIL,
     params
   });
 
 export const navigateToFingerprintPreferenceScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_BIOMETRIC_RECOGNITION
+    routeName: ROUTES.PROFILE_PREFERENCES_BIOMETRIC_RECOGNITION
   });
 
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_CALENDAR
+    routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
   });
 
-export const navigateToServicesPreferencesScreen = () =>
+export const navigateToServicesHomeScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_SERVICES
+    routeName: ROUTES.SERVICES_HOME
   });
 
 export const navigateToPaymentTransactionSummaryScreen = (
