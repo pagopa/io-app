@@ -12,8 +12,8 @@ import {
 import { UserProfileUnion } from "../../../api/backend";
 import { tosVersion } from "../../../config";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
+import { tosAccepted } from "../../../store/actions/onboarding";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
-import { tosAccepted } from '../../../store/actions/onboarding';
 
 describe("checkAcceptedTosSaga", () => {
   const authenticatedProfile: UserProfileUnion = {
@@ -23,7 +23,7 @@ describe("checkAcceptedTosSaga", () => {
     name: "John",
     fiscal_code: "XYZ" as FiscalCode,
     spid_mobile_phone: "123" as NonEmptyString
-  }
+  };
 
   const initializedProfile: UserProfileUnion = {
     has_profile: true,
