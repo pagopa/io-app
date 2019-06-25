@@ -21,7 +21,6 @@ import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
-import PreferencesNavigator from "./PreferencesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
@@ -33,7 +32,6 @@ const ROUTE_LABEL: RouteLabelMap = {
   MESSAGES_NAVIGATOR: I18n.t("global.navigator.messages"),
   WALLET_HOME: I18n.t("global.navigator.wallet"),
   DOCUMENTS_HOME: I18n.t("global.navigator.documents"),
-  PREFERENCES_HOME: I18n.t("global.navigator.preferences"),
   SERVICES_NAVIGATOR: I18n.t("global.navigator.services"),
   PROFILE_NAVIGATOR: I18n.t("global.navigator.profile")
 };
@@ -44,7 +42,6 @@ const ROUTE_ICON: RouteIconMap = {
   WALLET_HOME: "io-portafoglio",
   DOCUMENTS_HOME: "io-documenti",
   SERVICES_NAVIGATOR: "io-servizi",
-  PREFERENCES_HOME: "io-preferenze",
   PROFILE_NAVIGATOR: "io-profilo"
 };
 
@@ -136,9 +133,6 @@ const navigation = createBottomTabNavigator(
     // },
     [ROUTES.SERVICES_NAVIGATOR]: {
       screen: ServicesNavigator
-    },
-    [ROUTES.PREFERENCES_HOME]: {
-      screen: PreferencesNavigator
     },
     [ROUTES.PROFILE_NAVIGATOR]: {
       screen: ProfileNavigator

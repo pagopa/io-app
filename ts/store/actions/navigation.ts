@@ -96,12 +96,12 @@ export const navigateToServiceDetailsScreen = (
 
 export const navigateToFingerprintPreferenceScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_BIOMETRIC_RECOGNITION
+    routeName: ROUTES.PROFILE_PREFERENCES_BIOMETRIC_RECOGNITION
   });
 
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_CALENDAR
+    routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
   });
 
 export const navigateToServicesHomeScreen = () =>

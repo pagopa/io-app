@@ -30,7 +30,6 @@ global:
     messages: messages
     wallet: wallet
     documents: documents
-    preferences: preferences
     profile: profile
     services: services
   actions:
@@ -101,6 +100,9 @@ profile:
     resetPin:
       confirmTitle: Are you sure you want to reset your PIN?
       confirmMsg: You will be asked again to log in with SPID.
+    preferences:
+      title: Preferences
+      description: Manage app internal preferences
     privacy:
       title: Privacy
       description: Export data, delete account
@@ -134,6 +136,30 @@ profile:
     debugMode: Debug mode
     pagoPaEnv: PagoPA Test Environment
     pagoPAEnvAlert: This change requires app reboot
+  preferences:
+    title: Preferences
+    subtitle: This settings will be used by all services of the Public Amministration.
+    list:
+      biometric_recognition: Biometric recognition
+      biometric_recognition_status: 
+        enabled: Enabled
+        disabled: Disabled
+      email: Email address
+      mobile_phone: Mobile number
+      language: Language
+      digitalDomicile: Digital domicile
+      preferred_calendar:
+        title: Default Calendar
+        not_selected: Not selected
+    empty:
+      default: No preference set
+    preferencesHelp: !include preferences_home_help.md
+    unavailable:
+      title: This setting is set up on your SPID profile
+      message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
+    language: 
+      title: This setting is set up in system preferences
+      message: IO inherits language from the operating system of this device
 navigation:
   messages: Messages
   profile: Profile
@@ -594,30 +620,6 @@ notifications:
   installation:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error
-preferences:
-  title: Preferences
-  subtitle: This settings will be used by all services of the Public Amministration.
-  list:
-    biometric_recognition: Biometric recognition
-    biometric_recognition_status: 
-      enabled: Enabled
-      disabled: Disabled
-    email: Email address
-    mobile_phone: Mobile number
-    language: Language
-    digitalDomicile: Digital domicile
-    preferred_calendar:
-      title: Default Calendar
-      not_selected: Not selected
-  empty:
-    default: No preference set
-  preferencesHelp: !include preferences_home_help.md
-  unavailable:
-    title: This setting is set up on your SPID profile
-    message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
-  language: 
-    title: This setting is set up in system preferences
-    message: IO inherits language from the operating system of this device
 biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition
