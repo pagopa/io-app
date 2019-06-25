@@ -30,7 +30,7 @@ const reducer = (
         ...state,
         isFingerprintAcknowledged: true
       };
-    
+
     case getType(tosAccepted):
       return {
         ...state

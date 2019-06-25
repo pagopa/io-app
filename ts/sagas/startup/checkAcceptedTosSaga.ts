@@ -3,8 +3,8 @@ import { put, take } from "redux-saga/effects";
 import { UserProfileUnion } from "../../api/backend";
 import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
+import { tosAccepted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
-import { tosAccepted } from '../../store/actions/onboarding';
 
 export function* checkAcceptedTosSaga(
   userProfile: UserProfileUnion
@@ -27,7 +27,7 @@ export function* checkAcceptedTosSaga(
    * The user profile is updated storing the last accepted tos version.
    * If the user logs in for the first time, the accepted tos version is stored once the profile in initialized
    */
-  if(userProfile.has_profile) {
-     yield put(profileUpsert.request({ accepted_tos_version: tosVersion}))
+  if (userProfile.has_profile) {
+    yield put(profileUpsert.request({ accepted_tos_version: tosVersion }));
   }
 }

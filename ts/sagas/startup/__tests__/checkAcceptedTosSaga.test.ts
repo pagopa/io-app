@@ -12,11 +12,20 @@ import {
 import { UserProfileUnion } from "../../../api/backend";
 import { tosVersion } from "../../../config";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
-import { profileUpsert } from "../../../store/actions/profile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
+import { tosAccepted } from '../../../store/actions/onboarding';
 
 describe("checkAcceptedTosSaga", () => {
-  const initialProfile: UserProfileUnion = {
+  const authenticatedProfile: UserProfileUnion = {
+    has_profile: false,
+    spid_email: "test@example.com" as EmailString,
+    family_name: "Connor",
+    name: "John",
+    fiscal_code: "XYZ" as FiscalCode,
+    spid_mobile_phone: "123" as NonEmptyString
+  }
+
+  const initializedProfile: UserProfileUnion = {
     has_profile: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
@@ -30,12 +39,12 @@ describe("checkAcceptedTosSaga", () => {
   };
 
   const notUpdatedProfile: UserProfileUnion = {
-    ...initialProfile,
+    ...initializedProfile,
     accepted_tos_version: (tosVersion - 1) as NonNegativeNumber
   };
 
   const updatedProfile: UserProfileUnion = {
-    ...initialProfile,
+    ...initializedProfile,
     accepted_tos_version: tosVersion
   };
 
@@ -47,20 +56,29 @@ describe("checkAcceptedTosSaga", () => {
     });
   });
 
-  describe("when user has not already accepted an old version of ToS", () => {
+  describe("when user has accepted an old version of ToS", () => {
     it("should navigate to the terms of service screen and succeed when ToS get accepted", () => {
       return expectSaga(checkAcceptedTosSaga, notUpdatedProfile)
         .put(navigateToTosScreen)
-        .take(profileUpsert.request)
+        .take(tosAccepted)
         .run();
     });
   });
 
-  describe("when user has not already accepted an old version of ToS", () => {
+  describe("when user has accepted an old version of ToS", () => {
     it("should navigate to the terms of service screen and succeed when ToS get accepted", () => {
-      return expectSaga(checkAcceptedTosSaga, initialProfile)
+      return expectSaga(checkAcceptedTosSaga, initializedProfile)
         .put(navigateToTosScreen)
-        .take(profileUpsert.request)
+        .take(tosAccepted)
+        .run();
+    });
+  });
+
+  describe("when user has never accepted an ToS because he is accessing the app for the first time", () => {
+    it("should navigate to the terms of service screen and succeed when ToS get accepted", () => {
+      return expectSaga(checkAcceptedTosSaga, authenticatedProfile)
+        .put(navigateToTosScreen)
+        .take(tosAccepted)
         .run();
     });
   });
