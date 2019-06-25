@@ -14,11 +14,13 @@ import {
 export const identificationRequest = createAction(
   "IDENTIFICATION_REQUEST",
   resolve => (
+    canResetPin: boolean = true,
     identificationGenericData?: IdentificationGenericData,
     identificationCancelData?: IdentificationCancelData,
     identificationSuccessData?: IdentificationSuccessData
   ) =>
     resolve({
+      canResetPin,
       identificationGenericData,
       identificationCancelData,
       identificationSuccessData
@@ -32,12 +34,14 @@ export const identificationStart = createAction(
   "IDENTIFICATION_START",
   resolve => (
     pin: PinString,
+    canResetPin: boolean = true,
     identificationGenericData?: IdentificationGenericData,
     identificationCancelData?: IdentificationCancelData,
     identificationSuccessData?: IdentificationSuccessData
   ) =>
     resolve({
       pin,
+      canResetPin,
       identificationGenericData,
       identificationCancelData,
       identificationSuccessData

@@ -30,8 +30,8 @@ global:
     messages: messages
     wallet: wallet
     documents: documents
-    preferences: preferences
     profile: profile
+    services: services
   actions:
     retry: An error occurred, please retry
     search: Text to search
@@ -100,6 +100,9 @@ profile:
     resetPin:
       confirmTitle: Are you sure you want to reset your PIN?
       confirmMsg: You will be asked again to log in with SPID.
+    preferences:
+      title: Preferences
+      description: Manage app internal preferences
     privacy:
       title: Privacy
       description: Export data, delete account
@@ -139,6 +142,30 @@ profile:
     fiscalCode: FISCAL CODE
     name: FIRST NAME
     familyName: LAST NAME
+  preferences:
+    title: Preferences
+    subtitle: This settings will be used by all services of the Public Amministration.
+    list:
+      biometric_recognition: Biometric recognition
+      biometric_recognition_status: 
+        enabled: Enabled
+        disabled: Disabled
+      email: Email address
+      mobile_phone: Mobile number
+      language: Language
+      digitalDomicile: Digital domicile
+      preferred_calendar:
+        title: Default Calendar
+        not_selected: Not selected
+    empty:
+      default: No preference set
+    preferencesHelp: !include preferences_home_help.md
+    unavailable:
+      title: This setting is set up on your SPID profile
+      message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
+    language: 
+      title: This setting is set up in system preferences
+      message: IO inherits language from the operating system of this device
 navigation:
   messages: Messages
   profile: Profile
@@ -194,18 +221,18 @@ authentication:
       all the services of the Public Administration with a single Digital Identity
       (username and password).
     paragraph2-part1: 'SPID allows you to do online what was possible only in person:
-      so, to register at SPID you will'
-    paragraph2-bold: certiify your identity
+      so, to register at SPID you will '
+    paragraph2-bold: certify your identity
     paragraph2-part2: 'completing your recognition through an Identity Provider. Here
       what you shall do:'
     point1-value: '1'
-    point1-content: " Choose your \nIdentity Provider"
+    point1-content: "Choose your Identity Provider"
     point2-value: '2'
-    point2-content: " Insert your personal data and your mobile phone"
+    point2-content: "Insert your personal data and your mobile phone"
     point3-value: '3'
-    point3-content: " Upload a copy of your identity papers"
+    point3-content: "Upload a copy of your identity papers"
     point4-value: '4'
-    point4-content: " Complete the \nrecognition"
+    point4-content: "Complete the recognition"
     knowMore: Learn more on spid.gov.it
   idp_selection:
     headerTitle: Home
@@ -270,6 +297,9 @@ pin_login:
     help:
       title: Access with PIN
       content: !include pin_unlock_help.md
+  forgetPin:
+    confirmTitle: Did you forget the PIN?
+    confirmMsg: To be able to choose a new PIN you will need to log in again with SPID.
 forms:
   validators:
     required: Required value
@@ -523,6 +553,8 @@ messages:
   cta:
     archive: Archive
     unarchive: Unarchive
+    selectAll: All
+    deselectAll: None
     payment:
       expired: Payment expired
       validAlert:
@@ -594,32 +626,6 @@ notifications:
   installation:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error
-preferences:
-  title: Preferences
-  subtitle: This settings will be used by all services of the Public Amministration.
-  list:
-    biometric_recognition: Biometric recognition
-    biometric_recognition_status: 
-      enabled: Enabled
-      disabled: Disabled
-    email: Email address
-    mobile_phone: Mobile number
-    services: List of services
-    services_description: Enable/disable your services on IO
-    language: Language
-    digitalDomicile: Digital domicile
-    preferred_calendar:
-      title: Default Calendar
-      not_selected: Not selected
-  empty:
-    default: No preference set
-  preferencesHelp: !include preferences_home_help.md
-  unavailable:
-    title: This setting is set up on your SPID profile
-    message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
-  language: 
-    title: This setting is set up in system preferences
-    message: IO inherits language from the operating system of this device
 biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition
@@ -629,8 +635,7 @@ biometric_recognition:
   enroll_btnLabel: Go to settings
   needed_to_disable: Recognition required to disable
 services:
-  headerTitle: Services
-  title: Available services
+  title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: The service is enabled
