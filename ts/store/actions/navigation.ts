@@ -90,7 +90,7 @@ export const navigateToServiceDetailsScreen = (
   params: InferNavigationParams<typeof ServiceDetailsScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_SERVICE_DETAIL,
+    routeName: ROUTES.SERVICE_DETAIL,
     params
   });
 
@@ -104,9 +104,9 @@ export const navigateToCalendarPreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
   });
 
-export const navigateToServicesPreferencesScreen = () =>
+export const navigateToServicesHomeScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_SERVICES
+    routeName: ROUTES.SERVICES_HOME
   });
 
 export const navigateToPaymentTransactionSummaryScreen = (

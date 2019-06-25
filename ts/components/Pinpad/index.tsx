@@ -1,7 +1,7 @@
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
@@ -117,6 +117,24 @@ class Pinpad extends React.PureComponent<Props, State> {
     ]
   ];
 
+  private confirmResetAlert = () =>
+    Alert.alert(
+      I18n.t("pin_login.forgetPin.confirmTitle"),
+      I18n.t("pin_login.forgetPin.confirmMsg"),
+      [
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "default",
+          onPress: this.props.onPinResetHandler
+        },
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        }
+      ],
+      { cancelable: false }
+    );
+
   constructor(props: Props) {
     super(props);
 
@@ -201,7 +219,7 @@ class Pinpad extends React.PureComponent<Props, State> {
           <React.Fragment>
             <Text
               primary={true}
-              onPress={this.props.onPinResetHandler}
+              onPress={this.confirmResetAlert}
               style={styles.text}
             >
               {I18n.t("pin_login.pin.reset.button")}

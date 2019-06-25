@@ -32,6 +32,7 @@ global:
     wallet: portafoglio
     documents: documenti
     profile: profilo
+    services: servizi
   actions:
     retry: Si è verificato un errore, si prega di riprovare
     search: Testo da cercare
@@ -298,6 +299,9 @@ pin_login:
     help:
       title: Accesso con PIN
       content: !include pin_unlock_help.md
+  forgetPin:
+    confirmTitle: Hai dimenticato il PIN?
+    confirmMsg: Per poter scegliere un nuovo PIN dovrai fare di nuovo accesso con SPID.
 forms:
   validators:
     required: Valore richiesto
@@ -554,6 +558,8 @@ messages:
   cta:
     archive: Archivia
     unarchive: Ripristina
+    selectAll: Tutti
+    deselectAll: Nessuno
     payment:
       expired: Pagamento scaduto
       validAlert:
@@ -635,8 +641,7 @@ biometric_recognition:
   enroll_btnLabel: Vai alle impostazioni
   needed_to_disable: Riconoscimento richiesto per disabilitare
 services:
-  headerTitle: Servizi
-  title: Elenco dei servizi
+  title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: Il servizio è attivo
