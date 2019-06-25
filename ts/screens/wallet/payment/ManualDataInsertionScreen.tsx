@@ -68,7 +68,6 @@ type State = Readonly<{
     ReturnType<typeof AmountInEuroCentsFromString.decode>
   >;
   inputAmountValue: string;
-  showModal: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -92,8 +91,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       paymentNoticeNumber: none,
       organizationFiscalCode: none,
       delocalizedAmount: none,
-      inputAmountValue: "",
-      showModal: false
+      inputAmountValue: ""
     };
   }
 
