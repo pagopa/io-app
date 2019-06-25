@@ -4,7 +4,7 @@
  */
 import { getType } from "typesafe-actions";
 
-import { fingerprintAcknowledge } from "../actions/onboarding";
+import { fingerprintAcknowledge, tosAccepted } from "../actions/onboarding";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -29,6 +29,11 @@ const reducer = (
       return {
         ...state,
         isFingerprintAcknowledged: true
+      };
+    
+    case getType(tosAccepted):
+      return {
+        ...state
       };
 
     default:

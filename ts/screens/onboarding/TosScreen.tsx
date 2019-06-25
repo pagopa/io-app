@@ -10,8 +10,7 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Markdown from "../../components/ui/Markdown";
 import { tosVersion } from "../../config";
 import I18n from "../../i18n";
-import { abortOnboarding } from "../../store/actions/onboarding";
-import { profileUpsert } from "../../store/actions/profile";
+import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -83,13 +82,7 @@ class TosScreen extends React.PureComponent<Props, State> {
             <Button
               block={true}
               primary={true}
-              onPress={() =>
-                dispatch(
-                  profileUpsert.request({
-                    accepted_tos_version: tosVersion
-                  })
-                )
-              }
+              onPress={() => dispatch(tosAccepted())}
             >
               <Text>{I18n.t("onboarding.tos.continue")}</Text>
             </Button>
