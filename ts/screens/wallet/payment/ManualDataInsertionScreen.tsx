@@ -31,9 +31,11 @@ import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -51,7 +53,9 @@ type NavigationParams = {
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = OwnProps &
+  ReturnType<typeof mapDispatchToProps> &
+  LightModalContextInterface;
 
 type State = Readonly<{
   paymentNoticeNumber: Option<
@@ -163,7 +167,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       onPress: this.props.navigateToWalletHome,
       title: I18n.t("global.buttons.cancel")
     };
-
     return (
       <BaseScreenComponent
         goBack={true}
@@ -254,22 +257,22 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             </Form>
           </Content>
         </ScrollView>
-
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
         />
-
-        {this.state.showModal && (
-          <CodesPositionManualPaymentModal onClose={this.hideModal} />
-        )}
       </BaseScreenComponent>
     );
   }
-  private showModal = () => this.setState({ showModal: true });
+  // private showModal = () => this.setState({ showModal: true });
+  private showModal = () => {
+    this.props.showModal(
+      <CodesPositionManualPaymentModal onCancel={this.props.hideModal} />
+    );
+  };
 
-  private hideModal = () => this.setState({ showModal: false });
+  // private hideModal = () => this.setState({ showModal: false });
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -292,4 +295,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   undefined,
   mapDispatchToProps
-)(ManualDataInsertionScreen);
+)(withLightModalContext(ManualDataInsertionScreen));
