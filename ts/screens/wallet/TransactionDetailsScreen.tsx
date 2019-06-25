@@ -102,6 +102,11 @@ const styles = StyleSheet.create({
   pspLogo: {
     width: 100,
     height: 30
+  },
+
+  creditCardLogo: {
+    width: 48,
+    height: 30
   }
 });
 
@@ -176,7 +181,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
    */
   private labelImageRow(
     label: string | React.ReactElement<any>,
-    value: string | React.ReactElement<Image>,
+    value: string | React.ReactElement<any>,
     labelIsNote: boolean = true
   ): React.ReactNode {
     return (
@@ -191,7 +196,6 @@ class TransactionDetailsScreen extends React.Component<Props> {
   }
 
   public render(): React.ReactNode {
-    const { isExperimentalFeaturesEnabled } = this.props;
     const transaction = this.props.navigation.getParam("transaction");
 
     // whether this transaction is the result of a just completed payment
@@ -217,6 +221,11 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
     const transactionPSP =
       transactionWallet !== undefined ? transactionWallet.psp : undefined;
+
+    const creditCard =
+      transactionWallet !== undefined
+        ? transactionWallet.creditCard
+        : undefined;
 
     return (
       <WalletLayout
@@ -281,38 +290,36 @@ class TransactionDetailsScreen extends React.Component<Props> {
               I18n.t("wallet.time"),
               transaction.created.toLocaleTimeString()
             )}
-            {isExperimentalFeaturesEnabled &&
-              (transactionPSP && transactionPSP.logoPSP
-                ? this.labelImageRow(
+            {transactionPSP && transactionPSP.logoPSP
+              ? this.labelImageRow(
+                  I18n.t("wallet.psp"),
+                  <Image
+                    style={styles.pspLogo}
+                    resizeMode="contain"
+                    source={{ uri: transactionPSP.logoPSP }}
+                  />
+                )
+              : transactionPSP && transactionPSP.businessName
+                ? this.labelValueRow(
                     I18n.t("wallet.psp"),
-                    <Image
-                      style={styles.pspLogo}
-                      resizeMode="contain"
-                      source={{ uri: transactionPSP.logoPSP }}
-                    />
+                    transactionPSP.businessName
                   )
-                : transactionPSP && transactionPSP.businessName
-                  ? this.labelValueRow(
-                      I18n.t("wallet.psp"),
-                      transactionPSP.businessName
-                    )
-                  : undefined)}
-            {isExperimentalFeaturesEnabled &&
-              (transactionPSP && transactionPSP.serviceLogo
-                ? this.labelImageRow(
+                : undefined}
+            {creditCard && creditCard.brandLogo
+              ? this.labelImageRow(
+                  I18n.t("wallet.paymentMethod"),
+                  <Image
+                    style={styles.creditCardLogo}
+                    resizeMode="contain"
+                    source={{ uri: creditCard.brandLogo }}
+                  />
+                )
+              : creditCard && creditCard.brand
+                ? this.labelValueRow(
                     I18n.t("wallet.paymentMethod"),
-                    <Image
-                      style={styles.pspLogo}
-                      resizeMode="contain"
-                      source={{ uri: transactionPSP.serviceLogo }}
-                    />
+                    creditCard.brand
                   )
-                : transactionPSP && transactionPSP.serviceName
-                  ? this.labelValueRow(
-                      I18n.t("wallet.paymentMethod"),
-                      transactionPSP.serviceName
-                    )
-                  : undefined)}
+                : undefined}
           </Grid>
         </Content>
       </WalletLayout>
