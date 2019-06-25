@@ -26,14 +26,14 @@ import { getLocalePrimary } from "../../utils/locale";
 
 const unavailableAlert = () =>
   Alert.alert(
-    I18n.t("preferences.unavailable.title"),
-    I18n.t("preferences.unavailable.message")
+    I18n.t("profile.preferences.unavailable.title"),
+    I18n.t("profile.preferences.unavailable.message")
   );
 
 const languageAlert = () =>
   Alert.alert(
-    I18n.t("preferences.language.title"),
-    I18n.t("preferences.language.message")
+    I18n.t("profile.preferences.language.title"),
+    I18n.t("profile.preferences.language.message")
   );
 
 type OwnProps = Readonly<{
@@ -139,40 +139,32 @@ class PreferencesScreen extends React.Component<Props, State> {
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 
     return (
-      <TopScreenComponent title={I18n.t("preferences.title")} appLogo={true}>
+      <TopScreenComponent
+        title={I18n.t("profile.preferences.title")}
+        goBack={() => this.props.navigation.goBack()}
+      >
         <ScreenContent
-          title={I18n.t("preferences.title")}
-          subtitle={I18n.t("preferences.subtitle")}
+          title={I18n.t("profile.preferences.title")}
+          subtitle={I18n.t("profile.preferences.subtitle")}
           icon={require("../../../img/icons/gears.png")}
         >
           <List withContentLateralPadding={true}>
-            <ListItem
-              onPress={
-                isExperimentalFeaturesEnabled
-                  ? this.props.navigateToServicesHomeScreen
-                  : this.props.navigateToServicesPreferencesScreen
-              }
-            >
-              <PreferenceItem
-                kind="action"
-                title={I18n.t("preferences.list.services")}
-                valuePreview={I18n.t("preferences.list.services_description")}
-              />
-            </ListItem>
             {isFingerprintAvailable && (
               <ListItem
                 onPress={this.props.navigateToFingerprintPreferenceScreen}
               >
                 <PreferenceItem
                   kind="action"
-                  title={I18n.t("preferences.list.biometric_recognition")}
+                  title={I18n.t(
+                    "profile.preferences.list.biometric_recognition"
+                  )}
                   valuePreview={
                     this.props.isFingerprintEnabled
                       ? I18n.t(
-                          "preferences.list.biometric_recognition_status.enabled"
+                          "profile.preferences.list.biometric_recognition_status.enabled"
                         )
                       : I18n.t(
-                          "preferences.list.biometric_recognition_status.disabled"
+                          "profile.preferences.list.biometric_recognition_status.disabled"
                         )
                   }
                 />
@@ -182,12 +174,14 @@ class PreferencesScreen extends React.Component<Props, State> {
               <ListItem onPress={this.props.navigateToCalendarPreferenceScreen}>
                 <PreferenceItem
                   kind="action"
-                  title={I18n.t("preferences.list.preferred_calendar.title")}
+                  title={I18n.t(
+                    "profile.preferences.list.preferred_calendar.title"
+                  )}
                   valuePreview={
                     this.props.preferredCalendar
                       ? this.props.preferredCalendar.title
                       : I18n.t(
-                          "preferences.list.preferred_calendar.not_selected"
+                          "profile.preferences.list.preferred_calendar.not_selected"
                         )
                   }
                 />
@@ -196,7 +190,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             <ListItem onPress={unavailableAlert}>
               <PreferenceItem
                 kind="value"
-                title={I18n.t("preferences.list.email")}
+                title={I18n.t("profile.preferences.list.email")}
                 icon="io-email"
                 valuePreview={profileData.spid_email}
               />
@@ -204,7 +198,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             <ListItem onPress={unavailableAlert}>
               <PreferenceItem
                 kind="value"
-                title={I18n.t("preferences.list.mobile_phone")}
+                title={I18n.t("profile.preferences.list.mobile_phone")}
                 icon="io-phone-number"
                 valuePreview={profileData.spid_mobile_phone}
               />
@@ -212,7 +206,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             <ListItem onPress={languageAlert}>
               <PreferenceItem
                 kind="value"
-                title={I18n.t("preferences.list.language")}
+                title={I18n.t("profile.preferences.list.language")}
                 icon="io-languages"
                 valuePreview={languages}
               />
