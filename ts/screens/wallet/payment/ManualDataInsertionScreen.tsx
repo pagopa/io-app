@@ -31,6 +31,7 @@ import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
+import { ContextualHelpInjectedProps } from "../../../components/helpers/withContextualHelp";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -43,6 +44,7 @@ import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { NumberFromString } from "../../../utils/number";
+import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
   isInvalidAmount?: boolean;
@@ -50,7 +52,9 @@ type NavigationParams = {
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = OwnProps &
+  ReturnType<typeof mapDispatchToProps> &
+  ContextualHelpInjectedProps;
 
 type State = Readonly<{
   paymentNoticeNumber: Option<
@@ -63,6 +67,7 @@ type State = Readonly<{
     ReturnType<typeof AmountInEuroCentsFromString.decode>
   >;
   inputAmountValue: string;
+  showModal: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -86,7 +91,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       paymentNoticeNumber: none,
       organizationFiscalCode: none,
       delocalizedAmount: none,
-      inputAmountValue: ""
+      inputAmountValue: "",
+      showModal: false
     };
   }
 
@@ -171,6 +177,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
+            <Text link={true} onPress={this.showModal}>
+              {I18n.t("wallet.insertManually.link")}
+            </Text>
             <Form>
               <Item
                 style={styles.noLeftMargin}
@@ -254,9 +263,16 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
         />
+
+        {this.state.showModal && (
+          <CodesPositionManualPaymentModal onClose={this.hideModal} />
+        )}
       </BaseScreenComponent>
     );
   }
+  private showModal = () => this.setState({ showModal: true });
+
+  private hideModal = () => this.setState({ showModal: false });
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
