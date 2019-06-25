@@ -290,21 +290,6 @@ class TransactionDetailsScreen extends React.Component<Props> {
               I18n.t("wallet.time"),
               transaction.created.toLocaleTimeString()
             )}
-            {transactionPSP && transactionPSP.logoPSP
-              ? this.labelImageRow(
-                  I18n.t("wallet.psp"),
-                  <Image
-                    style={styles.pspLogo}
-                    resizeMode="contain"
-                    source={{ uri: transactionPSP.logoPSP }}
-                  />
-                )
-              : transactionPSP && transactionPSP.businessName
-                ? this.labelValueRow(
-                    I18n.t("wallet.psp"),
-                    transactionPSP.businessName
-                  )
-                : undefined}
             {creditCard && creditCard.brandLogo
               ? this.labelImageRow(
                   I18n.t("wallet.paymentMethod"),
@@ -318,6 +303,21 @@ class TransactionDetailsScreen extends React.Component<Props> {
                 ? this.labelValueRow(
                     I18n.t("wallet.paymentMethod"),
                     creditCard.brand
+                  )
+                : undefined}
+            {transactionPSP && transactionPSP.logoPSP
+              ? this.labelImageRow(
+                  I18n.t("wallet.psp"),
+                  <Image
+                    style={styles.pspLogo}
+                    resizeMode="contain"
+                    source={{ uri: transactionPSP.logoPSP }}
+                  />
+                )
+              : transactionPSP && transactionPSP.businessName
+                ? this.labelValueRow(
+                    I18n.t("wallet.psp"),
+                    transactionPSP.businessName
                   )
                 : undefined}
           </Grid>
