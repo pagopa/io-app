@@ -324,6 +324,29 @@ export function getCurrentRouteName(navNode: any): string | undefined {
   }
   return undefined;
 }
+
+export function getCurrentRouteKey(navNode: any): string | undefined {
+  if (!navNode) {
+    return undefined;
+  }
+  if (
+    navNode.index === undefined &&
+    navNode.key &&
+    typeof navNode.key === "string"
+  ) {
+    // navNode is a NavigationLeafRoute
+    return navNode.key;
+  }
+  if (
+    navNode.routes &&
+    navNode.index !== undefined &&
+    navNode.routes[navNode.index]
+  ) {
+    const route = navNode.routes[navNode.index];
+    return getCurrentRouteKey(route);
+  }
+  return undefined;
+}
 /*
   The middleware acts as a general hook in order to track any meaningful navigation action
   https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux
