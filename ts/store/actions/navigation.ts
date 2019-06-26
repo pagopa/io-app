@@ -104,7 +104,7 @@ export const navigateToCalendarPreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
   });
 
-export const navigateToServicesHomeScreen = () =>
+export const navigateToServiceHomeScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.SERVICES_HOME
   });

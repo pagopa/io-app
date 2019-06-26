@@ -19,7 +19,7 @@ import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import {
   navigateToServiceDetailsScreen,
-  navigateToServicesHomeScreen
+  navigateToServiceHomeScreen
 } from "../../store/actions/navigation";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
@@ -186,7 +186,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => dispatch(navigateToServiceDetailsScreen(params)),
-  navigateToServiceHomeScreen: () => dispatch(navigateToServicesHomeScreen())
+  navigateToServiceHomeScreen: () => dispatch(navigateToServiceHomeScreen())
 });
 
 export default connect(
