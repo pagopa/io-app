@@ -75,8 +75,7 @@ const styles = StyleSheet.create({
 
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
-    const isNew =
-      this.props.unreadTransactions.filter(_ => _.id === item.id).length !== 0; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
+    const isNew = this.props.unreadTransactions.find(_ => _.id === item.id) !== undefined;
     const datetime: string = `${formatDateAsLocal(
       item.created,
       true,
