@@ -52,8 +52,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     };
   }
 
-  private goBack = () => this.props.navigation.goBack();
-
   private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
     new Animated.Value(0),
     new Animated.Value(0),
@@ -83,16 +81,16 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     return (
       // TODO: Remove back when this screen will be accessible from the tabBar
       <TopScreenComponent
-        title={I18n.t("services.headerTitle")}
-        goBack={this.goBack}
+        title={I18n.t("services.title")}
+        appLogo={true}
         contextualHelp={{
-          title: I18n.t("services.headerTitle"),
+          title: I18n.t("services.title"),
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
       >
         <React.Fragment>
           <ScreenContentHeader
-            title={I18n.t("services.headerTitle")}
+            title={I18n.t("services.title")}
             icon={require("../../../img/icons/services-icon.png")}
             fixed={true}
           />

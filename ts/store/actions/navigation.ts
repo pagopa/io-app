@@ -109,11 +109,6 @@ export const navigateToServicesHomeScreen = () =>
     routeName: ROUTES.SERVICES_HOME
   });
 
-export const navigateToServicesHomeScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.SERVICES_HOME
-  });
-
 export const navigateToPaymentTransactionSummaryScreen = (
   params: InferNavigationParams<typeof TransactionSummaryScreen>
 ) =>

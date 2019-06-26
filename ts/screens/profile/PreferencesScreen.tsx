@@ -15,9 +15,7 @@ import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
-  navigateToFingerprintPreferenceScreen,
-  navigateToServicesHomeScreen,
-  navigateToServicesPreferencesScreen
+  navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
@@ -120,7 +118,7 @@ class PreferencesScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const { potProfile, isExperimentalFeaturesEnabled } = this.props;
+    const { potProfile } = this.props;
     const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
     const profileData = potProfile
@@ -231,10 +229,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToFingerprintPreferenceScreen: () =>
     dispatch(navigateToFingerprintPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
-    dispatch(navigateToCalendarPreferenceScreen()),
-  navigateToServicesHomeScreen: () => dispatch(navigateToServicesHomeScreen()),
-  navigateToServicesPreferencesScreen: () =>
-    dispatch(navigateToServicesPreferencesScreen())
+    dispatch(navigateToCalendarPreferenceScreen())
 });
 
 export default connect(
