@@ -232,8 +232,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 </ListItem>
               )}
             {/* Privacy */}
-            <ListItem
-              first={!isExperimentalFeaturesEnabled} />
+            <ListItem first={!isExperimentalFeaturesEnabled} />
             {/* Preferences */}
             <ListItem
               first={true}
