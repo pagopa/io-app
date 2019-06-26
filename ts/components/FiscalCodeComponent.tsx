@@ -1,6 +1,12 @@
 /**
  * A component to show a representation
  * of the fiscal code card of the user profile
+ * 
+ * TODO: 
+ * - get rotated header only
+ * - get landscape of card 
+ * - add shadow to component
+ * - extract missing data from fiscal code
  */
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -27,6 +33,16 @@ const textdLineHeight = 15;
 const textFontSize = 11;
 const textLeftMargin = 140 * scaleFactor + 6;
 
+const fiscalCodeHeight = cardHeaderHeight + cardLargeSpacer;
+const lastNameHeight =
+  cardHeaderHeight + cardLargeSpacer + cardLineHeight * 2 + cardSpacer;
+const nameHeight =
+  cardHeaderHeight +
+  cardLargeSpacer +
+  cardLineHeight * 2 +
+  cardSpacer +
+  cardLineHeight +
+  cardSpacer;
 
 const styles = StyleSheet.create({
   cardBackground: {
@@ -57,7 +73,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             styles.text,
             {
               lineHeight: cardLineHeight * 2,
-              marginTop: cardHeaderHeight + cardLargeSpacer
+              marginTop: fiscalCodeHeight
             }
           ]}
         >
@@ -70,11 +86,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             styles.text,
             {
               lineHeight: textdLineHeight,
-              marginTop:
-                cardHeaderHeight +
-                cardLargeSpacer +
-                cardLineHeight * 2 +
-                cardSpacer
+              marginTop: lastNameHeight
             }
           ]}
         >
@@ -87,13 +99,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             styles.text,
             {
               lineHeight: textdLineHeight,
-              marginTop:
-                cardHeaderHeight +
-                cardLargeSpacer +
-                cardLineHeight * 2 +
-                cardSpacer +
-                cardLineHeight +
-                cardSpacer
+              marginTop: nameHeight
             }
           ]}
         >
