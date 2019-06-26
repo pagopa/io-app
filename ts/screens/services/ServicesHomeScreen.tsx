@@ -79,7 +79,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   public render() {
     return (
-      // TODO: Remove back when this screen will be accessible from the tabBar
       <TopScreenComponent
         title={I18n.t("services.title")}
         appLogo={true}
