@@ -4,7 +4,7 @@
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -17,10 +17,7 @@ import ServicesSearch from "../../components/services/ServicesSearch";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
-import {
-  navigateToServiceDetailsScreen,
-  navigateToServiceHomeScreen
-} from "../../store/actions/navigation";
+import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
@@ -53,22 +50,6 @@ class ServicesScreen extends React.Component<Props> {
     });
   };
 
-  public componentWillMount() {
-    this.checkForExperimentalFeatures();
-  }
-
-  private handleWillFocus = () => {
-    this.checkForExperimentalFeatures();
-  };
-
-  private checkForExperimentalFeatures() {
-    const { isExperimentalFeaturesEnabled } = this.props;
-    // If experimental features are enabled go to the new services home
-    if (isExperimentalFeaturesEnabled) {
-      this.props.navigateToServiceHomeScreen();
-    }
-  }
-
   public componentDidMount() {
     // on mount, update visible services
     this.props.refreshServices();
@@ -88,7 +69,6 @@ class ServicesScreen extends React.Component<Props> {
         searchType="Services"
         appLogo={true}
       >
-        <NavigationEvents onWillFocus={this.handleWillFocus} />
         {!isSearchEnabled && (
           <ScreenContentHeader
             title={I18n.t("services.title")}
@@ -185,8 +165,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(contentServiceLoad.request(serviceId)),
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => dispatch(navigateToServiceDetailsScreen(params)),
-  navigateToServiceHomeScreen: () => dispatch(navigateToServiceHomeScreen())
+  ) => dispatch(navigateToServiceDetailsScreen(params))
 });
 
 export default connect(

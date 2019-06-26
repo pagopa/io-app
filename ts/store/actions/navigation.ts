@@ -104,11 +104,6 @@ export const navigateToCalendarPreferenceScreen = () =>
     routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
   });
 
-export const navigateToServiceHomeScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.SERVICES_HOME
-  });
-
 export const navigateToPaymentTransactionSummaryScreen = (
   params: InferNavigationParams<typeof TransactionSummaryScreen>
 ) =>
