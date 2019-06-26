@@ -220,9 +220,7 @@ const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
   potProfile: pot.toOption(state.profile),
   isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-  preferredCalendar: state.persistedPreferences.preferredCalendar,
-  isExperimentalFeaturesEnabled:
-    state.persistedPreferences.isExperimentalFeaturesEnabled
+  preferredCalendar: state.persistedPreferences.preferredCalendar
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
