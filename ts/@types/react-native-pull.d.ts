@@ -1,4 +1,3 @@
-
 /**
  * See {@link https://github.com/greatbsky/react-native-pull}
  * This module exposes 3 component to implements scrollable view with a custom pull-to-refresh animation,
@@ -18,8 +17,11 @@ declare module "react-native-pull" {
         onPullOk?: () => void;
         onPullRelease?: () => void;
         isPullEnd?: () => void;
-        sectionsLength: number;
+        sectionsLength?: number;
         loadMoreData?: () => void;
     }>;
-    export class PullSectionList extends React.Component<SectionList.Props, Props> {}
+    
+    export class PullView extends React.Component<Props & ScrollView.Props> {}
+    export class PullList extends React.Component<Props & ListView.Props> {}
+    export class PullSectionList extends React.Component<Props & SectionList.Props> {}
 }
