@@ -153,17 +153,13 @@ const mapStateToProps = (state: GlobalState) => {
   const isLoading =
     pot.isLoading(state.entities.services.visible) || isAnyServiceLoading;
 
-  const isExperimentalFeaturesEnabled =
-    state.persistedPreferences.isExperimentalFeaturesEnabled;
-
   return {
     profile: state.profile,
     sections,
     allServicesId: Object.keys(services.byId),
     isLoading,
     searchText: searchTextSelector(state),
-    isSearchEnabled: isSearchServicesEnabledSelector(state),
-    isExperimentalFeaturesEnabled
+    isSearchEnabled: isSearchServicesEnabledSelector(state)
   };
 };
 
