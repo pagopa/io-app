@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   organizationIcon: {
     marginRight: variables.spacingBase,
-    marginBottom: 2, // To reduce misalignment due to bug on font
+    marginBottom: 6, // To reduce misalignment due to bug on font
     alignSelf: "flex-start"
   }
 });
@@ -103,7 +103,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
             styles.organizationIcon
           ]}
         />
-        <H5 style={styles.organizationName}>{info.section.title}</H5>
+        <H5 style={styles.organizationName}>0{info.section.title}</H5>
       </ListItem>
     ) : (
       <ListItem itemHeader={true} style={styles.listItem}>
