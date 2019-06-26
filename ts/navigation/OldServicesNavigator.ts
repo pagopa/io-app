@@ -1,16 +1,16 @@
 import { createStackNavigator } from "react-navigation";
 
-import ServiceDetailsScreen from "../screens/preferences/ServiceDetailsScreen";
-import ServicesScreen from "../screens/preferences/ServicesScreen";
+import OldServiceDetailsScreen from "../screens/preferences/OldServiceDetailsScreen";
+import OldServicesHomeScreen from "../screens/preferences/OldServicesHomeScreen";
 import ROUTES from "./routes";
 
 const OldServicesNavigator = createStackNavigator(
   {
-    [ROUTES.SERVICES_LIST]: {
-      screen: ServicesScreen
+    [ROUTES.OLD_SERVICES_HOME]: {
+      screen: OldServicesHomeScreen
     },
-    [ROUTES.SERVICE_DETAIL]: {
-      screen: ServiceDetailsScreen
+    [ROUTES.OLD_SERVICE_DETAIL]: {
+      screen: OldServiceDetailsScreen
     }
   },
   {

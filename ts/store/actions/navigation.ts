@@ -15,7 +15,7 @@ import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 
-import ServiceDetailsScreen from "../../screens/preferences/ServiceDetailsScreen";
+import OldServiceDetailsScreen from "../../screens/preferences/OldServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
@@ -86,11 +86,11 @@ export const navigateToMessageDetailScreenAction = (
     params
   });
 
-export const navigateToServiceDetailsScreen = (
-  params: InferNavigationParams<typeof ServiceDetailsScreen>
+export const navigateToOldServiceDetailsScreen = (
+  params: InferNavigationParams<typeof OldServiceDetailsScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.SERVICE_DETAIL,
+    routeName: ROUTES.OLD_SERVICE_DETAIL,
     params
   });
 
