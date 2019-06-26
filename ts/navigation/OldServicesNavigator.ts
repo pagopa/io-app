@@ -6,10 +6,10 @@ import ROUTES from "./routes";
 
 const OldServicesNavigator = createStackNavigator(
   {
-    [ROUTES.OLD_SERVICES_HOME]: {
+    [ROUTES.SERVICES_HOME]: {
       screen: OldServicesHomeScreen
     },
-    [ROUTES.OLD_SERVICE_DETAIL]: {
+    [ROUTES.SERVICE_DETAIL]: {
       screen: OldServiceDetailsScreen
     }
   },

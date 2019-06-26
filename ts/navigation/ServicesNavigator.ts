@@ -10,7 +10,7 @@ const ServicesNavigator = createStackNavigator(
       screen: ServicesHomeScreen
     },
     // TODO Replace when the new detail screen is available
-    [ROUTES.OLD_SERVICE_DETAIL]: {
+    [ROUTES.SERVICE_DETAIL]: {
       screen: OldServiceDetailsScreen
     }
   },
