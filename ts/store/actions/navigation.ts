@@ -90,7 +90,7 @@ export const navigateToOldServiceDetailsScreen = (
   params: InferNavigationParams<typeof OldServiceDetailsScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.OLD_SERVICE_DETAIL,
+    routeName: ROUTES.SERVICE_DETAIL,
     params
   });
 
