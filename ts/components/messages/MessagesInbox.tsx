@@ -193,7 +193,13 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       <View style={styles.listWrapper}>
         {selectedMessageIds.isSome() &&
           allMessageIdsState.isSome() && (
-            <Animated.View style={[styles.buttonBar, AnimatedCTAStyle, paddingForAnimation && styles.animatedStartPosition]}>
+            <Animated.View
+              style={[
+                styles.buttonBar,
+                AnimatedCTAStyle,
+                paddingForAnimation && styles.animatedStartPosition
+              ]}
+            >
               <Button
                 block={true}
                 bordered={true}
