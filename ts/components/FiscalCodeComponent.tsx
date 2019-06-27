@@ -23,10 +23,12 @@ interface PreviewProps {
 
 interface FullProps extends BaseProps {
   type: "Full";
+  getCardBack: boolean;
 }
 
 interface LandscapeProps extends BaseProps {
   type: "Landscape";
+  getCardBack: boolean;
 }
 
 type Props = PreviewProps | FullProps | LandscapeProps;
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
 });
 
 export default class FiscalCodeComponent extends React.Component<Props> {
-  private renderContent(profile: UserProfile, isLandscape: boolean) {
+  private renderFrontContent(profile: UserProfile, isLandscape: boolean) {
     return (
       <React.Fragment>
         <Text
@@ -206,7 +208,11 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     return (
       <View>
         <Image
-          source={require("./../../img/fiscalCode/fiscalCodeFront.png")}
+          source={
+            this.props.type !== "Preview" && this.props.getCardBack
+              ? require("./../../img/fiscalCode/fiscalCodeBack.png")
+              : require("./../../img/fiscalCode/fiscalCodeFront.png")
+          }
           style={[
             this.props.type === "Preview" && styles.previewCardBackground,
             this.props.type === "Landscape"
@@ -215,9 +221,11 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           ]}
         />
         {this.props.type !== "Preview" &&
-          this.renderContent(
+          !this.props.getCardBack &&
+          this.renderFrontContent(
             this.props.profile,
             this.props.type === "Landscape"
+            // TODO: renderBarcode if getCardBack
           )}
       </View>
     );
