@@ -4,7 +4,10 @@
  */
 import { getType } from "typesafe-actions";
 
-import { previousInstallationDataDeleteSuccess } from "../actions/installation";
+import {
+  previousInstallationDataDeleteRequest,
+  previousInstallationDataDeleteSuccess
+} from "../actions/installation";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -29,6 +32,9 @@ const reducer = (
       return {
         isFirstRunAfterInstall: false
       };
+
+    case getType(previousInstallationDataDeleteRequest):
+      return INITIAL_STATE;
 
     default:
       return state;
