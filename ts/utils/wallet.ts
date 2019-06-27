@@ -1,5 +1,5 @@
-import { CreditCard } from "../types/pagopa";
 import * as t from "io-ts";
+import { CreditCard } from "../types/pagopa";
 /* 
     Contains utility functions to check conditions
     used across project (currently just in CardComponent)
