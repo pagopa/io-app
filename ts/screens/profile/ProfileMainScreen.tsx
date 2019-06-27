@@ -1,4 +1,3 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import {
   Button,
   H3,
@@ -87,10 +86,6 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     lineHeight: 40
-  },
-  fcItem: {
-    flex: 1,
-    paddingRight: 0
   }
 });
 
@@ -203,8 +198,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       walletToken,
       notificationToken,
       notificationId,
-      isExperimentalFeaturesEnabled,
-      profile
+      isExperimentalFeaturesEnabled
     } = this.props;
     return (
       <TopScreenComponent
@@ -225,12 +219,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
-            {isExperimentalFeaturesEnabled &&
-              profile && (
-                <ListItem first={true} style={styles.fcItem}>
-                  <FiscalCodeComponent profile={profile} />
-                </ListItem>
-              )}
             {/* Privacy */}
             <ListItem first={!isExperimentalFeaturesEnabled} />
             {/* Preferences */}
@@ -492,7 +480,6 @@ const mapStateToProps = (state: GlobalState) => ({
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isExperimentalFeaturesEnabled:
     state.persistedPreferences.isExperimentalFeaturesEnabled,
-  profile: pot.getOrElse(profileSelector(state), null)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
