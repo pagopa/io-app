@@ -50,7 +50,6 @@ import {
 } from "../../store/reducers/authentication";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
