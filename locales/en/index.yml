@@ -136,12 +136,6 @@ profile:
     debugMode: Debug mode
     pagoPaEnv: PagoPA Test Environment
     pagoPAEnvAlert: This change requires app reboot
-  fiscalCode:
-    header1: REPUBBLICA ITALIANA 
-    header2: MINISTERO DELLE FINANZE
-    fiscalCode: FISCAL CODE
-    name: FIRST NAME
-    familyName: LAST NAME
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
