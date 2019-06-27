@@ -20,13 +20,13 @@ import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { getAllSections } from "../../store/reducers/entities/services/orderedServices";
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
-import { isDefined } from "../../utils/guards";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationInjectedProps;
@@ -120,24 +120,7 @@ class ServicesScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const { services, organizations } = state.entities;
-
-  const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
-
-  // tslint:disable-next-line:readonly-array
-  const sections = orgfiscalCodes
-    .map(fiscalCode => {
-      const title = organizations[fiscalCode] || fiscalCode;
-      const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
-      const data = serviceIdsForOrg
-        .map(id => services.byId[id])
-        .filter(isDefined);
-      return {
-        title,
-        data
-      };
-    })
-    .filter(_ => _.data.length > 0);
+  const { services } = state.entities;
 
   const isAnyServiceLoading =
     Object.keys(services.byId).find(k => {
@@ -150,7 +133,7 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     profile: state.profile,
-    sections,
+    sections: getAllSections(state),
     isLoading,
     searchText: searchTextSelector(state),
     isSearchEnabled: isSearchServicesEnabledSelector(state)
