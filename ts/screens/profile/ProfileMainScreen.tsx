@@ -217,8 +217,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
-            {/* Privacy */}
-            <ListItem first={!isExperimentalFeaturesEnabled} />
             {/* Preferences */}
             <ListItem
               first={true}
