@@ -117,12 +117,12 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
 
     return (
       <TopScreenComponent
-        headerTitle={I18n.t("preferences.title")}
-        title={I18n.t("preferences.list.preferred_calendar.title")}
+        headerTitle={I18n.t("profile.preferences.title")}
+        title={I18n.t("profile.preferences.list.preferred_calendar.title")}
         goBack={this.props.navigation.goBack}
       >
         <ScreenContentHeader
-          title={I18n.t("preferences.list.preferred_calendar.title")}
+          title={I18n.t("profile.preferences.list.preferred_calendar.title")}
           subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
         />
         <View
