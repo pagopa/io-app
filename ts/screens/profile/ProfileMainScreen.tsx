@@ -479,7 +479,7 @@ const mapStateToProps = (state: GlobalState) => ({
   isDebugModeEnabled: state.debug.isDebugModeEnabled,
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isExperimentalFeaturesEnabled:
-    state.persistedPreferences.isExperimentalFeaturesEnabled,
+    state.persistedPreferences.isExperimentalFeaturesEnabled
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
