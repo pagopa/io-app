@@ -16,22 +16,25 @@ import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
+import Logo from "../../components/wallet/card/Logo";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { fetchPsp } from "../../store/actions/wallet/transactions";
 import { GlobalState } from "../../store/reducers/types";
+import { pspSelector } from "../../store/reducers/wallet/psp";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
@@ -101,12 +104,14 @@ const styles = StyleSheet.create({
 
   pspLogo: {
     width: 100,
-    height: 30
+    height: 30,
+    resizeMode: "contain"
   },
 
   creditCardLogo: {
     width: 48,
-    height: 30
+    height: 30,
+    resizeMode: "contain"
   }
 });
 
@@ -195,7 +200,15 @@ class TransactionDetailsScreen extends React.Component<Props> {
     );
   }
 
+  private handleWillFocus = () => {
+    const transaction = this.props.navigation.getParam("transaction");
+    if (transaction.idPsp !== undefined) {
+      this.props.fetchPsp(transaction.idPsp);
+    }
+  };
+
   public render(): React.ReactNode {
+    const { psp } = this.props;
     const transaction = this.props.navigation.getParam("transaction");
 
     // whether this transaction is the result of a just completed payment
@@ -219,9 +232,6 @@ class TransactionDetailsScreen extends React.Component<Props> {
       ? this.props.wallets[transaction.idWallet]
       : undefined;
 
-    const transactionPSP =
-      transactionWallet !== undefined ? transactionWallet.psp : undefined;
-
     const creditCard =
       transactionWallet !== undefined
         ? transactionWallet.creditCard
@@ -238,6 +248,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         hideHeader={true}
         hasDynamicSubHeader={false}
       >
+        <NavigationEvents onWillFocus={this.handleWillFocus} />
         <Content
           scrollEnabled={false}
           style={[styles.noBottomPadding, styles.whiteContent]}
@@ -293,11 +304,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             {creditCard && creditCard.brandLogo
               ? this.labelImageRow(
                   I18n.t("wallet.paymentMethod"),
-                  <Image
-                    style={styles.creditCardLogo}
-                    resizeMode="contain"
-                    source={{ uri: creditCard.brandLogo }}
-                  />
+                  <Logo imageStyle={styles.creditCardLogo} item={creditCard} />
                 )
               : creditCard && creditCard.brand
                 ? this.labelValueRow(
@@ -305,20 +312,13 @@ class TransactionDetailsScreen extends React.Component<Props> {
                     creditCard.brand
                   )
                 : undefined}
-            {transactionPSP && transactionPSP.logoPSP
+            {psp && psp.logoPSP
               ? this.labelImageRow(
                   I18n.t("wallet.psp"),
-                  <Image
-                    style={styles.pspLogo}
-                    resizeMode="contain"
-                    source={{ uri: transactionPSP.logoPSP }}
-                  />
+                  <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
                 )
-              : transactionPSP && transactionPSP.businessName
-                ? this.labelValueRow(
-                    I18n.t("wallet.psp"),
-                    transactionPSP.businessName
-                  )
+              : psp && psp.businessName
+                ? this.labelValueRow(I18n.t("wallet.psp"), psp.businessName)
                 : undefined}
           </Grid>
         </Content>
@@ -328,21 +328,28 @@ class TransactionDetailsScreen extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome())
+  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  fetchPsp: (idPsp: number) => dispatch(fetchPsp.request({ idPsp }))
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  wallets: pot.toUndefined(getWalletsById(state)),
-  isExperimentalFeaturesEnabled:
-    state.persistedPreferences.isExperimentalFeaturesEnabled
-});
+const mapStateToProps = (state: GlobalState) => {
+  const potPsp = pspSelector(state);
+  const isLoading = pot.isLoading(potPsp);
+  return {
+    wallets: pot.toUndefined(getWalletsById(state)),
+    isExperimentalFeaturesEnabled:
+      state.persistedPreferences.isExperimentalFeaturesEnabled,
+    isLoading,
+    psp: pot.toUndefined(potPsp)
+  };
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
   withContextualHelp(
-    TransactionDetailsScreen,
+    withLoadingSpinner(TransactionDetailsScreen),
     I18n.t("wallet.whyAFee.title"),
     () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
   )

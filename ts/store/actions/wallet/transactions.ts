@@ -1,7 +1,11 @@
 import { Function1, Lazy, Predicate } from "fp-ts/lib/function";
-import { ActionType, createStandardAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 
-import { Transaction } from "../../../types/pagopa";
+import { Psp, Transaction } from "../../../types/pagopa";
 
 //
 // fetch all transactions
@@ -36,6 +40,22 @@ export const fetchTransactionFailure = createStandardAction(
 )<Error>();
 
 //
+// fetch a single psp
+//
+
+type FetchPspRequestPayload = Readonly<{
+  idPsp: number;
+  onSuccess?: (action: ActionType<typeof fetchPsp["success"]>) => void;
+  onFailure?: (action: ActionType<typeof fetchPsp["failure"]>) => void;
+}>;
+
+export const fetchPsp = createAsyncAction(
+  "FETCH_PSP_REQUEST",
+  "FETCH_PSP_SUCCESS",
+  "FETCH_PSP_FAILURE"
+)<FetchPspRequestPayload, Psp, Error>();
+
+//
 // poll for a transaction until it reaches a certain state
 //
 
@@ -65,6 +85,7 @@ export type TransactionsActions =
   | ActionType<typeof fetchTransactionSuccess>
   | ActionType<typeof fetchTransactionRequest>
   | ActionType<typeof fetchTransactionFailure>
+  | ActionType<typeof fetchPsp>
   | ActionType<typeof runPollTransactionSaga>
   | ActionType<typeof pollTransactionSagaCompleted>
   | ActionType<typeof pollTransactionSagaTimeout>;

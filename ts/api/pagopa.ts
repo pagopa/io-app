@@ -22,7 +22,8 @@ import {
   NullableWallet,
   PagoPAErrorResponse,
   PaymentManagerToken,
-  PspListResponse
+  PspListResponse,
+  PspResponse
 } from "../types/pagopa";
 import { SessionResponse } from "../types/pagopa";
 import { TransactionListResponse } from "../types/pagopa";
@@ -41,6 +42,8 @@ import {
   FavouriteWalletUsingPOSTT,
   getPspListUsingGETDecoder,
   GetPspListUsingGETT,
+  getPspUsingGETDecoder,
+  GetPspUsingGETT,
   getTransactionsUsingGETDecoder,
   GetTransactionsUsingGETT,
   getTransactionUsingGETDecoder,
@@ -176,6 +179,16 @@ const getPspList: GetPspListUsingGETTExtra = {
         },
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getPspListUsingGETDecoder(PspListResponse)
+};
+
+type GetPspUsingGETTExtra = MapResponseType<GetPspUsingGETT, 200, PspResponse>;
+
+const getPsp: GetPspUsingGETTExtra = {
+  method: "get",
+  url: ({ id }) => `/v1/psps/${id}`,
+  query: () => ({}),
+  headers: ParamAuthorizationBearerHeader,
+  response_decoder: getPspUsingGETDecoder(PspResponse)
 };
 
 type UpdateWalletUsingPUTTExtra = MapResponseType<
@@ -334,6 +347,10 @@ export function PaymentManagerClient(
             }
           : { idPayment }
       ),
+    getPsp: (id: TypeofApiParams<GetPspUsingGETT>["id"]) =>
+      flip(withPaymentManagerToken(createFetchRequestForApi(getPsp, options)))({
+        id
+      }),
     updateWalletPsp: (
       id: TypeofApiParams<UpdateWalletUsingPUTT>["id"],
       walletRequest: TypeofApiParams<UpdateWalletUsingPUTT>["walletRequest"]
