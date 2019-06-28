@@ -48,13 +48,18 @@ const textdLineHeightF = 15;
 const textFontSizeF = 11;
 const textLeftMarginF = 140 * fullScaleFactor + 6;
 
+const barCodeHeightF = 107 * fullScaleFactor;
+const barCodeWidthF = 512 * fullScaleFactor;
+const barCodeMarginLeftF = 181 * fullScaleFactor;
+const barCodeMarginTopF = 179 * fullScaleFactor;
 const fiscalCodeHeight = cardHeaderHeightF + cardLargeSpacerF;
-const lastNameHeightFull =
+const lastNameHeightF =
   cardHeaderHeightF + cardLargeSpacerF + cardLineHeightF * 2 + cardSpacerF;
-const nameHeightFull = lastNameHeightFull + cardLineHeightF + cardSpacerF;
+const nameHeightF = lastNameHeightF + cardLineHeightF + cardSpacerF;
 
 // Landscape (vertical position)
 const landscapeScaleFactor = contentWidth / 546;
+const cardWidthL = 870 * landscapeScaleFactor;
 const textLineHeightL = 28; // to solve misalignment on font, 28 is the fist value that seems to give text centered to line
 const textLeftMarginL = 140 * landscapeScaleFactor + 8;
 const cardHeaderHeightL = 154 * landscapeScaleFactor;
@@ -62,6 +67,10 @@ const cardSpacerL = 16 * landscapeScaleFactor;
 const cardLargeSpacerL = 24 * landscapeScaleFactor;
 const cardLineHeightL = 26 * landscapeScaleFactor;
 
+const barCodeHeightL = 107 * landscapeScaleFactor;
+const barCodeWidthL = 512 * landscapeScaleFactor;
+const barCodeMarginLeftL = 181 * landscapeScaleFactor;
+const barCodeMarginTopL = 179 * landscapeScaleFactor;
 const fiscalCodeHeightL =
   cardHeaderHeightL +
   cardLargeSpacerL -
@@ -87,16 +96,16 @@ const styles = StyleSheet.create({
 
   landscapeCardBackground: {
     resizeMode: "contain",
-    width: 870 * landscapeScaleFactor,
+    width: cardWidthL,
     height: contentWidth
   },
 
   landscapeCardRotation: {
     transform: [
       { rotateZ: "90deg" },
-      { translateY: (870 * landscapeScaleFactor - contentWidth) / 2 }
+      { translateY: (cardWidthL - contentWidth) / 2 }
     ],
-    marginVertical: (870 * landscapeScaleFactor - contentWidth) / 2
+    marginVertical: (cardWidthL - contentWidth) / 2
   },
 
   fullText: {
@@ -110,7 +119,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     color: customVariables.brandDarkestGray,
     fontSize: 18,
-    width: 870 * landscapeScaleFactor,
+    width: cardWidthL,
     paddingLeft: textLeftMarginL,
     lineHeight: textLineHeightL
   },
@@ -125,15 +134,14 @@ const styles = StyleSheet.create({
       { rotateZ: "90deg" },
       { translateY: -(2 * customVariables.contentPadding) + fiscalCodeHeightL },
       {
-        translateX:
-          (870 * landscapeScaleFactor - customVariables.contentPadding) / 2
+        translateX: (cardWidthL - customVariables.contentPadding) / 2
       }
     ]
   },
 
   fullLastNameText: {
     lineHeight: textdLineHeightF,
-    marginTop: lastNameHeightFull
+    marginTop: lastNameHeightF
   },
 
   landscapeLastNameText: {
@@ -141,15 +149,14 @@ const styles = StyleSheet.create({
       { rotateZ: "90deg" },
       { translateY: -(2 * customVariables.contentPadding) + lastNameHeightL },
       {
-        translateX:
-          (870 * landscapeScaleFactor - customVariables.contentPadding) / 2
+        translateX: (cardWidthL - customVariables.contentPadding) / 2
       }
     ]
   },
 
   fulleNameText: {
     lineHeight: textdLineHeightF,
-    marginTop: nameHeightFull
+    marginTop: nameHeightF
   },
 
   landscapeNameText: {
@@ -157,9 +164,21 @@ const styles = StyleSheet.create({
       { rotateZ: "90deg" },
       { translateY: -(2 * customVariables.contentPadding) + nameHeightL },
       {
-        translateX:
-          (870 * landscapeScaleFactor - customVariables.contentPadding) / 2
+        translateX: (cardWidthL - customVariables.contentPadding) / 2
       }
+    ]
+  },
+
+  fullBareCode: {
+    marginTop: barCodeMarginTopF,
+    marginLeft: barCodeMarginLeftF
+  },
+
+  landscapeBarCode: {
+    transform: [
+      { rotateZ: "90deg" },
+      { translateY: -barCodeHeightL / 2 + barCodeMarginTopL },
+      { translateX: cardWidthL / 2 + barCodeMarginLeftL - barCodeHeightL / 2 }
     ]
   }
 });
@@ -204,6 +223,45 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     );
   }
 
+  // TODO: add real barcode
+  private renderBarCode(isLandscape: boolean) {
+    return isLandscape ? (
+      <View
+        style={[
+          styles.landscapeBarCode,
+          {
+            position: "absolute",
+            height: barCodeHeightL,
+            width: 870 * landscapeScaleFactor
+          }
+        ]}
+      >
+        <View
+          style={{
+            position: "absolute",
+            height: barCodeHeightL,
+            width: barCodeWidthL,
+            backgroundColor: "pink",
+            opacity: 0.5
+          }}
+        />
+      </View>
+    ) : (
+      <View
+        style={[
+          styles.fullBareCode,
+          {
+            position: "absolute",
+            height: barCodeHeightF,
+            width: barCodeWidthF,
+            backgroundColor: "yellow",
+            opacity: 0.5
+          }
+        ]}
+      />
+    );
+  }
+
   public render(): React.ReactNode {
     return (
       <View>
@@ -225,8 +283,11 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           this.renderFrontContent(
             this.props.profile,
             this.props.type === "Landscape"
-            // TODO: renderBarcode if getCardBack
           )}
+
+        {this.props.type !== "Preview" &&
+          this.props.getCardBack &&
+          this.renderBarCode(this.props.type === "Landscape")}
       </View>
     );
   }
