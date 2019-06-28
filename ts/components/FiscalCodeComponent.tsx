@@ -245,7 +245,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           {
             position: "absolute",
             height: barCodeHeightL,
-            width: 870 * landscapeScaleFactor,
+            width: cardWidthL,
             alignItems: "flex-start"
           }
         ]}
