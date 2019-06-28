@@ -139,7 +139,12 @@ const styles = StyleSheet.create({
   landscapeFiscalCodeText: {
     transform: [
       { rotateZ: "90deg" },
-      { translateY: -(2 * customVariables.contentPadding) + fiscalCodeHeightL + (28-15*landscapeScaleFactor)/4},
+      {
+        translateY:
+          -(2 * customVariables.contentPadding) +
+          fiscalCodeHeightL +
+          (28 - 15 * landscapeScaleFactor) / 4
+      },
       {
         translateX: (cardWidthL - customVariables.contentPadding) / 2
       }
