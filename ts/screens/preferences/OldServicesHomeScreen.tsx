@@ -27,6 +27,7 @@ import {
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
+import { isDefined } from "../../utils/guards";
 import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type OwnProps = NavigationInjectedProps;
