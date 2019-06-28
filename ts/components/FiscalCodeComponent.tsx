@@ -5,11 +5,14 @@
  * TODO:
  * - add shadow to component
  * - extract missing data from fiscal code
+ * - evaluate if the barcode padding give issues
+ * - evaluate orientation library usage
  */
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
-
+import Barcode from "react-native-barcode-builder";
+import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import customVariables from "../theme/variables";
 
@@ -171,7 +174,8 @@ const styles = StyleSheet.create({
 
   fullBareCode: {
     marginTop: barCodeMarginTopF,
-    marginLeft: barCodeMarginLeftF
+    marginLeft: barCodeMarginLeftF,
+    position: "absolute"
   },
 
   landscapeBarCode: {
@@ -224,7 +228,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
   }
 
   // TODO: add real barcode
-  private renderBarCode(isLandscape: boolean) {
+  private renderBarCode(fiscalCode: FiscalCode, isLandscape: boolean) {
     return isLandscape ? (
       <View
         style={[
@@ -232,33 +236,27 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           {
             position: "absolute",
             height: barCodeHeightL,
-            width: 870 * landscapeScaleFactor
+            width: 870 * landscapeScaleFactor,
+            alignItems: "flex-start"
           }
         ]}
       >
-        <View
-          style={{
-            position: "absolute",
-            height: barCodeHeightL,
-            width: barCodeWidthL,
-            backgroundColor: "pink",
-            opacity: 0.5
-          }}
+        <Barcode
+          value={fiscalCode}
+          format={"CODE128"}
+          height={barCodeHeightL - 20} // 20: horizontal default padding on the barcode component
+          width={(barCodeWidthL - 20) / 211} // 211: number of characters in the fiscal code barcode with CODE128
         />
       </View>
     ) : (
-      <View
-        style={[
-          styles.fullBareCode,
-          {
-            position: "absolute",
-            height: barCodeHeightF,
-            width: barCodeWidthF,
-            backgroundColor: "yellow",
-            opacity: 0.5
-          }
-        ]}
-      />
+      <View style={styles.fullBareCode}>
+        <Barcode
+          value={fiscalCode}
+          format={"CODE128"}
+          height={barCodeHeightF - 20}
+          width={(barCodeWidthF - 20) / 211}
+        />
+      </View>
     );
   }
 
@@ -287,7 +285,10 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
         {this.props.type !== "Preview" &&
           this.props.getCardBack &&
-          this.renderBarCode(this.props.type === "Landscape")}
+          this.renderBarCode(
+            this.props.profile.fiscal_code,
+            this.props.type === "Landscape"
+          )}
       </View>
     );
   }
