@@ -10,7 +10,10 @@
  * 
  */
 declare module "react-native-pull" {
-    export type Props = Readonly<{
+    import * as React from "react"
+    import { ScrollViewProps, ListViewProps, SectionListProps }  from "react-native"
+
+    export type PullProps = {
         topIndicatorRender: () => void;
         topIndicatorHeight: number;
         onPulling?: () => void;
@@ -19,9 +22,9 @@ declare module "react-native-pull" {
         isPullEnd?: () => void;
         sectionsLength?: number;
         loadMoreData?: () => void;
-    }>;
-    
-    export class PullView extends React.Component<Props & ScrollView.Props> {}
-    export class PullList extends React.Component<Props & ListView.Props> {}
-    export class PullSectionList extends React.Component<Props & SectionList.Props> {}
+    };
+
+    export class PullView extends React.Component<PullProps & ScrollViewProps> {}
+    export class PullList extends React.Component<PullProps & ListViewProps> {}
+    export class PullSectionList<IT> extends React.Component<PullProps & SectionListProps<IT>> {}
 }
