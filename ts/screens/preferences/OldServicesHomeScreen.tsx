@@ -18,8 +18,16 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
-import { loadVisibleServices } from "../../store/actions/services";
+import {
+  loadVisibleServices,
+  showServiceDetails
+} from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import {
+  readServicesSelector,
+  serviceReadByIdSelector
+} from "../../store/reducers/entities/services/servicesByReadStatus";
+
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
@@ -45,6 +53,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
     // when a service gets selected, before navigating to the service detail
     // screen, we issue a contentServiceLoad to refresh the service metadata
     this.props.contentServiceLoad(service.service_id);
+    this.props.serviceDetailsLoad(service);
     this.props.navigateToOldServiceDetailsScreen({
       service
     });
@@ -90,6 +99,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
         isRefreshing={this.props.isLoading}
         onRefresh={this.props.refreshServices}
         onSelect={this.onServiceSelect}
+
       />
     );
   };
@@ -155,7 +165,8 @@ const mapStateToProps = (state: GlobalState) => {
     searchText: searchTextSelector(state),
     isSearchEnabled: isSearchServicesEnabledSelector(state),
     isExperimentalFeaturesEnabled:
-      state.persistedPreferences.isExperimentalFeaturesEnabled
+      state.persistedPreferences.isExperimentalFeaturesEnabled,
+    readServices: readServicesSelector(state)
   };
 };
 
@@ -165,7 +176,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(contentServiceLoad.request(serviceId)),
   navigateToOldServiceDetailsScreen: (
     params: InferNavigationParams<typeof OldServiceDetailsScreen>
-  ) => dispatch(navigateToOldServiceDetailsScreen(params))
+  ) => dispatch(navigateToOldServiceDetailsScreen(params)),
+  serviceDetailsLoad: (service: ServicePublic) =>
+    dispatch(showServiceDetails(service))
 });
 
 export default connect(

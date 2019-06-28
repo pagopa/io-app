@@ -15,11 +15,13 @@ import H4 from "../../components/ui/H4";
 import variables from "../../theme/variables";
 
 import { getEnabledChannelsForService } from "../../screens/preferences/common";
+import { Badge } from "../Badge";
 
 type Props = Readonly<{
   item: pot.Pot<ServicePublic, Error>;
   profile: ProfileState;
   onSelect: (service: ServicePublic) => void;
+  isRead: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -34,6 +36,11 @@ const styles = StyleSheet.create({
   },
   serviceName: {
     color: variables.brandDarkGray
+  },
+  headerWrapper: {
+    flexDirection: "row",
+    marginBottom: 4,
+    marginLeft: 10
   }
 });
 
@@ -67,7 +74,15 @@ export class ServiceListItem extends React.PureComponent<Props> {
         <Left>
           <Grid>
             <Row>
-              <H4 style={styles.serviceName}>{serviceName}</H4>
+              {!this.props.isRead && <Badge />}
+              <H4
+                style={[
+                  styles.serviceName,
+                  this.props.isRead ? styles.headerWrapper : undefined
+                ]}
+              >
+                {serviceName}
+              </H4>
             </Row>
             <Row>
               <Text italic={true} style={styles.fixCroppedItalic}>

@@ -10,6 +10,7 @@ import {
 
 import { H3, ListItem } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ServicesByReadState } from "../../store/reducers/entities/services/servicesByReadStatus";
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
 import { ServiceListItem } from "./ServiceListItem";
@@ -23,6 +24,7 @@ type OwnProps = {
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
+  readServices: ServicesByReadState;
 };
 
 type Props = OwnProps;
@@ -45,6 +47,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
       item={itemInfo.item}
       profile={this.props.profile}
       onSelect={this.props.onSelect}
+      isRead={true}// find element in list
     />
   );
 
