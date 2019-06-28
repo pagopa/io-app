@@ -1,6 +1,5 @@
 /**
- * A component to show a representation
- * of the fiscal code card of the user profile
+ * A component to show the user fiscal code fac-simile
  *
  * TODO:
  * - add shadow to component
@@ -42,29 +41,34 @@ const contentWidth =
 
 // Full (horizontal position)
 const fullScaleFactor = contentWidth / 870;
+
+const textdLineHeightF = 15;
+const textFontSizeF = 11;
+const textLeftMarginF = 140 * fullScaleFactor + 6;
+
 const cardHeightF = 546 * fullScaleFactor;
 const cardHeaderHeightF = 154 * fullScaleFactor;
 const cardSpacerF = 16 * fullScaleFactor;
 const cardLargeSpacerF = 24 * fullScaleFactor;
 const cardLineHeightF = 26 * fullScaleFactor;
-const textdLineHeightF = 15;
-const textFontSizeF = 11;
-const textLeftMarginF = 140 * fullScaleFactor + 6;
 
 const barCodeHeightF = 107 * fullScaleFactor;
 const barCodeWidthF = 512 * fullScaleFactor;
 const barCodeMarginLeftF = 181 * fullScaleFactor;
 const barCodeMarginTopF = 179 * fullScaleFactor;
-const fiscalCodeHeight = cardHeaderHeightF + cardLargeSpacerF;
+
+const fiscalCodeHeightF = cardHeaderHeightF + cardLargeSpacerF;
 const lastNameHeightF =
   cardHeaderHeightF + cardLargeSpacerF + cardLineHeightF * 2 + cardSpacerF;
 const nameHeightF = lastNameHeightF + cardLineHeightF + cardSpacerF;
 
 // Landscape (vertical position)
 const landscapeScaleFactor = contentWidth / 546;
-const cardWidthL = 870 * landscapeScaleFactor;
 const textLineHeightL = 28; // to solve misalignment on font, 28 is the fist value that seems to give text centered to line
+const textFontSizeL = 18;
 const textLeftMarginL = 140 * landscapeScaleFactor + 8;
+
+const cardWidthL = 870 * landscapeScaleFactor;
 const cardHeaderHeightL = 154 * landscapeScaleFactor;
 const cardSpacerL = 16 * landscapeScaleFactor;
 const cardLargeSpacerL = 24 * landscapeScaleFactor;
@@ -121,7 +125,7 @@ const styles = StyleSheet.create({
   landscapeText: {
     position: "absolute",
     color: customVariables.brandDarkestGray,
-    fontSize: 18,
+    fontSize: textFontSizeL,
     width: cardWidthL,
     paddingLeft: textLeftMarginL,
     lineHeight: textLineHeightL
@@ -129,13 +133,13 @@ const styles = StyleSheet.create({
 
   fullFiscalCodeText: {
     lineHeight: cardLineHeightF * 2,
-    marginTop: fiscalCodeHeight
+    marginTop: fiscalCodeHeightF
   },
 
   landscapeFiscalCodeText: {
     transform: [
       { rotateZ: "90deg" },
-      { translateY: -(2 * customVariables.contentPadding) + fiscalCodeHeightL },
+      { translateY: -(2 * customVariables.contentPadding) + fiscalCodeHeightL + (28-15*landscapeScaleFactor)/4},
       {
         translateX: (cardWidthL - customVariables.contentPadding) / 2
       }
@@ -244,7 +248,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         <Barcode
           value={fiscalCode}
           format={"CODE128"}
-          height={barCodeHeightL - 20} // 20: horizontal default padding on the barcode component
+          height={barCodeHeightL - 20} // 20: horizontal default padding of the barcode component
           width={(barCodeWidthL - 20) / 211} // 211: number of characters in the fiscal code barcode with CODE128
         />
       </View>
