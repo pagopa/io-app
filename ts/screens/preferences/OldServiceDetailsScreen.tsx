@@ -17,6 +17,8 @@ import {
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+// @ts-ignore
+import createOpenLink from "react-native-open-maps";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import H4 from "../../components/ui/H4";
@@ -440,7 +442,11 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
               renderInformationRow(
                 I18n.t("services.contactAddress"),
                 address,
-                () => Clipboard.setString(address)
+                () => {
+                  createOpenLink({
+                    query: address
+                  });
+                }
               )}
             {phone &&
               renderInformationRow(I18n.t("services.contactPhone"), phone, () =>
