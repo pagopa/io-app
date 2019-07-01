@@ -34,10 +34,8 @@ import {
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import {
-  getUnreadTransactions,
-  latestTransactionsSelector
-} from "../../store/reducers/wallet/transactions";
+import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
+import { getUnreadTransactions } from "../../store/reducers/entities/readTransactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";

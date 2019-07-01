@@ -4,7 +4,7 @@ import React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 import { GlobalState } from "../store/reducers/types";
-import { getUnreadTransactions } from "../store/reducers/wallet/transactions";
+import { getUnreadTransactions } from "../store/reducers/entities/readTransactions";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 

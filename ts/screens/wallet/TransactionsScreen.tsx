@@ -26,10 +26,8 @@ import {
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import {
-  getUnreadTransactions,
-  getWalletTransactionsCreator
-} from "../../store/reducers/wallet/transactions";
+import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
+import { getUnreadTransactions } from "../../store/reducers/entities/readTransactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";

@@ -11,8 +11,7 @@ import { Action } from "../../actions/types";
 import {
   fetchTransactionsFailure,
   fetchTransactionsRequest,
-  fetchTransactionsSuccess,
-  readTransaction
+  fetchTransactionsSuccess
 } from "../../actions/wallet/transactions";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
@@ -24,13 +23,11 @@ const MAX_TRANSACTIONS_IN_LIST = 50;
 
 export type TransactionsState = Readonly<{
   transactions: pot.Pot<IndexedById<Transaction>, Error>;
-  read: Set<number>;
 }>;
 
 // added list of read trans IDs
 const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
-  transactions: pot.none,
-  read: new Set<number>()
+  transactions: pot.none
 };
 
 // selectors
@@ -42,7 +39,7 @@ export const getTransactions = (state: GlobalState) =>
         _ => _ !== undefined && isSuccessTransaction(_)
       ) as ReadonlyArray<Transaction>
   );
-
+/*
 // Search transaction number in Set of read transactions
 export const isReadTransaction = (state: GlobalState, txid: number) =>
   state.wallet.transactions.read.has(txid);
@@ -51,12 +48,12 @@ export const isReadTransaction = (state: GlobalState, txid: number) =>
 export const getUnreadTransactions = (state: GlobalState) =>
   pot.map(
     state.wallet.transactions.transactions,
-    txs =>
+    txs => 
       values(txs).filter(
         _ => _ !== undefined && !isReadTransaction(state, _.id)
       ) as ReadonlyArray<Transaction> // ridurre a array di ID
   );
-
+*/
 export const getWalletTransactionsCreator = (idWallet: number) => (
   state: GlobalState
 ) =>
@@ -113,12 +110,12 @@ const reducer = (
         transactions: pot.toError(state.transactions, action.payload)
       };
 
-    case getType(readTransaction):
+    /*case getType(readTransaction):
       return {
         ...state,
         read: state.read.add(action.payload.id)
       };
-
+    */
     default:
       return state;
   }

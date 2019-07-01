@@ -12,6 +12,7 @@ import {
 } from "./organizations/organizationsByFiscalCodeReducer";
 import { paymentByRptIdReducer, PaymentByRptIdState } from "./payments";
 import servicesReducer, { ServicesState } from "./services";
+import { ReadTransactionsState, transactionsReadReducer } from './readTransactions';
 
 export type EntitiesState = Readonly<{
   messages: MessagesState;
@@ -19,6 +20,7 @@ export type EntitiesState = Readonly<{
   organizations: OrganizationNamesByFiscalCodeState;
   paymentByRptId: PaymentByRptIdState;
   calendarEvents: CalendarEventsState;
+  transactionsRead: ReadTransactionsState;
 }>;
 
 const reducer = combineReducers<EntitiesState, Action>({
@@ -26,7 +28,8 @@ const reducer = combineReducers<EntitiesState, Action>({
   services: servicesReducer,
   organizations: servicesByOrganizationFiscalCodeReducer,
   paymentByRptId: paymentByRptIdReducer,
-  calendarEvents: calendarEventsReducer
+  calendarEvents: calendarEventsReducer,
+  transactionsRead: transactionsReadReducer
 });
 
 export default reducer;
