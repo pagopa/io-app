@@ -32,7 +32,10 @@ allprojects {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
         }
-    }
+        maven {
+            url "https://sdks.instabug.com/nexus/repository/instabug-cp"
+        }
+      }
     configurations.all {
         resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
     }
