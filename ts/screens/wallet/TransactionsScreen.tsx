@@ -142,7 +142,10 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state),
   favoriteWallet: getFavoriteWalletId(state),
-  unreadTransactions: pot.getOrElse(getUnreadTransactions(state), []) as ReadonlyArray<Transaction>
+  unreadTransactions: pot.getOrElse(
+    getUnreadTransactions(state),
+    []
+  ) as ReadonlyArray<Transaction>
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
