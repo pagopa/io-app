@@ -3,9 +3,7 @@
  *
  * TODO:
  * - add shadow to component
- * - extract missing data from fiscal code
- * - evaluate if the barcode padding give issues
- * - evaluate orientation library usage
+ * - evaluate if extract missing data from fiscal code
  */
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -39,7 +37,7 @@ type Props = PreviewProps | FullProps | LandscapeProps;
 const contentWidth =
   Dimensions.get("screen").width - 2 * customVariables.contentPadding;
 
-// Full (horizontal position)
+// Full (card horizontal position)
 const fullScaleFactor = contentWidth / 870;
 
 const textdLineHeightF = 15;
@@ -62,9 +60,9 @@ const lastNameHeightF =
   cardHeaderHeightF + cardLargeSpacerF + cardLineHeightF * 2 + cardSpacerF;
 const nameHeightF = lastNameHeightF + cardLineHeightF + cardSpacerF;
 
-// Landscape (vertical position)
+// Landscape (card vertical position)
 const landscapeScaleFactor = contentWidth / 546;
-const textLineHeightL = 28; // to solve misalignment on font, 28 is the fist value that seems to give text centered to line
+const textLineHeightL = 28; // to solve misalignment on font, 28 is the fist value that seems to give text centered to line height
 const textFontSizeL = 18;
 const textLeftMarginL = 140 * landscapeScaleFactor + 8;
 
@@ -78,15 +76,19 @@ const barCodeHeightL = 107 * landscapeScaleFactor;
 const barCodeWidthL = 512 * landscapeScaleFactor;
 const barCodeMarginLeftL = 181 * landscapeScaleFactor;
 const barCodeMarginTopL = 179 * landscapeScaleFactor;
+
 const fiscalCodeHeightL =
+  (2 * customVariables.contentPadding + textLineHeightL / 4) + // rotation correction factor
   cardHeaderHeightL +
-  cardLargeSpacerL -
-  (cardLineHeightL * 2 - textLineHeightL);
+  cardLargeSpacerL +
+  (cardLineHeightL * 2 - textLineHeightL); // 2-line label correction factor - align 0 char dimension
+
 const lastNameHeightL =
   fiscalCodeHeightL +
+  (textLineHeightL - cardLineHeightL) + // opvercome 2-line label correction of previous item
   cardSpacerL +
-  cardLineHeightL -
-  (cardLineHeightL - textLineHeightL);
+  cardLineHeightL;
+
 const nameHeightL = lastNameHeightL + cardSpacerL + cardLineHeightL;
 
 const styles = StyleSheet.create({
@@ -140,10 +142,7 @@ const styles = StyleSheet.create({
     transform: [
       { rotateZ: "90deg" },
       {
-        translateY:
-          -(2 * customVariables.contentPadding) +
-          fiscalCodeHeightL +
-          (28 - 15 * landscapeScaleFactor) / 4
+        translateY: fiscalCodeHeightL
       },
       {
         translateX: (cardWidthL - customVariables.contentPadding) / 2
@@ -159,7 +158,7 @@ const styles = StyleSheet.create({
   landscapeLastNameText: {
     transform: [
       { rotateZ: "90deg" },
-      { translateY: -(2 * customVariables.contentPadding) + lastNameHeightL },
+      { translateY: lastNameHeightL },
       {
         translateX: (cardWidthL - customVariables.contentPadding) / 2
       }
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
   landscapeNameText: {
     transform: [
       { rotateZ: "90deg" },
-      { translateY: -(2 * customVariables.contentPadding) + nameHeightL },
+      { translateY: nameHeightL },
       {
         translateX: (cardWidthL - customVariables.contentPadding) / 2
       }
