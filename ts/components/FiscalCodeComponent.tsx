@@ -4,7 +4,7 @@
  * - Preview: it renders only the header of the fac-simile, rotated on the perspective direction
  * - Full: it renders the fac-simile in the horiontal position
  * - Landscape: it renders the fac-simile in the vertical position (rotated of 90 degrees)
- * The back of the fac-simile can be rendered for both full and lansdscape modes,
+ * The fac-simile back side can be rendered for both full and lansdscape modes,
  * and it includes the barcode of the fiscal code with the code 128 format
  */
 import { Text, View } from "native-base";
