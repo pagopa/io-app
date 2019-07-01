@@ -64,7 +64,7 @@ export default class WalletLayout extends React.Component<Props> {
           <H5 style={styles.brandDarkGray}>
             {I18n.t("wallet.latestTransactions")}
           </H5>
-          <Text>{I18n.t("wallet.total")}</Text>
+          <Text>{I18n.t("wallet.amount")}</Text>
         </View>
         <View spacer={true} />
       </View>
