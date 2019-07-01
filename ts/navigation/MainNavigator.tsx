@@ -17,10 +17,12 @@ import {
 import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
 import IconFont from "../components/ui/IconFont";
+import { newHomeServicesEnabled } from "../config";
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
+import OldServicesNavigator from "./OldServicesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
@@ -132,7 +134,7 @@ const navigation = createBottomTabNavigator(
     //   screen: PlaceholderScreen
     // },
     [ROUTES.SERVICES_NAVIGATOR]: {
-      screen: ServicesNavigator
+      screen: newHomeServicesEnabled ? ServicesNavigator : OldServicesNavigator
     },
     [ROUTES.PROFILE_NAVIGATOR]: {
       screen: ProfileNavigator

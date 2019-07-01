@@ -646,6 +646,10 @@ services:
   contactsAndInfo: Contacts and info
   contactAddress: Address
   contactPhone: Phone
+  tab:
+    locals: Local
+    national: National
+    otherServices: Other services
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."

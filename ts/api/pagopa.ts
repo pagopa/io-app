@@ -31,6 +31,8 @@ import { TransactionResponse } from "../types/pagopa";
 import { WalletListResponse } from "../types/pagopa";
 import { WalletResponse } from "../types/pagopa";
 
+import * as t from "io-ts";
+import * as r from "italia-ts-commons/lib/requests";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
@@ -48,7 +50,6 @@ import {
   GetTransactionsUsingGETT,
   getTransactionUsingGETDecoder,
   GetTransactionUsingGETT,
-  getWalletsUsingGETDecoder,
   GetWalletsUsingGETT,
   payCreditCardVerificationUsingPOSTDecoder,
   PayCreditCardVerificationUsingPOSTT,
@@ -59,7 +60,7 @@ import {
   updateWalletUsingPUTDecoder,
   UpdateWalletUsingPUTT
 } from "../../definitions/pagopa/requestTypes";
-
+import { fixWalletPspTagsValues } from "../utils/wallet";
 /**
  * A decoder that ignores the content of the payload and only decodes the status
  */
@@ -137,12 +138,50 @@ type GetWalletsUsingGETExtraT = MapResponseType<
   WalletListResponse
 >;
 
+/**
+ *
+ * This patch is needed because 'tags' field (an array of strings) in psp objects
+ * often contains mixed (and duplicated too) values
+ * e.g tags = ["value1",null,null]
+ * Psp codec fails decoding 'tags' having these values, so this getPatchedWalletsUsingGETDecoder alterates the
+ * payload just before the decoding phase making 'tags' an empty array
+ * TODO: temporary patch. Remove this patch once SIA has fixed the spec.
+ * @see https://www.pivotaltracker.com/story/show/166665367
+ */
+const getPatchedWalletsUsingGETDecoder = <O>(
+  type: t.Type<WalletListResponse, O>
+) =>
+  r.composeResponseDecoders(
+    r.composeResponseDecoders(
+      r.composeResponseDecoders(
+        r.ioResponseDecoder<200, (typeof type)["_A"], (typeof type)["_O"]>(
+          200,
+          type,
+          payload => {
+            if (payload && payload.data && Array.isArray(payload.data)) {
+              // sanitize wallets from values with type different
+              // from string contained in psp.tags arrays
+              const newData = payload.data.map((w: any) =>
+                fixWalletPspTagsValues(w)
+              );
+              return { ...payload, data: newData };
+            }
+            return payload;
+          }
+        ),
+        r.constantResponseDecoder<undefined, 401>(401, undefined)
+      ),
+      r.constantResponseDecoder<undefined, 403>(403, undefined)
+    ),
+    r.constantResponseDecoder<undefined, 404>(404, undefined)
+  );
+
 const getWallets: GetWalletsUsingGETExtraT = {
   method: "get",
   url: () => "/v1/wallet",
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
-  response_decoder: getWalletsUsingGETDecoder(WalletListResponse)
+  response_decoder: getPatchedWalletsUsingGETDecoder(WalletListResponse)
 };
 
 const checkPayment: CheckPaymentUsingGETT = {

@@ -84,7 +84,7 @@ function renderInformationRow(
   );
 }
 
-class ServiceDetailsScreen extends React.Component<Props, State> {
+class OldServiceDetailsScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -479,4 +479,4 @@ const mapStateToProps = (state: GlobalState) => ({
     state.persistedPreferences.wasServiceAlertDisplayedOnce
 });
 
-export default connect(mapStateToProps)(ServiceDetailsScreen);
+export default connect(mapStateToProps)(OldServiceDetailsScreen);
