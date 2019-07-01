@@ -1,14 +1,15 @@
-import { BugReporting, Chats } from "instabug-reactnative";
+import { BugReporting, Chats, Replies } from "instabug-reactnative";
+
+import { none, Option, some } from "fp-ts/lib/Option";
+import { Button } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
-
-import { Button } from "native-base";
-import { Dispatch } from "../store/actions/types";
-import { GlobalState } from "../store/reducers/types";
 import {
   instabugReportClosed,
   instabugReportOpened
-} from "./../store/actions/debug";
+} from "../store/actions/debug";
+import { Dispatch } from "../store/actions/types";
+import { GlobalState } from "../store/reducers/types";
 import IconFont from "./ui/IconFont";
 
 interface OwnProps {
@@ -19,25 +20,53 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps &
   ReturnType<typeof mapDispatchToProps>;
 
-class InstabugButtonsComponent extends React.PureComponent<Props, {}> {
+type State = {
+  instabugReportType: Option<string>;
+};
+
+class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
-    this.props.dispatchIBReportOpen("chat");
-    Chats.show();
+    const chat = "chat";
+    this.setState({ instabugReportType: some(chat) });
+    this.props.dispatchIBReportOpen(chat);
+    // Check if there are previous chat
+    Replies.hasChats(hasChats => {
+      if (hasChats) {
+        Replies.show();
+      } else {
+        Chats.show();
+      }
+    });
   };
 
   private handleIBBugPress = () => {
-    this.props.dispatchIBReportOpen("bug");
+    const bug = "bug";
+    this.setState({ instabugReportType: some(bug) });
+    this.props.dispatchIBReportOpen(bug);
     BugReporting.showWithOptions(BugReporting.reportType.bug, [
       BugReporting.option.commentFieldRequired
     ]);
   };
 
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      instabugReportType: none
+    };
+  }
   public componentDidMount() {
     // Register to the instabug dismiss event. (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
     // This event is fired when chat or bug screen is dismissed
     BugReporting.onSDKDismissedHandler(
-      (dismissType: string, reportType: string): void => {
-        this.props.dispatchIBReportClosed(reportType, dismissType);
+      (dismiss: string, _: string): void => {
+        // Due an Instabug library bug, we can't use the report parameter because it always has "bug" as value.
+        // We need to differentiate the type of report then use instabugReportType
+        if (this.state.instabugReportType.isSome()) {
+          this.props.dispatchIBReportClosed(
+            this.state.instabugReportType.value,
+            dismiss
+          );
+        }
       }
     );
   }
