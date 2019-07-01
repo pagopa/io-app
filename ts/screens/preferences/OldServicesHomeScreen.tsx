@@ -17,7 +17,7 @@ import ServicesSearch from "../../components/services/ServicesSearch";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
-import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
+import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
@@ -27,7 +27,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
-import ServiceDetailsScreen from "./ServiceDetailsScreen";
+import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -36,7 +36,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReduxProps &
   OwnProps;
 
-class ServicesHomeScreen extends React.Component<Props> {
+class OldServicesHomeScreen extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -45,7 +45,7 @@ class ServicesHomeScreen extends React.Component<Props> {
     // when a service gets selected, before navigating to the service detail
     // screen, we issue a contentServiceLoad to refresh the service metadata
     this.props.contentServiceLoad(service.service_id);
-    this.props.navigateToServiceDetailsScreen({
+    this.props.navigateToOldServiceDetailsScreen({
       service
     });
   };
@@ -153,7 +153,9 @@ const mapStateToProps = (state: GlobalState) => {
     sections,
     isLoading,
     searchText: searchTextSelector(state),
-    isSearchEnabled: isSearchServicesEnabledSelector(state)
+    isSearchEnabled: isSearchServicesEnabledSelector(state),
+    isExperimentalFeaturesEnabled:
+      state.persistedPreferences.isExperimentalFeaturesEnabled
   };
 };
 
@@ -161,12 +163,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshServices: () => dispatch(loadVisibleServices.request()),
   contentServiceLoad: (serviceId: ServiceId) =>
     dispatch(contentServiceLoad.request(serviceId)),
-  navigateToServiceDetailsScreen: (
-    params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => dispatch(navigateToServiceDetailsScreen(params))
+  navigateToOldServiceDetailsScreen: (
+    params: InferNavigationParams<typeof OldServiceDetailsScreen>
+  ) => dispatch(navigateToOldServiceDetailsScreen(params))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ServicesHomeScreen);
+)(OldServicesHomeScreen);

@@ -657,6 +657,10 @@ services:
   contactsAndInfo: Contatti ed informazioni
   contactAddress: Indirizzo
   contactPhone: Telefono
+  tab:
+    locals: Locali
+    national: Nazionali
+    otherServices: Altri servizi
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
