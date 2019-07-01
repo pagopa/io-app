@@ -6,7 +6,7 @@ import * as React from "react";
 import { Circle, Svg } from "react-native-svg";
 import customVariables from "../theme/variables";
 
-export class Badge extends React.PureComponent<{}> {
+export class CustomBadge extends React.PureComponent<{}> {
   public render() {
     return (
       <Svg width={14} height={18}>

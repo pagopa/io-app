@@ -3,19 +3,14 @@ import { Grid, Left, ListItem, Right, Row, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import I18n from "../../i18n";
-
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-
-import IconFont from "../../components/ui/IconFont";
-
-import { ProfileState } from "../../store/reducers/profile";
-
 import H4 from "../../components/ui/H4";
-import variables from "../../theme/variables";
-
+import IconFont from "../../components/ui/IconFont";
+import I18n from "../../i18n";
 import { getEnabledChannelsForService } from "../../screens/preferences/common";
-import { Badge } from "../Badge";
+import { ProfileState } from "../../store/reducers/profile";
+import variables from "../../theme/variables";
+import { CustomBadge } from "../CustomBadge";
 
 type Props = Readonly<{
   item: pot.Pot<ServicePublic, Error>;
@@ -41,6 +36,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 4,
     marginLeft: 10
+  },
+  badgeMargin: {
+    marginLeft: 4
   }
 });
 
@@ -74,11 +72,11 @@ export class ServiceListItem extends React.PureComponent<Props> {
         <Left>
           <Grid>
             <Row>
-              {!this.props.isRead && <Badge />}
+              {!this.props.isRead && <CustomBadge />}
               <H4
                 style={[
                   styles.serviceName,
-                  this.props.isRead ? styles.headerWrapper : undefined
+                  this.props.isRead ? styles.headerWrapper : styles.badgeMargin
                 ]}
               >
                 {serviceName}

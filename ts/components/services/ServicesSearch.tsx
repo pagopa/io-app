@@ -3,6 +3,7 @@ import React from "react";
 
 import { SectionListData } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ServicesByReadState } from "../../store/reducers/entities/services/servicesByReadStatus";
 import { ProfileState } from "../../store/reducers/profile";
 import { serviceContainsText } from "../../utils/services";
 import { SearchNoResultMessage } from "../search/SearchNoResultMessage";
@@ -15,6 +16,7 @@ type OwnProps = {
   profile: ProfileState;
   onRefresh: () => void;
   navigateToServiceDetail: (service: ServicePublic) => void;
+  readServices: ServicesByReadState;
 };
 
 type Props = OwnProps;

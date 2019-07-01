@@ -40,6 +40,25 @@ const styles = StyleSheet.create({
  * A component to render a list of services grouped by organization.
  */
 class ServiceSectionListComponent extends React.Component<Props> {
+  private isRead = (
+    potService: pot.Pot<ServicePublic, Error>,
+    readServices: ServicesByReadState
+  ): boolean => {
+    const service =
+      pot.isLoading(potService) ||
+      pot.isError(potService) ||
+      pot.isNone(potService)
+        ? undefined
+        : potService.value;
+
+    return (
+      readServices !== undefined &&
+      Object.keys(readServices).find(k => {
+        return service !== undefined && k === service.service_id;
+      }) !== undefined
+    );
+  };
+
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
   ) => (
@@ -47,7 +66,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
       item={itemInfo.item}
       profile={this.props.profile}
       onSelect={this.props.onSelect}
-      isRead={true}// find element in list
+      isRead={this.isRead(itemInfo.item, this.props.readServices)}
     />
   );
 

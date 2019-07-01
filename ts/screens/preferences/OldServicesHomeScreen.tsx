@@ -6,6 +6,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -23,11 +24,7 @@ import {
   showServiceDetails
 } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import {
-  readServicesSelector,
-  serviceReadByIdSelector
-} from "../../store/reducers/entities/services/servicesByReadStatus";
-
+import { readServicesSelector } from "../../store/reducers/entities/services/servicesByReadStatus";
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
@@ -99,7 +96,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
         isRefreshing={this.props.isLoading}
         onRefresh={this.props.refreshServices}
         onSelect={this.onServiceSelect}
-
+        readServices={this.props.readServices}
       />
     );
   };
@@ -122,6 +119,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
               onRefresh={refreshServices}
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
+              readServices={this.props.readServices}
             />
           )
       )
