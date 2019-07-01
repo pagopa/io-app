@@ -11,6 +11,7 @@ export type InjectedWithMessagesSelectionProps = {
   selectedMessageIds: Option<Set<string>>;
   toggleMessageSelection: (id: string) => void;
   resetSelection: () => void;
+  setSelectedMessageIds: (newSelectedMessageIds: Option<Set<string>>) => void;
 };
 
 /**
@@ -32,13 +33,13 @@ export function withMessagesSelection<
 
     public render() {
       const { selectedMessageIds } = this.state;
-
       return (
         <WrappedComponent
           {...this.props as P}
           selectedMessageIds={selectedMessageIds}
           toggleMessageSelection={this.toggleMessageSelection}
           resetSelection={this.resetSelection}
+          setSelectedMessageIds={this.setSelectedMessageIds}
         />
       );
     }
@@ -57,7 +58,17 @@ export function withMessagesSelection<
               selectedMessageIds: some(newSelectedMessageIds)
             };
           })
-          .getOrElse({ selectedMessageIds: some(new Set().add(id)) });
+          .getOrElse({
+            selectedMessageIds: some(new Set().add(id))
+          });
+      });
+    };
+
+    private setSelectedMessageIds = (
+      newSelectedMessageIds: Option<Set<string>>
+    ) => {
+      this.setState({
+        selectedMessageIds: newSelectedMessageIds
       });
     };
 

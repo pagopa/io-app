@@ -242,6 +242,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     // The identification state is started we need to show the modal
     const {
       pin,
+      canResetPin,
       identificationGenericData,
       identificationCancelData
     } = identificationState;
@@ -291,7 +292,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               {identificationMessage}
             </Text>
             <Pinpad
-              onPinResetHandler={onPinResetHandler}
+              onPinResetHandler={canResetPin ? onPinResetHandler : undefined}
               isFingerprintEnabled={isFingerprintEnabled}
               biometryType={biometryType}
               onFingerPrintReq={() =>
