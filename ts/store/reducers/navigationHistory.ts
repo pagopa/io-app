@@ -28,7 +28,7 @@ const reducer = (
       return INITIAL_STATE;
 
     case getType(navigationHistoryPop):
-      return state.slice(0, -1);
+      return state.slice(0, -action.payload);
 
     default:
       return state;

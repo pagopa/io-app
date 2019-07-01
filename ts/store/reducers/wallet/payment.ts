@@ -10,6 +10,7 @@ import {
   paymentExecutePayment,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
+  paymentInitializeEntrypointRoute,
   paymentInitializeState,
   paymentVerifica
 } from "../../actions/wallet/payment";
@@ -19,6 +20,11 @@ import {
   runPollTransactionSaga
 } from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
+
+export type EntrypointRoute = Readonly<{
+  name: string;
+  key: string;
+}>;
 
 // TODO: instead of keeping one single state, it would me more correct to keep
 //       a state for each rptid - this will make unnecessary to reset the state
@@ -52,6 +58,7 @@ export type PaymentState = Readonly<{
     typeof pollTransactionSagaCompleted,
     false
   >;
+  entrypointRoute?: EntrypointRoute;
 }>;
 
 /**
@@ -63,6 +70,9 @@ const getPaymentIdFromGlobalState = (state: GlobalState) =>
 export const isPaymentOngoingSelector = (state: GlobalState) =>
   getPaymentIdFromGlobalState(state).isSome();
 
+export const entrypointRouteSelector = (state: GlobalState) =>
+  state.wallet.payment.entrypointRoute;
+
 const PAYMENT_INITIAL_STATE: PaymentState = {
   verifica: pot.none,
   attiva: pot.none,
@@ -70,7 +80,8 @@ const PAYMENT_INITIAL_STATE: PaymentState = {
   check: pot.none,
   psps: pot.none,
   transaction: pot.none,
-  confirmedTransaction: pot.none
+  confirmedTransaction: pot.none,
+  entrypointRoute: undefined
 };
 
 /**
@@ -84,7 +95,12 @@ const reducer = (
     // start a new payment from scratch
     case getType(paymentInitializeState):
       return PAYMENT_INITIAL_STATE;
-
+    // tracking of the route from which the payment started
+    case getType(paymentInitializeEntrypointRoute):
+      return {
+        ...state,
+        entrypointRoute: action.payload
+      };
     //
     // verifica
     //
@@ -94,6 +110,7 @@ const reducer = (
         // effectively starting a new payment session, thus we also invalidate
         // the rest of the payment state
         ...PAYMENT_INITIAL_STATE,
+        entrypointRoute: state.entrypointRoute,
         verifica: pot.noneLoading
       };
     case getType(paymentVerifica.success):

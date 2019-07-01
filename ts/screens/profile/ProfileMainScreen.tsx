@@ -217,9 +217,28 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         <ScrollView ref={this.ServiceListRef}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
-            {/* Privacy */}
+            {/* Preferences */}
             <ListItem
               first={true}
+              onPress={() =>
+                navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME)
+              }
+            >
+              <Left style={styles.itemLeft}>
+                <H3>{I18n.t("profile.main.preferences.title")}</H3>
+                <Text style={styles.itemLeftText}>
+                  {I18n.t("profile.main.preferences.description")}
+                </Text>
+              </Left>
+              <Right>
+                <IconFont
+                  name="io-right"
+                  color={variables.contentPrimaryBackground}
+                />
+              </Right>
+            </ListItem>
+            {/* Privacy */}
+            <ListItem
               onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
             >
               <Left style={styles.itemLeft}>
