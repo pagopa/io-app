@@ -1,4 +1,4 @@
-import { H3, Left, Right, Text } from "native-base";
+import { Left, Right, Text } from "native-base";
 import * as React from "react";
 
 import { connectStyle } from "native-base-shoutem-theme";
@@ -6,6 +6,7 @@ import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 
 import IconFont from "../components/ui/IconFont";
 import variables from "../theme/variables";
+import H5 from "./ui/H5";
 
 interface BaseProps {
   title: string;
@@ -33,7 +34,7 @@ class PreferenceItem extends React.Component<Props> {
     return (
       <React.Fragment>
         <Left>
-          <H3>{title}</H3>
+          <H5>{title}</H5>
           <Text>{valuePreview}</Text>
         </Left>
         <Right>
