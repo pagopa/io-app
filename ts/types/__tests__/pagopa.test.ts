@@ -1,3 +1,4 @@
+import { fixWalletPspTagsValues } from "../../utils/wallet";
 import {
   Amount,
   CreditCard,
@@ -137,6 +138,19 @@ const invalidWallet = Object.keys(validWallet)
   .filter(k => k !== "idWallet")
   .reduce((o, k) => ({ ...o, [k]: validWallet[k] }), {} as object);
 
+/**
+ * mock a valid wallet with psp.tags malformed
+ * TODO: temporary test. Remove this test once SIA has fixed the spec.
+ * @see https://www.pivotaltracker.com/story/show/166665367
+ */
+const validWalletWithMalformedPspTags = {
+  ...validWallet,
+  psp: {
+    ...validPsp,
+    tags: [null, null, "VISA", "VISA", "MASTERCARD", null]
+  }
+};
+
 // Amount testing
 describe("Amount", () => {
   it("should recognize a valid Amount", () => {
@@ -260,6 +274,24 @@ describe("WalletListResponse", () => {
       WalletListResponse.decode(walletListResponse).isRight()
     ).toBeTruthy();
   });
+
+  /**
+   * TODO: temporary test. Remove this test once SIA has fixed the spec.
+   * @see https://www.pivotaltracker.com/story/show/166665367
+   */
+  it("should recognize a valid WalletListResponse also when psp tags are malformed", () => {
+    const walletListResponse = {
+      data: [validWalletWithMalformedPspTags, validWalletWithMalformedPspTags]
+    };
+    // sanitize tags field
+    const walletListResponseSanitized = {
+      data: walletListResponse.data.map(d => fixWalletPspTagsValues(d))
+    };
+    expect(
+      WalletListResponse.decode(walletListResponseSanitized).isRight()
+    ).toBeTruthy();
+  });
+
   it("should NOT recognize an invalid WalletListResponse", () => {
     const walletListResponse = {
       data: [validWallet, invalidWallet]
