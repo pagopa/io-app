@@ -35,11 +35,23 @@ const styles = StyleSheet.create({
   },
 
   whiteBg: {
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: customVariables.colorWhite,
+    marginBottom: 10
   },
 
   flex1: {
     flex: 1
+  },
+
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
   },
 
   brandDarkGray: {
@@ -58,7 +70,7 @@ const styles = StyleSheet.create({
 export default class WalletLayout extends React.Component<Props> {
   private dynamicSubHeader() {
     return (
-      <View style={[styles.whiteBg, styles.flex1]}>
+      <View style={[styles.whiteBg, styles.flex1, styles.shadow]}>
         <View spacer={true} />
         <View style={styles.subHeaderContent}>
           <H5 style={styles.brandDarkGray}>
