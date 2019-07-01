@@ -164,7 +164,6 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     profile: state.profile,
-    sections,
     allServicesId: Object.keys(services.byId),
     sections: getAllSections(state),
     isLoading,
