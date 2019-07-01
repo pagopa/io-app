@@ -1,9 +1,11 @@
 /**
- * A component to show the user fiscal code fac-simile
- *
- * TODO:
- * - add shadow to component
- * - evaluate if extract missing data from fiscal code
+ * A component to show the profile fiscal code fac-simile.
+ * It can be displayed as:
+ * - Preview: it renders only the header of the fac-simile, rotated on the perspective direction
+ * - Full: it renders the fac-simile in the horiontal position
+ * - Landscape: it renders the fac-simile in the vertical position (rotated of 90 degrees)
+ * The back of the fac-simile can be rendered for both full and lansdscape modes,
+ * and it includes the barcode of the fiscal code with the code 128 format
  */
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -78,7 +80,8 @@ const barCodeMarginLeftL = 181 * landscapeScaleFactor;
 const barCodeMarginTopL = 179 * landscapeScaleFactor;
 
 const fiscalCodeHeightL =
-  (2 * customVariables.contentPadding + textLineHeightL / 4) + // rotation correction factor
+  2 * customVariables.contentPadding +
+  textLineHeightL / 4 + // rotation correction factor
   cardHeaderHeightL +
   cardLargeSpacerL +
   (cardLineHeightL * 2 - textLineHeightL); // 2-line label correction factor - align 0 char dimension
