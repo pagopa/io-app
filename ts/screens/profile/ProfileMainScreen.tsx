@@ -26,6 +26,7 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
+import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
@@ -84,6 +85,30 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     lineHeight: 40
+  },
+
+  title: {
+    fontWeight: "700"
+  },
+
+  sectionHeader: {
+    fontWeight: "400"
+  },
+
+  listItem: {
+    paddingTop: variables.spacerLargeHeight,
+    paddingBottom: variables.spacerLargeHeight
+  },
+
+  divider: {
+    paddingTop: variables.spacerLargeHeight + variables.spacerWidth,
+    paddingLeft: 0,
+    paddingBottom: 0,
+    alignItems: "center"
+  },
+
+  noBorder: {
+    borderBottomWidth: 0
   }
 });
 
@@ -187,6 +212,42 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     }
   };
 
+  private renderItem(
+    title: string,
+    description: string,
+    onPress: () => void,
+    isFirstItem?: boolean,
+    isLastItem?: boolean
+  ) {
+    return (
+      <ListItem
+        onPress={onPress}
+        first={isFirstItem}
+        style={[styles.listItem, isLastItem && styles.noBorder]}
+      >
+        <Left style={styles.itemLeft}>
+          <H5 style={styles.title}>{title}</H5>
+          <Text style={styles.itemLeftText}>{description}</Text>
+        </Left>
+        <Right>
+          <IconFont
+            name="io-right"
+            color={variables.contentPrimaryBackground}
+          />
+        </Right>
+      </ListItem>
+    );
+  }
+
+  private customDivider(sectionHeader: string) {
+    return (
+      <ListItem first={true} style={styles.divider}>
+        <View spacer={true} large={true} />
+        <H5 style={styles.sectionHeader}>{sectionHeader}</H5>
+      </ListItem>
+    );
+  }
+
   // tslint:disable-next-line: no-big-function
   public render() {
     const {
@@ -218,82 +279,41 @@ class ProfileMainScreen extends React.PureComponent<Props> {
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
             {/* Preferences */}
-            <ListItem
-              first={true}
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME)
-              }
-            >
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("profile.main.preferences.title")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.main.preferences.description")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
-            {/* Privacy */}
-            <ListItem
-              onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
-            >
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("profile.main.privacy.title")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.main.privacy.description")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
+            {this.renderItem(
+              I18n.t("profile.main.preferences.title"),
+              I18n.t("profile.main.preferences.description"),
+              () => navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME),
+              true
+            )}
 
-            <ListItem itemDivider={true}>
-              <Text>{I18n.t("profile.main.accountSectionHeader")}</Text>
-            </ListItem>
+            {/* Privacy */}
+            {this.renderItem(
+              I18n.t("profile.main.privacy.title"),
+              I18n.t("profile.main.privacy.description"),
+              () => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN),
+              false,
+              true
+            )}
+
+            {this.customDivider(I18n.t("profile.main.accountSectionHeader"))}
 
             {/* Reset PIN */}
-            <ListItem onPress={this.confirmResetAlert}>
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("pin_login.pin.reset.tip_short")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
+            {this.renderItem(
+              I18n.t("pin_login.pin.reset.button_short"),
+              I18n.t("pin_login.pin.reset.tip_short"),
+              this.confirmResetAlert
+            )}
 
             {/* Logout/Exit */}
-            <ListItem onPress={this.onLogoutPress}>
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("profile.main.logout")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.logout.menulabel")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
+            {this.renderItem(
+              I18n.t("profile.main.logout"),
+              I18n.t("profile.logout.menulabel"),
+              this.onLogoutPress,
+              false,
+              true
+            )}
 
-            <ListItem itemDivider={true}>
-              <Text>{I18n.t("profile.main.developersSectionHeader")}</Text>
-            </ListItem>
+            {this.customDivider(I18n.t("profile.main.developersSectionHeader"))}
 
             <ListItem>
               <View style={styles.developerSectionItem}>
