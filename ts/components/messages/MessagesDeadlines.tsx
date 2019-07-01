@@ -13,7 +13,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Text, View } from "native-base";
 import React from "react";
-import { SectionListScrollParams, StyleSheet } from "react-native";
+import { Platform, SectionListScrollParams, StyleSheet } from "react-native";
+import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
@@ -35,16 +36,23 @@ import MessageAgenda, {
 // How many past months to load in batch
 const PAST_DATA_MONTHS = 3;
 
+const SCROLL_RANGE_FOR_ANIMATION =
+  customVariables.appHeaderHeight +
+  (Platform.OS === "ios"
+    ? isIphoneX()
+      ? 18
+      : getStatusBarHeight(true)
+    : customVariables.spacerHeight);
+
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
   },
-
   buttonBar: {
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: Platform.OS === "ios" ? SCROLL_RANGE_FOR_ANIMATION : 0,
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",

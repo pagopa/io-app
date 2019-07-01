@@ -1,4 +1,5 @@
 import { isNone, Option } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationActions, NavigationState } from "react-navigation";
 import { Effect } from "redux-saga";
 import {
@@ -31,7 +32,8 @@ import {
 } from "../store/actions/navigation";
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
-import { resetProfileState } from "../store/actions/profile";
+import { clearOnboarding } from "../store/actions/onboarding";
+import { clearCache, resetProfileState } from "../store/actions/profile";
 import { loadService, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
@@ -42,10 +44,11 @@ import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
+import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
-import { getPin } from "../utils/keychain";
+import { deletePin, getPin } from "../utils/keychain";
 import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
@@ -86,6 +89,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   //           every new installation.
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
+
+  // Get last logged in Profile from the state
+  const lastLoggedInProfileState: ReturnType<
+    typeof profileSelector
+  > = yield select<GlobalState>(profileSelector);
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
@@ -164,7 +172,25 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     yield put(startApplicationInitialization());
     return;
   }
+
   const userProfile = maybeUserProfile.value;
+
+  // If user logged in with different credentials, but this device still has
+  // user data loaded, then delete data keeping current session (user already
+  // logged in)
+  if (
+    pot.isSome(lastLoggedInProfileState) &&
+    lastLoggedInProfileState.value.fiscal_code !== userProfile.fiscal_code
+  ) {
+    // Delete all data while keeping current session:
+    // Delete the current PIN from the Keychain
+    // tslint:disable-next-line:saga-yield-return-type
+    yield call(deletePin);
+    // Delete all onboarding data
+    yield put(clearOnboarding());
+    yield put(clearCache());
+  }
+
   const maybeIdp: Option<IdentityProvider> = yield select<GlobalState>(
     idpSelector
   );

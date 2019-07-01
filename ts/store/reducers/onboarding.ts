@@ -4,7 +4,11 @@
  */
 import { getType } from "typesafe-actions";
 
-import { fingerprintAcknowledge, tosAccepted } from "../actions/onboarding";
+import {
+  clearOnboarding,
+  fingerprintAcknowledge,
+  tosAccepted
+} from "../actions/onboarding";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -35,6 +39,9 @@ const reducer = (
       return {
         ...state
       };
+
+    case getType(clearOnboarding):
+      return INITIAL_STATE;
 
     default:
       return state;

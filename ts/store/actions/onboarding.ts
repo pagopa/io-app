@@ -18,6 +18,12 @@ export const tosAccepted = createStandardAction("TOS_ACCEPTED")();
 
 export const abortOnboarding = createStandardAction("ABORT_ONBOARDING")();
 
-export type OnboardingActions = ActionType<
-  typeof fingerprintAcknowledge | typeof tosAccepted | typeof abortOnboarding
->;
+export const clearOnboarding = createStandardAction("CLEAR_ONBOARDING")();
+
+type OnboardingActionTypes =
+  | typeof tosAccepted
+  | typeof fingerprintAcknowledge
+  | typeof abortOnboarding
+  | typeof clearOnboarding;
+
+export type OnboardingActions = ActionType<OnboardingActionTypes>;

@@ -1,7 +1,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
-import { Animated, Image, StyleSheet } from "react-native";
+import { Animated, Image, Platform, StyleSheet } from "react-native";
+import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "../../i18n";
@@ -14,6 +15,14 @@ import {
 } from "../helpers/withMessagesSelection";
 import MessageList from "./MessageList";
 
+const SCROLL_RANGE_FOR_ANIMATION =
+  customVariables.appHeaderHeight +
+  (Platform.OS === "ios"
+    ? isIphoneX()
+      ? 18
+      : getStatusBarHeight(true)
+    : customVariables.spacerHeight);
+
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
@@ -23,12 +32,15 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: 72,
+    bottom: 0,
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",
     backgroundColor: customVariables.brandLightGray,
     padding: 10
+  },
+  animatedStartPosition: {
+    bottom: SCROLL_RANGE_FOR_ANIMATION
   },
   buttonBarLeft: {
     flex: 2
@@ -69,8 +81,9 @@ type OwnProps = {
 };
 
 type AnimationProps = {
-  // paddingForAnimation has value equal to screen header. It is necessary
-  // because header has absolute position
+  // paddingForAnimation flag is set to true when this component is animated.
+  // It is used to make empty list component and command bar correctly visible
+  // when scroll is below animation threshold.
   paddingForAnimation: boolean;
   AnimatedCTAStyle?: any;
 };
@@ -170,6 +183,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     const {
       animated,
       AnimatedCTAStyle,
+      paddingForAnimation,
       selectedMessageIds,
       resetSelection
     } = this.props;
@@ -179,7 +193,13 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       <View style={styles.listWrapper}>
         {selectedMessageIds.isSome() &&
           allMessageIdsState.isSome() && (
-            <Animated.View style={[styles.buttonBar, AnimatedCTAStyle]}>
+            <Animated.View
+              style={[
+                styles.buttonBar,
+                AnimatedCTAStyle,
+                paddingForAnimation && styles.animatedStartPosition
+              ]}
+            >
               <Button
                 block={true}
                 bordered={true}
