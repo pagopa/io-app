@@ -49,11 +49,21 @@ type FetchPspRequestPayload = Readonly<{
   onFailure?: (action: ActionType<typeof fetchPsp["failure"]>) => void;
 }>;
 
+type FetchPspSuccessPayload = Readonly<{
+  idPsp: number;
+  psp: Psp;
+}>;
+
+type FetchPspFailurePayload = Readonly<{
+  idPsp: number;
+  error: Error;
+}>;
+
 export const fetchPsp = createAsyncAction(
   "FETCH_PSP_REQUEST",
   "FETCH_PSP_SUCCESS",
   "FETCH_PSP_FAILURE"
-)<FetchPspRequestPayload, Psp, Error>();
+)<FetchPspRequestPayload, FetchPspSuccessPayload, FetchPspFailurePayload>();
 
 //
 // poll for a transaction until it reaches a certain state

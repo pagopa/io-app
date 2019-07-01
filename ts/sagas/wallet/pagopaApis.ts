@@ -143,7 +143,10 @@ export function* fetchPspRequestHandler(
     if (response.isRight()) {
       if (response.value.status === 200) {
         const psp = response.value.value.data;
-        const successAction = fetchPsp.success(psp);
+        const successAction = fetchPsp.success({
+          idPsp: action.payload.idPsp,
+          psp
+        });
         yield put(successAction);
         if (action.payload.onSuccess) {
           action.payload.onSuccess(successAction);
@@ -155,7 +158,10 @@ export function* fetchPspRequestHandler(
       throw Error(readableReport(response.value));
     }
   } catch (error) {
-    const failureAction = fetchPsp.failure(error);
+    const failureAction = fetchPsp.failure({
+      idPsp: action.payload.idPsp,
+      error
+    });
     yield put(failureAction);
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);

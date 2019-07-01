@@ -6,8 +6,7 @@
 import { combineReducers } from "redux";
 import { PaymentState } from "./payment";
 import paymentReducer from "./payment";
-import { PspState } from "./psp";
-import pspReducer from "./psp";
+import pspsByIdReducer, { PspStateById } from "./pspsById";
 import { TransactionsState } from "./transactions";
 import transactionsReducer from "./transactions";
 import { WalletsState } from "./wallets";
@@ -17,14 +16,14 @@ export type WalletState = Readonly<{
   transactions: TransactionsState;
   wallets: WalletsState;
   payment: PaymentState;
-  psp: PspState;
+  pspsById: PspStateById;
 }>;
 
 const reducer = combineReducers({
   transactions: transactionsReducer,
   wallets: walletsReducer,
   payment: paymentReducer,
-  psp: pspReducer
+  pspsById: pspsByIdReducer
 });
 
 export default reducer;

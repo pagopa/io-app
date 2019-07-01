@@ -11,6 +11,7 @@
  * TODO: insert contextual help to the Text link related to the fee
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
@@ -34,7 +35,7 @@ import { navigateToWalletHome } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
 import { GlobalState } from "../../store/reducers/types";
-import { pspSelector } from "../../store/reducers/wallet/psp";
+import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
@@ -47,9 +48,11 @@ type NavigationParams = Readonly<{
   transaction: Transaction;
 }>;
 
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationInjectedProps<NavigationParams> &
+  OwnProps &
   ContextualHelpInjectedProps;
 
 /**
@@ -202,7 +205,8 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
   private handleWillFocus = () => {
     const transaction = this.props.navigation.getParam("transaction");
-    if (transaction.idPsp !== undefined) {
+    // Fetch psp only if the store not contains this psp
+    if (transaction.idPsp !== undefined && this.props.psp === undefined) {
       this.props.fetchPsp(transaction.idPsp);
     }
   };
@@ -332,9 +336,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchPsp: (idPsp: number) => dispatch(fetchPsp.request({ idPsp }))
 });
 
-const mapStateToProps = (state: GlobalState) => {
-  const potPsp = pspSelector(state);
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
+  const transaction = ownProps.navigation.getParam("transaction");
+  const idPsp = String(transaction.idPsp);
+
+  const maybePotPspState = fromNullable(pspStateByIdSelector(idPsp)(state));
+  const potPsp = maybePotPspState.map(_ => _.psp).getOrElse(pot.none);
   const isLoading = pot.isLoading(potPsp);
+
   return {
     wallets: pot.toUndefined(getWalletsById(state)),
     isExperimentalFeaturesEnabled:
