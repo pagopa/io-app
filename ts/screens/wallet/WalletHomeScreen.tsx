@@ -32,10 +32,10 @@ import {
   readTransaction
 } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
+import { getUnreadTransactions } from "../../store/reducers/entities/readTransactions";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
-import { getUnreadTransactions } from "../../store/reducers/entities/readTransactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
@@ -335,7 +335,7 @@ const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  unreadTransactions: pot.getOrElse(getUnreadTransactions(state), [])
+  unreadTransactions: pot.getOrElse(getUnreadTransactions(state), []) as ReadonlyArray<Transaction>
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

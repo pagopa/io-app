@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
 
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
-    const isNew = this.props.unreadTransactions.find(_ => _.id === item.id) !== undefined;
+    const isNew =
+      this.props.unreadTransactions.find(_ => _.id === item.id) !== undefined;
     const datetime: string = `${formatDateAsLocal(
       item.created,
       true,

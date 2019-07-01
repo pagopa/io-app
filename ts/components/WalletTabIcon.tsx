@@ -3,8 +3,8 @@ import { Badge, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
-import { GlobalState } from "../store/reducers/types";
 import { getUnreadTransactions } from "../store/reducers/entities/readTransactions";
+import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 

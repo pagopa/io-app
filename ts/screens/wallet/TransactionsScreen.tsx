@@ -25,9 +25,9 @@ import {
   deleteWalletRequest,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
+import { getUnreadTransactions } from "../../store/reducers/entities/readTransactions";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
-import { getUnreadTransactions } from "../../store/reducers/entities/readTransactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
@@ -142,7 +142,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state),
   favoriteWallet: getFavoriteWalletId(state),
-  unreadTransactions: pot.getOrElse(getUnreadTransactions(state), [])
+  unreadTransactions: pot.getOrElse(getUnreadTransactions(state), []) as ReadonlyArray<Transaction>
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

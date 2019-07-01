@@ -11,8 +11,11 @@ import {
   servicesByOrganizationFiscalCodeReducer
 } from "./organizations/organizationsByFiscalCodeReducer";
 import { paymentByRptIdReducer, PaymentByRptIdState } from "./payments";
+import {
+  ReadTransactionsState,
+  transactionsReadReducer
+} from "./readTransactions";
 import servicesReducer, { ServicesState } from "./services";
-import { ReadTransactionsState, transactionsReadReducer } from './readTransactions';
 
 export type EntitiesState = Readonly<{
   messages: MessagesState;

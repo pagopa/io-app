@@ -39,21 +39,7 @@ export const getTransactions = (state: GlobalState) =>
         _ => _ !== undefined && isSuccessTransaction(_)
       ) as ReadonlyArray<Transaction>
   );
-/*
-// Search transaction number in Set of read transactions
-export const isReadTransaction = (state: GlobalState, txid: number) =>
-  state.wallet.transactions.read.has(txid);
 
-// filter only unread transactions to account for the residual number
-export const getUnreadTransactions = (state: GlobalState) =>
-  pot.map(
-    state.wallet.transactions.transactions,
-    txs => 
-      values(txs).filter(
-        _ => _ !== undefined && !isReadTransaction(state, _.id)
-      ) as ReadonlyArray<Transaction> // ridurre a array di ID
-  );
-*/
 export const getWalletTransactionsCreator = (idWallet: number) => (
   state: GlobalState
 ) =>
