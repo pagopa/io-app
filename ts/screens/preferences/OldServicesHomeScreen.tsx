@@ -19,12 +19,14 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
+import { profileUpsert } from "../../store/actions/profile";
 import {
   loadVisibleServices,
   showServiceDetails
 } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { readServicesSelector } from "../../store/reducers/entities/services/servicesByReadStatus";
+import { ProfileState } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
@@ -32,6 +34,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
+import { getChannelsforServicesList } from "./common";
 import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type OwnProps = NavigationInjectedProps;
@@ -82,6 +85,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
             icon={require("../../../img/icons/service-icon.png")}
           />
         )}
+
         {isSearchEnabled ? this.renderSearch() : this.renderList()}
       </TopScreenComponent>
     );
@@ -159,6 +163,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     profile: state.profile,
     sections,
+    allServicesId: Object.keys(services.byId),
     isLoading,
     searchText: searchTextSelector(state),
     isSearchEnabled: isSearchServicesEnabledSelector(state),
@@ -176,7 +181,26 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     params: InferNavigationParams<typeof OldServiceDetailsScreen>
   ) => dispatch(navigateToOldServiceDetailsScreen(params)),
   serviceDetailsLoad: (service: ServicePublic) =>
-    dispatch(showServiceDetails(service))
+    dispatch(showServiceDetails(service)),
+  /**
+   * TODO: restyle ui to trigger all the services being enabled/disabled at once
+   *       https://www.pivotaltracker.com/n/projects/2048617/stories/166763719
+   */
+  disableAllServices: (
+    allServicesId: ReadonlyArray<string>,
+    profile: ProfileState
+  ) => {
+    const newBlockedChannels = getChannelsforServicesList(
+      allServicesId,
+      profile,
+      false
+    );
+    dispatch(
+      profileUpsert.request({
+        blocked_inbox_or_channels: newBlockedChannels
+      })
+    );
+  }
 });
 
 export default connect(
