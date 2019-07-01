@@ -6,6 +6,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import { createSelector } from "reselect";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -19,8 +20,10 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
+import { profileUpsert } from "../../store/actions/profile";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { ProfileState } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
@@ -28,6 +31,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
+import { getChannelsforServicesList } from "./common";
 import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type OwnProps = NavigationInjectedProps;
@@ -77,6 +81,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
             icon={require("../../../img/icons/service-icon.png")}
           />
         )}
+
         {isSearchEnabled ? this.renderSearch() : this.renderList()}
       </TopScreenComponent>
     );
@@ -159,6 +164,8 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     profile: state.profile,
+    sections,
+    allServicesId: Object.keys(services.byId),
     sections: getAllSections(state),
     isLoading,
     searchText: searchTextSelector(state),
@@ -174,7 +181,27 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(contentServiceLoad.request(serviceId)),
   navigateToOldServiceDetailsScreen: (
     params: InferNavigationParams<typeof OldServiceDetailsScreen>
-  ) => dispatch(navigateToOldServiceDetailsScreen(params))
+  ) => dispatch(navigateToOldServiceDetailsScreen(params)),
+
+  /**
+   * TODO: restyle ui to trigger all the services being enabled/disabled at once
+   *       https://www.pivotaltracker.com/n/projects/2048617/stories/166763719
+   */
+  disableAllServices: (
+    allServicesId: ReadonlyArray<string>,
+    profile: ProfileState
+  ) => {
+    const newBlockedChannels = getChannelsforServicesList(
+      allServicesId,
+      profile,
+      false
+    );
+    dispatch(
+      profileUpsert.request({
+        blocked_inbox_or_channels: newBlockedChannels
+      })
+    );
+  }
 });
 
 export default connect(
