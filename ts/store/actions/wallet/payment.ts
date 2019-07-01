@@ -16,6 +16,7 @@ import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTyp
 
 import { Psp, Transaction, Wallet } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
+import { EntrypointRoute } from "../../reducers/wallet/payment";
 import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 
 /**
@@ -23,6 +24,20 @@ import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
  */
 export const paymentInitializeState = createStandardAction(
   "PAYMENT_INITIALIZE_STATE"
+)();
+
+/**
+ * Track the route from which the payment is initiated
+ */
+export const paymentInitializeEntrypointRoute = createStandardAction(
+  "PAYMENT_ENTRYPOINT_ROUTE"
+)<EntrypointRoute>();
+
+/**
+ * For back to entrypoint (where the payment is initiated)
+ */
+export const backToEntrypointPayment = createStandardAction(
+  "BACK_TO_PAYMENT_ENTRYPOINT_ROUTE"
 )();
 
 //
@@ -217,6 +232,8 @@ export const runStartOrResumePaymentActivationSaga = createStandardAction(
  */
 export type PaymentActions =
   | ActionType<typeof paymentInitializeState>
+  | ActionType<typeof paymentInitializeEntrypointRoute>
+  | ActionType<typeof backToEntrypointPayment>
   | ActionType<typeof paymentUpdateWalletPsp>
   | ActionType<typeof paymentVerifica>
   | ActionType<typeof paymentAttiva>

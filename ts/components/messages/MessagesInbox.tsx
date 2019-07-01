@@ -1,8 +1,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
-import { Animated, Image, StyleSheet } from "react-native";
+import { Animated, Image, Platform, StyleSheet } from "react-native";
+import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 
+import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
@@ -13,6 +15,14 @@ import {
 } from "../helpers/withMessagesSelection";
 import MessageList from "./MessageList";
 
+const SCROLL_RANGE_FOR_ANIMATION =
+  customVariables.appHeaderHeight +
+  (Platform.OS === "ios"
+    ? isIphoneX()
+      ? 18
+      : getStatusBarHeight(true)
+    : customVariables.spacerHeight);
+
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
@@ -22,19 +32,27 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: 72,
+    bottom: 0,
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",
     backgroundColor: customVariables.brandLightGray,
     padding: 10
   },
-  buttonBarPrimaryButton: {
-    flex: 8,
-    marginLeft: 10
+  animatedStartPosition: {
+    bottom: SCROLL_RANGE_FOR_ANIMATION
   },
-  buttonBarSecondaryButton: {
-    flex: 4
+  buttonBarLeft: {
+    flex: 2
+  },
+  buttonBarRight: {
+    flex: 2
+  },
+  buttonBarCenter: {
+    flex: 2,
+    backgroundColor: customVariables.colorWhite,
+    marginLeft: 10,
+    marginRight: 10
   },
   emptyListWrapper: {
     padding: customVariables.contentPadding,
@@ -63,8 +81,9 @@ type OwnProps = {
 };
 
 type AnimationProps = {
-  // paddingForAnimation has value equal to screen header. It is necessary
-  // because header has absolute position
+  // paddingForAnimation flag is set to true when this component is animated.
+  // It is used to make empty list component and command bar correctly visible
+  // when scroll is below animation threshold.
   paddingForAnimation: boolean;
   AnimatedCTAStyle?: any;
 };
@@ -85,6 +104,7 @@ type State = {
   filteredMessageStates: ReturnType<
     typeof generateMessagesStateNotArchivedArray
   >;
+  allMessageIdsState: Option<Set<string>>;
 };
 
 /**
@@ -134,11 +154,14 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     if (lastMessagesState !== nextProps.messagesState) {
       // The list was updated, we need to re-apply the filter and
       // save the result in the state.
+      const messagesStateNotArchived = generateMessagesStateNotArchivedArray(
+        nextProps.messagesState
+      );
+      const allMessagesIdsArray = messagesStateNotArchived.map(_ => _.meta.id);
       return {
-        filteredMessageStates: generateMessagesStateNotArchivedArray(
-          nextProps.messagesState
-        ),
-        lastMessagesState: nextProps.messagesState
+        filteredMessageStates: messagesStateNotArchived,
+        lastMessagesState: nextProps.messagesState,
+        allMessageIdsState: some(new Set(allMessagesIdsArray))
       };
     }
 
@@ -150,7 +173,8 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       lastMessagesState: pot.none,
-      filteredMessageStates: []
+      filteredMessageStates: [],
+      allMessageIdsState: none
     };
   }
 
@@ -159,33 +183,57 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     const {
       animated,
       AnimatedCTAStyle,
+      paddingForAnimation,
       selectedMessageIds,
       resetSelection
     } = this.props;
+    const { allMessageIdsState } = this.state;
 
     return (
       <View style={styles.listWrapper}>
-        {selectedMessageIds.isSome() && (
-          <Animated.View style={[styles.buttonBar, AnimatedCTAStyle]}>
-            <Button
-              block={true}
-              bordered={true}
-              light={true}
-              onPress={resetSelection}
-              style={styles.buttonBarSecondaryButton}
+        {selectedMessageIds.isSome() &&
+          allMessageIdsState.isSome() && (
+            <Animated.View
+              style={[
+                styles.buttonBar,
+                AnimatedCTAStyle,
+                paddingForAnimation && styles.animatedStartPosition
+              ]}
             >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </Button>
-            <Button
-              block={true}
-              style={styles.buttonBarPrimaryButton}
-              disabled={selectedMessageIds.value.size === 0}
-              onPress={this.archiveMessages}
-            >
-              <Text>{I18n.t("messages.cta.archive")}</Text>
-            </Button>
-          </Animated.View>
-        )}
+              <Button
+                block={true}
+                bordered={true}
+                light={true}
+                onPress={resetSelection}
+                style={styles.buttonBarLeft}
+              >
+                <Text>{I18n.t("global.buttons.cancel")}</Text>
+              </Button>
+              <Button
+                block={true}
+                bordered={true}
+                style={styles.buttonBarCenter}
+                onPress={this.toggleAllMessagesSelection}
+              >
+                <Text>
+                  {I18n.t(
+                    selectedMessageIds.value.size ===
+                    allMessageIdsState.value.size
+                      ? "messages.cta.deselectAll"
+                      : "messages.cta.selectAll"
+                  )}
+                </Text>
+              </Button>
+              <Button
+                block={true}
+                style={styles.buttonBarRight}
+                disabled={selectedMessageIds.value.size === 0}
+                onPress={this.archiveMessages}
+              >
+                <Text>{I18n.t("messages.cta.archive")}</Text>
+              </Button>
+            </Animated.View>
+          )}
         <MessageList
           {...this.props}
           messageStates={this.state.filteredMessageStates}
@@ -212,6 +260,18 @@ class MessagesInbox extends React.PureComponent<Props, State> {
 
   private handleOnLongPressItem = (id: string) => {
     this.props.toggleMessageSelection(id);
+  };
+
+  private toggleAllMessagesSelection = () => {
+    const { allMessageIdsState } = this.state;
+    const { selectedMessageIds } = this.props;
+    if (allMessageIdsState.isSome() && selectedMessageIds.isSome()) {
+      this.props.setSelectedMessageIds(
+        allMessageIdsState.value.size === selectedMessageIds.value.size
+          ? some(new Set())
+          : allMessageIdsState
+      );
+    }
   };
 
   private archiveMessages = () => {
