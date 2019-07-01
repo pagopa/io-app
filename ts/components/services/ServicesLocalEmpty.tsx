@@ -1,16 +1,17 @@
-import { Button, Content, Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
 
+type Props = {
+  paddingForAnimation: boolean;
+};
+
 const styles = StyleSheet.create({
   contentWrapper: {
     padding: customVariables.contentPadding,
-    paddingBottom: 0
-  },
-  content: {
     alignItems: "center"
   },
   message: {
@@ -30,18 +31,20 @@ const styles = StyleSheet.create({
   icon: {
     color: customVariables.brandPrimary,
     lineHeight: 24
+  },
+  paddingForAnimation: {
+    height: 55
   }
 });
 
-export class ServicesLocalEmpty extends React.PureComponent<{}> {
+export class ServicesLocalEmpty extends React.PureComponent<Props> {
   public render() {
+    const { paddingForAnimation } = this.props;
     return (
-      <Content
-        style={styles.contentWrapper}
-        contentContainerStyle={styles.content}
-      >
+      <View style={styles.contentWrapper}>
         <Text style={styles.message}>
           {I18n.t("services.areasOfInterest.selectMessage")}
+          Fine.
         </Text>
 
         <View spacer={true} large={true} />
@@ -56,7 +59,9 @@ export class ServicesLocalEmpty extends React.PureComponent<{}> {
         <View spacer={true} extralarge={true} />
 
         <Image source={require("../../../img/services/icon-places.png")} />
-      </Content>
+
+        {paddingForAnimation && <View style={styles.paddingForAnimation} />}
+      </View>
     );
   }
 }
