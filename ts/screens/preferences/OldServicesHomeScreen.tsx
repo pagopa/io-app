@@ -6,6 +6,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { createSelector } from "reselect";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -20,13 +21,13 @@ import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { getAllSections } from "../../store/reducers/entities/services/orderedServices";
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
+import { isDefined } from "../../utils/guards";
 import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type OwnProps = NavigationInjectedProps;
@@ -118,6 +119,31 @@ class OldServicesHomeScreen extends React.Component<Props> {
       .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
   };
 }
+
+const servicesSelector = (state: GlobalState) => state.entities.services;
+const organizationsSelector = (state: GlobalState) =>
+  state.entities.organizations;
+
+export const getAllSections = createSelector(
+  [servicesSelector, organizationsSelector],
+  (services, organizations) => {
+    const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
+    return orgfiscalCodes
+      .map(fiscalCode => {
+        const title = organizations[fiscalCode] || fiscalCode;
+        const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
+        const data = serviceIdsForOrg
+          .map(id => services.byId[id])
+          .filter(isDefined);
+        return {
+          title,
+          data
+        };
+      })
+      .sort((a, b) => (a.title || "").localeCompare(b.title))
+      .filter(_ => _.data.length > 0);
+  }
+);
 
 const mapStateToProps = (state: GlobalState) => {
   const { services } = state.entities;
