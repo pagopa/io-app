@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     paddingBottom: customVariables.spacerLargeHeight,
     borderBottomWidth: 0,
     borderTopWidth: 1 / 3,
-    borderColor: customVariables.brandDarkGray,
+    borderColor: '#c9c9c9',
     borderTopLeftRadius: customVariables.contentPadding,
     borderTopRightRadius: customVariables.contentPadding
   },
