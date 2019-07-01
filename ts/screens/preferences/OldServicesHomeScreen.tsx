@@ -18,7 +18,7 @@ import ServicesSearch from "../../components/services/ServicesSearch";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
-import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
+import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
 import { profileUpsert } from "../../store/actions/profile";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
@@ -31,7 +31,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
 import { getChannelsforServicesList } from "./common";
-import ServiceDetailsScreen from "./ServiceDetailsScreen";
+import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -40,7 +40,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReduxProps &
   OwnProps;
 
-class ServicesHomeScreen extends React.Component<Props> {
+class OldServicesHomeScreen extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -49,7 +49,7 @@ class ServicesHomeScreen extends React.Component<Props> {
     // when a service gets selected, before navigating to the service detail
     // screen, we issue a contentServiceLoad to refresh the service metadata
     this.props.contentServiceLoad(service.service_id);
-    this.props.navigateToServiceDetailsScreen({
+    this.props.navigateToOldServiceDetailsScreen({
       service
     });
   };
@@ -159,7 +159,9 @@ const mapStateToProps = (state: GlobalState) => {
     allServicesId: Object.keys(services.byId),
     isLoading,
     searchText: searchTextSelector(state),
-    isSearchEnabled: isSearchServicesEnabledSelector(state)
+    isSearchEnabled: isSearchServicesEnabledSelector(state),
+    isExperimentalFeaturesEnabled:
+      state.persistedPreferences.isExperimentalFeaturesEnabled
   };
 };
 
@@ -167,12 +169,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshServices: () => dispatch(loadVisibleServices.request()),
   contentServiceLoad: (serviceId: ServiceId) =>
     dispatch(contentServiceLoad.request(serviceId)),
-  navigateToServiceDetailsScreen: (
-    params: InferNavigationParams<typeof ServiceDetailsScreen>
-  ) => dispatch(navigateToServiceDetailsScreen(params)),
+  navigateToOldServiceDetailsScreen: (
+    params: InferNavigationParams<typeof OldServiceDetailsScreen>
+  ) => dispatch(navigateToOldServiceDetailsScreen(params)),
 
   /**
-   * TODO: implement graphycal to trigger all the services being disabled at once
+   * TODO: restyle ui to trigger all the services being enabled/disabled at once
    *       https://www.pivotaltracker.com/n/projects/2048617/stories/166763719
    */
   disableAllServices: (
@@ -195,4 +197,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ServicesHomeScreen);
+)(OldServicesHomeScreen);
