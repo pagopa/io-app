@@ -1,15 +1,14 @@
 import { createStackNavigator } from "react-navigation";
 
 import OldServiceDetailsScreen from "../screens/preferences/OldServiceDetailsScreen";
-import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
+import OldServicesHomeScreen from "../screens/preferences/OldServicesHomeScreen";
 import ROUTES from "./routes";
 
-const ServicesNavigator = createStackNavigator(
+const OldServicesNavigator = createStackNavigator(
   {
     [ROUTES.SERVICES_HOME]: {
-      screen: ServicesHomeScreen
+      screen: OldServicesHomeScreen
     },
-    // TODO Replace when the new detail screen is available
     [ROUTES.SERVICE_DETAIL]: {
       screen: OldServiceDetailsScreen
     }
@@ -20,4 +19,4 @@ const ServicesNavigator = createStackNavigator(
   }
 );
 
-export default ServicesNavigator;
+export default OldServicesNavigator;
