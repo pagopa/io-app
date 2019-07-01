@@ -1,5 +1,6 @@
 import { Left, Right, Text } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
@@ -24,6 +25,12 @@ interface ActionProps extends BaseProps {
 
 type Props = ValueProps | ActionProps;
 
+const styles = StyleSheet.create({
+  title: {
+    fontWeight: "700"
+  }
+});
+
 /**
  * Renders a single item in the preferences screen
  */
@@ -34,7 +41,7 @@ class PreferenceItem extends React.Component<Props> {
     return (
       <React.Fragment>
         <Left>
-          <H5>{title}</H5>
+          <H5 style={styles.title}>{title}</H5>
           <Text>{valuePreview}</Text>
         </Left>
         <Right>

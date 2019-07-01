@@ -216,8 +216,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     title: string,
     description: string,
     onPress: () => void,
-    isFirstItem?: boolean,
-    isLastItem?: boolean
+    isFirstItem: boolean = false,
+    isLastItem: boolean = false
   ) {
     return (
       <ListItem
