@@ -320,6 +320,10 @@ payment:
   recipientFiscalCode: Recipient fiscal code
 wallet:
   wallet: Wallet
+  walletHelp: Your payment methods and transaction history are listed here.
+    In the payment methods you will find only credit/debit card types as they are supported by the app.
+    It may therefore happen that, although you have registered payment methods, some of them do not appear as they are still not compatible.
+    Other payment methods will be progressively integrated.
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method

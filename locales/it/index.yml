@@ -328,6 +328,10 @@ payment:
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
   wallet: Portafoglio
+  walletHelp: Qui sono elencati i tuoi metodi di pagamento e lo storico delle tue transazioni.
+    Nei metodi di pagamento troverai solo quelli di tipo carta di credito/debito in quanto supportati dall'app.
+    Può accadere quindi che, nonostante tu abbia dei metodi di pagamento registrati, alcuni di essi non compaiano in quanto ancora non compatibili.
+    Progressivamente verranno integrati altri metodi di pagamento.
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
