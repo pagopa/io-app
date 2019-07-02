@@ -23,6 +23,7 @@ import { connect } from "react-redux";
 import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
+import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -91,20 +92,9 @@ const styles = StyleSheet.create({
     fontWeight: "700"
   },
 
-  sectionHeader: {
-    fontWeight: "400"
-  },
-
   listItem: {
     paddingTop: variables.spacerLargeHeight,
     paddingBottom: variables.spacerLargeHeight
-  },
-
-  divider: {
-    paddingTop: variables.spacerLargeHeight + variables.spacerWidth,
-    paddingLeft: 0,
-    paddingBottom: 0,
-    alignItems: "center"
   },
 
   noBorder: {
@@ -239,15 +229,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     );
   }
 
-  private customDivider(sectionHeader: string) {
-    return (
-      <ListItem first={true} style={styles.divider}>
-        <View spacer={true} large={true} />
-        <H5 style={styles.sectionHeader}>{sectionHeader}</H5>
-      </ListItem>
-    );
-  }
-
   // tslint:disable-next-line: no-big-function
   public render() {
     const {
@@ -295,7 +276,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               true
             )}
 
-            {this.customDivider(I18n.t("profile.main.accountSectionHeader"))}
+            <SectionHeaderComponent
+              sectionHeader={I18n.t("profile.main.accountSectionHeader")}
+            />
 
             {/* Reset PIN */}
             {this.renderItem(
@@ -313,7 +296,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               true
             )}
 
-            {this.customDivider(I18n.t("profile.main.developersSectionHeader"))}
+            <SectionHeaderComponent
+              sectionHeader={I18n.t("profile.main.developersSectionHeader")}
+            />
 
             <ListItem>
               <View style={styles.developerSectionItem}>
