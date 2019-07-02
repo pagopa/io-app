@@ -44,7 +44,6 @@ export class ServicesLocalEmpty extends React.PureComponent<Props> {
       <View style={styles.contentWrapper}>
         <Text style={styles.message}>
           {I18n.t("services.areasOfInterest.selectMessage")}
-          Fine.
         </Text>
 
         <View spacer={true} large={true} />
