@@ -80,7 +80,8 @@ const barCodeMarginLeftL = 181 * landscapeScaleFactor;
 const barCodeMarginTopL = 179 * landscapeScaleFactor;
 
 const fiscalCodeHeightL =
-  (2 * customVariables.contentPadding + textLineHeightL / 4) + // rotation correction factor
+  2 * customVariables.contentPadding + // rotation correction factor
+  textLineHeightL / 4 + // rotation correction factor
   cardHeaderHeightL +
   cardLargeSpacerL +
   (cardLineHeightL * 2 - textLineHeightL); // 2-line label correction factor - align 0 char dimension
@@ -255,7 +256,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           value={fiscalCode}
           format={"CODE128"}
           height={barCodeHeightL - 20} // 20: horizontal default padding of the barcode component
-          width={(barCodeWidthL - 20) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128 
+          width={(barCodeWidthL - 20) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
       </View>
     ) : (
