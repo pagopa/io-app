@@ -647,7 +647,7 @@ services:
   contactPhone: Phone
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
-    addButton: Aggiungi le tue aree di interesse
+    addButton: Add your areas of interest
   tab:
     locals: Local
     national: National
