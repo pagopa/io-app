@@ -1,5 +1,5 @@
 /**
- * Screen dysplaying the details of a selected service. The user
+ * Screen displaying the details of a selected service. The user
  * can enable/disable the service and customize the notification settings.
  */
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
@@ -17,7 +17,6 @@ import {
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-// @ts-ignore
 import createOpenLink from "react-native-open-maps";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
