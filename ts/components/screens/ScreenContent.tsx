@@ -7,7 +7,6 @@ import { ScreenContentHeader } from "./ScreenContentHeader";
 
 interface OwnProps {
   hideHeader?: boolean;
-  darkHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
 }
 
@@ -23,8 +22,8 @@ class ScreenContent extends React.PureComponent<Props> {
       icon,
       subtitle,
       banner,
+      dark,
       hideHeader,
-      darkHeader,
       contentStyle
     } = this.props;
 
@@ -36,7 +35,7 @@ class ScreenContent extends React.PureComponent<Props> {
             title={title}
             subtitle={subtitle}
             banner={banner}
-            dark={darkHeader}
+            dark={dark}
           />
         )}
         {this.props.children}
