@@ -8,6 +8,7 @@ import { ScreenContentHeader } from "./ScreenContentHeader";
 interface OwnProps {
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
+  bounces?: boolean;
 }
 
 type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
@@ -24,11 +25,12 @@ class ScreenContent extends React.PureComponent<Props> {
       banner,
       dark,
       hideHeader,
-      contentStyle
+      contentStyle,
+      bounces
     } = this.props;
 
     return (
-      <Content noPadded={true} style={contentStyle}>
+      <Content noPadded={true} style={contentStyle} bounces={bounces}>
         {!hideHeader && (
           <ScreenContentHeader
             icon={icon}
