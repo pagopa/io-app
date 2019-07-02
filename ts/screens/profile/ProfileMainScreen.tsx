@@ -22,6 +22,7 @@ import { connect } from "react-redux";
 
 import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import ListItemComponent from "../../components/screens/ListItemComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -99,6 +100,10 @@ const styles = StyleSheet.create({
 
   noBorder: {
     borderBottomWidth: 0
+  },
+
+  noRightPadding: {
+    paddingRight: 0
   }
 });
 
@@ -202,33 +207,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     }
   };
 
-  private renderItem(
-    title: string,
-    description: string,
-    onPress: () => void,
-    isFirstItem: boolean = false,
-    isLastItem: boolean = false
-  ) {
-    return (
-      <ListItem
-        onPress={onPress}
-        first={isFirstItem}
-        style={[styles.listItem, isLastItem && styles.noBorder]}
-      >
-        <Left style={styles.itemLeft}>
-          <H5 style={styles.title}>{title}</H5>
-          <Text style={styles.itemLeftText}>{description}</Text>
-        </Left>
-        <Right>
-          <IconFont
-            name="io-right"
-            color={variables.contentPrimaryBackground}
-          />
-        </Right>
-      </ListItem>
-    );
-  }
-
   // tslint:disable-next-line: no-big-function
   public render() {
     const {
@@ -260,47 +238,47 @@ class ProfileMainScreen extends React.PureComponent<Props> {
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
             {/* Preferences */}
-            {this.renderItem(
-              I18n.t("profile.main.preferences.title"),
-              I18n.t("profile.main.preferences.description"),
-              () => navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME),
-              true
-            )}
+            <ListItemComponent
+              title={I18n.t("profile.main.preferences.title")}
+              subTitle={I18n.t("profile.main.preferences.description")}
+              onPress={() =>
+                navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME)
+              }
+              isFirstItem={true}
+            />
 
             {/* Privacy */}
-            {this.renderItem(
-              I18n.t("profile.main.privacy.title"),
-              I18n.t("profile.main.privacy.description"),
-              () => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN),
-              false,
-              true
-            )}
+            <ListItemComponent
+              title={I18n.t("profile.main.privacy.title")}
+              subTitle={I18n.t("profile.main.privacy.description")}
+              onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
+              isLastItem={true}
+            />
 
             <SectionHeaderComponent
               sectionHeader={I18n.t("profile.main.accountSectionHeader")}
             />
 
             {/* Reset PIN */}
-            {this.renderItem(
-              I18n.t("pin_login.pin.reset.button_short"),
-              I18n.t("pin_login.pin.reset.tip_short"),
-              this.confirmResetAlert
-            )}
+            <ListItemComponent
+              title={I18n.t("pin_login.pin.reset.button_short")}
+              subTitle={I18n.t("pin_login.pin.reset.tip_short")}
+              onPress={this.confirmResetAlert}
+            />
 
             {/* Logout/Exit */}
-            {this.renderItem(
-              I18n.t("profile.main.logout"),
-              I18n.t("profile.logout.menulabel"),
-              this.onLogoutPress,
-              false,
-              true
-            )}
+            <ListItemComponent
+              title={I18n.t("profile.main.logout")}
+              subTitle={I18n.t("profile.logout.menulabel")}
+              onPress={this.onLogoutPress}
+              isLastItem={true}
+            />
 
             <SectionHeaderComponent
               sectionHeader={I18n.t("profile.main.developersSectionHeader")}
             />
 
-            <ListItem>
+            <ListItem style={styles.noRightPadding}>
               <View style={styles.developerSectionItem}>
                 <Text>
                   {I18n.t("profile.main.experimentalFeatures.confirmTitle")}
@@ -312,7 +290,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               </View>
             </ListItem>
 
-            <ListItem>
+            <ListItem style={styles.noRightPadding}>
               <View style={styles.developerSectionItem}>
                 <View style={styles.developerSectionItemLeft}>
                   <Text style={styles.itemLeftText}>
@@ -332,7 +310,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               </View>
             </ListItem>
 
-            <ListItem>
+            <ListItem style={styles.noRightPadding}>
               <View style={styles.developerSectionItem}>
                 <Text>{I18n.t("profile.main.debugMode")}</Text>
                 <Switch
@@ -344,7 +322,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
             {this.props.isDebugModeEnabled && (
               <React.Fragment>
-                <ListItem>
+                <ListItem style={styles.noRightPadding}>
                   <Button
                     info={true}
                     small={true}
@@ -360,7 +338,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   </Button>
                 </ListItem>
                 {backendInfo && (
-                  <ListItem>
+                  <ListItem style={styles.noRightPadding}>
                     <Button
                       info={true}
                       small={true}
@@ -377,7 +355,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   </ListItem>
                 )}
                 {sessionToken && (
-                  <ListItem>
+                  <ListItem style={styles.noRightPadding}>
                     <Button
                       info={true}
                       small={true}
@@ -392,7 +370,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   </ListItem>
                 )}
                 {walletToken && (
-                  <ListItem>
+                  <ListItem style={styles.noRightPadding}>
                     <Button
                       info={true}
                       small={true}
@@ -407,7 +385,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   </ListItem>
                 )}
 
-                <ListItem>
+                <ListItem style={styles.noRightPadding}>
                   <Button
                     info={true}
                     small={true}
@@ -423,7 +401,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 </ListItem>
 
                 {notificationToken && (
-                  <ListItem>
+                  <ListItem style={styles.noRightPadding}>
                     <Button
                       info={true}
                       small={true}
@@ -439,7 +417,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   </ListItem>
                 )}
 
-                <ListItem>
+                <ListItem style={styles.noRightPadding}>
                   <Button
                     danger={true}
                     small={true}
@@ -449,7 +427,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   </Button>
                 </ListItem>
 
-                <ListItem>
+                <ListItem style={styles.noRightPadding}>
                   <Button
                     danger={true}
                     small={true}
