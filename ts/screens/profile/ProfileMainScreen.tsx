@@ -1,10 +1,8 @@
 import {
   Button,
   H3,
-  Left,
   List,
   ListItem,
-  Right,
   Switch,
   Text,
   Toast,
@@ -28,8 +26,6 @@ import SectionHeaderComponent from "../../components/screens/SectionHeaderCompon
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
-import H5 from "../../components/ui/H5";
-import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
