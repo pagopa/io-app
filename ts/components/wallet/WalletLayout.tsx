@@ -7,14 +7,15 @@
  * wrapped in a ScrollView, and optionally a
  * footer with a button for starting a new payment
  */
+/**
+ * TODO: utilizzare il nuovo componente DarkLayout
+ */
 import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import customVariables from "../../theme/variables";
-import AnimatedScreenContent from "../screens/AnimatedScreenContent";
-import ScreenContent from "../screens/ScreenContent";
-import TopScreenComponent from "../screens/TopScreenComponent";
+import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
 import PagoPALogo from "./PagoPALogo";
 
@@ -29,11 +30,6 @@ type Props = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
-  headerContents: {
-    backgroundColor: customVariables.brandDarkGray,
-    paddingHorizontal: customVariables.contentPadding
-  },
-
   whiteBg: {
     backgroundColor: customVariables.colorWhite,
     marginBottom: 10
@@ -83,19 +79,6 @@ export default class WalletLayout extends React.Component<Props> {
     );
   }
 
-  private screenContent() {
-    return (
-      <React.Fragment>
-        <View style={styles.headerContents}>
-          <View spacer={true} />
-          {this.props.topContent}
-        </View>
-
-        {this.props.children}
-      </React.Fragment>
-    );
-  }
-
   public render(): React.ReactNode {
     const {
       title,
@@ -106,39 +89,22 @@ export default class WalletLayout extends React.Component<Props> {
     } = this.props;
 
     return (
-      <TopScreenComponent
-        goBack={allowGoBack}
-        title={title}
-        dark={true}
+      <DarkLayout
+        bounces={false}
+        allowGoBack={allowGoBack}
         headerBody={<PagoPALogo />}
+        title={title ? title : I18n.t("wallet.wallet")}
+        icon={require("../../../img/wallet/bank.png")}
+        contentStyle={contentStyle}
+        hasDynamicSubHeader={this.props.hasDynamicSubHeader}
+        dynamicSubHeader={this.dynamicSubHeader()}
+        topContentHeight={250}
+        topContent={this.props.topContent}
+        hideHeader={hideHeader}
+        footerContent={footerContent}
       >
-        {this.props.hasDynamicSubHeader ? (
-          <AnimatedScreenContent
-            hideHeader={hideHeader}
-            title={title ? title : I18n.t("wallet.wallet")}
-            icon={require("../../../img/wallet/bank.png")}
-            dark={true}
-            contentStyle={contentStyle}
-            dynamicSubHeader={this.dynamicSubHeader()}
-            topContentHeight={250}
-            animationOffset={40}
-          >
-            {this.screenContent()}
-          </AnimatedScreenContent>
-        ) : (
-          <ScreenContent
-            hideHeader={hideHeader}
-            title={title ? title : I18n.t("wallet.wallet")}
-            icon={require("../../../img/wallet/bank.png")}
-            dark={true}
-            contentStyle={contentStyle}
-          >
-            {this.screenContent()}
-          </ScreenContent>
-        )}
-
-        {footerContent && <View footer={true}>{footerContent}</View>}
-      </TopScreenComponent>
+        {this.props.children}
+      </DarkLayout>
     );
   }
 }
