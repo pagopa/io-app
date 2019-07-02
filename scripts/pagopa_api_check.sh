@@ -56,7 +56,7 @@ printf "\n"
 if [ $VAR_LENGTH -eq "0" ]; then
     echo $SEND_MSG
 else
-    KO_MSG="⚠️ $MB_SLACK ko. It seems *PROD* and *DEV* pagoPa specifications are different"
+    KO_MSG="⚠️ $MB_SLACK It seems *PROD* and *DEV* pagoPa specifications are different"
     echo "⚠️  It seems PROD and DEV pagoPa specifications are different"
     SEND_MSG=$KO_MSG
     SEND_EXIT=1
