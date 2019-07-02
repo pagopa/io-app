@@ -22,6 +22,12 @@ export const fingerprintAcknowledge = createAsyncAction(
 
 export const abortOnboarding = createStandardAction("ABORT_ONBOARDING")();
 
-export type OnboardingActions = ActionType<
-  typeof tosAccept | typeof fingerprintAcknowledge | typeof abortOnboarding
->;
+export const clearOnboarding = createStandardAction("CLEAR_ONBOARDING")();
+
+type OnboardingActionTypes =
+  | typeof tosAccept
+  | typeof fingerprintAcknowledge
+  | typeof abortOnboarding
+  | typeof clearOnboarding;
+
+export type OnboardingActions = ActionType<OnboardingActionTypes>;
