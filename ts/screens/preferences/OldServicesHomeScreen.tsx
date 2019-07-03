@@ -118,7 +118,9 @@ class OldServicesHomeScreen extends React.Component<Props> {
               onRefresh={refreshServices}
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
-              isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
+              isExperimentalFeaturesEnabled={
+                this.props.isExperimentalFeaturesEnabled
+              }
             />
           )
       )
