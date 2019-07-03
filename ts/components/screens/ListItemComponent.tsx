@@ -13,7 +13,7 @@ type Props = Readonly<{
   isFirstItem?: boolean;
   isLastItem?: boolean;
   hasBadge?: boolean;
-  iconName?: any;
+  iconName?: string;
 }>;
 
 const ICON_SIZE = 24;
