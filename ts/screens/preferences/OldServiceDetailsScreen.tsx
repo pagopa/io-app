@@ -17,7 +17,6 @@ import {
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import createOpenLink from "react-native-open-maps";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import H4 from "../../components/ui/H4";
@@ -30,6 +29,7 @@ import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { openMaps } from "../../utils/openMaps";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import {
@@ -442,9 +442,7 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
                 I18n.t("services.contactAddress"),
                 address,
                 () => {
-                  createOpenLink({
-                    query: address
-                  });
+                  openMaps(address);
                 }
               )}
             {phone &&
