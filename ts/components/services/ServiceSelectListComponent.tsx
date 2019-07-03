@@ -110,7 +110,7 @@ export class ServiceSelectListComponent extends React.PureComponent<
   Props,
   State
 > {
-  private sectionedMultiSelect = React.createRef<SectionedMultiSelect>();
+  private sectionedMultiSelect: any;
 
   constructor(props: Props) {
     super(props);
@@ -118,19 +118,20 @@ export class ServiceSelectListComponent extends React.PureComponent<
       selectedItems: []
     };
   }
+
   public onSelectedItemsChange = (selectedItems: ReadonlyArray<any>) => {
     this.setState({ selectedItems });
   };
 
   private onPressCancel = () => {
-    if (this.sectionedMultiSelect.current !== null) {
-      this.sectionedMultiSelect.current._cancelSelection();
+    if (this.sectionedMultiSelect !== null) {
+      this.sectionedMultiSelect._cancelSelection();
     }
   };
 
   private onPressSave = () => {
-    if (this.sectionedMultiSelect.current !== null) {
-      this.sectionedMultiSelect.current._submitSelection();
+    if (this.sectionedMultiSelect !== null) {
+      this.sectionedMultiSelect._submitSelection();
     }
   };
 
@@ -138,6 +139,7 @@ export class ServiceSelectListComponent extends React.PureComponent<
     const cancelButtonProps = {
       block: true,
       light: true,
+      bordered: true,
       onPress: this.onPressCancel,
       title: I18n.t("global.buttons.cancel")
     };
@@ -161,7 +163,8 @@ export class ServiceSelectListComponent extends React.PureComponent<
     return (
       <View>
         <SectionedMultiSelect
-          ref={this.sectionedMultiSelect}
+          // tslint:disable-next-line: no-object-mutation
+          ref={component => (this.sectionedMultiSelect = component)}
           items={items}
           uniqueKey="id"
           subKey="children"
