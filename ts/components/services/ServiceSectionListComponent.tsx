@@ -54,9 +54,8 @@ class ServiceSectionListComponent extends React.Component<Props> {
 
     return (
       readServices !== undefined &&
-      Object.keys(readServices).find(k => {
-        return service !== undefined && k === service.service_id;
-      }) !== undefined
+      service !== undefined &&
+      readServices[service.service_id] !== undefined
     );
   };
 
