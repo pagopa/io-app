@@ -9,6 +9,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
 
 import PreferenceItem from "../../components/PreferenceItem";
+import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
@@ -185,30 +186,27 @@ class PreferencesScreen extends React.Component<Props, State> {
                 />
               </ListItem>
             )}
-            <ListItem onPress={unavailableAlert}>
-              <PreferenceItem
-                kind="value"
-                title={I18n.t("profile.preferences.list.email")}
-                icon="io-email"
-                valuePreview={profileData.spid_email}
-              />
-            </ListItem>
-            <ListItem onPress={unavailableAlert}>
-              <PreferenceItem
-                kind="value"
-                title={I18n.t("profile.preferences.list.mobile_phone")}
-                icon="io-phone-number"
-                valuePreview={profileData.spid_mobile_phone}
-              />
-            </ListItem>
-            <ListItem onPress={languageAlert}>
-              <PreferenceItem
-                kind="value"
-                title={I18n.t("profile.preferences.list.language")}
-                icon="io-languages"
-                valuePreview={languages}
-              />
-            </ListItem>
+
+            <ListItemComponent
+              title={I18n.t("profile.preferences.list.email")}
+              subTitle={profileData.spid_email}
+              iconName={"io-email"}
+              onPress={unavailableAlert}
+            />
+
+            <ListItemComponent
+              title={I18n.t("profile.preferences.list.mobile_phone")}
+              subTitle={languages}
+              iconName={"io-phone-number"}
+              onPress={unavailableAlert}
+            />
+
+            <ListItemComponent
+              title={I18n.t("profile.preferences.list.language")}
+              subTitle={profileData.spid_mobile_phone}
+              iconName={"io-languages"}
+              onPress={languageAlert}
+            />
           </List>
         </ScreenContent>
       </TopScreenComponent>

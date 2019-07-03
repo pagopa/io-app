@@ -13,13 +13,13 @@ type Props = Readonly<{
   isFirstItem?: boolean;
   isLastItem?: boolean;
   hasBadge?: boolean;
+  iconName?: any;
 }>;
 
 const ICON_SIZE = 24;
 
 const styles = StyleSheet.create({
   listItem: {
-    flexDirection: "column",
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: customVariables.spacerHeight,
@@ -29,14 +29,11 @@ const styles = StyleSheet.create({
     paddingRight: customVariables.spacingBase
   },
   flexRow: {
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
   serviceName: {
-    flex: 1,
     fontWeight: "700"
-  },
-  center: {
-    alignSelf: "center"
   },
   description: {
     paddingRight: ICON_SIZE,
@@ -51,29 +48,52 @@ export default class ListItemComponent extends React.Component<Props> {
   public render() {
     return (
       <ListItem
-        style={[styles.listItem, this.props.isLastItem && styles.noBorder]}
+        style={[
+          styles.listItem,
+          this.props.isLastItem && styles.noBorder,
+          styles.flexRow
+        ]}
         onPress={this.props.onPress}
         first={this.props.isFirstItem}
       >
-        <View style={styles.flexRow}>
-          {this.props.hasBadge && (
-            <View style={styles.spacingBase}>
-              <BadgeComponent />
-            </View>
-          )}
-          <H5 numberOfLines={2} style={styles.serviceName}>
-            {this.props.title}
-          </H5>
+        <View
+          style={[
+            {
+              flexDirection: "column",
+              justifyContent: "space-between",
+              flexGrow: 1
+            }
+          ]}
+        >
+          <View style={styles.flexRow}>
+            {this.props.hasBadge && (
+              <View style={styles.spacingBase}>
+                <BadgeComponent />
+              </View>
+            )}
+            <H5 numberOfLines={2} style={styles.serviceName}>
+              {this.props.title}
+            </H5>
+            {!this.props.iconName && (
+              <IconFont
+                name={"io-right"}
+                size={ICON_SIZE}
+                color={customVariables.contentPrimaryBackground}
+              />
+            )}
+          </View>
+          <Text numberOfLines={1} style={styles.description}>
+            {this.props.subTitle}
+          </Text>
+        </View>
+        {this.props.iconName && (
           <IconFont
-            style={styles.center}
-            name={"io-right"}
-            size={ICON_SIZE}
+            name={this.props.iconName}
+            size={ICON_SIZE * 2}
+            style={{ alignSelf: "center" }}
             color={customVariables.contentPrimaryBackground}
           />
-        </View>
-        <Text numberOfLines={1} style={styles.description}>
-          {this.props.subTitle}
-        </Text>
+        )}
       </ListItem>
     );
   }
