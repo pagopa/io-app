@@ -10,6 +10,7 @@ import { StyleSheet } from "react-native";
 
 import I18n from "i18n-js";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { getEnabledChannelsForService } from "../../screens/preferences/common";
 import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import H5 from "./../ui/H5";
@@ -62,12 +63,26 @@ export class NewServiceListItem extends React.PureComponent<Props> {
     const onPress = pot.toUndefined(
       pot.map(potService, service => () => this.props.onSelect(service))
     );
+    const enabledChannels = pot.map(potService, service =>
+      getEnabledChannelsForService(this.props.profile, service.service_id)
+    );
 
     const serviceName = pot.isLoading(potService)
       ? I18n.t("global.remoteStates.loading")
       : pot.isError(potService) || pot.isNone(potService)
         ? I18n.t("global.remoteStates.notAvailable")
         : potService.value.service_name;
+
+    const inboxEnabledLabel = pot.getOrElse(
+      pot.map(
+        enabledChannels,
+        _ =>
+          _.inbox
+            ? I18n.t("services.serviceIsEnabled")
+            : I18n.t("services.serviceNotEnabled")
+      ),
+      undefined
+    );
 
     return (
       <ListItem style={styles.listItem} onPress={onPress}>
@@ -87,10 +102,11 @@ export class NewServiceListItem extends React.PureComponent<Props> {
             color={customVariables.contentPrimaryBackground}
           />
         </View>
+        {inboxEnabledLabel && (
           <Text numberOfLines={1} style={styles.description}>
-              {/**TODO: add inboxEnabledLabel*/}
-            </Text>
-          )}
+            {inboxEnabledLabel}
+          </Text>
+        )}
       </ListItem>
     );
   }
