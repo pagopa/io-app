@@ -22,7 +22,6 @@ import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigatio
 import { profileUpsert } from "../../store/actions/profile";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { serviceMetadataByIdSelector } from "../../store/reducers/content";
 import { ProfileState } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
@@ -157,7 +156,6 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     profile: state.profile,
     sections,
-    servicesMetadataById: serviceMetadataByIdSelector(state),
     allServicesId: Object.keys(services.byId),
     isLoading,
     searchText: searchTextSelector(state),
