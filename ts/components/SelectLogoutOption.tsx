@@ -55,7 +55,7 @@ class SelectLogoutOption extends React.PureComponent<Props> {
               onPress={() =>
                 this.props.onOptionSelected({ keepUserData: true })
               }
-              extendedSubTitle={true}
+              useExtendedSubTitle={true}
             />
 
             <ListItemComponent
@@ -64,7 +64,7 @@ class SelectLogoutOption extends React.PureComponent<Props> {
               onPress={() =>
                 this.props.onOptionSelected({ keepUserData: false })
               }
-              extendedSubTitle={true}
+              useExtendedSubTitle={true}
             />
           </List>
           <View style={styles.separator} />

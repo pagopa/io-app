@@ -37,7 +37,7 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
             "profile.main.mainPrivacy.privacyPolicy.description"
           )}
           onPress={() => props.navigation.navigate(ROUTES.PROFILE_PRIVACY)}
-          extendedSubTitle={true}
+          useExtendedSubTitle={true}
         />
 
         {/* Remove account */}
@@ -47,7 +47,7 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
             "profile.main.mainPrivacy.removeAccount.description"
           )}
           onPress={unavailableAlert}
-          extendedSubTitle={true}
+          useExtendedSubTitle={true}
         />
 
         {/* Export your data */}
@@ -55,7 +55,7 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
           title={I18n.t("profile.main.mainPrivacy.exportData.title")}
           subTitle={I18n.t("profile.main.mainPrivacy.exportData.description")}
           onPress={unavailableAlert}
-          extendedSubTitle={true}
+          useExtendedSubTitle={true}
         />
       </List>
     </ScreenContent>

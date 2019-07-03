@@ -15,7 +15,7 @@ type Props = Readonly<{
   hasBadge?: boolean;
   iconName?: string;
   hideIcon?: boolean;
-  extendedSubTitle?: boolean;
+  useExtendedSubTitle?: boolean;
 }>;
 
 const ICON_SIZE = 24;
@@ -86,7 +86,7 @@ export default class ListItemComponent extends React.Component<Props> {
               )}
           </View>
           <Text
-            numberOfLines={this.props.extendedSubTitle ? undefined : 1}
+            numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
             style={styles.description}
           >
             {this.props.subTitle}
