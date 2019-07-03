@@ -33,9 +33,10 @@ const ITEM_HEIGHT = 158;
 const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
 
+const TOP_INDICATOR_HEIGHT = 70;
+const MARGIN_TOP_EMPTY_LIST = 35;
+
 const screenWidth = Dimensions.get("screen").width;
-const topIndicatorHeight = 70;
-const marginTopEmptyList = 35;
 
 const styles = StyleSheet.create({
   // List
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: topIndicatorHeight / 2
+    bottom: TOP_INDICATOR_HEIGHT / 2
   }
 });
 
@@ -377,7 +378,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
-          height: topIndicatorHeight
+          height: TOP_INDICATOR_HEIGHT
         }}
       >
         <Button
@@ -409,7 +410,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         <PullSectionList
           loadMoreData={this.loadMoreData}
           topIndicatorRender={this.topIndicatorRender}
-          topIndicatorHeight={topIndicatorHeight}
+          topIndicatorHeight={TOP_INDICATOR_HEIGHT}
           sectionsLength={sections.length}
           ref={this.sectionListRef}
           ListEmptyComponent={ListEmptyComponent}
@@ -426,7 +427,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           bounces={false}
           style={[
             {
-              marginTop: sections.length === 0 ? marginTopEmptyList : 0
+              marginTop: sections.length === 0 ? MARGIN_TOP_EMPTY_LIST : 0
             },
             styles.scrollList
           ]}
