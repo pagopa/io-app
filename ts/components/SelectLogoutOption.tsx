@@ -1,12 +1,7 @@
 import {
   Container,
   Content,
-  H3,
-  Left,
   List,
-  ListItem,
-  Right,
-  Text,
   View
 } from "native-base";
 import React from "react";
@@ -14,11 +9,9 @@ import { BackHandler, StyleSheet } from "react-native";
 
 import I18n from "../i18n";
 import variables from "../theme/variables";
-
 import { LogoutOption } from "../store/actions/authentication";
 import ListItemComponent from "./screens/ListItemComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import IconFont from "./ui/IconFont";
 
 const styles = StyleSheet.create({
   content: {
