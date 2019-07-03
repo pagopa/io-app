@@ -238,7 +238,6 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     );
   }
 
-  // TODO: add real barcode
   private renderBarCode(fiscalCode: FiscalCode, isLandscape: boolean) {
     return isLandscape ? (
       <View
