@@ -93,7 +93,10 @@ class ServiceSectionListComponent extends React.Component<Props> {
   }): React.ReactNode =>
     this.props.isExperimentalFeaturesEnabled ? (
       <ListItem style={styles.organization}>
-        {/* TODO: introduce organization logo and alignment from https://github.com/teamdigitale/io-app/pull/1155 */}
+        {/* TODO: 
+          - introduce organization logo and alignment from https://github.com/teamdigitale/io-app/pull/1155 
+          - use SectionHeader from https://www.pivotaltracker.com/story/show/167036251
+          */}
         <View
           style={[
             {
