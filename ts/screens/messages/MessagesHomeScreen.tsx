@@ -150,7 +150,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
    */
   private renderTabs = () => {
     const {
-      isExperimentalFeaturesEnabled,
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
@@ -261,25 +260,23 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             }
           />
         </Tab>
-        {isExperimentalFeaturesEnabled && (
-          <Tab
-            heading={
-              <TabHeading>
-                <Text style={styles.tabBarContent}>
-                  {I18n.t("messages.tab.deadlines")}
-                </Text>
-              </TabHeading>
-            }
-          >
-            <MessagesDeadlines
-              messagesState={lexicallyOrderedMessagesState}
-              servicesById={servicesById}
-              paymentsByRptId={paymentsByRptId}
-              setMessagesArchivedState={updateMessagesArchivedState}
-              navigateToMessageDetail={navigateToMessageDetail}
-            />
-          </Tab>
-        )}
+        <Tab
+          heading={
+            <TabHeading>
+              <Text style={styles.tabBarContent}>
+                {I18n.t("messages.tab.deadlines")}
+              </Text>
+            </TabHeading>
+          }
+        >
+          <MessagesDeadlines
+            messagesState={lexicallyOrderedMessagesState}
+            servicesById={servicesById}
+            paymentsByRptId={paymentsByRptId}
+            setMessagesArchivedState={updateMessagesArchivedState}
+            navigateToMessageDetail={navigateToMessageDetail}
+          />
+        </Tab>
 
         <Tab
           heading={
@@ -305,9 +302,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
                         {
                           nativeEvent: {
                             contentOffset: {
-                              y: isExperimentalFeaturesEnabled
-                                ? this.animatedScrollPositions[2]
-                                : this.animatedScrollPositions[1]
+                              y: this.animatedScrollPositions[2]
                             }
                           }
                         }
@@ -383,8 +378,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isExperimentalFeaturesEnabled:
-    state.persistedPreferences.isExperimentalFeaturesEnabled,
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state),
