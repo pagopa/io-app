@@ -346,8 +346,6 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   return {
     wallets: pot.toUndefined(getWalletsById(state)),
-    isExperimentalFeaturesEnabled:
-      state.persistedPreferences.isExperimentalFeaturesEnabled,
     isLoading,
     psp: pot.toUndefined(potPsp)
   };
