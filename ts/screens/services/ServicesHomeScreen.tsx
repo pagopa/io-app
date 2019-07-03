@@ -5,9 +5,9 @@ import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { NavigationScreenProps } from "react-navigation";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import OtherServices from "../../components/services/OtherServices";
 import ServicesLocal from "../../components/services/ServicesLocal";
 import ServicesNational from "../../components/services/ServicesNational";
+import ServicesOther from "../../components/services/ServicesOther";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -250,7 +250,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          <OtherServices
+          <ServicesOther
             animated={{
               onScroll: Animated.event(
                 [

@@ -16,11 +16,11 @@ type Props = AnimatedProps;
 /**
  * A component to render a list of other services.
  */
-class OtherServices extends React.PureComponent<Props> {
+class ServicesOther extends React.PureComponent<Props> {
   public render() {
     const { animated } = this.props;
     return <ServiceList {...this.props} animated={animated} />;
   }
 }
 
-export default OtherServices;
+export default ServicesOther;
