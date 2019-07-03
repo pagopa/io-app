@@ -13,6 +13,7 @@ import {
   put,
   select,
   take,
+  takeEvery,
   takeLatest
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
@@ -26,12 +27,15 @@ import {
   fetchPaymentManagerLongTimeout
 } from "../config";
 import {
+  backToEntrypointPayment,
   paymentAttiva,
   paymentCheck,
   paymentDeletePayment,
   paymentExecutePayment,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
+  paymentInitializeEntrypointRoute,
+  paymentInitializeState,
   paymentUpdateWalletPsp,
   paymentVerifica,
   runDeleteActivePaymentSaga,
@@ -91,6 +95,13 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 
+import { NavigationActions } from "react-navigation";
+import ROUTES from "../navigation/routes";
+import { navigateToWalletHome } from "../store/actions/navigation";
+import {
+  getCurrentRouteKey,
+  getCurrentRouteName
+} from "../store/middlewares/analytics";
 import { SessionManager } from "../utils/SessionManager";
 
 /**
@@ -650,4 +661,52 @@ export function* watchWalletSaga(
     paymentManagerClient,
     pmSessionManager
   );
+}
+
+/**
+ * This saga track each time a new payment of the route from which it started is initiated
+ */
+export function* watchPaymentInitializeSaga(): Iterator<Effect> {
+  yield takeEvery(getType(paymentInitializeState), function*() {
+    const nav: GlobalState["nav"] = yield select<GlobalState>(_ => _.nav);
+    const currentRouteName = getCurrentRouteName(nav);
+    const currentRouteKey = getCurrentRouteKey(nav);
+    if (currentRouteName !== undefined && currentRouteKey !== undefined) {
+      yield put(
+        paymentInitializeEntrypointRoute({
+          name: currentRouteName,
+          key: currentRouteKey
+        })
+      );
+    }
+  });
+}
+
+/**
+ * This saga back to entrypoint payment if the payment was initiated from the message list or detail
+ * otherwise navigate to the Home of wallet
+ */
+export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
+  yield takeEvery(getType(backToEntrypointPayment), function*() {
+    const entrypointRoute: GlobalState["wallet"]["payment"]["entrypointRoute"] = yield select<
+      GlobalState
+    >(_ => _.wallet.payment.entrypointRoute);
+    if (entrypointRoute !== undefined) {
+      const routeName = entrypointRoute ? entrypointRoute.name : undefined;
+      const key = entrypointRoute ? entrypointRoute.key : undefined;
+
+      // if the payment was initiated from the message list or detail go back
+      if (
+        routeName === ROUTES.MESSAGES_HOME ||
+        routeName === ROUTES.MESSAGE_DETAIL
+      ) {
+        const navigationBackAction = NavigationActions.back({
+          key
+        });
+        yield put(navigationBackAction);
+      } else {
+        yield call(navigateToWalletHome);
+      }
+    }
+  });
 }
