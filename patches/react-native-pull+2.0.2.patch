@@ -74,7 +74,7 @@ index 54404ff..4ff55b4 100644
              </ScrollView>
          );
 diff --git a/node_modules/react-native-pull/Pullable.js b/node_modules/react-native-pull/Pullable.js
-index 1c647a7..d9c2395 100644
+index 1c647a7..a08e803 100644
 --- a/node_modules/react-native-pull/Pullable.js
 +++ b/node_modules/react-native-pull/Pullable.js
 @@ -3,16 +3,11 @@
@@ -102,7 +102,7 @@ index 1c647a7..d9c2395 100644
 -                this.scroll.scrollTo({x:0, y: gesture.dy * -1});
 +                if (this.props.sections) {
 +                    //ending animation to close button
-+                    if (!this.flagAnimationButton && this.props.sectionsLength>0) {
++                    if (!this.flagAnimationButton && this.props.sectionsLength > 0) {
 +                        this.scroll.scrollToLocation({
 +                            animated: true,
 +                            sectionIndex: 0,
