@@ -1,4 +1,5 @@
 import { createTransform, TransformIn, TransformOut } from "redux-persist";
+import { DateFromISOString } from "../../utils/dates";
 
 /**
  *  if value is a Date object, a string in ISO8601 format is returned
@@ -6,7 +7,7 @@ import { createTransform, TransformIn, TransformOut } from "redux-persist";
 
 const dataReplacer = (_: any, value: any): any => {
   if (value !== undefined && value instanceof Date) {
-    return value.toISOString();
+    return DateFromISOString.encode(value);
   }
   return value;
 };
@@ -19,7 +20,7 @@ const dateReviver = (_: any, value: any): any => {
     typeof value === "string" &&
     value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)
   ) {
-    return new Date(value);
+    return DateFromISOString.decode(value).getOrElse(new Date(value));
   }
   return value;
 };

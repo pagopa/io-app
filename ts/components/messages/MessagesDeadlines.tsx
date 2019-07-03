@@ -22,6 +22,7 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import customVariables from "../../theme/variables";
 import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
+import { DateFromISOString } from "../../utils/dates";
 import {
   InjectedWithMessagesSelectionProps,
   withMessagesSelection
@@ -148,9 +149,9 @@ const generateSections = (
             (accumulator, messageAgendaItem) => {
               // As title of the section we use the ISOString rapresentation
               // of the due_date day.
-              const title = startOfDay(
-                messageAgendaItem.e1.content.due_date
-              ).toISOString();
+              const title = DateFromISOString.encode(
+                startOfDay(messageAgendaItem.e1.content.due_date)
+              );
               if (
                 accumulator.lastTitle.isNone() ||
                 title !== accumulator.lastTitle.value
@@ -200,7 +201,10 @@ const filterSectionsWithTimeLimit = (
   const filteredSections: Sections = [];
 
   for (const section of sections) {
-    const sectionTime = new Date(section.title).getTime();
+    const dateSection = DateFromISOString.decode(section.title).getOrElse(
+      new Date(section.title)
+    );
+    const sectionTime = dateSection.getTime();
     if (sectionTime > toTimeLimit) {
       break;
     }
