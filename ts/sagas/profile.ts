@@ -115,7 +115,6 @@ function* createOrUpdateProfileSaga(
     return;
   }
 
-  // TODO: Implement logic when a 429 persist from upstream API
   if (response.value.status === 429) {
     yield put(sessionExpired());
     return;
