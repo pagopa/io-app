@@ -13,7 +13,8 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Text, View } from "native-base";
 import React from "react";
-import { SectionListScrollParams, StyleSheet } from "react-native";
+import { Platform, SectionListScrollParams, StyleSheet } from "react-native";
+import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
@@ -26,6 +27,7 @@ import {
   withMessagesSelection
 } from "../helpers/withMessagesSelection";
 import MessageAgenda, {
+  isFakeItem,
   MessageAgendaItem,
   MessageAgendaSection,
   Sections
@@ -34,28 +36,40 @@ import MessageAgenda, {
 // How many past months to load in batch
 const PAST_DATA_MONTHS = 3;
 
+const SCROLL_RANGE_FOR_ANIMATION =
+  customVariables.appHeaderHeight +
+  (Platform.OS === "ios"
+    ? isIphoneX()
+      ? 18
+      : getStatusBarHeight(true)
+    : customVariables.spacerHeight);
+
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
   },
-
   buttonBar: {
     position: "absolute",
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: Platform.OS === "ios" ? SCROLL_RANGE_FOR_ANIMATION : 0,
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",
     backgroundColor: customVariables.brandLightGray,
     padding: 10
   },
-  buttonBarPrimaryButton: {
-    flex: 8,
-    marginLeft: 10
+  buttonBarLeft: {
+    flex: 2
   },
-  buttonBarSecondaryButton: {
-    flex: 4
+  buttonBarRight: {
+    flex: 2
+  },
+  buttonBarCenter: {
+    flex: 2,
+    backgroundColor: customVariables.colorWhite,
+    marginLeft: 10,
+    marginRight: 10
   }
 });
 
@@ -83,6 +97,7 @@ type State = {
   sectionsToRender: Sections;
   maybeLastLoadedStartOfMonthTime: Option<number>;
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
+  allMessageIdsState: Set<string>;
 };
 
 /**
@@ -343,6 +358,20 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     this.props.toggleMessageSelection(id);
   };
 
+  private toggleAllMessagesSelection = () => {
+    const { allMessageIdsState } = this.state;
+    const { selectedMessageIds } = this.props;
+    if (selectedMessageIds.isSome()) {
+      this.props.setSelectedMessageIds(
+        some(
+          allMessageIdsState.size === selectedMessageIds.value.size
+            ? new Set()
+            : allMessageIdsState
+        )
+      );
+    }
+  };
+
   private archiveMessages = () => {
     this.props.resetSelection();
     this.props.setMessagesArchivedState(
@@ -396,6 +425,12 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
               ...moreSectionsToRender,
               ...prevState.sectionsToRender
             ],
+            allMessageIdsState: new Set([
+              ...this.generateMessagesIdsFromMessageAgendaSection(
+                moreSectionsToRender
+              ),
+              ...prevState.allMessageIdsState
+            ]),
             maybeLastLoadedStartOfMonthTime: some(
               startOfMonth(
                 subMonths(lastLoadedStartOfMonthTime, PAST_DATA_MONTHS)
@@ -413,7 +448,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       isWorking: true,
       sections: [],
       sectionsToRender: [],
-      maybeLastLoadedStartOfMonthTime: none
+      maybeLastLoadedStartOfMonthTime: none,
+      allMessageIdsState: new Set()
     };
   }
 
@@ -429,7 +465,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     this.setState({
       isWorking: false,
       sections,
-      sectionsToRender
+      sectionsToRender,
+      allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
+        sectionsToRender
+      )
     });
   }
 
@@ -451,9 +490,28 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       this.setState({
         isWorking: false,
         sections,
-        sectionsToRender
+        sectionsToRender,
+        allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
+          sectionsToRender
+        )
       });
     }
+  }
+
+  private generateMessagesIdsFromMessageAgendaSection(
+    sections: Sections
+  ): Set<string> {
+    // tslint:disable-next-line: readonly-array
+    const messagesIds: string[] = [];
+    sections.forEach(messageAgendaSection =>
+      messageAgendaSection.data.forEach(item => {
+        const idMessage = !isFakeItem(item) ? item.e1.id : undefined;
+        if (idMessage !== undefined) {
+          messagesIds.push(idMessage);
+        }
+      })
+    );
+    return messagesIds.length > 0 ? new Set(messagesIds) : new Set();
   }
 
   public render() {
@@ -464,7 +522,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       selectedMessageIds,
       resetSelection
     } = this.props;
-    const { isWorking, sectionsToRender } = this.state;
+    const { allMessageIdsState, isWorking, sectionsToRender } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
 
@@ -477,13 +535,27 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
               bordered={true}
               light={true}
               onPress={resetSelection}
-              style={styles.buttonBarSecondaryButton}
+              style={styles.buttonBarLeft}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
             <Button
               block={true}
-              style={styles.buttonBarPrimaryButton}
+              bordered={true}
+              style={styles.buttonBarCenter}
+              onPress={this.toggleAllMessagesSelection}
+            >
+              <Text>
+                {I18n.t(
+                  selectedMessageIds.value.size === allMessageIdsState.size
+                    ? "messages.cta.deselectAll"
+                    : "messages.cta.selectAll"
+                )}
+              </Text>
+            </Button>
+            <Button
+              block={true}
+              style={styles.buttonBarRight}
               disabled={selectedMessageIds.value.size === 0}
               onPress={this.archiveMessages}
             >
