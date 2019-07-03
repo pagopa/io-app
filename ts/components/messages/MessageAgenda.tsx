@@ -35,6 +35,7 @@ const ITEM_SEPARATOR_HEIGHT = 1;
 
 const screenWidth = Dimensions.get("screen").width;
 const topIndicatorHeight = 70;
+const marginTopEmptyList = 35;
 
 const styles = StyleSheet.create({
   // List
@@ -425,7 +426,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           bounces={false}
           style={[
             {
-              marginTop: sections.length === 0 ? topIndicatorHeight : 0
+              marginTop: sections.length === 0 ? marginTopEmptyList : 0
             },
             styles.scrollList
           ]}
