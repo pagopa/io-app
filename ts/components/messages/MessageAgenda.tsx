@@ -5,9 +5,7 @@ import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
-  Animated,
   Dimensions,
-  Easing,
   Image,
   Platform,
   SectionList,
@@ -18,6 +16,7 @@ import {
 } from "react-native";
 import variables from "../../theme/variables";
 
+import { PullSectionList } from "react-native-pull";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -33,9 +32,9 @@ const SECTION_HEADER_HEIGHT = 48;
 const ITEM_HEIGHT = 158;
 const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
-// Used to animate button refresh
-const HEADER_SCROLL_DISTANCE = 42 + variables.contentPadding;
-const MIN_PULLDOWN_DISTANCE = 1;
+
+const TOP_INDICATOR_HEIGHT = 70;
+const MARGIN_TOP_EMPTY_LIST = 30;
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -50,7 +49,6 @@ const styles = StyleSheet.create({
   },
   emptyListContentSubtitle: {
     textAlign: "center",
-    paddingTop: customVariables.contentPadding,
     fontSize: customVariables.fontSizeSmall
   },
 
@@ -106,8 +104,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     marginTop: variables.contentPadding,
-    width: screenWidth - variables.contentPadding * 2,
-    backgroundColor: variables.colorWhite
+    width: screenWidth - variables.contentPadding * 2
+  },
+  scrollList: {
+    backgroundColor: variables.colorWhite,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: Platform.OS === "ios" ? 35 : 0
   }
 });
 
@@ -155,16 +160,11 @@ type OwnProps = {
 type Props = OwnProps & SelectedSectionListProps;
 
 type State = {
-  /*
-  Animation states when show and gone load-data button:
-  */
-  animationState: "NOTREADY" | "READY" | "STARTED";
-  scrollY: Animated.Value;
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
 };
 
-const isFakeItem = (item: any): item is FakeItem => {
+export const isFakeItem = (item: any): item is FakeItem => {
   return item.fake;
 };
 
@@ -262,75 +262,15 @@ const FakeItemComponent = (
  * A component to render messages with due_date in a agenda like form.
  */
 class MessageAgenda extends React.PureComponent<Props, State> {
+  // Ref to section list
   private sectionListRef = React.createRef<any>();
-  private overScrollAnim: Animated.Value;
-
-  public componentDidMount() {
-    this.state.scrollY.addListener(value => this.handleScroll(value));
-  }
-
-  public componentWillUnmount() {
-    this.state.scrollY.removeAllListeners();
-  }
-
-  public handleRelease() {
-    if (this.state.animationState === "READY") {
-      // start animation
-      this.animateOverScroll();
-    }
-  }
-
-  private handleScroll(pullDownDistance: any) {
-    if (pullDownDistance.value <= MIN_PULLDOWN_DISTANCE) {
-      if (this.state.animationState === "NOTREADY") {
-        return this.setState({ animationState: "READY" });
-      }
-    } else {
-      this.animateCloseOverScroll();
-      return this.setState({ animationState: "NOTREADY" });
-    }
-  }
-
-  private handleDragMove() {
-    if (this.state.animationState === "READY") {
-      this.animateOverScroll();
-    }
-    return true;
-  }
-
-  private animateOverScroll = () => {
-    this.overScrollAnim.setValue(0);
-    this.setState({ animationState: "STARTED" });
-    Animated.timing(this.overScrollAnim, {
-      toValue: HEADER_SCROLL_DISTANCE,
-      duration: 50,
-      easing: Easing.linear,
-      useNativeDriver: true
-    }).start();
-  };
-
-  private animateCloseOverScroll = () => {
-    if (this.state.animationState === "STARTED") {
-      this.setState({ animationState: "NOTREADY" });
-      Animated.timing(this.overScrollAnim, {
-        toValue: 0,
-        duration: 50,
-        easing: Easing.linear,
-        useNativeDriver: true
-      }).start();
-    }
-  };
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      animationState: "NOTREADY",
-      scrollY: new Animated.Value(0),
       itemLayouts: []
     };
-    this.overScrollAnim = new Animated.Value(0);
-    this.handleDragMove = this.handleDragMove.bind(this);
-    this.handleRelease = this.handleRelease.bind(this);
+    this.loadMoreData = this.loadMoreData.bind(this);
   }
 
   public static getDerivedStateFromProps(
@@ -347,6 +287,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     }
 
     return null;
+  }
+
+  private loadMoreData() {
+    this.props.onMoreDataRequest();
   }
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
@@ -426,6 +370,30 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return this.state.itemLayouts[index];
   };
 
+  private topIndicatorRender() {
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          height: TOP_INDICATOR_HEIGHT
+        }}
+      >
+        <Button
+          block={true}
+          primary={true}
+          small={true}
+          bordered={true}
+          style={styles.button}
+          onPress={this.loadMoreData}
+        >
+          <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
+        </Button>
+      </View>
+    );
+  }
+
   public render() {
     const {
       sections,
@@ -435,41 +403,15 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       onContentSizeChange
     } = this.props;
 
-    const { onMoreDataRequest } = this.props;
-
-    const marginTopAnim = this.overScrollAnim.interpolate({
-      inputRange: [0, HEADER_SCROLL_DISTANCE],
-      outputRange: [0, HEADER_SCROLL_DISTANCE],
-      extrapolate: "clamp"
-    });
-
-    const marginTopList = sections.length === 0 ? 0 : -HEADER_SCROLL_DISTANCE;
-
     return (
       <View style={styles.fill}>
-        <Animated.View
-          style={[
-            {
-              useNativeDriver: true
-            },
-            styles.button
-          ]}
-        >
-          <Button
-            block={true}
-            primary={true}
-            small={true}
-            onPress={onMoreDataRequest}
-          >
-            <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
-          </Button>
-        </Animated.View>
-
-        <Animated.SectionList
+        {sections.length === 0 && this.topIndicatorRender()}
+        <PullSectionList
+          loadMoreData={this.loadMoreData}
+          topIndicatorRender={this.topIndicatorRender}
+          topIndicatorHeight={TOP_INDICATOR_HEIGHT}
+          sectionsLength={sections.length}
           ref={this.sectionListRef}
-          onResponderMove={this.handleDragMove}
-          onResponderRelease={this.handleRelease}
-          onScrollEndDrag={this.handleRelease}
           ListEmptyComponent={ListEmptyComponent}
           renderSectionHeader={this.renderSectionHeader}
           renderItem={this.renderItem}
@@ -481,23 +423,14 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           stickySectionHeadersEnabled={true}
           keyExtractor={keyExtractor}
           getItemLayout={this.getItemLayout}
-          bounces={true}
+          bounces={false}
           style={[
             {
-              useNativeDriver: true,
-              transform: [{ translateY: marginTopAnim }]
+              marginTop: sections.length === 0 ? MARGIN_TOP_EMPTY_LIST : 0
             },
-            {
-              flex: 1,
-              marginTop: marginTopList,
-              backgroundColor: variables.colorWhite
-            }
+            styles.scrollList
           ]}
           scrollEventThrottle={8}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
-            { useNativeDriver: true }
-          )}
         />
       </View>
     );
@@ -505,7 +438,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   public scrollToLocation = (params: SectionListScrollParams) => {
     if (this.sectionListRef.current !== null) {
-      this.sectionListRef.current.getNode().scrollToLocation(params);
+      this.sectionListRef.current.scrollToLocation(params);
     }
   };
 }

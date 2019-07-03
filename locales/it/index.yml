@@ -31,8 +31,8 @@ global:
     messages: messaggi
     wallet: portafoglio
     documents: documenti
-    preferences: preferenze
     profile: profilo
+    services: servizi
   actions:
     retry: Si è verificato un errore, si prega di riprovare
     search: Testo da cercare
@@ -102,6 +102,9 @@ profile:
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
       confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
+    preferences:
+      title: Preferenze
+      description: Gestisci le preferenze dell'aplicazione
     privacy:
       title: Privacy
       description: Esporta dati, cancella account
@@ -137,6 +140,31 @@ profile:
     debugMode: Modalità debug
     pagoPaEnv: Ambiente PagoPA di Test
     pagoPAEnvAlert: La modifica richiede il reboot dell'app
+  preferences:
+    title: Preferenze
+    subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
+      Amministrazione.
+    list:
+      biometric_recognition: Riconoscimento biometrico
+      biometric_recognition_status: 
+        enabled: Abilitato
+        disabled: Disabilitato
+      email: Indirizzo email
+      mobile_phone: Numero di telefono
+      language: Lingua
+      digitalDomicile: Domicilio digitale
+      preferred_calendar:
+        title: Calendario preferito
+        not_selected: Non Selezionato
+    empty:
+      default: Nessuna preferenza impostata
+    preferencesHelp: !include preferences_home_help.md
+    unavailable:
+      title: Questa preferenza è impostata nel tuo profilo SPID
+      message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
+    language:
+      title: Questa preferenza è impostata nelle preferenze di sistema
+      message: IO eredita la lingua dal sistema operativo del tuo dispositivo
 navigation:
   messages: Messaggi
   profile: Profilo
@@ -271,6 +299,9 @@ pin_login:
     help:
       title: Accesso con PIN
       content: !include pin_unlock_help.md
+  forgetPin:
+    confirmTitle: Hai dimenticato il PIN?
+    confirmMsg: Per poter scegliere un nuovo PIN dovrai fare di nuovo accesso con SPID.
 forms:
   validators:
     required: Valore richiesto
@@ -297,6 +328,7 @@ payment:
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
   wallet: Portafoglio
+  walletHelp: !include wallet_help.md
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
@@ -527,6 +559,8 @@ messages:
   cta:
     archive: Archivia
     unarchive: Ripristina
+    selectAll: Tutti
+    deselectAll: Nessuno
     payment:
       expired: Pagamento scaduto
       validAlert:
@@ -599,33 +633,6 @@ notifications:
     errorTitle: Notifiche push
     errorMessage: La registrazione verso il servizio di notifiche push ha generato
       un errore
-preferences:
-  title: Preferenze
-  subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
-    Amministrazione.
-  list:
-    biometric_recognition: Riconoscimento biometrico
-    biometric_recognition_status: 
-      enabled: Abilitato
-      disabled: Disabilitato
-    email: Indirizzo email
-    mobile_phone: Numero di telefono
-    services: Elenco dei servizi
-    services_description: Attiva/disattiva i tuoi servizi di IO
-    language: Lingua
-    digitalDomicile: Domicilio digitale
-    preferred_calendar:
-      title: Calendario preferito
-      not_selected: Non Selezionato
-  empty:
-    default: Nessuna preferenza impostata
-  preferencesHelp: !include preferences_home_help.md
-  unavailable:
-    title: Questa preferenza è impostata nel tuo profilo SPID
-    message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
-  language:
-    title: Questa preferenza è impostata nelle preferenze di sistema
-    message: IO eredita la lingua dal sistema operativo del tuo dispositivo
 biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico
@@ -635,8 +642,7 @@ biometric_recognition:
   enroll_btnLabel: Vai alle impostazioni
   needed_to_disable: Riconoscimento richiesto per disabilitare
 services:
-  headerTitle: Servizi
-  title: Elenco dei servizi
+  title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: Il servizio è attivo
@@ -652,6 +658,10 @@ services:
   contactsAndInfo: Contatti ed informazioni
   contactAddress: Indirizzo
   contactPhone: Telefono
+  tab:
+    locals: Locali
+    national: Nazionali
+    otherServices: Altri servizi
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
