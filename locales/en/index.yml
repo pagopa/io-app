@@ -447,6 +447,7 @@ wallet:
   recipient: Recipient
   date: Date
   time: Time
+  psp: Payment provider
   receipt: Receipt
   seeReceipt: See Receipt
   transactions: Transactions
