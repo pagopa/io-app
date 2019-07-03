@@ -145,8 +145,8 @@ export const getAllSections = createSelector(
           data
         };
       })
-      .sort((a, b) => (a.title || "").localeCompare(b.title))
-      .filter(_ => _.data.length > 0);
+      .filter(_ => _.data.length > 0)
+      .sort((a, b) => (a.title || "").localeCompare(b.title));
   }
 );
 
