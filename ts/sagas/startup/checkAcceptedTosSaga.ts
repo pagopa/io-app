@@ -12,7 +12,7 @@ export function* checkAcceptedTosSaga(
   if (
     "accepted_tos_version" in userProfile &&
     userProfile.accepted_tos_version &&
-    userProfile.accepted_tos_version === tosVersion
+    userProfile.accepted_tos_version > tosVersion
   ) {
     return;
   }
