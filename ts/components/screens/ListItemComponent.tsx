@@ -14,6 +14,8 @@ type Props = Readonly<{
   isLastItem?: boolean;
   hasBadge?: boolean;
   iconName?: string;
+  hideIcon?: boolean;
+  extendedSubTitle?: boolean;
 }>;
 
 const ICON_SIZE = 24;
@@ -74,15 +76,19 @@ export default class ListItemComponent extends React.Component<Props> {
             <H5 numberOfLines={2} style={styles.serviceName}>
               {this.props.title}
             </H5>
-            {!this.props.iconName && (
-              <IconFont
-                name={"io-right"}
-                size={ICON_SIZE}
-                color={customVariables.contentPrimaryBackground}
-              />
-            )}
+            {!this.props.iconName &&
+              !this.props.hideIcon && (
+                <IconFont
+                  name={"io-right"}
+                  size={ICON_SIZE}
+                  color={customVariables.contentPrimaryBackground}
+                />
+              )}
           </View>
-          <Text numberOfLines={1} style={styles.description}>
+          <Text
+            numberOfLines={this.props.extendedSubTitle ? undefined : 1}
+            style={styles.description}
+          >
             {this.props.subTitle}
           </Text>
         </View>
