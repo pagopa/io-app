@@ -1,6 +1,5 @@
 /**
  * A component to render the circolar badge
- * TODO: use the same component on all lists (messages, services, transaction)
  */
 import * as React from "react";
 import { Circle, Svg } from "react-native-svg";

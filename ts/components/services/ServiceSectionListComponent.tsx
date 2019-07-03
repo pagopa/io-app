@@ -10,7 +10,8 @@ import {
 
 import { H3, ListItem } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { ServicesByReadState } from "../../store/reducers/entities/services/servicesByReadStatus";
+import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByService";
+
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
 import { ServiceListItem } from "./ServiceListItem";
@@ -24,7 +25,7 @@ type OwnProps = {
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
-  readServices: ServicesByReadState;
+  readServices: ReadStateByServicesId;
 };
 
 type Props = OwnProps;
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
 class ServiceSectionListComponent extends React.Component<Props> {
   private isRead = (
     potService: pot.Pot<ServicePublic, Error>,
-    readServices: ServicesByReadState
+    readServices: ReadStateByServicesId
   ): boolean => {
     const service =
       pot.isLoading(potService) ||
