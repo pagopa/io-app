@@ -7,99 +7,111 @@ import FooterWithButtons from "../ui/FooterWithButtons";
 const items: ReadonlyArray<any> = [
   // this is the parent or 'item'
   {
-    name: "Fruits",
+    name: "Categoria 1",
     id: 0,
     // these are the children or 'sub items'
     children: [
       {
-        name: "Apple",
+        name: "Servizio 1",
+        id: 1
+      },
+      {
+        name: "Servizio 2",
+        id: 2
+      },
+      {
+        name: "Servizio 3",
+        id: 3
+      },
+      {
+        name: "Servizio 4",
+        id: 4
+      },
+      {
+        name: "Servizio 5",
+        id: 5
+      },
+      {
+        name: "Servizio 6",
+        id: 6
+      },
+      {
+        name: "Servizio 7",
+        id: 7
+      },
+      {
+        name: "Servizio 8",
+        id: 8
+      },
+      {
+        name: "Servizio 9",
+        id: 9
+      },
+      {
+        name: "Servizio 10",
         id: 10
       },
       {
-        name: "Strawberry",
-        id: 17
+        name: "Servizio 11",
+        id: 11
       },
       {
-        name: "Pineapple",
+        name: "Servizio 12",
+        id: 12
+      },
+      {
+        name: "Servizio 13",
         id: 13
       },
       {
-        name: "Banana",
+        name: "Servizio 14",
         id: 14
       },
       {
-        name: "Watermelon",
+        name: "Servizio 15",
         id: 15
       },
       {
-        name: "Kiwi fruit",
+        name: "Servizio 16",
         id: 16
       },
       {
-        name: "Apple",
-        id: 20
+        name: "Servizio 17",
+        id: 17
       },
       {
-        name: "Strawberry",
-        id: 21
-      },
-      {
-        name: "Pineapple",
-        id: 22
-      },
-      {
-        name: "Banana",
-        id: 23
-      },
-      {
-        name: "Watermelon",
-        id: 24
-      },
-      {
-        name: "Kiwi fruit",
-        id: 25
-      },
-      {
-        name: "Apple",
-        id: 26
-      },
-      {
-        name: "Strawberry",
-        id: 27
-      },
-      {
-        name: "Pineapple",
-        id: 28
-      },
-      {
-        name: "Banana",
-        id: 29
-      },
-      {
-        name: "Watermelon",
-        id: 30
-      },
-      {
-        name: "Kiwi fruit",
-        id: 31
+        name: "Servizio 18",
+        id: 18
       }
     ]
   },
   {
-    name: "Fruits 2",
+    name: "Categoria 2",
     id: 1,
     // these are the children or 'sub items'
     children: [
       {
-        name: "Passion Fruit",
-        id: 40
+        name: "Servizio 19",
+        id: 19
+      },
+      {
+        name: "Servizio 20",
+        id: 20
+      },
+      {
+        name: "Servizio 21",
+        id: 21
+      },
+      {
+        name: "Servizio 22",
+        id: 22
       }
     ]
   }
 ];
 
 type Props = {
-  test?: string;
+  services?: ReadonlyArray<any>;
 };
 
 type State = {
@@ -168,7 +180,7 @@ export class ServiceSelectListComponent extends React.PureComponent<
           items={items}
           uniqueKey="id"
           subKey="children"
-          selectText="Choose some things..."
+          selectText="Aggiungi le tue aree di interesse"
           showDropDowns={false}
           readOnlyHeadings={true}
           onSelectedItemsChange={this.onSelectedItemsChange}
