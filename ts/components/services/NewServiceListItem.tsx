@@ -2,8 +2,6 @@
  * A component to render the preview of a service
  * TODO:
  *     - make the badge being visible for new services: https://www.pivotaltracker.com/story/show/166761825
- *     - resolve how to properly get description instead the mocked one
- *     - ANALYZE: inboxEnabledLabelis is unused in new version of the app
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import { ListItem, Text, View } from "native-base";
@@ -12,16 +10,13 @@ import { StyleSheet } from "react-native";
 
 import I18n from "i18n-js";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
-import { Badge } from "./../Badge";
 import H5 from "./../ui/H5";
 import IconFont from "./../ui/IconFont";
 
 type Props = Readonly<{
   item: pot.Pot<ServicePublic, Error>;
-  serviceContent?: pot.Pot<ServiceMetadata, string>;
   profile: ProfileState;
   onSelect: (service: ServicePublic) => void;
   hasBadge?: boolean;
@@ -79,7 +74,7 @@ export class NewServiceListItem extends React.PureComponent<Props> {
         <View style={styles.flexRow}>
           {this.props.hasBadge && (
             <View style={styles.spacingBase}>
-              <Badge />
+              {/*TODO: add BadgeComponent from https://www.pivotaltracker.com/story/show/167036251*/}
             </View>
           )}
           <H5 numberOfLines={2} style={styles.serviceName}>
@@ -92,10 +87,8 @@ export class NewServiceListItem extends React.PureComponent<Props> {
             color={customVariables.contentPrimaryBackground}
           />
         </View>
-        {this.props.serviceContent &&
-          pot.isSome(this.props.serviceContent) && (
-            <Text numberOfLines={1} style={styles.description}>
-              {this.props.serviceContent.value.description}
+          <Text numberOfLines={1} style={styles.description}>
+              {/**TODO: add inboxEnabledLabel*/}
             </Text>
           )}
       </ListItem>

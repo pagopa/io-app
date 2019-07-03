@@ -92,12 +92,10 @@ class OldServicesHomeScreen extends React.Component<Props> {
     return (
       <ServiceSectionListComponent
         sections={sections}
-        servicesMetadataById={this.props.servicesMetadataById}
         profile={this.props.profile}
         isRefreshing={this.props.isLoading}
         onRefresh={this.props.refreshServices}
         onSelect={this.onServiceSelect}
-        isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
       />
     );
   };
@@ -120,10 +118,6 @@ class OldServicesHomeScreen extends React.Component<Props> {
               onRefresh={refreshServices}
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
-              servicesMetadataById={this.props.servicesMetadataById}
-              isExperimentalFeaturesEnabled={
-                this.props.isExperimentalFeaturesEnabled
-              }
             />
           )
       )

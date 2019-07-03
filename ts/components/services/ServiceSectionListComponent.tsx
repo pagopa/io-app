@@ -27,7 +27,6 @@ type OwnProps = {
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   isExperimentalFeaturesEnabled?: boolean;
-  servicesMetadataById?: ReturnType<typeof serviceMetadataByIdSelector>;
 };
 
 type Props = OwnProps;
@@ -67,11 +66,6 @@ class ServiceSectionListComponent extends React.Component<Props> {
         item={itemInfo.item}
         profile={this.props.profile}
         onSelect={this.props.onSelect}
-        serviceContent={
-          pot.isSome(itemInfo.item) && this.props.servicesMetadataById
-            ? this.props.servicesMetadataById[itemInfo.item.value.service_id]
-            : undefined
-        }
       />
     ) : (
       <ServiceListItem
