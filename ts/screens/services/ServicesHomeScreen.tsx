@@ -4,6 +4,7 @@ import { Animated, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { ServiceSelectListComponent } from "../../components/services/ServiceSelectListComponent";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -127,7 +128,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               </Text>
             </TabHeading>
           }
-        />
+        >
+          <ServiceSelectListComponent />
+        </Tab>
         <Tab
           heading={
             <TabHeading>

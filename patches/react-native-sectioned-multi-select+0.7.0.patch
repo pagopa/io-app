@@ -1,0 +1,17 @@
+diff --git a/node_modules/react-native-sectioned-multi-select/lib/sectioned-multi-select.js b/node_modules/react-native-sectioned-multi-select/lib/sectioned-multi-select.js
+index 5c1273c..7ead1c1 100644
+--- a/node_modules/react-native-sectioned-multi-select/lib/sectioned-multi-select.js
++++ b/node_modules/react-native-sectioned-multi-select/lib/sectioned-multi-select.js
+@@ -979,9 +979,9 @@ class SectionedMultiSelect extends PureComponent {
+             style={[
+               {
+                 overflow: 'hidden',
+-                marginHorizontal: 18,
+-                marginVertical: 26,
+-                borderRadius: 6,
++                marginHorizontal: 0,
++                marginVertical: 0,
++                borderRadius: 0,
+                 alignSelf: 'stretch',
+                 flex: 1,
+                 backgroundColor: 'white',

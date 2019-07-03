@@ -26,6 +26,7 @@ global:
     back: Back
     confirm: Confirm
     close: Close
+    saveSelection: Save the selection
   navigator:
     messages: messages
     wallet: wallet

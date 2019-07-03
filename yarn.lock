@@ -7116,6 +7116,11 @@ react-native-safe-area-view@^0.12.0:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
 
+react-native-sectioned-multi-select@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-sectioned-multi-select/-/react-native-sectioned-multi-select-0.7.0.tgz#566daf45169301d875d3332c53d0549683670263"
+  integrity sha512-sqjX/SP6X5YFe9yGyHHFdnuu/lMaV5ICcy9NaZyHkrO4FijarhblVk1BwG5sQNQTFwclkzrbECGYTpFnQ4IY+w==
+
 react-native-sha256@1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/react-native-sha256/-/react-native-sha256-1.2.3.tgz#59eaa2c260882ed1e4de94c88e0383726cddc40c"
