@@ -687,3 +687,5 @@ calendarEvents:
 reminders:
   emptyMonth: Non ci sono scadenze in questo mese
   loadMoreData: carica le scadenze del periodo precedente
+openMaps:
+  genericError: Si è verificato un errore durante l'apertura della mappa
