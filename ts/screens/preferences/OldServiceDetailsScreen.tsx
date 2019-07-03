@@ -450,7 +450,7 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
                 Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
               )}
             {email &&
-              renderInformationRow("EMail", email, () =>
+              renderInformationRow("Email", email, () =>
                 Linking.openURL(`mailto:${email}`).then(() => 0, () => 0)
               )}
             {pec &&
