@@ -1,4 +1,4 @@
-import { List, ListItem } from "native-base";
+import { List } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -166,15 +166,15 @@ class PreferencesScreen extends React.Component<Props, State> {
               <ListItemComponent
                 onPress={this.props.navigateToCalendarPreferenceScreen}
                 title={I18n.t(
-                    "profile.preferences.list.preferred_calendar.title"
-                  )}
+                  "profile.preferences.list.preferred_calendar.title"
+                )}
                 subTitle={
-                    this.props.preferredCalendar
-                      ? this.props.preferredCalendar.title
-                      : I18n.t(
-                          "profile.preferences.list.preferred_calendar.not_selected"
-                        )
-                  }
+                  this.props.preferredCalendar
+                    ? this.props.preferredCalendar.title
+                    : I18n.t(
+                        "profile.preferences.list.preferred_calendar.not_selected"
+                      )
+                }
               />
             )}
 
