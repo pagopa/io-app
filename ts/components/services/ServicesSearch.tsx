@@ -3,6 +3,7 @@ import React from "react";
 
 import { SectionListData } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { serviceMetadataByIdSelector } from "../../store/reducers/content";
 import { ProfileState } from "../../store/reducers/profile";
 import { serviceContainsText } from "../../utils/services";
 import { SearchNoResultMessage } from "../search/SearchNoResultMessage";
@@ -15,6 +16,8 @@ type OwnProps = {
   profile: ProfileState;
   onRefresh: () => void;
   navigateToServiceDetail: (service: ServicePublic) => void;
+  servicesMetadataById: ReturnType<typeof serviceMetadataByIdSelector>;
+  isExperimentalFeaturesEnabled?: boolean;
 };
 
 type Props = OwnProps;
@@ -157,6 +160,8 @@ class ServicesSearch extends React.PureComponent<Props, State> {
         isRefreshing={isFiltering}
         onRefresh={onRefresh}
         onSelect={this.handleOnServiceSelect}
+        isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
+        servicesMetadataById={this.props.servicesMetadataById}
       />
     ) : (
       <SearchNoResultMessage errorType="NoResultsFound" />

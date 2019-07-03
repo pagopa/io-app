@@ -12,6 +12,7 @@ import { Service as ServiceMetadata } from "../../../definitions/content/Service
 import { contentServiceLoad } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 /**
  * Stores useful content such as services and organizations metadata,
@@ -81,3 +82,7 @@ export default function content(
       return state;
   }
 }
+
+export const serviceMetadataByIdSelector = (state: GlobalState) => {
+  return state.content.servicesMetadata.byId;
+};

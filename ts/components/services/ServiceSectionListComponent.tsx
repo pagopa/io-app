@@ -10,6 +10,7 @@ import {
 
 import { H3, ListItem, View } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { serviceMetadataByIdSelector } from "../../store/reducers/content";
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
 import H5 from "../ui/H5";
@@ -26,6 +27,7 @@ type OwnProps = {
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   isExperimentalFeaturesEnabled?: boolean;
+  servicesMetadataById?: ReturnType<typeof serviceMetadataByIdSelector>;
 };
 
 type Props = OwnProps;
@@ -65,6 +67,11 @@ class ServiceSectionListComponent extends React.Component<Props> {
         item={itemInfo.item}
         profile={this.props.profile}
         onSelect={this.props.onSelect}
+        serviceContent={
+          pot.isSome(itemInfo.item) && this.props.servicesMetadataById
+            ? this.props.servicesMetadataById[itemInfo.item.value.service_id]
+            : undefined
+        }
       />
     ) : (
       <ServiceListItem
@@ -103,7 +110,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
             styles.organizationIcon
           ]}
         />
-        <H5 style={styles.organizationName}>0{info.section.title}</H5>
+        <H5 style={styles.organizationName}>{info.section.title}</H5>
       </ListItem>
     ) : (
       <ListItem itemHeader={true} style={styles.listItem}>

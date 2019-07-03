@@ -12,15 +12,22 @@ import { StyleSheet } from "react-native";
 
 import I18n from "i18n-js";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import { Badge } from "./../Badge";
 import H5 from "./../ui/H5";
 import IconFont from "./../ui/IconFont";
 
+type Props = Readonly<{
+  item: pot.Pot<ServicePublic, Error>;
+  serviceContent?: pot.Pot<ServiceMetadata, string>;
+  profile: ProfileState;
+  onSelect: (service: ServicePublic) => void;
+  hasBadge?: boolean;
+}>;
+
 const ICON_SIZE = 24;
-const MOCKED_DESCRIPTION =
-  "Descrizione del servizio molto molto lunga che occupa una sola riga";
 
 const styles = StyleSheet.create({
   spacingBase: {
@@ -54,13 +61,6 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = Readonly<{
-  item: pot.Pot<ServicePublic, Error>;
-  profile: ProfileState;
-  onSelect: (service: ServicePublic) => void;
-  hasBadge?: boolean;
-}>;
-
 export class NewServiceListItem extends React.PureComponent<Props> {
   public render() {
     const potService = this.props.item;
@@ -92,10 +92,12 @@ export class NewServiceListItem extends React.PureComponent<Props> {
             color={customVariables.contentPrimaryBackground}
           />
         </View>
-
-        <Text numberOfLines={1} style={styles.description}>
-          {MOCKED_DESCRIPTION}
-        </Text>
+        {this.props.serviceContent &&
+          pot.isSome(this.props.serviceContent) && (
+            <Text numberOfLines={1} style={styles.description}>
+              {this.props.serviceContent.value.description}
+            </Text>
+          )}
       </ListItem>
     );
   }
