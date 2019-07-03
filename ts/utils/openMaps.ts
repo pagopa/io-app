@@ -11,19 +11,16 @@ export function openMaps(
   });
   const latitudeLongitude = `${latitude},${longitude}`;
   const label = streetName;
-  if (latitude && longitude) {
-    const url = Platform.select({
-      ios: `${intentScheme}${label}@${latitudeLongitude}`,
-      android: `${intentScheme}${latitudeLongitude}(${label})`
-    });
-    // tslint:disable no-floating-promises
-    Linking.openURL(url);
-  } else {
-    const url = Platform.select({
-      ios: `${intentScheme}${label}`,
-      android: `${intentScheme}${label}`
-    });
-    // tslint:disable no-floating-promises
-    Linking.openURL(url);
-  }
+  const url =
+    latitude && longitude
+      ? Platform.select({
+          ios: `${intentScheme}${label}@${latitudeLongitude}`,
+          android: `${intentScheme}${latitudeLongitude}(${label})`
+        })
+      : Platform.select({
+          ios: `${intentScheme}${label}`,
+          android: `${intentScheme}${label}`
+        });
+  // tslint:disable no-floating-promises
+  Linking.openURL(url);
 }
