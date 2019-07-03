@@ -1,15 +1,10 @@
-import {
-  Container,
-  Content,
-  List,
-  View
-} from "native-base";
+import { Container, Content, List, View } from "native-base";
 import React from "react";
 import { BackHandler, StyleSheet } from "react-native";
 
 import I18n from "../i18n";
-import variables from "../theme/variables";
 import { LogoutOption } from "../store/actions/authentication";
+import variables from "../theme/variables";
 import ListItemComponent from "./screens/ListItemComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
