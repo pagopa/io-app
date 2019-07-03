@@ -34,7 +34,7 @@ const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
 
 const TOP_INDICATOR_HEIGHT = 70;
-const MARGIN_TOP_EMPTY_LIST = 35;
+const MARGIN_TOP_EMPTY_LIST = 30;
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
   },
   emptyListContentSubtitle: {
     textAlign: "center",
-    paddingTop: customVariables.contentPadding,
     fontSize: customVariables.fontSizeSmall
   },
 
