@@ -8,7 +8,6 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
 
-import PreferenceItem from "../../components/PreferenceItem";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -149,42 +148,34 @@ class PreferencesScreen extends React.Component<Props, State> {
         >
           <List withContentLateralPadding={true}>
             {isFingerprintAvailable && (
-              <ListItem
+              <ListItemComponent
+                title={I18n.t("profile.preferences.list.biometric_recognition")}
                 onPress={this.props.navigateToFingerprintPreferenceScreen}
-              >
-                <PreferenceItem
-                  kind="action"
-                  title={I18n.t(
-                    "profile.preferences.list.biometric_recognition"
-                  )}
-                  valuePreview={
-                    this.props.isFingerprintEnabled
-                      ? I18n.t(
-                          "profile.preferences.list.biometric_recognition_status.enabled"
-                        )
-                      : I18n.t(
-                          "profile.preferences.list.biometric_recognition_status.disabled"
-                        )
-                  }
-                />
-              </ListItem>
+                subTitle={
+                  this.props.isFingerprintEnabled
+                    ? I18n.t(
+                        "profile.preferences.list.biometric_recognition_status.enabled"
+                      )
+                    : I18n.t(
+                        "profile.preferences.list.biometric_recognition_status.disabled"
+                      )
+                }
+              />
             )}
             {hasCalendarPermission && (
-              <ListItem onPress={this.props.navigateToCalendarPreferenceScreen}>
-                <PreferenceItem
-                  kind="action"
-                  title={I18n.t(
+              <ListItemComponent
+                onPress={this.props.navigateToCalendarPreferenceScreen}
+                title={I18n.t(
                     "profile.preferences.list.preferred_calendar.title"
                   )}
-                  valuePreview={
+                subTitle={
                     this.props.preferredCalendar
                       ? this.props.preferredCalendar.title
                       : I18n.t(
                           "profile.preferences.list.preferred_calendar.not_selected"
                         )
                   }
-                />
-              </ListItem>
+              />
             )}
 
             <ListItemComponent
