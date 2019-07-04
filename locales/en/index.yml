@@ -321,6 +321,7 @@ payment:
   recipientFiscalCode: Recipient fiscal code
 wallet:
   wallet: Wallet
+  walletHelp: !include wallet_help.md
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
@@ -447,6 +448,7 @@ wallet:
   recipient: Recipient
   date: Date
   time: Time
+  psp: Payment provider
   receipt: Receipt
   seeReceipt: See Receipt
   transactions: Transactions
@@ -676,3 +678,5 @@ calendarEvents:
 reminders:
   emptyMonth: No reminders for this month
   loadMoreData: loads the deadlines of the previous period
+openMaps:
+  genericError: An error occurred while opening the map
