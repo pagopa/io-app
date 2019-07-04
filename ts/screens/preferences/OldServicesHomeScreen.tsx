@@ -22,6 +22,7 @@ import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigatio
 import { profileUpsert } from "../../store/actions/profile";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { organizationNamesByFiscalCodeSelector } from "../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { ProfileState } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
@@ -125,8 +126,9 @@ class OldServicesHomeScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const { services, organizations } = state.entities;
+  const { services } = state.entities;
 
+  const organizations = organizationNamesByFiscalCodeSelector(state);
   const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
 
   // tslint:disable-next-line:readonly-array
