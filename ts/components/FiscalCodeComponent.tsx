@@ -25,12 +25,12 @@ interface PreviewProps {
 
 interface FullProps extends BaseProps {
   type: "Full";
-  backSide: boolean;
+  getBackSide: boolean;
 }
 
 interface LandscapeProps extends BaseProps {
   type: "Landscape";
-  backSide: boolean;
+  getBackSide: boolean;
 }
 
 type Props = PreviewProps | FullProps | LandscapeProps;
@@ -298,7 +298,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
       <View>
         <Image
           source={
-            this.props.type !== "Preview" && this.props.backSide
+            this.props.type !== "Preview" && this.props.getBackSide
               ? require("./../../img/fiscalCode/fiscalCodeBack.png")
               : require("./../../img/fiscalCode/fiscalCodeFront.png")
           }
@@ -310,14 +310,14 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           ]}
         />
         {this.props.type !== "Preview" &&
-          !this.props.backSide &&
+          !this.props.getBackSide &&
           this.renderFrontContent(
             this.props.profile,
             this.props.type === "Landscape"
           )}
 
         {this.props.type !== "Preview" &&
-          this.props.backSide &&
+          this.props.getBackSide &&
           this.renderBarCode(
             this.props.profile.fiscal_code,
             this.props.type === "Landscape"
