@@ -328,6 +328,7 @@ payment:
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
   wallet: Portafoglio
+  walletHelp: !include wallet_help.md
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
@@ -456,6 +457,7 @@ wallet:
   recipient: Destinatario
   date: Data
   time: Ora
+  psp: Prestatore pagamento
   receipt: Ricevuta
   seeReceipt: Vedi la ricevuta
   transactions: Operazioni
@@ -687,3 +689,5 @@ calendarEvents:
 reminders:
   emptyMonth: Non ci sono scadenze in questo mese
   loadMoreData: carica le scadenze del periodo precedente
+openMaps:
+  genericError: Si è verificato un errore durante l'apertura della mappa
