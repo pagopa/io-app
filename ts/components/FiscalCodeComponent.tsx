@@ -183,6 +183,23 @@ const styles = StyleSheet.create({
     ]
   },
 
+  fullFacSimile: {
+    marginTop: 280 * fullScaleFactor,
+    position: "absolute",
+    fontSize: textFontSizeF,
+    color: customVariables.brandDarkestGray,
+    width: barCodeWidthF
+  },
+
+  landscapeFacSimile: {
+    marginTop: 280 * landscapeScaleFactor,
+    position: "absolute",
+    color: customVariables.brandDarkestGray,
+    fontSize: textFontSizeL,
+    lineHeight: textLineHeightL,
+    width: barCodeWidthL
+  },
+
   fullBareCode: {
     marginTop: barCodeMarginTopF,
     marginLeft: barCodeMarginLeftF,
@@ -257,6 +274,9 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           height={barCodeHeightL - 20} // 20: horizontal default padding of the barcode component
           width={(barCodeWidthL - 20) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
+        <Text bold={true} alignCenter={true} style={styles.landscapeFacSimile}>
+          FAC-SIMILE
+        </Text>
       </View>
     ) : (
       <View style={styles.fullBareCode}>
@@ -266,6 +286,9 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           height={barCodeHeightF - 20}
           width={(barCodeWidthF - 20) / 211}
         />
+        <Text bold={true} alignCenter={true} style={styles.fullFacSimile}>
+          FAC-SIMILE
+        </Text>
       </View>
     );
   }
