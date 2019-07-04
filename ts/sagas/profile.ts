@@ -118,9 +118,9 @@ function* createOrUpdateProfileSaga(
   if (response.value.status !== 200) {
     // We got a error, send a SESSION_UPSERT_FAILURE action
     const error: Error = Error(
-      response.value.value !== undefined
+      response.value.value
         ? response.value.value.title
-        : "" || I18n.t("profile.errors.upsert")
+        : I18n.t("profile.errors.upsert")
     );
 
     yield put(profileUpsert.failure(error));
