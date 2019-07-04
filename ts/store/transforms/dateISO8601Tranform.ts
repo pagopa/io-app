@@ -16,13 +16,8 @@ const dataReplacer = (_: any, value: any): any => {
  *  if value is in a string in ISO8601 format the corrisponding Date object is returned
  */
 const dateReviver = (_: any, value: any): any => {
-  if (
-    typeof value === "string" &&
-    value.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/)
-  ) {
-    return DateFromISOString.decode(value).getOrElse(new Date(value));
-  }
-  return value;
+  const decodedValue = DateFromISOString.decode(value);
+  return decodedValue.isRight() ? decodedValue.value : value;
 };
 
 const encoder: TransformIn<any, string> = (value: any, _: string): any =>

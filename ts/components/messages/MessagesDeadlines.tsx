@@ -201,9 +201,10 @@ const filterSectionsWithTimeLimit = (
   const filteredSections: Sections = [];
 
   for (const section of sections) {
-    const dateSection = DateFromISOString.decode(section.title).getOrElse(
-      new Date(section.title)
-    );
+    const decodedValue = DateFromISOString.decode(section.title);
+    const dateSection = decodedValue.isRight()
+      ? decodedValue.value
+      : section.title;
     const sectionTime = dateSection.getTime();
     if (sectionTime > toTimeLimit) {
       break;
