@@ -42,6 +42,7 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
 import {
+  fetchPsp,
   fetchTransactionFailure,
   fetchTransactionRequest,
   fetchTransactionsRequest,
@@ -80,6 +81,7 @@ import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 import {
   addWalletCreditCardRequestHandler,
   deleteWalletRequestHandler,
+  fetchPspRequestHandler,
   fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
   fetchWalletsRequestHandler,
@@ -658,6 +660,13 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(paymentDeletePayment.request),
     paymentDeletePaymentRequestHandler,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(fetchPsp.request),
+    fetchPspRequestHandler,
     paymentManagerClient,
     pmSessionManager
   );
