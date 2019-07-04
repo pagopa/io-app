@@ -447,6 +447,7 @@ wallet:
   recipient: Recipient
   date: Date
   time: Time
+  psp: Payment provider
   receipt: Receipt
   seeReceipt: See Receipt
   transactions: Transactions
@@ -676,3 +677,5 @@ calendarEvents:
 reminders:
   emptyMonth: No reminders for this month
   loadMoreData: loads the deadlines of the previous period
+openMaps:
+  genericError: An error occurred while opening the map
