@@ -1,8 +1,7 @@
 import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItem, ScrollView, StyleSheet } from "react-native";
-import customVariables from "../theme/variables";
+import { FlatList, ListRenderItem, ScrollView } from "react-native";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 type Props = {
@@ -14,29 +13,6 @@ type Props = {
 type State = {
   selectedItems: ReadonlyArray<any>;
 };
-
-const styles = StyleSheet.create({
-  itemSeparator: {
-    height: 1,
-    backgroundColor: customVariables.brandLightGray
-  },
-  listWrapper: {
-    flex: 1
-  },
-  footerButtonsBar: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    flexDirection: "row",
-    zIndex: 1,
-    justifyContent: "space-around",
-    padding: 10,
-    flex: 1
-  }
-});
-
-const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 export class ChooserListComponent extends React.PureComponent<Props, State> {
   private sectionedMultiSelect: any;
@@ -123,7 +99,6 @@ export class ChooserListComponent extends React.PureComponent<Props, State> {
                 removeClippedSubviews={false}
                 data={items}
                 keyExtractor={keyExtractor}
-                ItemSeparatorComponent={ItemSeparatorComponent}
                 renderItem={renderItem}
               />
             ) : (

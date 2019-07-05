@@ -5,6 +5,7 @@ import { Animated, ListRenderItemInfo, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ChooserListComponent } from "../../components/ChooserListComponent";
+import ChooserListItemComponent from "../../components/ChooserListItemComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -124,7 +125,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private renderItem = (info: ListRenderItemInfo<Organization>) => {
     const item = info.item;
-    return <Text>{item.name}</Text>;
+    return <ChooserListItemComponent title={item.name} />;
   };
 
   private showModal = () => {
