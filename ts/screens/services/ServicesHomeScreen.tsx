@@ -1,14 +1,33 @@
-import { Tab, TabHeading, Tabs, Text } from "native-base";
+import * as pot from "italia-ts-commons/lib/pot";
+import { Button, Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import { Animated, StyleSheet } from "react-native";
+import { Animated, ListRenderItemInfo, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
+import { connect } from "react-redux";
+import { ChooserListComponent } from "../../components/ChooserListComponent";
+import ChooserListItemComponent from "../../components/ChooserListItemComponent";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import { loadVisibleServices } from "../../store/actions/services";
+import { Dispatch } from "../../store/actions/types";
+import {
+  Organization,
+  organizationsAllSelector
+} from "../../store/reducers/entities/organizations/organizationsAll";
+import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
-type Props = NavigationScreenProps;
+type OwnProps = NavigationScreenProps;
+
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  OwnProps &
+  LightModalContextInterface;
 
 type State = {
   currentTab: number;
@@ -52,6 +71,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     };
   }
 
+  public componentDidMount() {
+    // on mount, update visible services
+    this.props.refreshServices();
+  }
+
   private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
     new Animated.Value(0),
     new Animated.Value(0),
@@ -76,6 +100,26 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       });
     }
   }
+
+  /**
+   * For tab Locals
+   */
+
+  private renderChooserLocalItem = (info: ListRenderItemInfo<Organization>) => {
+    const item = info.item;
+    return <ChooserListItemComponent title={item.name} />;
+  };
+
+  private showModal = () => {
+    this.props.showModal(
+      <ChooserListComponent
+        items={this.props.allOrganizations}
+        keyExtractor={item => item.fiscalCode}
+        renderItem={this.renderChooserLocalItem}
+        onCancel={this.props.hideModal}
+      />
+    );
+  };
 
   public render() {
     return (
@@ -127,7 +171,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               </Text>
             </TabHeading>
           }
-        />
+        >
+          <Button onPress={this.showModal}>
+            <Text>Aggiungi le tue aree di interesse</Text>
+          </Button>
+        </Tab>
         <Tab
           heading={
             <TabHeading>
@@ -151,4 +199,19 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 }
 
-export default ServicesHomeScreen;
+const mapStateToProps = (state: GlobalState) => {
+  const isLoading = pot.isLoading(state.entities.services.visible);
+  return {
+    allOrganizations: organizationsAllSelector(state),
+    isLoading
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  refreshServices: () => dispatch(loadVisibleServices.request())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLightModalContext(withLoadingSpinner(ServicesHomeScreen)));
