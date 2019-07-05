@@ -21,6 +21,7 @@ type Props = Readonly<{
   dynamicSubHeader?: React.ReactNode;
   topContentHeight?: number;
   footerContent?: React.ReactNode;
+  contextualHelp?: { title: string; body: () => React.ReactNode };
 }>;
 
 const styles = StyleSheet.create({
@@ -51,6 +52,7 @@ export default class DarkLayout extends React.Component<Props> {
         dark={true}
         headerBody={this.props.headerBody}
         appLogo={this.props.appLogo}
+        contextualHelp={this.props.contextualHelp}
       >
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent

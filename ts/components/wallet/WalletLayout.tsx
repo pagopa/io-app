@@ -17,6 +17,7 @@ import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import customVariables from "../../theme/variables";
 import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
+import Markdown from "../ui/Markdown";
 import PagoPALogo from "./PagoPALogo";
 
 type Props = Readonly<{
@@ -102,6 +103,10 @@ export default class WalletLayout extends React.Component<Props> {
         topContent={this.props.topContent}
         hideHeader={hideHeader}
         footerContent={footerContent}
+        contextualHelp={{
+          title: I18n.t("wallet.wallet"),
+          body: () => <Markdown>{I18n.t("wallet.walletHelp")}</Markdown>
+        }}
       >
         {this.props.children}
       </DarkLayout>
