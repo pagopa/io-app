@@ -223,6 +223,7 @@ class PaymentButton extends React.PureComponent<Props> {
             />
           ))}
         <Text
+          bold={paid && true}
           style={[
             baseStyles.text,
             appliedStyles.text,
