@@ -209,18 +209,19 @@ class PaymentButton extends React.PureComponent<Props> {
           paid && paidStyles.button
         ]}
       >
-        {!hideIcon  || paid && (
-          <IconFont
-            name={paid ? 'io-tick-big' : "io-timer"}
-            style={[
-              baseStyles.icon,
-              appliedStyles.icon,
-              small && smallStyles.icon,
-              disabled && disabledStyles.icon,
-            ]}
-            color={paid && customVariables.brandHighlight}
-          />
-        )}
+        {!hideIcon ||
+          (paid && (
+            <IconFont
+              name={paid ? "io-tick-big" : "io-timer"}
+              style={[
+                baseStyles.icon,
+                appliedStyles.icon,
+                small && smallStyles.icon,
+                disabled && disabledStyles.icon
+              ]}
+              color={paid && customVariables.brandHighlight}
+            />
+          ))}
         <Text
           style={[
             baseStyles.text,
