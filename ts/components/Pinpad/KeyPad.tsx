@@ -58,13 +58,20 @@ const renderPinCol = (
   buttonType: "primary" | "light",
   isDisabled: boolean
 ) => {
+  const buttonStyle =
+    style === "digit"
+      ? styles.roundButton
+      : style === "label"
+        ? {
+            backgroundColor: "transparent"
+          }
+        : {};
   return (
     <Col key={key}>
       <Button
         onPress={handler}
         disabled={isDisabled}
-        style={style === "digit" ? styles.roundButton : {}}
-        transparent={style === "label"}
+        style={buttonStyle}
         block={style === "label"}
         primary={buttonType === "primary"}
         light={buttonType === "light"}
