@@ -108,7 +108,8 @@ const smallStyles = StyleSheet.create({
 
 const disabledStyles = StyleSheet.create({
   button: {
-    backgroundColor: "#b5b5b5"
+    backgroundColor: "#b5b5b5",
+    borderWidth: 0
   },
 
   icon: {
@@ -176,6 +177,7 @@ const getButtonText = (
 };
 
 class PaymentButton extends React.PureComponent<Props> {
+  // tslint:disable-next-line: cognitive-complexity
   public render() {
     const {
       paid,
@@ -198,15 +200,15 @@ class PaymentButton extends React.PureComponent<Props> {
 
     return (
       <Button
-        disabled={disabled}
+        disabled={disabled || paid}
         light={true}
         onPress={paid ? undefined : onPress}
         style={[
           baseStyles.button,
           appliedStyles.button,
           small && smallStyles.button,
-          disabled && disabledStyles.button,
-          paid && paidStyles.button
+          paid && paidStyles.button,
+          disabled && disabledStyles.button
         ]}
       >
         {!hideIcon ||
@@ -219,17 +221,19 @@ class PaymentButton extends React.PureComponent<Props> {
                 small && smallStyles.icon,
                 disabled && disabledStyles.icon
               ]}
-              color={paid && customVariables.brandHighlight}
+              color={
+                paid && !disabled ? customVariables.brandHighlight : undefined
+              }
             />
           ))}
         <Text
-          bold={paid && true}
+          bold={true}
           style={[
             baseStyles.text,
             appliedStyles.text,
             small && smallStyles.text,
-            disabled && disabledStyles.text,
-            paid && paidStyles.text
+            paid && paidStyles.text,
+            disabled && disabledStyles.text
           ]}
         >
           {getButtonText(messagePaymentExpirationInfo, paid)}

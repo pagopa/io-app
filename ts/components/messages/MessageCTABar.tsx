@@ -415,14 +415,14 @@ class MessageCTABar extends React.PureComponent<Props, State> {
               initialAmount: amount.value
             });
           }
-        : paid ? this.navigateToMessageDetail : undefined ;
+        : undefined;
 
     return (
       <PaymentButton
         paid={paid}
         messagePaymentExpirationInfo={messagePaymentExpirationInfo}
         small={small}
-        disabled={onPressHandler === undefined}
+        disabled={disabled}
         onPress={onPressHandler}
       />
     );
