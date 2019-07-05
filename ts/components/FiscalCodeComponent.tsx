@@ -7,6 +7,7 @@
  * The fac-simile back side can be rendered for both full and lansdscape modes,
  * and it includes the barcode of the fiscal code with the code 128 format
  */
+import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
@@ -80,8 +81,8 @@ const barCodeMarginLeftL = 181 * landscapeScaleFactor;
 const barCodeMarginTopL = 179 * landscapeScaleFactor;
 
 const fiscalCodeHeightL =
-  2 * customVariables.contentPadding + // rotation correction factor
-  textLineHeightL / 4 + // rotation correction factor
+  -// rotation correction factor
+  (2 * customVariables.contentPadding + textLineHeightL / 4) +
   cardHeaderHeightL +
   cardLargeSpacerL +
   (cardLineHeightL * 2 - textLineHeightL); // 2-line label correction factor - align 0 char dimension
@@ -275,7 +276,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           width={(barCodeWidthL - 20) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
         <Text bold={true} alignCenter={true} style={styles.landscapeFacSimile}>
-          {I18n.t('profile.facSimile')}
+          {I18n.t("profile.facSimile")}
         </Text>
       </View>
     ) : (
@@ -287,7 +288,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           width={(barCodeWidthF - 20) / 211}
         />
         <Text bold={true} alignCenter={true} style={styles.fullFacSimile}>
-          {I18n.t('profile.facSimile')}
+          {I18n.t("profile.facSimile")}
         </Text>
       </View>
     );
