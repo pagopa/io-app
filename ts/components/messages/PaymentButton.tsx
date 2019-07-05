@@ -1,7 +1,7 @@
 /**
- * A component to render the button related to a payment 
+ * A component to render the button related to a payment
  * pired with a message.
- * 
+ *
  */
 import { Button, Text } from "native-base";
 import React, { ComponentProps } from "react";
