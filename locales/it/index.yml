@@ -579,7 +579,7 @@ messages:
         block5: alle
         block6: del
     pay: Paga € {{amount}}
-    paid: Pagato € {{amount}}
+    paid: Pagati € {{amount}}
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?

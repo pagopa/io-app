@@ -120,6 +120,18 @@ const disabledStyles = StyleSheet.create({
   }
 });
 
+const paidStyles = StyleSheet.create({
+  button: {
+    backgroundColor: customVariables.colorWhite,
+    borderColor: customVariables.brandHighlight,
+    borderWidth: 1
+  },
+
+  text: {
+    color: customVariables.brandHighlight
+  }
+});
+
 const getExpirationStyles = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo,
   small: boolean = false
@@ -140,9 +152,16 @@ const getExpirationStyles = (
 };
 
 const getButtonText = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo
+  messagePaymentExpirationInfo: MessagePaymentExpirationInfo,
+  paid: boolean
 ): string => {
   const { amount } = messagePaymentExpirationInfo;
+
+  if (paid) {
+    return I18n.t("messages.cta.paid", {
+      amount: formatPaymentAmount(amount)
+    });
+  }
 
   if (
     messagePaymentExpirationInfo.kind === "EXPIRABLE" &&
@@ -175,28 +194,31 @@ class PaymentButton extends React.PureComponent<Props> {
     const isExpired =
       messagePaymentExpirationInfo.kind === "EXPIRABLE" &&
       messagePaymentExpirationInfo.expireStatus === "EXPIRED";
-    const hideIcon = paid || isUnexpirable || isExpired || !small;
+    const hideIcon = isUnexpirable || isExpired || !small;
 
     return (
       <Button
         disabled={disabled}
-        onPress={onPress}
+        light={true}
+        onPress={paid ? undefined : onPress}
         style={[
           baseStyles.button,
           appliedStyles.button,
           small && smallStyles.button,
-          disabled && disabledStyles.button
+          disabled && disabledStyles.button,
+          paid && paidStyles.button
         ]}
       >
-        {!hideIcon && (
+        {!hideIcon  || paid && (
           <IconFont
-            name="io-timer"
+            name={paid ? 'io-tick-big' : "io-timer"}
             style={[
               baseStyles.icon,
               appliedStyles.icon,
               small && smallStyles.icon,
-              disabled && disabledStyles.icon
+              disabled && disabledStyles.icon,
             ]}
+            color={paid && customVariables.brandHighlight}
           />
         )}
         <Text
@@ -204,10 +226,11 @@ class PaymentButton extends React.PureComponent<Props> {
             baseStyles.text,
             appliedStyles.text,
             small && smallStyles.text,
-            disabled && disabledStyles.text
+            disabled && disabledStyles.text,
+            paid && paidStyles.text
           ]}
         >
-          {getButtonText(messagePaymentExpirationInfo)}
+          {getButtonText(messagePaymentExpirationInfo, paid)}
         </Text>
       </Button>
     );
