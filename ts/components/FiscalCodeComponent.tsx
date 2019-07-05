@@ -275,7 +275,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           width={(barCodeWidthL - 20) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
         <Text bold={true} alignCenter={true} style={styles.landscapeFacSimile}>
-          FAC-SIMILE
+          {I18n.t('profile.facSimile')}
         </Text>
       </View>
     ) : (
@@ -287,7 +287,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           width={(barCodeWidthF - 20) / 211}
         />
         <Text bold={true} alignCenter={true} style={styles.fullFacSimile}>
-          FAC-SIMILE
+          {I18n.t('profile.facSimile')}
         </Text>
       </View>
     );
