@@ -110,9 +110,97 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   private showChooserLocalServicesModal = () => {
+    const mockOrganizations: ReadonlyArray<any> = [
+      {
+        name: "Presidenza del Consiglio dei Ministri",
+        fiscalCode: "1"
+      },
+      {
+        name: "Comune di Milano",
+        fiscalCode: "2"
+      },
+      {
+        name: "Città di Torino",
+        fiscalCode: "3"
+      },
+      {
+        name: "ACI",
+        fiscalCode: "4"
+      },
+      {
+        name: "Comune di Ripalta Cremasca",
+        fiscalCode: "5"
+      },
+      {
+        name: "Comune di Valsamoggia",
+        fiscalCode: "6"
+      },
+      {
+        name:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        fiscalCode: "7"
+      },
+      {
+        name:
+          "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        fiscalCode: "8"
+      },
+      {
+        name:
+          "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.",
+        fiscalCode: "9"
+      },
+      {
+        name:
+          "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.",
+        fiscalCode: "10"
+      },
+      {
+        name:
+          "Proin gravida hendrerit lectus a. Tellus mauris a diam maecenas sed enim ut. Proin gravida hendrerit lectus a. Tellus mauris a diam maecenas sed enim ut.",
+        fiscalCode: "11"
+      },
+      {
+        name:
+          "Nec feugiat in fermentum posuere urna. Sed lectus vestibulum mattis. Nec feugiat in fermentum posuere urna. Sed lectus vestibulum mattis.",
+        fiscalCode: "12"
+      },
+      {
+        name:
+          "A arcu cursus vitae congue mauris. Hendrerit gravida rutrum quisque non tellus orci ac.",
+        fiscalCode: "13"
+      },
+      {
+        name:
+          "Tortor id aliquet lectus proin nibh nisl condimentum id venenatis. Sit amet est placerat in egestas.",
+        fiscalCode: "14"
+      },
+      {
+        name:
+          "Velit dignissim sodales ut eu sem integer vitae. Morbi tristique senectus et netus et malesuada fames ac turpis.",
+        fiscalCode: "15"
+      },
+      {
+        name:
+          "Etiam dignissim diam quis enim lobortis scelerisque. Scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis.",
+        fiscalCode: "16"
+      },
+      {
+        name:
+          "Scelerisque purus semper eget duis at. Tristique senectus et netus et malesuada fames ac.",
+        fiscalCode: "17"
+      },
+      {
+        name:
+          "Facilisi etiam dignissim diam quis enim. Velit aliquet sagittis id consectetur purus ut faucibus.",
+        fiscalCode: "18"
+      }
+    ];
+
     this.props.showModal(
       <ChooserListComponent
-        items={this.props.allOrganizations}
+        // items={this.props.allOrganizations}
+        items={mockOrganizations}
         keyExtractor={item => item.fiscalCode}
         renderItem={this.renderOrganizationItem}
         onCancel={this.props.hideModal}

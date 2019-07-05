@@ -1,7 +1,7 @@
 import I18n from "i18n-js";
-import { Container, Text, View } from "native-base";
+import { Container, Content, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItem, ScrollView, StyleSheet } from "react-native";
+import { FlatList, ListRenderItem, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
@@ -91,7 +91,8 @@ export class ChooserListComponent extends React.PureComponent<Props> {
 
     return (
       <Container style={styles.container}>
-        <ScrollView
+        <Content
+          noPadded={true}
           keyboardShouldPersistTaps="always"
           style={styles.scrollView}
         >
@@ -109,7 +110,7 @@ export class ChooserListComponent extends React.PureComponent<Props> {
               this.renderListEmptyComponent()
             )}
           </View>
-        </ScrollView>
+        </Content>
         {this.renderFooterButtons()}
       </Container>
     );
