@@ -24,7 +24,7 @@ const connectionMonitorParameters = {
   pingTimeout: 3000,
   pingServerUrl: `${apiUrlPrefix}/ping`, // PING endpoint of the app backend
   shouldPing: true,
-  pingInterval: 8000
+  pingInterval: 30000
 };
 
 export default function* root(): Iterator<Effect> {
