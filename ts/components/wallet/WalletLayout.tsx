@@ -7,9 +7,7 @@
  * wrapped in a ScrollView, and optionally a
  * footer with a button for starting a new payment
  */
-/**
- * TODO: utilizzare il nuovo componente DarkLayout
- */
+
 import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
