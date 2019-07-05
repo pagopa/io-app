@@ -1,7 +1,8 @@
 import I18n from "i18n-js";
-import { Text, View } from "native-base";
+import { Container, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItem, ScrollView } from "react-native";
+import { FlatList, ListRenderItem, ScrollView, StyleSheet } from "react-native";
+import customVariables from "../theme/variables";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 type Props = {
@@ -10,6 +11,28 @@ type Props = {
   renderItem: ListRenderItem<any>;
   onCancel: () => void;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    overflow: "hidden",
+    marginHorizontal: 0,
+    marginVertical: 0,
+    borderRadius: 0,
+    alignSelf: "stretch",
+    flex: 1
+  },
+  scrollView: {
+    flex: 1
+  },
+  itemSeparator: {
+    height: 1,
+    marginLeft: customVariables.contentPadding,
+    marginRight: customVariables.contentPadding,
+    backgroundColor: customVariables.brandLightGray
+  }
+});
+
+const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 export class ChooserListComponent extends React.PureComponent<Props> {
   constructor(props: Props) {
@@ -27,7 +50,6 @@ export class ChooserListComponent extends React.PureComponent<Props> {
   /**
    * Footer
    */
-
   private renderFooterButtons() {
     const cancelButtonProps = {
       block: true,
@@ -66,23 +88,12 @@ export class ChooserListComponent extends React.PureComponent<Props> {
 
   public render() {
     const { items, keyExtractor, renderItem } = this.props;
+
     return (
-      <View
-        style={[
-          {
-            overflow: "hidden",
-            marginHorizontal: 0,
-            marginVertical: 0,
-            borderRadius: 0,
-            alignSelf: "stretch",
-            flex: 1,
-            backgroundColor: "white"
-          }
-        ]}
-      >
+      <Container style={styles.container}>
         <ScrollView
           keyboardShouldPersistTaps="always"
-          style={[{ paddingHorizontal: 12, flex: 1 }]}
+          style={styles.scrollView}
         >
           <View>
             {items.length > 0 ? (
@@ -92,6 +103,7 @@ export class ChooserListComponent extends React.PureComponent<Props> {
                 data={items}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
+                ItemSeparatorComponent={ItemSeparatorComponent}
               />
             ) : (
               this.renderListEmptyComponent()
@@ -99,7 +111,7 @@ export class ChooserListComponent extends React.PureComponent<Props> {
           </View>
         </ScrollView>
         {this.renderFooterButtons()}
-      </View>
+      </Container>
     );
   }
 }

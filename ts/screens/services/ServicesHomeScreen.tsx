@@ -104,18 +104,17 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /**
    * For tab Locals
    */
-
-  private renderChooserLocalItem = (info: ListRenderItemInfo<Organization>) => {
+  private renderOrganizationItem = (info: ListRenderItemInfo<Organization>) => {
     const item = info.item;
     return <ChooserListItemComponent title={item.name} />;
   };
 
-  private showModal = () => {
+  private showChooserLocalServicesModal = () => {
     this.props.showModal(
       <ChooserListComponent
         items={this.props.allOrganizations}
         keyExtractor={item => item.fiscalCode}
-        renderItem={this.renderChooserLocalItem}
+        renderItem={this.renderOrganizationItem}
         onCancel={this.props.hideModal}
       />
     );
@@ -172,7 +171,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          <Button onPress={this.showModal}>
+          <Button onPress={this.showChooserLocalServicesModal} primary={false}>
             <Text>Aggiungi le tue aree di interesse</Text>
           </Button>
         </Tab>

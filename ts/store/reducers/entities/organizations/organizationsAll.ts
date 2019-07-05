@@ -25,6 +25,7 @@ const reducer = (
       const organization = state.find(
         _ => _.fiscalCode === action.payload.organization_fiscal_code
       );
+      // add only if it is not already present
       if (organization === undefined) {
         return [
           ...state,
