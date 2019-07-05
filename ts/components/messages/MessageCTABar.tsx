@@ -1,3 +1,9 @@
+/**
+ * A component to show the action buttons on a message.
+ * For messages with the proper configuration, the user can:
+ * - add a message-related calendar event
+ * - start the message-related payment
+ */
 import { isToday } from "date-fns";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
@@ -409,7 +415,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
               initialAmount: amount.value
             });
           }
-        : undefined;
+        : paid ? this.navigateToMessageDetail : undefined ;
 
     return (
       <PaymentButton
