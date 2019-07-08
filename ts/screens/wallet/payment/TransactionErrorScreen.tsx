@@ -191,7 +191,7 @@ class TransactionErrorScreen extends React.Component<Props> {
         </Text>
         <View spacer={true} extralarge={true} />
         <Button block={true} onPress={this.sendPaymentBlockedBug}>
-          <Text>Invia segnalazione</Text>
+          <Text>{I18n.t("wallet.errors.sendReport")}</Text>
         </Button>
       </React.Fragment>
     );

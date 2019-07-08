@@ -516,6 +516,7 @@ wallet:
     PAYMENT_ONGOING_NOCANCEL_TIMEOUT: If you have already waited 30 minutes and the payment is still blocked, use the button below to send us a report.
     PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
+    sendReport: Send report
 saveCard:
   saveCard: Save the card
   header: Do you whant to save this card?
