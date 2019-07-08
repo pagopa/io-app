@@ -444,7 +444,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       navigateToPaymentTransactionErrorScreen({
         error,
         onCancel,
-        onRetry
+        onRetry,
+        rptId
       })
     );
 
