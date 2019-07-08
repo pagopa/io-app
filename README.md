@@ -201,7 +201,9 @@ To test the io-app on a real iOS device you must:
 1. (Without Xcode) navigate in the io-app project and open the package.json file, in the scripts section add: _"build: ios": "react-native bundle --entry-file = 'index.js' - bundle-output = '. / ios / main.jsbundle' --dev = false --platform = 'ios' "_ 
 1. Open the Terminal and from the root directory project run _npm run build: ios_  
 1. In Xcode navigate in the project, select _'main.jsbundle'_ and enable the checkbox on the right labeled 'ItaliaApp'
-1. Clean and launch the project on the iOS device, if the unit tests fail they can be disabled by going to Product -> Scheme -> Edit Scheme -> Build
+1. Always in Xcode select 'Product' -> 'Clean Build Folder'
+1. On the real device connected, accept to trust the device
+1. From Xcode select the device by the drop-down list and run ('Product' -> 'Run') on the iOS device, if the unit tests fail they can be disabled by going to Product -> Scheme -> Edit Scheme -> Build
 
 
 ### Development with Backend App and Local Test IDP
