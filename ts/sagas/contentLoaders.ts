@@ -43,7 +43,7 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       serviceId
     );
 
-    if (response.isRight() && response.value.status === 200) {
+    if (response && response.isRight() && response.value.status === 200) {
       yield put(
         contentServiceLoad.success({ serviceId, data: response.value.value })
       );
