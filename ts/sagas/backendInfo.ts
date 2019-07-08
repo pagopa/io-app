@@ -37,6 +37,7 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
       typeof getServerInfo
     > = yield call(getServerInfo, {});
     if (
+      backendInfoResponse &&
       backendInfoResponse.isRight() &&
       backendInfoResponse.value.status === 200
     ) {
