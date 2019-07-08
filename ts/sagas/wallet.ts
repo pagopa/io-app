@@ -718,7 +718,7 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
         });
         yield put(navigationBackAction);
       } else {
-        yield call(navigateToWalletHome);
+        yield put(navigateToWalletHome());
       }
     }
   });
