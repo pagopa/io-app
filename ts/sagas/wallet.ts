@@ -10,6 +10,7 @@ import { delay } from "redux-saga";
 import {
   call,
   Effect,
+  fork,
   put,
   select,
   take,
@@ -42,6 +43,7 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
 import {
+  fetchPsp,
   fetchTransactionFailure,
   fetchTransactionRequest,
   fetchTransactionsRequest,
@@ -80,6 +82,7 @@ import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 import {
   addWalletCreditCardRequestHandler,
   deleteWalletRequestHandler,
+  fetchPspRequestHandler,
   fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
   fetchWalletsRequestHandler,
@@ -103,6 +106,7 @@ import {
   getCurrentRouteName
 } from "../store/middlewares/analytics";
 import { SessionManager } from "../utils/SessionManager";
+import { paymentsDeleteUncompletedSaga } from "./payments";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -661,6 +665,15 @@ export function* watchWalletSaga(
     paymentManagerClient,
     pmSessionManager
   );
+
+  yield takeLatest(
+    getType(fetchPsp.request),
+    fetchPspRequestHandler,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield fork(paymentsDeleteUncompletedSaga);
 }
 
 /**

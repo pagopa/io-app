@@ -22,6 +22,7 @@ import navigationReducer from "./navigation";
 import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
+import paymentsReducer from "./payments";
 import persistedPreferencesReducer from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
@@ -82,7 +83,8 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   profile: profileReducer,
   entities: entitiesReducer,
   debug: debugReducer,
-  search: searchReducer
+  search: searchReducer,
+  payments: paymentsReducer
 });
 
 export function createRootReducer(

@@ -11,27 +11,31 @@
  * TODO: insert contextual help to the Text link related to the fee
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import { NavigationInjectedProps } from "react-navigation";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import {
   ContextualHelpInjectedProps,
   withContextualHelp
 } from "../../components/helpers/withContextualHelp";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
+import Logo from "../../components/wallet/card/Logo";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { fetchPsp } from "../../store/actions/wallet/transactions";
 import { GlobalState } from "../../store/reducers/types";
+import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
@@ -44,9 +48,11 @@ type NavigationParams = Readonly<{
   transaction: Transaction;
 }>;
 
+type OwnProps = NavigationInjectedProps<NavigationParams>;
+
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationInjectedProps<NavigationParams> &
+  OwnProps &
   ContextualHelpInjectedProps;
 
 /**
@@ -58,6 +64,11 @@ const styles = StyleSheet.create({
   value: {
     flex: 1,
     flexDirection: "row"
+  },
+
+  valueImage: {
+    justifyContent: "flex-end",
+    alignItems: "flex-end"
   },
 
   align: {
@@ -92,6 +103,18 @@ const styles = StyleSheet.create({
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
+  },
+
+  pspLogo: {
+    width: 100,
+    height: 30,
+    resizeMode: "contain"
+  },
+
+  creditCardLogo: {
+    width: 48,
+    height: 30,
+    resizeMode: "contain"
   }
 });
 
@@ -161,7 +184,35 @@ class TransactionDetailsScreen extends React.Component<Props> {
     );
   }
 
+  /**
+   * It provides the proper format to the listed content by using flex layout
+   */
+  private labelImageRow(
+    label: string | React.ReactElement<any>,
+    value: string | React.ReactElement<any>,
+    labelIsNote: boolean = true
+  ): React.ReactNode {
+    return (
+      <Col>
+        <View spacer={true} />
+        <Row style={{ alignItems: "center" }}>
+          <Text note={labelIsNote}>{label}</Text>
+          <View style={[styles.value, styles.valueImage]}>{value}</View>
+        </Row>
+      </Col>
+    );
+  }
+
+  private handleWillFocus = () => {
+    const transaction = this.props.navigation.getParam("transaction");
+    // Fetch psp only if the store not contains this psp
+    if (transaction.idPsp !== undefined && this.props.psp === undefined) {
+      this.props.fetchPsp(transaction.idPsp);
+    }
+  };
+
   public render(): React.ReactNode {
+    const { psp } = this.props;
     const transaction = this.props.navigation.getParam("transaction");
 
     // whether this transaction is the result of a just completed payment
@@ -185,6 +236,11 @@ class TransactionDetailsScreen extends React.Component<Props> {
       ? this.props.wallets[transaction.idWallet]
       : undefined;
 
+    const creditCard =
+      transactionWallet !== undefined
+        ? transactionWallet.creditCard
+        : undefined;
+
     return (
       <WalletLayout
         title={I18n.t("wallet.transaction")}
@@ -196,6 +252,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         hideHeader={true}
         hasDynamicSubHeader={false}
       >
+        <NavigationEvents onWillFocus={this.handleWillFocus} />
         <Content
           scrollEnabled={false}
           style={[styles.noBottomPadding, styles.whiteContent]}
@@ -248,6 +305,25 @@ class TransactionDetailsScreen extends React.Component<Props> {
               I18n.t("wallet.time"),
               transaction.created.toLocaleTimeString()
             )}
+            {creditCard && creditCard.brandLogo
+              ? this.labelImageRow(
+                  I18n.t("wallet.paymentMethod"),
+                  <Logo imageStyle={styles.creditCardLogo} item={creditCard} />
+                )
+              : creditCard && creditCard.brand
+                ? this.labelValueRow(
+                    I18n.t("wallet.paymentMethod"),
+                    creditCard.brand
+                  )
+                : undefined}
+            {psp && psp.logoPSP
+              ? this.labelImageRow(
+                  I18n.t("wallet.psp"),
+                  <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
+                )
+              : psp && psp.businessName
+                ? this.labelValueRow(I18n.t("wallet.psp"), psp.businessName)
+                : undefined}
           </Grid>
         </Content>
       </WalletLayout>
@@ -256,19 +332,31 @@ class TransactionDetailsScreen extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome())
+  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  fetchPsp: (idPsp: number) => dispatch(fetchPsp.request({ idPsp }))
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  wallets: pot.toUndefined(getWalletsById(state))
-});
+const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
+  const transaction = ownProps.navigation.getParam("transaction");
+  const idPsp = String(transaction.idPsp);
+
+  const maybePotPspState = fromNullable(pspStateByIdSelector(idPsp)(state));
+  const potPsp = maybePotPspState.map(_ => _.psp).getOrElse(pot.none);
+  const isLoading = pot.isLoading(potPsp);
+
+  return {
+    wallets: pot.toUndefined(getWalletsById(state)),
+    isLoading,
+    psp: pot.toUndefined(potPsp)
+  };
+};
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
   withContextualHelp(
-    TransactionDetailsScreen,
+    withLoadingSpinner(TransactionDetailsScreen),
     I18n.t("wallet.whyAFee.title"),
     () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
   )
