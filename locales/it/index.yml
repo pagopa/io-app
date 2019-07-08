@@ -31,8 +31,8 @@ global:
     messages: messaggi
     wallet: portafoglio
     documents: documenti
-    preferences: preferenze
     profile: profilo
+    services: servizi
   actions:
     retry: Si è verificato un errore, si prega di riprovare
     search: Testo da cercare
@@ -56,6 +56,8 @@ clipboard:
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
+exit:
+  pressAgain: premi ancora per uscire
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
@@ -100,6 +102,9 @@ profile:
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
       confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
+    preferences:
+      title: Preferenze
+      description: Gestisci le preferenze dell'aplicazione
     privacy:
       title: Privacy
       description: Esporta dati, cancella account
@@ -135,6 +140,31 @@ profile:
     debugMode: Modalità debug
     pagoPaEnv: Ambiente PagoPA di Test
     pagoPAEnvAlert: La modifica richiede il reboot dell'app
+  preferences:
+    title: Preferenze
+    subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
+      Amministrazione.
+    list:
+      biometric_recognition: Riconoscimento biometrico
+      biometric_recognition_status: 
+        enabled: Abilitato
+        disabled: Disabilitato
+      email: Indirizzo email
+      mobile_phone: Numero di telefono
+      language: Lingua
+      digitalDomicile: Domicilio digitale
+      preferred_calendar:
+        title: Calendario preferito
+        not_selected: Non Selezionato
+    empty:
+      default: Nessuna preferenza impostata
+    preferencesHelp: !include preferences_home_help.md
+    unavailable:
+      title: Questa preferenza è impostata nel tuo profilo SPID
+      message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
+    language:
+      title: Questa preferenza è impostata nelle preferenze di sistema
+      message: IO eredita la lingua dal sistema operativo del tuo dispositivo
 navigation:
   messages: Messaggi
   profile: Profilo
@@ -258,7 +288,7 @@ pin_login:
   pin:
     pinInfo: Inserisci il PIN
     reset:
-      button: Ho dimenticato il PIN
+      button: PIN dimenticato?
       button_short: Reimposta PIN
       tip: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità
         SPID.
@@ -269,6 +299,9 @@ pin_login:
     help:
       title: Accesso con PIN
       content: !include pin_unlock_help.md
+  forgetPin:
+    confirmTitle: Hai dimenticato il PIN?
+    confirmMsg: Per poter scegliere un nuovo PIN dovrai fare di nuovo accesso con SPID.
 forms:
   validators:
     required: Valore richiesto
@@ -295,6 +328,7 @@ payment:
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
   wallet: Portafoglio
+  walletHelp: !include wallet_help.md
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
@@ -415,6 +449,7 @@ wallet:
     amount: Importo (€)
     proceed: Procedi con il pagamento
   total: Totale
+  amount: Importo
   payAmount: Importo da pagare
   transactionFee: Costo operazione
   why: Perché?
@@ -422,6 +457,7 @@ wallet:
   recipient: Destinatario
   date: Data
   time: Ora
+  psp: Prestatore pagamento
   receipt: Ricevuta
   seeReceipt: Vedi la ricevuta
   transactions: Operazioni
@@ -486,6 +522,11 @@ wallet:
     DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su PagoPA, il pagamento non può essere effettuato.
     GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
     MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
+    PAYMENT_ONGOING_NOCANCEL: Un pagamento per questo avviso è già in corso, riprova tra 30 minuti.
+    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: Se hai già atteso 30 minuti e il pagamento risulta ancora bloccato utilizza il pulsante quì sotto per inviarci una segnalazione.
+    PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
+    PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
+    sendReport: Invia segnalazione
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -524,6 +565,8 @@ messages:
   cta:
     archive: Archivia
     unarchive: Ripristina
+    selectAll: Tutti
+    deselectAll: Nessuno
     payment:
       expired: Pagamento scaduto
       validAlert:
@@ -541,7 +584,7 @@ messages:
         block5: alle
         block6: del
     pay: Paga € {{amount}}
-    paid: Pagato € {{amount}}
+    paid: Pagati € {{amount}}
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
@@ -596,33 +639,6 @@ notifications:
     errorTitle: Notifiche push
     errorMessage: La registrazione verso il servizio di notifiche push ha generato
       un errore
-preferences:
-  title: Preferenze
-  subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
-    Amministrazione.
-  list:
-    biometric_recognition: Riconoscimento biometrico
-    biometric_recognition_status: 
-      enabled: Abilitato
-      disabled: Disabilitato
-    email: Indirizzo email
-    mobile_phone: Numero di telefono
-    services: Elenco dei servizi
-    services_description: Attiva/disattiva i tuoi servizi di IO
-    language: Lingua
-    digitalDomicile: Domicilio digitale
-    preferred_calendar:
-      title: Calendario preferito
-      not_selected: Non Selezionato
-  empty:
-    default: Nessuna preferenza impostata
-  preferencesHelp: !include preferences_home_help.md
-  unavailable:
-    title: Questa preferenza è impostata nel tuo profilo SPID
-    message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
-  language:
-    title: Questa preferenza è impostata nelle preferenze di sistema
-    message: IO eredita la lingua dal sistema operativo del tuo dispositivo
 biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico
@@ -632,8 +648,7 @@ biometric_recognition:
   enroll_btnLabel: Vai alle impostazioni
   needed_to_disable: Riconoscimento richiesto per disabilitare
 services:
-  headerTitle: Servizi
-  title: Elenco dei servizi
+  title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
   servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: Il servizio è attivo
@@ -649,15 +664,22 @@ services:
   contactsAndInfo: Contatti ed informazioni
   contactAddress: Indirizzo
   contactPhone: Telefono
+  areasOfInterest:
+    selectMessage: Scegli le aree geografiche (comuni, regioni, etc.) dove risiedi o che frequenti solitamente per vederne qui i relativi servizi. Potrai modificarle in ogni momento.
+    addButton: Aggiungi le tue aree di interesse
+  tab:
+    locals: Locali
+    national: Nazionali
+    otherServices: Altri servizi
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
   disableTitle: "Vuoi davvero disattivare il servizio?"
   disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
 identification:
-  message: "Inserisci il PIN"
-  resetPinMessage: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità SPID.
-  resetPinFromProfileMessage: Per reimpostare il PIN devi annullare l'operazione e scegliere "Reimposta PIN" dalla sezione "Profilo".
+  messageFingerPrint: "Appoggia l'impronta o inserisci il codice PIN"
+  messageFaceID: "Usa FaceID o inserisci il codice PIN"
+  messageEnterPin: "Inserisci il codice PIN"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
@@ -675,3 +697,5 @@ calendarEvents:
 reminders:
   emptyMonth: Non ci sono scadenze in questo mese
   loadMoreData: carica le scadenze del periodo precedente
+openMaps:
+  genericError: Si è verificato un errore durante l'apertura della mappa

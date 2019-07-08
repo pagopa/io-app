@@ -14,7 +14,7 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -29,6 +29,7 @@ import I18n from "../../../i18n";
 
 import { Dispatch } from "../../../store/actions/types";
 import {
+  backToEntrypointPayment,
   paymentAttiva,
   paymentCompletedSuccess,
   paymentIdPolling,
@@ -43,9 +44,9 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
+  navigateToPaymentManualDataInsertion,
   navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen,
-  navigateToWalletHome
+  navigateToPaymentTransactionErrorScreen
 } from "../../../store/actions/navigation";
 import {
   getFavoriteWallet,
@@ -55,6 +56,7 @@ import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { PayloadForAction } from "../../../types/utils";
 import { AmountToImporto } from "../../../utils/amounts";
 import { cleanTransactionDescription } from "../../../utils/payment";
+import { showToast } from "../../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./common";
 
 const basePrimaryButtonProps = {
@@ -66,6 +68,7 @@ const basePrimaryButtonProps = {
 export type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
+  isManualPaymentInsertion?: boolean;
 }>;
 
 type ReduxMergedProps = Readonly<{
@@ -133,13 +136,45 @@ class TransactionSummaryScreen extends React.Component<Props> {
     }
   }
 
-  private handleBackPress = () => this.props.navigation.goBack();
+  private handleBackPress = () => {
+    if (pot.isSome(this.props.paymentId)) {
+      // If we have a paymentId (payment check already done) we need to
+      // ask the user to cancel the payment and in case reset it
+      ActionSheet.show(
+        {
+          options: [
+            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
+            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
+          ],
+          destructiveButtonIndex: 0,
+          cancelButtonIndex: 1,
+          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            this.props.resetPayment();
+            this.props.navigation.goBack();
+            showToast(
+              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
+              "success"
+            );
+          }
+        }
+      );
+    } else {
+      this.props.navigation.goBack();
+    }
+  };
 
   private getSecondaryButtonProps = () => ({
     block: true,
     light: true,
     onPress: this.handleBackPress,
-    title: I18n.t("global.buttons.back")
+    title: I18n.t(
+      pot.isSome(this.props.paymentId)
+        ? "global.buttons.cancel"
+        : "global.buttons.back"
+    )
   });
 
   private renderFooterSingleButton() {
@@ -195,7 +230,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
     return (
       <BaseScreenComponent
-        goBack={true}
+        goBack={this.handleBackPress}
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
       >
         <Content noPadded={true}>
@@ -323,8 +358,9 @@ const mapStateToProps = (state: GlobalState) => {
     error,
     isLoading,
     loadingCaption,
-    loadingOpacity: 0.95,
+    loadingOpacity: 0.98,
     potVerifica: verifica,
+    paymentId,
     maybeFavoriteWallet,
     hasWallets
   };
@@ -333,14 +369,22 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const rptId = props.navigation.getParam("rptId");
   const initialAmount = props.navigation.getParam("initialAmount");
+  const isManualPaymentInsertion = props.navigation.getParam(
+    "isManualPaymentInsertion"
+  );
 
   const dispatchPaymentVerificaRequest = () =>
     dispatch(paymentVerifica.request(rptId));
 
+  const resetPayment = () => {
+    dispatch(runDeleteActivePaymentSaga());
+    dispatch(paymentInitializeState());
+  };
+
   const onCancel = () => {
     // on cancel:
-    // navigate to the wallet home
-    dispatch(navigateToWalletHome());
+    // navigate to entrypoint of payment or wallet home
+    dispatch(backToEntrypointPayment());
     // delete the active payment from PagoPA
     dispatch(runDeleteActivePaymentSaga());
     // reset the payment state
@@ -400,19 +444,30 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       navigateToPaymentTransactionErrorScreen({
         error,
         onCancel,
-        onRetry
+        onRetry,
+        rptId
+      })
+    );
+
+  const dispatchNavigateToPaymentManualDataInsertion = () =>
+    dispatch(
+      navigateToPaymentManualDataInsertion({
+        isInvalidAmount: isManualPaymentInsertion
       })
     );
 
   return {
     dispatchPaymentVerificaRequest,
     navigateToPaymentTransactionError,
+    dispatchNavigateToPaymentManualDataInsertion,
     startOrResumePayment,
+    isManualPaymentInsertion,
     goBack: () => {
       props.navigation.goBack();
       // reset the payment state
       dispatch(paymentInitializeState());
     },
+    resetPayment,
     onCancel,
     onRetryWithPotVerifica: (
       potVerifica: ReturnType<typeof mapStateToProps>["potVerifica"],
@@ -447,11 +502,20 @@ const mergeProps = (
   ownProps: OwnProps
 ) => {
   const onRetry = () => {
-    dispatchProps.onRetryWithPotVerifica(
-      stateProps.potVerifica,
-      stateProps.maybeFavoriteWallet,
-      stateProps.hasWallets
-    );
+    // If the error is INVALID_AMOUNT and the user has manually entered the data of notice
+    // go back to the screen to allow the user to modify the data
+    if (
+      stateProps.error.toUndefined() === "INVALID_AMOUNT" &&
+      dispatchProps.isManualPaymentInsertion
+    ) {
+      dispatchProps.dispatchNavigateToPaymentManualDataInsertion();
+    } else {
+      dispatchProps.onRetryWithPotVerifica(
+        stateProps.potVerifica,
+        stateProps.maybeFavoriteWallet,
+        stateProps.hasWallets
+      );
+    }
   };
   return {
     ...stateProps,

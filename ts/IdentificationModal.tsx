@@ -1,4 +1,4 @@
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
@@ -57,7 +57,6 @@ const renderIdentificationByPinState = (
   if (identificationByPinState === "failure") {
     return (
       <React.Fragment>
-        <View spacer={true} extralarge={true} />
         <TextWithIcon danger={true}>
           <IconFont name="io-close" color={"white"} />
           <Text white={true}>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
@@ -94,8 +93,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: variables.colorWhite,
     fontSize: 16,
-    lineHeight: 21,
-    width: "70%"
+    lineHeight: 20,
+    width: "100%"
   },
   resetPinMessage: {
     alignSelf: "center",
@@ -103,6 +102,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
     width: "80%"
+  },
+  pinPad: {
+    justifyContent: "center",
+    flexGrow: 1
   }
 });
 
@@ -146,7 +149,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
    * 3. Current status of biometry recognition system, provided by querying
    * the library in charge.
    *
-   * @param {boolean} updateBiometrySupportProp – This flag is needed because
+   * @param {boolean} updateBiometrySupportProp – This flag is needed because
    * this funciton can be run from several contexts: when it is called while
    * the app is returning foreground from background, biometry support status
    * has to be updated in case of system preferences changes.
@@ -229,23 +232,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     dispatch(identificationFailure());
   };
 
-  /**
-   * Print the only BiometrySimplePrintableType values that are passed to the UI
-   * @param biometrySimplePrintableType
-   */
-  private renderBiometryType(
-    biometryPrintableSimpleType: BiometryPrintableSimpleType
-  ): string {
-    switch (biometryPrintableSimpleType) {
-      case "FINGERPRINT":
-        return I18n.t("identification.biometric.fingerprintType");
-      case "FACE_ID":
-        return I18n.t("onboarding.fingerprint.body.enrolledType.faceId");
-      case "TOUCH_ID":
-        return I18n.t("onboarding.fingerprint.body.enrolledType.touchId");
-    }
-  }
-
   public render() {
     const { identificationState, isFingerprintEnabled, dispatch } = this.props;
 
@@ -256,6 +242,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     // The identification state is started we need to show the modal
     const {
       pin,
+      canResetPin,
       identificationGenericData,
       identificationCancelData
     } = identificationState;
@@ -268,7 +255,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     const identificationMessage = identificationGenericData
       ? identificationGenericData.message
-      : I18n.t("identification.message");
+      : this.renderBiometryType();
 
     /**
      * Create handlers merging default internal actions (to manage the identification state)
@@ -296,26 +283,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             barStyle="light-content"
             backgroundColor={variables.contentPrimaryBackground}
           />
-          <Content primary={true}>
-            {isFingerprintEnabled &&
-              biometryType && (
-                <React.Fragment>
-                  <Button
-                    block={true}
-                    primary={true}
-                    onPress={() =>
-                      this.onFingerprintRequest(
-                        this.onIdentificationSuccessHandler,
-                        this.onIdentificationFailureHandler
-                      )
-                    }
-                  >
-                    <Text>{this.renderBiometryType(biometryType)}</Text>
-                  </Button>
-                  <View spacer={true} />
-                </React.Fragment>
-              )}
-            <View spacer={true} />
+          <Content primary={true} contentContainerStyle={styles.pinPad}>
             <Text
               bold={true}
               alignCenter={true}
@@ -324,6 +292,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               {identificationMessage}
             </Text>
             <Pinpad
+              onPinResetHandler={canResetPin ? onPinResetHandler : undefined}
+              isFingerprintEnabled={isFingerprintEnabled}
+              biometryType={biometryType}
+              onFingerPrintReq={() =>
+                this.onFingerprintRequest(
+                  this.onIdentificationSuccessHandler,
+                  this.onIdentificationFailureHandler
+                )
+              }
               compareWithCode={pin as string}
               activeColor={"white"}
               inactiveColor={"white"}
@@ -346,28 +323,29 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             />
             {renderIdentificationByPinState(identificationByPinState)}
             {renderIdentificationByBiometryState(identificationByBiometryState)}
+
             <View spacer={true} large={true} />
-
-            {identificationCancelData === undefined && (
-              <React.Fragment>
-                <Button block={true} primary={true} onPress={onPinResetHandler}>
-                  <Text>{I18n.t("pin_login.pin.reset.button")}</Text>
-                </Button>
-                <View spacer={true} large={true} />
-              </React.Fragment>
-            )}
-
-            <Text alignCenter={true} style={styles.resetPinMessage}>
-              {identificationCancelData !== undefined
-                ? I18n.t("identification.resetPinFromProfileMessage")
-                : I18n.t("identification.resetPinMessage")}
-            </Text>
-
-            <View spacer={true} extralarge={true} />
           </Content>
         </BaseScreenComponent>
       </Modal>
     );
+  }
+
+  /**
+   * Print the only BiometrySimplePrintableType values that are passed to the UI
+   * @param biometrySimplePrintableType
+   */
+  private renderBiometryType(): string {
+    switch (this.state.biometryType) {
+      case "FINGERPRINT":
+        return I18n.t("identification.messageFingerPrint");
+      case "FACE_ID":
+        return I18n.t("identification.messageFaceID");
+      case "TOUCH_ID":
+        return I18n.t("identification.messageFingerPrint");
+      default:
+        return I18n.t("identification.messageEnterPin");
+    }
   }
 
   private onPinFullfill = (

@@ -1,14 +1,6 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4bfe698a793a4270b9bac004515225a3)](https://www.codacy.com/app/cloudify/italia-app?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=teamdigitale/italia-app&amp;utm_campaign=Badge_Grade)
+[![CircleCI](https://circleci.com/gh/teamdigitale/io-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/io-app)
 
-[![dependencies](https://david-dm.org/teamdigitale/italia-app/status.svg)](https://david-dm.org/teamdigitale/italia-app)
-
-[![CircleCI](https://circleci.com/gh/teamdigitale/italia-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/italia-app)
-
-[![codecov](https://codecov.io/gh/teamdigitale/italia-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/italia-app)
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/d813b789c3a2085bd8f4/maintainability)](https://codeclimate.com/github/teamdigitale/italia-app/maintainability)
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app?ref=badge_shield)
+[![codecov](https://codecov.io/gh/teamdigitale/io-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/io-app)
 
 # The mobile app of the Digital Citizenship project
 
@@ -35,7 +27,6 @@ The Digital Citizenship mobile app is a native mobile application for iOS and An
 The development of the app is carried out by several contributors:
 
 * the [Digital Transformation Team](https://teamdigitale.governo.it/)
-* the [Agency for Digital Italy](http://www.agid.gov.it/)
 * volunteers who support the project.
 
 ### Can I use the app?

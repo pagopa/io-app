@@ -1,5 +1,5 @@
 /**
- * Screen dysplaying the details of a selected service. The user
+ * Screen displaying the details of a selected service. The user
  * can enable/disable the service and customize the notification settings.
  */
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
@@ -29,6 +29,7 @@ import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { openMaps } from "../../utils/openMaps";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import {
@@ -84,7 +85,7 @@ function renderInformationRow(
   );
 }
 
-class ServiceDetailsScreen extends React.Component<Props, State> {
+class OldServiceDetailsScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -440,14 +441,16 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               renderInformationRow(
                 I18n.t("services.contactAddress"),
                 address,
-                () => Clipboard.setString(address)
+                () => {
+                  openMaps(address);
+                }
               )}
             {phone &&
               renderInformationRow(I18n.t("services.contactPhone"), phone, () =>
                 Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
               )}
             {email &&
-              renderInformationRow("EMail", email, () =>
+              renderInformationRow("Email", email, () =>
                 Linking.openURL(`mailto:${email}`).then(() => 0, () => 0)
               )}
             {pec &&
@@ -479,4 +482,4 @@ const mapStateToProps = (state: GlobalState) => ({
     state.persistedPreferences.wasServiceAlertDisplayedOnce
 });
 
-export default connect(mapStateToProps)(ServiceDetailsScreen);
+export default connect(mapStateToProps)(OldServiceDetailsScreen);

@@ -15,11 +15,12 @@ import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 
-import ServiceDetailsScreen from "../../screens/preferences/ServiceDetailsScreen";
+import OldServiceDetailsScreen from "../../screens/preferences/OldServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
 import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
+import ManualDataInsertionScreen from "../../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
 import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErrorScreen";
@@ -85,27 +86,22 @@ export const navigateToMessageDetailScreenAction = (
     params
   });
 
-export const navigateToServiceDetailsScreen = (
-  params: InferNavigationParams<typeof ServiceDetailsScreen>
+export const navigateToOldServiceDetailsScreen = (
+  params: InferNavigationParams<typeof OldServiceDetailsScreen>
 ) =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_SERVICE_DETAIL,
+    routeName: ROUTES.SERVICE_DETAIL,
     params
   });
 
 export const navigateToFingerprintPreferenceScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_BIOMETRIC_RECOGNITION
+    routeName: ROUTES.PROFILE_PREFERENCES_BIOMETRIC_RECOGNITION
   });
 
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_CALENDAR
-  });
-
-export const navigateToServicesPreferencesScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PREFERENCES_SERVICES
+    routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
   });
 
 export const navigateToPaymentTransactionSummaryScreen = (
@@ -209,7 +205,10 @@ export const navigateToPaymentScanQrCode = () =>
     routeName: ROUTES.PAYMENT_SCAN_QR_CODE
   });
 
-export const navigateToPaymentManualDataInsertion = () =>
+export const navigateToPaymentManualDataInsertion = (
+  params?: InferNavigationParams<typeof ManualDataInsertionScreen>
+) =>
   NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION
+    routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
+    params
   });

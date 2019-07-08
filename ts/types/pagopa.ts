@@ -12,6 +12,7 @@ import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
 import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
 import { Psp as PspPagoPA } from "../../definitions/pagopa/Psp";
 import { PspListResponse as PspListResponsePagoPA } from "../../definitions/pagopa/PspListResponse";
+import { PspResponse as PspResponsePagoPA } from "../../definitions/pagopa/PspResponse";
 import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
 import { SessionResponse as SessionResponsePagoPA } from "../../definitions/pagopa/SessionResponse";
 import { Transaction as TransactionPagoPA } from "../../definitions/pagopa/Transaction";
@@ -94,7 +95,11 @@ export type Psp = t.TypeOf<typeof Psp>;
  * A refined Wallet
  */
 export const Wallet = repP(
-  repP(reqP(reqP(WalletPagoPA, "idWallet"), "type"), "creditCard", CreditCard),
+  repP(
+    reqP(reqP(WalletPagoPA, "idWallet"), "type"),
+    "creditCard",
+    t.union([CreditCard, t.undefined])
+  ),
   "psp",
   t.union([Psp, t.undefined]),
   "Wallet"
@@ -245,6 +250,13 @@ export const TransactionResponse = repP(
 );
 
 export type TransactionResponse = t.TypeOf<typeof TransactionResponse>;
+
+/**
+ * A refined PspResponse
+ */
+export const PspResponse = repP(PspResponsePagoPA, "data", Psp, "PspResponse");
+
+export type PspResponse = t.TypeOf<typeof PspResponse>;
 
 /**
  * A refined Pay
