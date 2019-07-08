@@ -1,7 +1,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import { Animated, ListRenderItemInfo, StyleSheet } from "react-native";
+import { Animated, ListRenderItemInfo, Platform, StyleSheet } from "react-native";
+import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ChooserListComponent } from "../../components/ChooserListComponent";
@@ -11,6 +12,9 @@ import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner"
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import ServicesLocal from "../../components/services/ServicesLocal";
+import ServicesNational from "../../components/services/ServicesNational";
+import ServicesOther from "../../components/services/ServicesOther";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { loadVisibleServices } from "../../store/actions/services";
@@ -34,7 +38,13 @@ type State = {
 };
 
 // Scroll range is directly influenced by floating header height
-const SCROLL_RANGE_FOR_ANIMATION = 72;
+const SCROLL_RANGE_FOR_ANIMATION =
+  customVariables.appHeaderHeight +
+  (Platform.OS === "ios"
+    ? isIphoneX()
+      ? 18
+      : getStatusBarHeight(true)
+    : customVariables.spacerHeight);
 
 const styles = StyleSheet.create({
   tabBarContainer: {
@@ -157,7 +167,21 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         style={{
           transform: [
             {
-              translateY: SCROLL_RANGE_FOR_ANIMATION
+              translateY: this.animatedScrollPositions[
+                this.state.currentTab
+              ].interpolate({
+                inputRange: [
+                  0,
+                  SCROLL_RANGE_FOR_ANIMATION / 2,
+                  SCROLL_RANGE_FOR_ANIMATION
+                ],
+                outputRange: [
+                  SCROLL_RANGE_FOR_ANIMATION,
+                  SCROLL_RANGE_FOR_ANIMATION / 4,
+                  0
+                ],
+                extrapolate: "clamp"
+              })
             }
           ]
         }}
@@ -171,9 +195,45 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          <Button onPress={this.showChooserLocalServicesModal} primary={false}>
-            <Text>Aggiungi le tue aree di interesse</Text>
-          </Button>
+          <ServicesLocal
+            animated={{
+              onScroll: Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: {
+                        y: this.animatedScrollPositions[0]
+                      }
+                    }
+                  }
+                ],
+                { useNativeDriver: true }
+              ),
+              scrollEventThrottle: 8 // target is 120fps
+            }}
+            paddingForAnimation={true}
+            AnimatedCTAStyle={{
+              transform: [
+                {
+                  translateY: this.animatedScrollPositions[
+                    this.state.currentTab
+                  ].interpolate({
+                    inputRange: [
+                      0,
+                      SCROLL_RANGE_FOR_ANIMATION / 2,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    outputRange: [
+                      0,
+                      SCROLL_RANGE_FOR_ANIMATION * 0.75,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    extrapolate: "clamp"
+                  })
+                }
+              ]
+            }}
+          />
         </Tab>
         <Tab
           heading={
@@ -183,7 +243,47 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               </Text>
             </TabHeading>
           }
-        />
+        >
+          <ServicesNational
+            animated={{
+              onScroll: Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: {
+                        y: this.animatedScrollPositions[1]
+                      }
+                    }
+                  }
+                ],
+                { useNativeDriver: true }
+              ),
+              scrollEventThrottle: 8 // target is 120fps
+            }}
+            paddingForAnimation={true}
+            AnimatedCTAStyle={{
+              transform: [
+                {
+                  translateY: this.animatedScrollPositions[
+                    this.state.currentTab
+                  ].interpolate({
+                    inputRange: [
+                      0,
+                      SCROLL_RANGE_FOR_ANIMATION / 2,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    outputRange: [
+                      0,
+                      SCROLL_RANGE_FOR_ANIMATION * 0.75,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    extrapolate: "clamp"
+                  })
+                }
+              ]
+            }}
+          />
+        </Tab>
         <Tab
           heading={
             <TabHeading>
@@ -192,7 +292,47 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               </Text>
             </TabHeading>
           }
-        />
+        >
+          <ServicesOther
+            animated={{
+              onScroll: Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: {
+                        y: this.animatedScrollPositions[2]
+                      }
+                    }
+                  }
+                ],
+                { useNativeDriver: true }
+              ),
+              scrollEventThrottle: 8 // target is 120fps
+            }}
+            paddingForAnimation={true}
+            AnimatedCTAStyle={{
+              transform: [
+                {
+                  translateY: this.animatedScrollPositions[
+                    this.state.currentTab
+                  ].interpolate({
+                    inputRange: [
+                      0,
+                      SCROLL_RANGE_FOR_ANIMATION / 2,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    outputRange: [
+                      0,
+                      SCROLL_RANGE_FOR_ANIMATION * 0.75,
+                      SCROLL_RANGE_FOR_ANIMATION
+                    ],
+                    extrapolate: "clamp"
+                  })
+                }
+              ]
+            }}
+          />
+        </Tab>
       </AnimatedTabs>
     );
   };
