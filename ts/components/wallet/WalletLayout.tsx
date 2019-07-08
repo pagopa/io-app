@@ -45,14 +45,19 @@ const styles = StyleSheet.create({
   },
 
   shadow: {
+    // iOS
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5
+    zIndex: 999,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    // Android
+    elevation: 8,
+    borderBottomWidth: 0,
+    position: "relative"
   },
 
   brandDarkGray: {
