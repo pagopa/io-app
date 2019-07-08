@@ -167,9 +167,12 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
           kind: action.payload.kind
         });
       }
+    // failure actions (payload: failure reason description)
     // service failures
     case getType(loadService.failure):
     case getType(loadVisibleServices.failure):
+    // session
+    case getType(sessionInformationLoadFailure):
     // profile failures
     case getType(profileLoadFailure):
     case getType(profileUpsert.failure):
@@ -179,11 +182,12 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(backendInfoLoadFailure):
     // content failures
     case getType(contentServiceLoad.failure):
-    // wallet failures
+    // messages
+    case getType(loadMessages.failure):
+    //
+    // wallet / payment failures
+    //
     case getType(fetchWalletsFailure):
-    //
-    // Wallet / payment failure actions (reason in the payload)
-    //
     case getType(addWalletCreditCardFailure):
     case getType(paymentAttiva.failure):
     case getType(paymentVerifica.failure):
@@ -195,6 +199,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       });
 
     // Messages actions with properties
+    case getType(loadMessage.failure): {
+      return mp.track(action.type, { reason: action.payload.error });
+    }
     case getType(removeMessages): {
       return mp.track(action.type, action.payload);
     }
@@ -219,7 +226,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loginSuccess):
     case getType(loginFailure):
     case getType(sessionInformationLoadSuccess):
-    case getType(sessionInformationLoadFailure):
     case getType(sessionExpired):
     case getType(sessionInvalid):
     case getType(logoutSuccess):
@@ -241,11 +247,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     // messages
     case getType(loadMessages.request):
-    case getType(loadMessages.failure):
     case getType(loadMessages.success):
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
-    case getType(loadMessage.failure):
     // services
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):
