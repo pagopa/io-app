@@ -2,12 +2,16 @@
  * The screen to display to the user the various types of errors that occurred during the transaction.
  * Inside the cancel and retry buttons are conditionally returned.
  */
-import { Option } from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
+import { differenceInMinutes } from "date-fns";
+import { Option, some } from "fp-ts/lib/Option";
+import { BugReporting } from "instabug-reactnative";
+import { RptId, RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { setInstabugUserAttribute } from "../../../boot/configureInstabug";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -18,6 +22,8 @@ import {
   paymentIdPolling,
   paymentVerifica
 } from "../../../store/actions/wallet/payment";
+import { paymentsLastDeletedStateSelector } from "../../../store/reducers/payments/lastDeleted";
+import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 
@@ -29,13 +35,16 @@ type NavigationParams = {
       | typeof paymentIdPolling["failure"]
     >
   >;
+  rptId: RptId;
   onCancel: () => void;
   onRetry: () => void;
 };
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -53,6 +62,8 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSizeSmall
   }
 });
+
+const MAX_MINUTES_FOR_PAYMENT_DELETION = 15;
 
 /**
  * Print the icon according to current error status
@@ -114,14 +125,86 @@ export const renderErrorTransactionMessage = (
 };
 
 class TransactionErrorScreen extends React.Component<Props> {
+  // Save the rptId as attribute and open the Instabug chat.
+  private sendPaymentBlockedBug = () => {
+    const rptId = this.props.navigation.getParam("rptId");
+    setInstabugUserAttribute(
+      "blockedPaymentRptId",
+      RptIdFromString.encode(rptId)
+    );
+    BugReporting.showWithOptions(BugReporting.reportType.bug, [
+      BugReporting.option.commentFieldRequired
+    ]);
+  };
+
+  // Render a specific screen for the ON_GOING error.
+  private renderPaymentOngoingError = () => {
+    const rptId = this.props.navigation.getParam("rptId");
+    const lastDeleted = this.props.lastDeleted;
+
+    if (
+      lastDeleted !== null &&
+      RptIdFromString.encode(lastDeleted.rptId) ===
+        RptIdFromString.encode(rptId)
+    ) {
+      // We have requested the deletion of this rptId
+      const deletedMinutesAgo = differenceInMinutes(Date.now(), lastDeleted.at);
+      // We must wait 15 minutes from the deletion
+      const deleteInProgress =
+        deletedMinutesAgo < MAX_MINUTES_FOR_PAYMENT_DELETION;
+
+      const errorMessage = deleteInProgress
+        ? I18n.t("wallet.errors.PAYMENT_ONGOING_CANCELLED", {
+            remainingMinutes: 15 - deletedMinutesAgo
+          })
+        : I18n.t("wallet.errors.PAYMENT_ONGOING_CANCELLED_TIMEOUT");
+
+      return (
+        <React.Fragment>
+          <Image source={renderErrorTransactionIcon(some("PAYMENT_ONGOING"))} />
+          <View spacer={true} />
+          <Text bold={true} style={styles.errorMessage}>
+            {errorMessage}
+          </Text>
+          {!deleteInProgress && (
+            <React.Fragment>
+              <View spacer={true} extralarge={true} />
+              <Button block={true} onPress={this.sendPaymentBlockedBug}>
+                <Text>Invia segnalazione</Text>
+              </Button>
+            </React.Fragment>
+          )}
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <React.Fragment>
+        <Image source={renderErrorTransactionIcon(some("PAYMENT_ONGOING"))} />
+        <View spacer={true} />
+        <Text bold={true} style={styles.errorMessage}>
+          {I18n.t("wallet.errors.PAYMENT_ONGOING_NOCANCEL")}
+        </Text>
+        <View spacer={true} extralarge={true} />
+        <Text style={styles.errorMessageSubtitle}>
+          {I18n.t("wallet.errors.PAYMENT_ONGOING_NOCANCEL_TIMEOUT")}
+        </Text>
+        <View spacer={true} extralarge={true} />
+        <Button block={true} onPress={this.sendPaymentBlockedBug}>
+          <Text>{I18n.t("wallet.errors.sendReport")}</Text>
+        </Button>
+      </React.Fragment>
+    );
+  };
+
   public render() {
     const error = this.props.navigation.getParam("error");
+
     const canRetry: boolean = error
       .filter(
         _ =>
           _ === "INVALID_AMOUNT" ||
           _ === "PAYMENT_ID_TIMEOUT" ||
-          _ === "PAYMENT_ONGOING" ||
           _ === "PAYMENT_UNAVAILABLE" ||
           _ === undefined
       )
@@ -135,18 +218,26 @@ class TransactionErrorScreen extends React.Component<Props> {
           <View style={styles.contentWrapper}>
             <View spacer={true} extralarge={true} />
 
-            <Image source={renderErrorTransactionIcon(error)} />
-            <View spacer={true} />
-            <Text bold={true} style={styles.errorMessage}>
-              {renderErrorTransactionMessage(error)}
-            </Text>
-            <View spacer={true} extralarge={true} />
+            {error.isSome() && error.value === "PAYMENT_ONGOING" ? (
+              this.renderPaymentOngoingError()
+            ) : (
+              <React.Fragment>
+                <Image source={renderErrorTransactionIcon(error)} />
+                <View spacer={true} />
+                <Text bold={true} style={styles.errorMessage}>
+                  {renderErrorTransactionMessage(error)}
+                </Text>
+                <View spacer={true} extralarge={true} />
 
-            {canRetry && <View spacer={true} extralarge={true} />}
-            {canRetry && (
-              <Text style={styles.errorMessageSubtitle}>
-                {I18n.t("wallet.errorTransaction.submitBugText")}
-              </Text>
+                {canRetry && (
+                  <React.Fragment>
+                    <View spacer={true} extralarge={true} />
+                    <Text style={styles.errorMessageSubtitle}>
+                      {I18n.t("wallet.errorTransaction.submitBugText")}
+                    </Text>
+                  </React.Fragment>
+                )}
+              </React.Fragment>
             )}
           </View>
         </Content>
@@ -207,12 +298,16 @@ class TransactionErrorScreen extends React.Component<Props> {
   };
 }
 
+const mapStateToProps = (state: GlobalState) => ({
+  lastDeleted: paymentsLastDeletedStateSelector(state)
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToPaymentManualDataInsertion: (isInvalidAmount: boolean) =>
     dispatch(navigateToPaymentManualDataInsertion({ isInvalidAmount }))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(TransactionErrorScreen);

@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
@@ -16,6 +15,7 @@ import {
 } from "react-native";
 import variables from "../../theme/variables";
 
+import startCase from "lodash/startCase";
 import { PullSectionList } from "react-native-pull";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -24,6 +24,7 @@ import { ServicesByIdState } from "../../store/reducers/entities/services/servic
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
+import { format } from "../../utils/dates";
 import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
@@ -299,12 +300,14 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       <View style={styles.sectionHeaderWrapper}>
         <View style={styles.sectionHeaderContent}>
           <Text style={styles.sectionHeaderText}>
-            {format(
-              info.section.title,
-              I18n.t(
-                isFake
-                  ? "global.dateFormats.monthYear"
-                  : "global.dateFormats.weekdayDayMonthYear"
+            {startCase(
+              format(
+                info.section.title,
+                I18n.t(
+                  isFake
+                    ? "global.dateFormats.monthYear"
+                    : "global.dateFormats.weekdayDayMonthYear"
+                )
               )
             )}
           </Text>
