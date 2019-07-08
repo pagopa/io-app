@@ -1,7 +1,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import { Animated, ListRenderItemInfo, Platform, StyleSheet } from "react-native";
+import {
+  Animated,
+  ListRenderItemInfo,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -11,10 +16,10 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
 import ServicesLocal from "../../components/services/ServicesLocal";
 import ServicesNational from "../../components/services/ServicesNational";
 import ServicesOther from "../../components/services/ServicesOther";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { loadVisibleServices } from "../../store/actions/services";
@@ -195,6 +200,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
+          <Button onPress={this.showChooserLocalServicesModal}>
+            <Text>Aggiungi le tue aree di interesse</Text>
+          </Button>
           <ServicesLocal
             animated={{
               onScroll: Animated.event(
