@@ -155,7 +155,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
           small={true}
           onPress={onPress}
         >
-          <Text>{title}</Text>
+          <Text numberOfLines={1}>{title}</Text>
         </Button>
       </ListItem>
     );
