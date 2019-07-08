@@ -25,7 +25,7 @@ export type TransactionsState = Readonly<{
   transactions: pot.Pot<IndexedById<Transaction>, Error>;
 }>;
 
-// added list of read trans IDs
+
 const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
   transactions: pot.none
 };
@@ -96,12 +96,6 @@ const reducer = (
         transactions: pot.toError(state.transactions, action.payload)
       };
 
-    /*case getType(readTransaction):
-      return {
-        ...state,
-        read: state.read.add(action.payload.id)
-      };
-    */
     default:
       return state;
   }

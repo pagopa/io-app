@@ -16,7 +16,7 @@ export const getUnreadTransactions = (state: GlobalState) =>
     txs =>
       values(txs).filter(
         _ => _ !== undefined && !isReadTransaction(state, _.id)
-      ) // TODO: convert to ID array to lighten the weight
+      )
   );
 
 export type ReadTransactionsState = Readonly<{
@@ -31,10 +31,10 @@ export const transactionsReadReducer = (
 ): ReadTransactionsState => {
   switch (action.type) {
     case getType(readTransaction): {
-      const transactionsRead = action.payload.id.toString();
+      const transactionsId = action.payload.id.toString();
       return {
         ...state,
-        [transactionsRead]: action.payload.id
+        [transactionsId]: action.payload.id
       };
     }
     default:

@@ -26,6 +26,7 @@ import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
+import { ReadTransactionsState } from '../../store/reducers/entities/readTransactions';
 
 type Props = Readonly<{
   title: string;
@@ -33,7 +34,7 @@ type Props = Readonly<{
   transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
   navigateToTransactionDetails: (transaction: Transaction) => void;
   ListEmptyComponent?: React.ReactNode;
-  unreadTransactions: ReadonlyArray<Transaction>;
+  readTransactions: ReadTransactionsState;
 }>;
 
 const styles = StyleSheet.create({
@@ -75,9 +76,12 @@ const styles = StyleSheet.create({
 
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
-    const isNew =
+    /*const isNew =
       this.props.unreadTransactions.find(_ => _.id === item.id) !== undefined;
-    const datetime: string = `${formatDateAsLocal(
+    */
+      const isNew =
+        this.props.readTransactions[item.id.toString()] === undefined;
+      const datetime: string = `${formatDateAsLocal(
       item.created,
       true,
       true

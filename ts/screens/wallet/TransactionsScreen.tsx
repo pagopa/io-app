@@ -25,7 +25,6 @@ import {
   deleteWalletRequest,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
-import { getUnreadTransactions } from "../../store/reducers/entities/readTransactions";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
@@ -129,7 +128,7 @@ class TransactionsScreen extends React.Component<Props> {
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
           }
-          unreadTransactions={this.props.unreadTransactions}
+          readTransactions={this.props.readTransactions}
           ListEmptyComponent={ListEmptyComponent}
         />
       </WalletLayout>
@@ -142,10 +141,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state),
   favoriteWallet: getFavoriteWalletId(state),
-  unreadTransactions: pot.getOrElse(
-    getUnreadTransactions(state),
-    []
-  ) as ReadonlyArray<Transaction>
+  readTransactions: state.entities.transactionsRead
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

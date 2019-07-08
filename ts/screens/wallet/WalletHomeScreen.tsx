@@ -32,7 +32,6 @@ import {
   readTransaction
 } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
-import { getUnreadTransactions } from "../../store/reducers/entities/readTransactions";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
@@ -278,7 +277,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
-        unreadTransactions={this.props.unreadTransactions}
+        readTransactions={this.props.readTransactions}
         ListEmptyComponent={this.listEmptyComponent()}
       />
     );
@@ -335,10 +334,7 @@ const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  unreadTransactions: pot.getOrElse(
-    getUnreadTransactions(state),
-    []
-  ) as ReadonlyArray<Transaction>
+  readTransactions: state.entities.transactionsRead
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
