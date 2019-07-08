@@ -1,3 +1,8 @@
+/**
+ * A component to render the button related to a payment
+ * pired with a message.
+ *
+ */
 import { Button, Text } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
@@ -108,7 +113,8 @@ const smallStyles = StyleSheet.create({
 
 const disabledStyles = StyleSheet.create({
   button: {
-    backgroundColor: "#b5b5b5"
+    backgroundColor: "#b5b5b5",
+    borderWidth: 0
   },
 
   icon: {
@@ -117,6 +123,18 @@ const disabledStyles = StyleSheet.create({
 
   text: {
     color: customVariables.colorWhite
+  }
+});
+
+const paidStyles = StyleSheet.create({
+  button: {
+    backgroundColor: customVariables.colorWhite,
+    borderColor: customVariables.brandHighlight,
+    borderWidth: 1
+  },
+
+  text: {
+    color: customVariables.brandHighlight
   }
 });
 
@@ -140,9 +158,16 @@ const getExpirationStyles = (
 };
 
 const getButtonText = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo
+  messagePaymentExpirationInfo: MessagePaymentExpirationInfo,
+  paid: boolean
 ): string => {
   const { amount } = messagePaymentExpirationInfo;
+
+  if (paid) {
+    return I18n.t("messages.cta.paid", {
+      amount: formatPaymentAmount(amount)
+    });
+  }
 
   if (
     messagePaymentExpirationInfo.kind === "EXPIRABLE" &&
@@ -157,6 +182,7 @@ const getButtonText = (
 };
 
 class PaymentButton extends React.PureComponent<Props> {
+  // tslint:disable-next-line: cognitive-complexity
   public render() {
     const {
       paid,
@@ -175,39 +201,47 @@ class PaymentButton extends React.PureComponent<Props> {
     const isExpired =
       messagePaymentExpirationInfo.kind === "EXPIRABLE" &&
       messagePaymentExpirationInfo.expireStatus === "EXPIRED";
-    const hideIcon = paid || isUnexpirable || isExpired || !small;
+    const hideIcon = isUnexpirable || isExpired || !small;
 
     return (
       <Button
-        disabled={disabled}
-        onPress={onPress}
+        disabled={disabled || paid}
+        light={true}
+        onPress={paid ? undefined : onPress}
         style={[
           baseStyles.button,
           appliedStyles.button,
           small && smallStyles.button,
+          paid && paidStyles.button,
           disabled && disabledStyles.button
         ]}
       >
-        {!hideIcon && (
-          <IconFont
-            name="io-timer"
-            style={[
-              baseStyles.icon,
-              appliedStyles.icon,
-              small && smallStyles.icon,
-              disabled && disabledStyles.icon
-            ]}
-          />
-        )}
+        {!hideIcon ||
+          (paid && (
+            <IconFont
+              name={paid ? "io-tick-big" : "io-timer"}
+              style={[
+                baseStyles.icon,
+                appliedStyles.icon,
+                small && smallStyles.icon,
+                disabled && disabledStyles.icon
+              ]}
+              color={
+                paid && !disabled ? customVariables.brandHighlight : undefined
+              }
+            />
+          ))}
         <Text
+          bold={true}
           style={[
             baseStyles.text,
             appliedStyles.text,
             small && smallStyles.text,
+            paid && paidStyles.text,
             disabled && disabledStyles.text
           ]}
         >
-          {getButtonText(messagePaymentExpirationInfo)}
+          {getButtonText(messagePaymentExpirationInfo, paid)}
         </Text>
       </Button>
     );
