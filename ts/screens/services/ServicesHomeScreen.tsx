@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Tab, TabHeading, Tabs, Text } from "native-base";
+import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
 import {
   Animated,
@@ -200,10 +200,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          <Button onPress={this.showChooserLocalServicesModal}>
-            <Text>Aggiungi le tue aree di interesse</Text>
-          </Button>
           <ServicesLocal
+            onAddAreasOfInterestPress={this.showChooserLocalServicesModal}
             animated={{
               onScroll: Animated.event(
                 [
