@@ -124,6 +124,43 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     this.props.hideModal();
   };
 
+  private developerListItem(
+    title: string,
+    switchValue: boolean,
+    onSwitchValueChange: (value: boolean) => void,
+    description?: string
+  ) {
+    return (
+      <ListItem style={styles.noRightPadding}>
+        <View style={styles.developerSectionItem}>
+          <View style={styles.developerSectionItemLeft}>
+            <Text style={styles.itemLeftText}>{title}</Text>
+
+            <Text style={styles.itemLeftText}>{description}</Text>
+          </View>
+          <View style={styles.developerSectionItemRight}>
+            <Switch value={switchValue} onValueChange={onSwitchValueChange} />
+          </View>
+        </View>
+      </ListItem>
+    );
+  }
+
+  private debugListItem(title: string, onPress: () => void, isDanger: boolean) {
+    return (
+      <ListItem style={styles.noRightPadding}>
+        <Button
+          info={!isDanger}
+          danger={isDanger}
+          small={true}
+          onPress={onPress}
+        >
+          <Text>{title}</Text>
+        </Button>
+      </ListItem>
+    );
+  }
+
   private onLogoutPress = () => {
     // Show a modal to let the user select a calendar
     this.props.showModal(
@@ -274,164 +311,79 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               sectionHeader={I18n.t("profile.main.developersSectionHeader")}
             />
 
-            <ListItem style={styles.noRightPadding}>
-              <View style={styles.developerSectionItem}>
-                <Text>
-                  {I18n.t("profile.main.experimentalFeatures.confirmTitle")}
-                </Text>
-                <Switch
-                  value={this.props.isExperimentalFeaturesEnabled}
-                  onValueChange={this.onExperimentalFeaturesToggle}
-                />
-              </View>
-            </ListItem>
+            {this.developerListItem(
+              I18n.t("profile.main.experimentalFeatures.confirmTitle"),
+              this.props.isExperimentalFeaturesEnabled,
+              this.onExperimentalFeaturesToggle
+            )}
 
-            <ListItem style={styles.noRightPadding}>
-              <View style={styles.developerSectionItem}>
-                <View style={styles.developerSectionItemLeft}>
-                  <Text style={styles.itemLeftText}>
-                    {I18n.t("profile.main.pagoPaEnv")}
-                  </Text>
+            {this.developerListItem(
+              I18n.t("profile.main.pagoPaEnv"),
+              this.props.isPagoPATestEnabled,
+              this.onPagoPAEnvironmentToggle,
+              I18n.t("profile.main.pagoPAEnvAlert")
+            )}
 
-                  <Text style={styles.itemLeftText}>
-                    {I18n.t("profile.main.pagoPAEnvAlert")}
-                  </Text>
-                </View>
-                <View style={styles.developerSectionItemRight}>
-                  <Switch
-                    value={this.props.isPagoPATestEnabled}
-                    onValueChange={this.onPagoPAEnvironmentToggle}
-                  />
-                </View>
-              </View>
-            </ListItem>
-
-            <ListItem style={styles.noRightPadding}>
-              <View style={styles.developerSectionItem}>
-                <Text>{I18n.t("profile.main.debugMode")}</Text>
-                <Switch
-                  value={this.props.isDebugModeEnabled}
-                  onValueChange={this.props.setDebugModeEnabled}
-                />
-              </View>
-            </ListItem>
+            {this.developerListItem(
+              I18n.t("profile.main.debugMode"),
+              this.props.isDebugModeEnabled,
+              this.props.setDebugModeEnabled
+            )}
 
             {this.props.isDebugModeEnabled && (
               <React.Fragment>
-                <ListItem style={styles.noRightPadding}>
-                  <Button
-                    info={true}
-                    small={true}
-                    onPress={() =>
-                      clipboardSetStringWithFeedback(getAppLongVersion())
-                    }
-                  >
-                    <Text>
-                      {`${I18n.t(
-                        "profile.main.appVersion"
-                      )} ${getAppLongVersion()}`}
-                    </Text>
-                  </Button>
-                </ListItem>
-                {backendInfo && (
-                  <ListItem style={styles.noRightPadding}>
-                    <Button
-                      info={true}
-                      small={true}
-                      onPress={() =>
-                        clipboardSetStringWithFeedback(backendInfo.version)
-                      }
-                    >
-                      <Text>
-                        {`${I18n.t("profile.main.backendVersion")} ${
-                          backendInfo.version
-                        }`}
-                      </Text>
-                    </Button>
-                  </ListItem>
-                )}
-                {sessionToken && (
-                  <ListItem style={styles.noRightPadding}>
-                    <Button
-                      info={true}
-                      small={true}
-                      onPress={() =>
-                        clipboardSetStringWithFeedback(sessionToken)
-                      }
-                    >
-                      <Text ellipsizeMode="tail" numberOfLines={1}>
-                        {`Session Token ${sessionToken}`}
-                      </Text>
-                    </Button>
-                  </ListItem>
-                )}
-                {walletToken && (
-                  <ListItem style={styles.noRightPadding}>
-                    <Button
-                      info={true}
-                      small={true}
-                      onPress={() =>
-                        clipboardSetStringWithFeedback(walletToken)
-                      }
-                    >
-                      <Text ellipsizeMode="tail" numberOfLines={1}>
-                        {`Wallet token ${walletToken}`}
-                      </Text>
-                    </Button>
-                  </ListItem>
+                {this.debugListItem(
+                  `${I18n.t("profile.main.appVersion")} ${getAppLongVersion()}`,
+                  () => clipboardSetStringWithFeedback(getAppLongVersion()),
+                  false
                 )}
 
-                <ListItem style={styles.noRightPadding}>
-                  <Button
-                    info={true}
-                    small={true}
-                    onPress={() =>
-                      clipboardSetStringWithFeedback(notificationId)
-                    }
-                  >
-                    <Text>{`Notification ID ${notificationId.slice(
-                      0,
-                      6
-                    )}`}</Text>
-                  </Button>
-                </ListItem>
+                {backendInfo &&
+                  this.debugListItem(
+                    `${I18n.t("profile.main.backendVersion")} ${
+                      backendInfo.version
+                    }`,
+                    () => clipboardSetStringWithFeedback(backendInfo.version),
+                    false
+                  )}
+                {sessionToken &&
+                  this.debugListItem(
+                    `Session Token ${sessionToken}`,
+                    () => clipboardSetStringWithFeedback(sessionToken),
+                    false
+                  )}
 
-                {notificationToken && (
-                  <ListItem style={styles.noRightPadding}>
-                    <Button
-                      info={true}
-                      small={true}
-                      onPress={() =>
-                        clipboardSetStringWithFeedback(notificationToken)
-                      }
-                    >
-                      <Text>{`Notification token ${notificationToken.slice(
-                        0,
-                        6
-                      )}`}</Text>
-                    </Button>
-                  </ListItem>
+                {walletToken &&
+                  this.debugListItem(
+                    `Wallet token ${walletToken}`,
+                    () => clipboardSetStringWithFeedback(walletToken),
+                    false
+                  )}
+
+                {this.debugListItem(
+                  `Notification ID ${notificationId.slice(0, 6)}`,
+                  () => clipboardSetStringWithFeedback(notificationId),
+                  false
                 )}
 
-                <ListItem style={styles.noRightPadding}>
-                  <Button
-                    danger={true}
-                    small={true}
-                    onPress={this.handleClearCachePress}
-                  >
-                    <Text>{I18n.t("profile.main.clearCache")}</Text>
-                  </Button>
-                </ListItem>
+                {notificationToken &&
+                  this.debugListItem(
+                    `Notification token ${notificationToken.slice(0, 6)}`,
+                    () => clipboardSetStringWithFeedback(notificationToken),
+                    false
+                  )}
 
-                <ListItem style={styles.noRightPadding}>
-                  <Button
-                    danger={true}
-                    small={true}
-                    onPress={this.props.dispatchSessionExpired}
-                  >
-                    <Text>{I18n.t("profile.main.forgetCurrentSession")}</Text>
-                  </Button>
-                </ListItem>
+                {this.debugListItem(
+                  I18n.t("profile.main.clearCache"),
+                  this.handleClearCachePress,
+                  true
+                )}
+
+                {this.debugListItem(
+                  I18n.t("profile.main.forgetCurrentSession"),
+                  this.props.dispatchSessionExpired,
+                  true
+                )}
               </React.Fragment>
             )}
           </List>
