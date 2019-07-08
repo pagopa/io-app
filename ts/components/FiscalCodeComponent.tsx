@@ -84,8 +84,7 @@ const fiscalCodeHeightL =
   -// rotation correction factor
   (2 * customVariables.contentPadding + textLineHeightL / 4) +
   cardHeaderHeightL +
-  cardLargeSpacerL +
-  (cardLineHeightL * 2 - textLineHeightL); // 2-line label correction factor - align 0 char dimension
+  cardLargeSpacerL;
 
 const lastNameHeightL =
   fiscalCodeHeightL +
@@ -169,7 +168,7 @@ const styles = StyleSheet.create({
     ]
   },
 
-  fulleNameText: {
+  fullNameText: {
     lineHeight: textdLineHeightF,
     marginTop: nameHeightF
   },
@@ -247,7 +246,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           style={[
             isLandscape
               ? [styles.landscapeText, styles.landscapeNameText]
-              : [styles.fullText, styles.fulleNameText]
+              : [styles.fullText, styles.fullNameText]
           ]}
         >
           {profile.name.toUpperCase()}
