@@ -3,6 +3,7 @@ import { Container, Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItem, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
+import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 type Props = {
@@ -14,14 +15,9 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
-    overflow: "hidden",
-    marginHorizontal: 0,
-    marginVertical: 0,
-    borderRadius: 0,
-    alignSelf: "stretch",
     flex: 1
   },
-  scrollView: {
+  content: {
     flex: 1
   },
   itemSeparator: {
@@ -29,6 +25,9 @@ const styles = StyleSheet.create({
     marginLeft: customVariables.contentPadding,
     marginRight: customVariables.contentPadding,
     backgroundColor: customVariables.brandLightGray
+  },
+  header: {
+    height: customVariables.contentPadding / 2
   }
 });
 
@@ -77,7 +76,6 @@ export class ChooserListComponent extends React.PureComponent<Props> {
   /**
    * Empty list
    */
-
   private renderListEmptyComponent() {
     return (
       <View>
@@ -91,10 +89,11 @@ export class ChooserListComponent extends React.PureComponent<Props> {
 
     return (
       <Container style={styles.container}>
+        <AppHeader style={styles.header} />
         <Content
           noPadded={true}
           keyboardShouldPersistTaps="always"
-          style={styles.scrollView}
+          style={styles.content}
         >
           <View>
             {items.length > 0 ? (
