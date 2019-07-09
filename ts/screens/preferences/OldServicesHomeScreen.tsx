@@ -136,13 +136,15 @@ const mapStateToProps = (state: GlobalState) => {
   // tslint:disable-next-line:readonly-array
   const sections = orgfiscalCodes
     .map(fiscalCode => {
-      const title = organizations[fiscalCode] || fiscalCode;
+      const organizationName = organizations[fiscalCode] || fiscalCode;
+      const organizationFiscalCode = fiscalCode;
       const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
       const data = serviceIdsForOrg
         .map(id => services.byId[id])
         .filter(isDefined);
       return {
-        title,
+        organizationName,
+        organizationFiscalCode,
         data
       };
     })

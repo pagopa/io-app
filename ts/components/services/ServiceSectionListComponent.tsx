@@ -8,12 +8,14 @@ import {
   StyleSheet
 } from "react-native";
 
-import { H3, ListItem, View } from "native-base";
+import { H3, ListItem } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
+import { getLogoForOrganization } from "../../utils/organizations";
 import H5 from "../ui/H5";
 import { NewServiceListItem } from "./NewServiceListItem";
+import OrganizationLogo from "./OrganizationLogo";
 import { ServiceListItem } from "./ServiceListItem";
 
 type OwnProps = {
@@ -32,8 +34,8 @@ type Props = OwnProps;
 
 const styles = StyleSheet.create({
   listItem: {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
+    paddingLeft: variables.spacerHeight,
+    paddingRight: variables.spacerHeight
   },
   organizationName: {
     fontWeight: "400",
@@ -61,6 +63,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
   ) =>
     this.props.isExperimentalFeaturesEnabled ? (
+      // TODO: use the custom list item https://www.pivotaltracker.com/story/show/167036251
       <NewServiceListItem
         item={itemInfo.item}
         profile={this.props.profile}
@@ -93,24 +96,17 @@ class ServiceSectionListComponent extends React.Component<Props> {
     this.props.isExperimentalFeaturesEnabled ? (
       <ListItem style={styles.organization}>
         {/* TODO: 
-          - introduce organization logo and alignment from https://github.com/teamdigitale/io-app/pull/1155 
-          - use SectionHeader from https://www.pivotaltracker.com/story/show/167036251
+          * - introduce organization logo and alignment from https://github.com/teamdigitale/io-app/pull/1155 
+          * - use SectionHeader from https://www.pivotaltracker.com/story/show/167036251
           */}
-        <View
-          style={[
-            {
-              width: 32,
-              height: 32,
-              backgroundColor: "pink"
-            },
-            styles.organizationIcon
-          ]}
+        <OrganizationLogo
+          logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
         />
-        <H5 style={styles.organizationName}>{info.section.title}</H5>
+        <H5 style={styles.organizationName}>{info.section.organizationName}</H5>
       </ListItem>
     ) : (
       <ListItem itemHeader={true} style={styles.listItem}>
-        <H3>{info.section.title}</H3>
+        <H3>{info.section.organizationName}</H3>
       </ListItem>
     );
 
