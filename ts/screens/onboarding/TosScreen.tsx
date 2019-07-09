@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, H2, Text, View } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { StyleSheet } from "react-native";
 import AbortOnboardingModal from "../../components/AbortOnboardingModal";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import { tosVersion } from "../../config";
 import I18n from "../../i18n";
@@ -14,6 +15,7 @@ import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import customVariables from "../../theme/variables";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -29,13 +31,20 @@ const styles = StyleSheet.create({
   alert: {
     backgroundColor: "#c1f4f2",
     borderRadius: 4,
-    marginTop: 24,
+    marginTop: customVariables.spacerLargeHeight,
     marginBottom: 0,
-    paddingVertical: 4,
-    paddingHorizontal: 8,
+    paddingVertical: customVariables.spacingBase,
+    paddingHorizontal: customVariables.contentPadding,
     flexDirection: "column",
     justifyContent: "center",
     alignContent: "flex-start"
+  },
+  boldH4: {
+    fontWeight: "700",
+    paddingTop: customVariables.spacerLargeHeight
+  },
+  horizontalPadding: {
+    paddingHorizontal: customVariables.contentPadding
   }
 });
 
@@ -65,15 +74,15 @@ class TosScreen extends React.PureComponent<Props, State> {
         }
       >
         <Content noPadded={true}>
-          <View content={true}>
-            <H2>{I18n.t("profile.main.privacy.header")}</H2>
-            {this.props.hasPreviousAcceptedToS && (
-              <View style={styles.alert}>
-                <Text bold={true}>
-                  {I18n.t("profile.main.privacy.updated")}
-                </Text>
-              </View>
-            )}
+          <H4 style={[styles.boldH4, styles.horizontalPadding]}>
+            {I18n.t("profile.main.privacy.header")}
+          </H4>
+          {!this.props.hasPreviousAcceptedToS && (
+            <View style={styles.alert}>
+              <Text>{I18n.t("profile.main.privacy.updated")}</Text>
+            </View>
+          )}
+          <View style={styles.horizontalPadding}>
             <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
           </View>
         </Content>
