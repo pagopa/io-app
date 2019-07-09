@@ -23,9 +23,7 @@ const ICON_SIZE = 24;
 const styles = StyleSheet.create({
   listItem: {
     paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: customVariables.spacerHeight,
-    paddingBottom: customVariables.spacerHeight
+    paddingRight: 0
   },
   spacingBase: {
     paddingRight: customVariables.spacingBase
@@ -40,9 +38,6 @@ const styles = StyleSheet.create({
   description: {
     paddingRight: ICON_SIZE,
     alignSelf: "flex-start"
-  },
-  noBorder: {
-    borderBottomWidth: 0
   }
 });
 
@@ -50,13 +45,10 @@ export default class ListItemComponent extends React.Component<Props> {
   public render() {
     return (
       <ListItem
-        style={[
-          styles.listItem,
-          this.props.isLastItem && styles.noBorder,
-          styles.flexRow
-        ]}
+        style={[styles.listItem, styles.flexRow]}
         onPress={this.props.onPress}
         first={this.props.isFirstItem}
+        last={this.props.isLastItem}
       >
         <View
           style={[
