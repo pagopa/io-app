@@ -19,6 +19,7 @@ import { StyleSheet } from "react-native";
 
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
+import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
@@ -26,7 +27,6 @@ import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
-import { ReadTransactionsState } from '../../store/reducers/entities/readTransactions';
 
 type Props = Readonly<{
   title: string;
@@ -76,12 +76,8 @@ const styles = StyleSheet.create({
 
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
-    /*const isNew =
-      this.props.unreadTransactions.find(_ => _.id === item.id) !== undefined;
-    */
-      const isNew =
-        this.props.readTransactions[item.id.toString()] === undefined;
-      const datetime: string = `${formatDateAsLocal(
+    const isNew = this.props.readTransactions[item.id.toString()] === undefined;
+    const datetime: string = `${formatDateAsLocal(
       item.created,
       true,
       true

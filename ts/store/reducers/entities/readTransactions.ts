@@ -11,12 +11,8 @@ export const isReadTransaction = (state: GlobalState, txid: number) =>
 
 // filter only unread transactions to account for the residual number
 export const getUnreadTransactions = (state: GlobalState) =>
-  pot.map(
-    state.wallet.transactions.transactions,
-    txs =>
-      values(txs).filter(
-        _ => _ !== undefined && !isReadTransaction(state, _.id)
-      )
+  pot.map(state.wallet.transactions.transactions, txs =>
+    values(txs).filter(_ => _ !== undefined && !isReadTransaction(state, _.id))
   );
 
 export type ReadTransactionsState = Readonly<{

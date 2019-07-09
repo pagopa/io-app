@@ -25,7 +25,6 @@ export type TransactionsState = Readonly<{
   transactions: pot.Pot<IndexedById<Transaction>, Error>;
 }>;
 
-
 const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
   transactions: pot.none
 };
