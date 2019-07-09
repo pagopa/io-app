@@ -34,10 +34,6 @@ const styles = StyleSheet.create({
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 export class ChooserListComponent extends React.PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   private onPressCancel = () => {
     this.props.onCancel();
   };

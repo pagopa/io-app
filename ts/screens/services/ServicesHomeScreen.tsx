@@ -16,6 +16,7 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import OrganizationLogo from "../../components/services/OrganizationLogo";
 import ServicesLocal from "../../components/services/ServicesLocal";
 import ServicesNational from "../../components/services/ServicesNational";
 import ServicesOther from "../../components/services/ServicesOther";
@@ -30,6 +31,7 @@ import {
 } from "../../store/reducers/entities/organizations/organizationsAll";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { getLogoForOrganization } from "../../utils/organizations";
 
 type OwnProps = NavigationScreenProps;
 
@@ -71,6 +73,9 @@ const styles = StyleSheet.create({
   },
   searchDisableIcon: {
     color: customVariables.headerFontColor
+  },
+  organizationLogo: {
+    marginBottom: 0
   }
 });
 
@@ -121,7 +126,21 @@ class ServicesHomeScreen extends React.Component<Props, State> {
    */
   private renderOrganizationItem = (info: ListRenderItemInfo<Organization>) => {
     const item = info.item;
-    return <ChooserListItemComponent title={item.name} />;
+    return (
+      <ChooserListItemComponent
+        title={item.name}
+        iconComponent={this.renderOrganizationLogo(item.fiscalCode)}
+      />
+    );
+  };
+
+  private renderOrganizationLogo = (organizationFiscalCode: string) => {
+    return (
+      <OrganizationLogo
+        logoUri={getLogoForOrganization(organizationFiscalCode)}
+        imageStyle={styles.organizationLogo}
+      />
+    );
   };
 
   private showChooserLocalServicesModal = () => {

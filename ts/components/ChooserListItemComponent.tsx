@@ -17,10 +17,13 @@ const styles = StyleSheet.create({
     paddingBottom: customVariables.contentPadding / 2,
     flexDirection: "row",
     alignItems: "center",
-    height: 70
+    height: 65
   },
   content: {
-    flex: 1
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    height: 50
   },
   title: {
     ...makeFontStyleObject(Platform.select, "700", false),
@@ -34,7 +37,7 @@ export default class ChooserListItemComponent extends React.Component<Props> {
   public render() {
     return (
       <View style={styles.container}>
-        <View>{this.props.iconComponent}</View>
+        {this.props.iconComponent && <View>{this.props.iconComponent}</View>}
         <View style={styles.content}>
           <Text numberOfLines={2} style={styles.title}>
             {this.props.title}

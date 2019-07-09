@@ -41,7 +41,9 @@ export class MultiImage extends React.PureComponent<Props, State> {
       // if current image fails loading, move to next
       this.setState({
         sourceIndex:
-          sourceIndex < this.props.source.length ? sourceIndex + 1 : undefined
+          sourceIndex + 1 < this.props.source.length
+            ? sourceIndex + 1
+            : undefined
       });
     };
     return <Image {...this.props} source={source} onError={onError} />;
