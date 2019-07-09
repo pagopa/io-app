@@ -49,9 +49,10 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
       // tslint:disable-next-line:saga-yield-return-type
       yield call(startTimer, BACKEND_INFO_LOAD_INTERVAL);
     } else {
-      const errorDescription = backendInfoResponse.isLeft()
-        ? readableReport(backendInfoResponse.value)
-        : `response status ${backendInfoResponse.value.status}`;
+      const errorDescription = backendInfoResponse.fold(
+        readableReport,
+        ({ status }) => `response status ${status}`
+      );
 
       yield put(backendInfoLoadFailure(errorDescription));
 

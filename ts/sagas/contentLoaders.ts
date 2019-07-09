@@ -49,9 +49,10 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
         contentServiceLoad.success({ serviceId, data: response.value.value })
       );
     } else {
-      const errorDescription = response.isLeft()
-        ? readableReport(response.value)
-        : `response status ${response.value.status}`;
+      const errorDescription = response.fold(
+        readableReport,
+        ({ status }) => `response status ${status}`
+      );
       yield put(
         contentServiceLoad.failure(
           `${errorDescription} - serviceId ${serviceId}`
