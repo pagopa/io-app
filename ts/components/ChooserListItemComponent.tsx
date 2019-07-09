@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
   container: {
     paddingLeft: customVariables.contentPadding,
     paddingRight: customVariables.contentPadding,
-    paddingTop: 12,
-    paddingBottom: 12,
+    paddingTop: customVariables.contentPadding / 2,
+    paddingBottom: customVariables.contentPadding / 2,
     flexDirection: "row",
     alignItems: "center",
     height: 70

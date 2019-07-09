@@ -1,5 +1,5 @@
 import I18n from "i18n-js";
-import { Container, Content, Text, View } from "native-base";
+import { Container, Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItem, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
@@ -73,17 +73,6 @@ export class ChooserListComponent extends React.PureComponent<Props> {
     );
   }
 
-  /**
-   * Empty list
-   */
-  private renderListEmptyComponent() {
-    return (
-      <View>
-        <Text>Nessun elemento</Text>
-      </View>
-    );
-  }
-
   public render() {
     const { items, keyExtractor, renderItem } = this.props;
 
@@ -96,7 +85,7 @@ export class ChooserListComponent extends React.PureComponent<Props> {
           style={styles.content}
         >
           <View>
-            {items.length > 0 ? (
+            {items.length > 0 && (
               <FlatList
                 keyboardShouldPersistTaps="always"
                 removeClippedSubviews={false}
@@ -105,8 +94,6 @@ export class ChooserListComponent extends React.PureComponent<Props> {
                 renderItem={renderItem}
                 ItemSeparatorComponent={ItemSeparatorComponent}
               />
-            ) : (
-              this.renderListEmptyComponent()
             )}
           </View>
         </Content>
