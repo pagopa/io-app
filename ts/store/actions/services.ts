@@ -36,7 +36,7 @@ export const loadService = createAsyncAction(
 // show service detail
 //
 
-export const showServiceDetails = createStandardAction("SERVICE_LOAD_DETAILS")<
+export const showServiceDetails = createStandardAction("SERVICE_SHOW_DETAILS")<
   ServicePublic
 >();
 
