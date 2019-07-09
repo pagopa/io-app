@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
@@ -16,6 +15,7 @@ import {
 } from "react-native";
 import variables from "../../theme/variables";
 
+import startCase from "lodash/startCase";
 import { PullSectionList } from "react-native-pull";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -24,6 +24,7 @@ import { ServicesByIdState } from "../../store/reducers/entities/services/servic
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
+import { format } from "../../utils/dates";
 import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
@@ -33,8 +34,10 @@ const ITEM_HEIGHT = 158;
 const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
 
+const TOP_INDICATOR_HEIGHT = 70;
+const MARGIN_TOP_EMPTY_LIST = 30;
+
 const screenWidth = Dimensions.get("screen").width;
-const topIndicatorHeight = 70;
 
 const styles = StyleSheet.create({
   // List
@@ -47,7 +50,6 @@ const styles = StyleSheet.create({
   },
   emptyListContentSubtitle: {
     textAlign: "center",
-    paddingTop: customVariables.contentPadding,
     fontSize: customVariables.fontSizeSmall
   },
 
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: topIndicatorHeight / 2
+    bottom: Platform.OS === "ios" ? 35 : 0
   }
 });
 
@@ -298,12 +300,14 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       <View style={styles.sectionHeaderWrapper}>
         <View style={styles.sectionHeaderContent}>
           <Text style={styles.sectionHeaderText}>
-            {format(
-              info.section.title,
-              I18n.t(
-                isFake
-                  ? "global.dateFormats.monthYear"
-                  : "global.dateFormats.weekdayDayMonthYear"
+            {startCase(
+              format(
+                info.section.title,
+                I18n.t(
+                  isFake
+                    ? "global.dateFormats.monthYear"
+                    : "global.dateFormats.weekdayDayMonthYear"
+                )
               )
             )}
           </Text>
@@ -376,7 +380,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
-          height: topIndicatorHeight
+          height: TOP_INDICATOR_HEIGHT
         }}
       >
         <Button
@@ -408,7 +412,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         <PullSectionList
           loadMoreData={this.loadMoreData}
           topIndicatorRender={this.topIndicatorRender}
-          topIndicatorHeight={topIndicatorHeight}
+          topIndicatorHeight={TOP_INDICATOR_HEIGHT}
           sectionsLength={sections.length}
           ref={this.sectionListRef}
           ListEmptyComponent={ListEmptyComponent}
@@ -425,7 +429,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           bounces={false}
           style={[
             {
-              marginTop: sections.length === 0 ? topIndicatorHeight : 0
+              marginTop: sections.length === 0 ? MARGIN_TOP_EMPTY_LIST : 0
             },
             styles.scrollList
           ]}
