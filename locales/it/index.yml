@@ -104,7 +104,7 @@ profile:
       confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
     preferences:
       title: Preferenze
-      description: Gestisci le preferenze dell'aplicazione
+      description: Gestisci le preferenze dell'applicazione
     privacy:
       title: Privacy
       description: Esporta dati, cancella account
