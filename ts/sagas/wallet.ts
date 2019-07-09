@@ -10,6 +10,7 @@ import { delay } from "redux-saga";
 import {
   call,
   Effect,
+  fork,
   put,
   select,
   take,
@@ -105,6 +106,7 @@ import {
   getCurrentRouteName
 } from "../store/middlewares/analytics";
 import { SessionManager } from "../utils/SessionManager";
+import { paymentsDeleteUncompletedSaga } from "./payments";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -670,6 +672,8 @@ export function* watchWalletSaga(
     paymentManagerClient,
     pmSessionManager
   );
+
+  yield fork(paymentsDeleteUncompletedSaga);
 }
 
 /**
@@ -714,7 +718,7 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
         });
         yield put(navigationBackAction);
       } else {
-        yield call(navigateToWalletHome);
+        yield put(navigateToWalletHome());
       }
     }
   });
