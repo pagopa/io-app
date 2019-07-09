@@ -44,6 +44,10 @@ export class MultiImage extends React.PureComponent<Props, State> {
           sourceIndex < this.props.source.length ? sourceIndex + 1 : undefined
       });
     };
-    return <Image {...this.props} source={source} onError={onError} />;
+    return source ? (
+      <Image {...this.props} source={source} onError={onError} />
+    ) : (
+      <React.Fragment />
+    );
   }
 }

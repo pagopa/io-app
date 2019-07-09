@@ -92,16 +92,12 @@ class ServiceSectionListComponent extends React.Component<Props> {
 
   private renderServiceSectionHeader = (info: {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
-  }): React.ReactNode =>
-    this.props.isExperimentalFeaturesEnabled ? (
+  }): React.ReactNode => {
+    const logoUri = getLogoForOrganization(info.section.organizationFiscalCode);
+    return this.props.isExperimentalFeaturesEnabled ? (
       <ListItem style={styles.organization}>
-        {/* TODO: 
-          * - introduce organization logo and alignment from https://github.com/teamdigitale/io-app/pull/1155 
-          * - use SectionHeader from https://www.pivotaltracker.com/story/show/167036251
-          */}
-        <OrganizationLogo
-          logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
-        />
+        {/* TODO: use SectionHeader from https://www.pivotaltracker.com/story/show/167036251 */}
+        {logoUri && <OrganizationLogo logoUri={logoUri} />}
         <H5 style={styles.organizationName}>{info.section.organizationName}</H5>
       </ListItem>
     ) : (
@@ -109,6 +105,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
         <H3>{info.section.organizationName}</H3>
       </ListItem>
     );
+  };
 
   public render() {
     const { sections, isRefreshing, onRefresh } = this.props;

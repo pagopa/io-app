@@ -7,7 +7,9 @@ export function getLogoForOrganization(
   orgFiscalCode: string,
   logosRepoUrl: string = `${contentRepoUrl}/logos`
 ) {
-  return [`organizations/${orgFiscalCode.replace(/^0+/, "")}`].map(u => ({
-    uri: `${logosRepoUrl}/${u}.png`
-  }));
+  return orgFiscalCode.replace(/^0+/, "")
+    ? [`organizations/${orgFiscalCode.replace(/^0+/, "")}`].map(u => ({
+        uri: `${logosRepoUrl}/${u}.png`
+      }))
+    : undefined;
 }
