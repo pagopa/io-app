@@ -25,7 +25,7 @@ import {
   showServiceDetails
 } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { readServicesSelector } from "../../store/reducers/entities/services/readStateByService";
+import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 
 import { ProfileState } from "../../store/reducers/profile";
 import {

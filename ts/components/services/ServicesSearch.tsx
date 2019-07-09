@@ -3,7 +3,7 @@ import React from "react";
 
 import { SectionListData } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByService";
+import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 
 import { ProfileState } from "../../store/reducers/profile";
 import { serviceContainsText } from "../../utils/services";

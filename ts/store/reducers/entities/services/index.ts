@@ -6,7 +6,7 @@ import { combineReducers } from "redux";
 import { Action } from "../../../actions/types";
 import readStateByServiceReducer, {
   ReadStateByServicesId
-} from "./readStateByService";
+} from "./readStateByServiceId";
 
 import servicesByIdReducer, { ServicesByIdState } from "./servicesById";
 import {

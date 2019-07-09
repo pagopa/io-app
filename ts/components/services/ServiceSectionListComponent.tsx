@@ -10,7 +10,7 @@ import {
 
 import { H3, ListItem } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByService";
+import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
