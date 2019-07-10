@@ -210,13 +210,13 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     backendClient.createOrUpdateProfile
   );
 
+  // Start the watchAbortOnboardingSaga
+  const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
+
   if (!previousSessionToken || isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no PIN set, thus we need
     // to pass through the onboarding process.
-
-    // Start the watchAbortOnboardingSaga
-    const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
 
     // Ask to accept ToS if it is the first access on IO or if there is a new available version
     yield call(checkAcceptedTosSaga, userProfile);
