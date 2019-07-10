@@ -21,11 +21,29 @@ const ALLOWED_ROUTE_NAMES: ReadonlyArray<string> = [
   ROUTES.WALLET_LIST
 ];
 
+/**
+ * Used to replace old navigation routes with new one
+ */
+function replaceOldRoute(routeName: string): string {
+  switch (routeName) {
+    case "PREFERENCES_SERVICES":
+      return ROUTES.SERVICES_HOME;
+
+    case "PREFERENCES_HOME":
+      return ROUTES.PROFILE_PREFERENCES_HOME;
+
+    default:
+      return routeName;
+  }
+}
+
 function getInternalRoute(href: string): Option<string> {
   return some(href.split(IO_INTERNAL_LINK_PREFIX))
     .filter(_ => _.length === 2 && _[0] === "")
     .chain(_ =>
-      fromNullable(ALLOWED_ROUTE_NAMES.find(e => e === _[1].toUpperCase()))
+      fromNullable(
+        ALLOWED_ROUTE_NAMES.find(e => e === replaceOldRoute(_[1].toUpperCase()))
+      )
     );
 }
 
@@ -33,11 +51,7 @@ export function handleInternalLink(dispatch: Dispatch, href: string) {
   getInternalRoute(href).map(routeName =>
     dispatch(
       NavigationActions.navigate({
-        routeName:
-          // filtering legacy routes
-          routeName === ROUTES.PREFERENCES_SERVICES
-            ? ROUTES.SERVICES_HOME
-            : routeName
+        routeName
       })
     )
   );

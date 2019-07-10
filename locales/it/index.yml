@@ -76,6 +76,7 @@ inbox:
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
+  facSimile: FAC-SIMILE
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
@@ -104,7 +105,7 @@ profile:
       confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
     preferences:
       title: Preferenze
-      description: Gestisci le preferenze dell'aplicazione
+      description: Gestisci le preferenze dell'applicazione
     privacy:
       title: Privacy
       description: Esporta dati, cancella account
@@ -522,6 +523,11 @@ wallet:
     DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su PagoPA, il pagamento non può essere effettuato.
     GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
     MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
+    PAYMENT_ONGOING_NOCANCEL: Un pagamento per questo avviso è già in corso, riprova tra 30 minuti.
+    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: Se hai già atteso 30 minuti e il pagamento risulta ancora bloccato utilizza il pulsante quì sotto per inviarci una segnalazione.
+    PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
+    PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
+    sendReport: Invia segnalazione
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -579,7 +585,7 @@ messages:
         block5: alle
         block6: del
     pay: Paga € {{amount}}
-    paid: Pagato € {{amount}}
+    paid: Pagati € {{amount}}
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
@@ -659,6 +665,9 @@ services:
   contactsAndInfo: Contatti ed informazioni
   contactAddress: Indirizzo
   contactPhone: Telefono
+  areasOfInterest:
+    selectMessage: Scegli le aree geografiche (comuni, regioni, etc.) dove risiedi o che frequenti solitamente per vederne qui i relativi servizi. Potrai modificarle in ogni momento.
+    addButton: Aggiungi le tue aree di interesse
   tab:
     locals: Locali
     national: Nazionali
