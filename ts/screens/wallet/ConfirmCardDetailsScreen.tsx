@@ -112,7 +112,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
+      light: false,
       bordered: true,
       onPress: this.goBack,
       title: I18n.t("global.buttons.back")

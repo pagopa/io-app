@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
 
   noLeftMargin: {
     marginLeft: 0
+  },
+  cancelButton: {
+    backgroundColor: variables.brandDarkGray
   }
 });
 
@@ -155,8 +158,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
-      bordered: true,
+      light: false,
+      style: styles.cancelButton,
       onPress: this.props.navigateToWalletHome,
       title: I18n.t("global.buttons.cancel")
     };
