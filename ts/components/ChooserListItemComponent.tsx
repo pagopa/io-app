@@ -1,7 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
-import { makeFontStyleObject } from "../theme/fonts";
+import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 
 type Props = Readonly<{
@@ -26,9 +25,9 @@ const styles = StyleSheet.create({
     height: 50
   },
   title: {
-    ...makeFontStyleObject(Platform.select, "700", false),
     fontSize: 18,
-    lineHeight: 21,
+    lineHeight: 22,
+    marginTop: 4,
     color: customVariables.brandDarkestGray
   }
 });
@@ -39,7 +38,7 @@ export default class ChooserListItemComponent extends React.Component<Props> {
       <View style={styles.container}>
         {this.props.iconComponent && <View>{this.props.iconComponent}</View>}
         <View style={styles.content}>
-          <Text numberOfLines={2} style={styles.title}>
+          <Text numberOfLines={2} bold={true} style={styles.title}>
             {this.props.title}
           </Text>
         </View>
