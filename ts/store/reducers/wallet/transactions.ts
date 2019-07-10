@@ -7,7 +7,6 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
 import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
-import { DateFromISOString } from "../../../utils/dates";
 import { Action } from "../../actions/types";
 import {
   fetchTransactionsFailure,
@@ -65,9 +64,7 @@ export const latestTransactionsSelector = createSelector(
               // tslint:disable-next-line:no-useless-cast
               isNaN(a.created as any) || isNaN(b.created as any)
                 ? -1 // define behavior for undefined creation dates (pagoPA allows these to be undefined)
-                : DateFromISOString.encode(b.created).localeCompare(
-                    DateFromISOString.encode(a.created)
-                  )
+                : b.created.toISOString().localeCompare(a.created.toISOString())
           )
           .filter(t => t.statusMessage !== "rifiutato")
           .slice(0, MAX_TRANSACTIONS_IN_LIST) // WIP no magic numbers

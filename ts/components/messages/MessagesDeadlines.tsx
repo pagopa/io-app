@@ -149,9 +149,9 @@ const generateSections = (
             (accumulator, messageAgendaItem) => {
               // As title of the section we use the ISOString rapresentation
               // of the due_date day.
-              const title = DateFromISOString.encode(
-                startOfDay(messageAgendaItem.e1.content.due_date)
-              );
+              const title = startOfDay(
+                messageAgendaItem.e1.content.due_date
+              ).toISOString();
               if (
                 accumulator.lastTitle.isNone() ||
                 title !== accumulator.lastTitle.value
