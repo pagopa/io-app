@@ -7,6 +7,7 @@ import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { createSelector } from "reselect";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -124,25 +125,33 @@ class OldServicesHomeScreen extends React.Component<Props> {
   };
 }
 
+const servicesSelector = (state: GlobalState) => state.entities.services;
+const organizationsSelector = (state: GlobalState) =>
+  state.entities.organizations;
+
+export const getAllSections = createSelector(
+  [servicesSelector, organizationsSelector],
+  (services, organizations) => {
+    const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
+    return orgfiscalCodes
+      .map(fiscalCode => {
+        const title = organizations[fiscalCode] || fiscalCode;
+        const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
+        const data = serviceIdsForOrg
+          .map(id => services.byId[id])
+          .filter(isDefined);
+        return {
+          title,
+          data
+        };
+      })
+      .filter(_ => _.data.length > 0)
+      .sort((a, b) => (a.title || "").localeCompare(b.title));
+  }
+);
+
 const mapStateToProps = (state: GlobalState) => {
-  const { services, organizations } = state.entities;
-
-  const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
-
-  // tslint:disable-next-line:readonly-array
-  const sections = orgfiscalCodes
-    .map(fiscalCode => {
-      const title = organizations[fiscalCode] || fiscalCode;
-      const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
-      const data = serviceIdsForOrg
-        .map(id => services.byId[id])
-        .filter(isDefined);
-      return {
-        title,
-        data
-      };
-    })
-    .filter(_ => _.data.length > 0);
+  const { services } = state.entities;
 
   const isAnyServiceLoading =
     Object.keys(services.byId).find(k => {
@@ -155,8 +164,8 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     profile: state.profile,
-    sections,
     allServicesId: Object.keys(services.byId),
+    sections: getAllSections(state),
     isLoading,
     searchText: searchTextSelector(state),
     isSearchEnabled: isSearchServicesEnabledSelector(state),
