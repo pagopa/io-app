@@ -176,7 +176,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
   private getSecondaryButtonProps = () => ({
     block: true,
     light: false,
-    bordered: !pot.isSome(this.props.paymentId),
+    bordered: pot.isNone(this.props.paymentId),
     style: pot.isSome(this.props.paymentId) ? styles.cancelButton : null,
     onPress: this.handleBackPress,
     title: I18n.t(
