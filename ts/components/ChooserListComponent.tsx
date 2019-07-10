@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 /**
- * A component to search, select and view a list of items
- * //TODO search will be introduced with story https://www.pivotaltracker.com/story/show/166792313
- * //TODO select will be introduced with story https://www.pivotaltracker.com/story/show/167102335
+ * A component view, search and select a list of items
+ * TODO search will be introduced with story https://www.pivotaltracker.com/story/show/166792313
+ * TODO select will be introduced with story https://www.pivotaltracker.com/story/show/167102335
  */
 export class ChooserListComponent extends React.PureComponent<Props> {
   private onPressCancel = () => {
