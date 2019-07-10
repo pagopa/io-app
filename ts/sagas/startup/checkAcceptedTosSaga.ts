@@ -17,14 +17,22 @@ export function* checkAcceptedTosSaga(
     return;
   }
 
-  // Navigate to the TosScreen
-  yield put(navigateToTosScreen);
+  // The user has to explicitly accept the new version of ToS if:
+  // - this is the first access
+  // - if the user profile stores the user accepted an old version of ToS
+  if (
+    !userProfile.has_profile ||
+    (userProfile.has_profile && "accepted_tos_version" in userProfile)
+  ) {
+    // Navigate to the TosScreen
+    yield put(navigateToTosScreen);
 
-  // Wait the user accept the ToS
-  yield take(tosAccepted);
+    // Wait the user accept the ToS
+    yield take(tosAccepted);
+  }
 
   /**
-   * The user profile is updated storing the last accepted tos version.
+   * The user profile is updated storing the last ToS version.
    * If the user logs in for the first time, the accepted tos version is stored once the profile in initialized
    */
   if (userProfile.has_profile) {
