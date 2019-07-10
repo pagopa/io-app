@@ -46,6 +46,7 @@ const fullScaleFactor = contentWidth / 870;
 const textdLineHeightF = 15;
 const textFontSizeF = 11;
 const textLeftMarginF = 140 * fullScaleFactor + 6;
+const textGenderLeftMarginF = 800 * fullScaleFactor + 6;
 
 const cardHeightF = 546 * fullScaleFactor;
 const cardHeaderHeightF = 154 * fullScaleFactor;
@@ -68,6 +69,7 @@ const landscapeScaleFactor = contentWidth / 546;
 const textLineHeightL = 28; // to solve misalignment on font, 28 is the fist value that seems to give text centered to line height
 const textFontSizeL = 18;
 const textLeftMarginL = 140 * landscapeScaleFactor + 8;
+const textGenderLeftMarginL = 800 * landscapeScaleFactor + 8;
 
 const cardWidthL = 870 * landscapeScaleFactor;
 const cardHeaderHeightL = 154 * landscapeScaleFactor;
@@ -84,7 +86,8 @@ const fiscalCodeHeightL =
   -// rotation correction factor
   (2 * customVariables.contentPadding + textLineHeightL / 4) +
   cardHeaderHeightL +
-  cardLargeSpacerL;
+  cardLargeSpacerL +
+  (cardLineHeightL * 2 - textLineHeightL); // 2-line label correction factor - align 0 char dimension
 
 const lastNameHeightL =
   fiscalCodeHeightL +
@@ -183,6 +186,9 @@ const styles = StyleSheet.create({
     ]
   },
 
+  fullGenderText: {
+    marginLeft: textGenderLeftMarginF
+  },
   fullFacSimile: {
     marginTop: 280 * fullScaleFactor,
     position: "absolute",
@@ -216,6 +222,10 @@ const styles = StyleSheet.create({
 });
 
 export default class FiscalCodeComponent extends React.Component<Props> {
+  private getGender(fiscalCode: FiscalCode) {
+    return parseInt(fiscalCode.substring(6, 7), 10) - 40 > 0 ? "F" : "M";
+  }
+
   private renderFrontContent(profile: UserProfile, isLandscape: boolean) {
     return (
       <React.Fragment>
@@ -251,6 +261,18 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         >
           {profile.name.toUpperCase()}
         </Text>
+
+        <Text
+          bold={true}
+          style={[
+            isLandscape
+              ? [styles.landscapeGender, styles.landscapeNameText]
+              : [styles.fullText, styles.fullNameText, styles.fullGenderText]
+          ]}
+        >
+          {this.getGender(profile.fiscal_code)}
+        </Text>
+
       </React.Fragment>
     );
   }
