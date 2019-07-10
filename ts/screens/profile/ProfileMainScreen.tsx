@@ -24,6 +24,7 @@ import {
 import { connect } from "react-redux";
 
 import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
+import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -55,6 +56,7 @@ import { notificationsInstallationSelector } from "../../store/reducers/notifica
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 
 type OwnProps = Readonly<{
@@ -88,6 +90,9 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     lineHeight: 40
+  },
+  whiteBg: {
+    backgroundColor: customVariables.colorWhite
   }
 });
 
@@ -204,7 +209,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     // tslint:disable no-big-function
     const screenContent = () => {
       return (
-        <ScrollView ref={this.ServiceListRef}>
+        <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
             {/* Preferences */}
@@ -457,11 +462,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         headerBody={<IconFont name="io-logo" color={"white"} />}
         title={I18n.t("profile.main.screenTitle")}
         icon={require("../../../img/icons/profile-illustration.png")}
-        topContent={
-          <Text white={true} alignCenter={true}>
-            Insert FiscalCode fac-simile here
-          </Text>
-        } // TODO
+        topContent={<FiscalCodeComponent type={"Preview"} />}
       >
         {screenContent()}
       </DarkLayout>
