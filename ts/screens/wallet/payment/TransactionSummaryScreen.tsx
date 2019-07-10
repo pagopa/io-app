@@ -16,6 +16,7 @@ import {
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -26,7 +27,6 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 
 import I18n from "../../../i18n";
-
 import { Dispatch } from "../../../store/actions/types";
 import {
   backToEntrypointPayment,
@@ -39,6 +39,7 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
+import variables from "../../../theme/variables";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
@@ -58,6 +59,12 @@ import { AmountToImporto } from "../../../utils/amounts";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./common";
+
+const styles = StyleSheet.create({
+  cancelButton: {
+    backgroundColor: variables.brandDarkGray
+  }
+});
 
 const basePrimaryButtonProps = {
   block: true,
@@ -168,7 +175,9 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   private getSecondaryButtonProps = () => ({
     block: true,
-    light: true,
+    light: false,
+    bordered: !pot.isSome(this.props.paymentId),
+    style: pot.isSome(this.props.paymentId) ? styles.cancelButton : null,
     onPress: this.handleBackPress,
     title: I18n.t(
       pot.isSome(this.props.paymentId)
