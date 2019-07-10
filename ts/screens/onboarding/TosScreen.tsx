@@ -1,3 +1,8 @@
+/**
+ * A screen to show the app Terms of Service. If the user accepted an old version
+ * of ToS and a new version is available, an alert is displayed to highlight the user
+ * has to accept the new version of ToS.
+ */
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -77,7 +82,7 @@ class TosScreen extends React.PureComponent<Props, State> {
           <H4 style={[styles.boldH4, styles.horizontalPadding]}>
             {I18n.t("profile.main.privacy.header")}
           </H4>
-          {!this.props.hasPreviousAcceptedToS && (
+          {this.props.hasAcceptedOldTosVersion && (
             <View style={styles.alert}>
               <Text>{I18n.t("profile.main.privacy.updated")}</Text>
             </View>
@@ -126,17 +131,14 @@ class TosScreen extends React.PureComponent<Props, State> {
     );
 }
 
-// If the user had accepted a previous version of ToS
-// it is displayed a related alert
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
-    hasPreviousAcceptedToS:
+    hasAcceptedOldTosVersion:
       pot.isSome(potProfile) &&
-      potProfile.value.has_profile &&
-      (("accepted_tos_version" in potProfile.value &&
-        potProfile.value.accepted_tos_version !== tosVersion) ||
-        !("accepted_tos_version" in potProfile.value))
+      "accepted_tos_version" in potProfile.value &&
+      potProfile.value.accepted_tos_version &&
+      potProfile.value.accepted_tos_version < tosVersion
   };
 }
 
