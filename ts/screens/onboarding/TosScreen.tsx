@@ -28,10 +28,6 @@ type OwnProps = {
 
 type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
 
-type State = {
-  showAbortOnboardingModal: boolean;
-};
-
 const styles = StyleSheet.create({
   alert: {
     backgroundColor: "#c1f4f2",
@@ -56,14 +52,7 @@ const styles = StyleSheet.create({
 /**
  * A screen to show the ToS to the user.
  */
-class TosScreen extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showAbortOnboardingModal: false
-    };
-  }
-
+class TosScreen extends React.PureComponent<Props> {
   public render() {
     const { navigation, dispatch } = this.props;
 
