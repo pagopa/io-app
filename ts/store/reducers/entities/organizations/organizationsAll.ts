@@ -9,7 +9,6 @@ import { GlobalState } from "../../types";
 export type Organization = {
   name: string;
   fiscalCode: string;
-  iconUri?: string;
 };
 
 export type OrganizationsAllState = ReadonlyArray<Organization>;

@@ -25,10 +25,8 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
-import {
-  Organization,
-  organizationsAllSelector
-} from "../../store/reducers/entities/organizations/organizationsAll";
+import { lexicallyOrderedAllOrganizations } from "../../store/reducers/entities/organizations";
+import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
@@ -366,7 +364,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const isLoading = pot.isLoading(state.entities.services.visible);
   return {
-    allOrganizations: organizationsAllSelector(state),
+    allOrganizations: lexicallyOrderedAllOrganizations(state),
     isLoading
   };
 };
