@@ -76,6 +76,7 @@ inbox:
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
+  facSimile: FAC-SIMILE
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
