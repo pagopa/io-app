@@ -16,7 +16,6 @@ import {
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -39,7 +38,6 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import variables from "../../../theme/variables";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
@@ -59,12 +57,6 @@ import { AmountToImporto } from "../../../utils/amounts";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./common";
-
-const styles = StyleSheet.create({
-  cancelButton: {
-    backgroundColor: variables.brandDarkGray
-  }
-});
 
 const basePrimaryButtonProps = {
   block: true,
@@ -177,7 +169,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
     block: true,
     light: false,
     bordered: pot.isNone(this.props.paymentId),
-    style: pot.isSome(this.props.paymentId) ? styles.cancelButton : null,
+    cancel: pot.isSome(this.props.paymentId),
     onPress: this.handleBackPress,
     title: I18n.t(
       pot.isSome(this.props.paymentId)

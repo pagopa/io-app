@@ -92,9 +92,6 @@ const styles = StyleSheet.create({
   notAuthorizedBtn: {
     flex: 1,
     alignSelf: "center"
-  },
-  cancelButton: {
-    backgroundColor: variables.brandDarkGray
   }
 });
 
@@ -200,7 +197,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       block: true,
       bordered: false,
       light: false,
-      style: styles.cancelButton,
+      cancel: true,
       onPress: this.props.navigateToWalletHome,
       title: I18n.t("global.buttons.cancel")
     };

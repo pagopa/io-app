@@ -12,8 +12,7 @@ const styles = StyleSheet.create({
     padding: variables.contentPadding
   },
   cancelButton: {
-    alignSelf: "center",
-    backgroundColor: variables.brandDarkGray
+    alignSelf: "center"
   }
 });
 
@@ -59,7 +58,11 @@ export function withLoadingSpinner<
                 }
                 action={
                   onCancel && (
-                    <Button onPress={onCancel} style={styles.cancelButton}>
+                    <Button
+                      onPress={onCancel}
+                      cancel={true}
+                      style={styles.cancelButton}
+                    >
                       <Text>{I18n.t("global.buttons.cancel")}</Text>
                     </Button>
                   )
