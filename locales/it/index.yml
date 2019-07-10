@@ -27,6 +27,7 @@ global:
     back: Indietro
     confirm: Conferma
     close: Chiudi
+    exit: Esci
   navigator:
     messages: messaggi
     wallet: portafoglio
