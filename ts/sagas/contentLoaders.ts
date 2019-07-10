@@ -50,14 +50,6 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
     );
 
     if (response.isRight()) {
-      console.log("right");
-    }
-
-    if (response.isLeft()) {
-      console.log("left");
-    }
-
-    if (response.isRight()) {
       yield put(
         contentServiceLoad.success({ serviceId, data: response.value.value })
       );
