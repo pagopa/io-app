@@ -65,6 +65,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
   }): React.ReactNode => (
     <ListItem itemHeader={true} style={styles.listItem}>
+      {/*TODO: add organization icon to section header https://www.pivotaltracker.com/story/show/166792020*/}
       <H3>{info.section.title}</H3>
     </ListItem>
   );
