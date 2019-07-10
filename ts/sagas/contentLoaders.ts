@@ -1,3 +1,4 @@
+import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, takeEvery } from "redux-saga/effects";
@@ -18,11 +19,16 @@ const contentClient = ContentClient();
  */
 function getServiceMetadata(
   serviceId: ServiceId
-): Promise<t.Validation<BasicResponseType<ServiceMetadata>>> {
+): Promise<Either<Error, t.Validation<BasicResponseType<ServiceMetadata>>>> {
   return new Promise((resolve, _) =>
     contentClient
       .getService({ serviceId })
-      .then(resolve, () => resolve(undefined))
+      .then(obj => {
+        resolve(right(obj));
+      })
+      .catch(error => {
+        resolve(left(new Error(error)));
+      })
   );
 }
 
@@ -43,7 +49,15 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       serviceId
     );
 
-    if (response && response.isRight() && response.value.status === 200) {
+    if (response.isRight()) {
+      console.log("right");
+    }
+
+    if (response.isLeft()) {
+      console.log("left");
+    }
+
+    if (response.isRight()) {
       yield put(
         contentServiceLoad.success({ serviceId, data: response.value.value })
       );
