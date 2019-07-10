@@ -1,5 +1,5 @@
 /**
- * Services reducer
+ * Organizations reducer
  */
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";

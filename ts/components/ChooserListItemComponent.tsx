@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * A component for selectable list item with icon (optional) and text
+ * //TODO select will be introduced with story https://www.pivotaltracker.com/story/show/167102335
+ */
 export default class ChooserListItemComponent extends React.Component<Props> {
   public render() {
     return (
