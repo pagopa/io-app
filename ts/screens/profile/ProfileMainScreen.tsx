@@ -14,7 +14,13 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
+import {
+  Alert,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
@@ -463,7 +469,15 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         headerBody={<IconFont name="io-logo" color={"white"} />}
         title={I18n.t("profile.main.screenTitle")}
         icon={require("../../../img/icons/profile-illustration.png")}
-        topContent={<FiscalCodeComponent type={"Preview"} />}
+        topContent={
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate(ROUTES.PROFILE_FISCAL_CODE)
+            }
+          >
+            <FiscalCodeComponent type={"Preview"} />
+          </TouchableOpacity>
+        }
         contextualHelp={{
           title: I18n.t("wallet.wallet"),
           body: () => (
