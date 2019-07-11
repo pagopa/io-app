@@ -20,13 +20,19 @@ const contentClient = ContentClient();
 function getServiceMetadata(
   serviceId: ServiceId
 ): Promise<t.Validation<BasicResponseType<ServiceMetadata>>> {
-  return new Promise((resolve, reject) =>
+  return new Promise((resolve, _) =>
     contentClient
       .getService({ serviceId })
-      .then(resolve)
-      .catch(err => {
-        reject(left(err));
-      })
+      .then(resolve, () =>
+        resolve(
+          left([
+            t.getValidationError(
+              "some error occurred",
+              t.getDefaultContext(t.null)
+            )
+          ])
+        )
+      )
   );
 }
 
@@ -42,19 +48,16 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
   ) {
     const serviceId = action.payload;
 
-    try {
-      const response: SagaCallReturnType<
-        typeof getServiceMetadata
-      > = yield call(getServiceMetadata, serviceId);
+    const response: SagaCallReturnType<typeof getServiceMetadata> = yield call(
+      getServiceMetadata,
+      serviceId
+    );
 
-      if (response.isRight() && response.value.status === 200) {
-        yield put(
-          contentServiceLoad.success({ serviceId, data: response.value.value })
-        );
-      } else {
-        yield put(contentServiceLoad.failure(serviceId));
-      }
-    } catch (err) {
+    if (response.isRight() && response.value.status === 200) {
+      yield put(
+        contentServiceLoad.success({ serviceId, data: response.value.value })
+      );
+    } else {
       yield put(contentServiceLoad.failure(serviceId));
     }
   });
