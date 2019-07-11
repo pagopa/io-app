@@ -33,6 +33,7 @@ import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -463,6 +464,12 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         title={I18n.t("profile.main.screenTitle")}
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={<FiscalCodeComponent type={"Preview"} />}
+        contextualHelp={{
+          title: I18n.t("wallet.wallet"),
+          body: () => (
+            <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
+          )
+        }}
       >
         {screenContent()}
       </DarkLayout>

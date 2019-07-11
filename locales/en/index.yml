@@ -94,7 +94,7 @@ profile:
     upsert: Error creating or updating the profile
   main:
     screenTitle: Profile
-    screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
+    contextualHelp: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
     clearCache: Clear cache
