@@ -13,10 +13,10 @@ import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
 
 type Props = Readonly<{
-  allowGoBack: boolean;
-  headerBody: React.ReactNode;
-  title: string;
-  icon: ImageSourcePropType;
+  allowGoBack?: boolean;
+  headerBody?: React.ReactNode;
+  title?: string;
+  icon?: ImageSourcePropType;
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
   appLogo?: boolean;
@@ -53,7 +53,7 @@ export default class DarkLayout extends React.Component<Props> {
     return (
       <TopScreenComponent
         goBack={this.props.allowGoBack}
-        title={this.props.title}
+        title={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
         appLogo={this.props.appLogo}
@@ -66,7 +66,7 @@ export default class DarkLayout extends React.Component<Props> {
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
             hideHeader={this.props.hideHeader}
-            title={this.props.title}
+            title={this.props.title ? this.props.title : ""}
             icon={this.props.icon}
             dark={true}
             contentStyle={this.props.contentStyle}
@@ -81,7 +81,7 @@ export default class DarkLayout extends React.Component<Props> {
         ) : (
           <ScreenContent
             hideHeader={this.props.hideHeader}
-            title={this.props.title}
+            title={this.props.title ? this.props.title : ""}
             icon={this.props.icon}
             dark={true}
             contentStyle={this.props.contentStyle}
