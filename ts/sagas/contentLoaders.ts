@@ -1,4 +1,4 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import { left } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, takeEvery } from "redux-saga/effects";
@@ -19,15 +19,13 @@ const contentClient = ContentClient();
  */
 function getServiceMetadata(
   serviceId: ServiceId
-): Promise<Either<Error, t.Validation<BasicResponseType<ServiceMetadata>>>> {
-  return new Promise((resolve, _) =>
+): Promise<t.Validation<BasicResponseType<ServiceMetadata>>> {
+  return new Promise((resolve, reject) =>
     contentClient
       .getService({ serviceId })
-      .then(obj => {
-        resolve(right(obj));
-      })
-      .catch(error => {
-        resolve(left(new Error(error)));
+      .then(resolve)
+      .catch(err => {
+        reject(left(err));
       })
   );
 }
@@ -44,16 +42,19 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
   ) {
     const serviceId = action.payload;
 
-    const response: SagaCallReturnType<typeof getServiceMetadata> = yield call(
-      getServiceMetadata,
-      serviceId
-    );
+    try {
+      const response: SagaCallReturnType<
+        typeof getServiceMetadata
+      > = yield call(getServiceMetadata, serviceId);
 
-    if (response.isRight()) {
-      yield put(
-        contentServiceLoad.success({ serviceId, data: response.value.value })
-      );
-    } else {
+      if (response.isRight() && response.value.status === 200) {
+        yield put(
+          contentServiceLoad.success({ serviceId, data: response.value.value })
+        );
+      } else {
+        yield put(contentServiceLoad.failure(serviceId));
+      }
+    } catch (err) {
       yield put(contentServiceLoad.failure(serviceId));
     }
   });
