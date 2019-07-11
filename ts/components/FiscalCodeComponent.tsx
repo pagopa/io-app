@@ -382,7 +382,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
               : [styles.fullText, styles.fullBirthPlaceText]
           ]}
         >
-          LUOGO DI NASCITA {/** TODO: get data from fiscal code */}
+          {/** LUOGO DI NASCITA  TODO: get data from fiscal https://www.pivotaltracker.com/story/show/167064742  */}
         </Text>
 
         <Text
@@ -393,7 +393,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
               : [styles.fullText, styles.fullBirthCityText]
           ]}
         >
-          PROVINCIA {/** TODO: get data from fiscal code */}
+          {/** PROVINCIA  TODO: get data from fiscal code https://www.pivotaltracker.com/story/show/167064742 */}
         </Text>
 
         <Text
