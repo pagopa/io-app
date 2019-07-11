@@ -1,3 +1,4 @@
+import { left } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, fork, put } from "redux-saga/effects";
@@ -28,7 +29,16 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
     return new Promise((resolve, _) =>
       backendPublicClient
         .getServerInfo({})
-        .then(resolve, () => resolve(undefined))
+        .then(resolve, () =>
+          resolve(
+            left([
+              t.getValidationError(
+                "some error occurred",
+                t.getDefaultContext(t.null)
+              )
+            ])
+          )
+        )
     );
   }
 
@@ -37,7 +47,6 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
       typeof getServerInfo
     > = yield call(getServerInfo, {});
     if (
-      backendInfoResponse &&
       backendInfoResponse.isRight() &&
       backendInfoResponse.value.status === 200
     ) {
