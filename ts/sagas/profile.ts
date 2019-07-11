@@ -32,6 +32,7 @@ export function* loadProfile(
       {}
     );
     // we got an error, throw it
+    // WARNING: profile info disclosure (implement a readablePrivacyReport)
     if (response.isLeft()) {
       throw Error(readableReport(response.value));
     }
