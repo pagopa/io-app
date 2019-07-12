@@ -34,6 +34,14 @@ export const profileUpsert = createAsyncAction(
   "PROFILE_UPSERT_FAILURE"
 )<ProfileUpsertPayload, InitializedProfile, Error>();
 
+type ProfileFirstLoginPayload = {
+  fiscal_code: InitializedProfile["fiscal_code"];
+  spid_email: InitializedProfile["spid_email"];
+};
+export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")<
+  ProfileFirstLoginPayload
+>();
+
 export const clearCache = createStandardAction("CLEAR_CACHE")();
 
 export type ProfileActions =
@@ -41,4 +49,5 @@ export type ProfileActions =
   | ActionType<typeof profileLoadSuccess>
   | ActionType<typeof profileLoadFailure>
   | ActionType<typeof profileUpsert>
+  | ActionType<typeof profileFirstLogin>
   | ActionType<typeof clearCache>;

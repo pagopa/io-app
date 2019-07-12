@@ -14,6 +14,7 @@ import { InstallationState } from "./installation";
 import { NavigationHistoryState } from "./navigationHistory";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
+import { PaymentsState } from "./payments";
 import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
@@ -45,6 +46,7 @@ export type GlobalState = Readonly<{
   installation: InstallationState;
   debug: DebugState;
   search: SearchState;
+  payments: PaymentsState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;
