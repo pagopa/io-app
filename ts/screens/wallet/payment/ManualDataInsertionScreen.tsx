@@ -31,9 +31,11 @@ import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import {
   navigateToPaymentTransactionSummaryScreen,
@@ -43,6 +45,7 @@ import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { NumberFromString } from "../../../utils/number";
+import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
   isInvalidAmount?: boolean;
@@ -50,7 +53,9 @@ type NavigationParams = {
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = OwnProps &
+  ReturnType<typeof mapDispatchToProps> &
+  LightModalContextInterface;
 
 type State = Readonly<{
   paymentNoticeNumber: Option<
@@ -159,7 +164,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       onPress: this.props.navigateToWalletHome,
       title: I18n.t("global.buttons.cancel")
     };
-
     return (
       <BaseScreenComponent
         goBack={true}
@@ -170,6 +174,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
+            <Text link={true} onPress={this.showModal}>
+              {I18n.t("wallet.insertManually.link")}
+            </Text>
             <Form>
               <Item
                 style={styles.noLeftMargin}
@@ -247,7 +254,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
             </Form>
           </Content>
         </ScrollView>
-
         <FooterWithButtons
           type="TwoButtonsInlineHalf"
           leftButton={secondaryButtonProps}
@@ -256,6 +262,14 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       </BaseScreenComponent>
     );
   }
+  // private showModal = () => this.setState({ showModal: true });
+  private showModal = () => {
+    this.props.showModal(
+      <CodesPositionManualPaymentModal onCancel={this.props.hideModal} />
+    );
+  };
+
+  // private hideModal = () => this.setState({ showModal: false });
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -278,4 +292,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   undefined,
   mapDispatchToProps
-)(ManualDataInsertionScreen);
+)(withLightModalContext(ManualDataInsertionScreen));
