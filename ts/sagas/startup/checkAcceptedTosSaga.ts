@@ -9,6 +9,9 @@ import { profileUpsert } from "../../store/actions/profile";
 export function* checkAcceptedTosSaga(
   userProfile: UserProfileUnion
 ): IterableIterator<Effect> {
+  // The user has to explicitly accept the new version of ToS if:
+  // - this is the first access
+  // - the user profile stores the user accepted an old version of ToS
   if (
     "accepted_tos_version" in userProfile &&
     userProfile.accepted_tos_version &&
@@ -17,9 +20,6 @@ export function* checkAcceptedTosSaga(
     return;
   }
 
-  // The user has to explicitly accept the new version of ToS if:
-  // - this is the first access
-  // - if the user profile stores the user accepted an old version of ToS
   if (
     !userProfile.has_profile ||
     (userProfile.has_profile && "accepted_tos_version" in userProfile)

@@ -241,6 +241,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
       }
       // Ask to accept ToS if there is a new available version
       yield call(checkAcceptedTosSaga, userProfile);
+
+      // Stop the watchAbortOnboardingSaga
+      yield cancel(watchAbortOnboardingSagaTask);
     }
   }
 
