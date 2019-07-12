@@ -16,6 +16,7 @@ import AnimatedScreenContent from "../screens/AnimatedScreenContent";
 import ScreenContent from "../screens/ScreenContent";
 import TopScreenComponent from "../screens/TopScreenComponent";
 import H5 from "../ui/H5";
+import Markdown from "../ui/Markdown";
 import PagoPALogo from "./PagoPALogo";
 
 type Props = Readonly<{
@@ -44,14 +45,19 @@ const styles = StyleSheet.create({
   },
 
   shadow: {
+    // iOS
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5
+    zIndex: 999,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    // Android
+    elevation: 8,
+    borderBottomWidth: 0,
+    position: "relative"
   },
 
   brandDarkGray: {
@@ -110,6 +116,10 @@ export default class WalletLayout extends React.Component<Props> {
         goBack={allowGoBack}
         title={title}
         dark={true}
+        contextualHelp={{
+          title: I18n.t("wallet.wallet"),
+          body: () => <Markdown>{I18n.t("wallet.walletHelp")}</Markdown>
+        }}
         headerBody={<PagoPALogo />}
       >
         {this.props.hasDynamicSubHeader ? (

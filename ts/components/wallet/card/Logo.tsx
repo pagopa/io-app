@@ -3,7 +3,7 @@
  * credit card logo based on its pan
  */
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import { CreditCard } from "../../../types/pagopa";
 import { CreditCardType } from "../../../types/pagopa";
 import { getResourceNameFromUrl } from "../../../utils/url";
@@ -61,11 +61,12 @@ const styles = StyleSheet.create({
 
 type Props = Readonly<{
   item?: CreditCard;
+  imageStyle?: StyleProp<ImageStyle>;
 }>;
 
 const Logo: React.SFC<Props> = props => (
   <Image
-    style={styles.issuerLogo}
+    style={props.imageStyle ? props.imageStyle : styles.issuerLogo}
     source={props.item ? getCardIconFromBrandLogo(props.item) : defaultCardIcon}
   />
 );
