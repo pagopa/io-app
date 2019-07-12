@@ -479,7 +479,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
           </TouchableOpacity>
         }
         contextualHelp={{
-          title: I18n.t("wallet.wallet"),
+          title: I18n.t("profile.main.screenTitle"),
           body: () => (
             <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
           )
