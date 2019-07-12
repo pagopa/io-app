@@ -1,3 +1,4 @@
+import { fixWalletPspTagsValues } from "../../utils/wallet";
 import {
   Amount,
   CreditCard,
@@ -122,10 +123,33 @@ const validWallet: { [key: string]: any } = {
   lastUsage: "2018-08-07T15:50:08Z"
 };
 
+const validWalletNoCreditCard: { [key: string]: any } = {
+  idWallet: 2345,
+  type: "EXTERNAL_PS",
+  favourite: false,
+  psp: validPsp,
+  idPsp: validPsp.id,
+  pspEditable: true,
+  lastUsage: "2018-08-07T15:50:08Z"
+};
+
 // has no id
 const invalidWallet = Object.keys(validWallet)
   .filter(k => k !== "idWallet")
   .reduce((o, k) => ({ ...o, [k]: validWallet[k] }), {} as object);
+
+/**
+ * mock a valid wallet with psp.tags malformed
+ * TODO: temporary test. Remove this test once SIA has fixed the spec.
+ * @see https://www.pivotaltracker.com/story/show/166665367
+ */
+const validWalletWithMalformedPspTags = {
+  ...validWallet,
+  psp: {
+    ...validPsp,
+    tags: [null, null, "VISA", "VISA", "MASTERCARD", null]
+  }
+};
 
 // Amount testing
 describe("Amount", () => {
@@ -231,6 +255,11 @@ describe("Wallet", () => {
   it("should accept a valid Wallet", () => {
     expect(Wallet.decode(validWallet).isRight()).toBeTruthy();
   });
+
+  it("should accept a valid Wallet that contains no credit card", () => {
+    expect(Wallet.decode(validWalletNoCreditCard).isRight()).toBeTruthy();
+  });
+
   it("should NOT accept an invalid Wallet", () => {
     expect(Wallet.decode(invalidWallet).isRight()).toBeFalsy();
   });
@@ -245,6 +274,24 @@ describe("WalletListResponse", () => {
       WalletListResponse.decode(walletListResponse).isRight()
     ).toBeTruthy();
   });
+
+  /**
+   * TODO: temporary test. Remove this test once SIA has fixed the spec.
+   * @see https://www.pivotaltracker.com/story/show/166665367
+   */
+  it("should recognize a valid WalletListResponse also when psp tags are malformed", () => {
+    const walletListResponse = {
+      data: [validWalletWithMalformedPspTags, validWalletWithMalformedPspTags]
+    };
+    // sanitize tags field
+    const walletListResponseSanitized = {
+      data: walletListResponse.data.map(d => fixWalletPspTagsValues(d))
+    };
+    expect(
+      WalletListResponse.decode(walletListResponseSanitized).isRight()
+    ).toBeTruthy();
+  });
+
   it("should NOT recognize an invalid WalletListResponse", () => {
     const walletListResponse = {
       data: [validWallet, invalidWallet]

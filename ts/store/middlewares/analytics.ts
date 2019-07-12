@@ -46,6 +46,7 @@ import {
 import { tosAccept } from "../actions/onboarding";
 import { createPinSuccess } from "../actions/pinset";
 import {
+  profileFirstLogin,
   profileLoadFailure,
   profileLoadSuccess,
   profileUpsert
@@ -89,7 +90,7 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
-// tslint:disable-next-line:cognitive-complexity
+// tslint:disable-next-line: cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
@@ -122,6 +123,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         SPID_URL: action.payload.url
       });
+
+    case getType(profileFirstLogin):
+      return mp.track(action.type, action.payload);
+
     //
     // Content actions (with properties)
     //
@@ -230,6 +235,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(profileUpsert.failure):
     // messages
     case getType(loadMessages.request):
+    case getType(loadMessages.failure):
     case getType(loadMessages.success):
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
@@ -322,6 +328,29 @@ export function getCurrentRouteName(navNode: any): string | undefined {
   ) {
     const route = navNode.routes[navNode.index];
     return getCurrentRouteName(route);
+  }
+  return undefined;
+}
+
+export function getCurrentRouteKey(navNode: any): string | undefined {
+  if (!navNode) {
+    return undefined;
+  }
+  if (
+    navNode.index === undefined &&
+    navNode.key &&
+    typeof navNode.key === "string"
+  ) {
+    // navNode is a NavigationLeafRoute
+    return navNode.key;
+  }
+  if (
+    navNode.routes &&
+    navNode.index !== undefined &&
+    navNode.routes[navNode.index]
+  ) {
+    const route = navNode.routes[navNode.index];
+    return getCurrentRouteKey(route);
   }
   return undefined;
 }

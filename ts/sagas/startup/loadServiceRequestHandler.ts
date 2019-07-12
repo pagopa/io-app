@@ -1,8 +1,7 @@
-import { TypeofApiCall } from "italia-ts-commons/lib/requests";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put } from "redux-saga/effects";
-
 import { ActionType } from "typesafe-actions";
-import { GetServiceT } from "../../../definitions/backend/requestTypes";
+import { BackendClient } from "../../api/backend";
 import { loadService } from "../../store/actions/services";
 import { SagaCallReturnType } from "../../types/utils";
 
@@ -14,7 +13,7 @@ import { SagaCallReturnType } from "../../types/utils";
  * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
  */
 export function* loadServiceRequestHandler(
-  getService: TypeofApiCall<GetServiceT>,
+  getService: ReturnType<typeof BackendClient>["getService"],
   action: ActionType<typeof loadService["request"]>
 ): IterableIterator<Effect> {
   try {
@@ -23,8 +22,12 @@ export function* loadServiceRequestHandler(
       { service_id: action.payload }
     );
 
-    if (response !== undefined && response.status === 200) {
-      yield put(loadService.success(response.value));
+    if (response.isLeft()) {
+      throw Error(readableReport(response.value));
+    }
+
+    if (response.value.status === 200) {
+      yield put(loadService.success(response.value.value));
     } else {
       throw Error();
     }

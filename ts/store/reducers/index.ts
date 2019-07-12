@@ -22,9 +22,11 @@ import navigationReducer from "./navigation";
 import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
+import paymentsReducer from "./payments";
 import persistedPreferencesReducer from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
+import searchReducer from "./search";
 import { GlobalState } from "./types";
 import walletReducer from "./wallet";
 
@@ -80,7 +82,9 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   notifications: notificationsReducer,
   profile: profileReducer,
   entities: entitiesReducer,
-  debug: debugReducer
+  debug: debugReducer,
+  search: searchReducer,
+  payments: paymentsReducer
 });
 
 export function createRootReducer(

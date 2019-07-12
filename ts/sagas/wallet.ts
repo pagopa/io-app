@@ -10,13 +10,16 @@ import { delay } from "redux-saga";
 import {
   call,
   Effect,
+  fork,
   put,
   select,
   take,
+  takeEvery,
   takeLatest
 } from "redux-saga/effects";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
 
+import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
 import { PaymentManagerClient } from "../api/pagopa";
 import {
@@ -24,20 +27,23 @@ import {
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
-
 import {
+  backToEntrypointPayment,
   paymentAttiva,
   paymentCheck,
   paymentDeletePayment,
   paymentExecutePayment,
   paymentFetchPspsForPaymentId,
   paymentIdPolling,
+  paymentInitializeEntrypointRoute,
+  paymentInitializeState,
   paymentUpdateWalletPsp,
   paymentVerifica,
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../store/actions/wallet/payment";
 import {
+  fetchPsp,
   fetchTransactionFailure,
   fetchTransactionRequest,
   fetchTransactionsRequest,
@@ -76,6 +82,7 @@ import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 import {
   addWalletCreditCardRequestHandler,
   deleteWalletRequestHandler,
+  fetchPspRequestHandler,
   fetchTransactionRequestHandler,
   fetchTransactionsRequestHandler,
   fetchWalletsRequestHandler,
@@ -91,7 +98,15 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 
+import { NavigationActions } from "react-navigation";
+import ROUTES from "../navigation/routes";
+import { navigateToWalletHome } from "../store/actions/navigation";
+import {
+  getCurrentRouteKey,
+  getCurrentRouteName
+} from "../store/middlewares/analytics";
 import { SessionManager } from "../utils/SessionManager";
+import { paymentsDeleteUncompletedSaga } from "./payments";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -144,7 +159,7 @@ function* startOrResumeAddCreditCardSaga(
   // want to add
   const creditCardWallet: NullableWallet = {
     idWallet: null,
-    type: "CREDIT_CARD",
+    type: TypeEnum.CREDIT_CARD,
     favourite: action.payload.setAsFavorite,
     creditCard: action.payload.creditCard,
     psp: undefined
@@ -509,8 +524,8 @@ export function* watchWalletSaga(
   const getPaymentManagerSession = async () => {
     try {
       const response = await paymentManagerClient.getSession(walletToken);
-      if (response !== undefined && response.status === 200) {
-        return some(response.value.data.sessionToken);
+      if (response.isRight() && response.value.status === 200) {
+        return some(response.value.value.data.sessionToken);
       }
       return none;
     } catch {
@@ -650,4 +665,61 @@ export function* watchWalletSaga(
     paymentManagerClient,
     pmSessionManager
   );
+
+  yield takeLatest(
+    getType(fetchPsp.request),
+    fetchPspRequestHandler,
+    paymentManagerClient,
+    pmSessionManager
+  );
+
+  yield fork(paymentsDeleteUncompletedSaga);
+}
+
+/**
+ * This saga track each time a new payment of the route from which it started is initiated
+ */
+export function* watchPaymentInitializeSaga(): Iterator<Effect> {
+  yield takeEvery(getType(paymentInitializeState), function*() {
+    const nav: GlobalState["nav"] = yield select<GlobalState>(_ => _.nav);
+    const currentRouteName = getCurrentRouteName(nav);
+    const currentRouteKey = getCurrentRouteKey(nav);
+    if (currentRouteName !== undefined && currentRouteKey !== undefined) {
+      yield put(
+        paymentInitializeEntrypointRoute({
+          name: currentRouteName,
+          key: currentRouteKey
+        })
+      );
+    }
+  });
+}
+
+/**
+ * This saga back to entrypoint payment if the payment was initiated from the message list or detail
+ * otherwise navigate to the Home of wallet
+ */
+export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
+  yield takeEvery(getType(backToEntrypointPayment), function*() {
+    const entrypointRoute: GlobalState["wallet"]["payment"]["entrypointRoute"] = yield select<
+      GlobalState
+    >(_ => _.wallet.payment.entrypointRoute);
+    if (entrypointRoute !== undefined) {
+      const routeName = entrypointRoute ? entrypointRoute.name : undefined;
+      const key = entrypointRoute ? entrypointRoute.key : undefined;
+
+      // if the payment was initiated from the message list or detail go back
+      if (
+        routeName === ROUTES.MESSAGES_HOME ||
+        routeName === ROUTES.MESSAGE_DETAIL
+      ) {
+        const navigationBackAction = NavigationActions.back({
+          key
+        });
+        yield put(navigationBackAction);
+      } else {
+        yield put(navigateToWalletHome());
+      }
+    }
+  });
 }

@@ -4,7 +4,6 @@
  * are managed by different global reducers.
  */
 
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
@@ -50,30 +49,46 @@ const reducer = (
       return pot.toUpdating(state, action.payload as any);
 
     case getType(profileUpsert.success):
-      const updated = action.payload;
-      const newVersion = updated.version;
-      if (
-        pot.isSome(state) &&
-        newVersion !== undefined &&
-        state.value.has_profile === true &&
-        newVersion > state.value.version
-      ) {
-        // If current profile exist and we got a new (updated) version, we merge
-        // the updated version in the existing profile.
-        // Note: we cannot just assign the "updated" profile to the
-        // cached one since they have two different types.
-        // FIXME: one gets merged https://github.com/teamdigitale/italia-backend/pull/322
-        return pot.some({
-          ...state.value,
-          email: updated.email,
-          is_inbox_enabled: updated.is_inbox_enabled === true,
-          is_webhook_enabled: updated.is_webhook_enabled === true,
-          preferred_languages: updated.preferred_languages,
-          blocked_inbox_or_channels: updated.blocked_inbox_or_channels,
-          // FIXME: remove the cast after the following bug has been fixed:
-          //        https://www.pivotaltracker.com/story/show/159802090
-          version: newVersion as NonNegativeInteger // tslint:disable-line:no-useless-cast
-        });
+      if (pot.isSome(state)) {
+        const currentProfile = state.value;
+        const newProfile = action.payload;
+
+        // The API profile is still absent
+        if (
+          !currentProfile.has_profile &&
+          newProfile.has_profile &&
+          newProfile.version === 0
+        ) {
+          return pot.some({
+            ...currentProfile,
+            has_profile: true,
+            email: newProfile.email,
+            is_inbox_enabled: newProfile.is_inbox_enabled === true,
+            is_webhook_enabled: newProfile.is_webhook_enabled === true,
+            preferred_languages: newProfile.preferred_languages,
+            blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,
+            version: 0
+          });
+        }
+
+        // We already have a API profile
+        if (
+          currentProfile.has_profile &&
+          newProfile.has_profile &&
+          currentProfile.version < newProfile.version
+        ) {
+          return pot.some({
+            ...currentProfile,
+            email: newProfile.email,
+            is_inbox_enabled: newProfile.is_inbox_enabled === true,
+            is_webhook_enabled: newProfile.is_webhook_enabled === true,
+            preferred_languages: newProfile.preferred_languages,
+            blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,
+            version: newProfile.version
+          });
+        }
+
+        return state;
       } else {
         // We can't merge an updated profile if we haven't loaded a full
         // profile yet

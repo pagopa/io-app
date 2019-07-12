@@ -7,6 +7,7 @@ import {
   Platform,
   StatusBar
 } from "react-native";
+import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 
 import { initialiseInstabug } from "./boot/configureInstabug";
@@ -76,6 +77,8 @@ class RootContainer extends React.PureComponent<Props> {
     }
 
     AppState.addEventListener("change", this.handleApplicationActivity);
+    // Hide splash screen
+    SplashScreen.hide();
   }
 
   public componentWillUnmount() {

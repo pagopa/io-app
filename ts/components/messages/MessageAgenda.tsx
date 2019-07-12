@@ -1,10 +1,10 @@
-import { format } from "date-fns";
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
+  Dimensions,
   Image,
   Platform,
   SectionList,
@@ -13,7 +13,10 @@ import {
   SectionListScrollParams,
   StyleSheet
 } from "react-native";
+import variables from "../../theme/variables";
 
+import startCase from "lodash/startCase";
+import { PullSectionList } from "react-native-pull";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -21,6 +24,7 @@ import { ServicesByIdState } from "../../store/reducers/entities/services/servic
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
+import { format } from "../../utils/dates";
 import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
@@ -29,6 +33,11 @@ const SECTION_HEADER_HEIGHT = 48;
 const ITEM_HEIGHT = 158;
 const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
+
+const TOP_INDICATOR_HEIGHT = 70;
+const MARGIN_TOP_EMPTY_LIST = 30;
+
+const screenWidth = Dimensions.get("screen").width;
 
 const styles = StyleSheet.create({
   // List
@@ -41,7 +50,6 @@ const styles = StyleSheet.create({
   },
   emptyListContentSubtitle: {
     textAlign: "center",
-    paddingTop: customVariables.contentPadding,
     fontSize: customVariables.fontSizeSmall
   },
 
@@ -86,6 +94,26 @@ const styles = StyleSheet.create({
   itemSeparator: {
     height: ITEM_SEPARATOR_HEIGHT,
     backgroundColor: customVariables.brandLightGray
+  },
+
+  // animation scrollview
+  fill: {
+    flex: 1
+  },
+  button: {
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginTop: variables.contentPadding,
+    width: screenWidth - variables.contentPadding * 2
+  },
+  scrollList: {
+    backgroundColor: variables.colorWhite,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: Platform.OS === "ios" ? 35 : 0
   }
 });
 
@@ -137,7 +165,7 @@ type State = {
   prevSections?: Sections;
 };
 
-const isFakeItem = (item: any): item is FakeItem => {
+export const isFakeItem = (item: any): item is FakeItem => {
   return item.fake;
 };
 
@@ -235,6 +263,7 @@ const FakeItemComponent = (
  * A component to render messages with due_date in a agenda like form.
  */
 class MessageAgenda extends React.PureComponent<Props, State> {
+  // Ref to section list
   private sectionListRef = React.createRef<any>();
 
   constructor(props: Props) {
@@ -242,6 +271,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     this.state = {
       itemLayouts: []
     };
+    this.loadMoreData = this.loadMoreData.bind(this);
   }
 
   public static getDerivedStateFromProps(
@@ -260,24 +290,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return null;
   }
 
-  private renderListHeader = () => {
-    const { onMoreDataRequest } = this.props;
-
-    return (
-      <View style={styles.listHeaderWrapper}>
-        <Button
-          block={true}
-          primary={true}
-          small={true}
-          onPress={onMoreDataRequest}
-        >
-          <Text style={styles.listHeaderButtonText} numberOfLines={1}>
-            {I18n.t("reminders.loadMoreData")}
-          </Text>
-        </Button>
-      </View>
-    );
-  };
+  private loadMoreData() {
+    this.props.onMoreDataRequest();
+  }
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
     const isFake = info.section.fake;
@@ -285,12 +300,14 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       <View style={styles.sectionHeaderWrapper}>
         <View style={styles.sectionHeaderContent}>
           <Text style={styles.sectionHeaderText}>
-            {format(
-              info.section.title,
-              I18n.t(
-                isFake
-                  ? "global.dateFormats.monthYear"
-                  : "global.dateFormats.dayMonthYear"
+            {startCase(
+              format(
+                info.section.title,
+                I18n.t(
+                  isFake
+                    ? "global.dateFormats.monthYear"
+                    : "global.dateFormats.weekdayDayMonthYear"
+                )
               )
             )}
           </Text>
@@ -356,6 +373,30 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return this.state.itemLayouts[index];
   };
 
+  private topIndicatorRender() {
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          height: TOP_INDICATOR_HEIGHT
+        }}
+      >
+        <Button
+          block={true}
+          primary={true}
+          small={true}
+          bordered={true}
+          style={styles.button}
+          onPress={this.loadMoreData}
+        >
+          <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
+        </Button>
+      </View>
+    );
+  }
+
   public render() {
     const {
       sections,
@@ -364,23 +405,37 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       refreshing,
       onContentSizeChange
     } = this.props;
+
     return (
-      <SectionList
-        ref={this.sectionListRef}
-        ListEmptyComponent={ListEmptyComponent}
-        ListHeaderComponent={this.renderListHeader}
-        renderSectionHeader={this.renderSectionHeader}
-        renderItem={this.renderItem}
-        ItemSeparatorComponent={ItemSeparatorComponent}
-        sections={sections}
-        extraData={{ servicesById, paymentsByRptId }}
-        refreshing={refreshing}
-        onContentSizeChange={onContentSizeChange}
-        stickySectionHeadersEnabled={true}
-        keyExtractor={keyExtractor}
-        getItemLayout={this.getItemLayout}
-        bounces={false}
-      />
+      <View style={styles.fill}>
+        {sections.length === 0 && this.topIndicatorRender()}
+        <PullSectionList
+          loadMoreData={this.loadMoreData}
+          topIndicatorRender={this.topIndicatorRender}
+          topIndicatorHeight={TOP_INDICATOR_HEIGHT}
+          sectionsLength={sections.length}
+          ref={this.sectionListRef}
+          ListEmptyComponent={ListEmptyComponent}
+          renderSectionHeader={this.renderSectionHeader}
+          renderItem={this.renderItem}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+          sections={sections}
+          extraData={{ servicesById, paymentsByRptId }}
+          refreshing={refreshing}
+          onContentSizeChange={onContentSizeChange}
+          stickySectionHeadersEnabled={true}
+          keyExtractor={keyExtractor}
+          getItemLayout={this.getItemLayout}
+          bounces={false}
+          style={[
+            {
+              marginTop: sections.length === 0 ? MARGIN_TOP_EMPTY_LIST : 0
+            },
+            styles.scrollList
+          ]}
+          scrollEventThrottle={8}
+        />
+      </View>
     );
   }
 

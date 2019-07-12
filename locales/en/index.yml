@@ -2,11 +2,15 @@
 global:
   localization:
     decimalSeparator: "."
+  date:
+    today: "today"
+    tomorrow: "tomorrow"
   dateFormats:
     monthYear: "MMMM YYYY"
-    dayMonthYear: "dddd D MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "MM/DD" 
+    dayMonthYear: "D MMMM YYYY"
+    weekdayDayMonthYear: "dddd D MMMM YYYY"
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -26,17 +30,18 @@ global:
     messages: messages
     wallet: wallet
     documents: documents
-    preferences: preferences
     profile: profile
+    services: services
   actions:
     retry: An error occurred, please retry
-    search: Search
+    search: Text to search
   remoteStates:
     loading: Loading...
     notAvailable: Non available
   notImplemented: NOT IMPLEMENTED
   search:
-    invalidSearchBarText: Enter at least three characters in the search bar.
+    invalidSearchBarText: Enter at least {{minCharacter}} characters
+    noResultsFound: "There are no results for this search: try something else."
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
@@ -50,6 +55,8 @@ clipboard:
 connection:
   status:
     offline: Offline! Some features will not work.
+exit:
+  pressAgain: press again to exit
 errors:
   loginError: There was an error in the login, repeat the procedure.
   profileUpdateError: An error occurred while updating your profile.
@@ -68,6 +75,7 @@ inbox:
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
+  facSimile: FAC-SIMILE
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
@@ -89,9 +97,13 @@ profile:
     screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    clearCache: Clear cache
     resetPin:
       confirmTitle: Are you sure you want to reset your PIN?
       confirmMsg: You will be asked again to log in with SPID.
+    preferences:
+      title: Preferences
+      description: Manage app internal preferences
     privacy:
       title: Privacy
       description: Export data, delete account
@@ -125,6 +137,30 @@ profile:
     debugMode: Debug mode
     pagoPaEnv: PagoPA Test Environment
     pagoPAEnvAlert: This change requires app reboot
+  preferences:
+    title: Preferences
+    subtitle: This settings will be used by all services of the Public Amministration.
+    list:
+      biometric_recognition: Biometric recognition
+      biometric_recognition_status: 
+        enabled: Enabled
+        disabled: Disabled
+      email: Email address
+      mobile_phone: Mobile number
+      language: Language
+      digitalDomicile: Digital domicile
+      preferred_calendar:
+        title: Default Calendar
+        not_selected: Not selected
+    empty:
+      default: No preference set
+    preferencesHelp: !include preferences_home_help.md
+    unavailable:
+      title: This setting is set up on your SPID profile
+      message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
+    language: 
+      title: This setting is set up in system preferences
+      message: IO inherits language from the operating system of this device
 navigation:
   messages: Messages
   profile: Profile
@@ -180,18 +216,18 @@ authentication:
       all the services of the Public Administration with a single Digital Identity
       (username and password).
     paragraph2-part1: 'SPID allows you to do online what was possible only in person:
-      so, to register at SPID you will'
-    paragraph2-bold: certiify your identity
+      so, to register at SPID you will '
+    paragraph2-bold: certify your identity
     paragraph2-part2: 'completing your recognition through an Identity Provider. Here
       what you shall do:'
     point1-value: '1'
-    point1-content: " Choose your \nIdentity Provider"
+    point1-content: "Choose your Identity Provider"
     point2-value: '2'
-    point2-content: " Insert your personal data and your mobile phone"
+    point2-content: "Insert your personal data and your mobile phone"
     point3-value: '3'
-    point3-content: " Upload a copy of your identity papers"
+    point3-content: "Upload a copy of your identity papers"
     point4-value: '4'
-    point4-content: " Complete the \nrecognition"
+    point4-content: "Complete the recognition"
     knowMore: Learn more on spid.gov.it
   idp_selection:
     headerTitle: Home
@@ -246,7 +282,7 @@ pin_login:
   pin:
     pinInfo: Enter the PIN
     reset:
-      button: I forgot my PIN
+      button: Did you forget the PIN?
       button_short: Reset PIN
       tip: To reset your PIN you will have to login again with your SPID account.
       tip_short: You will have to login again.
@@ -256,6 +292,9 @@ pin_login:
     help:
       title: Access with PIN
       content: !include pin_unlock_help.md
+  forgetPin:
+    confirmTitle: Did you forget the PIN?
+    confirmMsg: To be able to choose a new PIN you will need to log in again with SPID.
 forms:
   validators:
     required: Required value
@@ -282,6 +321,7 @@ payment:
   recipientFiscalCode: Recipient fiscal code
 wallet:
   wallet: Wallet
+  walletHelp: !include wallet_help.md
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
@@ -297,6 +337,7 @@ wallet:
   delete:
     successful: Card successfully deleted
     failed: The card could not be deleted
+    alert: 'Warning: the payment method had been removed from wallet'
   newPaymentMethod:
     add: add
     addButton: Add a new method
@@ -399,6 +440,7 @@ wallet:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
   total: Total
+  amount: Amount
   payAmount: Amount to pay
   transactionFee: Transaction fee
   why: Why?
@@ -406,6 +448,7 @@ wallet:
   recipient: Recipient
   date: Date
   time: Time
+  psp: Payment provider
   receipt: Receipt
   seeReceipt: See Receipt
   transactions: Transactions
@@ -431,6 +474,7 @@ wallet:
     mobile:
       name: Other payment methods
       maxFee: Paypal, Satispay, etc.
+    notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
     labels:
@@ -446,6 +490,7 @@ wallet:
   acceptedCards: Accepted cards
   chooseMethod: Select the desired method
   QRtoPay:
+    chooser: Pick image from gallery
     wrongQrCode: Not a PagoPA QR Code!
     byCameraTitle: Notice QR Code
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
@@ -468,6 +513,11 @@ wallet:
     DOMAIN_UNKNOWN: This notice has been generated by an administration that is not part of the PagoPA network, the payment cannot be started.
     GENERIC_ERROR: "Ooops, something did not work as expected! It's probably a temporary issue, please try again!"
     MISSING_PAYMENT_ID: The administration that provided this notice is having issued handling it right now, please retry!
+    PAYMENT_ONGOING_NOCANCEL: Another payment for this notice is going on, retry after 30 minutes.
+    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: If you have already waited 30 minutes and the payment is still blocked, use the button below to send us a report.
+    PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
+    PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
+    sendReport: Send report
 saveCard:
   saveCard: Save the card
   header: Do you whant to save this card?
@@ -505,6 +555,24 @@ messages:
   cta:
     archive: Archive
     unarchive: Unarchive
+    selectAll: All
+    deselectAll: None
+    payment:
+      expired: Payment expired
+      validAlert:
+        block1: You can pay this notice until
+        block2: "{{time}} of {{day}}."
+      expiringAlert:
+        block1: This notice
+        block2: expire {{todayOrTomorrow}}
+        block3: at
+      expiredAlert:
+        block1: The notice of
+        block2: € {{amount}}
+        block3: is
+        block4: expired
+        block5: at
+        block6: of
     pay: Pay € {{amount}}
     paid: Paid € {{amount}}
     reminder: Reminder
@@ -520,6 +588,10 @@ messages:
     reminderRemoveSuccess: "Reminder removed"
     reminderRemoveFailure: "Error removing reminder, please retry"
     preferenceCalendarSelect: "Select a default calendar"
+    calendarPermDenied:
+      title: "It seems calendar permissions has been denied"
+      ok: "Enable permissions"
+      cancel: "Cancel"
     errors:
       fetchCalendars: Error fetching calendars
     helper: "IO will remember this choice, you can change it from the preference pane."
@@ -556,32 +628,6 @@ notifications:
   installation:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error
-preferences:
-  title: Preferences
-  subtitle: This settings will be used by all services of the Public Amministration.
-  list:
-    biometric_recognition: Biometric recognition
-    biometric_recognition_status: 
-      enabled: Enabled
-      disabled: Disabled
-    email: Email address
-    mobile_phone: Mobile number
-    services: List of services
-    services_description: Enable/disable your services on IO
-    language: Language
-    digitalDomicile: Digital domicile
-    preferred_calendar:
-      title: Default Calendar
-      not_selected: Not selected
-  empty:
-    default: No preference set
-  preferencesHelp: !include preferences_home_help.md
-  unavailable:
-    title: This setting is set up on your SPID profile
-    message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
-  language: 
-    title: This setting is set up in system preferences
-    message: IO inherits language from the operating system of this device
 biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition
@@ -591,8 +637,7 @@ biometric_recognition:
   enroll_btnLabel: Go to settings
   needed_to_disable: Recognition required to disable
 services:
-  headerTitle: Services
-  title: Available services
+  title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
   servicesHelp: !include preferences_services_help.md
   serviceIsEnabled: The service is enabled
@@ -608,15 +653,22 @@ services:
   contactsAndInfo: Contacts and info
   contactAddress: Address
   contactPhone: Phone
+  areasOfInterest:
+    selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
+    addButton: Add your areas of interest
+  tab:
+    locals: Local
+    national: National
+    otherServices: Other services
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
   disableTitle: "Do you really want to disable the service?"
-  disableMsg: "Rememer, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
+  disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
 identification:
-  message: "Enter the PIN"
-  resetPinMessage: To reset your PIN you will have to login again with your SPID account.
-  resetPinFromProfileMessage: To reset your PIN you need to cancel the transaction and select "Reset PIN" from the "Profile" section.
+  messageFingerPrint: "Use the fingerprint or enter the PIN"
+  messageFaceID: "Use FaceID or enter the PIN"
+  messageEnterPin: "Enter the PIN"
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint
@@ -634,3 +686,5 @@ calendarEvents:
 reminders:
   emptyMonth: No reminders for this month
   loadMoreData: loads the deadlines of the previous period
+openMaps:
+  genericError: An error occurred while opening the map

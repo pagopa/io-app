@@ -1,17 +1,9 @@
-import { none, Option, some } from "fp-ts/lib/Option";
-import debounce from "lodash/debounce";
-import {
-  Button,
-  Input,
-  Item,
-  Tab,
-  TabHeading,
-  Tabs,
-  Text,
-  View
-} from "native-base";
+import * as pot from "italia-ts-commons/lib/pot";
+import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Animated, Platform, StyleSheet } from "react-native";
+import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
+
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import MessagesArchive from "../../components/messages/MessagesArchive";
@@ -20,7 +12,8 @@ import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import IconFont from "../../components/ui/IconFont";
+import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
+import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import I18n from "../../i18n";
 import {
   loadMessages,
@@ -31,6 +24,10 @@ import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import {
+  isSearchMessagesEnabledSelector,
+  searchTextSelector
+} from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
@@ -39,9 +36,18 @@ type Props = NavigationScreenProps &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  searchText: Option<string>;
-  debouncedSearchText: Option<string>;
+  currentTab: number;
+  hasRefreshedOnceUp: boolean;
 };
+
+// Scroll range is directly influenced by floating header height
+const SCROLL_RANGE_FOR_ANIMATION =
+  customVariables.appHeaderHeight +
+  (Platform.OS === "ios"
+    ? isIphoneX()
+      ? 18
+      : getStatusBarHeight(true)
+    : customVariables.spacerHeight);
 
 const styles = StyleSheet.create({
   tabBarContainer: {
@@ -61,49 +67,12 @@ const styles = StyleSheet.create({
     marginBottom: -customVariables.tabUnderlineHeight,
     backgroundColor: customVariables.contentPrimaryBackground
   },
-  noSearchBarText: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  shadowContainer: {
-    backgroundColor: "#FFFFFF"
-  },
-  shadow: {
-    width: "100%",
-    height: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: customVariables.brandGray,
-    // iOS shadow
-    shadowColor: customVariables.footerShadowColor,
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowRadius: 5,
-    shadowOpacity: 1,
-    // Android shadow
-    elevation: 5,
-    marginTop: -1
-  },
-  ioSearchContainer: {
-    width: "100%",
-    flex: 1
-  },
-  ioSearch: {
-    paddingHorizontal: 6,
-    alignSelf: "flex-end",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: 40,
-    height: 40,
-    minWidth: 40
-  },
   searchDisableIcon: {
     color: customVariables.headerFontColor
   }
 });
 
+const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 /**
  * A screen that contains all the Tabs related to messages.
  */
@@ -111,62 +80,67 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      searchText: none,
-      debouncedSearchText: none
+      currentTab: 0,
+      hasRefreshedOnceUp: false
     };
   }
+
+  private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
+    new Animated.Value(0),
+    new Animated.Value(0),
+    new Animated.Value(0)
+  ];
+
+  // tslint:disable-next-line: readonly-array
+  private scollPositions: number[] = [0, 0, 0];
 
   public componentDidMount() {
     this.props.refreshMessages();
   }
 
-  private renderShadow = () => (
-    <View style={styles.shadowContainer}>
-      <View style={styles.shadow} />
-    </View>
-  );
+  public componentDidUpdate(prevprops: Props, prevstate: State) {
+    // saving current list scroll position to enable header animation
+    // when shifting between tabs
+    if (prevstate.currentTab !== this.state.currentTab) {
+      this.animatedScrollPositions.map((_, i) => {
+        // when current tab changes, listeners are not kept, so it is needed to
+        // assign them again.
+        this.animatedScrollPositions[i].removeAllListeners();
+        this.animatedScrollPositions[i].addListener(animatedValue => {
+          // tslint:disable-next-line: no-object-mutation
+          this.scollPositions[i] = animatedValue.value;
+        });
+      });
+    }
+    if (
+      pot.isLoading(prevprops.lexicallyOrderedMessagesState) &&
+      !pot.isLoading(this.props.lexicallyOrderedMessagesState) &&
+      !prevstate.hasRefreshedOnceUp
+    ) {
+      this.setState({ hasRefreshedOnceUp: true });
+    }
+  }
 
   public render() {
-    const { searchText } = this.state;
-
+    const { isSearchEnabled } = this.props;
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
+        isSearchAvailable={true}
+        searchType="Messages"
         appLogo={true}
-        headerBody={
-          searchText.isSome() ? (
-            <Item>
-              <Input
-                placeholder={I18n.t("global.actions.search")}
-                value={searchText.value}
-                onChangeText={this.onSearchTextChange}
-                autoFocus={true}
-              />
-              <IconFont name="io-close" onPress={this.onSearchDisable} />
-            </Item>
-          ) : (
-            <View style={styles.ioSearchContainer}>
-              <Button
-                onPress={this.onSearchEnable}
-                transparent={true}
-                style={styles.ioSearch}
-                accessible={true}
-                accessibilityLabel={I18n.t("global.actions.search")}
-              >
-                <IconFont name="io-search" />
-              </Button>
-            </View>
-          )
-        }
       >
-        {!searchText.isSome() && (
-          <ScreenContentHeader
-            title={I18n.t("messages.contentTitle")}
-            icon={require("../../../img/icons/message-icon.png")}
-          />
+        {!isSearchEnabled && (
+          <React.Fragment>
+            <ScreenContentHeader
+              title={I18n.t("messages.contentTitle")}
+              icon={require("../../../img/icons/message-icon.png")}
+              fixed={Platform.OS === "ios"}
+            />
+            {this.renderTabs()}
+          </React.Fragment>
         )}
-
-        {searchText.isSome() ? this.renderSearch() : this.renderTabs()}
+        {isSearchEnabled && this.renderSearch()}
       </TopScreenComponent>
     );
   }
@@ -176,7 +150,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
    */
   private renderTabs = () => {
     const {
-      isExperimentalFeaturesEnabled,
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
@@ -186,9 +159,41 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     } = this.props;
 
     return (
-      <Tabs
+      <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+        onChangeTab={(evt: any) => {
+          this.setState({ currentTab: evt.i });
+        }}
+        initialPage={0}
+        style={
+          Platform.OS === "ios" && {
+            transform: [
+              {
+                // hasRefreshedOnceUp is used to avoid unwanted refresh of
+                // animation after a new set of messages is received from
+                // backend at first load
+                translateY: this.state.hasRefreshedOnceUp
+                  ? this.animatedScrollPositions[
+                      this.state.currentTab
+                    ].interpolate({
+                      inputRange: [
+                        0,
+                        SCROLL_RANGE_FOR_ANIMATION / 2,
+                        SCROLL_RANGE_FOR_ANIMATION
+                      ],
+                      outputRange: [
+                        SCROLL_RANGE_FOR_ANIMATION,
+                        SCROLL_RANGE_FOR_ANIMATION / 4,
+                        0
+                      ],
+                      extrapolate: "clamp"
+                    })
+                  : SCROLL_RANGE_FOR_ANIMATION
+              }
+            ]
+          }
+        }
       >
         <Tab
           heading={
@@ -199,7 +204,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          {this.renderShadow()}
           <MessagesInbox
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
@@ -207,28 +211,72 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
+            animated={
+              Platform.OS === "ios"
+                ? {
+                    onScroll: Animated.event(
+                      [
+                        {
+                          nativeEvent: {
+                            contentOffset: {
+                              y: this.animatedScrollPositions[0]
+                            }
+                          }
+                        }
+                      ],
+                      {
+                        useNativeDriver: true
+                      }
+                    ),
+                    scrollEventThrottle: 8 // target is 120fps
+                  }
+                : undefined
+            }
+            paddingForAnimation={Platform.OS === "ios"}
+            AnimatedCTAStyle={
+              Platform.OS === "ios"
+                ? {
+                    transform: [
+                      {
+                        translateY: this.animatedScrollPositions[
+                          this.state.currentTab
+                        ].interpolate({
+                          inputRange: [
+                            0,
+                            SCROLL_RANGE_FOR_ANIMATION / 2,
+                            SCROLL_RANGE_FOR_ANIMATION
+                          ],
+                          outputRange: [
+                            0,
+                            SCROLL_RANGE_FOR_ANIMATION * 0.75,
+                            SCROLL_RANGE_FOR_ANIMATION
+                          ],
+                          extrapolate: "clamp"
+                        })
+                      }
+                    ]
+                  }
+                : undefined
+            }
           />
         </Tab>
-        {isExperimentalFeaturesEnabled && (
-          <Tab
-            heading={
-              <TabHeading>
-                <Text style={styles.tabBarContent}>
-                  {I18n.t("messages.tab.deadlines")}
-                </Text>
-              </TabHeading>
-            }
-          >
-            {this.renderShadow()}
-            <MessagesDeadlines
-              messagesState={lexicallyOrderedMessagesState}
-              servicesById={servicesById}
-              paymentsByRptId={paymentsByRptId}
-              setMessagesArchivedState={updateMessagesArchivedState}
-              navigateToMessageDetail={navigateToMessageDetail}
-            />
-          </Tab>
-        )}
+        <Tab
+          heading={
+            <TabHeading>
+              <Text style={styles.tabBarContent}>
+                {I18n.t("messages.tab.deadlines")}
+              </Text>
+            </TabHeading>
+          }
+        >
+          <MessagesDeadlines
+            messagesState={lexicallyOrderedMessagesState}
+            servicesById={servicesById}
+            paymentsByRptId={paymentsByRptId}
+            setMessagesArchivedState={updateMessagesArchivedState}
+            navigateToMessageDetail={navigateToMessageDetail}
+          />
+        </Tab>
 
         <Tab
           heading={
@@ -239,7 +287,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          {this.renderShadow()}
           <MessagesArchive
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
@@ -247,9 +294,54 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             onRefresh={refreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
+            animated={
+              Platform.OS === "ios"
+                ? {
+                    onScroll: Animated.event(
+                      [
+                        {
+                          nativeEvent: {
+                            contentOffset: {
+                              y: this.animatedScrollPositions[2]
+                            }
+                          }
+                        }
+                      ],
+                      { useNativeDriver: true }
+                    ),
+                    scrollEventThrottle: 8 // target is 120fps
+                  }
+                : undefined
+            }
+            paddingForAnimation={Platform.OS === "ios"}
+            AnimatedCTAStyle={
+              Platform.OS === "ios"
+                ? {
+                    transform: [
+                      {
+                        translateY: this.animatedScrollPositions[
+                          this.state.currentTab
+                        ].interpolate({
+                          inputRange: [
+                            0,
+                            SCROLL_RANGE_FOR_ANIMATION / 2,
+                            SCROLL_RANGE_FOR_ANIMATION
+                          ],
+                          outputRange: [
+                            0,
+                            SCROLL_RANGE_FOR_ANIMATION * 0.75,
+                            SCROLL_RANGE_FOR_ANIMATION
+                          ],
+                          extrapolate: "clamp"
+                        })
+                      }
+                    ]
+                  }
+                : undefined
+            }
           />
         </Tab>
-      </Tabs>
+      </AnimatedTabs>
     );
   };
 
@@ -265,13 +357,11 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       navigateToMessageDetail
     } = this.props;
 
-    const { debouncedSearchText } = this.state;
-
-    return debouncedSearchText
+    return this.props.searchText
       .map(
         _ =>
-          _.length < 3 ? (
-            this.renderInvalidSearchBarText()
+          _.length < MIN_CHARACTER_SEARCH_TEXT ? (
+            <SearchNoResultMessage errorType="InvalidSearchBarText" />
           ) : (
             <MessagesSearch
               messagesState={lexicallyOrderedMessagesState}
@@ -283,52 +373,16 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             />
           )
       )
-      .getOrElse(this.renderInvalidSearchBarText());
-  };
-
-  private renderInvalidSearchBarText = () => {
-    return (
-      <View style={styles.noSearchBarText}>
-        <Text>{I18n.t("global.search.invalidSearchBarText")}</Text>
-      </View>
-    );
-  };
-
-  private onSearchEnable = () => {
-    this.setState({
-      searchText: some("")
-    });
-  };
-
-  private onSearchTextChange = (text: string) => {
-    this.setState({
-      searchText: some(text)
-    });
-    this.updateDebouncedSearchText(text);
-  };
-
-  private updateDebouncedSearchText = debounce(
-    (text: string) =>
-      this.setState({
-        debouncedSearchText: some(text)
-      }),
-    300
-  );
-
-  private onSearchDisable = () => {
-    this.setState({
-      searchText: none,
-      debouncedSearchText: none
-    });
+      .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
   };
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isExperimentalFeaturesEnabled:
-    state.persistedPreferences.isExperimentalFeaturesEnabled,
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
-  paymentsByRptId: paymentsByRptIdSelector(state)
+  paymentsByRptId: paymentsByRptIdSelector(state),
+  searchText: searchTextSelector(state),
+  isSearchEnabled: isSearchMessagesEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

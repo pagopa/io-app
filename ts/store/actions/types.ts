@@ -24,10 +24,12 @@ import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
+import { PaymentsActions } from "./payments";
 import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PinSetActions } from "./pinset";
 import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
+import { SearchActions } from "./search";
 import { ServicesActions } from "./services";
 import { WalletActions } from "./wallet";
 
@@ -52,7 +54,9 @@ export type Action =
   | IdentificationActions
   | InstallationActions
   | DebugActions
-  | CalendarEventsActions;
+  | CalendarEventsActions
+  | SearchActions
+  | PaymentsActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

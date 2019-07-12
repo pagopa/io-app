@@ -1,14 +1,18 @@
 import * as React from "react";
 
 import { ComponentProps } from "../../types/react";
+import { SearchType } from "../search/SearchButton";
 import BaseScreenComponent from "./BaseScreenComponent";
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
 interface OwnProps {
   headerTitle?: string;
+  isSearchAvailable?: boolean;
+  searchType?: SearchType;
 }
 
 type BaseScreenComponentProps =
+  | "dark"
   | "appLogo"
   | "goBack"
   | "contextualHelp"
@@ -24,21 +28,27 @@ type Props = OwnProps &
 class TopScreenComponent extends React.PureComponent<Props> {
   public render() {
     const {
+      dark,
       appLogo,
       goBack,
       title,
       headerTitle,
       contextualHelp,
-      headerBody
+      headerBody,
+      isSearchAvailable,
+      searchType
     } = this.props;
 
     return (
       <BaseScreenComponent
         appLogo={appLogo}
+        dark={dark}
         goBack={goBack}
         headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}
         headerBody={headerBody}
+        isSearchAvailable={isSearchAvailable}
+        searchType={searchType}
       >
         {this.props.children}
       </BaseScreenComponent>

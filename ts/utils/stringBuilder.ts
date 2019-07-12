@@ -1,5 +1,5 @@
 import I18n from "../i18n";
-import { Wallet } from "../types/pagopa";
+import { CreditCard } from "../types/pagopa";
 
 /**
  * Build a string based on the currency that
@@ -21,5 +21,5 @@ export const formatNumberAmount = (amount: number): string =>
     format: "%n %u"
   });
 
-export const buildExpirationDate = (w: Wallet): string =>
-  `${w.creditCard.expireMonth}/${w.creditCard.expireYear}`;
+export const buildExpirationDate = (creditCard: CreditCard): string =>
+  `${creditCard.expireMonth}/${creditCard.expireYear}`;

@@ -4,7 +4,7 @@ import { ActionType, getType } from "typesafe-actions";
 
 import { UserProfileUnion } from "../../api/backend";
 import { startApplicationInitialization } from "../../store/actions/application";
-import { profileUpsert } from "../../store/actions/profile";
+import { profileFirstLogin, profileUpsert } from "../../store/actions/profile";
 
 export function* checkProfileEnabledSaga(
   profile: UserProfileUnion
@@ -40,6 +40,16 @@ export function* checkProfileEnabledSaga(
       // Restart the initialization loop to let the user retry.
       // FIXME: show an error message
       yield put(startApplicationInitialization());
+    } else {
+      // First time login
+      if (!profile.has_profile) {
+        yield put(
+          profileFirstLogin({
+            fiscal_code: profile.fiscal_code,
+            spid_email: profile.spid_email
+          })
+        );
+      }
     }
   }
 }
