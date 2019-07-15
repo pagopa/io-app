@@ -153,13 +153,13 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private withoutCardsHeader(hasNoValidWallets: boolean = false) {
+  private withoutCardsHeader(hasNotSupportedWallets: boolean = false) {
     return (
       <Grid>
         <Row>
           <Text note={true} white={true} style={styles.inLineSpace}>
             {I18n.t("wallet.newPaymentMethod.addDescription")}
-            {hasNoValidWallets && (
+            {hasNotSupportedWallets && (
               <Text note={true} white={true} bold={true}>
                 {` ${I18n.t("wallet.newPaymentMethod.walletAlert")}`}
               </Text>
@@ -307,7 +307,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
     const wallets = pot.getOrElse(potWallets, []);
 
-    const hasNoValidWallets = wallets
+    const hasNotSupportedWallets = wallets
       .map(wallet => {
         return (
           wallet.type === TypeEnum.BANK_ACCOUNT ||
@@ -322,7 +322,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         ? this.errorWalletsHeader()
         : wallets.length > 0
           ? this.cardPreview(wallets)
-          : this.withoutCardsHeader(hasNoValidWallets);
+          : this.withoutCardsHeader(hasNotSupportedWallets);
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()
