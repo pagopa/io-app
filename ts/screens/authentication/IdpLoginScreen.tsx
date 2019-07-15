@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 const onNavigationStateChange = (
   onFailure: () => void,
   onSuccess: (_: SessionToken) => void
-) => (navState: NavState) => {
+) => (navState: NavState): boolean => {
   // Extract the login result from the url.
   // If the url is not related to login this will be `null`
   if (navState.url) {
@@ -91,12 +91,15 @@ const onNavigationStateChange = (
       if (loginResult.success) {
         // In case of successful login
         onSuccess(loginResult.token);
+        return false;
       } else {
         // In case of login failure
         onFailure();
+        return true;
       }
     }
   }
+  return true;
 };
 
 /**
@@ -145,8 +148,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({
       requestState: event.loading ? pot.noneLoading : pot.some(true)
     });
+  };
 
-    onNavigationStateChange(
+  private handleShouldStartLoading = (event: NavState): boolean => {
+    return onNavigationStateChange(
       this.handleLoginFailure,
       this.props.dispatchLoginSuccess
     )(event);
@@ -230,6 +235,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
             onError={this.handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={this.handleNavigationStateChange}
+            onShouldStartLoadWithRequest={this.handleShouldStartLoading}
           />
         )}
         {this.renderMask()}
