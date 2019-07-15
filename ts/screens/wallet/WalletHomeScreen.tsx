@@ -12,6 +12,7 @@ import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
@@ -152,13 +153,21 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private withoutCardsHeader() {
+  private withoutCardsHeader(hasNoValidWallets: boolean = false) {
     return (
       <Grid>
         <Row>
           <Text note={true} white={true} style={styles.inLineSpace}>
             {I18n.t("wallet.newPaymentMethod.addDescription")}
           </Text>
+        </Row>
+        <Row>
+          {!hasNoValidWallets && (
+            <Text note={true} white={true}>
+              Attenzione: i tuoi metodi di pagamento non sono attualmente
+              supportati
+            </Text>
+          )}
         </Row>
         <Row>
           <View spacer={true} />
@@ -297,14 +306,25 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const { potWallets, potTransactions } = this.props;
+
     const wallets = pot.getOrElse(potWallets, []);
+
+    const hasNoValidWallets = wallets
+      .map(wallet => {
+        return (
+          wallet.type === TypeEnum.BANK_ACCOUNT ||
+          wallet.type === TypeEnum.EXTERNAL_PS
+        );
+      })
+      .find(isNoCard => isNoCard === true);
+
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
         ? this.errorWalletsHeader()
         : wallets.length > 0
           ? this.cardPreview(wallets)
-          : this.withoutCardsHeader();
+          : this.withoutCardsHeader(hasNoValidWallets);
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()
