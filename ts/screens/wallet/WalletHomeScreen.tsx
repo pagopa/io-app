@@ -159,16 +159,14 @@ class WalletHomeScreen extends React.Component<Props, never> {
         <Row>
           <Text note={true} white={true} style={styles.inLineSpace}>
             {I18n.t("wallet.newPaymentMethod.addDescription")}
+            {hasNoValidWallets && (
+              <Text note={true} white={true} bold={true}>
+                {` ${I18n.t("wallet.newPaymentMethod.walletAlert")}`}
+              </Text>
+            )}
           </Text>
         </Row>
-        <Row>
-          {hasNoValidWallets && (
-            <Text note={true} white={true}>
-              Attenzione: i tuoi metodi di pagamento non sono attualmente
-              supportati
-            </Text>
-          )}
-        </Row>
+        <Row />
         <Row>
           <View spacer={true} />
         </Row>
