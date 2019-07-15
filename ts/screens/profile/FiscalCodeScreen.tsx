@@ -2,15 +2,23 @@ import I18n from "i18n-js";
 import { getOrElse } from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
+import FiscalCodeLandscapeModal from "../../components/FiscalCodeLandscapeModal";
 import DarkLayout from "../../components/screens/DarkLayout";
 import H5 from "../../components/ui/H5";
 import Markdown from "../../components/ui/Markdown";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+
+type Props = ReturnType<typeof mapStateToProps>;
+
+type State = Readonly<{
+  showLandscapeMode: boolean;
+  showBackSide: boolean;
+}>;
 
 const styles = StyleSheet.create({
   darkBg: {
@@ -44,63 +52,99 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = ReturnType<typeof mapStateToProps>;
-
-class FiscalCodeScreen extends React.PureComponent<Props> {
+class FiscalCodeScreen extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showLandscapeMode: false,
+      showBackSide: false
+    };
+  }
   public render() {
     return (
-      <DarkLayout
-        allowGoBack={true}
-        headerBody={
-          <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
-        }
-        contentStyle={styles.darkBg}
-        contextualHelp={{
-          title: I18n.t("profile.fiscalCode.title"),
-          body: () => <Markdown>{I18n.t("profile.fiscalCode.help")}</Markdown>
-        }}
-        hideHeader={true}
-        topContent={
-          <React.Fragment>
-            <View spacer={true} />
-            <H5 style={styles.white}>
-              {I18n.t("profile.fiscalCode.fiscalCode")}
-            </H5>
-            <View spacer={true} />
-          </React.Fragment>
-        }
-      >
-        {this.props.profile && (
-          <React.Fragment>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              <View style={styles.largeSpacer} />
-              <View style={styles.shadow}>
-                <FiscalCodeComponent
-                  type={"Full"}
-                  profile={this.props.profile}
-                  getBackSide={false}
-                />
-              </View>
+      <React.Fragment>
+        <DarkLayout
+          allowGoBack={true}
+          headerBody={
+            <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
+          }
+          contentStyle={styles.darkBg}
+          contextualHelp={{
+            title: I18n.t("profile.fiscalCode.title"),
+            body: () => <Markdown>{I18n.t("profile.fiscalCode.help")}</Markdown>
+          }}
+          hideHeader={true}
+          topContent={
+            <React.Fragment>
+              <View spacer={true} />
+              <H5 style={styles.white}>
+                {I18n.t("profile.fiscalCode.fiscalCode")}
+              </H5>
+              <View spacer={true} />
+            </React.Fragment>
+          }
+        >
+          {this.props.profile && (
+            <React.Fragment>
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              >
+                <View style={styles.largeSpacer} />
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      showLandscapeMode: true,
+                      showBackSide: false
+                    })
+                  }
+                >
+                  <View style={styles.shadow}>
+                    <FiscalCodeComponent
+                      type={"Full"}
+                      profile={this.props.profile}
+                      getBackSide={false}
+                    />
+                  </View>
+                </TouchableOpacity>
 
-              <View style={styles.spacer} />
-              <View style={styles.shadow}>
-                <FiscalCodeComponent
-                  type={"Full"}
-                  profile={this.props.profile}
-                  getBackSide={true}
-                />
-              </View>
-              <View style={styles.largeSpacer} />
-            </ScrollView>
-            <Text white={true} style={styles.text}>
-              {I18n.t("profile.fiscalCode.content")}
-            </Text>
-          </React.Fragment>
+                <View style={styles.spacer} />
+
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({
+                      showLandscapeMode: true,
+                      showBackSide: true
+                    })
+                  }
+                >
+                  <View style={styles.shadow}>
+                    <FiscalCodeComponent
+                      type={"Full"}
+                      profile={this.props.profile}
+                      getBackSide={true}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <View style={styles.largeSpacer} />
+              </ScrollView>
+              <Text white={true} style={styles.text}>
+                {I18n.t("profile.fiscalCode.content")}
+              </Text>
+            </React.Fragment>
+          )}
+        </DarkLayout>
+
+        {this.props.profile && (
+          <FiscalCodeLandscapeModal
+            isVisible={this.state.showLandscapeMode}
+            onClose={() => this.setState({ showLandscapeMode: false })}
+            showBackSide={this.state.showBackSide}
+            profile={this.props.profile}
+          />
         )}
-      </DarkLayout>
+      </React.Fragment>
     );
   }
 }
