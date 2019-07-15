@@ -162,7 +162,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           </Text>
         </Row>
         <Row>
-          {!hasNoValidWallets && (
+          {hasNoValidWallets && (
             <Text note={true} white={true}>
               Attenzione: i tuoi metodi di pagamento non sono attualmente
               supportati
