@@ -32,11 +32,21 @@ export const loadService = createAsyncAction(
   "SERVICE_LOAD_FAILURE"
 )<string, ServicePublic, string>();
 
+//
+// show service detail
+//
+
+export const showServiceDetails = createStandardAction("SERVICE_SHOW_DETAILS")<
+  ServicePublic
+>();
+
 // Remove services passing a list of tuples with serviceId and organizationFiscalCode
 export const removeServiceTuples = createStandardAction(
   "SERVICES_REMOVE_TUPLES"
 )<ReadonlyArray<ITuple2<string, string | undefined>>>();
 
-export type ServicesActions = ActionType<
-  typeof loadVisibleServices | typeof loadService | typeof removeServiceTuples
->;
+export type ServicesActions =
+  | ActionType<typeof loadVisibleServices>
+  | ActionType<typeof loadService>
+  | ActionType<typeof removeServiceTuples>
+  | ActionType<typeof showServiceDetails>;
