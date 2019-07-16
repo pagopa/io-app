@@ -16,7 +16,7 @@ import customVariables from "../../theme/variables";
 type Props = ReturnType<typeof mapStateToProps>;
 
 type State = Readonly<{
-  showLandscapeMode: boolean;
+  showAsLandscape: boolean;
   showBackSide: boolean;
 }>;
 
@@ -56,7 +56,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      showLandscapeMode: false,
+      showAsLandscape: false,
       showBackSide: false
     };
   }
@@ -94,7 +94,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
                 <TouchableOpacity
                   onPress={() =>
                     this.setState({
-                      showLandscapeMode: true,
+                      showAsLandscape: true,
                       showBackSide: false
                     })
                   }
@@ -113,7 +113,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
                 <TouchableOpacity
                   onPress={() =>
                     this.setState({
-                      showLandscapeMode: true,
+                      showAsLandscape: true,
                       showBackSide: true
                     })
                   }
@@ -138,8 +138,8 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
 
         {this.props.profile && (
           <FiscalCodeLandscapeModal
-            isVisible={this.state.showLandscapeMode}
-            onClose={() => this.setState({ showLandscapeMode: false })}
+            isVisible={this.state.showAsLandscape}
+            onClose={() => this.setState({ showAsLandscape: false })}
             showBackSide={this.state.showBackSide}
             profile={this.props.profile}
           />
