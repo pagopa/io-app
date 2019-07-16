@@ -311,9 +311,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
       wallets.length > 0 &&
       wallets
         .map(wallet => {
-          return (
-            wallet.type !== TypeEnum.CREDIT_CARD
-          );
+          return wallet.type !== TypeEnum.CREDIT_CARD;
         })
         .find(isNoCard => isNoCard === true);
 
