@@ -147,9 +147,7 @@ export const getAllSections = createSelector(
       })
       .filter(_ => _.data.length > 0)
       .sort((a, b) =>
-        (a.title.toLocaleLowerCase() || "").localeCompare(
-          b.title.toLocaleLowerCase()
-        )
+        (a.title || "").localeCompare(b.title, "it", { caseFirst: "lower" })
       );
   }
 );
