@@ -153,7 +153,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private withoutCardsHeader(hasNotSupportedWallets: boolean = false) {
+  private withoutCardsHeader(hasNotSupportedWallets: boolean) {
     return (
       <Grid>
         <Row>
@@ -313,7 +313,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         .map(wallet => {
           return wallet.type !== TypeEnum.CREDIT_CARD;
         })
-        .find(isNoCard => isNoCard === true);
+        .find(isNoCard => isNoCard === true) !== undefined;
 
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
