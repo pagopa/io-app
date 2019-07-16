@@ -355,7 +355,8 @@ wallet:
     add: aggiungi
     addButton: Aggiungi un metodo
     addDescription: Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
-      ecc.) per non doverli inserire ad ogni transazione
+      ecc.) per non doverli inserire ad ogni transazione.
+    walletAlert: "Nel tuo portafoglio sono registrati dei metodi di pagamento ma nessuno di questi è compatibile con IO"
     successful: Carta aggiunta con successo
     failed: Impossibile aggiungere la carta
     failedCardAlreadyExists: La carta che stai inserendo è già presente
