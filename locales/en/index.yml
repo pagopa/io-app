@@ -343,7 +343,7 @@ wallet:
     addButton: Add a new method
     addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
       so that you don't have to re-add them from scratch for every transaction.
-    walletAlert: "Warning: your wallet includes payment methods but no one is supported by IO yet"
+    walletAlert: "Your wallet includes payment methods but no one is supported by IO yet"
     successful: The card was added successfully!
     failed: The card could not be added
     failedCardAlreadyExists: The card you are adding already exists
