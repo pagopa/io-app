@@ -214,7 +214,8 @@ const mapStateToProps = (state: GlobalState) => {
     error,
     checkout3dsUrl: pot.isLoading(creditCardCheckout3ds)
       ? pot.toOption(creditCardCheckout3ds)
-      : none
+      : none,
+    loadingOpacity: 0.98
   };
 };
 
