@@ -7,7 +7,7 @@ import { DateFromISOString } from "../../utils/dates";
 
 const dataReplacer = (_: any, value: any): any => {
   if (value !== undefined && value instanceof Date) {
-    return DateFromISOString.encode(value);
+    return value.toISOString();
   }
   return value;
 };
