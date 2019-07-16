@@ -3,7 +3,7 @@ import { Badge, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
-import { getUnreadTransactions } from "../store/reducers/entities/readTransactions";
+import { getUnreadTransactionsSelector } from "../store/reducers/entities/readTransactions";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
@@ -66,7 +66,7 @@ class WalletTabIcon extends React.PureComponent<Props> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  const transactions = getUnreadTransactions(state);
+  const transactions = getUnreadTransactionsSelector(state);
   return {
     badgeValue: Math.min(
       pot.getOrElse(transactions, []).length,
