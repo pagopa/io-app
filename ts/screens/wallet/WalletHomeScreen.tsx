@@ -307,14 +307,16 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
     const wallets = pot.getOrElse(potWallets, []);
 
-    const hasNotSupportedWallets = wallets
-      .map(wallet => {
-        return (
-          wallet.type === TypeEnum.BANK_ACCOUNT ||
-          wallet.type === TypeEnum.EXTERNAL_PS
-        );
-      })
-      .find(isNoCard => isNoCard === true);
+    const hasNotSupportedWallets =
+      wallets.length > 0 &&
+      wallets
+        .map(wallet => {
+          return (
+            wallet.type === TypeEnum.BANK_ACCOUNT ||
+            wallet.type === TypeEnum.EXTERNAL_PS
+          );
+        })
+        .find(isNoCard => isNoCard === true);
 
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
