@@ -362,7 +362,17 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const isLoading = pot.isLoading(state.entities.services.visible);
+  const { services } = state.entities;
+
+  const isAnyServiceLoading =
+    Object.keys(services.byId).find(k => {
+      const oneService = services.byId[k];
+      return oneService !== undefined && pot.isLoading(oneService);
+    }) !== undefined;
+
+  const isLoading =
+    pot.isLoading(state.entities.services.visible) || isAnyServiceLoading;
+
   return {
     allOrganizations: lexicallyOrderedAllOrganizations(state),
     isLoading
