@@ -1,5 +1,5 @@
 import I18n from "i18n-js";
-import { getOrElse } from "italia-ts-commons/lib/pot";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
@@ -150,7 +150,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  profile: getOrElse(profileSelector(state), undefined)
+  profile: pot.toUndefined(profileSelector(state))
 });
 
 export default connect(mapStateToProps)(FiscalCodeScreen);
