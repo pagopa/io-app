@@ -12,3 +12,4 @@ declare module "react-native-offline" {
     args: NetworkEventsListenerSagaArguments
   ): Generator<A, B, C>;
 }
+
