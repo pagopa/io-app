@@ -119,14 +119,14 @@ profile:
         tuoi dati personali.
       privacyPolicy:
         title: Privacy policy
-        description: rivedi le regole sulla privacy che hai accettato
+        description: Rivedi le regole sulla privacy che hai accettato
       removeAccount:
         title: Cancella il tuo account
-        description: elimina sia dal telefono che da internet tutti i data ad esso
+        description: Elimina sia dal telefono che da internet tutti i data ad esso
           associati (richiede SPID)
       exportData:
         title: Esporta i tuoi dati
-        description: ricevi nella tua mail tutti i dati associati al tuo account in
+        description: Ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
     developersSectionHeader: Sviluppatori
     experimentalFeatures:
@@ -357,7 +357,8 @@ wallet:
     add: aggiungi
     addButton: Aggiungi un metodo
     addDescription: Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
-      ecc.) per non doverli inserire ad ogni transazione
+      ecc.) per non doverli inserire ad ogni transazione.
+    walletAlert: "Nel tuo portafoglio sono registrati dei metodi di pagamento ma nessuno di questi è compatibile con IO"
     successful: Carta aggiunta con successo
     failed: Impossibile aggiungere la carta
     failedCardAlreadyExists: La carta che stai inserendo è già presente
