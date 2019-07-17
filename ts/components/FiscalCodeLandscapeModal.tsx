@@ -1,6 +1,6 @@
 import { Body, Button, Container, Content, View } from "native-base";
 import * as React from "react";
-import { Modal, Platform, StyleSheet } from "react-native";
+import { Modal, Platform, StatusBar, StyleSheet } from "react-native";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import IconFont from "../components/ui/IconFont";
@@ -50,16 +50,20 @@ export default class FiscalCodeLandscapeModal extends React.PureComponent<
     return (
       <Modal
         visible={this.props.isVisible}
-        animationType={"fade"}
+        animationType={"slide"}
         onRequestClose={() => this.props.onClose()}
         onShow={() =>
           this.props.showBackSide ? this.contentRef._root.scrollToEnd() : {}
         }
       >
         <Container style={{ backgroundColor: customVariables.brandDarkGray }}>
-          <AppHeader noLeft={true}>
+          <AppHeader noLeft={true} dark={true}>
             <Body />
           </AppHeader>
+          <StatusBar
+            backgroundColor={customVariables.brandDarkGray}
+            barStyle={"light-content"}
+          />
           <Content
             style={styles.content}
             // tslint:disable-next-line no-object-mutation

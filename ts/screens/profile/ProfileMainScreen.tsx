@@ -37,6 +37,7 @@ import SectionHeaderComponent from "../../components/screens/SectionHeaderCompon
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
+import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -63,7 +64,6 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import IconFont from "../../components/ui/IconFont";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -102,8 +102,7 @@ const styles = StyleSheet.create({
   },
 
   noRightPadding: {
-    paddingRight: 0,
-    backgroundColor: 'pink'
+    paddingRight: 0
   }
 });
 
