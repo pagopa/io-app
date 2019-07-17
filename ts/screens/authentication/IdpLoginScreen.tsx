@@ -4,6 +4,7 @@ import { Image, NavState, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { TranslationKeys } from "../../../locales/locales";
 
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
 
@@ -33,6 +34,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 type State = {
   requestState: pot.Pot<true, "LOADING_ERROR" | "LOGIN_ERROR">;
+  errorCode?: string;
 };
 
 const LOGIN_BASE_URL = `${
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
 });
 
 const onNavigationStateChange = (
-  onFailure: () => void,
+  onFailure: (errorCode: string | undefined) => void,
   onSuccess: (_: SessionToken) => void
 ) => (navState: NavState) => {
   // Extract the login result from the url.
@@ -93,7 +95,7 @@ const onNavigationStateChange = (
         onSuccess(loginResult.token);
       } else {
         // In case of login failure
-        onFailure();
+        onFailure(loginResult.errorCode);
       }
     }
   }
@@ -109,7 +111,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      requestState: pot.noneLoading
+      requestState: pot.noneLoading,
+      errorCode: undefined
     };
   }
 
@@ -124,10 +127,11 @@ class IdpLoginScreen extends React.Component<Props, State> {
     });
   };
 
-  private handleLoginFailure = () => {
+  private handleLoginFailure = (errorCode?: string) => {
     this.props.dispatchLoginFailure();
     this.setState({
-      requestState: pot.noneError("LOGIN_ERROR")
+      requestState: pot.noneError("LOGIN_ERROR"),
+      errorCode
     });
   };
 
@@ -171,13 +175,14 @@ class IdpLoginScreen extends React.Component<Props, State> {
                 : "authentication.errors.login.title"
             )}
           </Text>
-          <Text style={styles.errorBody}>
-            {I18n.t(
-              errorType === "LOADING_ERROR"
-                ? "authentication.errors.network.body"
-                : "authentication.errors.login.body"
+          {errorType === "LOGIN_ERROR" &&
+            this.state.errorCode && (
+              <Text style={styles.errorBody}>
+                {I18n.t(("authentication.errors.spid.error_" +
+                  this.state.errorCode) as TranslationKeys)}
+              </Text>
             )}
-          </Text>
+
           <View style={styles.errorButtonsContainer}>
             <Button
               onPress={this.goBack}
