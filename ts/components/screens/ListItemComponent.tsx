@@ -1,6 +1,6 @@
 import { ListItem, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import customVariables from "../../theme/variables";
 import H5 from "../ui/H5";
 import IconFont from "./../ui/IconFont";
@@ -8,14 +8,16 @@ import { BadgeComponent } from "./BadgeComponent";
 
 type Props = Readonly<{
   title: string;
-  subTitle: string;
-  onPress: () => void;
+  onPress?: () => void;
+  subTitle?: string;
   isFirstItem?: boolean;
   isLastItem?: boolean;
   hasBadge?: boolean;
   iconName?: string;
   hideIcon?: boolean;
   useExtendedSubTitle?: boolean;
+  style?: StyleProp<ViewStyle>;
+  hideSeparator?: boolean;
 }>;
 
 const ICON_SIZE = 24;
@@ -33,7 +35,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   serviceName: {
-    fontWeight: "700"
+    fontWeight: "700",
+    alignSelf: "flex-start",
+    paddingRight: 24 + 4 // icon width + margin - to overcome title not going on second line when overlapping with the right icon
   },
   description: {
     paddingRight: ICON_SIZE,
@@ -45,10 +49,10 @@ export default class ListItemComponent extends React.Component<Props> {
   public render() {
     return (
       <ListItem
-        style={[styles.listItem, styles.flexRow]}
+        style={[styles.listItem, styles.flexRow, this.props.style]}
         onPress={this.props.onPress}
         first={this.props.isFirstItem}
-        last={this.props.isLastItem}
+        last={this.props.isLastItem || this.props.hideSeparator}
       >
         <View
           style={[
@@ -60,14 +64,23 @@ export default class ListItemComponent extends React.Component<Props> {
           ]}
         >
           <View style={styles.flexRow}>
-            {this.props.hasBadge && (
-              <View style={styles.spacingBase}>
-                <BadgeComponent />
-              </View>
-            )}
-            <H5 numberOfLines={2} style={styles.serviceName}>
-              {this.props.title}
-            </H5>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                flex: 1
+              }}
+            >
+              {this.props.hasBadge && (
+                <View style={styles.spacingBase}>
+                  <BadgeComponent />
+                </View>
+              )}
+              <H5 numberOfLines={2} style={styles.serviceName}>
+                {this.props.title}
+              </H5>
+            </View>
+
             {!this.props.iconName &&
               !this.props.hideIcon && (
                 <IconFont
