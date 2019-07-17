@@ -245,6 +245,13 @@ authentication:
     login:
       title: Login error
       body: There was an error with the login, please retry!
+    spid:
+      error_19: Authentication failed due to repeated submission of incorrect credentials - exceeded number of attempts
+      error_20: User without credentials compatible with the HTTP level requested by the service provider
+      error_21: Timeout during user authentication
+      error_22: User denies consent to sending data to the SP in the event of a current session
+      error_23: User with suspended / revoked identity or with blocked credential
+      error_25: Authentication process canceled by usere
   expiredSessionBanner:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
