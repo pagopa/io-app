@@ -34,6 +34,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
+  flexRow1: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    flexGrow: 1
+  },
+  flexRow2: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    flex: 1
+  },
   serviceName: {
     fontWeight: "700",
     alignSelf: "flex-start",
@@ -54,23 +64,9 @@ export default class ListItemComponent extends React.Component<Props> {
         first={this.props.isFirstItem}
         last={this.props.isLastItem || this.props.hideSeparator}
       >
-        <View
-          style={[
-            {
-              flexDirection: "column",
-              justifyContent: "space-between",
-              flexGrow: 1
-            }
-          ]}
-        >
-          <View style={styles.flexRow}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                flex: 1
-              }}
-            >
+        <View style={styles.flexRow1}>
+          <View style={styles.flexRow1}>
+            <View style={styles.flexRow2}>
               {this.props.hasBadge && (
                 <View style={styles.spacingBase}>
                   <BadgeComponent />
