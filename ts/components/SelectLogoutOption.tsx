@@ -1,23 +1,12 @@
-import {
-  Container,
-  Content,
-  H3,
-  Left,
-  List,
-  ListItem,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Container, Content, List, View } from "native-base";
 import React from "react";
 import { BackHandler, StyleSheet } from "react-native";
 
 import I18n from "../i18n";
-import variables from "../theme/variables";
-
 import { LogoutOption } from "../store/actions/authentication";
+import variables from "../theme/variables";
+import ListItemComponent from "./screens/ListItemComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import IconFont from "./ui/IconFont";
 
 const styles = StyleSheet.create({
   content: {
@@ -60,43 +49,23 @@ class SelectLogoutOption extends React.PureComponent<Props> {
         <Content style={styles.content}>
           {this.props.header || null}
           <List>
-            <ListItem
-              first={true}
+            <ListItemComponent
+              title={I18n.t("profile.logout.cta.keepData.title")}
+              subTitle={I18n.t("profile.logout.cta.keepData.description")}
               onPress={() =>
                 this.props.onOptionSelected({ keepUserData: true })
               }
-            >
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("profile.logout.cta.keepData.title")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.logout.cta.keepData.description")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
-            <ListItem
+              useExtendedSubTitle={true}
+            />
+
+            <ListItemComponent
+              title={I18n.t("profile.logout.cta.resetData.title")}
+              subTitle={I18n.t("profile.logout.cta.resetData.description")}
               onPress={() =>
                 this.props.onOptionSelected({ keepUserData: false })
               }
-            >
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("profile.logout.cta.resetData.title")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.logout.cta.resetData.description")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
+              useExtendedSubTitle={true}
+            />
           </List>
           <View style={styles.separator} />
         </Content>
