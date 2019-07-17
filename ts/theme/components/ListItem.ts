@@ -13,6 +13,10 @@ export default (): Theme => {
       paddingRight: 0,
       paddingBottom: 0,
       paddingTop: 40
+    },
+    ".last": {
+      borderBottomWidth: 0,
+      marginLeft: 0
     }
   };
 };

@@ -21,8 +21,13 @@ import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
 import { profileUpsert } from "../../store/actions/profile";
-import { loadVisibleServices } from "../../store/actions/services";
+import {
+  loadVisibleServices,
+  showServiceDetails
+} from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
+
 import { ProfileState } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
@@ -50,6 +55,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
     // when a service gets selected, before navigating to the service detail
     // screen, we issue a contentServiceLoad to refresh the service metadata
     this.props.contentServiceLoad(service.service_id);
+    this.props.serviceDetailsLoad(service);
     this.props.navigateToOldServiceDetailsScreen({
       service
     });
@@ -97,6 +103,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
         onRefresh={this.props.refreshServices}
         onSelect={this.onServiceSelect}
         isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
+        readServices={this.props.readServices}
       />
     );
   };
@@ -122,6 +129,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
               isExperimentalFeaturesEnabled={
                 this.props.isExperimentalFeaturesEnabled
               }
+              readServices={this.props.readServices}
             />
           )
       )
@@ -137,7 +145,7 @@ export const getAllSections = createSelector(
   [servicesSelector, organizationsSelector],
   (services, organizations) => {
     const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
-    
+
     return orgfiscalCodes
       .map(fiscalCode => {
         const organizationName = organizations[fiscalCode] || fiscalCode;
@@ -153,7 +161,11 @@ export const getAllSections = createSelector(
         };
       })
       .filter(_ => _.data.length > 0)
-      .sort((a, b) => (a.organizationName || "").localeCompare(b.organizationName));
+      .sort((a, b) =>
+        (a.organizationName || "").localeCompare(b.organizationName, "it", {
+          caseFirst: "lower"
+        })
+      );
   }
 );
 
@@ -177,7 +189,8 @@ const mapStateToProps = (state: GlobalState) => {
     searchText: searchTextSelector(state),
     isSearchEnabled: isSearchServicesEnabledSelector(state),
     isExperimentalFeaturesEnabled:
-      state.persistedPreferences.isExperimentalFeaturesEnabled
+      state.persistedPreferences.isExperimentalFeaturesEnabled,
+    readServices: readServicesSelector(state)
   };
 };
 
@@ -188,7 +201,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToOldServiceDetailsScreen: (
     params: InferNavigationParams<typeof OldServiceDetailsScreen>
   ) => dispatch(navigateToOldServiceDetailsScreen(params)),
-
+  serviceDetailsLoad: (service: ServicePublic) =>
+    dispatch(showServiceDetails(service)),
   /**
    * TODO: restyle ui to trigger all the services being enabled/disabled at once
    *       https://www.pivotaltracker.com/n/projects/2048617/stories/166763719

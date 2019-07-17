@@ -10,6 +10,8 @@ import {
 
 import { H3, ListItem } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
+
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
@@ -28,6 +30,7 @@ type OwnProps = {
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   isExperimentalFeaturesEnabled?: boolean;
+  readServices: ReadStateByServicesId;
 };
 
 type Props = OwnProps;
@@ -59,6 +62,24 @@ const styles = StyleSheet.create({
  * A component to render a list of services grouped by organization.
  */
 class ServiceSectionListComponent extends React.Component<Props> {
+  private isRead = (
+    potService: pot.Pot<ServicePublic, Error>,
+    readServices: ReadStateByServicesId
+  ): boolean => {
+    const service =
+      pot.isLoading(potService) ||
+      pot.isError(potService) ||
+      pot.isNone(potService)
+        ? undefined
+        : potService.value;
+
+    return (
+      readServices !== undefined &&
+      service !== undefined &&
+      readServices[service.service_id] !== undefined
+    );
+  };
+
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
   ) =>
@@ -74,6 +95,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
         item={itemInfo.item}
         profile={this.props.profile}
         onSelect={this.props.onSelect}
+        isRead={this.isRead(itemInfo.item, this.props.readServices)}
       />
     );
 
