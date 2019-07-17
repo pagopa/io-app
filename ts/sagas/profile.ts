@@ -64,67 +64,73 @@ function* createOrUpdateProfileSaga(
   >["createOrUpdateProfile"],
   action: ActionType<typeof profileUpsert["request"]>
 ): Iterator<Effect> {
-  // Get the current Profile from the state
-  const profileState: ReturnType<typeof profileSelector> = yield select<
-    GlobalState
-  >(profileSelector);
+  try {
+    // Get the current Profile from the state
+    const profileState: ReturnType<typeof profileSelector> = yield select<
+      GlobalState
+    >(profileSelector);
 
-  if (pot.isNone(profileState)) {
-    // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
-    // the used didn't yet authenticated: ignore this upsert request.
-    return;
-  }
-
-  const currentProfile = profileState.value;
-
-  // If we already have a profile, merge it with the new updated attributes
-  // or else, create a new profile from the provided object
-  // FIXME: perhaps this is responsibility of the caller?
-  const newProfile: ExtendedProfile = currentProfile.has_profile
-    ? {
-        is_inbox_enabled: currentProfile.is_inbox_enabled,
-        is_webhook_enabled: currentProfile.is_webhook_enabled,
-        version: currentProfile.version,
-        email: currentProfile.email,
-        preferred_languages: currentProfile.preferred_languages,
-        blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
-        ...action.payload
-      }
-    : {
-        is_inbox_enabled: false,
-        is_webhook_enabled: false,
-        ...action.payload,
-        version: 0
-      };
-
-  const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
-    createOrUpdateProfile,
-    {
-      extendedProfile: newProfile
+    if (pot.isNone(profileState)) {
+      // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
+      // the used didn't yet authenticated: ignore this upsert request.
+      return;
     }
-  );
 
-  if (response.isLeft()) {
-    yield put(profileUpsert.failure(new Error(readableReport(response.value))));
-    return;
-  }
+    const currentProfile = profileState.value;
 
-  if (response.value.status === 401) {
-    // on 401, expire the current session and restart the authentication flow
-    yield put(sessionExpired());
-    return;
-  }
+    // If we already have a profile, merge it with the new updated attributes
+    // or else, create a new profile from the provided object
+    // FIXME: perhaps this is responsibility of the caller?
+    const newProfile: ExtendedProfile = currentProfile.has_profile
+      ? {
+          is_inbox_enabled: currentProfile.is_inbox_enabled,
+          is_webhook_enabled: currentProfile.is_webhook_enabled,
+          version: currentProfile.version,
+          email: currentProfile.email,
+          preferred_languages: currentProfile.preferred_languages,
+          blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
+          ...action.payload
+        }
+      : {
+          is_inbox_enabled: false,
+          is_webhook_enabled: false,
+          ...action.payload,
+          version: 0
+        };
 
-  if (response.value.status !== 200) {
-    // We got a error, send a SESSION_UPSERT_FAILURE action
-    const error: Error = Error(
-      response.value.value.title || I18n.t("profile.errors.upsert")
-    );
+    const response: SagaCallReturnType<
+      typeof createOrUpdateProfile
+    > = yield call(createOrUpdateProfile, {
+      extendedProfile: newProfile
+    });
 
+    if (response.isLeft()) {
+      yield put(
+        profileUpsert.failure(new Error(readableReport(response.value)))
+      );
+      return;
+    }
+
+    if (response.value.status === 401) {
+      // on 401, expire the current session and restart the authentication flow
+      yield put(sessionExpired());
+      return;
+    }
+
+    if (response.value.status !== 200) {
+      // We got a error, send a SESSION_UPSERT_FAILURE action
+      const error: Error = Error(
+        response.value.value.title || I18n.t("profile.errors.upsert")
+      );
+
+      yield put(profileUpsert.failure(error));
+    } else {
+      // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
+      yield put(profileUpsert.success(response.value.value));
+    }
+  } catch (err) {
+    const error: Error = Error(I18n.t("profile.errors.upsert"));
     yield put(profileUpsert.failure(error));
-  } else {
-    // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
-    yield put(profileUpsert.success(response.value.value));
   }
 }
 
