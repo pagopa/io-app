@@ -143,7 +143,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private showChooserLocalServicesModal = () => {
     this.props.showModal(
-      <ChooserListComponent
+      <ChooserListComponent<Organization>
         items={this.props.allOrganizations}
         keyExtractor={item => item.fiscalCode}
         renderItem={this.renderOrganizationItem}

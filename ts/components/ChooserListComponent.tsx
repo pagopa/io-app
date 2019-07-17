@@ -6,10 +6,10 @@ import customVariables from "../theme/variables";
 import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
-type Props = {
-  items: ReadonlyArray<any>;
-  keyExtractor: (item: any, index: number) => string;
-  renderItem: ListRenderItem<any>;
+type Props<T> = {
+  items: ReadonlyArray<T>;
+  keyExtractor: (item: T, index: number) => string;
+  renderItem: ListRenderItem<T>;
   onCancel: () => void;
 };
 
@@ -38,7 +38,7 @@ const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
  * TODO search will be introduced with story https://www.pivotaltracker.com/story/show/166792313
  * TODO select will be introduced with story https://www.pivotaltracker.com/story/show/167102335
  */
-export class ChooserListComponent extends React.PureComponent<Props> {
+export class ChooserListComponent<T> extends React.PureComponent<Props<T>> {
   private onPressCancel = () => {
     this.props.onCancel();
   };

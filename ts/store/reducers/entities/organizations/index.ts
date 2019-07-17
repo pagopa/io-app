@@ -27,7 +27,9 @@ const reducer = combineReducers<OrganizationsState, Action>({
 export const lexicallyOrderedAllOrganizations = createSelector(
   organizationsAllSelector,
   allLexicallyOrdered =>
-    [...allLexicallyOrdered].sort((a, b) => (a.name > b.name ? 1 : -1))
+    [...allLexicallyOrdered].sort((a, b) =>
+      a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+    )
 );
 
 export default reducer;
