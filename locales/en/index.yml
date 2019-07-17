@@ -116,14 +116,14 @@ profile:
       screenSubtitle: Here you will find information related to your personal data.
       privacyPolicy:
         title: Privacy policy
-        description: review accepted privacy terms
+        description: Review accepted privacy terms
       removeAccount:
         title: Delete your account
-        description: remove all data associated to your account from your phone and
+        description: Remove all data associated to your account from your phone and
           our systems (SPID required)
       exportData:
         title: Export your data
-        description: send to your email all your account’s data in an open format
+        description: Send to your email all your account’s data in an open format
     developersSectionHeader: Developers
     experimentalFeatures:
       confirmTitle: Experimental features
