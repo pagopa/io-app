@@ -71,7 +71,8 @@ function filterSectionListDataMatchingSearchText(
     .filter(pot.isSome);
 
   const sectionListDataFiltered = {
-    title: sectionListData.title,
+    organizationName: sectionListData.organizationName,
+    organizationFiscalCode: sectionListData.organizationFiscalCode,
     data: filteredData
   };
   return filteredData.length > 0 ? sectionListDataFiltered : null;
