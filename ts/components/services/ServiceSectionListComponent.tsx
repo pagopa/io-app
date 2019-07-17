@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
   listItem: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
+  },
+  padded: {
+    marginLeft: customVariables.contentPadding,
+    marginRight: customVariables.contentPadding
   }
 });
 
@@ -104,10 +108,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
     this.props.isExperimentalFeaturesEnabled ? (
       <SectionHeaderComponent
         sectionHeader={info.section.organizationName}
-        style={{
-          marginLeft: customVariables.contentPadding,
-          marginRight: customVariables.contentPadding
-        }}
+        style={styles.padded}
         logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
       />
     ) : (
