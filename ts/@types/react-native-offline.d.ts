@@ -1,13 +1,14 @@
-export function reducer<T>(state: T | undefined, action: any): T; 
+declare module "react-native-offline" {
+  export function reducer<T>(state: T | undefined, action: any): T;
 
-interface NetworkEventsListenerSagaArguments { 
-  timeout?: number; 
-  pingServerUrl?: string; 
-  withExtraHeadRequest?: boolean; 
-  checkConnectionInterval?: number; 
-} 
+  interface NetworkEventsListenerSagaArguments {
+    pingTimeout?: number;
+    pingServerUrl?: string;
+    shouldPing?: boolean;
+    pingInterval?: number;
+  }
 
-export function* networkEventsListenerSaga<A, B, C>( 
-  args: NetworkEventsListenerSagaArguments 
-  ): Generator<A, B, C>; 
+  export function* networkSaga<A, B, C>(
+    args: NetworkEventsListenerSagaArguments
+  ): Generator<A, B, C>;
 }
