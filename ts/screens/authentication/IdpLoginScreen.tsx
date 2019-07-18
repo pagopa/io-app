@@ -79,27 +79,30 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Extract the login result from the ginen url.
+ * Return true if the url contains login pattern & token
+ */
 const onNavigationStateChange = (
   onFailure: () => void,
   onSuccess: (_: SessionToken) => void
 ) => (navState: NavState): boolean => {
-  // Extract the login result from the url.
-  // If the url is not related to login this will be `null`
   if (navState.url) {
+    // If the url is not related to login this will be `null`
     const loginResult = extractLoginResult(navState.url);
     if (loginResult) {
       if (loginResult.success) {
         // In case of successful login
         onSuccess(loginResult.token);
-        return false;
+        return true;
       } else {
         // In case of login failure
         onFailure();
-        return true;
+        return false;
       }
     }
   }
-  return true;
+  return false;
 };
 
 /**
@@ -148,10 +151,16 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({
       requestState: event.loading ? pot.noneLoading : pot.some(true)
     });
+    onNavigationStateChange(
+      this.handleLoginFailure,
+      this.props.dispatchLoginSuccess
+    )(event);
   };
 
   private handleShouldStartLoading = (event: NavState): boolean => {
-    return onNavigationStateChange(
+    // onNavigationStateChange returns true if url match login pattern & contains token
+    // if the url means login success, we don't care about loading that url
+    return !onNavigationStateChange(
       this.handleLoginFailure,
       this.props.dispatchLoginSuccess
     )(event);
@@ -235,7 +244,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
             onError={this.handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={this.handleNavigationStateChange}
-            onShouldStartLoadWithRequest={this.handleShouldStartLoading}
+            //onShouldStartLoadWithRequest={this.handleShouldStartLoading}
           />
         )}
         {this.renderMask()}
