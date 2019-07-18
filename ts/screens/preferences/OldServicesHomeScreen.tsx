@@ -139,7 +139,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
 
 const servicesSelector = (state: GlobalState) => state.entities.services;
 const organizationsSelector = (state: GlobalState) =>
-  state.entities.organizations;
+  state.entities.organizations.nameByFiscalCode;
 
 export const getAllSections = createSelector(
   [servicesSelector, organizationsSelector],

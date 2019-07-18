@@ -7,6 +7,7 @@ import { PrivacyMainScreen } from "../screens/profile/PrivacyMainScreen";
 import { PrivacyScreen } from "../screens/profile/PrivacyScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 
+import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import ROUTES from "./routes";
 
 /**
@@ -31,6 +32,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.PROFILE_PREFERENCES_CALENDAR]: {
       screen: CalendarsPreferencesScreen
+    },
+    [ROUTES.PROFILE_FISCAL_CODE]: {
+      screen: FiscalCodeScreen
     }
   },
   {

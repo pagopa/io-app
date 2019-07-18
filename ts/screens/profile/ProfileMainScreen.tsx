@@ -1,3 +1,6 @@
+/**
+ * A component to show the main screen of the Profile section
+ */
 import {
   Button,
   H3,
@@ -9,7 +12,13 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
+import {
+  Alert,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
@@ -19,14 +28,18 @@ import {
 import { connect } from "react-redux";
 
 import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
+import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import DarkLayout from "../../components/screens/DarkLayout";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
+import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -49,7 +62,7 @@ import {
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 
 type OwnProps = Readonly<{
@@ -84,18 +97,8 @@ const styles = StyleSheet.create({
   modalHeader: {
     lineHeight: 40
   },
-
-  title: {
-    fontWeight: "700"
-  },
-
-  listItem: {
-    paddingTop: variables.spacerLargeHeight,
-    paddingBottom: variables.spacerLargeHeight
-  },
-
-  noBorder: {
-    borderBottomWidth: 0
+  whiteBg: {
+    backgroundColor: customVariables.colorWhite
   },
 
   noRightPadding: {
@@ -109,9 +112,6 @@ const getAppLongVersion = () => {
   return `${DeviceInfo.getVersion()}${buildNumber}`;
 };
 
-/**
- * A component to show the main screen of the Profile section
- */
 class ProfileMainScreen extends React.PureComponent<Props> {
   private handleClearCachePress = () => {
     this.props.clearCache();
@@ -251,23 +251,12 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       notificationId,
       isExperimentalFeaturesEnabled
     } = this.props;
-    return (
-      <TopScreenComponent
-        title={I18n.t("profile.main.screenTitle")}
-        appLogo={true}
-      >
-        <ScreenContentHeader
-          title={I18n.t("profile.main.screenTitle")}
-          icon={require("../../../img/icons/gears.png")}
-          subtitle={I18n.t("profile.main.screenSubtitle")}
-          banner={
-            isExperimentalFeaturesEnabled
-              ? ExperimentalFeaturesBanner
-              : undefined
-          }
-        />
 
-        <ScrollView ref={this.ServiceListRef}>
+    // TODO: once isExperimentalFeaturesEnabled is removed, shift again screenContent into the main return
+    // tslint:disable no-big-function
+    const screenContent = () => {
+      return (
+        <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
             {/* Preferences */}
@@ -388,6 +377,50 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             )}
           </List>
         </ScrollView>
+      );
+    };
+
+    return this.props.isExperimentalFeaturesEnabled ? (
+      <DarkLayout
+        allowGoBack={false}
+        bounces={false}
+        headerBody={<IconFont name="io-logo" color={"white"} />}
+        title={I18n.t("profile.main.screenTitle")}
+        icon={require("../../../img/icons/profile-illustration.png")}
+        topContent={
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate(ROUTES.PROFILE_FISCAL_CODE)
+            }
+          >
+            <FiscalCodeComponent type={"Preview"} />
+          </TouchableOpacity>
+        }
+        contextualHelp={{
+          title: I18n.t("profile.main.screenTitle"),
+          body: () => (
+            <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
+          )
+        }}
+      >
+        {screenContent()}
+      </DarkLayout>
+    ) : (
+      <TopScreenComponent
+        title={I18n.t("profile.main.screenTitle")}
+        appLogo={true}
+      >
+        <ScreenContentHeader
+          title={I18n.t("profile.main.screenTitle")}
+          icon={require("../../../img/icons/gears.png")}
+          subtitle={I18n.t("profile.main.screenSubtitle")}
+          banner={
+            isExperimentalFeaturesEnabled
+              ? ExperimentalFeaturesBanner
+              : undefined
+          }
+        />
+        {screenContent()}
       </TopScreenComponent>
     );
   }
