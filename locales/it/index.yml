@@ -27,6 +27,7 @@ global:
     back: Indietro
     confirm: Conferma
     close: Chiudi
+    saveSelection: Salva la selezione
   navigator:
     messages: messaggi
     wallet: portafoglio
