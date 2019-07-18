@@ -316,7 +316,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
         ? this.errorWalletsHeader()
-        : wallets.length > 0
+        : wallets.length > 0 && !hasNotSupportedWalletsOnly
           ? this.cardPreview(wallets)
           : this.withoutCardsHeader(hasNotSupportedWalletsOnly);
 
