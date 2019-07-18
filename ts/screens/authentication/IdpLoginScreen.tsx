@@ -80,8 +80,8 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Extract the login result from the ginen url.
- * Return true if the url contains login pattern & token
+ * Extract the login result from the given url.
+ * Returns true if the url contains login pattern & token
  */
 const onNavigationStateChange = (
   onFailure: () => void,
@@ -155,7 +155,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
   private handleShouldStartLoading = (event: NavState): boolean => {
     // onNavigationStateChange returns true if url matches login pattern & it contains token
-    // if the url means login success, we don't care about loading it
+    // if the url means login success, we don't care about loading that url
     const stopNavigation = onNavigationStateChange(
       this.handleLoginFailure,
       this.props.dispatchLoginSuccess
