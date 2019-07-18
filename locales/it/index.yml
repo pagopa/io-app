@@ -78,7 +78,12 @@ inbox:
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
-  facSimile: FAC-SIMILE
+  fiscalCode:
+    title: Documenti personali
+    fiscalCode: Codice fiscale
+    help: !include fiscal_code.md
+    content: Il fac-simile del codice fiscale non sostituisce il documento fisico ma ne permette la lettura dei dati o del codice a barre sul retro
+    facSimile: FAC-SIMILE
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
@@ -97,8 +102,8 @@ profile:
     upsert: Errore nella creazione o nell'aggiornamento del profilo
   main:
     screenTitle: Profilo
-    screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi
-      dati personali, etc."
+    screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
+    contextualHelp: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
     clearCache: Elimina cache
