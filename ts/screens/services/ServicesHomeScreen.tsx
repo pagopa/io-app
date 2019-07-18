@@ -30,6 +30,7 @@ import { Organization } from "../../store/reducers/entities/organizations/organi
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
+import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 
 type OwnProps = NavigationScreenProps;
 
@@ -141,6 +142,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   };
 
+  private organizationContainsText(item: Organization, searchText: string) {
+    return isTextIncludedCaseInsensitive(item.name, searchText);
+  }
+
   private showChooserLocalServicesModal = () => {
     this.props.showModal(
       <ChooserListComponent<Organization>
@@ -148,6 +153,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         keyExtractor={item => item.fiscalCode}
         renderItem={this.renderOrganizationItem}
         onCancel={this.props.hideModal}
+        isSearchEnabled={true}
+        onSearchItemContainsText={this.organizationContainsText}
+        noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
+        noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
       />
     );
   };

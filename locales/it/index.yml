@@ -44,6 +44,7 @@ global:
   search:
     invalidSearchBarText: Inserisci almeno {{minCharacter}} caratteri
     noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
+    noResultsTitle: Nessun risultato.
   localNotifications:
     spidLogin:
       title: Ricordati di accedere ad IO!
@@ -670,6 +671,7 @@ services:
   areasOfInterest:
     selectMessage: Scegli le aree geografiche (comuni, regioni, etc.) dove risiedi o che frequenti solitamente per vederne qui i relativi servizi. Potrai modificarle in ogni momento.
     addButton: Aggiungi le tue aree di interesse
+    searchEmpty: Se non trovi la tua area di interesse, significa che gli enti di quel territorio non espongono ancora servizi su IO.
   tab:
     locals: Locali
     national: Nazionali
