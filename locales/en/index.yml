@@ -26,6 +26,7 @@ global:
     back: Back
     confirm: Confirm
     close: Close
+    saveSelection: Save the selection
   navigator:
     messages: messages
     wallet: wallet
@@ -75,7 +76,12 @@ inbox:
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
-  facSimile: FAC-SIMILE
+  fiscalCode:
+    title: Personal documents
+    fiscalCode: Fiscal code
+    help: !include fiscal_code.md
+    content: The fiscal code fac-simile does not substitute the physical document but it allows both data and barcode being read
+    facSimile: FAC-SIMILE
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
@@ -95,6 +101,7 @@ profile:
   main:
     screenTitle: Profile
     screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
+    contextualHelp: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
     clearCache: Clear cache
@@ -116,14 +123,14 @@ profile:
       screenSubtitle: Here you will find information related to your personal data.
       privacyPolicy:
         title: Privacy policy
-        description: review accepted privacy terms
+        description: Review accepted privacy terms
       removeAccount:
         title: Delete your account
-        description: remove all data associated to your account from your phone and
+        description: Remove all data associated to your account from your phone and
           our systems (SPID required)
       exportData:
         title: Export your data
-        description: send to your email all your account’s data in an open format
+        description: Send to your email all your account’s data in an open format
     developersSectionHeader: Developers
     experimentalFeatures:
       confirmTitle: Experimental features
@@ -342,7 +349,8 @@ wallet:
     add: add
     addButton: Add a new method
     addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
-      so that you don't have to re-add them from scratch for every transaction
+      so that you don't have to re-add them from scratch for every transaction.
+    walletAlert: "Your wallet includes payment methods but no one is supported by IO yet"
     successful: The card was added successfully!
     failed: The card could not be added
     failedCardAlreadyExists: The card you are adding already exists

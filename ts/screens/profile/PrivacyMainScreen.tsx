@@ -1,23 +1,15 @@
-import { Body, H3, List, ListItem, Right, Text, View } from "native-base";
+import { List } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
+import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import variables from "../../theme/variables";
 
 const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
-
-const styles = StyleSheet.create({
-  notGrow: {
-    flex: 0,
-    marginLeft: variables.fontSizeBase
-  }
-});
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -38,61 +30,33 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
       subtitle={I18n.t("profile.main.mainPrivacy.screenSubtitle")}
     >
       <List withContentLateralPadding={true}>
-        <ListItem
+        {/* Privacy Policy*/}
+        <ListItemComponent
+          title={I18n.t("profile.main.mainPrivacy.privacyPolicy.title")}
+          subTitle={I18n.t(
+            "profile.main.mainPrivacy.privacyPolicy.description"
+          )}
           onPress={() => props.navigation.navigate(ROUTES.PROFILE_PRIVACY)}
-        >
-          {/* Privacy Policy*/}
-          <Body>
-            <View>
-              <H3>{I18n.t("profile.main.mainPrivacy.privacyPolicy.title")}</H3>
-              <Text>
-                {I18n.t("profile.main.mainPrivacy.privacyPolicy.description")}
-              </Text>
-            </View>
-          </Body>
-          <Right style={styles.notGrow}>
-            <IconFont
-              name="io-right"
-              color={variables.contentPrimaryBackground}
-            />
-          </Right>
-        </ListItem>
+          useExtendedSubTitle={true}
+        />
 
-        <ListItem onPress={unavailableAlert}>
-          {/* Remove account */}
-          <Body>
-            <View>
-              <H3>{I18n.t("profile.main.mainPrivacy.removeAccount.title")}</H3>
-              <Text>
-                {I18n.t("profile.main.mainPrivacy.removeAccount.description")}
-              </Text>
-            </View>
-          </Body>
-          <Right style={styles.notGrow}>
-            <IconFont
-              name="io-right"
-              color={variables.contentPrimaryBackground}
-            />
-          </Right>
-        </ListItem>
+        {/* Remove account */}
+        <ListItemComponent
+          title={I18n.t("profile.main.mainPrivacy.removeAccount.title")}
+          subTitle={I18n.t(
+            "profile.main.mainPrivacy.removeAccount.description"
+          )}
+          onPress={unavailableAlert}
+          useExtendedSubTitle={true}
+        />
 
-        <ListItem onPress={unavailableAlert}>
-          {/* Export your data */}
-          <Body>
-            <View>
-              <H3>{I18n.t("profile.main.mainPrivacy.exportData.title")}</H3>
-              <Text>
-                {I18n.t("profile.main.mainPrivacy.exportData.description")}
-              </Text>
-            </View>
-          </Body>
-          <Right style={styles.notGrow}>
-            <IconFont
-              name="io-right"
-              color={variables.contentPrimaryBackground}
-            />
-          </Right>
-        </ListItem>
+        {/* Export your data */}
+        <ListItemComponent
+          title={I18n.t("profile.main.mainPrivacy.exportData.title")}
+          subTitle={I18n.t("profile.main.mainPrivacy.exportData.description")}
+          onPress={unavailableAlert}
+          useExtendedSubTitle={true}
+        />
       </List>
     </ScreenContent>
   </TopScreenComponent>

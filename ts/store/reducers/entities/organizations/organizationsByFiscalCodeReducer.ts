@@ -7,6 +7,7 @@ import { getType } from "typesafe-actions";
 
 import { loadService } from "../../../actions/services";
 import { Action } from "../../../actions/types";
+import { GlobalState } from "../../types";
 
 /**
  * Maps organization fiscal code to serviceId
@@ -17,10 +18,10 @@ export type OrganizationNamesByFiscalCodeState = Readonly<{
 
 const INITIAL_STATE: OrganizationNamesByFiscalCodeState = {};
 
-export function servicesByOrganizationFiscalCodeReducer(
+const reducer = (
   state: OrganizationNamesByFiscalCodeState = INITIAL_STATE,
   action: Action
-): OrganizationNamesByFiscalCodeState {
+): OrganizationNamesByFiscalCodeState => {
   switch (action.type) {
     case getType(loadService.success):
       return {
@@ -32,4 +33,13 @@ export function servicesByOrganizationFiscalCodeReducer(
     default:
       return state;
   }
-}
+};
+
+// Selectors
+export const organizationNamesByFiscalCodeSelector = (
+  state: GlobalState
+): OrganizationNamesByFiscalCodeState => {
+  return state.entities.organizations.nameByFiscalCode;
+};
+
+export default reducer;
