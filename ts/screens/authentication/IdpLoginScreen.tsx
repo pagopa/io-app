@@ -154,13 +154,12 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleShouldStartLoading = (event: NavState): boolean => {
-    // onNavigationStateChange returns true if url match login pattern & contains token
-    // if the url means login success, we don't care about loading that url
+    // onNavigationStateChange returns true if url matches login pattern & it contains token
+    // if the url means login success, we don't care about loading it
     const stopNavigation = onNavigationStateChange(
       this.handleLoginFailure,
       this.props.dispatchLoginSuccess
     )(event);
-    console.log(`${event.url} -> ${stopNavigation}`);
     return !stopNavigation;
   };
 
