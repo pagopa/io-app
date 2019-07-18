@@ -151,19 +151,17 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({
       requestState: event.loading ? pot.noneLoading : pot.some(true)
     });
-    onNavigationStateChange(
-      this.handleLoginFailure,
-      this.props.dispatchLoginSuccess
-    )(event);
   };
 
   private handleShouldStartLoading = (event: NavState): boolean => {
     // onNavigationStateChange returns true if url match login pattern & contains token
     // if the url means login success, we don't care about loading that url
-    return !onNavigationStateChange(
+    const stopNavigation = onNavigationStateChange(
       this.handleLoginFailure,
       this.props.dispatchLoginSuccess
     )(event);
+    console.log(`${event.url} -> ${stopNavigation}`);
+    return !stopNavigation;
   };
 
   private renderMask = () => {
@@ -244,7 +242,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
             onError={this.handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={this.handleNavigationStateChange}
-            //onShouldStartLoadWithRequest={this.handleShouldStartLoading}
+            onShouldStartLoadWithRequest={this.handleShouldStartLoading}
           />
         )}
         {this.renderMask()}
