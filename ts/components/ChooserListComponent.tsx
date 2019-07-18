@@ -1,7 +1,6 @@
 import color from "color";
 import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
-import { debounce } from "lodash";
 import { Body, Button, Content, Input, Item, Right, View } from "native-base";
 import * as React from "react";
 import {
@@ -31,7 +30,6 @@ type Props<T> = {
 
 type State = {
   searchText: Option<string>;
-  debouncedSearchText: Option<string>;
 };
 
 const styles = StyleSheet.create({
@@ -57,8 +55,7 @@ export class ChooserListComponent<T> extends React.PureComponent<
   constructor(props: Props<T>) {
     super(props);
     this.state = {
-      searchText: this.props.isSearchEnabled ? some("") : none,
-      debouncedSearchText: none
+      searchText: this.props.isSearchEnabled ? some("") : none
     };
   }
 
@@ -125,19 +122,11 @@ export class ChooserListComponent<T> extends React.PureComponent<
     this.setState({
       searchText: some(text)
     });
-    this.updateDebouncedSearchText(text);
   };
-
-  private updateDebouncedSearchText = debounce((text: string) => {
-    this.setState({
-      debouncedSearchText: some(text)
-    });
-  }, 300);
 
   private onSearchDisable = () => {
     this.setState({
-      searchText: none,
-      debouncedSearchText: none
+      searchText: none
     });
   };
 
