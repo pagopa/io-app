@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class FiscalCodeLandscapeModal extends React.PureComponent<
+export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   Props
 > {
   // private contentRef: any;

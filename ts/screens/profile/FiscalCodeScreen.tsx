@@ -5,7 +5,7 @@ import * as React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
-import FiscalCodeLandscapeModal from "../../components/FiscalCodeLandscapeModal";
+import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
 import H5 from "../../components/ui/H5";
@@ -67,7 +67,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
     // tslint:disable-next-line:no-unused-expression
     this.props.profile &&
       this.props.showModal(
-        <FiscalCodeLandscapeModal
+        <FiscalCodeLandscapeOverlay
           onCancel={this.props.hideModal}
           profile={this.props.profile}
         />
