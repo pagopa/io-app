@@ -158,7 +158,7 @@ export class ChooserListComponent<T> extends React.PureComponent<
   }
 
   /**
-   * Render Search component.
+   * Render Search component
    */
   private renderSearch = () => {
     const {
