@@ -1,14 +1,20 @@
+import { left } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ContentClient } from "../api/content";
 
+import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 
-import { contentServiceLoad } from "../store/actions/content";
+import {
+  contentMunicipalityLoad,
+  contentServiceLoad
+} from "../store/actions/content";
 
 import { ServiceId } from "../../definitions/backend/ServiceId";
+import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
 
 const contentClient = ContentClient();
@@ -49,6 +55,52 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       );
     } else {
       yield put(contentServiceLoad.failure(serviceId));
+    }
+  });
+}
+
+/**
+ * Retrieves a municipality metadata from the static content repository
+ */
+function getMunicipalityMetadata(
+  codiceCatastale: CodiceCatastale
+): Promise<t.Validation<BasicResponseType<MunicipalityMedadata>>> {
+  return new Promise((resolve, _) =>
+    contentClient.getMunicipality({ codiceCatastale }).then(resolve, () =>
+      resolve(
+        left([
+          {
+            context: [],
+            value: "some error occurred while retrieving municipality metadata"
+          }
+        ])
+      )
+    )
+  );
+}
+
+/**
+ * A saga that watches for and executes requests to load municipality metadata.
+ */
+export function* watchContentMunicipalityLoadSaga(): Iterator<Effect> {
+  yield takeEvery(getType(contentMunicipalityLoad.request), function*(
+    action: ActionType<typeof contentMunicipalityLoad["request"]>
+  ) {
+    const codiceCatastale = action.payload;
+
+    const response: SagaCallReturnType<
+      typeof getMunicipalityMetadata
+    > = yield call(getMunicipalityMetadata, codiceCatastale);
+
+    if (response.isRight() && response.value.status === 200) {
+      yield put(
+        contentMunicipalityLoad.success({
+          codiceCatastale,
+          data: response.value.value
+        })
+      );
+    } else {
+      yield put(contentMunicipalityLoad.failure(codiceCatastale));
     }
   });
 }
