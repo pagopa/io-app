@@ -70,6 +70,7 @@ const migrations: MigrationManifest = {
     ({
       ...state,
       entities: {
+        ...((state as any).entities ? (state as any).entities : {}),
         organizations: {}
       }
     } as PersistedState)
