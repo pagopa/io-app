@@ -154,13 +154,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleShouldStartLoading = (event: NavState): boolean => {
-    // onNavigationStateChange returns true if url matches login pattern and it contains token
-    // if the url means login success, we don't care about loading that url
-    const stopNavigation = onNavigationStateChange(
+    const isLoginUrlWithToken = onNavigationStateChange(
       this.handleLoginFailure,
       this.props.dispatchLoginSuccess
     )(event);
-    return !stopNavigation;
+    // URL can be loaded if it's not the login URL containing the session token - this avoids
+    // making a (useless) GET request with the session in the URL
+    return !isLoginUrlWithToken;
   };
 
   private renderMask = () => {
