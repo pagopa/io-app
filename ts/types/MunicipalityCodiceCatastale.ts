@@ -7,7 +7,7 @@ import { PatternString } from "italia-ts-commons/lib/strings";
  * https://it.wikipedia.org/wiki/Codice_catastale
  */
 
-const CODICE_CATASTALE_REGEX = `^[A-Z]\d{3}$`;
+const CODICE_CATASTALE_REGEX = `^[A-Z]\\d{3}$`;
 
 export const CodiceCatastale = PatternString(CODICE_CATASTALE_REGEX);
 export type CodiceCatastale = t.TypeOf<typeof CodiceCatastale>;
