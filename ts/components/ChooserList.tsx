@@ -13,7 +13,8 @@ type OwnProps = {
   items: ReadonlyArray<any>;
   keyExtractor: (item: any, index: number) => string;
   renderItem: ListRenderItem<any>;
-  refreshing: boolean;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 };
 
 type Props = OwnProps;
@@ -31,9 +32,20 @@ const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 class ChooserList extends React.Component<Props> {
   public render() {
-    const { refreshing, items, keyExtractor, renderItem } = this.props;
+    const {
+      onRefresh,
+      refreshing,
+      items,
+      keyExtractor,
+      renderItem
+    } = this.props;
 
-    const refreshControl = <RefreshControl refreshing={refreshing} />;
+    const refreshControl =
+      onRefresh && refreshing !== undefined ? (
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      ) : (
+        undefined
+      );
 
     return (
       <React.Fragment>

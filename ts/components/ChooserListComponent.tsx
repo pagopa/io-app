@@ -22,6 +22,9 @@ type Props<T> = {
   keyExtractor: (item: T, index: number) => string;
   renderItem: ListRenderItem<T>;
   onCancel: () => void;
+  isRefreshEnabled: boolean;
+  isRefreshing?: boolean;
+  onRefresh?: () => void;
   isSearchEnabled: boolean;
   onSearchItemContainsText?: (item: T, searchText: string) => boolean;
   noSearchResultsSourceIcon?: ImageSourcePropType;
@@ -186,12 +189,23 @@ export class ChooserListComponent<T> extends React.PureComponent<
 
   public render() {
     const {
+      isRefreshEnabled,
+      isRefreshing,
       isSearchEnabled,
       items,
+      onRefresh,
       onSearchItemContainsText,
       keyExtractor,
       renderItem
     } = this.props;
+
+    const refreshProps =
+      isRefreshEnabled && isRefreshing && onRefresh
+        ? {
+            onRefresh,
+            isRefreshing
+          }
+        : undefined;
 
     return (
       <View style={styles.container}>
@@ -204,10 +218,10 @@ export class ChooserListComponent<T> extends React.PureComponent<
               ? this.renderSearch()
               : items.length > 0 && (
                   <ChooserList
+                    {...refreshProps}
                     items={items}
                     keyExtractor={keyExtractor}
                     renderItem={renderItem}
-                    refreshing={false}
                   />
                 )}
           </View>

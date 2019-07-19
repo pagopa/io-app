@@ -153,6 +153,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         keyExtractor={item => item.fiscalCode}
         renderItem={this.renderOrganizationItem}
         onCancel={this.props.hideModal}
+        isRefreshEnabled={false}
         isSearchEnabled={true}
         onSearchItemContainsText={this.organizationContainsText}
         noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
