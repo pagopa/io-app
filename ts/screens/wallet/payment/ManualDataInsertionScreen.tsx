@@ -13,9 +13,11 @@ import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import {
+  NavigationActions,
   NavigationEventPayload,
   NavigationEvents,
-  NavigationInjectedProps
+  NavigationInjectedProps,
+  StackActions
 } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -35,10 +37,8 @@ import {
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import {
-  navigateToPaymentTransactionSummaryScreen,
-  navigateToWalletHome
-} from "../../../store/actions/navigation";
+import ROUTES from "../../../navigation/routes";
+import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
@@ -260,7 +260,24 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  navigateToWalletHome: () => {
+    dispatch(
+      StackActions.reset({
+        actions: [
+          NavigationActions.navigate({
+            routeName: ROUTES.MAIN
+          })
+        ],
+        key: null,
+        index: 0
+      })
+    );
+    dispatch(
+      NavigationActions.navigate({
+        routeName: ROUTES.WALLET_HOME
+      })
+    );
+  },
   navigateToTransactionSummary: (
     rptId: RptId,
     initialAmount: AmountInEuroCents

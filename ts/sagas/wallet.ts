@@ -6,6 +6,7 @@
 
 import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { NavigationActions, StackActions } from "react-navigation";
 import { delay } from "redux-saga";
 import {
   call,
@@ -98,9 +99,7 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 
-import { NavigationActions } from "react-navigation";
 import ROUTES from "../navigation/routes";
-import { navigateToWalletHome } from "../store/actions/navigation";
 import {
   getCurrentRouteKey,
   getCurrentRouteName
@@ -718,7 +717,13 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
         });
         yield put(navigationBackAction);
       } else {
-        yield put(navigateToWalletHome());
+        yield put(
+          StackActions.reset({
+            key: null,
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: ROUTES.MAIN })]
+          })
+        );
       }
     }
   });

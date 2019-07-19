@@ -7,7 +7,7 @@ import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -116,17 +116,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     // WIP WIP create pivotal story
     this.props.loadWallets();
     this.props.loadTransactions();
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
   }
-
-  public componentWillUnmount(): void {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
-  }
-
-  private onBackPress = () => {
-    this.props.navigation.goBack();
-    return true;
-  };
 
   private cardHeader(isError: boolean = false) {
     return (
@@ -346,7 +336,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletAddPaymentMethod: () =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
+  navigateToPaymentScanQrCode: () => {
+    dispatch(navigateToPaymentScanQrCode());
+  },
   navigateToTransactionDetailsScreen: (transaction: Transaction) =>
     dispatch(
       navigateToTransactionDetailsScreen({
