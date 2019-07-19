@@ -66,14 +66,17 @@ const migrations: MigrationManifest = {
 
   // Version 3
   // we changes the organizations so we clear the entitie of organizations to force a reload
-  "3": (state: PersistedState): PersistedState =>
-    ({
+  "3": (state: PersistedState) => {
+    return {
       ...state,
       entities: {
-        ...((state as any).entities ? (state as any).entities : {}),
+        ...((state as PersistedGlobalState).entities
+          ? (state as PersistedGlobalState).entities
+          : {}),
         organizations: {}
       }
-    } as PersistedState)
+    };
+  }
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
