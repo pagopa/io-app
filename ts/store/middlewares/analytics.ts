@@ -180,8 +180,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // session
     case getType(sessionInformationLoadFailure):
     // profile failures
-    case getType(profileLoadFailure):
-    case getType(profileUpsert.failure):
     case getType(updateNotificationInstallationFailure):
     case getType(logoutFailure):
     // backend info failures
@@ -206,6 +204,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         reason: action.payload
       });
     // wallet / payment failures (reason in the payload, as an error)
+    case getType(profileLoadFailure):
+    case getType(profileUpsert.failure):
     case getType(setFavouriteWalletFailure):
     case getType(fetchTransactionFailure):
     case getType(fetchTransactionsFailure):

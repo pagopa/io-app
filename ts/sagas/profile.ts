@@ -3,7 +3,6 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
@@ -21,6 +20,7 @@ import {
 import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import { SagaCallReturnType } from "../types/utils";
+import { readablePrivacyReport } from "../utils/reporters";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -34,7 +34,7 @@ export function* loadProfile(
     // we got an error, throw it
     // WARNING: profile info disclosure (implement a readablePrivacyReport)
     if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
     if (response.value.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
@@ -51,7 +51,7 @@ export function* loadProfile(
     }
     throw Error(`response status ${response.value.status}`);
   } catch (error) {
-    yield put(profileLoadFailure(error.message));
+    yield put(profileLoadFailure(error));
   }
   return none;
 }
@@ -104,7 +104,9 @@ function* createOrUpdateProfileSaga(
   );
 
   if (response.isLeft()) {
-    yield put(profileUpsert.failure(readableReport(response.value)));
+    yield put(
+      profileUpsert.failure(Error(readablePrivacyReport(response.value)))
+    );
     return;
   }
 
@@ -116,7 +118,9 @@ function* createOrUpdateProfileSaga(
 
   if (response.value.status !== 200) {
     // We got a error, send a SESSION_UPSERT_FAILURE action
-    const error = response.value.value.title || I18n.t("profile.errors.upsert");
+    const error = new Error(
+      response.value.value.title || I18n.t("profile.errors.upsert")
+    );
 
     yield put(profileUpsert.failure(error));
   } else {
