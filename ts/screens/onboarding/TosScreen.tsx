@@ -104,17 +104,17 @@ class TosScreen extends React.PureComponent<Props> {
 
   private handleGoBack = () =>
     Alert.alert(
-      "Vuoi davvero uscire da IO?",
-      "Dovrai loggarti nuovamente per continuare ad usare l'app",
+      I18n.t("onboarding.alert.title"),
+      I18n.t("onboarding.alert.description"),
       [
         {
-          text: "Annulla",
+          text: I18n.t("global.buttons.cancel"),
           style: "cancel"
         },
         {
-          text: "Esci",
+          text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => this.props.dispatch(abortOnboarding()) // TODO: make it to de on right and bold
+          onPress: () => this.props.dispatch(abortOnboarding())
         }
       ]
     );

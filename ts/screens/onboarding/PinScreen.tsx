@@ -5,15 +5,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Content, H3, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import AbortOnboardingModal from "../../components/AbortOnboardingModal";
-
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-
 import Pinpad from "../../components/Pinpad";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
@@ -254,6 +251,23 @@ class PinScreen extends React.Component<Props, State> {
     );
   }
 
+  private handleGoBack = () =>
+    Alert.alert(
+      I18n.t("onboarding.alert.title"),
+      I18n.t("onboarding.alert.description"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "default",
+          onPress: () => this.props.dispatch(abortOnboarding())
+        }
+      ]
+    );
+
   public render() {
     const { pinState } = this.state;
 
@@ -264,13 +278,6 @@ class PinScreen extends React.Component<Props, State> {
       >
         {this.renderContent(pinState)}
         {pinState.state !== "PinUnselected" && this.renderFooter(pinState)}
-
-        {this.state.showAbortOnboardingModal && (
-          <AbortOnboardingModal
-            onClose={this.handleModalClose}
-            onConfirm={this.handleModalConfirm}
-          />
-        )}
       </BaseScreenComponent>
     );
   }
@@ -304,17 +311,6 @@ class PinScreen extends React.Component<Props, State> {
           }
         })
     );
-  };
-
-  private handleGoBack = () =>
-    this.setState({ showAbortOnboardingModal: true });
-
-  private handleModalClose = () =>
-    this.setState({ showAbortOnboardingModal: false });
-
-  private handleModalConfirm = () => {
-    this.handleModalClose();
-    this.props.dispatch(abortOnboarding());
   };
 }
 

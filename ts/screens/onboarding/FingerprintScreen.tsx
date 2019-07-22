@@ -3,7 +3,7 @@ import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import AbortOnboardingModal from "../../components/AbortOnboardingModal";
+import { Alert } from "react-native";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
@@ -27,14 +27,10 @@ type OwnProps = NavigationScreenProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
-type State = {
-  isAbortOnboardingModalVisible: boolean;
-};
-
 /**
  * A screen to show if the fingerprint is supported to the user.
  */
-export class FingerprintScreen extends React.PureComponent<Props, State> {
+export class FingerprintScreen extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -75,8 +71,24 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
     }
   }
 
+  private handleGoBack = () =>
+    Alert.alert(
+      I18n.t("onboarding.alert.title"),
+      I18n.t("onboarding.alert.description"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "default",
+          onPress: () => this.props.abortOnboarding()
+        }
+      ]
+    );
+
   public render() {
-    const { isAbortOnboardingModalVisible } = this.state;
     const biometryType = this.props.navigation.getParam("biometryType");
 
     return (
@@ -110,27 +122,9 @@ export class FingerprintScreen extends React.PureComponent<Props, State> {
             <Text>{I18n.t("global.buttons.continue")}</Text>
           </Button>
         </View>
-
-        {isAbortOnboardingModalVisible && (
-          <AbortOnboardingModal
-            onClose={this.handleModalClose}
-            onConfirm={this.handleModalConfirm}
-          />
-        )}
       </TopScreenComponent>
     );
   }
-
-  private handleGoBack = () =>
-    this.setState({ isAbortOnboardingModalVisible: true });
-
-  private handleModalClose = () =>
-    this.setState({ isAbortOnboardingModalVisible: false });
-
-  private handleModalConfirm = () => {
-    this.handleModalClose();
-    this.props.abortOnboarding();
-  };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

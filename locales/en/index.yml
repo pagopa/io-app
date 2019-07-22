@@ -276,8 +276,9 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
-  resetConfirm: Are you sure you want to interrupt the IO activation?
-    You can do this again at any time logging in with your SPID account.
+  alert:
+    title: Sure to log out of IO?
+    description: You will have to log in again to use the app
   fingerprint:
     headerTitle: Activation
     title: Biometric authentication
