@@ -17,11 +17,18 @@ describe("privacy Report", () => {
     // decoding should fail because sensibleInvalidData has 2 wrong type fields
     expect(decodeValue.isRight()).toBeFalsy();
     if (decodeValue.isLeft()) {
-      // check error report contains sensible data
+      // expect error report does not contains sensible data
       const errorReport = readableReport(decodeValue.value);
       expect(errorReport).toMatch("123456");
       expect(errorReport).toMatch("36");
-
+    }
+  });
+  it("should report a plain text error without any sensible data", () => {
+    const decodeValue = Person.decode(sensibleInvalidData);
+    // decoding should fail because sensibleInvalidData has 2 wrong type fields
+    expect(decodeValue.isRight()).toBeFalsy();
+    if (decodeValue.isLeft()) {
+      // expect error report does not contains sensible data
       const errorPrivacyReport = readablePrivacyReport(decodeValue.value);
       expect(errorPrivacyReport).not.toMatch("123456");
       expect(errorPrivacyReport).not.toMatch("36");
