@@ -47,6 +47,7 @@ import {
 import { tosAccept } from "../actions/onboarding";
 import { createPinSuccess } from "../actions/pinset";
 import {
+  profileFirstLogin,
   profileLoadFailure,
   profileLoadSuccess,
   profileUpsert
@@ -125,6 +126,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         SPID_URL: action.payload.url
       });
+
+    case getType(profileFirstLogin):
+      return mp.track(action.type, action.payload);
+
     //
     // Wallet actions (with properties)
     //

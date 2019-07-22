@@ -10,6 +10,8 @@ import {
 
 import { H3, ListItem } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
+
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
 import { ServiceListItem } from "./ServiceListItem";
@@ -23,6 +25,7 @@ type OwnProps = {
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
+  readServices: ReadStateByServicesId;
 };
 
 type Props = OwnProps;
@@ -38,6 +41,24 @@ const styles = StyleSheet.create({
  * A component to render a list of services grouped by organization.
  */
 class ServiceSectionListComponent extends React.Component<Props> {
+  private isRead = (
+    potService: pot.Pot<ServicePublic, Error>,
+    readServices: ReadStateByServicesId
+  ): boolean => {
+    const service =
+      pot.isLoading(potService) ||
+      pot.isError(potService) ||
+      pot.isNone(potService)
+        ? undefined
+        : potService.value;
+
+    return (
+      readServices !== undefined &&
+      service !== undefined &&
+      readServices[service.service_id] !== undefined
+    );
+  };
+
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
   ) => (
@@ -45,6 +66,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
       item={itemInfo.item}
       profile={this.props.profile}
       onSelect={this.props.onSelect}
+      isRead={this.isRead(itemInfo.item, this.props.readServices)}
     />
   );
 
@@ -65,6 +87,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
   }): React.ReactNode => (
     <ListItem itemHeader={true} style={styles.listItem}>
+      {/*TODO: add organization icon to section header https://www.pivotaltracker.com/story/show/166792020*/}
       <H3>{info.section.title}</H3>
     </ListItem>
   );
