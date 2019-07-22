@@ -7,6 +7,7 @@ import {
   ImageSourcePropType,
   KeyboardAvoidingView,
   ListRenderItem,
+  Platform,
   StyleSheet
 } from "react-native";
 import customVariables from "../theme/variables";
@@ -226,7 +227,13 @@ export class ChooserListComponent<T> extends React.PureComponent<
                 )}
           </View>
         </Content>
-        <KeyboardAvoidingView behavior="position">
+        <KeyboardAvoidingView
+          behavior="position"
+          keyboardVerticalOffset={Platform.select({
+            ios: 0,
+            android: customVariables.contentPadding
+          })}
+        >
           {this.renderFooterButtons()}
         </KeyboardAvoidingView>
       </View>
