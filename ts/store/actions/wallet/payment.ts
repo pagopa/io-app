@@ -53,7 +53,7 @@ export const paymentVerifica = createAsyncAction(
 )<
   RptId,
   PaymentRequestsGetResponse,
-  keyof typeof PaymentProblemErrorEnum | string
+  keyof typeof PaymentProblemErrorEnum | undefined
 >();
 
 //
@@ -207,7 +207,7 @@ export const paymentDeletePayment = createAsyncAction(
   "PAYMENT_DELETE_PAYMENT_REQUEST",
   "PAYMENT_DELETE_PAYMENT_SUCCESS",
   "PAYMENT_DELETE_PAYMENT_FAILURE"
-)<PaymentDeletePaymentRequestPayload, void, void>();
+)<PaymentDeletePaymentRequestPayload, void, Error>();
 
 export const runDeleteActivePaymentSaga = createStandardAction(
   "PAYMENT_RUN_DELETE_ACTIVE_PAYMENT_SAGA"

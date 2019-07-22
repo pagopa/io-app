@@ -68,6 +68,7 @@ import {
   paymentVerifica
 } from "../actions/wallet/payment";
 import {
+  fetchTransactionFailure,
   fetchTransactionsFailure,
   fetchTransactionsRequest,
   fetchTransactionsSuccess
@@ -190,17 +191,31 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // messages
     case getType(loadMessages.failure):
     //
-    // wallet / payment failures
+    // wallet / payment failures (reason in the payload, as a string)
     //
+    case getType(deleteWalletFailure):
     case getType(fetchWalletsFailure):
     case getType(addWalletCreditCardFailure):
     case getType(paymentAttiva.failure):
     case getType(paymentVerifica.failure):
     case getType(paymentIdPolling.failure):
     case getType(paymentCheck.failure):
+    case getType(paymentUpdateWalletPsp.failure):
       return mp.track(action.type, {
         // contains failure details as a string
         reason: action.payload
+      });
+    // wallet / payment failures (reason in the payload, as an error)
+    case getType(setFavouriteWalletFailure):
+    case getType(fetchTransactionFailure):
+    case getType(fetchTransactionsFailure):
+    case getType(paymentDeletePayment.failure):
+    case getType(payCreditCardVerificationFailure):
+    case getType(paymentFetchPspsForPaymentId.failure):
+    case getType(paymentExecutePayment.failure):
+      return mp.track(action.type, {
+        // contains failure details as an error
+        reason: action.payload.message
       });
 
     // Messages actions with properties
@@ -268,17 +283,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(addWalletCreditCardRequest):
     case getType(payCreditCardVerificationRequest):
     case getType(payCreditCardVerificationSuccess):
-    case getType(payCreditCardVerificationFailure):
     case getType(creditCardCheckout3dsRequest):
     case getType(creditCardCheckout3dsSuccess):
     case getType(deleteWalletRequest):
     case getType(deleteWalletSuccess):
-    case getType(deleteWalletFailure):
     case getType(setFavouriteWalletRequest):
     case getType(setFavouriteWalletSuccess):
-    case getType(setFavouriteWalletFailure):
     case getType(fetchTransactionsRequest):
-    case getType(fetchTransactionsFailure):
+
     // payment
     case getType(paymentInitializeState):
     case getType(paymentAttiva.success):
@@ -288,17 +300,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentCheck.success):
     case getType(paymentFetchPspsForPaymentId.request):
     case getType(paymentFetchPspsForPaymentId.success):
-    case getType(paymentFetchPspsForPaymentId.failure):
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
-    case getType(paymentUpdateWalletPsp.failure):
     case getType(paymentExecutePayment.request):
     case getType(paymentExecutePayment.success):
-    case getType(paymentExecutePayment.failure):
     case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
-    case getType(paymentDeletePayment.failure):
     // other
     case getType(updateNotificationsInstallationToken):
       return mp.track(action.type);

@@ -1,5 +1,4 @@
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 
@@ -43,6 +42,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import { PaymentManagerToken } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
+import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 
 //
@@ -66,7 +66,7 @@ export function* fetchWalletsRequestHandler(
         throw Error(`response status ${getResponse.value.status}`);
       }
     } else {
-      throw Error(readableReport(getResponse.value));
+      throw Error(readablePrivacyReport(getResponse.value));
     }
   } catch (error) {
     yield put(fetchWalletsFailure(error.message));
@@ -87,11 +87,15 @@ export function* fetchTransactionsRequestHandler(
       if (response.value.status === 200) {
         yield put(fetchTransactionsSuccess(response.value.value.data));
       } else {
-        yield put(fetchTransactionsFailure(Error("Generic error")));
+        yield put(
+          fetchTransactionsFailure(
+            Error(`response status ${response.value.status}`)
+          )
+        );
       }
     } else {
       yield put(
-        fetchTransactionsFailure(Error(readableReport(response.value)))
+        fetchTransactionsFailure(Error(readablePrivacyReport(response.value)))
       );
     }
   } catch (error) {
@@ -116,10 +120,10 @@ export function* fetchTransactionRequestHandler(
       if (response.value.status === 200) {
         yield put(fetchTransactionSuccess(response.value.value.data));
       } else {
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
   } catch (error) {
     yield put(fetchTransactionFailure(error));
@@ -152,10 +156,10 @@ export function* fetchPspRequestHandler(
           action.payload.onSuccess(successAction);
         }
       } else {
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
   } catch (error) {
     const failureAction = fetchPsp.failure({
@@ -191,10 +195,10 @@ export function* setFavouriteWalletRequestHandler(
       if (response.value.status === 200) {
         yield put(setFavouriteWalletSuccess(response.value.value.data));
       } else {
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
   } catch (error) {
     yield put(setFavouriteWalletFailure(error));
@@ -258,17 +262,17 @@ export function* updateWalletPspRequestHandler(
             }
           } else {
             // oops, the wallet is not there anymore!
-            throw Error("Generic error");
+            throw Error(`response status ${response.value.status}`);
           }
         } else {
-          throw Error(readableReport(getResponse.value));
+          throw Error(readablePrivacyReport(getResponse.value));
         }
       } else {
         // oops, the wallet is not there anymore!
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
   } catch (error) {
     const failureAction = paymentUpdateWalletPsp.failure(error.message);
@@ -313,20 +317,22 @@ export function* deleteWalletRequestHandler(
         }
       } else {
         throw Error(
-          getResponse.isLeft()
-            ? readableReport(getResponse.value)
-            : "Generic Error"
+          getResponse.fold(
+            readablePrivacyReport,
+            ({ status }) => `response status ${status}`
+          )
         );
       }
     } else {
       throw Error(
-        deleteResponse.isLeft()
-          ? readableReport(deleteResponse.value)
-          : "Generic Error"
+        deleteResponse.fold(
+          readablePrivacyReport,
+          ({ status }) => `response status ${status}`
+        )
       );
     }
   } catch (e) {
-    const failureAction = deleteWalletFailure(e);
+    const failureAction = deleteWalletFailure(e.message);
     yield put(failureAction);
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);
@@ -363,13 +369,13 @@ export function* addWalletCreditCardRequestHandler(
       ) {
         yield put(addWalletCreditCardFailure("ALREADY_EXISTS"));
       } else {
-        throw Error();
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
-  } catch {
-    yield put(addWalletCreditCardFailure("GENERIC_ERROR"));
+  } catch (e) {
+    yield put(addWalletCreditCardFailure(e.message));
   }
 }
 
@@ -395,13 +401,13 @@ export function* payCreditCardVerificationRequestHandler(
       if (response.value.status === 200) {
         yield put(payCreditCardVerificationSuccess(response.value.value));
       } else {
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
-  } catch {
-    yield put(payCreditCardVerificationFailure(Error("GENERIC_ERROR")));
+  } catch (e) {
+    yield put(payCreditCardVerificationFailure(e));
   }
 }
 
@@ -432,15 +438,13 @@ export function* paymentFetchPspsForWalletRequestHandler(
           action.payload.onSuccess(successAction);
         }
       } else {
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
-  } catch {
-    const failureAction = paymentFetchPspsForPaymentId.failure(
-      Error("GENERIC_ERROR")
-    );
+  } catch (e) {
+    const failureAction = paymentFetchPspsForPaymentId.failure(e);
     yield put(failureAction);
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);
@@ -511,15 +515,17 @@ export function* paymentExecutePaymentRequestHandler(
           action.payload.onSuccess(successAction);
         }
       } else {
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
       yield put(
-        paymentExecutePayment.failure(Error(readableReport(response.value)))
+        paymentExecutePayment.failure(
+          Error(readablePrivacyReport(response.value))
+        )
       );
     }
-  } catch {
-    yield put(paymentExecutePayment.failure(Error("GENERIC_ERROR")));
+  } catch (e) {
+    yield put(paymentExecutePayment.failure(e));
   }
 }
 
@@ -540,13 +546,13 @@ export function* paymentDeletePaymentRequestHandler(
       if (response.value.status === 200) {
         yield put(paymentDeletePayment.success());
       } else {
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
-  } catch {
-    yield put(paymentDeletePayment.failure());
+  } catch (e) {
+    yield put(paymentDeletePayment.failure(e));
   }
 }
 
@@ -585,7 +591,7 @@ export function* paymentVerificaRequestHandler(
         throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
   } catch (e) {
     // Probably a timeout
@@ -629,7 +635,7 @@ export function* paymentAttivaRequestHandler(
         throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
   } catch (e) {
     // Probably a timeout
@@ -669,12 +675,12 @@ export function* paymentIdPollingRequestHandler(
         // Attiva failed
         yield put(paymentIdPolling.failure("PAYMENT_ID_TIMEOUT"));
       } else {
-        throw Error("Generic error");
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
-  } catch {
-    yield put(paymentIdPolling.failure(undefined));
+  } catch (e) {
+    yield put(paymentIdPolling.failure(e.message));
   }
 }
