@@ -1,24 +1,30 @@
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
-import React, { ComponentProps } from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import React from "react";
+import {
+  Image,
+  ImageSourcePropType,
+  ListRenderItem,
+  StyleSheet
+} from "react-native";
 import customVariables from "../theme/variables";
 import ChooserList from "./ChooserList";
 
-type OwnProps = {
-  listState: ReadonlyArray<any>;
+type OwnProps<T> = {
+  listState: ReadonlyArray<T>;
   searchText: string;
-  onSearchItemContainsText?: (item: any, searchText: string) => boolean;
+  keyExtractor: (item: T, index: number) => string;
+  renderItem: ListRenderItem<T>;
+  onSearchItemContainsText?: (item: T, searchText: string) => boolean;
   noSearchResultsSourceIcon?: ImageSourcePropType;
   noSearchResultsSubtitle?: string;
 };
 
-type Props = OwnProps &
-  Pick<ComponentProps<typeof ChooserList>, "keyExtractor" | "renderItem">;
+type Props<T> = OwnProps<T>;
 
-type State = {
-  potFilteredListStates: pot.Pot<ReadonlyArray<any>, string>;
+type State<T> = {
+  potFilteredListStates: pot.Pot<ReadonlyArray<T>, string>;
 };
 
 const styles = StyleSheet.create({
@@ -44,8 +50,11 @@ const styles = StyleSheet.create({
 /**
  * A component that renders a list of object that match a search text.
  */
-class ChooserListSearchComponent extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
+class ChooserListSearchComponent<T> extends React.PureComponent<
+  Props<T>,
+  State<T>
+> {
+  constructor(props: Props<T>) {
     super(props);
     this.state = {
       potFilteredListStates: pot.noneLoading
@@ -56,9 +65,9 @@ class ChooserListSearchComponent extends React.PureComponent<Props, State> {
    * Filter only the object that match the searchText.
    */
   private generateListStateMatchingSearchTextAsync(
-    listState: ReadonlyArray<any>,
+    listState: ReadonlyArray<T>,
     searchText: string
-  ): Promise<ReadonlyArray<any>> {
+  ): Promise<ReadonlyArray<T>> {
     const { onSearchItemContainsText } = this.props;
     return new Promise(resolve => {
       const result = listState.filter(
@@ -118,7 +127,7 @@ class ChooserListSearchComponent extends React.PureComponent<Props, State> {
     });
   }
 
-  public async componentDidUpdate(prevProps: Props) {
+  public async componentDidUpdate(prevProps: Props<T>) {
     const { listState: prevListState, searchText: prevSearchText } = prevProps;
     const { listState, searchText } = this.props;
     const { potFilteredListStates } = this.state;
@@ -150,7 +159,7 @@ class ChooserListSearchComponent extends React.PureComponent<Props, State> {
     const filteredListStates = pot.getOrElse(potFilteredListStates, []);
 
     return filteredListStates.length > 0 ? (
-      <ChooserList
+      <ChooserList<T>
         {...this.props}
         items={filteredListStates}
         refreshing={isFiltering}

@@ -9,15 +9,15 @@ import {
 
 import customVariables from "../theme/variables";
 
-type OwnProps = {
-  items: ReadonlyArray<any>;
-  keyExtractor: (item: any, index: number) => string;
-  renderItem: ListRenderItem<any>;
+type OwnProps<T> = {
+  items: ReadonlyArray<T>;
+  keyExtractor: (item: T, index: number) => string;
+  renderItem: ListRenderItem<T>;
   refreshing?: boolean;
   onRefresh?: () => void;
 };
 
-type Props = OwnProps;
+type Props<T> = OwnProps<T>;
 
 const styles = StyleSheet.create({
   itemSeparator: {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
-class ChooserList extends React.Component<Props> {
+class ChooserList<T> extends React.Component<Props<T>> {
   public render() {
     const {
       onRefresh,

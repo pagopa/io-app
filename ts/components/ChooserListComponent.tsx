@@ -174,7 +174,7 @@ export class ChooserListComponent<T> extends React.PureComponent<
       noSearchResultsSubtitle
     } = this.props;
     return (
-      <ChooserListSearchComponent
+      <ChooserListSearchComponent<T>
         listState={items}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
@@ -218,7 +218,7 @@ export class ChooserListComponent<T> extends React.PureComponent<
             {isSearchEnabled && onSearchItemContainsText
               ? this.renderSearch()
               : items.length > 0 && (
-                  <ChooserList
+                  <ChooserList<T>
                     {...refreshProps}
                     items={items}
                     keyExtractor={keyExtractor}
