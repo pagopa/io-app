@@ -1,6 +1,5 @@
 /**
  * A component to show the fiscal code fac-simile in Landscape
- * TODO: verify how to introduce focus on back side if required by parent
  */
 import { Body, Button, Container, Content, View } from "native-base";
 import * as React from "react";
@@ -51,14 +50,6 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
 
   public render() {
     return (
-      /* <Modal
-        visible={this.props.isVisible}
-        animationType={"slide"}
-        onRequestClose={() => this.props.onClose()}
-        onShow={() =>
-          this.props.showBackSide ? this.contentRef._root.scrollToEnd() : {}
-        }
-      >*/
       <Container style={{ backgroundColor: customVariables.brandDarkGray }}>
         <AppHeader noLeft={true} dark={true}>
           <Body />
@@ -70,7 +61,6 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
         <Content
           style={styles.content}
           // tslint:disable-next-line no-object-mutation
-          // ref={c => (this.contentRef = c)}
         >
           <View style={styles.headerSpacer} />
           <View spacer={true} />
