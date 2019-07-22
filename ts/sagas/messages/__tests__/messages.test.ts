@@ -41,13 +41,7 @@ describe("messages", () => {
         .next()
         // Return a new `Either` holding a `Left` validatorError as getMessage response
         .next(left([validatorError]))
-        .returns(
-          left(
-            Error(
-              'value ["some error occurred"] at [root] is not a valid [string]'
-            )
-          )
-        );
+        .returns(left(Error("some value at [root] is not a valid [string]")));
     });
 
     it("should only return the error if the getMessage response status is not 200", () => {

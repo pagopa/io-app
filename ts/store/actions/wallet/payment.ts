@@ -74,7 +74,7 @@ export const paymentAttiva = createAsyncAction(
 )<
   paymentAttivaRequestPayload,
   PaymentActivationsPostResponse,
-  PaymentProblemErrorEnum | string
+  PaymentProblemErrorEnum | undefined
 >();
 
 //
