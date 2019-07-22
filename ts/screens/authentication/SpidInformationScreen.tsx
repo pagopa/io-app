@@ -17,12 +17,11 @@ import { Linking } from "react-native";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { ContextualHelp } from "../../components/ContextualHelp";
 import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
-import {
-  ContextualHelpInjectedProps,
-  withContextualHelp
-} from "../../components/helpers/withContextualHelp";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -31,7 +30,7 @@ type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = OwnProps & ContextualHelpInjectedProps;
+type Props = OwnProps & LightModalContextInterface;
 
 const styles = StyleSheet.create({
   value: {
@@ -66,6 +65,17 @@ class SpidInformationScreen extends React.Component<Props, never> {
     Linking.openURL(url);
   }
 
+  private showHelp = () => {
+    // tslint:disable-next-line:no-unused-expression
+    this.props.showModal(
+      <ContextualHelp
+        onClose={this.props.hideModal}
+        title={I18n.t("profile.main.privacy.title")}
+        body={() => <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>}
+      />
+    );
+  };
+
   public render() {
     return (
       <BaseScreenComponent
@@ -80,7 +90,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
 
           <View spacer={true} large={true} />
           <Text>{I18n.t("authentication.spid_information.paragraph1")}</Text>
-          <Text link={true} onPress={this.props.showHelp}>
+          <Text link={true} onPress={this.showHelp}>
             {I18n.t("authentication.spid_information.moreLinkText")}
           </Text>
           <View spacer={true} extralarge={true} />
@@ -130,10 +140,4 @@ class SpidInformationScreen extends React.Component<Props, never> {
   }
 }
 
-export default connect()(
-  withContextualHelp<Props>(
-    SpidInformationScreen,
-    I18n.t("profile.main.privacy.title"),
-    () => <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
-  )
-);
+export default connect()(withLightModalContext(SpidInformationScreen));
