@@ -88,3 +88,8 @@
 
 #Instabug
 -dontwarn com.instabug.**
+
+# React-native Keychain
+-keep class com.facebook.crypto.** {
+   *;
+}
