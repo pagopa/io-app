@@ -173,7 +173,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
           kind: action.payload.kind
         });
       }
-    // failure actions (payload: failure reason description)
+    // failure actions (reason in the payload, as a string)
     // service failures
     case getType(loadService.failure):
     case getType(loadVisibleServices.failure):
@@ -189,7 +189,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // messages
     case getType(loadMessages.failure):
     //
-    // wallet / payment failures (reason in the payload, as a string)
+    // wallet / payment failures
     //
     case getType(deleteWalletFailure):
     case getType(fetchWalletsFailure):
@@ -203,9 +203,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         // contains failure details as a string
         reason: action.payload
       });
-    // wallet / payment failures (reason in the payload, as an error)
+    // failures (reason in the payload, as an error)
+    // profile
     case getType(profileLoadFailure):
     case getType(profileUpsert.failure):
+    // wallet / payment
     case getType(setFavouriteWalletFailure):
     case getType(fetchTransactionFailure):
     case getType(fetchTransactionsFailure):
