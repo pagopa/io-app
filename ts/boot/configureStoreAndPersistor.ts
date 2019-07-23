@@ -65,7 +65,7 @@ const migrations: MigrationManifest = {
   },
 
   // Version 3
-  // we changes the organizations so we clear the entitie of organizations to force a reload
+  // we changed the organizations so we clear the entities of organizations to force a reload
   "3": (state: PersistedState) => {
     return {
       ...state,
