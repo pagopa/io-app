@@ -1,7 +1,7 @@
 /**
  * The root saga that forks and includes all the other sagas.
  */
-import { networkEventsListenerSaga } from "react-native-offline";
+import { networkSaga } from "react-native-offline";
 import { all, call, Effect } from "redux-saga/effects";
 
 import backendInfoSaga from "./backendInfo";
@@ -21,17 +21,17 @@ import {
 // More info at https://github.com/rauliyohmc/react-native-offline#withnetworkconnectivity
 const connectionMonitorParameters = {
   withRedux: true,
-  timeout: 2500,
+  pingTimeout: 3000,
   pingServerUrl: `${apiUrlPrefix}/ping`, // PING endpoint of the app backend
-  withExtraHeadRequest: true,
-  checkConnectionInterval: 10000
+  shouldPing: true,
+  pingInterval: 30000
 };
 
 export default function* root(): Iterator<Effect> {
   yield all([
     call(startupSaga),
     call(backendInfoSaga),
-    call(networkEventsListenerSaga, connectionMonitorParameters),
+    call(networkSaga, connectionMonitorParameters),
     call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),
     call(watchContentServiceLoadSaga),

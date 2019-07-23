@@ -27,6 +27,7 @@ global:
     back: Indietro
     confirm: Conferma
     close: Chiudi
+    saveSelection: Salva la selezione
   navigator:
     messages: messaggi
     wallet: portafoglio
@@ -76,7 +77,12 @@ inbox:
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
-  facSimile: FAC-SIMILE
+  fiscalCode:
+    title: Documenti personali
+    fiscalCode: Codice fiscale
+    help: !include fiscal_code.md
+    content: Il fac-simile del codice fiscale non sostituisce il documento fisico ma ne permette la lettura dei dati o del codice a barre sul retro
+    facSimile: FAC-SIMILE
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
@@ -95,8 +101,8 @@ profile:
     upsert: Errore nella creazione o nell'aggiornamento del profilo
   main:
     screenTitle: Profilo
-    screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi
-      dati personali, etc."
+    screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
+    contextualHelp: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
     clearCache: Elimina cache
@@ -119,14 +125,14 @@ profile:
         tuoi dati personali.
       privacyPolicy:
         title: Privacy policy
-        description: rivedi le regole sulla privacy che hai accettato
+        description: Rivedi le regole sulla privacy che hai accettato
       removeAccount:
         title: Cancella il tuo account
-        description: elimina sia dal telefono che da internet tutti i data ad esso
+        description: Elimina sia dal telefono che da internet tutti i data ad esso
           associati (richiede SPID)
       exportData:
         title: Esporta i tuoi dati
-        description: ricevi nella tua mail tutti i dati associati al tuo account in
+        description: Ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
     developersSectionHeader: Sviluppatori
     experimentalFeatures:
@@ -350,7 +356,8 @@ wallet:
     add: aggiungi
     addButton: Aggiungi un metodo
     addDescription: Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
-      ecc.) per non doverli inserire ad ogni transazione
+      ecc.) per non doverli inserire ad ogni transazione.
+    walletAlert: "Nel tuo portafoglio sono registrati dei metodi di pagamento ma nessuno di questi è compatibile con IO"
     successful: Carta aggiunta con successo
     failed: Impossibile aggiungere la carta
     failedCardAlreadyExists: La carta che stai inserendo è già presente
