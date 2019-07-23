@@ -135,7 +135,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
 
 const servicesSelector = (state: GlobalState) => state.entities.services;
 const organizationsSelector = (state: GlobalState) =>
-  state.entities.organizations;
+  state.entities.organizations.nameByFiscalCode;
 
 export const getAllSections = createSelector(
   [servicesSelector, organizationsSelector],
@@ -155,7 +155,7 @@ export const getAllSections = createSelector(
       })
       .filter(_ => _.data.length > 0)
       .sort((a, b) =>
-        (a.title || "").localeCompare(b.title, "it", { caseFirst: "lower" })
+        a.title.toLocaleLowerCase().localeCompare(b.title.toLocaleLowerCase())
       );
   }
 );

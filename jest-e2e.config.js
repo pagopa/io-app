@@ -8,7 +8,7 @@ module.exports = {
     '\\.js$': 'ts-jest',
   },
   transformIgnorePatterns: [
-    "node_modules/(?!react-native|react-navigation|react-native-device-info|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui)"
+    "node_modules/(?!react-native|react-navigation|react-native-device-info|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui|jsbarcode)"
   ],
   globals: {
     'ts-jest': {
