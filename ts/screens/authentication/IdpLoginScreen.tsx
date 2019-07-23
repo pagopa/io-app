@@ -81,24 +81,29 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Extract the login result from the given url.
+ * Return true if the url contains login pattern & token
+ */
 const onNavigationStateChange = (
   onFailure: (errorCode: string | undefined) => void,
   onSuccess: (_: SessionToken) => void
-) => (navState: NavState) => {
-  // Extract the login result from the url.
-  // If the url is not related to login this will be `null`
+) => (navState: NavState): boolean => {
   if (navState.url) {
+    // If the url is not related to login this will be `null`
     const loginResult = extractLoginResult(navState.url);
     if (loginResult) {
       if (loginResult.success) {
         // In case of successful login
         onSuccess(loginResult.token);
+        return true;
       } else {
         // In case of login failure
         onFailure(loginResult.errorCode);
       }
     }
   }
+  return false;
 };
 
 /**
@@ -149,11 +154,16 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({
       requestState: event.loading ? pot.noneLoading : pot.some(true)
     });
+  };
 
-    onNavigationStateChange(
+  private handleShouldStartLoading = (event: NavState): boolean => {
+    const isLoginUrlWithToken = onNavigationStateChange(
       this.handleLoginFailure,
       this.props.dispatchLoginSuccess
     )(event);
+    // URL can be loaded if it's not the login URL containing the session token - this avoids
+    // making a (useless) GET request with the session in the URL
+    return !isLoginUrlWithToken;
   };
 
   private renderMask = () => {
@@ -235,6 +245,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
             onError={this.handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={this.handleNavigationStateChange}
+            onShouldStartLoadWithRequest={this.handleShouldStartLoading}
           />
         )}
         {this.renderMask()}
