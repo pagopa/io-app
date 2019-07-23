@@ -17,11 +17,6 @@ import customVariables from "../../theme/variables";
 
 type Props = ReturnType<typeof mapStateToProps> & LightModalContextInterface;
 
-type State = Readonly<{
-  showAsLandscape: boolean;
-  showBackSide: boolean;
-}>;
-
 const styles = StyleSheet.create({
   darkBg: {
     backgroundColor: customVariables.brandDarkGray
@@ -54,15 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class FiscalCodeScreen extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showAsLandscape: false,
-      showBackSide: false
-    };
-  }
-
+class FiscalCodeScreen extends React.PureComponent<Props> {
   private showModal = () => {
     // tslint:disable-next-line:no-unused-expression
     this.props.profile &&
