@@ -161,9 +161,7 @@ export const getAllSections = createSelector(
       })
       .filter(_ => _.data.length > 0)
       .sort((a, b) =>
-        (a.organizationName || "").localeCompare(b.organizationName, "it", {
-          caseFirst: "lower"
-        })
+        a.organizationName.toLocaleLowerCase().localeCompare(b.organizationName.toLocaleLowerCase())
       );
   }
 );
