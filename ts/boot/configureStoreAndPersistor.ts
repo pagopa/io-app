@@ -65,15 +65,25 @@ const migrations: MigrationManifest = {
   },
 
   // Version 3
-  // we changed the organizations so we clear the entities of organizations to force a reload
+  // we changed the entities of organizations
   "3": (state: PersistedState) => {
+    const entitiesState = (state as any).entities;
+    const orgNameByFiscalCode = entitiesState.organizations;
+    const allOrganizations = Object.keys(orgNameByFiscalCode).map(key => {
+      return {
+        fiscalCode: key,
+        name: orgNameByFiscalCode[key]
+      };
+    });
+
     return {
       ...state,
       entities: {
-        ...((state as PersistedGlobalState).entities
-          ? (state as PersistedGlobalState).entities
-          : {}),
-        organizations: {}
+        ...(entitiesState ? entitiesState : {}),
+        organizations: {
+          nameByFiscalCode: orgNameByFiscalCode ? orgNameByFiscalCode : {},
+          all: allOrganizations ? allOrganizations : {}
+        }
       }
     };
   }
