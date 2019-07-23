@@ -69,6 +69,10 @@ class ChooserListSearchComponent<T> extends React.PureComponent<
     searchText: string
   ): Promise<ReadonlyArray<T>> {
     const { onSearchItemContainsText } = this.props;
+    // Don't apply the filter if searchText is empty
+    if (searchText.length === 0) {
+      return Promise.resolve(listState);
+    }
     return new Promise(resolve => {
       const result = listState.filter(
         _ =>
