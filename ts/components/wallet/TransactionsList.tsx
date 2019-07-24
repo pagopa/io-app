@@ -2,20 +2,14 @@
  * This component displays a list of transactions
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  Body,
-  Content,
-  Grid,
-  Left,
-  List,
-  ListItem,
-  Right,
-  Row,
-  Text,
-  View
-} from "native-base";
+import { Content, Grid, Left, Right, Row, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -38,6 +32,15 @@ type Props = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
+  transaction: {
+    paddingVertical: variables.spacerHeight
+  },
+
+  itemSeparator: {
+    backgroundColor: "#C9C9C9",
+    height: 1 / 3
+  },
+
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
@@ -94,34 +97,32 @@ export default class TransactionsList extends React.Component<Props> {
     );
   }
 
-  private renderRow = (item: Transaction): React.ReactElement<any> => {
+  private renderTransaction = (info: ListRenderItemInfo<Transaction>) => {
+    const item = info.item;
     const paymentReason = cleanTransactionDescription(item.description);
     const amount = formatNumberAmount(centsToAmount(item.amount.amount));
     const recipient = item.merchant;
     return (
-      <ListItem
-        style={styles.listItem}
+      <TouchableOpacity
         onPress={() => this.props.navigateToTransactionDetails(item)}
       >
-        <Body>
-          <Grid>
-            {this.renderDate(item)}
-            <Row>
-              <Left>
-                <Text>{paymentReason}</Text>
-              </Left>
-              <Right>
-                <Text>{amount}</Text>
-              </Right>
-            </Row>
-            <Row>
-              <Left>
-                <Text note={true}>{recipient}</Text>
-              </Left>
-            </Row>
-          </Grid>
-        </Body>
-      </ListItem>
+        <Grid style={styles.transaction}>
+          {this.renderDate(item)}
+          <Row>
+            <Left>
+              <Text>{paymentReason}</Text>
+            </Left>
+            <Right>
+              <Text>{amount}</Text>
+            </Right>
+          </Row>
+          <Row>
+            <Left>
+              <Text note={true}>{recipient}</Text>
+            </Left>
+          </Row>
+        </Grid>
+      </TouchableOpacity>
     );
   };
 
@@ -159,11 +160,15 @@ export default class TransactionsList extends React.Component<Props> {
 
         <Grid>
           <Row>
-            <List
+            <FlatList
               scrollEnabled={false}
               removeClippedSubviews={false}
-              dataArray={transactions as Transaction[]} // tslint:disable-line: readonly-array
-              renderRow={this.renderRow}
+              data={transactions as Transaction[]} // tslint:disable-line: readonly-array
+              renderItem={this.renderTransaction}
+              ItemSeparatorComponent={() => (
+                <View style={styles.itemSeparator} />
+              )}
+              keyExtractor={item => item.id.toString()}
             />
           </Row>
         </Grid>
