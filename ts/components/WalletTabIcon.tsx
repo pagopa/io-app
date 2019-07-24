@@ -67,11 +67,12 @@ class WalletTabIcon extends React.PureComponent<Props> {
 
 function mapStateToProps(state: GlobalState) {
   const transactions = getUnreadTransactionsSelector(state);
+  const unreadTransactions = pot.isSome(transactions)
+    ? Object.keys(transactions.value).length
+    : 0;
+
   return {
-    badgeValue: Math.min(
-      pot.getOrElse(transactions, []).length,
-      MAX_BADGE_VALUE
-    )
+    badgeValue: Math.min(unreadTransactions, MAX_BADGE_VALUE)
   };
 }
 

@@ -5,21 +5,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../actions/types";
 import { readTransaction } from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
-
-// Search transaction number in Set of read transactions
-export const isReadTransaction = (state: GlobalState, txid: number) =>
-  state.entities.transactionsRead[txid] !== undefined;
-
-// filter only unread transactions to account for the residual number
-const getUnreadTransactions = (state: GlobalState) =>
-  pot.map(state.wallet.transactions.transactions, txs =>
-    values(txs).filter(_ => _ !== undefined && !isReadTransaction(state, _.id))
-  );
-
-export const getUnreadTransactionsSelector = createSelector(
-  getUnreadTransactions,
-  transArr => transArr
-);
+import { getTransactions } from "../wallet/transactions";
 
 export type ReadTransactionsState = Readonly<{
   [key: string]: number;
@@ -43,3 +29,18 @@ export const transactionsReadReducer = (
       return state;
   }
 };
+
+// selectors
+export const getTransactionsRead = (state: GlobalState) =>
+  state.entities.transactionsRead;
+
+// filter only unread transactions to account for the residual number
+export const getUnreadTransactionsSelector = createSelector(
+  [getTransactionsRead, getTransactions],
+  (transactionsRead, transactions) =>
+    pot.map(transactions, txs =>
+      values(txs).filter(
+        _ => _ !== undefined && transactionsRead[_.id] === undefined
+      )
+    )
+);
