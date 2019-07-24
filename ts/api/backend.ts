@@ -33,6 +33,8 @@ import {
   getUserMessagesDefaultDecoder,
   GetUserMessagesT,
   GetUserMessageT,
+  getUserMetadataDefaultDecoder,
+  GetUserMetadataT,
   getUserProfileDecoder,
   GetUserProfileT,
   getVisibleServicesDefaultDecoder,
@@ -190,6 +192,14 @@ export function BackendClient(
     response_decoder: upsertProfileDefaultDecoder()
   };
 
+  const getUserMetadataT: GetUserMetadataT = {
+    method: "get",
+    url: () => "/api/v1/user-metadata",
+    query: _ => ({}),
+    headers: tokenHeaderProducer,
+    response_decoder: getUserMetadataDefaultDecoder()
+  };
+
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
     method: "put",
     url: params => `/api/v1/installations/${params.installationID}`,
@@ -257,6 +267,9 @@ export function BackendClient(
     getProfile: withBearerToken(createFetchRequestForApi(getProfileT, options)),
     createOrUpdateProfile: withBearerToken(
       createFetchRequestForApi(createOrUpdateProfileT, options)
+    ),
+    getUserMetadata: withBearerToken(
+      createFetchRequestForApi(getUserMetadataT, options)
     ),
     createOrUpdateInstallation: withBearerToken(
       createFetchRequestForApi(createOrUpdateInstallationT, options)
