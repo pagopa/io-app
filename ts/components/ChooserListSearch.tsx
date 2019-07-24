@@ -50,10 +50,7 @@ const styles = StyleSheet.create({
 /**
  * A component that renders a list of object that match a search text.
  */
-class ChooserListSearchComponent<T> extends React.PureComponent<
-  Props<T>,
-  State<T>
-> {
+class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
   constructor(props: Props<T>) {
     super(props);
     this.state = {
@@ -166,7 +163,7 @@ class ChooserListSearchComponent<T> extends React.PureComponent<
       <ChooserList<T>
         {...this.props}
         items={filteredListStates}
-        refreshing={isFiltering}
+        isRefreshing={isFiltering}
       />
     ) : (
       this.renderResultEmptyComponent()
@@ -174,4 +171,4 @@ class ChooserListSearchComponent<T> extends React.PureComponent<
   }
 }
 
-export default ChooserListSearchComponent;
+export default ChooserListSearch;

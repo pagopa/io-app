@@ -13,7 +13,7 @@ type OwnProps<T> = {
   items: ReadonlyArray<T>;
   keyExtractor: (item: T, index: number) => string;
   renderItem: ListRenderItem<T>;
-  refreshing?: boolean;
+  isRefreshing: boolean;
   onRefresh?: () => void;
 };
 
@@ -34,31 +34,26 @@ class ChooserList<T> extends React.Component<Props<T>> {
   public render() {
     const {
       onRefresh,
-      refreshing,
+      isRefreshing,
       items,
       keyExtractor,
       renderItem
     } = this.props;
 
-    const refreshControl =
-      onRefresh && refreshing !== undefined ? (
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      ) : (
-        undefined
-      );
+    const refreshControl = (
+      <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+    );
 
     return (
-      <React.Fragment>
-        <FlatList
-          keyboardShouldPersistTaps="always"
-          removeClippedSubviews={false}
-          data={items}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          ItemSeparatorComponent={ItemSeparatorComponent}
-          refreshControl={refreshControl}
-        />
-      </React.Fragment>
+      <FlatList
+        keyboardShouldPersistTaps="always"
+        removeClippedSubviews={false}
+        data={items}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        ItemSeparatorComponent={ItemSeparatorComponent}
+        refreshControl={refreshControl}
+      />
     );
   }
 }

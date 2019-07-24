@@ -13,7 +13,7 @@ import {
 import customVariables from "../theme/variables";
 import variables from "../theme/variables";
 import ChooserList from "./ChooserList";
-import ChooserListSearchComponent from "./ChooserListSearchComponent";
+import ChooserListSearch from "./ChooserListSearch";
 import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
  * A component for view, search and select a list of items
  * TODO select will be introduced with story https://www.pivotaltracker.com/story/show/167102335
  */
-export class ChooserListComponent<T> extends React.PureComponent<
+export class ChooserListContainer<T> extends React.PureComponent<
   Props<T>,
   State
 > {
@@ -174,7 +174,7 @@ export class ChooserListComponent<T> extends React.PureComponent<
       noSearchResultsSubtitle
     } = this.props;
     return (
-      <ChooserListSearchComponent<T>
+      <ChooserListSearch<T>
         listState={items}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
@@ -206,7 +206,7 @@ export class ChooserListComponent<T> extends React.PureComponent<
             onRefresh,
             isRefreshing
           }
-        : undefined;
+        : { isRefreshing: false };
 
     return (
       <View style={styles.container}>

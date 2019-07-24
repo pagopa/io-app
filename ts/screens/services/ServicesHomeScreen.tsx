@@ -10,8 +10,8 @@ import {
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-import { ChooserListComponent } from "../../components/ChooserListComponent";
-import ChooserListItemComponent from "../../components/ChooserListItemComponent";
+import { ChooserListContainer } from "../../components/ChooserListContainer";
+import ChooserListItem from "../../components/ChooserListItem";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -126,7 +126,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private renderOrganizationItem = (info: ListRenderItemInfo<Organization>) => {
     const item = info.item;
     return (
-      <ChooserListItemComponent
+      <ChooserListItem
         title={item.name}
         iconComponent={this.renderOrganizationLogo(item.fiscalCode)}
       />
@@ -148,9 +148,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private showChooserLocalServicesModal = () => {
     this.props.showModal(
-      <ChooserListComponent<Organization>
+      <ChooserListContainer<Organization>
         items={this.props.allOrganizations}
-        keyExtractor={item => item.fiscalCode}
+        keyExtractor={(item: Organization) => item.fiscalCode}
         renderItem={this.renderOrganizationItem}
         onCancel={this.props.hideModal}
         isRefreshEnabled={false}
