@@ -17,6 +17,7 @@ import ChooserListSearch from "./ChooserListSearch";
 import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
+import { debounce } from 'lodash';
 
 type Props<T> = {
   items: ReadonlyArray<T>;
@@ -34,6 +35,7 @@ type Props<T> = {
 
 type State = {
   searchText: Option<string>;
+  debouncedSearchText: Option<string>;
 };
 
 const styles = StyleSheet.create({
@@ -59,7 +61,8 @@ export class ChooserListContainer<T> extends React.PureComponent<
   constructor(props: Props<T>) {
     super(props);
     this.state = {
-      searchText: this.props.isSearchEnabled ? some("") : none
+      searchText: this.props.isSearchEnabled ? some("") : none,
+      debouncedSearchText: this.props.isSearchEnabled ? some("") : none
     };
   }
 
@@ -126,11 +129,21 @@ export class ChooserListContainer<T> extends React.PureComponent<
     this.setState({
       searchText: some(text)
     });
+    this.updateDebouncedSearchText(text);
   };
+
+  private updateDebouncedSearchText = debounce(
+    (text: string) =>
+      this.setState({
+        debouncedSearchText: some(text)
+      }),
+    300
+  );
 
   private onSearchDisable = () => {
     this.setState({
-      searchText: none
+      searchText: none,
+      debouncedSearchText: none
     });
   };
 
@@ -173,12 +186,13 @@ export class ChooserListContainer<T> extends React.PureComponent<
       noSearchResultsSourceIcon,
       noSearchResultsSubtitle
     } = this.props;
+    const { debouncedSearchText } = this.state;
     return (
       <ChooserListSearch<T>
         listState={items}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
-        searchText={this.state.searchText.getOrElse("")}
+        searchText={debouncedSearchText.getOrElse("")}
         onSearchItemContainsText={onSearchItemContainsText}
         noSearchResultsSourceIcon={noSearchResultsSourceIcon}
         noSearchResultsSubtitle={noSearchResultsSubtitle}
