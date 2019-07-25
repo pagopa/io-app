@@ -2,8 +2,15 @@ import { Either, left, right } from "fp-ts/lib/Either";
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
-import { getType } from "typesafe-actions";
+import {
+  call,
+  Effect,
+  fork,
+  put,
+  select,
+  takeLatest
+} from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
 
 import { UserMetadata as BackendUserMetadata } from "../../../definitions/backend/UserMetadata";
 import { BackendClient } from "../../api/backend";
@@ -200,18 +207,28 @@ export function* upsertUserMetadata(
 }
 
 /**
+ * Extract the action payload and call upsertUserMetadata saga.
+ */
+export function* upsertUserMetadataManager(
+  createOrUpdateUserMetadata: ReturnType<
+    typeof BackendClient
+  >["createOrUpdateUserMetadata"],
+  action: ActionType<typeof userMetadataUpsert.request>
+) {
+  yield fork(upsertUserMetadata, createOrUpdateUserMetadata, action.payload);
+}
+
+/**
  * Listen for userMetadataUpsert.request and calls upsertUserMetadata saga.
  */
 export function* watchUpserUserMetadata(
   createOrUpdateUserMetadata: ReturnType<
     typeof BackendClient
-  >["createOrUpdateUserMetadata"],
-  userMetadata: UserMetadata
+  >["createOrUpdateUserMetadata"]
 ) {
   yield takeLatest(
     getType(userMetadataUpsert.request),
-    upsertUserMetadata,
-    createOrUpdateUserMetadata,
-    userMetadata
+    upsertUserMetadataManager,
+    createOrUpdateUserMetadata
   );
 }

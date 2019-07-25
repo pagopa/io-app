@@ -72,7 +72,11 @@ import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
-import { loadUserMetadata, watchLoadUserMetadata } from "./user/userMetadata";
+import {
+  loadUserMetadata,
+  watchLoadUserMetadata,
+  watchUpserUserMetadata
+} from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 
 /**
@@ -271,6 +275,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // this parent saga gets restarted.
 
   yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
+  yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
   yield takeEvery(
     getType(loadService.request),
