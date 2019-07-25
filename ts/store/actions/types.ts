@@ -31,6 +31,7 @@ import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
 import { SearchActions } from "./search";
 import { ServicesActions } from "./services";
+import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 
 export type Action =
@@ -47,6 +48,7 @@ export type Action =
   | PreferencesActions
   | PersistedPreferencesActions
   | ProfileActions
+  | UserMetadataActions
   | ServicesActions
   | WalletActions
   | ContentActions
