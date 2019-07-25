@@ -46,8 +46,6 @@ const styles = StyleSheet.create({
 export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   Props
 > {
-  // private contentRef: any;
-
   public render() {
     return (
       <Container style={{ backgroundColor: customVariables.brandDarkGray }}>
@@ -58,10 +56,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
           backgroundColor={customVariables.brandDarkGray}
           barStyle={"light-content"}
         />
-        <Content
-          style={styles.content}
-          // tslint:disable-next-line no-object-mutation
-        >
+        <Content style={styles.content}>
           <View style={styles.headerSpacer} />
           <View spacer={true} />
           <View>

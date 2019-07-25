@@ -51,14 +51,14 @@ const styles = StyleSheet.create({
 
 class FiscalCodeScreen extends React.PureComponent<Props> {
   private showModal = () => {
-    // tslint:disable-next-line:no-unused-expression
-    this.props.profile &&
+    if (this.props.profile) {
       this.props.showModal(
         <FiscalCodeLandscapeOverlay
           onCancel={this.props.hideModal}
           profile={this.props.profile}
         />
       );
+    }
   };
 
   public render() {
