@@ -258,7 +258,7 @@ authentication:
       error_21: Timeout during user authentication
       error_22: User denies consent to sending data to the SP in the event of a current session
       error_23: User with suspended / revoked identity or with blocked credential
-      error_25: Authentication process canceled by usere
+      error_25: Authentication process canceled by user
   expiredSessionBanner:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
