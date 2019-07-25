@@ -13,8 +13,8 @@ export const contentServiceLoad = createAsyncAction(
 
 export const contentMunicipalityLoad = createAsyncAction(
   "CONTENT_MUNICIPALITY_LOAD_REQUEST",
-  "CONTENT_MUNICIPALITY_SUCCESS",
-  "CONTENT_MUNICIPALITY_FAILURE"
+  "CONTENT_MUNICIPALITY_LOAD_SUCCESS",
+  "CONTENT_MUNICIPALITY_LOAD_FAILURE"
 )<
   CodiceCatastale,
   { codiceCatastale: CodiceCatastale; data: MunicipalityMetadata },
