@@ -266,8 +266,9 @@ const styles = StyleSheet.create({
     ]
   },
 
-  fullFacSimile: {
-    marginTop: 280 * fullScaleFactor,
+  fullFacSimileText: {
+    marginTop: 295 * fullScaleFactor,
+    lineHeight: 38 * fullScaleFactor,
     position: "absolute",
     fontSize: textFontSizeF,
     color: customVariables.brandDarkestGray,
@@ -290,6 +291,10 @@ const styles = StyleSheet.create({
   },
 
   landscapeBarCode: {
+    position: "absolute",
+    height: barCodeHeightL,
+    width: cardWidthL,
+    alignItems: "flex-start",
     transform: [
       { rotateZ: "90deg" },
       { translateY: -barCodeHeightL / 2 + barCodeMarginTopL },
@@ -412,17 +417,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
   private renderBarCode(fiscalCode: FiscalCode, isLandscape: boolean) {
     return isLandscape ? (
-      <View
-        style={[
-          styles.landscapeBarCode,
-          {
-            position: "absolute",
-            height: barCodeHeightL,
-            width: cardWidthL,
-            alignItems: "flex-start"
-          }
-        ]}
-      >
+      <View style={styles.landscapeBarCode}>
         <Barcode
           value={fiscalCode}
           format={"CODE128"}
@@ -430,7 +425,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           width={(barCodeWidthL - 20) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
         <Text bold={true} alignCenter={true} style={styles.landscapeFacSimile}>
-          {I18n.t("profile.facSimile")}
+          {I18n.t("profile.fiscalCode.facSimile")}
         </Text>
       </View>
     ) : (
@@ -441,8 +436,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           height={barCodeHeightF - 20}
           width={(barCodeWidthF - 20) / 211}
         />
-        <Text bold={true} alignCenter={true} style={styles.fullFacSimile}>
-          {I18n.t("profile.facSimile")}
+        <Text bold={true} alignCenter={true} style={styles.fullFacSimileText}>
+          {I18n.t("profile.fiscalCode.facSimile")}
         </Text>
       </View>
     );
