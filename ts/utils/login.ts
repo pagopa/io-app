@@ -38,14 +38,12 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
   const failureTokenPathPos = url.indexOf(LOGIN_FAILURE_PREFIX);
   if (failureTokenPathPos !== -1) {
     const errCode = url.substr(
-      failureTokenPathPos + LOGIN_FAILURE_PREFIX.length
-    );
+      failureTokenPathPos + LOGIN_FAILURE_PREFIX.length);
 
     return {
       success: false,
       errorCode: errCode && errCode.length > 0 ? errCode : undefined
     };
-      return { success: false, errorCode: errCode };
     } else {
       return { success: false };
     }
