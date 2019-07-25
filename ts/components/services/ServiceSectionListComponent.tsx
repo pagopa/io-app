@@ -10,8 +10,15 @@ import {
 
 import { H3, ListItem } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
+
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
+import { getLogoForOrganization } from "../../utils/organizations";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import SectionHeaderComponent from "../screens/SectionHeaderComponent";
+import NewServiceListItem from "./NewServiceListItem";
 import { ServiceListItem } from "./ServiceListItem";
 
 type OwnProps = {
@@ -23,6 +30,8 @@ type OwnProps = {
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
+  readServices: ReadStateByServicesId;
+  isExperimentalFeaturesEnabled?: boolean;
 };
 
 type Props = OwnProps;
@@ -31,6 +40,10 @@ const styles = StyleSheet.create({
   listItem: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
+  },
+  padded: {
+    marginLeft: customVariables.contentPadding,
+    marginRight: customVariables.contentPadding
   }
 });
 
@@ -38,15 +51,43 @@ const styles = StyleSheet.create({
  * A component to render a list of services grouped by organization.
  */
 class ServiceSectionListComponent extends React.Component<Props> {
+  private isRead = (
+    potService: pot.Pot<ServicePublic, Error>,
+    readServices: ReadStateByServicesId
+  ): boolean => {
+    const service =
+      pot.isLoading(potService) ||
+      pot.isError(potService) ||
+      pot.isNone(potService)
+        ? undefined
+        : potService.value;
+
+    return (
+      readServices !== undefined &&
+      service !== undefined &&
+      readServices[service.service_id] !== undefined
+    );
+  };
+
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
-  ) => (
-    <ServiceListItem
-      item={itemInfo.item}
-      profile={this.props.profile}
-      onSelect={this.props.onSelect}
-    />
-  );
+  ) =>
+    this.props.isExperimentalFeaturesEnabled ? (
+      <NewServiceListItem
+        item={itemInfo.item}
+        profile={this.props.profile}
+        onSelect={this.props.onSelect}
+        isRead={this.isRead(itemInfo.item, this.props.readServices)}
+        hideSeparator={true}
+      />
+    ) : (
+      <ServiceListItem
+        item={itemInfo.item}
+        profile={this.props.profile}
+        onSelect={this.props.onSelect}
+        isRead={this.isRead(itemInfo.item, this.props.readServices)}
+      />
+    );
 
   private getServiceKey = (
     potService: pot.Pot<ServicePublic, Error>,
@@ -63,11 +104,18 @@ class ServiceSectionListComponent extends React.Component<Props> {
 
   private renderServiceSectionHeader = (info: {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
-  }): React.ReactNode => (
-    <ListItem itemHeader={true} style={styles.listItem}>
-      <H3>{info.section.title}</H3>
-    </ListItem>
-  );
+  }): React.ReactNode =>
+    this.props.isExperimentalFeaturesEnabled ? (
+      <SectionHeaderComponent
+        sectionHeader={info.section.organizationName}
+        style={styles.padded}
+        logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
+      />
+    ) : (
+      <ListItem itemHeader={true} style={styles.listItem}>
+        <H3>{info.section.organizationName}</H3>
+      </ListItem>
+    );
 
   public render() {
     const { sections, isRefreshing, onRefresh } = this.props;
@@ -85,6 +133,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
         stickySectionHeadersEnabled={false}
         alwaysBounceVertical={false}
         refreshControl={refreshControl}
+        ItemSeparatorComponent={ItemSeparatorComponent}
       />
     );
   }

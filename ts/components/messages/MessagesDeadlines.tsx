@@ -22,6 +22,7 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import customVariables from "../../theme/variables";
 import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
+import { DateFromISOString } from "../../utils/dates";
 import {
   InjectedWithMessagesSelectionProps,
   withMessagesSelection
@@ -200,7 +201,10 @@ const filterSectionsWithTimeLimit = (
   const filteredSections: Sections = [];
 
   for (const section of sections) {
-    const sectionTime = new Date(section.title).getTime();
+    const decodedValue = DateFromISOString.decode(section.title);
+    const sectionTime = decodedValue.isRight()
+      ? decodedValue.value.getTime()
+      : section.title;
     if (sectionTime > toTimeLimit) {
       break;
     }
