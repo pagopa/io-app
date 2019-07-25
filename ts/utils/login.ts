@@ -41,7 +41,10 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
       failureTokenPathPos + LOGIN_FAILURE_PREFIX.length
     );
 
-    if (errCode && errCode.length > 0) {
+    return {
+      success: false,
+      errorCode: errCode && errCode.length > 0 ? errCode : undefined
+    };
       return { success: false, errorCode: errCode };
     } else {
       return { success: false };
