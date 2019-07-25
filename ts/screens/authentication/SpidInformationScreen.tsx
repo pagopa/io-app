@@ -17,7 +17,7 @@ import { Linking } from "react-native";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import DefaultSubscreenHeader from "../../components/DefaultScreenHeader";
+
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -68,10 +68,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
         headerTitle={I18n.t("authentication.spid_information.headerTitle")}
       >
         <Content>
-          <DefaultSubscreenHeader
-            screenTitle={I18n.t("authentication.spid_information.contentTitle")}
-            icon={require("../../../img/icons/digital-id.png")}
-          />
+          <H1>{I18n.t("authentication.spid_information.contentTitle")}</H1>
 
           <View spacer={true} large={true} />
           <Text>{I18n.t("authentication.spid_information.paragraph1")}</Text>
