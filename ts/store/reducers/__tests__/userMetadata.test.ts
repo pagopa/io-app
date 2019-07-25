@@ -96,10 +96,11 @@ describe("userMetadata", () => {
       expect(successState).toEqual(pot.some(userMetadata));
     });
 
-    it("should handle", () => {
+    it("should handle userMetadataUpsert correctly", () => {
       const initialState: UserMetadataState = pot.some(userMetadata);
       const newUserMetadata: UserMetadata = {
-        version: userMetadata.version + 1,
+        // tslint:disable-next-line: no-useless-cast
+        version: (userMetadata.version as number) + 1,
         metadata: {
           experimentalFeatures: true
         }
