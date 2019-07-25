@@ -33,12 +33,16 @@ import {
   getUserMessagesDefaultDecoder,
   GetUserMessagesT,
   GetUserMessageT,
+  getUserMetadataDefaultDecoder,
+  GetUserMetadataT,
   getUserProfileDecoder,
   GetUserProfileT,
   getVisibleServicesDefaultDecoder,
   GetVisibleServicesT,
   upsertProfileDefaultDecoder,
-  UpsertProfileT
+  UpsertProfileT,
+  upsertUserMetadataDefaultDecoder,
+  UpsertUserMetadataT
 } from "../../definitions/backend/requestTypes";
 
 import { SessionToken } from "../types/SessionToken";
@@ -190,6 +194,23 @@ export function BackendClient(
     response_decoder: upsertProfileDefaultDecoder()
   };
 
+  const getUserMetadataT: GetUserMetadataT = {
+    method: "get",
+    url: () => "/api/v1/user-metadata",
+    query: _ => ({}),
+    headers: tokenHeaderProducer,
+    response_decoder: getUserMetadataDefaultDecoder()
+  };
+
+  const createOrUpdateUserMetadataT: UpsertUserMetadataT = {
+    method: "post",
+    url: () => "/api/v1/user-metadata",
+    query: _ => ({}),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    body: p => JSON.stringify(p.userMetadata),
+    response_decoder: upsertUserMetadataDefaultDecoder()
+  };
+
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
     method: "put",
     url: params => `/api/v1/installations/${params.installationID}`,
@@ -257,6 +278,12 @@ export function BackendClient(
     getProfile: withBearerToken(createFetchRequestForApi(getProfileT, options)),
     createOrUpdateProfile: withBearerToken(
       createFetchRequestForApi(createOrUpdateProfileT, options)
+    ),
+    getUserMetadata: withBearerToken(
+      createFetchRequestForApi(getUserMetadataT, options)
+    ),
+    createOrUpdateUserMetadata: withBearerToken(
+      createFetchRequestForApi(createOrUpdateUserMetadataT, options)
     ),
     createOrUpdateInstallation: withBearerToken(
       createFetchRequestForApi(createOrUpdateInstallationT, options)
