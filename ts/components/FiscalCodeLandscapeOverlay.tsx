@@ -17,12 +17,12 @@ type Props = Readonly<{
   showBackSide?: boolean;
 }>;
 
-const globalHeaderHeight: number =
-  Platform.OS === "ios"
-    ? isIphoneX()
-      ? customVariables.appHeaderHeight + 42
-      : customVariables.appHeaderHeight + 18
-    : customVariables.appHeaderHeight;
+const globalHeaderHeight: number = Platform.select({
+  ios: isIphoneX()
+    ? customVariables.appHeaderHeight + 42
+    : customVariables.appHeaderHeight + 18,
+  android: customVariables.appHeaderHeight
+});
 
 const styles = StyleSheet.create({
   content: {
