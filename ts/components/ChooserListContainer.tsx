@@ -178,9 +178,7 @@ export class ChooserListContainer<T> extends React.PureComponent<
         listState={items}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
-        searchText={
-          this.state.searchText.isSome() ? this.state.searchText.value : ""
-        }
+        searchText={this.state.searchText.getOrElse("")}
         onSearchItemContainsText={onSearchItemContainsText}
         noSearchResultsSourceIcon={noSearchResultsSourceIcon}
         noSearchResultsSubtitle={noSearchResultsSubtitle}
@@ -200,13 +198,12 @@ export class ChooserListContainer<T> extends React.PureComponent<
       renderItem
     } = this.props;
 
-    const refreshProps =
-      isRefreshEnabled && isRefreshing && onRefresh
-        ? {
-            onRefresh,
-            isRefreshing
-          }
-        : { isRefreshing: false };
+    const isOnRefresh =
+      isRefreshEnabled && (isRefreshing || false) && onRefresh !== undefined;
+    const refreshProps = {
+      onRefresh,
+      isRefreshing: isOnRefresh
+    };
 
     return (
       <View style={styles.container}>
