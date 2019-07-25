@@ -1,6 +1,7 @@
 import color from "color";
 import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
+import { debounce } from "lodash";
 import { Body, Button, Content, Input, Item, Right, View } from "native-base";
 import * as React from "react";
 import {
@@ -17,7 +18,6 @@ import ChooserListSearch from "./ChooserListSearch";
 import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
-import { debounce } from 'lodash';
 
 type Props<T> = {
   items: ReadonlyArray<T>;
