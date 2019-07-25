@@ -21,6 +21,7 @@ const LOGIN_SUCCESS_PREFIX = "/profile.html?token=";
 const LOGIN_FAILURE_PREFIX = "/error.html?errorCode=";
 
 export const extractLoginResult = (url: string): LoginResult | undefined => {
+  console.log(url);
   // Check for LOGIN_SUCCESS
   const successTokenPathPos = url.indexOf(LOGIN_SUCCESS_PREFIX);
 
@@ -36,17 +37,15 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
 
   // Check for LOGIN_FAILURE
   const failureTokenPathPos = url.indexOf(LOGIN_FAILURE_PREFIX);
+  console.log("failureTokenPathPos:" + failureTokenPathPos);
   if (failureTokenPathPos !== -1) {
     const errCode = url.substr(
-      failureTokenPathPos + LOGIN_FAILURE_PREFIX.length);
-
+      failureTokenPathPos + LOGIN_FAILURE_PREFIX.length
+    );
     return {
       success: false,
       errorCode: errCode && errCode.length > 0 ? errCode : undefined
     };
-    } else {
-      return { success: false };
-    }
   }
 
   // Url is not LOGIN related
