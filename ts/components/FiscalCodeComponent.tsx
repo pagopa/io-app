@@ -15,7 +15,7 @@ import Barcode from "react-native-barcode-builder";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import customVariables from "../theme/variables";
-import { formatDateAsLocal } from "../utils/dates";
+import { extractFiscalCodeData } from "../utils/profile";
 
 interface BaseProps {
   profile: UserProfile;
@@ -304,34 +304,6 @@ const styles = StyleSheet.create({
 });
 
 export default class FiscalCodeComponent extends React.Component<Props> {
-  private getGender(fiscalCode: FiscalCode) {
-    return parseInt(fiscalCode.substring(6, 7), 10) - 40 > 0 ? "F" : "M";
-  }
-
-  private getBirthday(fiscalCode: FiscalCode) {
-    const months: { [k: string]: number } = {
-      ["A"]: 1,
-      ["B"]: 2,
-      ["C"]: 3,
-      ["D"]: 4,
-      ["E"]: 5,
-      ["H"]: 6,
-      ["L"]: 7,
-      ["M"]: 8,
-      ["P"]: 9,
-      ["R"]: 10,
-      ["S"]: 11,
-      ["T"]: 12
-    };
-    // tslint:disable-next-line no-let
-    let day = parseInt(fiscalCode.substring(9, 11), 10);
-    day = day - 40 > 0 ? day - 40 : day;
-    const year = parseInt(fiscalCode.substring(6, 8), 10);
-    const month = months[fiscalCode.charAt(8)];
-    // TODO: evaluate if date format should be the italian one or localized by language preference
-    return formatDateAsLocal(new Date(year, month - 1, day), true, true); // date month is indexed from index 0
-  }
-
   private renderFrontContent(profile: UserProfile, isLandscape: boolean) {
     return (
       <React.Fragment>
@@ -376,7 +348,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
               : [styles.fullText, styles.fullNameText, styles.fullGenderText]
           ]}
         >
-          {this.getGender(profile.fiscal_code)}
+          {extractFiscalCodeData(profile.fiscal_code).gender}
         </Text>
 
         <Text
@@ -409,7 +381,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
               : [styles.fullText, styles.fullDateText]
           ]}
         >
-          {this.getBirthday(profile.fiscal_code)}
+          {extractFiscalCodeData(profile.fiscal_code).birthDate}
         </Text>
       </React.Fragment>
     );
