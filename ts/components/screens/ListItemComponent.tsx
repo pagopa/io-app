@@ -86,12 +86,14 @@ export default class ListItemComponent extends React.Component<Props> {
                 />
               )}
           </View>
-          <Text
-            numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-            style={styles.description}
-          >
-            {this.props.subTitle}
-          </Text>
+          {this.props.subTitle && (
+            <Text
+              numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
+              style={styles.description}
+            >
+              {this.props.subTitle}
+            </Text>
+          )}
         </View>
         {this.props.iconName && (
           <IconFont
