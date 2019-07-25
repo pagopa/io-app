@@ -12,7 +12,7 @@ type FiscalCodeData = Readonly<{
   birthDate: ReturnType<typeof dateFnsFormat>;
 }>;
 
-//
+// Generate object including data expressed into the given fiscal code
 export function extractFiscalCodeData(fiscalCode: FiscalCode): FiscalCodeData {
   const gender = parseInt(fiscalCode.substring(6, 7), 10) - 40 > 0 ? "F" : "M";
   const months: { [k: string]: number } = {
@@ -36,7 +36,7 @@ export function extractFiscalCodeData(fiscalCode: FiscalCode): FiscalCodeData {
   const month = months[fiscalCode.charAt(8)];
   // TODO: evaluate if date format should be the italian one or localized by language preference
   const birthDate = formatDateAsLocal(
-    new Date(year, month - 1, day), // date month is indexed from index 0
+    new Date(year, month - 1, day), // months are indexed from index 0
     true,
     true
   );
