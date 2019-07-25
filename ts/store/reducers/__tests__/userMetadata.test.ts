@@ -1,10 +1,16 @@
 import { left, right } from "fp-ts/lib/Either";
+import * as pot from "italia-ts-commons/lib/pot";
 
 import { UserMetadata as BackendUserMetadata } from "../../../../definitions/backend/UserMetadata";
 import {
+  userMetadataLoad,
+  userMetadataUpsert
+} from "../../actions/userMetadata";
+import userMetadataReducer, {
   backendUserMetadataToUserMetadata,
   UserMetadata,
   UserMetadataMetadata,
+  UserMetadataState,
   userMetadataToBackendUserMetadata
 } from "../userMetadata";
 
@@ -57,6 +63,61 @@ describe("userMetadata", () => {
       expect(userMetadataToBackendUserMetadata(userMetadata)).toEqual(
         backendUserMetadata
       );
+    });
+  });
+
+  describe("reducer", () => {
+    const userMetadata: UserMetadata = {
+      version: 1,
+      metadata: {
+        experimentalFeatures: false
+      }
+    };
+
+    it("should handle userMetadataLoad correctly", () => {
+      const initialState: UserMetadataState = pot.none;
+
+      const loadingState = userMetadataReducer(
+        initialState,
+        userMetadataLoad.request()
+      );
+      expect(loadingState).toEqual(pot.noneLoading);
+
+      const failureState = userMetadataReducer(
+        loadingState,
+        userMetadataLoad.failure(new Error())
+      );
+      expect(failureState).toEqual(pot.noneError(new Error()));
+
+      const successState = userMetadataReducer(
+        loadingState,
+        userMetadataLoad.success(userMetadata)
+      );
+      expect(successState).toEqual(pot.some(userMetadata));
+    });
+
+    it("should handle", () => {
+      const initialState: UserMetadataState = pot.some(userMetadata);
+      const newUserMetadata: UserMetadata = {
+        version: userMetadata.version + 1,
+        metadata: {
+          experimentalFeatures: true
+        }
+      };
+
+      const updatingState = userMetadataReducer(
+        initialState,
+        userMetadataUpsert.request(newUserMetadata)
+      );
+      expect(updatingState).toEqual(
+        pot.someUpdating(userMetadata, newUserMetadata)
+      );
+
+      const failureState = userMetadataReducer(
+        updatingState,
+        userMetadataUpsert.failure(new Error())
+      );
+      expect(failureState).toEqual(pot.someError(userMetadata, new Error()));
     });
   });
 });

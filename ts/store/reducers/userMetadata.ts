@@ -4,7 +4,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { UserMetadata as BackendUserMetadata } from "../../../definitions/backend/UserMetadata";
 import { Action } from "../actions/types";
-import { userMetadataLoad } from "../actions/userMetadata";
+import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import { GlobalState } from "./types";
 
 export const UserMetadataMetadata = t.partial({
@@ -72,6 +72,7 @@ const userMetadataReducer = (
   action: Action
 ): UserMetadataState => {
   switch (action.type) {
+    // Load
     case getType(userMetadataLoad.request):
       return pot.toLoading(state);
 
@@ -81,10 +82,19 @@ const userMetadataReducer = (
     case getType(userMetadataLoad.success):
       return pot.some(action.payload);
 
+    // Upsert
+    case getType(userMetadataUpsert.request):
+      return pot.toUpdating(state, action.payload);
+
+    case getType(userMetadataUpsert.failure):
+      return pot.toError(state, action.payload);
+
+    case getType(userMetadataUpsert.success):
+      return pot.some(action.payload);
+
     default:
-      break;
+      return state;
   }
-  return state;
 };
 
 export default userMetadataReducer;
