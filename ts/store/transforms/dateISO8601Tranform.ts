@@ -10,13 +10,15 @@ import { DateFromISOString } from "../../utils/dates";
  * EntitiesState
  *  - MessageState
  *    - CreatedMessageWithContent
- *      - created_at
+ *      - created_at *
+ *      - content
+ *        - due_date *
  *    - CreatedMessageWithoutContent
- *      - created_at
+ *      - created_at *
  *
  * https://www.pivotaltracker.com/story/show/167507349
  */
-const dateFieldsTransformable = new Set<string>(["created_at"]);
+const dateFieldsTransformable = new Set<string>(["created_at", "due_date"]);
 
 /**
  *  if value is a Date object, a string in ISO8601 format is returned
