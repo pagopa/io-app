@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   }
 });
 // The number of milliseconds to delay for search
-const DEBOUNCED_TIME = 300;
+const DEBOUNCED_TIME = 300 as Millisecond;
 
 /**
  * A component for view, search and select a list of items
