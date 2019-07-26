@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   textCaption: {
     padding: variables.contentPadding
   },
-  cancelButton: {
+  cancelButtonStyle: {
     alignSelf: "center"
   }
 });
@@ -61,7 +61,7 @@ export function withLoadingSpinner<
                     <Button
                       onPress={onCancel}
                       cancel={true}
-                      style={styles.cancelButton}
+                      style={styles.cancelButtonStyle}
                     >
                       <Text>{I18n.t("global.buttons.cancel")}</Text>
                     </Button>
