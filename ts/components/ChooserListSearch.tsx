@@ -59,7 +59,7 @@ class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
   }
 
   /**
-   * Filter only the object that match the searchText.
+   * Filter object matching the given searchText.
    */
   private generateListStateMatchingSearchTextAsync(
     listState: ReadonlyArray<T>,
