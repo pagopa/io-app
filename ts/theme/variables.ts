@@ -48,6 +48,8 @@ const customVariables = Object.assign(materialVariables, {
   cardFontColor: "#17324D",
   colorWhite: "white",
 
+  itemSeparator: "#C9C9C9",
+
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
