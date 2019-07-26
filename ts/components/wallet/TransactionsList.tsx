@@ -41,12 +41,6 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
 
-  newIconStyle: {
-    marginTop: 6,
-    fontSize: variables.fontSize1,
-    color: variables.brandPrimary
-  },
-
   listItem: {
     marginLeft: 0,
     paddingRight: 0
