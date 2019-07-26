@@ -21,8 +21,14 @@ import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
 import { profileUpsert } from "../../store/actions/profile";
-import { loadVisibleServices } from "../../store/actions/services";
+import {
+  loadVisibleServices,
+  showServiceDetails
+} from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
+
+import { organizationNamesByFiscalCodeSelector } from "../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { ProfileState } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
@@ -50,6 +56,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
     // when a service gets selected, before navigating to the service detail
     // screen, we issue a contentServiceLoad to refresh the service metadata
     this.props.contentServiceLoad(service.service_id);
+    this.props.serviceDetailsLoad(service);
     this.props.navigateToOldServiceDetailsScreen({
       service
     });
@@ -96,6 +103,8 @@ class OldServicesHomeScreen extends React.Component<Props> {
         isRefreshing={this.props.isLoading}
         onRefresh={this.props.refreshServices}
         onSelect={this.onServiceSelect}
+        readServices={this.props.readServices}
+        isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
       />
     );
   };
@@ -118,6 +127,10 @@ class OldServicesHomeScreen extends React.Component<Props> {
               onRefresh={refreshServices}
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
+              readServices={this.props.readServices}
+              isExperimentalFeaturesEnabled={
+                this.props.isExperimentalFeaturesEnabled
+              }
             />
           )
       )
@@ -126,27 +139,31 @@ class OldServicesHomeScreen extends React.Component<Props> {
 }
 
 const servicesSelector = (state: GlobalState) => state.entities.services;
-const organizationsSelector = (state: GlobalState) =>
-  state.entities.organizations;
 
 export const getAllSections = createSelector(
-  [servicesSelector, organizationsSelector],
+  [servicesSelector, organizationNamesByFiscalCodeSelector],
   (services, organizations) => {
     const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
     return orgfiscalCodes
       .map(fiscalCode => {
-        const title = organizations[fiscalCode] || fiscalCode;
+        const organizationName = organizations[fiscalCode] || fiscalCode;
+        const organizationFiscalCode = fiscalCode;
         const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
         const data = serviceIdsForOrg
           .map(id => services.byId[id])
           .filter(isDefined);
         return {
-          title,
+          organizationName,
+          organizationFiscalCode,
           data
         };
       })
       .filter(_ => _.data.length > 0)
-      .sort((a, b) => (a.title || "").localeCompare(b.title));
+      .sort((a, b) =>
+        a.organizationName
+          .toLocaleLowerCase()
+          .localeCompare(b.organizationName.toLocaleLowerCase())
+      );
   }
 );
 
@@ -170,7 +187,8 @@ const mapStateToProps = (state: GlobalState) => {
     searchText: searchTextSelector(state),
     isSearchEnabled: isSearchServicesEnabledSelector(state),
     isExperimentalFeaturesEnabled:
-      state.persistedPreferences.isExperimentalFeaturesEnabled
+      state.persistedPreferences.isExperimentalFeaturesEnabled,
+    readServices: readServicesSelector(state)
   };
 };
 
@@ -181,7 +199,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToOldServiceDetailsScreen: (
     params: InferNavigationParams<typeof OldServiceDetailsScreen>
   ) => dispatch(navigateToOldServiceDetailsScreen(params)),
-
+  serviceDetailsLoad: (service: ServicePublic) =>
+    dispatch(showServiceDetails(service)),
   /**
    * TODO: restyle ui to trigger all the services being enabled/disabled at once
    *       https://www.pivotaltracker.com/n/projects/2048617/stories/166763719

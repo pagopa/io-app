@@ -1,5 +1,6 @@
 import * as t from "io-ts";
 import { CreditCard } from "../types/pagopa";
+import { NumberFromString } from "./number";
 /* 
     Contains utility functions to check conditions
     used across project (currently just in CardComponent)
@@ -15,11 +16,16 @@ export const isExpiredCard = (creditCard: CreditCard) => {
       .slice(2),
     10
   );
-  return (
-    parseInt(creditCard.expireYear, 10) < cmpY ||
-    (parseInt(creditCard.expireYear, 10) === cmpY &&
-      parseInt(creditCard.expireMonth, 10) < cmpM)
-  );
+  const decodedValueYear = NumberFromString.decode(creditCard.expireYear);
+  const ccExpireYear = decodedValueYear.isRight()
+    ? decodedValueYear.value
+    : creditCard.expireYear;
+  const decodedValueMonth = NumberFromString.decode(creditCard.expireMonth);
+  const ccExpireMonth = decodedValueMonth.isRight()
+    ? decodedValueMonth.value
+    : creditCard.expireMonth;
+
+  return ccExpireYear < cmpY || (ccExpireYear === cmpY && ccExpireMonth < cmpM);
 };
 
 /**

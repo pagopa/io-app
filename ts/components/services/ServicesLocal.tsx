@@ -12,22 +12,32 @@ type AnimatedProps = {
   AnimatedCTAStyle?: any;
 };
 
-type Props = AnimatedProps;
+type OwnProps = {
+  onAddAreasOfInterestPress: () => void;
+};
 
-const ListEmptyComponent = (paddingForAnimation: boolean) => (
-  <ServicesLocalEmpty paddingForAnimation={paddingForAnimation} />
-);
+type Props = OwnProps & AnimatedProps;
 
 /**
  * A component to render a list of local services.
  */
 class ServicesLocal extends React.PureComponent<Props> {
+  private renderListEmptyComponent() {
+    const { paddingForAnimation, onAddAreasOfInterestPress } = this.props;
+    return (
+      <ServicesLocalEmpty
+        paddingForAnimation={paddingForAnimation}
+        onAddAreasOfInterestPress={onAddAreasOfInterestPress}
+      />
+    );
+  }
+
   public render() {
-    const { animated, paddingForAnimation } = this.props;
+    const { animated } = this.props;
     return (
       <ServiceList
         {...this.props}
-        ListEmptyComponent={ListEmptyComponent(paddingForAnimation)}
+        ListEmptyComponent={this.renderListEmptyComponent()}
         animated={animated}
       />
     );
