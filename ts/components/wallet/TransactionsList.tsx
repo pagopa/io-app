@@ -17,13 +17,13 @@ import {
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
+import { BadgeComponent } from "../screens/BadgeComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
 
@@ -84,7 +84,7 @@ export default class TransactionsList extends React.Component<Props> {
       <Row>
         <Left>
           <Text>
-            {isNew && <IconFont name="io-new" style={styles.newIconStyle} />}
+            {isNew && <BadgeComponent />}
             <Text note={true}>{isNew ? `  ${datetime}` : datetime}</Text>
           </Text>
         </Left>
