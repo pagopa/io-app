@@ -1,6 +1,7 @@
 import color from "color";
 import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { debounce } from "lodash";
 import { Body, Button, Content, Input, Item, Right, View } from "native-base";
 import * as React from "react";
@@ -11,8 +12,8 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import customVariables from "../theme/variables";
 import variables from "../theme/variables";
+import customVariables from "../theme/variables";
 import ChooserList from "./ChooserList";
 import ChooserListSearch from "./ChooserListSearch";
 import AppHeader from "./ui/AppHeader";
