@@ -2,6 +2,23 @@ import { createTransform, TransformIn, TransformOut } from "redux-persist";
 import { DateFromISOString } from "../../utils/dates";
 
 /**
+ * dateFieldsTransformable contains the name of the fields that are
+ * instance of Date and those ones we want to persist/rehydrate in redux persist store
+ *
+ * actually entities state (whitelisted in this transform) contains these following date (Timestamp) fields
+ *
+ * EntitiesState
+ *  - MessageState
+ *    - CreatedMessageWithContent
+ *      - created_at
+ *    - CreatedMessageWithoutContent
+ *      - created_at
+ *
+ * https://www.pivotaltracker.com/story/show/167507349
+ */
+const dateFieldsTransformable = new Set<string>(["created_at"]);
+
+/**
  *  if value is a Date object, a string in ISO8601 format is returned
  */
 
@@ -15,9 +32,11 @@ const dataReplacer = (_: any, value: any): any => {
 /**
  *  if value is in a string in ISO8601 format the corrisponding Date object is returned
  */
-const dateReviver = (_: any, value: any): any => {
+const dateReviver = (key: any, value: any): any => {
   const decodedValue = DateFromISOString.decode(value);
-  return decodedValue.isRight() ? decodedValue.value : value;
+  return dateFieldsTransformable.has(key) && decodedValue.isRight()
+    ? decodedValue.value
+    : value;
 };
 
 const encoder: TransformIn<any, string> = (value: any, _: string): any =>
