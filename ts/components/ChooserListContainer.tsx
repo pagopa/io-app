@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
     height: customVariables.contentPadding / 2
   }
 });
+// The number of milliseconds to delay for search
+const DEBOUNCED_TIME = 300;
 
 /**
  * A component for view, search and select a list of items
@@ -61,7 +63,9 @@ export class ChooserListContainer<T> extends React.PureComponent<
   constructor(props: Props<T>) {
     super(props);
     this.state = {
+      // The text entered by the user for the search
       searchText: this.props.isSearchEnabled ? some("") : none,
+      // The debounced text used to avoid executing a search for each typed char
       debouncedSearchText: this.props.isSearchEnabled ? some("") : none
     };
   }
@@ -137,7 +141,7 @@ export class ChooserListContainer<T> extends React.PureComponent<
       this.setState({
         debouncedSearchText: some(text)
       }),
-    300
+    DEBOUNCED_TIME
   );
 
   private onSearchDisable = () => {
