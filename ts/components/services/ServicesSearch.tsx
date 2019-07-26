@@ -18,6 +18,7 @@ type OwnProps = {
   onRefresh: () => void;
   navigateToServiceDetail: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
+  isExperimentalFeaturesEnabled?: boolean;
 };
 
 type Props = OwnProps;
@@ -70,7 +71,8 @@ function filterSectionListDataMatchingSearchText(
     .filter(pot.isSome);
 
   const sectionListDataFiltered = {
-    title: sectionListData.title,
+    organizationName: sectionListData.organizationName,
+    organizationFiscalCode: sectionListData.organizationFiscalCode,
     data: filteredData
   };
   return filteredData.length > 0 ? sectionListDataFiltered : null;
@@ -160,6 +162,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
         isRefreshing={isFiltering}
         onRefresh={onRefresh}
         onSelect={this.handleOnServiceSelect}
+        isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
       />
     ) : (
       <SearchNoResultMessage errorType="NoResultsFound" />
