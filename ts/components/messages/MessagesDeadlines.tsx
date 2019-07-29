@@ -24,9 +24,9 @@ import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessag
 import { ComponentProps } from "../../types/react";
 import { DateFromISOString } from "../../utils/dates";
 import {
-  InjectedWithMessagesSelectionProps,
-  withMessagesSelection
-} from "../helpers/withMessagesSelection";
+  InjectedWithItemsSelectionProps,
+  withItemsSelection
+} from "../helpers/withItemsSelection";
 import MessageAgenda, {
   isFakeItem,
   MessageAgendaItem,
@@ -88,7 +88,7 @@ type Props = Pick<
   "servicesById" | "paymentsByRptId"
 > &
   OwnProps &
-  InjectedWithMessagesSelectionProps;
+  InjectedWithItemsSelectionProps;
 
 type State = {
   isWorking: boolean;
@@ -349,7 +349,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   };
 
   private handleOnPressItem = (id: string) => {
-    if (this.props.selectedMessageIds.isSome()) {
+    if (this.props.selectedItemIds.isSome()) {
       // Is the selection mode is active a simple "press" must act as
       // a "longPress" (select the item).
       this.handleOnLongPressItem(id);
@@ -359,16 +359,16 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   };
 
   private handleOnLongPressItem = (id: string) => {
-    this.props.toggleMessageSelection(id);
+    this.props.toggleItemSelection(id);
   };
 
   private toggleAllMessagesSelection = () => {
     const { allMessageIdsState } = this.state;
-    const { selectedMessageIds } = this.props;
-    if (selectedMessageIds.isSome()) {
-      this.props.setSelectedMessageIds(
+    const { selectedItemIds } = this.props;
+    if (selectedItemIds.isSome()) {
+      this.props.setSelectedItemIds(
         some(
-          allMessageIdsState.size === selectedMessageIds.value.size
+          allMessageIdsState.size === selectedItemIds.value.size
             ? new Set()
             : allMessageIdsState
         )
@@ -379,7 +379,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   private archiveMessages = () => {
     this.props.resetSelection();
     this.props.setMessagesArchivedState(
-      this.props.selectedMessageIds.map(_ => Array.from(_)).getOrElse([]),
+      this.props.selectedItemIds.map(_ => Array.from(_)).getOrElse([]),
       true
     );
   };
@@ -523,7 +523,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       messagesState,
       servicesById,
       paymentsByRptId,
-      selectedMessageIds,
+      selectedItemIds,
       resetSelection
     } = this.props;
     const { allMessageIdsState, isWorking, sectionsToRender } = this.state;
@@ -532,7 +532,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
     return (
       <View style={styles.listWrapper}>
-        {selectedMessageIds.isSome() && (
+        {selectedItemIds.isSome() && (
           <View style={styles.buttonBar}>
             <Button
               block={true}
@@ -551,7 +551,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             >
               <Text>
                 {I18n.t(
-                  selectedMessageIds.value.size === allMessageIdsState.size
+                  selectedItemIds.value.size === allMessageIdsState.size
                     ? "messages.cta.deselectAll"
                     : "messages.cta.selectAll"
                 )}
@@ -560,7 +560,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             <Button
               block={true}
               style={styles.buttonBarRight}
-              disabled={selectedMessageIds.value.size === 0}
+              disabled={selectedItemIds.value.size === 0}
               onPress={this.archiveMessages}
             >
               <Text>{I18n.t("messages.cta.archive")}</Text>
@@ -573,7 +573,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           servicesById={servicesById}
           paymentsByRptId={paymentsByRptId}
           refreshing={isRefreshing}
-          selectedMessageIds={selectedMessageIds}
+          selectedMessageIds={selectedItemIds}
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnLongPressItem}
           onMoreDataRequest={this.onLoadMoreDataRequest}
@@ -584,4 +584,4 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   }
 }
 
-export default withMessagesSelection(MessagesDeadlines);
+export default withItemsSelection(MessagesDeadlines);

@@ -5,26 +5,33 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { debounce } from "lodash";
 import { Body, Button, Content, Input, Item, Right, View } from "native-base";
 import * as React from "react";
+import { ComponentProps } from "react";
 import {
   ImageSourcePropType,
   KeyboardAvoidingView,
-  ListRenderItem,
   Platform,
   StyleSheet
 } from "react-native";
-import variables from "../theme/variables";
 import customVariables from "../theme/variables";
+import variables from "../theme/variables";
 import ChooserList from "./ChooserList";
+import ChooserListItem from "./ChooserListItem";
 import ChooserListSearch from "./ChooserListSearch";
+import {
+  InjectedWithItemsSelectionProps,
+  withItemsSelection
+} from "./helpers/withItemsSelection";
 import AppHeader from "./ui/AppHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 
-type Props<T> = {
+type OwnProps<T> = {
   items: ReadonlyArray<T>;
-  keyExtractor: (item: T, index: number) => string;
-  renderItem: ListRenderItem<T>;
+  initialSelectedItemIds: Option<Set<string>>;
+  keyExtractor: (item: T) => string;
+  itemTitleExtractor: (item: T) => string;
   onCancel: () => void;
+  onSave: (selectedItemIds: Option<Set<string>>) => void;
   isRefreshEnabled: boolean;
   isRefreshing?: boolean;
   onRefresh?: () => void;
@@ -33,6 +40,11 @@ type Props<T> = {
   noSearchResultsSourceIcon?: ImageSourcePropType;
   noSearchResultsSubtitle?: string;
 };
+
+type OwnOwnProps<T> = OwnProps<T> &
+  Pick<ComponentProps<typeof ChooserListItem>, "itemIconComponent">;
+
+type Props<T> = OwnOwnProps<T> & InjectedWithItemsSelectionProps;
 
 type State = {
   searchText: Option<string>;
@@ -55,12 +67,8 @@ const DEBOUNCED_TIME = 300 as Millisecond;
 
 /**
  * A component for view, search and select a list of items
- * TODO select will be introduced with story https://www.pivotaltracker.com/story/show/167102335
  */
-export class ChooserListContainer<T> extends React.PureComponent<
-  Props<T>,
-  State
-> {
+class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
   constructor(props: Props<T>) {
     super(props);
     this.state = {
@@ -71,12 +79,30 @@ export class ChooserListContainer<T> extends React.PureComponent<
     };
   }
 
+  public componentDidMount() {
+    const { initialSelectedItemIds } = this.props;
+    // Set the initial set of selected items ids if is any
+    if (
+      initialSelectedItemIds !== undefined &&
+      initialSelectedItemIds.isSome()
+    ) {
+      this.props.setSelectedItemIds(initialSelectedItemIds);
+    }
+  }
+
   private onPressCancel = () => {
     this.props.onCancel();
   };
 
   private onPressSave = () => {
-    this.onPressCancel();
+    this.props.onSave(this.props.selectedItemIds);
+  };
+
+  /**
+   * Selection
+   */
+  private handleOnPressItem = (id: string) => {
+    this.props.toggleItemSelection(id);
   };
 
   /**
@@ -186,17 +212,22 @@ export class ChooserListContainer<T> extends React.PureComponent<
     const {
       items,
       onSearchItemContainsText,
-      renderItem,
       keyExtractor,
+      itemTitleExtractor,
       noSearchResultsSourceIcon,
-      noSearchResultsSubtitle
+      noSearchResultsSubtitle,
+      selectedItemIds,
+      itemIconComponent
     } = this.props;
     const { debouncedSearchText } = this.state;
     return (
       <ChooserListSearch<T>
         listState={items}
-        renderItem={renderItem}
         keyExtractor={keyExtractor}
+        itemTitleExtractor={itemTitleExtractor}
+        selectedItemIds={selectedItemIds}
+        itemIconComponent={itemIconComponent}
+        onPressItem={this.handleOnPressItem}
         searchText={debouncedSearchText.getOrElse("")}
         onSearchItemContainsText={onSearchItemContainsText}
         noSearchResultsSourceIcon={noSearchResultsSourceIcon}
@@ -214,7 +245,9 @@ export class ChooserListContainer<T> extends React.PureComponent<
       onRefresh,
       onSearchItemContainsText,
       keyExtractor,
-      renderItem
+      selectedItemIds,
+      itemTitleExtractor,
+      itemIconComponent
     } = this.props;
 
     const isOnRefresh =
@@ -238,7 +271,10 @@ export class ChooserListContainer<T> extends React.PureComponent<
                     {...refreshProps}
                     items={items}
                     keyExtractor={keyExtractor}
-                    renderItem={renderItem}
+                    itemTitleExtractor={itemTitleExtractor}
+                    onPressItem={this.handleOnPressItem}
+                    selectedItemIds={selectedItemIds}
+                    itemIconComponent={itemIconComponent}
                   />
                 )}
           </View>
@@ -256,3 +292,11 @@ export class ChooserListContainer<T> extends React.PureComponent<
     );
   }
 }
+
+type ExternalProps<T> = Omit<OwnOwnProps<T>, "classes">;
+
+type ChooserListContainerType = <T>(props: ExternalProps<T>) => any;
+
+export default (withItemsSelection(
+  ChooserListContainer
+) as unknown) as ChooserListContainerType;

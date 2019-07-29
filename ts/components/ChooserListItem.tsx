@@ -1,11 +1,18 @@
-import { Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import variables from "../theme/variables";
 import customVariables from "../theme/variables";
+import IconFont from "./ui/IconFont";
 
 type Props = Readonly<{
-  title: string;
-  iconComponent?: React.ReactElement;
+  itemTitle: string;
+  itemId: string;
+  itemIconComponent?:
+    | (React.ReactElement)
+    | ((itemId: string) => React.ReactElement);
+  onPressItem: (itemId: string) => void;
+  isItemSelected: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -34,19 +41,39 @@ const styles = StyleSheet.create({
 
 /**
  * A component for selectable list item with icon (optional) and text
- * TODO select will be introduced with story https://www.pivotaltracker.com/story/show/167102335
  */
 export default class ChooserListItem extends React.Component<Props> {
   public render() {
+    const { isItemSelected, itemIconComponent, itemId, itemTitle } = this.props;
+
+    const iconName = isItemSelected ? "io-checkbox-on" : "io-checkbox-off";
+    const iconColor = isItemSelected
+      ? variables.selectedColor
+      : variables.unselectedColor;
+
+    const icon =
+      typeof itemIconComponent === "function"
+        ? itemIconComponent(itemId)
+        : itemIconComponent;
+
     return (
-      <View style={styles.container}>
-        {this.props.iconComponent && <View>{this.props.iconComponent}</View>}
-        <View style={styles.content}>
-          <Text numberOfLines={2} bold={true} style={styles.title}>
-            {this.props.title}
-          </Text>
+      <TouchableOpacity onPress={this.handleOnPress}>
+        <View style={styles.container}>
+          {icon && <View>{icon}</View>}
+          <View style={styles.content}>
+            <Text numberOfLines={2} bold={true} style={styles.title}>
+              {itemTitle}
+            </Text>
+          </View>
+          <Button onPress={this.handleOnPress} transparent={true}>
+            <IconFont name={iconName} color={iconColor} />
+          </Button>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
+
+  private handleOnPress = () => {
+    this.props.onPressItem(this.props.itemId);
+  };
 }

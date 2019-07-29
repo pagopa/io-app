@@ -1,27 +1,28 @@
+import { Option } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
-import React from "react";
-import {
-  Image,
-  ImageSourcePropType,
-  ListRenderItem,
-  StyleSheet
-} from "react-native";
+import React, { ComponentProps } from "react";
+import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import ChooserList from "./ChooserList";
+import ChooserListItem from "./ChooserListItem";
 
 type OwnProps<T> = {
   listState: ReadonlyArray<T>;
   searchText: string;
-  keyExtractor: (item: T, index: number) => string;
-  renderItem: ListRenderItem<T>;
   onSearchItemContainsText?: (item: T, searchText: string) => boolean;
   noSearchResultsSourceIcon?: ImageSourcePropType;
   noSearchResultsSubtitle?: string;
+  keyExtractor: (item: T) => string;
+  itemTitleExtractor: (item: T) => string;
+  selectedItemIds: Option<Set<string>>;
 };
 
-type Props<T> = OwnProps<T>;
+type ChooserListItemProps = "itemIconComponent" | "onPressItem";
+
+type Props<T> = OwnProps<T> &
+  Pick<ComponentProps<typeof ChooserListItem>, ChooserListItemProps>;
 
 type State<T> = {
   potFilteredListStates: pot.Pot<ReadonlyArray<T>, string>;
