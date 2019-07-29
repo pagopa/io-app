@@ -12,8 +12,8 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import customVariables from "../theme/variables";
 import variables from "../theme/variables";
+import customVariables from "../theme/variables";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";
 import ChooserListSearch from "./ChooserListSearch";
@@ -41,10 +41,10 @@ type OwnProps<T> = {
   noSearchResultsSubtitle?: string;
 };
 
-type OwnOwnProps<T> = OwnProps<T> &
+type OtherProps<T> = OwnProps<T> &
   Pick<ComponentProps<typeof ChooserListItem>, "itemIconComponent">;
 
-type Props<T> = OwnOwnProps<T> & InjectedWithItemsSelectionProps;
+type Props<T> = OtherProps<T> & InjectedWithItemsSelectionProps;
 
 type State = {
   searchText: Option<string>;
@@ -293,7 +293,8 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
   }
 }
 
-type ExternalProps<T> = Omit<OwnOwnProps<T>, "classes">;
+type Without<T, K> = Pick<T, Exclude<keyof T, K>>;
+type ExternalProps<T> = Without<OtherProps<T>, "classes">;
 
 type ChooserListContainerType = <T>(props: ExternalProps<T>) => any;
 
