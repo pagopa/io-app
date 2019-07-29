@@ -19,6 +19,7 @@ import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import { SearchState } from "./search";
+import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
 
 type NetworkState = Readonly<{
@@ -47,6 +48,7 @@ export type GlobalState = Readonly<{
   debug: DebugState;
   search: SearchState;
   payments: PaymentsState;
+  userMetadata: UserMetadataState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

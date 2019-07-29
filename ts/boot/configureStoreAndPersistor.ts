@@ -50,7 +50,7 @@ const migrations: MigrationManifest = {
     } as PersistedState),
 
   // version 1
-  // we changes the type of the services state to use Pot types so we clear all
+  // we changed the type of the services state to use Pot types so we clear all
   // the entitie to force a reload of messages and services
   "1": (state: PersistedState): PersistedState =>
     ({
@@ -65,14 +65,38 @@ const migrations: MigrationManifest = {
   },
 
   // Version 3
-  // we change the way ToS acceptance is managed
-  "3": (state: PersistedState) => ({
-    ...state,
-    onboarding: {
-      isFingerprintAcknowledged: (state as any).onboarding
-        .isFingerprintAcknowledged
-    }
-  })
+  // we changed the entities of organizations
+  "3": (state: PersistedState) => {
+    const entitiesState = (state as any).entities;
+    const orgNameByFiscalCode = entitiesState.organizations;
+    const allOrganizations = Object.keys(orgNameByFiscalCode).map(key => {
+      return {
+        fiscalCode: key,
+        name: orgNameByFiscalCode[key]
+      };
+    });
+
+    return {
+      ...state,
+      entities: {
+        ...(entitiesState ? entitiesState : {}),
+        organizations: {
+          nameByFiscalCode: orgNameByFiscalCode ? orgNameByFiscalCode : {},
+          all: allOrganizations ? allOrganizations : {}
+        }
+      }
+    };
+  },
+
+    // Version 4
+    // we changed the way ToS acceptance is managed
+    "4": (state: PersistedState) => ({
+      ...state,
+      onboarding: {
+        isFingerprintAcknowledged: (state as any).onboarding
+          .isFingerprintAcknowledged
+      }
+    })
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;

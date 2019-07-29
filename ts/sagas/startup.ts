@@ -72,6 +72,11 @@ import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
+import {
+  loadUserMetadata,
+  watchLoadUserMetadata,
+  watchUpserUserMetadata
+} from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 
 /**
@@ -251,6 +256,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // User is autenticated, session token is valid
   //
 
+  // Load the user metadata
+  yield call(loadUserMetadata, backendClient.getUserMetadata, true);
+
   // the wallet token is available,
   // proceed with starting the "watch wallet" saga
   const walletToken = maybeSessionInformation.value.walletToken;
@@ -273,6 +281,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // UI of the application.
   // Note that the following sagas will be automatically cancelled each time
   // this parent saga gets restarted.
+
+  yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
+  yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
   yield takeEvery(
     getType(loadService.request),

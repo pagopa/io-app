@@ -171,6 +171,9 @@ profile:
     language: 
       title: This setting is set up in system preferences
       message: IO inherits language from the operating system of this device
+userMetadata:
+  errors:
+    upsertVersion: Can't upsert user metadata with this version
 navigation:
   messages: Messages
   profile: Profile
