@@ -33,7 +33,7 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 2;
+const CURRENT_REDUX_STORE_VERSION = 3;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -62,6 +62,30 @@ const migrations: MigrationManifest = {
   // Adds messagesIdsByServiceId
   "2": (state: PersistedState) => {
     return addMessagesIdsByServiceId(state as PersistedGlobalState);
+  },
+
+  // Version 3
+  // we changed the entities of organizations
+  "3": (state: PersistedState) => {
+    const entitiesState = (state as any).entities;
+    const orgNameByFiscalCode = entitiesState.organizations;
+    const allOrganizations = Object.keys(orgNameByFiscalCode).map(key => {
+      return {
+        fiscalCode: key,
+        name: orgNameByFiscalCode[key]
+      };
+    });
+
+    return {
+      ...state,
+      entities: {
+        ...(entitiesState ? entitiesState : {}),
+        organizations: {
+          nameByFiscalCode: orgNameByFiscalCode ? orgNameByFiscalCode : {},
+          all: allOrganizations ? allOrganizations : {}
+        }
+      }
+    };
   }
 };
 

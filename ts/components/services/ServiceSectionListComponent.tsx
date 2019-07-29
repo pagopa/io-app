@@ -14,6 +14,11 @@ import { ReadStateByServicesId } from "../../store/reducers/entities/services/re
 
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
+import { getLogoForOrganization } from "../../utils/organizations";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import SectionHeaderComponent from "../screens/SectionHeaderComponent";
+import NewServiceListItem from "./NewServiceListItem";
 import { ServiceListItem } from "./ServiceListItem";
 
 type OwnProps = {
@@ -26,6 +31,7 @@ type OwnProps = {
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
+  isExperimentalFeaturesEnabled?: boolean;
 };
 
 type Props = OwnProps;
@@ -34,6 +40,10 @@ const styles = StyleSheet.create({
   listItem: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
+  },
+  padded: {
+    marginLeft: customVariables.contentPadding,
+    marginRight: customVariables.contentPadding
   }
 });
 
@@ -61,14 +71,23 @@ class ServiceSectionListComponent extends React.Component<Props> {
 
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
-  ) => (
-    <ServiceListItem
-      item={itemInfo.item}
-      profile={this.props.profile}
-      onSelect={this.props.onSelect}
-      isRead={this.isRead(itemInfo.item, this.props.readServices)}
-    />
-  );
+  ) =>
+    this.props.isExperimentalFeaturesEnabled ? (
+      <NewServiceListItem
+        item={itemInfo.item}
+        profile={this.props.profile}
+        onSelect={this.props.onSelect}
+        isRead={this.isRead(itemInfo.item, this.props.readServices)}
+        hideSeparator={true}
+      />
+    ) : (
+      <ServiceListItem
+        item={itemInfo.item}
+        profile={this.props.profile}
+        onSelect={this.props.onSelect}
+        isRead={this.isRead(itemInfo.item, this.props.readServices)}
+      />
+    );
 
   private getServiceKey = (
     potService: pot.Pot<ServicePublic, Error>,
@@ -85,12 +104,18 @@ class ServiceSectionListComponent extends React.Component<Props> {
 
   private renderServiceSectionHeader = (info: {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
-  }): React.ReactNode => (
-    <ListItem itemHeader={true} style={styles.listItem}>
-      {/*TODO: add organization icon to section header https://www.pivotaltracker.com/story/show/166792020*/}
-      <H3>{info.section.title}</H3>
-    </ListItem>
-  );
+  }): React.ReactNode =>
+    this.props.isExperimentalFeaturesEnabled ? (
+      <SectionHeaderComponent
+        sectionHeader={info.section.organizationName}
+        style={styles.padded}
+        logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
+      />
+    ) : (
+      <ListItem itemHeader={true} style={styles.listItem}>
+        <H3>{info.section.organizationName}</H3>
+      </ListItem>
+    );
 
   public render() {
     const { sections, isRefreshing, onRefresh } = this.props;
@@ -108,6 +133,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
         stickySectionHeadersEnabled={false}
         alwaysBounceVertical={false}
         refreshControl={refreshControl}
+        ItemSeparatorComponent={ItemSeparatorComponent}
       />
     );
   }
