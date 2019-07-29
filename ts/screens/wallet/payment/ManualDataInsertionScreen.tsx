@@ -262,14 +262,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       </BaseScreenComponent>
     );
   }
-  // private showModal = () => this.setState({ showModal: true });
   private showModal = () => {
     this.props.showModal(
       <CodesPositionManualPaymentModal onCancel={this.props.hideModal} />
     );
   };
-
-  // private hideModal = () => this.setState({ showModal: false });
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

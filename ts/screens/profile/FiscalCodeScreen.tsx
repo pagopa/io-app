@@ -5,20 +5,17 @@ import * as React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
-import FiscalCodeLandscapeModal from "../../components/FiscalCodeLandscapeModal";
+import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
 import H5 from "../../components/ui/H5";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
-type Props = ReturnType<typeof mapStateToProps>;
-
-type State = Readonly<{
-  showAsLandscape: boolean;
-  showBackSide: boolean;
-}>;
+type Props = ReturnType<typeof mapStateToProps> & LightModalContextInterface;
 
 const styles = StyleSheet.create({
   darkBg: {
@@ -52,14 +49,18 @@ const styles = StyleSheet.create({
   }
 });
 
-class FiscalCodeScreen extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showAsLandscape: false,
-      showBackSide: false
-    };
-  }
+class FiscalCodeScreen extends React.PureComponent<Props> {
+  private showModal = () => {
+    if (this.props.profile) {
+      this.props.showModal(
+        <FiscalCodeLandscapeOverlay
+          onCancel={this.props.hideModal}
+          profile={this.props.profile}
+        />
+      );
+    }
+  };
+
   public render() {
     return (
       <React.Fragment>
@@ -91,14 +92,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
                 showsHorizontalScrollIndicator={false}
               >
                 <View style={styles.largeSpacer} />
-                <TouchableOpacity
-                  onPress={() =>
-                    this.setState({
-                      showAsLandscape: true,
-                      showBackSide: false
-                    })
-                  }
-                >
+                <TouchableOpacity onPress={this.showModal}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -110,14 +104,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
 
                 <View style={styles.spacer} />
 
-                <TouchableOpacity
-                  onPress={() =>
-                    this.setState({
-                      showAsLandscape: true,
-                      showBackSide: true
-                    })
-                  }
-                >
+                <TouchableOpacity onPress={this.showModal}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -135,15 +122,6 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
             </React.Fragment>
           )}
         </DarkLayout>
-
-        {this.props.profile && (
-          <FiscalCodeLandscapeModal
-            isVisible={this.state.showAsLandscape}
-            onClose={() => this.setState({ showAsLandscape: false })}
-            showBackSide={this.state.showBackSide}
-            profile={this.props.profile}
-          />
-        )}
       </React.Fragment>
     );
   }
@@ -153,4 +131,6 @@ const mapStateToProps = (state: GlobalState) => ({
   profile: pot.toUndefined(profileSelector(state))
 });
 
-export default connect(mapStateToProps)(FiscalCodeScreen);
+export default connect(mapStateToProps)(
+  withLightModalContext(FiscalCodeScreen)
+);
