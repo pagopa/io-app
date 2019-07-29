@@ -1,4 +1,4 @@
-import { Option } from "fp-ts/lib/Option";
+import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
@@ -138,7 +138,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.props.showModal(
       <ChooserListContainer<Organization>
         items={allOrganizations}
-        initialSelectedItemIds={organizationsSelected}
+        initialSelectedItemIds={some(new Set(organizationsSelected))}
         keyExtractor={(item: Organization) => item.fiscalCode}
         itemTitleExtractor={(item: Organization) => item.name}
         itemIconComponent={(fiscalCode: string) =>
@@ -230,7 +230,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         >
           <ServicesLocal
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
-            organizationsFiscalCodesSelected={this.props.organizationsSelected}
+            organizationsFiscalCodesSelected={some(
+              new Set(this.props.organizationsSelected)
+            )}
             animated={{
               onScroll: Animated.event(
                 [
@@ -394,8 +396,11 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshServices: () => dispatch(loadVisibleServices.request()),
-  saveSelectedOrganizationItems: (selectedItemIds: Option<Set<string>>) =>
-    dispatch(setSelectedOrganizations(selectedItemIds))
+  saveSelectedOrganizationItems: (selectedItemIds: Option<Set<string>>) => {
+    if (selectedItemIds.isSome()) {
+      dispatch(setSelectedOrganizations(Array.from(selectedItemIds.value)));
+    }
+  }
 });
 
 export default connect(

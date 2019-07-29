@@ -1,15 +1,14 @@
 /**
  * A reducer to store the organization fiscal codes selected in local tab
  */
-import { Option, some } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { setSelectedOrganizations } from "../../../actions/organizations";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
-export type OrganizationsSelectedState = Option<Set<string>>;
+export type OrganizationsSelectedState = ReadonlyArray<string>;
 
-const INITIAL_STATE: OrganizationsSelectedState = some(new Set<string>());
+const INITIAL_STATE: OrganizationsSelectedState = [];
 
 const reducer = (
   state: OrganizationsSelectedState = INITIAL_STATE,
