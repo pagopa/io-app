@@ -33,7 +33,7 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 3;
+const CURRENT_REDUX_STORE_VERSION = 4;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
