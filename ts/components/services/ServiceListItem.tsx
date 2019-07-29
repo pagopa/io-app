@@ -61,6 +61,8 @@ export class ServiceListItem extends React.PureComponent<Props, State> {
       getEnabledChannelsForService(this.props.profile, service.service_id)
     );
 
+    // ?
+
     const onPress = !isLongPressModeEnabled
       ? pot.toUndefined(
           pot.map(potService, service => () => this.props.onSelect(service))
