@@ -3,13 +3,19 @@
  * access the service detail by pressing on the related list item.
  */
 import * as pot from "italia-ts-commons/lib/pot";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { StyleSheet } from "react-native";
 import { createSelector } from "reselect";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import {
+  InjectedWithServicesSelectionProps,
+  withServicesSelection
+} from "../../components/helpers/withServicesSelection";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
@@ -26,30 +32,65 @@ import {
   showServiceDetails
 } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
-
 import { organizationNamesByFiscalCodeSelector } from "../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
+import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
+import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
-import { getChannelsforServicesList } from "./common";
+import {
+  getChannelsforServicesList,
+  getEnabledChannelsForService
+} from "./common";
 import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
+
+type State = {
+  enabledServices: boolean;
+};
 
 type OwnProps = NavigationInjectedProps;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   ReduxProps &
-  OwnProps;
+  OwnProps &
+  InjectedWithServicesSelectionProps;
 
-class OldServicesHomeScreen extends React.Component<Props> {
+const styles = StyleSheet.create({
+  listWrapper: {
+    flex: 1
+  },
+  buttonBar: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    flexDirection: "row",
+    zIndex: 1,
+    justifyContent: "space-around",
+    backgroundColor: customVariables.colorWhite,
+    padding: 10
+  },
+  buttonBarLeft: {
+    flex: 1,
+    marginEnd: 10
+  },
+  buttonBarRight: {
+    flex: 2
+  }
+});
+
+class OldServicesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    this.state = {
+      enabledServices: false
+    };
   }
 
   private onServiceSelect = (service: ServicePublic) => {
@@ -60,6 +101,27 @@ class OldServicesHomeScreen extends React.Component<Props> {
     this.props.navigateToOldServiceDetailsScreen({
       service
     });
+  };
+
+  private onSwitch = (service: ServicePublic) => {
+    this.props.contentServiceLoad(service.service_id);
+
+    const value = getEnabledChannelsForService(
+      this.props.profile,
+      service.service_id
+    );
+    this.props.disableAllServices(
+      [service.service_id],
+      this.props.profile,
+      !value.inbox
+    );
+  };
+
+  private setEnabledServices = () => {
+    this.setState({ enabledServices: !this.state.enabledServices });
+  };
+  private handleOnLongPressItem = () => {
+    this.props.setLongPressEnabled();
   };
 
   public componentDidMount() {
@@ -97,15 +159,54 @@ class OldServicesHomeScreen extends React.Component<Props> {
   private renderList = () => {
     const { sections } = this.props;
     return (
-      <ServiceSectionListComponent
-        sections={sections}
-        profile={this.props.profile}
-        isRefreshing={this.props.isLoading}
-        onRefresh={this.props.refreshServices}
-        onSelect={this.onServiceSelect}
-        readServices={this.props.readServices}
-        isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
-      />
+      <View style={styles.listWrapper}>
+        {this.props.isLongPressEnabled && (
+          <View style={styles.buttonBar}>
+            <Button
+              block={true}
+              bordered={true}
+              light={true}
+              onPress={this.props.disableLongPress}
+              style={styles.buttonBarLeft}
+            >
+              <Text>Fatto</Text>
+            </Button>
+            <Button
+              block={true}
+              bordered={true}
+              style={styles.buttonBarRight}
+              onPress={() => {
+                this.props.disableAllServices(
+                  this.props.allServicesId,
+                  this.props.profile,
+                  this.state.enabledServices
+                );
+                this.setEnabledServices();
+              }}
+            >
+              <Text>
+                {this.state.enabledServices
+                  ? I18n.t("services.enableAll")
+                  : I18n.t("services.disableAll")}
+              </Text>
+            </Button>
+          </View>
+        )}
+        <ServiceSectionListComponent
+          sections={sections}
+          profile={this.props.profile}
+          isRefreshing={this.props.isLoading}
+          onRefresh={this.props.refreshServices}
+          onSelect={this.onServiceSelect}
+          readServices={this.props.readServices}
+          isExperimentalFeaturesEnabled={
+            this.props.isExperimentalFeaturesEnabled
+          }
+          onLongPressItem={this.handleOnLongPressItem}
+          isLongPressEnabled={this.props.isLongPressEnabled}
+          onSwitch={this.onSwitch}
+        />
+      </View>
     );
   };
 
@@ -131,6 +232,8 @@ class OldServicesHomeScreen extends React.Component<Props> {
               isExperimentalFeaturesEnabled={
                 this.props.isExperimentalFeaturesEnabled
               }
+              onLongPressItem={this.handleOnLongPressItem}
+              onSwitch={this.onSwitch}
             />
           )
       )
@@ -207,12 +310,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
    */
   disableAllServices: (
     allServicesId: ReadonlyArray<string>,
-    profile: ProfileState
+    profile: ProfileState,
+    enable: boolean
   ) => {
     const newBlockedChannels = getChannelsforServicesList(
       allServicesId,
       profile,
-      false
+      enable
     );
     dispatch(
       profileUpsert.request({
@@ -225,4 +329,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(OldServicesHomeScreen);
+)(withServicesSelection(OldServicesHomeScreen));

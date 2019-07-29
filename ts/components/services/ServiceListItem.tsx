@@ -16,6 +16,10 @@ import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
 import { BadgeComponent } from "../screens/BadgeComponent";
 
+interface State {
+  uiEnabledChannels: EnabledChannels;
+}
+
 type Props = Readonly<{
   item: pot.Pot<ServicePublic, Error>;
   profile: ProfileState;
@@ -25,10 +29,6 @@ type Props = Readonly<{
   isLongPressModeEnabled: boolean;
   onSwitch: (service: ServicePublic) => void;
 }>;
-
-interface State {
-  uiEnabledChannels: EnabledChannels;
-}
 
 const styles = StyleSheet.create({
   listItem: {
@@ -61,15 +61,23 @@ export class ServiceListItem extends React.PureComponent<Props, State> {
       getEnabledChannelsForService(this.props.profile, service.service_id)
     );
 
-    // ?
+    if (pot.isSome(potService)) {
+      // tslint:disable-next-line no-object-mutation
+      this.state = {
+        uiEnabledChannels: getEnabledChannelsForService(
+          this.props.profile,
+          potService.value.service_id
+        )
+      };
+    }
 
-    const onPress = !isLongPressModeEnabled
+    const onPress = !this.props.isLongPressModeEnabled
       ? pot.toUndefined(
           pot.map(potService, service => () => this.props.onSelect(service))
         )
       : undefined;
 
-    const onSwitchTap = isLongPressModeEnabled
+    const onSwitchTap = this.props.isLongPressModeEnabled
       ? pot.toUndefined(
           pot.map(potService, service => () => this.props.onSwitch(service))
         )

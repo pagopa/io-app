@@ -684,6 +684,8 @@ services:
     locals: Locali
     national: Nazionali
     otherServices: Altri servizi
+  enableAll: Attiva tutti
+  disableAll: Disattiva tutti
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
