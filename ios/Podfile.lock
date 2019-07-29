@@ -6,13 +6,13 @@ PODS:
     - React
   - react-native-calendar-events (1.7.1):
     - React
-  - react-native-camera (1.2.0):
+  - react-native-camera (2.11.1):
     - React
-    - react-native-camera/RCT (= 1.2.0)
-    - react-native-camera/RN (= 1.2.0)
-  - react-native-camera/RCT (1.2.0):
+    - react-native-camera/RCT (= 2.11.1)
+    - react-native-camera/RN (= 2.11.1)
+  - react-native-camera/RCT (2.11.1):
     - React
-  - react-native-camera/RN (1.2.0):
+  - react-native-camera/RN (2.11.1):
     - React
   - react-native-config (0.11.7):
     - React
@@ -158,7 +158,7 @@ SPEC CHECKSUMS:
   React: a86b92f00edbe1873a63e4a212c29b7a7ad5224f
   react-native-background-timer: 1b6e6b4e10f1b74c367a1fdc3c72b67c619b222b
   react-native-calendar-events: 667f4141959b3f90c44cd328396c1488f216922d
-  react-native-camera: 74c7513056d1513686286a0d54426083ca8a0088
+  react-native-camera: f1fbfc336ba8ca6de5296190341d1b6022c71cff
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
   react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
