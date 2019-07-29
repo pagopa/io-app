@@ -91,14 +91,17 @@ const migrations: MigrationManifest = {
   // Version 4
   // we added a state to monitor what pagopa environment is selected
   "4": (state: PersistedState) => {
-    const oldPersistedState = (state as any).persistedPreferences;
-    return {
-      ...state,
-      persistedPreferences: {
-        ...oldPersistedState,
-        isPagoPATestEnabled: false
-      }
-    };
+    return (state as any).persistedPreferences.isPagoPATestEnabled === undefined
+      ? {
+          ...state,
+          persistedPreferences: {
+            ...(state as any).persistedPreferences,
+            isPagoPATestEnabled: false
+          }
+        }
+      : {
+          ...state
+        };
   }
 };
 
