@@ -88,15 +88,15 @@ const migrations: MigrationManifest = {
     };
   },
 
-    // Version 4
-    // we changed the way ToS acceptance is managed
-    "4": (state: PersistedState) => ({
-      ...state,
-      onboarding: {
-        isFingerprintAcknowledged: (state as any).onboarding
-          .isFingerprintAcknowledged
-      }
-    })
+  // Version 4
+  // we changed the way ToS acceptance is managed
+  "4": (state: PersistedState) => ({
+    ...state,
+    onboarding: {
+      isFingerprintAcknowledged: (state as any).onboarding
+        .isFingerprintAcknowledged
+    }
+  })
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
