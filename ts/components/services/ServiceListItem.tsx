@@ -1,13 +1,17 @@
+import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Grid, Left, ListItem, Right, Row, Text } from "native-base";
+import { Col, Grid, Left, ListItem, Right, Row, Text } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Switch } from "react-native";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import H4 from "../../components/ui/H4";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
-import { getEnabledChannelsForService } from "../../screens/preferences/common";
+import {
+  EnabledChannels,
+  getEnabledChannelsForService
+} from "../../screens/preferences/common";
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
 import { BadgeComponent } from "../screens/BadgeComponent";
@@ -17,7 +21,14 @@ type Props = Readonly<{
   profile: ProfileState;
   onSelect: (service: ServicePublic) => void;
   isRead: boolean;
+  onLongPress: () => void;
+  isLongPressModeEnabled: boolean;
+  onSwitch: (service: ServicePublic) => void;
 }>;
+
+interface State {
+  uiEnabledChannels: EnabledChannels;
+}
 
 const styles = StyleSheet.create({
   listItem: {
@@ -42,16 +53,25 @@ const styles = StyleSheet.create({
   }
 });
 
-export class ServiceListItem extends React.PureComponent<Props> {
+export class ServiceListItem extends React.PureComponent<Props, State> {
   public render() {
+    const { isLongPressModeEnabled } = this.props;
     const potService = this.props.item;
     const enabledChannels = pot.map(potService, service =>
       getEnabledChannelsForService(this.props.profile, service.service_id)
     );
 
-    const onPress = pot.toUndefined(
-      pot.map(potService, service => () => this.props.onSelect(service))
-    );
+    const onPress = !isLongPressModeEnabled
+      ? pot.toUndefined(
+          pot.map(potService, service => () => this.props.onSelect(service))
+        )
+      : undefined;
+
+    const onSwitchTap = isLongPressModeEnabled
+      ? pot.toUndefined(
+          pot.map(potService, service => () => this.props.onSwitch(service))
+        )
+      : undefined;
 
     const serviceName = pot.isLoading(potService)
       ? I18n.t("global.remoteStates.loading")
@@ -67,8 +87,18 @@ export class ServiceListItem extends React.PureComponent<Props> {
           : I18n.t("services.serviceNotEnabled")
     );
 
+    // whether last attempt to save the preferences failed
+    const profileVersion = pot
+      .toOption(this.props.profile)
+      .mapNullable(_ => (_.has_profile ? _.version : null))
+      .getOrElse(0 as NonNegativeInteger);
+
     return (
-      <ListItem onPress={onPress} style={styles.listItem}>
+      <ListItem
+        onPress={onPress}
+        style={styles.listItem}
+        onLongPress={this.props.onLongPress}
+      >
         <Left>
           <Grid>
             <Row>
@@ -90,7 +120,17 @@ export class ServiceListItem extends React.PureComponent<Props> {
           </Grid>
         </Left>
         <Right>
-          <IconFont name="io-right" color={variables.brandPrimary} />
+          {isLongPressModeEnabled ? (
+            <Col size={2}>
+              <Switch
+                key={`switch-service-${profileVersion}`}
+                value={this.state.uiEnabledChannels.inbox}
+                onValueChange={onSwitchTap}
+              />
+            </Col>
+          ) : (
+            <IconFont name="io-right" color={variables.brandPrimary} />
+          )}
         </Right>
       </ListItem>
     );
