@@ -1,6 +1,5 @@
-import { format as dateFnsFormat } from "date-fns";
+import { format, format as dateFnsFormat } from "date-fns";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
-import { formatDateAsLocal } from "./dates";
 
 /**
  * Generic utilities for profile
@@ -35,10 +34,9 @@ export function extractFiscalCodeData(fiscalCode: FiscalCode): FiscalCodeData {
   const year = parseInt(fiscalCode.substring(6, 8), 10);
   const month = months[fiscalCode.charAt(8)];
   // TODO: evaluate if date format should be the italian one or localized by language preference
-  const birthDate = formatDateAsLocal(
+  const birthDate = format(
     new Date(year, month - 1, day), // months are indexed from index 0
-    true,
-    true
+    "DD/MM/YYYY"
   );
 
   return {
