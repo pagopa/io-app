@@ -26,7 +26,6 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 
 import I18n from "../../../i18n";
-
 import { Dispatch } from "../../../store/actions/types";
 import {
   backToEntrypointPayment,
@@ -168,7 +167,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   private getSecondaryButtonProps = () => ({
     block: true,
-    light: true,
+    bordered: pot.isNone(this.props.paymentId),
+    cancel: pot.isSome(this.props.paymentId),
     onPress: this.handleBackPress,
     title: I18n.t(
       pot.isSome(this.props.paymentId)
