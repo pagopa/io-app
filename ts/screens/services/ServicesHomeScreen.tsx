@@ -1,18 +1,43 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import { Animated, Platform, StyleSheet } from "react-native";
+import {
+  Animated,
+  ListRenderItemInfo,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { NavigationScreenProps } from "react-navigation";
+import { connect } from "react-redux";
+import { ChooserListContainer } from "../../components/ChooserListContainer";
+import ChooserListItem from "../../components/ChooserListItem";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import OrganizationLogo from "../../components/services/OrganizationLogo";
 import ServicesLocal from "../../components/services/ServicesLocal";
 import ServicesNational from "../../components/services/ServicesNational";
 import ServicesOther from "../../components/services/ServicesOther";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import { loadVisibleServices } from "../../store/actions/services";
+import { Dispatch } from "../../store/actions/types";
+import { lexicallyOrderedAllOrganizations } from "../../store/reducers/entities/organizations";
+import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
+import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { getLogoForOrganization } from "../../utils/organizations";
+import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 
-type Props = NavigationScreenProps;
+type OwnProps = NavigationScreenProps;
+
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  OwnProps &
+  LightModalContextInterface;
 
 type State = {
   currentTab: number;
@@ -47,6 +72,9 @@ const styles = StyleSheet.create({
   },
   searchDisableIcon: {
     color: customVariables.headerFontColor
+  },
+  organizationLogo: {
+    marginBottom: 0
   }
 });
 
@@ -60,6 +88,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.state = {
       currentTab: 0
     };
+  }
+
+  public componentDidMount() {
+    // on mount, update visible services
+    this.props.refreshServices();
   }
 
   private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -86,6 +119,48 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       });
     }
   }
+
+  /**
+   * For tab Locals
+   */
+  private renderOrganizationItem = (info: ListRenderItemInfo<Organization>) => {
+    const item = info.item;
+    return (
+      <ChooserListItem
+        title={item.name}
+        iconComponent={this.renderOrganizationLogo(item.fiscalCode)}
+      />
+    );
+  };
+
+  private renderOrganizationLogo = (organizationFiscalCode: string) => {
+    return (
+      <OrganizationLogo
+        logoUri={getLogoForOrganization(organizationFiscalCode)}
+        imageStyle={styles.organizationLogo}
+      />
+    );
+  };
+
+  private organizationContainsText(item: Organization, searchText: string) {
+    return isTextIncludedCaseInsensitive(item.name, searchText);
+  }
+
+  private showChooserLocalServicesModal = () => {
+    this.props.showModal(
+      <ChooserListContainer<Organization>
+        items={this.props.allOrganizations}
+        keyExtractor={(item: Organization) => item.fiscalCode}
+        renderItem={this.renderOrganizationItem}
+        onCancel={this.props.hideModal}
+        isRefreshEnabled={false}
+        isSearchEnabled={true}
+        onSearchItemContainsText={this.organizationContainsText}
+        noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
+        noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
+      />
+    );
+  };
 
   public render() {
     return (
@@ -153,6 +228,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           }
         >
           <ServicesLocal
+            onAddAreasOfInterestPress={this.showChooserLocalServicesModal}
             animated={{
               onScroll: Animated.event(
                 [
@@ -295,4 +371,29 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 }
 
-export default ServicesHomeScreen;
+const mapStateToProps = (state: GlobalState) => {
+  const { services } = state.entities;
+
+  const isAnyServiceLoading =
+    Object.keys(services.byId).find(k => {
+      const oneService = services.byId[k];
+      return oneService !== undefined && pot.isLoading(oneService);
+    }) !== undefined;
+
+  const isLoading =
+    pot.isLoading(state.entities.services.visible) || isAnyServiceLoading;
+
+  return {
+    allOrganizations: lexicallyOrderedAllOrganizations(state),
+    isLoading
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  refreshServices: () => dispatch(loadVisibleServices.request())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLightModalContext(withLoadingSpinner(ServicesHomeScreen)));

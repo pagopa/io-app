@@ -3,6 +3,8 @@ import React from "react";
 
 import { SectionListData } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
+
 import { ProfileState } from "../../store/reducers/profile";
 import { serviceContainsText } from "../../utils/services";
 import { SearchNoResultMessage } from "../search/SearchNoResultMessage";
@@ -15,6 +17,8 @@ type OwnProps = {
   profile: ProfileState;
   onRefresh: () => void;
   navigateToServiceDetail: (service: ServicePublic) => void;
+  readServices: ReadStateByServicesId;
+  isExperimentalFeaturesEnabled?: boolean;
 };
 
 type Props = OwnProps;
@@ -67,7 +71,8 @@ function filterSectionListDataMatchingSearchText(
     .filter(pot.isSome);
 
   const sectionListDataFiltered = {
-    title: sectionListData.title,
+    organizationName: sectionListData.organizationName,
+    organizationFiscalCode: sectionListData.organizationFiscalCode,
     data: filteredData
   };
   return filteredData.length > 0 ? sectionListDataFiltered : null;
@@ -157,6 +162,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
         isRefreshing={isFiltering}
         onRefresh={onRefresh}
         onSelect={this.handleOnServiceSelect}
+        isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
       />
     ) : (
       <SearchNoResultMessage errorType="NoResultsFound" />

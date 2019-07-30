@@ -7,6 +7,7 @@ import IconFont from "../ui/IconFont";
 
 type Props = {
   paddingForAnimation: boolean;
+  onAddAreasOfInterestPress: () => void;
 };
 
 const styles = StyleSheet.create({
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
 
 export class ServicesLocalEmpty extends React.PureComponent<Props> {
   public render() {
-    const { paddingForAnimation } = this.props;
+    const { paddingForAnimation, onAddAreasOfInterestPress } = this.props;
     return (
       <View style={styles.contentWrapper}>
         <Text style={styles.message}>
@@ -48,7 +49,13 @@ export class ServicesLocalEmpty extends React.PureComponent<Props> {
 
         <View spacer={true} large={true} />
 
-        <Button small={true} bordered={true} style={styles.button} block={true}>
+        <Button
+          small={true}
+          bordered={true}
+          style={styles.button}
+          block={true}
+          onPress={onAddAreasOfInterestPress}
+        >
           <IconFont name="io-plus" style={styles.icon} />
           <Text style={styles.textButton}>
             {I18n.t("services.areasOfInterest.addButton")}
