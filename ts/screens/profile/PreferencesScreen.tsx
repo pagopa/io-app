@@ -187,14 +187,14 @@ class PreferencesScreen extends React.Component<Props, State> {
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.mobile_phone")}
-              subTitle={languages}
+              subTitle={profileData.spid_mobile_phone}
               iconName={"io-phone-number"}
               onPress={unavailableAlert}
             />
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
-              subTitle={profileData.spid_mobile_phone}
+              subTitle={languages}
               iconName={"io-languages"}
               onPress={languageAlert}
             />
