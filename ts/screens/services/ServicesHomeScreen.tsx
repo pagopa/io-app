@@ -10,8 +10,8 @@ import {
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-import { ChooserListComponent } from "../../components/ChooserListComponent";
-import ChooserListItemComponent from "../../components/ChooserListItemComponent";
+import { ChooserListContainer } from "../../components/ChooserListContainer";
+import ChooserListItem from "../../components/ChooserListItem";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -30,6 +30,7 @@ import { Organization } from "../../store/reducers/entities/organizations/organi
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
+import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 
 type OwnProps = NavigationScreenProps;
 
@@ -125,7 +126,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private renderOrganizationItem = (info: ListRenderItemInfo<Organization>) => {
     const item = info.item;
     return (
-      <ChooserListItemComponent
+      <ChooserListItem
         title={item.name}
         iconComponent={this.renderOrganizationLogo(item.fiscalCode)}
       />
@@ -141,13 +142,22 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   };
 
+  private organizationContainsText(item: Organization, searchText: string) {
+    return isTextIncludedCaseInsensitive(item.name, searchText);
+  }
+
   private showChooserLocalServicesModal = () => {
     this.props.showModal(
-      <ChooserListComponent<Organization>
+      <ChooserListContainer<Organization>
         items={this.props.allOrganizations}
-        keyExtractor={item => item.fiscalCode}
+        keyExtractor={(item: Organization) => item.fiscalCode}
         renderItem={this.renderOrganizationItem}
         onCancel={this.props.hideModal}
+        isRefreshEnabled={false}
+        isSearchEnabled={true}
+        onSearchItemContainsText={this.organizationContainsText}
+        noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
+        noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
       />
     );
   };
