@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
 
 /**
  * A component for selectable list item with icon (optional) and text
+ * the checkbox for the selection is present by default
  */
 export default class ChooserListItem extends React.Component<Props> {
   public render() {
