@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { GlobalState } from "../store/reducers/types";
-import customVariables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 
 type OwnProps = {
@@ -22,9 +21,7 @@ class ProfileTabIcon extends React.PureComponent<Props> {
     return (
       <IconFont
         size={size}
-        color={
-          isExperimentalFeaturesEnabled ? customVariables.brandHighlight : color
-        }
+        color={color}
         name={isExperimentalFeaturesEnabled ? "io-profilo-exp" : "io-profilo"}
       />
     );
