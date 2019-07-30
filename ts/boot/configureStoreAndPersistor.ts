@@ -33,7 +33,7 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 4;
+const CURRENT_REDUX_STORE_VERSION = 5;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -96,7 +96,23 @@ const migrations: MigrationManifest = {
       isFingerprintAcknowledged: (state as any).onboarding
         .isFingerprintAcknowledged
     }
-  })
+  }),
+
+  // Version 5
+  // we added a state to monitor what pagopa environment is selected
+  "5": (state: PersistedState) => {
+    return (state as any).persistedPreferences.isPagoPATestEnabled === undefined
+      ? {
+          ...state,
+          persistedPreferences: {
+            ...(state as any).persistedPreferences,
+            isPagoPATestEnabled: false
+          }
+        }
+      : {
+          ...state
+        };
+  }
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
