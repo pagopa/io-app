@@ -32,25 +32,30 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontWeight: "400",
     flex: 1
+  },
+  sectionView: {
+    backgroundColor: "#FFF"
   }
 });
 
 export default class SectionHeaderComponent extends React.Component<Props> {
   public render() {
     return (
-      <ListItem
-        first={true}
-        style={[
-          this.props.logoUri ? styles.withLogo : styles.withoutLogo,
-          this.props.style
-        ]}
-      >
-        <View spacer={true} large={true} />
-        {this.props.logoUri && (
-          <OrganizationLogo logoUri={this.props.logoUri} />
-        )}
-        <H5 style={styles.sectionTitle}>{this.props.sectionHeader}</H5>
-      </ListItem>
+      <View style={styles.sectionView}>
+        <ListItem
+          first={true}
+          style={[
+            this.props.logoUri ? styles.withLogo : styles.withoutLogo,
+            this.props.style
+          ]}
+        >
+          <View spacer={true} large={true} />
+          {this.props.logoUri && (
+            <OrganizationLogo logoUri={this.props.logoUri} />
+          )}
+          <H5 style={styles.sectionTitle}>{this.props.sectionHeader}</H5>
+        </ListItem>
+      </View>
     );
   }
 }
