@@ -28,6 +28,7 @@ import {
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 
+import { organizationNamesByFiscalCodeSelector } from "../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { ProfileState } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
@@ -103,6 +104,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
         onRefresh={this.props.refreshServices}
         onSelect={this.onServiceSelect}
         readServices={this.props.readServices}
+        isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
       />
     );
   };
@@ -126,6 +128,9 @@ class OldServicesHomeScreen extends React.Component<Props> {
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
               readServices={this.props.readServices}
+              isExperimentalFeaturesEnabled={
+                this.props.isExperimentalFeaturesEnabled
+              }
             />
           )
       )
@@ -134,28 +139,30 @@ class OldServicesHomeScreen extends React.Component<Props> {
 }
 
 const servicesSelector = (state: GlobalState) => state.entities.services;
-const organizationsSelector = (state: GlobalState) =>
-  state.entities.organizations.nameByFiscalCode;
 
 export const getAllSections = createSelector(
-  [servicesSelector, organizationsSelector],
+  [servicesSelector, organizationNamesByFiscalCodeSelector],
   (services, organizations) => {
     const orgfiscalCodes = Object.keys(services.byOrgFiscalCode);
     return orgfiscalCodes
       .map(fiscalCode => {
-        const title = organizations[fiscalCode] || fiscalCode;
+        const organizationName = organizations[fiscalCode] || fiscalCode;
+        const organizationFiscalCode = fiscalCode;
         const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
         const data = serviceIdsForOrg
           .map(id => services.byId[id])
           .filter(isDefined);
         return {
-          title,
+          organizationName,
+          organizationFiscalCode,
           data
         };
       })
       .filter(_ => _.data.length > 0)
       .sort((a, b) =>
-        a.title.toLocaleLowerCase().localeCompare(b.title.toLocaleLowerCase())
+        a.organizationName
+          .toLocaleLowerCase()
+          .localeCompare(b.organizationName.toLocaleLowerCase())
       );
   }
 );
