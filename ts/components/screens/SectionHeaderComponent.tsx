@@ -4,7 +4,7 @@
  *  - message list https://www.pivotaltracker.com/story/show/165716236
  *  - service lists https://www.pivotaltracker.com/story/show/166792020
  */
-import { ListItem, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import customVariables from "../../theme/variables";
@@ -34,27 +34,28 @@ const styles = StyleSheet.create({
     flex: 1
   },
   sectionView: {
-    backgroundColor: "#FFF"
+    backgroundColor: "#FFF",
+    flexDirection: "row",
+    borderBottomColor: customVariables.itemSeparator,
+    borderBottomWidth: StyleSheet.hairlineWidth
   }
 });
 
 export default class SectionHeaderComponent extends React.Component<Props> {
   public render() {
     return (
-      <View style={styles.sectionView}>
-        <ListItem
-          first={true}
-          style={[
-            this.props.logoUri ? styles.withLogo : styles.withoutLogo,
-            this.props.style
-          ]}
-        >
-          <View spacer={true} large={true} />
-          {this.props.logoUri && (
-            <OrganizationLogo logoUri={this.props.logoUri} />
-          )}
-          <H5 style={styles.sectionTitle}>{this.props.sectionHeader}</H5>
-        </ListItem>
+      <View
+        style={[
+          styles.sectionView,
+          this.props.logoUri ? styles.withLogo : styles.withoutLogo,
+          this.props.style
+        ]}
+      >
+        <View spacer={true} large={true} />
+        {this.props.logoUri && (
+          <OrganizationLogo logoUri={this.props.logoUri} />
+        )}
+        <H5 style={styles.sectionTitle}>{this.props.sectionHeader}</H5>
       </View>
     );
   }
