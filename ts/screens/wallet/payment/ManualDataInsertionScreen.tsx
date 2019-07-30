@@ -16,8 +16,7 @@ import {
   NavigationActions,
   NavigationEventPayload,
   NavigationEvents,
-  NavigationInjectedProps,
-  StackActions
+  NavigationInjectedProps
 } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -37,7 +36,6 @@ import {
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
@@ -155,9 +153,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
       bordered: true,
-      onPress: this.props.navigateToWalletHome,
+      onPress: this.props.navigateBack,
       title: I18n.t("global.buttons.cancel")
     };
 
@@ -260,23 +257,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => {
-    dispatch(
-      StackActions.reset({
-        actions: [
-          NavigationActions.navigate({
-            routeName: ROUTES.MAIN
-          })
-        ],
-        key: null,
-        index: 0
-      })
-    );
-    dispatch(
-      NavigationActions.navigate({
-        routeName: ROUTES.WALLET_HOME
-      })
-    );
+  navigateBack: () => {
+    dispatch(NavigationActions.back());
   },
   navigateToTransactionSummary: (
     rptId: RptId,

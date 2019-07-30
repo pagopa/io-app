@@ -6,7 +6,7 @@
 
 import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationActions, StackActions } from "react-navigation";
+import { NavigationActions } from "react-navigation";
 import { delay } from "redux-saga";
 import {
   call,
@@ -28,6 +28,7 @@ import {
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
+import { navigateToWalletHome } from "../store/actions/navigation";
 import {
   backToEntrypointPayment,
   paymentAttiva,
@@ -717,13 +718,7 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
         });
         yield put(navigationBackAction);
       } else {
-        yield put(
-          StackActions.reset({
-            key: null,
-            index: 0,
-            actions: [NavigationActions.navigate({ routeName: ROUTES.MAIN })]
-          })
-        );
+        yield put(navigateToWalletHome());
       }
     }
   });
