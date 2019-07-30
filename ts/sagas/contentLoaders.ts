@@ -1,4 +1,4 @@
-import { left } from "fp-ts/lib/Either";
+import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, takeEvery } from "redux-saga/effects";
@@ -13,6 +13,7 @@ import {
   contentServiceLoad
 } from "../store/actions/content";
 
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
@@ -62,21 +63,26 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
 /**
  * Retrieves a municipality metadata from the static content repository
  */
-function getMunicipalityMetadata(
+function* fetchMunicipalityMetadata(
+  getMunicipality: ReturnType<typeof ContentClient>["getMunicipality"],
   codiceCatastale: CodiceCatastale
-): Promise<t.Validation<BasicResponseType<MunicipalityMedadata>>> {
-  return new Promise((resolve, _) =>
-    contentClient.getMunicipality({ codiceCatastale }).then(resolve, () =>
-      resolve(
-        left([
-          {
-            context: [],
-            value: "some error occurred while retrieving municipality metadata"
-          }
-        ])
-      )
-    )
-  );
+): IterableIterator<Effect | Either<Error, MunicipalityMedadata>> {
+  try {
+    const response: SagaCallReturnType<typeof getMunicipality> = yield call(
+      getMunicipality,
+      { codiceCatastale }
+    );
+    // Can't decode response
+    if (response.isLeft()) {
+      throw Error(readableReport(response.value));
+    }
+    if (response.value.status !== 200) {
+      throw Error(`response status ${response.value.status}`);
+    }
+    return right(response.value.value);
+  } catch (error) {
+    return left(error);
+  }
 }
 
 /**
@@ -89,14 +95,18 @@ export function* watchContentMunicipalityLoadSaga(): Iterator<Effect> {
     const codiceCatastale = action.payload;
 
     const response: SagaCallReturnType<
-      typeof getMunicipalityMetadata
-    > = yield call(getMunicipalityMetadata, codiceCatastale);
+      typeof fetchMunicipalityMetadata
+    > = yield call(
+      fetchMunicipalityMetadata,
+      contentClient.getMunicipality,
+      codiceCatastale
+    );
 
-    if (response.isRight() && response.value.status === 200) {
+    if (response.isRight()) {
       yield put(
         contentMunicipalityLoad.success({
           codiceCatastale,
-          data: response.value.value
+          data: response.value
         })
       );
     } else {
