@@ -675,6 +675,7 @@ services:
     otherServices: Other services
   enableAll: Enable all
   disableAll: Disable all
+  done: Done
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."

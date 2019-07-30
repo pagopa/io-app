@@ -78,10 +78,11 @@ const styles = StyleSheet.create({
   },
   buttonBarLeft: {
     flex: 1,
-    marginEnd: 10
+    marginEnd: 5
   },
   buttonBarRight: {
-    flex: 2
+    flex: 1,
+    marginStart: 5
   }
 });
 
@@ -165,16 +166,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
             <Button
               block={true}
               bordered={true}
-              light={true}
-              onPress={this.props.disableLongPress}
               style={styles.buttonBarLeft}
-            >
-              <Text>Fatto</Text>
-            </Button>
-            <Button
-              block={true}
-              bordered={true}
-              style={styles.buttonBarRight}
               onPress={() => {
                 this.props.disableAllServices(
                   this.props.allServicesId,
@@ -189,6 +181,14 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
                   ? I18n.t("services.enableAll")
                   : I18n.t("services.disableAll")}
               </Text>
+            </Button>
+            <Button
+              block={true}
+              primary={true}
+              onPress={this.props.disableLongPress}
+              style={styles.buttonBarRight}
+            >
+              <Text>{I18n.t("services.done")}</Text>
             </Button>
           </View>
         )}
