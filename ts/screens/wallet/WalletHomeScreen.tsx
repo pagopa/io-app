@@ -12,6 +12,7 @@ import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
+import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
@@ -152,14 +153,20 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private withoutCardsHeader() {
+  private withoutCardsHeader(hasNotSupportedWalletsOnly: boolean) {
     return (
       <Grid>
         <Row>
           <Text note={true} white={true} style={styles.inLineSpace}>
             {I18n.t("wallet.newPaymentMethod.addDescription")}
+            {hasNotSupportedWalletsOnly && (
+              <Text note={true} white={true} bold={true}>
+                {` ${I18n.t("wallet.newPaymentMethod.walletAlert")}`}
+              </Text>
+            )}
           </Text>
         </Row>
+        <Row />
         <Row>
           <View spacer={true} />
         </Row>
@@ -297,14 +304,21 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
   public render(): React.ReactNode {
     const { potWallets, potTransactions } = this.props;
+
     const wallets = pot.getOrElse(potWallets, []);
+
+    const hasNotSupportedWalletsOnly =
+      wallets.length > 0 &&
+      wallets.filter(wallet => wallet.type === TypeEnum.CREDIT_CARD).length ===
+        0;
+
     const headerContent = pot.isLoading(potWallets)
       ? this.loadingWalletsHeader()
       : pot.isError(potWallets)
         ? this.errorWalletsHeader()
-        : wallets.length > 0
+        : wallets.length > 0 && !hasNotSupportedWalletsOnly
           ? this.cardPreview(wallets)
-          : this.withoutCardsHeader();
+          : this.withoutCardsHeader(hasNotSupportedWalletsOnly);
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()

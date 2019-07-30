@@ -26,6 +26,7 @@ global:
     back: Back
     confirm: Confirm
     close: Close
+    saveSelection: Save the selection
   navigator:
     messages: messages
     wallet: wallet
@@ -42,6 +43,7 @@ global:
   search:
     invalidSearchBarText: Enter at least {{minCharacter}} characters
     noResultsFound: "There are no results for this search: try something else."
+    noResultsTitle: No results.
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
@@ -75,7 +77,12 @@ inbox:
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
-  facSimile: FAC-SIMILE
+  fiscalCode:
+    title: Personal documents
+    fiscalCode: Fiscal code
+    help: !include fiscal_code.md
+    content: The fiscal code fac-simile does not substitute the physical document but it allows both data and barcode being read
+    facSimile: FAC-SIMILE
   sections:
     spid: SPID PROFILE
   unknown: UNKNOWN
@@ -95,6 +102,7 @@ profile:
   main:
     screenTitle: Profile
     screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
+    contextualHelp: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
     clearCache: Clear cache
@@ -116,14 +124,14 @@ profile:
       screenSubtitle: Here you will find information related to your personal data.
       privacyPolicy:
         title: Privacy policy
-        description: review accepted privacy terms
+        description: Review accepted privacy terms
       removeAccount:
         title: Delete your account
-        description: remove all data associated to your account from your phone and
+        description: Remove all data associated to your account from your phone and
           our systems (SPID required)
       exportData:
         title: Export your data
-        description: send to your email all your account’s data in an open format
+        description: Send to your email all your account’s data in an open format
     developersSectionHeader: Developers
     experimentalFeatures:
       confirmTitle: Experimental features
@@ -161,6 +169,9 @@ profile:
     language: 
       title: This setting is set up in system preferences
       message: IO inherits language from the operating system of this device
+userMetadata:
+  errors:
+    upsertVersion: Can't upsert user metadata with this version
 navigation:
   messages: Messages
   profile: Profile
@@ -342,7 +353,8 @@ wallet:
     add: add
     addButton: Add a new method
     addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
-      so that you don't have to re-add them from scratch for every transaction
+      so that you don't have to re-add them from scratch for every transaction.
+    walletAlert: "Your wallet includes payment methods but no one is supported by IO yet"
     successful: The card was added successfully!
     failed: The card could not be added
     failedCardAlreadyExists: The card you are adding already exists
@@ -656,6 +668,7 @@ services:
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
     addButton: Add your areas of interest
+    searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
   tab:
     locals: Local
     national: National
