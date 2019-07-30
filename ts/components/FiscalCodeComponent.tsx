@@ -57,8 +57,8 @@ const cardLineHeightF = 26 * fullScaleFactor;
 
 const barCodeHeightF = 107 * fullScaleFactor;
 const barCodeWidthF = 512 * fullScaleFactor;
-const barCodeMarginLeftF = 181 * fullScaleFactor;
-const barCodeMarginTopF = 179 * fullScaleFactor;
+const barCodeMarginLeftF = 162 * fullScaleFactor;
+const barCodeMarginTopF = 164 * fullScaleFactor;
 
 const fiscalCodeHeightF = cardHeaderHeightF + cardLargeSpacerF;
 const lastNameHeightF = fiscalCodeHeightF + cardLineHeightF * 2 + cardSpacerF;
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   },
 
   fullFacSimileText: {
-    marginTop: 295 * fullScaleFactor,
+    marginTop: 310 * fullScaleFactor,
     lineHeight: 38 * fullScaleFactor,
     position: "absolute",
     fontSize: textFontSizeF,
@@ -393,6 +393,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         <Barcode
           value={fiscalCode}
           format={"CODE128"}
+          background={"transparent"}
           height={barCodeHeightL - 20} // 20: horizontal default padding of the barcode component
           width={(barCodeWidthL - 20) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
@@ -405,8 +406,9 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         <Barcode
           value={fiscalCode}
           format={"CODE128"}
-          height={barCodeHeightF - 20}
-          width={(barCodeWidthF - 20) / 211}
+          background={"transparent"}
+          height={barCodeHeightF - 5}
+          width={(barCodeWidthF - 5) / 211}
         />
         <Text bold={true} alignCenter={true} style={styles.fullFacSimileText}>
           {I18n.t("profile.fiscalCode.facSimile")}
