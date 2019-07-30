@@ -1,4 +1,4 @@
-The PIN is the security code that grant your data being securely stored into the IO app.
+The PIN is the security code that grants your data is securely stored into the IO app.
 
 You chose it when you logged in for the first time with your SPID credentials.
 
