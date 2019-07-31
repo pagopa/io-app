@@ -19,10 +19,10 @@ type Props = Readonly<{
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
-  isLongPressModeEnabled: boolean;
+  isLongPressModeEnabled?: boolean;
   onSwitch?: () => void;
-  value: boolean;
-  key: string;
+  value?: boolean;
+  key?: string;
 }>;
 
 const ICON_SIZE = 24;
