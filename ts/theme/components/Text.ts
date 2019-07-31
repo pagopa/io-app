@@ -16,6 +16,7 @@ declare module "native-base" {
       white?: boolean;
       alignCenter?: boolean;
       primary?: boolean;
+      robotomono?: boolean;
     }
   }
 }
@@ -52,6 +53,14 @@ export default (): Theme => {
     },
     ".primary": {
       color: variables.brandPrimary
+    },
+    ".robotomono": {
+      ...makeFontStyleObject(
+        Platform.select,
+        undefined,
+        undefined,
+        "RobotoMono"
+      )
     },
     lineHeight: variables.lineHeightBase
   };

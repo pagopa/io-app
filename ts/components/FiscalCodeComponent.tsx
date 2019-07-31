@@ -45,7 +45,7 @@ const contentWidth =
 const fullScaleFactor = contentWidth / 870;
 
 const textdLineHeightF = 15;
-const textFontSizeF = 11;
+const textFontSizeF = 13;
 const textLeftMarginF = 140 * fullScaleFactor + 6;
 const textGenderLeftMarginF = 800 * fullScaleFactor + 6;
 
@@ -70,7 +70,7 @@ const dateHeightF = birthCityHeightF + cardLineHeightF + cardSpacerF;
 // Landscape (card vertical position)
 const landscapeScaleFactor = contentWidth / 546;
 const textLineHeightL = 28; // to solve misalignment on font, 28 is the fist value that seems to give text centered to line height
-const textFontSizeL = 18;
+const textFontSizeL = 21;
 const textLeftMarginL = 140 * landscapeScaleFactor + 8;
 const textGenderLeftMarginL = 800 * landscapeScaleFactor + 8;
 
@@ -82,8 +82,8 @@ const cardLineHeightL = 26 * landscapeScaleFactor;
 
 const barCodeHeightL = 107 * landscapeScaleFactor;
 const barCodeWidthL = 512 * landscapeScaleFactor;
-const barCodeMarginLeftL = 181 * landscapeScaleFactor;
-const barCodeMarginTopL = 179 * landscapeScaleFactor;
+const barCodeMarginLeftL = 170 * landscapeScaleFactor;
+const barCodeMarginTopL = 164 * landscapeScaleFactor;
 
 const fiscalCodeHeightL =
   -// rotation correction factor
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
   },
 
   landscapeFacSimile: {
-    marginTop: 280 * landscapeScaleFactor,
+    marginTop: 295 * landscapeScaleFactor,
     position: "absolute",
     color: customVariables.brandDarkestGray,
     fontSize: textFontSizeL,
@@ -309,6 +309,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
       <React.Fragment>
         <Text
           bold={true}
+          robotomono={true}
           style={[
             isLandscape
               ? [styles.landscapeText, styles.landscapeFiscalCodeText]
@@ -320,6 +321,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
         <Text
           bold={true}
+          robotomono={true}
           style={[
             isLandscape
               ? [styles.landscapeText, styles.landscapeLastNameText]
@@ -331,6 +333,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
         <Text
           bold={true}
+          robotomono={true}
           style={[
             isLandscape
               ? [styles.landscapeText, styles.landscapeNameText]
@@ -342,6 +345,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
         <Text
           bold={true}
+          robotomono={true}
           style={[
             isLandscape
               ? [styles.landscapeGender, styles.landscapeNameText]
@@ -353,6 +357,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
         <Text
           bold={true}
+          robotomono={true}
           style={[
             isLandscape
               ? [styles.landscapeText, styles.landscapeBirthPlaceText]
@@ -364,6 +369,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
         <Text
           bold={true}
+          robotomono={true}
           style={[
             isLandscape
               ? [styles.landscapeText, styles.landscapeBirthCityText]
@@ -375,6 +381,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
         <Text
           bold={true}
+          robotomono={true}
           style={[
             isLandscape
               ? [styles.landscapeText, styles.landscapeDateText]
@@ -394,10 +401,15 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           value={fiscalCode}
           format={"CODE128"}
           background={"transparent"}
-          height={barCodeHeightL - 20} // 20: horizontal default padding of the barcode component
-          width={(barCodeWidthL - 20) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
+          height={barCodeHeightL - 5} // 20: horizontal default padding of the barcode component
+          width={(barCodeWidthL - 5) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
-        <Text bold={true} alignCenter={true} style={styles.landscapeFacSimile}>
+        <Text
+          bold={true}
+          robotomono={true}
+          alignCenter={true}
+          style={styles.landscapeFacSimile}
+        >
           {I18n.t("profile.fiscalCode.facSimile")}
         </Text>
       </View>
@@ -410,7 +422,12 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           height={barCodeHeightF - 5}
           width={(barCodeWidthF - 5) / 211}
         />
-        <Text bold={true} alignCenter={true} style={styles.fullFacSimileText}>
+        <Text
+          bold={true}
+          robotomono={true}
+          alignCenter={true}
+          style={styles.fullFacSimileText}
+        >
           {I18n.t("profile.fiscalCode.facSimile")}
         </Text>
       </View>
