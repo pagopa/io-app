@@ -675,6 +675,8 @@ services:
     otherServices: Other services
   enableAll: Enable all
   disableAll: Disable all
+  disableAllTitle: "Do you really want to disable all the services?"
+  disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, its can no longer contact you by IO (until you enable it again). You will be able to use the services by other channels (front office, website, etc.)"
   done: Done
 serviceDetail:
   headerTitle: "Service details"

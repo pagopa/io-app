@@ -8,14 +8,10 @@ import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { createSelector } from "reselect";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import {
-  InjectedWithServicesSelectionProps,
-  withServicesSelection
-} from "../../components/helpers/withServicesSelection";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
@@ -26,6 +22,7 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
+import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import {
   loadVisibleServices,
@@ -50,7 +47,8 @@ import {
 import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type State = {
-  enabledServices: boolean;
+  enableServices: boolean;
+  isLongPressEnabled: boolean;
 };
 
 type OwnProps = NavigationInjectedProps;
@@ -58,8 +56,7 @@ type OwnProps = NavigationInjectedProps;
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   ReduxProps &
-  OwnProps &
-  InjectedWithServicesSelectionProps;
+  OwnProps;
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -90,7 +87,8 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      enabledServices: false
+      enableServices: false,
+      isLongPressEnabled: false
     };
   }
 
@@ -111,7 +109,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
       this.props.profile,
       service.service_id
     );
-    this.props.disableAllServices(
+    this.props.disableOrEnableAllServices(
       [service.service_id],
       this.props.profile,
       !value.inbox
@@ -119,10 +117,40 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
   };
 
   private setEnabledServices = () => {
-    this.setState({ enabledServices: !this.state.enabledServices });
+    this.setState({ enableServices: !this.state.enableServices });
   };
   private handleOnLongPressItem = () => {
-    this.props.setLongPressEnabled();
+    this.setState({ isLongPressEnabled: !this.state.isLongPressEnabled });
+  };
+
+  // show an alert describing what happen if a service is disabled on IO
+  // the alert is displayed only the first time the user disable a service
+  private showAlertOnServiceDisabling = () => {
+    Alert.alert(
+      I18n.t("services.disableAllTitle"),
+      I18n.t("services.disableAllMsg"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.ok"),
+          style: "destructive",
+          onPress: () => {
+            this.props.disableOrEnableAllServices(
+              this.props.allServicesId,
+              this.props.profile,
+              this.state.enableServices
+            );
+            this.setEnabledServices();
+            // update the persisted preferences to remember the user read the alert
+            this.props.updatePersistedPreference(true);
+          }
+        }
+      ],
+      { cancelable: false }
+    );
   };
 
   public componentDidMount() {
@@ -161,23 +189,27 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     const { sections } = this.props;
     return (
       <View style={styles.listWrapper}>
-        {this.props.isLongPressEnabled && (
+        {this.state.isLongPressEnabled && (
           <View style={styles.buttonBar}>
             <Button
               block={true}
               bordered={true}
               style={styles.buttonBarLeft}
               onPress={() => {
-                this.props.disableAllServices(
-                  this.props.allServicesId,
-                  this.props.profile,
-                  this.state.enabledServices
-                );
-                this.setEnabledServices();
+                if (!this.props.wasServiceAlertDisplayedOnce) {
+                  this.showAlertOnServiceDisabling();
+                } else {
+                  this.props.disableOrEnableAllServices(
+                    this.props.allServicesId,
+                    this.props.profile,
+                    this.state.enableServices
+                  );
+                  this.setEnabledServices();
+                }
               }}
             >
               <Text>
-                {this.state.enabledServices
+                {this.state.enableServices
                   ? I18n.t("services.enableAll")
                   : I18n.t("services.disableAll")}
               </Text>
@@ -185,7 +217,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
             <Button
               block={true}
               primary={true}
-              onPress={this.props.disableLongPress}
+              onPress={this.handleOnLongPressItem}
               style={styles.buttonBarRight}
             >
               <Text>{I18n.t("services.done")}</Text>
@@ -203,7 +235,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
             this.props.isExperimentalFeaturesEnabled
           }
           onLongPressItem={this.handleOnLongPressItem}
-          isLongPressEnabled={this.props.isLongPressEnabled}
+          isLongPressEnabled={this.state.isLongPressEnabled}
           onSwitch={this.onSwitch}
         />
       </View>
@@ -291,7 +323,9 @@ const mapStateToProps = (state: GlobalState) => {
     isSearchEnabled: isSearchServicesEnabledSelector(state),
     isExperimentalFeaturesEnabled:
       state.persistedPreferences.isExperimentalFeaturesEnabled,
-    readServices: readServicesSelector(state)
+    readServices: readServicesSelector(state),
+    wasServiceAlertDisplayedOnce:
+      state.persistedPreferences.wasServiceAlertDisplayedOnce
   };
 };
 
@@ -308,7 +342,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
    * TODO: restyle ui to trigger all the services being enabled/disabled at once
    *       https://www.pivotaltracker.com/n/projects/2048617/stories/166763719
    */
-  disableAllServices: (
+  disableOrEnableAllServices: (
     allServicesId: ReadonlyArray<string>,
     profile: ProfileState,
     enable: boolean
@@ -323,10 +357,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         blocked_inbox_or_channels: newBlockedChannels
       })
     );
+  },
+  updatePersistedPreference: (value: boolean) => {
+    dispatch(
+      serviceAlertDisplayedOnceSuccess({
+        wasServiceAlertDisplayedOnce: value
+      })
+    );
   }
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withServicesSelection(OldServicesHomeScreen));
+)(OldServicesHomeScreen);

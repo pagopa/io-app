@@ -686,6 +686,8 @@ services:
     otherServices: Altri servizi
   enableAll: Attiva tutti
   disableAll: Disattiva tutti
+  disableAllTitle: Vuoi davvero disattivare tutti i servizi?
+  disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finchè non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   done: Fatto
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
