@@ -1,6 +1,6 @@
-import { ListItem, Text, View } from "native-base";
+import { Col, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, Switch, ViewStyle } from "react-native";
 import customVariables from "../../theme/variables";
 import H5 from "../ui/H5";
 import IconFont from "./../ui/IconFont";
@@ -9,6 +9,7 @@ import { BadgeComponent } from "./BadgeComponent";
 type Props = Readonly<{
   title: string;
   onPress?: () => void;
+  onLongPress?: () => void;
   subTitle?: string;
   isFirstItem?: boolean;
   isLastItem?: boolean;
@@ -18,6 +19,10 @@ type Props = Readonly<{
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
+  isLongPressModeEnabled: boolean;
+  onSwitch?: () => void;
+  value: boolean;
+  key: string;
 }>;
 
 const ICON_SIZE = 24;
@@ -61,6 +66,7 @@ export default class ListItemComponent extends React.Component<Props> {
       <ListItem
         style={[styles.listItem, styles.flexRow, this.props.style]}
         onPress={this.props.onPress}
+        onLongPress={this.props.onLongPress}
         first={this.props.isFirstItem}
         last={this.props.isLastItem || this.props.hideSeparator}
       >
@@ -76,15 +82,25 @@ export default class ListItemComponent extends React.Component<Props> {
                 {this.props.title}
               </H5>
             </View>
-
-            {!this.props.iconName &&
-              !this.props.hideIcon && (
-                <IconFont
-                  name={"io-right"}
-                  size={ICON_SIZE}
-                  color={customVariables.contentPrimaryBackground}
-                />
-              )}
+            <Right>
+              {!this.props.iconName &&
+                !this.props.hideIcon &&
+                (this.props.isLongPressModeEnabled ? (
+                  <Col size={2}>
+                    <Switch
+                      key={this.props.key}
+                      value={this.props.value}
+                      onValueChange={this.props.onSwitch}
+                    />
+                  </Col>
+                ) : (
+                  <IconFont
+                    name="io-right"
+                    size={ICON_SIZE}
+                    color={customVariables.contentPrimaryBackground}
+                  />
+                ))}
+            </Right>
           </View>
           {this.props.subTitle && (
             <Text

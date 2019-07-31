@@ -82,6 +82,9 @@ class ServiceSectionListComponent extends React.Component<Props> {
         onSelect={this.props.onSelect}
         isRead={this.isRead(itemInfo.item, this.props.readServices)}
         hideSeparator={true}
+        onLongPress={this.props.onLongPressItem}
+        isLongPressModeEnabled={this.props.isLongPressEnabled}
+        onSwitch={this.props.onSwitch}
       />
     ) : (
       <ServiceListItem

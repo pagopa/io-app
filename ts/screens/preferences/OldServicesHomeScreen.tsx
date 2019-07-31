@@ -123,7 +123,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     this.setState({ isLongPressEnabled: !this.state.isLongPressEnabled });
   };
 
-  // show an alert describing what happen if a service is disabled on IO
+  // show an alert describing what happen if all services is disabled on IO
   // the alert is displayed only the first time the user disable a service
   private showAlertOnServiceDisabling = () => {
     Alert.alert(
@@ -138,12 +138,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
           text: I18n.t("global.buttons.ok"),
           style: "destructive",
           onPress: () => {
-            this.props.disableOrEnableAllServices(
-              this.props.allServicesId,
-              this.props.profile,
-              this.state.enableServices
-            );
-            this.setEnabledServices();
+            this.disableOrEnableServices();
             // update the persisted preferences to remember the user read the alert
             this.props.updatePersistedPreference(true);
           }
@@ -151,6 +146,15 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
       ],
       { cancelable: false }
     );
+  };
+
+  private disableOrEnableServices = () => {
+    this.props.disableOrEnableAllServices(
+      this.props.allServicesId,
+      this.props.profile,
+      this.state.enableServices
+    );
+    this.setEnabledServices();
   };
 
   public componentDidMount() {
@@ -199,12 +203,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
                 if (!this.props.wasServiceAlertDisplayedOnce) {
                   this.showAlertOnServiceDisabling();
                 } else {
-                  this.props.disableOrEnableAllServices(
-                    this.props.allServicesId,
-                    this.props.profile,
-                    this.state.enableServices
-                  );
-                  this.setEnabledServices();
+                  this.disableOrEnableServices();
                 }
               }}
             >
