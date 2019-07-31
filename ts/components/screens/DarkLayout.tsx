@@ -46,7 +46,7 @@ export default class DarkLayout extends React.Component<Props> {
           <View spacer={true} />
           {this.props.topContent}
         </View>
-        {banner && <React.Fragment>{banner}</React.Fragment>}
+        {banner}
         {this.props.children}
       </React.Fragment>
     );
