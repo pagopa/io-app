@@ -112,7 +112,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
       bordered: true,
       onPress: this.goBack,
       title: I18n.t("global.buttons.back")
@@ -215,7 +214,8 @@ const mapStateToProps = (state: GlobalState) => {
     error,
     checkout3dsUrl: pot.isLoading(creditCardCheckout3ds)
       ? pot.toOption(creditCardCheckout3ds)
-      : none
+      : none,
+    loadingOpacity: 0.98
   };
 };
 
