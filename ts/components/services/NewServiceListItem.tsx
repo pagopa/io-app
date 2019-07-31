@@ -77,18 +77,20 @@ export default class NewServiceListItem extends React.PureComponent<
         )
       : undefined;
 
-    const onSwitchTap = this.props.isLongPressModeEnabled
+    const onSwitch = this.props.isLongPressModeEnabled
       ? pot.toUndefined(
           pot.map(potService, service => () => this.props.onSwitch(service))
         )
       : undefined;
 
-    const inboxEnabledLabel = pot.map(
-      enabledChannels,
-      _ =>
-        _.inbox
-          ? I18n.t("services.serviceIsEnabled")
-          : I18n.t("services.serviceNotEnabled")
+    const inboxEnabledLabel = pot.toUndefined(
+      pot.map(
+        enabledChannels,
+        _ =>
+          _.inbox
+            ? I18n.t("services.serviceIsEnabled")
+            : I18n.t("services.serviceNotEnabled")
+      )
     );
     const serviceName = pot.isLoading(potService)
       ? I18n.t("global.remoteStates.loading")
@@ -105,15 +107,15 @@ export default class NewServiceListItem extends React.PureComponent<
     return (
       <ListItemComponent
         title={serviceName}
-        subTitle={pot.getOrElse(inboxEnabledLabel, "")}
+        subTitle={inboxEnabledLabel}
         hasBadge={!this.props.isRead}
         onPress={onPress}
         onLongPress={this.props.onLongPress}
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
-        onSwitch={onSwitchTap}
+        onSwitch={onSwitch}
         value={this.state.uiEnabledChannels.inbox}
-        key={`switch-service-${profileVersion}`}
+        keySwitch={`switch-service-${profileVersion}`}
         isLongPressModeEnabled={isLongPressModeEnabled}
       />
     );

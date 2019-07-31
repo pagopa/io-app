@@ -1,4 +1,4 @@
-import { Col, ListItem, Right, Text, View } from "native-base";
+import { ListItem, Text, View } from "native-base";
 import * as React from "react";
 import { StyleProp, StyleSheet, Switch, ViewStyle } from "react-native";
 import customVariables from "../../theme/variables";
@@ -22,7 +22,7 @@ type Props = Readonly<{
   isLongPressModeEnabled?: boolean;
   onSwitch?: () => void;
   value?: boolean;
-  key?: string;
+  keySwitch?: string;
 }>;
 
 const ICON_SIZE = 24;
@@ -82,25 +82,21 @@ export default class ListItemComponent extends React.Component<Props> {
                 {this.props.title}
               </H5>
             </View>
-            <Right>
-              {!this.props.iconName &&
-                !this.props.hideIcon &&
-                (this.props.isLongPressModeEnabled ? (
-                  <Col size={2}>
-                    <Switch
-                      key={this.props.key}
-                      value={this.props.value}
-                      onValueChange={this.props.onSwitch}
-                    />
-                  </Col>
-                ) : (
-                  <IconFont
-                    name="io-right"
-                    size={ICON_SIZE}
-                    color={customVariables.contentPrimaryBackground}
-                  />
-                ))}
-            </Right>
+            {!this.props.iconName &&
+              !this.props.hideIcon &&
+              (this.props.isLongPressModeEnabled ? (
+                <Switch
+                  key={this.props.keySwitch}
+                  value={this.props.value}
+                  onValueChange={this.props.onSwitch}
+                />
+              ) : (
+                <IconFont
+                  name="io-right"
+                  size={ICON_SIZE}
+                  color={customVariables.contentPrimaryBackground}
+                />
+              ))}
           </View>
           {this.props.subTitle && (
             <Text
