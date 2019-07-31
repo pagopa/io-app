@@ -18,6 +18,7 @@ type Props = Readonly<{
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
+  isPreferenceItem?: boolean;
 }>;
 
 const ICON_SIZE = 24;
@@ -44,6 +45,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexGrow: 1
   },
+  flexColumn2: {
+    flexDirection: "column",
+    flex: 1
+  },
   serviceName: {
     fontWeight: "700",
     alignSelf: "flex-start",
@@ -64,45 +69,53 @@ export default class ListItemComponent extends React.Component<Props> {
         first={this.props.isFirstItem}
         last={this.props.isLastItem || this.props.hideSeparator}
       >
-        <View style={styles.flexColumn}>
-          <View style={styles.flexRow}>
-            <View style={styles.flexRow2}>
-              {this.props.hasBadge && (
-                <View style={styles.spacingBase}>
-                  <BadgeComponent />
-                </View>
-              )}
-              <H5 numberOfLines={2} style={styles.serviceName}>
-                {this.props.title}
-              </H5>
-            </View>
+        <View style={{ flexDirection: "row" }}>
+          <View
+            style={
+              this.props.isPreferenceItem
+                ? styles.flexColumn2
+                : styles.flexColumn
+            }
+          >
+            <View style={styles.flexRow}>
+              <View style={styles.flexRow2}>
+                {this.props.hasBadge && (
+                  <View style={styles.spacingBase}>
+                    <BadgeComponent />
+                  </View>
+                )}
+                <H5 numberOfLines={2} style={styles.serviceName}>
+                  {this.props.title}
+                </H5>
+              </View>
 
-            {!this.props.iconName &&
-              !this.props.hideIcon && (
-                <IconFont
-                  name={"io-right"}
-                  size={ICON_SIZE}
-                  color={customVariables.contentPrimaryBackground}
-                />
-              )}
+              {!this.props.iconName &&
+                !this.props.hideIcon && (
+                  <IconFont
+                    name={"io-right"}
+                    size={ICON_SIZE}
+                    color={customVariables.contentPrimaryBackground}
+                  />
+                )}
+            </View>
+            {this.props.subTitle && (
+              <Text
+                numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
+                style={styles.description}
+              >
+                {this.props.subTitle}
+              </Text>
+            )}
           </View>
-          {this.props.subTitle && (
-            <Text
-              numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-              style={styles.description}
-            >
-              {this.props.subTitle}
-            </Text>
+          {this.props.iconName && (
+            <IconFont
+              name={this.props.iconName}
+              size={ICON_SIZE * 2}
+              style={{ alignSelf: "center" }}
+              color={customVariables.contentPrimaryBackground}
+            />
           )}
         </View>
-        {this.props.iconName && (
-          <IconFont
-            name={this.props.iconName}
-            size={ICON_SIZE * 2}
-            style={{ alignSelf: "center" }}
-            color={customVariables.contentPrimaryBackground}
-          />
-        )}
       </ListItem>
     );
   }
