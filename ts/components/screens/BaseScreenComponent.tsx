@@ -3,10 +3,8 @@ import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 
-import { ContextualHelp } from "../ContextualHelp";
-import { withLightModalContext } from "../helpers/withLightModalContext";
+import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
-import { LightModalContextInterface } from "../ui/LightModal";
 import { BaseHeader } from "./BaseHeader";
 
 interface ContextualHelpProps {
@@ -34,20 +32,26 @@ type BaseHeaderProps =
   | "searchType";
 
 type Props = OwnProps &
-  LightModalContextInterface &
   Pick<React.ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
 
-class BaseScreenComponent extends React.PureComponent<Props> {
+interface State {
+  isHelpVisible: boolean;
+}
+
+class BaseScreenComponent extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isHelpVisible: false
+    };
+  }
+
   private showHelp = () => {
-    // tslint:disable-next-line:no-unused-expression
-    this.props.contextualHelp &&
-      this.props.showModal(
-        <ContextualHelp
-          onClose={this.props.hideModal}
-          title={this.props.contextualHelp.title}
-          body={this.props.contextualHelp.body}
-        />
-      );
+    this.setState({ isHelpVisible: true });
+  };
+
+  private hideHelp = () => {
+    this.setState({ isHelpVisible: false });
   };
 
   public render() {
@@ -77,6 +81,15 @@ class BaseScreenComponent extends React.PureComponent<Props> {
         />
 
         {this.props.children}
+
+        {contextualHelp && (
+          <ContextualHelpModal
+            title={contextualHelp.title}
+            body={contextualHelp.body}
+            isVisible={this.state.isHelpVisible}
+            close={this.hideHelp}
+          />
+        )}
       </Container>
     );
   }
@@ -86,4 +99,4 @@ export default connectStyle(
   "UIComponent.BaseScreenComponent",
   {},
   mapPropsToStyleNames
-)(withLightModalContext(BaseScreenComponent));
+)(BaseScreenComponent);
