@@ -401,7 +401,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           value={fiscalCode}
           format={"CODE128"}
           background={"transparent"}
-          height={barCodeHeightL - 5} // 20: horizontal default padding of the barcode component
+          height={barCodeHeightL - 5}
           width={(barCodeWidthL - 5) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
         <Text
