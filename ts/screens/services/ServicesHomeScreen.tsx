@@ -1,3 +1,4 @@
+import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
@@ -141,9 +142,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         initialSelectedItemIds={some(new Set(organizationsSelected))}
         keyExtractor={(item: Organization) => item.fiscalCode}
         itemTitleExtractor={(item: Organization) => item.name}
-        itemIconComponent={(fiscalCode: string) =>
+        itemIconComponent={left((fiscalCode: string) =>
           this.renderOrganizationLogo(fiscalCode)
-        }
+        )}
         onCancel={hideModal}
         onSave={this.onSaveAreasOfInterest}
         isRefreshEnabled={false}

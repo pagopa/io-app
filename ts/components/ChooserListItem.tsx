@@ -1,3 +1,4 @@
+import { Either } from "fp-ts/lib/Either";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
@@ -8,9 +9,10 @@ import IconFont from "./ui/IconFont";
 type Props = Readonly<{
   itemTitle: string;
   itemId: string;
-  itemIconComponent?:
-    | (React.ReactElement)
-    | ((itemId: string) => React.ReactElement);
+  itemIconComponent?: Either<
+    (itemId: string) => React.ReactElement,
+    React.ReactElement
+  >;
   onPressItem: (itemId: string) => void;
   isItemSelected: boolean;
 }>;
@@ -52,10 +54,9 @@ export default class ChooserListItem extends React.Component<Props> {
       ? variables.selectedColor
       : variables.unselectedColor;
 
-    const icon =
-      typeof itemIconComponent === "function"
-        ? itemIconComponent(itemId)
-        : itemIconComponent;
+    const icon = itemIconComponent
+      ? itemIconComponent.getOrElseL(f => f(itemId))
+      : itemIconComponent;
 
     return (
       <TouchableOpacity onPress={this.handleOnPress}>
