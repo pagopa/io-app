@@ -49,7 +49,6 @@ import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 type State = {
   enableServices: boolean;
   isLongPressModeEnabled: boolean;
-  itemServiceOnSwitch?: ServicePublic;
 };
 
 type OwnProps = NavigationInjectedProps;
@@ -89,9 +88,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       enableServices: false,
-      isLongPressModeEnabled: false,
-      // I set the item to undefined and when I switch I fill it
-      itemServiceOnSwitch: undefined
+      isLongPressModeEnabled: false
     };
   }
 
