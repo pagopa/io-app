@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   }
 });
 // The number of milliseconds to delay for search
-const DEBOUNCED_TIME = 300 as Millisecond;
+const searchDelay = 300 as Millisecond;
 
 /**
  * A component for view, search and select a list of items
@@ -168,7 +168,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
       this.setState({
         debouncedSearchText: some(text)
       }),
-    DEBOUNCED_TIME
+    searchDelay
   );
 
   private onSearchDisable = () => {
