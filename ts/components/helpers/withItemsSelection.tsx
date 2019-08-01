@@ -59,7 +59,7 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
             };
           })
           .getOrElse({
-            selectedItemIds: some(new Set<string>().add(id))
+            selectedItemIds: some(new Set<string>([id]))
           });
       });
     };
