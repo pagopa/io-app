@@ -18,7 +18,6 @@ type Props = Readonly<{
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
-  isPreferenceItem?: boolean;
 }>;
 
 const ICON_SIZE = 24;
@@ -43,10 +42,7 @@ const styles = StyleSheet.create({
   flexColumn: {
     flexDirection: "column",
     justifyContent: "space-between",
-    flexGrow: 1
-  },
-  flexColumn2: {
-    flexDirection: "column",
+    flexGrow: 1,
     flex: 1
   },
   serviceName: {
@@ -70,13 +66,7 @@ export default class ListItemComponent extends React.Component<Props> {
         last={this.props.isLastItem || this.props.hideSeparator}
       >
         <View style={{ flexDirection: "row" }}>
-          <View
-            style={
-              this.props.isPreferenceItem
-                ? styles.flexColumn2
-                : styles.flexColumn
-            }
-          >
+          <View style={styles.flexColumn}>
             <View style={styles.flexRow}>
               <View style={styles.flexRow2}>
                 {this.props.hasBadge && (

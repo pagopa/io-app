@@ -151,7 +151,6 @@ class PreferencesScreen extends React.Component<Props, State> {
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.biometric_recognition")}
                 onPress={this.props.navigateToFingerprintPreferenceScreen}
-                isPreferenceItem={true}
                 subTitle={
                   this.props.isFingerprintEnabled
                     ? I18n.t(
@@ -166,7 +165,6 @@ class PreferencesScreen extends React.Component<Props, State> {
             {hasCalendarPermission && (
               <ListItemComponent
                 onPress={this.props.navigateToCalendarPreferenceScreen}
-                isPreferenceItem={true}
                 title={I18n.t(
                   "profile.preferences.list.preferred_calendar.title"
                 )}
@@ -184,7 +182,6 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.email")}
               subTitle={profileData.spid_email}
               iconName={"io-email"}
-              isPreferenceItem={true}
               onPress={unavailableAlert}
             />
 
@@ -192,7 +189,6 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.mobile_phone")}
               subTitle={languages}
               iconName={"io-phone-number"}
-              isPreferenceItem={true}
               onPress={unavailableAlert}
             />
 
@@ -200,7 +196,6 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.language")}
               subTitle={profileData.spid_mobile_phone}
               iconName={"io-languages"}
-              isPreferenceItem={true}
               onPress={languageAlert}
             />
           </List>
