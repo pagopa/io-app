@@ -11,7 +11,7 @@ import {
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { Button, Text, View } from "native-base";
+import { View } from "native-base";
 import React from "react";
 import { Platform, SectionListScrollParams, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -27,6 +27,7 @@ import {
   InjectedWithMessagesSelectionProps,
   withMessagesSelection
 } from "../helpers/withMessagesSelection";
+import { ListSelectionBar } from "../ListSelectionBar";
 import MessageAgenda, {
   isFakeItem,
   MessageAgendaItem,
@@ -49,28 +50,8 @@ const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
   },
-  buttonBar: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: Platform.OS === "ios" ? SCROLL_RANGE_FOR_ANIMATION : 0,
-    flexDirection: "row",
-    zIndex: 1,
-    justifyContent: "space-around",
-    backgroundColor: customVariables.brandLightGray,
-    padding: 10
-  },
-  buttonBarLeft: {
-    flex: 2
-  },
-  buttonBarRight: {
-    flex: 2
-  },
-  buttonBarCenter: {
-    flex: 2,
-    backgroundColor: customVariables.colorWhite,
-    marginLeft: 10,
-    marginRight: 10
+  animatedStartPosition: {
+    bottom: Platform.OS === "ios" ? SCROLL_RANGE_FOR_ANIMATION : 0
   }
 });
 
@@ -532,41 +513,15 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
     return (
       <View style={styles.listWrapper}>
-        {selectedMessageIds.isSome() && (
-          <View style={styles.buttonBar}>
-            <Button
-              block={true}
-              bordered={true}
-              light={true}
-              onPress={resetSelection}
-              style={styles.buttonBarLeft}
-            >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </Button>
-            <Button
-              block={true}
-              bordered={true}
-              style={styles.buttonBarCenter}
-              onPress={this.toggleAllMessagesSelection}
-            >
-              <Text>
-                {I18n.t(
-                  selectedMessageIds.value.size === allMessageIdsState.size
-                    ? "messages.cta.deselectAll"
-                    : "messages.cta.selectAll"
-                )}
-              </Text>
-            </Button>
-            <Button
-              block={true}
-              style={styles.buttonBarRight}
-              disabled={selectedMessageIds.value.size === 0}
-              onPress={this.archiveMessages}
-            >
-              <Text>{I18n.t("messages.cta.archive")}</Text>
-            </Button>
-          </View>
-        )}
+        <ListSelectionBar
+          selectedItemIds={selectedMessageIds}
+          allItemIds={some(allMessageIdsState)}
+          onToggleSelection={this.archiveMessages}
+          onToggleAllSelection={this.toggleAllMessagesSelection}
+          onResetSelection={resetSelection}
+          primaryButtonText={I18n.t("messages.cta.archive")}
+          containerStyle={[styles.animatedStartPosition]}
+        />
         <MessageAgenda
           ref={this.messageAgendaRef}
           sections={sectionsToRender}
