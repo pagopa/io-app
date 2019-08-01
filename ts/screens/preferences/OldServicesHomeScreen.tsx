@@ -48,7 +48,8 @@ import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type State = {
   enableServices: boolean;
-  isLongPressEnabled: boolean;
+  isLongPressModeEnabled: boolean;
+  itemServiceOnSwitch?: ServicePublic;
 };
 
 type OwnProps = NavigationInjectedProps;
@@ -88,7 +89,9 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       enableServices: false,
-      isLongPressEnabled: false
+      isLongPressModeEnabled: false,
+      // I set the item to undefined and when I switch I fill it
+      itemServiceOnSwitch: undefined
     };
   }
 
@@ -103,24 +106,53 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
   };
 
   private onSwitch = (service: ServicePublic) => {
-    this.props.contentServiceLoad(service.service_id);
-
     const value = getEnabledChannelsForService(
       this.props.profile,
       service.service_id
-    );
-    this.props.disableOrEnableAllServices(
-      [service.service_id],
-      this.props.profile,
-      !value.inbox
-    );
+    ).inbox;
+    this.props.contentServiceLoad(service.service_id);
+
+    if (!this.props.wasServiceAlertDisplayedOnce && value) {
+      Alert.alert(
+        I18n.t("services.disableAllTitle"),
+        I18n.t("services.disableAllMsg"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.ok"),
+            style: "destructive",
+            onPress: () => {
+              this.props.disableOrEnableServices(
+                [service.service_id],
+                this.props.profile,
+                !value
+              );
+              // update the persisted preferences to remember the user read the alert
+              this.props.updatePersistedPreference(true);
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this.props.disableOrEnableServices(
+        [service.service_id],
+        this.props.profile,
+        !value
+      );
+    }
   };
 
   private setEnabledServices = () => {
     this.setState({ enableServices: !this.state.enableServices });
   };
   private handleOnLongPressItem = () => {
-    this.setState({ isLongPressEnabled: !this.state.isLongPressEnabled });
+    this.setState({
+      isLongPressModeEnabled: !this.state.isLongPressModeEnabled
+    });
   };
 
   // show an alert describing what happen if all services is disabled on IO
@@ -148,8 +180,9 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     );
   };
 
+  // This method enable or disable services and update the enableServices props
   private disableOrEnableServices = () => {
-    this.props.disableOrEnableAllServices(
+    this.props.disableOrEnableServices(
       this.props.allServicesId,
       this.props.profile,
       this.state.enableServices
@@ -193,7 +226,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     const { sections } = this.props;
     return (
       <View style={styles.listWrapper}>
-        {this.state.isLongPressEnabled && (
+        {this.state.isLongPressModeEnabled && (
           <View style={styles.buttonBar}>
             <Button
               block={true}
@@ -234,7 +267,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
             this.props.isExperimentalFeaturesEnabled
           }
           onLongPressItem={this.handleOnLongPressItem}
-          isLongPressEnabled={this.state.isLongPressEnabled}
+          isLongPressEnabled={this.state.isLongPressModeEnabled}
           onSwitch={this.onSwitch}
         />
       </View>
@@ -341,7 +374,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
    * TODO: restyle ui to trigger all the services being enabled/disabled at once
    *       https://www.pivotaltracker.com/n/projects/2048617/stories/166763719
    */
-  disableOrEnableAllServices: (
+  disableOrEnableServices: (
     allServicesId: ReadonlyArray<string>,
     profile: ProfileState,
     enable: boolean
