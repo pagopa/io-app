@@ -10,6 +10,9 @@ import { Overlay } from "../ui/Overlay";
 const styles = StyleSheet.create({
   textCaption: {
     padding: variables.contentPadding
+  },
+  cancelButtonStyle: {
+    alignSelf: "center"
   }
 });
 
@@ -57,9 +60,8 @@ export function withLoadingSpinner<
                   onCancel && (
                     <Button
                       onPress={onCancel}
-                      style={{
-                        alignSelf: "center"
-                      }}
+                      cancel={true}
+                      style={styles.cancelButtonStyle}
                     >
                       <Text>{I18n.t("global.buttons.cancel")}</Text>
                     </Button>
