@@ -11,7 +11,7 @@ import ChooserListItem from "./ChooserListItem";
 type OwnProps<T> = {
   listState: ReadonlyArray<T>;
   searchText: string;
-  onSearchItemContainsText?: (item: T, searchText: string) => boolean;
+  matchingTextPredicate?: (item: T, searchText: string) => boolean;
   noSearchResultsSourceIcon?: ImageSourcePropType;
   noSearchResultsSubtitle?: string;
   keyExtractor: (item: T) => string;
@@ -66,7 +66,7 @@ class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
     listState: ReadonlyArray<T>,
     searchText: string
   ): Promise<ReadonlyArray<T>> {
-    const { onSearchItemContainsText } = this.props;
+    const { matchingTextPredicate } = this.props;
     // Don't apply the filter if searchText is empty
     if (searchText.length === 0) {
       return Promise.resolve(listState);
@@ -74,9 +74,7 @@ class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
     return new Promise(resolve => {
       const result = listState.filter(
         _ =>
-          onSearchItemContainsText
-            ? onSearchItemContainsText(_, searchText)
-            : false
+          matchingTextPredicate ? matchingTextPredicate(_, searchText) : false
       );
       resolve(result);
     });

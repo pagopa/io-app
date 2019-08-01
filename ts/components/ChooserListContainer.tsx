@@ -36,7 +36,7 @@ type OwnProps<T> = {
   isRefreshing?: boolean;
   onRefresh?: () => void;
   isSearchEnabled: boolean;
-  onSearchItemContainsText?: (item: T, searchText: string) => boolean;
+  matchingTextPredicate?: (item: T, searchText: string) => boolean;
   noSearchResultsSourceIcon?: ImageSourcePropType;
   noSearchResultsSubtitle?: string;
 };
@@ -211,7 +211,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
   private renderSearch = () => {
     const {
       items,
-      onSearchItemContainsText,
+      matchingTextPredicate,
       keyExtractor,
       itemTitleExtractor,
       noSearchResultsSourceIcon,
@@ -229,7 +229,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
         itemIconComponent={itemIconComponent}
         onPressItem={this.handleOnPressItem}
         searchText={debouncedSearchText.getOrElse("")}
-        onSearchItemContainsText={onSearchItemContainsText}
+        matchingTextPredicate={matchingTextPredicate}
         noSearchResultsSourceIcon={noSearchResultsSourceIcon}
         noSearchResultsSubtitle={noSearchResultsSubtitle}
       />
@@ -243,7 +243,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
       isSearchEnabled,
       items,
       onRefresh,
-      onSearchItemContainsText,
+      matchingTextPredicate,
       keyExtractor,
       selectedItemIds,
       itemTitleExtractor,
@@ -264,7 +264,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
         </AppHeader>
         <Content noPadded={true} style={styles.content}>
           <View>
-            {isSearchEnabled && onSearchItemContainsText
+            {isSearchEnabled && matchingTextPredicate
               ? this.renderSearch()
               : items.length > 0 && (
                   <ChooserList<T>

@@ -148,7 +148,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         onSave={this.onSaveAreasOfInterest}
         isRefreshEnabled={false}
         isSearchEnabled={true}
-        onSearchItemContainsText={this.organizationContainsText}
+        matchingTextPredicate={this.organizationContainsText}
         noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
         noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
       />
