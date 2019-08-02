@@ -49,9 +49,10 @@ export class ServicesLocalHeader extends React.PureComponent<Props> {
       onChooserAreasOfInterestPress,
       organizationsFiscalCodesSelected
     } = this.props;
-    const isOrganizationsFiscalCodesSelected =
-      organizationsFiscalCodesSelected.isSome() &&
-      organizationsFiscalCodesSelected.value.size > 0;
+    const isOrganizationsFiscalCodesSelected = organizationsFiscalCodesSelected.fold(
+      false,
+      _ => _.size > 0
+    );
 
     return isOrganizationsFiscalCodesSelected ? (
       <View style={styles.contentWrapper}>
