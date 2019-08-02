@@ -7,10 +7,6 @@ import customVariables from "../theme/variables";
 
 const styles = StyleSheet.create({
   buttonBar: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",

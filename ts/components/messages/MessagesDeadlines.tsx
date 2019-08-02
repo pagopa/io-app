@@ -52,6 +52,9 @@ const styles = StyleSheet.create({
   },
   animatedStartPosition: {
     bottom: Platform.OS === "ios" ? SCROLL_RANGE_FOR_ANIMATION : 0
+  },
+  listContainer: {
+    flex: 1
   }
 });
 
@@ -513,6 +516,20 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
     return (
       <View style={styles.listWrapper}>
+        <View style={styles.listContainer}>
+          <MessageAgenda
+            ref={this.messageAgendaRef}
+            sections={sectionsToRender}
+            servicesById={servicesById}
+            paymentsByRptId={paymentsByRptId}
+            refreshing={isRefreshing}
+            selectedMessageIds={selectedMessageIds}
+            onPressItem={this.handleOnPressItem}
+            onLongPressItem={this.handleOnLongPressItem}
+            onMoreDataRequest={this.onLoadMoreDataRequest}
+            onContentSizeChange={this.onContentSizeChange}
+          />
+        </View>
         <ListSelectionBar
           selectedItemIds={selectedMessageIds}
           allItemIds={some(allMessageIdsState)}
@@ -521,18 +538,6 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           onResetSelection={resetSelection}
           primaryButtonText={I18n.t("messages.cta.archive")}
           containerStyle={[styles.animatedStartPosition]}
-        />
-        <MessageAgenda
-          ref={this.messageAgendaRef}
-          sections={sectionsToRender}
-          servicesById={servicesById}
-          paymentsByRptId={paymentsByRptId}
-          refreshing={isRefreshing}
-          selectedMessageIds={selectedMessageIds}
-          onPressItem={this.handleOnPressItem}
-          onLongPressItem={this.handleOnLongPressItem}
-          onMoreDataRequest={this.onLoadMoreDataRequest}
-          onContentSizeChange={this.onContentSizeChange}
         />
       </View>
     );

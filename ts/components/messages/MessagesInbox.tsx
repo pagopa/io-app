@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
   },
   paddingForAnimation: {
     height: 55
+  },
+  listContainer: {
+    flex: 1
   }
 });
 
@@ -168,6 +171,18 @@ class MessagesInbox extends React.PureComponent<Props, State> {
 
     return (
       <View style={styles.listWrapper}>
+        <View style={styles.listContainer}>
+          <MessageList
+            {...this.props}
+            messageStates={this.state.filteredMessageStates}
+            onPressItem={this.handleOnPressItem}
+            onLongPressItem={this.handleOnLongPressItem}
+            refreshing={isLoading}
+            selectedMessageIds={selectedMessageIds}
+            ListEmptyComponent={ListEmptyComponent}
+            animated={animated}
+          />
+        </View>
         <ListSelectionBar
           selectedItemIds={selectedMessageIds}
           allItemIds={allMessageIdsState}
@@ -179,16 +194,6 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             AnimatedCTAStyle,
             paddingForAnimation && styles.animatedStartPosition
           ]}
-        />
-        <MessageList
-          {...this.props}
-          messageStates={this.state.filteredMessageStates}
-          onPressItem={this.handleOnPressItem}
-          onLongPressItem={this.handleOnLongPressItem}
-          refreshing={isLoading}
-          selectedMessageIds={selectedMessageIds}
-          ListEmptyComponent={ListEmptyComponent}
-          animated={animated}
         />
       </View>
     );
