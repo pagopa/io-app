@@ -98,6 +98,7 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 
+import { stopRetryByClient } from "italia-ts-commons/lib/tasks";
 import { NavigationActions } from "react-navigation";
 import ROUTES from "../navigation/routes";
 import { navigateToWalletHome } from "../store/actions/navigation";
@@ -465,6 +466,8 @@ function* pollTransactionSaga(
  * This is a best effort operation as the result is actually ignored.
  */
 function* deleteActivePaymentSaga() {
+  // stop polling
+  stopRetryByClient();
   const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select<
     GlobalState
   >(_ => _.wallet.payment.paymentId);
