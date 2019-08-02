@@ -110,29 +110,16 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     this.props.contentServiceLoad(service.service_id);
 
     if (!this.props.wasServiceAlertDisplayedOnce && value) {
-      Alert.alert(
-        I18n.t("services.disableAllTitle"),
-        I18n.t("services.disableAllMsg"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.ok"),
-            style: "destructive",
-            onPress: () => {
-              this.props.disableOrEnableServices(
-                [service.service_id],
-                this.props.profile,
-                !value
-              );
-              // update the persisted preferences to remember the user read the alert
-              this.props.updatePersistedPreference(true);
-            }
-          }
-        ],
-        { cancelable: false }
+      this.showAlertOnDisableServices(
+        I18n.t("services.disableTitle"),
+        I18n.t("services.disableMsg"),
+        () => {
+          this.props.disableOrEnableServices(
+            [service.service_id],
+            this.props.profile,
+            !value
+          );
+        }
       );
     } else {
       this.props.disableOrEnableServices(
@@ -152,12 +139,14 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     });
   };
 
-  // show an alert describing what happen if all services is disabled on IO
-  // the alert is displayed only the first time the user disable a service
-  private showAlertOnServiceDisabling = () => {
+  private showAlertOnDisableServices = (
+    title: string,
+    msg: string,
+    onConfirmPress: () => void
+  ) => {
     Alert.alert(
-      I18n.t("services.disableAllTitle"),
-      I18n.t("services.disableAllMsg"),
+      title,
+      msg,
       [
         {
           text: I18n.t("global.buttons.cancel"),
@@ -167,7 +156,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
           text: I18n.t("global.buttons.ok"),
           style: "destructive",
           onPress: () => {
-            this.disableOrEnableServices();
+            onConfirmPress();
             // update the persisted preferences to remember the user read the alert
             this.props.updatePersistedPreference(true);
           }
@@ -231,7 +220,11 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
               style={styles.buttonBarLeft}
               onPress={() => {
                 if (!this.props.wasServiceAlertDisplayedOnce) {
-                  this.showAlertOnServiceDisabling();
+                  this.showAlertOnDisableServices(
+                    I18n.t("services.disableAllTitle"),
+                    I18n.t("services.disableAllMsg"),
+                    () => this.disableOrEnableServices()
+                  );
                 } else {
                   this.disableOrEnableServices();
                 }
