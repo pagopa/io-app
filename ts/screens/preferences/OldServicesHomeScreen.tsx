@@ -116,7 +116,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
           this.props.disableOrEnableServices(
             [service.service_id],
             this.props.profile,
-            !value
+            false
           );
         }
       );
@@ -124,7 +124,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
       this.props.disableOrEnableServices(
         [service.service_id],
         this.props.profile,
-        false
+        !value
       );
     }
   };
