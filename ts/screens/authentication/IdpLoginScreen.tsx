@@ -185,13 +185,17 @@ class IdpLoginScreen extends React.Component<Props, State> {
                 : "authentication.errors.login.title"
             )}
           </Text>
-          {errorType === "LOGIN_ERROR" &&
-            this.state.errorCode && (
-              <Text style={styles.errorBody}>
-                {I18n.t(("authentication.errors.spid.error_" +
-                  this.state.errorCode) as TranslationKeys)}
-              </Text>
-            )}
+
+          {errorType === "LOGIN_ERROR" && (
+            <Text style={styles.errorBody}>
+              {this.state.errorCode
+                ? I18n.t(("authentication.errors.spid.error_" +
+                    this.state.errorCode) as TranslationKeys)
+                : I18n.t(
+                    "authentication.errors.spid.unknown" as TranslationKeys
+                  )}
+            </Text>
+          )}
 
           <View style={styles.errorButtonsContainer}>
             <Button

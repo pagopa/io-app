@@ -262,6 +262,7 @@ authentication:
       title: Errore nel login
       body: Si è verificato un errore durante il login, si prega di riprovare!
     spid:
+      unknown: Errore sconosciuto
       error_19: Autenticazione fallita per ripetuta sottomissione di credenziali errate - superato numero tentativi
       error_20: Utente privo di credenziali compatibili con il livello HTTP richiesto dal fornitore del servizio
       error_21: Timeout durante l’autenticazione utente
