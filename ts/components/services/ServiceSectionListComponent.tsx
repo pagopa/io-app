@@ -130,7 +130,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
         renderItem={this.renderServiceItem}
         renderSectionHeader={this.renderServiceSectionHeader}
         keyExtractor={this.getServiceKey}
-        stickySectionHeadersEnabled={false}
+        stickySectionHeadersEnabled={true}
         alwaysBounceVertical={false}
         refreshControl={refreshControl}
         ItemSeparatorComponent={ItemSeparatorComponent}
