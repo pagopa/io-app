@@ -4,7 +4,6 @@ import { Image, NavState, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { TranslationKeys } from "../../../locales/locales";
 
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
 
