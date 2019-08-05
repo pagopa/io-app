@@ -267,7 +267,7 @@ authentication:
       error_19: Autenticazione fallita per ripetuta sottomissione di credenziali errate - superato numero tentativi
       error_20: Utente privo di credenziali compatibili con il livello HTTP richiesto dal fornitore del servizio
       error_21: Timeout durante l’autenticazione utente
-      error_22: Utente nega il consenso all’invio di dati al SP in caso di sessione vigente
+      error_22: Utente nega il consenso all’invio di dati al fornitore del servizio in caso di sessione vigente
       error_23: Utente con identità sospesa/revocata o con credenziali bloccate
       error_25: Processo di autenticazione annullato dall’utente
   expiredSessionBanner:
