@@ -33,7 +33,7 @@
     "instabug-reactnative": "8.4.1",
     "io-ts": "1.8.5",
     "italia-pagopa-commons": "^1.0.0",
-    "italia-ts-commons": "git://github.com/teamdigitale/io-ts-commons.git#d440666d4805928bfc8b21c6fe19199e71aac2ae",
+    "italia-ts-commons": "git://github.com/teamdigitale/io-ts-commons.git#c675e469b6ff0c88f6bbb9e07751cc0d0fc9aedc",
     "lodash": "^4.17.11",
     "native-base": "2.12.1",
     "native-base-shoutem-theme": "^0.2.3",

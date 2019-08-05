@@ -98,7 +98,6 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 
-import { stopRetryByClient } from "italia-ts-commons/lib/tasks";
 import { NavigationActions } from "react-navigation";
 import ROUTES from "../navigation/routes";
 import { navigateToWalletHome } from "../store/actions/navigation";
@@ -460,14 +459,28 @@ function* pollTransactionSaga(
   }
 }
 
+// tslint:disable-next-line: no-let
+let promiseRetryResolve: {
+  // tslint:disable-next-line: unified-signatures
+  (value?: Response | PromiseLike<Response> | undefined): void;
+  (): void;
+};
+/**
+ * This Promise has used to interrupt polling for request idPayment
+ */
+// tslint:disable-next-line: promise-must-complete
+const promiseControllerRetry = new Promise<Response>((resolve, _) => {
+  promiseRetryResolve = resolve;
+});
+
 /**
  * This saga attempts to delete the active payment, if there's one.
  *
  * This is a best effort operation as the result is actually ignored.
  */
 function* deleteActivePaymentSaga() {
-  // stop polling
-  stopRetryByClient();
+  // Call resolve promise
+  promiseRetryResolve();
   const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select<
     GlobalState
   >(_ => _.wallet.payment.paymentId);
@@ -508,6 +521,7 @@ export function* watchWalletSaga(
     apiUrlPrefix,
     sessionToken,
     constantPollingFetch(
+      promiseControllerRetry,
       PAYMENT_ID_MAX_POLLING_RETRIES,
       PAYMENT_ID_RETRY_DELAY_MILLIS
     )
