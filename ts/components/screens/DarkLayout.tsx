@@ -27,6 +27,7 @@ type Props = Readonly<{
   topContentHeight?: number;
   footerContent?: React.ReactNode;
   contextualHelp?: { title: string; body: () => React.ReactNode };
+  banner?: React.ReactNode;
 }>;
 
 const styles = StyleSheet.create({
@@ -38,13 +39,14 @@ const styles = StyleSheet.create({
 
 export default class DarkLayout extends React.Component<Props> {
   private screenContent() {
+    const { banner } = this.props;
     return (
       <React.Fragment>
         <View style={styles.headerContents}>
           <View spacer={true} />
           {this.props.topContent}
         </View>
-
+        {banner}
         {this.props.children}
       </React.Fragment>
     );
@@ -63,6 +65,7 @@ export default class DarkLayout extends React.Component<Props> {
           backgroundColor={customVariables.brandDarkGray}
           barStyle={"light-content"}
         />
+
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
             hideHeader={this.props.hideHeader}

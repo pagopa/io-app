@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   flexColumn: {
     flexDirection: "column",
     justifyContent: "space-between",
-    flexGrow: 1
+    flex: 1
   },
   serviceName: {
     fontWeight: "700",

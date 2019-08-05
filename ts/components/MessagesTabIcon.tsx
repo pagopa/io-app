@@ -2,7 +2,7 @@ import { Badge, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
-import { messagesUnreadSelector } from "../store/reducers/entities/messages";
+import { messagesUnreadedAndUnarchivedSelector } from "../store/reducers/entities/messages";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
@@ -65,7 +65,7 @@ class MessagesTabIcon extends React.PureComponent<Props> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  const messagesUnread = messagesUnreadSelector(state);
+  const messagesUnread = messagesUnreadedAndUnarchivedSelector(state);
   return {
     badgeValue:
       messagesUnread < MAX_BADGE_VALUE ? messagesUnread : MAX_BADGE_VALUE
