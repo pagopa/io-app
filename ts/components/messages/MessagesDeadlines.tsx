@@ -523,7 +523,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
             refreshing={isRefreshing}
-            selectedMessageIds={selectedMessageIds}
+            selectedMessageIds={selectedItemIds}
             onPressItem={this.handleOnPressItem}
             onLongPressItem={this.handleOnLongPressItem}
             onMoreDataRequest={this.onLoadMoreDataRequest}
@@ -531,7 +531,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           />
         </View>
         <ListSelectionBar
-          selectedItemIds={selectedMessageIds}
+          selectedItemIds={selectedItemIds}
           allItemIds={some(allMessageIdsState)}
           onToggleSelection={this.archiveMessages}
           onToggleAllSelection={this.toggleAllMessagesSelection}
