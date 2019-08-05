@@ -242,7 +242,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                   <View spacer={true} extralarge={true} />
                 </View>
               }
-              cameraProps={{ ratio: "1:1" }}
+              // "captureAudio" enable/disable microphone permission
+              cameraProps={{ ratio: "1:1", captureAudio: false }}
               // "checkAndroid6Permissions" property enables permission checking for
               // Android versions greater than 6.0 (23+).
               checkAndroid6Permissions={true}
