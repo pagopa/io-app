@@ -78,6 +78,10 @@ const styles = StyleSheet.create({
     bottom: 30,
     flex: 1,
     flexDirection: "row"
+  },
+  cancelButtonStyle: {
+    flex: 1,
+    marginEnd: 10
   }
 });
 
@@ -200,9 +204,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
           <View style={styles.errorButtonsContainer}>
             <Button
               onPress={this.goBack}
-              style={{ flex: 1 }}
+              style={styles.cancelButtonStyle}
               block={true}
               light={true}
+              bordered={true}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>
