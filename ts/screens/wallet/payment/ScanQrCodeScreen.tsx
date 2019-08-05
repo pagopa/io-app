@@ -248,12 +248,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               // Android versions greater than 6.0 (23+).
               checkAndroid6Permissions={true}
               permissionDialogTitle={I18n.t(
-                "wallet.QRtoPay.cameraUsagePerissionInfobox.title"
+                "wallet.QRtoPay.cameraUsagePermissionInfobox.title"
               )}
               permissionDialogMessage={I18n.t(
-                "wallet.QRtoPay.cameraUsagePerissionInfobox.message"
+                "wallet.QRtoPay.cameraUsagePermissionInfobox.message"
               )}
-              // "notAuthorizedView" is by defatult available on iOS systems ONLY.
+              // "notAuthorizedView" is by default available on iOS systems ONLY.
               // In order to make Android systems act the same as iOSs you MUST
               // enable "checkAndroid6Permissions" property as well.
               // On devices before SDK version 23, the permissions are automatically
