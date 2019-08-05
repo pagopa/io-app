@@ -195,6 +195,12 @@ class MessageList extends React.Component<Props, State> {
     }
   };
 
+  private scrollToIndex = (index: number) => {
+    if (this.flatListRef.current) {
+      this.flatListRef.current.getNode().scrollToIndex({ index });
+    }
+  };
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -221,10 +227,9 @@ class MessageList extends React.Component<Props, State> {
 
   private renderItem = (info: ListRenderItemInfo<MessageState>) => {
     const { meta, isRead, message: potMessage } = info.item;
-    const { paymentsByRptId, onPressItem, onLongPressItem } = this.props;
+    const { paymentsByRptId, onPressItem } = this.props;
 
     const potService = this.props.servicesById[meta.sender_service_id];
-
     if (
       potService &&
       (pot.isLoading(potService) || pot.isLoading(potMessage))
@@ -279,7 +284,7 @@ class MessageList extends React.Component<Props, State> {
           service={service}
           payment={payment}
           onPress={onPressItem}
-          onLongPress={onLongPressItem}
+          onLongPress={this.onLongPress}
           isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
           isSelected={this.props.selectedMessageIds
             .map(_ => _.has(info.item.meta.id))
@@ -294,6 +299,15 @@ class MessageList extends React.Component<Props, State> {
     index: number
   ) => {
     return this.state.itemLayouts[index];
+  };
+
+  private onLongPress = (id: string) => {
+    const { messageStates, onLongPressItem } = this.props;
+    onLongPressItem(id);
+    const index = messageStates.findIndex(_ => _.meta.id === id);
+    setTimeout(() => {
+      this.scrollToIndex(index);
+    }, 10);
   };
 
   public render() {
