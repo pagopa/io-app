@@ -1,17 +1,13 @@
+import { left } from "fp-ts/lib/Either";
+import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import {
-  Animated,
-  ListRenderItemInfo,
-  Platform,
-  StyleSheet
-} from "react-native";
+import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-import { ChooserListContainer } from "../../components/ChooserListContainer";
-import ChooserListItem from "../../components/ChooserListItem";
+import ChooserListContainer from "../../components/ChooserListContainer";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -23,10 +19,12 @@ import ServicesOther from "../../components/services/ServicesOther";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import { setSelectedOrganizations } from "../../store/actions/organizations";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedAllOrganizations } from "../../store/reducers/entities/organizations";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
+import { organizationsFiscalCodesSelectedStateSelector } from "../../store/reducers/entities/organizations/organizationsFiscalCodesSelected";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
@@ -123,16 +121,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /**
    * For tab Locals
    */
-  private renderOrganizationItem = (info: ListRenderItemInfo<Organization>) => {
-    const item = info.item;
-    return (
-      <ChooserListItem
-        title={item.name}
-        iconComponent={this.renderOrganizationLogo(item.fiscalCode)}
-      />
-    );
-  };
-
   private renderOrganizationLogo = (organizationFiscalCode: string) => {
     return (
       <OrganizationLogo
@@ -146,20 +134,33 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     return isTextIncludedCaseInsensitive(item.name, searchText);
   }
 
-  private showChooserLocalServicesModal = () => {
+  private showChooserAreasOfInterestModal = () => {
+    const { allOrganizations, hideModal, organizationsSelected } = this.props;
     this.props.showModal(
       <ChooserListContainer<Organization>
-        items={this.props.allOrganizations}
+        items={allOrganizations}
+        initialSelectedItemIds={some(new Set(organizationsSelected))}
         keyExtractor={(item: Organization) => item.fiscalCode}
-        renderItem={this.renderOrganizationItem}
-        onCancel={this.props.hideModal}
+        itemTitleExtractor={(item: Organization) => item.name}
+        itemIconComponent={left((fiscalCode: string) =>
+          this.renderOrganizationLogo(fiscalCode)
+        )}
+        onCancel={hideModal}
+        onSave={this.onSaveAreasOfInterest}
         isRefreshEnabled={false}
-        isSearchEnabled={true}
-        onSearchItemContainsText={this.organizationContainsText}
+        matchingTextPredicate={this.organizationContainsText}
         noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
         noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
       />
     );
+  };
+
+  private onSaveAreasOfInterest = (
+    selectedFiscalCodes: Option<Set<string>>
+  ) => {
+    const { saveSelectedOrganizationItems, hideModal } = this.props;
+    saveSelectedOrganizationItems(selectedFiscalCodes);
+    hideModal();
   };
 
   public render() {
@@ -228,7 +229,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           }
         >
           <ServicesLocal
-            onAddAreasOfInterestPress={this.showChooserLocalServicesModal}
+            onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
+            organizationsFiscalCodesSelected={some(
+              new Set(this.props.organizationsSelected)
+            )}
             animated={{
               onScroll: Animated.event(
                 [
@@ -385,12 +389,18 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     allOrganizations: lexicallyOrderedAllOrganizations(state),
-    isLoading
+    isLoading,
+    organizationsSelected: organizationsFiscalCodesSelectedStateSelector(state)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshServices: () => dispatch(loadVisibleServices.request())
+  refreshServices: () => dispatch(loadVisibleServices.request()),
+  saveSelectedOrganizationItems: (selectedItemIds: Option<Set<string>>) => {
+    if (selectedItemIds.isSome()) {
+      dispatch(setSelectedOrganizations(Array.from(selectedItemIds.value)));
+    }
+  }
 });
 
 export default connect(
