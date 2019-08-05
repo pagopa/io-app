@@ -174,13 +174,13 @@ class MessagesArchive extends React.PureComponent<Props, State> {
             onPressItem={this.handleOnPressItem}
             onLongPressItem={this.handleOnLongPressItem}
             refreshing={isLoading}
-            selectedMessageIds={selectedMessageIds}
+            selectedMessageIds={selectedItemIds}
             ListEmptyComponent={ListEmptyComponent}
             animated={animated}
           />
         </View>
         <ListSelectionBar
-          selectedItemIds={selectedMessageIds}
+          selectedItemIds={selectedItemIds}
           allItemIds={allMessageIdsState}
           onToggleSelection={this.unarchiveMessages}
           onToggleAllSelection={this.toggleAllMessagesSelection}
