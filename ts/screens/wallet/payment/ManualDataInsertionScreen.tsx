@@ -160,8 +160,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
-      bordered: true,
+      cancel: true,
       onPress: this.props.navigateToWalletHome,
       title: I18n.t("global.buttons.cancel")
     };
