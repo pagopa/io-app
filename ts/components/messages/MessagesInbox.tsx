@@ -10,9 +10,9 @@ import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/enti
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import customVariables from "../../theme/variables";
 import {
-  InjectedWithMessagesSelectionProps,
-  withMessagesSelection
-} from "../helpers/withMessagesSelection";
+  InjectedWithItemsSelectionProps,
+  withItemsSelection
+} from "../helpers/withItemsSelection";
 import MessageList from "./MessageList";
 
 const SCROLL_RANGE_FOR_ANIMATION =
@@ -97,7 +97,7 @@ type MessageListProps =
 type Props = Pick<ComponentProps<typeof MessageList>, MessageListProps> &
   OwnProps &
   AnimationProps &
-  InjectedWithMessagesSelectionProps;
+  InjectedWithItemsSelectionProps;
 
 type State = {
   lastMessagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
@@ -184,14 +184,14 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       animated,
       AnimatedCTAStyle,
       paddingForAnimation,
-      selectedMessageIds,
+      selectedItemIds,
       resetSelection
     } = this.props;
     const { allMessageIdsState } = this.state;
 
     return (
       <View style={styles.listWrapper}>
-        {selectedMessageIds.isSome() &&
+        {selectedItemIds.isSome() &&
           allMessageIdsState.isSome() && (
             <Animated.View
               style={[
@@ -217,8 +217,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
               >
                 <Text>
                   {I18n.t(
-                    selectedMessageIds.value.size ===
-                    allMessageIdsState.value.size
+                    selectedItemIds.value.size === allMessageIdsState.value.size
                       ? "messages.cta.deselectAll"
                       : "messages.cta.selectAll"
                   )}
@@ -227,7 +226,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
               <Button
                 block={true}
                 style={styles.buttonBarRight}
-                disabled={selectedMessageIds.value.size === 0}
+                disabled={selectedItemIds.value.size === 0}
                 onPress={this.archiveMessages}
               >
                 <Text>{I18n.t("messages.cta.archive")}</Text>
@@ -240,7 +239,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnLongPressItem}
           refreshing={isLoading}
-          selectedMessageIds={selectedMessageIds}
+          selectedMessageIds={selectedItemIds}
           ListEmptyComponent={ListEmptyComponent}
           animated={animated}
         />
@@ -249,7 +248,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   }
 
   private handleOnPressItem = (id: string) => {
-    if (this.props.selectedMessageIds.isSome()) {
+    if (this.props.selectedItemIds.isSome()) {
       // Is the selection mode is active a simple "press" must act as
       // a "longPress" (select the item).
       this.handleOnLongPressItem(id);
@@ -259,15 +258,15 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   };
 
   private handleOnLongPressItem = (id: string) => {
-    this.props.toggleMessageSelection(id);
+    this.props.toggleItemSelection(id);
   };
 
   private toggleAllMessagesSelection = () => {
     const { allMessageIdsState } = this.state;
-    const { selectedMessageIds } = this.props;
-    if (allMessageIdsState.isSome() && selectedMessageIds.isSome()) {
-      this.props.setSelectedMessageIds(
-        allMessageIdsState.value.size === selectedMessageIds.value.size
+    const { selectedItemIds } = this.props;
+    if (allMessageIdsState.isSome() && selectedItemIds.isSome()) {
+      this.props.setSelectedItemIds(
+        allMessageIdsState.value.size === selectedItemIds.value.size
           ? some(new Set())
           : allMessageIdsState
       );
@@ -277,10 +276,10 @@ class MessagesInbox extends React.PureComponent<Props, State> {
   private archiveMessages = () => {
     this.props.resetSelection();
     this.props.setMessagesArchivedState(
-      this.props.selectedMessageIds.map(_ => Array.from(_)).getOrElse([]),
+      this.props.selectedItemIds.map(_ => Array.from(_)).getOrElse([]),
       true
     );
   };
 }
 
-export default withMessagesSelection(MessagesInbox);
+export default withItemsSelection(MessagesInbox);
