@@ -120,8 +120,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      requestState: pot.noneLoading,
-      errorCode: undefined
+      requestState: pot.noneLoading
     };
   }
 
@@ -179,6 +178,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
       );
     } else if (pot.isError(this.state.requestState)) {
       const errorType = this.state.requestState.error;
+      const errorTranslationKey = `authentication.errors.spid.error_${
+        this.state.errorCode
+      }`;
+
       return (
         <View style={styles.errorContainer}>
           <Image source={brokenLinkImage} resizeMode="contain" />
@@ -192,12 +195,9 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
           {errorType === "LOGIN_ERROR" && (
             <Text style={styles.errorBody}>
-              {this.state.errorCode
-                ? I18n.t(("authentication.errors.spid.error_" +
-                    this.state.errorCode) as TranslationKeys)
-                : I18n.t(
-                    "authentication.errors.spid.unknown" as TranslationKeys
-                  )}
+              {I18n.t(errorTranslationKey, {
+                defaultValue: I18n.t("authentication.errors.spid.unknown")
+              })}
             </Text>
           )}
 
