@@ -56,6 +56,7 @@ type Props = OwnProps & AnimatedProps;
 type State = {
   prevMessageStates?: ReadonlyArray<MessageState>;
   itemLayouts: ReadonlyArray<ItemLayout>;
+  longPressedItemIndex?: number;
 };
 
 const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
@@ -305,9 +306,21 @@ class MessageList extends React.Component<Props, State> {
     const { messageStates, onLongPressItem } = this.props;
     onLongPressItem(id);
     const index = messageStates.findIndex(_ => _.meta.id === id);
-    setTimeout(() => {
-      this.scrollToIndex(index);
-    }, 10);
+    if (index === messageStates.length - 1) {
+      this.setState({
+        longPressedItemIndex: index
+      });
+    }
+  };
+
+  private handleOnLayoutChange = () => {
+    const { longPressedItemIndex } = this.state;
+    if (longPressedItemIndex) {
+      this.scrollToIndex(longPressedItemIndex);
+      this.setState({
+        longPressedItemIndex: undefined
+      });
+    }
   };
 
   public render() {
@@ -344,6 +357,7 @@ class MessageList extends React.Component<Props, State> {
           renderItem={this.renderItem}
           getItemLayout={this.getItemLayout}
           onScroll={animated ? animated.onScroll : undefined}
+          onLayout={this.handleOnLayoutChange}
         />
       </React.Fragment>
     );
