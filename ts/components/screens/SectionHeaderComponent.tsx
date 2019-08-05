@@ -4,7 +4,7 @@
  *  - message list https://www.pivotaltracker.com/story/show/165716236
  *  - service lists https://www.pivotaltracker.com/story/show/166792020
  */
-import { ListItem, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import customVariables from "../../theme/variables";
@@ -32,15 +32,21 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontWeight: "400",
     flex: 1
+  },
+  sectionView: {
+    backgroundColor: "#FFF",
+    flexDirection: "row",
+    borderBottomColor: customVariables.itemSeparator,
+    borderBottomWidth: StyleSheet.hairlineWidth
   }
 });
 
 export default class SectionHeaderComponent extends React.Component<Props> {
   public render() {
     return (
-      <ListItem
-        first={true}
+      <View
         style={[
+          styles.sectionView,
           this.props.logoUri ? styles.withLogo : styles.withoutLogo,
           this.props.style
         ]}
@@ -50,7 +56,7 @@ export default class SectionHeaderComponent extends React.Component<Props> {
           <OrganizationLogo logoUri={this.props.logoUri} />
         )}
         <H5 style={styles.sectionTitle}>{this.props.sectionHeader}</H5>
-      </ListItem>
+      </View>
     );
   }
 }
