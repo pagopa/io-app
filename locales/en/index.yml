@@ -43,6 +43,7 @@ global:
   search:
     invalidSearchBarText: Enter at least {{minCharacter}} characters
     noResultsFound: "There are no results for this search: try something else."
+    noResultsTitle: No results.
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
@@ -168,6 +169,9 @@ profile:
     language: 
       title: This setting is set up in system preferences
       message: IO inherits language from the operating system of this device
+userMetadata:
+  errors:
+    upsertVersion: Can't upsert user metadata with this version
 navigation:
   messages: Messages
   profile: Profile
@@ -664,6 +668,7 @@ services:
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
     addButton: Add your areas of interest
+    searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
   tab:
     locals: Local
     national: National

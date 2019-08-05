@@ -10,7 +10,7 @@ import I18n from "../../i18n";
 import { getEnabledChannelsForService } from "../../screens/preferences/common";
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
-import { CustomBadge } from "../CustomBadge";
+import { BadgeComponent } from "../screens/BadgeComponent";
 
 type Props = Readonly<{
   item: pot.Pot<ServicePublic, Error>;
@@ -72,7 +72,7 @@ export class ServiceListItem extends React.PureComponent<Props> {
         <Left>
           <Grid>
             <Row>
-              {!this.props.isRead && <CustomBadge />}
+              {!this.props.isRead && <BadgeComponent />}
               <H4
                 style={[
                   styles.serviceName,
