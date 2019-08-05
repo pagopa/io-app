@@ -160,8 +160,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
-      bordered: true,
+      cancel: true,
       onPress: this.props.navigateToWalletHome,
       title: I18n.t("global.buttons.cancel")
     };
@@ -263,14 +262,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       </BaseScreenComponent>
     );
   }
-  // private showModal = () => this.setState({ showModal: true });
   private showModal = () => {
     this.props.showModal(
       <CodesPositionManualPaymentModal onCancel={this.props.hideModal} />
     );
   };
-
-  // private hideModal = () => this.setState({ showModal: false });
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -1,9 +1,7 @@
-Il PIN è il codice di sicurezza che mantiene nell'app IO i tuoi dati protetti.
+The PIN is the security code that grants your data is securely stored into the IO app.
 
-Lo hai scelto quando sei entrato per la prima volta nell'app tramite la tua identità SPID.
+You chose it when you logged in for the first time with your SPID credentials.
 
-Se non lo ricordi, puoi modificarlo in ogni momento  semplicemente premendo il pulsante in basso e usando nuovamente la tua identità SPID.
+If you forgot it, you can change it at any time by pressing the "Did you forget the PIN?" button on the bottom and logging in again with your SPID credentials.
 
-Il PIN è legato al telefono, per motivi di sicurezza, quindi se cambi telefono dovrai impostarlo di nuovo.
-
-TODO: needs translation
+The PIN is tied to the device. For security reasons, if you will change the device, the IO app will ask you to set it again.
