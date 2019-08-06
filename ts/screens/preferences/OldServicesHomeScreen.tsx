@@ -216,7 +216,15 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
             <Button
               block={true}
               bordered={true}
+              onPress={this.handleOnLongPressItem}
               style={styles.buttonBarLeft}
+            >
+              <Text>{I18n.t("services.close")}</Text>
+            </Button>
+            <Button
+              block={true}
+              primary={true}
+              style={styles.buttonBarRight}
               onPress={() => {
                 if (!this.props.wasServiceAlertDisplayedOnce) {
                   this.showAlertOnDisableServices(
@@ -234,14 +242,6 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
                   ? I18n.t("services.enableAll")
                   : I18n.t("services.disableAll")}
               </Text>
-            </Button>
-            <Button
-              block={true}
-              primary={true}
-              onPress={this.handleOnLongPressItem}
-              style={styles.buttonBarRight}
-            >
-              <Text>{I18n.t("services.done")}</Text>
             </Button>
           </View>
         )}
