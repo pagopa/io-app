@@ -517,7 +517,7 @@ wallet:
       manually insert the transaction-related data (IUV and the entity/company code).
     setManually: Insert data manually
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
-    cameraUsagePerissionInfobox:
+    cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
       message: "IO app needs Camera usage permission to shoot at the QR code"
   whyAFee:
