@@ -1,12 +1,6 @@
 import { Button, Text } from "native-base";
 import * as React from "react";
-import {
-  Platform,
-  StyleSheet,
-  TouchableHighlight,
-  TouchableOpacity,
-  View
-} from "react-native";
+import { Platform, StyleSheet, TouchableHighlight, View } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -15,6 +9,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
@@ -42,7 +37,7 @@ const styles = StyleSheet.create({
 });
 
 const TouchableComponent =
-  Platform.OS === "ios" ? TouchableHighlight : TouchableOpacity;
+  Platform.OS === "ios" ? TouchableHighlight : TouchableWithoutOpacity;
 
 type CalendarItemProps = {
   calendar: Calendar;

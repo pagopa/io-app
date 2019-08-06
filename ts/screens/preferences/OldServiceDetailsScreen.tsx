@@ -6,19 +6,13 @@ import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  Clipboard,
-  Image,
-  Linking,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { Alert, Clipboard, Image, Linking, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
@@ -360,22 +354,22 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
             {description && <Markdown animated={true}>{description}</Markdown>}
             {description && <View spacer={true} large={true} />}
             {tos_url && (
-              <TouchableOpacity
+              <TouchableWithoutOpacity
                 style={styles.infoItem}
                 onPress={() => Linking.openURL(tos_url).then(() => 0, () => 0)}
               >
                 <Text link={true}>{I18n.t("services.tosLink")}</Text>
-              </TouchableOpacity>
+              </TouchableWithoutOpacity>
             )}
             {privacy_url && (
-              <TouchableOpacity
+              <TouchableWithoutOpacity
                 style={styles.infoItem}
                 onPress={() =>
                   Linking.openURL(privacy_url).then(() => 0, () => 0)
                 }
               >
                 <Text link={true}>{I18n.t("services.privacyLink")}</Text>
-              </TouchableOpacity>
+              </TouchableWithoutOpacity>
             )}
             {(app_android || app_ios || web_url) && (
               <H4 style={styles.infoHeader}>
@@ -400,7 +394,7 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
             {app_ios && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppIos")}</Text>
-                <TouchableOpacity
+                <TouchableWithoutOpacity
                   onPress={() =>
                     Linking.openURL(app_ios).then(() => 0, () => 0)
                   }
@@ -410,13 +404,13 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
                     resizeMode="contain"
                     source={require("../../../img/badges/app-store-badge.png")}
                   />
-                </TouchableOpacity>
+                </TouchableWithoutOpacity>
               </View>
             )}
             {app_android && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppAndroid")}</Text>
-                <TouchableOpacity
+                <TouchableWithoutOpacity
                   onPress={() =>
                     Linking.openURL(app_android).then(() => 0, () => 0)
                   }
@@ -426,7 +420,7 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
                     resizeMode="contain"
                     source={require("../../../img/badges/google-play-badge.png")}
                   />
-                </TouchableOpacity>
+                </TouchableWithoutOpacity>
               </View>
             )}
             <H4 style={styles.infoHeader}>

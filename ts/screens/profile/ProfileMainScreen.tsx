@@ -12,13 +12,7 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
@@ -36,6 +30,7 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
+import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -387,13 +382,13 @@ class ProfileMainScreen extends React.PureComponent<Props> {
         title={I18n.t("profile.main.screenTitle")}
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={
-          <TouchableOpacity
+          <TouchableWithoutOpacity
             onPress={() =>
               this.props.navigation.navigate(ROUTES.PROFILE_FISCAL_CODE)
             }
           >
             <FiscalCodeComponent type={"Preview"} />
-          </TouchableOpacity>
+          </TouchableWithoutOpacity>
         }
         contextualHelp={{
           title: I18n.t("profile.main.screenTitle"),

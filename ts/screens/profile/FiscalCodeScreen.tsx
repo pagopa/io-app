@@ -2,12 +2,13 @@ import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
+import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
 import H5 from "../../components/ui/H5";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
@@ -92,7 +93,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                 showsHorizontalScrollIndicator={false}
               >
                 <View style={styles.largeSpacer} />
-                <TouchableOpacity onPress={this.showModal}>
+                <TouchableWithoutOpacity onPress={this.showModal}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -100,11 +101,11 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       getBackSide={false}
                     />
                   </View>
-                </TouchableOpacity>
+                </TouchableWithoutOpacity>
 
                 <View style={styles.spacer} />
 
-                <TouchableOpacity onPress={this.showModal}>
+                <TouchableWithoutOpacity onPress={this.showModal}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -112,7 +113,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       getBackSide={true}
                     />
                   </View>
-                </TouchableOpacity>
+                </TouchableWithoutOpacity>
 
                 <View style={styles.largeSpacer} />
               </ScrollView>

@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, H1, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
@@ -12,6 +12,7 @@ import variables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
+import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
@@ -130,12 +131,12 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                 </H6>
               </Col>
               <Col style={styles.serviceCol}>
-                <TouchableOpacity onPress={onServiceLinkPress}>
+                <TouchableWithoutOpacity onPress={onServiceLinkPress}>
                   <MultiImage
                     style={styles.serviceMultiImage}
                     source={logosForService(service)}
                   />
-                </TouchableOpacity>
+                </TouchableWithoutOpacity>
               </Col>
             </Grid>
           )}

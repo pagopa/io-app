@@ -1,7 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { Button, Text, View } from "native-base";
 import React from "react";
-import { Platform, StyleSheet, TouchableOpacity } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
@@ -13,6 +13,7 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
+import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
 
@@ -163,7 +164,7 @@ class MessageListItem extends React.PureComponent<Props> {
       : variables.unselectedColor;
 
     return (
-      <TouchableOpacity
+      <TouchableWithoutOpacity
         style={styles.highlight}
         onPress={this.handlePress}
         onLongPress={this.handleLongPress}
@@ -224,7 +225,7 @@ class MessageListItem extends React.PureComponent<Props> {
             </View>
           )}
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutOpacity>
     );
   }
 }

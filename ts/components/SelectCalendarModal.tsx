@@ -5,8 +5,7 @@ import {
   BackHandler,
   Platform,
   StyleSheet,
-  TouchableHighlight,
-  TouchableOpacity
+  TouchableHighlight
 } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 
@@ -16,6 +15,7 @@ import { GlobalState } from "../store/reducers/types";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
+import TouchableWithoutOpacity from "./TouchableWithoutOpacity";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 const styles = StyleSheet.create({
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 });
 
 const TouchableComponent =
-  Platform.OS === "ios" ? TouchableHighlight : TouchableOpacity;
+  Platform.OS === "ios" ? TouchableHighlight : TouchableWithoutOpacity;
 
 type CalendarItemProps = {
   calendar: Calendar;

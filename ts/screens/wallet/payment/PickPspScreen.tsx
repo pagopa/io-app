@@ -2,7 +2,7 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import TouchableWithoutOpacity from "../../../components/TouchableWithoutOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
@@ -105,7 +106,9 @@ class PickPspScreen extends React.Component<Props> {
             data={availablePsps}
             keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => this.props.pickPsp(item.id)}>
+              <TouchableWithoutOpacity
+                onPress={() => this.props.pickPsp(item.id)}
+              >
                 <View style={style.listItem}>
                   <Grid>
                     <Col size={6}>
@@ -134,7 +137,7 @@ class PickPspScreen extends React.Component<Props> {
                     </Col>
                   </Grid>
                 </View>
-              </TouchableOpacity>
+              </TouchableWithoutOpacity>
             )}
           />
         </Content>

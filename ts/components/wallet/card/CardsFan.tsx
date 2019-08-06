@@ -1,7 +1,7 @@
 import * as React from "react";
-import { TouchableOpacity } from "react-native";
 
 import { ComponentProps } from "../../../types/react";
+import TouchableWithoutOpacity from "../../TouchableWithoutOpacity";
 import { RotatedCards } from "./RotatedCards";
 
 type Props = Readonly<{
@@ -11,9 +11,9 @@ type Props = Readonly<{
 
 const CardsFan: React.SFC<Props> = props => {
   return (
-    <TouchableOpacity onPress={props.navigateToWalletList}>
+    <TouchableWithoutOpacity onPress={props.navigateToWalletList}>
       <RotatedCards cardType="Preview" wallets={props.wallets} />
-    </TouchableOpacity>
+    </TouchableWithoutOpacity>
   );
 };
 
