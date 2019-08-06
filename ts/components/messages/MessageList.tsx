@@ -1,4 +1,4 @@
-import { Option } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
@@ -56,7 +56,7 @@ type Props = OwnProps & AnimatedProps;
 type State = {
   prevMessageStates?: ReadonlyArray<MessageState>;
   itemLayouts: ReadonlyArray<ItemLayout>;
-  longPressedItemIndex?: number;
+  longPressedItemIndex: Option<number>;
 };
 
 const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
@@ -188,24 +188,17 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 class MessageList extends React.Component<Props, State> {
   private flatListRef = React.createRef<typeof AnimatedFlatList>();
 
-  private scrollToTop = () => {
+  private scrollTo = (index: number, animated: boolean = false) => {
     if (this.flatListRef.current && this.props.messageStates.length > 0) {
-      this.flatListRef.current
-        .getNode()
-        .scrollToIndex({ animated: false, index: 0 });
-    }
-  };
-
-  private scrollToIndex = (index: number) => {
-    if (this.flatListRef.current) {
-      this.flatListRef.current.getNode().scrollToIndex({ index });
+      this.flatListRef.current.getNode().scrollToIndex({ animated, index });
     }
   };
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      itemLayouts: []
+      itemLayouts: [],
+      longPressedItemIndex: none
     };
   }
 
@@ -305,20 +298,20 @@ class MessageList extends React.Component<Props, State> {
   private onLongPress = (id: string) => {
     const { messageStates, onLongPressItem } = this.props;
     onLongPressItem(id);
-    const index = messageStates.findIndex(_ => _.meta.id === id);
-    if (index === messageStates.length - 1) {
+    const lastIndex = messageStates.length - 1;
+    if (id === messageStates[lastIndex].meta.id) {
       this.setState({
-        longPressedItemIndex: index
+        longPressedItemIndex: some(lastIndex)
       });
     }
   };
 
   private handleOnLayoutChange = () => {
     const { longPressedItemIndex } = this.state;
-    if (longPressedItemIndex) {
-      this.scrollToIndex(longPressedItemIndex);
+    if (longPressedItemIndex.isSome()) {
+      this.scrollTo(longPressedItemIndex.value, true);
       this.setState({
-        longPressedItemIndex: undefined
+        longPressedItemIndex: none
       });
     }
   };
@@ -340,7 +333,7 @@ class MessageList extends React.Component<Props, State> {
 
     return (
       <React.Fragment>
-        <NavigationEvents onWillFocus={this.scrollToTop} />
+        <NavigationEvents onWillFocus={() => this.scrollTo(0)} />
         <AnimatedFlatList
           ref={this.flatListRef}
           scrollEnabled={true}
