@@ -257,7 +257,7 @@ authentication:
       title: Login error
       body: There was an error with the login, please retry!
     spid:
-      unknown: Unknown error from spid
+      unknown: Unknown error 
       error_19: Authentication failed due to repeated submission of incorrect credentials - exceeded number of attempts
       error_20: User without credentials compatible with the HTTP level requested by the service provider
       error_21: Timeout during user authentication
