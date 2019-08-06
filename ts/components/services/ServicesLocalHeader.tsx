@@ -3,12 +3,16 @@ import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { ComponentProps } from "../../types/react";
 import IconFont from "../ui/IconFont";
+import ServicesLocal from "./ServicesLocal";
 
-type Props = {
-  paddingForAnimation: boolean;
-  onAddAreasOfInterestPress: () => void;
-};
+type ServicesLocalProps =
+  | "paddingForAnimation"
+  | "onChooserAreasOfInterestPress"
+  | "organizationsFiscalCodesSelected";
+
+type Props = Pick<ComponentProps<typeof ServicesLocal>, ServicesLocalProps>;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -38,10 +42,34 @@ const styles = StyleSheet.create({
   }
 });
 
-export class ServicesLocalEmpty extends React.PureComponent<Props> {
+export class ServicesLocalHeader extends React.PureComponent<Props> {
   public render() {
-    const { paddingForAnimation, onAddAreasOfInterestPress } = this.props;
-    return (
+    const {
+      paddingForAnimation,
+      onChooserAreasOfInterestPress,
+      organizationsFiscalCodesSelected
+    } = this.props;
+    const isOrganizationsFiscalCodesSelected = organizationsFiscalCodesSelected.fold(
+      false,
+      _ => _.size > 0
+    );
+
+    return isOrganizationsFiscalCodesSelected ? (
+      <View style={styles.contentWrapper}>
+        <Button
+          small={true}
+          bordered={true}
+          style={styles.button}
+          block={true}
+          onPress={onChooserAreasOfInterestPress}
+        >
+          <Text style={styles.textButton}>
+            {I18n.t("services.areasOfInterest.editButton")}
+          </Text>
+        </Button>
+        {paddingForAnimation && <View style={styles.paddingForAnimation} />}
+      </View>
+    ) : (
       <View style={styles.contentWrapper}>
         <Text style={styles.message}>
           {I18n.t("services.areasOfInterest.selectMessage")}
@@ -54,9 +82,10 @@ export class ServicesLocalEmpty extends React.PureComponent<Props> {
           bordered={true}
           style={styles.button}
           block={true}
-          onPress={onAddAreasOfInterestPress}
+          onPress={this.props.onChooserAreasOfInterestPress}
         >
           <IconFont name="io-plus" style={styles.icon} />
+
           <Text style={styles.textButton}>
             {I18n.t("services.areasOfInterest.addButton")}
           </Text>
@@ -65,7 +94,6 @@ export class ServicesLocalEmpty extends React.PureComponent<Props> {
         <View spacer={true} extralarge={true} />
 
         <Image source={require("../../../img/services/icon-places.png")} />
-
         {paddingForAnimation && <View style={styles.paddingForAnimation} />}
       </View>
     );
