@@ -256,6 +256,14 @@ authentication:
     login:
       title: Login error
       body: There was an error with the login, please retry!
+    spid:
+      unknown: Unknown error 
+      error_19: Authentication failed due to repeated submission of incorrect credentials - exceeded number of attempts
+      error_20: User without credentials compatible with the HTTP level requested by the service provider
+      error_21: Timeout during user authentication
+      error_22: User denies consent to sending data to the service provider in the event of a current session
+      error_23: User with suspended/revoked identity or with blocked credentials
+      error_25: Authentication process canceled by the user
   expiredSessionBanner:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
@@ -509,7 +517,7 @@ wallet:
       manually insert the transaction-related data (IUV and the entity/company code).
     setManually: Insert data manually
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
-    cameraUsagePerissionInfobox:
+    cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
       message: "IO app needs Camera usage permission to shoot at the QR code"
   whyAFee:
@@ -668,6 +676,7 @@ services:
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
     addButton: Add your areas of interest
+    editButton: Change the areas of interest
     searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
   tab:
     locals: Local
