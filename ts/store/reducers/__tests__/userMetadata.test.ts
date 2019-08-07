@@ -18,7 +18,8 @@ describe("userMetadata", () => {
   describe("backendUserMetadataToUserMetadata", () => {
     it("should covert a valid backendUserMetadata without errors", () => {
       const metadata: UserMetadataMetadata = {
-        experimentalFeatures: true
+        experimentalFeatures: true,
+        organizationsOfInterest: []
       };
       const backendUserMetadata: BackendUserMetadata = {
         version: 1,
@@ -37,7 +38,8 @@ describe("userMetadata", () => {
       const backendUserMetadata: BackendUserMetadata = {
         version: 1,
         metadata: JSON.stringify({
-          experimentalFeatures: "NOT_A_BOOLEAN"
+          experimentalFeatures: "NOT_A_BOOLEAN",
+          organizationsOfInterest: "NOT_A_READONLY_ARRAY"
         })
       };
       expect(backendUserMetadataToUserMetadata(backendUserMetadata)).toEqual(
@@ -49,7 +51,8 @@ describe("userMetadata", () => {
   describe("userMetadataToBackendUserMetadata", () => {
     it("should covert a userMetadata correctly ", () => {
       const metadata: UserMetadataMetadata = {
-        experimentalFeatures: true
+        experimentalFeatures: true,
+        organizationsOfInterest: []
       };
       const userMetadata: UserMetadata = {
         version: 1,
@@ -70,7 +73,8 @@ describe("userMetadata", () => {
     const userMetadata: UserMetadata = {
       version: 1,
       metadata: {
-        experimentalFeatures: false
+        experimentalFeatures: false,
+        organizationsOfInterest: []
       }
     };
 

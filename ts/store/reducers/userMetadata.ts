@@ -8,7 +8,8 @@ import { userMetadataLoad, userMetadataUpsert } from "../actions/userMetadata";
 import { GlobalState } from "./types";
 
 export const UserMetadataMetadata = t.partial({
-  experimentalFeatures: t.boolean
+  experimentalFeatures: t.boolean,
+  organizationsOfInterest: t.readonlyArray(t.string)
 });
 
 export type UserMetadataMetadata = t.TypeOf<typeof UserMetadataMetadata>;

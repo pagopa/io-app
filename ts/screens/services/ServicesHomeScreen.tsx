@@ -19,22 +19,32 @@ import ServicesOther from "../../components/services/ServicesOther";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { setSelectedOrganizations } from "../../store/actions/organizations";
 import { loadVisibleServices } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
+import { userMetadataUpsert } from "../../store/actions/userMetadata";
 import { lexicallyOrderedAllOrganizations } from "../../store/reducers/entities/organizations";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
-import { organizationsFiscalCodesSelectedStateSelector } from "../../store/reducers/entities/organizations/organizationsFiscalCodesSelected";
 import { GlobalState } from "../../store/reducers/types";
+import {
+  UserMetadata,
+  userMetadataSelector
+} from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 
 type OwnProps = NavigationScreenProps;
 
+type ReduxMergedProps = Readonly<{
+  dispatchUpdateOrganizationsOfInterestMetadata: (
+    selectedItemIds: Option<Set<string>>
+  ) => void;
+}>;
+
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps &
+  ReduxMergedProps &
   LightModalContextInterface;
 
 type State = {
@@ -158,8 +168,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private onSaveAreasOfInterest = (
     selectedFiscalCodes: Option<Set<string>>
   ) => {
-    const { saveSelectedOrganizationItems, hideModal } = this.props;
-    saveSelectedOrganizationItems(selectedFiscalCodes);
+    const { hideModal } = this.props;
+    this.props.dispatchUpdateOrganizationsOfInterestMetadata(
+      selectedFiscalCodes
+    );
     hideModal();
   };
 
@@ -378,6 +390,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const { services } = state.entities;
 
+  const potUserMetadata = userMetadataSelector(state);
+  const userMetadata = pot.getOrElse(potUserMetadata, undefined);
+  const organizationsSelected = userMetadata
+    ? userMetadata.metadata.organizationsOfInterest
+    : undefined;
+
   const isAnyServiceLoading =
     Object.keys(services.byId).find(k => {
       const oneService = services.byId[k];
@@ -385,25 +403,67 @@ const mapStateToProps = (state: GlobalState) => {
     }) !== undefined;
 
   const isLoading =
-    pot.isLoading(state.entities.services.visible) || isAnyServiceLoading;
+    pot.isLoading(state.entities.services.visible) ||
+    isAnyServiceLoading ||
+    pot.isLoading(potUserMetadata);
 
   return {
     allOrganizations: lexicallyOrderedAllOrganizations(state),
     isLoading,
-    organizationsSelected: organizationsFiscalCodesSelectedStateSelector(state)
+    organizationsSelected,
+    userMetadata
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshServices: () => dispatch(loadVisibleServices.request()),
-  saveSelectedOrganizationItems: (selectedItemIds: Option<Set<string>>) => {
+  saveSelectedOrganizationItems: (
+    userMetadata: UserMetadata,
+    selectedItemIds: Option<Set<string>>
+  ) => {
     if (selectedItemIds.isSome()) {
-      dispatch(setSelectedOrganizations(Array.from(selectedItemIds.value)));
+      const metadata = userMetadata.metadata;
+      dispatch(
+        userMetadataUpsert.request({
+          ...userMetadata,
+          version: userMetadata.version + 1,
+          metadata: {
+            ...metadata,
+            organizationsOfInterest: Array.from(selectedItemIds.value)
+          }
+        })
+      );
     }
   }
 });
 
+const mergeProps = (
+  stateProps: ReturnType<typeof mapStateToProps>,
+  dispatchProps: ReturnType<typeof mapDispatchToProps>,
+  ownProps: OwnProps
+) => {
+  const dispatchUpdateOrganizationsOfInterestMetadata = (
+    selectedItemIds: Option<Set<string>>
+  ) => {
+    if (selectedItemIds.isSome() && stateProps.userMetadata) {
+      dispatchProps.saveSelectedOrganizationItems(
+        stateProps.userMetadata,
+        selectedItemIds
+      );
+    }
+  };
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    ...{
+      dispatchUpdateOrganizationsOfInterestMetadata
+    }
+  };
+};
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(withLightModalContext(withLoadingSpinner(ServicesHomeScreen)));
