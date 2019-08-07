@@ -426,7 +426,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       dispatch(
         userMetadataUpsert.request({
           ...userMetadata,
-          version: userMetadata.version + 1,
+          // tslint:disable-next-line: no-useless-cast
+          version: (userMetadata.version as number) + 1,
           metadata: {
             ...metadata,
             organizationsOfInterest: Array.from(selectedItemIds.value)
