@@ -82,7 +82,7 @@ export default class FooterWithButtons extends React.Component<Props, never> {
 
     return (
       <View footer={true} style={styles.container}>
-        <Button {...otherPropsLeftButton} style={styles.button}>
+        <Button style={styles.button} {...otherPropsLeftButton}>
           <Text>{leftButtonTitle}</Text>
         </Button>
         {this.renderRightButton()}

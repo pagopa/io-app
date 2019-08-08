@@ -262,6 +262,14 @@ authentication:
     login:
       title: Errore nel login
       body: Si è verificato un errore durante il login, si prega di riprovare!
+    spid:
+      unknown: Errore sconosciuto
+      error_19: Autenticazione fallita per ripetuta sottomissione di credenziali errate - superato numero tentativi
+      error_20: Utente privo di credenziali compatibili con il livello HTTP richiesto dal fornitore del servizio
+      error_21: Timeout durante l’autenticazione utente
+      error_22: Utente nega il consenso all’invio di dati al fornitore del servizio in caso di sessione vigente
+      error_23: Utente con identità sospesa/revocata o con credenziali bloccate
+      error_25: Processo di autenticazione annullato dall’utente
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
@@ -518,7 +526,7 @@ wallet:
       inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
     setManually: Inserisci i dati manualmente
     enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
-    cameraUsagePerissionInfobox:
+    cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
       message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
   whyAFee:
@@ -679,6 +687,7 @@ services:
   areasOfInterest:
     selectMessage: Scegli le aree geografiche (comuni, regioni, etc.) dove risiedi o che frequenti solitamente per vederne qui i relativi servizi. Potrai modificarle in ogni momento.
     addButton: Aggiungi le tue aree di interesse
+    editButton: Modifica le aree di interesse
     searchEmpty: Se non trovi la tua area di interesse, significa che gli enti di quel territorio non espongono ancora servizi su IO.
   tab:
     locals: Locali

@@ -158,7 +158,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      bordered: true,
+      cancel: true,
       onPress: this.props.navigateBack,
       title: I18n.t("global.buttons.cancel")
     };
