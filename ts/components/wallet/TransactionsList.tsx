@@ -40,29 +40,32 @@ const styles = StyleSheet.create({
     padding: variables.contentPadding,
     paddingBottom: 0
   },
-
   listItem: {
     marginLeft: 0,
     paddingRight: 0
   },
-
   whiteContent: {
     backgroundColor: variables.colorWhite,
     flex: 1
   },
-
   subHeaderContent: {
     flexDirection: "row",
     alignItems: "baseline",
     justifyContent: "space-between"
   },
-
   brandDarkGray: {
     color: variables.brandDarkGray
   },
   dateStyle: {
-    flexDirection: "row",
-    alignItems: "center"
+    lineHeight: 18,
+    fontSize: 13
+  },
+  badgeStyle: {
+    flex: 0,
+    paddingRight: 4
+  },
+  viewStyle: {
+    flexDirection: "row"
   }
 });
 
@@ -72,7 +75,7 @@ const styles = StyleSheet.create({
 
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
-    const isNew = false; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
+    const isNew = true; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
     const datetime: string = `${formatDateAsLocal(
       item.created,
       true,
@@ -81,9 +84,17 @@ export default class TransactionsList extends React.Component<Props> {
     return (
       <Row>
         <Left>
-          <View style={styles.dateStyle}>
-            {isNew && <BadgeComponent />}
-            <Text note={true}>{isNew ? `  ${datetime}` : datetime}</Text>
+          <View style={styles.viewStyle}>
+            {isNew && (
+              <View style={styles.badgeStyle}>
+                <BadgeComponent />
+              </View>
+            )}
+            <View>
+              <Text note={true} style={styles.dateStyle}>
+                {datetime}
+              </Text>
+            </View>
           </View>
         </Left>
       </Row>
