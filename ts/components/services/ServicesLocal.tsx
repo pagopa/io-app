@@ -2,7 +2,9 @@ import { Option } from "fp-ts/lib/Option";
 import React from "react";
 import { NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 import { StyleSheet } from "react-native";
+import { ComponentProps } from "../../types/react";
 import ServiceList from "./ServiceList";
+import ServiceSectionListComponent from "./ServiceSectionListComponent";
 import { ServicesLocalHeader } from "./ServicesLocalHeader";
 
 type AnimatedProps = {
@@ -19,7 +21,20 @@ type OwnProps = {
   organizationsFiscalCodesSelected: Option<Set<string>>;
 };
 
-type Props = OwnProps & AnimatedProps;
+type ServiceSectionListComponentProps =
+  | "sections"
+  | "profile"
+  | "isRefreshing"
+  | "onRefresh"
+  | "onSelect"
+  | "readServices";
+
+type Props = OwnProps &
+  AnimatedProps &
+  Pick<
+    ComponentProps<typeof ServiceSectionListComponent>,
+    ServiceSectionListComponentProps
+  >;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -33,7 +48,6 @@ const styles = StyleSheet.create({
 class ServicesLocal extends React.PureComponent<Props> {
   public render() {
     const {
-      animated,
       onChooserAreasOfInterestPress,
       paddingForAnimation,
       organizationsFiscalCodesSelected
@@ -45,10 +59,34 @@ class ServicesLocal extends React.PureComponent<Props> {
           paddingForAnimation={paddingForAnimation}
           organizationsFiscalCodesSelected={organizationsFiscalCodesSelected}
         />
-        <ServiceList {...this.props} animated={animated} />
+        {this.renderList()}
       </View>
     );
   }
+
+  private renderList = () => {
+    const {
+      animated,
+      profile,
+      sections,
+      isRefreshing,
+      onRefresh,
+      onSelect,
+      readServices
+    } = this.props;
+    return (
+      <ServiceList
+        animated={animated}
+        sections={sections}
+        profile={profile}
+        isRefreshing={isRefreshing}
+        onRefresh={onRefresh}
+        onSelect={onSelect}
+        readServices={readServices}
+        isExperimentalFeaturesEnabled={true}
+      />
+    );
+  };
 }
 
 export default ServicesLocal;

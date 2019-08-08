@@ -1,6 +1,5 @@
 import React from "react";
-import { NativeScrollEvent, NativeSyntheticEvent } from "react-native";
-import ServiceList from "./ServiceList";
+import { NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 
 type AnimatedProps = {
   animated?: {
@@ -18,8 +17,8 @@ type Props = AnimatedProps;
  */
 class ServicesNational extends React.PureComponent<Props> {
   public render() {
-    const { animated } = this.props;
-    return <ServiceList {...this.props} animated={animated} />;
+    // TODO To implement in story https://www.pivotaltracker.com/story/show/166793396
+    return <View />;
   }
 }
 

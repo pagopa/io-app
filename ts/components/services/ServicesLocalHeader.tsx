@@ -67,7 +67,6 @@ export class ServicesLocalHeader extends React.PureComponent<Props> {
             {I18n.t("services.areasOfInterest.editButton")}
           </Text>
         </Button>
-        {paddingForAnimation && <View style={styles.paddingForAnimation} />}
       </View>
     ) : (
       <View style={styles.contentWrapper}>

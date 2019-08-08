@@ -14,6 +14,17 @@ import {
   ServiceIdsByOrganizationFiscalCodeState
 } from "./servicesByOrganizationFiscalCode";
 
+import { createSelector } from "reselect";
+import { isDefined } from "../../../../utils/guards";
+import { GlobalState } from "../../types";
+import {
+  organizationNamesByFiscalCodeSelector,
+  OrganizationNamesByFiscalCodeState
+} from "../organizations/organizationsByFiscalCodeReducer";
+import {
+  organizationsFiscalCodesSelectedStateSelector,
+  OrganizationsSelectedState
+} from "../organizations/organizationsFiscalCodesSelected";
 import {
   visibleServicesReducer,
   VisibleServicesState
@@ -32,5 +43,46 @@ const reducer = combineReducers<ServicesState, Action>({
   visible: visibleServicesReducer,
   readState: readStateByServiceReducer
 });
+
+// Selectors
+export const servicesSelector = (state: GlobalState) => state.entities.services;
+
+const getLocalServices = (
+  services: ServicesState,
+  organizations: OrganizationNamesByFiscalCodeState,
+  organizationsFiscalCodesSelected: OrganizationsSelectedState
+) => {
+  return organizationsFiscalCodesSelected
+    .map(fiscalCode => {
+      const organizationName = organizations[fiscalCode] || fiscalCode;
+      const organizationFiscalCode = fiscalCode;
+      const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
+
+      const data = serviceIdsForOrg
+        .map(id => services.byId[id])
+        .filter(isDefined);
+      return {
+        organizationName,
+        organizationFiscalCode,
+        data
+      };
+    })
+    .filter(_ => _.data.length > 0)
+    .sort((a, b) =>
+      a.organizationName
+        .toLocaleLowerCase()
+        .localeCompare(b.organizationName.toLocaleLowerCase())
+    );
+};
+
+export const localServicesSectionsSelector = createSelector(
+  [
+    servicesSelector,
+    organizationNamesByFiscalCodeSelector,
+    organizationsFiscalCodesSelectedStateSelector
+  ],
+  (services, organizations, organizationsSelected) =>
+    getLocalServices(services, organizations, organizationsSelected)
+);
 
 export default reducer;

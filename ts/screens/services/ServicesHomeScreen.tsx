@@ -7,6 +7,8 @@ import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ChooserListContainer from "../../components/ChooserListContainer";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -19,16 +21,25 @@ import ServicesOther from "../../components/services/ServicesOther";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import { contentServiceLoad } from "../../store/actions/content";
+import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
 import { setSelectedOrganizations } from "../../store/actions/organizations";
-import { loadVisibleServices } from "../../store/actions/services";
+import {
+  loadVisibleServices,
+  showServiceDetails
+} from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedAllOrganizations } from "../../store/reducers/entities/organizations";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import { organizationsFiscalCodesSelectedStateSelector } from "../../store/reducers/entities/organizations/organizationsFiscalCodesSelected";
+import { localServicesSectionsSelector } from "../../store/reducers/entities/services";
+import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { InferNavigationParams } from "../../types/react";
 import { getLogoForOrganization } from "../../utils/organizations";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
+import OldServiceDetailsScreen from "../preferences/OldServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
 
@@ -117,6 +128,16 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       });
     }
   }
+
+  private onServiceSelect = (service: ServicePublic) => {
+    // when a service gets selected, before navigating to the service detail
+    // screen, we issue a contentServiceLoad to refresh the service metadata
+    this.props.contentServiceLoad(service.service_id);
+    this.props.serviceDetailsLoad(service);
+    this.props.navigateToOldServiceDetailsScreen({
+      service
+    });
+  };
 
   /**
    * For tab Locals
@@ -229,6 +250,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           }
         >
           <ServicesLocal
+            sections={this.props.localSections}
+            profile={this.props.profile}
+            isRefreshing={this.props.isLoading}
+            onRefresh={this.props.refreshServices}
+            onSelect={this.onServiceSelect}
+            readServices={this.props.readServices}
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
             organizationsFiscalCodesSelected={some(
               new Set(this.props.organizationsSelected)
@@ -390,7 +417,10 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     allOrganizations: lexicallyOrderedAllOrganizations(state),
     isLoading,
-    organizationsSelected: organizationsFiscalCodesSelectedStateSelector(state)
+    organizationsSelected: organizationsFiscalCodesSelectedStateSelector(state),
+    profile: state.profile,
+    readServices: readServicesSelector(state),
+    localSections: localServicesSectionsSelector(state)
   };
 };
 
@@ -400,7 +430,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     if (selectedItemIds.isSome()) {
       dispatch(setSelectedOrganizations(Array.from(selectedItemIds.value)));
     }
-  }
+  },
+  contentServiceLoad: (serviceId: ServiceId) =>
+    dispatch(contentServiceLoad.request(serviceId)),
+  navigateToOldServiceDetailsScreen: (
+    params: InferNavigationParams<typeof OldServiceDetailsScreen>
+  ) => dispatch(navigateToOldServiceDetailsScreen(params)),
+  serviceDetailsLoad: (service: ServicePublic) =>
+    dispatch(showServiceDetails(service))
 });
 
 export default connect(
