@@ -17,13 +17,13 @@ import {
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
-import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
+import { BadgeComponent } from "../screens/BadgeComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
 
@@ -40,31 +40,32 @@ const styles = StyleSheet.create({
     padding: variables.contentPadding,
     paddingBottom: 0
   },
-
-  newIconStyle: {
-    marginTop: 6,
-    fontSize: variables.fontSize1,
-    color: variables.brandPrimary
-  },
-
   listItem: {
     marginLeft: 0,
     paddingRight: 0
   },
-
   whiteContent: {
     backgroundColor: variables.colorWhite,
     flex: 1
   },
-
   subHeaderContent: {
     flexDirection: "row",
     alignItems: "baseline",
     justifyContent: "space-between"
   },
-
   brandDarkGray: {
     color: variables.brandDarkGray
+  },
+  dateStyle: {
+    lineHeight: 18,
+    fontSize: 13
+  },
+  badgeStyle: {
+    flex: 0,
+    paddingRight: 4
+  },
+  viewStyle: {
+    flexDirection: "row"
   }
 });
 
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
 
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
-    const isNew = false; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
+    const isNew = true; // TODO : handle notification of new transactions @https://www.pivotaltracker.com/story/show/158141219
     const datetime: string = `${formatDateAsLocal(
       item.created,
       true,
@@ -83,10 +84,18 @@ export default class TransactionsList extends React.Component<Props> {
     return (
       <Row>
         <Left>
-          <Text>
-            {isNew && <IconFont name="io-new" style={styles.newIconStyle} />}
-            <Text note={true}>{isNew ? `  ${datetime}` : datetime}</Text>
-          </Text>
+          <View style={styles.viewStyle}>
+            {isNew && (
+              <View style={styles.badgeStyle}>
+                <BadgeComponent />
+              </View>
+            )}
+            <View>
+              <Text note={true} style={styles.dateStyle}>
+                {datetime}
+              </Text>
+            </View>
+          </View>
         </Left>
       </Row>
     );
