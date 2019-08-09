@@ -19,8 +19,8 @@ type OwnProps = {
   navigateToServiceDetail: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
   isExperimentalFeaturesEnabled?: boolean;
-  onLongPressItem: () => void;
-  onSwitch: (service: ServicePublic) => void;
+  onLongPressItem?: () => void;
+  onSwitch?: (service: ServicePublic) => void;
 };
 
 type Props = OwnProps;
@@ -147,7 +147,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
 
   public render() {
     const { potFilteredServiceSectionsStates } = this.state;
-    const { onRefresh, onLongPressItem, onSwitch } = this.props;
+    const { onRefresh } = this.props;
 
     const isFiltering = pot.isLoading(potFilteredServiceSectionsStates);
 
@@ -165,9 +165,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
         onRefresh={onRefresh}
         onSelect={this.handleOnServiceSelect}
         isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
-        onLongPressItem={onLongPressItem}
         isLongPressEnabled={false}
-        onSwitch={onSwitch}
       />
     ) : (
       <SearchNoResultMessage errorType="NoResultsFound" />

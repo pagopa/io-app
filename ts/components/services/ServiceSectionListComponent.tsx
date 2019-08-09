@@ -32,9 +32,9 @@ type OwnProps = {
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
   isExperimentalFeaturesEnabled?: boolean;
-  onLongPressItem: () => void;
+  onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
-  onSwitch: (service: ServicePublic) => void;
+  onSwitch?: (service: ServicePublic) => void;
 };
 
 type Props = OwnProps;

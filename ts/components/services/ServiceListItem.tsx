@@ -1,6 +1,6 @@
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Col, Grid, Left, ListItem, Right, Row, Text } from "native-base";
+import { Grid, Left, ListItem, Right, Row, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet, Switch } from "react-native";
 
@@ -25,9 +25,9 @@ type Props = Readonly<{
   profile: ProfileState;
   onSelect: (service: ServicePublic) => void;
   isRead: boolean;
-  onLongPress: () => void;
+  onLongPress?: () => void;
   isLongPressModeEnabled: boolean;
-  onSwitch: (service: ServicePublic) => void;
+  onSwitch?: (service: ServicePublic) => void;
 }>;
 
 const styles = StyleSheet.create({
@@ -115,13 +115,11 @@ export class ServiceListItem extends React.PureComponent<Props, State> {
         </Left>
         <Right>
           {isLongPressModeEnabled ? (
-            <Col size={2}>
-              <Switch
-                key={`switch-service-${profileVersion}`}
-                value={pot.isSome(enabledChannels)}
-                onValueChange={() => true}
-              />
-            </Col>
+            <Switch
+              key={`switch-service-${profileVersion}`}
+              value={pot.isSome(enabledChannels) && enabledChannels.value.inbox}
+              onValueChange={() => true}
+            />
           ) : (
             <IconFont name="io-right" color={variables.brandPrimary} />
           )}

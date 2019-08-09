@@ -22,7 +22,7 @@ type Props = Readonly<{
   onSelect: (service: ServicePublic) => void;
   isRead: boolean;
   hideSeparator: boolean;
-  onLongPress: () => void;
+  onLongPress?: () => void;
   isLongPressModeEnabled: boolean;
   onSwitch: (service: ServicePublic) => void;
 }>;
@@ -60,16 +60,6 @@ export default class NewServiceListItem extends React.PureComponent<
     const enabledChannels = pot.map(potService, service =>
       getEnabledChannelsForService(this.props.profile, service.service_id)
     );
-
-    if (pot.isSome(potService)) {
-      // tslint:disable-next-line no-object-mutation
-      this.state = {
-        uiEnabledChannels: getEnabledChannelsForService(
-          this.props.profile,
-          potService.value.service_id
-        )
-      };
-    }
 
     const onPress = !this.props.isLongPressModeEnabled
       ? pot.toUndefined(
@@ -114,7 +104,7 @@ export default class NewServiceListItem extends React.PureComponent<
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
         onSwitch={onSwitch}
-        value={this.state.uiEnabledChannels.inbox}
+        value={pot.isSome(enabledChannels) && enabledChannels.value.inbox}
         keySwitch={`switch-service-${profileVersion}`}
         isLongPressModeEnabled={isLongPressModeEnabled}
       />
