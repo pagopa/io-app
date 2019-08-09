@@ -37,6 +37,9 @@ type OwnProps = {
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
   isExperimentalFeaturesEnabled?: boolean;
+  ListEmptyComponent?: React.ComponentProps<
+    typeof SectionList
+  >["ListEmptyComponent"];
 };
 
 type Props = OwnProps & AnimatedProps;
@@ -114,7 +117,12 @@ class ServiceList extends React.Component<Props> {
   };
 
   public render() {
-    const { sections, isRefreshing, onRefresh } = this.props;
+    const {
+      sections,
+      isRefreshing,
+      onRefresh,
+      ListEmptyComponent
+    } = this.props;
 
     const refreshControl = (
       <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
@@ -140,6 +148,7 @@ class ServiceList extends React.Component<Props> {
         alwaysBounceVertical={false}
         refreshControl={refreshControl}
         ItemSeparatorComponent={ItemSeparatorComponent}
+        ListEmptyComponent={ListEmptyComponent}
       />
     );
   }

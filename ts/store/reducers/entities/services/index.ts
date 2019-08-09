@@ -79,6 +79,8 @@ export const localServicesSectionsSelector = createSelector(
   [
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
+    // TODO When https://github.com/teamdigitale/io-app/pull/1260 is merged
+    // substitute with this selector "organizationsOfInterestSelector" from UserMetadata
     organizationsFiscalCodesSelectedStateSelector
   ],
   (services, organizations, organizationsSelected) =>
