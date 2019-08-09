@@ -62,11 +62,10 @@ const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
   },
+  listContainer: {
+    flex: 1
+  },
   buttonBar: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",
@@ -74,11 +73,11 @@ const styles = StyleSheet.create({
     padding: 10
   },
   buttonBarLeft: {
-    flex: 1,
+    flex: 2,
     marginEnd: 5
   },
   buttonBarRight: {
-    flex: 1,
+    flex: 2,
     marginStart: 5
   }
 });
@@ -211,6 +210,22 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     const { sections } = this.props;
     return (
       <View style={styles.listWrapper}>
+        <View style={styles.listContainer}>
+          <ServiceSectionListComponent
+            sections={sections}
+            profile={this.props.profile}
+            isRefreshing={this.props.isLoading}
+            onRefresh={this.props.refreshServices}
+            onSelect={this.onServiceSelect}
+            readServices={this.props.readServices}
+            isExperimentalFeaturesEnabled={
+              this.props.isExperimentalFeaturesEnabled
+            }
+            onLongPressItem={this.handleOnLongPressItem}
+            isLongPressEnabled={this.state.isLongPressModeEnabled}
+            onSwitch={this.onSwitch}
+          />
+        </View>
         {this.state.isLongPressModeEnabled && (
           <View style={styles.buttonBar}>
             <Button
@@ -245,20 +260,6 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
             </Button>
           </View>
         )}
-        <ServiceSectionListComponent
-          sections={sections}
-          profile={this.props.profile}
-          isRefreshing={this.props.isLoading}
-          onRefresh={this.props.refreshServices}
-          onSelect={this.onServiceSelect}
-          readServices={this.props.readServices}
-          isExperimentalFeaturesEnabled={
-            this.props.isExperimentalFeaturesEnabled
-          }
-          onLongPressItem={this.handleOnLongPressItem}
-          isLongPressEnabled={this.state.isLongPressModeEnabled}
-          onSwitch={this.onSwitch}
-        />
       </View>
     );
   };

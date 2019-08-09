@@ -61,25 +61,9 @@ export class ServiceListItem extends React.PureComponent<Props, State> {
       getEnabledChannelsForService(this.props.profile, service.service_id)
     );
 
-    if (pot.isSome(potService)) {
-      // tslint:disable-next-line no-object-mutation
-      this.state = {
-        uiEnabledChannels: getEnabledChannelsForService(
-          this.props.profile,
-          potService.value.service_id
-        )
-      };
-    }
-
     const onPress = !this.props.isLongPressModeEnabled
       ? pot.toUndefined(
           pot.map(potService, service => () => this.props.onSelect(service))
-        )
-      : undefined;
-
-    const onSwitchTap = this.props.isLongPressModeEnabled
-      ? pot.toUndefined(
-          pot.map(potService, service => () => this.props.onSwitch(service))
         )
       : undefined;
 
@@ -134,8 +118,8 @@ export class ServiceListItem extends React.PureComponent<Props, State> {
             <Col size={2}>
               <Switch
                 key={`switch-service-${profileVersion}`}
-                value={this.state.uiEnabledChannels.inbox}
-                onValueChange={onSwitchTap}
+                value={pot.isSome(enabledChannels)}
+                onValueChange={() => true}
               />
             </Col>
           ) : (
