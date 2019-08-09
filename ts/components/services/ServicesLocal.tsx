@@ -50,11 +50,13 @@ class ServicesLocal extends React.PureComponent<Props> {
     const {
       onChooserAreasOfInterestPress,
       paddingForAnimation,
-      organizationsFiscalCodesSelected
+      organizationsFiscalCodesSelected,
+      isRefreshing
     } = this.props;
     return (
       <View style={styles.contentWrapper}>
         <ServicesLocalHeader
+          isRefreshing={isRefreshing}
           onChooserAreasOfInterestPress={onChooserAreasOfInterestPress}
           paddingForAnimation={paddingForAnimation}
           organizationsFiscalCodesSelected={organizationsFiscalCodesSelected}

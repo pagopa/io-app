@@ -12,7 +12,12 @@ type ServicesLocalProps =
   | "onChooserAreasOfInterestPress"
   | "organizationsFiscalCodesSelected";
 
-type Props = Pick<ComponentProps<typeof ServicesLocal>, ServicesLocalProps>;
+type OwnProps = {
+  isRefreshing: boolean;
+};
+
+type Props = OwnProps &
+  Pick<ComponentProps<typeof ServicesLocal>, ServicesLocalProps>;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -47,7 +52,8 @@ export class ServicesLocalHeader extends React.PureComponent<Props> {
     const {
       paddingForAnimation,
       onChooserAreasOfInterestPress,
-      organizationsFiscalCodesSelected
+      organizationsFiscalCodesSelected,
+      isRefreshing
     } = this.props;
     const isOrganizationsFiscalCodesSelected = organizationsFiscalCodesSelected.fold(
       false,
@@ -62,12 +68,15 @@ export class ServicesLocalHeader extends React.PureComponent<Props> {
           style={styles.button}
           block={true}
           onPress={onChooserAreasOfInterestPress}
+          disabled={isRefreshing}
         >
           <Text style={styles.textButton}>
             {I18n.t("services.areasOfInterest.editButton")}
           </Text>
         </Button>
       </View>
+    ) : isRefreshing ? (
+      <View />
     ) : (
       <View style={styles.contentWrapper}>
         <Text style={styles.message}>

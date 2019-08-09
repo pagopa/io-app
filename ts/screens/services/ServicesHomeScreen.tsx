@@ -11,7 +11,6 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ChooserListContainer from "../../components/ChooserListContainer";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import OrganizationLogo from "../../components/services/OrganizationLogo";
@@ -156,7 +155,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   }
 
   private showChooserAreasOfInterestModal = () => {
-    const { allOrganizations, hideModal, organizationsSelected } = this.props;
+    const {
+      allOrganizations,
+      hideModal,
+      organizationsSelected,
+      isLoading
+    } = this.props;
     this.props.showModal(
       <ChooserListContainer<Organization>
         items={allOrganizations}
@@ -169,6 +173,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         onCancel={hideModal}
         onSave={this.onSaveAreasOfInterest}
         isRefreshEnabled={false}
+        isRefreshing={isLoading}
         matchingTextPredicate={this.organizationContainsText}
         noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
         noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
@@ -443,4 +448,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(withLoadingSpinner(ServicesHomeScreen)));
+)(withLightModalContext(ServicesHomeScreen));
