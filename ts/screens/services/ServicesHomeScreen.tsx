@@ -26,6 +26,7 @@ import { lexicallyOrderedAllOrganizations } from "../../store/reducers/entities/
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import { GlobalState } from "../../store/reducers/types";
 import {
+  organizationsOfInterestSelector,
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
@@ -392,9 +393,6 @@ const mapStateToProps = (state: GlobalState) => {
 
   const potUserMetadata = userMetadataSelector(state);
   const userMetadata = pot.getOrElse(potUserMetadata, undefined);
-  const organizationsSelected = userMetadata
-    ? userMetadata.metadata.organizationsOfInterest
-    : undefined;
 
   const isAnyServiceLoading =
     Object.keys(services.byId).find(k => {
@@ -410,7 +408,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     allOrganizations: lexicallyOrderedAllOrganizations(state),
     isLoading,
-    organizationsSelected,
+    organizationsSelected: organizationsOfInterestSelector(state),
     userMetadata
   };
 };

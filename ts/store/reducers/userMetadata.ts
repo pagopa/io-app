@@ -1,6 +1,7 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as pot from "italia-ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { UserMetadata as BackendUserMetadata } from "../../../definitions/backend/UserMetadata";
 import { Action } from "../actions/types";
@@ -67,6 +68,16 @@ export const INITIAL_STATE: UserMetadataState = pot.none;
 
 // Selectors
 export const userMetadataSelector = (state: GlobalState) => state.userMetadata;
+
+export const organizationsOfInterestSelector = createSelector(
+  userMetadataSelector,
+  potUserMetadata => {
+    const userMetadata = pot.getOrElse(potUserMetadata, undefined);
+    return userMetadata
+      ? userMetadata.metadata.organizationsOfInterest
+      : undefined;
+  }
+);
 
 const userMetadataReducer = (
   state: UserMetadataState = INITIAL_STATE,
