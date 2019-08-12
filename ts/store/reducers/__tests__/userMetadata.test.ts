@@ -34,17 +34,32 @@ describe("userMetadata", () => {
       );
     });
 
-    it("should return an Error if the decode of the backendUserMetadata fails", () => {
-      const backendUserMetadata: BackendUserMetadata = {
+    it("should return an Error if the decode of the backendUserMetadata experimentalFeatures fails", () => {
+      const backendUserMetadataBadExperimentalFeatures: BackendUserMetadata = {
         version: 1,
         metadata: JSON.stringify({
           experimentalFeatures: "NOT_A_BOOLEAN",
-          organizationsOfInterest: "NOT_A_READONLY_ARRAY"
+          organizationsOfInterest: ["a", "b"]
         })
       };
-      expect(backendUserMetadataToUserMetadata(backendUserMetadata)).toEqual(
-        left(new Error())
-      );
+      expect(
+        backendUserMetadataToUserMetadata(
+          backendUserMetadataBadExperimentalFeatures
+        )
+      ).toEqual(left(new Error()));
+    });
+
+    it("should return an Error if the decode of the backendUserMetadata organizationsOfInterest fails", () => {
+      const backendUserMetadataBadOrganization: BackendUserMetadata = {
+        version: 1,
+        metadata: JSON.stringify({
+          experimentalFeatures: true,
+          organizationsOfInterest: [1, 2, 3]
+        })
+      };
+      expect(
+        backendUserMetadataToUserMetadata(backendUserMetadataBadOrganization)
+      ).toEqual(left(new Error()));
     });
   });
 
