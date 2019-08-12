@@ -72,10 +72,10 @@ export const userMetadataSelector = (state: GlobalState) => state.userMetadata;
 export const organizationsOfInterestSelector = createSelector(
   userMetadataSelector,
   potUserMetadata => {
-    const userMetadata = pot.getOrElse(potUserMetadata, undefined);
-    return userMetadata
-      ? userMetadata.metadata.organizationsOfInterest
-      : undefined;
+    return pot.getOrElse(
+      pot.map(potUserMetadata, _ => _.metadata.organizationsOfInterest),
+      undefined
+    );
   }
 );
 
