@@ -2,7 +2,6 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { Button, Text, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet, TouchableOpacity } from "react-native";
-import Svg, { Circle } from "react-native-svg";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -13,6 +12,7 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
+import { BadgeComponent } from "../screens/BadgeComponent";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
 
@@ -116,17 +116,6 @@ const UNKNOWN_SERVICE_DATA = {
   departmentName: "Info sul servizio mancanti"
 };
 
-const MessageUnreadIcon = (
-  <Svg width={14} height={18}>
-    <Circle
-      cx="50%"
-      cy="50%"
-      r={14 / 2}
-      fill={customVariables.contentPrimaryBackground}
-    />
-  </Svg>
-);
-
 class MessageListItem extends React.PureComponent<Props> {
   private handlePress = () => {
     this.props.onPress(this.props.message.id);
@@ -176,7 +165,9 @@ class MessageListItem extends React.PureComponent<Props> {
         >
           <View style={styles.headerWrapper}>
             {!isRead && (
-              <View style={styles.headerLeft}>{MessageUnreadIcon}</View>
+              <View style={styles.headerLeft}>
+                <BadgeComponent />
+              </View>
             )}
             <View style={styles.headerCenter}>
               <Text numberOfLines={1} style={styles.serviceOrganizationName}>
