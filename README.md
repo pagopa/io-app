@@ -491,7 +491,7 @@ $ detox test
 
 ### Troubleshooting
 
-### iOS build warning
+#### iOS build warning
 
 If, during the archive process, you see one or more warning like this `...RNTextInputMask.o)) was built for newer iOS version (10.3) than being linked (9.0)` you can fix it in this way:
 1. Open the project io-app/ios with Xcode
