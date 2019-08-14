@@ -62,7 +62,7 @@ export function defaultRetryingFetch(
  * createFetchRequestForApi when creating "getPaymentId"
  */
 export const constantPollingFetch = (
-  controllerRetry: Promise<Response>,
+  shouldAbort: Promise<boolean>,
   retries: number,
   delay: number,
   timeout: Millisecond = 1000 as Millisecond
@@ -79,8 +79,7 @@ export const constantPollingFetch = (
   const constantBackoff = () => delay as Millisecond;
   const retryLogic = withRetries<Error, Response>(
     retries,
-    constantBackoff,
-    controllerRetry
+    constantBackoff
   );
   // makes the retry logic map 404s to transient errors (by default only
   // timeouts are transient)
@@ -100,5 +99,5 @@ export const constantPollingFetch = (
     );
 
   // TODO: remove the cast once we upgrade to tsc >= 3.1
-  return retriableFetch(retryWithTransient404s)(timeoutFetch as typeof fetch);
+  return retriableFetch(retryWithTransient404s, shouldAbort)(timeoutFetch as typeof fetch);
 };

@@ -462,14 +462,14 @@ function* pollTransactionSaga(
 // tslint:disable-next-line: no-let
 let promiseRetryResolve: {
   // tslint:disable-next-line: unified-signatures
-  (value?: Response | PromiseLike<Response> | undefined): void;
+  (value?: boolean | PromiseLike<boolean> | undefined): void;
   (): void;
 };
 /**
  * This Promise has used to interrupt polling for request idPayment
  */
 // tslint:disable-next-line: promise-must-complete
-const promiseControllerRetry = new Promise<Response>((resolve, _) => {
+const promiseControllerRetry = new Promise<boolean>((resolve, _) => {
   promiseRetryResolve = resolve;
 });
 
@@ -480,7 +480,7 @@ const promiseControllerRetry = new Promise<Response>((resolve, _) => {
  */
 function* deleteActivePaymentSaga() {
   // Call resolve promise
-  promiseRetryResolve();
+  promiseRetryResolve(true);
   const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select<
     GlobalState
   >(_ => _.wallet.payment.paymentId);

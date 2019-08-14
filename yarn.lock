@@ -4618,9 +4618,9 @@ italia-ts-commons@5.1.1, italia-ts-commons@^5.0.1:
     json-set-map "^1.0.2"
     validator "^10.1.0"
 
-"italia-ts-commons@git://github.com/teamdigitale/io-ts-commons.git#c675e469b6ff0c88f6bbb9e07751cc0d0fc9aedc":
+"italia-ts-commons@git://github.com/teamdigitale/io-ts-commons.git#c9294c206a9147f83cefc84b72c97d60dadf96cd":
   version "5.1.5"
-  resolved "git://github.com/teamdigitale/io-ts-commons.git#c675e469b6ff0c88f6bbb9e07751cc0d0fc9aedc"
+  resolved "git://github.com/teamdigitale/io-ts-commons.git#c9294c206a9147f83cefc84b72c97d60dadf96cd"
   dependencies:
     fp-ts "1.12.0"
     io-ts "1.8.5"
