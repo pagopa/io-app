@@ -460,7 +460,7 @@ function* pollTransactionSaga(
 }
 
 // tslint:disable-next-line: no-let
-let promiseRetryResolve: {
+let shouldAbortResolve: {
   // tslint:disable-next-line: unified-signatures
   (value?: boolean | PromiseLike<boolean> | undefined): void;
   (): void;
@@ -469,8 +469,8 @@ let promiseRetryResolve: {
  * This Promise has used to interrupt polling for request idPayment
  */
 // tslint:disable-next-line: promise-must-complete
-const promiseControllerRetry = new Promise<boolean>((resolve, _) => {
-  promiseRetryResolve = resolve;
+const shouldAbort = new Promise<boolean>((resolve, _) => {
+  shouldAbortResolve = resolve;
 });
 
 /**
@@ -480,7 +480,7 @@ const promiseControllerRetry = new Promise<boolean>((resolve, _) => {
  */
 function* deleteActivePaymentSaga() {
   // Call resolve promise
-  promiseRetryResolve(true);
+  shouldAbortResolve(true);
   const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select<
     GlobalState
   >(_ => _.wallet.payment.paymentId);
@@ -521,7 +521,7 @@ export function* watchWalletSaga(
     apiUrlPrefix,
     sessionToken,
     constantPollingFetch(
-      promiseControllerRetry,
+      shouldAbort,
       PAYMENT_ID_MAX_POLLING_RETRIES,
       PAYMENT_ID_RETRY_DELAY_MILLIS
     )
