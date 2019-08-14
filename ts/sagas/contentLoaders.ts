@@ -1,5 +1,4 @@
 import { Either, left, right } from "fp-ts/lib/Either";
-import { Errors } from "io-ts";
 import * as t from "io-ts";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, takeEvery } from "redux-saga/effects";
@@ -21,13 +20,6 @@ import { SagaCallReturnType } from "../types/utils";
 
 const contentClient = ContentClient();
 
-const error: Errors = [
-  {
-    context: [],
-    value: "some error occurred"
-  }
-];
-
 /**
  * Retrieves a service metadata from the static content repository
  */
@@ -37,7 +29,7 @@ function getServiceMetadata(
   return new Promise((resolve, _) =>
     contentClient
       .getService({ serviceId })
-      .then(resolve, () => resolve(left(error)))
+      .then(resolve, e => resolve(left([{ context: [], value: e }])))
   );
 }
 

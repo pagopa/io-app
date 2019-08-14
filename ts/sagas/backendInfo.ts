@@ -1,5 +1,4 @@
 import { left } from "fp-ts/lib/Either";
-import { Errors } from "io-ts";
 import * as t from "io-ts";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, fork, put } from "redux-saga/effects";
@@ -24,20 +23,14 @@ const BACKEND_INFO_RETRY_INTERVAL = 60 * 60 * 10 * 1000;
 function* backendInfoWatcher(): IterableIterator<Effect> {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
 
-  const error: Errors = [
-    {
-      context: [],
-      value: "some error occurred"
-    }
-  ];
-
   function getServerInfo(): Promise<
     t.Validation<BasicResponseType<ServerInfo>>
   > {
     return new Promise((resolve, _) =>
       backendPublicClient
         .getServerInfo({})
-        .then(resolve, () => resolve(left(error)))
+
+        .then(resolve, e => resolve(left([{ context: [], value: e }])))
     );
   }
 
