@@ -64,6 +64,9 @@ export function defaultRetryingFetch(
   return retryingFetch((global as any).fetch, timeout, maxRetries);
 }
 
+/**
+ * Fetch with transient error handling. Handle error that occurs once or at unpredictable intervals.
+ */
 function retryLogicForTransientResponseError(
   p: (r: Response) => boolean,
   retryLogic: (
