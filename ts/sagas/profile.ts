@@ -64,15 +64,14 @@ function* createOrUpdateProfileSaga(
   >["createOrUpdateProfile"],
   action: ActionType<typeof profileUpsert["request"]>
 ): Iterator<Effect> {
+  // Get the current Profile from the state
+  const profileState: ReturnType<typeof profileSelector> = yield select<
+    GlobalState
+  >(profileSelector);
   try {
-    // Get the current Profile from the state
-    const profileState: ReturnType<typeof profileSelector> = yield select<
-      GlobalState
-    >(profileSelector);
-
     if (pot.isNone(profileState)) {
       // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
-      // the used didn't yet authenticated: ignore this upsert request.
+      // the user didn't yet authenticated: ignore this upsert request.
       return;
     }
 
