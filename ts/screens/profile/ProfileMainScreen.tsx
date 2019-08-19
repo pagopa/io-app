@@ -248,8 +248,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       sessionToken,
       walletToken,
       notificationToken,
-      notificationId,
-      isExperimentalFeaturesEnabled
+      notificationId
     } = this.props;
 
     // TODO: once isExperimentalFeaturesEnabled is removed, shift again screenContent into the main return
@@ -402,6 +401,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
           )
         }}
+        banner={ExperimentalFeaturesBanner}
       >
         {screenContent()}
       </DarkLayout>
@@ -414,11 +414,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
           title={I18n.t("profile.main.screenTitle")}
           icon={require("../../../img/icons/gears.png")}
           subtitle={I18n.t("profile.main.screenSubtitle")}
-          banner={
-            isExperimentalFeaturesEnabled
-              ? ExperimentalFeaturesBanner
-              : undefined
-          }
         />
         {screenContent()}
       </TopScreenComponent>
