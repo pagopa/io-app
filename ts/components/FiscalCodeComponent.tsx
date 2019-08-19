@@ -8,17 +8,26 @@
  * and it includes the barcode of the fiscal code with the code 128 format
  */
 import I18n from "i18n-js";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  Image,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { UserProfile } from "../../definitions/backend/UserProfile";
+import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
 import { extractFiscalCodeData } from "../utils/profile";
 
 interface BaseProps {
   profile: UserProfile;
+  municipality: MunicipalityState;
 }
 
 interface PreviewProps {
@@ -209,6 +218,8 @@ const styles = StyleSheet.create({
   },
 
   fullGenderText: {
+    lineHeight: textdLineHeightF,
+    marginTop: nameHeightF,
     marginLeft: textGenderLeftMarginF
   },
 
@@ -218,7 +229,14 @@ const styles = StyleSheet.create({
     fontSize: textFontSizeL,
     width: cardWidthL,
     paddingLeft: textGenderLeftMarginL,
-    lineHeight: textLineHeightL
+    lineHeight: textLineHeightL,
+    transform: [
+      { rotateZ: "90deg" },
+      { translateY: nameHeightL },
+      {
+        translateX: (cardWidthL - customVariables.contentPadding) / 2
+      }
+    ]
   },
 
   fullBirthPlaceText: {
@@ -304,93 +322,91 @@ const styles = StyleSheet.create({
 });
 
 export default class FiscalCodeComponent extends React.Component<Props> {
-  private renderFrontContent(profile: UserProfile, isLandscape: boolean) {
+  private renderItem(
+    content: string,
+    fullStyle: StyleProp<ViewStyle>,
+    landscapeStyle: StyleProp<ViewStyle>,
+    isLandscape: boolean
+  ) {
     return (
-      <React.Fragment>
-        <Text
-          bold={true}
-          robotomono={true}
-          style={[
-            isLandscape
-              ? [styles.landscapeText, styles.landscapeFiscalCodeText]
-              : [styles.fullText, styles.fullFiscalCodeText]
-          ]}
-        >
-          {profile.fiscal_code.toUpperCase()}
-        </Text>
+      <Text
+        bold={true}
+        robotomono={true}
+        style={[
+          isLandscape
+            ? [styles.landscapeText, landscapeStyle]
+            : [styles.fullText, fullStyle]
+        ]}
+      >
+        {content.toUpperCase()}
+      </Text>
+    );
+  }
 
-        <Text
-          bold={true}
-          robotomono={true}
-          style={[
-            isLandscape
-              ? [styles.landscapeText, styles.landscapeLastNameText]
-              : [styles.fullText, styles.fullLastNameText]
-          ]}
-        >
-          {profile.family_name.toUpperCase()}
-        </Text>
+  private renderFrontContent(
+    profile: UserProfile,
+    municipality: MunicipalityState,
+    isLandscape: boolean
+  ) {
+    const fiscalCodeData = extractFiscalCodeData(
+      profile.fiscal_code,
+      municipality
+    );
 
-        <Text
-          bold={true}
-          robotomono={true}
-          style={[
+    return (
+      !pot.isLoading(municipality.data) && (
+        <React.Fragment>
+          {this.renderItem(
+            profile.fiscal_code,
+            styles.fullFiscalCodeText,
+            styles.landscapeFiscalCodeText,
             isLandscape
-              ? [styles.landscapeText, styles.landscapeNameText]
-              : [styles.fullText, styles.fullNameText]
-          ]}
-        >
-          {profile.name.toUpperCase()}
-        </Text>
+          )}
 
-        <Text
-          bold={true}
-          robotomono={true}
-          style={[
+          {this.renderItem(
+            profile.family_name,
+            styles.fullLastNameText,
+            styles.landscapeLastNameText,
             isLandscape
-              ? [styles.landscapeGender, styles.landscapeNameText]
-              : [styles.fullText, styles.fullNameText, styles.fullGenderText]
-          ]}
-        >
-          {extractFiscalCodeData(profile.fiscal_code).gender}
-        </Text>
+          )}
 
-        <Text
-          bold={true}
-          robotomono={true}
-          style={[
+          {this.renderItem(
+            profile.name,
+            styles.fullNameText,
+            styles.landscapeNameText,
             isLandscape
-              ? [styles.landscapeText, styles.landscapeBirthPlaceText]
-              : [styles.fullText, styles.fullBirthPlaceText]
-          ]}
-        >
-          {/** LUOGO DI NASCITA  TODO: get data from fiscal https://www.pivotaltracker.com/story/show/167064742  */}
-        </Text>
+          )}
 
-        <Text
-          bold={true}
-          robotomono={true}
-          style={[
-            isLandscape
-              ? [styles.landscapeText, styles.landscapeBirthCityText]
-              : [styles.fullText, styles.fullBirthCityText]
-          ]}
-        >
-          {/** PROVINCIA  TODO: get data from fiscal code https://www.pivotaltracker.com/story/show/167064742 */}
-        </Text>
+          {pot.isSome(municipality.data) &&
+            this.renderItem(
+              municipality.data.value.denominazioneInItaliano,
+              styles.fullBirthPlaceText,
+              styles.landscapeBirthPlaceText,
+              isLandscape
+            )}
 
-        <Text
-          bold={true}
-          robotomono={true}
-          style={[
+          {this.renderItem(
+            fiscalCodeData.gender,
+            styles.fullGenderText,
+            styles.landscapeGender,
             isLandscape
-              ? [styles.landscapeText, styles.landscapeDateText]
-              : [styles.fullText, styles.fullDateText]
-          ]}
-        >
-          {extractFiscalCodeData(profile.fiscal_code).birthDate}
-        </Text>
-      </React.Fragment>
+          )}
+
+          {this.renderItem(
+            fiscalCodeData.siglaProvincia,
+            styles.fullBirthCityText,
+            styles.landscapeBirthCityText,
+            isLandscape
+          )}
+
+          {this.renderItem(
+            fiscalCodeData.birthDate,
+            styles.fullDateText,
+            styles.landscapeDateText,
+            isLandscape
+          )}
+        </React.Fragment>
+      )
     );
   }
 
@@ -454,6 +470,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           !this.props.getBackSide &&
           this.renderFrontContent(
             this.props.profile,
+            this.props.municipality,
             this.props.type === "Landscape"
           )}
 

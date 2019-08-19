@@ -7,6 +7,7 @@ import { Platform, StatusBar, StyleSheet } from "react-native";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import IconFont from "../components/ui/IconFont";
+import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
@@ -14,6 +15,7 @@ import AppHeader from "./ui/AppHeader";
 type Props = Readonly<{
   onCancel: () => void;
   profile: UserProfile;
+  municipality: MunicipalityState;
   showBackSide?: boolean;
 }>;
 
@@ -62,6 +64,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
               type={"Landscape"}
               profile={this.props.profile}
               getBackSide={false}
+              municipality={this.props.municipality}
             />
           </View>
 
@@ -71,6 +74,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
             type={"Landscape"}
             profile={this.props.profile}
             getBackSide={true}
+            municipality={this.props.municipality}
           />
 
           <View spacer={true} large={true} />
