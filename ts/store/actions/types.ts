@@ -24,6 +24,7 @@ import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
+import { OrganizationsActions } from "./organizations";
 import { PaymentsActions } from "./payments";
 import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PinSetActions } from "./pinset";
@@ -31,6 +32,7 @@ import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
 import { SearchActions } from "./search";
 import { ServicesActions } from "./services";
+import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 
 export type Action =
@@ -47,6 +49,7 @@ export type Action =
   | PreferencesActions
   | PersistedPreferencesActions
   | ProfileActions
+  | UserMetadataActions
   | ServicesActions
   | WalletActions
   | ContentActions
@@ -56,7 +59,8 @@ export type Action =
   | DebugActions
   | CalendarEventsActions
   | SearchActions
-  | PaymentsActions;
+  | PaymentsActions
+  | OrganizationsActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
