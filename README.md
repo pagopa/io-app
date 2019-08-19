@@ -489,3 +489,11 @@ $ detox test
 
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
 
+### Troubleshooting
+
+#### iOS build warning
+
+If, during the archive process, you see one or more warning like this `...RNTextInputMask.o)) was built for newer iOS version (10.3) than being linked (9.0)` you can fix it in this way:
+1. Open the project io-app/ios with Xcode
+1. Select the library (es. RNTextInputMask) in 'Libraries'
+1. Select the name of the library under the label 'PROJECT' and change the iOS Deployment target from 10.3 to 9.0 
