@@ -11,7 +11,7 @@ import {
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { Button, Text, View } from "native-base";
+import { View } from "native-base";
 import React from "react";
 import { Platform, SectionListScrollParams, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -24,9 +24,10 @@ import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessag
 import { ComponentProps } from "../../types/react";
 import { DateFromISOString } from "../../utils/dates";
 import {
-  InjectedWithMessagesSelectionProps,
-  withMessagesSelection
-} from "../helpers/withMessagesSelection";
+  InjectedWithItemsSelectionProps,
+  withItemsSelection
+} from "../helpers/withItemsSelection";
+import { ListSelectionBar } from "../ListSelectionBar";
 import MessageAgenda, {
   isFakeItem,
   MessageAgendaItem,
@@ -49,28 +50,11 @@ const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
   },
-  buttonBar: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: Platform.OS === "ios" ? SCROLL_RANGE_FOR_ANIMATION : 0,
-    flexDirection: "row",
-    zIndex: 1,
-    justifyContent: "space-around",
-    backgroundColor: customVariables.brandLightGray,
-    padding: 10
+  animatedStartPosition: {
+    bottom: Platform.OS === "ios" ? SCROLL_RANGE_FOR_ANIMATION : 0
   },
-  buttonBarLeft: {
-    flex: 2
-  },
-  buttonBarRight: {
-    flex: 2
-  },
-  buttonBarCenter: {
-    flex: 2,
-    backgroundColor: customVariables.colorWhite,
-    marginLeft: 10,
-    marginRight: 10
+  listContainer: {
+    flex: 1
   }
 });
 
@@ -88,7 +72,7 @@ type Props = Pick<
   "servicesById" | "paymentsByRptId"
 > &
   OwnProps &
-  InjectedWithMessagesSelectionProps;
+  InjectedWithItemsSelectionProps;
 
 type State = {
   isWorking: boolean;
@@ -349,7 +333,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   };
 
   private handleOnPressItem = (id: string) => {
-    if (this.props.selectedMessageIds.isSome()) {
+    if (this.props.selectedItemIds.isSome()) {
       // Is the selection mode is active a simple "press" must act as
       // a "longPress" (select the item).
       this.handleOnLongPressItem(id);
@@ -359,16 +343,16 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   };
 
   private handleOnLongPressItem = (id: string) => {
-    this.props.toggleMessageSelection(id);
+    this.props.toggleItemSelection(id);
   };
 
   private toggleAllMessagesSelection = () => {
     const { allMessageIdsState } = this.state;
-    const { selectedMessageIds } = this.props;
-    if (selectedMessageIds.isSome()) {
-      this.props.setSelectedMessageIds(
+    const { selectedItemIds } = this.props;
+    if (selectedItemIds.isSome()) {
+      this.props.setSelectedItemIds(
         some(
-          allMessageIdsState.size === selectedMessageIds.value.size
+          allMessageIdsState.size === selectedItemIds.value.size
             ? new Set()
             : allMessageIdsState
         )
@@ -379,7 +363,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   private archiveMessages = () => {
     this.props.resetSelection();
     this.props.setMessagesArchivedState(
-      this.props.selectedMessageIds.map(_ => Array.from(_)).getOrElse([]),
+      this.props.selectedItemIds.map(_ => Array.from(_)).getOrElse([]),
       true
     );
   };
@@ -523,7 +507,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       messagesState,
       servicesById,
       paymentsByRptId,
-      selectedMessageIds,
+      selectedItemIds,
       resetSelection
     } = this.props;
     const { allMessageIdsState, isWorking, sectionsToRender } = this.state;
@@ -532,56 +516,32 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
     return (
       <View style={styles.listWrapper}>
-        {selectedMessageIds.isSome() && (
-          <View style={styles.buttonBar}>
-            <Button
-              block={true}
-              bordered={true}
-              light={true}
-              onPress={resetSelection}
-              style={styles.buttonBarLeft}
-            >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </Button>
-            <Button
-              block={true}
-              bordered={true}
-              style={styles.buttonBarCenter}
-              onPress={this.toggleAllMessagesSelection}
-            >
-              <Text>
-                {I18n.t(
-                  selectedMessageIds.value.size === allMessageIdsState.size
-                    ? "messages.cta.deselectAll"
-                    : "messages.cta.selectAll"
-                )}
-              </Text>
-            </Button>
-            <Button
-              block={true}
-              style={styles.buttonBarRight}
-              disabled={selectedMessageIds.value.size === 0}
-              onPress={this.archiveMessages}
-            >
-              <Text>{I18n.t("messages.cta.archive")}</Text>
-            </Button>
-          </View>
-        )}
-        <MessageAgenda
-          ref={this.messageAgendaRef}
-          sections={sectionsToRender}
-          servicesById={servicesById}
-          paymentsByRptId={paymentsByRptId}
-          refreshing={isRefreshing}
-          selectedMessageIds={selectedMessageIds}
-          onPressItem={this.handleOnPressItem}
-          onLongPressItem={this.handleOnLongPressItem}
-          onMoreDataRequest={this.onLoadMoreDataRequest}
-          onContentSizeChange={this.onContentSizeChange}
+        <View style={styles.listContainer}>
+          <MessageAgenda
+            ref={this.messageAgendaRef}
+            sections={sectionsToRender}
+            servicesById={servicesById}
+            paymentsByRptId={paymentsByRptId}
+            refreshing={isRefreshing}
+            selectedMessageIds={selectedItemIds}
+            onPressItem={this.handleOnPressItem}
+            onLongPressItem={this.handleOnLongPressItem}
+            onMoreDataRequest={this.onLoadMoreDataRequest}
+            onContentSizeChange={this.onContentSizeChange}
+          />
+        </View>
+        <ListSelectionBar
+          selectedItemIds={selectedItemIds}
+          allItemIds={some(allMessageIdsState)}
+          onToggleSelection={this.archiveMessages}
+          onToggleAllSelection={this.toggleAllMessagesSelection}
+          onResetSelection={resetSelection}
+          primaryButtonText={I18n.t("messages.cta.archive")}
+          containerStyle={[styles.animatedStartPosition]}
         />
       </View>
     );
   }
 }
 
-export default withMessagesSelection(MessagesDeadlines);
+export default withItemsSelection(MessagesDeadlines);

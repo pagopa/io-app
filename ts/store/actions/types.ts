@@ -24,6 +24,7 @@ import { NavigationActions } from "./navigation";
 import { NavigationHistoryActions } from "./navigationHistory";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
+import { OrganizationsActions } from "./organizations";
 import { PaymentsActions } from "./payments";
 import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PinSetActions } from "./pinset";
@@ -58,7 +59,8 @@ export type Action =
   | DebugActions
   | CalendarEventsActions
   | SearchActions
-  | PaymentsActions;
+  | PaymentsActions
+  | OrganizationsActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
