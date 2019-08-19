@@ -6985,10 +6985,10 @@ react-native-calendar-events@1.7.1:
   resolved "https://registry.yarnpkg.com/react-native-calendar-events/-/react-native-calendar-events-1.7.1.tgz#177dcac0a3c711f1190ce107f6299e47aabba645"
   integrity sha512-Kixqf4Evu+keQa5H6T1Pq2Hu5JPQLGxNp9NA4nf75QjT3tAT6naZX9RIltlnUX9+va2cWbJ5hoTQ6VXax1CRNA==
 
-react-native-camera@2.11.1:
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-2.11.1.tgz#a72062f59bb57c0cb2bd57fe6713fa23b2a90571"
-  integrity sha512-ZmPZHcY7UXEf7Z8PoJX/WhFtmLFtdRPBGDwemOLlPRVwTVyu/OXVINDUWCug4daBqV8Fs3X1O6V927+K2u2GfA==
+react-native-camera@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.1.2.tgz#a9cbc1ee55d5e6ad374aa7e5e502b4bdfe32c371"
+  integrity sha512-2XpBwUXN7Mq17rNnos4ZvUrUR4QDnu5H+SpTn1S/LUuAf2bN4Rk+Zyje7/GnytRslYOuhTtr2DFKEmvubYzpYg==
   dependencies:
     prop-types "^15.6.2"
 
