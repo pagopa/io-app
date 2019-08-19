@@ -33,6 +33,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 type State = {
   requestState: pot.Pot<true, "LOADING_ERROR" | "LOGIN_ERROR">;
+  errorCode?: string;
 };
 
 const LOGIN_BASE_URL = `${
@@ -76,6 +77,10 @@ const styles = StyleSheet.create({
     bottom: 30,
     flex: 1,
     flexDirection: "row"
+  },
+  cancelButtonStyle: {
+    flex: 1,
+    marginEnd: 10
   }
 });
 
@@ -84,7 +89,7 @@ const styles = StyleSheet.create({
  * Return true if the url contains login pattern & token
  */
 const onNavigationStateChange = (
-  onFailure: () => void,
+  onFailure: (errorCode: string | undefined) => void,
   onSuccess: (_: SessionToken) => void
 ) => (navState: NavState): boolean => {
   if (navState.url) {
@@ -97,8 +102,7 @@ const onNavigationStateChange = (
         return true;
       } else {
         // In case of login failure
-        onFailure();
-        return false;
+        onFailure(loginResult.errorCode);
       }
     }
   }
@@ -130,10 +134,11 @@ class IdpLoginScreen extends React.Component<Props, State> {
     });
   };
 
-  private handleLoginFailure = () => {
+  private handleLoginFailure = (errorCode?: string) => {
     this.props.dispatchLoginFailure();
     this.setState({
-      requestState: pot.noneError("LOGIN_ERROR")
+      requestState: pot.noneError("LOGIN_ERROR"),
+      errorCode
     });
   };
 
@@ -172,6 +177,10 @@ class IdpLoginScreen extends React.Component<Props, State> {
       );
     } else if (pot.isError(this.state.requestState)) {
       const errorType = this.state.requestState.error;
+      const errorTranslationKey = `authentication.errors.spid.error_${
+        this.state.errorCode
+      }`;
+
       return (
         <View style={styles.errorContainer}>
           <Image source={brokenLinkImage} resizeMode="contain" />
@@ -182,19 +191,22 @@ class IdpLoginScreen extends React.Component<Props, State> {
                 : "authentication.errors.login.title"
             )}
           </Text>
-          <Text style={styles.errorBody}>
-            {I18n.t(
-              errorType === "LOADING_ERROR"
-                ? "authentication.errors.network.body"
-                : "authentication.errors.login.body"
-            )}
-          </Text>
+
+          {errorType === "LOGIN_ERROR" && (
+            <Text style={styles.errorBody}>
+              {I18n.t(errorTranslationKey, {
+                defaultValue: I18n.t("authentication.errors.spid.unknown")
+              })}
+            </Text>
+          )}
+
           <View style={styles.errorButtonsContainer}>
             <Button
               onPress={this.goBack}
-              style={{ flex: 1 }}
+              style={styles.cancelButtonStyle}
               block={true}
               light={true}
+              bordered={true}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </Button>

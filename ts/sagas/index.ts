@@ -5,7 +5,10 @@ import { networkSaga } from "react-native-offline";
 import { all, call, Effect } from "redux-saga/effects";
 
 import backendInfoSaga from "./backendInfo";
-import { watchContentServiceLoadSaga } from "./contentLoaders";
+import {
+  watchContentMunicipalityLoadSaga,
+  watchContentServiceLoadSaga
+} from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
 import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
@@ -35,6 +38,7 @@ export default function* root(): Iterator<Effect> {
     call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),
     call(watchContentServiceLoadSaga),
+    call(watchContentMunicipalityLoadSaga),
     call(watchPaymentInitializeSaga),
     call(watchBackToEntrypointPaymentSaga)
   ]);
