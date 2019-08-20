@@ -1,3 +1,5 @@
+// TODO: delete this component (bieng substituted with the generic ServicesSectionsList)
+
 import React from "react";
 import { NativeScrollEvent, NativeSyntheticEvent, View } from "react-native";
 

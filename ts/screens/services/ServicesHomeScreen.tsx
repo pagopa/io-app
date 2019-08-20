@@ -1,3 +1,6 @@
+/**
+ * A screen that contains all the Tabs related to services.
+ */
 import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -14,9 +17,8 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import OrganizationLogo from "../../components/services/OrganizationLogo";
-import ServicesLocal from "../../components/services/ServicesLocal";
-import ServicesNational from "../../components/services/ServicesNational";
-import ServicesOther from "../../components/services/ServicesOther";
+import ServicesSections from "../../components/services/ServicesSectionsList";
+import ServicesSectionsList from "../../components/services/ServicesSectionsList";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -31,8 +33,13 @@ import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedAllOrganizations } from "../../store/reducers/entities/organizations";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import { organizationsFiscalCodesSelectedStateSelector } from "../../store/reducers/entities/organizations/organizationsFiscalCodesSelected";
-import { localServicesSectionsSelector } from "../../store/reducers/entities/services";
+import {
+  nationalServiceSectionsSelector,
+  notSelectedLocalServiceSectionsSelector,
+  selectedLocalServiceSectionsSelector
+} from "../../store/reducers/entities/services";
 import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
+import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
@@ -87,9 +94,6 @@ const styles = StyleSheet.create({
 });
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
-/**
- * A screen that contains all the Tabs related to services.
- */
 class ServicesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -100,7 +104,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     // on mount, update visible services
-    this.props.refreshServices();
+    this.props.refreshServices(this.props.servicesById);
   }
 
   private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -214,6 +218,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /**
    * Render Locals, Nationals and Other services tabs.
    */
+  // tslint:disable no-big-function
   private renderTabs = () => {
     return (
       <AnimatedTabs
@@ -254,11 +259,14 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          <ServicesLocal
+          <ServicesSectionsList
+            type={"Local"}
             sections={this.props.localSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
-            onRefresh={this.props.refreshServices}
+            onRefresh={() =>
+              this.props.refreshServices(this.props.servicesById)
+            }
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
@@ -313,7 +321,16 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          <ServicesNational
+          <ServicesSections
+            type={"Other"}
+            sections={this.props.nationalSections}
+            profile={this.props.profile}
+            isRefreshing={this.props.isLoading}
+            onRefresh={() =>
+              this.props.refreshServices(this.props.servicesById)
+            }
+            onSelect={this.onServiceSelect}
+            readServices={this.props.readServices}
             animated={{
               onScroll: Animated.event(
                 [
@@ -362,7 +379,16 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          <ServicesOther
+          <ServicesSections
+            type={"Other"}
+            sections={this.props.otherServicesSections}
+            profile={this.props.profile}
+            isRefreshing={this.props.isLoading}
+            onRefresh={() =>
+              this.props.refreshServices(this.props.servicesById)
+            }
+            onSelect={this.onServiceSelect}
+            readServices={this.props.readServices}
             animated={{
               onScroll: Animated.event(
                 [
@@ -424,13 +450,21 @@ const mapStateToProps = (state: GlobalState) => {
     isLoading,
     organizationsSelected: organizationsFiscalCodesSelectedStateSelector(state),
     profile: state.profile,
+    servicesById: state.entities.services.byId,
     readServices: readServicesSelector(state),
-    localSections: localServicesSectionsSelector(state)
+    localSections: selectedLocalServiceSectionsSelector(state),
+    nationalSections: nationalServiceSectionsSelector(state),
+    otherServicesSections: notSelectedLocalServiceSectionsSelector(state)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshServices: () => dispatch(loadVisibleServices.request()),
+  refreshServices: (servicesById: ServicesByIdState) => {
+    dispatch(loadVisibleServices.request());
+    Object.keys(servicesById).forEach(serviceId =>
+      dispatch(contentServiceLoad.request(serviceId as ServiceId))
+    );
+  },
   saveSelectedOrganizationItems: (selectedItemIds: Option<Set<string>>) => {
     if (selectedItemIds.isSome()) {
       dispatch(setSelectedOrganizations(Array.from(selectedItemIds.value)));

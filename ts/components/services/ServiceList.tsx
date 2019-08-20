@@ -11,10 +11,11 @@ import {
   StyleSheet
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ServicesSectionState } from "../../store/reducers/entities/services";
 import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
+import variables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
@@ -28,9 +29,7 @@ type AnimatedProps = {
 };
 
 type OwnProps = {
-  // Can't use ReadonlyArray because of the SectionList section prop typescript definition.
-  // tslint:disable-next-line:readonly-array
-  sections: Array<SectionListData<pot.Pot<ServicePublic, Error>>>;
+  sections: ReadonlyArray<SectionListData<pot.Pot<ServicePublic, Error>>>;
   profile: ProfileState;
   isRefreshing: boolean;
   onRefresh: () => void;
@@ -89,7 +88,7 @@ class ServiceList extends React.Component<Props> {
   };
 
   private renderServiceSectionHeader = (info: {
-    section: SectionListData<pot.Pot<ServicePublic, Error>>;
+    section: ServicesSectionState;
   }): React.ReactNode => (
     <SectionHeaderComponent
       sectionHeader={info.section.organizationName}

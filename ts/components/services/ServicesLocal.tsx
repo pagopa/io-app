@@ -1,3 +1,4 @@
+// TODO: delete this component (bieng substituted with the generic ServicesSectionsList)
 import { Option } from "fp-ts/lib/Option";
 import { Button, Text, View } from "native-base";
 import React from "react";
