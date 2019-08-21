@@ -80,7 +80,9 @@ const styles = StyleSheet.create({
 
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
+    // Check if the current transaction is stored among the read transactions.
     const isNew = this.props.readTransactions[item.id.toString()] === undefined;
+
     const datetime: string = `${formatDateAsLocal(
       item.created,
       true,
@@ -172,7 +174,7 @@ export default class TransactionsList extends React.Component<Props> {
             <FlatList
               scrollEnabled={false}
               removeClippedSubviews={false}
-              data={transactions as Transaction[]} // tslint:disable-line: readonly-array
+              data={transactions}
               renderItem={this.renderTransaction}
               ItemSeparatorComponent={() => (
                 <View style={styles.itemSeparator} />

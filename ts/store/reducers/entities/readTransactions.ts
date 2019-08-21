@@ -1,5 +1,4 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../actions/types";
@@ -39,8 +38,6 @@ export const getUnreadTransactionsSelector = createSelector(
   [getTransactionsRead, getTransactions],
   (transactionsRead, transactions) =>
     pot.map(transactions, txs =>
-      values(txs).filter(
-        _ => _ !== undefined && transactionsRead[_.id] === undefined
-      )
+      txs.filter(_ => _ !== undefined && transactionsRead[_.id] === undefined)
     )
 );
