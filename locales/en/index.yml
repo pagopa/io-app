@@ -289,7 +289,7 @@ onboarding:
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
   alert:
-    title: Sure to log out of IO?
+    title: Do you really want to log out?
     description: You will have to log in again to use the app
   fingerprint:
     headerTitle: Activation

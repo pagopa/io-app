@@ -54,7 +54,6 @@ type PinState = PinUnselected | PinSelected | PinConfirmed | PinSaved;
 
 type State = {
   pinState: PinState;
-  showAbortOnboardingModal: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -71,8 +70,7 @@ class PinScreen extends React.Component<Props, State> {
     this.state = {
       pinState: {
         state: "PinUnselected"
-      },
-      showAbortOnboardingModal: false
+      }
     };
   }
 

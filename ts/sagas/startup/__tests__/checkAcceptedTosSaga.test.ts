@@ -49,7 +49,7 @@ describe("checkAcceptedTosSaga", () => {
   };
 
   describe("when user has already accepted the last version of ToS", () => {
-    it("should should do nothing", () => {
+    it("should do nothing", () => {
       return expectSaga(checkAcceptedTosSaga, updatedProfile)
         .not.put(navigateToTosScreen)
         .run();
@@ -57,7 +57,7 @@ describe("checkAcceptedTosSaga", () => {
   });
 
   describe("when user has accepted ToS before its version was persisted", () => {
-    it("should should do nothing", () => {
+    it("should do nothing", () => {
       return expectSaga(checkAcceptedTosSaga, oldOnboardedProfile)
         .not.put(navigateToTosScreen)
         .run();

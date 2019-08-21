@@ -31,13 +31,6 @@ type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
  * A screen to show if the fingerprint is supported to the user.
  */
 export class FingerprintScreen extends React.PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isAbortOnboardingModalVisible: false
-    };
-  }
-
   /**
    * Print the only BiometrySimplePrintableType values that are passed to the UI
    * @param biometrySimplePrintableType

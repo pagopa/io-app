@@ -89,18 +89,8 @@ const migrations: MigrationManifest = {
   },
 
   // Version 4
-  // we changed the way ToS acceptance is managed
-  "4": (state: PersistedState) => ({
-    ...state,
-    onboarding: {
-      isFingerprintAcknowledged: (state as any).onboarding
-        .isFingerprintAcknowledged
-    }
-  }),
-
-  // Version 5
   // we added a state to monitor what pagopa environment is selected
-  "5": (state: PersistedState) => {
+  "4": (state: PersistedState) => {
     return (state as any).persistedPreferences.isPagoPATestEnabled === undefined
       ? {
           ...state,
@@ -112,7 +102,17 @@ const migrations: MigrationManifest = {
       : {
           ...state
         };
-  }
+  },
+
+  // Version 5
+  // we changed the way ToS acceptance is managed
+  "5": (state: PersistedState) => ({
+    ...state,
+    onboarding: {
+      isFingerprintAcknowledged: (state as any).onboarding
+        .isFingerprintAcknowledged
+    }
+  })
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;

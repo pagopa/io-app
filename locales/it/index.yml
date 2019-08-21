@@ -296,7 +296,7 @@ onboarding:
     confirmInvalid: i due pin non coincidono
   alert: 
     title: Vuoi davvero uscire da IO?
-    description: Dovrai loggarti nuovamente per continuare ad usare l'app
+    description: Dovrai fare nuovamente il login per continuare ad usare l'app
   fingerprint:
     headerTitle: Attivazione
     title: Autenticazione biometrica
