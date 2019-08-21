@@ -30,13 +30,13 @@ import {
   showServiceDetails
 } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
-import { lexicallyOrderedAllOrganizations } from "../../store/reducers/entities/organizations";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import { organizationsFiscalCodesSelectedStateSelector } from "../../store/reducers/entities/organizations/organizationsFiscalCodesSelected";
 import {
-  nationalServiceSectionsSelector,
-  notSelectedLocalServiceSectionsSelector,
-  selectedLocalServiceSectionsSelector
+  nationalServicesSectionsSelector,
+  notSelectedLocalServicesSectionsSelector,
+  selectedLocalServicesSectionsSelector,
+  localServicesSectionsSelector
 } from "../../store/reducers/entities/services";
 import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
@@ -160,14 +160,14 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private showChooserAreasOfInterestModal = () => {
     const {
-      allOrganizations,
+      selectableOrganizations,
       hideModal,
       organizationsSelected,
       isLoading
     } = this.props;
     this.props.showModal(
       <ChooserListContainer<Organization>
-        items={allOrganizations}
+        items={selectableOrganizations}
         initialSelectedItemIds={some(new Set(organizationsSelected))}
         keyExtractor={(item: Organization) => item.fiscalCode}
         itemTitleExtractor={(item: Organization) => item.name}
@@ -444,17 +444,25 @@ const mapStateToProps = (state: GlobalState) => {
 
   const isLoading =
     pot.isLoading(state.entities.services.visible) || isAnyServiceLoading;
+  
+  const localServicesSections = localServicesSectionsSelector(state);
+  const selectableOrganizations = localServicesSections.map(section => {
+    return {
+      name: section.organizationName,
+      fiscalCode: section.organizationFiscalCode
+    }
+  })
 
   return {
-    allOrganizations: lexicallyOrderedAllOrganizations(state),
+    selectableOrganizations,
     isLoading,
     organizationsSelected: organizationsFiscalCodesSelectedStateSelector(state),
     profile: state.profile,
     servicesById: state.entities.services.byId,
     readServices: readServicesSelector(state),
-    localSections: selectedLocalServiceSectionsSelector(state),
-    nationalSections: nationalServiceSectionsSelector(state),
-    otherServicesSections: notSelectedLocalServiceSectionsSelector(state)
+    localSections: selectedLocalServicesSectionsSelector(state),
+    nationalSections: nationalServicesSectionsSelector(state),
+    otherServicesSections: notSelectedLocalServicesSectionsSelector(state)
   };
 };
 

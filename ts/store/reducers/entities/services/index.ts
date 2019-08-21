@@ -126,7 +126,7 @@ const getServices = (
 };
 
 // A selector providing sections related to national services
-export const nationalServiceSectionsSelector = createSelector(
+export const nationalServicesSectionsSelector = createSelector(
   [
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
@@ -136,8 +136,19 @@ export const nationalServiceSectionsSelector = createSelector(
     getServices(services, organizations, servicesMetadata, "NATIONAL")
 );
 
+// A selector providing sections related to national services
+export const localServicesSectionsSelector = createSelector(
+  [
+    servicesSelector,
+    organizationNamesByFiscalCodeSelector,
+    servicesMetadataSelector
+  ],
+  (services, organizations, servicesMetadata) =>
+    getServices(services, organizations, servicesMetadata, "LOCAL")
+);
+
 // A selector providing sections related to the organizations selected by the user
-export const selectedLocalServiceSectionsSelector = createSelector(
+export const selectedLocalServicesSectionsSelector = createSelector(
   [
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
@@ -156,7 +167,7 @@ export const selectedLocalServiceSectionsSelector = createSelector(
     )
 );
 
-export const notSelectedLocalServiceSectionsSelector = createSelector(
+export const notSelectedLocalServicesSectionsSelector = createSelector(
   [
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
