@@ -14,7 +14,7 @@ export const fingerprintAcknowledge = createAsyncAction(
   "FINGERPRINT_ACKNOWLEDGE_FAILURE"
 )<void, void, void>();
 
-export const tosAccepted = createStandardAction("TOS_ACCEPTED")();
+export const tosAccepted = createStandardAction("TOS_ACCEPTED")<number>();
 
 export const abortOnboarding = createStandardAction("ABORT_ONBOARDING")();
 

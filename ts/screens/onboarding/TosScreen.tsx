@@ -93,7 +93,7 @@ class TosScreen extends React.PureComponent<Props> {
             rightButton={{
               block: true,
               primary: true,
-              onPress: () => dispatch(tosAccepted()),
+              onPress: () => dispatch(tosAccepted(tosVersion)),
               title: I18n.t("onboarding.tos.continue")
             }}
           />
