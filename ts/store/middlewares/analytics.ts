@@ -90,7 +90,7 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
-// tslint:disable-next-line: cognitive-complexity no-big-function
+// tslint:disable cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
@@ -101,6 +101,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(applicationChangeState):
       return mp.track("APP_STATE_CHANGE", {
         APPLICATION_STATE_NAME: action.payload
+      });
+    //
+    // Onboarding (with properties)
+    //
+    case getType(tosAccepted):
+      return mp.track(action.type, {
+        acceptedTosVersion: action.payload
       });
     //
     // Authentication actions (with properties)
@@ -228,7 +235,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // onboarding
     case getType(analyticsOnboardingStarted):
     case getType(createPinSuccess):
-    case getType(tosAccepted):
     // profile
     case getType(profileLoadFailure):
     case getType(profileUpsert.success):
