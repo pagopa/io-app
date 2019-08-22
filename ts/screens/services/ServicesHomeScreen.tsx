@@ -33,13 +33,12 @@ import { Dispatch } from "../../store/actions/types";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import { organizationsFiscalCodesSelectedStateSelector } from "../../store/reducers/entities/organizations/organizationsFiscalCodesSelected";
 import {
+  localServicesSectionsSelector,
   nationalServicesSectionsSelector,
   notSelectedLocalServicesSectionsSelector,
-  selectedLocalServicesSectionsSelector,
-  localServicesSectionsSelector
+  selectedLocalServicesSectionsSelector
 } from "../../store/reducers/entities/services";
 import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
-import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
@@ -104,7 +103,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     // on mount, update visible services
-    this.props.refreshServices(this.props.servicesById);
+    this.props.refreshServices();
   }
 
   private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -135,8 +134,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private onServiceSelect = (service: ServicePublic) => {
     // when a service gets selected, before navigating to the service detail
     // screen, we issue a contentServiceLoad to refresh the service metadata
+
+    // TODO: evaluate if it makes sense to load the service metadata also on click  (now they are previously loaded)
     this.props.contentServiceLoad(service.service_id);
     this.props.serviceDetailsLoad(service);
+
     this.props.navigateToOldServiceDetailsScreen({
       service
     });
@@ -264,9 +266,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.localSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
-            onRefresh={() =>
-              this.props.refreshServices(this.props.servicesById)
-            }
+            onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
@@ -326,9 +326,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.nationalSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
-            onRefresh={() =>
-              this.props.refreshServices(this.props.servicesById)
-            }
+            onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             animated={{
@@ -384,9 +382,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.otherServicesSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
-            onRefresh={() =>
-              this.props.refreshServices(this.props.servicesById)
-            }
+            onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             animated={{
@@ -444,14 +440,14 @@ const mapStateToProps = (state: GlobalState) => {
 
   const isLoading =
     pot.isLoading(state.entities.services.visible) || isAnyServiceLoading;
-  
+
   const localServicesSections = localServicesSectionsSelector(state);
   const selectableOrganizations = localServicesSections.map(section => {
     return {
       name: section.organizationName,
       fiscalCode: section.organizationFiscalCode
-    }
-  })
+    };
+  });
 
   return {
     selectableOrganizations,
@@ -467,12 +463,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshServices: (servicesById: ServicesByIdState) => {
-    dispatch(loadVisibleServices.request());
-    Object.keys(servicesById).forEach(serviceId =>
-      dispatch(contentServiceLoad.request(serviceId as ServiceId))
-    );
-  },
+  refreshServices: () => dispatch(loadVisibleServices.request()),
   saveSelectedOrganizationItems: (selectedItemIds: Option<Set<string>>) => {
     if (selectedItemIds.isSome()) {
       dispatch(setSelectedOrganizations(Array.from(selectedItemIds.value)));

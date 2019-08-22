@@ -11,8 +11,8 @@ import organizationsSelectedReducer, {
   OrganizationsSelectedState
 } from "./organizationsFiscalCodesSelected";
 
-// TODO: evaluate if organizations.all should be deleted or remodulated: it was introduced to 
-// implement the selection of area of interets (service section) that now get the organization 
+// TODO: evaluate if organizations.all should be deleted or remodulated: it was introduced to
+// implement the selection of area of interets (service section) that now get the organization
 // list by filtering section of local services.
 
 export type OrganizationsState = Readonly<{

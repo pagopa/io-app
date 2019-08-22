@@ -122,7 +122,8 @@ const rootPersistConfig: PersistConfig = {
     "debug",
     "persistedPreferences",
     "installation",
-    "payments"
+    "payments",
+    "content"
   ],
   // Transform functions used to manipulate state on store/rehydrate
   transforms: [DateISO8601Transform, PotTransform]
