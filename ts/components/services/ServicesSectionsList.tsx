@@ -1,3 +1,6 @@
+/**
+ * A component to render a list of services organized in sections, one for each organization.
+ */
 import { Option } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Button, Text, View } from "native-base";
@@ -64,9 +67,6 @@ const styles = StyleSheet.create({
   }
 });
 
-/**
- * A component to render a list of services organized in sections, one for each organization.
- */
 class ServicesSectionsList extends React.PureComponent<Props> {
   private listEmptyComponent() {
     return (

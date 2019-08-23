@@ -11,6 +11,7 @@ import { getType } from "typesafe-actions";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { contentServiceLoad } from "../actions/content";
 import { clearCache } from "../actions/profile";
+import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -79,6 +80,23 @@ export default function content(
         ...state,
         servicesMetadata: { ...initialContentState.servicesMetadata }
       };
+
+    case getType(removeServiceTuples): {
+      const serviceTuples = action.payload;
+      const newServicesMetadataByIdState = {
+        ...(state as any).servicesMetadata.byId
+      };
+      serviceTuples.forEach(
+        // tslint:disable-next-line no-object-mutation
+        tuple => delete newServicesMetadataByIdState[tuple.e1]
+      );
+      return {
+        ...state,
+        servicesMetadata: {
+          byId: newServicesMetadataByIdState
+        }
+      };
+    }
 
     default:
       return state;

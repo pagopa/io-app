@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
 });
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
+
 class ServicesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);

@@ -1,3 +1,6 @@
+/**
+ * A component to render a list of services grouped by organization.
+ */
 import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
 import {
@@ -56,9 +59,6 @@ const styles = StyleSheet.create({
 
 const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 
-/**
- * A component to render a list of services grouped by organization.
- */
 class ServiceList extends React.Component<Props> {
   private sectionListRef = React.createRef<typeof AnimatedSectionList>();
 
