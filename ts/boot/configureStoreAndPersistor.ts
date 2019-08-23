@@ -33,7 +33,7 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 4;
+const CURRENT_REDUX_STORE_VERSION = 5;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -102,6 +102,21 @@ const migrations: MigrationManifest = {
       : {
           ...state
         };
+  },
+
+  // Version 5
+  // we empty the services list to get both services list and services metadata being reloaded and persisted
+  "5": (state: PersistedState) => {
+    return {
+      ...state,
+      entities: {
+        ...(state as any).entities,
+        services: {
+          ...(state as any).entities.services,
+          byId: {}
+        }
+      }
+    };
   }
 };
 
