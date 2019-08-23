@@ -55,6 +55,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 type State = {
   currentTab: number;
+  enableHeaderAnimation: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -98,7 +99,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      currentTab: 0
+      currentTab: 0,
+      enableHeaderAnimation: false
     };
   }
 
@@ -129,6 +131,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           this.scollPositions[i] = animatedValue.value;
         });
       });
+    }
+    if (!prevState.enableHeaderAnimation && !this.props.isLoading) {
+      this.setState({ enableHeaderAnimation: true });
     }
   }
 
@@ -231,27 +236,33 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           this.setState({ currentTab: evt.i });
         }}
         initialPage={0}
-        style={{
-          transform: [
-            {
-              translateY: this.animatedScrollPositions[
-                this.state.currentTab
-              ].interpolate({
-                inputRange: [
-                  0,
-                  SCROLL_RANGE_FOR_ANIMATION / 2,
-                  SCROLL_RANGE_FOR_ANIMATION
-                ],
-                outputRange: [
-                  SCROLL_RANGE_FOR_ANIMATION,
-                  SCROLL_RANGE_FOR_ANIMATION / 4,
-                  0
-                ],
-                extrapolate: "clamp"
-              })
-            }
-          ]
-        }}
+        style={
+          Platform.OS === "ios" && {
+            transform: [
+              {
+                // hasRefreshedOnceUp is used to avoid unwanted refresh of
+                // animation
+                translateY: this.state.enableHeaderAnimation
+                  ? this.animatedScrollPositions[
+                      this.state.currentTab
+                    ].interpolate({
+                      inputRange: [
+                        0,
+                        SCROLL_RANGE_FOR_ANIMATION / 2,
+                        SCROLL_RANGE_FOR_ANIMATION
+                      ],
+                      outputRange: [
+                        SCROLL_RANGE_FOR_ANIMATION,
+                        SCROLL_RANGE_FOR_ANIMATION / 4,
+                        0
+                      ],
+                      extrapolate: "clamp"
+                    })
+                  : SCROLL_RANGE_FOR_ANIMATION
+              }
+            ]
+          }
+        }
       >
         <Tab
           heading={
@@ -439,8 +450,16 @@ const mapStateToProps = (state: GlobalState) => {
       return oneService !== undefined && pot.isLoading(oneService);
     }) !== undefined;
 
+  const isAnyServiceMetdataLoading =
+    Object.keys(state.content.servicesMetadata.byId).find(k => {
+      const oneService = state.content.servicesMetadata.byId[k];
+      return oneService !== undefined && pot.isLoading(oneService);
+    }) !== undefined;
+
   const isLoading =
-    pot.isLoading(state.entities.services.visible) || isAnyServiceLoading;
+    pot.isLoading(state.entities.services.visible) ||
+    isAnyServiceLoading ||
+    isAnyServiceMetdataLoading;
 
   const localServicesSections = localServicesSectionsSelector(state);
   const selectableOrganizations = localServicesSections.map(section => {
