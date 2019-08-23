@@ -144,7 +144,7 @@ class ServiceList extends React.Component<Props> {
         renderSectionHeader={this.renderServiceSectionHeader}
         keyExtractor={this.getServiceKey}
         stickySectionHeadersEnabled={true}
-        alwaysBounceVertical={false}
+        alwaysBounceVertical={true}
         refreshControl={refreshControl}
         ItemSeparatorComponent={ItemSeparatorComponent}
         ListEmptyComponent={ListEmptyComponent}
