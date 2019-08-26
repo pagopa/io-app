@@ -330,8 +330,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
   ) {
     return (
       <Text
-        bold={true}
         robotomono={true}
+        bold={true}
         style={[
           isLandscape
             ? [styles.landscapeText, landscapeStyle]
@@ -422,8 +422,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           width={(barCodeWidthL - 5) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
         <Text
-          bold={true}
           robotomono={true}
+          bold={true}
           alignCenter={true}
           style={styles.landscapeFacSimile}
         >
@@ -440,8 +440,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           width={(barCodeWidthF - 5) / 211}
         />
         <Text
-          bold={true}
           robotomono={true}
+          bold={true}
           alignCenter={true}
           style={styles.fullFacSimileText}
         >
