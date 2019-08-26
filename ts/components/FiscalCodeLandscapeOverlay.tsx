@@ -3,7 +3,7 @@
  */
 import { Body, Button, Container, Content, View } from "native-base";
 import * as React from "react";
-import { Platform, StatusBar, StyleSheet } from "react-native";
+import { BackHandler, Platform, StatusBar, StyleSheet } from "react-native";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import IconFont from "../components/ui/IconFont";
@@ -44,6 +44,19 @@ const styles = StyleSheet.create({
 export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   Props
 > {
+  private handleBackPress = () => {
+    this.props.onCancel();
+    return true;
+  };
+
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
   public render() {
     return (
       <Container style={{ backgroundColor: customVariables.brandDarkGray }}>
