@@ -53,7 +53,7 @@ const contentWidth =
 // Full (card horizontal position)
 const fullScaleFactor = contentWidth / 870;
 
-const textdLineHeightF = 15;
+const textdLineHeightF = 16;
 const textFontSizeF = 13;
 const textLeftMarginF = 140 * fullScaleFactor + 6;
 const textGenderLeftMarginF = 800 * fullScaleFactor + 6;
