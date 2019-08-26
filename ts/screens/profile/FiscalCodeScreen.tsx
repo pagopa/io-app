@@ -73,9 +73,10 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
       this.props.profile !== undefined &&
       pot.isNone(this.props.municipality.data)
     ) {
-      this.props.loadMunicipality(
+      const maybeCodiceCatastale = CodiceCatastale.decode(
         this.props.profile.fiscal_code.substring(11, 15)
       );
+      maybeCodiceCatastale.map(c => this.props.loadMunicipality(c));
     }
   }
 
@@ -153,8 +154,8 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadMunicipality: (code: string) =>
-    dispatch(contentMunicipalityLoad.request(code as CodiceCatastale))
+  loadMunicipality: (code: CodiceCatastale) =>
+    dispatch(contentMunicipalityLoad.request(code))
 });
 
 export default connect(

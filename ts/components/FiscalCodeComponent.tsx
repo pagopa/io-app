@@ -354,59 +354,60 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     );
 
     return (
-      !pot.isLoading(municipality.data) && (
-        <React.Fragment>
-          {this.renderItem(
-            profile.fiscal_code,
-            styles.fullFiscalCodeText,
-            styles.landscapeFiscalCodeText,
+      <React.Fragment>
+        {this.renderItem(
+          profile.fiscal_code,
+          styles.fullFiscalCodeText,
+          styles.landscapeFiscalCodeText,
+          isLandscape
+        )}
+
+        {this.renderItem(
+          profile.family_name,
+          styles.fullLastNameText,
+          styles.landscapeLastNameText,
+          isLandscape
+        )}
+
+        {this.renderItem(
+          profile.name,
+          styles.fullNameText,
+          styles.landscapeNameText,
+          isLandscape
+        )}
+
+        {pot.isSome(municipality.data) &&
+          this.renderItem(
+            fiscalCodeData.denominazione,
+            styles.fullBirthPlaceText,
+            styles.landscapeBirthPlaceText,
             isLandscape
           )}
 
-          {this.renderItem(
-            profile.family_name,
-            styles.fullLastNameText,
-            styles.landscapeLastNameText,
-            isLandscape
-          )}
-
-          {this.renderItem(
-            profile.name,
-            styles.fullNameText,
-            styles.landscapeNameText,
-            isLandscape
-          )}
-
-          {pot.isSome(municipality.data) &&
-            this.renderItem(
-              municipality.data.value.denominazioneInItaliano,
-              styles.fullBirthPlaceText,
-              styles.landscapeBirthPlaceText,
-              isLandscape
-            )}
-
-          {this.renderItem(
+        {fiscalCodeData.gender &&
+          this.renderItem(
             fiscalCodeData.gender,
             styles.fullGenderText,
             styles.landscapeGender,
             isLandscape
           )}
 
-          {this.renderItem(
+        {pot.isSome(municipality.data) &&
+          this.renderItem(
             fiscalCodeData.siglaProvincia,
             styles.fullBirthCityText,
             styles.landscapeBirthCityText,
             isLandscape
           )}
 
-          {this.renderItem(
+        {fiscalCodeData.birthDate &&
+          this.renderItem(
             fiscalCodeData.birthDate,
             styles.fullDateText,
             styles.landscapeDateText,
             isLandscape
           )}
-        </React.Fragment>
-      )
+      </React.Fragment>
     );
   }
 
