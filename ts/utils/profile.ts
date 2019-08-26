@@ -40,7 +40,7 @@ export function extractFiscalCodeData(
   }
 
   const tempDay = parseInt(fiscalCode.substring(9, 11), 10);
-  gender = tempDay - 40 > 0 ? "M" : "F";
+  gender = tempDay - 40 > 0 ? "F" : "M";
   const months: { [k: string]: number } = {
     ["A"]: 1,
     ["B"]: 2,
