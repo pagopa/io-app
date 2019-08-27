@@ -50,7 +50,9 @@ type Props = PreviewProps | FullProps | LandscapeProps;
 const contentWidth =
   Dimensions.get("screen").width - 2 * customVariables.contentPadding;
 
-// Full (card horizontal position)
+/**
+ * Full dimensions (card horizontal position)
+ */
 const fullScaleFactor = contentWidth / 870;
 
 const textdLineHeightF = 16;
@@ -76,7 +78,9 @@ const birdPlaceHeightF = nameHeightF + cardLineHeightF + cardSpacerF;
 const birthCityHeightF = birdPlaceHeightF + cardLineHeightF * 2 + cardSpacerF;
 const dateHeightF = birthCityHeightF + cardLineHeightF + cardSpacerF;
 
-// Landscape (card vertical position)
+/**
+ * Landscape dimensions (card vertical position)
+ */
 const landscapeScaleFactor = contentWidth / 546;
 const textLineHeightL = 28; // to solve misalignment on font, 28 is the fist value that seems to give text centered to line height
 const textFontSizeL = 21;
@@ -95,8 +99,7 @@ const barCodeMarginLeftL = 170 * landscapeScaleFactor;
 const barCodeMarginTopL = 164 * landscapeScaleFactor;
 
 const fiscalCodeHeightL =
-  -// rotation correction factor
-  (2 * customVariables.contentPadding + textLineHeightL / 4) +
+  -94 * landscapeScaleFactor + // rotation correction factor
   cardHeaderHeightL +
   cardLargeSpacerL +
   (cardLineHeightL * 2 - textLineHeightL); // 2-line label correction factor - align 0 char dimension

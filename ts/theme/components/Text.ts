@@ -60,7 +60,15 @@ export default (): Theme => {
         undefined,
         undefined,
         "RobotoMono"
-      )
+      ),
+      ".bold": {
+        ...makeFontStyleObject(
+          Platform.select,
+          variables.textBoldWeight,
+          undefined,
+          "RobotoMono"
+        )
+      }
     },
     lineHeight: variables.lineHeightBase
   };
