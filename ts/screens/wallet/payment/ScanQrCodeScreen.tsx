@@ -41,6 +41,7 @@ type State = {
 };
 
 const screenWidth = Dimensions.get("screen").width;
+const cameraTextOverlapping = 20;
 
 const styles = StyleSheet.create({
   padded: {
@@ -52,8 +53,15 @@ const styles = StyleSheet.create({
     backgroundColor: variables.brandPrimaryInverted
   },
 
-  centerText: {
-    textAlign: "center"
+  bottomText: {
+    textAlign: "center",
+    paddingTop: cameraTextOverlapping
+  },
+
+  content: {
+    backgroundColor: variables.colorWhite,
+    marginTop: -cameraTextOverlapping,
+    zIndex: 1
   },
 
   cameraContainer: {
@@ -67,9 +75,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     alignSelf: "center",
-    marginTop: -20,
+    marginTop: -cameraTextOverlapping,
     width: screenWidth - variables.contentPadding * 2,
-    backgroundColor: variables.colorWhite
+    backgroundColor: variables.colorWhite,
+    zIndex: 2
   },
 
   camera: {
@@ -235,11 +244,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                   >
                     <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
                   </Button>
-                  <View spacer={true} />
-                  <Text style={[styles.padded, styles.centerText]}>
-                    {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                  </Text>
-                  <View spacer={true} extralarge={true} />
+                  <View style={styles.content}>
+                    <View spacer={true} />
+                    <Text style={[styles.padded, styles.bottomText]}>
+                      {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
+                    </Text>
+                    <View spacer={true} extralarge={true} />
+                  </View>
                 </View>
               }
               // "captureAudio" enable/disable microphone permission
