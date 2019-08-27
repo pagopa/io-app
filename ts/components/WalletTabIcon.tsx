@@ -5,6 +5,7 @@ import { Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 import { getUnreadTransactionsSelector } from "../store/reducers/entities/readTransactions";
 import { GlobalState } from "../store/reducers/types";
+import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 
@@ -14,9 +15,13 @@ type OwnProps = {
 const MAX_BADGE_VALUE = 99;
 const styles = StyleSheet.create({
   textBadgeStyle: {
+    ...makeFontStyleObject(
+      Platform.select,
+      variables.textBoldWeight,
+      undefined,
+      "TitilliumWeb"
+    ),
     fontSize: 10,
-    fontFamily: "Titillium Web",
-    fontWeight: "bold",
     color: "white",
     flex: 1,
     position: "absolute",

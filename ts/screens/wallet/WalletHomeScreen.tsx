@@ -33,6 +33,7 @@ import {
   readTransaction
 } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
+import { transactionsReadSelector } from "../../store/reducers/entities";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
@@ -348,7 +349,7 @@ const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  readTransactions: state.entities.transactionsRead
+  readTransactions: transactionsReadSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

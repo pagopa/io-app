@@ -4,6 +4,7 @@
 import { combineReducers } from "redux";
 
 import { Action } from "../../actions/types";
+import { GlobalState } from "../types";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import messagesReducer, { MessagesState } from "./messages";
 import organizationsReducer, { OrganizationsState } from "./organizations";
@@ -33,3 +34,7 @@ const reducer = combineReducers<EntitiesState, Action>({
 });
 
 export default reducer;
+
+// Selector
+export const transactionsReadSelector = (state: GlobalState) =>
+  state.entities.transactionsRead;
