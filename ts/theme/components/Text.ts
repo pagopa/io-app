@@ -16,6 +16,7 @@ declare module "native-base" {
       white?: boolean;
       alignCenter?: boolean;
       primary?: boolean;
+      badge?: boolean;
     }
   }
 }
@@ -52,6 +53,13 @@ export default (): Theme => {
     },
     ".primary": {
       color: variables.brandPrimary
+    },
+    ".badge": {
+      ...makeFontStyleObject(Platform.select, variables.textBoldWeight),
+      color: variables.colorWhite,
+      fontSize: 10,
+      textAlign: "center",
+      lineHeight: 14
     },
     lineHeight: variables.lineHeightBase
   };
