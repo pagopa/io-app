@@ -17,6 +17,7 @@ declare module "native-base" {
       alignCenter?: boolean;
       primary?: boolean;
       badge?: boolean;
+      robotomono?: boolean;
     }
   }
 }
@@ -60,6 +61,22 @@ export default (): Theme => {
       fontSize: 10,
       textAlign: "center",
       lineHeight: 14
+    },
+    ".robotomono": {
+      ...makeFontStyleObject(
+        Platform.select,
+        undefined,
+        undefined,
+        "RobotoMono"
+      ),
+      ".bold": {
+        ...makeFontStyleObject(
+          Platform.select,
+          variables.textBoldWeight,
+          undefined,
+          "RobotoMono"
+        )
+      }
     },
     lineHeight: variables.lineHeightBase
   };
