@@ -58,7 +58,6 @@ const reducer = combineReducers<ServicesState, Action>({
 export const servicesSelector = (state: GlobalState) => state.entities.services;
 
 // Check if the passed service is local or national throught data included into the service metadata
-// Service without metadata are trated as local
 const getLocalizedServices = (
   service: pot.Pot<ServicePublic, Error>,
   servicesMetadataById: ServiceMetadataById,
@@ -74,7 +73,8 @@ const getLocalizedServices = (
       );
       return serviceMetadata.scope === localization;
     } else {
-      return undefined;
+      // if service metadata are unreachable, the service is assumed as local
+      return localization === ScopeEnum.LOCAL ? true : undefined;
     }
   } else {
     return true;

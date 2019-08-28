@@ -1,5 +1,6 @@
 /**
  * A screen that contains all the Tabs related to services.
+ * TODO: add placeholder on services lists https://www.pivotaltracker.com/story/show/168171009
  */
 import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
