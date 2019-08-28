@@ -1,8 +1,7 @@
 import { MaxRetries } from "italia-ts-commons/lib/tasks";
 import { Millisecond } from "italia-ts-commons/lib/units";
 
-import { ServerMock } from "mock-http-server";
-
+import ServerMock from "mock-http-server";
 import nodeFetch from "node-fetch";
 import { constantPollingFetch, defaultRetryingFetch } from "../fetch";
 
@@ -18,10 +17,7 @@ const TEST_PORT = 40000;
 
 // tslint:disable-next-line:no-any
 function createServerTransientNotFound(): any {
-  const server = new ServerMock(
-    { host: TEST_HOST, port: TEST_PORT },
-    undefined
-  );
+  const server = ServerMock({ host: TEST_HOST, port: TEST_PORT }, undefined);
 
   server.on({
     method: "GET",
@@ -36,10 +32,7 @@ function createServerTransientNotFound(): any {
 
 // tslint:disable-next-line:no-any no-identical-functions
 function createServerTransientTooManyRequests(): any {
-  const server = new ServerMock(
-    { host: TEST_HOST, port: TEST_PORT },
-    undefined
-  );
+  const server = ServerMock({ host: TEST_HOST, port: TEST_PORT }, undefined);
 
   server.on({
     method: "GET",
@@ -62,8 +55,8 @@ describe("retriableFetch", () => {
 
   it("should wrap fetch with a retrying logic that handles 404 as transient error", async () => {
     // configure retriable logic with 5 retries and constant backoff
-    const retry: number = 3 as number;
-    const delay: number = 2 as number;
+    const retry: number = 3;
+    const delay: number = 2;
 
     /**
      * This is a fetch with timeouts, constant backoff and with the logic
@@ -90,7 +83,7 @@ describe("retriableFetch", () => {
 
   it("should wrap fetch with a retrying logic that handles 429 as transient error", async () => {
     // configure retriable logic with 5 retries and constant backoff
-    const retry: number = 3 as number;
+    const retry: number = 3;
     // configure retriable logic with 5 retries and constant backoff
     const constantBackoff = 10 as Millisecond;
     /**
