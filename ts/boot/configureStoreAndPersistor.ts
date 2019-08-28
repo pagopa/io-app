@@ -91,11 +91,12 @@ const migrations: MigrationManifest = {
   // Version 4
   // we added a state to monitor what pagopa environment is selected
   "4": (state: PersistedState) => {
-    return (state as any).persistedPreferences.isPagoPATestEnabled === undefined
+    return (state as PersistedGlobalState).persistedPreferences
+      .isPagoPATestEnabled === undefined
       ? {
           ...state,
           persistedPreferences: {
-            ...(state as any).persistedPreferences,
+            ...(state as PersistedGlobalState).persistedPreferences,
             isPagoPATestEnabled: false
           }
         }
@@ -109,7 +110,7 @@ const migrations: MigrationManifest = {
   "5": (state: PersistedState) => ({
     ...state,
     onboarding: {
-      isFingerprintAcknowledged: (state as any).onboarding
+      isFingerprintAcknowledged: (state as PersistedGlobalState).onboarding
         .isFingerprintAcknowledged
     }
   })
