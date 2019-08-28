@@ -16,6 +16,7 @@ import {
 } from "react-navigation";
 import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
+import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
 import WalletTabIcon from "../components/WalletTabIcon";
 import { newHomeServicesEnabled } from "../config";
@@ -185,6 +186,13 @@ const navigation = createBottomTabNavigator(
           return (
             <ProfileTabIcon
               size={variables.iconSize3}
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
+        if (iconName === ROUTE_ICON.SERVICES_NAVIGATOR) {
+          return (
+            <ServiceTabIcon
               color={options.tintColor === null ? undefined : options.tintColor}
             />
           );
