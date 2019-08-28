@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
 
 interface OwnProps {
   readonly markdown: string;
+  headerContent?: React.ReactNode;
 }
 
 type T = typeof BaseScreenComponent;
@@ -55,6 +56,7 @@ export class MarkdownScreenComponent extends React.PureComponent<Props, State> {
         )}
         {this.state.content && (
           <Content contentContainerStyle={styles.contentContainer}>
+            {this.props.headerContent}
             {this.state.content}
           </Content>
         )}

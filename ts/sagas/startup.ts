@@ -208,14 +208,24 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // tslint:disable-next-line:no-let
   let storedPin: PinString;
 
+  // Start watching for profile update requests as the checkProfileEnabledSaga
+  // may need to update the profile.
+  yield fork(
+    watchProfileUpsertRequestsSaga,
+    backendClient.createOrUpdateProfile
+  );
+
+  // Start the watchAbortOnboardingSaga
+  const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
+
   if (!previousSessionToken || isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no PIN set, thus we need
     // to pass through the onboarding process.
 
-    // Start the watchAbortOnboardingSaga
-    const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
-    yield call(checkAcceptedTosSaga);
+    // Ask to accept ToS if it is the first access on IO or if there is a new available version
+    yield call(checkAcceptedTosSaga, userProfile);
+
     storedPin = yield call(checkConfiguredPinSaga);
     yield call(checkAcknowledgedFingerprintSaga);
     // Stop the watchAbortOnboardingSaga
@@ -234,6 +244,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
         yield put(startApplicationInitialization());
         return;
       }
+      // Ask to accept ToS if there is a new available version
+      yield call(checkAcceptedTosSaga, userProfile);
+
+      // Stop the watchAbortOnboardingSaga
+      yield cancel(watchAbortOnboardingSagaTask);
     }
   }
 
@@ -257,13 +272,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     sessionToken,
     walletToken,
     isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
-  );
-
-  // Start watching for profile update requests as the checkProfileEnabledSaga
-  // may need to update the profile.
-  yield fork(
-    watchProfileUpsertRequestsSaga,
-    backendClient.createOrUpdateProfile
   );
 
   // Check that profile is up to date (e.g. inbox enabled)
