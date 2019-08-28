@@ -68,35 +68,35 @@ function* createOrUpdateProfileSaga(
   const profileState: ReturnType<typeof profileSelector> = yield select<
     GlobalState
   >(profileSelector);
+
+  if (pot.isNone(profileState)) {
+    // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
+    // the user didn't yet authenticated: ignore this upsert request.
+    return;
+  }
+
+  const currentProfile = profileState.value;
+
+  // If we already have a profile, merge it with the new updated attributes
+  // or else, create a new profile from the provided object
+  // FIXME: perhaps this is responsibility of the caller?
+  const newProfile: ExtendedProfile = currentProfile.has_profile
+    ? {
+        is_inbox_enabled: currentProfile.is_inbox_enabled,
+        is_webhook_enabled: currentProfile.is_webhook_enabled,
+        version: currentProfile.version,
+        email: currentProfile.email,
+        preferred_languages: currentProfile.preferred_languages,
+        blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
+        ...action.payload
+      }
+    : {
+        is_inbox_enabled: false,
+        is_webhook_enabled: false,
+        ...action.payload,
+        version: 0
+      };
   try {
-    if (pot.isNone(profileState)) {
-      // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
-      // the user didn't yet authenticated: ignore this upsert request.
-      return;
-    }
-
-    const currentProfile = profileState.value;
-
-    // If we already have a profile, merge it with the new updated attributes
-    // or else, create a new profile from the provided object
-    // FIXME: perhaps this is responsibility of the caller?
-    const newProfile: ExtendedProfile = currentProfile.has_profile
-      ? {
-          is_inbox_enabled: currentProfile.is_inbox_enabled,
-          is_webhook_enabled: currentProfile.is_webhook_enabled,
-          version: currentProfile.version,
-          email: currentProfile.email,
-          preferred_languages: currentProfile.preferred_languages,
-          blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
-          ...action.payload
-        }
-      : {
-          is_inbox_enabled: false,
-          is_webhook_enabled: false,
-          ...action.payload,
-          version: 0
-        };
-
     const response: SagaCallReturnType<
       typeof createOrUpdateProfile
     > = yield call(createOrUpdateProfile, {
