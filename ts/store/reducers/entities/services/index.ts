@@ -5,7 +5,10 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { Service as ServiceMetadata } from "../../../../../definitions/content/Service";
+import {
+  ScopeEnum,
+  Service as ServiceMetadata
+} from "../../../../../definitions/content/Service";
 import { isDefined } from "../../../../utils/guards";
 import { Action } from "../../../actions/types";
 import { ServiceMetadataById, servicesMetadataSelector } from "../../content";
@@ -59,7 +62,7 @@ export const servicesSelector = (state: GlobalState) => state.entities.services;
 const getLocalizedServices = (
   service: pot.Pot<ServicePublic, Error>,
   servicesMetadataById: ServiceMetadataById,
-  localization?: "NATIONAL" | "LOCAL"
+  localization?: ScopeEnum
 ) => {
   if (localization) {
     const id = pot.isSome(service) ? service.value.service_id : undefined;
@@ -90,7 +93,7 @@ const getServices = (
   servicesMetadata: {
     byId: ServiceMetadataById;
   },
-  localization?: "NATIONAL" | "LOCAL",
+  localization?: ScopeEnum,
   organizationsFiscalCodesSelected?: OrganizationsSelectedState
 ) => {
   const organizationsFiscalCodes =
@@ -133,7 +136,7 @@ export const nationalServicesSectionsSelector = createSelector(
     servicesMetadataSelector
   ],
   (services, organizations, servicesMetadata) =>
-    getServices(services, organizations, servicesMetadata, "NATIONAL")
+    getServices(services, organizations, servicesMetadata, ScopeEnum.NATIONAL)
 );
 
 // A selector providing sections related to national services
@@ -144,7 +147,7 @@ export const localServicesSectionsSelector = createSelector(
     servicesMetadataSelector
   ],
   (services, organizations, servicesMetadata) =>
-    getServices(services, organizations, servicesMetadata, "LOCAL")
+    getServices(services, organizations, servicesMetadata, ScopeEnum.LOCAL)
 );
 
 // A selector providing sections related to the organizations selected by the user
@@ -189,7 +192,7 @@ export const notSelectedLocalServicesSectionsSelector = createSelector(
       services,
       organizations,
       servicesMetadata,
-      "LOCAL",
+      ScopeEnum.LOCAL,
       notSelectedOrganizations
     );
   }

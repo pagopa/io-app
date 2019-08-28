@@ -29,4 +29,14 @@ export const organizationsFiscalCodesSelectedStateSelector = (
   return state.entities.organizations.selectedFiscalCodes;
 };
 
+// Get organizations selected by the user that are providing services yet
+export const existingOrganizationsFiscalCodesSelectedStateSelector = (
+  state: GlobalState
+): OrganizationsSelectedState => {
+  const set = new Set(state.entities.organizations.selectedFiscalCodes);
+  return state.entities.organizations.all
+    .filter(org => set.has(org.fiscalCode))
+    .map(os => os.fiscalCode);
+};
+
 export default reducer;

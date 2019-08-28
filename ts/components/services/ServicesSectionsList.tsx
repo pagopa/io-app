@@ -100,7 +100,11 @@ class ServicesSectionsList extends React.PureComponent<Props> {
 
   private renderEditButton = () => {
     return (
-      this.props.type === "Local" && (
+      this.props.type === "Local" &&
+      this.props.organizationsFiscalCodesSelected.fold(
+        false,
+        _ => _.size > 0
+      ) && (
         <View style={styles.headerContentWrapper}>
           <Button
             small={true}
@@ -145,13 +149,9 @@ class ServicesSectionsList extends React.PureComponent<Props> {
   };
 
   public render() {
-    const isOrganizationsFiscalCodesSelected =
-      this.props.type === "Local" &&
-      this.props.organizationsFiscalCodesSelected.fold(false, _ => _.size > 0);
-
     return (
       <View style={styles.contentWrapper}>
-        {isOrganizationsFiscalCodesSelected && this.renderEditButton()}
+        {this.renderEditButton()}
         {this.renderList()}
       </View>
     );

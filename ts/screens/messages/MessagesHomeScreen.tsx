@@ -20,6 +20,7 @@ import {
   setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
+import { loadService } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
@@ -96,6 +97,17 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     this.props.refreshMessages();
+
+    // Refresh services related to messages received by the user
+    if (pot.isSome(this.props.lexicallyOrderedMessagesState)) {
+      this.props.lexicallyOrderedMessagesState.value.forEach(item => {
+        if (
+          this.props.servicesById[item.meta.sender_service_id] === undefined
+        ) {
+          this.props.refreshService(item.meta.sender_service_id);
+        }
+      });
+    }
   }
 
   public componentDidUpdate(prevprops: Props, prevstate: State) {
@@ -388,6 +400,9 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshMessages: () => {
     dispatch(loadMessages.request());
+  },
+  refreshService: (serviceId: string) => {
+    dispatch(loadService.request(serviceId));
   },
   navigateToMessageDetail: (messageId: string) =>
     dispatch(navigateToMessageDetailScreenAction({ messageId })),

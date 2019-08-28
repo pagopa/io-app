@@ -31,7 +31,7 @@ import {
 } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
-import { organizationsFiscalCodesSelectedStateSelector } from "../../store/reducers/entities/organizations/organizationsFiscalCodesSelected";
+import { existingOrganizationsFiscalCodesSelectedStateSelector } from "../../store/reducers/entities/organizations/organizationsFiscalCodesSelected";
 import {
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
@@ -170,13 +170,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     const {
       selectableOrganizations,
       hideModal,
-      organizationsSelected,
+      validOrganizationsSelected,
       isLoading
     } = this.props;
     this.props.showModal(
       <ChooserListContainer<Organization>
         items={selectableOrganizations}
-        initialSelectedItemIds={some(new Set(organizationsSelected))}
+        initialSelectedItemIds={some(new Set(validOrganizationsSelected))}
         keyExtractor={(item: Organization) => item.fiscalCode}
         itemTitleExtractor={(item: Organization) => item.name}
         itemIconComponent={left((fiscalCode: string) =>
@@ -215,7 +215,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <ScreenContentHeader
             title={I18n.t("services.title")}
             icon={require("../../../img/icons/services-icon.png")}
-            fixed={true}
+            fixed={Platform.OS === "ios"}
           />
           {this.renderTabs()}
         </React.Fragment>
@@ -283,7 +283,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             readServices={this.props.readServices}
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
             organizationsFiscalCodesSelected={some(
-              new Set(this.props.organizationsSelected)
+              new Set(this.props.validOrganizationsSelected)
             )}
             animated={{
               onScroll: Animated.event(
@@ -472,7 +472,9 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     selectableOrganizations,
     isLoading,
-    organizationsSelected: organizationsFiscalCodesSelectedStateSelector(state),
+    validOrganizationsSelected: existingOrganizationsFiscalCodesSelectedStateSelector(
+      state
+    ),
     profile: state.profile,
     servicesById: state.entities.services.byId,
     readServices: readServicesSelector(state),
