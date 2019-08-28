@@ -57,7 +57,10 @@ export default (): Theme => {
 
     ".light": {
       ".bordered": {
-        "NativeBase.Text": { color: variables.btnLightTextColor },
+        "NativeBase.Text": {
+          color: variables.btnLightTextColor,
+          fontWeight: variables.textBoldWeight
+        },
         borderWidth: 1,
         borderColor: variables.btnLightBorderColor,
         backgroundColor: variables.brandLight,

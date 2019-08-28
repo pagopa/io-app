@@ -67,6 +67,7 @@ const reducer = (
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
             preferred_languages: newProfile.preferred_languages,
             blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,
+            accepted_tos_version: newProfile.accepted_tos_version,
             version: 0
           });
         }
@@ -84,6 +85,7 @@ const reducer = (
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
             preferred_languages: newProfile.preferred_languages,
             blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,
+            accepted_tos_version: newProfile.accepted_tos_version,
             version: newProfile.version
           });
         }

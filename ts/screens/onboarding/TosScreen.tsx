@@ -1,36 +1,58 @@
-import { Button, Content, Text, View } from "native-base";
+/**
+ * A screen to show the app Terms of Service. If the user accepted an old version
+ * of ToS and a new version is available, an alert is displayed to highlight the user
+ * has to accept the new version of ToS.
+ */
+import * as pot from "italia-ts-commons/lib/pot";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import AbortOnboardingModal from "../../components/AbortOnboardingModal";
+import { Alert, StyleSheet } from "react-native";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
+import { tosVersion } from "../../config";
 import I18n from "../../i18n";
-import { abortOnboarding, tosAccept } from "../../store/actions/onboarding";
+import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
+import { profileSelector } from "../../store/reducers/profile";
+import { GlobalState } from "../../store/reducers/types";
+import customVariables from "../../theme/variables";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReduxProps & OwnProps;
+type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
 
-type State = {
-  showAbortOnboardingModal: boolean;
-};
+const styles = StyleSheet.create({
+  alert: {
+    backgroundColor: "#c1f4f2",
+    borderRadius: 4,
+    marginTop: customVariables.spacerLargeHeight,
+    marginBottom: 0,
+    paddingVertical: customVariables.spacingBase,
+    paddingHorizontal: customVariables.contentPadding,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignContent: "flex-start"
+  },
+  boldH4: {
+    fontWeight: customVariables.textBoldWeight,
+    paddingTop: customVariables.spacerLargeHeight
+  },
+  horizontalPadding: {
+    paddingHorizontal: customVariables.contentPadding
+  }
+});
 
 /**
  * A screen to show the ToS to the user.
  */
-class TosScreen extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      showAbortOnboardingModal: false
-    };
-  }
-
+class TosScreen extends React.PureComponent<Props> {
   public render() {
     const { navigation, dispatch } = this.props;
 
@@ -46,26 +68,34 @@ class TosScreen extends React.PureComponent<Props, State> {
         }
       >
         <Content noPadded={true}>
-          <View content={true}>
+          <H4 style={[styles.boldH4, styles.horizontalPadding]}>
+            {I18n.t("profile.main.privacy.header")}
+          </H4>
+          {this.props.hasAcceptedOldTosVersion && (
+            <View style={styles.alert}>
+              <Text>{I18n.t("profile.main.privacy.updated")}</Text>
+            </View>
+          )}
+          <View style={styles.horizontalPadding}>
             <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
           </View>
         </Content>
         {isProfile === false && (
-          <View footer={true}>
-            <Button
-              block={true}
-              primary={true}
-              onPress={() => dispatch(tosAccept.request())}
-            >
-              <Text>{I18n.t("onboarding.tos.continue")}</Text>
-            </Button>
-          </View>
-        )}
-
-        {this.state.showAbortOnboardingModal && (
-          <AbortOnboardingModal
-            onClose={this.handleModalClose}
-            onConfirm={this.handleModalConfirm}
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={{
+              block: true,
+              light: true,
+              bordered: true,
+              onPress: () => this.handleGoBack(),
+              title: I18n.t("global.buttons.exit")
+            }}
+            rightButton={{
+              block: true,
+              primary: true,
+              onPress: () => dispatch(tosAccepted(tosVersion)),
+              title: I18n.t("onboarding.tos.continue")
+            }}
           />
         )}
       </BaseScreenComponent>
@@ -73,15 +103,32 @@ class TosScreen extends React.PureComponent<Props, State> {
   }
 
   private handleGoBack = () =>
-    this.setState({ showAbortOnboardingModal: true });
+    Alert.alert(
+      I18n.t("onboarding.alert.title"),
+      I18n.t("onboarding.alert.description"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "default",
+          onPress: () => this.props.dispatch(abortOnboarding())
+        }
+      ]
+    );
+}
 
-  private handleModalClose = () =>
-    this.setState({ showAbortOnboardingModal: false });
-
-  private handleModalConfirm = () => {
-    this.handleModalClose();
-    this.props.dispatch(abortOnboarding());
+function mapStateToProps(state: GlobalState) {
+  const potProfile = profileSelector(state);
+  return {
+    hasAcceptedOldTosVersion:
+      pot.isSome(potProfile) &&
+      "accepted_tos_version" in potProfile.value &&
+      potProfile.value.accepted_tos_version &&
+      potProfile.value.accepted_tos_version < tosVersion
   };
 }
 
-export default connect()(TosScreen);
+export default connect(mapStateToProps)(TosScreen);
