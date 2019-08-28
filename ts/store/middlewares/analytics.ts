@@ -43,7 +43,7 @@ import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
 } from "../actions/notifications";
-import { tosAccept } from "../actions/onboarding";
+import { tosAccepted } from "../actions/onboarding";
 import { createPinSuccess } from "../actions/pinset";
 import {
   profileFirstLogin,
@@ -90,7 +90,7 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
-// tslint:disable-next-line: cognitive-complexity no-big-function
+// tslint:disable cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
@@ -101,6 +101,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(applicationChangeState):
       return mp.track("APP_STATE_CHANGE", {
         APPLICATION_STATE_NAME: action.payload
+      });
+    //
+    // Onboarding (with properties)
+    //
+    case getType(tosAccepted):
+      return mp.track(action.type, {
+        acceptedTosVersion: action.payload
       });
     //
     // Authentication actions (with properties)
@@ -227,7 +234,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(identificationPinReset):
     // onboarding
     case getType(analyticsOnboardingStarted):
-    case getType(tosAccept.success):
     case getType(createPinSuccess):
     // profile
     case getType(profileLoadFailure):
