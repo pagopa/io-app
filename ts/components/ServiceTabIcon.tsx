@@ -1,3 +1,8 @@
+/**
+ * Service tab icon with badge indicator
+ * TODO: make badge displays the sum of unread service into the "Local" and the "National" tabs
+ *        https://www.pivotaltracker.com/story/show/168169955
+ */
 import React from "react";
 import { connect } from "react-redux";
 
@@ -11,9 +16,6 @@ type OwnProps = {
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
-/**
- * Wallet tab icon with badge indicator
- */
 class ServiceTabIcon extends React.PureComponent<Props> {
   public render() {
     const { color, unreadServices } = this.props;
