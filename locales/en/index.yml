@@ -668,6 +668,7 @@ services:
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications
   emailNotifications: Email Notifications
+  emailForwarding: Email forwarding
   tosLink: Terms and conditions
   privacyLink: Privacy information
   otherAppsInfo: You can find this service also

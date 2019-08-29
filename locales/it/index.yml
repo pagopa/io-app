@@ -679,6 +679,7 @@ services:
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Notifiche push
   emailNotifications: Notifiche email
+  emailForwarding: Inoltro via email
   tosLink: Termini e condizioni d'uso
   privacyLink: Informativa sulla privacy
   otherAppsInfo: Puoi usare questo servizio anche
