@@ -164,7 +164,7 @@ export const selectedLocalServicesSectionsSelector = createSelector(
     )
 );
 
-export const notSelectedLocalServicesSectionsSelector = createSelector(
+export const notSelectedServicesSectionsSelector = createSelector(
   [
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
@@ -186,7 +186,7 @@ export const notSelectedLocalServicesSectionsSelector = createSelector(
       services,
       organizations,
       servicesMetadata,
-      ScopeEnum.LOCAL,
+      undefined,
       notSelectedOrganizations
     );
   }

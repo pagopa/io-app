@@ -36,7 +36,7 @@ import { existingOrganizationsFiscalCodesSelectedStateSelector } from "../../sto
 import {
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
-  notSelectedLocalServicesSectionsSelector,
+  notSelectedServicesSectionsSelector,
   selectedLocalServicesSectionsSelector
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
@@ -385,14 +385,14 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           heading={
             <TabHeading>
               <Text style={styles.tabBarContent}>
-                {I18n.t("services.tab.otherServices")}
+                {I18n.t("services.tab.all")}
               </Text>
             </TabHeading>
           }
         >
           <ServicesSections
             type={"Other"}
-            sections={this.props.otherServicesSections}
+            sections={this.props.allServicesSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
             onRefresh={this.props.refreshServices}
@@ -481,7 +481,7 @@ const mapStateToProps = (state: GlobalState) => {
     readServices: readServicesByIdSelector(state),
     localSections: selectedLocalServicesSectionsSelector(state),
     nationalSections: nationalServicesSectionsSelector(state),
-    otherServicesSections: notSelectedLocalServicesSectionsSelector(state)
+    allServicesSections: notSelectedServicesSectionsSelector(state)
   };
 };
 

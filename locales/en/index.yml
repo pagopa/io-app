@@ -685,7 +685,7 @@ services:
   tab:
     locals: Local
     national: National
-    otherServices: Other services
+    all: All
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
