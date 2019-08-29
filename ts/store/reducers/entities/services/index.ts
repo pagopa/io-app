@@ -21,7 +21,7 @@ import {
   organizationsFiscalCodesSelectedStateSelector,
   OrganizationsSelectedState
 } from "../organizations/organizationsFiscalCodesSelected";
-import readStateByServiceReducer, {
+import readServicesByIdReducer, {
   ReadStateByServicesId
 } from "./readStateByServiceId";
 import servicesByIdReducer, { ServicesByIdState } from "./servicesById";
@@ -51,7 +51,7 @@ const reducer = combineReducers<ServicesState, Action>({
   byId: servicesByIdReducer,
   byOrgFiscalCode: serviceIdsByOrganizationFiscalCodeReducer,
   visible: visibleServicesReducer,
-  readState: readStateByServiceReducer
+  readState: readServicesByIdReducer
 });
 
 // Selectors

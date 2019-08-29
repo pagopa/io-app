@@ -50,7 +50,7 @@ const migrations: MigrationManifest = {
     } as PersistedState),
 
   // version 1
-  // we changes the type of the services state to use Pot types so we clear all
+  // we changed the type of the services state to use Pot types so we clear all
   // the entitie to force a reload of messages and services
   "1": (state: PersistedState): PersistedState =>
     ({
@@ -91,11 +91,12 @@ const migrations: MigrationManifest = {
   // Version 4
   // we added a state to monitor what pagopa environment is selected
   "4": (state: PersistedState) => {
-    return (state as any).persistedPreferences.isPagoPATestEnabled === undefined
+    return (state as PersistedGlobalState).persistedPreferences
+      .isPagoPATestEnabled === undefined
       ? {
           ...state,
           persistedPreferences: {
-            ...(state as any).persistedPreferences,
+            ...(state as PersistedGlobalState).persistedPreferences,
             isPagoPATestEnabled: false
           }
         }
@@ -105,8 +106,18 @@ const migrations: MigrationManifest = {
   },
 
   // Version 5
+  // we changed the way ToS acceptance is managed
+  "5": (state: PersistedState) => ({
+    ...state,
+    onboarding: {
+      isFingerprintAcknowledged: (state as PersistedGlobalState).onboarding
+        .isFingerprintAcknowledged
+    }
+  }),
+
+  // Version 6
   // we empty the services list to get both services list and services metadata being reloaded and persisted
-  "5": (state: PersistedState) => {
+  "6": (state: PersistedState) => {
     return {
       ...state,
       entities: {
