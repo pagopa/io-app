@@ -78,7 +78,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
           <View spacer={true} large={true} />
           <Button
             small={true}
-            bordered={true}
+            primary={true}
             style={styles.button}
             block={true}
             onPress={this.props.onChooserAreasOfInterestPress}
@@ -108,7 +108,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
         <View style={styles.headerContentWrapper}>
           <Button
             small={true}
-            bordered={true}
+            primary={true}
             style={styles.button}
             block={true}
             onPress={this.props.onChooserAreasOfInterestPress}
