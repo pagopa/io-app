@@ -1,30 +1,41 @@
 import { Effect } from "redux-saga";
-import { put, select, take } from "redux-saga/effects";
-import { getType } from "typesafe-actions";
-
+import { put, take } from "redux-saga/effects";
+import { UserProfileUnion } from "../../api/backend";
+import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
-import { tosAccept } from "../../store/actions/onboarding";
-import { isTosAcceptedSelector } from "../../store/reducers/onboarding";
-import { GlobalState } from "../../store/reducers/types";
+import { tosAccepted } from "../../store/actions/onboarding";
+import { profileUpsert } from "../../store/actions/profile";
 
-export function* checkAcceptedTosSaga(): IterableIterator<Effect> {
-  // From the state we check whether the user has already accepted the ToS
-  // FIXME: ToS can change over time, this step should eventually check whether
-  //        the user has accepted the latest version of the ToS and store the
-  //        information in the user profile.
-  const isTosAccepted: ReturnType<typeof isTosAcceptedSelector> = yield select<
-    GlobalState
-  >(isTosAcceptedSelector);
+export function* checkAcceptedTosSaga(
+  userProfile: UserProfileUnion
+): IterableIterator<Effect> {
+  // The user has to explicitly accept the new version of ToS if:
+  // - this is the first access
+  // - the user profile stores the user accepted an old version of ToS
+  if (
+    "accepted_tos_version" in userProfile &&
+    userProfile.accepted_tos_version &&
+    userProfile.accepted_tos_version >= tosVersion
+  ) {
+    return;
+  }
 
-  if (!isTosAccepted) {
+  if (
+    !userProfile.has_profile ||
+    (userProfile.has_profile && "accepted_tos_version" in userProfile)
+  ) {
     // Navigate to the TosScreen
     yield put(navigateToTosScreen);
 
-    // Here we wait the user accept the ToS
-    yield take(getType(tosAccept.request));
+    // Wait the user accept the ToS
+    yield take(tosAccepted);
+  }
 
-    // We're done with accepting the ToS, dispatch the action that updates
-    // the redux state.
-    yield put(tosAccept.success());
+  /**
+   * The user profile is updated storing the last ToS version.
+   * If the user logs in for the first time, the accepted tos version is stored once the profile in initialized
+   */
+  if (userProfile.has_profile) {
+    yield put(profileUpsert.request({ accepted_tos_version: tosVersion }));
   }
 }
