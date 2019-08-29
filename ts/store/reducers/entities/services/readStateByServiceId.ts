@@ -1,8 +1,10 @@
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { clearCache } from "../../../actions/profile";
 import { showServiceDetails } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
+import { servicesByIdSelector } from "./servicesById";
 
 export type ReadStateByServicesId = Readonly<{
   [key: string]: boolean | undefined;
@@ -10,15 +12,21 @@ export type ReadStateByServicesId = Readonly<{
 
 const INITIAL_STATE: ReadStateByServicesId = {};
 
-export const readStateByServiceIdSelector = (id: string) => (
-  state: GlobalState
-): boolean | undefined => state.entities.services.readState[id] !== undefined;
-
-export const readServicesSelector = (
+// Selectors
+export const readServicesByIdSelector = (
   state: GlobalState
 ): ReadStateByServicesId => state.entities.services.readState;
 
-export function readStateByServiceIdReducer(
+export const unreadServicesByIdSelector = createSelector(
+  [servicesByIdSelector, readServicesByIdSelector],
+  (servicesById, readServicesById) =>
+    Object.keys(servicesById).filter(
+      serviceId => readServicesById[serviceId] === undefined
+    )
+);
+
+// Reducer
+export function readServicesByIdReducer(
   state = INITIAL_STATE,
   action: Action
 ): ReadStateByServicesId {
@@ -37,4 +45,4 @@ export function readStateByServiceIdReducer(
   }
 }
 
-export default readStateByServiceIdReducer;
+export default readServicesByIdReducer;
