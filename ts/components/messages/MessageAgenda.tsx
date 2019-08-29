@@ -78,8 +78,9 @@ const styles = StyleSheet.create({
   },
   sectionHeaderText: {
     fontSize: 18,
-    lineHeight: 20,
-    color: customVariables.brandDarkestGray
+    color: customVariables.brandDarkestGray,
+    ...makeFontStyleObject(Platform.select, "600", false),
+    lineHeight: 20
   },
 
   // Items
