@@ -7,6 +7,7 @@ import { Body, Button, Content, Input, Item, Right, View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import {
+  BackHandler,
   ImageSourcePropType,
   KeyboardAvoidingView,
   Platform,
@@ -87,10 +88,21 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     ) {
       this.props.setSelectedItemIds(initialSelectedItemIds);
     }
+
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
   private onPressCancel = () => {
     this.props.onCancel();
+  };
+
+  private handleBackPress = () => {
+    this.props.onCancel();
+    return true;
   };
 
   private onPressSave = () => {
@@ -124,7 +136,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
                   .darken(0.2)
                   .string()}
               />
-              <Button onPress={this.onSearchDisable} transparent={true}>
+              <Button onPress={this.onPressCancel} transparent={true}>
                 <IconFont
                   name="io-close"
                   accessible={true}
@@ -169,13 +181,6 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
       }),
     searchDelay
   );
-
-  private onSearchDisable = () => {
-    this.setState({
-      searchText: none,
-      debouncedSearchText: none
-    });
-  };
 
   /**
    * Footer
