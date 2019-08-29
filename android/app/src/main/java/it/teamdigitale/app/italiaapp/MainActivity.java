@@ -33,9 +33,9 @@ public class MainActivity extends ReactActivity {
             super.onCreate(savedInstanceState);
             //on rooted device show message ant stop app
             AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-            alertDialog.setTitle("Device rooted");
-            alertDialog.setMessage("This device is rooted, you can't use this app");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+            alertDialog.setTitle(getString(R.string.alert_device_rooted_title));
+            alertDialog.setMessage(getString(R.string.alert_device_rooted_desc));
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
                     (dialog, which) -> finish());
             alertDialog.setCancelable(false);
             alertDialog.show();
