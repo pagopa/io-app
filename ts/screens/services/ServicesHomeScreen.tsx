@@ -39,7 +39,7 @@ import {
   notSelectedLocalServicesSectionsSelector,
   selectedLocalServicesSectionsSelector
 } from "../../store/reducers/entities/services";
-import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
+import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
@@ -478,7 +478,7 @@ const mapStateToProps = (state: GlobalState) => {
     ),
     profile: state.profile,
     servicesById: state.entities.services.byId,
-    readServices: readServicesSelector(state),
+    readServices: readServicesByIdSelector(state),
     localSections: selectedLocalServicesSectionsSelector(state),
     nationalSections: nationalServicesSectionsSelector(state),
     otherServicesSections: notSelectedLocalServicesSectionsSelector(state)

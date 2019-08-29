@@ -5,10 +5,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import {
-  ScopeEnum,
-  Service as ServiceMetadata
-} from "../../../../../definitions/content/Service";
+import { ScopeEnum } from "../../../../../definitions/content/Service";
 import { isDefined } from "../../../../utils/guards";
 import { Action } from "../../../actions/types";
 import { ServiceMetadataById, servicesMetadataSelector } from "../../content";
@@ -63,22 +60,19 @@ const getLocalizedServices = (
   servicesMetadataById: ServiceMetadataById,
   localization?: ScopeEnum
 ) => {
-  if (localization) {
-    const id = pot.isSome(service) ? service.value.service_id : undefined;
-    if (id) {
-      const potServiceMetadata = servicesMetadataById[id] || pot.none;
-      const serviceMetadata: ServiceMetadata = pot.getOrElse(
-        potServiceMetadata,
-        {} as pot.PotType<typeof potServiceMetadata>
-      );
-      return serviceMetadata.scope === localization;
-    } else {
-      // if service metadata are unreachable, the service is assumed as local
-      return localization === ScopeEnum.LOCAL ? true : undefined;
-    }
-  } else {
+  if (localization === undefined) {
     return true;
   }
+
+  const id = pot.isSome(service) ? service.value.service_id : undefined;
+  if (id) {
+    const potServiceMetadata = servicesMetadataById[id] || pot.none;
+    if (pot.isSome(potServiceMetadata)) {
+      return potServiceMetadata.value.scope === localization;
+    }
+  }
+
+  return localization === ScopeEnum.LOCAL;
 };
 
 /**
