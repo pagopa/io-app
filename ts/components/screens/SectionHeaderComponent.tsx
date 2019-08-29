@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   sectionTitle: {
-    ...makeFontStyleObject(Platform.select, "600", false),
+    ...makeFontStyleObject(Platform.select, "700", false),
     flex: 1
   },
   sectionView: {

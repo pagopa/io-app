@@ -254,9 +254,7 @@ const ListEmptyComponent = (
 
 const FakeItemComponent = (
   <View style={styles.itemEmptyWrapper}>
-    <Text bold={true} style={styles.itemEmptyText}>
-      {I18n.t("reminders.emptyMonth")}
-    </Text>
+    <Text style={styles.itemEmptyText}>{I18n.t("reminders.emptyMonth")}</Text>
   </View>
 );
 
