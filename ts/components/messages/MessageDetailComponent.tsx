@@ -121,24 +121,26 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
       <View style={styles.mainWrapper}>
         <View style={styles.headerContainer}>
           {/* Service */}
-          {service && (
-            <Grid style={styles.serviceContainer}>
-              <Col>
-                <H4>{service.organization_name}</H4>
-                <H6 link={true} onPress={onServiceLinkPress}>
-                  {service.service_name}
-                </H6>
-              </Col>
-              <Col style={styles.serviceCol}>
-                <TouchableOpacity onPress={onServiceLinkPress}>
-                  <MultiImage
-                    style={styles.serviceMultiImage}
-                    source={logosForService(service)}
-                  />
-                </TouchableOpacity>
-              </Col>
-            </Grid>
-          )}
+          {service &&
+            service.service_id &&
+            pot.isSome(potService) && (
+              <Grid style={styles.serviceContainer}>
+                <Col>
+                  <H4>{service.organization_name}</H4>
+                  <H6 link={true} onPress={onServiceLinkPress}>
+                    {service.service_name}
+                  </H6>
+                </Col>
+                <Col style={styles.serviceCol}>
+                  <TouchableOpacity onPress={onServiceLinkPress}>
+                    <MultiImage
+                      style={styles.serviceMultiImage}
+                      source={logosForService(service)}
+                    />
+                  </TouchableOpacity>
+                </Col>
+              </Grid>
+            )}
 
           {/* Subject */}
           <View style={styles.subjectContainer}>
