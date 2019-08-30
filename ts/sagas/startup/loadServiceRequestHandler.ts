@@ -1,7 +1,6 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { BackendClient } from "../../api/backend";
 import { contentServiceLoad } from "../../store/actions/content";
 import { loadService } from "../../store/actions/services";
@@ -31,7 +30,7 @@ export function* loadServiceRequestHandler(
     if (response.value.status === 200) {
       yield put(loadService.success(response.value.value));
 
-      yield put(contentServiceLoad.request(action.payload as ServiceId));
+      yield put(contentServiceLoad.request(response.value.value.service_id));
     } else {
       throw Error();
     }

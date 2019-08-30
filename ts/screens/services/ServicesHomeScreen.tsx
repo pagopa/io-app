@@ -18,7 +18,6 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import OrganizationLogo from "../../components/services/OrganizationLogo";
-import ServicesSections from "../../components/services/ServicesSectionsList";
 import ServicesSectionsList from "../../components/services/ServicesSectionsList";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
@@ -302,27 +301,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               scrollEventThrottle: 8 // target is 120fps
             }}
             paddingForAnimation={true}
-            AnimatedCTAStyle={{
-              transform: [
-                {
-                  translateY: this.animatedScrollPositions[
-                    this.state.currentTab
-                  ].interpolate({
-                    inputRange: [
-                      0,
-                      SCROLL_RANGE_FOR_ANIMATION / 2,
-                      SCROLL_RANGE_FOR_ANIMATION
-                    ],
-                    outputRange: [
-                      0,
-                      SCROLL_RANGE_FOR_ANIMATION * 0.75,
-                      SCROLL_RANGE_FOR_ANIMATION
-                    ],
-                    extrapolate: "clamp"
-                  })
-                }
-              ]
-            }}
           />
         </Tab>
         <Tab
@@ -334,8 +312,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          <ServicesSections
-            type={"Other"}
+          <ServicesSectionsList
+            type={"Generic"}
             sections={this.props.nationalSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
@@ -358,27 +336,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               scrollEventThrottle: 8 // target is 120fps
             }}
             paddingForAnimation={true}
-            AnimatedCTAStyle={{
-              transform: [
-                {
-                  translateY: this.animatedScrollPositions[
-                    this.state.currentTab
-                  ].interpolate({
-                    inputRange: [
-                      0,
-                      SCROLL_RANGE_FOR_ANIMATION / 2,
-                      SCROLL_RANGE_FOR_ANIMATION
-                    ],
-                    outputRange: [
-                      0,
-                      SCROLL_RANGE_FOR_ANIMATION * 0.75,
-                      SCROLL_RANGE_FOR_ANIMATION
-                    ],
-                    extrapolate: "clamp"
-                  })
-                }
-              ]
-            }}
           />
         </Tab>
         <Tab
@@ -390,8 +347,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             </TabHeading>
           }
         >
-          <ServicesSections
-            type={"Other"}
+          <ServicesSectionsList
+            type={"Generic"}
             sections={this.props.allServicesSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
@@ -414,27 +371,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               scrollEventThrottle: 8 // target is 120fps
             }}
             paddingForAnimation={true}
-            AnimatedCTAStyle={{
-              transform: [
-                {
-                  translateY: this.animatedScrollPositions[
-                    this.state.currentTab
-                  ].interpolate({
-                    inputRange: [
-                      0,
-                      SCROLL_RANGE_FOR_ANIMATION / 2,
-                      SCROLL_RANGE_FOR_ANIMATION
-                    ],
-                    outputRange: [
-                      0,
-                      SCROLL_RANGE_FOR_ANIMATION * 0.75,
-                      SCROLL_RANGE_FOR_ANIMATION
-                    ],
-                    extrapolate: "clamp"
-                  })
-                }
-              ]
-            }}
           />
         </Tab>
       </AnimatedTabs>

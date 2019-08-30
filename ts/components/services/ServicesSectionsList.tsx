@@ -18,23 +18,22 @@ type AnimatedProps = {
     scrollEventThrottle?: number;
   };
   paddingForAnimation: boolean;
-  AnimatedCTAStyle?: any;
 };
 
 type BaseProps = AnimatedProps &
   ComponentProps<typeof ServiceSectionListComponent>;
 
-interface LocalProps extends BaseProps {
+interface LocalSectionProps extends BaseProps {
   type: "Local";
   onChooserAreasOfInterestPress: () => void;
   organizationsFiscalCodesSelected: Option<Set<string>>;
 }
 
-interface OtherProps extends BaseProps {
-  type: "Other";
+interface GenericSectionProps extends BaseProps {
+  type: "Generic";
 }
 
-type Props = LocalProps | OtherProps;
+type Props = LocalSectionProps | GenericSectionProps;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -68,7 +67,7 @@ const styles = StyleSheet.create({
 });
 
 class ServicesSectionsList extends React.PureComponent<Props> {
-  private listEmptyComponent() {
+  private localListEmptyComponent() {
     return (
       this.props.type === "Local" && (
         <View style={styles.headerContentWrapper}>
@@ -143,7 +142,9 @@ class ServicesSectionsList extends React.PureComponent<Props> {
         onSelect={onSelect}
         readServices={readServices}
         isExperimentalFeaturesEnabled={true}
-        ListEmptyComponent={this.listEmptyComponent()}
+        ListEmptyComponent={
+          this.props.type === "Local" && this.localListEmptyComponent()
+        }
       />
     );
   };

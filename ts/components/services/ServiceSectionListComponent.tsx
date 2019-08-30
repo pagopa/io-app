@@ -96,7 +96,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
     return pot.getOrElse(
       pot.map(
         potService,
-        service => `${service.service_id}-${service.version || 0}`
+        service => `${service.service_id}-${service.version}`
       ),
       `service-pot-${index}`
     );

@@ -101,17 +101,9 @@ class ServiceList extends React.Component<Props> {
     potService: pot.Pot<ServicePublic, Error>,
     readServices: ReadStateByServicesId
   ): boolean => {
-    const service =
-      pot.isLoading(potService) ||
-      pot.isError(potService) ||
-      pot.isNone(potService)
-        ? undefined
-        : potService.value;
-
-    return (
-      readServices !== undefined &&
-      service !== undefined &&
-      readServices[service.service_id] !== undefined
+    return pot.getOrElse(
+      pot.map(potService, s => s && readServices[s.service_id] !== undefined),
+      false
     );
   };
 
