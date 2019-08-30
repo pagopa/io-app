@@ -19,20 +19,15 @@ type AnimatedProps = {
   };
 };
 
-type BaseProps = AnimatedProps &
+type OwnProps = {
+  onChooserAreasOfInterestPress?: () => void;
+  organizationsFiscalCodesSelected?: Option<Set<string>>;
+  isLocal?: boolean;
+};
+
+type Props = AnimatedProps &
+  OwnProps &
   ComponentProps<typeof ServiceSectionListComponent>;
-
-interface LocalSectionProps extends BaseProps {
-  type: "Local";
-  onChooserAreasOfInterestPress: () => void;
-  organizationsFiscalCodesSelected: Option<Set<string>>;
-}
-
-interface GenericSectionProps extends BaseProps {
-  type: "Generic";
-}
-
-type Props = LocalSectionProps | GenericSectionProps;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -65,7 +60,7 @@ const styles = StyleSheet.create({
 class ServicesSectionsList extends React.PureComponent<Props> {
   private localListEmptyComponent() {
     return (
-      this.props.type === "Local" && (
+      this.props.isLocal && (
         <View style={styles.headerContentWrapper}>
           <Text style={styles.message}>
             {I18n.t("services.areasOfInterest.selectMessage")}
@@ -92,7 +87,8 @@ class ServicesSectionsList extends React.PureComponent<Props> {
 
   private renderEditButton = () => {
     return (
-      this.props.type === "Local" &&
+      this.props.isLocal &&
+      this.props.organizationsFiscalCodesSelected &&
       this.props.organizationsFiscalCodesSelected.fold(
         false,
         _ => _.size > 0
@@ -135,9 +131,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
         onSelect={onSelect}
         readServices={readServices}
         isExperimentalFeaturesEnabled={true}
-        ListEmptyComponent={
-          this.props.type === "Local" && this.localListEmptyComponent()
-        }
+        ListEmptyComponent={this.localListEmptyComponent()}
       />
     );
   };

@@ -274,7 +274,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           }
         >
           <ServicesSectionsList
-            type={"Local"}
+            isLocal={true}
             sections={this.props.localSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
@@ -312,7 +312,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           }
         >
           <ServicesSectionsList
-            type={"Generic"}
             sections={this.props.nationalSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
@@ -346,7 +345,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           }
         >
           <ServicesSectionsList
-            type={"Generic"}
             sections={this.props.allServicesSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
