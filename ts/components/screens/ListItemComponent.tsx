@@ -18,6 +18,7 @@ type Props = Readonly<{
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
+  isItemDisabled?: boolean;
 }>;
 
 const ICON_SIZE = 24;
@@ -49,6 +50,9 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingRight: 24 + 4 // icon width + margin - to overcome title not going on second line when overlapping with the right icon
   },
+  disabledItem: {
+    color: customVariables.brandDarkGray
+  },
   description: {
     paddingRight: ICON_SIZE,
     alignSelf: "flex-start"
@@ -72,7 +76,13 @@ export default class ListItemComponent extends React.Component<Props> {
                   <BadgeComponent />
                 </View>
               )}
-              <H5 numberOfLines={2} style={styles.serviceName}>
+              <H5
+                numberOfLines={2}
+                style={[
+                  styles.serviceName,
+                  this.props.isItemDisabled && styles.disabledItem
+                ]}
+              >
                 {this.props.title}
               </H5>
             </View>

@@ -33,15 +33,10 @@ export default class NewServiceListItem extends React.PureComponent<Props> {
     const enabledChannels = pot.map(potService, service =>
       getEnabledChannelsForService(this.props.profile, service.service_id)
     );
-    const inboxEnabledLabel = pot.toUndefined(
-      pot.map(
-        enabledChannels,
-        _ =>
-          _.inbox
-            ? I18n.t("services.serviceIsEnabled")
-            : I18n.t("services.serviceNotEnabled")
-      )
-    );
+
+    const isServiceDisabled =
+      pot.isSome(enabledChannels) && enabledChannels.value.inbox === false;
+
     const serviceName = pot.isLoading(potService)
       ? I18n.t("global.remoteStates.loading")
       : pot.isError(potService) || pot.isNone(potService)
@@ -51,11 +46,11 @@ export default class NewServiceListItem extends React.PureComponent<Props> {
     return (
       <ListItemComponent
         title={serviceName}
-        subTitle={inboxEnabledLabel}
         hasBadge={!this.props.isRead}
         onPress={onPress}
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
+        isItemDisabled={isServiceDisabled}
       />
     );
   }
