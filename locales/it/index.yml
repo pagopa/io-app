@@ -585,7 +585,8 @@ messages:
   errorLoading:
     details: Impossibile caricare i dettagli del messaggio
     senderService:  Mittente sconosciuto
-    senderInfo: Info sul servizio mancanti
+    serviceInfo: Info sul servizio mancanti
+    departmentInfo: Info sul dipartimento mancanti
   cta:
     archive: Archivia
     unarchive: Ripristina
