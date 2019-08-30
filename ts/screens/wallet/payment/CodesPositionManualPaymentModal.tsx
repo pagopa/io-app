@@ -1,6 +1,6 @@
 import { Body, Button, Container, Right } from "native-base";
 import * as React from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import { BackHandler, Dimensions, Image, StyleSheet } from "react-native";
 import ImageZoom from "react-native-image-pan-zoom";
 
 import AppHeader from "./../../../components/ui/AppHeader";
@@ -31,6 +31,19 @@ const styles = StyleSheet.create({
 });
 
 class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
+  private handleBackPress = () => {
+    this.props.onCancel();
+    return true;
+  };
+
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
   public render() {
     return (
       <Container>
