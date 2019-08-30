@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   serviceName: {
     fontSize: 18,
     color: variables.brandDarkestGray,
-    ...makeFontStyleObject(Platform.select, "600", false),
+    ...makeFontStyleObject(Platform.select, "600"),
     alignSelf: "flex-start",
     paddingRight: 16
   }

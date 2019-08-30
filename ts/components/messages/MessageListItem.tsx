@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
 
   messageDate: {
-    ...makeFontStyleObject(Platform.select, "700", false),
+    ...makeFontStyleObject(Platform.select, "700"),
     fontSize: 14,
     lineHeight: 18,
     color: customVariables.brandDarkGray
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
 
   messageTitle: {
-    ...makeFontStyleObject(Platform.select, "600", false),
+    ...makeFontStyleObject(Platform.select, "600"),
     fontSize: 18,
     lineHeight: 21,
     color: customVariables.brandDarkestGray
