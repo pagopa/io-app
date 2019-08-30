@@ -103,7 +103,8 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
         ? pot.isNone(potService)
           ? ({
               organization_name: I18n.t("messages.errorLoading.senderService"),
-              department_name: I18n.t("messages.errorLoading.senderInfo")
+              department_name: I18n.t("messages.errorLoading.senderInfo"),
+              service_name: I18n.t("messages.errorLoading.senderInfo")
             } as ServicePublic)
           : pot.toUndefined(potService)
         : undefined;
@@ -121,16 +122,15 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
       <View style={styles.mainWrapper}>
         <View style={styles.headerContainer}>
           {/* Service */}
-          {service &&
-            service.service_id &&
-            pot.isSome(potService) && (
-              <Grid style={styles.serviceContainer}>
-                <Col>
-                  <H4>{service.organization_name}</H4>
-                  <H6 link={true} onPress={onServiceLinkPress}>
-                    {service.service_name}
-                  </H6>
-                </Col>
+          {service && (
+            <Grid style={styles.serviceContainer}>
+              <Col>
+                <H4>{service.organization_name}</H4>
+                <H6 link={true} onPress={onServiceLinkPress}>
+                  {service.service_name}
+                </H6>
+              </Col>
+              {service.service_id && (
                 <Col style={styles.serviceCol}>
                   <TouchableOpacity onPress={onServiceLinkPress}>
                     <MultiImage
@@ -139,8 +139,9 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                     />
                   </TouchableOpacity>
                 </Col>
-              </Grid>
-            )}
+              )}
+            </Grid>
+          )}
 
           {/* Subject */}
           <View style={styles.subjectContainer}>
