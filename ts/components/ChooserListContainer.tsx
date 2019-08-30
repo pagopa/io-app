@@ -185,7 +185,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
   /**
    * Footer
    */
-  private renderFooterButtons() {
+  private renderFooterButtons(hasNoNewSelection: boolean) {
     const cancelButtonProps = {
       block: true,
       light: true,
@@ -196,6 +196,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     const saveButtonProps = {
       block: true,
       primary: true,
+      disabled: hasNoNewSelection,
       onPress: this.onPressSave,
       title: I18n.t("global.buttons.saveSelection")
     };
@@ -291,7 +292,9 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
             android: customVariables.contentPadding
           })}
         >
-          {this.renderFooterButtons()}
+          {this.renderFooterButtons(
+            this.props.initialSelectedItemIds === selectedItemIds
+          )}
         </KeyboardAvoidingView>
       </View>
     );
