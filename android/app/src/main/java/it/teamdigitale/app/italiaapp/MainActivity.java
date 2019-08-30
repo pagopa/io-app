@@ -40,8 +40,18 @@ public class MainActivity extends ReactActivity {
             alertDialog.setCancelable(false);
             alertDialog.show();
         } else {
-            SplashScreen.show(this, R.style.SplashScreenTheme);
-            super.onCreate(savedInstanceState);
+            if (getResources().getBoolean(R.bool.isTablet)) {
+                super.onCreate(savedInstanceState);
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(getString(R.string.dialog_attention))
+                        .setMessage(getString(R.string.tablet_not_supported))
+                        .setPositiveButton(getString(android.R.string.ok), (dialog, which) -> finish())
+                        .setCancelable(false)
+                        .show();
+            } else {
+                SplashScreen.show(this, R.style.SplashScreenTheme);
+                super.onCreate(savedInstanceState);
+            }
         }
         // Fix the problem described here:
         // https://stackoverflow.com/questions/48072438/java-lang-illegalstateexception-only-fullscreen-opaque-activities-can-request-o

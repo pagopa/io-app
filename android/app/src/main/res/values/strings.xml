@@ -2,4 +2,6 @@
     <string name="app_name" translatable="false">IO</string>
     <string name="notification_channel_name">Messages</string>
     <string name="notification_channel_description">Receive notification for new messages</string>
+    <string name="dialog_attention">Attention</string>
+    <string name="tablet_not_supported">Tablets are not supported yet</string>
 </resources>

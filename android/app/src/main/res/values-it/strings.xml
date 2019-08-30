@@ -2,4 +2,6 @@
 <resources>
     <string name="notification_channel_name">Messaggi</string>
     <string name="notification_channel_description">Ricevi la notifica per i nuovi messaggi</string>
+  <string name="dialog_attention">Attenzione</string>
+  <string name="tablet_not_supported">I dispositivi tablet non sono al momento supportati</string>
 </resources>
