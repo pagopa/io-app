@@ -78,8 +78,9 @@ const styles = StyleSheet.create({
   },
   sectionHeaderText: {
     fontSize: 18,
-    lineHeight: 20,
-    color: customVariables.brandDarkestGray
+    color: customVariables.brandDarkestGray,
+    ...makeFontStyleObject(Platform.select, "600"),
+    lineHeight: 20
   },
 
   // Items
@@ -253,9 +254,7 @@ const ListEmptyComponent = (
 
 const FakeItemComponent = (
   <View style={styles.itemEmptyWrapper}>
-    <Text bold={true} style={styles.itemEmptyText}>
-      {I18n.t("reminders.emptyMonth")}
-    </Text>
+    <Text style={styles.itemEmptyText}>{I18n.t("reminders.emptyMonth")}</Text>
   </View>
 );
 
