@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
 });
 
 const UNKNOWN_SERVICE_DATA = {
-  organizationName: I18n.t("messages.errorLoading.senderService"),
-  departmentName: I18n.t("messages.errorLoading.senderInfo")
+  organizationName: I18n.t("messages.errorLoading.senderInfo"),
+  departmentName: I18n.t("messages.errorLoading.serviceInfo")
 };
 
 class MessageListItem extends React.PureComponent<Props> {

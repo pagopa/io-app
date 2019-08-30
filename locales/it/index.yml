@@ -584,7 +584,7 @@ messages:
   yesterday: ieri
   errorLoading:
     details: Impossibile caricare i dettagli del messaggio
-    senderService:  Mittente sconosciuto
+    senderInfo:  Mittente sconosciuto
     serviceInfo: Info sul servizio mancanti
     departmentInfo: Info sul dipartimento mancanti
   cta:

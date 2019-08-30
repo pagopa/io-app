@@ -102,7 +102,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
       potService !== undefined
         ? pot.isNone(potService)
           ? ({
-              organization_name: I18n.t("messages.errorLoading.senderService"),
+              organization_name: I18n.t("messages.errorLoading.senderInfo"),
               department_name: I18n.t("messages.errorLoading.departmentInfo"),
               service_name: I18n.t("messages.errorLoading.serviceInfo")
             } as ServicePublic)
