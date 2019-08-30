@@ -80,10 +80,13 @@ export default class ListItemComponent extends React.Component<Props> {
                   <BadgeComponent />
                 </View>
               )}
-              <Text numberOfLines={2} style={[
-                styles.serviceName,
-                this.props.isItemDisabled && styles.disabledItem
-              ]}>
+              <Text
+                numberOfLines={2}
+                style={[
+                  styles.serviceName,
+                  this.props.isItemDisabled && styles.disabledItem
+                ]}
+              >
                 {this.props.title}
               </Text>
             </View>
