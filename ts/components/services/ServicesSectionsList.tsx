@@ -17,7 +17,6 @@ type AnimatedProps = {
     onScroll: (_: NativeSyntheticEvent<NativeScrollEvent>) => void;
     scrollEventThrottle?: number;
   };
-  paddingForAnimation: boolean;
 };
 
 type BaseProps = AnimatedProps &
@@ -60,9 +59,6 @@ const styles = StyleSheet.create({
   icon: {
     color: customVariables.brandPrimary,
     lineHeight: 24
-  },
-  paddingForAnimation: {
-    height: 55
   }
 });
 
@@ -89,9 +85,6 @@ class ServicesSectionsList extends React.PureComponent<Props> {
           </Button>
           <View spacer={true} extralarge={true} />
           <Image source={require("../../../img/services/icon-places.png")} />
-          {this.props.paddingForAnimation && (
-            <View style={styles.paddingForAnimation} />
-          )}
         </View>
       )
     );

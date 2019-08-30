@@ -300,7 +300,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               ),
               scrollEventThrottle: 8 // target is 120fps
             }}
-            paddingForAnimation={true}
           />
         </Tab>
         <Tab
@@ -335,7 +334,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               ),
               scrollEventThrottle: 8 // target is 120fps
             }}
-            paddingForAnimation={true}
           />
         </Tab>
         <Tab
@@ -370,7 +368,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               ),
               scrollEventThrottle: 8 // target is 120fps
             }}
-            paddingForAnimation={true}
           />
         </Tab>
       </AnimatedTabs>
