@@ -48,7 +48,7 @@ import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type State = {
   enableServices: boolean;
-  isLongPressModeEnabled: boolean;
+  isLongPressEnabled: boolean;
 };
 
 type OwnProps = NavigationInjectedProps;
@@ -87,7 +87,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       enableServices: false,
-      isLongPressModeEnabled: false
+      isLongPressEnabled: false
     };
   }
 
@@ -133,7 +133,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
   };
   private handleOnLongPressItem = () => {
     this.setState({
-      isLongPressModeEnabled: !this.state.isLongPressModeEnabled
+      isLongPressEnabled: !this.state.isLongPressEnabled
     });
   };
 
@@ -222,11 +222,11 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
               this.props.isExperimentalFeaturesEnabled
             }
             onLongPressItem={this.handleOnLongPressItem}
-            isLongPressEnabled={this.state.isLongPressModeEnabled}
+            isLongPressEnabled={this.state.isLongPressEnabled}
             onSwitch={this.onSwitch}
           />
         </View>
-        {this.state.isLongPressModeEnabled && (
+        {this.state.isLongPressEnabled && (
           <View style={styles.buttonBar}>
             <Button
               block={true}
@@ -287,7 +287,6 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
                 this.props.isExperimentalFeaturesEnabled
               }
               onLongPressItem={this.handleOnLongPressItem}
-              onSwitch={this.onSwitch}
             />
           )
       )

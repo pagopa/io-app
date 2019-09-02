@@ -26,8 +26,8 @@ type Props = Readonly<{
   onSelect: (service: ServicePublic) => void;
   isRead: boolean;
   onLongPress?: () => void;
-  isLongPressModeEnabled: boolean;
   onSwitch?: (service: ServicePublic) => void;
+  isLongPressEnabled: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -54,14 +54,24 @@ const styles = StyleSheet.create({
 });
 
 export class ServiceListItem extends React.PureComponent<Props, State> {
+  // tslint:disable-next-line:cognitive-complexity
   public render() {
-    const { isLongPressModeEnabled } = this.props;
     const potService = this.props.item;
     const enabledChannels = pot.map(potService, service =>
       getEnabledChannelsForService(this.props.profile, service.service_id)
     );
 
-    const onPress = !this.props.isLongPressModeEnabled
+    const onSwitchTap = this.props.onSwitch
+      ? pot.toUndefined(
+          pot.map(potService, service => () => {
+            if (this.props.onSwitch) {
+              this.props.onSwitch(service);
+            }
+          })
+        )
+      : undefined;
+
+    const onPress = !this.props.isLongPressEnabled
       ? pot.toUndefined(
           pot.map(potService, service => () => this.props.onSelect(service))
         )
@@ -114,11 +124,11 @@ export class ServiceListItem extends React.PureComponent<Props, State> {
           </Grid>
         </Left>
         <Right>
-          {isLongPressModeEnabled ? (
+          {this.props.isLongPressEnabled ? (
             <Switch
               key={`switch-service-${profileVersion}`}
               value={pot.isSome(enabledChannels) && enabledChannels.value.inbox}
-              onValueChange={() => true}
+              onValueChange={onSwitchTap}
             />
           ) : (
             <IconFont name="io-right" color={variables.brandPrimary} />

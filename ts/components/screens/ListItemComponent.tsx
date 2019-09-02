@@ -19,10 +19,10 @@ type Props = Readonly<{
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
-  isLongPressModeEnabled?: boolean;
   onSwitch?: () => void;
   value?: boolean;
   keySwitch?: string;
+  isLongPressEnabled?: boolean;
 }>;
 
 const ICON_SIZE = 24;
@@ -84,7 +84,7 @@ export default class ListItemComponent extends React.Component<Props> {
             </View>
             {!this.props.iconName &&
               !this.props.hideIcon &&
-              (this.props.isLongPressModeEnabled ? (
+              (this.props.isLongPressEnabled ? (
                 <Switch
                   key={this.props.keySwitch}
                   value={this.props.value}
