@@ -574,8 +574,9 @@ messages:
   yesterday: yesterday
   errorLoading:
     details: Error loading message details
-    senderService:  Sender service unknown
-    senderInfo: Service info unknown
+    senderInfo:  Sender service unknown
+    serviceInfo: Service info unknown
+    departmentInfo: Department info unknown
   cta:
     archive: Archive
     unarchive: Unarchive
