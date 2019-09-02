@@ -32,22 +32,13 @@ public class MainActivity extends ReactActivity {
         if (!isEmulator() && isDeviceRooted()) {
             super.onCreate(savedInstanceState);
             //on rooted device show message ant stop app
-            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-            alertDialog.setTitle(getString(R.string.alert_device_rooted_title));
-            alertDialog.setMessage(getString(R.string.alert_device_rooted_desc));
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(android.R.string.ok),
-                    (dialog, which) -> finish());
-            alertDialog.setCancelable(false);
-            alertDialog.show();
+            showAlertDialog(getString(R.string.alert_device_rooted_title),
+                    getString(R.string.alert_device_rooted_desc));
         } else {
             if (getResources().getBoolean(R.bool.isTablet)) {
                 super.onCreate(savedInstanceState);
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle(getString(R.string.dialog_attention))
-                        .setMessage(getString(R.string.tablet_not_supported))
-                        .setPositiveButton(getString(android.R.string.ok), (dialog, which) -> finish())
-                        .setCancelable(false)
-                        .show();
+                showAlertDialog(getString(R.string.dialog_attention),
+                        getString(R.string.tablet_not_supported));
             } else {
                 SplashScreen.show(this, R.style.SplashScreenTheme);
                 super.onCreate(savedInstanceState);
@@ -137,5 +128,14 @@ public class MainActivity extends ReactActivity {
                 || Build.MANUFACTURER.contains("Genymotion")
                 || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
                 || "google_sdk".equals(Build.PRODUCT);
+    }
+
+    private void showAlertDialog(String title, String message) {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(getString(android.R.string.ok), (dialog, which) -> finish())
+                .setCancelable(false)
+                .show();
     }
 }
