@@ -29,16 +29,16 @@ public class MainActivity extends ReactActivity {
     // see https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (!isEmulator() && isDeviceRooted()) {
+        if (getResources().getBoolean(R.bool.isTablet)) {
             super.onCreate(savedInstanceState);
-            //on rooted device show message ant stop app
-            showAlertDialog(getString(R.string.alert_device_rooted_title),
-                    getString(R.string.alert_device_rooted_desc));
+            showAlertDialog(getString(R.string.dialog_attention),
+                    getString(R.string.tablet_not_supported));
         } else {
-            if (getResources().getBoolean(R.bool.isTablet)) {
+            if (!isEmulator() && isDeviceRooted()) {
                 super.onCreate(savedInstanceState);
-                showAlertDialog(getString(R.string.dialog_attention),
-                        getString(R.string.tablet_not_supported));
+                //on rooted device show message ant stop app
+                showAlertDialog(getString(R.string.alert_device_rooted_title),
+                        getString(R.string.alert_device_rooted_desc));
             } else {
                 SplashScreen.show(this, R.style.SplashScreenTheme);
                 super.onCreate(savedInstanceState);
