@@ -4,12 +4,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, Left, Right, Row, Text, View } from "native-base";
 import * as React from "react";
-import {
-  FlatList,
-  ListRenderItemInfo,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
@@ -19,6 +14,7 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { BadgeComponent } from "../screens/BadgeComponent";
+import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
 
@@ -115,7 +111,7 @@ export default class TransactionsList extends React.Component<Props> {
     const amount = formatNumberAmount(centsToAmount(item.amount.amount));
     const recipient = item.merchant;
     return (
-      <TouchableOpacity
+      <TouchableWithoutOpacity
         onPress={() => this.props.navigateToTransactionDetails(item)}
       >
         <Grid style={styles.transaction}>
@@ -134,7 +130,7 @@ export default class TransactionsList extends React.Component<Props> {
             </Left>
           </Row>
         </Grid>
-      </TouchableOpacity>
+      </TouchableWithoutOpacity>
     );
   };
 

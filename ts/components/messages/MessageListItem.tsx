@@ -11,8 +11,8 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
-import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import { BadgeComponent } from "../screens/BadgeComponent";
+import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
 

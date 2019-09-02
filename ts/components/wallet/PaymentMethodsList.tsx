@@ -100,6 +100,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
               <ListItem
                 style={[styles.listItem]}
                 onPress={itemInfo.item.onPress}
+                activeOpacity={1}
               >
                 <Left>
                   <Grid>

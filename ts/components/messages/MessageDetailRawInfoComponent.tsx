@@ -1,16 +1,13 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import {
-  StyleSheet,
-  TouchableHighlight,
-  TouchableWithoutFeedback
-} from "react-native";
+import { StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { format } from "../../utils/dates";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
+import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import IconFont from "../ui/IconFont";
 
 type OwnProps = {
@@ -111,14 +108,14 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
 
     return (
       <View>
-        <TouchableHighlight onPress={this.toggleRawInfo}>
+        <TouchableWithoutOpacity onPress={this.toggleRawInfo}>
           <View style={styles.toggleContainer}>
             <Text link={true}>
               {I18n.t("messageDetails.rawInfoLink.showLabel")}
             </Text>
             <IconFont name="io-right" color={variables.textLinkColor} />
           </View>
-        </TouchableHighlight>
+        </TouchableWithoutOpacity>
       </View>
     );
   }

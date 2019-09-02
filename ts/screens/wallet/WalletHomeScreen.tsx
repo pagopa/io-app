@@ -181,6 +181,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
               block={true}
               style={styles.bordercColorBrandGray}
               onPress={this.props.navigateToWalletAddPaymentMethod}
+              activeOpacity={1}
             >
               <Text bold={true} style={styles.colorBrandGray}>
                 {I18n.t("wallet.newPaymentMethod.addButton")}
@@ -300,6 +301,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
             ? this.props.navigateToPaymentScanQrCode
             : undefined
         }
+        activeOpacity={1}
       >
         <IconFont name="io-qr" style={styles.white} />
         <Text>{I18n.t("wallet.payNotice")}</Text>
