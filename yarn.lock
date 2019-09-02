@@ -7214,10 +7214,10 @@ react-native-vector-icons@^6.4.2:
     prop-types "^15.6.2"
     yargs "^13.2.2"
 
-react-native-webview@^5.7.2:
-  version "5.7.2"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-5.7.2.tgz#dd9def5001e782cf3aae558d9add50533d26f51d"
-  integrity sha512-sBErRnlNGHRrSTbcrmamly6DVmth3kgoInQujlvypSo0YsaVe/NRQs3wVDt5EZWg0GUwHQr+qACzOf0qeUMFVg==
+react-native-webview@^6.11.1:
+  version "6.11.1"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-6.11.1.tgz#51fab0838ef9bdf3efd0d3f27147dddda5119f94"
+  integrity sha512-0OaNCEzdyywJZ70y6Z4fmmuAd2AHYq2AEByIr15z3YetpMXhm9lXUe2V/8BXQIZXeC9FJosj2DAKu48lpZ0nEg==
   dependencies:
     escape-string-regexp "1.0.5"
     invariant "2.2.4"
