@@ -1,8 +1,8 @@
 import { ListItem, Text, View } from "native-base";
 import * as React from "react";
-import { StyleProp, StyleSheet, Switch, ViewStyle } from "react-native";
+import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import H5 from "../ui/H5";
 import IconFont from "./../ui/IconFont";
 import { BadgeComponent } from "./BadgeComponent";
 
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     paddingRight: 0
   },
   spacingBase: {
+    paddingTop: 6,
     paddingRight: customVariables.spacingBase
   },
   flexRow: {
@@ -50,11 +51,14 @@ const styles = StyleSheet.create({
     flex: 1
   },
   serviceName: {
-    fontWeight: "700",
+    fontSize: 18,
+    color: customVariables.brandDarkestGray,
+    ...makeFontStyleObject(Platform.select, "600"),
     alignSelf: "flex-start",
-    paddingRight: 24 + 4 // icon width + margin - to overcome title not going on second line when overlapping with the right icon
+    paddingRight: 16
   },
   description: {
+    fontSize: 14,
     paddingRight: ICON_SIZE,
     alignSelf: "flex-start"
   }
@@ -78,9 +82,9 @@ export default class ListItemComponent extends React.Component<Props> {
                   <BadgeComponent />
                 </View>
               )}
-              <H5 numberOfLines={2} style={styles.serviceName}>
+              <Text numberOfLines={2} style={styles.serviceName}>
                 {this.props.title}
-              </H5>
+              </Text>
             </View>
             {!this.props.iconName &&
               !this.props.hideIcon &&

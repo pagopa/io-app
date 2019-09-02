@@ -29,8 +29,9 @@ import {
   showServiceDetails
 } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
+
 import { organizationNamesByFiscalCodeSelector } from "../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
-import { readServicesSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
@@ -344,7 +345,7 @@ const mapStateToProps = (state: GlobalState) => {
     isSearchEnabled: isSearchServicesEnabledSelector(state),
     isExperimentalFeaturesEnabled:
       state.persistedPreferences.isExperimentalFeaturesEnabled,
-    readServices: readServicesSelector(state),
+    readServices: readServicesByIdSelector(state),
     wasServiceAlertDisplayedOnce:
       state.persistedPreferences.wasServiceAlertDisplayedOnce
   };

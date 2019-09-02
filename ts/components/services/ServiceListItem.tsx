@@ -1,11 +1,10 @@
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Grid, Left, ListItem, Right, Row, Text } from "native-base";
+import { Grid, Left, ListItem, Right, Row, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, Switch } from "react-native";
+import { Platform, StyleSheet, Switch } from "react-native";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import H4 from "../../components/ui/H4";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import {
@@ -13,6 +12,7 @@ import {
   getEnabledChannelsForService
 } from "../../screens/preferences/common";
 import { ProfileState } from "../../store/reducers/profile";
+import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
 import { BadgeComponent } from "../screens/BadgeComponent";
 
@@ -31,6 +31,10 @@ type Props = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
+  spacingBase: {
+    paddingTop: 6,
+    paddingRight: variables.spacingBase
+  },
   listItem: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
@@ -41,15 +45,11 @@ const styles = StyleSheet.create({
     paddingRight: variables.fontSizeBase / 3
   },
   serviceName: {
-    color: variables.brandDarkGray
-  },
-  headerWrapper: {
-    flexDirection: "row",
-    marginBottom: 4,
-    marginLeft: 10
-  },
-  badgeMargin: {
-    marginLeft: 4
+    fontSize: 18,
+    color: variables.brandDarkestGray,
+    ...makeFontStyleObject(Platform.select, "600"),
+    alignSelf: "flex-start",
+    paddingRight: 16
   }
 });
 
@@ -106,15 +106,12 @@ export class ServiceListItem extends React.PureComponent<Props, State> {
         <Left>
           <Grid>
             <Row>
-              {!this.props.isRead && <BadgeComponent />}
-              <H4
-                style={[
-                  styles.serviceName,
-                  this.props.isRead ? styles.headerWrapper : styles.badgeMargin
-                ]}
-              >
-                {serviceName}
-              </H4>
+              {!this.props.isRead && (
+                <View style={styles.spacingBase}>
+                  <BadgeComponent />
+                </View>
+              )}
+              <Text style={styles.serviceName}>{serviceName}</Text>
             </Row>
             <Row>
               <Text italic={true} style={styles.fixCroppedItalic}>

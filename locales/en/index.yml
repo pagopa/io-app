@@ -26,6 +26,7 @@ global:
     back: Back
     confirm: Confirm
     close: Close
+    exit: Exit
     saveSelection: Save the selection
   navigator:
     messages: messages
@@ -115,6 +116,8 @@ profile:
     privacy:
       title: Privacy
       description: Export data, delete account
+      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+      updated: It is required to accept the new version of Terms and Conditions
       text: !include privacy.md
     termsAndConditions:
       title: Terms and Conditions
@@ -285,8 +288,9 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
-  resetConfirm: Are you sure you want to interrupt the IO activation?
-    You can do this again at any time logging in with your SPID account.
+  alert:
+    title: Do you really want to log out?
+    description: You will have to log in again to use the app
   fingerprint:
     headerTitle: Activation
     title: Biometric authentication
@@ -570,8 +574,9 @@ messages:
   yesterday: yesterday
   errorLoading:
     details: Error loading message details
-    senderService:  Sender service unknown
-    senderInfo: Service info unknown
+    senderInfo:  Sender service unknown
+    serviceInfo: Service info unknown
+    departmentInfo: Department info unknown
   cta:
     archive: Archive
     unarchive: Unarchive
@@ -663,7 +668,7 @@ services:
   serviceIsEnabled: The service is enabled
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications
-  emailNotifications: Email Notifications
+  emailForwarding: Email forwarding
   tosLink: Terms and conditions
   privacyLink: Privacy information
   otherAppsInfo: You can find this service also

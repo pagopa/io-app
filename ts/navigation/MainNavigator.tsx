@@ -16,7 +16,9 @@ import {
 } from "react-navigation";
 import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
+import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
+import WalletTabIcon from "../components/WalletTabIcon";
 import { newHomeServicesEnabled } from "../config";
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
@@ -173,10 +175,24 @@ const navigation = createBottomTabNavigator(
             />
           );
         }
+        if (iconName === ROUTE_ICON.WALLET_HOME) {
+          return (
+            <WalletTabIcon
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
         if (iconName === ROUTE_ICON.PROFILE_NAVIGATOR) {
           return (
             <ProfileTabIcon
               size={variables.iconSize3}
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
+        if (iconName === ROUTE_ICON.SERVICES_NAVIGATOR) {
+          return (
+            <ServiceTabIcon
               color={options.tintColor === null ? undefined : options.tintColor}
             />
           );
