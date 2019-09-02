@@ -27,6 +27,7 @@ global:
     back: Indietro
     confirm: Conferma
     close: Chiudi
+    exit: Esci
     saveSelection: Salva la selezione
   navigator:
     messages: messaggi
@@ -116,6 +117,8 @@ profile:
     privacy:
       title: Privacy
       description: Esporta dati, cancella account
+      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+      updated: E' necessario prendere visione della nuova versione dell'Informativa
       text: !include privacy.md
     termsAndConditions:
       title: Termini e condizioni d'uso
@@ -262,6 +265,14 @@ authentication:
     login:
       title: Errore nel login
       body: Si è verificato un errore durante il login, si prega di riprovare!
+    spid:
+      unknown: Errore sconosciuto
+      error_19: Autenticazione fallita per ripetuta sottomissione di credenziali errate - superato numero tentativi
+      error_20: Utente privo di credenziali compatibili con il livello HTTP richiesto dal fornitore del servizio
+      error_21: Timeout durante l’autenticazione utente
+      error_22: Utente nega il consenso all’invio di dati al fornitore del servizio in caso di sessione vigente
+      error_23: Utente con identità sospesa/revocata o con credenziali bloccate
+      error_25: Processo di autenticazione annullato dall’utente
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
@@ -283,8 +294,9 @@ onboarding:
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
     confirmInvalid: i due pin non coincidono
-  resetConfirm: Sei sicuro di interrompere l'attivazione di IO?
-    Potrai riprenderla in ogni momento facendo di nuovo login con SPID.
+  alert: 
+    title: Vuoi davvero uscire da IO?
+    description: Dovrai fare nuovamente il login per continuare ad usare l'app
   fingerprint:
     headerTitle: Attivazione
     title: Autenticazione biometrica
@@ -572,8 +584,9 @@ messages:
   yesterday: ieri
   errorLoading:
     details: Impossibile caricare i dettagli del messaggio
-    senderService:  Mittente sconosciuto
-    senderInfo: Info sul servizio mancanti
+    senderInfo:  Mittente sconosciuto
+    serviceInfo: Info sul servizio mancanti
+    departmentInfo: Info sul dipartimento mancanti
   cta:
     archive: Archivia
     unarchive: Ripristina
@@ -666,7 +679,7 @@ services:
   serviceIsEnabled: Il servizio è attivo
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Notifiche push
-  emailNotifications: Notifiche email
+  emailForwarding: Inoltro via email
   tosLink: Termini e condizioni d'uso
   privacyLink: Informativa sulla privacy
   otherAppsInfo: Puoi usare questo servizio anche

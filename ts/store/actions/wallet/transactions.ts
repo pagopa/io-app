@@ -23,10 +23,13 @@ export const fetchTransactionsFailure = createStandardAction(
   "FETCH_TRANSACTIONS_FAILURE"
 )<Error>();
 
+export const readTransaction = createStandardAction("READ_TRANSACTION")<
+  Transaction
+>();
+
 //
 // fetch a single transaction
 //
-
 export const fetchTransactionRequest = createStandardAction(
   "FETCH_TRANSACTION_REQUEST"
 )<number>();
@@ -89,6 +92,7 @@ export const pollTransactionSagaTimeout = createStandardAction(
 )();
 
 export type TransactionsActions =
+  | ActionType<typeof readTransaction>
   | ActionType<typeof fetchTransactionsSuccess>
   | ActionType<typeof fetchTransactionsRequest>
   | ActionType<typeof fetchTransactionsFailure>

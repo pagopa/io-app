@@ -103,8 +103,9 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
       potService !== undefined
         ? pot.isNone(potService)
           ? ({
-              organization_name: I18n.t("messages.errorLoading.senderService"),
-              department_name: I18n.t("messages.errorLoading.senderInfo")
+              organization_name: I18n.t("messages.errorLoading.senderInfo"),
+              department_name: I18n.t("messages.errorLoading.departmentInfo"),
+              service_name: I18n.t("messages.errorLoading.serviceInfo")
             } as ServicePublic)
           : pot.toUndefined(potService)
         : undefined;
@@ -130,14 +131,16 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                   {service.service_name}
                 </H6>
               </Col>
-              <Col style={styles.serviceCol}>
-                <TouchableWithoutOpacity onPress={onServiceLinkPress}>
-                  <MultiImage
-                    style={styles.serviceMultiImage}
-                    source={logosForService(service)}
-                  />
-                </TouchableWithoutOpacity>
-              </Col>
+              {service.service_id && (
+                <Col style={styles.serviceCol}>
+                  <TouchableWithoutOpacity onPress={onServiceLinkPress}>
+                    <MultiImage
+                      style={styles.serviceMultiImage}
+                      source={logosForService(service)}
+                    />
+                  </TouchableWithoutOpacity>
+                </Col>
+              )}
             </Grid>
           )}
 

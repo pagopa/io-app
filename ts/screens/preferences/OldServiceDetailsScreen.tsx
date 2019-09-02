@@ -325,7 +325,7 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
                     this.state.uiEnabledChannels.email
                   }
                 >
-                  {I18n.t("services.emailNotifications")}
+                  {I18n.t("services.emailForwarding")}
                 </Text>
               </Col>
               <Col size={2}>

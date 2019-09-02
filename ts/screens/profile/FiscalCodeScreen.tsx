@@ -4,6 +4,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -12,11 +13,16 @@ import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
 import H5 from "../../components/ui/H5";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
+import { contentMunicipalityLoad } from "../../store/actions/content";
+import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
-type Props = ReturnType<typeof mapStateToProps> & LightModalContextInterface;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  LightModalContextInterface;
 
 const styles = StyleSheet.create({
   darkBg: {
@@ -57,10 +63,23 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
         <FiscalCodeLandscapeOverlay
           onCancel={this.props.hideModal}
           profile={this.props.profile}
+          municipality={this.props.municipality}
         />
       );
     }
   };
+
+  public componentDidMount() {
+    if (
+      this.props.profile !== undefined &&
+      pot.isNone(this.props.municipality.data)
+    ) {
+      const maybeCodiceCatastale = CodiceCatastale.decode(
+        this.props.profile.fiscal_code.substring(11, 15)
+      );
+      maybeCodiceCatastale.map(c => this.props.loadMunicipality(c));
+    }
+  }
 
   public render() {
     return (
@@ -99,6 +118,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       type={"Full"}
                       profile={this.props.profile}
                       getBackSide={false}
+                      municipality={this.props.municipality}
                     />
                   </View>
                 </TouchableWithoutOpacity>
@@ -111,6 +131,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       type={"Full"}
                       profile={this.props.profile}
                       getBackSide={true}
+                      municipality={this.props.municipality}
                     />
                   </View>
                 </TouchableWithoutOpacity>
@@ -129,9 +150,16 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  profile: pot.toUndefined(profileSelector(state))
+  profile: pot.toUndefined(profileSelector(state)),
+  municipality: municipalitySelector(state)
 });
 
-export default connect(mapStateToProps)(
-  withLightModalContext(FiscalCodeScreen)
-);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadMunicipality: (code: CodiceCatastale) =>
+    dispatch(contentMunicipalityLoad.request(code))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLightModalContext(FiscalCodeScreen));
