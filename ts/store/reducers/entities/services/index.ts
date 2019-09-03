@@ -4,7 +4,7 @@
 import { combineReducers } from "redux";
 
 import { Action } from "../../../actions/types";
-import readStateByServiceReducer, {
+import readServicesByIdReducer, {
   ReadStateByServicesId
 } from "./readStateByServiceId";
 
@@ -30,7 +30,7 @@ const reducer = combineReducers<ServicesState, Action>({
   byId: servicesByIdReducer,
   byOrgFiscalCode: serviceIdsByOrganizationFiscalCodeReducer,
   visible: visibleServicesReducer,
-  readState: readStateByServiceReducer
+  readState: readServicesByIdReducer
 });
 
 export default reducer;
