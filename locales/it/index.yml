@@ -267,12 +267,12 @@ authentication:
       body: Si è verificato un errore durante il login, si prega di riprovare!
     spid:
       unknown: Errore sconosciuto
-      error_19: Il nome utente e la password inseriti non corrispondono.
-      error_20: Al momento non possiedi lo strumento per effettuare questa operazione.
-      error_21: La tua sessione è scaduta. Per continuare effettua nuovamente l'accesso.
-      error_22: Non è stato possibile completare l'operazione. Per continuare dai il consenso al passaggio dei dati.
-      error_23: La tua identità SPID risulta sospesa o revocata. Per riattivare il tuo account, attiva la procedura di riattivazione.
-      error_25: Hai annullato l'operazione.
+      error_19: "Hai inserito troppe volte un nome utente o una password non corretti: riprova fra qualche minuto o contatta il tuo fornitore di identità SPID per cambiare le tue credenziali."
+      error_20: "Per motivi di sicurezza IO richiede un login con un secondo fattore di autenticazione: contatta il tuo fornitore di identità SPID per capire come si usa."
+      error_21: "È passato troppo tempo da quando hai iniziato l'accesso: per piacere riparti dall'inizio."
+      error_22: "Per usare IO è necessario consentire l'accesso ad alcuni dei tuoi dati: accedi nuovamente e dai il tuo consenso al passaggio di dati."
+      error_23: "La tua identità SPID risulta sospesa o revocata. Per riattivare il tuo account, contatta il tuo fornitore di identità SPID."
+      error_25: "Hai annullato l'operazione di login: puoi riprovare quando vuoi."
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
