@@ -16,8 +16,9 @@ type Props = OwnProps & ReturnType<typeof mapStateToProps>;
  */
 class ProfileTabIcon extends React.PureComponent<Props> {
   public render() {
-    const { size, color, isExperimentalFeaturesEnabled } = this.props;
-
+    const { size, color } = this.props;
+    // since no experimental features are available we force the flag to false (see https://www.pivotaltracker.com/story/show/168263994)
+    const isExperimentalFeaturesEnabled = false;
     return (
       <IconFont
         size={size}
