@@ -20,7 +20,6 @@ type OwnProps = {
   readServices: ReadStateByServicesId;
   isExperimentalFeaturesEnabled?: boolean;
   onLongPressItem?: () => void;
-  onSwitch?: (service: ServicePublic) => void;
 };
 
 type Props = OwnProps;

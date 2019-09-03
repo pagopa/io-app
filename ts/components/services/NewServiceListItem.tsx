@@ -23,7 +23,7 @@ type Props = Readonly<{
   isRead: boolean;
   hideSeparator: boolean;
   onLongPress?: () => void;
-  onSwitch?: (service: ServicePublic) => void;
+  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
   isLongPressEnabled: boolean;
 }>;
 
@@ -54,6 +54,7 @@ export default class NewServiceListItem extends React.PureComponent<
   Props,
   State
 > {
+  // tslint:disable-next-line:cognitive-complexity
   public render() {
     const potService = this.props.item;
     const enabledChannels = pot.map(potService, service =>
@@ -66,15 +67,17 @@ export default class NewServiceListItem extends React.PureComponent<
         )
       : undefined;
 
-    const onSwitch = this.props.onSwitch
-      ? pot.toUndefined(
-          pot.map(potService, service => () => {
-            if (this.props.onSwitch) {
-              this.props.onSwitch(service);
-            }
-          })
-        )
-      : undefined;
+    const onItemSwitchValueChanged = (value: boolean) => {
+      return this.props.onItemSwitchValueChanged
+        ? pot.toUndefined(
+            pot.map(potService, service => {
+              if (this.props.onItemSwitchValueChanged) {
+                this.props.onItemSwitchValueChanged(service, value);
+              }
+            })
+          )
+        : undefined;
+    };
 
     const inboxEnabledLabel = pot.toUndefined(
       pot.map(
@@ -106,7 +109,7 @@ export default class NewServiceListItem extends React.PureComponent<
         onLongPress={this.props.onLongPress}
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
-        onSwitch={onSwitch}
+        onSwitchValueChanged={onItemSwitchValueChanged}
         value={pot.isSome(enabledChannels) && enabledChannels.value.inbox}
         keySwitch={`switch-service-${profileVersion}`}
         isLongPressEnabled={this.props.isLongPressEnabled}

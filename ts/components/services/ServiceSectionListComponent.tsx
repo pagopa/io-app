@@ -34,7 +34,7 @@ type OwnProps = {
   isExperimentalFeaturesEnabled?: boolean;
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
-  onSwitch?: (service: ServicePublic) => void;
+  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
 };
 
 type Props = OwnProps;
@@ -83,7 +83,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
         isRead={this.isRead(itemInfo.item, this.props.readServices)}
         hideSeparator={true}
         onLongPress={this.props.onLongPressItem}
-        onSwitch={this.props.onSwitch}
+        onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
         isLongPressEnabled={this.props.isLongPressEnabled}
       />
     ) : (
@@ -93,7 +93,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
         onSelect={this.props.onSelect}
         isRead={this.isRead(itemInfo.item, this.props.readServices)}
         onLongPress={this.props.onLongPressItem}
-        onSwitch={this.props.onSwitch}
+        onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
         isLongPressEnabled={this.props.isLongPressEnabled}
       />
     );

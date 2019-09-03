@@ -25,7 +25,7 @@ type Props = Readonly<{
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
-  onSwitch?: () => void;
+  onSwitchValueChanged?: (value: boolean) => void;
   value?: boolean;
   keySwitch?: string;
   isLongPressEnabled?: boolean;
@@ -98,7 +98,7 @@ export default class ListItemComponent extends React.Component<Props> {
                 <Switch
                   key={this.props.keySwitch}
                   value={this.props.value}
-                  onValueChange={this.props.onSwitch}
+                  onValueChange={this.props.onSwitchValueChanged}
                 />
               ) : (
                 <IconFont

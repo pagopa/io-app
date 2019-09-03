@@ -41,10 +41,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
-import {
-  getChannelsforServicesList,
-  getEnabledChannelsForService
-} from "./common";
+import { getChannelsforServicesList } from "./common";
 import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type State = {
@@ -102,13 +99,12 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     });
   };
 
-  private onSwitch = (service: ServicePublic) => {
-    const value = getEnabledChannelsForService(
-      this.props.profile,
-      service.service_id
-    ).inbox;
+  private onItemSwitchValueChanged = (
+    service: ServicePublic,
+    value: boolean
+  ) => {
     // check if the alert of disable service has not been shown already and if the service is active
-    if (!this.props.wasServiceAlertDisplayedOnce && value) {
+    if (!this.props.wasServiceAlertDisplayedOnce && !value) {
       this.showAlertOnDisableServices(
         I18n.t("serviceDetail.disableTitle"),
         I18n.t("serviceDetail.disableMsg"),
@@ -124,7 +120,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
       this.props.disableOrEnableServices(
         [service.service_id],
         this.props.profile,
-        !value
+        value
       );
     }
   };
@@ -224,7 +220,7 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
             }
             onLongPressItem={this.handleOnLongPressItem}
             isLongPressEnabled={this.state.isLongPressEnabled}
-            onSwitch={this.onSwitch}
+            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
           />
         </View>
         {this.state.isLongPressEnabled && (
