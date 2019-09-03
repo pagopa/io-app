@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import variables from "../theme/variables";
 import customVariables from "../theme/variables";
+import { areSetEqual } from "../utils/options";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";
 import ChooserListSearch from "./ChooserListSearch";
@@ -293,7 +294,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
           })}
         >
           {this.renderFooterButtons(
-            this.props.initialSelectedItemIds === selectedItemIds
+            areSetEqual(this.props.initialSelectedItemIds, selectedItemIds)
           )}
         </KeyboardAvoidingView>
       </View>
