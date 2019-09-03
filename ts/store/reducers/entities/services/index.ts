@@ -54,8 +54,8 @@ const reducer = combineReducers<ServicesState, Action>({
 // Selectors
 export const servicesSelector = (state: GlobalState) => state.entities.services;
 
-// Check if the passed service is local or national throught data included into the service metadata
-const getLocalizedServices = (
+// Check if the passed service is local or national through data included into the service metadata
+const hasLocalization = (
   service: pot.Pot<ServicePublic, Error>,
   servicesMetadataById: ServiceMetadataById,
   localization?: ScopeEnum
@@ -105,7 +105,7 @@ const getServices = (
         .map(id => services.byId[id])
         .filter(isDefined)
         .filter(service =>
-          getLocalizedServices(service, servicesMetadata.byId, localization)
+          hasLocalization(service, servicesMetadata.byId, localization)
         );
 
       return {

@@ -30,6 +30,9 @@ export function* loadServiceRequestHandler(
     if (response.value.status === 200) {
       yield put(loadService.success(response.value.value));
 
+      // Once the service content is loaded, the service metadata loading is requested.
+      // Service metadata contains service scope (national/local) used to identify where
+      // the service should be displayed into the ServiceHomeScreen
       yield put(contentServiceLoad.request(response.value.value.service_id));
     } else {
       throw Error();

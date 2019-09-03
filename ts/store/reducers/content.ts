@@ -122,7 +122,7 @@ export default function content(
     case getType(removeServiceTuples): {
       const serviceTuples = action.payload;
       const newServicesMetadataByIdState = {
-        ...(state as any).servicesMetadata.byId
+        ...state.servicesMetadata.byId
       };
       serviceTuples.forEach(
         // tslint:disable-next-line no-object-mutation
