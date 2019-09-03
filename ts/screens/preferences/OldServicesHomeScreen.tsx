@@ -110,8 +110,8 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
     // check if the alert of disable service has not been shown already and if the service is active
     if (!this.props.wasServiceAlertDisplayedOnce && value) {
       this.showAlertOnDisableServices(
-        I18n.t("services.disableTitle"),
-        I18n.t("services.disableMsg"),
+        I18n.t("serviceDetail.disableTitle"),
+        I18n.t("serviceDetail.disableMsg"),
         () => {
           this.props.disableOrEnableServices(
             [service.service_id],
