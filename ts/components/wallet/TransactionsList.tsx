@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   },
   badgeStyle: {
     flex: 0,
+    paddingTop: 4,
     paddingRight: 4
   },
   viewStyle: {

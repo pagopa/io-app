@@ -6,7 +6,8 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import OrganizationLogo from "../services/OrganizationLogo";
 import H5 from "../ui/H5";
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   sectionTitle: {
-    fontWeight: "400",
+    ...makeFontStyleObject(Platform.select, "700"),
     flex: 1
   },
   sectionView: {

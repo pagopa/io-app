@@ -584,8 +584,9 @@ messages:
   yesterday: ieri
   errorLoading:
     details: Impossibile caricare i dettagli del messaggio
-    senderService:  Mittente sconosciuto
-    senderInfo: Info sul servizio mancanti
+    senderInfo:  Mittente sconosciuto
+    serviceInfo: Info sul servizio mancanti
+    departmentInfo: Info sul dipartimento mancanti
   cta:
     archive: Archivia
     unarchive: Ripristina
@@ -678,7 +679,7 @@ services:
   serviceIsEnabled: Il servizio è attivo
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Notifiche push
-  emailNotifications: Notifiche email
+  emailForwarding: Inoltro via email
   tosLink: Termini e condizioni d'uso
   privacyLink: Informativa sulla privacy
   otherAppsInfo: Puoi usare questo servizio anche
