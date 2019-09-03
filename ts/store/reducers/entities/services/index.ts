@@ -54,7 +54,9 @@ const reducer = combineReducers<ServicesState, Action>({
 // Selectors
 export const servicesSelector = (state: GlobalState) => state.entities.services;
 
-// Check if the passed service is local or national through data included into the service metadata
+// Check if the passed service is local or national through data included into the service metadata.
+// If service metadata aren't loaded, the service is treated as local, otherwise it returns
+// true  if service scope is equal to the filter localization parameter
 const hasLocalization = (
   service: pot.Pot<ServicePublic, Error>,
   servicesMetadataById: ServiceMetadataById,
@@ -64,15 +66,17 @@ const hasLocalization = (
     return true;
   }
 
-  const id = pot.isSome(service) ? service.value.service_id : undefined;
-  if (id) {
-    const potServiceMetadata = servicesMetadataById[id] || pot.none;
+  if (pot.isSome(service)) {
+    const potServiceMetadata =
+      servicesMetadataById[service.value.service_id] || pot.none;
     if (pot.isSome(potServiceMetadata)) {
       return potServiceMetadata.value.scope === localization;
+    } else {
+      return localization === ScopeEnum.LOCAL; // if metadata load fails, the service is treated as local
     }
+  } else {
+    return false; // if service is Error, the corresponding item is not included into section
   }
-
-  return localization === ScopeEnum.LOCAL;
 };
 
 /**
