@@ -8,10 +8,9 @@ import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { UserProfileUnion } from "../api/backend";
-
-import I18n from "../i18n";
-
 import { BackendClient } from "../api/backend";
+import { tosVersion } from "../config";
+import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
 import {
   profileLoadFailure,
@@ -88,12 +87,14 @@ function* createOrUpdateProfileSaga(
         email: currentProfile.email,
         preferred_languages: currentProfile.preferred_languages,
         blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
+        accepted_tos_version: currentProfile.accepted_tos_version,
         ...action.payload
       }
     : {
         is_inbox_enabled: false,
         is_webhook_enabled: false,
         ...action.payload,
+        accepted_tos_version: tosVersion,
         version: 0
       };
 
