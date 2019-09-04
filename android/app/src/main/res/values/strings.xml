@@ -3,5 +3,5 @@
     <string name="notification_channel_name">Messages</string>
     <string name="notification_channel_description">Receive notification for new messages</string>
     <string name="alert_device_rooted_title">Device rooted</string>
-    <string name="alert_device_rooted_desc">This device is rooted, you can\'t use this app</string>
+    <string name="alert_device_rooted_desc">This device is rooted, you can\'t use this app for security reasons</string>
 </resources>

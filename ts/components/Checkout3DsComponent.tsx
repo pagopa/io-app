@@ -26,21 +26,6 @@ const styles = StyleSheet.create({
   }
 });
 
-// TODO: Remove as soon as the problem is fixed in the Webapp
-// https://www.pivotaltracker.com/story/show/167284500
-// Temporary fix for the "double form submit" problem in the Webapp loaded in the Webview
-const FIX_POST_JS = `
-function removeSpidModal() {
-  if(window.location.pathname === "/wallet/checkout") {
-    $('#spid_modal').remove();
-  }
-}
-
-removeSpidModal();
-
-true
-`;
-
 export default class Checkout3DsComponent extends React.Component<
   Props,
   State
@@ -78,7 +63,6 @@ export default class Checkout3DsComponent extends React.Component<
           javaScriptEnabled={true}
           onLoadStart={() => this.updateLoadingState(true)}
           onLoadEnd={() => this.updateLoadingState(false)}
-          injectedJavaScript={FIX_POST_JS}
         />
         {this.state.isWebViewLoading && (
           <View style={styles.refreshIndicatorContainer}>

@@ -104,7 +104,6 @@ class OldServicesHomeScreen extends React.Component<Props> {
         onRefresh={this.props.refreshServices}
         onSelect={this.onServiceSelect}
         readServices={this.props.readServices}
-        isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
       />
     );
   };
@@ -128,9 +127,6 @@ class OldServicesHomeScreen extends React.Component<Props> {
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
               readServices={this.props.readServices}
-              isExperimentalFeaturesEnabled={
-                this.props.isExperimentalFeaturesEnabled
-              }
             />
           )
       )
