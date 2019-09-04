@@ -1,9 +1,15 @@
 /**
  * A component to show the fiscal code fac-simile in Landscape
  */
-import { Body, Button, Container, Content, View } from "native-base";
+import { Body, Button, Container, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Platform, StatusBar, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  Platform,
+  ScrollView,
+  StatusBar,
+  StyleSheet
+} from "react-native";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import IconFont from "../components/ui/IconFont";
@@ -17,6 +23,7 @@ type Props = Readonly<{
   profile: UserProfile;
   municipality: MunicipalityState;
   showBackSide?: boolean;
+  selected: number;
 }>;
 
 const globalHeaderHeight: number = Platform.select({
@@ -46,6 +53,9 @@ const styles = StyleSheet.create({
 export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   Props
 > {
+  private scrollViewContent: ScrollView | null = null;
+  private scrollViewHeight: number = 0;
+
   private handleBackPress = () => {
     this.props.onCancel();
     return true;
@@ -53,6 +63,16 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
 
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    if (this.props.selected === 2) {
+      setTimeout(() => {
+        if (this.scrollViewContent) {
+          this.scrollViewContent.scrollTo({
+            y: this.scrollViewHeight,
+            animated: true
+          });
+        }
+      }, 100);
+    }
   }
 
   public componentWillUnmount() {
@@ -69,7 +89,13 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
           backgroundColor={customVariables.brandDarkGray}
           barStyle={"light-content"}
         />
-        <Content style={styles.content}>
+        <ScrollView
+          style={styles.content}
+          ref={scrollView => (this.scrollViewContent = scrollView)} // tslint:disable-line no-object-mutation
+          onContentSizeChange={(_, height) => {
+            this.scrollViewHeight = height; // tslint:disable-line no-object-mutation
+          }}
+        >
           <View style={styles.headerSpacer} />
           <View spacer={true} />
           <View>
@@ -92,7 +118,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
 
           <View spacer={true} large={true} />
           <View spacer={true} large={true} />
-        </Content>
+        </ScrollView>
         <View style={styles.closeButton}>
           <Button transparent={true} onPress={() => this.props.onCancel()}>
             <IconFont name="io-close" color={customVariables.colorWhite} />
