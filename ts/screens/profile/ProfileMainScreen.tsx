@@ -185,6 +185,39 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     );
   };
 
+  /**
+   * since no experimental features are available we hide this method (see https://www.pivotaltracker.com/story/show/168263994).
+   * It could be usefull when new experimental features will be available
+   */
+  /*
+  private onExperimentalFeaturesToggle = (enabled: boolean) => {
+    if (enabled) {
+      Alert.alert(
+        I18n.t("profile.main.experimentalFeatures.confirmTitle"),
+        I18n.t("profile.main.experimentalFeatures.confirmMessage"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.ok"),
+            style: "destructive",
+            onPress: () => {
+              this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(
+                enabled
+              );
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
+    }
+  };
+  */
+
   private confirmResetAlert = () =>
     Alert.alert(
       I18n.t("profile.main.resetPin.confirmTitle"),
@@ -268,6 +301,16 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             <SectionHeaderComponent
               sectionHeader={I18n.t("profile.main.developersSectionHeader")}
             />
+            {
+              // since no experimental features are available we hide this method (see https://www.pivotaltracker.com/story/show/168263994).
+              // It could be usefull when new experimental features will be available
+              /*
+              this.developerListItem(
+              I18n.t("profile.main.experimentalFeatures.confirmTitle"),
+              this.props.isExperimentalFeaturesEnabled,
+              this.onExperimentalFeaturesToggle
+            )*/
+            }
 
             {this.developerListItem(
               I18n.t("profile.main.pagoPaEnv"),
