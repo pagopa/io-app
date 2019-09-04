@@ -302,7 +302,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               sectionHeader={I18n.t("profile.main.developersSectionHeader")}
             />
             {
-              // since no experimental features are available we hide this method (see https://www.pivotaltracker.com/story/show/168263994).
+              // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
               // It could be usefull when new experimental features will be available
               /*
               this.developerListItem(
