@@ -54,6 +54,8 @@ const initialContentState: ContentState = {
 // Selectors
 export const municipalitySelector = (state: GlobalState) =>
   state.content.municipality;
+export const servicesMetadataByIdSelector = (state: GlobalState) =>
+  state.content.servicesMetadata.byId;
 
 export default function content(
   state: ContentState = initialContentState,

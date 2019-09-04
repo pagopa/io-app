@@ -32,12 +32,15 @@ import { Dispatch } from "../../store/actions/types";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import { existingOrganizationsFiscalCodesSelectedStateSelector } from "../../store/reducers/entities/organizations/organizationsFiscalCodesSelected";
 import {
+  isLoadingServicesSelector,
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
-  selectedLocalServicesSectionsSelector
+  selectedLocalServicesSectionsSelector,
+  servicesByIdSelector
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
@@ -395,25 +398,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const { services } = state.entities;
-
-  const isAnyServiceLoading =
-    Object.keys(services.byId).find(k => {
-      const oneService = services.byId[k];
-      return oneService !== undefined && pot.isLoading(oneService);
-    }) !== undefined;
-
-  const isAnyServiceMetdataLoading =
-    Object.keys(state.content.servicesMetadata.byId).find(k => {
-      const oneService = state.content.servicesMetadata.byId[k];
-      return oneService !== undefined && pot.isLoading(oneService);
-    }) !== undefined;
-
-  const isLoading =
-    pot.isLoading(state.entities.services.visible) ||
-    isAnyServiceLoading ||
-    isAnyServiceMetdataLoading;
-
   const localServicesSections = localServicesSectionsSelector(state);
   const selectableOrganizations = localServicesSections.map(section => {
     return {
@@ -424,12 +408,12 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     selectableOrganizations,
-    isLoading,
+    isLoading: isLoadingServicesSelector(state),
     validOrganizationsSelected: existingOrganizationsFiscalCodesSelectedStateSelector(
       state
     ),
-    profile: state.profile,
-    servicesById: state.entities.services.byId,
+    profile: profileSelector(state),
+    servicesById: servicesByIdSelector(state),
     readServices: readServicesByIdSelector(state),
     localSections: selectedLocalServicesSectionsSelector(state),
     nationalSections: nationalServicesSectionsSelector(state),
