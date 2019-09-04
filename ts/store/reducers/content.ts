@@ -8,6 +8,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
+import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
@@ -120,7 +121,14 @@ export default function content(
       };
 
     case getType(removeServiceTuples): {
-      const serviceTuples = action.payload;
+      // removeServiceTuples is dispatched to remove from the store
+      // the service content (and, here, metadata) related to services that are
+      // no more visible and that are not related to messages list
+
+      // references of the services to be removed from the store
+      const serviceTuples: ReadonlyArray<ITuple2<string, string | undefined>> =
+        action.payload;
+
       const newServicesMetadataByIdState = {
         ...state.servicesMetadata.byId
       };
