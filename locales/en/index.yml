@@ -26,6 +26,7 @@ global:
     back: Back
     confirm: Confirm
     close: Close
+    exit: Exit
     saveSelection: Save the selection
   navigator:
     messages: messages
@@ -115,6 +116,8 @@ profile:
     privacy:
       title: Privacy
       description: Export data, delete account
+      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+      updated: It is required to accept the new version of Terms and Conditions
       text: !include privacy.md
     termsAndConditions:
       title: Terms and Conditions
@@ -256,6 +259,14 @@ authentication:
     login:
       title: Login error
       body: There was an error with the login, please retry!
+    spid:
+      unknown: Unknown error 
+      error_19: "You have entered an incorrect username or password too many times: try again in a few minutes or contact your SPID identity provider to change your credentials."
+      error_20: "For security reasons IO requires a login with a second authentication factor: contact your SPID identity provider to understand how to use it."
+      error_21: "It's been too long since you started accessing: please start over again."
+      error_22: "To use IO you must allow access to some of your data: log in again and give your consent to the transfer of data."
+      error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
+      error_25: "You have canceled the login operation: you can try again whenever you want."
   expiredSessionBanner:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
@@ -277,8 +288,9 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
-  resetConfirm: Are you sure you want to interrupt the IO activation?
-    You can do this again at any time logging in with your SPID account.
+  alert:
+    title: Do you really want to log out?
+    description: You will have to log in again to use the app
   fingerprint:
     headerTitle: Activation
     title: Biometric authentication
@@ -509,7 +521,7 @@ wallet:
       manually insert the transaction-related data (IUV and the entity/company code).
     setManually: Insert data manually
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
-    cameraUsagePerissionInfobox:
+    cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
       message: "IO app needs Camera usage permission to shoot at the QR code"
   whyAFee:
@@ -562,8 +574,9 @@ messages:
   yesterday: yesterday
   errorLoading:
     details: Error loading message details
-    senderService:  Sender service unknown
-    senderInfo: Service info unknown
+    senderInfo:  Sender service unknown
+    serviceInfo: Service info unknown
+    departmentInfo: Department info unknown
   cta:
     archive: Archive
     unarchive: Unarchive
@@ -655,7 +668,7 @@ services:
   serviceIsEnabled: The service is enabled
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications
-  emailNotifications: Email Notifications
+  emailForwarding: Email forwarding
   tosLink: Terms and conditions
   privacyLink: Privacy information
   otherAppsInfo: You can find this service also
@@ -668,6 +681,7 @@ services:
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
     addButton: Add your areas of interest
+    editButton: Change the areas of interest
     searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
   tab:
     locals: Local

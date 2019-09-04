@@ -28,8 +28,12 @@ import {
   navigateToWalletList
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
+import {
+  fetchTransactionsRequest,
+  readTransaction
+} from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
+import { transactionsReadSelector } from "../../store/reducers/entities";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
@@ -281,6 +285,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
+        readTransactions={this.props.readTransactions}
         ListEmptyComponent={this.listEmptyComponent()}
       />
     );
@@ -343,7 +348,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+  readTransactions: transactionsReadSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -351,13 +357,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
   navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
-  navigateToTransactionDetailsScreen: (transaction: Transaction) =>
+  navigateToTransactionDetailsScreen: (transaction: Transaction) => {
+    dispatch(readTransaction(transaction));
     dispatch(
       navigateToTransactionDetailsScreen({
         transaction,
         isPaymentCompletedTransaction: false
       })
-    ),
+    );
+  },
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
   loadWallets: () => dispatch(fetchWalletsRequest())
 });

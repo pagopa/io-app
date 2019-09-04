@@ -34,8 +34,8 @@
       [self.window makeKeyAndVisible];
       //show popup
       UIAlertController * alert=   [UIAlertController
-                                    alertControllerWithTitle:@"Device rooted"
-                                    message:@"This device is rooted, you can't use this app"
+                                    alertControllerWithTitle:NSLocalizedString(@"ALERT_DEVICE_ROOTED_TITLE", @"")
+                                    message:NSLocalizedString(@"ALERT_DEVICE_ROOTED_DESC", @"")
                                     preferredStyle:UIAlertControllerStyleAlert];
       
       UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
