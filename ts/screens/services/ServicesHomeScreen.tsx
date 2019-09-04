@@ -282,9 +282,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
-            organizationsFiscalCodesSelected={some(
+            organizationsFiscalCodesSelected={
               new Set(this.props.validOrganizationsSelected)
-            )}
+            }
             animated={{
               onScroll: Animated.event(
                 [

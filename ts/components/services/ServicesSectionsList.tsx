@@ -1,7 +1,6 @@
 /**
  * A component to render a list of services organized in sections, one for each organization.
  */
-import { Option } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
@@ -21,7 +20,7 @@ type AnimatedProps = {
 
 type OwnProps = {
   onChooserAreasOfInterestPress?: () => void;
-  organizationsFiscalCodesSelected?: Option<Set<string>>;
+  organizationsFiscalCodesSelected?: Set<string>;
   isLocal?: boolean;
 };
 
@@ -89,10 +88,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
     return (
       this.props.isLocal &&
       this.props.organizationsFiscalCodesSelected &&
-      this.props.organizationsFiscalCodesSelected.fold(
-        false,
-        _ => _.size > 0
-      ) && (
+      this.props.organizationsFiscalCodesSelected.size > 0 && (
         <View style={styles.headerContentWrapper}>
           <Button
             small={true}
