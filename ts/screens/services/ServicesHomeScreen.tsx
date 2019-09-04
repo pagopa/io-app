@@ -4,10 +4,9 @@
  */
 import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Tab, TabHeading, Tabs, Text } from "native-base";
+import { Tab, TabHeading, Tabs, Text, View } from "native-base";
 import * as React from "react";
-import { Animated, Platform, StyleSheet } from "react-native";
+import { Animated, Image, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -135,6 +134,28 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     if (!prevState.enableHeaderAnimation && !this.props.isLoading) {
       this.setState({ enableHeaderAnimation: true });
     }
+  }
+
+  private renderFirstServiceLoadingContent() {
+    return (
+      <View style={{ alignItems: "center" }}>
+        {Platform.OS === "ios" && (
+          <View
+            style={{
+              height:
+                customVariables.spacerHeight + customVariables.h1LineHeight
+            }}
+          />
+        )}
+        <View spacer={true} extralarge={true} />
+        <View spacer={true} extralarge={true} />
+        <Image
+          source={require("../../../img/services/icon-loading-services.png")}
+        />
+        <Text bold={true}>{I18n.t("services.loading.title")}</Text>
+        <Text>{I18n.t("services.loading.subtitle")}</Text>
+      </View>
+    );
   }
 
   private onServiceSelect = (service: ServicePublic) => {
