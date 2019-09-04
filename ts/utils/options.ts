@@ -4,7 +4,7 @@
 import { Option } from "fp-ts/lib/Option";
 
 // Check if 2 option set contains the same items
-export function areSetEqual(a: Option<Set<string>>, b: Option<Set<string>>) {
+export function areSetEqual<T>(a: Option<Set<T>>, b: Option<Set<T>>) {
   const setA = a.getOrElse(new Set());
   const setB = b.getOrElse(new Set());
 
