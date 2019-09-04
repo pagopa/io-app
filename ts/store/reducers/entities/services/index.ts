@@ -8,7 +8,11 @@ import { ServicePublic } from "../../../../../definitions/backend/ServicePublic"
 import { ScopeEnum } from "../../../../../definitions/content/Service";
 import { isDefined } from "../../../../utils/guards";
 import { Action } from "../../../actions/types";
-import { ServiceMetadataById, servicesMetadataSelector } from "../../content";
+import {
+  ServiceMetadataById,
+  servicesMetadataByIdSelector,
+  servicesMetadataSelector
+} from "../../content";
 import { GlobalState } from "../../types";
 import {
   organizationNamesByFiscalCodeSelector,
@@ -18,16 +22,21 @@ import {
   organizationsFiscalCodesSelectedStateSelector,
   OrganizationsSelectedState
 } from "../organizations/organizationsFiscalCodesSelected";
+import { firstLoadingReducer, FirstLoadingState } from "./firstServicesLoading";
 import readServicesByIdReducer, {
   ReadStateByServicesId
 } from "./readStateByServiceId";
-import servicesByIdReducer, { ServicesByIdState } from "./servicesById";
+import servicesByIdReducer, {
+  servicesByIdSelector,
+  ServicesByIdState
+} from "./servicesById";
 import {
   serviceIdsByOrganizationFiscalCodeReducer,
   ServiceIdsByOrganizationFiscalCodeState
 } from "./servicesByOrganizationFiscalCode";
 import {
   visibleServicesReducer,
+  visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
 
@@ -36,6 +45,7 @@ export type ServicesState = Readonly<{
   byOrgFiscalCode: ServiceIdsByOrganizationFiscalCodeState;
   visible: VisibleServicesState;
   readState: ReadStateByServicesId;
+  firstLoading: FirstLoadingState;
 }>;
 
 export type ServicesSectionState = Readonly<{
@@ -48,11 +58,40 @@ const reducer = combineReducers<ServicesState, Action>({
   byId: servicesByIdReducer,
   byOrgFiscalCode: serviceIdsByOrganizationFiscalCodeReducer,
   visible: visibleServicesReducer,
-  readState: readServicesByIdReducer
+  readState: readServicesByIdReducer,
+  firstLoading: firstLoadingReducer
 });
 
 // Selectors
 export const servicesSelector = (state: GlobalState) => state.entities.services;
+
+// Selector to get if services content and metadata are still being loaded
+export const isLoadingServicesSelector = createSelector(
+  [servicesByIdSelector, servicesMetadataByIdSelector, visibleServicesSelector],
+  (servicesById, servicesMetadataById, visibleServices) => {
+    const isAnyServiceLoading =
+      Object.keys(servicesById).find(k => {
+        const oneService = servicesById[k];
+        return oneService !== undefined && pot.isLoading(oneService);
+      }) !== undefined;
+
+    const isAnyServiceMetdataLoading =
+      Object.keys(servicesMetadataById).find(k => {
+        const oneService = servicesMetadataById[k];
+        return oneService !== undefined && pot.isLoading(oneService);
+      }) !== undefined;
+
+    return (
+      pot.isLoading(visibleServices) ||
+      isAnyServiceLoading ||
+      isAnyServiceMetdataLoading
+    );
+  }
+);
+
+//
+// Functions and selectors to get services organized in sections
+//
 
 // Check if the passed service is local or national through data included into the service metadata.
 // If service metadata aren't loaded, the service is treated as local, otherwise it returns

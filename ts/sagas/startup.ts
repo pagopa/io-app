@@ -34,12 +34,20 @@ import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
-import { loadService, loadVisibleServices } from "../store/actions/services";
+import {
+  firstServicesLoad,
+  loadService,
+  loadVisibleServices
+} from "../store/actions/services";
 import {
   idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import {
+  servicesByIdSelector,
+  ServicesByIdState
+} from "../store/reducers/entities/services/servicesById";
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -296,6 +304,15 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     loadVisibleServicesRequestHandler,
     backendClient.getVisibleServices
   );
+
+  // Trigger the services content and metadata  being loaded/refreshed
+  // If the service list is empty (such as at the first app startup), the service load
+  // will requires more time and a dedicated screen is displayed in the services setion
+  const servicesById: ServicesByIdState = yield select(servicesByIdSelector);
+  if (Object.keys(servicesById).length === 0) {
+    yield put(firstServicesLoad.request());
+  }
+  yield put(loadVisibleServices.request());
 
   // Load messages when requested
   yield fork(watchMessagesLoadOrCancelSaga, backendClient.getMessages);

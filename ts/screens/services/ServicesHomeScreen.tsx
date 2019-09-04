@@ -36,10 +36,11 @@ import {
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
-  selectedLocalServicesSectionsSelector,
-  servicesByIdSelector
+  selectedLocalServicesSectionsSelector
 } from "../../store/reducers/entities/services";
+import { isLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
+import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
@@ -241,7 +242,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             icon={require("../../../img/icons/services-icon.png")}
             fixed={Platform.OS === "ios"}
           />
-          {this.renderTabs()}
+          {this.props.isFirstServiceLoadCompleted
+            ? this.renderTabs()
+            : this.renderFirstServiceLoadingContent()}
         </React.Fragment>
       </TopScreenComponent>
     );
@@ -412,6 +415,7 @@ const mapStateToProps = (state: GlobalState) => {
     validOrganizationsSelected: existingOrganizationsFiscalCodesSelectedStateSelector(
       state
     ),
+    isFirstServiceLoadCompleted: isLoadCompletedSelector(state),
     profile: profileSelector(state),
     servicesById: servicesByIdSelector(state),
     readServices: readServicesByIdSelector(state),
