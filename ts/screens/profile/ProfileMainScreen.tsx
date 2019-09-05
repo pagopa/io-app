@@ -21,14 +21,11 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
-import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -174,6 +171,20 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     );
   };
 
+  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
+    this.props.setPagoPATestEnabled(enabled);
+    this.props.showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
+  };
+
+  /**
+   * since no experimental features are available we hide this method (see https://www.pivotaltracker.com/story/show/168263994).
+   * It could be usefull when new experimental features will be available
+   */
+  /*
   private onExperimentalFeaturesToggle = (enabled: boolean) => {
     if (enabled) {
       Alert.alert(
@@ -200,15 +211,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
     }
   };
-
-  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
-    this.props.setPagoPATestEnabled(enabled);
-    this.props.showModal(
-      <AlertModal
-        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-      />
-    );
-  };
+  */
 
   private confirmResetAlert = () =>
     Alert.alert(
@@ -293,12 +296,16 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             <SectionHeaderComponent
               sectionHeader={I18n.t("profile.main.developersSectionHeader")}
             />
-
-            {this.developerListItem(
+            {
+              // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
+              // It could be usefull when new experimental features will be available
+              /*
+              this.developerListItem(
               I18n.t("profile.main.experimentalFeatures.confirmTitle"),
               this.props.isExperimentalFeaturesEnabled,
               this.onExperimentalFeaturesToggle
-            )}
+            )*/
+            }
 
             {this.developerListItem(
               I18n.t("profile.main.pagoPaEnv"),
@@ -374,7 +381,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       );
     };
 
-    return this.props.isExperimentalFeaturesEnabled ? (
+    return (
       <DarkLayout
         allowGoBack={false}
         bounces={false}
@@ -396,22 +403,10 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
           )
         }}
-        banner={ExperimentalFeaturesBanner}
+        banner={undefined}
       >
         {screenContent()}
       </DarkLayout>
-    ) : (
-      <TopScreenComponent
-        title={I18n.t("profile.main.screenTitle")}
-        appLogo={true}
-      >
-        <ScreenContentHeader
-          title={I18n.t("profile.main.screenTitle")}
-          icon={require("../../../img/icons/gears.png")}
-          subtitle={I18n.t("profile.main.screenSubtitle")}
-        />
-        {screenContent()}
-      </TopScreenComponent>
     );
   }
 }
