@@ -16,6 +16,10 @@ import {
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import {
+  firstServicesLoad,
+  markServiceAsRead
+} from "../store/actions/services";
+import {
   isFirstVisibleServiceLoadCompletedSelector,
   isVisibleServicesContentLoadCompletedSelector,
   isVisibleServicesMetadataLoadCompletedSelector
@@ -66,6 +70,11 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
     const isFirstServiceLoadingCompleted = yield select(
       isFirstVisibleServiceLoadCompletedSelector
     );
+
+    // If the app is loading the service content for the first time, avoids to display all the services as not read
+    if (!isFirstServiceLoadingCompleted) {
+      yield put(markServiceAsRead(serviceId));
+    }
 
     const isServiceContentLoadingCompleted = yield select(
       isVisibleServicesContentLoadCompletedSelector

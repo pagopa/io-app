@@ -51,6 +51,14 @@ export const showServiceDetails = createStandardAction("SERVICE_SHOW_DETAILS")<
   ServicePublic
 >();
 
+//
+//  mark service as read
+//
+
+export const markServiceAsRead = createStandardAction("MARK_SERVICE_AS_READ")<
+  ServiceId
+>();
+
 // Remove services passing a list of tuples with serviceId and organizationFiscalCode
 export const removeServiceTuples = createStandardAction(
   "SERVICES_REMOVE_TUPLES"
@@ -61,4 +69,5 @@ export type ServicesActions =
   | ActionType<typeof loadVisibleServices>
   | ActionType<typeof loadService>
   | ActionType<typeof removeServiceTuples>
-  | ActionType<typeof showServiceDetails>;
+  | ActionType<typeof showServiceDetails>
+  | ActionType<typeof markServiceAsRead>;
