@@ -36,12 +36,12 @@ interface PreviewProps {
 
 interface FullProps extends BaseProps {
   type: "Full";
-  getBackSide: boolean;
+  getBackSide?: boolean;
 }
 
 interface LandscapeProps extends BaseProps {
   type: "Landscape";
-  getBackSide: boolean;
+  getBackSide?: boolean;
 }
 
 type Props = PreviewProps | FullProps | LandscapeProps;

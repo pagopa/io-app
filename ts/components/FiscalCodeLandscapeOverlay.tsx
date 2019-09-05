@@ -23,7 +23,6 @@ type Props = Readonly<{
   profile: UserProfile;
   municipality: MunicipalityState;
   showBackSide?: boolean;
-  selected: number;
 }>;
 
 const globalHeaderHeight: number = Platform.select({
@@ -53,8 +52,8 @@ const styles = StyleSheet.create({
 export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   Props
 > {
-  private scrollViewContent: ScrollView | null = null;
   private scrollViewHeight: number = 0;
+  private ScrollVewRef = React.createRef<ScrollView>();
 
   private handleBackPress = () => {
     this.props.onCancel();
@@ -63,10 +62,10 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
 
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-    if (this.props.selected === 2) {
+    if (this.props.showBackSide) {
       setTimeout(() => {
-        if (this.scrollViewContent) {
-          this.scrollViewContent.scrollTo({
+        if (this.ScrollVewRef.current) {
+          this.ScrollVewRef.current.scrollTo({
             y: this.scrollViewHeight,
             animated: true
           });
@@ -91,7 +90,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
         />
         <ScrollView
           style={styles.content}
-          ref={scrollView => (this.scrollViewContent = scrollView)} // tslint:disable-line no-object-mutation
+          ref={this.ScrollVewRef}
           onContentSizeChange={(_, height) => {
             this.scrollViewHeight = height; // tslint:disable-line no-object-mutation
           }}
