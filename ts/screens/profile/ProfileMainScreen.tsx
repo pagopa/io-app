@@ -177,11 +177,28 @@ class ProfileMainScreen extends React.PureComponent<Props> {
   };
 
   private onPagoPAEnvironmentToggle = (enabled: boolean) => {
-    this.props.setPagoPATestEnabled(enabled);
-    this.props.showModal(
-      <AlertModal
-        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-      />
+    Alert.alert(
+      "",
+      I18n.t("profile.main.pagoPAConfirmAlertTitle"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "destructive",
+          onPress: () => {
+            this.props.setPagoPATestEnabled(enabled);
+            this.props.showModal(
+              <AlertModal
+                message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+              />
+            );
+          }
+        }
+      ],
+      { cancelable: false }
     );
   };
 

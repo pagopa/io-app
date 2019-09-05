@@ -151,6 +151,7 @@ profile:
     debugMode: Modalità debug
     pagoPaEnv: Ambiente PagoPA di Test
     pagoPAEnvAlert: La modifica richiede il reboot dell'app
+    pagoPAConfirmAlertTitle: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
   preferences:
     title: Preferenze
     subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica

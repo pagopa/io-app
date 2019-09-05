@@ -148,6 +148,8 @@ profile:
     debugMode: Debug mode
     pagoPaEnv: PagoPA Test Environment
     pagoPAEnvAlert: This change requires app reboot
+    pagoPAConfirmAlertTitle: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
+
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
