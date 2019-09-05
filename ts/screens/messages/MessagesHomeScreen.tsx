@@ -1,10 +1,13 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import { Animated, Platform, StyleSheet } from "react-native";
+import { Animated, Platform, StatusBar, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 
-import { NavigationScreenProps } from "react-navigation";
+import {
+  NavigationEventSubscription,
+  NavigationScreenProps
+} from "react-navigation";
 import { connect } from "react-redux";
 import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
@@ -77,6 +80,7 @@ const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
  * A screen that contains all the Tabs related to messages.
  */
 class MessagesHomeScreen extends React.Component<Props, State> {
+  private navListener?: NavigationEventSubscription;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -96,6 +100,16 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     this.props.refreshMessages();
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      StatusBar.setBarStyle("dark-content");
+      StatusBar.setBackgroundColor(customVariables.colorWhite, true);
+    }); // tslint:disable-line no-object-mutation
+  }
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
+    }
   }
 
   public componentDidUpdate(prevprops: Props, prevstate: State) {

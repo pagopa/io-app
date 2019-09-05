@@ -16,12 +16,14 @@ import {
   Alert,
   Platform,
   ScrollView,
+  StatusBar,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
+  NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
@@ -110,6 +112,21 @@ const getAppLongVersion = () => {
 };
 
 class ProfileMainScreen extends React.PureComponent<Props> {
+  private navListener?: NavigationEventSubscription;
+
+  public componentDidMount() {
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      StatusBar.setBarStyle("light-content");
+      StatusBar.setBackgroundColor(customVariables.brandDarkGray, true);
+    }); // tslint:disable-line no-object-mutation
+  }
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
+    }
+  }
+
   private handleClearCachePress = () => {
     this.props.clearCache();
     Toast.show({ text: "The cache has been cleared." });

@@ -4,7 +4,11 @@
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { NavigationInjectedProps } from "react-navigation";
+import { StatusBar } from "react-native";
+import {
+  NavigationEventSubscription,
+  NavigationInjectedProps
+} from "react-navigation";
 import { connect } from "react-redux";
 
 import { createSelector } from "reselect";
@@ -35,6 +39,7 @@ import {
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
+import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
 import { getChannelsforServicesList } from "./common";
@@ -48,6 +53,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 class OldServicesHomeScreen extends React.Component<Props> {
+  private navListener?: NavigationEventSubscription;
   constructor(props: Props) {
     super(props);
   }
@@ -65,6 +71,16 @@ class OldServicesHomeScreen extends React.Component<Props> {
   public componentDidMount() {
     // on mount, update visible services
     this.props.refreshServices();
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      StatusBar.setBarStyle("dark-content");
+      StatusBar.setBackgroundColor(customVariables.colorWhite, true);
+    }); // tslint:disable-line no-object-mutation
+  }
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
+    }
   }
 
   public render() {

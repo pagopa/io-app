@@ -3,9 +3,12 @@ import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import { Animated, Platform, StyleSheet } from "react-native";
+import { Animated, Platform, StatusBar, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
-import { NavigationScreenProps } from "react-navigation";
+import {
+  NavigationEventSubscription,
+  NavigationScreenProps
+} from "react-navigation";
 import { connect } from "react-redux";
 import ChooserListContainer from "../../components/ChooserListContainer";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -81,6 +84,7 @@ const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
  * A screen that contains all the Tabs related to services.
  */
 class ServicesHomeScreen extends React.Component<Props, State> {
+  private navListener?: NavigationEventSubscription;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -91,6 +95,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   public componentDidMount() {
     // on mount, update visible services
     this.props.refreshServices();
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      StatusBar.setBarStyle("dark-content");
+      StatusBar.setBackgroundColor(customVariables.colorWhite, true);
+    }); // tslint:disable-line no-object-mutation
   }
 
   private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -115,6 +123,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           this.scollPositions[i] = animatedValue.value;
         });
       });
+    }
+  }
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
     }
   }
 
