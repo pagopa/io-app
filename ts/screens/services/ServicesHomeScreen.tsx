@@ -38,7 +38,7 @@ import {
   notSelectedServicesSectionsSelector,
   selectedLocalServicesSectionsSelector
 } from "../../store/reducers/entities/services";
-import { isLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";
+import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { profileSelector } from "../../store/reducers/profile";
@@ -415,7 +415,9 @@ const mapStateToProps = (state: GlobalState) => {
     validOrganizationsSelected: existingOrganizationsFiscalCodesSelectedStateSelector(
       state
     ),
-    isFirstServiceLoadCompleted: isLoadCompletedSelector(state),
+    isFirstServiceLoadCompleted: isFirstVisibleServiceLoadCompletedSelector(
+      state
+    ),
     profile: profileSelector(state),
     servicesById: servicesByIdSelector(state),
     readServices: readServicesByIdSelector(state),

@@ -1,32 +1,20 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { contentServiceLoad } from "../../../actions/content";
-import { firstServicesLoad, loadService } from "../../../actions/services";
+import { firstServicesLoad } from "../../../actions/services";
 import { Action } from "../../../actions/types";
+import { servicesMetadataByIdSelector } from "../../content";
 import { GlobalState } from "../../types";
 import { servicesByIdSelector } from "./servicesById";
-
-// TODO into pr: evaluate how to manage if the service loading fails.
-export enum LoadingResultEnum {
-  "ISLOADING" = "ISLOADING",
-  "SUCCESS" = "SUCCESS",
-  "FAILED" = "FAILED"
-}
+import { visibleServicesSelector } from "./visibleServices";
 
 export type FirstLoadingState = Readonly<{
   isFirstServicesLoadingCompleted: boolean;
-  loadedServices: {
-    [key: string]: {
-      isContentSuccesfullyLoaded: LoadingResultEnum;
-      isMetadataSuccesfullyLoaded: LoadingResultEnum;
-    };
-  };
 }>;
 
 const INITIAL_STATE: FirstLoadingState = {
-  isFirstServicesLoadingCompleted: false,
-  loadedServices: {}
+  isFirstServicesLoadingCompleted: false
 };
 
 // Reducer
@@ -35,88 +23,9 @@ export const firstLoadingReducer = (
   action: Action
 ): FirstLoadingState => {
   switch (action.type) {
-    case getType(loadService.request): {
-      return {
-        ...state,
-        loadedServices: {
-          ...state.loadedServices,
-          [action.payload]: {
-            ...state.loadedServices[action.payload],
-            isContentSuccesfullyLoaded: LoadingResultEnum.ISLOADING
-          }
-        }
-      };
-    }
-
-    case getType(loadService.success): {
-      return {
-        ...state,
-        loadedServices: {
-          ...state.loadedServices,
-          [action.payload.service_id]: {
-            ...state.loadedServices[action.payload.service_id],
-            isContentSuccesfullyLoaded: LoadingResultEnum.SUCCESS
-          }
-        }
-      };
-    }
-
-    case getType(loadService.failure): {
-      return {
-        ...state,
-        loadedServices: {
-          ...state.loadedServices,
-          [action.payload]: {
-            ...state.loadedServices[action.payload],
-            isContentSuccesfullyLoaded: LoadingResultEnum.FAILED
-          }
-        }
-      };
-    }
-
-    case getType(contentServiceLoad.request): {
-      return {
-        ...state,
-        loadedServices: {
-          ...state.loadedServices,
-          [action.payload]: {
-            ...state.loadedServices[action.payload],
-            isMetadataSuccesfullyLoaded: LoadingResultEnum.ISLOADING
-          }
-        }
-      };
-    }
-
-    case getType(contentServiceLoad.success): {
-      return {
-        ...state,
-        loadedServices: {
-          ...state.loadedServices,
-          [action.payload.serviceId]: {
-            ...state.loadedServices[action.payload.serviceId],
-            isMetadataSuccesfullyLoaded: LoadingResultEnum.SUCCESS
-          }
-        }
-      };
-    }
-
-    case getType(contentServiceLoad.failure): {
-      return {
-        ...state,
-        loadedServices: {
-          ...state.loadedServices,
-          [action.payload]: {
-            ...state.loadedServices[action.payload],
-            isMetadataSuccesfullyLoaded: LoadingResultEnum.FAILED
-          }
-        }
-      };
-    }
-
     case getType(firstServicesLoad.success): {
       return {
-        isFirstServicesLoadingCompleted: true,
-        loadedServices: {}
+        isFirstServicesLoadingCompleted: true
       };
     }
 
@@ -126,21 +35,39 @@ export const firstLoadingReducer = (
 };
 
 // Selectors
-export const isLoadCompletedSelector = (state: GlobalState) =>
-  state.entities.services.firstLoading.isFirstServicesLoadingCompleted;
-export const loadedServicesSelector = (state: GlobalState) =>
-  state.entities.services.firstLoading.loadedServices;
+export const isFirstVisibleServiceLoadCompletedSelector = (
+  state: GlobalState
+) => state.entities.services.firstLoading.isFirstServicesLoadingCompleted;
 
-export const isServiceLoadingCompletedSelector = createSelector(
-  [isLoadCompletedSelector, loadedServicesSelector, servicesByIdSelector],
-  (isFirstServiceLoadCompleted, loadedServices, servicesById) => {
-    const areAllServicesLoaded =
-      Object.keys(loadedServices).filter(
-        serviceId =>
-          loadedServices[serviceId].isMetadataSuccesfullyLoaded !==
-          LoadingResultEnum.ISLOADING
-      ).length === Object.keys(servicesById).length;
+export const isVisibleServicesContentLoadCompletedSelector = createSelector(
+  [servicesByIdSelector, visibleServicesSelector],
+  (serviceById, visibleServices) => {
+    const visibles = pot.isSome(visibleServices)
+      ? visibleServices.value.length
+      : 0;
+    return (
+      pot.isSome(visibleServices) &&
+      Object.keys(serviceById).filter(serviceId => {
+        const service = serviceById[serviceId];
+        return service && (pot.isSome(service) || pot.isError(service));
+      }).length === visibles
+    );
+  }
+);
 
-    return !isFirstServiceLoadCompleted && areAllServicesLoaded;
+export const isVisibleServicesMetadataLoadCompletedSelector = createSelector(
+  [servicesMetadataByIdSelector, visibleServicesSelector],
+  (servicesMetadataById, visibleServices) => {
+    const visibles = pot.isSome(visibleServices)
+      ? visibleServices.value.length
+      : 0;
+
+    return (
+      pot.isSome(visibleServices) &&
+      Object.keys(servicesMetadataById).filter(serviceId => {
+        const service = servicesMetadataById[serviceId];
+        return service && (pot.isSome(service) || pot.isError(service));
+      }).length === visibles
+    );
   }
 );

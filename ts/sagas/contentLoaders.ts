@@ -15,8 +15,11 @@ import {
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ServiceId } from "../../definitions/backend/ServiceId";
-import { firstServicesLoad } from "../store/actions/services";
-import { isServiceLoadingCompletedSelector } from "../store/reducers/entities/services/firstServicesLoading";
+import {
+  isFirstVisibleServiceLoadCompletedSelector,
+  isVisibleServicesContentLoadCompletedSelector,
+  isVisibleServicesMetadataLoadCompletedSelector
+} from "../store/reducers/entities/services/firstServicesLoading";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
 
@@ -60,14 +63,27 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       yield put(contentServiceLoad.failure(serviceId));
     }
 
+    const isFirstServiceLoadingCompleted = yield select(
+      isFirstVisibleServiceLoadCompletedSelector
+    );
+
+    const isServiceContentLoadingCompleted = yield select(
+      isVisibleServicesContentLoadCompletedSelector
+    );
+
+    const isServiceMetadataLoadingCompleted = yield select(
+      isVisibleServicesMetadataLoadCompletedSelector
+    );
+
     // Check if the first services loading is occurring yet and check when it is completed
     //
-    // TODO: Define and manage the firstServicesLoad.failure. It could occurs when one ore
+    // TODO: Define and manage the firstServicesLoad.failure. It could occurs when one or
     //        more services content load fails
-    const isFirstServiceLoadingCompleted = yield select(
-      isServiceLoadingCompletedSelector
-    );
-    if (isFirstServiceLoadingCompleted) {
+    if (
+      !isFirstServiceLoadingCompleted &&
+      isServiceContentLoadingCompleted &&
+      isServiceMetadataLoadingCompleted
+    ) {
       yield put(firstServicesLoad.success());
     }
   });
