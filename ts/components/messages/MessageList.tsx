@@ -249,8 +249,8 @@ class MessageList extends React.Component<Props, State> {
       potService !== undefined
         ? pot.isNone(potService)
           ? ({
-              organization_name: I18n.t("messages.errorLoading.senderService"),
-              department_name: I18n.t("messages.errorLoading.senderInfo")
+              organization_name: I18n.t("messages.errorLoading.senderInfo"),
+              department_name: I18n.t("messages.errorLoading.serviceInfo")
             } as ServicePublic)
           : pot.toUndefined(potService)
         : undefined;

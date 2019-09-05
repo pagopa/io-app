@@ -24,9 +24,11 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		16E38CBD19D4437A9C020B21 /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76E4CEA78E3F4060ABB59808 /* RobotoMono-Regular.ttf */; };
 		194A5D2B1F027F5A0078620E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 194A5D2A1F027F5A0078620E /* Podfile */; };
 		1E5E2F92276B4E66A82EB971 /* libRNTextInputMask.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5F65895457F4A8593B7110D /* libRNTextInputMask.a */; };
 		202CF26AAA6EDB336D62CCB0 /* Instabug.framework in Embed Instabug Framework */ = {isa = PBXBuildFile; fileRef = DF11F115CF1E1FC7FA05A617 /* Instabug.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		28E4866232804051B865FC10 /* RobotoMono-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5389C36762A04AE69D762289 /* RobotoMono-RegularItalic.ttf */; };
 		3A3CA4696BA44782A02FE37E /* TitilliumWeb-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B021D4CC17ED4D54B7944FED /* TitilliumWeb-SemiBold.ttf */; };
 		4D331CF68DAC4800A6D6297A /* TitilliumWeb-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C2483C363E432BB4D0A583 /* TitilliumWeb-Regular.ttf */; };
 		570BBC8FC70C4A76ABF035AC /* TitilliumWeb-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 163BC670599B42509D4D138E /* TitilliumWeb-Light.ttf */; };
@@ -40,18 +42,22 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		859781B477BB45579FB9A9F2 /* TitilliumWeb-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F709D4AE20E44EFAAB255A8E /* TitilliumWeb-Italic.ttf */; };
 		862C0E693C864E76BADCDFCC /* TitilliumWeb-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A786CC45B2D4B77BDF55C1D /* TitilliumWeb-Black.ttf */; };
+		8788744508D34396942D3DB4 /* RobotoMono-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFE8D23873DE458BB54EB46B /* RobotoMono-Light.ttf */; };
 		8C7948EB37334D2DADB1E7AE /* TitilliumWeb-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE4F83DB63254F5285C36A40 /* TitilliumWeb-ExtraLight.ttf */; };
 		8D109BF3B47F46FDA6B105CE /* TitilliumWeb-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E4EECD1122B401CAC190472 /* TitilliumWeb-BoldItalic.ttf */; };
-		93CCC5C9D689411BAE570452 /* RobotoMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 425140D589F84E2D87D7888D /* RobotoMono-Regular.ttf */; };
+		8E7BB01F1A6D4D79B17B4210 /* RobotoMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */; };
+		9975E38DE95949D28D07A275 /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B0FB3D49E5CE77110DC71130 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C94683EA8FE46C9BBC374C4C /* libPods-ItaliaApp.a */; };
 		BCC6A5BE7EA743388104A040 /* libreact-native-sha256.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF7BF3EEAED4436F8DD575A5 /* libreact-native-sha256.a */; };
 		BE1A42156484487BABBC4DED /* TitilliumWeb-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */; };
+		C2CF038002D24FEEAB41B336 /* RobotoMono-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */; };
 		CE0249F3A87F4635941BE608 /* io-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF247919391E44AE83924808 /* io-icon-font.ttf */; };
 		D18E075B28304466B6CA2381 /* TitilliumWeb-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65D221FCB5A461FBC44285D /* TitilliumWeb-LightItalic.ttf */; };
 		D6AB3CED2EA64A63904039FD /* libQRCode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4EA3E6B75994FF48D015082 /* libQRCode.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		EFFA620FCD2D46F6B942663B /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2D52800996AA471A87A7F975 /* LICENSE.txt */; };
+		F09FEB3C231818E3007071DB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F09FEB0D231818E3007071DB /* Localizable.strings */; };
 		F79805F89B1C426B89BF2FD5 /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D94E785317A4CE6840C34C0 /* libReactNativeExceptionHandler.a */; };
 		FCBD12162A70BC057E884393 /* Instabug.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF11F115CF1E1FC7FA05A617 /* Instabug.framework */; };
 /* End PBXBuildFile section */
@@ -433,29 +439,34 @@
 		194A5D2A1F027F5A0078620E /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		1E4EECD1122B401CAC190472 /* TitilliumWeb-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-BoldItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-BoldItalic.ttf"; sourceTree = "<group>"; };
 		2608EEFDBECB4F7BB92043DB /* Pods-ItaliaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.debug.xcconfig"; sourceTree = "<group>"; };
+		2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-BoldItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-BoldItalic.ttf"; sourceTree = "<group>"; };
 		2D52800996AA471A87A7F975 /* LICENSE.txt */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = LICENSE.txt; path = ../assets/fonts/RobotoMono/LICENSE.txt; sourceTree = "<group>"; };
 		2F9A90CEEF7F49FAAC6ED3C4 /* RNInstabug.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNInstabug.xcodeproj; path = "../node_modules/instabug-reactnative/ios/RNInstabug.xcodeproj"; sourceTree = "<group>"; };
 		3087D2BB18D649C9ABA70F4E /* ReactNativeExceptionHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeExceptionHandler.xcodeproj; path = "../node_modules/react-native-exception-handler/ios/ReactNativeExceptionHandler.xcodeproj"; sourceTree = "<group>"; };
 		309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Bold.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Bold.ttf"; sourceTree = "<group>"; };
-		425140D589F84E2D87D7888D /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Regular.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
 		4B2174CC664E41728331AB0D /* react-native-sha256.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = "react-native-sha256.xcodeproj"; path = "../node_modules/react-native-sha256/ios/react-native-sha256.xcodeproj"; sourceTree = "<group>"; };
+		5389C36762A04AE69D762289 /* RobotoMono-RegularItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-RegularItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-RegularItalic.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		61CC92FB2135800100206602 /* InputMaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = InputMaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61CC930F2135818B00206602 /* InputMask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = InputMask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-LightItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-LightItalic.ttf"; sourceTree = "<group>"; };
 		6754714BBEF54AA59833C0EB /* TitilliumWeb-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-ExtraLightItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		69DDBDD712454186B7493CEC /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = ../assets/fonts/Ionicons/Ionicons.ttf; sourceTree = "<group>"; };
 		6A786CC45B2D4B77BDF55C1D /* TitilliumWeb-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Black.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Black.ttf"; sourceTree = "<group>"; };
 		6D94E785317A4CE6840C34C0 /* libReactNativeExceptionHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeExceptionHandler.a; sourceTree = "<group>"; };
 		71ADF92C4ACB4A53A42C7221 /* QrCode.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = QrCode.xcodeproj; path = "../node_modules/react-native-lewin-qrcode/ios/QrCode.xcodeproj"; sourceTree = "<group>"; };
+		76E4CEA78E3F4060ABB59808 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Regular.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A83F0572152B12C000C6389 /* ItaliaApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ItaliaApp.entitlements; path = ItaliaApp/ItaliaApp.entitlements; sourceTree = "<group>"; };
 		7E03A5F522C6155200629442 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		A4827A715541433A928083C5 /* RNTextInputMask.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTextInputMask.xcodeproj; path = "../node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		AFE8D23873DE458BB54EB46B /* RobotoMono-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Light.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Light.ttf"; sourceTree = "<group>"; };
 		B021D4CC17ED4D54B7944FED /* TitilliumWeb-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-SemiBold.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-SemiBold.ttf"; sourceTree = "<group>"; };
 		B59B6238889E4208B49E5C9D /* libRNInstabug.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNInstabug.a; sourceTree = "<group>"; };
 		B65D221FCB5A461FBC44285D /* TitilliumWeb-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-LightItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-LightItalic.ttf"; sourceTree = "<group>"; };
+		B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Bold.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Bold.ttf"; sourceTree = "<group>"; };
 		C4EA3E6B75994FF48D015082 /* libQRCode.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libQRCode.a; sourceTree = "<group>"; };
 		C94683EA8FE46C9BBC374C4C /* libPods-ItaliaApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItaliaApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDFFCB24547EDF335F819CA8 /* Pods-ItaliaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -465,6 +476,8 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE4F83DB63254F5285C36A40 /* TitilliumWeb-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-ExtraLight.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLight.ttf"; sourceTree = "<group>"; };
 		EF247919391E44AE83924808 /* io-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "io-icon-font.ttf"; path = "../assets/fonts/io-icon-font/io-icon-font.ttf"; sourceTree = "<group>"; };
+		F09FEB0E231818E3007071DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ItaliaApp/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F09FEB3D231818F0007071DB /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = ItaliaApp/it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F5F65895457F4A8593B7110D /* libRNTextInputMask.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTextInputMask.a; sourceTree = "<group>"; };
 		F709D4AE20E44EFAAB255A8E /* TitilliumWeb-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Italic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Italic.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -621,6 +634,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				F09FEB0D231818E3007071DB /* Localizable.strings */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -664,10 +678,15 @@
 				11C2483C363E432BB4D0A583 /* TitilliumWeb-Regular.ttf */,
 				B021D4CC17ED4D54B7944FED /* TitilliumWeb-SemiBold.ttf */,
 				CED8B1FF1E254583BB3F285F /* TitilliumWeb-SemiBoldItalic.ttf */,
-				425140D589F84E2D87D7888D /* RobotoMono-Regular.ttf */,
 				2D52800996AA471A87A7F975 /* LICENSE.txt */,
 				69DDBDD712454186B7493CEC /* Ionicons.ttf */,
 				EF247919391E44AE83924808 /* io-icon-font.ttf */,
+				B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */,
+				2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */,
+				AFE8D23873DE458BB54EB46B /* RobotoMono-Light.ttf */,
+				640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */,
+				76E4CEA78E3F4060ABB59808 /* RobotoMono-Regular.ttf */,
+				5389C36762A04AE69D762289 /* RobotoMono-RegularItalic.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1326,15 +1345,21 @@
 				8C7948EB37334D2DADB1E7AE /* TitilliumWeb-ExtraLight.ttf in Resources */,
 				6B44A74498354CC19B90FE9C /* TitilliumWeb-ExtraLightItalic.ttf in Resources */,
 				859781B477BB45579FB9A9F2 /* TitilliumWeb-Italic.ttf in Resources */,
+				F09FEB3C231818E3007071DB /* Localizable.strings in Resources */,
 				570BBC8FC70C4A76ABF035AC /* TitilliumWeb-Light.ttf in Resources */,
 				D18E075B28304466B6CA2381 /* TitilliumWeb-LightItalic.ttf in Resources */,
 				4D331CF68DAC4800A6D6297A /* TitilliumWeb-Regular.ttf in Resources */,
 				3A3CA4696BA44782A02FE37E /* TitilliumWeb-SemiBold.ttf in Resources */,
 				72E4B1EFF7D4414483079F91 /* TitilliumWeb-SemiBoldItalic.ttf in Resources */,
-				93CCC5C9D689411BAE570452 /* RobotoMono-Regular.ttf in Resources */,
 				EFFA620FCD2D46F6B942663B /* LICENSE.txt in Resources */,
 				6867BE73959A414F84C77FED /* Ionicons.ttf in Resources */,
 				CE0249F3A87F4635941BE608 /* io-icon-font.ttf in Resources */,
+				9975E38DE95949D28D07A275 /* RobotoMono-Bold.ttf in Resources */,
+				8E7BB01F1A6D4D79B17B4210 /* RobotoMono-BoldItalic.ttf in Resources */,
+				8788744508D34396942D3DB4 /* RobotoMono-Light.ttf in Resources */,
+				C2CF038002D24FEEAB41B336 /* RobotoMono-LightItalic.ttf in Resources */,
+				16E38CBD19D4437A9C020B21 /* RobotoMono-Regular.ttf in Resources */,
+				28E4866232804051B865FC10 /* RobotoMono-RegularItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1501,6 +1526,15 @@
 			path = ItaliaApp;
 			sourceTree = "<group>";
 		};
+		F09FEB0D231818E3007071DB /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F09FEB0E231818E3007071DB /* en */,
+				F09FEB3D231818F0007071DB /* it */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1578,7 +1612,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 22;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = BC8NKY5TF7;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1620,7 +1654,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = BC8NKY5TF7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -33,7 +33,7 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 5;
+const CURRENT_REDUX_STORE_VERSION = 6;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -50,7 +50,7 @@ const migrations: MigrationManifest = {
     } as PersistedState),
 
   // version 1
-  // we changes the type of the services state to use Pot types so we clear all
+  // we changed the type of the services state to use Pot types so we clear all
   // the entitie to force a reload of messages and services
   "1": (state: PersistedState): PersistedState =>
     ({
@@ -91,11 +91,12 @@ const migrations: MigrationManifest = {
   // Version 4
   // we added a state to monitor what pagopa environment is selected
   "4": (state: PersistedState) => {
-    return (state as any).persistedPreferences.isPagoPATestEnabled === undefined
+    return (state as PersistedGlobalState).persistedPreferences
+      .isPagoPATestEnabled === undefined
       ? {
           ...state,
           persistedPreferences: {
-            ...(state as any).persistedPreferences,
+            ...(state as PersistedGlobalState).persistedPreferences,
             isPagoPATestEnabled: false
           }
         }
@@ -121,7 +122,17 @@ const migrations: MigrationManifest = {
         }
       }
     };
-  }
+  },
+
+  // Version 6
+  // we changed the way ToS acceptance is managed
+  "6": (state: PersistedState) => ({
+    ...state,
+    onboarding: {
+      isFingerprintAcknowledged: (state as PersistedGlobalState).onboarding
+        .isFingerprintAcknowledged
+    }
+  })
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;

@@ -47,9 +47,12 @@ const styles = StyleSheet.create({
     marginBottom: 4
   },
 
-  headerLeft: {
+  badgeContainer: {
     flex: 0,
-    paddingRight: 4
+    paddingRight: 4,
+    alignSelf: "flex-start",
+    marginRight: 4,
+    paddingTop: 4
   },
 
   headerCenter: {
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
   },
 
   messageDate: {
-    ...makeFontStyleObject(Platform.select, "700", false),
+    ...makeFontStyleObject(Platform.select, "700"),
     fontSize: 14,
     lineHeight: 18,
     color: customVariables.brandDarkGray
@@ -85,13 +88,14 @@ const styles = StyleSheet.create({
   },
 
   contentCenter: {
+    flexDirection: "row",
     flex: 1,
-    paddingRight: 32
+    paddingRight: 36
   },
 
   messageTitle: {
-    ...makeFontStyleObject(Platform.select, "700", false),
-    fontSize: 16,
+    ...makeFontStyleObject(Platform.select, "600"),
+    fontSize: 18,
     lineHeight: 21,
     color: customVariables.brandDarkestGray
   },
@@ -107,13 +111,13 @@ const styles = StyleSheet.create({
 
   footerWrapper: {
     height: 32,
-    marginTop: 12
+    marginTop: 10
   }
 });
 
 const UNKNOWN_SERVICE_DATA = {
-  organizationName: "Mittente sconosciuto",
-  departmentName: "Info sul servizio mancanti"
+  organizationName: I18n.t("messages.errorLoading.senderInfo"),
+  departmentName: I18n.t("messages.errorLoading.serviceInfo")
 };
 
 class MessageListItem extends React.PureComponent<Props> {
@@ -164,11 +168,6 @@ class MessageListItem extends React.PureComponent<Props> {
           ]}
         >
           <View style={styles.headerWrapper}>
-            {!isRead && (
-              <View style={styles.headerLeft}>
-                <BadgeComponent />
-              </View>
-            )}
             <View style={styles.headerCenter}>
               <Text numberOfLines={1} style={styles.serviceOrganizationName}>
                 {uiService.organizationName}
@@ -184,6 +183,11 @@ class MessageListItem extends React.PureComponent<Props> {
 
           <View style={styles.contentWrapper}>
             <View style={styles.contentCenter}>
+              {!isRead && (
+                <View style={styles.badgeContainer}>
+                  <BadgeComponent />
+                </View>
+              )}
               <Text numberOfLines={2} style={styles.messageTitle}>
                 {message.content.subject}
               </Text>

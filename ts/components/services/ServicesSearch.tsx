@@ -18,7 +18,6 @@ type OwnProps = {
   onRefresh: () => void;
   navigateToServiceDetail: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
-  isExperimentalFeaturesEnabled?: boolean;
 };
 
 type Props = OwnProps;
@@ -162,7 +161,6 @@ class ServicesSearch extends React.PureComponent<Props, State> {
         isRefreshing={isFiltering}
         onRefresh={onRefresh}
         onSelect={this.handleOnServiceSelect}
-        isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
       />
     ) : (
       <SearchNoResultMessage errorType="NoResultsFound" />
