@@ -26,6 +26,7 @@ import { lexicallyOrderedAllOrganizations } from "../../store/reducers/entities/
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import { GlobalState } from "../../store/reducers/types";
 import {
+  noneUserMetadata,
   organizationsOfInterestSelector,
   UserMetadata,
   userMetadataSelector
@@ -392,7 +393,9 @@ const mapStateToProps = (state: GlobalState) => {
   const { services } = state.entities;
 
   const potUserMetadata = userMetadataSelector(state);
-  const userMetadata = pot.getOrElse(potUserMetadata, undefined);
+  // TODO: disable selection of areas of interest if the user metadata are not noaded
+  // (it causes the new selection is not loaded) https://www.pivotaltracker.com/story/show/168312476
+  const userMetadata = pot.getOrElse(potUserMetadata, noneUserMetadata);
 
   const isAnyServiceLoading =
     Object.keys(services.byId).find(k => {

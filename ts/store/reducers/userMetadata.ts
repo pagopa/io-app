@@ -20,6 +20,14 @@ export type UserMetadata = {
   metadata: UserMetadataMetadata;
 };
 
+export const noneUserMetadata: UserMetadata = {
+  version: 0,
+  metadata: {
+    experimentalFeatures: undefined,
+    organizationsOfInterest: undefined
+  }
+};
+
 export type UserMetadataState = pot.Pot<UserMetadata, Error>;
 
 export function backendUserMetadataToUserMetadata(
