@@ -1,7 +1,7 @@
 import { MaxRetries } from "italia-ts-commons/lib/tasks";
 import { Millisecond } from "italia-ts-commons/lib/units";
 
-import ServerMock from "mock-http-server";
+import * as ServerMock from "mock-http-server";
 import nodeFetch from "node-fetch";
 import { constantPollingFetch, defaultRetryingFetch } from "../fetch";
 
@@ -17,7 +17,10 @@ const TEST_PORT = 40000;
 
 // tslint:disable-next-line:no-any
 function createServerTransientNotFound(): any {
-  const server = ServerMock({ host: TEST_HOST, port: TEST_PORT }, undefined);
+  const server = new ServerMock.default(
+    { host: TEST_HOST, port: TEST_PORT },
+    undefined
+  );
 
   server.on({
     method: "GET",
@@ -32,7 +35,10 @@ function createServerTransientNotFound(): any {
 
 // tslint:disable-next-line:no-any no-identical-functions
 function createServerTransientTooManyRequests(): any {
-  const server = ServerMock({ host: TEST_HOST, port: TEST_PORT }, undefined);
+  const server = new ServerMock.default(
+    { host: TEST_HOST, port: TEST_PORT },
+    undefined
+  );
 
   server.on({
     method: "GET",

@@ -1,4 +1,1 @@
-declare module "mock-http-server" {
-  function ServerMock(httpConfig: any, httpsConfig: any);
-  export = ServerMock;
-}
+declare module "mock-http-server";
