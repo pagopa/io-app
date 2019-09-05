@@ -36,7 +36,7 @@ import {
   EnabledChannels,
   getBlockedChannels,
   getEnabledChannelsForService
-} from "./common";
+} from "../preferences/common";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -85,7 +85,7 @@ function renderInformationRow(
   );
 }
 
-class OldServiceDetailsScreen extends React.Component<Props, State> {
+class ServiceDetailsScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -482,4 +482,4 @@ const mapStateToProps = (state: GlobalState) => ({
     state.persistedPreferences.wasServiceAlertDisplayedOnce
 });
 
-export default connect(mapStateToProps)(OldServiceDetailsScreen);
+export default connect(mapStateToProps)(ServiceDetailsScreen);
