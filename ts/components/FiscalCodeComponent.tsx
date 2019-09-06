@@ -2,9 +2,9 @@
  * A component to show the profile fiscal code fac-simile.
  * It can be displayed as:
  * - Preview: it renders only the header of the fac-simile, rotated on the perspective direction
- * - Full: it renders the fac-simile in the horiontal position
+ * - Full: it renders the fac-simile in the horizontal position
  * - Landscape: it renders the fac-simile in the vertical position (rotated of 90 degrees)
- * The fac-simile back side can be rendered for both full and lansdscape modes,
+ * The fac-simile back side can be rendered for both full and landscape modes,
  * and it includes the barcode of the fiscal code with the code 128 format
  */
 import I18n from "i18n-js";
@@ -28,23 +28,15 @@ import { extractFiscalCodeData } from "../utils/profile";
 interface BaseProps {
   profile: UserProfile;
   municipality: MunicipalityState;
+  getBackSide: boolean;
+  type: "Full" | "Landscape";
 }
 
 interface PreviewProps {
   type: "Preview";
 }
 
-interface FullProps extends BaseProps {
-  type: "Full";
-  getBackSide: boolean;
-}
-
-interface LandscapeProps extends BaseProps {
-  type: "Landscape";
-  getBackSide: boolean;
-}
-
-type Props = PreviewProps | FullProps | LandscapeProps;
+type Props = PreviewProps | BaseProps;
 
 // fiscal card fac-simile dimensions: 546 x 870
 const contentWidth =
