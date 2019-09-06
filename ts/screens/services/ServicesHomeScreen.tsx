@@ -393,7 +393,7 @@ const mapStateToProps = (state: GlobalState) => {
   const { services } = state.entities;
 
   const potUserMetadata = userMetadataSelector(state);
-  // TODO: disable selection of areas of interest if the user metadata are not noaded
+  // TODO: disable selection of areas of interest if the user metadata are not loaded
   // (it causes the new selection is not loaded) https://www.pivotaltracker.com/story/show/168312476
   const userMetadata = pot.getOrElse(potUserMetadata, noneUserMetadata);
 
