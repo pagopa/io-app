@@ -97,7 +97,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.props.refreshServices();
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       StatusBar.setBarStyle("dark-content");
-      StatusBar.setBackgroundColor(customVariables.colorWhite, true);
+      if (Platform.OS === "android") {
+        StatusBar.setBackgroundColor(customVariables.colorWhite, true);
+      }
     }); // tslint:disable-line no-object-mutation
   }
 

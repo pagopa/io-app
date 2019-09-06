@@ -4,7 +4,7 @@
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { StatusBar } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationInjectedProps
@@ -73,7 +73,9 @@ class OldServicesHomeScreen extends React.Component<Props> {
     this.props.refreshServices();
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       StatusBar.setBarStyle("dark-content");
-      StatusBar.setBackgroundColor(customVariables.colorWhite, true);
+      if (Platform.OS === "android") {
+        StatusBar.setBackgroundColor(customVariables.colorWhite, true);
+      }
     }); // tslint:disable-line no-object-mutation
   }
 

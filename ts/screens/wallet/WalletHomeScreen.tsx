@@ -7,7 +7,7 @@ import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StatusBar, StyleSheet } from "react-native";
+import { Image, Platform, StatusBar, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
   NavigationEventSubscription,
@@ -129,7 +129,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
     this.props.loadTransactions();
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       StatusBar.setBarStyle("light-content");
-      StatusBar.setBackgroundColor(customVariables.brandDarkGray, true);
+      if (Platform.OS === "android") {
+        StatusBar.setBackgroundColor(customVariables.brandDarkGray, true);
+      }
     }); // tslint:disable-line no-object-mutation
   }
 

@@ -117,7 +117,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       StatusBar.setBarStyle("light-content");
-      StatusBar.setBackgroundColor(customVariables.brandDarkGray, true);
+      if (Platform.OS === "android") {
+        StatusBar.setBackgroundColor(customVariables.brandDarkGray, true);
+      }
     }); // tslint:disable-line no-object-mutation
   }
 
