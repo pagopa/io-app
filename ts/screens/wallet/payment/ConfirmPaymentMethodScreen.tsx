@@ -13,13 +13,12 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  ContextualHelpInjectedProps,
-  withContextualHelp
-} from "../../../components/helpers/withContextualHelp";
+import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -69,7 +68,7 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  ContextualHelpInjectedProps &
+  LightModalContextInterface &
   OwnProps;
 
 const styles = StyleSheet.create({
@@ -114,6 +113,17 @@ const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
   );
 
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
+  private showHelp = () => {
+    // tslint:disable-next-line:no-unused-expression
+    this.props.showModal(
+      <ContextualHelp
+        onClose={this.props.hideModal}
+        title={I18n.t("wallet.whyAFee.title")}
+        body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
+      />
+    );
+  };
+
   public render(): React.ReactNode {
     const verifica = this.props.navigation.getParam("verifica");
     const wallet = this.props.navigation.getParam("wallet");
@@ -173,7 +183,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <Col size={4}>
                     <Text>
                       {`${I18n.t("wallet.ConfirmPayment.fee")} `}
-                      <Text link={true} onPress={this.props.showHelp}>
+                      <Text link={true} onPress={this.showHelp}>
                         {I18n.t("wallet.ConfirmPayment.why")}
                       </Text>
                     </Text>
@@ -424,12 +434,10 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
-  withContextualHelp(
+  withLightModalContext(
     withErrorModal(
       withLoadingSpinner(ConfirmPaymentMethodScreen),
       (_: string) => _
-    ),
-    I18n.t("wallet.whyAFee.title"),
-    () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
+    )
   )
 );
