@@ -177,29 +177,35 @@ class ProfileMainScreen extends React.PureComponent<Props> {
   };
 
   private onPagoPAEnvironmentToggle = (enabled: boolean) => {
-    Alert.alert(
-      I18n.t("profile.main.pagoPaEnvironment.alertConfirmTitle"),
-      I18n.t("profile.main.pagoPaEnvironment.alertConfirmMessage"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.confirm"),
-          style: "destructive",
-          onPress: () => {
-            this.props.setPagoPATestEnabled(enabled);
-            this.props.showModal(
-              <AlertModal
-                message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-              />
-            );
+    if (enabled) {
+      Alert.alert(
+        I18n.t("profile.main.pagoPaEnvironment.alertConfirmTitle"),
+        I18n.t("profile.main.pagoPaEnvironment.alertConfirmMessage"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.confirm"),
+            style: "destructive",
+            onPress: () => {
+              this.props.setPagoPATestEnabled(enabled);
+              this.props.showModal(
+                <AlertModal
+                  message={I18n.t(
+                    "profile.main.pagoPaEnvironment.alertMessage"
+                  )}
+                />
+              );
+            }
           }
-        }
-      ],
-      { cancelable: false }
-    );
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this.props.setPagoPATestEnabled(enabled);
+    }
   };
 
   /**
