@@ -210,7 +210,6 @@ class TransactionDetailsScreen extends React.Component<Props> {
   };
 
   private showHelp = () => {
-    // tslint:disable-next-line:no-unused-expression
     this.props.showModal(
       <ContextualHelp
         onClose={this.props.hideModal}
