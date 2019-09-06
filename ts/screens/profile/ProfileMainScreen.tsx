@@ -176,6 +176,14 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     );
   };
 
+  private showModal() {
+    this.props.showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
+  }
+
   private onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
       Alert.alert(
@@ -191,13 +199,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             style: "destructive",
             onPress: () => {
               this.props.setPagoPATestEnabled(enabled);
-              this.props.showModal(
-                <AlertModal
-                  message={I18n.t(
-                    "profile.main.pagoPaEnvironment.alertMessage"
-                  )}
-                />
-              );
+              this.showModal();
             }
           }
         ],
@@ -205,6 +207,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       );
     } else {
       this.props.setPagoPATestEnabled(enabled);
+      this.showModal();
     }
   };
 
