@@ -11,7 +11,8 @@ import {
   RefreshControl,
   SectionList,
   SectionListData,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
@@ -22,6 +23,7 @@ import variables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
+import IconFont from "../ui/IconFont";
 import NewServiceListItem from "./NewServiceListItem";
 
 type AnimatedProps = {
@@ -94,8 +96,21 @@ class ServiceList extends React.Component<Props> {
       sectionHeader={info.section.organizationName}
       style={styles.padded}
       logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
+      rightItem={this.renderQuickSectionDeletion}
     />
   );
+
+  private renderQuickSectionDeletion = (info: {
+    section: ServicesSectionState;
+  }): React.ReactNode => {
+    const onPressItem = () => {};
+    // TODO: use logic implemented within https://www.pivotaltracker.com/story/show/166762981
+    return (
+      <TouchableOpacity onPress={onPressItem}>
+        <IconFont name={"io-trash"} color={"#C7D1D9"} size={17} />
+      </TouchableOpacity>
+    );
+  };
 
   private isRead = (
     potService: pot.Pot<ServicePublic, Error>,
