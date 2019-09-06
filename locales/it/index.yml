@@ -144,14 +144,15 @@ profile:
       confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
       bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     pagoPaEnvironment:
+      pagoPaEnv: Ambiente PagoPA di Test
+      pagoPAEnvAlert: La modifica richiede il reboot dell'app
+      alertConfirmTitle: Vuoi usare l'ambiente di test pagoPA?
+      alertConfirmMessage: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
       alertMessage: È necessario il riavvio dell'applicazione affinchè le modifiche abbiano effetto.
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
-    pagoPaEnv: Ambiente PagoPA di Test
-    pagoPAEnvAlert: La modifica richiede il reboot dell'app
-    pagoPAConfirmAlertTitle: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
   preferences:
     title: Preferenze
     subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
