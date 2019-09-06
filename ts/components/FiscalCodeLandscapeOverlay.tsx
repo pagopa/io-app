@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
 export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   Props
 > {
-  private scrollViewHeight: number = 0;
   private ScrollVewRef = React.createRef<ScrollView>();
 
   private handleBackPress = () => {
@@ -65,10 +64,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
     if (this.props.showBackSide) {
       setTimeout(() => {
         if (this.ScrollVewRef.current) {
-          this.ScrollVewRef.current.scrollTo({
-            y: this.scrollViewHeight,
-            animated: true
-          });
+          this.ScrollVewRef.current.scrollToEnd({ animated: true });
         }
       }, 100);
     }
@@ -88,13 +84,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
           backgroundColor={customVariables.brandDarkGray}
           barStyle={"light-content"}
         />
-        <ScrollView
-          style={styles.content}
-          ref={this.ScrollVewRef}
-          onContentSizeChange={(_, height) => {
-            this.scrollViewHeight = height; // tslint:disable-line no-object-mutation
-          }}
-        >
+        <ScrollView style={styles.content} ref={this.ScrollVewRef}>
           <View style={styles.headerSpacer} />
           <View spacer={true} />
           <View>

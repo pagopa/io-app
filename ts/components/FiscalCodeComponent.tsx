@@ -28,23 +28,15 @@ import { extractFiscalCodeData } from "../utils/profile";
 interface BaseProps {
   profile: UserProfile;
   municipality: MunicipalityState;
+  getBackSide: boolean;
+  type: "Full" | "Landscape";
 }
 
 interface PreviewProps {
   type: "Preview";
 }
 
-interface FullProps extends BaseProps {
-  type: "Full";
-  getBackSide?: boolean;
-}
-
-interface LandscapeProps extends BaseProps {
-  type: "Landscape";
-  getBackSide?: boolean;
-}
-
-type Props = PreviewProps | FullProps | LandscapeProps;
+type Props = PreviewProps | BaseProps;
 
 // fiscal card fac-simile dimensions: 546 x 870
 const contentWidth =
