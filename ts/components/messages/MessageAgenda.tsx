@@ -25,6 +25,7 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { format } from "../../utils/dates";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
@@ -433,6 +434,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             styles.scrollList
           ]}
           scrollEventThrottle={8}
+          ListFooterComponent={sections.length !== 0 && <EdgeBorderComponent />}
         />
       </View>
     );

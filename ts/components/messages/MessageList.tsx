@@ -22,6 +22,7 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import customVariables from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import MessageListItem from "./MessageListItem";
 
 type ItemLayout = {
@@ -351,6 +352,9 @@ class MessageList extends React.Component<Props, State> {
           getItemLayout={this.getItemLayout}
           onScroll={animated ? animated.onScroll : undefined}
           onLayout={this.handleOnLayoutChange}
+          ListFooterComponent={
+            messageStates.length !== 0 && <EdgeBorderComponent />
+          }
         />
       </React.Fragment>
     );
