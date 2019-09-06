@@ -17,12 +17,8 @@ import { Linking } from "react-native";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import {
-  ContextualHelpInjectedProps,
-  withContextualHelp
-} from "../../components/helpers/withContextualHelp";
+
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 
@@ -30,7 +26,7 @@ type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = OwnProps & ContextualHelpInjectedProps;
+type Props = OwnProps;
 
 const styles = StyleSheet.create({
   value: {
@@ -76,9 +72,6 @@ class SpidInformationScreen extends React.Component<Props, never> {
 
           <View spacer={true} large={true} />
           <Text>{I18n.t("authentication.spid_information.paragraph1")}</Text>
-          <Text link={true} onPress={this.props.showHelp}>
-            {I18n.t("authentication.spid_information.moreLinkText")}
-          </Text>
           <View spacer={true} extralarge={true} />
 
           <H1>{I18n.t("authentication.spid_information.subtitle")}</H1>
@@ -126,10 +119,4 @@ class SpidInformationScreen extends React.Component<Props, never> {
   }
 }
 
-export default connect()(
-  withContextualHelp<Props>(
-    SpidInformationScreen,
-    I18n.t("profile.main.privacy.title"),
-    () => <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
-  )
-);
+export default connect()(SpidInformationScreen);
