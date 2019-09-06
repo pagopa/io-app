@@ -61,17 +61,16 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
 
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-    if (this.props.showBackSide) {
-      setTimeout(() => {
-        if (this.ScrollVewRef.current) {
-          this.ScrollVewRef.current.scrollToEnd({ animated: true });
-        }
-      }, 100);
-    }
   }
 
   public componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  private scrollToEnd() {
+    if (this.props.showBackSide && this.ScrollVewRef.current) {
+      this.ScrollVewRef.current.scrollToEnd({ animated: true });
+    }
   }
 
   public render() {
@@ -84,7 +83,11 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
           backgroundColor={customVariables.brandDarkGray}
           barStyle={"light-content"}
         />
-        <ScrollView style={styles.content} ref={this.ScrollVewRef}>
+        <ScrollView
+          style={styles.content}
+          ref={this.ScrollVewRef}
+          onLayout={() => this.scrollToEnd()}
+        >
           <View style={styles.headerSpacer} />
           <View spacer={true} />
           <View>
