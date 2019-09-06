@@ -67,11 +67,11 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
-  private scrollToEnd() {
+  private scrollToEnd = () => {
     if (this.props.showBackSide && this.ScrollVewRef.current) {
       this.ScrollVewRef.current.scrollToEnd({ animated: true });
     }
-  }
+  };
 
   public render() {
     return (
@@ -86,7 +86,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
         <ScrollView
           style={styles.content}
           ref={this.ScrollVewRef}
-          onLayout={() => this.scrollToEnd()}
+          onLayout={this.scrollToEnd}
         >
           <View style={styles.headerSpacer} />
           <View spacer={true} />
