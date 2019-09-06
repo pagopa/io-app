@@ -106,9 +106,19 @@ const migrations: MigrationManifest = {
   },
 
   // Version 5
+  // we changed the way ToS acceptance is managed
+  "5": (state: PersistedState) => ({
+    ...state,
+    onboarding: {
+      isFingerprintAcknowledged: (state as PersistedGlobalState).onboarding
+        .isFingerprintAcknowledged
+    }
+  }),
+
+  // Version 6
   // we removed selectedFiscalCodes from organizations
-  "5": (state: PersistedState) => {
-    const entitiesState = (state as any).entities;
+  "6": (state: PersistedState) => {
+    const entitiesState = (state as PersistedGlobalState).entities;
     const organizations = entitiesState.organizations;
     return {
       ...state,
@@ -122,17 +132,7 @@ const migrations: MigrationManifest = {
         }
       }
     };
-  },
-
-  // Version 6
-  // we changed the way ToS acceptance is managed
-  "6": (state: PersistedState) => ({
-    ...state,
-    onboarding: {
-      isFingerprintAcknowledged: (state as PersistedGlobalState).onboarding
-        .isFingerprintAcknowledged
-    }
-  })
+  }
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;

@@ -444,6 +444,8 @@ const mergeProps = (
   dispatchProps: ReturnType<typeof mapDispatchToProps>,
   ownProps: OwnProps
 ) => {
+  // If the user updates the area of interest, the upsert of
+  // the user metadata stored on backend is triggered
   const dispatchUpdateOrganizationsOfInterestMetadata = (
     selectedItemIds: Option<Set<string>>
   ) => {
@@ -454,6 +456,7 @@ const mergeProps = (
       );
     }
   };
+
   return {
     ...stateProps,
     ...dispatchProps,
