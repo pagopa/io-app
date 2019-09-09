@@ -4,7 +4,7 @@
  */
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Button, Container, Text, Toast, View } from "native-base";
+import { Button, Container, Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
@@ -29,6 +29,7 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { openAppSettings } from "../../../utils/appSettings";
 import { decodePagoPaQrCode } from "../../../utils/payment";
+import { showToast } from "../../../utils/showToast";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -40,6 +41,7 @@ type State = {
 };
 
 const screenWidth = Dimensions.get("screen").width;
+const cameraTextOverlapping = 20;
 
 const styles = StyleSheet.create({
   padded: {
@@ -51,8 +53,15 @@ const styles = StyleSheet.create({
     backgroundColor: variables.brandPrimaryInverted
   },
 
-  centerText: {
-    textAlign: "center"
+  bottomText: {
+    textAlign: "center",
+    paddingTop: cameraTextOverlapping
+  },
+
+  content: {
+    backgroundColor: variables.colorWhite,
+    marginTop: -cameraTextOverlapping,
+    zIndex: 1
   },
 
   cameraContainer: {
@@ -66,9 +75,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     alignSelf: "center",
-    marginTop: -20,
+    marginTop: -cameraTextOverlapping,
     width: screenWidth - variables.contentPadding * 2,
-    backgroundColor: variables.colorWhite
+    backgroundColor: variables.colorWhite,
+    zIndex: 2
   },
 
   camera: {
@@ -97,7 +107,7 @@ const styles = StyleSheet.create({
 /**
  * Delay for reactivating the QR scanner after a scan
  */
-const QRCODE_SCANNER_REACTIVATION_TIME_MS = 1000;
+const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
@@ -116,10 +126,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    * Handles invalid PagoPA QR codes
    */
   private onInvalidQrCode = () => {
-    Toast.show({
-      text: I18n.t("wallet.QRtoPay.wrongQrCode"),
-      type: "danger"
-    });
+    showToast(I18n.t("wallet.QRtoPay.wrongQrCode"), "danger");
 
     this.setState({
       scanningState: "INVALID"
@@ -197,8 +204,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      bordered: true,
-      onPress: this.props.navigateToWalletHome,
+      cancel: true,
+      onPress: this.props.navigation.goBack,
       title: I18n.t("global.buttons.cancel")
     };
 
@@ -237,24 +244,27 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                   >
                     <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
                   </Button>
-                  <View spacer={true} />
-                  <Text style={[styles.padded, styles.centerText]}>
-                    {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                  </Text>
-                  <View spacer={true} extralarge={true} />
+                  <View style={styles.content}>
+                    <View spacer={true} />
+                    <Text style={[styles.padded, styles.bottomText]}>
+                      {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
+                    </Text>
+                    <View spacer={true} extralarge={true} />
+                  </View>
                 </View>
               }
-              cameraProps={{ ratio: "1:1" }}
+              // "captureAudio" enable/disable microphone permission
+              cameraProps={{ ratio: "1:1", captureAudio: false }}
               // "checkAndroid6Permissions" property enables permission checking for
               // Android versions greater than 6.0 (23+).
               checkAndroid6Permissions={true}
               permissionDialogTitle={I18n.t(
-                "wallet.QRtoPay.cameraUsagePerissionInfobox.title"
+                "wallet.QRtoPay.cameraUsagePermissionInfobox.title"
               )}
               permissionDialogMessage={I18n.t(
-                "wallet.QRtoPay.cameraUsagePerissionInfobox.message"
+                "wallet.QRtoPay.cameraUsagePermissionInfobox.message"
               )}
-              // "notAuthorizedView" is by defatult available on iOS systems ONLY.
+              // "notAuthorizedView" is by default available on iOS systems ONLY.
               // In order to make Android systems act the same as iOSs you MUST
               // enable "checkAndroid6Permissions" property as well.
               // On devices before SDK version 23, the permissions are automatically

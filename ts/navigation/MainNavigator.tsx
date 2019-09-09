@@ -16,14 +16,18 @@ import {
 } from "react-navigation";
 import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
+import ServiceTabIcon from "../components/ServiceTabIcon";
 import IconFont from "../components/ui/IconFont";
+import WalletTabIcon from "../components/WalletTabIcon";
+import { newHomeServicesEnabled } from "../config";
 import I18n from "../i18n";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import MessageNavigator from "./MessagesNavigator";
-import PreferencesNavigator from "./PreferencesNavigator";
+import OldServicesNavigator from "./OldServicesNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
+import ServicesNavigator from "./ServicesNavigator";
 import WalletNavigator from "./WalletNavigator";
 type Routes = keyof typeof ROUTES;
 
@@ -32,7 +36,7 @@ const ROUTE_LABEL: RouteLabelMap = {
   MESSAGES_NAVIGATOR: I18n.t("global.navigator.messages"),
   WALLET_HOME: I18n.t("global.navigator.wallet"),
   DOCUMENTS_HOME: I18n.t("global.navigator.documents"),
-  PREFERENCES_HOME: I18n.t("global.navigator.preferences"),
+  SERVICES_NAVIGATOR: I18n.t("global.navigator.services"),
   PROFILE_NAVIGATOR: I18n.t("global.navigator.profile")
 };
 
@@ -41,7 +45,7 @@ const ROUTE_ICON: RouteIconMap = {
   MESSAGES_NAVIGATOR: "io-messaggi",
   WALLET_HOME: "io-portafoglio",
   DOCUMENTS_HOME: "io-documenti",
-  PREFERENCES_HOME: "io-preferenze",
+  SERVICES_NAVIGATOR: "io-servizi",
   PROFILE_NAVIGATOR: "io-profilo"
 };
 
@@ -131,8 +135,8 @@ const navigation = createBottomTabNavigator(
     // [ROUTES.DOCUMENTS_HOME]: {
     //   screen: PlaceholderScreen
     // },
-    [ROUTES.PREFERENCES_HOME]: {
-      screen: PreferencesNavigator
+    [ROUTES.SERVICES_NAVIGATOR]: {
+      screen: newHomeServicesEnabled ? ServicesNavigator : OldServicesNavigator
     },
     [ROUTES.PROFILE_NAVIGATOR]: {
       screen: ProfileNavigator
@@ -171,10 +175,24 @@ const navigation = createBottomTabNavigator(
             />
           );
         }
+        if (iconName === ROUTE_ICON.WALLET_HOME) {
+          return (
+            <WalletTabIcon
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
         if (iconName === ROUTE_ICON.PROFILE_NAVIGATOR) {
           return (
             <ProfileTabIcon
               size={variables.iconSize3}
+              color={options.tintColor === null ? undefined : options.tintColor}
+            />
+          );
+        }
+        if (iconName === ROUTE_ICON.SERVICES_NAVIGATOR) {
+          return (
+            <ServiceTabIcon
               color={options.tintColor === null ? undefined : options.tintColor}
             />
           );

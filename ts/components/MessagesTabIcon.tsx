@@ -1,75 +1,40 @@
-import { Badge, View } from "native-base";
 import React from "react";
-import { Platform, StyleSheet, Text } from "react-native";
+
 import PushNotification from "react-native-push-notification";
 import { connect } from "react-redux";
-import { messagesUnreadSelector } from "../store/reducers/entities/messages";
+
+import { messagesUnreadAndUnarchivedSelector } from "../store/reducers/entities/messages";
 import { GlobalState } from "../store/reducers/types";
-import variables from "../theme/variables";
-import IconFont from "./ui/IconFont";
+import TabIconComponent from "./ui/TabIconComponent";
 
 type OwnProps = {
   color?: string;
 };
-const MAX_BADGE_VALUE = 99;
-const styles = StyleSheet.create({
-  textBadgeStyle: {
-    fontSize: 10,
-    fontFamily: "Titillium Web",
-    fontWeight: "bold",
-    color: "white",
-    flex: 1,
-    position: "absolute",
-    height: 19,
-    width: 19,
-    textAlign: "center",
-    paddingRight: 4,
-    top: Platform.OS === "ios" ? 0 : undefined
-  },
-  badgeStyle: {
-    backgroundColor: variables.brandPrimary,
-    borderColor: "white",
-    borderWidth: 2,
-    position: "absolute",
-    elevation: 0.1,
-    shadowColor: "white",
-    height: 19,
-    width: 19,
-    left: 12,
-    bottom: 10
-  }
-});
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
+const MAX_BADGE_VALUE = 99;
+
 /**
- * Message icon add badge.
+ * Message tab icon with badge indicator
  */
 class MessagesTabIcon extends React.PureComponent<Props> {
   public render() {
     const { color, badgeValue } = this.props;
     return (
-      <View>
-        <IconFont
-          name={"io-messaggi"}
-          size={variables.iconSize3}
-          color={color}
-        />
-        {badgeValue > 0 ? (
-          <Badge style={styles.badgeStyle}>
-            <Text style={[styles.textBadgeStyle]}>{badgeValue}</Text>
-          </Badge>
-        ) : null}
-      </View>
+      <TabIconComponent
+        iconName={"io-messaggi"}
+        badgeValue={badgeValue}
+        color={color}
+      />
     );
   }
 }
 
 function mapStateToProps(state: GlobalState) {
-  const messagesUnread = messagesUnreadSelector(state);
+  const messagesUnreadAndUnarchived = messagesUnreadAndUnarchivedSelector(state);
 
-  const badgeValue =
-    messagesUnread < MAX_BADGE_VALUE ? messagesUnread : MAX_BADGE_VALUE;
+  const badgeValue = Math.min(messagesUnreadAndUnarchived, MAX_BADGE_VALUE);
 
   PushNotification.setApplicationIconBadgeNumber(badgeValue);
 

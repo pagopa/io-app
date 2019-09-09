@@ -3,21 +3,23 @@
  * a "pay notice" button and payment methods info/button to
  * add new ones
  */
+import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, H1, H3, Left, Right, Text, View } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import { none } from "fp-ts/lib/Option";
+import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
+import H5 from "../../components/ui/H5";
+import IconFont from "../../components/ui/IconFont";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { DEFAULT_APPLICATION_NAME } from "../../config";
 import I18n from "../../i18n";
 import {
   navigateToPaymentScanQrCode,
@@ -26,13 +28,18 @@ import {
   navigateToWalletList
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
+import {
+  fetchTransactionsRequest,
+  readTransaction
+} from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
+import { transactionsReadSelector } from "../../store/reducers/entities";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
-import { Transaction } from "../../types/pagopa";
+import { Transaction, Wallet } from "../../types/pagopa";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -43,11 +50,6 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  flex: {
-    alignItems: "flex-end",
-    justifyContent: "space-between"
-  },
-
   inLineSpace: {
     lineHeight: 20
   },
@@ -62,17 +64,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "transparent"
   },
+
+  flex1: {
+    flex: 1
+  },
+
+  flexRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+
   emptyListWrapper: {
     padding: variables.contentPadding,
     alignItems: "center"
   },
+
   emptyListContentTitle: {
     paddingBottom: variables.contentPadding / 2,
     fontSize: variables.fontSizeSmall
-  },
-
-  brandDarkGray: {
-    color: variables.brandDarkGray
   },
 
   bordercColorBrandGray: {
@@ -83,9 +93,16 @@ const styles = StyleSheet.create({
     color: variables.brandGray
   },
 
-  whiteContent: {
-    backgroundColor: variables.colorWhite,
-    flex: 1
+  brandDarkGray: {
+    color: variables.brandDarkGray
+  },
+
+  brandLightGray: {
+    color: variables.brandLightGray
+  },
+
+  whiteBg: {
+    backgroundColor: variables.colorWhite
   },
 
   noBottomPadding: {
@@ -94,63 +111,66 @@ const styles = StyleSheet.create({
   }
 });
 
-const ListEmptyComponent = (
-  <Content scrollEnabled={false} noPadded={true}>
-    <View style={styles.emptyListWrapper}>
-      <Text style={styles.emptyListContentTitle}>
-        {I18n.t("wallet.noTransactionsInWalletHome")}
-      </Text>
-      <Image
-        source={require("../../../img/messages/empty-transaction-list-icon.png")}
-      />
-    </View>
-  </Content>
-);
-
 /**
  * Wallet Home Screen
  */
 class WalletHomeScreen extends React.Component<Props, never> {
-  private header() {
-    return (
-      <Row style={styles.flex}>
-        <H1 style={styles.white}>{I18n.t("wallet.wallet")}</H1>
-        <Image source={require("../../../img/wallet/bank.png")} />
-      </Row>
-    );
+  public componentDidMount() {
+    // WIP loadTransactions should not be called from here
+    // (transactions should be persisted & fetched periodically)
+    // WIP WIP create pivotal story
+    this.props.loadWallets();
+    this.props.loadTransactions();
   }
 
-  private withCardsHeader() {
+  private cardHeader(isError: boolean = false) {
     return (
-      <Grid>
-        {this.header()}
-        <View spacer={true} />
-        <Row>
-          <Left>
-            <Text bold={true} white={true}>
-              {I18n.t("wallet.paymentMethods")}
-            </Text>
-          </Left>
-          <Right>
+      <View style={styles.flexRow}>
+        <View>
+          <H5 style={styles.brandLightGray}>
+            {I18n.t("wallet.paymentMethods")}
+          </H5>
+        </View>
+        {!isError && (
+          <View>
             <AddPaymentMethodButton
               onPress={this.props.navigateToWalletAddPaymentMethod}
             />
-          </Right>
-        </Row>
-      </Grid>
+          </View>
+        )}
+      </View>
     );
   }
 
-  private withoutCardsHeader() {
+  private cardPreview(wallets: any) {
+    return (
+      <View>
+        {this.cardHeader()}
+        <View spacer={true} />
+        <CardsFan
+          wallets={
+            wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
+          }
+          navigateToWalletList={this.props.navigateToWalletList}
+        />
+      </View>
+    );
+  }
+
+  private withoutCardsHeader(hasNotSupportedWalletsOnly: boolean) {
     return (
       <Grid>
-        {this.header()}
-        <View spacer={true} />
         <Row>
           <Text note={true} white={true} style={styles.inLineSpace}>
             {I18n.t("wallet.newPaymentMethod.addDescription")}
+            {hasNotSupportedWalletsOnly && (
+              <Text note={true} white={true} bold={true}>
+                {` ${I18n.t("wallet.newPaymentMethod.walletAlert")}`}
+              </Text>
+            )}
           </Text>
         </Row>
+        <Row />
         <Row>
           <View spacer={true} />
         </Row>
@@ -178,8 +198,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
   private loadingWalletsHeader() {
     return (
       <View>
-        {this.header()}
-        <View spacer={true} />
         <BoxedRefreshIndicator
           caption={
             <Text white={true} style={styles.inLineSpace}>
@@ -194,8 +212,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
   private errorWalletsHeader() {
     return (
       <View>
-        {this.withCardsHeader()}
-        <View spacer={true} large={true} />
+        {this.cardHeader(true)}
+        <View spacer={true} />
         <Text style={[styles.white, styles.inLineSpace]}>
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
@@ -214,80 +232,114 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  public componentDidMount() {
-    // WIP loadTransactions should not be called from here
-    // (transactions should be persisted & fetched periodically)
-    // WIP WIP create pivotal story
-    this.props.loadWallets();
-    this.props.loadTransactions();
+  private transactionError() {
+    return (
+      <Content
+        scrollEnabled={false}
+        style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
+      >
+        <View spacer={true} />
+        <H5 style={styles.brandDarkGray}>{I18n.t("wallet.transactions")}</H5>
+        <View spacer={true} large={true} />
+        <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
+          {I18n.t("wallet.transactionsLoadFailure")}
+        </Text>
+        <View spacer={true} />
+        <Button
+          block={true}
+          light={true}
+          bordered={true}
+          small={true}
+          onPress={this.props.loadTransactions}
+        >
+          <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
+        </Button>
+        <View spacer={true} large={true} />
+      </Content>
+    );
   }
 
-  public render(): React.ReactNode {
-    const { potWallets, potTransactions } = this.props;
-    const wallets = pot.getOrElse(potWallets, []);
-    const headerContents = pot.isLoading(potWallets)
-      ? this.loadingWalletsHeader()
-      : pot.isError(potWallets)
-        ? this.errorWalletsHeader()
-        : wallets.length > 0
-          ? this.withCardsHeader()
-          : this.withoutCardsHeader();
-
+  private listEmptyComponent() {
     return (
-      <WalletLayout
-        title={DEFAULT_APPLICATION_NAME}
-        headerContents={headerContents}
-        displayedWallets={
-          wallets.length === 0 ? null : (
-            <CardsFan
-              wallets={
-                wallets.length === 1 ? [wallets[0]] : [wallets[0], wallets[1]]
-              }
-              navigateToWalletList={this.props.navigateToWalletList}
-            />
-          )
+      <Content scrollEnabled={false} noPadded={true}>
+        <View style={styles.emptyListWrapper}>
+          <Text style={styles.emptyListContentTitle}>
+            {I18n.t("wallet.noTransactionsInWalletHome")}
+          </Text>
+          <Image
+            source={require("../../../img/messages/empty-transaction-list-icon.png")}
+          />
+        </View>
+      </Content>
+    );
+  }
+
+  private transactionList(
+    potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
+  ) {
+    return (
+      <TransactionsList
+        title={I18n.t("wallet.latestTransactions")}
+        amount={I18n.t("wallet.amount")}
+        transactions={potTransactions}
+        navigateToTransactionDetails={
+          this.props.navigateToTransactionDetailsScreen
         }
-        onNewPaymentPress={
+        readTransactions={this.props.readTransactions}
+        ListEmptyComponent={this.listEmptyComponent()}
+      />
+    );
+  }
+
+  private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
+    return (
+      <Button
+        block={true}
+        onPress={
           pot.isSome(potWallets)
             ? this.props.navigateToPaymentScanQrCode
             : undefined
         }
-        allowGoBack={false}
       >
-        {pot.isError(potTransactions) ? (
-          <Content
-            scrollEnabled={false}
-            style={[styles.noBottomPadding, styles.whiteContent]}
-          >
-            <View spacer={true} />
-            <H3>{I18n.t("wallet.transactions")}</H3>
-            <View spacer={true} large={true} />
-            <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
-              {I18n.t("wallet.transactionsLoadFailure")}
-            </Text>
-            <View spacer={true} />
-            <Button
-              block={true}
-              light={true}
-              bordered={true}
-              small={true}
-              onPress={this.props.loadTransactions}
-            >
-              <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
-            </Button>
-            <View spacer={true} large={true} />
-          </Content>
-        ) : (
-          <TransactionsList
-            title={I18n.t("wallet.latestTransactions")}
-            totalAmount={I18n.t("wallet.total")}
-            transactions={potTransactions}
-            navigateToTransactionDetails={
-              this.props.navigateToTransactionDetailsScreen
-            }
-            ListEmptyComponent={ListEmptyComponent}
-          />
-        )}
+        <IconFont name="io-qr" style={styles.white} />
+        <Text>{I18n.t("wallet.payNotice")}</Text>
+      </Button>
+    );
+  }
+
+  public render(): React.ReactNode {
+    const { potWallets, potTransactions } = this.props;
+
+    const wallets = pot.getOrElse(potWallets, []);
+
+    const hasNotSupportedWalletsOnly =
+      wallets.length > 0 &&
+      wallets.filter(wallet => wallet.type === TypeEnum.CREDIT_CARD).length ===
+        0;
+
+    const headerContent = pot.isLoading(potWallets)
+      ? this.loadingWalletsHeader()
+      : pot.isError(potWallets)
+        ? this.errorWalletsHeader()
+        : wallets.length > 0 && !hasNotSupportedWalletsOnly
+          ? this.cardPreview(wallets)
+          : this.withoutCardsHeader(hasNotSupportedWalletsOnly);
+
+    const transactionContent = pot.isError(potTransactions)
+      ? this.transactionError()
+      : this.transactionList(potTransactions);
+
+    const footerContent = this.footerButton(potWallets);
+
+    return (
+      <WalletLayout
+        title={I18n.t("wallet.wallet")}
+        allowGoBack={false}
+        hasDynamicSubHeader={true}
+        topContent={headerContent}
+        footerContent={footerContent}
+      >
+        {transactionContent}
       </WalletLayout>
     );
   }
@@ -295,7 +347,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
-  potTransactions: latestTransactionsSelector(state)
+  potTransactions: latestTransactionsSelector(state),
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+  readTransactions: transactionsReadSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -303,13 +357,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
   navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
-  navigateToTransactionDetailsScreen: (transaction: Transaction) =>
+  navigateToTransactionDetailsScreen: (transaction: Transaction) => {
+    dispatch(readTransaction(transaction));
     dispatch(
       navigateToTransactionDetailsScreen({
         transaction,
         isPaymentCompletedTransaction: false
       })
-    ),
+    );
+  },
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
   loadWallets: () => dispatch(fetchWalletsRequest())
 });

@@ -1,6 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
 import Instabug from "instabug-reactnative";
-import { processColor } from "react-native";
 
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import { Locales } from "../../locales/locales";
@@ -16,7 +15,8 @@ type InstabugUserAttributeKeys =
   | "activeScreen"
   | "fiscalcode"
   | "identityProvider"
-  | "lastSeenMessageID";
+  | "lastSeenMessageID"
+  | "blockedPaymentRptId";
 
 const instabugLocales: InstabugLocales = {
   en: Instabug.locale.english,
@@ -28,7 +28,7 @@ export const initialiseInstabug = () => {
   Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.none]);
 
   // Set primary color for iOS. The Android's counterpart is inside MainApplication.java
-  Instabug.setPrimaryColor(processColor(variables.contentPrimaryBackground));
+  Instabug.setPrimaryColor(variables.contentPrimaryBackground);
 
   Instabug.setColorTheme(Instabug.colorTheme.light);
 

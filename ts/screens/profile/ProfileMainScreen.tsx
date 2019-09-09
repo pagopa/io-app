@@ -1,17 +1,24 @@
+/**
+ * A component to show the main screen of the Profile section
+ */
 import {
   Button,
   H3,
-  Left,
   List,
   ListItem,
-  Right,
   Switch,
   Text,
   Toast,
   View
 } from "native-base";
 import * as React from "react";
-import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
+import {
+  Alert,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
@@ -20,14 +27,16 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
-import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
+import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import DarkLayout from "../../components/screens/DarkLayout";
+import ListItemComponent from "../../components/screens/ListItemComponent";
+import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {
@@ -50,7 +59,7 @@ import {
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 
 type OwnProps = Readonly<{
@@ -84,6 +93,13 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     lineHeight: 40
+  },
+  whiteBg: {
+    backgroundColor: customVariables.colorWhite
+  },
+
+  noRightPadding: {
+    paddingRight: 0
   }
 });
 
@@ -93,9 +109,6 @@ const getAppLongVersion = () => {
   return `${DeviceInfo.getVersion()}${buildNumber}`;
 };
 
-/**
- * A component to show the main screen of the Profile section
- */
 class ProfileMainScreen extends React.PureComponent<Props> {
   private handleClearCachePress = () => {
     this.props.clearCache();
@@ -107,6 +120,43 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
     this.props.hideModal();
   };
+
+  private developerListItem(
+    title: string,
+    switchValue: boolean,
+    onSwitchValueChange: (value: boolean) => void,
+    description?: string
+  ) {
+    return (
+      <ListItem style={styles.noRightPadding}>
+        <View style={styles.developerSectionItem}>
+          <View style={styles.developerSectionItemLeft}>
+            <Text style={styles.itemLeftText}>{title}</Text>
+
+            <Text style={styles.itemLeftText}>{description}</Text>
+          </View>
+          <View style={styles.developerSectionItemRight}>
+            <Switch value={switchValue} onValueChange={onSwitchValueChange} />
+          </View>
+        </View>
+      </ListItem>
+    );
+  }
+
+  private debugListItem(title: string, onPress: () => void, isDanger: boolean) {
+    return (
+      <ListItem style={styles.noRightPadding}>
+        <Button
+          info={!isDanger}
+          danger={isDanger}
+          small={true}
+          onPress={onPress}
+        >
+          <Text numberOfLines={1}>{title}</Text>
+        </Button>
+      </ListItem>
+    );
+  }
 
   private onLogoutPress = () => {
     // Show a modal to let the user select a calendar
@@ -126,6 +176,46 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     );
   };
 
+  private showModal() {
+    this.props.showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
+  }
+
+  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
+    if (enabled) {
+      Alert.alert(
+        I18n.t("profile.main.pagoPaEnvironment.alertConfirmTitle"),
+        I18n.t("profile.main.pagoPaEnvironment.alertConfirmMessage"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.confirm"),
+            style: "destructive",
+            onPress: () => {
+              this.props.setPagoPATestEnabled(enabled);
+              this.showModal();
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this.props.setPagoPATestEnabled(enabled);
+      this.showModal();
+    }
+  };
+
+  /**
+   * since no experimental features are available we hide this method (see https://www.pivotaltracker.com/story/show/168263994).
+   * It could be usefull when new experimental features will be available
+   */
+  /*
   private onExperimentalFeaturesToggle = (enabled: boolean) => {
     if (enabled) {
       Alert.alert(
@@ -152,15 +242,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
     }
   };
-
-  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
-    this.props.setPagoPATestEnabled(enabled);
-    this.props.showModal(
-      <AlertModal
-        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-      />
-    );
-  };
+  */
 
   private confirmResetAlert = () =>
     Alert.alert(
@@ -195,250 +277,167 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       sessionToken,
       walletToken,
       notificationToken,
-      notificationId,
-      isExperimentalFeaturesEnabled
+      notificationId
     } = this.props;
-    return (
-      <TopScreenComponent
-        title={I18n.t("profile.main.screenTitle")}
-        appLogo={true}
-      >
-        <ScreenContentHeader
-          title={I18n.t("profile.main.screenTitle")}
-          icon={require("../../../img/icons/gears.png")}
-          subtitle={I18n.t("profile.main.screenSubtitle")}
-          banner={
-            isExperimentalFeaturesEnabled
-              ? ExperimentalFeaturesBanner
-              : undefined
-          }
-        />
 
-        <ScrollView ref={this.ServiceListRef}>
+    // TODO: once isExperimentalFeaturesEnabled is removed, shift again screenContent into the main return
+    // tslint:disable no-big-function
+    const screenContent = () => {
+      return (
+        <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
           <List withContentLateralPadding={true}>
-            {/* Privacy */}
-            <ListItem
-              first={true}
-              onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
-            >
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("profile.main.privacy.title")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.main.privacy.description")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
+            {/* Preferences */}
+            <ListItemComponent
+              title={I18n.t("profile.main.preferences.title")}
+              subTitle={I18n.t("profile.main.preferences.description")}
+              onPress={() =>
+                navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME)
+              }
+              isFirstItem={true}
+            />
 
-            <ListItem itemDivider={true}>
-              <Text>{I18n.t("profile.main.accountSectionHeader")}</Text>
-            </ListItem>
+            {/* Privacy */}
+            <ListItemComponent
+              title={I18n.t("profile.main.privacy.title")}
+              subTitle={I18n.t("profile.main.privacy.description")}
+              onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
+              isLastItem={true}
+            />
+
+            <SectionHeaderComponent
+              sectionHeader={I18n.t("profile.main.accountSectionHeader")}
+            />
 
             {/* Reset PIN */}
-            <ListItem onPress={this.confirmResetAlert}>
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("pin_login.pin.reset.button_short")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("pin_login.pin.reset.tip_short")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
+            <ListItemComponent
+              title={I18n.t("pin_login.pin.reset.button_short")}
+              subTitle={I18n.t("pin_login.pin.reset.tip_short")}
+              onPress={this.confirmResetAlert}
+            />
 
             {/* Logout/Exit */}
-            <ListItem onPress={this.onLogoutPress}>
-              <Left style={styles.itemLeft}>
-                <H3>{I18n.t("profile.main.logout")}</H3>
-                <Text style={styles.itemLeftText}>
-                  {I18n.t("profile.logout.menulabel")}
-                </Text>
-              </Left>
-              <Right>
-                <IconFont
-                  name="io-right"
-                  color={variables.contentPrimaryBackground}
-                />
-              </Right>
-            </ListItem>
+            <ListItemComponent
+              title={I18n.t("profile.main.logout")}
+              subTitle={I18n.t("profile.logout.menulabel")}
+              onPress={this.onLogoutPress}
+              isLastItem={true}
+            />
 
-            <ListItem itemDivider={true}>
-              <Text>{I18n.t("profile.main.developersSectionHeader")}</Text>
-            </ListItem>
+            <SectionHeaderComponent
+              sectionHeader={I18n.t("profile.main.developersSectionHeader")}
+            />
+            {
+              // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
+              // It could be usefull when new experimental features will be available
+              /*
+              this.developerListItem(
+              I18n.t("profile.main.experimentalFeatures.confirmTitle"),
+              this.props.isExperimentalFeaturesEnabled,
+              this.onExperimentalFeaturesToggle
+            )*/
+            }
 
-            <ListItem>
-              <View style={styles.developerSectionItem}>
-                <Text>
-                  {I18n.t("profile.main.experimentalFeatures.confirmTitle")}
-                </Text>
-                <Switch
-                  value={this.props.isExperimentalFeaturesEnabled}
-                  onValueChange={this.onExperimentalFeaturesToggle}
-                />
-              </View>
-            </ListItem>
+            {this.developerListItem(
+              I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
+              this.props.isPagoPATestEnabled,
+              this.onPagoPAEnvironmentToggle,
+              I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
+            )}
 
-            <ListItem>
-              <View style={styles.developerSectionItem}>
-                <View style={styles.developerSectionItemLeft}>
-                  <Text style={styles.itemLeftText}>
-                    {I18n.t("profile.main.pagoPaEnv")}
-                  </Text>
-
-                  <Text style={styles.itemLeftText}>
-                    {I18n.t("profile.main.pagoPAEnvAlert")}
-                  </Text>
-                </View>
-                <View style={styles.developerSectionItemRight}>
-                  <Switch
-                    value={this.props.isPagoPATestEnabled}
-                    onValueChange={this.onPagoPAEnvironmentToggle}
-                  />
-                </View>
-              </View>
-            </ListItem>
-
-            <ListItem>
-              <View style={styles.developerSectionItem}>
-                <Text>{I18n.t("profile.main.debugMode")}</Text>
-                <Switch
-                  value={this.props.isDebugModeEnabled}
-                  onValueChange={this.props.setDebugModeEnabled}
-                />
-              </View>
-            </ListItem>
+            {this.developerListItem(
+              I18n.t("profile.main.debugMode"),
+              this.props.isDebugModeEnabled,
+              this.props.setDebugModeEnabled
+            )}
 
             {this.props.isDebugModeEnabled && (
               <React.Fragment>
-                <ListItem>
-                  <Button
-                    info={true}
-                    small={true}
-                    onPress={() =>
-                      clipboardSetStringWithFeedback(getAppLongVersion())
-                    }
-                  >
-                    <Text>
-                      {`${I18n.t(
-                        "profile.main.appVersion"
-                      )} ${getAppLongVersion()}`}
-                    </Text>
-                  </Button>
-                </ListItem>
-                {backendInfo && (
-                  <ListItem>
-                    <Button
-                      info={true}
-                      small={true}
-                      onPress={() =>
-                        clipboardSetStringWithFeedback(backendInfo.version)
-                      }
-                    >
-                      <Text>
-                        {`${I18n.t("profile.main.backendVersion")} ${
-                          backendInfo.version
-                        }`}
-                      </Text>
-                    </Button>
-                  </ListItem>
-                )}
-                {sessionToken && (
-                  <ListItem>
-                    <Button
-                      info={true}
-                      small={true}
-                      onPress={() =>
-                        clipboardSetStringWithFeedback(sessionToken)
-                      }
-                    >
-                      <Text ellipsizeMode="tail" numberOfLines={1}>
-                        {`Session Token ${sessionToken}`}
-                      </Text>
-                    </Button>
-                  </ListItem>
-                )}
-                {walletToken && (
-                  <ListItem>
-                    <Button
-                      info={true}
-                      small={true}
-                      onPress={() =>
-                        clipboardSetStringWithFeedback(walletToken)
-                      }
-                    >
-                      <Text ellipsizeMode="tail" numberOfLines={1}>
-                        {`Wallet token ${walletToken}`}
-                      </Text>
-                    </Button>
-                  </ListItem>
+                {this.debugListItem(
+                  `${I18n.t("profile.main.appVersion")} ${getAppLongVersion()}`,
+                  () => clipboardSetStringWithFeedback(getAppLongVersion()),
+                  false
                 )}
 
-                <ListItem>
-                  <Button
-                    info={true}
-                    small={true}
-                    onPress={() =>
-                      clipboardSetStringWithFeedback(notificationId)
-                    }
-                  >
-                    <Text>{`Notification ID ${notificationId.slice(
-                      0,
-                      6
-                    )}`}</Text>
-                  </Button>
-                </ListItem>
+                {backendInfo &&
+                  this.debugListItem(
+                    `${I18n.t("profile.main.backendVersion")} ${
+                      backendInfo.version
+                    }`,
+                    () => clipboardSetStringWithFeedback(backendInfo.version),
+                    false
+                  )}
+                {sessionToken &&
+                  this.debugListItem(
+                    `Session Token ${sessionToken}`,
+                    () => clipboardSetStringWithFeedback(sessionToken),
+                    false
+                  )}
 
-                {notificationToken && (
-                  <ListItem>
-                    <Button
-                      info={true}
-                      small={true}
-                      onPress={() =>
-                        clipboardSetStringWithFeedback(notificationToken)
-                      }
-                    >
-                      <Text>{`Notification token ${notificationToken.slice(
-                        0,
-                        6
-                      )}`}</Text>
-                    </Button>
-                  </ListItem>
+                {walletToken &&
+                  this.debugListItem(
+                    `Wallet token ${walletToken}`,
+                    () => clipboardSetStringWithFeedback(walletToken),
+                    false
+                  )}
+
+                {this.debugListItem(
+                  `Notification ID ${notificationId.slice(0, 6)}`,
+                  () => clipboardSetStringWithFeedback(notificationId),
+                  false
                 )}
 
-                <ListItem>
-                  <Button
-                    danger={true}
-                    small={true}
-                    onPress={this.handleClearCachePress}
-                  >
-                    <Text>Clear cache</Text>
-                  </Button>
-                </ListItem>
+                {notificationToken &&
+                  this.debugListItem(
+                    `Notification token ${notificationToken.slice(0, 6)}`,
+                    () => clipboardSetStringWithFeedback(notificationToken),
+                    false
+                  )}
 
-                <ListItem>
-                  <Button
-                    danger={true}
-                    small={true}
-                    onPress={this.props.dispatchSessionExpired}
-                  >
-                    <Text>{I18n.t("profile.main.forgetCurrentSession")}</Text>
-                  </Button>
-                </ListItem>
+                {this.debugListItem(
+                  I18n.t("profile.main.clearCache"),
+                  this.handleClearCachePress,
+                  true
+                )}
+
+                {this.debugListItem(
+                  I18n.t("profile.main.forgetCurrentSession"),
+                  this.props.dispatchSessionExpired,
+                  true
+                )}
               </React.Fragment>
             )}
           </List>
         </ScrollView>
-      </TopScreenComponent>
+      );
+    };
+
+    return (
+      <DarkLayout
+        allowGoBack={false}
+        bounces={false}
+        headerBody={<IconFont name="io-logo" color={"white"} />}
+        title={I18n.t("profile.main.screenTitle")}
+        icon={require("../../../img/icons/profile-illustration.png")}
+        topContent={
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate(ROUTES.PROFILE_FISCAL_CODE)
+            }
+          >
+            <FiscalCodeComponent type={"Preview"} />
+          </TouchableOpacity>
+        }
+        contextualHelp={{
+          title: I18n.t("profile.main.screenTitle"),
+          body: () => (
+            <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
+          )
+        }}
+        banner={undefined}
+      >
+        {screenContent()}
+      </DarkLayout>
     );
   }
 }

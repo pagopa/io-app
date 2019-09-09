@@ -13,13 +13,12 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  ContextualHelpInjectedProps,
-  withContextualHelp
-} from "../../../components/helpers/withContextualHelp";
+import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -28,11 +27,11 @@ import { identificationRequest } from "../../../store/actions/identification";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
-  navigateToTransactionDetailsScreen,
-  navigateToWalletHome
+  navigateToTransactionDetailsScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  backToEntrypointPayment,
   paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentExecutePayment,
@@ -52,7 +51,6 @@ import {
   Transaction,
   Wallet
 } from "../../../types/pagopa";
-import { UNKNOWN_RECIPIENT } from "../../../types/unknown";
 import { AmountToImporto } from "../../../utils/amounts";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
@@ -70,7 +68,7 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  ContextualHelpInjectedProps &
+  LightModalContextInterface &
   OwnProps;
 
 const styles = StyleSheet.create({
@@ -115,6 +113,17 @@ const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
   );
 
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
+  private showHelp = () => {
+    // tslint:disable-next-line:no-unused-expression
+    this.props.showModal(
+      <ContextualHelp
+        onClose={this.props.hideModal}
+        title={I18n.t("wallet.whyAFee.title")}
+        body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
+      />
+    );
+  };
+
   public render(): React.ReactNode {
     const verifica = this.props.navigation.getParam("verifica");
     const wallet = this.props.navigation.getParam("wallet");
@@ -142,14 +151,14 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
     return (
       <BaseScreenComponent
-        goBack={true}
+        goBack={this.props.onCancel}
         headerTitle={I18n.t("wallet.ConfirmPayment.header")}
       >
         <Content noPadded={true}>
           <PaymentBannerComponent
             currentAmount={currentAmount}
             paymentReason={paymentReason}
-            recipient={recipient || UNKNOWN_RECIPIENT}
+            recipient={recipient}
             onCancel={this.props.onCancel}
           />
           <View style={styles.paddedLR}>
@@ -174,7 +183,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <Col size={4}>
                     <Text>
                       {`${I18n.t("wallet.ConfirmPayment.fee")} `}
-                      <Text link={true} onPress={this.props.showHelp}>
+                      <Text link={true} onPress={this.showHelp}>
                         {I18n.t("wallet.ConfirmPayment.why")}
                       </Text>
                     </Text>
@@ -291,7 +300,7 @@ const mapStateToProps = ({ wallet }: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const onTransactionTimeout = () => {
-    dispatch(navigateToWalletHome());
+    dispatch(backToEntrypointPayment());
     showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
   };
 
@@ -320,8 +329,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {
       // on failure:
-      // navigate to the wallet home
-      dispatch(navigateToWalletHome());
+      // navigate to entrypoint of payment or wallet home
+      dispatch(backToEntrypointPayment());
       // signal faliure
       dispatch(paymentCompletedFailure());
       // delete the active payment from PagoPA
@@ -354,6 +363,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const runAuthorizationAndPayment = () =>
     dispatch(
       identificationRequest(
+        false,
         {
           message: I18n.t("wallet.ConfirmPayment.identificationMessage")
         },
@@ -401,8 +411,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         buttonIndex => {
           if (buttonIndex === 0) {
             // on cancel:
-            // navigate to the wallet home
-            dispatch(navigateToWalletHome());
+            // navigate to entrypoint of payment or wallet home
+            dispatch(backToEntrypointPayment());
             // delete the active payment from PagoPA
             dispatch(runDeleteActivePaymentSaga());
             // reset the payment state
@@ -424,12 +434,10 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
-  withContextualHelp(
+  withLightModalContext(
     withErrorModal(
       withLoadingSpinner(ConfirmPaymentMethodScreen),
       (_: string) => _
-    ),
-    I18n.t("wallet.whyAFee.title"),
-    () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
+    )
   )
 );

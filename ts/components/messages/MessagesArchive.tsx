@@ -1,39 +1,35 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, Platform, StyleSheet } from "react-native";
+import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 
+import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import customVariables from "../../theme/variables";
 import {
-  InjectedWithMessagesSelectionProps,
-  withMessagesSelection
-} from "../helpers/withMessagesSelection";
+  InjectedWithItemsSelectionProps,
+  withItemsSelection
+} from "../helpers/withItemsSelection";
+import { ListSelectionBar } from "../ListSelectionBar";
 import MessageList from "./MessageList";
+
+const SCROLL_RANGE_FOR_ANIMATION =
+  customVariables.appHeaderHeight +
+  (Platform.OS === "ios"
+    ? isIphoneX()
+      ? 18
+      : getStatusBarHeight(true)
+    : customVariables.spacerHeight);
 
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
   },
-  buttonBar: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    flexDirection: "row",
-    zIndex: 1,
-    justifyContent: "space-around",
-    backgroundColor: "#fefefe",
-    padding: 10
-  },
-  buttonBarPrimaryButton: {
-    flex: 8,
-    marginLeft: 10
-  },
-  buttonBarSecondaryButton: {
-    flex: 4
+  animatedStartPosition: {
+    bottom: SCROLL_RANGE_FOR_ANIMATION
   },
   emptyListWrapper: {
     padding: customVariables.contentPadding,
@@ -46,6 +42,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     paddingTop: customVariables.contentPadding,
     fontSize: customVariables.fontSizeSmall
+  },
+  paddingForAnimation: {
+    height: 55
+  },
+  listContainer: {
+    flex: 1
   }
 });
 
@@ -58,19 +60,30 @@ type OwnProps = {
   ) => void;
 };
 
-type Props = Pick<
-  ComponentProps<typeof MessageList>,
-  "servicesById" | "paymentsByRptId" | "onRefresh"
-> &
+type AnimationProps = {
+  // paddingForAnimation has value equal to screen header. It is necessary
+  // because header has absolute position
+  paddingForAnimation: boolean;
+  AnimatedCTAStyle?: any;
+};
+type MessageListProps =
+  | "servicesById"
+  | "paymentsByRptId"
+  | "onRefresh"
+  | "animated";
+
+type Props = Pick<ComponentProps<typeof MessageList>, MessageListProps> &
   OwnProps &
-  InjectedWithMessagesSelectionProps;
+  AnimationProps &
+  InjectedWithItemsSelectionProps;
 
 type State = {
   lastMessagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   filteredMessageStates: ReturnType<typeof generateMessagesStateArchivedArray>;
+  allMessageIdsState: Option<Set<string>>;
 };
 
-const ListEmptyComponent = (
+const ListEmptyComponent = (paddingForAnimation: boolean) => (
   <View style={styles.emptyListWrapper}>
     <View spacer={true} />
     <Image
@@ -82,6 +95,7 @@ const ListEmptyComponent = (
     <Text style={styles.emptyListContentSubtitle}>
       {I18n.t("messages.archive.emptyMessage.subtitle")}
     </Text>
+    {paddingForAnimation && <View style={styles.paddingForAnimation} />}
   </View>
 );
 
@@ -116,11 +130,14 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     if (lastMessagesState !== nextProps.messagesState) {
       // The list was updated, we need to re-apply the filter and
       // save the result in the state.
+      const messagesStateArchived = generateMessagesStateArchivedArray(
+        nextProps.messagesState
+      );
+      const allMessagesIdsArray = messagesStateArchived.map(_ => _.meta.id);
       return {
-        filteredMessageStates: generateMessagesStateArchivedArray(
-          nextProps.messagesState
-        ),
-        lastMessagesState: nextProps.messagesState
+        filteredMessageStates: messagesStateArchived,
+        lastMessagesState: nextProps.messagesState,
+        allMessageIdsState: some(new Set(allMessagesIdsArray))
       };
     }
 
@@ -132,52 +149,54 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       lastMessagesState: pot.none,
-      filteredMessageStates: []
+      filteredMessageStates: [],
+      allMessageIdsState: none
     };
   }
 
   public render() {
     const isLoading = pot.isLoading(this.props.messagesState);
-    const { selectedMessageIds, resetSelection } = this.props;
+    const {
+      animated,
+      AnimatedCTAStyle,
+      paddingForAnimation,
+      selectedItemIds,
+      resetSelection
+    } = this.props;
+    const { allMessageIdsState } = this.state;
 
     return (
       <View style={styles.listWrapper}>
-        {selectedMessageIds.isSome() && (
-          <View style={styles.buttonBar}>
-            <Button
-              block={true}
-              bordered={true}
-              light={true}
-              onPress={resetSelection}
-              style={styles.buttonBarSecondaryButton}
-            >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </Button>
-            <Button
-              block={true}
-              style={styles.buttonBarPrimaryButton}
-              disabled={selectedMessageIds.value.size === 0}
-              onPress={this.unarchiveMessages}
-            >
-              <Text>{I18n.t("messages.cta.unarchive")}</Text>
-            </Button>
-          </View>
-        )}
-        <MessageList
-          {...this.props}
-          messageStates={this.state.filteredMessageStates}
-          onPressItem={this.handleOnPressItem}
-          onLongPressItem={this.handleOnLongPressItem}
-          refreshing={isLoading}
-          selectedMessageIds={selectedMessageIds}
-          ListEmptyComponent={ListEmptyComponent}
+        <View style={styles.listContainer}>
+          <MessageList
+            {...this.props}
+            messageStates={this.state.filteredMessageStates}
+            onPressItem={this.handleOnPressItem}
+            onLongPressItem={this.handleOnLongPressItem}
+            refreshing={isLoading}
+            selectedMessageIds={selectedItemIds}
+            ListEmptyComponent={ListEmptyComponent}
+            animated={animated}
+          />
+        </View>
+        <ListSelectionBar
+          selectedItemIds={selectedItemIds}
+          allItemIds={allMessageIdsState}
+          onToggleSelection={this.unarchiveMessages}
+          onToggleAllSelection={this.toggleAllMessagesSelection}
+          onResetSelection={resetSelection}
+          primaryButtonText={I18n.t("messages.cta.unarchive")}
+          containerStyle={[
+            AnimatedCTAStyle,
+            paddingForAnimation && styles.animatedStartPosition
+          ]}
         />
       </View>
     );
   }
 
   private handleOnPressItem = (id: string) => {
-    if (this.props.selectedMessageIds.isSome()) {
+    if (this.props.selectedItemIds.isSome()) {
       // Is the selection mode is active a simple "press" must act as
       // a "longPress" (select the item).
       this.handleOnLongPressItem(id);
@@ -187,16 +206,28 @@ class MessagesArchive extends React.PureComponent<Props, State> {
   };
 
   private handleOnLongPressItem = (id: string) => {
-    this.props.toggleMessageSelection(id);
+    this.props.toggleItemSelection(id);
+  };
+
+  private toggleAllMessagesSelection = () => {
+    const { allMessageIdsState } = this.state;
+    const { selectedItemIds } = this.props;
+    if (allMessageIdsState.isSome() && selectedItemIds.isSome()) {
+      this.props.setSelectedItemIds(
+        allMessageIdsState.value.size === selectedItemIds.value.size
+          ? some(new Set())
+          : allMessageIdsState
+      );
+    }
   };
 
   private unarchiveMessages = () => {
     this.props.resetSelection();
     this.props.setMessagesArchivedState(
-      this.props.selectedMessageIds.map(_ => Array.from(_)).getOrElse([]),
+      this.props.selectedItemIds.map(_ => Array.from(_)).getOrElse([]),
       false
     );
   };
 }
 
-export default withMessagesSelection(MessagesArchive);
+export default withItemsSelection(MessagesArchive);

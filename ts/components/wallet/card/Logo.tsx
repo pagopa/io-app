@@ -3,8 +3,8 @@
  * credit card logo based on its pan
  */
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
-import { Wallet } from "../../../types/pagopa";
+import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
+import { CreditCard } from "../../../types/pagopa";
 import { CreditCardType } from "../../../types/pagopa";
 import { getResourceNameFromUrl } from "../../../utils/url";
 
@@ -31,6 +31,7 @@ const cardMapIcon: { [key in string]: any } = {
   carta_poste: require("../../../../img/wallet/cards-icons/postepay.png")
 };
 
+const defaultCardIcon = require("../../../../img/wallet/cards-icons/unknown.png");
 /**
  * PagoPA's "brandLogo" field contains an url to an image
  * From the given url it will check if there is a matching and an icon will be returned
@@ -38,14 +39,13 @@ const cardMapIcon: { [key in string]: any } = {
  * Consider to evaluate the field "brand" instead of "brandLogo"
  * because it should contain only the name of the credit card type
  * for more info check https://www.pivotaltracker.com/story/show/165067615
- * @param wallet the wallet objects from which retrieve the credit card icon
+ * @param creditcard the creditcard objects from which retrieve the icon
  */
-const getCardIconFromBrandLogo = (wallet?: Wallet) => {
-  const defaultCardIcon = require("../../../../img/wallet/cards-icons/unknown.png");
-  if (!wallet || !wallet.creditCard.brandLogo) {
+const getCardIconFromBrandLogo = (creditcard: CreditCard) => {
+  if (!creditcard.brandLogo) {
     return defaultCardIcon;
   }
-  const imageName = getResourceNameFromUrl(wallet.creditCard.brandLogo);
+  const imageName = getResourceNameFromUrl(creditcard.brandLogo);
   return imageName && cardMapIcon[imageName]
     ? cardMapIcon[imageName]
     : defaultCardIcon;
@@ -60,17 +60,14 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  item?: Wallet;
+  item?: CreditCard;
+  imageStyle?: StyleProp<ImageStyle>;
 }>;
 
 const Logo: React.SFC<Props> = props => (
   <Image
-    style={styles.issuerLogo}
-    source={
-      props.item
-        ? getCardIconFromBrandLogo(props.item)
-        : getCardIconFromBrandLogo()
-    }
+    style={props.imageStyle ? props.imageStyle : styles.issuerLogo}
+    source={props.item ? getCardIconFromBrandLogo(props.item) : defaultCardIcon}
   />
 );
 

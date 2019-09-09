@@ -16,6 +16,7 @@ import {
   paymentVerifica
 } from "../../store/actions/wallet/payment";
 import {
+  fetchPsp,
   fetchTransactionFailure,
   fetchTransactionRequest,
   fetchTransactionsFailure,
@@ -122,6 +123,49 @@ export function* fetchTransactionRequestHandler(
     }
   } catch (error) {
     yield put(fetchTransactionFailure(error));
+  }
+}
+
+/**
+ * Handles fetchPspRequest
+ */
+export function* fetchPspRequestHandler(
+  pagoPaClient: PaymentManagerClient,
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof fetchPsp["request"]>
+): Iterator<Effect> {
+  const request = pmSessionManager.withRefresh(
+    pagoPaClient.getPsp(action.payload.idPsp)
+  );
+  try {
+    const response: SagaCallReturnType<typeof request> = yield call(request);
+
+    if (response.isRight()) {
+      if (response.value.status === 200) {
+        const psp = response.value.value.data;
+        const successAction = fetchPsp.success({
+          idPsp: action.payload.idPsp,
+          psp
+        });
+        yield put(successAction);
+        if (action.payload.onSuccess) {
+          action.payload.onSuccess(successAction);
+        }
+      } else {
+        throw Error("Generic error");
+      }
+    } else {
+      throw Error(readableReport(response.value));
+    }
+  } catch (error) {
+    const failureAction = fetchPsp.failure({
+      idPsp: action.payload.idPsp,
+      error
+    });
+    yield put(failureAction);
+    if (action.payload.onFailure) {
+      action.payload.onFailure(failureAction);
+    }
   }
 }
 

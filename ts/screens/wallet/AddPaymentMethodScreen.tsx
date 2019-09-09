@@ -30,7 +30,6 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
-import { UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { AmountToImporto } from "../../utils/amounts";
 
 type NavigationParams = Readonly<{
@@ -72,9 +71,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
               currentAmount={AmountToImporto.encode(
                 inPayment.value.verifica.importoSingoloVersamento
               )}
-              recipient={
-                inPayment.value.verifica.enteBeneficiario || UNKNOWN_RECIPIENT
-              }
+              recipient={inPayment.value.verifica.enteBeneficiario}
               onCancel={this.props.navigateToTransactionSummary}
             />
             <View style={styles.paddedLR}>

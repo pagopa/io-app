@@ -1,14 +1,6 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4bfe698a793a4270b9bac004515225a3)](https://www.codacy.com/app/cloudify/italia-app?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=teamdigitale/italia-app&amp;utm_campaign=Badge_Grade)
+[![CircleCI](https://circleci.com/gh/teamdigitale/io-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/io-app)
 
-[![dependencies](https://david-dm.org/teamdigitale/italia-app/status.svg)](https://david-dm.org/teamdigitale/italia-app)
-
-[![CircleCI](https://circleci.com/gh/teamdigitale/italia-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/italia-app)
-
-[![codecov](https://codecov.io/gh/teamdigitale/italia-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/italia-app)
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/d813b789c3a2085bd8f4/maintainability)](https://codeclimate.com/github/teamdigitale/italia-app/maintainability)
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fteamdigitale%2Fitalia-app?ref=badge_shield)
+[![codecov](https://codecov.io/gh/teamdigitale/io-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/io-app)
 
 # The mobile app of the Digital Citizenship project
 
@@ -35,7 +27,6 @@ The Digital Citizenship mobile app is a native mobile application for iOS and An
 The development of the app is carried out by several contributors:
 
 * the [Digital Transformation Team](https://teamdigitale.governo.it/)
-* the [Agency for Digital Italy](http://www.agid.gov.it/)
 * volunteers who support the project.
 
 ### Can I use the app?
@@ -202,9 +193,18 @@ _Note: the alpha releases on Android are automatically carried by the `alpha-rel
 
 For this step you’ll need to have a proper iOS development certificate on your dev machine that is also installed on your physical device.
 
-```
-react-native run-ios --configuration Release --device 'YOUR_DEVICE_NAME'
-```
+To test the io-app on a real iOS device you must:
+1. Open the project with Xcode and modify the bundle identifier (eg: add ‘.test’ to the existing one)  
+1. Go to the 'Build Settings' tab and in the PROVISIONING_PROFILE section delete the existing ID. Then select 'ios developer' in the debug field of the 'Code Signing Identity'  
+1. In General tab select the 'Automatically Menage Signing' checkbox  
+1. You must have an Apple id developer and select it from the 'Team' drop-down menu  
+1. (Without Xcode) navigate in the io-app project and open the package.json file, in the scripts section add: _"build: ios": "react-native bundle --entry-file = 'index.js' - bundle-output = '. / ios / main.jsbundle' --dev = false --platform = 'ios' "_ 
+1. Open the Terminal and from the root directory project run _npm run build: ios_  
+1. In Xcode navigate in the project, select _'main.jsbundle'_ and enable the checkbox on the right labeled 'ItaliaApp'
+1. Always in Xcode select 'Product' -> 'Clean Build Folder'
+1. On the real device connected, accept to trust the device
+1. From Xcode select the device by the drop-down list and run ('Product' -> 'Run') on the iOS device, if the unit tests fail they can be disabled by going to Product -> Scheme -> Edit Scheme -> Build
+
 
 ### Development with Backend App and Local Test IDP
 
@@ -311,9 +311,10 @@ To update the icon-font to a new version, it is necessary to extract and correct
 * `selection.json` contained in the archive root, to be placed in [ts/theme/font-icons/io-icon-font/](ts/theme/font-icons/io-icon-font).
 * `io-icon-font.ttf` contained in the directory fonts archive, to be placed in [assets/fonts/io-icon-font/](assets/fonts/io-icon-font).
 
-Once the two files have been copied, it is necessary to update the link of the asset by installing globally and running:
+Once the two files have been copied, it is necessary to update the link of the asset by installing globally and running react-native-asset (version 1.1.4):
 
 ```
+$ yarn global add react-native-asset@1.1.4
 $ react-native-asset
 ```
 
@@ -489,3 +490,11 @@ $ detox test
 
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
 
+### Troubleshooting
+
+#### iOS build warning
+
+If, during the archive process, you see one or more warning like this `...RNTextInputMask.o)) was built for newer iOS version (10.3) than being linked (9.0)` you can fix it in this way:
+1. Open the project io-app/ios with Xcode
+1. Select the library (es. RNTextInputMask) in 'Libraries'
+1. Select the name of the library under the label 'PROJECT' and change the iOS Deployment target from 10.3 to 9.0 

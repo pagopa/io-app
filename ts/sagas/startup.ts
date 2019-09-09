@@ -1,4 +1,5 @@
 import { isNone, Option } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationActions, NavigationState } from "react-navigation";
 import { Effect } from "redux-saga";
 import {
@@ -31,7 +32,8 @@ import {
 } from "../store/actions/navigation";
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
-import { resetProfileState } from "../store/actions/profile";
+import { clearOnboarding } from "../store/actions/onboarding";
+import { clearCache, resetProfileState } from "../store/actions/profile";
 import { loadService, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
@@ -42,10 +44,11 @@ import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
+import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
-import { getPin } from "../utils/keychain";
+import { deletePin, getPin } from "../utils/keychain";
 import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
@@ -69,6 +72,11 @@ import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
+import {
+  loadUserMetadata,
+  watchLoadUserMetadata,
+  watchUpserUserMetadata
+} from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 
 /**
@@ -86,6 +94,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   //           every new installation.
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
+
+  // Get last logged in Profile from the state
+  const lastLoggedInProfileState: ReturnType<
+    typeof profileSelector
+  > = yield select<GlobalState>(profileSelector);
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
@@ -164,7 +177,25 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     yield put(startApplicationInitialization());
     return;
   }
+
   const userProfile = maybeUserProfile.value;
+
+  // If user logged in with different credentials, but this device still has
+  // user data loaded, then delete data keeping current session (user already
+  // logged in)
+  if (
+    pot.isSome(lastLoggedInProfileState) &&
+    lastLoggedInProfileState.value.fiscal_code !== userProfile.fiscal_code
+  ) {
+    // Delete all data while keeping current session:
+    // Delete the current PIN from the Keychain
+    // tslint:disable-next-line:saga-yield-return-type
+    yield call(deletePin);
+    // Delete all onboarding data
+    yield put(clearOnboarding());
+    yield put(clearCache());
+  }
+
   const maybeIdp: Option<IdentityProvider> = yield select<GlobalState>(
     idpSelector
   );
@@ -177,14 +208,24 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // tslint:disable-next-line:no-let
   let storedPin: PinString;
 
+  // Start watching for profile update requests as the checkProfileEnabledSaga
+  // may need to update the profile.
+  yield fork(
+    watchProfileUpsertRequestsSaga,
+    backendClient.createOrUpdateProfile
+  );
+
+  // Start the watchAbortOnboardingSaga
+  const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
+
   if (!previousSessionToken || isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no PIN set, thus we need
     // to pass through the onboarding process.
 
-    // Start the watchAbortOnboardingSaga
-    const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
-    yield call(checkAcceptedTosSaga);
+    // Ask to accept ToS if it is the first access on IO or if there is a new available version
+    yield call(checkAcceptedTosSaga, userProfile);
+
     storedPin = yield call(checkConfiguredPinSaga);
     yield call(checkAcknowledgedFingerprintSaga);
     // Stop the watchAbortOnboardingSaga
@@ -203,12 +244,20 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
         yield put(startApplicationInitialization());
         return;
       }
+      // Ask to accept ToS if there is a new available version
+      yield call(checkAcceptedTosSaga, userProfile);
+
+      // Stop the watchAbortOnboardingSaga
+      yield cancel(watchAbortOnboardingSagaTask);
     }
   }
 
   //
   // User is autenticated, session token is valid
   //
+
+  // Load the user metadata
+  yield call(loadUserMetadata, backendClient.getUserMetadata, true);
 
   // the wallet token is available,
   // proceed with starting the "watch wallet" saga
@@ -225,13 +274,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
   );
 
-  // Start watching for profile update requests as the checkProfileEnabledSaga
-  // may need to update the profile.
-  yield fork(
-    watchProfileUpsertRequestsSaga,
-    backendClient.createOrUpdateProfile
-  );
-
   // Check that profile is up to date (e.g. inbox enabled)
   yield call(checkProfileEnabledSaga, userProfile);
 
@@ -239,6 +281,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // UI of the application.
   // Note that the following sagas will be automatically cancelled each time
   // this parent saga gets restarted.
+
+  yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
+  yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
   yield takeEvery(
     getType(loadService.request),

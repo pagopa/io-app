@@ -8,20 +8,22 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-export const tosAccept = createAsyncAction(
-  "TOS_ACCEPT_REQUEST",
-  "TOS_ACCEPT_SUCCESS",
-  "TOS_ACCEPT_FAILURE"
-)<void, void, void>();
-
 export const fingerprintAcknowledge = createAsyncAction(
   "FINGERPRINT_ACKNOWLEDGE_REQUEST",
   "FINGERPRINT_ACKNOWLEDGE_SUCCESS",
   "FINGERPRINT_ACKNOWLEDGE_FAILURE"
 )<void, void, void>();
 
+export const tosAccepted = createStandardAction("TOS_ACCEPTED")<number>();
+
 export const abortOnboarding = createStandardAction("ABORT_ONBOARDING")();
 
-export type OnboardingActions = ActionType<
-  typeof tosAccept | typeof fingerprintAcknowledge | typeof abortOnboarding
->;
+export const clearOnboarding = createStandardAction("CLEAR_ONBOARDING")();
+
+type OnboardingActionTypes =
+  | typeof tosAccepted
+  | typeof fingerprintAcknowledge
+  | typeof abortOnboarding
+  | typeof clearOnboarding;
+
+export type OnboardingActions = ActionType<OnboardingActionTypes>;

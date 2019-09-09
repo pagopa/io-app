@@ -8,11 +8,16 @@ import {
   StyleSheet
 } from "react-native";
 
-import { H3, ListItem } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
+
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
-import { ServiceListItem } from "./ServiceListItem";
+import customVariables from "../../theme/variables";
+import { getLogoForOrganization } from "../../utils/organizations";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import SectionHeaderComponent from "../screens/SectionHeaderComponent";
+import NewServiceListItem from "./NewServiceListItem";
 
 type OwnProps = {
   // Can't use ReadonlyArray because of the SectionList section prop
@@ -23,6 +28,7 @@ type OwnProps = {
   isRefreshing: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
+  readServices: ReadStateByServicesId;
 };
 
 type Props = OwnProps;
@@ -31,6 +37,10 @@ const styles = StyleSheet.create({
   listItem: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
+  },
+  padded: {
+    marginLeft: customVariables.contentPadding,
+    marginRight: customVariables.contentPadding
   }
 });
 
@@ -38,13 +48,33 @@ const styles = StyleSheet.create({
  * A component to render a list of services grouped by organization.
  */
 class ServiceSectionListComponent extends React.Component<Props> {
+  private isRead = (
+    potService: pot.Pot<ServicePublic, Error>,
+    readServices: ReadStateByServicesId
+  ): boolean => {
+    const service =
+      pot.isLoading(potService) ||
+      pot.isError(potService) ||
+      pot.isNone(potService)
+        ? undefined
+        : potService.value;
+
+    return (
+      readServices !== undefined &&
+      service !== undefined &&
+      readServices[service.service_id] !== undefined
+    );
+  };
+
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
   ) => (
-    <ServiceListItem
+    <NewServiceListItem
       item={itemInfo.item}
       profile={this.props.profile}
       onSelect={this.props.onSelect}
+      isRead={this.isRead(itemInfo.item, this.props.readServices)}
+      hideSeparator={true}
     />
   );
 
@@ -64,9 +94,11 @@ class ServiceSectionListComponent extends React.Component<Props> {
   private renderServiceSectionHeader = (info: {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
   }): React.ReactNode => (
-    <ListItem itemHeader={true} style={styles.listItem}>
-      <H3>{info.section.title}</H3>
-    </ListItem>
+    <SectionHeaderComponent
+      sectionHeader={info.section.organizationName}
+      style={styles.padded}
+      logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
+    />
   );
 
   public render() {
@@ -82,9 +114,10 @@ class ServiceSectionListComponent extends React.Component<Props> {
         renderItem={this.renderServiceItem}
         renderSectionHeader={this.renderServiceSectionHeader}
         keyExtractor={this.getServiceKey}
-        stickySectionHeadersEnabled={false}
+        stickySectionHeadersEnabled={true}
         alwaysBounceVertical={false}
         refreshControl={refreshControl}
+        ItemSeparatorComponent={ItemSeparatorComponent}
       />
     );
   }

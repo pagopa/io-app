@@ -43,9 +43,10 @@ import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
 } from "../actions/notifications";
-import { tosAccept } from "../actions/onboarding";
+import { tosAccepted } from "../actions/onboarding";
 import { createPinSuccess } from "../actions/pinset";
 import {
+  profileFirstLogin,
   profileLoadFailure,
   profileLoadSuccess,
   profileUpsert
@@ -89,7 +90,7 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
-// tslint:disable-next-line:cognitive-complexity
+// tslint:disable cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
 ): Promise<any> => {
@@ -100,6 +101,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(applicationChangeState):
       return mp.track("APP_STATE_CHANGE", {
         APPLICATION_STATE_NAME: action.payload
+      });
+    //
+    // Onboarding (with properties)
+    //
+    case getType(tosAccepted):
+      return mp.track(action.type, {
+        acceptedTosVersion: action.payload
       });
     //
     // Authentication actions (with properties)
@@ -122,6 +130,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         SPID_URL: action.payload.url
       });
+
+    case getType(profileFirstLogin):
+      return mp.track(action.type, action.payload);
+
     //
     // Content actions (with properties)
     //
@@ -222,7 +234,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(identificationPinReset):
     // onboarding
     case getType(analyticsOnboardingStarted):
-    case getType(tosAccept.success):
     case getType(createPinSuccess):
     // profile
     case getType(profileLoadFailure):
@@ -323,6 +334,29 @@ export function getCurrentRouteName(navNode: any): string | undefined {
   ) {
     const route = navNode.routes[navNode.index];
     return getCurrentRouteName(route);
+  }
+  return undefined;
+}
+
+export function getCurrentRouteKey(navNode: any): string | undefined {
+  if (!navNode) {
+    return undefined;
+  }
+  if (
+    navNode.index === undefined &&
+    navNode.key &&
+    typeof navNode.key === "string"
+  ) {
+    // navNode is a NavigationLeafRoute
+    return navNode.key;
+  }
+  if (
+    navNode.routes &&
+    navNode.index !== undefined &&
+    navNode.routes[navNode.index]
+  ) {
+    const route = navNode.routes[navNode.index];
+    return getCurrentRouteKey(route);
   }
   return undefined;
 }

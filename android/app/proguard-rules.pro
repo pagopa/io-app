@@ -89,3 +89,11 @@
 # react-native-shortcut-badge
 # Further info here https://github.com/leolin310148/ShortcutBadger/issues/46
 -keep class me.leolin.shortcutbadger.impl.** { <init>(...); }
+
+#Instabug
+-dontwarn com.instabug.**
+
+# React-native Keychain
+-keep class com.facebook.crypto.** {
+   *;
+}

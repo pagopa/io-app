@@ -1,11 +1,14 @@
 import { Content } from "native-base";
 import * as React from "react";
 
+import { StyleProp, ViewStyle } from "react-native";
 import { ComponentProps } from "../../types/react";
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
 interface OwnProps {
   hideHeader?: boolean;
+  contentStyle?: StyleProp<ViewStyle>;
+  bounces?: boolean;
 }
 
 type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
@@ -15,16 +18,26 @@ type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
  */
 class ScreenContent extends React.PureComponent<Props> {
   public render() {
-    const { title, icon, subtitle, banner, hideHeader } = this.props;
+    const {
+      title,
+      icon,
+      subtitle,
+      banner,
+      dark,
+      hideHeader,
+      contentStyle,
+      bounces
+    } = this.props;
 
     return (
-      <Content noPadded={true}>
+      <Content noPadded={true} style={contentStyle} bounces={bounces}>
         {!hideHeader && (
           <ScreenContentHeader
             icon={icon}
             title={title}
             subtitle={subtitle}
             banner={banner}
+            dark={dark}
           />
         )}
         {this.props.children}

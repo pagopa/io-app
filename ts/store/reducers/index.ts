@@ -22,11 +22,13 @@ import navigationReducer from "./navigation";
 import navigationHistoryReducer from "./navigationHistory";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
+import paymentsReducer from "./payments";
 import persistedPreferencesReducer from "./persistedPreferences";
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import searchReducer from "./search";
 import { GlobalState } from "./types";
+import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
 
 // A custom configuration to store the authentication into the Keychain
@@ -80,9 +82,11 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
+  userMetadata: userMetadataReducer,
   entities: entitiesReducer,
   debug: debugReducer,
-  search: searchReducer
+  search: searchReducer,
+  payments: paymentsReducer
 });
 
 export function createRootReducer(
