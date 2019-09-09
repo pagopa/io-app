@@ -32,7 +32,9 @@ class MessagesTabIcon extends React.PureComponent<Props> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  const messagesUnreadAndUnarchived = messagesUnreadAndUnarchivedSelector(state);
+  const messagesUnreadAndUnarchived = messagesUnreadAndUnarchivedSelector(
+    state
+  );
 
   const badgeValue = Math.min(messagesUnreadAndUnarchived, MAX_BADGE_VALUE);
 
