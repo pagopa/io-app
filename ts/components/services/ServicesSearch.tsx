@@ -165,6 +165,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
         onSelect={this.handleOnServiceSelect}
         isExperimentalFeaturesEnabled={this.props.isExperimentalFeaturesEnabled}
         isLongPressEnabled={false}
+
       />
     ) : (
       <SearchNoResultMessage errorType="NoResultsFound" />

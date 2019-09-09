@@ -141,13 +141,15 @@ profile:
       confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
       bannerMessage: You are using experimental features that may be incomplete or unstable.
     pagoPaEnvironment:
+      pagoPaEnv: PagoPA Test Environment
+      pagoPAEnvAlert: This change requires app reboot
+      alertConfirmTitle: Do you want to use the pagoPA test environment?
+      alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
       alertMessage: The application must be restarted for the changes to take effect.
     accountSectionHeader: Account
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
-    pagoPaEnv: PagoPA Test Environment
-    pagoPAEnvAlert: This change requires app reboot
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
@@ -261,12 +263,12 @@ authentication:
       body: There was an error with the login, please retry!
     spid:
       unknown: Unknown error 
-      error_19: Authentication failed due to repeated submission of incorrect credentials - exceeded number of attempts
-      error_20: User without credentials compatible with the HTTP level requested by the service provider
-      error_21: Timeout during user authentication
-      error_22: User denies consent to sending data to the service provider in the event of a current session
-      error_23: User with suspended/revoked identity or with blocked credentials
-      error_25: Authentication process canceled by the user
+      error_19: "You have entered an incorrect username or password too many times: try again in a few minutes or contact your SPID identity provider to change your credentials."
+      error_20: "For security reasons IO requires a login with a second authentication factor: contact your SPID identity provider to understand how to use it."
+      error_21: "It's been too long since you started accessing: please start over again."
+      error_22: "To use IO you must allow access to some of your data: log in again and give your consent to the transfer of data."
+      error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
+      error_25: "You have canceled the login operation: you can try again whenever you want."
   expiredSessionBanner:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
@@ -360,7 +362,7 @@ wallet:
   delete:
     successful: Card successfully deleted
     failed: The card could not be deleted
-    alert: 'Warning: the payment method had been removed from wallet'
+    alert: 'Warning: the payment method has been removed from wallet'
   newPaymentMethod:
     add: add
     addButton: Add a new method
