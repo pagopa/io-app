@@ -1,6 +1,7 @@
 package it.teamdigitale.app.italiaapp;
 
-import android.support.multidex.MultiDexApplication;
+
+import androidx.multidex.MultiDexApplication;
 
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.sha256lib.Sha256Package;
@@ -34,6 +35,7 @@ import com.facebook.soloader.SoLoader;
 
 import java.util.Arrays;
 import java.util.List;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 
@@ -73,7 +75,8 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
         new Sha256Package(),
         new RNMixpanel(),
         new RNDeviceInfo(),
-        new ReactNativeConfigPackage()
+        new ReactNativeConfigPackage(),
+        new NetInfoPackage()
       );
     }
 

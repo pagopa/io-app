@@ -15,8 +15,6 @@ module.exports = {
       babelConfig: true,
     }
   },
-  setupFiles: [
-    "./jestSetup.js"
-  ],
+  setupFiles: ['./jestSetup.js'],
   collectCoverage: true
 };
