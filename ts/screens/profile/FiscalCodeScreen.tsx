@@ -57,17 +57,18 @@ const styles = StyleSheet.create({
 });
 
 class FiscalCodeScreen extends React.PureComponent<Props> {
-  private showModal = () => {
+  private showModal(showBackSide: boolean = false) {
     if (this.props.profile) {
       this.props.showModal(
         <FiscalCodeLandscapeOverlay
           onCancel={this.props.hideModal}
           profile={this.props.profile}
           municipality={this.props.municipality}
+          showBackSide={showBackSide}
         />
       );
     }
-  };
+  }
 
   public componentDidMount() {
     if (
@@ -122,9 +123,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                     />
                   </View>
                 </TouchableWithoutOpacity>
-
                 <View style={styles.spacer} />
-
                 <TouchableWithoutOpacity onPress={this.showModal}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
