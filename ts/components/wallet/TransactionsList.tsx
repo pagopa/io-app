@@ -19,6 +19,7 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { BadgeComponent } from "../screens/BadgeComponent";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
 
@@ -183,6 +184,7 @@ export default class TransactionsList extends React.Component<Props> {
               keyExtractor={item => item.id.toString()}
             />
           </Row>
+          <EdgeBorderComponent />
         </Grid>
       </Content>
     );
