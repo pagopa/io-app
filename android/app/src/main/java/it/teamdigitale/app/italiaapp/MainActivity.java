@@ -29,6 +29,11 @@ public class MainActivity extends ReactActivity {
     // see https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /*
+        When the app starts, a check is made on the "isTablet" flag in the bools.xml file. 
+        The value changes automatically depending on the device dp.
+        Starting from 600dp it is set to true.
+        */ 
         if (getResources().getBoolean(R.bool.isTablet)) {
             super.onCreate(savedInstanceState);
             showAlertDialog(getString(R.string.dialog_attention),
