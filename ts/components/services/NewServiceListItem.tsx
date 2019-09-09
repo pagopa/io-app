@@ -110,7 +110,7 @@ export default class NewServiceListItem extends React.PureComponent<
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
         onSwitchValueChanged={onItemSwitchValueChanged}
-        value={pot.isSome(enabledChannels) && enabledChannels.value.inbox}
+        switchValue={pot.isSome(enabledChannels) && enabledChannels.value.inbox}
         keySwitch={`switch-service-${profileVersion}`}
         isLongPressEnabled={this.props.isLongPressEnabled}
       />

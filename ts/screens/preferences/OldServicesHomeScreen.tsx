@@ -258,14 +258,6 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
           </View>
         )}
       </View>
-      <ServiceSectionListComponent
-        sections={sections}
-        profile={this.props.profile}
-        isRefreshing={this.props.isLoading}
-        onRefresh={this.props.refreshServices}
-        onSelect={this.onServiceSelect}
-        readServices={this.props.readServices}
-      />
     );
   };
 
