@@ -18,6 +18,7 @@ import {
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { isExpired } from "./../../utils/dates";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -346,15 +347,6 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 
   private isValidExpirationDate() {
-    const today: Date = new Date();
-    const currentMonth: number = today.getMonth() + 1;
-    const currentYear: number = parseInt(
-      today
-        .getFullYear()
-        .toString()
-        .slice(1),
-      10
-    );
     return this.state.expirationDate
       .map(expirationDate => {
         const [expirationMonth, expirationYear] = expirationDate.split("/");
@@ -362,11 +354,7 @@ class AddCardScreen extends React.Component<Props, State> {
           CreditCardExpirationMonth.is(expirationMonth) &&
           CreditCardExpirationYear.is(expirationYear)
         ) {
-          return !(
-            Number(expirationYear) < currentYear ||
-            (Number(expirationYear) === currentYear &&
-              Number(expirationMonth) < currentMonth)
-          );
+          return !isExpired(Number(expirationMonth), Number(expirationYear));
         } else {
           return false;
         }
