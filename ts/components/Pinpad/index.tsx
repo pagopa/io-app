@@ -162,7 +162,7 @@ class Pinpad extends React.PureComponent<Props, State> {
       const isValid = inputValue === this.props.compareWithCode;
 
       if (!isValid && this.props.clearOnInvalid) {
-        this.clear();
+        setTimeout(() => this.clear(), 100);
         if (this.props.delayOnFailureMillis) {
           // disable click keypad
           this.setState({
