@@ -2,6 +2,11 @@
           package="it.teamdigitale.app.italiaapp"
           android:installLocation="auto">
 
+  <supports-screens android:smallScreens="true"
+                    android:normalScreens="true"
+                    android:largeScreens="true"
+                    android:xlargeScreens="false"/>
+
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.VIBRATE" />
