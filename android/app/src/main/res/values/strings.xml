@@ -4,4 +4,6 @@
     <string name="notification_channel_description">Receive notification for new messages</string>
     <string name="alert_device_rooted_title">Device rooted</string>
     <string name="alert_device_rooted_desc">This device is rooted, you can\'t use this app for security reasons</string>
+    <string name="dialog_attention">Attention</string>
+    <string name="tablet_not_supported">Tablet devices are not currently supported</string>
 </resources>
