@@ -350,14 +350,11 @@ class AddCardScreen extends React.Component<Props, State> {
     return this.state.expirationDate
       .map(expirationDate => {
         const [expirationMonth, expirationYear] = expirationDate.split("/");
-        if (
+        return (
           CreditCardExpirationMonth.is(expirationMonth) &&
-          CreditCardExpirationYear.is(expirationYear)
-        ) {
-          return !isExpired(Number(expirationMonth), Number(expirationYear));
-        } else {
-          return false;
-        }
+          CreditCardExpirationYear.is(expirationYear) &&
+          !isExpired(Number(expirationMonth), Number(expirationYear))
+        );
       })
       .toUndefined();
   }
