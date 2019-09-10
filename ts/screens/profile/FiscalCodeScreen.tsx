@@ -113,7 +113,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                 showsHorizontalScrollIndicator={false}
               >
                 <View style={styles.largeSpacer} />
-                <TouchableWithoutOpacity onPress={this.showModal}>
+                <TouchableWithoutOpacity onPress={() => this.showModal()}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -124,7 +124,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                   </View>
                 </TouchableWithoutOpacity>
                 <View style={styles.spacer} />
-                <TouchableWithoutOpacity onPress={this.showModal}>
+                <TouchableWithoutOpacity onPress={() => this.showModal()}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
