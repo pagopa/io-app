@@ -29,7 +29,6 @@ type OwnProps = {
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
-  isExperimentalFeaturesEnabled?: boolean;
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
   onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;

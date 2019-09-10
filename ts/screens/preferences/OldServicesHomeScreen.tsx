@@ -215,9 +215,6 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
             onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
-            isExperimentalFeaturesEnabled={
-              this.props.isExperimentalFeaturesEnabled
-            }
             onLongPressItem={this.handleOnLongPressItem}
             isLongPressEnabled={this.state.isLongPressEnabled}
             onItemSwitchValueChanged={this.onItemSwitchValueChanged}
@@ -280,9 +277,6 @@ class OldServicesHomeScreen extends React.Component<Props, State> {
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
               readServices={this.props.readServices}
-              isExperimentalFeaturesEnabled={
-                this.props.isExperimentalFeaturesEnabled
-              }
               onLongPressItem={this.handleOnLongPressItem}
             />
           )

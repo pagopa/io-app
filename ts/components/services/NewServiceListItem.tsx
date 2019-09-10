@@ -1,5 +1,4 @@
 import I18n from "i18n-js";
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -54,6 +53,17 @@ export default class NewServiceListItem extends React.PureComponent<
   Props,
   State
 > {
+  private getServiceKey = (
+    potService: pot.Pot<ServicePublic, Error>
+  ): string => {
+    return pot.getOrElse(
+      pot.map(
+        potService,
+        service => `${service.service_id}-${service.version || 0}`
+      ),
+      `service-switch`
+    );
+  };
   // tslint:disable-next-line:cognitive-complexity
   public render() {
     const potService = this.props.item;
@@ -88,17 +98,12 @@ export default class NewServiceListItem extends React.PureComponent<
             : I18n.t("services.serviceNotEnabled")
       )
     );
+
     const serviceName = pot.isLoading(potService)
       ? I18n.t("global.remoteStates.loading")
       : pot.isError(potService) || pot.isNone(potService)
         ? I18n.t("global.remoteStates.notAvailable")
         : potService.value.service_name;
-
-    // whether last attempt to save the preferences failed
-    const profileVersion = pot
-      .toOption(this.props.profile)
-      .mapNullable(_ => (_.has_profile ? _.version : null))
-      .getOrElse(0 as NonNegativeInteger);
 
     return (
       <ListItemComponent
@@ -111,7 +116,7 @@ export default class NewServiceListItem extends React.PureComponent<
         style={styles.listItem}
         onSwitchValueChanged={onItemSwitchValueChanged}
         switchValue={pot.isSome(enabledChannels) && enabledChannels.value.inbox}
-        keySwitch={`switch-service-${profileVersion}`}
+        keySwitch={this.getServiceKey(potService)}
         isLongPressEnabled={this.props.isLongPressEnabled}
       />
     );
