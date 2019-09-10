@@ -67,7 +67,7 @@ export function defaultRetryingFetch(
 /**
  * Fetch with transient error handling. Handle error that occurs once or at unpredictable intervals.
  */
-function retryLogicForTransientResponseError(
+export function retryLogicForTransientResponseError(
   p: (r: Response) => boolean,
   retryLogic: (
     t: RetriableTask<Error, Response>,

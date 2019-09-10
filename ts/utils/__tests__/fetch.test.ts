@@ -1,9 +1,18 @@
-import { MaxRetries } from "italia-ts-commons/lib/tasks";
+import {
+  AbortableFetch,
+  retriableFetch,
+  setFetchTimeout,
+  toFetch
+} from "italia-ts-commons/lib/fetch";
+import { MaxRetries, withRetries } from "italia-ts-commons/lib/tasks";
 import { Millisecond } from "italia-ts-commons/lib/units";
-
-import * as ServerMock from "mock-http-server";
 import nodeFetch from "node-fetch";
-import { constantPollingFetch, defaultRetryingFetch } from "../fetch";
+import { retryLogicForTransientResponseError } from "../fetch";
+
+const ServerMock = require("mock-http-server");
+const {
+  AbortController
+} = require("abortcontroller-polyfill/dist/cjs-ponyfill");
 
 //
 // We need to override the global fetch and AbortController to make the tests
@@ -11,20 +20,23 @@ import { constantPollingFetch, defaultRetryingFetch } from "../fetch";
 //
 // tslint:disable-next-line:no-object-mutation no-any
 (global as any).fetch = nodeFetch;
+// tslint:disable-next-line:no-object-mutation no-any
+(global as any).AbortController = AbortController;
 
+const TEST_PATH = "transient-error";
 const TEST_HOST = "localhost";
 const TEST_PORT = 40000;
 
 // tslint:disable-next-line:no-any
-function createServerTransientNotFound(): any {
-  const server = new ServerMock.default(
+function createServerMock(): any {
+  const server = new ServerMock(
     { host: TEST_HOST, port: TEST_PORT },
     undefined
   );
 
   server.on({
     method: "GET",
-    path: "/transient-error",
+    path: `/${TEST_PATH}`,
     reply: {
       status: 404
     }
@@ -33,78 +45,54 @@ function createServerTransientNotFound(): any {
   return server;
 }
 
-// tslint:disable-next-line:no-any no-identical-functions
-function createServerTransientTooManyRequests(): any {
-  const server = new ServerMock.default(
-    { host: TEST_HOST, port: TEST_PORT },
-    undefined
+const longDelayUrl = `http://${TEST_HOST}:${TEST_PORT}/${TEST_PATH}`;
+
+export const transientConfigurableFetch = (
+  retries: number,
+  httpErrorCode: number
+) => {
+  const delay = 10 as Millisecond;
+  const timeout: Millisecond = 1000 as Millisecond;
+  const abortableFetch = AbortableFetch(fetch);
+  const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
+  const constantBackoff = () => delay;
+  const retryLogic = withRetries<Error, Response>(retries, constantBackoff);
+  // makes the retry logic map specific http error code to transient errors (by default only
+  // timeouts are transient)
+  const retryWithTransientError = retryLogicForTransientResponseError(
+    _ => _.status === httpErrorCode,
+    retryLogic
   );
+  return retriableFetch(retryWithTransientError)(timeoutFetch as typeof fetch);
+};
 
-  server.on({
-    method: "GET",
-    path: "/transient-error",
-    reply: {
-      status: 429
-    }
-  });
-
-  return server;
-}
-
-const transientErrorUrl = `http://${TEST_HOST}:${TEST_PORT}/transient-error`;
-
-describe("retriableFetch", () => {
-  const server = createServerTransientNotFound();
+describe("Fetch with transient error", () => {
+  const server = createServerMock();
 
   beforeEach(server.start);
   afterEach(server.stop);
 
-  it("should wrap fetch with a retrying logic that handles 404 as transient error", async () => {
-    // configure retriable logic with 5 retries and constant backoff
-    const retry: number = 3;
-    const delay: number = 2;
-
-    /**
-     * This is a fetch with timeouts, constant backoff and with the logic
-     * that handles 404s as transient error.
-     */
-    const fetchWithRetries = constantPollingFetch(retry, delay);
-
+  it("Fetch should reach max retry on transient error", async () => {
+    // Set error 404 as transient error.
+    const fetchWithRetries = transientConfigurableFetch(3, 404);
     try {
       // start the fetch request
-      await fetchWithRetries(transientErrorUrl);
+      await fetchWithRetries(longDelayUrl);
     } catch (e) {
       // fetch should abort with MaxRetries
-      expect(server.requests().length).toEqual(retry);
+      expect(server.requests().length).toEqual(3);
       expect(e).toEqual(MaxRetries);
     }
   });
-});
 
-describe("retriableFetch", () => {
-  const server = createServerTransientTooManyRequests();
+  it("Fetch one time retry", async () => {
+    // Set error 401 as transient error, the server response is 404.
+    // In this case no other retry are performed.
+    const fetchWithRetries = transientConfigurableFetch(3, 401);
 
-  beforeEach(server.start);
-  afterEach(server.stop);
+    // start the fetch request
+    await fetchWithRetries(longDelayUrl);
 
-  it("should wrap fetch with a retrying logic that handles 429 as transient error", async () => {
-    // configure retriable logic with 5 retries and constant backoff
-    const retry: number = 3;
-    // configure retriable logic with 5 retries and constant backoff
-    const constantBackoff = 10 as Millisecond;
-    /**
-     * This is a fetch with timeouts, constant backoff and with the logic
-     * that handles 429 as transient error.
-     */
-    const fetchWithRetries = defaultRetryingFetch(constantBackoff, retry);
-
-    try {
-      // start the fetch request
-      await fetchWithRetries(transientErrorUrl);
-    } catch (e) {
-      // fetch should abort with MaxRetries
-      expect(server.requests().length).toEqual(retry);
-      expect(e).toEqual(MaxRetries);
-    }
+    expect(server.requests().length).toEqual(1);
   });
 });
