@@ -446,11 +446,7 @@ const mergeProps = (
   const dispatchUpdateOrganizationsOfInterestMetadata = (
     selectedItemIds: Option<Set<string>>
   ) => {
-    if (
-      selectedItemIds.isSome() &&
-      selectedItemIds.value.size !== 0 &&
-      stateProps.userMetadata
-    ) {
+    if (selectedItemIds.isSome() && stateProps.userMetadata) {
       dispatchProps.saveSelectedOrganizationItems(
         stateProps.userMetadata,
         selectedItemIds
