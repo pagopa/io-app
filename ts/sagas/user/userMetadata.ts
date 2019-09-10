@@ -47,7 +47,7 @@ export function* fetchUserMetadata(
 
     if (response.value.status !== 200) {
       if (response.value.status === 204) {
-        // Return an empty object
+        // Return an empty object cause profile has no metadata yet (204 === No Content)
         return right(emptyUserMetadata);
       }
 
