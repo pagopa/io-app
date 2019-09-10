@@ -21,6 +21,7 @@ import {
 } from "../../store/actions/userMetadata";
 import {
   backendUserMetadataToUserMetadata,
+  emptyUserMetadata,
   UserMetadata,
   userMetadataSelector,
   userMetadataToBackendUserMetadata
@@ -45,6 +46,11 @@ export function* fetchUserMetadata(
     }
 
     if (response.value.status !== 200) {
+      if (response.value.status === 204) {
+        // Return an empty object
+        return right(emptyUserMetadata);
+      }
+
       const error =
         response.value.status === 500 ? response.value.value.title : undefined;
       // Return the error

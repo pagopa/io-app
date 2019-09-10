@@ -20,7 +20,7 @@ export type UserMetadata = {
   metadata: UserMetadataMetadata;
 };
 
-export const noneUserMetadata: UserMetadata = {
+export const emptyUserMetadata: UserMetadata = {
   version: 0,
   metadata: {
     experimentalFeatures: undefined,

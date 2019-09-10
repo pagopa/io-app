@@ -1,5 +1,5 @@
 import { left } from "fp-ts/lib/Either";
-import { Option, some } from "fp-ts/lib/Option";
+import { Option, some, Some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
@@ -26,7 +26,6 @@ import { lexicallyOrderedAllOrganizations } from "../../store/reducers/entities/
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  noneUserMetadata,
   organizationsOfInterestSelector,
   UserMetadata,
   userMetadataSelector
@@ -395,7 +394,7 @@ const mapStateToProps = (state: GlobalState) => {
   const potUserMetadata = userMetadataSelector(state);
   // TODO: disable selection of areas of interest if the user metadata are not loaded
   // (it causes the new selection is not loaded) https://www.pivotaltracker.com/story/show/168312476
-  const userMetadata = pot.getOrElse(potUserMetadata, noneUserMetadata);
+  const userMetadata = pot.getOrElse(potUserMetadata, undefined);
 
   const isAnyServiceLoading =
     Object.keys(services.byId).find(k => {
@@ -420,22 +419,20 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshServices: () => dispatch(loadVisibleServices.request()),
   saveSelectedOrganizationItems: (
     userMetadata: UserMetadata,
-    selectedItemIds: Option<Set<string>>
+    selectedItemIds: Some<Set<string>>
   ) => {
-    if (selectedItemIds.isSome()) {
-      const metadata = userMetadata.metadata;
-      dispatch(
-        userMetadataUpsert.request({
-          ...userMetadata,
-          // tslint:disable-next-line: no-useless-cast
-          version: (userMetadata.version as number) + 1,
-          metadata: {
-            ...metadata,
-            organizationsOfInterest: Array.from(selectedItemIds.value)
-          }
-        })
-      );
-    }
+    const metadata = userMetadata.metadata;
+    dispatch(
+      userMetadataUpsert.request({
+        ...userMetadata,
+        // tslint:disable-next-line: no-useless-cast
+        version: (userMetadata.version as number) + 1,
+        metadata: {
+          ...metadata,
+          organizationsOfInterest: Array.from(selectedItemIds.value)
+        }
+      })
+    );
   }
 });
 
@@ -449,7 +446,11 @@ const mergeProps = (
   const dispatchUpdateOrganizationsOfInterestMetadata = (
     selectedItemIds: Option<Set<string>>
   ) => {
-    if (selectedItemIds.isSome() && stateProps.userMetadata) {
+    if (
+      selectedItemIds.isSome() &&
+      selectedItemIds.value.size !== 0 &&
+      stateProps.userMetadata
+    ) {
       dispatchProps.saveSelectedOrganizationItems(
         stateProps.userMetadata,
         selectedItemIds
