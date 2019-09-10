@@ -78,8 +78,9 @@ const styles = StyleSheet.create({
   },
   sectionHeaderText: {
     fontSize: 18,
-    lineHeight: 20,
-    color: customVariables.brandDarkestGray
+    color: customVariables.brandDarkestGray,
+    ...makeFontStyleObject(Platform.select, "600"),
+    lineHeight: 20
   },
 
   // Items
@@ -253,9 +254,7 @@ const ListEmptyComponent = (
 
 const FakeItemComponent = (
   <View style={styles.itemEmptyWrapper}>
-    <Text bold={true} style={styles.itemEmptyText}>
-      {I18n.t("reminders.emptyMonth")}
-    </Text>
+    <Text style={styles.itemEmptyText}>{I18n.t("reminders.emptyMonth")}</Text>
   </View>
 );
 
@@ -338,8 +337,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       potService !== undefined
         ? pot.isNone(potService)
           ? ({
-              organization_name: I18n.t("messages.errorLoading.senderService"),
-              department_name: I18n.t("messages.errorLoading.senderInfo")
+              organization_name: I18n.t("messages.errorLoading.senderInfo"),
+              department_name: I18n.t("messages.errorLoading.serviceInfo")
             } as ServicePublic)
           : pot.toUndefined(potService)
         : undefined;

@@ -3,7 +3,7 @@ import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 
-import { ContextualHelp } from "../ContextualHelp";
+import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import { BaseHeader } from "./BaseHeader";
 
@@ -66,6 +66,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       isSearchAvailable,
       searchType
     } = this.props;
+
     return (
       <Container>
         <BaseHeader
@@ -79,11 +80,9 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           body={headerBody}
           appLogo={appLogo}
         />
-
         {this.props.children}
-
         {contextualHelp && (
-          <ContextualHelp
+          <ContextualHelpModal
             title={contextualHelp.title}
             body={contextualHelp.body}
             isVisible={this.state.isHelpVisible}
