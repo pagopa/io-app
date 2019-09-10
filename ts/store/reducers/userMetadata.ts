@@ -22,10 +22,7 @@ export type UserMetadata = {
 
 export const emptyUserMetadata: UserMetadata = {
   version: 0,
-  metadata: {
-    experimentalFeatures: undefined,
-    organizationsOfInterest: undefined
-  }
+  metadata: {}
 };
 
 export type UserMetadataState = pot.Pot<UserMetadata, Error>;
