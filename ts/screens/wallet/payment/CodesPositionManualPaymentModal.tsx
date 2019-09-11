@@ -51,7 +51,10 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
         <AppHeader noLeft={true}>
           <Body />
           <Right>
-            <ButtonWithoutOpacity onPress={this.props.onCancel} transparent={true}>
+            <ButtonWithoutOpacity
+              onPress={this.props.onCancel}
+              transparent={true}
+            >
               <IconFont name="io-close" />
             </ButtonWithoutOpacity>
           </Right>

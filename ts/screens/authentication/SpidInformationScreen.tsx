@@ -101,7 +101,11 @@ class SpidInformationScreen extends React.Component<Props, never> {
         </Content>
 
         <View footer={true}>
-          <ButtonWithoutOpacity block={true} primary={true} onPress={this.browseToLink}>
+          <ButtonWithoutOpacity
+            block={true}
+            primary={true}
+            onPress={this.browseToLink}
+          >
             <Text>{I18n.t("authentication.spid_information.knowMore")}</Text>
           </ButtonWithoutOpacity>
         </View>
