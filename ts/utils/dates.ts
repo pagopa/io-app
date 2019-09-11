@@ -61,6 +61,22 @@ export function format(
   );
 }
 
+export function isExpired(expireMonth: number, expireYear: number): boolean {
+  const today: Date = new Date();
+  const currentMonth: number = today.getMonth() + 1;
+  const currentYear: number = parseInt(
+    today
+      .getFullYear()
+      .toString()
+      .slice(2),
+    10
+  );
+  return (
+    expireYear < currentYear ||
+    (expireYear === currentYear && expireMonth < currentMonth)
+  );
+}
+
 /* 
 * this code is a copy from gcanti repository https://github.com/gcanti/io-ts-types/blob/06b29a2e74c64b21ee2f2477cabf98616a7af35f/src/Date/DateFromISOString.ts
 * this because to avoid node modules conflicts given from using io-ts-types
