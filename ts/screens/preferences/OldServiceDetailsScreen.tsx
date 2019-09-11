@@ -20,6 +20,7 @@ import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import H4 from "../../components/ui/H4";
+import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
@@ -323,7 +324,9 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
             </Row>
             <View spacer={true} />
             <Row>
-              <Col size={1} />
+              <Col size={1}>
+                <IconFont name="io-lucchetto" />
+              </Col>
               <Col size={9}>
                 <Text
                   primary={
