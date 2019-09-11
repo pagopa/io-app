@@ -238,7 +238,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 autoCapitalize: "words",
                 keyboardType: "default",
                 returnKeyType: "done",
-                onChangeText: (value: string) => this.updateHolderState(value),
+                onChangeText: (value: string) => this.updateHolderState(value)
               }}
             />
 
