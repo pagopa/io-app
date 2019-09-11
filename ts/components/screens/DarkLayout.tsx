@@ -2,6 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import {
   ImageSourcePropType,
+  RefreshControlProps,
   StatusBar,
   StyleProp,
   ViewStyle
@@ -28,6 +29,7 @@ type Props = Readonly<{
   footerContent?: React.ReactNode;
   contextualHelp?: { title: string; body: () => React.ReactNode };
   banner?: React.ReactNode;
+  contentRefreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
 
 const styles = StyleSheet.create({
@@ -78,6 +80,7 @@ export default class DarkLayout extends React.Component<Props> {
               this.props.topContentHeight ? this.props.topContentHeight : 0
             }
             animationOffset={40}
+            contentRefreshControl={this.props.contentRefreshControl}
           >
             {this.screenContent()}
           </AnimatedScreenContent>

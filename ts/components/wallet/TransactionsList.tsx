@@ -169,21 +169,14 @@ export default class TransactionsList extends React.Component<Props> {
             <Text>{I18n.t("wallet.amount")}</Text>
           </View>
         </View>
-
-        <Grid>
-          <Row>
             <FlatList
               scrollEnabled={false}
               removeClippedSubviews={false}
               data={transactions}
               renderItem={this.renderTransaction}
-              ItemSeparatorComponent={() => (
-                <View style={styles.itemSeparator} />
-              )}
+          ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
               keyExtractor={item => item.id.toString()}
             />
-          </Row>
-        </Grid>
       </Content>
     );
   }
