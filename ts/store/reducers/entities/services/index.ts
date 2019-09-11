@@ -10,14 +10,11 @@ import { isDefined } from "../../../../utils/guards";
 import { Action } from "../../../actions/types";
 import { ServiceMetadataById, servicesMetadataSelector } from "../../content";
 import { GlobalState } from "../../types";
+import { organizationsOfInterestSelector } from "../../userMetadata";
 import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../organizations/organizationsByFiscalCodeReducer";
-import {
-  organizationsFiscalCodesSelectedStateSelector,
-  OrganizationsSelectedState
-} from "../organizations/organizationsFiscalCodesSelected";
 import readServicesByIdReducer, {
   ReadStateByServicesId
 } from "./readStateByServiceId";
@@ -92,15 +89,15 @@ const getServices = (
     byId: ServiceMetadataById;
   },
   localization?: ScopeEnum,
-  organizationsFiscalCodesSelected?: OrganizationsSelectedState
+  selectedOrganizationsFiscalCodes?: ReadonlyArray<string>
 ) => {
   const organizationsFiscalCodes =
-    organizationsFiscalCodesSelected === undefined
+    selectedOrganizationsFiscalCodes === undefined
       ? Object.keys(services.byOrgFiscalCode)
-      : organizationsFiscalCodesSelected;
+      : selectedOrganizationsFiscalCodes;
 
   return organizationsFiscalCodes
-    .map(fiscalCode => {
+    .map((fiscalCode: string) => {
       const organizationName = organizations[fiscalCode] || fiscalCode;
       const organizationFiscalCode = fiscalCode;
       const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
@@ -156,7 +153,7 @@ export const selectedLocalServicesSectionsSelector = createSelector(
     servicesMetadataSelector,
     // TODO When https://github.com/teamdigitale/io-app/pull/1260 is merged
     // substitute with this selector "organizationsOfInterestSelector" from UserMetadata
-    organizationsFiscalCodesSelectedStateSelector
+    organizationsOfInterestSelector
   ],
   (services, organizations, servicesMetadata, selectedOrganizations) =>
     getServices(
@@ -175,14 +172,16 @@ export const notSelectedServicesSectionsSelector = createSelector(
     servicesMetadataSelector,
     // TODO When https://github.com/teamdigitale/io-app/pull/1260 is merged
     // substitute with this selector "organizationsOfInterestSelector" from UserMetadata
-    organizationsFiscalCodesSelectedStateSelector
+    organizationsOfInterestSelector
   ],
   (services, organizations, servicesMetadata, selectedOrganizations) => {
     // tslint:disable-next-line:no-let
     let notSelectedOrganizations;
     if (organizations !== undefined) {
       notSelectedOrganizations = Object.keys(organizations).filter(
-        fiscalCode => selectedOrganizations.indexOf(fiscalCode) === -1
+        fiscalCode =>
+          selectedOrganizations &&
+          selectedOrganizations.indexOf(fiscalCode) === -1
       );
     }
 

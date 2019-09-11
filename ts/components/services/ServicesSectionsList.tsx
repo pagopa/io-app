@@ -20,7 +20,7 @@ type AnimatedProps = {
 
 type OwnProps = {
   onChooserAreasOfInterestPress?: () => void;
-  organizationsFiscalCodesSelected?: Set<string>;
+  selectedOrganizationsFiscalCodes?: Set<string>;
   isLocal?: boolean;
 };
 
@@ -87,8 +87,8 @@ class ServicesSectionsList extends React.PureComponent<Props> {
   private renderEditButton = () => {
     return (
       this.props.isLocal &&
-      this.props.organizationsFiscalCodesSelected &&
-      this.props.organizationsFiscalCodesSelected.size > 0 && (
+      this.props.selectedOrganizationsFiscalCodes &&
+      this.props.selectedOrganizationsFiscalCodes.size > 0 && (
         <View style={styles.headerContentWrapper}>
           <Button
             small={true}

@@ -3,7 +3,7 @@
  * TODO: add placeholder on services lists https://www.pivotaltracker.com/story/show/168171009
  */
 import { left } from "fp-ts/lib/Either";
-import { Option, some } from "fp-ts/lib/Option";
+import { Option, some, Some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
@@ -24,22 +24,27 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
-import { setSelectedOrganizations } from "../../store/actions/organizations";
 import {
   loadVisibleServices,
   showServiceDetails
 } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
+import { userMetadataUpsert } from "../../store/actions/userMetadata";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
-import { existingOrganizationsFiscalCodesSelectedStateSelector } from "../../store/reducers/entities/organizations/organizationsFiscalCodesSelected";
 import {
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
-  selectedLocalServicesSectionsSelector
+  selectedLocalServicesSectionsSelector,
+  ServicesSectionState
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { GlobalState } from "../../store/reducers/types";
+import {
+  organizationsOfInterestSelector,
+  UserMetadata,
+  userMetadataSelector
+} from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { getLogoForOrganization } from "../../utils/organizations";
@@ -48,9 +53,16 @@ import OldServiceDetailsScreen from "../preferences/OldServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
 
+type ReduxMergedProps = Readonly<{
+  dispatchUpdateOrganizationsOfInterestMetadata: (
+    selectedItemIds: Option<Set<string>>
+  ) => void;
+}>;
+
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps &
+  ReduxMergedProps &
   LightModalContextInterface;
 
 type State = {
@@ -170,13 +182,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     const {
       selectableOrganizations,
       hideModal,
-      validOrganizationsSelected,
+      selectedOrganizations,
       isLoading
     } = this.props;
     this.props.showModal(
       <ChooserListContainer<Organization>
         items={selectableOrganizations}
-        initialSelectedItemIds={some(new Set(validOrganizationsSelected))}
+        initialSelectedItemIds={some(new Set(selectedOrganizations))}
         keyExtractor={(item: Organization) => item.fiscalCode}
         itemTitleExtractor={(item: Organization) => item.name}
         itemIconComponent={left((fiscalCode: string) =>
@@ -196,9 +208,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private onSaveAreasOfInterest = (
     selectedFiscalCodes: Option<Set<string>>
   ) => {
-    const { saveSelectedOrganizationItems, hideModal } = this.props;
-    saveSelectedOrganizationItems(selectedFiscalCodes);
-    hideModal();
+    this.props.dispatchUpdateOrganizationsOfInterestMetadata(
+      selectedFiscalCodes
+    );
+    this.props.hideModal();
   };
 
   public render() {
@@ -282,8 +295,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
-            organizationsFiscalCodesSelected={
-              new Set(this.props.validOrganizationsSelected)
+            selectedOrganizationsFiscalCodes={
+              new Set(this.props.selectedOrganizations)
             }
             animated={{
               onScroll: Animated.event(
@@ -376,6 +389,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const { services } = state.entities;
 
+  const potUserMetadata = userMetadataSelector(state);
+  // TODO: disable selection of areas of interest if the user metadata are not loaded
+  // (it causes the new selection is not loaded) https://www.pivotaltracker.com/story/show/168312476
+  const userMetadata = pot.getOrElse(potUserMetadata, undefined);
+
   const isAnyServiceLoading =
     Object.keys(services.byId).find(k => {
       const oneService = services.byId[k];
@@ -394,34 +412,47 @@ const mapStateToProps = (state: GlobalState) => {
     isAnyServiceMetdataLoading;
 
   const localServicesSections = localServicesSectionsSelector(state);
-  const selectableOrganizations = localServicesSections.map(section => {
-    return {
-      name: section.organizationName,
-      fiscalCode: section.organizationFiscalCode
-    };
-  });
+  const selectableOrganizations = localServicesSections.map(
+    (section: ServicesSectionState) => {
+      return {
+        name: section.organizationName,
+        fiscalCode: section.organizationFiscalCode
+      };
+    }
+  );
 
   return {
     selectableOrganizations,
+    selectedOrganizations: organizationsOfInterestSelector(state),
     isLoading,
-    validOrganizationsSelected: existingOrganizationsFiscalCodesSelectedStateSelector(
-      state
-    ),
     profile: state.profile,
     servicesById: state.entities.services.byId,
     readServices: readServicesByIdSelector(state),
     localSections: selectedLocalServicesSectionsSelector(state),
     nationalSections: nationalServicesSectionsSelector(state),
-    allServicesSections: notSelectedServicesSectionsSelector(state)
+    allServicesSections: notSelectedServicesSectionsSelector(state),
+    userMetadata
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshServices: () => dispatch(loadVisibleServices.request()),
-  saveSelectedOrganizationItems: (selectedItemIds: Option<Set<string>>) => {
-    if (selectedItemIds.isSome()) {
-      dispatch(setSelectedOrganizations(Array.from(selectedItemIds.value)));
-    }
+  saveSelectedOrganizationItems: (
+    userMetadata: UserMetadata,
+    selectedItemIds: Some<Set<string>>
+  ) => {
+    const metadata = userMetadata.metadata;
+    dispatch(
+      userMetadataUpsert.request({
+        ...userMetadata,
+        // tslint:disable-next-line: no-useless-cast
+        version: (userMetadata.version as number) + 1,
+        metadata: {
+          ...metadata,
+          organizationsOfInterest: Array.from(selectedItemIds.value)
+        }
+      })
+    );
   },
   contentServiceLoad: (serviceId: ServiceId) =>
     dispatch(contentServiceLoad.request(serviceId)),
@@ -432,7 +463,36 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(showServiceDetails(service))
 });
 
+const mergeProps = (
+  stateProps: ReturnType<typeof mapStateToProps>,
+  dispatchProps: ReturnType<typeof mapDispatchToProps>,
+  ownProps: OwnProps
+) => {
+  // If the user updates the area of interest, the upsert of
+  // the user metadata stored on backend is triggered
+  const dispatchUpdateOrganizationsOfInterestMetadata = (
+    selectedItemIds: Option<Set<string>>
+  ) => {
+    if (selectedItemIds.isSome() && stateProps.userMetadata) {
+      dispatchProps.saveSelectedOrganizationItems(
+        stateProps.userMetadata,
+        selectedItemIds
+      );
+    }
+  };
+
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    ...{
+      dispatchUpdateOrganizationsOfInterestMetadata
+    }
+  };
+};
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(withLightModalContext(ServicesHomeScreen));
