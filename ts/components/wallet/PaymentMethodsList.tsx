@@ -33,7 +33,8 @@ type IPaymentMethod = Readonly<{
 const styles = StyleSheet.create({
   listItem: {
     marginLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
+    backgroundColor: "white"
   },
   disabled: {
     opacity: 0.75

@@ -10,6 +10,7 @@ import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonWithoutOpacity from "../../../components/ButtonWithoutOpacity";
 
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
@@ -237,13 +238,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               }
               bottomContent={
                 <View>
-                  <Button
+                  <ButtonWithoutOpacity
                     onPress={this.showImagePicker}
                     style={styles.button}
                     bordered={true}
                   >
                     <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
-                  </Button>
+                  </ButtonWithoutOpacity>
                   <View style={styles.content}>
                     <View spacer={true} />
                     <Text style={[styles.padded, styles.bottomText]}>

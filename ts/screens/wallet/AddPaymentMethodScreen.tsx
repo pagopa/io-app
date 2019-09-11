@@ -13,13 +13,14 @@
  */
 import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
-import { Button, Content, H1, Text, View } from "native-base";
+import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
+import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
@@ -91,7 +92,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
           </Content>
         )}
         <View footer={true}>
-          <Button
+          <ButtonWithoutOpacity
             block={true}
             light={true}
             bordered={true}
@@ -102,7 +103,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
                 ? I18n.t("global.buttons.back")
                 : I18n.t("global.buttons.cancel")}
             </Text>
-          </Button>
+          </ButtonWithoutOpacity>
         </View>
       </BaseScreenComponent>
     );

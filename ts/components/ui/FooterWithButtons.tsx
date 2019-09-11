@@ -1,8 +1,9 @@
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { ComponentProps } from "../../types/react";
+import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +23,7 @@ type OwnButtonProps = {
   title: string;
 };
 
-type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
+type FooterButtonProps = ComponentProps<ButtonWithoutOpacity> & OwnButtonProps;
 
 interface SingleButton {
   type: "SingleButton";
@@ -60,7 +61,7 @@ export default class FooterWithButtons extends React.Component<Props, never> {
     return (
       <React.Fragment>
         <View hspacer={true} />
-        <Button
+        <ButtonWithoutOpacity
           {...otherPropsRightButton}
           style={
             type === "TwoButtonsInlineThird"
@@ -69,7 +70,7 @@ export default class FooterWithButtons extends React.Component<Props, never> {
           }
         >
           <Text numberOfLines={1}>{rightButtonTitle}</Text>
-        </Button>
+        </ButtonWithoutOpacity>
       </React.Fragment>
     );
   }
@@ -82,9 +83,9 @@ export default class FooterWithButtons extends React.Component<Props, never> {
 
     return (
       <View footer={true} style={styles.container}>
-        <Button style={styles.button} {...otherPropsLeftButton}>
+        <ButtonWithoutOpacity style={styles.button} {...otherPropsLeftButton}>
           <Text>{leftButtonTitle}</Text>
-        </Button>
+        </ButtonWithoutOpacity>
         {this.renderRightButton()}
       </View>
     );
