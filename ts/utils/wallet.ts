@@ -11,13 +11,16 @@ export const isExpiredCard = (creditCard: CreditCard) => {
   const decodedValueYear = NumberFromString.decode(creditCard.expireYear);
   const ccExpireYear = decodedValueYear.isRight()
     ? decodedValueYear.value
-    : creditCard.expireYear;
+    : undefined;
   const decodedValueMonth = NumberFromString.decode(creditCard.expireMonth);
   const ccExpireMonth = decodedValueMonth.isRight()
     ? decodedValueMonth.value
-    : creditCard.expireMonth;
-
-  return isExpired(Number(ccExpireMonth), Number(ccExpireYear));
+    : undefined;
+  // if we can't decode month or year value, card will be considered as expired
+  if (ccExpireYear === undefined || ccExpireMonth === undefined) {
+    return true;
+  }
+  return isExpired(ccExpireMonth, ccExpireYear);
 };
 
 /**
