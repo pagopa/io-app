@@ -87,7 +87,7 @@ class PinScreen extends React.Component<Props, State> {
   public onPinConfirmFulfill = (code: PinString, isValid: boolean) => {
     // If the inserted PIN do not match we clear the component to let the user retry
     if (!isValid && this.pinConfirmComponent) {
-      this.pinConfirmComponent.clear();
+      this.pinConfirmComponent.debounceClear();
     }
     this.setState({
       pinState: {
@@ -100,7 +100,7 @@ class PinScreen extends React.Component<Props, State> {
 
   public onPinReset() {
     if (this.pinConfirmComponent) {
-      this.pinConfirmComponent.clear();
+      this.pinConfirmComponent.debounceClear();
     }
     this.setState({
       pinState: {

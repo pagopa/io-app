@@ -207,7 +207,7 @@ class Pinpad extends React.PureComponent<Props, State> {
     );
   };
 
-  private debounceClear = debounce(() => {
+  public debounceClear = debounce(() => {
     this.setState({ value: "" });
   }, 100);
 
