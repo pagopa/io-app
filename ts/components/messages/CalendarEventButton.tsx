@@ -101,17 +101,16 @@ class CalendarEventButton extends React.PureComponent<Props> {
           disabled && disabledStyles.button
         ]}
       >
-        {small && (
-          <IconFont
-            name={iconName}
-            style={[
-              baseStyles.icon,
-              validStyles.icon,
-              small && smallStyles.icon,
-              disabled && disabledStyles.icon
-            ]}
-          />
-        )}
+        <IconFont
+          name={iconName}
+          style={[
+            baseStyles.icon,
+            validStyles.icon,
+            small && smallStyles.icon,
+            disabled && disabledStyles.icon
+          ]}
+        />
+
         <Text
           style={[
             baseStyles.text,
