@@ -1,7 +1,7 @@
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
   Dimensions,
@@ -25,6 +25,7 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { format } from "../../utils/dates";
+import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
 import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
@@ -382,7 +383,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           height: TOP_INDICATOR_HEIGHT
         }}
       >
-        <Button
+        <ButtonWithoutOpacity
           block={true}
           primary={true}
           small={true}
@@ -391,7 +392,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           onPress={this.loadMoreData}
         >
           <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
-        </Button>
+        </ButtonWithoutOpacity>
       </View>
     );
   }

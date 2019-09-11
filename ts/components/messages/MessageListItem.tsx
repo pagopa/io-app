@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
@@ -11,6 +11,7 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
+import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
 import { BadgeComponent } from "../screens/BadgeComponent";
 import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import IconFont from "../ui/IconFont";
@@ -194,9 +195,12 @@ class MessageListItem extends React.PureComponent<Props> {
             </View>
             <View style={styles.contentRight}>
               {isSelectionModeEnabled ? (
-                <Button onPress={this.handleLongPress} transparent={true}>
+                <ButtonWithoutOpacity
+                  onPress={this.handleLongPress}
+                  transparent={true}
+                >
                   <IconFont name={iconName} color={iconColor} />
-                </Button>
+                </ButtonWithoutOpacity>
               ) : (
                 <IconFont
                   name="io-right"

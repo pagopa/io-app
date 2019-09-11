@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, H1, Text, View } from "native-base";
+import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -12,6 +12,7 @@ import variables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
+import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
 import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
@@ -155,7 +156,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                 <Text style={styles.messageIDLabelText}>ID: {message.id}</Text>
               </View>
               <View style={styles.messageIDBtnContainer}>
-                <Button
+                <ButtonWithoutOpacity
                   light={true}
                   bordered={true}
                   primary={true}
@@ -176,7 +177,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                   >
                     {I18n.t("clipboard.copyText")}
                   </Text>
-                </Button>
+                </ButtonWithoutOpacity>
               </View>
             </View>
           )}

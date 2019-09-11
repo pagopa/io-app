@@ -1,6 +1,7 @@
-import { Button, Text } from "native-base";
+import { Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
 
 type Props = Readonly<{
   onPress: () => void;
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
 });
 
 export const DevScreenButton: React.SFC<Props> = props => (
-  <Button
+  <ButtonWithoutOpacity
     dark={true}
     onPress={props.onPress}
     small={true}
@@ -25,5 +26,5 @@ export const DevScreenButton: React.SFC<Props> = props => (
     style={styles.devButton}
   >
     <Text>Dev</Text>
-  </Button>
+  </ButtonWithoutOpacity>
 );

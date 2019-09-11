@@ -1,9 +1,10 @@
 import { Option } from "fp-ts/lib/Option";
-import { Button, Text } from "native-base";
+import { Text } from "native-base";
 import React from "react";
 import { Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
+import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
 
 const styles = StyleSheet.create({
   buttonBar: {
@@ -56,7 +57,7 @@ export class ListSelectionBar extends React.PureComponent<Props> {
       selectedItemIds.isSome() &&
       allItemIds.isSome() && (
         <Animated.View style={[styles.buttonBar, containerStyle]}>
-          <Button
+          <ButtonWithoutOpacity
             block={true}
             bordered={true}
             light={true}
@@ -64,8 +65,8 @@ export class ListSelectionBar extends React.PureComponent<Props> {
             style={styles.buttonBarLeft}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-          <Button
+          </ButtonWithoutOpacity>
+          <ButtonWithoutOpacity
             block={true}
             bordered={true}
             style={styles.buttonBarCenter}
@@ -78,15 +79,15 @@ export class ListSelectionBar extends React.PureComponent<Props> {
                   : "messages.cta.selectAll"
               )}
             </Text>
-          </Button>
-          <Button
+          </ButtonWithoutOpacity>
+          <ButtonWithoutOpacity
             block={true}
             style={styles.buttonBarRight}
             disabled={selectedItemIds.value.size === 0}
             onPress={onToggleSelection}
           >
             <Text>{primaryButtonText}</Text>
-          </Button>
+          </ButtonWithoutOpacity>
         </Animated.View>
       )
     );

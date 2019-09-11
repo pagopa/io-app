@@ -5,7 +5,7 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { ActionSheet, Button, Content, H1, Text, View } from "native-base";
+import { ActionSheet, Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -13,6 +13,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import ButtonWithoutOpacity from "../../../components/ButtonWithoutOpacity";
 import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
@@ -255,25 +256,25 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
         </Content>
 
         <View footer={true}>
-          <Button
+          <ButtonWithoutOpacity
             block={true}
             primary={true}
             onPress={() => this.props.runAuthorizationAndPayment()}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
-          </Button>
+          </ButtonWithoutOpacity>
           <View spacer={true} />
           <View style={styles.parent}>
-            <Button
+            <ButtonWithoutOpacity
               style={styles.child}
               block={true}
               cancel={true}
               onPress={this.props.onCancel}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </Button>
+            </ButtonWithoutOpacity>
             <View hspacer={true} />
-            <Button
+            <ButtonWithoutOpacity
               style={[styles.child, styles.childTwice]}
               block={true}
               light={true}
@@ -281,7 +282,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               onPress={() => this.props.pickPaymentMethod()}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
-            </Button>
+            </ButtonWithoutOpacity>
           </View>
         </View>
       </BaseScreenComponent>

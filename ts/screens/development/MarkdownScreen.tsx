@@ -1,6 +1,7 @@
-import { Button, Container, Content, Text, View } from "native-base";
+import { Container, Content, Text, View } from "native-base";
 import * as React from "react";
 import { TextInput } from "react-native";
+import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -72,30 +73,30 @@ class MarkdownScreen extends React.Component<Props, State> {
           <View
             style={{ flexDirection: "row", justifyContent: "space-around" }}
           >
-            <Button
+            <ButtonWithoutOpacity
               small={true}
               onPress={() => this.setMarkdown(MARKDOWN_HEADING)}
             >
               <Text>Heading</Text>
-            </Button>
-            <Button
+            </ButtonWithoutOpacity>
+            <ButtonWithoutOpacity
               small={true}
               onPress={() => this.setMarkdown(MARKDOWN_PARAGRAPH)}
             >
               <Text>Paragraph</Text>
-            </Button>
-            <Button
+            </ButtonWithoutOpacity>
+            <ButtonWithoutOpacity
               small={true}
               onPress={() => this.setMarkdown(MARKDOWN_LIST)}
             >
               <Text>List</Text>
-            </Button>
-            <Button
+            </ButtonWithoutOpacity>
+            <ButtonWithoutOpacity
               small={true}
               onPress={() => this.setMarkdown(MARKDOWN_REFERENCE)}
             >
               <Text>Reference</Text>
-            </Button>
+            </ButtonWithoutOpacity>
           </View>
           <View spacer={true} />
           <TextInput

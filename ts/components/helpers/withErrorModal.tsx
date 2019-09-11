@@ -1,10 +1,11 @@
 import { Option } from "fp-ts/lib/Option";
-import { Button, H2, Text } from "native-base";
+import { H2, Text } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
 
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
+import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
 import { Overlay } from "../ui/Overlay";
 
 const styles = StyleSheet.create({
@@ -92,24 +93,24 @@ export function withErrorModal<
     private renderButtons = () => {
       return (
         <View style={styles.buttonsContainer}>
-          <Button
+          <ButtonWithoutOpacity
             onPress={this.props.onCancel}
             style={styles.buttonCancel}
             light={true}
             block={true}
           >
             <Text white={true}>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
+          </ButtonWithoutOpacity>
           {this.props.onRetry && <View style={styles.separator} />}
           {this.props.onRetry && (
-            <Button
+            <ButtonWithoutOpacity
               primary={true}
               block={true}
               onPress={this.props.onRetry}
               style={styles.buttonRetry}
             >
               <Text>{I18n.t("global.buttons.retry")}</Text>
-            </Button>
+            </ButtonWithoutOpacity>
           )}
         </View>
       );

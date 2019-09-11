@@ -4,7 +4,7 @@
  * the props passed
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import {
@@ -20,6 +20,7 @@ import variables from "../../../theme/variables";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { isExpiredCard } from "../../../utils/wallet";
+import ButtonWithoutOpacity from "../../ButtonWithoutOpacity";
 import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
@@ -249,7 +250,7 @@ export default class CardComponent extends React.Component<Props> {
     );
 
     return (
-      <Button
+      <ButtonWithoutOpacity
         style={[styles.footerButton, buttonStyle]}
         block={true}
         iconRight={true}
@@ -261,7 +262,7 @@ export default class CardComponent extends React.Component<Props> {
           size={variables.iconSize2}
           style={footerTextStyle}
         />
-      </Button>
+      </ButtonWithoutOpacity>
     );
   }
 

@@ -3,11 +3,12 @@
  */
 
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, H3, Text, View } from "native-base";
+import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -209,14 +210,14 @@ class PinScreen extends React.Component<Props, State> {
         const onPress = () => this.setPin(pin);
         return (
           <React.Fragment>
-            <Button
+            <ButtonWithoutOpacity
               block={true}
               primary={true}
               disabled={!isConfirmationPinMatch}
               onPress={onPress}
             >
               <Text>{I18n.t("onboarding.pin.continue")}</Text>
-            </Button>
+            </ButtonWithoutOpacity>
             <View spacer={true} />
           </React.Fragment>
         );
@@ -236,13 +237,13 @@ class PinScreen extends React.Component<Props, State> {
 
         {pinState.state !== "PinUnselected" && (
           <React.Fragment>
-            <Button
+            <ButtonWithoutOpacity
               block={true}
               bordered={true}
               onPress={() => this.onPinReset()}
             >
               <Text>{I18n.t("onboarding.pin.reset")}</Text>
-            </Button>
+            </ButtonWithoutOpacity>
           </React.Fragment>
         )}
       </View>

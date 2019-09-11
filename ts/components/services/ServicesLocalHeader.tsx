@@ -1,9 +1,10 @@
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
+import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
 import IconFont from "../ui/IconFont";
 import ServicesLocal from "./ServicesLocal";
 
@@ -56,7 +57,7 @@ export class ServicesLocalHeader extends React.PureComponent<Props> {
 
     return isOrganizationsFiscalCodesSelected ? (
       <View style={styles.contentWrapper}>
-        <Button
+        <ButtonWithoutOpacity
           small={true}
           bordered={true}
           style={styles.button}
@@ -66,7 +67,7 @@ export class ServicesLocalHeader extends React.PureComponent<Props> {
           <Text style={styles.textButton}>
             {I18n.t("services.areasOfInterest.editButton")}
           </Text>
-        </Button>
+        </ButtonWithoutOpacity>
         {paddingForAnimation && <View style={styles.paddingForAnimation} />}
       </View>
     ) : (
@@ -77,7 +78,7 @@ export class ServicesLocalHeader extends React.PureComponent<Props> {
 
         <View spacer={true} large={true} />
 
-        <Button
+        <ButtonWithoutOpacity
           small={true}
           bordered={true}
           style={styles.button}
@@ -89,7 +90,7 @@ export class ServicesLocalHeader extends React.PureComponent<Props> {
           <Text style={styles.textButton}>
             {I18n.t("services.areasOfInterest.addButton")}
           </Text>
-        </Button>
+        </ButtonWithoutOpacity>
 
         <View spacer={true} extralarge={true} />
 

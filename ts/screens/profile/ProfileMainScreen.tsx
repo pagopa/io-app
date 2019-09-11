@@ -1,16 +1,7 @@
 /**
  * A component to show the main screen of the Profile section
  */
-import {
-  Button,
-  H3,
-  List,
-  ListItem,
-  Switch,
-  Text,
-  Toast,
-  View
-} from "native-base";
+import { H3, List, ListItem, Switch, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -20,6 +11,7 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -141,14 +133,14 @@ class ProfileMainScreen extends React.PureComponent<Props> {
   private debugListItem(title: string, onPress: () => void, isDanger: boolean) {
     return (
       <ListItem style={styles.noRightPadding}>
-        <Button
+        <ButtonWithoutOpacity
           info={!isDanger}
           danger={isDanger}
           small={true}
           onPress={onPress}
         >
           <Text numberOfLines={1}>{title}</Text>
-        </Button>
+        </ButtonWithoutOpacity>
       </ListItem>
     );
   }

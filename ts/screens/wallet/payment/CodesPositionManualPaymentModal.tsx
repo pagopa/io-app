@@ -1,7 +1,8 @@
-import { Body, Button, Container, Right } from "native-base";
+import { Body, Container, Right } from "native-base";
 import * as React from "react";
 import { BackHandler, Dimensions, Image, StyleSheet } from "react-native";
 import ImageZoom from "react-native-image-pan-zoom";
+import ButtonWithoutOpacity from "../../../components/ButtonWithoutOpacity";
 
 import AppHeader from "./../../../components/ui/AppHeader";
 import IconFont from "./../../../components/ui/IconFont";
@@ -50,9 +51,9 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
         <AppHeader noLeft={true}>
           <Body />
           <Right>
-            <Button onPress={this.props.onCancel} transparent={true}>
+            <ButtonWithoutOpacity onPress={this.props.onCancel} transparent={true}>
               <IconFont name="io-close" />
-            </Button>
+            </ButtonWithoutOpacity>
           </Right>
         </AppHeader>
         <ImageZoom

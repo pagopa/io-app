@@ -1,9 +1,10 @@
-import { Button, Text } from "native-base";
+import { Text } from "native-base";
 import * as React from "react";
 import { Switch, View } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -132,9 +133,9 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
             >
               {I18n.t("biometric_recognition.enroll_cta")}
             </Text>
-            <Button onPress={openAppSecuritySettings}>
+            <ButtonWithoutOpacity onPress={openAppSecuritySettings}>
               <Text>{I18n.t("biometric_recognition.enroll_btnLabel")}</Text>
-            </Button>
+            </ButtonWithoutOpacity>
           </View>
         )}
       </TopScreenComponent>

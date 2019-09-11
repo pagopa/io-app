@@ -4,7 +4,7 @@
  */
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Button, Container, Text, View } from "native-base";
+import { Container, Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
@@ -277,14 +277,14 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                     {I18n.t("wallet.QRtoPay.enroll_cta")}
                   </Text>
 
-                  <Button
+                  <ButtonWithoutOpacity
                     onPress={openAppSettings}
                     style={styles.notAuthorizedBtn}
                   >
                     <Text>
                       {I18n.t("biometric_recognition.enroll_btnLabel")}
                     </Text>
-                  </Button>
+                  </ButtonWithoutOpacity>
                 </View>
               }
             />

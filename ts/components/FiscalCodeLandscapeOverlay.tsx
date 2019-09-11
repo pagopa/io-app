@@ -1,7 +1,7 @@
 /**
  * A component to show the fiscal code fac-simile in Landscape
  */
-import { Body, Button, Container, View } from "native-base";
+import { Body, Container, View } from "native-base";
 import * as React from "react";
 import {
   BackHandler,
@@ -15,6 +15,7 @@ import { UserProfile } from "../../definitions/backend/UserProfile";
 import IconFont from "../components/ui/IconFont";
 import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
+import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
 
@@ -112,9 +113,12 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
           <View spacer={true} large={true} />
         </ScrollView>
         <View style={styles.closeButton}>
-          <Button transparent={true} onPress={() => this.props.onCancel()}>
+          <ButtonWithoutOpacity
+            transparent={true}
+            onPress={() => this.props.onCancel()}
+          >
             <IconFont name="io-close" color={customVariables.colorWhite} />
-          </Button>
+          </ButtonWithoutOpacity>
         </View>
       </Container>
     );

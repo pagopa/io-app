@@ -1,4 +1,4 @@
-import { Button, Text } from "native-base";
+import { Text } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet, TouchableHighlight, View } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
@@ -6,6 +6,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import * as pot from "italia-ts-commons/lib/pot";
+import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -134,9 +135,9 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
           {pot.isError(calendars) && (
             <React.Fragment>
               <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
-              <Button onPress={this.fetchCalendars}>
+              <ButtonWithoutOpacity onPress={this.fetchCalendars}>
                 <Text>{I18n.t("global.buttons.retry")}</Text>
-              </Button>
+              </ButtonWithoutOpacity>
             </React.Fragment>
           )}
           {pot.isSome(calendars) && (

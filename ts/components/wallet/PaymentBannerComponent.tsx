@@ -7,7 +7,7 @@ import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber
 } from "italia-pagopa-commons/lib/pagopa";
-import { Button, Right, Text, View } from "native-base";
+import { Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -17,6 +17,7 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { formatNumberAmount } from "../../utils/stringBuilder";
+import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
 
 const styles = StyleSheet.create({
   rightButtonText: {
@@ -73,11 +74,15 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           <View spacer={true} />
         </Col>
         <Right>
-          <Button small={true} transparent={true} onPress={props.onCancel}>
+          <ButtonWithoutOpacity
+            small={true}
+            transparent={true}
+            onPress={props.onCancel}
+          >
             <Text white={true} style={styles.rightButtonText}>
               {I18n.t("global.buttons.cancel").toUpperCase()}
             </Text>
-          </Button>
+          </ButtonWithoutOpacity>
           <View spacer={true} />
         </Right>
       </Row>

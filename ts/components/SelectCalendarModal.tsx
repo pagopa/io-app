@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Container, Content, Text, View } from "native-base";
+import { Container, Content, Text, View } from "native-base";
 import React from "react";
 import {
   BackHandler,
@@ -15,6 +15,7 @@ import { GlobalState } from "../store/reducers/types";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
+import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
 import TouchableWithoutOpacity from "./TouchableWithoutOpacity";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
@@ -117,9 +118,9 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
           {pot.isError(calendars) && (
             <React.Fragment>
               <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
-              <Button onPress={this.fetchCalendars}>
+              <ButtonWithoutOpacity onPress={this.fetchCalendars}>
                 <Text>{I18n.t("global.buttons.retry")}</Text>
-              </Button>
+              </ButtonWithoutOpacity>
             </React.Fragment>
           )}
           {pot.isSome(calendars) && (

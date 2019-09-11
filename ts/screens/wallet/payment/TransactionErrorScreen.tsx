@@ -6,12 +6,13 @@ import { differenceInMinutes } from "date-fns";
 import { Option, some } from "fp-ts/lib/Option";
 import { BugReporting } from "instabug-reactnative";
 import { RptId, RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { setInstabugUserAttribute } from "../../../boot/configureInstabug";
+import ButtonWithoutOpacity from "../../../components/ButtonWithoutOpacity";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -169,9 +170,12 @@ class TransactionErrorScreen extends React.Component<Props> {
           {!deleteInProgress && (
             <React.Fragment>
               <View spacer={true} extralarge={true} />
-              <Button block={true} onPress={this.sendPaymentBlockedBug}>
+              <ButtonWithoutOpacity
+                block={true}
+                onPress={this.sendPaymentBlockedBug}
+              >
                 <Text>Invia segnalazione</Text>
-              </Button>
+              </ButtonWithoutOpacity>
             </React.Fragment>
           )}
         </React.Fragment>
@@ -190,9 +194,9 @@ class TransactionErrorScreen extends React.Component<Props> {
           {I18n.t("wallet.errors.PAYMENT_ONGOING_NOCANCEL_TIMEOUT")}
         </Text>
         <View spacer={true} extralarge={true} />
-        <Button block={true} onPress={this.sendPaymentBlockedBug}>
+        <ButtonWithoutOpacity block={true} onPress={this.sendPaymentBlockedBug}>
           <Text>{I18n.t("wallet.errors.sendReport")}</Text>
-        </Button>
+        </ButtonWithoutOpacity>
       </React.Fragment>
     );
   };

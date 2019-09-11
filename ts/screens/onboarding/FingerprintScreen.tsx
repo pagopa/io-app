@@ -1,9 +1,10 @@
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { Alert } from "react-native";
+import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
@@ -107,13 +108,13 @@ export class FingerprintScreen extends React.PureComponent<Props> {
           </View>
         </ScreenContent>
         <View footer={true}>
-          <Button
+          <ButtonWithoutOpacity
             block={true}
             primary={true}
             onPress={this.props.fingerprintAcknowledgeRequest}
           >
             <Text>{I18n.t("global.buttons.continue")}</Text>
-          </Button>
+          </ButtonWithoutOpacity>
         </View>
       </TopScreenComponent>
     );

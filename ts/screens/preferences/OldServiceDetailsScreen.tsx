@@ -4,13 +4,14 @@
  */
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
+import { Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Clipboard, Image, Linking, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
 import H4 from "../../components/ui/H4";
@@ -70,11 +71,11 @@ function renderInformationRow(
   return (
     <View style={styles.infoItem}>
       <Text>{label}</Text>
-      <Button primary={true} small={true} onPress={onPress}>
+      <ButtonWithoutOpacity primary={true} small={true} onPress={onPress}>
         <Text ellipsizeMode="tail" numberOfLines={1}>
           {info}
         </Text>
-      </Button>
+      </ButtonWithoutOpacity>
     </View>
   );
 }
@@ -379,7 +380,7 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
             {web_url && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppWeb")}</Text>
-                <Button
+                <ButtonWithoutOpacity
                   small={true}
                   onPress={() =>
                     Linking.openURL(web_url).then(() => 0, () => 0)
@@ -388,7 +389,7 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
                   <Text ellipsizeMode="tail" numberOfLines={1}>
                     {web_url}
                   </Text>
-                </Button>
+                </ButtonWithoutOpacity>
               </View>
             )}
             {app_ios && (

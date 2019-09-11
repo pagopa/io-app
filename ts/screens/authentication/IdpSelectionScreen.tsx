@@ -1,8 +1,9 @@
-import { Button, Content, H3, Text, View } from "native-base";
+import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 
 import IdpsGrid from "../../components/IdpsGrid";
 import { InfoBanner } from "../../components/InfoBanner";
@@ -155,9 +156,14 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
-          <Button block={true} light={true} bordered={true} onPress={goBack}>
+          <ButtonWithoutOpacity
+            block={true}
+            light={true}
+            bordered={true}
+            onPress={goBack}
+          >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
+          </ButtonWithoutOpacity>
         </View>
       </Content>
     </BaseScreenComponent>
