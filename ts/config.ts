@@ -44,6 +44,8 @@ export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
 export const newHomeServicesEnabled: boolean =
   Config.NEW_HOME_SERVICES_ENABLED === "YES";
+export const emailEditingAndValidation: boolean =
+  Config.EMAIL_EDITING_AND_VALIDATION === "YES";
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 export const instabugToken: string = Config.INSTABUG_TOKEN;
