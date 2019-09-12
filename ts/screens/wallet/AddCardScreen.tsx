@@ -18,6 +18,7 @@ import {
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { isExpired } from "./../../utils/dates";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -356,7 +357,8 @@ class AddCardScreen extends React.Component<Props, State> {
         const [expirationMonth, expirationYear] = expirationDate.split("/");
         return (
           CreditCardExpirationMonth.is(expirationMonth) &&
-          CreditCardExpirationYear.is(expirationYear)
+          CreditCardExpirationYear.is(expirationYear) &&
+          !isExpired(Number(expirationMonth), Number(expirationYear))
         );
       })
       .toUndefined();
