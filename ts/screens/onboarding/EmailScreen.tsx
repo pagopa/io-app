@@ -1,31 +1,31 @@
+import * as pot from "italia-ts-commons/lib/pot";
+import { untag } from "italia-ts-commons/lib/types";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
+import { Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
-import { Alert, StyleSheet } from "react-native";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import IconFont from "../../components/ui/IconFont";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   abortOnboarding,
-  fingerprintAcknowledge
+  emailAcknowledged
 } from "../../store/actions/onboarding";
-import { Dispatch } from "../../store/actions/types";
-import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-import IconFont from "../../components/ui/IconFont";
-import Markdown from "../../components/ui/Markdown";
 import customVariables from "../../theme/variables";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 
 type NavigationParams = {
   biometryType: BiometrySimpleType;
 };
 
-type OwnProps = ReturnType<typeof mapStateToProps> &
+type OwnProps = ReduxProps &
+  ReturnType<typeof mapStateToProps> &
   NavigationScreenProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
     marginTop: -10 // correct vertical alignment with icon
   }
 });
+
+const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
 
 /**
  * A screen to show if the fingerprint is supported to the user.
@@ -70,7 +72,7 @@ export class FingerprintScreen extends React.PureComponent<Props> {
     );
 
   public render() {
-    const { potProfile } = this.props;
+    const { dispatch, potProfile } = this.props;
 
     const profileData = potProfile
       .map(_ => ({
@@ -112,12 +114,14 @@ export class FingerprintScreen extends React.PureComponent<Props> {
           leftButton={{
             block: true,
             bordered: true,
-            title: I18n.t("onboarding.email.ctaEdit")
+            title: I18n.t("onboarding.email.ctaEdit"),
+            onPress: unavailableAlert
           }}
           rightButton={{
             block: true,
             primary: true,
-            title: I18n.t("global.buttons.continue")
+            title: I18n.t("global.buttons.continue"),
+            onPress: this.props.acknowledgeEmail
           }}
         />
       </TopScreenComponent>
@@ -130,8 +134,7 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fingerprintAcknowledgeRequest: () =>
-    dispatch(fingerprintAcknowledge.request()),
+  acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 
