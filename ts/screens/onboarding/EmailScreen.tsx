@@ -99,7 +99,6 @@ export class FingerprintScreen extends React.PureComponent<Props> {
                 name="io-email"
                 accessible={true}
                 accessibilityLabel={I18n.t("onboarding.email.title")}
-                color={customVariables.h1Color}
                 size={36}
               />
               <Text style={styles.email}>{profileData.spid_email}</Text>
