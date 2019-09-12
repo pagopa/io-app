@@ -169,6 +169,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
                     this.props.dispatchRemoveCalendarEvent(calendarEvent);
                   }
                 },
+                // handle promise rejection
                 () => {
                   this.setState({
                     isEventInDeviceCalendar: false
@@ -178,6 +179,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
               .catch();
           }
         },
+        // handle promise rejection
         // tslint:disable-next-line: no-identical-functions
         () => {
           this.setState({
@@ -657,7 +659,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       if (this.props.calendarEvent) {
         this.checkIfEventInCalendar(this.props.calendarEvent);
       } else {
-        // this means the calendar event has been remove from the app
+        // this means the calendar event has been removed from the app
         this.setState({ isEventInDeviceCalendar: false });
       }
     }
