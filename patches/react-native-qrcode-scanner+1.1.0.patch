@@ -1,0 +1,16 @@
+diff --git a/node_modules/react-native-qrcode-scanner/index.js b/node_modules/react-native-qrcode-scanner/index.js
+index 76d097b..c96e491 100644
+--- a/node_modules/react-native-qrcode-scanner/index.js
++++ b/node_modules/react-native-qrcode-scanner/index.js
+@@ -124,10 +124,7 @@ export default class QRCodeScanner extends Component {
+         title: this.props.permissionDialogTitle,
+         message: this.props.permissionDialogMessage,
+       }).then(granted => {
+-        const isAuthorized =
+-          Platform.Version >= 23
+-            ? granted === PermissionsAndroid.RESULTS.GRANTED
+-            : granted === true;
++        const isAuthorized = granted === PermissionsAndroid.RESULTS.GRANTED;
+ 
+         this.setState({ isAuthorized, isAuthorizationChecked: true });
+       });
