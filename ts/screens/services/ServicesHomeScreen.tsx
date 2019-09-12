@@ -3,7 +3,7 @@ import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import { Animated, Platform, StatusBar, StyleSheet } from "react-native";
+import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import {
   NavigationEventSubscription,
@@ -31,6 +31,7 @@ import { organizationsFiscalCodesSelectedStateSelector } from "../../store/reduc
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
+import { setStatusBarColorAndBackground } from "../../utils/statusbar";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 
 type OwnProps = NavigationScreenProps;
@@ -96,10 +97,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     // on mount, update visible services
     this.props.refreshServices();
     this.navListener = this.props.navigation.addListener("didFocus", () => {
-      StatusBar.setBarStyle("dark-content");
-      if (Platform.OS === "android") {
-        StatusBar.setBackgroundColor(customVariables.colorWhite, true);
-      }
+      setStatusBarColorAndBackground(
+        "dark-content",
+        customVariables.colorWhite,
+        true
+      );
     }); // tslint:disable-line no-object-mutation
   }
 

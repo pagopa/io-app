@@ -16,7 +16,6 @@ import {
   Alert,
   Platform,
   ScrollView,
-  StatusBar,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
@@ -63,6 +62,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { setStatusBarColorAndBackground } from "../../utils/statusbar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -116,10 +116,11 @@ class ProfileMainScreen extends React.PureComponent<Props> {
 
   public componentDidMount() {
     this.navListener = this.props.navigation.addListener("didFocus", () => {
-      StatusBar.setBarStyle("light-content");
-      if (Platform.OS === "android") {
-        StatusBar.setBackgroundColor(customVariables.brandDarkGray, true);
-      }
+      setStatusBarColorAndBackground(
+        "light-content",
+        customVariables.brandDarkGray,
+        true
+      );
     }); // tslint:disable-line no-object-mutation
   }
 

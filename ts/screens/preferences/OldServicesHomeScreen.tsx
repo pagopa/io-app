@@ -4,7 +4,6 @@
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
-import { Platform, StatusBar } from "react-native";
 import {
   NavigationEventSubscription,
   NavigationInjectedProps
@@ -42,6 +41,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
+import { setStatusBarColorAndBackground } from "../../utils/statusbar";
 import { getChannelsforServicesList } from "./common";
 import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
@@ -72,10 +72,11 @@ class OldServicesHomeScreen extends React.Component<Props> {
     // on mount, update visible services
     this.props.refreshServices();
     this.navListener = this.props.navigation.addListener("didFocus", () => {
-      StatusBar.setBarStyle("dark-content");
-      if (Platform.OS === "android") {
-        StatusBar.setBackgroundColor(customVariables.colorWhite, true);
-      }
+      setStatusBarColorAndBackground(
+        "dark-content",
+        customVariables.colorWhite,
+        true
+      );
     }); // tslint:disable-line no-object-mutation
   }
 

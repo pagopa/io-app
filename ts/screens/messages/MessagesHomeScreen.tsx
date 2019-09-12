@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, TabHeading, Tabs, Text } from "native-base";
 import * as React from "react";
-import { Animated, Platform, StatusBar, StyleSheet } from "react-native";
+import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 
 import {
@@ -33,6 +33,7 @@ import {
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { setStatusBarColorAndBackground } from "../../utils/statusbar";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -101,10 +102,11 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   public componentDidMount() {
     this.props.refreshMessages();
     this.navListener = this.props.navigation.addListener("didFocus", () => {
-      StatusBar.setBarStyle("dark-content");
-      if (Platform.OS === "android") {
-        StatusBar.setBackgroundColor(customVariables.colorWhite, true);
-      }
+      setStatusBarColorAndBackground(
+        "dark-content",
+        customVariables.colorWhite,
+        true
+      );
     }); // tslint:disable-line no-object-mutation
   }
 
