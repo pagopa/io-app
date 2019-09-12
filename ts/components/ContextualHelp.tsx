@@ -33,7 +33,11 @@ export class ContextualHelp extends React.Component<Props> {
         <AppHeader noLeft={true}>
           <Body />
           <Right>
-            <Button onPress={() => this.props.onClose()} transparent={true}>
+            <Button
+              onPress={() => this.props.onClose()}
+              transparent={true}
+              activeOpacity={1}
+            >
               <IconFont name="io-close" />
             </Button>
           </Right>

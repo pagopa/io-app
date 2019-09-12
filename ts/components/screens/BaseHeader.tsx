@@ -83,6 +83,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               onPress={onShowHelp}
               style={styles.helpButton}
               transparent={true}
+              activeOpacity={1}
             >
               <IconFont name="io-question" />
             </Button>

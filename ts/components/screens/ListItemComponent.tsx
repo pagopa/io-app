@@ -25,7 +25,8 @@ const ICON_SIZE = 24;
 const styles = StyleSheet.create({
   listItem: {
     paddingLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
+    backgroundColor: customVariables.colorWhite
   },
   spacingBase: {
     paddingTop: 6,
@@ -67,6 +68,7 @@ export default class ListItemComponent extends React.Component<Props> {
         onPress={this.props.onPress}
         first={this.props.isFirstItem}
         last={this.props.isLastItem || this.props.hideSeparator}
+        activeOpacity={1}
       >
         <View style={styles.flexColumn}>
           <View style={styles.flexRow}>

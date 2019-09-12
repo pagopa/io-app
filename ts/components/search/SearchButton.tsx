@@ -58,7 +58,11 @@ class SearchButton extends React.Component<Props, State> {
                 .darken(0.2)
                 .string()}
             />
-            <Button onPress={this.onSearchDisable} transparent={true}>
+            <Button
+              onPress={this.onSearchDisable}
+              transparent={true}
+              activeOpacity={1}
+            >
               <IconFont
                 name="io-close"
                 color={this.props.color}
@@ -68,7 +72,11 @@ class SearchButton extends React.Component<Props, State> {
             </Button>
           </Item>
         ) : (
-          <Button onPress={this.handleSearchPress} transparent={true}>
+          <Button
+            onPress={this.handleSearchPress}
+            transparent={true}
+            activeOpacity={1}
+          >
             <IconFont
               name="io-search"
               color={this.props.color}
