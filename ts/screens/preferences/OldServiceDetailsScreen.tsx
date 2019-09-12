@@ -57,6 +57,10 @@ const styles = StyleSheet.create({
     width: 150,
     height: 50,
     alignSelf: "flex-start"
+  },
+  linkStyle: {
+    color: customVariables.brandPrimary,
+    fontWeight: "bold"
   }
 });
 

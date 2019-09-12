@@ -39,7 +39,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   contentContainerStyle: {
     flex: 1,
     padding: variables.contentPadding
@@ -71,6 +71,11 @@ const style = StyleSheet.create({
   bottomBorder: {
     borderBottomWidth: 1,
     borderBottomColor: variables.brandGray
+  },
+
+  linkStyle: {
+    color: variables.brandPrimary,
+    fontWeight: "bold"
   }
 });
 
@@ -87,7 +92,7 @@ class PickPspScreen extends React.Component<Props> {
         headerTitle={I18n.t("saveCard.saveCard")}
       >
         <Content
-          contentContainerStyle={style.contentContainerStyle}
+          contentContainerStyle={styles.contentContainerStyle}
           noPadded={true}
         >
           <H1>{I18n.t("wallet.pickPsp.title")}</H1>
@@ -96,11 +101,15 @@ class PickPspScreen extends React.Component<Props> {
             {`${I18n.t("wallet.pickPsp.info")} `}
             <Text bold={true}>{`${I18n.t("wallet.pickPsp.infoBold")} `}</Text>
             <Text>{`${I18n.t("wallet.pickPsp.info2")} `}</Text>
-            <Text link={true}>{I18n.t("wallet.pickPsp.link")}</Text>
+            <TouchableWithoutOpacity>
+              <Text style={styles.linkStyle}>
+                {I18n.t("wallet.pickPsp.link")}
+              </Text>
+            </TouchableWithoutOpacity>
           </Text>
           <View spacer={true} />
           <FlatList
-            ItemSeparatorComponent={() => <View style={style.bottomBorder} />}
+            ItemSeparatorComponent={() => <View style={styles.bottomBorder} />}
             removeClippedSubviews={false}
             numColumns={1}
             data={availablePsps}
@@ -109,21 +118,21 @@ class PickPspScreen extends React.Component<Props> {
               <TouchableWithoutOpacity
                 onPress={() => this.props.pickPsp(item.id)}
               >
-                <View style={style.listItem}>
+                <View style={styles.listItem}>
                   <Grid>
                     <Col size={6}>
                       <View spacer={true} />
                       <Row>
                         <Image
-                          style={style.flexStart}
+                          style={styles.flexStart}
                           resizeMode={"contain"}
                           source={{ uri: item.logoPSP }}
                         />
                       </Row>
                       <Row>
-                        <Text style={style.feeText}>
+                        <Text style={styles.feeText}>
                           {`${I18n.t("wallet.pickPsp.maxFee")} `}
-                          <Text bold={true} style={style.feeText}>
+                          <Text bold={true} style={styles.feeText}>
                             {formatNumberAmount(
                               centsToAmount(item.fixedCost.amount)
                             )}
@@ -132,7 +141,7 @@ class PickPspScreen extends React.Component<Props> {
                       </Row>
                       <View spacer={true} />
                     </Col>
-                    <Col size={1} style={style.icon}>
+                    <Col size={1} style={styles.icon}>
                       <IconFont name="io-right" />
                     </Col>
                   </Grid>

@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
     borderLeftWidth: 2,
     borderLeftColor: variables.brandLightGray,
     paddingLeft: 10
+  },
+
+  linkStyle: {
+    color: variables.brandPrimary,
+    fontWeight: "bold"
   }
 });
 
@@ -59,9 +64,12 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
         <View>
           <TouchableWithoutFeedback onPress={this.toggleRawInfo}>
             <View style={styles.toggleContainer}>
-              <Text link={true}>
-                {I18n.t("messageDetails.rawInfoLink.hideLabel")}
-              </Text>
+              <TouchableWithoutOpacity>
+                <Text style={styles.linkStyle}>
+                  {I18n.t("messageDetails.rawInfoLink.hideLabel")}
+                </Text>
+              </TouchableWithoutOpacity>
+
               <IconFont name="io-close" color={variables.textLinkColor} />
             </View>
           </TouchableWithoutFeedback>
@@ -87,13 +95,11 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
                   )}: `}</Text>
                   {service.department_name}
                 </Text>
-
-                <Text link={true} onPress={onServiceLinkPress}>
-                  <Text bold={true}>{`${I18n.t(
-                    "messageDetails.rawInfoLabels.serviceName"
-                  )}: `}</Text>
-                  {service.service_name}
-                </Text>
+                <TouchableWithoutOpacity onPress={onServiceLinkPress}>
+                  <Text style={styles.linkStyle}>
+                    {`${I18n.t("messageDetails.rawInfoLabels.serviceName")}: `}
+                  </Text>
+                </TouchableWithoutOpacity>
 
                 <Text>
                   <Text bold={true}>ID: </Text>
@@ -110,7 +116,7 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
       <View>
         <TouchableWithoutOpacity onPress={this.toggleRawInfo}>
           <View style={styles.toggleContainer}>
-            <Text link={true}>
+            <Text style={styles.linkStyle}>
               {I18n.t("messageDetails.rawInfoLink.showLabel")}
             </Text>
             <IconFont name="io-right" color={variables.textLinkColor} />

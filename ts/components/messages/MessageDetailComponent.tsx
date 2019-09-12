@@ -84,6 +84,10 @@ const styles = StyleSheet.create({
   serviceMultiImage: {
     width: 60,
     height: 60
+  },
+  linkStyle: {
+    color: variables.textLinkColor,
+    fontWeight: "bold"
   }
 });
 
@@ -128,9 +132,9 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
             <Grid style={styles.serviceContainer}>
               <Col>
                 <H4>{service.organization_name}</H4>
-                <H6 link={true} onPress={onServiceLinkPress}>
-                  {service.service_name}
-                </H6>
+                <TouchableWithoutOpacity onPress={onServiceLinkPress}>
+                  <H6 style={styles.linkStyle}>{service.service_name}</H6>
+                </TouchableWithoutOpacity>
               </Col>
               {service.service_id && (
                 <Col style={styles.serviceCol}>

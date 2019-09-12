@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
   separator: {
     height: 10,
     width: "100%"
+  },
+  linkStyle: {
+    color: customVariables.brandPrimary,
+    fontWeight: "bold"
   }
 });
 
@@ -52,7 +56,10 @@ type CalendarItemProps = {
 const CalendarItem: React.SFC<CalendarItemProps> = props => (
   <TouchableComponent onPress={props.onPress}>
     <View style={styles.calendarItemWrapper}>
-      <Text link={true}>{props.calendar.title}</Text>
+      <TouchableWithoutOpacity>
+        <Text style={styles.linkStyle}>{props.calendar.title}</Text>
+      </TouchableWithoutOpacity>
+
       <IconFont
         name="io-right"
         color={customVariables.contentPrimaryBackground}

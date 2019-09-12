@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
   padded: {
     marginLeft: customVariables.contentPadding,
     marginRight: customVariables.contentPadding
+  },
+  whiteBg: {
+    backgroundColor: "white"
   }
 });
 
@@ -110,6 +113,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
 
     return (
       <SectionList
+        style={styles.whiteBg}
         sections={sections}
         renderItem={this.renderServiceItem}
         renderSectionHeader={this.renderServiceSectionHeader}

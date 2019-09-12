@@ -19,6 +19,7 @@ import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import TouchableWithoutOpacity from "../../../components/TouchableWithoutOpacity";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
@@ -102,6 +103,11 @@ const styles = StyleSheet.create({
 
   textCenter: {
     textAlign: "center"
+  },
+
+  linkStyle: {
+    color: variables.brandPrimary,
+    fontWeight: "bold"
   }
 });
 
@@ -184,9 +190,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <Col size={4}>
                     <Text>
                       {`${I18n.t("wallet.ConfirmPayment.fee")} `}
-                      <Text link={true} onPress={this.showHelp}>
-                        {I18n.t("wallet.ConfirmPayment.why")}
-                      </Text>
+                      <TouchableWithoutOpacity onPress={this.showHelp}>
+                        <Text style={styles.linkStyle}>
+                          {I18n.t("wallet.ConfirmPayment.why")}
+                        </Text>
+                      </TouchableWithoutOpacity>
                     </Text>
                   </Col>
 
@@ -231,9 +239,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                           wallet.psp.businessName
                         } `
                       : I18n.t("payment.noPsp")}
-                    <Text link={true} onPress={() => this.props.pickPsp()}>
-                      {I18n.t("payment.changePsp")}
-                    </Text>
+                    <TouchableWithoutOpacity onPress={this.props.pickPsp}>
+                      <Text style={styles.linkStyle}>
+                        {I18n.t("payment.changePsp")}
+                      </Text>
+                    </TouchableWithoutOpacity>
                   </Text>
                   <View spacer={true} />
                 </Col>

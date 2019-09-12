@@ -12,6 +12,7 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { ContextualHelp } from "../ContextualHelp";
 import { withLightModalContext } from "../helpers/withLightModalContext";
+import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 import Markdown from "../ui/Markdown";
@@ -38,6 +39,10 @@ const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.75
+  },
+  linkStyle: {
+    color: variables.brandPrimary,
+    fontWeight: "bold"
   }
 });
 
@@ -155,9 +160,9 @@ class PaymentMethodsList extends React.Component<Props, never> {
           }}
         />
         <View spacer={true} large={true} />
-        <Text link={true} onPress={this.showHelp}>
-          {I18n.t("wallet.whyAFee.title")}
-        </Text>
+        <TouchableWithoutOpacity onPress={this.showHelp}>
+          <Text style={styles.linkStyle}>{I18n.t("wallet.whyAFee.title")}</Text>
+        </TouchableWithoutOpacity>
       </View>
     );
   }
