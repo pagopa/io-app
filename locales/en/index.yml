@@ -689,6 +689,11 @@ services:
     locals: Local
     national: National
     otherServices: Other services
+  enableAll: Enable all
+  disableAll: Disable all
+  disableAllTitle: "Do you really want to disable all the services?"
+  disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
+  close: Close
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
