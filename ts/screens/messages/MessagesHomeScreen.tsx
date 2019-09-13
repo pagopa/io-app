@@ -33,7 +33,7 @@ import {
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { setStatusBarColorAndBackground } from "../../utils/statusbar";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -104,8 +104,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",
-        customVariables.colorWhite,
-        true
+        customVariables.colorWhite
       );
     }); // tslint:disable-line no-object-mutation
   }

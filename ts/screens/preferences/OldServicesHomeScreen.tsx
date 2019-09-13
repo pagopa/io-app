@@ -41,7 +41,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
-import { setStatusBarColorAndBackground } from "../../utils/statusbar";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { getChannelsforServicesList } from "./common";
 import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
@@ -74,8 +74,7 @@ class OldServicesHomeScreen extends React.Component<Props> {
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",
-        customVariables.colorWhite,
-        true
+        customVariables.colorWhite
       );
     }); // tslint:disable-line no-object-mutation
   }

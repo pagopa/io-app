@@ -45,7 +45,7 @@ import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
-import { setStatusBarColorAndBackground } from "../../utils/statusbar";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -131,8 +131,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "light-content",
-        customVariables.brandDarkGray,
-        true
+        customVariables.brandDarkGray
       );
     }); // tslint:disable-line no-object-mutation
   }

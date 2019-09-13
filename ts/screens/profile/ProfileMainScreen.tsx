@@ -62,7 +62,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import { setStatusBarColorAndBackground } from "../../utils/statusbar";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -118,8 +118,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "light-content",
-        customVariables.brandDarkGray,
-        true
+        customVariables.brandDarkGray
       );
     }); // tslint:disable-line no-object-mutation
   }

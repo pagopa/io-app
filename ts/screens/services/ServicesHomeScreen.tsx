@@ -35,7 +35,7 @@ import {
 } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
-import { setStatusBarColorAndBackground } from "../../utils/statusbar";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 
 type OwnProps = NavigationScreenProps;
@@ -110,8 +110,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",
-        customVariables.colorWhite,
-        true
+        customVariables.colorWhite
       );
     }); // tslint:disable-line no-object-mutation
   }
