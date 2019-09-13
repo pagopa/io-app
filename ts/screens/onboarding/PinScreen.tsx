@@ -89,13 +89,19 @@ class PinScreen extends React.Component<Props, State> {
     if (!isValid && this.pinConfirmComponent) {
       this.pinConfirmComponent.debounceClear();
     }
-    this.setState({
-      pinState: {
-        state: "PinConfirmed",
-        pin: code,
-        isConfirmationPinMatch: isValid
-      }
-    });
+    if (
+      this.state.pinState.state === "PinConfirmed" ||
+      this.state.pinState.state === "PinSelected"
+    ) {
+      this.setState({
+        pinState: {
+          state: "PinConfirmed",
+          pin:
+            this.state.pinState.pin === code ? code : this.state.pinState.pin,
+          isConfirmationPinMatch: isValid
+        }
+      });
+    }
   };
 
   public onPinReset() {
