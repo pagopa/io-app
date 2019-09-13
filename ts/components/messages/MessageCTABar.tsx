@@ -151,25 +151,42 @@ class MessageCTABar extends React.PureComponent<Props, State> {
    */
   private checkIfEventInCalendar = (calendarEvent: CalendarEvent) => {
     checkAndRequestPermission()
-      .then(hasPermission => {
-        if (hasPermission) {
-          RNCalendarEvents.findEventById(calendarEvent.eventId)
-            .then(event => {
-              if (event) {
-                // The event is in the store and also in the device calendar
-                // Update the state to display and handle the reminder button correctly
-                this.setState({
-                  isEventInDeviceCalendar: true
-                });
-              } else {
-                // The event is in the store but not in the device calendar.
-                // Remove it from store too
-                this.props.dispatchRemoveCalendarEvent(calendarEvent);
-              }
-            })
-            .catch();
+      .then(
+        hasPermission => {
+          if (hasPermission) {
+            RNCalendarEvents.findEventById(calendarEvent.eventId)
+              .then(
+                event => {
+                  if (event) {
+                    // The event is in the store and also in the device calendar
+                    // Update the state to display and handle the reminder button correctly
+                    this.setState({
+                      isEventInDeviceCalendar: true
+                    });
+                  } else {
+                    // The event is in the store but not in the device calendar.
+                    // Remove it from store too
+                    this.props.dispatchRemoveCalendarEvent(calendarEvent);
+                  }
+                },
+                // handle promise rejection
+                () => {
+                  this.setState({
+                    isEventInDeviceCalendar: false
+                  });
+                }
+              )
+              .catch();
+          }
+        },
+        // handle promise rejection
+        // tslint:disable-next-line: no-identical-functions
+        () => {
+          this.setState({
+            isEventInDeviceCalendar: false
+          });
         }
-      })
+      )
       .catch();
   };
 
@@ -631,6 +648,20 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     if (calendarEvent) {
       // Check if the event is still in the device calendar
       this.checkIfEventInCalendar(calendarEvent);
+    }
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    // if calenderEvent changes means reminder has been changed
+    if (prevProps.calendarEvent !== this.props.calendarEvent) {
+      // if a calendarEvent exists we have to check if it really exists as calendar event
+      // the event can be removed outside the App.
+      if (this.props.calendarEvent) {
+        this.checkIfEventInCalendar(this.props.calendarEvent);
+      } else {
+        // this means the calendar event has been removed from the app
+        this.setState({ isEventInDeviceCalendar: false });
+      }
     }
   }
 

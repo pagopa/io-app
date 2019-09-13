@@ -42,6 +42,9 @@ type OwnProps = {
   ListEmptyComponent?: React.ComponentProps<
     typeof SectionList
   >["ListEmptyComponent"];
+  onLongPressItem?: () => void;
+  isLongPressEnabled: boolean;
+  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
 };
 
 type Props = OwnProps & AnimatedProps;
@@ -71,6 +74,9 @@ class ServiceList extends React.Component<Props> {
       onSelect={this.props.onSelect}
       isRead={this.isRead(itemInfo.item, this.props.readServices)}
       hideSeparator={true}
+      onLongPress={this.props.onLongPressItem}
+      onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
+      isLongPressEnabled={this.props.isLongPressEnabled}
     />
   );
 

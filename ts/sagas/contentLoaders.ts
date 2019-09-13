@@ -38,7 +38,7 @@ function getServiceMetadata(
   return new Promise((resolve, _) =>
     contentClient
       .getService({ serviceId })
-      .then(resolve, () => resolve(undefined))
+      .then(resolve, e => resolve(left([{ context: [], value: e }])))
   );
 }
 

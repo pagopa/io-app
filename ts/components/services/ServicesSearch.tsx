@@ -18,6 +18,7 @@ type OwnProps = {
   onRefresh: () => void;
   navigateToServiceDetail: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
+  onLongPressItem?: () => void;
 };
 
 type Props = OwnProps;
@@ -161,6 +162,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
         isRefreshing={isFiltering}
         onRefresh={onRefresh}
         onSelect={this.handleOnServiceSelect}
+        isLongPressEnabled={false}
       />
     ) : (
       <SearchNoResultMessage errorType="NoResultsFound" />

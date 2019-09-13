@@ -237,6 +237,8 @@ class AddCardScreen extends React.Component<Props, State> {
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 placeholder: I18n.t("wallet.dummyCard.values.holder"),
                 autoCapitalize: "words",
+                keyboardType: "default",
+                returnKeyType: "done",
                 onChangeText: (value: string) => this.updateHolderState(value)
               }}
             />
@@ -253,6 +255,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
                 placeholder: I18n.t("wallet.dummyCard.values.pan"),
                 keyboardType: "numeric",
+                returnKeyType: "done",
                 maxLength: 23,
                 mask: "[0000] [0000] [0000] [0000] [999]",
                 onChangeText: (_, value) => {
@@ -278,6 +281,7 @@ class AddCardScreen extends React.Component<Props, State> {
                       "wallet.dummyCard.values.expirationDate"
                     ),
                     keyboardType: "numeric",
+                    returnKeyType: "done",
                     mask: "[00]{/}[00]",
                     onChangeText: (_, value) =>
                       this.updateExpirationDateState(value)
@@ -298,6 +302,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     ),
                     placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
                     keyboardType: "numeric",
+                    returnKeyType: "done",
                     maxLength: 4,
                     secureTextEntry: true,
                     mask: "[0009]",

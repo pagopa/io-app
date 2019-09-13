@@ -7,11 +7,22 @@
 import { left } from "fp-ts/lib/Either";
 import { Option, some, Some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Tab, TabHeading, Tabs, Text, View } from "native-base";
+import {
+  Button,
+  Content,
+  Tab,
+  TabHeading,
+  Tabs,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
-import { Animated, Image, Platform, StyleSheet } from "react-native";
+import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
-import { NavigationScreenProps } from "react-navigation";
+import {
+  NavigationEventSubscription,
+  NavigationScreenProps
+} from "react-navigation";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -27,6 +38,8 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
+import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
+import { profileUpsert } from "../../store/actions/profile";
 import {
   loadVisibleServices,
   showServiceDetails
@@ -48,7 +61,8 @@ import {
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { profileSelector } from "../../store/reducers/profile";
+import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
+import { profileSelector, ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import {
   organizationsOfInterestSelector,
@@ -58,7 +72,9 @@ import {
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { getLogoForOrganization } from "../../utils/organizations";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
+import { getChannelsforServicesList } from "../preferences/common";
 import OldServiceDetailsScreen from "../preferences/OldServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -78,6 +94,8 @@ type Props = ReturnType<typeof mapStateToProps> &
 type State = {
   currentTab: number;
   enableHeaderAnimation: boolean;
+  isLongPressEnabled: boolean;
+  enableServices: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -128,23 +146,54 @@ const styles = StyleSheet.create({
   },
   errorText2: {
     fontSize: customVariables.fontSizeSmall
+  },
+  buttonBar: {
+    flexDirection: "row",
+    zIndex: 1,
+    justifyContent: "space-around",
+    backgroundColor: customVariables.colorWhite,
+    padding: 10
+  },
+  buttonBarLeft: {
+    flex: 2,
+    marginEnd: 5
+  },
+  buttonBarRight: {
+    flex: 2,
+    marginStart: 5
   }
 });
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
 class ServicesHomeScreen extends React.Component<Props, State> {
+  private navListener?: NavigationEventSubscription;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       currentTab: 0,
-      enableHeaderAnimation: false
+      enableHeaderAnimation: false,
+      isLongPressEnabled: false,
+      enableServices: false
     };
   }
+
+  private handleOnLongPressItem = () => {
+    this.setState({
+      isLongPressEnabled: !this.state.isLongPressEnabled
+    });
+  };
 
   public componentDidMount() {
     // on mount, update visible services
     this.props.refreshServices();
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      setStatusBarColorAndBackground(
+        "dark-content",
+        customVariables.colorWhite
+      );
+    }); // tslint:disable-line no-object-mutation
   }
 
   private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -237,6 +286,65 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     });
   };
 
+  private showAlertOnDisableServices = (
+    title: string,
+    msg: string,
+    onConfirmPress: () => void
+  ) => {
+    Alert.alert(
+      title,
+      msg,
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.ok"),
+          style: "destructive",
+          onPress: () => {
+            onConfirmPress();
+            // update the persisted preferences to remember the user read the alert
+            this.props.updatePersistedPreference(true);
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
+  private onItemSwitchValueChanged = (
+    service: ServicePublic,
+    value: boolean
+  ) => {
+    // check if the alert of disable service has not been shown already and if the service is active
+    if (!this.props.wasServiceAlertDisplayedOnce && !value) {
+      this.showAlertOnDisableServices(
+        I18n.t("serviceDetail.disableTitle"),
+        I18n.t("serviceDetail.disableMsg"),
+        () => {
+          this.props.disableOrEnableServices(
+            [service.service_id],
+            this.props.profile,
+            false
+          );
+        }
+      );
+    } else {
+      this.props.disableOrEnableServices(
+        [service.service_id],
+        this.props.profile,
+        value
+      );
+    }
+  };
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
+    }
+  }
+
   /**
    * For tab Locals
    */
@@ -289,6 +397,53 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.props.hideModal();
   };
 
+  // This method enable or disable services and update the enableServices props
+  private disableOrEnableAllServices = () => {
+    this.props.disableOrEnableServices(
+      Object.keys(this.props.servicesById),
+      this.props.profile,
+      this.state.enableServices
+    );
+    this.setState({ enableServices: !this.state.enableServices });
+  };
+
+  private renderLongPressFooterButtons = () => {
+    return (
+      <View style={styles.buttonBar}>
+        <Button
+          block={true}
+          bordered={true}
+          onPress={this.handleOnLongPressItem}
+          style={styles.buttonBarLeft}
+        >
+          <Text>{I18n.t("services.close")}</Text>
+        </Button>
+        <Button
+          block={true}
+          primary={true}
+          style={styles.buttonBarRight}
+          onPress={() => {
+            if (!this.props.wasServiceAlertDisplayedOnce) {
+              this.showAlertOnDisableServices(
+                I18n.t("services.disableAllTitle"),
+                I18n.t("services.disableAllMsg"),
+                () => this.disableOrEnableAllServices()
+              );
+            } else {
+              this.disableOrEnableAllServices();
+            }
+          }}
+        >
+          <Text>
+            {this.state.enableServices
+              ? I18n.t("services.enableAll")
+              : I18n.t("services.disableAll")}
+          </Text>
+        </Button>
+      </View>
+    );
+  };
+
   public render() {
     return (
       <TopScreenComponent
@@ -309,6 +464,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             {this.props.isFirstServiceLoadCompleted
               ? this.renderTabs()
               : this.renderFirstServiceLoadingContent()}
+            {this.state.isLongPressEnabled &&
+              this.renderLongPressFooterButtons()}
           </React.Fragment>
         ) : (
           this.renderErrorContent()
@@ -379,6 +536,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             selectedOrganizationsFiscalCodes={
               new Set(this.props.selectedOrganizations)
             }
+            onLongPressItem={this.handleOnLongPressItem}
+            isLongPressEnabled={this.state.isLongPressEnabled}
+            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
             animated={{
               onScroll: Animated.event(
                 [
@@ -412,6 +572,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
+            onLongPressItem={this.handleOnLongPressItem}
+            isLongPressEnabled={this.state.isLongPressEnabled}
+            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
             animated={{
               onScroll: Animated.event(
                 [
@@ -445,6 +608,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
+            onLongPressItem={this.handleOnLongPressItem}
+            isLongPressEnabled={this.state.isLongPressEnabled}
+            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
             animated={{
               onScroll: Animated.event(
                 [
@@ -491,11 +657,12 @@ const mapStateToProps = (state: GlobalState) => {
       state
     ),
     profile: profileSelector(state),
-    servicesById: servicesByIdSelector(state),
     readServices: readServicesByIdSelector(state),
     localSections: selectedLocalServicesSectionsSelector(state),
     nationalSections: nationalServicesSectionsSelector(state),
     allServicesSections: notSelectedServicesSectionsSelector(state),
+    wasServiceAlertDisplayedOnce: wasServiceAlertDisplayedOnceSelector(state),
+    servicesById: servicesByIdSelector(state),
     userMetadata
   };
 };
@@ -505,6 +672,22 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(userMetadataLoad.request());
   },
   refreshServices: () => dispatch(loadVisibleServices.request()),
+  disableOrEnableServices: (
+    allServicesId: ReadonlyArray<string>,
+    profile: ProfileState,
+    enable: boolean
+  ) => {
+    const newBlockedChannels = getChannelsforServicesList(
+      allServicesId,
+      profile,
+      enable
+    );
+    dispatch(
+      profileUpsert.request({
+        blocked_inbox_or_channels: newBlockedChannels
+      })
+    );
+  },
   saveSelectedOrganizationItems: (
     userMetadata: UserMetadata,
     selectedItemIds: Some<Set<string>>
@@ -519,6 +702,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
           ...metadata,
           organizationsOfInterest: Array.from(selectedItemIds.value)
         }
+      })
+    );
+  },
+  updatePersistedPreference: (value: boolean) => {
+    dispatch(
+      serviceAlertDisplayedOnceSuccess({
+        wasServiceAlertDisplayedOnce: value
       })
     );
   },

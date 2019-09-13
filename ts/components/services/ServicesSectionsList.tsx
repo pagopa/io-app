@@ -6,6 +6,7 @@ import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import { Image, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { StyleSheet } from "react-native";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import customVariables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
 import ServiceList from "./ServiceList";
@@ -22,6 +23,9 @@ type OwnProps = {
   onChooserAreasOfInterestPress?: () => void;
   selectedOrganizationsFiscalCodes?: Set<string>;
   isLocal?: boolean;
+  onLongPressItem?: () => void;
+  isLongPressEnabled: boolean;
+  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
 };
 
 type Props = AnimatedProps &
@@ -92,11 +96,11 @@ class ServicesSectionsList extends React.PureComponent<Props> {
         <View style={styles.headerContentWrapper}>
           <Button
             small={true}
-            primary={true}
+            primary={!this.props.isLongPressEnabled}
             style={styles.button}
             block={true}
             onPress={this.props.onChooserAreasOfInterestPress}
-            disabled={this.props.isRefreshing}
+            disabled={this.props.isRefreshing || this.props.isLongPressEnabled}
           >
             <Text style={styles.textButton}>
               {I18n.t("services.areasOfInterest.editButton")}
@@ -128,6 +132,9 @@ class ServicesSectionsList extends React.PureComponent<Props> {
         readServices={readServices}
         isExperimentalFeaturesEnabled={true}
         ListEmptyComponent={this.localListEmptyComponent()}
+        onLongPressItem={this.props.onLongPressItem}
+        isLongPressEnabled={this.props.isLongPressEnabled}
+        onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
       />
     );
   };

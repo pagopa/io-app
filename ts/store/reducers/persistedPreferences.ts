@@ -72,3 +72,6 @@ export default function preferencesReducer(
 // Selectors
 export const isPagoPATestEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isPagoPATestEnabled;
+
+export const wasServiceAlertDisplayedOnceSelector = (state: GlobalState) =>
+  state.persistedPreferences.wasServiceAlertDisplayedOnce;
