@@ -22,6 +22,7 @@ import {
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
+  NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
@@ -61,6 +62,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -110,6 +112,23 @@ const getAppLongVersion = () => {
 };
 
 class ProfileMainScreen extends React.PureComponent<Props> {
+  private navListener?: NavigationEventSubscription;
+
+  public componentDidMount() {
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      setStatusBarColorAndBackground(
+        "light-content",
+        customVariables.brandDarkGray
+      );
+    }); // tslint:disable-line no-object-mutation
+  }
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
+    }
+  }
+
   private handleClearCachePress = () => {
     this.props.clearCache();
     Toast.show({ text: "The cache has been cleared." });
