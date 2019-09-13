@@ -4,6 +4,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -11,11 +12,16 @@ import DarkLayout from "../../components/screens/DarkLayout";
 import H5 from "../../components/ui/H5";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
+import { contentMunicipalityLoad } from "../../store/actions/content";
+import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
-type Props = ReturnType<typeof mapStateToProps> & LightModalContextInterface;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  LightModalContextInterface;
 
 const styles = StyleSheet.create({
   darkBg: {
@@ -50,16 +56,30 @@ const styles = StyleSheet.create({
 });
 
 class FiscalCodeScreen extends React.PureComponent<Props> {
-  private showModal = () => {
+  private showModal(showBackSide: boolean = false) {
     if (this.props.profile) {
       this.props.showModal(
         <FiscalCodeLandscapeOverlay
           onCancel={this.props.hideModal}
           profile={this.props.profile}
+          municipality={this.props.municipality}
+          showBackSide={showBackSide}
         />
       );
     }
-  };
+  }
+
+  public componentDidMount() {
+    if (
+      this.props.profile !== undefined &&
+      pot.isNone(this.props.municipality.data)
+    ) {
+      const maybeCodiceCatastale = CodiceCatastale.decode(
+        this.props.profile.fiscal_code.substring(11, 15)
+      );
+      maybeCodiceCatastale.map(c => this.props.loadMunicipality(c));
+    }
+  }
 
   public render() {
     return (
@@ -92,24 +112,26 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                 showsHorizontalScrollIndicator={false}
               >
                 <View style={styles.largeSpacer} />
-                <TouchableOpacity onPress={this.showModal}>
+                <TouchableOpacity onPress={() => this.showModal()}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
                       profile={this.props.profile}
                       getBackSide={false}
+                      municipality={this.props.municipality}
                     />
                   </View>
                 </TouchableOpacity>
 
                 <View style={styles.spacer} />
 
-                <TouchableOpacity onPress={this.showModal}>
+                <TouchableOpacity onPress={() => this.showModal(true)}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
                       profile={this.props.profile}
                       getBackSide={true}
+                      municipality={this.props.municipality}
                     />
                   </View>
                 </TouchableOpacity>
@@ -128,9 +150,16 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  profile: pot.toUndefined(profileSelector(state))
+  profile: pot.toUndefined(profileSelector(state)),
+  municipality: municipalitySelector(state)
 });
 
-export default connect(mapStateToProps)(
-  withLightModalContext(FiscalCodeScreen)
-);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadMunicipality: (code: CodiceCatastale) =>
+    dispatch(contentMunicipalityLoad.request(code))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLightModalContext(FiscalCodeScreen));

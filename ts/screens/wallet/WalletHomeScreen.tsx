@@ -9,7 +9,11 @@ import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import {
+  NavigationEventSubscription,
+  NavigationScreenProp,
+  NavigationState
+} from "react-navigation";
 import { connect } from "react-redux";
 
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -28,14 +32,20 @@ import {
   navigateToWalletList
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { fetchTransactionsRequest } from "../../store/actions/wallet/transactions";
+import {
+  fetchTransactionsRequest,
+  readTransaction
+} from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
+import { transactionsReadSelector } from "../../store/reducers/entities";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
+import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -111,12 +121,25 @@ const styles = StyleSheet.create({
  * Wallet Home Screen
  */
 class WalletHomeScreen extends React.Component<Props, never> {
+  private navListener?: NavigationEventSubscription;
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // WIP WIP create pivotal story
     this.props.loadWallets();
     this.props.loadTransactions();
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      setStatusBarColorAndBackground(
+        "light-content",
+        customVariables.brandDarkGray
+      );
+    }); // tslint:disable-line no-object-mutation
+  }
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
+    }
   }
 
   private cardHeader(isError: boolean = false) {
@@ -281,6 +304,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
+        readTransactions={this.props.readTransactions}
         ListEmptyComponent={this.listEmptyComponent()}
       />
     );
@@ -343,7 +367,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state)
+  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
+  readTransactions: transactionsReadSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -351,13 +376,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
   navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
-  navigateToTransactionDetailsScreen: (transaction: Transaction) =>
+  navigateToTransactionDetailsScreen: (transaction: Transaction) => {
+    dispatch(readTransaction(transaction));
     dispatch(
       navigateToTransactionDetailsScreen({
         transaction,
         isPaymentCompletedTransaction: false
       })
-    ),
+    );
+  },
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
   loadWallets: () => dispatch(fetchWalletsRequest())
 });

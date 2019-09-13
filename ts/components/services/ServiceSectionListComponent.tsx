@@ -8,7 +8,6 @@ import {
   StyleSheet
 } from "react-native";
 
-import { H3, ListItem } from "native-base";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 
@@ -19,7 +18,6 @@ import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
 import NewServiceListItem from "./NewServiceListItem";
-import { ServiceListItem } from "./ServiceListItem";
 
 type OwnProps = {
   // Can't use ReadonlyArray because of the SectionList section prop
@@ -31,7 +29,9 @@ type OwnProps = {
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
-  isExperimentalFeaturesEnabled?: boolean;
+  onLongPressItem?: () => void;
+  isLongPressEnabled: boolean;
+  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
 };
 
 type Props = OwnProps;
@@ -71,23 +71,18 @@ class ServiceSectionListComponent extends React.Component<Props> {
 
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
-  ) =>
-    this.props.isExperimentalFeaturesEnabled ? (
-      <NewServiceListItem
-        item={itemInfo.item}
-        profile={this.props.profile}
-        onSelect={this.props.onSelect}
-        isRead={this.isRead(itemInfo.item, this.props.readServices)}
-        hideSeparator={true}
-      />
-    ) : (
-      <ServiceListItem
-        item={itemInfo.item}
-        profile={this.props.profile}
-        onSelect={this.props.onSelect}
-        isRead={this.isRead(itemInfo.item, this.props.readServices)}
-      />
-    );
+  ) => (
+    <NewServiceListItem
+      item={itemInfo.item}
+      profile={this.props.profile}
+      onSelect={this.props.onSelect}
+      isRead={this.isRead(itemInfo.item, this.props.readServices)}
+      hideSeparator={true}
+      onLongPress={this.props.onLongPressItem}
+      onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
+      isLongPressEnabled={this.props.isLongPressEnabled}
+    />
+  );
 
   private getServiceKey = (
     potService: pot.Pot<ServicePublic, Error>,
@@ -104,18 +99,13 @@ class ServiceSectionListComponent extends React.Component<Props> {
 
   private renderServiceSectionHeader = (info: {
     section: SectionListData<pot.Pot<ServicePublic, Error>>;
-  }): React.ReactNode =>
-    this.props.isExperimentalFeaturesEnabled ? (
-      <SectionHeaderComponent
-        sectionHeader={info.section.organizationName}
-        style={styles.padded}
-        logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
-      />
-    ) : (
-      <ListItem itemHeader={true} style={styles.listItem}>
-        <H3>{info.section.organizationName}</H3>
-      </ListItem>
-    );
+  }): React.ReactNode => (
+    <SectionHeaderComponent
+      sectionHeader={info.section.organizationName}
+      style={styles.padded}
+      logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
+    />
+  );
 
   public render() {
     const { sections, isRefreshing, onRefresh } = this.props;

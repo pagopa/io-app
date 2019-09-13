@@ -2,6 +2,7 @@
 
 import * as t from "io-ts";
 
+import { NonNegativeNumber } from "italia-ts-commons/lib/numbers";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
@@ -43,9 +44,14 @@ export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
 export const newHomeServicesEnabled: boolean =
   Config.NEW_HOME_SERVICES_ENABLED === "YES";
+export const isEmailEditingAndValidationEnabled: boolean =
+  Config.EMAIL_EDITING_AND_VALIDATION_ENABLED === "YES";
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 export const instabugToken: string = Config.INSTABUG_TOKEN;
+
+// version of ToS
+export const tosVersion: NonNegativeNumber = 1 as NonNegativeNumber;
 
 export const fetchTimeout = t.Integer.decode(Config.FETCH_TIMEOUT_MS).getOrElse(
   DEFAULT_FETCH_TIMEOUT_MS

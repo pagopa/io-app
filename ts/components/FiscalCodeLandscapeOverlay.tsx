@@ -1,12 +1,19 @@
 /**
  * A component to show the fiscal code fac-simile in Landscape
  */
-import { Body, Button, Container, Content, View } from "native-base";
+import { Body, Button, Container, View } from "native-base";
 import * as React from "react";
-import { Platform, StatusBar, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  Platform,
+  ScrollView,
+  StatusBar,
+  StyleSheet
+} from "react-native";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import IconFont from "../components/ui/IconFont";
+import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
@@ -14,6 +21,7 @@ import AppHeader from "./ui/AppHeader";
 type Props = Readonly<{
   onCancel: () => void;
   profile: UserProfile;
+  municipality: MunicipalityState;
   showBackSide?: boolean;
 }>;
 
@@ -44,6 +52,27 @@ const styles = StyleSheet.create({
 export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   Props
 > {
+  private ScrollVewRef = React.createRef<ScrollView>();
+
+  private handleBackPress = () => {
+    this.props.onCancel();
+    return true;
+  };
+
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  private scrollToEnd = () => {
+    if (this.props.showBackSide && this.ScrollVewRef.current) {
+      this.ScrollVewRef.current.scrollToEnd({ animated: true });
+    }
+  };
+
   public render() {
     return (
       <Container style={{ backgroundColor: customVariables.brandDarkGray }}>
@@ -54,7 +83,11 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
           backgroundColor={customVariables.brandDarkGray}
           barStyle={"light-content"}
         />
-        <Content style={styles.content}>
+        <ScrollView
+          style={styles.content}
+          ref={this.ScrollVewRef}
+          onLayout={this.scrollToEnd}
+        >
           <View style={styles.headerSpacer} />
           <View spacer={true} />
           <View>
@@ -62,6 +95,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
               type={"Landscape"}
               profile={this.props.profile}
               getBackSide={false}
+              municipality={this.props.municipality}
             />
           </View>
 
@@ -71,11 +105,12 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
             type={"Landscape"}
             profile={this.props.profile}
             getBackSide={true}
+            municipality={this.props.municipality}
           />
 
           <View spacer={true} large={true} />
           <View spacer={true} large={true} />
-        </Content>
+        </ScrollView>
         <View style={styles.closeButton}>
           <Button transparent={true} onPress={() => this.props.onCancel()}>
             <IconFont name="io-close" color={customVariables.colorWhite} />

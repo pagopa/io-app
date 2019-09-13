@@ -2,7 +2,6 @@
  * A reducer for the wallet, aggregating those for
  * transactions and for cards
  */
-
 import { combineReducers } from "redux";
 import { PaymentState } from "./payment";
 import paymentReducer from "./payment";

@@ -8,10 +8,9 @@ import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { UserProfileUnion } from "../api/backend";
-
-import I18n from "../i18n";
-
 import { BackendClient } from "../api/backend";
+import { tosVersion } from "../config";
+import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
 import {
   profileLoadFailure,
@@ -71,7 +70,7 @@ function* createOrUpdateProfileSaga(
 
   if (pot.isNone(profileState)) {
     // somewhing's wrong, we don't even have an AuthenticatedProfile meaning
-    // the used didn't yet authenticated: ignore this upsert request.
+    // the user didn't yet authenticated: ignore this upsert request.
     return;
   }
 
@@ -88,43 +87,50 @@ function* createOrUpdateProfileSaga(
         email: currentProfile.email,
         preferred_languages: currentProfile.preferred_languages,
         blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
+        accepted_tos_version: currentProfile.accepted_tos_version,
         ...action.payload
       }
     : {
         is_inbox_enabled: false,
         is_webhook_enabled: false,
         ...action.payload,
+        accepted_tos_version: tosVersion,
         version: 0
       };
-
-  const response: SagaCallReturnType<typeof createOrUpdateProfile> = yield call(
-    createOrUpdateProfile,
-    {
+  try {
+    const response: SagaCallReturnType<
+      typeof createOrUpdateProfile
+    > = yield call(createOrUpdateProfile, {
       extendedProfile: newProfile
+    });
+
+    if (response.isLeft()) {
+      yield put(
+        profileUpsert.failure(new Error(readableReport(response.value)))
+      );
+      return;
     }
-  );
 
-  if (response.isLeft()) {
-    yield put(profileUpsert.failure(new Error(readableReport(response.value))));
-    return;
-  }
+    if (response.value.status === 401) {
+      // on 401, expire the current session and restart the authentication flow
+      yield put(sessionExpired());
+      return;
+    }
 
-  if (response.value.status === 401) {
-    // on 401, expire the current session and restart the authentication flow
-    yield put(sessionExpired());
-    return;
-  }
+    if (response.value.status !== 200) {
+      // We got a error, send a SESSION_UPSERT_FAILURE action
+      const error: Error = Error(
+        response.value.value.title || I18n.t("profile.errors.upsert")
+      );
 
-  if (response.value.status !== 200) {
-    // We got a error, send a SESSION_UPSERT_FAILURE action
-    const error: Error = Error(
-      response.value.value.title || I18n.t("profile.errors.upsert")
-    );
-
+      yield put(profileUpsert.failure(error));
+    } else {
+      // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
+      yield put(profileUpsert.success(response.value.value));
+    }
+  } catch (err) {
+    const error: Error = Error(I18n.t("profile.errors.upsert"));
     yield put(profileUpsert.failure(error));
-  } else {
-    // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
-    yield put(profileUpsert.success(response.value.value));
   }
 }
 

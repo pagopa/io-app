@@ -27,6 +27,7 @@ global:
     back: Indietro
     confirm: Conferma
     close: Chiudi
+    exit: Esci
     saveSelection: Salva la selezione
   navigator:
     messages: messaggi
@@ -116,6 +117,8 @@ profile:
     privacy:
       title: Privacy
       description: Esporta dati, cancella account
+      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+      updated: E' necessario prendere visione della nuova versione dell'Informativa
       text: !include privacy.md
     termsAndConditions:
       title: Termini e condizioni d'uso
@@ -141,13 +144,15 @@ profile:
       confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
       bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     pagoPaEnvironment:
+      pagoPaEnv: Ambiente PagoPA di Test
+      pagoPAEnvAlert: La modifica richiede il riavvio dell'app
+      alertConfirmTitle: Vuoi usare l'ambiente di test pagoPA?
+      alertConfirmMessage: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
       alertMessage: È necessario il riavvio dell'applicazione affinchè le modifiche abbiano effetto.
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
-    pagoPaEnv: Ambiente PagoPA di Test
-    pagoPAEnvAlert: La modifica richiede il reboot dell'app
   preferences:
     title: Preferenze
     subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
@@ -264,12 +269,12 @@ authentication:
       body: Si è verificato un errore durante il login, si prega di riprovare!
     spid:
       unknown: Errore sconosciuto
-      error_19: Autenticazione fallita per ripetuta sottomissione di credenziali errate - superato numero tentativi
-      error_20: Utente privo di credenziali compatibili con il livello HTTP richiesto dal fornitore del servizio
-      error_21: Timeout durante l’autenticazione utente
-      error_22: Utente nega il consenso all’invio di dati al fornitore del servizio in caso di sessione vigente
-      error_23: Utente con identità sospesa/revocata o con credenziali bloccate
-      error_25: Processo di autenticazione annullato dall’utente
+      error_19: "Hai inserito troppe volte un nome utente o una password non corretti: riprova fra qualche minuto o contatta il tuo fornitore di identità SPID per cambiare le tue credenziali."
+      error_20: "Per motivi di sicurezza IO richiede un login con un secondo fattore di autenticazione: contatta il tuo fornitore di identità SPID per capire come si usa."
+      error_21: "È passato troppo tempo da quando hai iniziato l'accesso: per piacere riparti dall'inizio."
+      error_22: "Per usare IO è necessario consentire l'accesso ad alcuni dei tuoi dati: accedi nuovamente e dai il tuo consenso al passaggio di dati."
+      error_23: "La tua identità SPID risulta sospesa o revocata. Per riattivare il tuo account, contatta il tuo fornitore di identità SPID."
+      error_25: "Hai annullato l'operazione di login: puoi riprovare quando vuoi."
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
@@ -291,8 +296,9 @@ onboarding:
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
     confirmInvalid: i due pin non coincidono
-  resetConfirm: Sei sicuro di interrompere l'attivazione di IO?
-    Potrai riprenderla in ogni momento facendo di nuovo login con SPID.
+  alert: 
+    title: Vuoi davvero uscire da IO?
+    description: Dovrai fare nuovamente il login per continuare ad usare l'app
   fingerprint:
     headerTitle: Attivazione
     title: Autenticazione biometrica
@@ -580,8 +586,9 @@ messages:
   yesterday: ieri
   errorLoading:
     details: Impossibile caricare i dettagli del messaggio
-    senderService:  Mittente sconosciuto
-    senderInfo: Info sul servizio mancanti
+    senderInfo:  Mittente sconosciuto
+    serviceInfo: Info sul servizio mancanti
+    departmentInfo: Info sul dipartimento mancanti
   cta:
     archive: Archivia
     unarchive: Ripristina
@@ -674,7 +681,7 @@ services:
   serviceIsEnabled: Il servizio è attivo
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Notifiche push
-  emailNotifications: Notifiche email
+  emailForwarding: Inoltro via email
   tosLink: Termini e condizioni d'uso
   privacyLink: Informativa sulla privacy
   otherAppsInfo: Puoi usare questo servizio anche
@@ -693,6 +700,11 @@ services:
     locals: Locali
     national: Nazionali
     otherServices: Altri servizi
+  enableAll: Attiva tutti
+  disableAll: Disattiva tutti
+  disableAllTitle: Vuoi davvero disattivare tutti i servizi?
+  disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finchè non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
+  close: Chiudi
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."

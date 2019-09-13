@@ -1,14 +1,21 @@
 import { ListItem, Text, View } from "native-base";
 import * as React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import {
+  Platform,
+  StyleProp,
+  StyleSheet,
+  Switch,
+  ViewStyle
+} from "react-native";
+import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import H5 from "../ui/H5";
 import IconFont from "./../ui/IconFont";
 import { BadgeComponent } from "./BadgeComponent";
 
 type Props = Readonly<{
   title: string;
   onPress?: () => void;
+  onLongPress?: () => void;
   subTitle?: string;
   isFirstItem?: boolean;
   isLastItem?: boolean;
@@ -18,6 +25,10 @@ type Props = Readonly<{
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
+  onSwitchValueChanged?: (value: boolean) => void;
+  switchValue?: boolean;
+  keySwitch?: string;
+  isLongPressEnabled?: boolean;
 }>;
 
 const ICON_SIZE = 24;
@@ -28,6 +39,7 @@ const styles = StyleSheet.create({
     paddingRight: 0
   },
   spacingBase: {
+    paddingTop: 6,
     paddingRight: customVariables.spacingBase
   },
   flexRow: {
@@ -45,11 +57,14 @@ const styles = StyleSheet.create({
     flex: 1
   },
   serviceName: {
-    fontWeight: "700",
+    fontSize: 18,
+    color: customVariables.brandDarkestGray,
+    ...makeFontStyleObject(Platform.select, "600"),
     alignSelf: "flex-start",
-    paddingRight: 24 + 4 // icon width + margin - to overcome title not going on second line when overlapping with the right icon
+    paddingRight: 16
   },
   description: {
+    fontSize: 14,
     paddingRight: ICON_SIZE,
     alignSelf: "flex-start"
   }
@@ -61,6 +76,7 @@ export default class ListItemComponent extends React.Component<Props> {
       <ListItem
         style={[styles.listItem, styles.flexRow, this.props.style]}
         onPress={this.props.onPress}
+        onLongPress={this.props.onLongPress}
         first={this.props.isFirstItem}
         last={this.props.isLastItem || this.props.hideSeparator}
       >
@@ -72,19 +88,25 @@ export default class ListItemComponent extends React.Component<Props> {
                   <BadgeComponent />
                 </View>
               )}
-              <H5 numberOfLines={2} style={styles.serviceName}>
+              <Text numberOfLines={2} style={styles.serviceName}>
                 {this.props.title}
-              </H5>
+              </Text>
             </View>
-
             {!this.props.iconName &&
-              !this.props.hideIcon && (
+              !this.props.hideIcon &&
+              (this.props.isLongPressEnabled ? (
+                <Switch
+                  key={this.props.keySwitch}
+                  value={this.props.switchValue}
+                  onValueChange={this.props.onSwitchValueChanged}
+                />
+              ) : (
                 <IconFont
-                  name={"io-right"}
+                  name="io-right"
                   size={ICON_SIZE}
                   color={customVariables.contentPrimaryBackground}
                 />
-              )}
+              ))}
           </View>
           {this.props.subTitle && (
             <Text

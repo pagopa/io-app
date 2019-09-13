@@ -6,6 +6,7 @@
 
 import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { NavigationActions } from "react-navigation";
 import { delay } from "redux-saga";
 import {
   call,
@@ -27,6 +28,7 @@ import {
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
+import { navigateToWalletHome } from "../store/actions/navigation";
 import {
   backToEntrypointPayment,
   paymentAttiva,
@@ -98,9 +100,7 @@ import {
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
 
-import { NavigationActions } from "react-navigation";
 import ROUTES from "../navigation/routes";
-import { navigateToWalletHome } from "../store/actions/navigation";
 import {
   getCurrentRouteKey,
   getCurrentRouteName
