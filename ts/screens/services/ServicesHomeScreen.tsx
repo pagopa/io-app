@@ -1,13 +1,15 @@
 /**
- * A screen that contains all the Tabs related to services.
- * TODO: add placeholder on services lists https://www.pivotaltracker.com/story/show/168171009
+ * A screen that contains all the available servives.
+ * - Local tab: services sections related to the areas of interest selected by the user
+ * - National tab: national services sections
+ * - All: local and national services sections, not including the user areas of interest
  */
 import { left } from "fp-ts/lib/Either";
 import { Option, some, Some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Tab, TabHeading, Tabs, Text } from "native-base";
+import { Content, Tab, TabHeading, Tabs, Text, View } from "native-base";
 import * as React from "react";
-import { Animated, Platform, StyleSheet } from "react-native";
+import { Animated, Image, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -19,6 +21,7 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import OrganizationLogo from "../../components/services/OrganizationLogo";
 import ServicesSectionsList from "../../components/services/ServicesSectionsList";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -29,16 +32,23 @@ import {
   showServiceDetails
 } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
-import { userMetadataUpsert } from "../../store/actions/userMetadata";
+import {
+  userMetadataLoad,
+  userMetadataUpsert
+} from "../../store/actions/userMetadata";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
+  isLoadingServicesSelector,
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
   selectedLocalServicesSectionsSelector,
   ServicesSectionState
 } from "../../store/reducers/entities/services";
+import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
+import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import {
   organizationsOfInterestSelector,
@@ -102,6 +112,22 @@ const styles = StyleSheet.create({
   },
   organizationLogo: {
     marginBottom: 0
+  },
+  center: {
+    alignItems: "center"
+  },
+  padded: {
+    paddingHorizontal: customVariables.contentPadding
+  },
+  customSpacer: {
+    height: customVariables.spacerHeight + customVariables.h1LineHeight
+  },
+  errorText: {
+    fontSize: customVariables.fontSize2,
+    paddingTop: customVariables.contentPadding
+  },
+  errorText2: {
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -129,6 +155,55 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   // tslint:disable-next-line: readonly-array
   private scollPositions: number[] = [0, 0, 0];
+
+  private renderErrorContent() {
+    return (
+      <React.Fragment>
+        <Content>
+          <View style={styles.center}>
+            <View spacer={true} extralarge={true} />
+            <Image
+              source={require("../../../img/wallet/errors/generic-error-icon.png")}
+            />
+            <View spacer={true} />
+            <Text bold={true} alignCenter={true} style={styles.errorText}>
+              {I18n.t("wallet.errors.GENERIC_ERROR")}
+            </Text>
+            <View spacer={true} extralarge={true} />
+            <View spacer={true} extralarge={true} />
+            <Text alignCenter={true} style={styles.errorText2}>
+              {I18n.t("wallet.errorTransaction.submitBugText")}
+            </Text>
+            <View spacer={true} extralarge={true} />
+          </View>
+        </Content>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={{
+            block: true,
+            primary: true,
+            onPress: this.props.retryUserMetadataLoad,
+            title: I18n.t("global.buttons.retry")
+          }}
+        />
+      </React.Fragment>
+    );
+  }
+
+  private renderFirstServiceLoadingContent() {
+    return (
+      <View style={[styles.center, styles.padded]}>
+        {Platform.OS === "ios" && <View style={styles.customSpacer} />}
+        <View spacer={true} extralarge={true} />
+        <View spacer={true} extralarge={true} />
+        <Image
+          source={require("../../../img/services/icon-loading-services.png")}
+        />
+        <Text bold={true}>{I18n.t("services.loading.title")}</Text>
+        <Text>{I18n.t("services.loading.subtitle")}</Text>
+      </View>
+    );
+  }
 
   public componentDidUpdate(_: Props, prevState: State) {
     // saving current list scroll position to enable header animation
@@ -224,14 +299,20 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
       >
-        <React.Fragment>
-          <ScreenContentHeader
-            title={I18n.t("services.title")}
-            icon={require("../../../img/icons/services-icon.png")}
-            fixed={Platform.OS === "ios"}
-          />
-          {this.renderTabs()}
-        </React.Fragment>
+        {this.props.userMetadata ? (
+          <React.Fragment>
+            <ScreenContentHeader
+              title={I18n.t("services.title")}
+              icon={require("../../../img/icons/services-icon.png")}
+              fixed={Platform.OS === "ios"}
+            />
+            {this.props.isFirstServiceLoadCompleted
+              ? this.renderTabs()
+              : this.renderFirstServiceLoadingContent()}
+          </React.Fragment>
+        ) : (
+          this.renderErrorContent()
+        )}
       </TopScreenComponent>
     );
   }
@@ -387,29 +468,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const { services } = state.entities;
-
   const potUserMetadata = userMetadataSelector(state);
   // TODO: disable selection of areas of interest if the user metadata are not loaded
   // (it causes the new selection is not loaded) https://www.pivotaltracker.com/story/show/168312476
   const userMetadata = pot.getOrElse(potUserMetadata, undefined);
-
-  const isAnyServiceLoading =
-    Object.keys(services.byId).find(k => {
-      const oneService = services.byId[k];
-      return oneService !== undefined && pot.isLoading(oneService);
-    }) !== undefined;
-
-  const isAnyServiceMetdataLoading =
-    Object.keys(state.content.servicesMetadata.byId).find(k => {
-      const oneService = state.content.servicesMetadata.byId[k];
-      return oneService !== undefined && pot.isLoading(oneService);
-    }) !== undefined;
-
-  const isLoading =
-    pot.isLoading(state.entities.services.visible) ||
-    isAnyServiceLoading ||
-    isAnyServiceMetdataLoading;
 
   const localServicesSections = localServicesSectionsSelector(state);
   const selectableOrganizations = localServicesSections.map(
@@ -424,9 +486,12 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     selectableOrganizations,
     selectedOrganizations: organizationsOfInterestSelector(state),
-    isLoading,
-    profile: state.profile,
-    servicesById: state.entities.services.byId,
+    isLoading: isLoadingServicesSelector(state),
+    isFirstServiceLoadCompleted: isFirstVisibleServiceLoadCompletedSelector(
+      state
+    ),
+    profile: profileSelector(state),
+    servicesById: servicesByIdSelector(state),
     readServices: readServicesByIdSelector(state),
     localSections: selectedLocalServicesSectionsSelector(state),
     nationalSections: nationalServicesSectionsSelector(state),
@@ -436,6 +501,9 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  retryUserMetadataLoad: () => {
+    dispatch(userMetadataLoad.request());
+  },
   refreshServices: () => dispatch(loadVisibleServices.request()),
   saveSelectedOrganizationItems: (
     userMetadata: UserMetadata,

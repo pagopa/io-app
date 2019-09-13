@@ -689,6 +689,9 @@ services:
     locals: Local
     national: National
     all: All
+  loading:
+    title: Loading the service list
+    subtitle: wait few seconds..
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."

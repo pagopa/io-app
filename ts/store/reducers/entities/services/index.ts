@@ -15,6 +15,12 @@ import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../organizations/organizationsByFiscalCodeReducer";
+import {
+  firstLoadingReducer,
+  FirstLoadingState,
+  isVisibleServicesContentLoadCompletedSelector,
+  isVisibleServicesMetadataLoadCompletedSelector
+} from "./firstServicesLoading";
 import readServicesByIdReducer, {
   ReadStateByServicesId
 } from "./readStateByServiceId";
@@ -25,6 +31,7 @@ import {
 } from "./servicesByOrganizationFiscalCode";
 import {
   visibleServicesReducer,
+  visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
 
@@ -33,6 +40,7 @@ export type ServicesState = Readonly<{
   byOrgFiscalCode: ServiceIdsByOrganizationFiscalCodeState;
   visible: VisibleServicesState;
   readState: ReadStateByServicesId;
+  firstLoading: FirstLoadingState;
 }>;
 
 export type ServicesSectionState = Readonly<{
@@ -45,11 +53,37 @@ const reducer = combineReducers<ServicesState, Action>({
   byId: servicesByIdReducer,
   byOrgFiscalCode: serviceIdsByOrganizationFiscalCodeReducer,
   visible: visibleServicesReducer,
-  readState: readServicesByIdReducer
+  readState: readServicesByIdReducer,
+  firstLoading: firstLoadingReducer
 });
 
 // Selectors
 export const servicesSelector = (state: GlobalState) => state.entities.services;
+
+// Selector to get if services content and metadata are still being loaded
+export const isLoadingServicesSelector = createSelector(
+  [
+    isVisibleServicesContentLoadCompletedSelector,
+    isVisibleServicesMetadataLoadCompletedSelector,
+    visibleServicesSelector
+  ],
+  (
+    isVisibleServicesContentLoadCompleted,
+    isVisibleServicesMetadataLoadCompleted,
+    visibleServices
+  ) => {
+    return (
+      pot.isLoading(visibleServices) ||
+      (pot.isSome(visibleServices) &&
+        (!isVisibleServicesContentLoadCompleted ||
+          !isVisibleServicesMetadataLoadCompleted))
+    );
+  }
+);
+
+//
+// Functions and selectors to get services organized in sections
+//
 
 // Check if the passed service is local or national through data included into the service metadata.
 // If service metadata aren't loaded, the service is treated as local, otherwise it returns
