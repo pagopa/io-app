@@ -23,7 +23,8 @@ interface Props {
   compareWithCode?: string;
   inactiveColor: string;
   buttonType: ComponentProps<typeof KeyPad>["buttonType"];
-  onFulfill: (code: PinString, isValid: boolean) => void;
+  onFulfill?: (code: PinString, isValid: boolean) => void;
+  onConfirmFulfill?: (isValid: boolean) => void;
   onCancel?: () => void;
   onPinResetHandler?: () => void;
   onFingerPrintReq?: () => void;
@@ -187,9 +188,13 @@ class Pinpad extends React.PureComponent<Props, State> {
       // Fire the callback asynchronously, otherwise this component
       // will be unmounted before the render of the last bullet placeholder.
       // tslint:disable-next-line no-object-mutation
-      this.onFulfillTimeoutId = setTimeout(() =>
-        this.props.onFulfill(inputValue as PinString, isValid)
-      );
+      this.onFulfillTimeoutId = setTimeout(() => {
+        if (this.props.onFulfill) {
+          this.props.onFulfill(inputValue as PinString, isValid);
+        } else if (this.props.onConfirmFulfill) {
+          this.props.onConfirmFulfill(isValid);
+        }
+      });
     }
   };
 
