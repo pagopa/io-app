@@ -44,7 +44,6 @@ import { latestTransactionsSelector } from "../../store/reducers/wallet/transact
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
-import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
