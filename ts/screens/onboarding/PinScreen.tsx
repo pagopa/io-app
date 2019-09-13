@@ -93,12 +93,13 @@ class PinScreen extends React.Component<Props, State> {
       this.state.pinState.state === "PinConfirmed" ||
       this.state.pinState.state === "PinSelected"
     ) {
+      const pinConfirmed: PinConfirmed = {
+        ...this.state.pinState,
+        state: "PinConfirmed",
+        isConfirmationPinMatch: isValid
+      };
       this.setState({
-        pinState: {
-          state: "PinConfirmed",
-          pin: this.state.pinState.pin,
-          isConfirmationPinMatch: isValid
-        }
+        pinState: pinConfirmed
       });
     }
   };
