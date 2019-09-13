@@ -130,7 +130,6 @@ class ServicesSectionsList extends React.PureComponent<Props> {
         onRefresh={onRefresh}
         onSelect={onSelect}
         readServices={readServices}
-        isExperimentalFeaturesEnabled={true}
         ListEmptyComponent={this.localListEmptyComponent()}
         onLongPressItem={this.props.onLongPressItem}
         isLongPressEnabled={this.props.isLongPressEnabled}

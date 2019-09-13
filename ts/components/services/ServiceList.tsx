@@ -38,7 +38,6 @@ type OwnProps = {
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
-  isExperimentalFeaturesEnabled?: boolean;
   ListEmptyComponent?: React.ComponentProps<
     typeof SectionList
   >["ListEmptyComponent"];
