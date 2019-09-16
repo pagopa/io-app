@@ -5,7 +5,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { RefreshControl, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -20,7 +20,10 @@ import {
   navigateToWalletList
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
-import { readTransaction } from "../../store/actions/wallet/transactions";
+import {
+  fetchTransactionsRequest,
+  readTransaction
+} from "../../store/actions/wallet/transactions";
 import {
   deleteWalletRequest,
   setFavouriteWalletRequest
@@ -113,6 +116,16 @@ class TransactionsScreen extends React.Component<Props> {
       _ => _ === selectedWallet.idWallet
     );
 
+    const transactionsRefreshControl = (
+      <RefreshControl
+        onRefresh={() => {
+          this.props.loadTransactions();
+        }}
+        refreshing={false}
+        tintColor={"transparent"}
+      />
+    );
+
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
@@ -120,6 +133,7 @@ class TransactionsScreen extends React.Component<Props> {
         topContent={this.headerContent(selectedWallet, isFavorite)}
         hideHeader={true}
         hasDynamicSubHeader={true}
+        refreshControl={transactionsRefreshControl}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
@@ -145,6 +159,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadTransactions: () => dispatch(fetchTransactionsRequest()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(

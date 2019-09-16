@@ -31,7 +31,7 @@ type Props = Readonly<{
   hideHeader?: boolean;
   footerContent?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
-  walletRefreshControl?: React.ReactElement<RefreshControlProps>;
+  refreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
 
 const styles = StyleSheet.create({
@@ -116,7 +116,7 @@ export default class WalletLayout extends React.Component<Props> {
           title: I18n.t("wallet.wallet"),
           body: () => <Markdown>{I18n.t("wallet.walletHelp")}</Markdown>
         }}
-        contentRefreshControl={this.props.walletRefreshControl}
+        contentRefreshControl={this.props.refreshControl}
       >
         {this.props.children}
       </DarkLayout>

@@ -368,7 +368,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         hasDynamicSubHeader={true}
         topContent={headerContent}
         footerContent={footerContent}
-        walletRefreshControl={walletRefreshControl}
+        refreshControl={walletRefreshControl}
       >
         {transactionContent}
       </WalletLayout>
