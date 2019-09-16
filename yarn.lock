@@ -7135,9 +7135,10 @@ react-native-push-notification@3.1.3:
   resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.1.3.tgz#f8dab43aec734dbb1a8bbc50caf82dd682655392"
   integrity sha512-bOZBApQ2zQ41/kSX047jm06XeDl2ylCwMuraT+4yRrlMQ6FDoAxIBh+Q+6jE1B5tVzot62mZnPcV6JaFTWtYeg==
 
-react-native-qrcode-scanner@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-qrcode-scanner/-/react-native-qrcode-scanner-1.1.0.tgz#6a2e88110e0c1def94690a4d52fc383634ed6e4c"
+react-native-qrcode-scanner@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-qrcode-scanner/-/react-native-qrcode-scanner-1.2.1.tgz#aa3949a77f6eee063a3ca25796a1f0ce17f9c4dd"
+  integrity sha512-JLX6iCmvUkBmbXcHHjtRS+OFr2onp9IFE9FXSPGZUuXib78afNEIg+qiWJdKfhQvtPKffRf55TH/WHxD3XDwKQ==
   dependencies:
     prop-types "^15.5.10"
     react-native-permissions "^1.1.1"
