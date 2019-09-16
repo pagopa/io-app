@@ -24,7 +24,7 @@ export default class Switch extends React.Component<NativeBase.Switch> {
           Platform.OS === "android"
             ? this.props.value
               ? variables.contentPrimaryBackground
-              : "default"
+              : variables.brandLightGray
             : "default"
         }
         {...this.props}
