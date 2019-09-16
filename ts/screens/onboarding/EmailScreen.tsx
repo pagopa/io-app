@@ -72,7 +72,7 @@ export class FingerprintScreen extends React.PureComponent<Props> {
     );
 
   public render() {
-    const { dispatch, potProfile } = this.props;
+    const { potProfile } = this.props;
 
     const profileData = potProfile
       .map(_ => ({

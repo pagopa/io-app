@@ -3,12 +3,12 @@ import { put, take } from "redux-saga/effects";
 
 import { navigateToEmailScreen } from "../../store/actions/navigation";
 import { emailAcknowledged } from "../../store/actions/onboarding";
-import { UserProfileUnion } from '../../api/backend';
+import { UserProfileUnion } from "../../api/backend";
 
 /**
  * Launch email saga that consists of:
  * - acknowledgement screen if email already exists and is valid and the user
- *   does not want to change it 
+ *   does not want to change it
  * - editing and validation screen, otherwise
  */
 export function* checkAcknowledgedEmailSaga(
@@ -19,6 +19,7 @@ export function* checkAcknowledgedEmailSaga(
     // Email exists
 
     // Check if email is valid
+    // FIXME: put email validation API query here
     const isValid: boolean = true;
 
     if (isValid) {

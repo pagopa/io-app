@@ -17,6 +17,7 @@ import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
+  isEmailEditingAndValidationEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -229,7 +230,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
     storedPin = yield call(checkConfiguredPinSaga);
     yield call(checkAcknowledgedFingerprintSaga);
-    yield call(checkAcknowledgedEmailSaga, userProfile);
+    if (isEmailEditingAndValidationEnabled)
+      yield call(checkAcknowledgedEmailSaga, userProfile);
     
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
