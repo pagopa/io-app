@@ -358,9 +358,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
         }}
         refreshing={false}
         tintColor={"transparent"} // iOS
-        progressBackgroundColor={"transparent"}
-        colors={[customVariables.brandDarkGray]}
-        size={1}
       />
     );
 
