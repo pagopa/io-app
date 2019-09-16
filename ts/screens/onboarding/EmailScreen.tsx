@@ -10,6 +10,7 @@ import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
@@ -86,6 +87,10 @@ export class FingerprintScreen extends React.PureComponent<Props> {
       <TopScreenComponent
         goBack={this.handleGoBack}
         title={I18n.t("onboarding.email.title")}
+        contextualHelp={{
+          title: I18n.t("onboarding.email.title"),
+          body: () => <Markdown>{I18n.t("onboarding.email.help")}</Markdown>
+        }}
       >
         <ScreenContent
           title={I18n.t("onboarding.email.title")}

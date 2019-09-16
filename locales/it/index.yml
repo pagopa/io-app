@@ -318,6 +318,9 @@ onboarding:
       il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
       casella di posta elettronica.
     ctaEdit: Modifica email
+    help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
+      indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
+      tuo provider di servizi SPID.
 pin_login:
   pin:
     pinInfo: Inserisci il PIN
