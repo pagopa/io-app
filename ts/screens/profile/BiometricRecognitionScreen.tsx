@@ -1,9 +1,10 @@
 import { Button, Text } from "native-base";
 import * as React from "react";
-import { Switch, View } from "react-native";
+import { View } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import Switch from "../../components/ui/Switch";
 
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
