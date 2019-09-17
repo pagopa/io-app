@@ -71,8 +71,11 @@ export default class NewServiceListItem extends React.PureComponent<
       getEnabledChannelsForService(this.props.profile, service.service_id)
     );
 
-    const isServiceDisabled =
-      pot.isSome(enabledChannels) && enabledChannels.value.inbox === false;
+    const isServiceDisabled = pot.getOrElse(
+      pot.map(enabledChannels, m => m.inbox === false),
+      false
+    );
+
     const onPress = !this.props.isLongPressEnabled
       ? pot.toUndefined(
           pot.map(potService, service => () => this.props.onSelect(service))
