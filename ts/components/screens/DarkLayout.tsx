@@ -91,7 +91,11 @@ export default class DarkLayout extends React.Component<Props> {
             icon={this.props.icon}
             dark={true}
             contentStyle={this.props.contentStyle}
-            bounces={this.props.bounces}
+            bounces={
+              this.props.bounces ||
+              this.props.contentRefreshControl !== undefined
+            }
+            contentRefreshControl={this.props.contentRefreshControl}
           >
             {this.screenContent()}
           </ScreenContent>
