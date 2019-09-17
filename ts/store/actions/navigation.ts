@@ -78,6 +78,13 @@ export const navigateToTosScreen = NavigationActions.navigate({
 
 export const navigateBack = NavigationActions.back;
 
+export const navigateToEmailInsertScreen = NavigationActions.navigate({
+  routeName: ROUTES.ONBOARDING_EMAIL_INSERT,
+  action: NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_EMAIL_INSERT
+  })
+});
+
 export const navigateToMessageDetailScreenAction = (
   params: InferNavigationParams<typeof MessageDetailScreen>
 ) =>

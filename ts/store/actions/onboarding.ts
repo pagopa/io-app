@@ -20,9 +20,12 @@ export const abortOnboarding = createStandardAction("ABORT_ONBOARDING")();
 
 export const clearOnboarding = createStandardAction("CLEAR_ONBOARDING")();
 
+export const emailInsert = createStandardAction("EMAIL_INSERT")();
+
 type OnboardingActionTypes =
   | typeof tosAccepted
   | typeof fingerprintAcknowledge
+  | typeof emailInsert
   | typeof abortOnboarding
   | typeof clearOnboarding;
 

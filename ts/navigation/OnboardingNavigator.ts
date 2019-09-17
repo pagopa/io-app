@@ -1,4 +1,5 @@
 import { createStackNavigator } from "react-navigation";
+import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import PinScreen from "../screens/onboarding/PinScreen";
@@ -18,6 +19,9 @@ const navigator = createStackNavigator(
     },
     [ROUTES.ONBOARDING_FINGERPRINT]: {
       screen: FingerprintScreen
+    },
+    [ROUTES.ONBOARDING_EMAIL_INSERT]: {
+      screen: EmailInsertScreen
     }
   },
   {
