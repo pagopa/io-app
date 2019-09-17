@@ -701,7 +701,7 @@ services:
     national: Nazionali
     all: Tutti
   loading:
-    title: Sto caricando l'elenco servizi
+    title: Sto caricando l'elenco dei servizi
     subtitle: attendi qualche secondo..  
   enableAll: Attiva tutti
   disableAll: Disattiva tutti
