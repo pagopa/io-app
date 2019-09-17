@@ -13,7 +13,6 @@ import { ReadStateByServicesId } from "../../store/reducers/entities/services/re
 
 import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
-import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
@@ -42,11 +41,11 @@ const styles = StyleSheet.create({
     paddingRight: variables.contentPadding
   },
   padded: {
-    marginLeft: customVariables.contentPadding,
-    marginRight: customVariables.contentPadding
+    marginLeft: variables.contentPadding,
+    marginRight: variables.contentPadding
   },
   whiteBg: {
-    backgroundColor: "white"
+    backgroundColor: variables.colorWhite
   }
 });
 
