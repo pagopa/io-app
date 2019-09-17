@@ -58,6 +58,9 @@ export function getChannelsforServicesList(
     if (updatedBlockedChannels.length !== 0) {
       // tslint:disable-next-line no-object-mutation
       profileBlockedChannels[id] = updatedBlockedChannels;
+    } else {
+      // tslint:disable-next-line no-object-mutation
+      delete profileBlockedChannels[id];
     }
   });
 
