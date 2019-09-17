@@ -10,20 +10,15 @@ import organizationsAllReducer, {
 import { OrganizationsAllState } from "./organizationsAll";
 import { OrganizationNamesByFiscalCodeState } from "./organizationsByFiscalCodeReducer";
 import organizationsByFiscalCodeReducer from "./organizationsByFiscalCodeReducer";
-import organizationsSelectedReducer, {
-  OrganizationsSelectedState
-} from "./organizationsFiscalCodesSelected";
 
 export type OrganizationsState = Readonly<{
   all: OrganizationsAllState;
   nameByFiscalCode: OrganizationNamesByFiscalCodeState;
-  selectedFiscalCodes: OrganizationsSelectedState;
 }>;
 
 const reducer = combineReducers<OrganizationsState, Action>({
   all: organizationsAllReducer,
-  nameByFiscalCode: organizationsByFiscalCodeReducer,
-  selectedFiscalCodes: organizationsSelectedReducer
+  nameByFiscalCode: organizationsByFiscalCodeReducer
 });
 
 /**
