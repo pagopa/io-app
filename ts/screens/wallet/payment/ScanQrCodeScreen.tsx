@@ -227,9 +227,9 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 this.onQrCodeData(reading.data)
               }
               ref="scanner" // tslint:disable-line jsx-no-string-ref
-              containerStyle={styles.cameraContainer}
+              containerStyle={styles.cameraContainer as any}
               showMarker={true}
-              cameraStyle={styles.camera}
+              cameraStyle={styles.camera as any}
               customMarker={
                 <CameraMarker
                   screenWidth={screenWidth}
