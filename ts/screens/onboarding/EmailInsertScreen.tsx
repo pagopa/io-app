@@ -164,7 +164,7 @@ class EmailScreen extends React.PureComponent<Props, State> {
           </KeyboardAvoidingView>
         </View>
       </BaseScreenComponent>
-    );Ø
+    );
   }
 
   private handleGoBack = () =>
