@@ -156,15 +156,15 @@ class EmailScreen extends React.PureComponent<Props, State> {
           <KeyboardAvoidingView
             behavior="padding"
             keyboardVerticalOffset={Platform.select({
-              ios: 0,
-              android: customVariables.contentPadding
+              ios: 100,
+              android: 80
             })}
           >
             {this.renderFooterButtons()}
           </KeyboardAvoidingView>
         </View>
       </BaseScreenComponent>
-    );
+    );Ø
   }
 
   private handleGoBack = () =>
