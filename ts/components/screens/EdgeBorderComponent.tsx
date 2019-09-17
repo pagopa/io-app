@@ -5,7 +5,8 @@ import { Image, StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   emptyListWrapper: {
     alignItems: "center",
-    marginTop: 74
+    marginTop: 74,
+    marginBottom: 20
   }
 });
 
