@@ -3,7 +3,7 @@
  */
 
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H3, Text, View } from "native-base";
+import { Button, Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
