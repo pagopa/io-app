@@ -690,7 +690,7 @@ services:
     national: National
     all: All
   loading:
-    title: Loading the service list
+    title: Loading the services list
     subtitle: wait few seconds..
   enableAll: Enable all
   disableAll: Disable all
