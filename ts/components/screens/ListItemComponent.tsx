@@ -5,6 +5,7 @@ import {
   StyleProp,
   StyleSheet,
   Switch,
+  TouchableWithoutFeedback,
   ViewStyle
 } from "react-native";
 import { makeFontStyleObject } from "../../theme/fonts";
@@ -74,60 +75,63 @@ const styles = StyleSheet.create({
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
     return (
-      <ListItem
-        style={[styles.listItem, styles.flexRow, this.props.style]}
+      <TouchableWithoutFeedback
         onPress={this.props.onPress}
         onLongPress={this.props.onLongPress}
-        first={this.props.isFirstItem}
-        last={this.props.isLastItem || this.props.hideSeparator}
-        activeOpacity={1}
       >
-        <View style={styles.flexColumn}>
-          <View style={styles.flexRow}>
-            <View style={styles.flexRow2}>
-              {this.props.hasBadge && (
-                <View style={styles.spacingBase}>
-                  <BadgeComponent />
-                </View>
-              )}
-              <Text numberOfLines={2} style={styles.serviceName}>
-                {this.props.title}
-              </Text>
+        <ListItem
+          style={[styles.listItem, styles.flexRow, this.props.style]}
+          first={this.props.isFirstItem}
+          last={this.props.isLastItem || this.props.hideSeparator}
+          activeOpacity={1}
+        >
+          <View style={styles.flexColumn}>
+            <View style={styles.flexRow}>
+              <View style={styles.flexRow2}>
+                {this.props.hasBadge && (
+                  <View style={styles.spacingBase}>
+                    <BadgeComponent />
+                  </View>
+                )}
+                <Text numberOfLines={2} style={styles.serviceName}>
+                  {this.props.title}
+                </Text>
+              </View>
+              {!this.props.iconName &&
+                !this.props.hideIcon &&
+                (this.props.isLongPressEnabled ? (
+                  <Switch
+                    key={this.props.keySwitch}
+                    value={this.props.switchValue}
+                    onValueChange={this.props.onSwitchValueChanged}
+                  />
+                ) : (
+                  <IconFont
+                    name="io-right"
+                    size={ICON_SIZE}
+                    color={customVariables.contentPrimaryBackground}
+                  />
+                ))}
             </View>
-            {!this.props.iconName &&
-              !this.props.hideIcon &&
-              (this.props.isLongPressEnabled ? (
-                <Switch
-                  key={this.props.keySwitch}
-                  value={this.props.switchValue}
-                  onValueChange={this.props.onSwitchValueChanged}
-                />
-              ) : (
-                <IconFont
-                  name="io-right"
-                  size={ICON_SIZE}
-                  color={customVariables.contentPrimaryBackground}
-                />
-              ))}
+            {this.props.subTitle && (
+              <Text
+                numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
+                style={styles.description}
+              >
+                {this.props.subTitle}
+              </Text>
+            )}
           </View>
-          {this.props.subTitle && (
-            <Text
-              numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-              style={styles.description}
-            >
-              {this.props.subTitle}
-            </Text>
+          {this.props.iconName && (
+            <IconFont
+              name={this.props.iconName}
+              size={ICON_SIZE * 2}
+              style={{ alignSelf: "center" }}
+              color={customVariables.contentPrimaryBackground}
+            />
           )}
-        </View>
-        {this.props.iconName && (
-          <IconFont
-            name={this.props.iconName}
-            size={ICON_SIZE * 2}
-            style={{ alignSelf: "center" }}
-            color={customVariables.contentPrimaryBackground}
-          />
-        )}
-      </ListItem>
+        </ListItem>
+      </TouchableWithoutFeedback>
     );
   }
 }
