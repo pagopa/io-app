@@ -303,6 +303,15 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include tos_fingerprint_not_enrolled.md
+  email:
+    insert:
+      headerTitle: Activation
+      title: Insert your email
+      help:
+        title: Email
+        content: !include email_insert_help.md
+    subtitle: Some IO app functions need your email.
+    emailInputLabel: Personal email address
 pin_login:
   pin:
     pinInfo: Enter the PIN

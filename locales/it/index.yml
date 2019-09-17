@@ -309,6 +309,15 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include tos_fingerprint_not_enrolled.md
+  email:
+    insert:
+      headerTitle: Attivazione
+      title: Inserisci la tua email
+      help:
+        title: Email
+        content: !include email_insert_help.md
+    subtitle: Alcune funzioni di IO hanno bisogno della tua email.
+    emailInputLabel: Indirizzo email personale
 pin_login:
   pin:
     pinInfo: Inserisci il PIN
