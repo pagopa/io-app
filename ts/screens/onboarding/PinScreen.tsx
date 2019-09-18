@@ -92,6 +92,19 @@ class PinScreen extends React.Component<Props, State> {
       }
     });
 
+  // Method called when the confirmation CodeInput is valid and cancel button is pressed
+  public onPinConfirmRemoveLastDigit = () => {
+    if (this.state.pinState.state === "PinConfirmed") {
+      const pinSelected: PinSelected = {
+        ...this.state.pinState,
+        state: "PinSelected"
+      };
+      this.setState({
+        pinState: pinSelected
+      });
+    }
+  };
+
   // Method called when the confirmation CodeInput is filled
   public onPinConfirmFulfill = (code: PinString, isValid: boolean) => {
     // If the inserted PIN do not match we clear the component to let the user retry
@@ -198,6 +211,7 @@ class PinScreen extends React.Component<Props, State> {
             onFulfill={this.onPinConfirmFulfill}
             ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
             buttonType="light"
+            onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
           />
 
           {this.renderCodeInputConfirmValidation()}
