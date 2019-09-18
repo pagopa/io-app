@@ -45,7 +45,7 @@ import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { getChannelsforServicesList } from "./common";
+import { getProfileChannelsforServicesList } from "./common";
 import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
 
 type State = {
@@ -376,7 +376,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     profile: ProfileState,
     enable: boolean
   ) => {
-    const newBlockedChannels = getChannelsforServicesList(
+    const newBlockedChannels = getProfileChannelsforServicesList(
       allServicesId,
       profile,
       enable

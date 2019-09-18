@@ -20,9 +20,9 @@ export type UserMetadata = {
   metadata: UserMetadataMetadata;
 };
 
-export const emptyUserMetadata: UserMetadata = {
+export const emptyUserMetadata: BackendUserMetadata = {
   version: 0,
-  metadata: {}
+  metadata: ""
 };
 
 export type UserMetadataState = pot.Pot<UserMetadata, Error>;

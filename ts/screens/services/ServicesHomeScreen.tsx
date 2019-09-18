@@ -20,6 +20,7 @@ import * as React from "react";
 import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import {
+  NavigationEvents,
   NavigationEventSubscription,
   NavigationScreenProps
 } from "react-navigation";
@@ -74,7 +75,10 @@ import { InferNavigationParams } from "../../types/react";
 import { getLogoForOrganization } from "../../utils/organizations";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
-import { getChannelsforServicesList } from "../preferences/common";
+import {
+  getChannelsforServicesList,
+  getProfileChannelsforServicesList
+} from "../preferences/common";
 import OldServiceDetailsScreen from "../preferences/OldServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -93,6 +97,8 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 type State = {
   currentTab: number;
+  // tslint:disable-next-line: readonly-array
+  currentTabServicesId: string[];
   enableHeaderAnimation: boolean;
   isLongPressEnabled: boolean;
   enableServices: boolean;
@@ -173,15 +179,38 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       currentTab: 0,
+      currentTabServicesId: [],
       enableHeaderAnimation: false,
       isLongPressEnabled: false,
       enableServices: false
     };
   }
 
+  private updateLongPressButtonScope = () => {
+    const currentTabServicesChannels = this.props.getServicesChannels(
+      this.props.tabsServicesId[this.state.currentTab],
+      this.props.profile
+    );
+
+    const disabledServices: number = Object.keys(
+      currentTabServicesChannels
+    ).filter(id => currentTabServicesChannels[id].indexOf("INBOX") !== -1)
+      .length;
+
+    if (disabledServices === Object.keys(currentTabServicesChannels).length) {
+      // if all tab services are disabled the footer primary button allows services are massively enabled
+      this.setState({ enableServices: true });
+    } else {
+      // if at least one tab service is enabled the footer primary button allows services are massively disabled
+      this.setState({ enableServices: false });
+    }
+  };
+
   private handleOnLongPressItem = () => {
+    this.updateLongPressButtonScope();
     this.setState({
-      isLongPressEnabled: !this.state.isLongPressEnabled
+      isLongPressEnabled: !this.state.isLongPressEnabled,
+      currentTabServicesId: this.props.tabsServicesId[this.state.currentTab]
     });
   };
 
@@ -337,6 +366,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         value
       );
     }
+    this.updateLongPressButtonScope();
   };
 
   public componentWillUnmount() {
@@ -398,13 +428,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   // This method enable or disable services and update the enableServices props
-  private disableOrEnableAllServices = () => {
+  private disableOrEnableTabServices = () => {
     this.props.disableOrEnableServices(
-      Object.keys(this.props.servicesById),
+      this.state.currentTabServicesId,
       this.props.profile,
       this.state.enableServices
     );
-    this.setState({ enableServices: !this.state.enableServices });
+    this.updateLongPressButtonScope();
   };
 
   private renderLongPressFooterButtons = () => {
@@ -427,10 +457,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               this.showAlertOnDisableServices(
                 I18n.t("services.disableAllTitle"),
                 I18n.t("services.disableAllMsg"),
-                () => this.disableOrEnableAllServices()
+                () => this.disableOrEnableTabServices()
               );
             } else {
-              this.disableOrEnableAllServices();
+              this.disableOrEnableTabServices();
             }
           }}
         >
@@ -454,6 +484,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
       >
+        <NavigationEvents
+          onWillFocus={() => this.setState({ isLongPressEnabled: false })}
+        />
         {this.props.userMetadata ? (
           <React.Fragment>
             <ScreenContentHeader
@@ -484,7 +517,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
         onChangeTab={(evt: any) => {
-          this.setState({ currentTab: evt.i });
+          this.setState({ currentTab: evt.i, isLongPressEnabled: false });
         }}
         initialPage={0}
         style={
@@ -649,6 +682,32 @@ const mapStateToProps = (state: GlobalState) => {
     }
   );
 
+  const localSections = selectedLocalServicesSectionsSelector(state);
+  const nationalSections = nationalServicesSectionsSelector(state);
+  const allServicesSections = notSelectedServicesSectionsSelector(state);
+
+  const getTabSevicesId = (
+    tabServices: ReadonlyArray<ServicesSectionState>
+  ) => {
+    // tslint:disable-next-line: readonly-array
+    const tabServicesId: string[] = [];
+    tabServices.forEach(section => {
+      section.data.forEach(service => {
+        if (pot.isSome(service)) {
+          tabServicesId.push(service.value.service_id);
+        }
+      });
+    });
+    return tabServicesId;
+  };
+
+  // tslint:disable-next-line: readonly-array
+  const tabsServicesId: { [k: number]: string[] } = {
+    [0]: getTabSevicesId(localSections),
+    [1]: getTabSevicesId(nationalSections),
+    [2]: getTabSevicesId(allServicesSections)
+  };
+
   return {
     selectableOrganizations,
     selectedOrganizations: organizationsOfInterestSelector(state),
@@ -658,9 +717,10 @@ const mapStateToProps = (state: GlobalState) => {
     ),
     profile: profileSelector(state),
     readServices: readServicesByIdSelector(state),
-    localSections: selectedLocalServicesSectionsSelector(state),
-    nationalSections: nationalServicesSectionsSelector(state),
-    allServicesSections: notSelectedServicesSectionsSelector(state),
+    localSections,
+    nationalSections,
+    allServicesSections,
+    tabsServicesId,
     wasServiceAlertDisplayedOnce: wasServiceAlertDisplayedOnceSelector(state),
     servicesById: servicesByIdSelector(state),
     userMetadata
@@ -672,13 +732,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(userMetadataLoad.request());
   },
   refreshServices: () => dispatch(loadVisibleServices.request()),
+  getServicesChannels: (
+    servicesId: ReadonlyArray<string>,
+    profile: ProfileState
+  ) => getChannelsforServicesList(servicesId, profile),
   disableOrEnableServices: (
-    allServicesId: ReadonlyArray<string>,
+    servicesId: ReadonlyArray<string>,
     profile: ProfileState,
     enable: boolean
   ) => {
-    const newBlockedChannels = getChannelsforServicesList(
-      allServicesId,
+    const newBlockedChannels = getProfileChannelsforServicesList(
+      servicesId,
       profile,
       enable
     );
