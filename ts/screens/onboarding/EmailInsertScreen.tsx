@@ -140,7 +140,7 @@ class EmailScreen extends React.PureComponent<Props, State> {
                 <LabelledItem
                   type={"text"}
                   label={I18n.t("onboarding.email.emailInputLabel")}
-                  icon="io-email"
+                  icon="io-envelope"
                   isValid={this.isValidEmail()}
                   inputProps={{
                     autoCapitalize: "none",
