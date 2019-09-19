@@ -121,6 +121,9 @@ class TransactionsScreen extends React.Component<Props> {
         onRefresh={() => {
           this.props.loadTransactions();
         }}
+        // The refresh control spinner is displayed only at pull-to-refresh
+        // while, during the transactions reload, it is displayed the custom transaction
+        // list spinner
         refreshing={false}
         tintColor={"transparent"}
       />

@@ -115,7 +115,7 @@ export default class AnimatedScreenContent extends React.Component<
       extrapolate: "clamp"
     });
 
-    // On iOS and if the header theme is the dark one, it is used to get
+    // On iOS, if the header theme is the dark one, it is used to get
     // a dark background at pull-to-refresh
     const dymanicOffset = this.state.scrollY.interpolate({
       inputRange: [-800, 0, 800],
