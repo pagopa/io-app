@@ -404,7 +404,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.props.showModal(
       <ChooserListContainer<Organization>
         items={selectableOrganizations}
-        initialSelectedItemIds={some(new Set(selectedOrganizations))}
+        initialSelectedItemIds={some(new Set(selectedOrganizations || []))}
         keyExtractor={(item: Organization) => item.fiscalCode}
         itemTitleExtractor={(item: Organization) => item.name}
         itemIconComponent={left((fiscalCode: string) =>
@@ -570,7 +570,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             readServices={this.props.readServices}
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
             selectedOrganizationsFiscalCodes={
-              new Set(this.props.selectedOrganizations)
+              new Set(this.props.selectedOrganizations || [])
             }
             onLongPressItem={this.handleOnLongPressItem}
             isLongPressEnabled={this.state.isLongPressEnabled}
