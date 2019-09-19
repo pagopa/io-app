@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     paddingRight: 0
   },
   icon: {
-    color: customVariables.colorWhite,
+    color: customVariables.brandPrimaryInverted,
     lineHeight: 24
   }
 });
