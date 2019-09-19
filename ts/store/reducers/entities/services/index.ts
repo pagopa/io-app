@@ -71,14 +71,11 @@ export const isLoadingServicesSelector = createSelector(
     isVisibleServicesContentLoadCompleted,
     isVisibleServicesMetadataLoadCompleted,
     visibleServices
-  ) => {
-    return (
-      pot.isLoading(visibleServices) ||
-      (pot.isSome(visibleServices) &&
-        (!isVisibleServicesContentLoadCompleted ||
-          !isVisibleServicesMetadataLoadCompleted))
-    );
-  }
+  ) =>
+    pot.isLoading(visibleServices) ||
+    (pot.isSome(visibleServices) &&
+      (!isVisibleServicesContentLoadCompleted ||
+        !isVisibleServicesMetadataLoadCompleted))
 );
 
 //
@@ -185,8 +182,6 @@ export const selectedLocalServicesSectionsSelector = createSelector(
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
     servicesMetadataSelector,
-    // TODO When https://github.com/teamdigitale/io-app/pull/1260 is merged
-    // substitute with this selector "organizationsOfInterestSelector" from UserMetadata
     organizationsOfInterestSelector
   ],
   (services, organizations, servicesMetadata, selectedOrganizations) =>
@@ -199,13 +194,14 @@ export const selectedLocalServicesSectionsSelector = createSelector(
     )
 );
 
+// A selector providing sections related to:
+// - all national services
+// - local services not included into the user areas of interest
 export const notSelectedServicesSectionsSelector = createSelector(
   [
     servicesSelector,
     organizationNamesByFiscalCodeSelector,
     servicesMetadataSelector,
-    // TODO When https://github.com/teamdigitale/io-app/pull/1260 is merged
-    // substitute with this selector "organizationsOfInterestSelector" from UserMetadata
     organizationsOfInterestSelector
   ],
   (services, organizations, servicesMetadata, selectedOrganizations) => {

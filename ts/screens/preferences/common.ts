@@ -24,25 +24,19 @@ export function getChannelsforServicesList(
   servicesId: ReadonlyArray<string>,
   profile: ProfileState
 ): BlockedInboxOrChannels {
-  const profileBlockedChannels = pot
-    .toOption(profile)
-    .mapNullable(
-      userProfile =>
-        InitializedProfile.is(userProfile)
-          ? userProfile.blocked_inbox_or_channels
-          : null
-    )
-    .getOrElse({});
+  const profileBlockedChannels = pot.getOrElse(
+    pot.mapNullable(
+      profile,
+      up => (InitializedProfile.is(up) ? up.blocked_inbox_or_channels : {})
+    ),
+    {} as BlockedInboxOrChannels
+  );
 
   return servicesId.reduce(
     (acc, serviceId) => {
-      const channels =
-        Object.keys(profileBlockedChannels).indexOf(serviceId) !== -1
-          ? profileBlockedChannels[serviceId]
-          : [];
       return {
         ...acc,
-        [serviceId]: channels
+        [serviceId]: profileBlockedChannels[serviceId] || []
       };
     },
     {} as BlockedInboxOrChannels

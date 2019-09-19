@@ -97,8 +97,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 type State = {
   currentTab: number;
-  // tslint:disable-next-line: readonly-array
-  currentTabServicesId: string[];
+  currentTabServicesId: ReadonlyArray<string>;
   enableHeaderAnimation: boolean;
   isLongPressEnabled: boolean;
   enableServices: boolean;
@@ -559,7 +558,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         >
           <ServicesSectionsList
             isLocal={true}
-            sections={this.props.localSections}
+            sections={this.props.localTabSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
             onRefresh={this.props.refreshServices}
@@ -599,7 +598,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           }
         >
           <ServicesSectionsList
-            sections={this.props.nationalSections}
+            sections={this.props.nationalTabSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
             onRefresh={this.props.refreshServices}
@@ -635,7 +634,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           }
         >
           <ServicesSectionsList
-            sections={this.props.allServicesSections}
+            sections={this.props.allTabSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoading}
             onRefresh={this.props.refreshServices}
@@ -682,30 +681,37 @@ const mapStateToProps = (state: GlobalState) => {
     }
   );
 
-  const localSections = selectedLocalServicesSectionsSelector(state);
-  const nationalSections = nationalServicesSectionsSelector(state);
-  const allServicesSections = notSelectedServicesSectionsSelector(state);
+  const localTabSections = selectedLocalServicesSectionsSelector(state);
+  const nationalTabSections = nationalServicesSectionsSelector(state);
+  const allTabSections = notSelectedServicesSectionsSelector(state);
 
   const getTabSevicesId = (
     tabServices: ReadonlyArray<ServicesSectionState>
   ) => {
-    // tslint:disable-next-line: readonly-array
-    const tabServicesId: string[] = [];
-    tabServices.forEach(section => {
-      section.data.forEach(service => {
-        if (pot.isSome(service)) {
-          tabServicesId.push(service.value.service_id);
-        }
-      });
-    });
-    return tabServicesId;
+    return tabServices.reduce(
+      (acc: ReadonlyArray<string>, curr: ServicesSectionState) => {
+        const sectionServices = curr.data.reduce(
+          (
+            acc2: ReadonlyArray<string>,
+            curr2: pot.Pot<ServicePublic, Error>
+          ) => {
+            if (pot.isSome(curr2)) {
+              return [...acc2, curr2.value.service_id];
+            }
+            return acc2;
+          },
+          []
+        );
+        return [...acc, ...sectionServices];
+      },
+      []
+    );
   };
 
-  // tslint:disable-next-line: readonly-array
-  const tabsServicesId: { [k: number]: string[] } = {
-    [0]: getTabSevicesId(localSections),
-    [1]: getTabSevicesId(nationalSections),
-    [2]: getTabSevicesId(allServicesSections)
+  const tabsServicesId: { [k: number]: ReadonlyArray<string> } = {
+    [0]: getTabSevicesId(localTabSections),
+    [1]: getTabSevicesId(nationalTabSections),
+    [2]: getTabSevicesId(allTabSections)
   };
 
   return {
@@ -717,9 +723,9 @@ const mapStateToProps = (state: GlobalState) => {
     ),
     profile: profileSelector(state),
     readServices: readServicesByIdSelector(state),
-    localSections,
-    nationalSections,
-    allServicesSections,
+    localTabSections,
+    nationalTabSections,
+    allTabSections,
     tabsServicesId,
     wasServiceAlertDisplayedOnce: wasServiceAlertDisplayedOnceSelector(state),
     servicesById: servicesByIdSelector(state),
