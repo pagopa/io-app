@@ -168,7 +168,7 @@ export const nationalServicesSectionsSelector = createSelector(
     getServices(services, organizations, servicesMetadata, ScopeEnum.NATIONAL)
 );
 
-// A selector providing sections related to national services
+// A selector providing sections related to local services
 export const localServicesSectionsSelector = createSelector(
   [
     servicesSelector,
