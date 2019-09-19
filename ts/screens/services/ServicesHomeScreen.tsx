@@ -207,9 +207,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private handleOnLongPressItem = () => {
     this.updateLongPressButtonScope();
+    const isLongPressEnabled = !this.state.isLongPressEnabled;
+    const currentTabServicesId = this.props.tabsServicesId[
+      this.state.currentTab
+    ];
     this.setState({
-      isLongPressEnabled: !this.state.isLongPressEnabled,
-      currentTabServicesId: this.props.tabsServicesId[this.state.currentTab]
+      isLongPressEnabled,
+      currentTabServicesId
     });
   };
 
