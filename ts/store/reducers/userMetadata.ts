@@ -78,7 +78,8 @@ export const organizationsOfInterestSelector = createSelector(
   userMetadataSelector,
   potUserMetadata => {
     return pot.toUndefined(
-      pot.map(potUserMetadata, _ => _.metadata.organizationsOfInterest)
+      // If the user never select areas of interest, return an empty object
+      pot.map(potUserMetadata, _ => _.metadata.organizationsOfInterest || [])
     );
   }
 );
