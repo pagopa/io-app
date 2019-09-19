@@ -1,16 +1,7 @@
 /**
  * A component to show the main screen of the Profile section
  */
-import {
-  Button,
-  H3,
-  List,
-  ListItem,
-  Switch,
-  Text,
-  Toast,
-  View
-} from "native-base";
+import { Button, H3, List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -27,6 +18,7 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import Switch from "../../components/ui/Switch";
 
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
