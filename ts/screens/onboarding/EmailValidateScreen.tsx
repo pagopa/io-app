@@ -18,7 +18,6 @@ import {
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 
 type NavigationParams = {
   biometryType: BiometrySimpleType;
