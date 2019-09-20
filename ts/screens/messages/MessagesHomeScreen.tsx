@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Tab, TabHeading, Tabs, Text } from "native-base";
+import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -73,6 +73,14 @@ const styles = StyleSheet.create({
   },
   searchDisableIcon: {
     color: customVariables.headerFontColor
+  },
+  activeTextStyle: {
+    fontFamily: "TitilliumWeb-Bold",
+    fontSize: Platform.OS === "android" ? 16 : undefined,
+    fontWeight: Platform.OS === "android" ? "normal" : "bold"
+  },
+  textStyle: {
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -213,13 +221,9 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         }
       >
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("messages.tab.inbox")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("messages.tab.inbox")}
         >
           <MessagesInbox
             messagesState={lexicallyOrderedMessagesState}
@@ -278,13 +282,9 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           />
         </Tab>
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("messages.tab.deadlines")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("messages.tab.deadlines")}
         >
           <MessagesDeadlines
             messagesState={lexicallyOrderedMessagesState}
@@ -296,13 +296,9 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         </Tab>
 
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("messages.tab.archive")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("messages.tab.archive")}
         >
           <MessagesArchive
             messagesState={lexicallyOrderedMessagesState}
