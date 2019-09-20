@@ -19,7 +19,7 @@ export function* checkAcknowledgedEmailSaga(
     // Email exists
 
     // Check if email is valid
-    // FIXME: put email validation API query here
+    // TODO: put email validation API query here
     const isValid: boolean = true;
 
     if (isValid) {
