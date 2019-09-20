@@ -95,12 +95,12 @@ class PinScreen extends React.Component<Props, State> {
   // Method called when the confirmation CodeInput is valid and cancel button is pressed
   public onPinConfirmRemoveLastDigit = () => {
     if (this.state.pinState.state === "PinConfirmed") {
-      const pinSelected: PinSelected = {
+      const pinState: PinSelected = {
         ...this.state.pinState,
         state: "PinSelected"
       };
       this.setState({
-        pinState: pinSelected
+        pinState
       });
     }
   };
