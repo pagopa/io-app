@@ -7,7 +7,7 @@ import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
   NavigationEventSubscription,
@@ -350,6 +350,17 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
     const footerContent = this.footerButton(potWallets);
 
+    const walletRefreshControl = (
+      <RefreshControl
+        onRefresh={() => {
+          this.props.loadTransactions();
+          this.props.loadWallets();
+        }}
+        refreshing={false}
+        tintColor={"transparent"} // iOS
+      />
+    );
+
     return (
       <WalletLayout
         title={I18n.t("wallet.wallet")}
@@ -357,6 +368,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         hasDynamicSubHeader={true}
         topContent={headerContent}
         footerContent={footerContent}
+        refreshControl={walletRefreshControl}
       >
         {transactionContent}
       </WalletLayout>
