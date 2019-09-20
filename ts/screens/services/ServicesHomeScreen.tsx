@@ -1,7 +1,7 @@
 import { left } from "fp-ts/lib/Either";
 import { Option, some, Some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Tab, TabHeading, Tabs, Text } from "native-base";
+import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -88,6 +88,14 @@ const styles = StyleSheet.create({
   },
   organizationLogo: {
     marginBottom: 0
+  },
+  activeTextStyle: {
+    fontFamily: "TitilliumWeb-Bold",
+    fontSize: Platform.OS === "android" ? 16 : undefined,
+    fontWeight: Platform.OS === "android" ? "normal" : "bold"
+  },
+  textStyle: {
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -250,13 +258,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         }}
       >
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("services.tab.locals")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("services.tab.locals")}
         >
           <ServicesLocal
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
@@ -303,13 +307,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           />
         </Tab>
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("services.tab.national")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("services.tab.national")}
         >
           <ServicesNational
             animated={{
@@ -352,13 +352,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           />
         </Tab>
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("services.tab.otherServices")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("services.tab.otherServices")}
         >
           <ServicesOther
             animated={{
