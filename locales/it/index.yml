@@ -309,6 +309,21 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include tos_fingerprint_not_enrolled.md
+  email:
+    validation:
+      title: Ricorda di validare il tuo indirizzo email
+      headerTitle: Validazione email
+      info: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
+        clicca semplicemente su quel link.
+        Finché non validaerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
+        inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
+        usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
+      ctaValidate: Invia una nuova email di validazione
+      emailSentFeedback: Invia una nuova email di validazione
+      help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
+        indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
+        tuo provider di servizi SPID.
+    ctaEdit: Modifica email
 pin_login:
   pin:
     pinInfo: Inserisci il PIN

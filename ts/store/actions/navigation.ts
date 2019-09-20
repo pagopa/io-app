@@ -76,6 +76,14 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
+export const navigateToEmailValidationScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING,
+    action: NavigationActions.navigate({
+      routeName: ROUTES.ONBOARDING_VALIDATE_EMAIL
+    })
+  });
+
 export const navigateBack = NavigationActions.back;
 
 export const navigateToMessageDetailScreenAction = (
