@@ -280,6 +280,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <Image
           source={require("../../../img/services/icon-loading-services.png")}
         />
+        <View spacer={true} extralarge={true} />
         <Text bold={true}>{I18n.t("services.loading.title")}</Text>
         <Text>{I18n.t("services.loading.subtitle")}</Text>
       </View>
