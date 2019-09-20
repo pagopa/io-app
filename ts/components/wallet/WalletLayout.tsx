@@ -11,7 +11,12 @@
 import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import {
+  RefreshControlProps,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 import customVariables from "../../theme/variables";
 import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
@@ -26,6 +31,7 @@ type Props = Readonly<{
   hideHeader?: boolean;
   footerContent?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
+  refreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
 
 const styles = StyleSheet.create({
@@ -110,6 +116,7 @@ export default class WalletLayout extends React.Component<Props> {
           title: I18n.t("wallet.wallet"),
           body: () => <Markdown>{I18n.t("wallet.walletHelp")}</Markdown>
         }}
+        contentRefreshControl={this.props.refreshControl}
       >
         {this.props.children}
       </DarkLayout>

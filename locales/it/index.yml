@@ -381,7 +381,7 @@ wallet:
   delete:
     successful: Carta cancellata correttamente
     failed: Impossibile cancellare la carta
-    alert: 'Attenzione: il metodo di pagamento è stato rimosso dal portafoglio'
+    alert: 'Il metodo di pagamento usato per la transazione non è più presente nel portafoglio'
   newPaymentMethod:
     add: aggiungi
     addButton: Aggiungi un metodo
@@ -712,6 +712,11 @@ services:
     locals: Locali
     national: Nazionali
     otherServices: Altri servizi
+  enableAll: Attiva tutti
+  disableAll: Disattiva tutti
+  disableAllTitle: Vuoi davvero disattivare tutti i servizi?
+  disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finchè non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
+  close: Chiudi
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
