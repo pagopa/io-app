@@ -4,8 +4,11 @@ import { Image, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   emptyListWrapper: {
-    alignItems: "center",
-    marginTop: 74
+    flexDirection: "row",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginTop: 40,
+    marginBottom: 40
   }
 });
 
