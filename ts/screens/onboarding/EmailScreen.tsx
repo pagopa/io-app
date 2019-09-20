@@ -2,14 +2,14 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { NavigationScreenProps } from "react-navigation";
 import { Alert, StyleSheet } from "react-native";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import IconFont from "../../components/ui/IconFont";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";

@@ -59,8 +59,8 @@ import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
-import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
+import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadServiceRequestHandler } from "./startup/loadServiceRequestHandler";
@@ -230,9 +230,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
     storedPin = yield call(checkConfiguredPinSaga);
     yield call(checkAcknowledgedFingerprintSaga);
-    if (isEmailEditingAndValidationEnabled)
+    if (isEmailEditingAndValidationEnabled) {
       yield call(checkAcknowledgedEmailSaga, userProfile);
-
+    }
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
   } else {
