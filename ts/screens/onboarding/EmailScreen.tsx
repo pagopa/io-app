@@ -44,8 +44,7 @@ const styles = StyleSheet.create({
     fontWeight: customVariables.h1FontWeight,
     color: customVariables.h1Color,
     fontSize: 18,
-    marginLeft: 8,
-    marginTop: -10 // correct vertical alignment with icon
+    marginLeft: 8
   }
 });
 
@@ -103,10 +102,10 @@ export class FingerprintScreen extends React.PureComponent<Props> {
             <View style={styles.spacerSmall} />
             <View style={styles.emailWithIcon}>
               <IconFont
-                name="io-email"
+                name="io-envelope"
                 accessible={true}
                 accessibilityLabel={I18n.t("onboarding.email.title")}
-                size={36}
+                size={18}
               />
               <Text style={styles.email}>{profileData.spid_email}</Text>
             </View>
