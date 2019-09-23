@@ -86,7 +86,7 @@ export const navigateToMessageDetailScreenAction = (
     params
   });
 
-export const navigateToOldServiceDetailsScreen = (
+export const navigateToServiceDetailsScreen = (
   params: InferNavigationParams<typeof OldServiceDetailsScreen>
 ) =>
   NavigationActions.navigate({
