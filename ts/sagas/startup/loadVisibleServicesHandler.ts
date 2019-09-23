@@ -65,7 +65,7 @@ export function* loadVisibleServicesRequestHandler(
       );
 
       // Create an array of tuples containing:
-      // - serviceId (to remove service from the servicesById section of the redux store)
+      // - serviceId (to remove service from both the servicesById and the servicesMetadataById sections of the redux store)
       // - organizationFiscalCode (to remove service from serviceIdsByOrganizationFiscalCode
       //   section of the redux store)
       const serviceTuplesToRemove = Object.keys(storedServicesById).reduce<
