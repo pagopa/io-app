@@ -115,7 +115,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     // When a service gets selected, before navigating to the service detail
     // screen, we issue a contentServiceLoad to refresh the service metadata
     this.props.contentServiceLoad(service.service_id);
-    this.props.navigateToOldServiceDetailsScreen({
+    this.props.navigateToServiceDetailsScreen({
       service
     });
   };
@@ -324,7 +324,7 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
       dispatch(loadMessageWithRelations.request(meta)),
     setMessageReadState: (isRead: boolean) =>
       dispatch(setMessageReadState(messageId, isRead)),
-    navigateToOldServiceDetailsScreen: (
+    navigateToServiceDetailsScreen: (
       params: InferNavigationParams<typeof ServiceDetailsScreen>
     ) => dispatch(navigateToServiceDetailsScreen(params))
   };
