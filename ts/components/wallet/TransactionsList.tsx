@@ -177,7 +177,9 @@ export default class TransactionsList extends React.Component<Props> {
           renderItem={this.renderTransaction}
           ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
           keyExtractor={item => item.id.toString()}
-          ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
+          ListFooterComponent={
+            transactions.length > 0 && <EdgeBorderComponent />
+          }
         />
       </Content>
     );
