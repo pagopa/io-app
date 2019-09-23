@@ -23,6 +23,7 @@ import Switch from "../../components/ui/Switch";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
@@ -55,7 +56,6 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
