@@ -9,6 +9,7 @@ import {
   Animated,
   LayoutChangeEvent,
   Platform,
+  RefreshControlProps,
   StyleProp,
   StyleSheet,
   ViewStyle
@@ -26,6 +27,7 @@ type OwnProps = Readonly<{
   animationOffset: number;
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
+  contentRefreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
 
 type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
@@ -54,6 +56,15 @@ const styles = StyleSheet.create({
 
   level2: {
     zIndex: -2
+  },
+
+  animatedDarkItem: {
+    backgroundColor: customVariables.brandDarkGray,
+    position: "absolute",
+    width: "100%",
+    zIndex: -5,
+    height: 1000,
+    marginTop: -800
   }
 });
 
@@ -104,17 +115,33 @@ export default class AnimatedScreenContent extends React.Component<
       extrapolate: "clamp"
     });
 
+    // On iOS, if the header theme is the dark one, it is used to get
+    // a dark background at pull-to-refresh
+    const dymanicOffset = this.state.scrollY.interpolate({
+      inputRange: [-800, 0, 800],
+      outputRange: [800, 0, -800]
+    });
+
     return (
       <React.Fragment>
+        {Platform.OS === "ios" &&
+          this.props.dark && (
+            <Animated.View
+              style={[
+                styles.animatedDarkItem,
+                { transform: [{ translateY: dymanicOffset }] }
+              ]}
+            />
+          )}
         <Animated.ScrollView
           style={[styles.level2, contentStyle]}
-          bounces={false}
           ref={this.scrollableContentRef}
           scrollEventThrottle={16}
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
             { useNativeDriver: true }
           )}
+          refreshControl={this.props.contentRefreshControl}
         >
           <NavigationEvents onWillFocus={this.scrollToTop} />
 
@@ -125,7 +152,6 @@ export default class AnimatedScreenContent extends React.Component<
               dark={this.props.dark}
             />
           )}
-
           {this.props.children}
         </Animated.ScrollView>
 
