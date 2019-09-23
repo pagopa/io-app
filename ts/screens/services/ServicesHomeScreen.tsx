@@ -17,7 +17,14 @@ import {
   View
 } from "native-base";
 import * as React from "react";
-import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
+import {
+  Alert,
+  Animated,
+  Image,
+  Platform,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import {
   NavigationEvents,
@@ -34,6 +41,7 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import OrganizationLogo from "../../components/services/OrganizationLogo";
 import ServicesSectionsList from "../../components/services/ServicesSectionsList";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -511,6 +519,23 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   }
 
+  private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => {
+    const onPressItem = () => {
+      if (this.props.userMetadata && this.props.selectedOrganizations) {
+        this.props.removeSelectedOrgnizationItem(
+          this.props.userMetadata,
+          this.props.selectedOrganizations,
+          section.organizationFiscalCode
+        );
+      }
+    };
+    return (
+      <TouchableOpacity onPress={onPressItem}>
+        <IconFont name={"io-trash"} color={"#C7D1D9"} size={17} />
+      </TouchableOpacity>
+    );
+  };
+
   /**
    * Render Locals, Nationals and Other services tabs.
    */
@@ -591,6 +616,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               ),
               scrollEventThrottle: 8 // target is 120fps
             }}
+            renderRightIcon={this.renderLocalQuickSectionDeletion}
           />
         </Tab>
         <Tab
@@ -776,6 +802,27 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         metadata: {
           ...metadata,
           organizationsOfInterest: Array.from(selectedItemIds.value)
+        }
+      })
+    );
+  },
+  removeSelectedOrgnizationItem: (
+    userMetadata: UserMetadata,
+    selectedOrganizations: ReadonlyArray<string>,
+    selectedOrganizationId: string
+  ) => {
+    const metadata = userMetadata.metadata;
+    const updatedAreasOfInterest = selectedOrganizations.filter(
+      item => item !== selectedOrganizationId
+    );
+    dispatch(
+      userMetadataUpsert.request({
+        ...userMetadata,
+        // tslint:disable-next-line: no-useless-cast
+        version: (userMetadata.version as number) + 1,
+        metadata: {
+          ...metadata,
+          organizationsOfInterest: updatedAreasOfInterest
         }
       })
     );

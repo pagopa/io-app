@@ -7,6 +7,7 @@ import React, { ComponentProps } from "react";
 import { Image, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ServicesSectionState } from "../../store/reducers/entities/services";
 import customVariables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
 import ServiceList from "./ServiceList";
@@ -26,6 +27,7 @@ type OwnProps = {
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
   onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
+  renderRightIcon?: (section: ServicesSectionState) => React.ReactNode;
 };
 
 type Props = AnimatedProps &
@@ -112,28 +114,22 @@ class ServicesSectionsList extends React.PureComponent<Props> {
   };
 
   private renderList = () => {
-    const {
-      animated,
-      profile,
-      sections,
-      isRefreshing,
-      onRefresh,
-      onSelect,
-      readServices
-    } = this.props;
     return (
       <ServiceList
-        animated={animated}
-        sections={sections}
-        profile={profile}
-        isRefreshing={isRefreshing}
-        onRefresh={onRefresh}
-        onSelect={onSelect}
-        readServices={readServices}
-        ListEmptyComponent={this.localListEmptyComponent()}
+        animated={this.props.animated}
+        sections={this.props.sections}
+        profile={this.props.profile}
+        isRefreshing={this.props.isRefreshing}
+        onRefresh={this.props.onRefresh}
+        onSelect={this.props.onSelect}
+        readServices={this.props.readServices}
+        ListEmptyComponent={
+          this.props.isLocal ? this.localListEmptyComponent() : undefined
+        }
         onLongPressItem={this.props.onLongPressItem}
         isLongPressEnabled={this.props.isLongPressEnabled}
         onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
+        renderRightIcon={this.props.renderRightIcon}
       />
     );
   };

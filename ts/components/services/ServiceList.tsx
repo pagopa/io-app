@@ -44,6 +44,7 @@ type OwnProps = {
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
   onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
+  renderRightIcon?: (selectedOrgId: ServicesSectionState) => React.ReactNode;
 };
 
 type Props = OwnProps & AnimatedProps;
@@ -99,6 +100,9 @@ class ServiceList extends React.Component<Props> {
       sectionHeader={info.section.organizationName}
       style={styles.padded}
       logoUri={getLogoForOrganization(info.section.organizationFiscalCode)}
+      rightItem={
+        this.props.renderRightIcon && this.props.renderRightIcon(info.section)
+      }
     />
   );
 
