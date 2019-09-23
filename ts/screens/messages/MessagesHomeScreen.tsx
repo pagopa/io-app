@@ -4,7 +4,10 @@ import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 
-import { NavigationScreenProps } from "react-navigation";
+import {
+  NavigationEventSubscription,
+  NavigationScreenProps
+} from "react-navigation";
 import { connect } from "react-redux";
 import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
@@ -20,16 +23,21 @@ import {
   setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
+import { loadService } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
-import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import {
+  servicesByIdSelector,
+  ServicesByIdState
+} from "../../store/reducers/entities/services/servicesById";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -77,6 +85,7 @@ const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
  * A screen that contains all the Tabs related to messages.
  */
 class MessagesHomeScreen extends React.Component<Props, State> {
+  private navListener?: NavigationEventSubscription;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -94,8 +103,27 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   // tslint:disable-next-line: readonly-array
   private scollPositions: number[] = [0, 0, 0];
 
+  private onRefreshMessages = () => {
+    this.props.refreshMessages(
+      this.props.lexicallyOrderedMessagesState,
+      this.props.servicesById
+    );
+  };
+
   public componentDidMount() {
-    this.props.refreshMessages();
+    this.onRefreshMessages();
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      setStatusBarColorAndBackground(
+        "dark-content",
+        customVariables.colorWhite
+      );
+    }); // tslint:disable-line no-object-mutation
+  }
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
+    }
   }
 
   public componentDidUpdate(prevprops: Props, prevstate: State) {
@@ -153,7 +181,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
-      refreshMessages,
       navigateToMessageDetail,
       updateMessagesArchivedState
     } = this.props;
@@ -208,7 +235,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
-            onRefresh={refreshMessages}
+            onRefresh={this.onRefreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
             animated={
@@ -291,7 +318,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
-            onRefresh={refreshMessages}
+            onRefresh={this.onRefreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
             animated={
@@ -353,7 +380,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
-      refreshMessages,
       navigateToMessageDetail
     } = this.props;
 
@@ -367,7 +393,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
               paymentsByRptId={paymentsByRptId}
-              onRefresh={refreshMessages}
+              onRefresh={this.onRefreshMessages}
               navigateToMessageDetail={navigateToMessageDetail}
               searchText={_}
             />
@@ -386,8 +412,24 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshMessages: () => {
+  refreshMessages: (
+    lexicallyOrderedMessagesState: ReturnType<
+      typeof lexicallyOrderedMessagesStateSelector
+    >,
+    servicesById: ServicesByIdState
+  ) => {
     dispatch(loadMessages.request());
+    // Refresh services related to messages received by the user
+    if (pot.isSome(lexicallyOrderedMessagesState)) {
+      lexicallyOrderedMessagesState.value.forEach(item => {
+        if (servicesById[item.meta.sender_service_id] === undefined) {
+          dispatch(loadService.request(item.meta.sender_service_id));
+        }
+      });
+    }
+  },
+  refreshService: (serviceId: string) => {
+    dispatch(loadService.request(serviceId));
   },
   navigateToMessageDetail: (messageId: string) =>
     dispatch(navigateToMessageDetailScreenAction({ messageId })),

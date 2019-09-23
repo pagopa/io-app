@@ -141,13 +141,15 @@ profile:
       confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
       bannerMessage: You are using experimental features that may be incomplete or unstable.
     pagoPaEnvironment:
+      pagoPaEnv: PagoPA Test Environment
+      pagoPAEnvAlert: This change requires app reboot
+      alertConfirmTitle: Do you want to use the pagoPA test environment?
+      alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
       alertMessage: The application must be restarted for the changes to take effect.
     accountSectionHeader: Account
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
-    pagoPaEnv: PagoPA Test Environment
-    pagoPAEnvAlert: This change requires app reboot
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
@@ -360,7 +362,7 @@ wallet:
   delete:
     successful: Card successfully deleted
     failed: The card could not be deleted
-    alert: 'Warning: the payment method had been removed from wallet'
+    alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add
     addButton: Add a new method
@@ -686,7 +688,15 @@ services:
   tab:
     locals: Local
     national: National
-    otherServices: Other services
+    all: All
+  loading:
+    title: Loading the services list
+    subtitle: wait few seconds..
+  enableAll: Enable all
+  disableAll: Disable all
+  disableAllTitle: "Do you really want to disable all the services?"
+  disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
+  close: Close
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."

@@ -21,6 +21,7 @@ import {
 } from "../../store/actions/userMetadata";
 import {
   backendUserMetadataToUserMetadata,
+  emptyUserMetadata,
   UserMetadata,
   userMetadataSelector,
   userMetadataToBackendUserMetadata
@@ -45,6 +46,11 @@ export function* fetchUserMetadata(
     }
 
     if (response.value.status !== 200) {
+      if (response.value.status === 204) {
+        // Return an empty object cause profile has no metadata yet (204 === No Content)
+        return right(emptyUserMetadata);
+      }
+
       const error =
         response.value.status === 500 ? response.value.value.title : undefined;
       // Return the error
@@ -83,6 +89,7 @@ export function* loadUserMetadata(
   const userMetadataOrError = backendUserMetadataToUserMetadata(
     backendUserMetadata
   );
+
   if (userMetadataOrError.isLeft()) {
     yield put(userMetadataLoad.failure(userMetadataOrError.value));
     return none;
@@ -100,9 +107,18 @@ export function* watchLoadUserMetadata(
 ) {
   yield takeLatest(
     getType(userMetadataLoad.request),
-    loadUserMetadata,
+    loadUserMetadataManager,
     getUserMetadata
   );
+}
+
+/**
+ * Call loadUserMetadata saga.
+ */
+export function* loadUserMetadataManager(
+  getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"]
+) {
+  yield fork(loadUserMetadata, getUserMetadata);
 }
 
 /**

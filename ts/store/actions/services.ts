@@ -10,7 +10,18 @@ import {
 } from "typesafe-actions";
 
 import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+
+//
+// service loading at startup
+//
+
+export const firstServicesLoad = createAsyncAction(
+  "FIRST_SERVICES_LOAD_REQUEST",
+  "FIRST_SERVICES_LOAD_SUCCESS",
+  "FIRT_SERVICES_LOAD_FAILURE"
+)<void, void, ReadonlyArray<ServiceId>>();
 
 //
 // load visible services
@@ -33,6 +44,14 @@ export const loadService = createAsyncAction(
 )<string, ServicePublic, string>();
 
 //
+//  mark service as read
+//
+
+export const markServiceAsRead = createStandardAction("MARK_SERVICE_AS_READ")<
+  ServiceId
+>();
+
+//
 // show service detail
 //
 
@@ -46,7 +65,9 @@ export const removeServiceTuples = createStandardAction(
 )<ReadonlyArray<ITuple2<string, string | undefined>>>();
 
 export type ServicesActions =
+  | ActionType<typeof firstServicesLoad>
   | ActionType<typeof loadVisibleServices>
   | ActionType<typeof loadService>
+  | ActionType<typeof markServiceAsRead>
   | ActionType<typeof removeServiceTuples>
   | ActionType<typeof showServiceDetails>;

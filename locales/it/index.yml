@@ -144,13 +144,15 @@ profile:
       confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
       bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     pagoPaEnvironment:
+      pagoPaEnv: Ambiente PagoPA di Test
+      pagoPAEnvAlert: La modifica richiede il riavvio dell'app
+      alertConfirmTitle: Vuoi usare l'ambiente di test pagoPA?
+      alertConfirmMessage: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
       alertMessage: È necessario il riavvio dell'applicazione affinchè le modifiche abbiano effetto.
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
-    pagoPaEnv: Ambiente PagoPA di Test
-    pagoPAEnvAlert: La modifica richiede il reboot dell'app
   preferences:
     title: Preferenze
     subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
@@ -367,7 +369,7 @@ wallet:
   delete:
     successful: Carta cancellata correttamente
     failed: Impossibile cancellare la carta
-    alert: 'Attenzione: il metodo di pagamento è stato rimosso dal portafoglio'
+    alert: 'Il metodo di pagamento usato per la transazione non è più presente nel portafoglio'
   newPaymentMethod:
     add: aggiungi
     addButton: Aggiungi un metodo
@@ -697,7 +699,15 @@ services:
   tab:
     locals: Locali
     national: Nazionali
-    otherServices: Altri servizi
+    all: Tutti
+  loading:
+    title: Sto caricando l'elenco dei servizi
+    subtitle: attendi qualche secondo..  
+  enableAll: Attiva tutti
+  disableAll: Disattiva tutti
+  disableAllTitle: Vuoi davvero disattivare tutti i servizi?
+  disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finchè non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
+  close: Chiudi
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."

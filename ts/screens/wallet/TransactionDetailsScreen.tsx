@@ -8,8 +8,6 @@
  *      - currency symbol
  *      - sum of amounts
  *      @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
- * TODO: insert contextual help to the Text link related to the fee
- *      @https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -19,13 +17,13 @@ import { Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import {
-  ContextualHelpInjectedProps,
-  withContextualHelp
-} from "../../components/helpers/withContextualHelp";
+
+import { ContextualHelp } from "../../components/ContextualHelp";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Logo from "../../components/wallet/card/Logo";
 import { RotatedCards } from "../../components/wallet/card/RotatedCards";
@@ -52,8 +50,8 @@ type OwnProps = NavigationInjectedProps<NavigationParams>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  OwnProps &
-  ContextualHelpInjectedProps;
+  LightModalContextInterface &
+  OwnProps;
 
 /**
  * isTransactionStarted will be true when the user accepted to proceed with a transaction
@@ -211,6 +209,16 @@ class TransactionDetailsScreen extends React.Component<Props> {
     }
   };
 
+  private showHelp = () => {
+    this.props.showModal(
+      <ContextualHelp
+        onClose={this.props.hideModal}
+        title={I18n.t("wallet.whyAFee.title")}
+        body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
+      />
+    );
+  };
+
   public render(): React.ReactNode {
     const { psp } = this.props;
     const transaction = this.props.navigation.getParam("transaction");
@@ -282,7 +290,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
                   note={true}
                   bold={true}
                   style={styles.whyLink}
-                  onPress={this.props.showHelp}
+                  onPress={this.showHelp}
                 >
                   {I18n.t("wallet.why")}
                 </Text>
@@ -354,10 +362,4 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(
-  withContextualHelp(
-    withLoadingSpinner(TransactionDetailsScreen),
-    I18n.t("wallet.whyAFee.title"),
-    () => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>
-  )
-);
+)(withLightModalContext(withLoadingSpinner(TransactionDetailsScreen)));

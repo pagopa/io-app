@@ -465,7 +465,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               renderInformationRow("ID", service.service_id, () =>
                 Clipboard.setString(service.service_id)
               )}
-            <View spacer={true} large={true} />
+            <View spacer={true} extralarge={true} />
           </Grid>
         </Content>
       </BaseScreenComponent>

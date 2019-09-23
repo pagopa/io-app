@@ -1,16 +1,7 @@
 /**
  * A component to show the main screen of the Profile section
  */
-import {
-  Button,
-  H3,
-  List,
-  ListItem,
-  Switch,
-  Text,
-  Toast,
-  View
-} from "native-base";
+import { Button, H3, List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -22,14 +13,17 @@ import {
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
+  NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import Switch from "../../components/ui/Switch";
 
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
@@ -61,6 +55,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -110,6 +105,23 @@ const getAppLongVersion = () => {
 };
 
 class ProfileMainScreen extends React.PureComponent<Props> {
+  private navListener?: NavigationEventSubscription;
+
+  public componentDidMount() {
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      setStatusBarColorAndBackground(
+        "light-content",
+        customVariables.brandDarkGray
+      );
+    }); // tslint:disable-line no-object-mutation
+  }
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
+    }
+  }
+
   private handleClearCachePress = () => {
     this.props.clearCache();
     Toast.show({ text: "The cache has been cleared." });
@@ -176,13 +188,39 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     );
   };
 
-  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
-    this.props.setPagoPATestEnabled(enabled);
+  private showModal() {
     this.props.showModal(
       <AlertModal
         message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
       />
     );
+  }
+
+  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
+    if (enabled) {
+      Alert.alert(
+        I18n.t("profile.main.pagoPaEnvironment.alertConfirmTitle"),
+        I18n.t("profile.main.pagoPaEnvironment.alertConfirmMessage"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.confirm"),
+            style: "destructive",
+            onPress: () => {
+              this.props.setPagoPATestEnabled(enabled);
+              this.showModal();
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this.props.setPagoPATestEnabled(enabled);
+      this.showModal();
+    }
   };
 
   /**
@@ -313,10 +351,10 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             }
 
             {this.developerListItem(
-              I18n.t("profile.main.pagoPaEnv"),
+              I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
               this.props.isPagoPATestEnabled,
               this.onPagoPAEnvironmentToggle,
-              I18n.t("profile.main.pagoPAEnvAlert")
+              I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
             )}
 
             {this.developerListItem(
@@ -379,6 +417,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   this.props.dispatchSessionExpired,
                   true
                 )}
+                {/* end list */}
+                <EdgeBorderComponent />
               </React.Fragment>
             )}
           </List>

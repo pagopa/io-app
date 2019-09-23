@@ -33,7 +33,7 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 5;
+const CURRENT_REDUX_STORE_VERSION = 7;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -113,7 +113,41 @@ const migrations: MigrationManifest = {
       isFingerprintAcknowledged: (state as PersistedGlobalState).onboarding
         .isFingerprintAcknowledged
     }
-  })
+  }),
+
+  // Version 6
+  // we removed selectedFiscalCodes from organizations
+  "6": (state: PersistedState) => {
+    const entitiesState = (state as PersistedGlobalState).entities;
+    const organizations = entitiesState.organizations;
+    return {
+      ...state,
+      entities: {
+        ...(entitiesState ? entitiesState : {}),
+        organizations: {
+          nameByFiscalCode: organizations.nameByFiscalCode
+            ? organizations.nameByFiscalCode
+            : {},
+          all: organizations.all ? organizations.all : {}
+        }
+      }
+    };
+  },
+
+  // Version 7
+  // we empty the services list to get both services list and services metadata being reloaded and persisted
+  "7": (state: PersistedState) => {
+    return {
+      ...state,
+      entities: {
+        ...(state as any).entities,
+        services: {
+          ...(state as any).entities.services,
+          byId: {}
+        }
+      }
+    };
+  }
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
@@ -133,7 +167,8 @@ const rootPersistConfig: PersistConfig = {
     "debug",
     "persistedPreferences",
     "installation",
-    "payments"
+    "payments",
+    "content"
   ],
   // Transform functions used to manipulate state on store/rehydrate
   transforms: [DateISO8601Transform, PotTransform]
