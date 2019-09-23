@@ -141,7 +141,7 @@
     "rn-nodeify": "^10.0.1",
     "ts-jest": "24.0.1",
     "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
+    "tslint": "5.20.0",
     "typescript": "3.4.1"
   },
   "resolutions": {
