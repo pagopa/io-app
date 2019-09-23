@@ -55,6 +55,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -416,6 +417,8 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   this.props.dispatchSessionExpired,
                   true
                 )}
+                {/* end list */}
+                <EdgeBorderComponent />
               </React.Fragment>
             )}
           </List>

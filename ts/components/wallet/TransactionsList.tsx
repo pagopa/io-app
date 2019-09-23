@@ -178,6 +178,7 @@ export default class TransactionsList extends React.Component<Props> {
           ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
           keyExtractor={item => item.id.toString()}
         />
+        <EdgeBorderComponent />
       </Content>
     );
   }

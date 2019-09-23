@@ -23,6 +23,7 @@ import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
 import NewServiceListItem from "./NewServiceListItem";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 
 type AnimatedProps = {
   animated?: {
@@ -145,6 +146,7 @@ class ServiceList extends React.Component<Props> {
         refreshControl={refreshControl}
         ItemSeparatorComponent={ItemSeparatorComponent}
         ListEmptyComponent={ListEmptyComponent}
+        ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
       />
     );
   }

@@ -16,6 +16,7 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
 import NewServiceListItem from "./NewServiceListItem";
 
@@ -124,6 +125,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
         alwaysBounceVertical={false}
         refreshControl={refreshControl}
         ItemSeparatorComponent={ItemSeparatorComponent}
+        ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
       />
     );
   }

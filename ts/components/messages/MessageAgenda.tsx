@@ -434,7 +434,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             styles.scrollList
           ]}
           scrollEventThrottle={8}
-          ListFooterComponent={sections.length !== 0 && <EdgeBorderComponent />}
+          ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
         />
       </View>
     );
