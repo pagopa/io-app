@@ -353,7 +353,7 @@ class MessageList extends React.Component<Props, State> {
           onScroll={animated ? animated.onScroll : undefined}
           onLayout={this.handleOnLayoutChange}
           ListFooterComponent={
-            messageStates.length !== 0 && <EdgeBorderComponent />
+            messageStates.length > 0 && <EdgeBorderComponent />
           }
         />
       </React.Fragment>
