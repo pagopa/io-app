@@ -12,7 +12,8 @@ import {
   logoutSuccess,
   sessionExpired,
   sessionInformationLoadSuccess,
-  sessionInvalid
+  sessionInvalid,
+  logoutFailure
 } from "../actions/authentication";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -174,7 +175,8 @@ const reducer = (
   if (
     (isActionOf(sessionExpired, action) ||
       isActionOf(sessionInvalid, action) ||
-      isActionOf(logoutSuccess, action)) &&
+      isActionOf(logoutSuccess, action) ||
+      isActionOf(logoutFailure, action)) &&
     isLoggedIn(state)
   ) {
     return {
