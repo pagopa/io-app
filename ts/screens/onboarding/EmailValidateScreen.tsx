@@ -57,15 +57,11 @@ export class FingerprintScreen extends React.PureComponent<Props> {
     );
 
   public render() {
-    const { potProfile } = this.props;
+    const { optionProfile } = this.props;
 
-    const profileData = potProfile
-      .map(_ => ({
-        spid_email: untag(_.spid_email)
-      }))
-      .getOrElse({
-        spid_email: ""
-      });
+    const profileEmail = optionProfile
+      .map(_ => untag(_.spid_email))
+      .getOrElse("");
 
     return (
       <TopScreenComponent
@@ -83,7 +79,7 @@ export class FingerprintScreen extends React.PureComponent<Props> {
           <View content={true}>
             <Markdown>
               {I18n.t("onboarding.email.validation.info", {
-                email: profileData.spid_email
+                email: profileEmail
               })}
             </Markdown>
             <View style={styles.spacerLarge} />
@@ -120,7 +116,7 @@ export class FingerprintScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  potProfile: pot.toOption(state.profile)
+  optionProfile: pot.toOption(state.profile)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
