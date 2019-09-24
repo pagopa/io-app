@@ -46,7 +46,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
-import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
+import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import {
@@ -87,7 +87,7 @@ import {
   getChannelsforServicesList,
   getProfileChannelsforServicesList
 } from "../preferences/common";
-import OldServiceDetailsScreen from "../preferences/OldServiceDetailsScreen";
+import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
 
@@ -322,7 +322,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.props.contentServiceLoad(service.service_id);
     this.props.serviceDetailsLoad(service);
 
-    this.props.navigateToOldServiceDetailsScreen({
+    this.props.navigateToServiceDetailsScreen({
       service
     });
   };
@@ -836,9 +836,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   contentServiceLoad: (serviceId: ServiceId) =>
     dispatch(contentServiceLoad.request(serviceId)),
-  navigateToOldServiceDetailsScreen: (
-    params: InferNavigationParams<typeof OldServiceDetailsScreen>
-  ) => dispatch(navigateToOldServiceDetailsScreen(params)),
+  navigateToServiceDetailsScreen: (
+    params: InferNavigationParams<typeof ServiceDetailsScreen>
+  ) => dispatch(navigateToServiceDetailsScreen(params)),
   serviceDetailsLoad: (service: ServicePublic) =>
     dispatch(showServiceDetails(service))
 });
