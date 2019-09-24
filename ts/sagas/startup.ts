@@ -240,7 +240,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     yield call(checkAcknowledgedFingerprintSaga);
 
     if (isEmailEditingAndValidationEnabled) {
-      yield call(checkAcknowledgedEmailSaga, userProfile);
+      yield call(checkAcknowledgedEmailSaga);
     }
 
     // Stop the watchAbortOnboardingSaga

@@ -1,6 +1,5 @@
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
-import { UserProfileUnion } from "../../api/backend";
 import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import { emailInsert } from "../../store/actions/onboarding";
 
@@ -13,11 +12,12 @@ import { emailInsert } from "../../store/actions/onboarding";
  *
  * If user doesn't have an email must specify a valid email.s
  */
-export function* checkAcknowledgedEmailSaga(
-  userProfile: UserProfileUnion
-): IterableIterator<Effect> {
+export function* checkAcknowledgedEmailSaga(): IterableIterator<Effect> {
   // Check if user profile has email
-  if (userProfile.spid_email && userProfile.spid_email !== "") {
+  // TODO: put email existence check here
+  const emailExists: boolean = false;
+
+  if (emailExists) {
     // Email exists
     // TODO: 168246944 implements this logic.
   } else {
