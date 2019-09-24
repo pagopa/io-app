@@ -3,7 +3,6 @@ import { untag } from "italia-ts-commons/lib/types";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -11,7 +10,6 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   abortOnboarding,
   emailAcknowledged
@@ -19,13 +17,7 @@ import {
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 
-type NavigationParams = {
-  biometryType: BiometrySimpleType;
-};
-
-type OwnProps = ReduxProps &
-  ReturnType<typeof mapStateToProps> &
-  NavigationScreenProps<NavigationParams>;
+type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
@@ -38,7 +30,7 @@ const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
 /**
  * A screen to show if the fingerprint is supported to the user.
  */
-export class FingerprintScreen extends React.PureComponent<Props> {
+export class EmailValidateScreen extends React.PureComponent<Props> {
   private handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),
@@ -127,4 +119,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FingerprintScreen);
+)(EmailValidateScreen);
