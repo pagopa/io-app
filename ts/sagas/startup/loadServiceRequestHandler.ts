@@ -2,6 +2,7 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
+import { contentServiceLoad } from "../../store/actions/content";
 import { loadService } from "../../store/actions/services";
 import { SagaCallReturnType } from "../../types/utils";
 
@@ -28,6 +29,11 @@ export function* loadServiceRequestHandler(
 
     if (response.value.status === 200) {
       yield put(loadService.success(response.value.value));
+
+      // Once the service content is loaded, the service metadata loading is requested.
+      // Service metadata contains service scope (national/local) used to identify where
+      // the service should be displayed into the ServiceHomeScreen
+      yield put(contentServiceLoad.request(response.value.value.service_id));
     } else {
       throw Error();
     }

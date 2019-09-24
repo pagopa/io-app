@@ -4,9 +4,14 @@
  */
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Left, Right, Text, View } from "native-base";
+import { Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  RefreshControl,
+  StyleSheet
+} from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -24,6 +29,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import {
   deleteWalletRequest,
+  fetchWalletsRequest,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
@@ -101,6 +107,15 @@ class WalletsScreen extends React.Component<Props> {
 
   public render(): React.ReactNode {
     const { favoriteWallet } = this.props;
+    const walletsRefreshControl = (
+      <RefreshControl
+        onRefresh={() => {
+          this.props.loadWallets();
+        }}
+        refreshing={false}
+        tintColor={"transparent"}
+      />
+    );
 
     return (
       <WalletLayout
@@ -110,16 +125,17 @@ class WalletsScreen extends React.Component<Props> {
         hideHeader={true}
         contentStyle={styles.brandDarkGrayBg}
         hasDynamicSubHeader={false}
+        refreshControl={walletsRefreshControl}
       >
-        <Content style={[styles.padded, styles.brandDarkGrayBg]}>
+        <View style={styles.padded}>
           <FlatList
             removeClippedSubviews={false}
-            data={this.props.wallets as any[]} // tslint:disable-line
+            data={this.props.wallets}
             renderItem={this.renderWallet}
             keyExtractor={(item, index) => `wallet-${item.idWallet}-${index}`}
             extraData={{ favoriteWallet }}
           />
-        </Content>
+        </View>
       </WalletLayout>
     );
   }
@@ -135,6 +151,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadWallets: () => dispatch(fetchWalletsRequest()),
   navigateToWalletTransactionsScreen: (selectedWallet: Wallet) =>
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   setFavoriteWallet: (walletId?: number) =>
