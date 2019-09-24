@@ -313,7 +313,7 @@ onboarding:
     title: Il tuo indirizzo email
     subtitle: Alcune funzioni di IO hanno bisogno della tua email.
     emailInputLabel: Indirizzo email personale
-    emailInfo: Questo è l'inidirizzo email che hai associato all'account SPID. Puoi
+    emailInfo: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
       usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
       il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
       casella di posta elettronica.
