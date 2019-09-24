@@ -1,3 +1,4 @@
+import { EmailString } from "italia-ts-commons/lib/strings";
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
 
@@ -11,11 +12,12 @@ import { emailAcknowledged } from "../../store/actions/onboarding";
  *   does not want to change it
  * - editing and validation screen, otherwise
  */
-export function* checkAcknowledgedEmailSaga(
-  userProfile: UserProfileUnion
-): IterableIterator<Effect> {
+export function* checkAcknowledgedEmailSaga(): IterableIterator<Effect> {
   // Check if user profile has email
-  if (userProfile.spid_email && userProfile.spid_email !== "") {
+  // TODO: put email existence check here
+  const emailExists: boolean = true;
+
+  if (emailExists) {
     // Email exists
 
     // Check if email is valid
