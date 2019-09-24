@@ -42,8 +42,6 @@ export const enableTestIdp = Config.ENABLE_TEST_IDP === "YES";
 export const gcmSenderId: string = Config.GCM_SENDER_ID;
 export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
-export const newHomeServicesEnabled: boolean =
-  Config.NEW_HOME_SERVICES_ENABLED === "YES";
 export const isEmailEditingAndValidationEnabled: boolean =
   Config.EMAIL_EDITING_AND_VALIDATION_ENABLED === "YES";
 export const isDebugBiometricIdentificationEnabled =

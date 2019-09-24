@@ -688,7 +688,10 @@ services:
   tab:
     locals: Local
     national: National
-    otherServices: Other services
+    all: All
+  loading:
+    title: Loading the services list
+    subtitle: wait few seconds..
   enableAll: Enable all
   disableAll: Disable all
   disableAllTitle: "Do you really want to disable all the services?"
