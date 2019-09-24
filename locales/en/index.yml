@@ -308,7 +308,7 @@ onboarding:
       title: Remember to validate your email address
       headerTitle: Email validation
       info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
-        click simply on that link.
+        click simply on that link.<br/>
         Until you will not validate your email address, some app functionalities
         (payments, messages forwarding by email, etc.) will not be available, but you
         will be able to use some other functions anyway (i.e. services, messages, etc.)"
