@@ -231,7 +231,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     storedPin = yield call(checkConfiguredPinSaga);
     yield call(checkAcknowledgedFingerprintSaga);
     if (isEmailEditingAndValidationEnabled) {
-      yield call(checkAcknowledgedEmailSaga, userProfile);
+      yield call(checkAcknowledgedEmailSaga);
     }
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
