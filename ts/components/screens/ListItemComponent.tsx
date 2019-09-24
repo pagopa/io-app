@@ -1,12 +1,8 @@
 import { ListItem, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Platform,
-  StyleProp,
-  StyleSheet,
-  Switch,
-  ViewStyle
-} from "react-native";
+import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import Switch from "../../components/ui/Switch";
+
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import IconFont from "./../ui/IconFont";
@@ -25,6 +21,7 @@ type Props = Readonly<{
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
+  isItemDisabled?: boolean;
   onSwitchValueChanged?: (value: boolean) => void;
   switchValue?: boolean;
   keySwitch?: string;
@@ -63,6 +60,9 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingRight: 16
   },
+  disabledItem: {
+    color: customVariables.brandDarkGray
+  },
   description: {
     fontSize: 14,
     paddingRight: ICON_SIZE,
@@ -88,7 +88,13 @@ export default class ListItemComponent extends React.Component<Props> {
                   <BadgeComponent />
                 </View>
               )}
-              <Text numberOfLines={2} style={styles.serviceName}>
+              <Text
+                numberOfLines={2}
+                style={[
+                  styles.serviceName,
+                  this.props.isItemDisabled && styles.disabledItem
+                ]}
+              >
                 {this.props.title}
               </Text>
             </View>

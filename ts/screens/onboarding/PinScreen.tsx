@@ -37,11 +37,15 @@ type PinSelected = {
   pin: PinString;
 };
 
+type PinConfirmError = {
+  state: "PinConfirmError";
+  // User confirmed a wrong PIN
+  pin: PinString;
+};
+
 type PinConfirmed = {
   state: "PinConfirmed";
   pin: PinString;
-  // True if the confirmation PIN match
-  isConfirmationPinMatch: boolean;
 };
 
 type PinSaved = {
@@ -50,7 +54,12 @@ type PinSaved = {
   savedPin: pot.Pot<PinString, string>;
 };
 
-type PinState = PinUnselected | PinSelected | PinConfirmed | PinSaved;
+type PinState =
+  | PinUnselected
+  | PinSelected
+  | PinConfirmed
+  | PinSaved
+  | PinConfirmError;
 
 type State = {
   pinState: PinState;
@@ -83,17 +92,42 @@ class PinScreen extends React.Component<Props, State> {
       }
     });
 
+  // Method called when the confirmation CodeInput is valid and cancel button is pressed
+  public onPinConfirmRemoveLastDigit = () => {
+    if (this.state.pinState.state === "PinConfirmed") {
+      const pinState: PinSelected = {
+        ...this.state.pinState,
+        state: "PinSelected"
+      };
+      this.setState({
+        pinState
+      });
+    }
+  };
+
   // Method called when the confirmation CodeInput is filled
   public onPinConfirmFulfill = (code: PinString, isValid: boolean) => {
     // If the inserted PIN do not match we clear the component to let the user retry
     if (!isValid && this.pinConfirmComponent) {
       this.pinConfirmComponent.debounceClear();
+      if (
+        this.state.pinState.state === "PinSelected" ||
+        this.state.pinState.state === "PinConfirmed"
+      ) {
+        const pinConfirmError: PinConfirmError = {
+          ...this.state.pinState,
+          state: "PinConfirmError"
+        };
+        this.setState({
+          pinState: pinConfirmError
+        });
+      }
+      return;
     }
     this.setState({
       pinState: {
         state: "PinConfirmed",
-        pin: code,
-        isConfirmationPinMatch: isValid
+        pin: code
       }
     });
   };
@@ -125,18 +159,23 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   // Render the PIN match/doesn't match feedback message
-  public renderCodeInputConfirmValidation(pinState: PinConfirmed) {
-    const validationMessage = pinState.isConfirmationPinMatch ? (
-      <TextWithIcon success={true}>
-        <IconFont name="io-tick-big" />
-        <Text>{I18n.t("onboarding.pin.confirmValid")}</Text>
-      </TextWithIcon>
-    ) : (
-      <TextWithIcon danger={true}>
-        <IconFont name="io-close" />
-        <Text>{I18n.t("onboarding.pin.confirmInvalid")}</Text>
-      </TextWithIcon>
-    );
+  public renderCodeInputConfirmValidation() {
+    const state = this.state.pinState.state;
+    if (state !== "PinConfirmed" && state !== "PinConfirmError") {
+      return undefined;
+    }
+    const validationMessage =
+      state === "PinConfirmed" ? (
+        <TextWithIcon success={true}>
+          <IconFont name="io-tick-big" />
+          <Text>{I18n.t("onboarding.pin.confirmValid")}</Text>
+        </TextWithIcon>
+      ) : (
+        <TextWithIcon danger={true}>
+          <IconFont name="io-close" />
+          <Text>{I18n.t("onboarding.pin.confirmInvalid")}</Text>
+        </TextWithIcon>
+      );
     return (
       <React.Fragment>
         <View spacer={true} extralarge={true} />
@@ -172,10 +211,10 @@ class PinScreen extends React.Component<Props, State> {
             onFulfill={this.onPinConfirmFulfill}
             ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
             buttonType="light"
+            onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
           />
 
-          {pinState.state === "PinConfirmed" &&
-            this.renderCodeInputConfirmValidation(pinState)}
+          {this.renderCodeInputConfirmValidation()}
         </React.Fragment>
       );
     }
@@ -202,30 +241,21 @@ class PinScreen extends React.Component<Props, State> {
   }
 
   public renderContinueButton(pinState: PinState) {
-    if (pinState.state === "PinConfirmed") {
-      const { pin, isConfirmationPinMatch } = pinState;
-
-      if (isConfirmationPinMatch) {
-        const onPress = () => this.setPin(pin);
-        return (
-          <React.Fragment>
-            <Button
-              block={true}
-              primary={true}
-              disabled={!isConfirmationPinMatch}
-              onPress={onPress}
-            >
-              <Text>{I18n.t("onboarding.pin.continue")}</Text>
-            </Button>
-            <View spacer={true} />
-          </React.Fragment>
-        );
-      } else {
-        return;
-      }
-    } else {
+    if (pinState.state !== "PinConfirmed") {
       return;
     }
+
+    const { pin } = pinState;
+
+    const onPress = () => this.setPin(pin);
+    return (
+      <React.Fragment>
+        <Button block={true} primary={true} disabled={false} onPress={onPress}>
+          <Text>{I18n.t("onboarding.pin.continue")}</Text>
+        </Button>
+        <View spacer={true} />
+      </React.Fragment>
+    );
   }
 
   // The Footer of the Screen

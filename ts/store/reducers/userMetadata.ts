@@ -20,9 +20,9 @@ export type UserMetadata = {
   metadata: UserMetadataMetadata;
 };
 
-export const emptyUserMetadata: UserMetadata = {
+export const emptyUserMetadata: BackendUserMetadata = {
   version: 0,
-  metadata: {}
+  metadata: ""
 };
 
 export type UserMetadataState = pot.Pot<UserMetadata, Error>;
@@ -77,9 +77,9 @@ export const userMetadataSelector = (state: GlobalState) => state.userMetadata;
 export const organizationsOfInterestSelector = createSelector(
   userMetadataSelector,
   potUserMetadata => {
-    return pot.getOrElse(
-      pot.map(potUserMetadata, _ => _.metadata.organizationsOfInterest),
-      undefined
+    return pot.toUndefined(
+      // If the user never select areas of interest, return an empty object
+      pot.map(potUserMetadata, _ => _.metadata.organizationsOfInterest || [])
     );
   }
 );
