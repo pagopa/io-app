@@ -466,7 +466,7 @@ let shouldAbortResolve: {
   (): void;
 };
 /**
- * This Promise has used to interrupt polling for request idPayment
+ * This Promise is used to interrupt polling for requesting idPayment
  */
 // tslint:disable-next-line: promise-must-complete
 const shouldAbort = new Promise<boolean>((resolve, _) => {
