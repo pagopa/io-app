@@ -53,7 +53,7 @@ const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
 /**
  * A screen to show if the fingerprint is supported to the user.
  */
-export class FingerprintScreen extends React.PureComponent<Props> {
+export class EmailScreen extends React.PureComponent<Props> {
   private handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),
@@ -141,4 +141,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FingerprintScreen);
+)(EmailScreen);
