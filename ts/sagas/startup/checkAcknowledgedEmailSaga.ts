@@ -1,8 +1,6 @@
-import { EmailString } from "italia-ts-commons/lib/strings";
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
 
-import { UserProfileUnion } from "../../api/backend";
 import { navigateToEmailScreen } from "../../store/actions/navigation";
 import { emailAcknowledged } from "../../store/actions/onboarding";
 
