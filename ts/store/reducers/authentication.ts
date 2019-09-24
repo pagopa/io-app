@@ -9,11 +9,11 @@ import {
   forgetCurrentSession,
   idpSelected,
   loginSuccess,
+  logoutFailure,
   logoutSuccess,
   sessionExpired,
   sessionInformationLoadSuccess,
-  sessionInvalid,
-  logoutFailure
+  sessionInvalid
 } from "../actions/authentication";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
