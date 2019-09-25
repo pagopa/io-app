@@ -71,6 +71,10 @@ export default class NewServiceListItem extends React.PureComponent<
       getEnabledChannelsForService(this.props.profile, service.service_id)
     );
 
+    const isServiceDisabled = pot.toUndefined(
+      pot.map(enabledChannels, m => m.inbox === false)
+    );
+
     const onPress = !this.props.isLongPressEnabled
       ? pot.toUndefined(
           pot.map(potService, service => () => this.props.onSelect(service))
@@ -89,16 +93,6 @@ export default class NewServiceListItem extends React.PureComponent<
         : undefined;
     };
 
-    const inboxEnabledLabel = pot.toUndefined(
-      pot.map(
-        enabledChannels,
-        _ =>
-          _.inbox
-            ? I18n.t("services.serviceIsEnabled")
-            : I18n.t("services.serviceNotEnabled")
-      )
-    );
-
     const serviceName = pot.isLoading(potService)
       ? I18n.t("global.remoteStates.loading")
       : pot.isError(potService) || pot.isNone(potService)
@@ -108,12 +102,12 @@ export default class NewServiceListItem extends React.PureComponent<
     return (
       <ListItemComponent
         title={serviceName}
-        subTitle={inboxEnabledLabel}
         hasBadge={!this.props.isRead}
         onPress={onPress}
         onLongPress={this.props.onLongPress}
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
+        isItemDisabled={isServiceDisabled}
         onSwitchValueChanged={onItemSwitchValueChanged}
         switchValue={pot.isSome(enabledChannels) && enabledChannels.value.inbox}
         keySwitch={this.getServiceKey(potService)}
