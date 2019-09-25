@@ -1,6 +1,6 @@
 import { createStackNavigator } from "react-navigation";
 
-import OldServiceDetailsScreen from "../screens/preferences/OldServiceDetailsScreen";
+import OldServiceDetailsScreen from "../screens/services/OldServiceDetailsScreen";
 import OldServicesHomeScreen from "../screens/preferences/OldServicesHomeScreen";
 import ROUTES from "./routes";
 

@@ -26,7 +26,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import OldServiceDetailsScreen from "../preferences/OldServiceDetailsScreen";
+import OldServiceDetailsScreen from "../services/OldServiceDetailsScreen";
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;

@@ -46,7 +46,7 @@ import { InferNavigationParams } from "../../types/react";
 import { isDefined } from "../../utils/guards";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { getChannelsforServicesList } from "./common";
-import OldServiceDetailsScreen from "./OldServiceDetailsScreen";
+import OldServiceDetailsScreen from "../services/OldServiceDetailsScreen";
 
 type State = {
   enableServices: boolean;
