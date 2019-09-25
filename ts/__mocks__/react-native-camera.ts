@@ -2,6 +2,23 @@
  * A mocked version of the react-native-camera components.
  */
 
-const Camera = {};
+import React from "react";
 
-export default Camera;
+export class RNCamera extends React.Component {
+  public static Constants = {
+    Aspect: {},
+    BarCodeType: {},
+    Type: {},
+    CaptureMode: {},
+    CaptureTarget: {},
+    CaptureQuality: {},
+    Orientation: {},
+    FlashMode: {},
+    TorchMode: {}
+  };
+  public render() {
+    return null;
+  }
+}
+
+export default RNCamera;
