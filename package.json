@@ -148,14 +148,6 @@
     "@types/react": "16.7.18",
     "@types/prop-types": "15.5.5"
   },
-  "rnpm": {
-    "assets": [
-      "./assets/fonts/TitilliumWeb",
-      "./assets/fonts/io-icon-font",
-      "./assets/fonts/Ionicons",
-      "./assets/fonts/RobotoMono"
-    ]
-  },
   "detox": {
     "test-runner": "jest",
     "specs": "e2e",
