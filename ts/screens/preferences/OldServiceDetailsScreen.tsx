@@ -36,7 +36,7 @@ import {
   EnabledChannels,
   getBlockedChannels,
   getEnabledChannelsForService
-} from "../preferences/common";
+} from "./common";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
