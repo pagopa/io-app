@@ -1,7 +1,8 @@
-import { Badge, Text, View } from "native-base";
+import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import variables from "../../theme/variables";
+import CustomBadge from "./CustomBadge";
 import IconFont from "./IconFont";
 
 type Props = {
@@ -13,7 +14,7 @@ type Props = {
 const MAX_BADGE_VALUE = 99;
 
 const styles = StyleSheet.create({
-  textBadgeStyle: {
+  textStyle: {
     paddingLeft: 0,
     paddingRight: 0
   },
@@ -45,11 +46,13 @@ class TabIconComponent extends React.PureComponent<Props> {
       <View>
         <IconFont name={iconName} size={variables.iconSize3} color={color} />
         {badgeValue && badgeValue > 0 ? (
-          <Badge style={styles.badgeStyle}>
-            <Text badge={true} style={styles.textBadgeStyle}>
-              {badgeValue > MAX_BADGE_VALUE ? MAX_BADGE_VALUE : badgeValue}
-            </Text>
-          </Badge>
+          <CustomBadge
+            badgeStyle={styles.badgeStyle}
+            textStyle={styles.textStyle}
+            badgeValue={
+              badgeValue > MAX_BADGE_VALUE ? MAX_BADGE_VALUE : badgeValue
+            }
+          />
         ) : null}
       </View>
     );

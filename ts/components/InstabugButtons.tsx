@@ -3,6 +3,7 @@ import { BugReporting, Chats, Replies } from "instabug-reactnative";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Button } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import {
   instabugReportClosed,
@@ -10,6 +11,8 @@ import {
 } from "../store/actions/debug";
 import { Dispatch } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
+import variables from "../theme/variables";
+import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
 
 interface OwnProps {
@@ -23,6 +26,29 @@ type Props = ReturnType<typeof mapStateToProps> &
 type State = {
   instabugReportType: Option<string>;
 };
+
+const styles = StyleSheet.create({
+  textStyle: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+  badgeStyle: {
+    backgroundColor: variables.brandPrimary,
+    borderColor: "white",
+    borderWidth: 2,
+    position: "absolute",
+    elevation: 0.1,
+    shadowColor: "white",
+    height: 19,
+    width: 19,
+    left: 20,
+    bottom: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
+    justifyContent: "center",
+    alignContent: "center"
+  }
+});
 
 class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
@@ -83,6 +109,11 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
               accessibilityLabel="io-chat"
             />
           </Button>
+          <CustomBadge
+            badgeStyle={styles.badgeStyle}
+            textStyle={styles.textStyle}
+            badgeValue={3}
+          />
           <Button onPress={this.handleIBBugPress} transparent={true}>
             <IconFont
               name="io-bug"
