@@ -6,6 +6,7 @@
 
 import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import { NavigationActions } from "react-navigation";
 import { delay } from "redux-saga";
 import {
@@ -340,6 +341,8 @@ function* startOrResumeAddCreditCardSaga(
 function* startOrResumePaymentActivationSaga(
   action: ActionType<typeof runStartOrResumePaymentActivationSaga>
 ) {
+  // create a new promise to abort payment
+  createNewPromise();
   while (true) {
     // before each step we select the updated payment state to know what has
     // been already done.
@@ -459,20 +462,10 @@ function* pollTransactionSaga(
   }
 }
 
-// tslint:disable-next-line: no-let
-let shouldAbortResolve: {
-  // tslint:disable-next-line: unified-signatures
-  (value?: boolean | PromiseLike<boolean> | undefined): void;
-  (): void;
-};
-/**
- * This Promise is used to interrupt polling for requesting idPayment
- */
-// tslint:disable-next-line: promise-must-complete
-const shouldAbort = new Promise<boolean>((resolve, _) => {
-  shouldAbortResolve = resolve;
-});
-
+// tslint:disable-next-line: no-let prefer-const
+let resolveShouldAbort: (v: boolean) => void;
+// tslint:disable-next-line: no-let prefer-const
+let shouldAbort: Promise<boolean>;
 /**
  * This saga attempts to delete the active payment, if there's one.
  *
@@ -480,7 +473,7 @@ const shouldAbort = new Promise<boolean>((resolve, _) => {
  */
 function* deleteActivePaymentSaga() {
   // Call resolve promise
-  shouldAbortResolve(true);
+  resolveShouldAbort(true);
   const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select<
     GlobalState
   >(_ => _.wallet.payment.paymentId);
@@ -490,6 +483,15 @@ function* deleteActivePaymentSaga() {
       paymentDeletePayment.request({ paymentId: maybePaymentId.value })
     );
   }
+}
+
+/**
+ * Return a Promise from a DeferredPromise
+ */
+function createNewPromise() {
+  const defPromise = DeferredPromise<boolean>();
+  resolveShouldAbort = defPromise.e2;
+  shouldAbort = defPromise.e1;
 }
 
 /**
