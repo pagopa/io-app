@@ -31,7 +31,10 @@ import ChooserListContainer from "../../components/ChooserListContainer";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
+import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import OrganizationLogo from "../../components/services/OrganizationLogo";
+import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesSectionsList from "../../components/services/ServicesSectionsList";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -52,6 +55,7 @@ import {
 } from "../../store/actions/userMetadata";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
+  allServicesSectionsSelector,
   isLoadingServicesSelector,
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
@@ -64,6 +68,10 @@ import { readServicesByIdSelector } from "../../store/reducers/entities/services
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
 import { profileSelector, ProfileState } from "../../store/reducers/profile";
+import {
+  isSearchServicesEnabledSelector,
+  searchTextSelector
+} from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import {
   organizationsOfInterestSelector,
@@ -206,15 +214,17 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   private handleOnLongPressItem = () => {
-    this.updateLongPressButtonScope();
-    const isLongPressEnabled = !this.state.isLongPressEnabled;
-    const currentTabServicesId = this.props.tabsServicesId[
-      this.state.currentTab
-    ];
-    this.setState({
-      isLongPressEnabled,
-      currentTabServicesId
-    });
+    if (!this.props.isSearchEnabled) {
+      this.updateLongPressButtonScope();
+      const isLongPressEnabled = !this.state.isLongPressEnabled;
+      const currentTabServicesId = this.props.tabsServicesId[
+        this.state.currentTab
+      ];
+      this.setState({
+        isLongPressEnabled,
+        currentTabServicesId
+      });
+    }
   };
 
   public componentDidMount() {
@@ -487,11 +497,15 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           title: I18n.t("services.title"),
           body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
         }}
+        isSearchAvailable={this.props.userMetadata !== undefined}
+        searchType={"Services"}
       >
         <NavigationEvents
           onWillFocus={() => this.setState({ isLongPressEnabled: false })}
         />
-        {this.props.userMetadata ? (
+        {this.props.isSearchEnabled ? (
+          this.renderSearch()
+        ) : this.props.userMetadata ? (
           <React.Fragment>
             <ScreenContentHeader
               title={I18n.t("services.title")}
@@ -510,6 +524,30 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       </TopScreenComponent>
     );
   }
+
+  /**
+   * Render ServicesSearch component.
+   */
+  private renderSearch = () => {
+    return this.props.searchText
+      .map(
+        _ =>
+          _.length < MIN_CHARACTER_SEARCH_TEXT ? (
+            <SearchNoResultMessage errorType="InvalidSearchBarText" />
+          ) : (
+            <ServicesSearch
+              sectionsState={this.props.allSections}
+              profile={this.props.profile}
+              onRefresh={this.props.refreshServices}
+              navigateToServiceDetail={this.onServiceSelect}
+              searchText={_}
+              readServices={this.props.readServices}
+              onLongPressItem={this.handleOnLongPressItem}
+            />
+          )
+      )
+      .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
+  };
 
   /**
    * Render Locals, Nationals and Other services tabs.
@@ -728,13 +766,16 @@ const mapStateToProps = (state: GlobalState) => {
     ),
     profile: profileSelector(state),
     readServices: readServicesByIdSelector(state),
+    allSections: allServicesSectionsSelector(state),
     localTabSections,
     nationalTabSections,
     allTabSections,
     tabsServicesId,
     wasServiceAlertDisplayedOnce: wasServiceAlertDisplayedOnceSelector(state),
     servicesById: servicesByIdSelector(state),
-    userMetadata
+    userMetadata,
+    isSearchEnabled: isSearchServicesEnabledSelector(state),
+    searchText: searchTextSelector(state)
   };
 };
 

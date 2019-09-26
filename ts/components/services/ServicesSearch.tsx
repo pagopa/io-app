@@ -1,14 +1,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
-
 import { SectionListData } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
-
 import { ProfileState } from "../../store/reducers/profile";
 import { serviceContainsText } from "../../utils/services";
 import { SearchNoResultMessage } from "../search/SearchNoResultMessage";
-import ServiceSectionListComponent from "./ServiceSectionListComponent";
+import ServicesSectionsList from "./ServicesSectionsList";
 
 type OwnProps = {
   sectionsState: // tslint:disable-next-line: readonly-array
@@ -155,7 +153,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
     );
 
     return filteredServiceSectionsStates.length > 0 ? (
-      <ServiceSectionListComponent
+      <ServicesSectionsList
         {...this.props}
         sections={filteredServiceSectionsStates}
         profile={this.props.profile}
