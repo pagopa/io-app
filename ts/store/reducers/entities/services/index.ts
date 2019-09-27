@@ -22,6 +22,7 @@ import {
   isVisibleServicesMetadataLoadCompletedSelector
 } from "./firstServicesLoading";
 import readServicesByIdReducer, {
+  readServicesByIdSelector,
   ReadStateByServicesId
 } from "./readStateByServiceId";
 import servicesByIdReducer, { ServicesByIdState } from "./servicesById";
@@ -232,19 +233,30 @@ export const servicesBadgeValueSelector = createSelector(
   [
     nationalServicesSectionsSelector,
     selectedLocalServicesSectionsSelector,
+    readServicesByIdSelector,
     isFirstVisibleServiceLoadCompletedSelector
   ],
   (
     nationalService,
     localService,
+    readServicesById,
     isFirstVisibleServicesLoadCompleted
   ) => {
-    let result = 0;
     if (isFirstVisibleServicesLoadCompleted) {
-      nationalService.length > 0 && nationalService.forEach(service => result += service.data.length)
-      localService.length > 0 && localService.forEach(service => result += service.data.length)
-    } 
-    return result;
+      const services: ReadonlyArray<ServicesSectionState> = [
+        ...nationalService,
+        ...localService
+      ];
+      return services.reduce((acc: number, service: ServicesSectionState) => {
+        const servicesNotRead = service.data.filter(
+          data =>
+            pot.isSome(data) &&
+            readServicesById[data.value.service_id] === undefined
+        ).length;
+        return acc + servicesNotRead;
+      }, 0);
+    }
+    return 0;
   }
 );
 
