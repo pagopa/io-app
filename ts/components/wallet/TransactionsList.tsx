@@ -19,6 +19,7 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { BadgeComponent } from "../screens/BadgeComponent";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
 
@@ -169,21 +170,17 @@ export default class TransactionsList extends React.Component<Props> {
             <Text>{I18n.t("wallet.amount")}</Text>
           </View>
         </View>
-
-        <Grid>
-          <Row>
-            <FlatList
-              scrollEnabled={false}
-              removeClippedSubviews={false}
-              data={transactions}
-              renderItem={this.renderTransaction}
-              ItemSeparatorComponent={() => (
-                <View style={styles.itemSeparator} />
-              )}
-              keyExtractor={item => item.id.toString()}
-            />
-          </Row>
-        </Grid>
+        <FlatList
+          scrollEnabled={false}
+          removeClippedSubviews={false}
+          data={transactions}
+          renderItem={this.renderTransaction}
+          ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
+          keyExtractor={item => item.id.toString()}
+          ListFooterComponent={
+            transactions.length > 0 && <EdgeBorderComponent />
+          }
+        />
       </Content>
     );
   }
