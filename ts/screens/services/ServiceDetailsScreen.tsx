@@ -10,6 +10,7 @@ import {
   Alert,
   Image,
   Linking,
+  Platform,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
@@ -120,23 +121,29 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
   private goBack = () => this.props.navigation.goBack();
 
-  private phoneCallAlert = (phone: string) =>
-    Alert.alert(
-      phone,
-      "",
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.call"),
-          style: "default",
-          onPress: undefined
-        }
-      ],
-      { cancelable: false }
-    );
+  private openPhoneDialer = (service: ServicePublic, phone: string) => {
+    if (Platform.OS === "android") {
+      Linking.openURL(`tel:${phone}`).then(() => 0, () => 0);
+    } else {
+      Alert.alert(
+        I18n.t("global.alert.call").replace("*", service.service_name),
+        "",
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.call"),
+            style: "default",
+            onPress: () =>
+              Linking.openURL(`telprompt:${phone}`).then(() => 0, () => 0)
+          }
+        ],
+        { cancelable: false }
+      );
+    }
+  };
 
   /**
    * Dispatches a profileUpsertRequest to trigger an asynchronous update of the
@@ -467,7 +474,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             {phone &&
               renderInformationRow(I18n.t("services.contactPhone"), phone, () =>
                 // Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
-                this.phoneCallAlert(phone)
+                this.openPhoneDialer(service, phone)
               )}
             {email &&
               renderInformationRow("Email", email, () =>

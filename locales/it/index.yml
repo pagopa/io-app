@@ -1,5 +1,7 @@
 ---
 global:
+  alert:
+    call: Vuoi chiamare *?
   localization:
     decimalSeparator: ","
   date:
