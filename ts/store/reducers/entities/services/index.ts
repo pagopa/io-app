@@ -228,7 +228,7 @@ export const notSelectedServicesSectionsSelector = createSelector(
   }
 );
 
-// Get the number of visible services that are not yet marked as read
+// Get the sum of selected local services + national services that are not yet marked as read
 export const servicesBadgeValueSelector = createSelector(
   [
     nationalServicesSectionsSelector,
