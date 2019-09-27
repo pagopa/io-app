@@ -137,13 +137,11 @@ const getServices = (
 
       const data = serviceIdsForOrg
         .map(id => services.byId[id])
-        .filter(isDefined)
-        .filter(service =>
-          hasLocalization(service, servicesMetadata.byId, localization)
-        )
         .filter(
           service =>
-            visibleServices ? isVisibleService(visibleServices, service) : true
+            isDefined(service) &&
+            hasLocalization(service, servicesMetadata.byId, localization) &&
+            isVisibleService(visibleServices, service)
         );
 
       return {
