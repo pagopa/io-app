@@ -35,6 +35,8 @@ import {
   VisibleServicesState
 } from "./visibleServices";
 
+import { isFirstVisibleServiceLoadCompletedSelector } from "./firstServicesLoading";
+
 export type ServicesState = Readonly<{
   byId: ServicesByIdState;
   byOrgFiscalCode: ServiceIdsByOrganizationFiscalCodeState;
@@ -222,6 +224,27 @@ export const notSelectedServicesSectionsSelector = createSelector(
       undefined,
       notSelectedOrganizations
     );
+  }
+);
+
+// Get the number of visible services that are not yet marked as read
+export const servicesBadgeValueSelector = createSelector(
+  [
+    nationalServicesSectionsSelector,
+    selectedLocalServicesSectionsSelector,
+    isFirstVisibleServiceLoadCompletedSelector
+  ],
+  (
+    nationalService,
+    localService,
+    isFirstVisibleServicesLoadCompleted
+  ) => {
+    let result = 0;
+    if (isFirstVisibleServicesLoadCompleted) {
+      nationalService.length > 0 && nationalService.forEach(service => result += service.data.length)
+      localService.length > 0 && localService.forEach(service => result += service.data.length)
+    } 
+    return result;
   }
 );
 

@@ -6,7 +6,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { servicesBadgeValueSelector } from "../store/reducers/entities/services/readStateByServiceId";
+import { servicesBadgeValueSelector } from "../store/reducers/entities/services";
 import { GlobalState } from "../store/reducers/types";
 import TabIconComponent from "./ui/TabIconComponent";
 
