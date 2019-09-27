@@ -3,12 +3,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ProfileState } from "../../store/reducers/profile";
+import customVariables from "../../theme/variables";
 import {
   EnabledChannels,
   getEnabledChannelsForService
-} from "../../screens/preferences/common";
-import { ProfileState } from "../../store/reducers/profile";
-import customVariables from "../../theme/variables";
+} from "../../utils/profile";
 import ListItemComponent from "../screens/ListItemComponent";
 
 interface State {

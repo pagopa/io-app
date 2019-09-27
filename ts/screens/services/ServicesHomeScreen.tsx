@@ -75,11 +75,8 @@ import { InferNavigationParams } from "../../types/react";
 import { getLogoForOrganization } from "../../utils/organizations";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
-import {
-  getChannelsforServicesList,
-  getProfileChannelsforServicesList
-} from "../preferences/common";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
+import { getChannelsforServicesList, getProfileChannelsforServicesList } from '../../utils/profile';
 
 type OwnProps = NavigationScreenProps;
 

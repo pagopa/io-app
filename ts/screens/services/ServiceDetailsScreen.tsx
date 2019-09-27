@@ -30,13 +30,13 @@ import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { openMaps } from "../../utils/openMaps";
-import { logosForService } from "../../utils/services";
-import { showToast } from "../../utils/showToast";
 import {
   EnabledChannels,
   getBlockedChannels,
   getEnabledChannelsForService
-} from "../preferences/common";
+} from "../../utils/profile";
+import { logosForService } from "../../utils/services";
+import { showToast } from "../../utils/showToast";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
