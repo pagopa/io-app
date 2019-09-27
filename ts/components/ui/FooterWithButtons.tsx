@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignContent: "center",
+    justifyContent: "center",
     flex: 1
   },
   buttonTwoThirds: {

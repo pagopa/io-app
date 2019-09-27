@@ -204,7 +204,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
 
     return (
       <FooterWithButtons
-        type="TwoButtonsInlineThird"
+        type={"TwoButtonsInlineThird"}
         leftButton={cancelButtonProps}
         rightButton={saveButtonProps}
       />

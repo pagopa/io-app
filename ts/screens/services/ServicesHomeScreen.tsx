@@ -73,10 +73,10 @@ import {
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { getLogoForOrganization } from "../../utils/organizations";
+import { getChannelsforServicesList, getProfileChannelsforServicesList } from '../../utils/profile';
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
-import { getChannelsforServicesList, getProfileChannelsforServicesList } from '../../utils/profile';
 
 type OwnProps = NavigationScreenProps;
 

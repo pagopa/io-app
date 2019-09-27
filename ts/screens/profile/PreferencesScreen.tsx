@@ -12,6 +12,7 @@ import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
@@ -181,8 +182,9 @@ class PreferencesScreen extends React.Component<Props, State> {
             <ListItemComponent
               title={I18n.t("profile.preferences.list.email")}
               subTitle={profileData.spid_email}
-              iconName={"io-email"}
-              onPress={unavailableAlert}
+              onPress={() =>
+                this.props.navigation.navigate(ROUTES.EMAIL_DETAILS_SCREEN)
+              }
             />
 
             <ListItemComponent
