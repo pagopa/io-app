@@ -521,7 +521,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
         onChangeTab={(evt: any) => {
-          this.setState({ currentTab: evt.i, isLongPressEnabled: false });
+          this.setState({
+            currentTab: evt.i,
+            isLongPressEnabled:
+              this.state.currentTab === evt.i && this.state.isLongPressEnabled
+          });
         }}
         initialPage={0}
         style={
