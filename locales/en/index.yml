@@ -1,7 +1,7 @@
 ---
 global:
   alert:
-    call: Do you want call *?
+    call: "Do you want call #?"
   localization:
     decimalSeparator: "."
   date:

@@ -126,7 +126,10 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       Linking.openURL(`tel:${phone}`).then(() => 0, () => 0);
     } else {
       Alert.alert(
-        I18n.t("global.alert.call").replace("*", service.service_name),
+        I18n.t("global.alert.call").replace(
+          new RegExp("#", "g"),
+          service.service_name
+        ),
         "",
         [
           {
