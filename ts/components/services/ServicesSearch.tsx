@@ -1,3 +1,9 @@
+/**
+ * A component that renders a list of services that match a search text.
+ * TODO: fix scroll: some items are displayed only if the keyboard is hidden
+ *    https://www.pivotaltracker.com/story/show/168803731
+ */
+
 import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
 import { SectionListData } from "react-native";
@@ -76,9 +82,6 @@ function filterSectionListDataMatchingSearchText(
   return filteredData.length > 0 ? sectionListDataFiltered : null;
 }
 
-/**
- * A component that renders a list of services that match a search text.
- */
 class ServicesSearch extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
