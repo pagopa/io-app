@@ -120,6 +120,24 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
   private goBack = () => this.props.navigation.goBack();
 
+  private phoneCallAlert = (phone: string) =>
+    Alert.alert(
+      phone,
+      "",
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.call"),
+          style: "default",
+          onPress: undefined
+        }
+      ],
+      { cancelable: false }
+    );
+
   /**
    * Dispatches a profileUpsertRequest to trigger an asynchronous update of the
    * profile with the new enabled channels
@@ -448,7 +466,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               )}
             {phone &&
               renderInformationRow(I18n.t("services.contactPhone"), phone, () =>
-                Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
+                // Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
+                this.phoneCallAlert(phone)
               )}
             {email &&
               renderInformationRow("Email", email, () =>

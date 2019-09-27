@@ -28,6 +28,7 @@ global:
     close: Close
     exit: Exit
     saveSelection: Save the selection
+    call: Call
   navigator:
     messages: messages
     wallet: wallet
