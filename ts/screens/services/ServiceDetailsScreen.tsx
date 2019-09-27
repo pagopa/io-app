@@ -12,7 +12,8 @@ import {
   Linking,
   Platform,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -231,6 +232,38 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     const serviceMetadata = pot.getOrElse(potServiceMetadata, {} as pot.PotType<
       typeof potServiceMetadata
     >);
+
+    const openPhoneDialer = (phoneNumber: string) => {
+      const alertMsg = () =>
+        Alert.alert(
+          "Call",
+          phoneNumber,
+          [
+            {
+              text: I18n.t("global.buttons.cancel"),
+              style: "cancel"
+            },
+            {
+              text: "Call",
+              style: "destructive",
+              onPress: () => {
+                Linking.openURL(`telprompt:${phoneNumber}`).then(
+                  () => 0,
+                  () => 0
+                );
+              }
+            }
+          ],
+          { cancelable: false }
+        );
+
+      Platform.select({
+        android: () => {
+          Linking.openURL(`tel:${phoneNumber}`).then(() => 0, () => 0);
+        },
+        ios: alertMsg
+      })();
+    };
 
     const {
       description,
@@ -473,8 +506,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               )}
             {phone &&
               renderInformationRow(I18n.t("services.contactPhone"), phone, () =>
-                // Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
-                this.openPhoneDialer(service, phone)
+      openPhoneDialer(phone)
               )}
             {email &&
               renderInformationRow("Email", email, () =>
