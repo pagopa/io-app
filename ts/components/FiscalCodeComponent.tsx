@@ -16,6 +16,7 @@ import {
   Image,
   StyleProp,
   StyleSheet,
+  TouchableHighlight,
   ViewStyle
 } from "react-native";
 import Barcode from "react-native-barcode-builder";
@@ -24,6 +25,7 @@ import { UserProfile } from "../../definitions/backend/UserProfile";
 import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
 import { extractFiscalCodeData } from "../utils/profile";
+import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 
 interface BaseProps {
   profile: UserProfile;
@@ -147,6 +149,10 @@ const styles = StyleSheet.create({
       { translateY: (cardWidthL - contentWidth) / 2 }
     ],
     marginVertical: (cardWidthL - contentWidth) / 2
+  },
+
+  touchableFiscalCode: {
+    position: "absolute"
   },
 
   fullText: {
@@ -343,19 +349,24 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     municipality: MunicipalityState,
     isLandscape: boolean
   ) {
-    const fiscalCodeData = extractFiscalCodeData(
-      profile.fiscal_code,
-      municipality
-    );
+    const fiscalCode = profile.fiscal_code;
+    const fiscalCodeData = extractFiscalCodeData(fiscalCode, municipality);
 
     return (
       <React.Fragment>
-        {this.renderItem(
-          profile.fiscal_code,
-          styles.fullFiscalCodeText,
-          styles.landscapeFiscalCodeText,
-          isLandscape
-        )}
+        <TouchableHighlight
+          onPress={() =>
+            clipboardSetStringWithFeedback(fiscalCode.toUpperCase())
+          }
+          style={[styles.touchableFiscalCode]}
+        >
+          {this.renderItem(
+            fiscalCode,
+            styles.fullFiscalCodeText,
+            styles.landscapeFiscalCodeText,
+            isLandscape
+          )}
+        </TouchableHighlight>
 
         {this.renderItem(
           profile.family_name,
