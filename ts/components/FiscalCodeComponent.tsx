@@ -24,8 +24,8 @@ import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
-import { extractFiscalCodeData } from "../utils/profile";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
+import { extractFiscalCodeData } from "../utils/profile";
 
 interface BaseProps {
   profile: UserProfile;
