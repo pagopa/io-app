@@ -1,5 +1,4 @@
-diff --git a/node_modules/instabug-reactnative/index.d.ts b/node_modules/instabug-reactnative/index.d.ts
-index 09ec669..04e9e94 100644
+patch-package
 --- a/node_modules/instabug-reactnative/index.d.ts
 +++ b/node_modules/instabug-reactnative/index.d.ts
 @@ -14,7 +14,7 @@ export namespace BugReporting {
@@ -11,6 +10,15 @@ index 09ec669..04e9e94 100644
    function setPromptOptionsEnabled(
      chat: boolean,
      bug: boolean,
+@@ -94,7 +94,7 @@ export namespace Replies {
+   function show(): void;
+   function setOnNewReplyReceivedCallback(onNewReplyReceivedCallback: () => void): void;
+   function setOnNewReplyReceivedHandler(onNewReplyReceivedHandler: () => void): void;
+-  function getUnreadRepliesCount(messageCountCallback: () => void): void;
++  function getUnreadRepliesCount(messageCountCallback: (count: number) => void): number;
+   function setInAppNotificationsEnabled(inAppNotificationsEnabled: boolean): void;
+   function setInAppNotificationSound(shouldPlaySound: boolean): void;
+ }
 @@ -152,7 +152,7 @@ export function setFloatingButtonEdge(
    ): void;
  export function setLocale(locale: locale): void;
