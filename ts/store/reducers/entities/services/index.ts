@@ -22,6 +22,7 @@ import {
   isVisibleServicesMetadataLoadCompletedSelector
 } from "./firstServicesLoading";
 import readServicesByIdReducer, {
+  readServicesByIdSelector,
   ReadStateByServicesId
 } from "./readStateByServiceId";
 import servicesByIdReducer, { ServicesByIdState } from "./servicesById";
@@ -34,6 +35,8 @@ import {
   visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
+
+import { isFirstVisibleServiceLoadCompletedSelector } from "./firstServicesLoading";
 
 export type ServicesState = Readonly<{
   byId: ServicesByIdState;
@@ -222,6 +225,38 @@ export const notSelectedServicesSectionsSelector = createSelector(
       undefined,
       notSelectedOrganizations
     );
+  }
+);
+
+// Get the sum of selected local services + national services that are not yet marked as read
+export const servicesBadgeValueSelector = createSelector(
+  [
+    nationalServicesSectionsSelector,
+    selectedLocalServicesSectionsSelector,
+    readServicesByIdSelector,
+    isFirstVisibleServiceLoadCompletedSelector
+  ],
+  (
+    nationalService,
+    localService,
+    readServicesById,
+    isFirstVisibleServicesLoadCompleted
+  ) => {
+    if (isFirstVisibleServicesLoadCompleted) {
+      const services: ReadonlyArray<ServicesSectionState> = [
+        ...nationalService,
+        ...localService
+      ];
+      return services.reduce((acc: number, service: ServicesSectionState) => {
+        const servicesNotRead = service.data.filter(
+          data =>
+            pot.isSome(data) &&
+            readServicesById[data.value.service_id] === undefined
+        ).length;
+        return acc + servicesNotRead;
+      }, 0);
+    }
+    return 0;
   }
 );
 
