@@ -25,6 +25,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 type State = {
   instabugReportType: Option<string>;
+  badgeValue: number;
 };
 
 const styles = StyleSheet.create({
@@ -77,7 +78,8 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      instabugReportType: none
+      instabugReportType: none,
+      badgeValue: 0
     };
   }
   public componentDidMount() {
@@ -95,6 +97,13 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
         }
       }
     );
+
+    Replies.getUnreadRepliesCount(count => {
+      this.setState({
+        badgeValue: count
+      });
+      return count;
+    });
   }
 
   public render() {
@@ -112,7 +121,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
           <CustomBadge
             badgeStyle={styles.badgeStyle}
             textStyle={styles.textStyle}
-            badgeValue={3}
+            badgeValue={this.state.badgeValue}
           />
           <Button onPress={this.handleIBBugPress} transparent={true}>
             <IconFont
