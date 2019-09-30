@@ -1,8 +1,6 @@
 // TODO: evaluate if substitute with EmailScreen introduced with https://github.com/teamdigitale/io-app/pull/1308/
 // or just create a component to rendere its content
 
-// TODO: shift the modal from the footer button here to the proper screens
-
 // TODO: add contextual help
 
 import { Text, View } from "native-base";
