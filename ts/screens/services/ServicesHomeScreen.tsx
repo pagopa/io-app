@@ -55,7 +55,6 @@ import {
 } from "../../store/actions/userMetadata";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
-  allServicesSectionsSelector,
   isLoadingServicesSelector,
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
@@ -542,7 +541,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
               readServices={this.props.readServices}
-              onLongPressItem={this.handleOnLongPressItem}
             />
           )
       )
@@ -734,6 +732,11 @@ const mapStateToProps = (state: GlobalState) => {
   const nationalTabSections = nationalServicesSectionsSelector(state);
   const allTabSections = notSelectedServicesSectionsSelector(state);
 
+  const allSections: ReadonlyArray<ServicesSectionState> = [
+    ...localTabSections,
+    ...allTabSections
+  ];
+
   const getTabSevicesId = (
     tabServices: ReadonlyArray<ServicesSectionState>
   ) => {
@@ -772,7 +775,7 @@ const mapStateToProps = (state: GlobalState) => {
     ),
     profile: profileSelector(state),
     readServices: readServicesByIdSelector(state),
-    allSections: allServicesSectionsSelector(state),
+    allSections,
     localTabSections,
     nationalTabSections,
     allTabSections,

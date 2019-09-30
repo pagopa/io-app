@@ -8,6 +8,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
 import { SectionListData } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ServicesSectionState } from "../../store/reducers/entities/services";
 import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
 import { serviceContainsText } from "../../utils/services";
@@ -16,13 +17,12 @@ import ServicesSectionsList from "./ServicesSectionsList";
 
 type OwnProps = {
   sectionsState: // tslint:disable-next-line: readonly-array
-  Array<SectionListData<pot.Pot<ServicePublic, Error>>>;
+  ReadonlyArray<ServicesSectionState>;
   searchText: string;
   profile: ProfileState;
   onRefresh: () => void;
   navigateToServiceDetail: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
-  onLongPressItem?: () => void;
 };
 
 type Props = OwnProps;
@@ -30,7 +30,7 @@ type Props = OwnProps;
 type State = {
   potFilteredServiceSectionsStates: pot.Pot<
     // tslint:disable-next-line: readonly-array
-    Array<SectionListData<pot.Pot<ServicePublic, Error>>>,
+    ReadonlyArray<ServicesSectionState>,
     Error
   >;
 };
@@ -40,13 +40,13 @@ type State = {
  */
 const generateSectionsServicesStateMatchingSearchTextArrayAsync = (
   // tslint:disable-next-line: readonly-array
-  servicesState: Array<SectionListData<pot.Pot<ServicePublic, Error>>>,
+  servicesState: ReadonlyArray<ServicesSectionState>,
   searchText: string
   // tslint:disable-next-line: readonly-array
-): Promise<Array<SectionListData<pot.Pot<ServicePublic, Error>>>> => {
+): Promise<ReadonlyArray<ServicesSectionState>> => {
   return new Promise(resolve => {
     // tslint:disable-next-line: readonly-array
-    const result: Array<SectionListData<pot.Pot<ServicePublic, Error>>> = [];
+    const result: ServicesSectionState[] = [];
     servicesState.forEach(sectionList => {
       const filtered = filterSectionListDataMatchingSearchText(
         sectionList,

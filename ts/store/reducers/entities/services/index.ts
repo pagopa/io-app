@@ -157,17 +157,6 @@ const getServices = (
     );
 };
 
-// A selector providing all services organized in sections
-export const allServicesSectionsSelector = createSelector(
-  [
-    servicesSelector,
-    organizationNamesByFiscalCodeSelector,
-    servicesMetadataSelector
-  ],
-  (services, organizations, servicesMetadata) =>
-    getServices(services, organizations, servicesMetadata)
-);
-
 // A selector providing sections related to national services
 export const nationalServicesSectionsSelector = createSelector(
   [
