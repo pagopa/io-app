@@ -142,10 +142,13 @@ const getServices = (
         .filter(service =>
           hasLocalization(service, servicesMetadata.byId, localization)
         )
-        .sort((a, b) =>
-          (a as any).value.service_name
-            .toLocaleLowerCase()
-            .localeCompare((b as any).value.service_name.toLocaleLowerCase())
+        .sort(
+          (a, b) =>
+            pot.isSome(a) && pot.isSome(b)
+              ? a.value.service_name
+                  .toLocaleLowerCase()
+                  .localeCompare(b.value.service_name.toLocaleLowerCase())
+              : 0
         );
 
       return {
