@@ -29,7 +29,7 @@ const customVariables = Object.assign(materialVariables, {
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
-  btnLightBorderColor: "#E6E9F2",
+  btnLightBorderColor: "#AEB5BF",
 
   // Color
   brandPrimary: "#0066CC",

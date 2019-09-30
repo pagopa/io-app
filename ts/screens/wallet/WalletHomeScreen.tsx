@@ -10,6 +10,7 @@ import * as React from "react";
 import { Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
+  NavigationEvents,
   NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
@@ -17,9 +18,12 @@ import {
 import { connect } from "react-redux";
 
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
@@ -53,6 +57,7 @@ type OwnProps = Readonly<{
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
+  LightModalContextInterface &
   OwnProps;
 
 const styles = StyleSheet.create({
@@ -122,18 +127,34 @@ const styles = StyleSheet.create({
  */
 class WalletHomeScreen extends React.Component<Props, never> {
   private navListener?: NavigationEventSubscription;
+
+  private showEmailVerificationModal = () =>
+    this.props.showModal(
+      <RemindEmailValidationOverlay
+        onClose={() => {
+          this.props.hideModal();
+          this.props.navigation.goBack();
+        }}
+        email={this.props.email}
+      />
+    );
+
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
-    // WIP WIP create pivotal story
-    this.props.loadWallets();
-    this.props.loadTransactions();
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "light-content",
-        customVariables.brandDarkGray
-      );
-    }); // tslint:disable-line no-object-mutation
+    // https://www.pivotaltracker.com/story/show/168836972
+
+    if (true) {
+      // TODO: add condition of email verification
+      this.props.loadWallets();
+      this.props.loadTransactions();
+      this.navListener = this.props.navigation.addListener("didFocus", () => {
+        setStatusBarColorAndBackground(
+          "light-content",
+          customVariables.brandDarkGray
+        );
+      }); // tslint:disable-line no-object-mutation
+    }
   }
 
   public componentWillUnmount() {
@@ -370,6 +391,11 @@ class WalletHomeScreen extends React.Component<Props, never> {
         footerContent={footerContent}
         refreshControl={walletRefreshControl}
       >
+        <NavigationEvents
+          onWillFocus={() => {
+            /*this.showEmailVerificationModal()*/
+          }} // TODO: add condition related to email validation
+        />
         {transactionContent}
       </WalletLayout>
     );
@@ -380,7 +406,8 @@ const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  readTransactions: transactionsReadSelector(state)
+  readTransactions: transactionsReadSelector(state),
+  email: "test@email.it" // TODO: get the proper email from store
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -404,4 +431,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(WalletHomeScreen);
+)(withLightModalContext(WalletHomeScreen));

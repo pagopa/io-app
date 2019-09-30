@@ -734,5 +734,11 @@ calendarEvents:
 reminders:
   emptyMonth: Non ci sono scadenze in questo mese
   loadMoreData: carica le scadenze del periodo precedente
+  email:
+    title: Ricorda di validare la tua email
+    modal1: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email. \n Ti abbiamo inviato una email a"
+    modal2: "apri il tuo client di posta e clicca semplicemente sul link."
+    button1: Invia una nuova email di validazione
+    button2: Modifica indirizzo email
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
