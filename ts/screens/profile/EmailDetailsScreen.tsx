@@ -1,14 +1,21 @@
 // TODO: evaluate if substitute with EmailScreen introduced with https://github.com/teamdigitale/io-app/pull/1308/
 // or just create a component to rendere its content
 
+// TODO: shift the modal from the footer button here to the proper screens
+
+// TODO: add contextual help
+
 import { Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H5 from "../../components/ui/H5";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
@@ -16,7 +23,9 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & ReturnType<typeof mapStateToProps>;
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  LightModalContextInterface;
 
 class EmailDetailsScreen extends React.PureComponent<Props> {
   public render() {
@@ -27,7 +36,7 @@ class EmailDetailsScreen extends React.PureComponent<Props> {
             <View spacer={true} />
             <Text>Indirizzo email personale</Text>
             <View spacer={true} />
-            <H5>{this.props.email}</H5> 
+            <H5>{this.props.email}</H5>
             <View spacer={true} />
             <Text>
               {`Puoi modificare questo indirizzo, che dovraivalidare cliccando su un link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che dipendono dalla email (pagamenti, inoltro messaggi, etc.) saranno disattivate. \n`}
@@ -44,7 +53,10 @@ class EmailDetailsScreen extends React.PureComponent<Props> {
           type={"SingleButton"}
           leftButton={{
             bordered: true,
-            onPress: () => {},
+            onPress: () =>
+              this.props.showModal(
+                <RemindEmailValidationOverlay onClose={this.props.hideModal} />
+              ),
             title: "Modifica indirizzo email"
           }}
         />
@@ -53,10 +65,12 @@ class EmailDetailsScreen extends React.PureComponent<Props> {
   }
 }
 
-function mapStateToProps (state: GlobalState) {
+function mapStateToProps(state: GlobalState) {
   return {
-    email: 'test@email.it'   // TODO: add email
-  }
+    email: "test@email.it" // TODO: add email
+  };
 }
 
-export default connect(mapStateToProps)(EmailDetailsScreen);
+export default connect(mapStateToProps)(
+  withLightModalContext(EmailDetailsScreen)
+);
