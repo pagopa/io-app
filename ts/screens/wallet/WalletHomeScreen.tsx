@@ -154,6 +154,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
           customVariables.brandDarkGray
         );
       }); // tslint:disable-line no-object-mutation
+    } else {
+      this.showEmailVerificationModal()
     }
   }
 
