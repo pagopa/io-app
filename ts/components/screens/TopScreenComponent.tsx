@@ -9,10 +9,6 @@ interface OwnProps {
   headerTitle?: string;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
-  customRightIcon?: {
-    iconName: string;
-    onPress: () => void;
-  };
 }
 
 type BaseScreenComponentProps =
@@ -40,8 +36,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
       contextualHelp,
       headerBody,
       isSearchAvailable,
-      searchType,
-      customRightIcon
+      searchType
     } = this.props;
 
     return (
@@ -54,7 +49,6 @@ class TopScreenComponent extends React.PureComponent<Props> {
         headerBody={headerBody}
         isSearchAvailable={isSearchAvailable}
         searchType={searchType}
-        customRightIcon={customRightIcon}
       >
         {this.props.children}
       </BaseScreenComponent>

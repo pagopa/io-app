@@ -9,13 +9,10 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H5 from "../../components/ui/H5";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
@@ -24,8 +21,7 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps &
-  ReturnType<typeof mapStateToProps> &
-  LightModalContextInterface;
+  ReturnType<typeof mapStateToProps>;
 
 class EmailDetailsScreen extends React.PureComponent<Props> {
   public render() {
@@ -53,10 +49,7 @@ class EmailDetailsScreen extends React.PureComponent<Props> {
           type={"SingleButton"}
           leftButton={{
             bordered: true,
-            onPress: () =>
-              this.props.showModal(
-                <RemindEmailValidationOverlay onClose={this.props.hideModal} />
-              ),
+            onPress: () => {/* TODO */},
             title: "Modifica indirizzo email"
           }}
         />
@@ -71,6 +64,4 @@ function mapStateToProps(state: GlobalState) {
   };
 }
 
-export default connect(mapStateToProps)(
-  withLightModalContext(EmailDetailsScreen)
-);
+export default connect(mapStateToProps)(EmailDetailsScreen);
