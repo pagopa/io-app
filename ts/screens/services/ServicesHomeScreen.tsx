@@ -33,6 +33,7 @@ import {
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
+import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   activeTextStyle: {
-    fontFamily: "TitilliumWeb-Bold",
+    ...makeFontStyleObject(Platform.select, "600"),
     fontSize: Platform.OS === "android" ? 16 : undefined,
     fontWeight: Platform.OS === "android" ? "normal" : "bold"
   },
