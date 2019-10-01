@@ -323,7 +323,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     fullStyle: StyleProp<ViewStyle>,
     landscapeStyle: StyleProp<ViewStyle>,
     isLandscape: boolean,
-    onPress?: () => void
+    selectable: boolean = false
   ) {
     return (
       <Text
@@ -334,7 +334,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             ? [styles.landscapeText, landscapeStyle]
             : [styles.fullText, fullStyle]
         ]}
-        onPress={onPress}
+        selectable={selectable}
       >
         {content.toUpperCase()}
       </Text>
@@ -356,7 +356,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           styles.fullFiscalCodeText,
           styles.landscapeFiscalCodeText,
           isLandscape,
-          () => Clipboard.setString(fiscalCode.toUpperCase())
+          true
         )}
 
         {this.renderItem(
