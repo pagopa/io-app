@@ -10,7 +10,6 @@ import {
   Alert,
   Image,
   Linking,
-  Platform,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
@@ -120,14 +119,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   }
 
   private goBack = () => this.props.navigation.goBack();
-
-  private openPhoneDialer = (phone: string) => {
-    if (Platform.OS === "android") {
-      Linking.openURL(`tel:${phone}`).then(() => 0, () => 0);
-    } else {
-      Linking.openURL(`telprompt:${phone}`).then(() => 0, () => 0);
-    }
-  };
 
   /**
    * Dispatches a profileUpsertRequest to trigger an asynchronous update of the
@@ -457,7 +448,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               )}
             {phone &&
               renderInformationRow(I18n.t("services.contactPhone"), phone, () =>
-                this.openPhoneDialer(phone)
+                Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
               )}
             {email &&
               renderInformationRow("Email", email, () =>
