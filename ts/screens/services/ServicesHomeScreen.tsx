@@ -7,15 +7,7 @@
 import { left } from "fp-ts/lib/Either";
 import { Option, some, Some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  Button,
-  Content,
-  Tab,
-  TabHeading,
-  Tabs,
-  Text,
-  View
-} from "native-base";
+import { Button, Content, Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -144,6 +136,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: customVariables.fontSizeSmall
+  },
   center: {
     alignItems: "center"
   },
