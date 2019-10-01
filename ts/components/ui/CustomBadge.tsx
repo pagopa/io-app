@@ -11,11 +11,13 @@ type Props = {
 export default class CustomBadge extends React.PureComponent<Props> {
   public render() {
     return (
-      <Badge style={this.props.badgeStyle}>
-        <Text badge={true} style={this.props.textStyle}>
-          {this.props.badgeValue}
-        </Text>
-      </Badge>
+      this.props.badgeValue > 0 && (
+        <Badge style={this.props.badgeStyle}>
+          <Text badge={true} style={this.props.textStyle}>
+            {this.props.badgeValue}
+          </Text>
+        </Badge>
+      )
     );
   }
 }
