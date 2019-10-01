@@ -12,7 +12,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
-  Clipboard,
   Dimensions,
   Image,
   StyleProp,
