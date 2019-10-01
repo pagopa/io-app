@@ -1,7 +1,5 @@
 ---
 global:
-  alert:
-    call: "Do you want to call {{SERVICE_NAME}}?"
   localization:
     decimalSeparator: "."
   date:
