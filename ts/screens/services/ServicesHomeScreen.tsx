@@ -5,7 +5,7 @@
  * - All: local and national services sections, not including the user areas of interest
  */
 import { left } from "fp-ts/lib/Either";
-import { Option, some, Some } from "fp-ts/lib/Option";
+import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import {
   Button,
@@ -174,6 +174,9 @@ const styles = StyleSheet.create({
   buttonBarRight: {
     flex: 2,
     marginStart: 5
+  },
+  icon: {
+    paddingHorizontal: (24 - 17) / 2 // (io-right icon width) - (io-trash icon width)
   }
 });
 
@@ -522,16 +525,23 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => {
     const onPressItem = () => {
       if (this.props.userMetadata && this.props.selectedOrganizations) {
-        this.props.removeSelectedOrgnizationItem(
+        const updatedAreasOfInterest = this.props.selectedOrganizations.filter(
+          item => item !== section.organizationFiscalCode
+        );
+        this.props.saveSelectedOrganizationItems(
           this.props.userMetadata,
-          this.props.selectedOrganizations,
-          section.organizationFiscalCode
+          updatedAreasOfInterest
         );
       }
     };
     return (
       <TouchableOpacity onPress={onPressItem}>
-        <IconFont name={"io-trash"} color={"#C7D1D9"} size={17} />
+        <IconFont
+          name={"io-trash"}
+          color={"#C7D1D9"}
+          size={17}
+          style={styles.icon}
+        />
       </TouchableOpacity>
     );
   };
@@ -797,7 +807,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   saveSelectedOrganizationItems: (
     userMetadata: UserMetadata,
-    selectedItemIds: Some<Set<string>>
+    selectedItemIds: ReadonlyArray<string>
   ) => {
     const metadata = userMetadata.metadata;
     dispatch(
@@ -807,28 +817,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         version: (userMetadata.version as number) + 1,
         metadata: {
           ...metadata,
-          organizationsOfInterest: Array.from(selectedItemIds.value)
-        }
-      })
-    );
-  },
-  removeSelectedOrgnizationItem: (
-    userMetadata: UserMetadata,
-    selectedOrganizations: ReadonlyArray<string>,
-    selectedOrganizationId: string
-  ) => {
-    const metadata = userMetadata.metadata;
-    const updatedAreasOfInterest = selectedOrganizations.filter(
-      item => item !== selectedOrganizationId
-    );
-    dispatch(
-      userMetadataUpsert.request({
-        ...userMetadata,
-        // tslint:disable-next-line: no-useless-cast
-        version: (userMetadata.version as number) + 1,
-        metadata: {
-          ...metadata,
-          organizationsOfInterest: updatedAreasOfInterest
+          organizationsOfInterest: selectedItemIds
         }
       })
     );
@@ -860,9 +849,10 @@ const mergeProps = (
     selectedItemIds: Option<Set<string>>
   ) => {
     if (selectedItemIds.isSome() && stateProps.userMetadata) {
+      const updatedAreasOfInterest = Array.from(selectedItemIds.value);
       dispatchProps.saveSelectedOrganizationItems(
         stateProps.userMetadata,
-        selectedItemIds
+        updatedAreasOfInterest
       );
     }
   };
