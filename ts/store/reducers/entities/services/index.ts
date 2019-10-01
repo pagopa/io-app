@@ -11,7 +11,7 @@ import { isVisibleService } from "../../../../utils/services";
 import { Action } from "../../../actions/types";
 import { ServiceMetadataById, servicesMetadataSelector } from "../../content";
 import { GlobalState } from "../../types";
-import { organizationsOfInterestSelector } from "../../userMetadata";
+import { userMetadataSelector } from "../../userMetadata";
 import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
@@ -63,6 +63,37 @@ const reducer = combineReducers<ServicesState, Action>({
 
 // Selectors
 export const servicesSelector = (state: GlobalState) => state.entities.services;
+
+// A selector to get the organizations selected by the user as areas of interests
+export const organizationsOfInterestSelector = createSelector(
+  [userMetadataSelector, servicesSelector],
+  (potUserMetadata, services) => {
+    const visibleServices = services.visible;
+    // If the user never select areas of interest, return an undefined object
+    return pot.toUndefined(
+      pot.map(
+        potUserMetadata,
+        _ =>
+          // filter organization by selecting those ones have
+          // at least 1 visible service inside
+          _.metadata.organizationsOfInterest && pot.isSome(visibleServices)
+            ? _.metadata.organizationsOfInterest.filter(org => {
+                const organizationServices = services.byOrgFiscalCode[org];
+                return (
+                  organizationServices &&
+                  visibleServices.value.findIndex(
+                    s =>
+                      organizationServices.findIndex(
+                        os => os === s.service_id
+                      ) !== -1
+                  )
+                );
+              })
+            : []
+      )
+    );
+  }
+);
 
 // Selector to get if services content and metadata are still being loaded
 export const isLoadingServicesSelector = createSelector(
