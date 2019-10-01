@@ -32,6 +32,7 @@ import {
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
+import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     color: customVariables.headerFontColor
   },
   activeTextStyle: {
-    fontFamily: "TitilliumWeb-Bold",
+    ...makeFontStyleObject(Platform.select, "600"),
     fontSize: Platform.OS === "android" ? 16 : undefined,
     fontWeight: Platform.OS === "android" ? "normal" : "bold"
   },
