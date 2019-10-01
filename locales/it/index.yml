@@ -29,7 +29,6 @@ global:
     close: Chiudi
     exit: Esci
     saveSelection: Salva la selezione
-    call: Chiama
   navigator:
     messages: messaggi
     wallet: portafoglio
