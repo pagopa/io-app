@@ -150,10 +150,6 @@ const styles = StyleSheet.create({
     marginVertical: (cardWidthL - contentWidth) / 2
   },
 
-  touchableFiscalCode: {
-    position: "absolute"
-  },
-
   fullText: {
     position: "absolute",
     fontSize: textFontSizeF,
