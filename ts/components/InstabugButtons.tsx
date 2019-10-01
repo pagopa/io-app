@@ -75,6 +75,16 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
     ]);
   };
 
+  // This method update the badgeValue state
+  private handleUpdateBadge = () => {
+    Replies.getUnreadRepliesCount(count => {
+      this.setState({
+        badgeValue: count
+      });
+      // return count;
+    });
+  };
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -97,13 +107,11 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
         }
       }
     );
+    this.handleUpdateBadge();
+  }
 
-    Replies.getUnreadRepliesCount(count => {
-      this.setState({
-        badgeValue: count
-      });
-      return count;
-    });
+  public componentWillMount(): void {
+    this.handleUpdateBadge();
   }
 
   public render() {
