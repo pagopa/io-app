@@ -12,11 +12,11 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
+  Clipboard,
   Dimensions,
   Image,
   StyleProp,
   StyleSheet,
-  TouchableHighlight,
   ViewStyle
 } from "react-native";
 import Barcode from "react-native-barcode-builder";
@@ -24,7 +24,6 @@ import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
-import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 import { extractFiscalCodeData } from "../utils/profile";
 
 interface BaseProps {
@@ -327,7 +326,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     content: string,
     fullStyle: StyleProp<ViewStyle>,
     landscapeStyle: StyleProp<ViewStyle>,
-    isLandscape: boolean
+    isLandscape: boolean,
+    onPress?: () => void
   ) {
     return (
       <Text
@@ -338,6 +338,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             ? [styles.landscapeText, landscapeStyle]
             : [styles.fullText, fullStyle]
         ]}
+        onPress={onPress}
       >
         {content.toUpperCase()}
       </Text>
@@ -354,19 +355,13 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
     return (
       <React.Fragment>
-        <TouchableHighlight
-          onPress={() =>
-            clipboardSetStringWithFeedback(fiscalCode.toUpperCase())
-          }
-          style={[styles.touchableFiscalCode]}
-        >
-          {this.renderItem(
-            fiscalCode,
-            styles.fullFiscalCodeText,
-            styles.landscapeFiscalCodeText,
-            isLandscape
-          )}
-        </TouchableHighlight>
+        {this.renderItem(
+          fiscalCode,
+          styles.fullFiscalCodeText,
+          styles.landscapeFiscalCodeText,
+          isLandscape,
+          () => Clipboard.setString(fiscalCode.toUpperCase())
+        )}
 
         {this.renderItem(
           profile.family_name,

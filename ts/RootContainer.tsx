@@ -1,3 +1,4 @@
+import { Root } from "native-base";
 import * as React from "react";
 import {
   AppState,
@@ -118,7 +119,7 @@ class RootContainer extends React.PureComponent<Props> {
     //        screen, we can make this screen blue based on
     //        the redux state (i.e. background)
     return (
-      <React.Fragment>
+      <Root>
         <StatusBar barStyle="dark-content" />
         {Platform.OS === "android" && (
           <FlagSecureComponent
@@ -129,7 +130,7 @@ class RootContainer extends React.PureComponent<Props> {
         <Navigation />
         <IdentificationModal />
         <LightModalRoot />
-      </React.Fragment>
+      </Root>
     );
   }
 }

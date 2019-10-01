@@ -1,4 +1,4 @@
-import { Root, StyleProvider } from "native-base";
+import { StyleProvider } from "native-base";
 import * as React from "react";
 import { MenuProvider } from "react-native-popup-menu";
 import { Provider } from "react-redux";
@@ -20,13 +20,11 @@ export const App: React.SFC<never> = () => (
   <StyleProvider style={theme()}>
     <Provider store={store}>
       <PersistGate loading={undefined} persistor={persistor}>
-        <Root>
-          <LightModalProvider>
-            <MenuProvider>
-              <RootContainer />
-            </MenuProvider>
-          </LightModalProvider>
-        </Root>
+        <LightModalProvider>
+          <MenuProvider>
+            <RootContainer />
+          </MenuProvider>
+        </LightModalProvider>
       </PersistGate>
     </Provider>
   </StyleProvider>
