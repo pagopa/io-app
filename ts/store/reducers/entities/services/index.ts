@@ -86,7 +86,7 @@ export const organizationsOfInterestSelector = createSelector(
                       organizationServices.findIndex(
                         os => os === s.service_id
                       ) !== -1
-                  )
+                  ) !== -1
                 );
               })
             : []
