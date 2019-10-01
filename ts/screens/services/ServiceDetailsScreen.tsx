@@ -122,14 +122,14 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   private goBack = () => this.props.navigation.goBack();
 
   private openPhoneDialer = (service: ServicePublic, phone: string) => {
+    const serviceName = service.service_name;
     if (Platform.OS === "android") {
       Linking.openURL(`tel:${phone}`).then(() => 0, () => 0);
     } else {
       Alert.alert(
-        I18n.t("global.alert.call").replace(
-          new RegExp("#", "g"),
-          service.service_name
-        ),
+        I18n.t("global.alert.call", {
+          serviceName
+        }),
         "",
         [
           {
@@ -137,7 +137,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             style: "cancel"
           },
           {
-            text: I18n.t("global.buttons.call"),
+            text: I18n.t("global.buttons.ok"),
             style: "default",
             onPress: () =>
               Linking.openURL(`telprompt:${phone}`).then(() => 0, () => 0)
