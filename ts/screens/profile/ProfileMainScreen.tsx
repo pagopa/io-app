@@ -417,10 +417,11 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   this.props.dispatchSessionExpired,
                   true
                 )}
-                {/* end list */}
-                <EdgeBorderComponent />
               </React.Fragment>
             )}
+
+            {/* end list */}
+            <EdgeBorderComponent />
           </List>
         </ScrollView>
       );
