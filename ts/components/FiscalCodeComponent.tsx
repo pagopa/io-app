@@ -321,7 +321,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     content: string,
     fullStyle: StyleProp<ViewStyle>,
     landscapeStyle: StyleProp<ViewStyle>,
-    isLandscape: boolean
+    isLandscape: boolean,
+    selectable: boolean = false
   ) {
     return (
       <Text
@@ -332,6 +333,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             ? [styles.landscapeText, landscapeStyle]
             : [styles.fullText, fullStyle]
         ]}
+        selectable={selectable}
       >
         {content.toUpperCase()}
       </Text>
@@ -343,18 +345,17 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     municipality: MunicipalityState,
     isLandscape: boolean
   ) {
-    const fiscalCodeData = extractFiscalCodeData(
-      profile.fiscal_code,
-      municipality
-    );
+    const fiscalCode = profile.fiscal_code;
+    const fiscalCodeData = extractFiscalCodeData(fiscalCode, municipality);
 
     return (
       <React.Fragment>
         {this.renderItem(
-          profile.fiscal_code,
+          fiscalCode,
           styles.fullFiscalCodeText,
           styles.landscapeFiscalCodeText,
-          isLandscape
+          isLandscape,
+          true
         )}
 
         {this.renderItem(
