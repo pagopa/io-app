@@ -81,6 +81,7 @@ import {
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { getLogoForOrganization } from "../../utils/organizations";
+import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 import {
@@ -109,6 +110,7 @@ type State = {
   enableHeaderAnimation: boolean;
   isLongPressEnabled: boolean;
   enableServices: boolean;
+  isWaitingForToast: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -192,7 +194,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       currentTabServicesId: [],
       enableHeaderAnimation: false,
       isLongPressEnabled: false,
-      enableServices: false
+      enableServices: false,
+      isWaitingForToast: false
     };
   }
 
@@ -312,8 +315,16 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         });
       });
     }
-    if (!prevState.enableHeaderAnimation && !this.props.isLoading) {
+    if (!prevState.enableHeaderAnimation && !this.props.isLoadingservices) {
       this.setState({ enableHeaderAnimation: true });
+    }
+
+    if (
+      prevState.isWaitingForToast === true &&
+      pot.isError(this.props.potUserMetadata)
+    ) {
+      this.setState({ isWaitingForToast: false });
+      showToast(I18n.t("global.genericError"), "danger");
     }
   }
 
@@ -411,7 +422,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       selectableOrganizations,
       hideModal,
       selectedOrganizations,
-      isLoading
+      isLoadingservices
     } = this.props;
     this.props.showModal(
       <ChooserListContainer<Organization>
@@ -425,7 +436,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         onCancel={hideModal}
         onSave={this.onSaveAreasOfInterest}
         isRefreshEnabled={false}
-        isRefreshing={isLoading}
+        isRefreshing={isLoadingservices}
         matchingTextPredicate={this.organizationContainsText}
         noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
         noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
@@ -436,6 +447,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private onSaveAreasOfInterest = (
     selectedFiscalCodes: Option<Set<string>>
   ) => {
+    this.setState({ isWaitingForToast: true });
     this.props.dispatchUpdateOrganizationsOfInterestMetadata(
       selectedFiscalCodes
     );
@@ -528,6 +540,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         const updatedAreasOfInterest = this.props.selectedOrganizations.filter(
           item => item !== section.organizationFiscalCode
         );
+        this.setState({ isWaitingForToast: true });
         this.props.saveSelectedOrganizationItems(
           this.props.userMetadata,
           updatedAreasOfInterest
@@ -606,7 +619,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             isLocal={true}
             sections={this.props.localTabSections}
             profile={this.props.profile}
-            isRefreshing={this.props.isLoading}
+            isRefreshing={
+              this.props.isLoadingservices || this.props.isLoadingUserMetadata
+            }
             onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
@@ -647,7 +662,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <ServicesSectionsList
             sections={this.props.nationalTabSections}
             profile={this.props.profile}
-            isRefreshing={this.props.isLoading}
+            isRefreshing={this.props.isLoadingservices}
             onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
@@ -683,7 +698,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <ServicesSectionsList
             sections={this.props.allTabSections}
             profile={this.props.profile}
-            isRefreshing={this.props.isLoading}
+            isRefreshing={this.props.isLoadingservices}
             onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
@@ -714,8 +729,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => {
   const potUserMetadata = userMetadataSelector(state);
-  // TODO: disable selection of areas of interest if the user metadata are not loaded
-  // (it causes the new selection is not loaded) https://www.pivotaltracker.com/story/show/168312476
   const userMetadata = pot.getOrElse(potUserMetadata, undefined);
 
   const localServicesSections = localServicesSectionsSelector(state);
@@ -764,7 +777,8 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     selectableOrganizations,
     selectedOrganizations: organizationsOfInterestSelector(state),
-    isLoading: isLoadingServicesSelector(state),
+    isLoadingservices: isLoadingServicesSelector(state),
+    isLoadingUserMetadata: pot.isLoading(potUserMetadata),
     isFirstServiceLoadCompleted: isFirstVisibleServiceLoadCompletedSelector(
       state
     ),
@@ -776,6 +790,7 @@ const mapStateToProps = (state: GlobalState) => {
     tabsServicesId,
     wasServiceAlertDisplayedOnce: wasServiceAlertDisplayedOnceSelector(state),
     servicesById: servicesByIdSelector(state),
+    potUserMetadata,
     userMetadata
   };
 };
