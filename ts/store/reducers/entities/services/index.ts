@@ -8,24 +8,26 @@ import { ServicePublic } from "../../../../../definitions/backend/ServicePublic"
 import { ScopeEnum } from "../../../../../definitions/content/Service";
 import { isDefined } from "../../../../utils/guards";
 import { Action } from "../../../actions/types";
-import { ServiceMetadataById, servicesMetadataSelector } from "../../content";
+import {
+  ServiceMetadataById,
+  servicesMetadataByIdSelector,
+  servicesMetadataSelector
+} from "../../content";
 import { GlobalState } from "../../types";
 import { organizationsOfInterestSelector } from "../../userMetadata";
 import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../organizations/organizationsByFiscalCodeReducer";
-import {
-  firstLoadingReducer,
-  FirstLoadingState,
-  isVisibleServicesContentLoadCompletedSelector,
-  isVisibleServicesMetadataLoadCompletedSelector
-} from "./firstServicesLoading";
+import { firstLoadingReducer, FirstLoadingState } from "./firstServicesLoading";
 import readServicesByIdReducer, {
   readServicesByIdSelector,
   ReadStateByServicesId
 } from "./readStateByServiceId";
-import servicesByIdReducer, { ServicesByIdState } from "./servicesById";
+import servicesByIdReducer, {
+  servicesByIdSelector,
+  ServicesByIdState
+} from "./servicesById";
 import {
   serviceIdsByOrganizationFiscalCodeReducer,
   ServiceIdsByOrganizationFiscalCodeState
@@ -62,6 +64,67 @@ const reducer = combineReducers<ServicesState, Action>({
 
 // Selectors
 export const servicesSelector = (state: GlobalState) => state.entities.services;
+
+// TODO: the following 3 seletors (isVisibleServicesContentLoadCompletedSelector,
+// isAnyServicesContentLoadFailedSelector, isVisibleServicesMetadataLoadCompletedSelector)
+// could be integrated giving as output a pot instead of a bool
+export const isVisibleServicesContentLoadCompletedSelector = createSelector(
+  [servicesByIdSelector, visibleServicesSelector],
+  (servicesById, visibleServices) => {
+    if (!pot.isSome(visibleServices)) {
+      return false;
+    }
+    const servicesLoading = visibleServices.value.findIndex(service => {
+      const serviceContent = servicesById[service.service_id];
+      return serviceContent === undefined || pot.isLoading(serviceContent);
+    });
+    return servicesLoading === -1;
+  }
+);
+
+export const isAnyServicesContentLoadFailedSelector = createSelector(
+  [
+    visibleServicesSelector,
+    isFirstVisibleServiceLoadCompletedSelector,
+    isVisibleServicesContentLoadCompletedSelector,
+    servicesByIdSelector
+  ],
+  (
+    visibleServices,
+    isFirstServiceLoading,
+    isVisibleServicesContentLoadCompleted,
+    servicesById
+  ) => {
+    if (
+      pot.isNone(isFirstServiceLoading) &&
+      pot.isSome(visibleServices) &&
+      isVisibleServicesContentLoadCompleted
+    ) {
+      return (
+        visibleServices.value.findIndex(service => {
+          const serviceContent = servicesById[service.service_id];
+          return serviceContent !== undefined && pot.isError(serviceContent);
+        }) !== -1
+      );
+    } else {
+      return undefined;
+    }
+  }
+);
+
+export const isVisibleServicesMetadataLoadCompletedSelector = createSelector(
+  [servicesMetadataByIdSelector, visibleServicesSelector],
+  (servicesMetadataById, visibleServices) => {
+    if (!pot.isSome(visibleServices)) {
+      return false;
+    }
+    const servicesLoading = visibleServices.value.findIndex(service => {
+      const serviceMetadata = servicesMetadataById[service.service_id];
+      return serviceMetadata === undefined || pot.isLoading(serviceMetadata);
+    });
+    return servicesLoading === -1;
+  }
+);
 
 // Selector to get if services content and metadata are still being loaded
 export const isLoadingServicesSelector = createSelector(

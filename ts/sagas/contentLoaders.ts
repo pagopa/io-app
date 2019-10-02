@@ -21,10 +21,10 @@ import {
   markServiceAsRead
 } from "../store/actions/services";
 import {
-  isFirstVisibleServiceLoadCompletedSelector,
   isVisibleServicesContentLoadCompletedSelector,
   isVisibleServicesMetadataLoadCompletedSelector
-} from "../store/reducers/entities/services/firstServicesLoading";
+} from "../store/reducers/entities/services";
+import { isFirstVisibleServiceLoadCompletedSelector } from "../store/reducers/entities/services/firstServicesLoading";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
 

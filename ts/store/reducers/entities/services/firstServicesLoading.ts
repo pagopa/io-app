@@ -88,31 +88,3 @@ export const isFirstVisibleServiceLoadCompletedSelector = (
   state: GlobalState
 ): pot.Pot<boolean, Error> =>
   state.entities.services.firstLoading.isFirstServicesLoadingCompleted;
-
-export const isVisibleServicesContentLoadCompletedSelector = createSelector(
-  [servicesByIdSelector, visibleServicesSelector],
-  (servicesById, visibleServices) => {
-    if (!pot.isSome(visibleServices)) {
-      return false;
-    }
-    const servicesLoading = visibleServices.value.findIndex(service => {
-      const serviceContent = servicesById[service.service_id];
-      return serviceContent === undefined || pot.isLoading(serviceContent);
-    });
-    return servicesLoading === -1;
-  }
-);
-
-export const isVisibleServicesMetadataLoadCompletedSelector = createSelector(
-  [servicesMetadataByIdSelector, visibleServicesSelector],
-  (servicesMetadataById, visibleServices) => {
-    if (!pot.isSome(visibleServices)) {
-      return false;
-    }
-    const servicesLoading = visibleServices.value.findIndex(service => {
-      const serviceMetadata = servicesMetadataById[service.service_id];
-      return serviceMetadata === undefined || pot.isLoading(serviceMetadata);
-    });
-    return servicesLoading === -1;
-  }
-);

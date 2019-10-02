@@ -44,6 +44,7 @@ import {
 } from "../../store/actions/userMetadata";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
+  isAnyServicesContentLoadFailedSelector,
   isLoadingServicesSelector,
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
@@ -238,10 +239,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   // tslint:disable-next-line: readonly-array
   private scollPositions: number[] = [0, 0, 0];
 
-  private renderErrorContent() {
+  private renderErrorContent(onRetry: () => void) {
     return (
       <React.Fragment>
-        <Content>
+        <Content bounces={false}>
           <View style={styles.center}>
             <View spacer={true} extralarge={true} />
             <Image
@@ -264,7 +265,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           leftButton={{
             block: true,
             primary: true,
-            onPress: this.props.retryUserMetadataLoad,
+            onPress: onRetry,
             title: I18n.t("global.buttons.retry")
           }}
         />
@@ -501,13 +502,15 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             />
             {pot.isSome(this.props.isFirstServiceLoadCompleted) ||
             pot.isError(this.props.isFirstServiceLoadCompleted)
-              ? this.renderTabs()
+              ? this.props.isServicesContentLoadFailed
+                ? this.renderErrorContent(this.props.refreshServices)
+                : this.renderTabs()
               : this.renderFirstServiceLoadingContent()}
             {this.state.isLongPressEnabled &&
               this.renderLongPressFooterButtons()}
           </React.Fragment>
         ) : (
-          this.renderErrorContent()
+          this.renderErrorContent(this.props.retryUserMetadataLoad)
         )}
       </TopScreenComponent>
     );
@@ -722,6 +725,7 @@ const mapStateToProps = (state: GlobalState) => {
     isFirstServiceLoadCompleted: isFirstVisibleServiceLoadCompletedSelector(
       state
     ),
+    isServicesContentLoadFailed: isAnyServicesContentLoadFailedSelector(state),
     profile: profileSelector(state),
     readServices: readServicesByIdSelector(state),
     localTabSections,
