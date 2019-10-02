@@ -74,7 +74,7 @@ export function* loadServiceRequestHandler(
       const isServicesContentLoadFailed =
         visibleServices.value.findIndex(service => {
           const serviceContent = servicesById[service.service_id];
-          return serviceContent && pot.isError(serviceContent);
+          return serviceContent !== undefined && pot.isError(serviceContent);
         }) !== -1;
 
       if (isServicesContentLoadFailed) {
