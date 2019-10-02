@@ -68,7 +68,10 @@ export const servicesSelector = (state: GlobalState) => state.entities.services;
 export const organizationsOfInterestSelector = createSelector(
   [userMetadataSelector, servicesSelector],
   (potUserMetadata, services) => {
-    const visibleServices = services.visible;
+    const visibleServices = new Set(
+      pot.getOrElse(services.visible, []).map(_ => _.service_id)
+    );
+
     // If the user never select areas of interest, return an undefined object
     return pot.toUndefined(
       pot.map(
@@ -76,17 +79,12 @@ export const organizationsOfInterestSelector = createSelector(
         _ =>
           // filter organization by selecting those ones have
           // at least 1 visible service inside
-          _.metadata.organizationsOfInterest && pot.isSome(visibleServices)
+          _.metadata.organizationsOfInterest
             ? _.metadata.organizationsOfInterest.filter(org => {
-                const organizationServices = services.byOrgFiscalCode[org];
-                return (
-                  organizationServices &&
-                  visibleServices.value.findIndex(
-                    s =>
-                      organizationServices.findIndex(
-                        os => os === s.service_id
-                      ) !== -1
-                  ) !== -1
+                const organizationServices =
+                  services.byOrgFiscalCode[org] || [];
+                return organizationServices.some(serviceId =>
+                  visibleServices.has(serviceId)
                 );
               })
             : []
