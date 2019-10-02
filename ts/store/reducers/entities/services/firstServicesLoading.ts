@@ -2,19 +2,26 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
-import { firstServicesLoad } from "../../../actions/services";
+import {
+  firstServicesLoad,
+  loadVisibleServices
+} from "../../../actions/services";
 import { Action } from "../../../actions/types";
+import {
+  userMetadataLoad,
+  userMetadataUpsert
+} from "../../../actions/userMetadata";
 import { servicesMetadataByIdSelector } from "../../content";
 import { GlobalState } from "../../types";
 import { servicesByIdSelector } from "./servicesById";
 import { visibleServicesSelector } from "./visibleServices";
 
 export type FirstLoadingState = Readonly<{
-  isFirstServicesLoadingCompleted: boolean;
+  isFirstServicesLoadingCompleted: pot.Pot<boolean, Error>;
 }>;
 
 const INITIAL_STATE: FirstLoadingState = {
-  isFirstServicesLoadingCompleted: false
+  isFirstServicesLoadingCompleted: pot.none
 };
 
 // Reducer
@@ -25,8 +32,50 @@ export const firstLoadingReducer = (
   switch (action.type) {
     case getType(firstServicesLoad.success): {
       return {
-        isFirstServicesLoadingCompleted: true
+        isFirstServicesLoadingCompleted: pot.some(true)
       };
+    }
+
+    case getType(firstServicesLoad.failure): {
+      return {
+        isFirstServicesLoadingCompleted: pot.toError(
+          state.isFirstServicesLoadingCompleted,
+          action.payload
+        )
+      };
+    }
+
+    case getType(loadVisibleServices.failure): {
+      if (pot.isNone(state.isFirstServicesLoadingCompleted)) {
+        return {
+          isFirstServicesLoadingCompleted: pot.toError(
+            state.isFirstServicesLoadingCompleted,
+            Error("Failed to load visibleServices")
+          )
+        };
+      }
+    }
+
+    case getType(userMetadataLoad.failure): {
+      if (pot.isNone(state.isFirstServicesLoadingCompleted)) {
+        return {
+          isFirstServicesLoadingCompleted: pot.toError(
+            state.isFirstServicesLoadingCompleted,
+            Error("Failed to load userMetadata")
+          )
+        };
+      }
+    }
+
+    case getType(userMetadataUpsert.failure): {
+      if (pot.isNone(state.isFirstServicesLoadingCompleted)) {
+        return {
+          isFirstServicesLoadingCompleted: pot.toError(
+            state.isFirstServicesLoadingCompleted,
+            Error("Failed to upsert userMetadata")
+          )
+        };
+      }
     }
 
     default:
@@ -37,7 +86,8 @@ export const firstLoadingReducer = (
 // Selectors
 export const isFirstVisibleServiceLoadCompletedSelector = (
   state: GlobalState
-) => state.entities.services.firstLoading.isFirstServicesLoadingCompleted;
+): pot.Pot<boolean, Error> =>
+  state.entities.services.firstLoading.isFirstServicesLoadingCompleted;
 
 export const isVisibleServicesContentLoadCompletedSelector = createSelector(
   [servicesByIdSelector, visibleServicesSelector],

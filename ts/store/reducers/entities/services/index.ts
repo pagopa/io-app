@@ -77,6 +77,7 @@ export const isLoadingServicesSelector = createSelector(
   ) =>
     pot.isLoading(visibleServices) ||
     (pot.isSome(visibleServices) &&
+      !pot.isError(visibleServices) &&
       (!isVisibleServicesContentLoadCompleted ||
         !isVisibleServicesMetadataLoadCompleted))
 );
@@ -242,7 +243,10 @@ export const servicesBadgeValueSelector = createSelector(
     readServicesById,
     isFirstVisibleServicesLoadCompleted
   ) => {
-    if (isFirstVisibleServicesLoadCompleted) {
+    if (
+      pot.isSome(isFirstVisibleServicesLoadCompleted) &&
+      isFirstVisibleServicesLoadCompleted.value === true
+    ) {
       const services: ReadonlyArray<ServicesSectionState> = [
         ...nationalService,
         ...localService

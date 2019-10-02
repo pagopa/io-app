@@ -492,14 +492,15 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <NavigationEvents
           onWillFocus={() => this.setState({ isLongPressEnabled: false })}
         />
-        {this.props.userMetadata ? (
+        {pot.isSome(this.props.potUserMetadata) ? (
           <React.Fragment>
             <ScreenContentHeader
               title={I18n.t("services.title")}
               icon={require("../../../img/icons/services-icon.png")}
               fixed={Platform.OS === "ios"}
             />
-            {this.props.isFirstServiceLoadCompleted
+            {pot.isSome(this.props.isFirstServiceLoadCompleted) ||
+            pot.isError(this.props.isFirstServiceLoadCompleted)
               ? this.renderTabs()
               : this.renderFirstServiceLoadingContent()}
             {this.state.isLongPressEnabled &&
@@ -729,6 +730,7 @@ const mapStateToProps = (state: GlobalState) => {
     tabsServicesId,
     wasServiceAlertDisplayedOnce: wasServiceAlertDisplayedOnceSelector(state),
     servicesById: servicesByIdSelector(state),
+    potUserMetadata,
     userMetadata
   };
 };

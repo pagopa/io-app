@@ -1,5 +1,6 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
+import * as pot from "italia-ts-commons/lib/pot";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
@@ -67,12 +68,13 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       yield put(contentServiceLoad.failure(serviceId));
     }
 
-    const isFirstServiceLoadingCompleted = yield select(
-      isFirstVisibleServiceLoadCompletedSelector
-    );
+    const isFirstServiceLoadingCompleted: pot.Pot<
+      boolean,
+      Error
+    > = yield select(isFirstVisibleServiceLoadCompletedSelector);
 
     // If the service content is loaded for the first time, the app shows the service list item without badge
-    if (!isFirstServiceLoadingCompleted) {
+    if (pot.isNone(isFirstServiceLoadingCompleted)) {
       yield put(markServiceAsRead(serviceId));
     }
 
@@ -90,7 +92,7 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
     //        more services content load fails  https://www.pivotaltracker.com/story/show/168451469
 
     if (
-      !isFirstServiceLoadingCompleted &&
+      pot.isNone(isFirstServiceLoadingCompleted) &&
       isVisibleServicesContentLoadingCompleted &&
       isVisibleServicesMetadataLoadingCompleted
     ) {

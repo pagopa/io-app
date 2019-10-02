@@ -20,8 +20,8 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 export const firstServicesLoad = createAsyncAction(
   "FIRST_SERVICES_LOAD_REQUEST",
   "FIRST_SERVICES_LOAD_SUCCESS",
-  "FIRT_SERVICES_LOAD_FAILURE"
-)<void, void, ReadonlyArray<ServiceId>>();
+  "FIRST_SERVICES_LOAD_FAILURE"
+)<void, void, Error>();
 
 //
 // load visible services

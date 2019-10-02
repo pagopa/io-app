@@ -15,10 +15,15 @@ import { ActionType, getType } from "typesafe-actions";
 import { UserMetadata as BackendUserMetadata } from "../../../definitions/backend/UserMetadata";
 import { BackendClient } from "../../api/backend";
 import TypedI18n from "../../i18n";
+import { loadVisibleServices } from "../../store/actions/services";
 import {
   userMetadataLoad,
   userMetadataUpsert
 } from "../../store/actions/userMetadata";
+import {
+  visibleServicesSelector,
+  VisibleServicesState
+} from "../../store/reducers/entities/services/visibleServices";
 import {
   backendUserMetadataToUserMetadata,
   emptyUserMetadata,
@@ -96,6 +101,15 @@ export function* loadUserMetadata(
   }
 
   yield put(userMetadataLoad.success(userMetadataOrError.value));
+
+  // If at startup the load of visible services had a previous fialure,
+  // it grants visible services is loaded again
+  const visibleServices: VisibleServicesState = yield select(
+    visibleServicesSelector
+  );
+  if (pot.isNone(visibleServices)) {
+    yield put(loadVisibleServices.request());
+  }
   return some(userMetadataOrError.value);
 }
 
