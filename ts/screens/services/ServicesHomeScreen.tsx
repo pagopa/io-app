@@ -7,15 +7,7 @@
 import { left } from "fp-ts/lib/Either";
 import { Option, some, Some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  Button,
-  Content,
-  Tab,
-  TabHeading,
-  Tabs,
-  Text,
-  View
-} from "native-base";
+import { Button, Content, Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -77,6 +69,7 @@ import {
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
+import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { getLogoForOrganization } from "../../utils/organizations";
@@ -142,6 +135,14 @@ const styles = StyleSheet.create({
   },
   organizationLogo: {
     marginBottom: 0
+  },
+  activeTextStyle: {
+    ...makeFontStyleObject(Platform.select, "600"),
+    fontSize: Platform.OS === "android" ? 16 : undefined,
+    fontWeight: Platform.OS === "android" ? "normal" : "bold"
+  },
+  textStyle: {
+    fontSize: customVariables.fontSizeSmall
   },
   center: {
     alignItems: "center"
@@ -595,13 +596,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         }
       >
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("services.tab.locals")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("services.tab.locals")}
         >
           <ServicesSectionsList
             isLocal={true}
@@ -636,13 +633,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           />
         </Tab>
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("services.tab.national")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("services.tab.national")}
         >
           <ServicesSectionsList
             sections={this.props.nationalTabSections}
@@ -672,13 +665,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           />
         </Tab>
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("services.tab.all")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("services.tab.all")}
         >
           <ServicesSectionsList
             sections={this.props.allTabSections}
