@@ -9,6 +9,7 @@ import {
   instabugReportClosed,
   instabugReportOpened
 } from "../store/actions/debug";
+import { instabugInfoLoad } from "../store/actions/instabug";
 import { Dispatch } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
@@ -108,6 +109,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
       }
     );
     this.handleUpdateBadge();
+    this.props.dispatchInstabugRequest();
   }
 
   public componentWillMount(): void {
@@ -153,7 +155,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIBReportOpen: (type: string) =>
     dispatch(instabugReportOpened({ type })),
   dispatchIBReportClosed: (type: string, how: string) =>
-    dispatch(instabugReportClosed({ type, how }))
+    dispatch(instabugReportClosed({ type, how })),
+  dispatchInstabugRequest: () => dispatch(instabugInfoLoad.request())
 });
 
 export const InstabugButtons = connect(

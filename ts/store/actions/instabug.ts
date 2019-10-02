@@ -11,4 +11,4 @@ export const instabugInfoLoad = createAsyncAction(
   "INSTABUG_INFO_LOAD_FAILURE"
 )<void, ServerInfo, Error>();
 
-export type BackendInfoActions = ActionType<typeof instabugInfoLoad>;
+export type InstabugInfoActions = ActionType<typeof instabugInfoLoad>;
