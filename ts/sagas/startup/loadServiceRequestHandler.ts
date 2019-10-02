@@ -41,19 +41,19 @@ export function* loadServiceRequestHandler(
     if (response.value.status === 200) {
       // If the organization fiscal code is associated to different organizazion names,
       // it is considered valid the one declared for a visible service
-      const visibleServices: VisibleServicesState = yield select(
-        visibleServicesSelector
-      );
-      const service = pot.some(response.value.value);
-      const isVisible = isVisibleService(visibleServices, service) || false;
 
       const organizations: OrganizationNamesByFiscalCodeState = yield select(
         organizationNamesByFiscalCodeSelector
       );
-      const fc = service.value.organization_fiscal_code;
 
       if (organizations) {
+        const service = pot.some(response.value.value);
+        const fc = service.value.organization_fiscal_code;
         const organization = organizations[fc];
+        const visibleServices: VisibleServicesState = yield select(
+          visibleServicesSelector
+        );
+        const isVisible = isVisibleService(visibleServices, service) || false;
         // If the organization has been previously saved in the organization entity,
         // the organization name  is updated only if the related service is visible
         if (!organization || (organization && isVisible)) {
