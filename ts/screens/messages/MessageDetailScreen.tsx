@@ -110,15 +110,6 @@ const styles = StyleSheet.create({
 });
 
 export class MessageDetailScreen extends React.PureComponent<Props, never> {
-  constructor(props: Props) {
-    super(props);
-
-    const { potMessage, refreshService } = this.props;
-    if (pot.isSome(potMessage)) {
-      refreshService(potMessage.value.sender_service_id);
-    }
-  }
-
   private goBack = () => this.props.navigation.goBack();
 
   private onServiceLinkPressHandler = (service: ServicePublic) => {
@@ -276,10 +267,19 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   public componentDidMount() {
+    const { potMessage, refreshService } = this.props;
+    if (pot.isSome(potMessage)) {
+      refreshService(potMessage.value.sender_service_id);
+    }
     this.setMessageReadState();
   }
 
-  public componentDidUpdate() {
+  public componentDidUpdate(prevProps: Props) {
+    const { potMessage, refreshService } = this.props;
+    const { potMessage: prevPotMessage } = prevProps;
+    if (!pot.isSome(prevPotMessage) && pot.isSome(potMessage)) {
+      refreshService(potMessage.value.sender_service_id);
+    }
     this.setMessageReadState();
   }
 
