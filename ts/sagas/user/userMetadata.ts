@@ -102,8 +102,8 @@ export function* loadUserMetadata(
 
   yield put(userMetadataLoad.success(userMetadataOrError.value));
 
-  // If at startup the load of visible services had a previous fialure,
-  // it grants visible services is loaded again
+  // If, at startup, the load of both user metadata and visible services fails,
+  // it grants visible services are loaded again
   const visibleServices: VisibleServicesState = yield select(
     visibleServicesSelector
   );

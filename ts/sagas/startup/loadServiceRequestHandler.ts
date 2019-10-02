@@ -52,8 +52,6 @@ export function* loadServiceRequestHandler(
   } catch {
     yield put(loadService.failure(action.payload));
 
-    // At startup, if any loadServiceSuccess, dispatch firstServicesLoad.failure
-
     // If at least one service content loading fails, the first services load is considered as failed
     const visibleServices: VisibleServicesState = yield select(
       visibleServicesSelector
