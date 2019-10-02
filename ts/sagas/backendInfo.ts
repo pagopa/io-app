@@ -29,7 +29,6 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
     return new Promise((resolve, _) =>
       backendPublicClient
         .getServerInfo({})
-
         .then(resolve, e => resolve(left([{ context: [], value: e }])))
     );
   }
