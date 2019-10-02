@@ -8,7 +8,6 @@ import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
-  Clipboard,
   Image,
   Linking,
   StyleSheet,
@@ -29,6 +28,7 @@ import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { openMaps } from "../../utils/openMaps";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
@@ -435,7 +435,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             {renderInformationRow(
               "C.F.",
               service.organization_fiscal_code,
-              () => Clipboard.setString(service.organization_fiscal_code)
+              () =>
+                clipboardSetStringWithFeedback(service.organization_fiscal_code)
             )}
             {address &&
               renderInformationRow(
@@ -463,7 +464,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               )}
             {this.props.isDebugModeEnabled &&
               renderInformationRow("ID", service.service_id, () =>
-                Clipboard.setString(service.service_id)
+                clipboardSetStringWithFeedback(service.service_id)
               )}
             <View spacer={true} extralarge={true} />
           </Grid>
