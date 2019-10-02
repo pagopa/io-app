@@ -11,6 +11,7 @@ import {
 import customVariables from "../theme/variables";
 import { ComponentProps } from "../types/react";
 import ChooserListItem from "./ChooserListItem";
+import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 
 type OwnProps<T> = {
   items: ReadonlyArray<T>;
@@ -87,6 +88,7 @@ class ChooserList<T> extends React.Component<Props<T>> {
         ItemSeparatorComponent={ItemSeparatorComponent}
         refreshControl={refreshControl}
         extraData={selectedItemIds}
+        ListFooterComponent={items.length > 0 && <EdgeBorderComponent />}
       />
     );
   }

@@ -15,6 +15,7 @@ import { ProfileState } from "../../store/reducers/profile";
 import variables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
 import NewServiceListItem from "./NewServiceListItem";
 
@@ -93,7 +94,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
     return pot.getOrElse(
       pot.map(
         potService,
-        service => `${service.service_id}-${service.version || 0}`
+        service => `${service.service_id}-${service.version}`
       ),
       `service-pot-${index}`
     );
@@ -127,6 +128,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
         alwaysBounceVertical={false}
         refreshControl={refreshControl}
         ItemSeparatorComponent={ItemSeparatorComponent}
+        ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
       />
     );
   }

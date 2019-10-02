@@ -37,10 +37,14 @@ export function* watchLogoutSaga(
             ? response.value.value.title
             : "Unknown error"
         );
-        yield put(logoutFailure(error));
+        yield put(logoutFailure({ error, options: action.payload }));
       }
     } else {
-      yield put(logoutFailure(Error(readableReport(response.value))));
+      const logoutError = {
+        error: Error(readableReport(response.value)),
+        options: action.payload
+      };
+      yield put(logoutFailure(logoutError));
     }
     // Force the login by expiring the session
     // FIXME: possibly reset the navigation stack as the watcher of

@@ -4,10 +4,10 @@ import {
   Platform,
   StyleProp,
   StyleSheet,
-  Switch,
   TouchableWithoutFeedback,
   ViewStyle
 } from "react-native";
+import Switch from "../../components/ui/Switch";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import IconFont from "./../ui/IconFont";
@@ -26,6 +26,7 @@ type Props = Readonly<{
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
+  isItemDisabled?: boolean;
   onSwitchValueChanged?: (value: boolean) => void;
   switchValue?: boolean;
   keySwitch?: string;
@@ -65,6 +66,9 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     paddingRight: 16
   },
+  disabledItem: {
+    color: customVariables.brandDarkGray
+  },
   description: {
     fontSize: 14,
     paddingRight: ICON_SIZE,
@@ -78,8 +82,7 @@ export default class ListItemComponent extends React.Component<Props> {
       <TouchableWithoutFeedback
         onPress={this.props.onPress}
         onLongPress={this.props.onLongPress}
-      >
-        <ListItem
+      >        <ListItem
           style={[styles.listItem, styles.flexRow, this.props.style]}
           first={this.props.isFirstItem}
           last={this.props.isLastItem || this.props.hideSeparator}
@@ -112,6 +115,23 @@ export default class ListItemComponent extends React.Component<Props> {
                     color={customVariables.contentPrimaryBackground}
                   />
                 ))}
+        <View style={styles.flexColumn}>
+          <View style={styles.flexRow}>
+            <View style={styles.flexRow2}>
+              {this.props.hasBadge && (
+                <View style={styles.spacingBase}>
+                  <BadgeComponent />
+                </View>
+              )}
+              <Text
+                numberOfLines={2}
+                style={[
+                  styles.serviceName,
+                  this.props.isItemDisabled && styles.disabledItem
+                ]}
+              >
+                {this.props.title}
+              </Text>
             </View>
             {this.props.subTitle && (
               <Text

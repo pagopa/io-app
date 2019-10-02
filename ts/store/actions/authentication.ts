@@ -16,6 +16,11 @@ export type LogoutOption = {
   keepUserData: boolean;
 };
 
+export type LogoutError = {
+  error: Error;
+  options: LogoutOption;
+};
+
 export const idpSelected = createStandardAction("IDP_SELECTED")<
   IdentityProvider
 >();
@@ -43,7 +48,7 @@ export const logoutSuccess = createStandardAction("LOGOUT_SUCCESS")<
 
 export const logoutFailure = createAction(
   "LOGOUT_FAILURE",
-  resolve => (error: Error) => resolve(error, true)
+  resolve => (logoutError: LogoutError) => resolve(logoutError, true)
 );
 
 export const sessionInformationLoadSuccess = createStandardAction(

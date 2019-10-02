@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Tab, TabHeading, Tabs, Text } from "native-base";
+import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -23,15 +23,20 @@ import {
   setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
+import { loadService } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
-import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import {
+  servicesByIdSelector,
+  ServicesByIdState
+} from "../../store/reducers/entities/services/servicesById";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
+import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
@@ -73,6 +78,14 @@ const styles = StyleSheet.create({
   },
   searchDisableIcon: {
     color: customVariables.headerFontColor
+  },
+  activeTextStyle: {
+    ...makeFontStyleObject(Platform.select, "600"),
+    fontSize: Platform.OS === "android" ? 16 : undefined,
+    fontWeight: Platform.OS === "android" ? "normal" : "bold"
+  },
+  textStyle: {
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -99,8 +112,15 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   // tslint:disable-next-line: readonly-array
   private scollPositions: number[] = [0, 0, 0];
 
+  private onRefreshMessages = () => {
+    this.props.refreshMessages(
+      this.props.lexicallyOrderedMessagesState,
+      this.props.servicesById
+    );
+  };
+
   public componentDidMount() {
-    this.props.refreshMessages();
+    this.onRefreshMessages();
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",
@@ -170,7 +190,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
-      refreshMessages,
       navigateToMessageDetail,
       updateMessagesArchivedState
     } = this.props;
@@ -213,19 +232,15 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         }
       >
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("messages.tab.inbox")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("messages.tab.inbox")}
         >
           <MessagesInbox
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
-            onRefresh={refreshMessages}
+            onRefresh={this.onRefreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
             animated={
@@ -278,13 +293,9 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           />
         </Tab>
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("messages.tab.deadlines")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("messages.tab.deadlines")}
         >
           <MessagesDeadlines
             messagesState={lexicallyOrderedMessagesState}
@@ -296,19 +307,15 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         </Tab>
 
         <Tab
-          heading={
-            <TabHeading>
-              <Text style={styles.tabBarContent}>
-                {I18n.t("messages.tab.archive")}
-              </Text>
-            </TabHeading>
-          }
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
+          heading={I18n.t("messages.tab.archive")}
         >
           <MessagesArchive
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
-            onRefresh={refreshMessages}
+            onRefresh={this.onRefreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
             animated={
@@ -370,7 +377,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
-      refreshMessages,
       navigateToMessageDetail
     } = this.props;
 
@@ -384,7 +390,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
               paymentsByRptId={paymentsByRptId}
-              onRefresh={refreshMessages}
+              onRefresh={this.onRefreshMessages}
               navigateToMessageDetail={navigateToMessageDetail}
               searchText={_}
             />
@@ -403,8 +409,24 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshMessages: () => {
+  refreshMessages: (
+    lexicallyOrderedMessagesState: ReturnType<
+      typeof lexicallyOrderedMessagesStateSelector
+    >,
+    servicesById: ServicesByIdState
+  ) => {
     dispatch(loadMessages.request());
+    // Refresh services related to messages received by the user
+    if (pot.isSome(lexicallyOrderedMessagesState)) {
+      lexicallyOrderedMessagesState.value.forEach(item => {
+        if (servicesById[item.meta.sender_service_id] === undefined) {
+          dispatch(loadService.request(item.meta.sender_service_id));
+        }
+      });
+    }
+  },
+  refreshService: (serviceId: string) => {
+    dispatch(loadService.request(serviceId));
   },
   navigateToMessageDetail: (messageId: string) =>
     dispatch(navigateToMessageDetailScreenAction({ messageId })),
