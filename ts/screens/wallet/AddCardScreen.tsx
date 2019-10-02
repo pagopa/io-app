@@ -143,7 +143,8 @@ const displayedCards: { [key: string]: any } = {
   VISA: cardIcons.VISA,
   VISAELECTRON: cardIcons.VISAELECTRON,
   POSTEPAY: cardIcons.POSTEPAY,
-  AMEX: cardIcons.AMEX
+  AMEX: cardIcons.AMEX,
+  MAESTRO: cardIcons.MAESTRO
 };
 
 class AddCardScreen extends React.Component<Props, State> {
