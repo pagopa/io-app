@@ -8,6 +8,7 @@ import {
   ViewStyle
 } from "react-native";
 import Switch from "../../components/ui/Switch";
+
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import IconFont from "./../ui/IconFont";
@@ -38,8 +39,7 @@ const ICON_SIZE = 24;
 const styles = StyleSheet.create({
   listItem: {
     paddingLeft: 0,
-    paddingRight: 0,
-    backgroundColor: "white"
+    paddingRight: 0
   },
   spacingBase: {
     paddingTop: 6,
@@ -79,14 +79,13 @@ const styles = StyleSheet.create({
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
     return (
-      <TouchableWithoutFeedback
-        onPress={this.props.onPress}
-        onLongPress={this.props.onLongPress}
-      >        <ListItem
+      <TouchableWithoutFeedback>
+        <ListItem
           style={[styles.listItem, styles.flexRow, this.props.style]}
+          onPress={this.props.onPress}
+          onLongPress={this.props.onLongPress}
           first={this.props.isFirstItem}
           last={this.props.isLastItem || this.props.hideSeparator}
-          activeOpacity={1}
         >
           <View style={styles.flexColumn}>
             <View style={styles.flexRow}>
@@ -96,7 +95,13 @@ export default class ListItemComponent extends React.Component<Props> {
                     <BadgeComponent />
                   </View>
                 )}
-                <Text numberOfLines={2} style={styles.serviceName}>
+                <Text
+                  numberOfLines={2}
+                  style={[
+                    styles.serviceName,
+                    this.props.isItemDisabled && styles.disabledItem
+                  ]}
+                >
                   {this.props.title}
                 </Text>
               </View>
@@ -115,23 +120,6 @@ export default class ListItemComponent extends React.Component<Props> {
                     color={customVariables.contentPrimaryBackground}
                   />
                 ))}
-        <View style={styles.flexColumn}>
-          <View style={styles.flexRow}>
-            <View style={styles.flexRow2}>
-              {this.props.hasBadge && (
-                <View style={styles.spacingBase}>
-                  <BadgeComponent />
-                </View>
-              )}
-              <Text
-                numberOfLines={2}
-                style={[
-                  styles.serviceName,
-                  this.props.isItemDisabled && styles.disabledItem
-                ]}
-              >
-                {this.props.title}
-              </Text>
             </View>
             {this.props.subTitle && (
               <Text

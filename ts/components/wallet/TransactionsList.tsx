@@ -14,8 +14,8 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { BadgeComponent } from "../screens/BadgeComponent";
-import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
+import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
 

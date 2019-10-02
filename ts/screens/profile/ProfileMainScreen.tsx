@@ -13,7 +13,6 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
-import Switch from "../../components/ui/Switch";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
@@ -26,6 +25,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
+import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import {

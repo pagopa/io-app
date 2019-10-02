@@ -15,8 +15,8 @@ import {
 } from "react-native";
 import variables from "../theme/variables";
 import customVariables from "../theme/variables";
-import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
 import { areSetEqual } from "../utils/options";
+import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";
 import ChooserListSearch from "./ChooserListSearch";
@@ -139,10 +139,9 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
                   .string()}
               />
               <ButtonWithoutOpacity
-                onPress={this.onSearchDisable}
+                onPress={this.onPressCancel}
                 transparent={true}
-              >
-              </ButtonWithoutOpacity>
+              />
             </Item>
           ) : (
             <ButtonWithoutOpacity
