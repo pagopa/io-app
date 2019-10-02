@@ -271,9 +271,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   }
 
   public componentWillMount() {
-    const { potService } = this.props;
-    if (pot.isSome(potService)) {
-      this.props.loadService(potService.value.service_id);
+    const { potMessage, refreshService } = this.props;
+    if (pot.isSome(potMessage)) {
+      refreshService(potMessage.value.sender_service_id);
     }
   }
 
@@ -326,7 +326,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
   return {
-    loadService: (serviceId: ServiceId) =>
+    refreshService: (serviceId: string) =>
       dispatch(loadService.request(serviceId)),
     contentServiceLoad: (serviceId: ServiceId) =>
       dispatch(contentServiceLoad.request(serviceId)),
