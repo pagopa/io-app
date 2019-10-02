@@ -315,7 +315,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         });
       });
     }
-    if (!prevState.enableHeaderAnimation && !this.props.isLoadingservices) {
+    if (!prevState.enableHeaderAnimation && !this.props.isLoadingServices) {
       this.setState({ enableHeaderAnimation: true });
     }
 
@@ -422,7 +422,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       selectableOrganizations,
       hideModal,
       selectedOrganizations,
-      isLoadingservices
+      isLoadingServices
     } = this.props;
     this.props.showModal(
       <ChooserListContainer<Organization>
@@ -436,7 +436,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         onCancel={hideModal}
         onSave={this.onSaveAreasOfInterest}
         isRefreshEnabled={false}
-        isRefreshing={isLoadingservices}
+        isRefreshing={isLoadingServices}
         matchingTextPredicate={this.organizationContainsText}
         noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
         noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
@@ -620,7 +620,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.localTabSections}
             profile={this.props.profile}
             isRefreshing={
-              this.props.isLoadingservices || this.props.isLoadingUserMetadata
+              this.props.isLoadingServices || this.props.isLoadingUserMetadata
             }
             onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
@@ -662,7 +662,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <ServicesSectionsList
             sections={this.props.nationalTabSections}
             profile={this.props.profile}
-            isRefreshing={this.props.isLoadingservices}
+            isRefreshing={this.props.isLoadingServices}
             onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
@@ -698,7 +698,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <ServicesSectionsList
             sections={this.props.allTabSections}
             profile={this.props.profile}
-            isRefreshing={this.props.isLoadingservices}
+            isRefreshing={this.props.isLoadingServices}
             onRefresh={this.props.refreshServices}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
@@ -777,7 +777,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     selectableOrganizations,
     selectedOrganizations: organizationsOfInterestSelector(state),
-    isLoadingservices: isLoadingServicesSelector(state),
+    isLoadingServices: isLoadingServicesSelector(state),
     isLoadingUserMetadata: pot.isLoading(potUserMetadata),
     isFirstServiceLoadCompleted: isFirstVisibleServiceLoadCompletedSelector(
       state
