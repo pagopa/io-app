@@ -19,6 +19,7 @@ import {
   setMessageReadState
 } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
+import { loadService } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -269,6 +270,13 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     this.setMessageReadState();
   }
 
+  public componentWillMount() {
+    const { potService } = this.props;
+    if (pot.isSome(potService)) {
+      this.props.loadService(potService.value.service_id);
+    }
+  }
+
   public componentDidUpdate() {
     this.setMessageReadState();
   }
@@ -318,6 +326,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
   return {
+    loadService: (serviceId: ServiceId) =>
+      dispatch(loadService.request(serviceId)),
     contentServiceLoad: (serviceId: ServiceId) =>
       dispatch(contentServiceLoad.request(serviceId)),
     loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
