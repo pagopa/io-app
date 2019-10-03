@@ -39,7 +39,7 @@ export function* loadServiceRequestHandler(
     }
 
     if (response.value.status === 200) {
-      // If the organization fiscal code is associated to different organizazion names,
+      // If the organization fiscal code is associated to different organization names,
       // it is considered valid the one declared for a visible service
 
       const organizations: OrganizationNamesByFiscalCodeState = yield select(
