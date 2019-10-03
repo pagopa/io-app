@@ -56,7 +56,12 @@ export function* loadServiceRequestHandler(
         const isVisible = isVisibleService(visibleServices, service) || false;
         // If the organization has been previously saved in the organization entity,
         // the organization name  is updated only if the related service is visible
-        if (!organization || (organization && isVisible)) {
+        if (
+          !organization ||
+          (organization &&
+            isVisible &&
+            organization !== response.value.value.organization_name)
+        ) {
           yield put(updateOrganizations(response.value.value));
         }
       }
