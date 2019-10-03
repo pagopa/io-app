@@ -51,6 +51,7 @@ import {
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
+  organizationsOfInterestSelector,
   selectedLocalServicesSectionsSelector,
   ServicesSectionState
 } from "../../store/reducers/entities/services";
@@ -65,7 +66,6 @@ import {
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  organizationsOfInterestSelector,
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
