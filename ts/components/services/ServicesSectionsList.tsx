@@ -22,7 +22,6 @@ type AnimatedProps = {
 };
 
 type OwnProps = {
-  // tslint:disable-next-line:readonly-array
   sections: ReadonlyArray<ServicesSectionState>;
   profile: ProfileState;
   onChooserAreasOfInterestPress?: () => void;

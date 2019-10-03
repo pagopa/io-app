@@ -11,13 +11,13 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
+import { isDefined } from "../../utils/guards";
 import { serviceContainsText } from "../../utils/services";
 import { SearchNoResultMessage } from "../search/SearchNoResultMessage";
 import ServicesSectionsList from "./ServicesSectionsList";
 
 type OwnProps = {
-  sectionsState: // tslint:disable-next-line: readonly-array
-  ReadonlyArray<ServicesSectionState>;
+  sectionsState: ReadonlyArray<ServicesSectionState>;
   searchText: string;
   profile: ProfileState;
   onRefresh: () => void;
@@ -29,7 +29,6 @@ type Props = OwnProps;
 
 type State = {
   potFilteredServiceSectionsStates: pot.Pot<
-    // tslint:disable-next-line: readonly-array
     ReadonlyArray<ServicesSectionState>,
     Error
   >;
@@ -39,23 +38,15 @@ type State = {
  * Filter only the services that match the searchText.
  */
 const generateSectionsServicesStateMatchingSearchTextArrayAsync = (
-  // tslint:disable-next-line: readonly-array
   servicesState: ReadonlyArray<ServicesSectionState>,
   searchText: string
-  // tslint:disable-next-line: readonly-array
 ): Promise<ReadonlyArray<ServicesSectionState>> => {
   return new Promise(resolve => {
-    // tslint:disable-next-line: readonly-array
-    const result: ServicesSectionState[] = [];
-    servicesState.forEach(sectionList => {
-      const filtered = filterSectionListDataMatchingSearchText(
-        sectionList,
-        searchText
-      );
-      if (filtered != null) {
-        result.push(filtered);
-      }
-    });
+    const result = servicesState
+      .map(section =>
+        filterSectionListDataMatchingSearchText(section, searchText)
+      )
+      .filter(isDefined);
 
     resolve(result);
   });

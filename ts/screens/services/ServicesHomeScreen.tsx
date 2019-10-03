@@ -3,6 +3,9 @@
  * - Local tab: services sections related to the areas of interest selected by the user
  * - National tab: national services sections
  * - All: local and national services sections, not including the user areas of interest
+ *
+ * If userMetadata are not loaded, the tabs are not displayed (missing data on the user ares
+ * of interest) and it is hidden also the search option
  */
 import { left } from "fp-ts/lib/Either";
 import { Option, some, Some } from "fp-ts/lib/Option";
