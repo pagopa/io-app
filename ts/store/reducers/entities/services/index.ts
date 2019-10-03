@@ -68,7 +68,7 @@ export const servicesSelector = (state: GlobalState) => state.entities.services;
 export const organizationsOfInterestSelector = createSelector(
   [userMetadataSelector, servicesSelector],
   (potUserMetadata, services) => {
-    const visibleServices = new Set(
+    const visibleServices = new Set<string>(
       pot.getOrElse(services.visible, []).map(_ => _.service_id)
     );
 
