@@ -73,20 +73,6 @@ const validStyles = StyleSheet.create({
   }
 });
 
-const expiringStyles = StyleSheet.create({
-  button: {
-    backgroundColor: "#D0021B"
-  },
-
-  icon: {
-    color: customVariables.colorWhite
-  },
-
-  text: {
-    color: customVariables.colorWhite
-  }
-});
-
 const expiredStyles = StyleSheet.create({
   button: {
     backgroundColor: customVariables.brandDarkGray
@@ -139,8 +125,7 @@ const paidStyles = StyleSheet.create({
 });
 
 const getExpirationStyles = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo,
-  small: boolean = false
+  messagePaymentExpirationInfo: MessagePaymentExpirationInfo
 ) => {
   if (messagePaymentExpirationInfo.kind === "UNEXPIRABLE") {
     return unexpirableStyles;
@@ -150,7 +135,7 @@ const getExpirationStyles = (
     case "VALID":
       return validStyles;
     case "EXPIRING":
-      return small ? expiringStyles : validStyles;
+      return validStyles;
 
     default:
       return expiredStyles;
@@ -192,10 +177,7 @@ class PaymentButton extends React.PureComponent<Props> {
       onPress
     } = this.props;
 
-    const appliedStyles = getExpirationStyles(
-      messagePaymentExpirationInfo,
-      small
-    );
+    const appliedStyles = getExpirationStyles(messagePaymentExpirationInfo);
 
     const isUnexpirable = messagePaymentExpirationInfo.kind === "UNEXPIRABLE";
     const isExpired =
