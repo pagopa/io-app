@@ -9,7 +9,7 @@ import {
   watchContentMunicipalityLoadSaga,
   watchContentServiceLoadSaga
 } from "./contentLoaders";
-import watchInstabugSaga from "./instabug";
+import { watchInstabugSaga } from "./instabug";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
 import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
@@ -42,6 +42,6 @@ export default function* root(): Iterator<Effect> {
     call(watchContentMunicipalityLoadSaga),
     call(watchPaymentInitializeSaga),
     call(watchBackToEntrypointPaymentSaga),
-    call(watchInstabugSaga)
+    call(watchInstabugSaga, true)
   ]);
 }
