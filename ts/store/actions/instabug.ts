@@ -3,14 +3,14 @@
  */
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-export const requestIstabugInfoLoad = createStandardAction(
+export const requestInstabugInfoLoad = createStandardAction(
   "REQUEST_INSTABUG_INFO_LOAD"
 )();
 
-export const instabugInfoLoaded = createStandardAction("INSTABUG_INFO_LOAD")<
-  number
->();
+export const responseInstabugInfoLoaded = createStandardAction(
+  "RESPONSE_INSTABUG_INFO_LOADED"
+)<number>();
 
 export type InstabugInfoActions =
-  | ActionType<typeof requestIstabugInfoLoad>
-  | ActionType<typeof instabugInfoLoaded>;
+  | ActionType<typeof requestInstabugInfoLoad>
+  | ActionType<typeof responseInstabugInfoLoaded>;

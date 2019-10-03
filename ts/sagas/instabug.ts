@@ -1,6 +1,6 @@
 import { Replies } from "instabug-reactnative";
 import { call, Effect, put } from "redux-saga/effects";
-import { instabugInfoLoaded } from "../store/actions/instabug";
+import { responseInstabugInfoLoaded } from "../store/actions/instabug";
 import { startTimer } from "../utils/timer";
 
 // load instabug's number messages every five minutes
@@ -17,7 +17,7 @@ export function* watchInstabugSaga(
   // tslint:disable-next-line:no-commented-code
   // console.warn("get repliesCount");
   const repliesCount = Replies.getUnreadRepliesCount(count => count);
-  yield put(instabugInfoLoaded(repliesCount));
+  yield put(responseInstabugInfoLoaded(repliesCount));
   while (retryPeriodically) {
     // tslint:disable-next-line:no-commented-code
     // console.warn("start waiting");
@@ -28,6 +28,6 @@ export function* watchInstabugSaga(
     const repliesCountPeriodically = Replies.getUnreadRepliesCount(
       count => count
     );
-    yield put(instabugInfoLoaded(repliesCountPeriodically));
+    yield put(responseInstabugInfoLoaded(repliesCountPeriodically));
   }
 }

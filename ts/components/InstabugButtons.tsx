@@ -9,7 +9,7 @@ import {
   instabugReportClosed,
   instabugReportOpened
 } from "../store/actions/debug";
-import { requestIstabugInfoLoad } from "../store/actions/instabug";
+import { requestInstabugInfoLoad } from "../store/actions/instabug";
 import { Dispatch } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
@@ -156,7 +156,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(instabugReportOpened({ type })),
   dispatchIBReportClosed: (type: string, how: string) =>
     dispatch(instabugReportClosed({ type, how })),
-  dispatchInstabugRequest: () => dispatch(requestIstabugInfoLoad())
+  dispatchInstabugRequest: () => dispatch(requestInstabugInfoLoad())
 });
 
 export const InstabugButtons = connect(

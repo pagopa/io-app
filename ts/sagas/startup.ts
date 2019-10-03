@@ -24,7 +24,7 @@ import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
-import { requestIstabugInfoLoad } from "../store/actions/instabug";
+import { requestInstabugInfoLoad } from "../store/actions/instabug";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { loadMessageWithRelations } from "../store/actions/messages";
 import {
@@ -329,7 +329,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     backendClient.getMessage
   );
 
-  yield takeEvery(getType(requestIstabugInfoLoad), watchInstabugSaga, false);
+  yield takeEvery(getType(requestInstabugInfoLoad), watchInstabugSaga, false);
 
   // Watch for the app going to background/foreground
   yield fork(watchApplicationActivitySaga);
