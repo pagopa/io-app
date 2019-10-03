@@ -814,10 +814,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     selectedItemIds: ReadonlyArray<string>
   ) => {
     const metadata = userMetadata.metadata;
+    const currentVersion: number = userMetadata.version;
     dispatch(
       userMetadataUpsert.request({
         ...userMetadata,
-        version: userMetadata.version + 1,
+        version: currentVersion + 1,
         metadata: {
           ...metadata,
           organizationsOfInterest: selectedItemIds

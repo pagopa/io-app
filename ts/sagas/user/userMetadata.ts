@@ -176,7 +176,7 @@ export function* upsertUserMetadata(
 
   // The version of the new userMetadata must be one more
   // the old one.
-  const currentVersion = pot.getOrElse(
+  const currentVersion: number = pot.getOrElse(
     pot.map(currentUserMetadata, _ => _.version),
     0
   );

@@ -117,8 +117,9 @@ describe("userMetadata", () => {
 
     it("should handle userMetadataUpsert correctly", () => {
       const initialState: UserMetadataState = pot.some(userMetadata);
+      const currentVersion: number = userMetadata.version;
       const newUserMetadata: UserMetadata = {
-        version: userMetadata.version + 1,
+        version: currentVersion + 1,
         metadata: {
           experimentalFeatures: true
         }
