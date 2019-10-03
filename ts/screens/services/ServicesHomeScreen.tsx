@@ -522,8 +522,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
         onScroll={(value: number) => {
-          const percScrollTab = Math.abs(value - this.state.currentTab) * 100;
-          if (percScrollTab > 50 && this.state.isLongPressEnabled) {
+          const { currentTab, isLongPressEnabled } = this.state;
+          const percScrollTab = Math.abs(value - currentTab) * 100;
+          if (percScrollTab > 50 && isLongPressEnabled) {
             this.setState({ isLongPressEnabled: false });
           }
         }}
