@@ -74,13 +74,13 @@ PODS:
   - react-native-image-picker (0.28.1):
     - React
   - react-native-mixpanel (0.0.6):
-    - Mixpanel (~> 3.4.5)
+    - Mixpanel
     - React
-  - react-native-netinfo (4.2.1):
+  - react-native-netinfo (4.2.2):
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-webview (5.12.1):
+  - react-native-webview (5.7.2):
     - React
   - React-RCTActionSheet (0.60.5):
     - React-Core (= 0.60.5)
@@ -105,7 +105,7 @@ PODS:
     - React-Core (= 0.60.5)
   - React-RCTWebSocket (0.60.5):
     - React-Core (= 0.60.5)
-  - ReactNativePermissions (1.2.0):
+  - ReactNativePermissions (1.1.1):
     - React
   - RNCAsyncStorage (1.6.1):
     - React
@@ -113,7 +113,7 @@ PODS:
     - React
   - RNFS (2.14.1):
     - React
-  - RNGestureHandler (1.4.1):
+  - RNGestureHandler (1.2.1):
     - React
   - RNI18n (2.0.15):
     - React
@@ -269,10 +269,10 @@ SPEC CHECKSUMS:
   react-native-camera: f4f2144140ae1e808cad97cc7caf013767c11f1b
   react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
-  react-native-mixpanel: f7ca1a4a436f1d3c19d9ca5d57aa47b848e97292
-  react-native-netinfo: aeb1752abb78a9c15cdcea067a6c95d596dcfc45
+  react-native-mixpanel: bdb451e8455940a12fdd157c2146a68c5f80310d
+  react-native-netinfo: 2bb2e5094edcfecfb340a85053608526cb20f185
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-webview: 5036ed4a973ad1deeeff118262d2df7b60b3419d
+  react-native-webview: 8360713396efdaee1528d0afcaaaa844b14fd2f2
   React-RCTActionSheet: b0f1ea83f4bf75fb966eae9bfc47b78c8d3efd90
   React-RCTAnimation: 359ba1b5690b1e87cc173558a78e82d35919333e
   React-RCTBlob: 5e2b55f76e9a1c7ae52b826923502ddc3238df24
@@ -283,11 +283,11 @@ SPEC CHECKSUMS:
   React-RCTText: b074d89033583d4f2eb5faf7ea2db3a13c7553a2
   React-RCTVibration: 2105b2e0e2b66a6408fc69a46c8a7fb5b2fdade0
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
-  ReactNativePermissions: f3beb8871251594a8ea2c6b19a3f8252d5c7379d
+  ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
   RNDeviceInfo: 75dac2d7cd6b638b512cc9266ce48a39661fed0e
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
-  RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
+  RNGestureHandler: aea90f0ad8e35fec23438db6fc3ad79be58bb734
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
   RNSVG: 4501a5e968f1eb962f5481b0da53dfb59260e9b6
