@@ -1,5 +1,4 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
 import {
@@ -11,10 +10,7 @@ import {
   userMetadataLoad,
   userMetadataUpsert
 } from "../../../actions/userMetadata";
-import { servicesMetadataByIdSelector } from "../../content";
 import { GlobalState } from "../../types";
-import { servicesByIdSelector } from "./servicesById";
-import { visibleServicesSelector } from "./visibleServices";
 
 export type FirstLoadingState = Readonly<{
   isFirstServicesLoadingCompleted: pot.Pot<boolean, Error>;
