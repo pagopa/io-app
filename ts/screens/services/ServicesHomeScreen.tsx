@@ -817,8 +817,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       userMetadataUpsert.request({
         ...userMetadata,
-        // tslint:disable-next-line: no-useless-cast
-        version: (userMetadata.version as number) + 1,
+        version: userMetadata.version + 1,
         metadata: {
           ...metadata,
           organizationsOfInterest: selectedItemIds

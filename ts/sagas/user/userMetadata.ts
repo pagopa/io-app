@@ -181,8 +181,7 @@ export function* upsertUserMetadata(
     0
   );
 
-  // tslint:disable-next-line: no-useless-cast
-  if (userMetadata.version !== (currentVersion as number) + 1) {
+  if (userMetadata.version !== currentVersion + 1) {
     yield put(
       userMetadataUpsert.failure(
         new Error(TypedI18n.t("userMetadata.errors.upsertVersion"))
