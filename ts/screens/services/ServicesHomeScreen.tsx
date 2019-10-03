@@ -62,13 +62,15 @@ import {
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { visibleServicesSelector } from "../../store/reducers/entities/services/visibleServices";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
 import { profileSelector, ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import {
   organizationsOfInterestSelector,
   UserMetadata,
-  userMetadataSelector
+  userMetadataSelector,
+  UserMetadataState
 } from "../../store/reducers/userMetadata";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
@@ -103,7 +105,6 @@ type State = {
   enableHeaderAnimation: boolean;
   isLongPressEnabled: boolean;
   enableServices: boolean;
-  isWaitingForToast: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -195,8 +196,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       currentTabServicesId: [],
       enableHeaderAnimation: false,
       isLongPressEnabled: false,
-      enableServices: false,
-      isWaitingForToast: false
+      enableServices: false
     };
   }
 
@@ -234,7 +234,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     // on mount, update visible services
-    this.props.refreshServices();
+    this.props.refreshServices(this.props.potUserMetadata);
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",
@@ -302,7 +302,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   }
 
-  public componentDidUpdate(_: Props, prevState: State) {
+  public componentDidUpdate(prevProps: Props, prevState: State) {
     // saving current list scroll position to enable header animation
     // when shifting between tabs
     if (prevState.currentTab !== this.state.currentTab) {
@@ -315,17 +315,22 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           this.scollPositions[i] = animatedValue.value;
         });
       });
+    } else {
+      // A toast is displayed with generic error if:
+      // - refresh visible services fails
+      // - upsert userMetadata fails
+      if (
+        (prevProps.potUserMetadata !== this.props.potUserMetadata &&
+          pot.isSome(this.props.potUserMetadata) &&
+          pot.isError(this.props.potUserMetadata)) ||
+        (prevProps.visibleServices !== this.props.visibleServices &&
+          pot.isError(this.props.visibleServices))
+      ) {
+        showToast(I18n.t("global.genericError"), "danger");
+      }
     }
     if (!prevState.enableHeaderAnimation && !this.props.isLoadingServices) {
       this.setState({ enableHeaderAnimation: true });
-    }
-
-    if (
-      prevState.isWaitingForToast === true &&
-      pot.isError(this.props.potUserMetadata)
-    ) {
-      this.setState({ isWaitingForToast: false });
-      showToast(I18n.t("global.genericError"), "danger");
     }
   }
 
@@ -448,7 +453,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private onSaveAreasOfInterest = (
     selectedFiscalCodes: Option<Set<string>>
   ) => {
-    this.setState({ isWaitingForToast: true });
     this.props.dispatchUpdateOrganizationsOfInterestMetadata(
       selectedFiscalCodes
     );
@@ -541,7 +545,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         const updatedAreasOfInterest = this.props.selectedOrganizations.filter(
           item => item !== section.organizationFiscalCode
         );
-        this.setState({ isWaitingForToast: true });
         this.props.saveSelectedOrganizationItems(
           this.props.userMetadata,
           updatedAreasOfInterest
@@ -619,7 +622,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             isRefreshing={
               this.props.isLoadingServices || this.props.isLoadingUserMetadata
             }
-            onRefresh={this.props.refreshServices}
+            onRefresh={() =>
+              this.props.refreshServices(this.props.potUserMetadata)
+            }
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
@@ -656,7 +661,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.nationalTabSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoadingServices}
-            onRefresh={this.props.refreshServices}
+            onRefresh={() =>
+              this.props.refreshServices(this.props.potUserMetadata)
+            }
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onLongPressItem={this.handleOnLongPressItem}
@@ -688,7 +695,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.allTabSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoadingServices}
-            onRefresh={this.props.refreshServices}
+            onRefresh={() =>
+              this.props.refreshServices(this.props.potUserMetadata)
+            }
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onLongPressItem={this.handleOnLongPressItem}
@@ -772,6 +781,7 @@ const mapStateToProps = (state: GlobalState) => {
       state
     ),
     profile: profileSelector(state),
+    visibleServices: visibleServicesSelector(state),
     readServices: readServicesByIdSelector(state),
     localTabSections,
     nationalTabSections,
@@ -788,7 +798,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   retryUserMetadataLoad: () => {
     dispatch(userMetadataLoad.request());
   },
-  refreshServices: () => dispatch(loadVisibleServices.request()),
+  refreshServices: (potUserMetadata: UserMetadataState) => {
+    if (pot.isError(potUserMetadata)) {
+      dispatch(userMetadataLoad.request());
+    }
+    dispatch(loadVisibleServices.request());
+  },
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
     profile: ProfileState
