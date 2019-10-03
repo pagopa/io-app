@@ -2,39 +2,25 @@
  * Organizations reducer
  */
 import { combineReducers } from "redux";
-import { createSelector } from "reselect";
 import { Action } from "../../../actions/types";
-import organizationsAllReducer, {
-  organizationsAllSelector
-} from "./organizationsAll";
+import organizationsAllReducer from "./organizationsAll";
 import { OrganizationsAllState } from "./organizationsAll";
 import { OrganizationNamesByFiscalCodeState } from "./organizationsByFiscalCodeReducer";
 import organizationsByFiscalCodeReducer from "./organizationsByFiscalCodeReducer";
-import organizationsSelectedReducer, {
-  OrganizationsSelectedState
-} from "./organizationsFiscalCodesSelected";
+
+// TODO: evaluate if organizations.all should be deleted or remodulated: it was introduced to
+// implement the selection of the user areas of interest (services sections) that now get the organizations
+// list by filtering the sections of local services.
+// https://www.pivotaltracker.com/story/show/168642579
 
 export type OrganizationsState = Readonly<{
   all: OrganizationsAllState;
   nameByFiscalCode: OrganizationNamesByFiscalCodeState;
-  selectedFiscalCodes: OrganizationsSelectedState;
 }>;
 
 const reducer = combineReducers<OrganizationsState, Action>({
   all: organizationsAllReducer,
-  nameByFiscalCode: organizationsByFiscalCodeReducer,
-  selectedFiscalCodes: organizationsSelectedReducer
+  nameByFiscalCode: organizationsByFiscalCodeReducer
 });
-
-/**
- * Returns all organizations lexically ordered.
- */
-export const lexicallyOrderedAllOrganizations = createSelector(
-  organizationsAllSelector,
-  allLexicallyOrdered =>
-    [...allLexicallyOrdered].sort((a, b) =>
-      a.name.toLowerCase().localeCompare(b.name.toLowerCase())
-    )
-);
 
 export default reducer;

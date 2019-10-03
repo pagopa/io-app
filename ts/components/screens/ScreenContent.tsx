@@ -1,7 +1,7 @@
 import { Content } from "native-base";
 import * as React from "react";
 
-import { StyleProp, ViewStyle } from "react-native";
+import { RefreshControlProps, StyleProp, ViewStyle } from "react-native";
 import { ComponentProps } from "../../types/react";
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
@@ -9,6 +9,7 @@ interface OwnProps {
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
   bounces?: boolean;
+  contentRefreshControl?: React.ReactElement<RefreshControlProps>;
 }
 
 type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
@@ -30,7 +31,12 @@ class ScreenContent extends React.PureComponent<Props> {
     } = this.props;
 
     return (
-      <Content noPadded={true} style={contentStyle} bounces={bounces}>
+      <Content
+        noPadded={true}
+        style={contentStyle}
+        bounces={bounces}
+        refreshControl={this.props.contentRefreshControl}
+      >
         {!hideHeader && (
           <ScreenContentHeader
             icon={icon}

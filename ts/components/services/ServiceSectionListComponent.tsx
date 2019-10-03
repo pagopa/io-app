@@ -16,6 +16,7 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
 import NewServiceListItem from "./NewServiceListItem";
 
@@ -29,6 +30,9 @@ type OwnProps = {
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
+  onLongPressItem?: () => void;
+  isLongPressEnabled: boolean;
+  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
 };
 
 type Props = OwnProps;
@@ -75,6 +79,9 @@ class ServiceSectionListComponent extends React.Component<Props> {
       onSelect={this.props.onSelect}
       isRead={this.isRead(itemInfo.item, this.props.readServices)}
       hideSeparator={true}
+      onLongPress={this.props.onLongPressItem}
+      onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
+      isLongPressEnabled={this.props.isLongPressEnabled}
     />
   );
 
@@ -85,7 +92,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
     return pot.getOrElse(
       pot.map(
         potService,
-        service => `${service.service_id}-${service.version || 0}`
+        service => `${service.service_id}-${service.version}`
       ),
       `service-pot-${index}`
     );
@@ -118,6 +125,7 @@ class ServiceSectionListComponent extends React.Component<Props> {
         alwaysBounceVertical={false}
         refreshControl={refreshControl}
         ItemSeparatorComponent={ItemSeparatorComponent}
+        ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
       />
     );
   }

@@ -18,6 +18,7 @@ import {
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { isExpired } from "./../../utils/dates";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -139,10 +140,10 @@ function getCardFromState(state: State): Option<CreditCard> {
 // list of cards to be displayed
 const displayedCards: { [key: string]: any } = {
   MASTERCARD: cardIcons.MASTERCARD,
-  MAESTRO: cardIcons.MAESTRO,
   VISA: cardIcons.VISA,
   VISAELECTRON: cardIcons.VISAELECTRON,
-  POSTEPAY: cardIcons.POSTEPAY
+  POSTEPAY: cardIcons.POSTEPAY,
+  AMEX: cardIcons.AMEX
 };
 
 class AddCardScreen extends React.Component<Props, State> {
@@ -236,6 +237,8 @@ class AddCardScreen extends React.Component<Props, State> {
                 value: this.state.holder.getOrElse(EMPTY_CARD_HOLDER),
                 placeholder: I18n.t("wallet.dummyCard.values.holder"),
                 autoCapitalize: "words",
+                keyboardType: "default",
+                returnKeyType: "done",
                 onChangeText: (value: string) => this.updateHolderState(value)
               }}
             />
@@ -252,6 +255,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 value: this.state.pan.getOrElse(EMPTY_CARD_PAN),
                 placeholder: I18n.t("wallet.dummyCard.values.pan"),
                 keyboardType: "numeric",
+                returnKeyType: "done",
                 maxLength: 23,
                 mask: "[0000] [0000] [0000] [0000] [999]",
                 onChangeText: (_, value) => {
@@ -277,6 +281,7 @@ class AddCardScreen extends React.Component<Props, State> {
                       "wallet.dummyCard.values.expirationDate"
                     ),
                     keyboardType: "numeric",
+                    returnKeyType: "done",
                     mask: "[00]{/}[00]",
                     onChangeText: (_, value) =>
                       this.updateExpirationDateState(value)
@@ -297,6 +302,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     ),
                     placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
                     keyboardType: "numeric",
+                    returnKeyType: "done",
                     maxLength: 4,
                     secureTextEntry: true,
                     mask: "[0009]",
@@ -351,7 +357,8 @@ class AddCardScreen extends React.Component<Props, State> {
         const [expirationMonth, expirationYear] = expirationDate.split("/");
         return (
           CreditCardExpirationMonth.is(expirationMonth) &&
-          CreditCardExpirationYear.is(expirationYear)
+          CreditCardExpirationYear.is(expirationYear) &&
+          !isExpired(Number(expirationMonth), Number(expirationYear))
         );
       })
       .toUndefined();

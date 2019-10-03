@@ -7,6 +7,7 @@ import { Body, Button, Content, Input, Item, Right, View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import {
+  BackHandler,
   ImageSourcePropType,
   KeyboardAvoidingView,
   Platform,
@@ -14,6 +15,7 @@ import {
 } from "react-native";
 import variables from "../theme/variables";
 import customVariables from "../theme/variables";
+import { areSetEqual } from "../utils/options";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";
 import ChooserListSearch from "./ChooserListSearch";
@@ -87,10 +89,21 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     ) {
       this.props.setSelectedItemIds(initialSelectedItemIds);
     }
+
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
   private onPressCancel = () => {
     this.props.onCancel();
+  };
+
+  private handleBackPress = () => {
+    this.props.onCancel();
+    return true;
   };
 
   private onPressSave = () => {
@@ -124,7 +137,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
                   .darken(0.2)
                   .string()}
               />
-              <Button onPress={this.onSearchDisable} transparent={true}>
+              <Button onPress={this.onPressCancel} transparent={true}>
                 <IconFont
                   name="io-close"
                   accessible={true}
@@ -170,17 +183,10 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     searchDelay
   );
 
-  private onSearchDisable = () => {
-    this.setState({
-      searchText: none,
-      debouncedSearchText: none
-    });
-  };
-
   /**
    * Footer
    */
-  private renderFooterButtons() {
+  private renderFooterButtons(hasNoNewSelection: boolean) {
     const cancelButtonProps = {
       block: true,
       light: true,
@@ -191,6 +197,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     const saveButtonProps = {
       block: true,
       primary: true,
+      disabled: hasNoNewSelection,
       onPress: this.onPressSave,
       title: I18n.t("global.buttons.saveSelection")
     };
@@ -286,7 +293,9 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
             android: customVariables.contentPadding
           })}
         >
-          {this.renderFooterButtons()}
+          {this.renderFooterButtons(
+            areSetEqual(this.props.initialSelectedItemIds, selectedItemIds)
+          )}
         </KeyboardAvoidingView>
       </View>
     );

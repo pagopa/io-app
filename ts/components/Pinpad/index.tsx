@@ -3,6 +3,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 
+import { debounce } from "lodash";
 import I18n from "../../i18n";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
 import variables from "../../theme/variables";
@@ -26,6 +27,7 @@ interface Props {
   onCancel?: () => void;
   onPinResetHandler?: () => void;
   onFingerPrintReq?: () => void;
+  onDeleteLastDigit?: () => void;
 }
 
 interface State {
@@ -73,13 +75,17 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   }
 
-  private deleteLastDigit = () =>
+  private deleteLastDigit = () => {
     this.setState(prev => ({
       value:
         prev.value.length > 0
           ? prev.value.slice(0, prev.value.length - 1)
           : prev.value
     }));
+    if (this.props.onDeleteLastDigit) {
+      this.props.onDeleteLastDigit();
+    }
+  };
 
   private pinPadDigits: ComponentProps<typeof KeyPad>["digits"] = [
     [
@@ -162,7 +168,7 @@ class Pinpad extends React.PureComponent<Props, State> {
       const isValid = inputValue === this.props.compareWithCode;
 
       if (!isValid && this.props.clearOnInvalid) {
-        this.clear();
+        this.debounceClear();
         if (this.props.delayOnFailureMillis) {
           // disable click keypad
           this.setState({
@@ -206,7 +212,9 @@ class Pinpad extends React.PureComponent<Props, State> {
     );
   };
 
-  public clear = () => this.setState({ value: "" });
+  public debounceClear = debounce(() => {
+    this.setState({ value: "" });
+  }, 100);
 
   public render() {
     return (
