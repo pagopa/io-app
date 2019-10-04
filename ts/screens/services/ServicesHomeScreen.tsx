@@ -49,6 +49,7 @@ import {
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
+  organizationsOfInterestSelector,
   selectedLocalServicesSectionsSelector,
   ServicesSectionState
 } from "../../store/reducers/entities/services";
@@ -59,7 +60,6 @@ import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persi
 import { profileSelector, ProfileState } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  organizationsOfInterestSelector,
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
