@@ -620,7 +620,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.localTabSections}
             profile={this.props.profile}
             isRefreshing={
-              this.props.isLoadingServices || this.props.isLoadingUserMetadata
+              this.props.isLoadingServices ||
+              pot.isLoading(this.props.potUserMetadata)
             }
             onRefresh={() =>
               this.props.refreshServices(this.props.potUserMetadata)
@@ -776,7 +777,6 @@ const mapStateToProps = (state: GlobalState) => {
     selectableOrganizations,
     selectedOrganizations: organizationsOfInterestSelector(state),
     isLoadingServices: isLoadingServicesSelector(state),
-    isLoadingUserMetadata: pot.isLoading(potUserMetadata),
     isFirstServiceLoadCompleted: isFirstVisibleServiceLoadCompletedSelector(
       state
     ),
