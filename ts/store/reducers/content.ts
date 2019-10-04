@@ -135,6 +135,18 @@ export default function content(
         }
       };
 
+    case getType(contentMunicipalityLoad.failure):
+      return {
+        ...state,
+        municipality: {
+          codiceCatastale: pot.toError(
+            state.municipality.codiceCatastale,
+            action.payload
+          ),
+          data: pot.toError(state.municipality.data, action.payload)
+        }
+      };
+
     case getType(clearCache):
       return {
         ...state,
