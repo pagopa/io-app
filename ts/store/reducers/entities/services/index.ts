@@ -21,6 +21,7 @@ import {
   OrganizationNamesByFiscalCodeState
 } from "../organizations/organizationsByFiscalCodeReducer";
 import { firstLoadingReducer, FirstLoadingState } from "./firstServicesLoading";
+import { isFirstVisibleServiceLoadCompletedSelector } from "./firstServicesLoading";
 import readServicesByIdReducer, {
   readServicesByIdSelector,
   ReadStateByServicesId
@@ -38,7 +39,6 @@ import {
   visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
-import { isFirstVisibleServiceLoadCompletedSelector } from "./firstServicesLoading";
 
 export type ServicesState = Readonly<{
   byId: ServicesByIdState;
