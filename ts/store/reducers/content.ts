@@ -9,7 +9,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { createSelector } from "reselect";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
@@ -20,7 +19,6 @@ import {
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
-import { profileSelector } from "./profile";
 import { GlobalState } from "./types";
 
 /**
