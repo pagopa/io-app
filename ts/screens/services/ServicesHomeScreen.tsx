@@ -316,15 +316,22 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         });
       });
     } else {
-      // A toast is displayed with generic error if:
-      // - refresh visible services fails
-      // - upsert userMetadata fails
+      // A toast is displayed if upsert userMetadata fails
       if (
-        (prevProps.potUserMetadata !== this.props.potUserMetadata &&
-          pot.isSome(this.props.potUserMetadata) &&
-          pot.isError(this.props.potUserMetadata)) ||
-        (prevProps.visibleServices !== this.props.visibleServices &&
-          pot.isError(this.props.visibleServices))
+        prevProps.potUserMetadata !== this.props.potUserMetadata &&
+        pot.isSome(this.props.potUserMetadata) &&
+        pot.isError(this.props.potUserMetadata)
+      ) {
+        showToast(
+          I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
+          "danger"
+        );
+      }
+
+      // A toast is displayed if refresh visible services fails
+      if (
+        prevProps.visibleServices !== this.props.visibleServices &&
+        pot.isError(this.props.visibleServices)
       ) {
         showToast(I18n.t("global.genericError"), "danger");
       }
