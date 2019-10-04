@@ -1,7 +1,7 @@
 import { format, format as dateFnsFormat } from "date-fns";
 import * as pot from "italia-ts-commons/lib/pot";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
-import { MunicipalityState } from "../store/reducers/content";
+import { Municipality } from "../../definitions/content/Municipality";
 
 type GenderType = "M" | "F" | undefined;
 
@@ -33,13 +33,13 @@ const months: { [k: string]: number } = {
 // Generate object including data expressed into the given fiscal code
 export function extractFiscalCodeData(
   fiscalCode: FiscalCode,
-  municipality: MunicipalityState
+  municipality: pot.Pot<Municipality, Error>
 ): FiscalCodeDerivedData {
-  const siglaProvincia = pot.isSome(municipality.data)
-    ? municipality.data.value.siglaProvincia
+  const siglaProvincia = pot.isSome(municipality)
+    ? municipality.value.siglaProvincia
     : "";
-  const denominazione = pot.isSome(municipality.data)
-    ? municipality.data.value.denominazioneInItaliano
+  const denominazione = pot.isSome(municipality)
+    ? municipality.value.denominazioneInItaliano
     : "";
   if (!RegExp("^[0-9]+$").test(fiscalCode.substring(9, 11))) {
     return {
