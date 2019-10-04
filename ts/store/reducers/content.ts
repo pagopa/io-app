@@ -54,24 +54,8 @@ const initialContentState: ContentState = {
 };
 
 // Selectors
-// return municipality metadata if codice catastale mathes with the one in profile fiscal code
-export const municipalitySelector = createSelector(
-  [(state: GlobalState) => state.content.municipality, profileSelector],
-  (municipality, profile): pot.Pot<MunicipalityMetadata, Error> => {
-    if (pot.isSome(municipality.codiceCatastale) && pot.isSome(profile)) {
-      const maybeCodiceCatastale = CodiceCatastale.decode(
-        profile.value.fiscal_code.substring(11, 15)
-      );
-      if (
-        maybeCodiceCatastale.isRight() &&
-        maybeCodiceCatastale.value === municipality.codiceCatastale.value
-      ) {
-        return municipality.data;
-      }
-    }
-    return pot.none;
-  }
-);
+export const municipalitySelector = (state: GlobalState) =>
+  state.content.municipality;
 
 export const servicesMetadataByIdSelector = (state: GlobalState) =>
   state.content.servicesMetadata.byId;
