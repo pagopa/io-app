@@ -22,7 +22,6 @@ import Barcode from "react-native-barcode-builder";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { UserProfile } from "../../definitions/backend/UserProfile";
 import { Municipality } from "../../definitions/content/Municipality";
-import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
 import { extractFiscalCodeData } from "../utils/profile";
 
