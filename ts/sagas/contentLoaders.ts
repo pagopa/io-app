@@ -87,10 +87,6 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
     );
 
     // Check if the first services loading is occurring yet and check when it is completed
-    //
-    // TODO: Define and manage the firstServicesLoad.failure. It could occurs when one or
-    //        more services content load fails  https://www.pivotaltracker.com/story/show/168451469
-
     if (
       pot.isNone(isFirstServiceLoadingCompleted) &&
       isVisibleServicesContentLoadingCompleted &&
