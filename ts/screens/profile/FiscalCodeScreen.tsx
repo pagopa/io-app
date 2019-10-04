@@ -72,7 +72,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     if (
       this.props.profile !== undefined &&
-      pot.isNone(this.props.municipality.data)
+      pot.isNone(this.props.municipality)
     ) {
       const maybeCodiceCatastale = CodiceCatastale.decode(
         this.props.profile.fiscal_code.substring(11, 15)

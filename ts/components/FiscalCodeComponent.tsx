@@ -21,13 +21,14 @@ import {
 import Barcode from "react-native-barcode-builder";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { UserProfile } from "../../definitions/backend/UserProfile";
+import { Municipality } from "../../definitions/content/Municipality";
 import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
 import { extractFiscalCodeData } from "../utils/profile";
 
 interface BaseProps {
   profile: UserProfile;
-  municipality: MunicipalityState;
+  municipality: pot.Pot<Municipality, Error>;
   getBackSide: boolean;
   type: "Full" | "Landscape";
 }
@@ -342,7 +343,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
   private renderFrontContent(
     profile: UserProfile,
-    municipality: MunicipalityState,
+    municipality: pot.Pot<Municipality, Error>,
     isLandscape: boolean
   ) {
     const fiscalCode = profile.fiscal_code;
@@ -372,7 +373,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           isLandscape
         )}
 
-        {pot.isSome(municipality.data) &&
+        {pot.isSome(municipality) &&
           this.renderItem(
             fiscalCodeData.denominazione,
             styles.fullBirthPlaceText,
@@ -388,7 +389,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             isLandscape
           )}
 
-        {pot.isSome(municipality.data) &&
+        {pot.isSome(municipality) &&
           this.renderItem(
             fiscalCodeData.siglaProvincia,
             styles.fullBirthCityText,

@@ -9,6 +9,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { createSelector } from "reselect";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
@@ -19,6 +20,7 @@ import {
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
+import { profileSelector } from "./profile";
 import { GlobalState } from "./types";
 
 /**
@@ -52,8 +54,24 @@ const initialContentState: ContentState = {
 };
 
 // Selectors
-export const municipalitySelector = (state: GlobalState) =>
-  state.content.municipality;
+// return municipality metadata if codice catastale mathes with the one in profile fiscal code
+export const municipalitySelector = createSelector(
+  [(state: GlobalState) => state.content.municipality, profileSelector],
+  (municipality, profile): pot.Pot<MunicipalityMetadata, Error> => {
+    if (pot.isSome(municipality.codiceCatastale) && pot.isSome(profile)) {
+      const maybeCodiceCatastale = CodiceCatastale.decode(
+        profile.value.fiscal_code.substring(11, 15)
+      );
+      if (
+        maybeCodiceCatastale.isRight() &&
+        maybeCodiceCatastale.value === municipality.codiceCatastale.value
+      ) {
+        return municipality.data;
+      }
+    }
+    return pot.none;
+  }
+);
 
 export const servicesMetadataByIdSelector = (state: GlobalState) =>
   state.content.servicesMetadata.byId;
