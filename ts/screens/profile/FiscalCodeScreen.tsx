@@ -74,7 +74,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
       const maybeCodiceCatastale = CodiceCatastale.decode(
         this.props.profile.fiscal_code.substring(11, 15)
       );
-      // it the stored value is different from the requiring one
+      // if the maybeCodiceCatastale stored value is different from the requiring one
       // we need to ask for un update
       const isNeededToUpdate = pot.getOrElse(
         pot.map(
