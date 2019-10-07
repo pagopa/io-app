@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
 
 /**
- * A screen to show if the fingerprint is supported to the user.
+ * A screen as reminder to the user to validate his email address
  */
 export class EmailValidateScreen extends React.PureComponent<Props> {
   private handleGoBack = () =>
