@@ -89,6 +89,7 @@ export function* loadUserMetadata(
   const userMetadataOrError = backendUserMetadataToUserMetadata(
     backendUserMetadata
   );
+
   if (userMetadataOrError.isLeft()) {
     yield put(userMetadataLoad.failure(userMetadataOrError.value));
     return none;
@@ -106,9 +107,18 @@ export function* watchLoadUserMetadata(
 ) {
   yield takeLatest(
     getType(userMetadataLoad.request),
-    loadUserMetadata,
+    loadUserMetadataManager,
     getUserMetadata
   );
+}
+
+/**
+ * Call loadUserMetadata saga.
+ */
+export function* loadUserMetadataManager(
+  getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"]
+) {
+  yield fork(loadUserMetadata, getUserMetadata);
 }
 
 /**

@@ -1,7 +1,7 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
-import { call, Effect, put, takeEvery } from "redux-saga/effects";
+import { call, Effect, put, select, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ContentClient } from "../api/content";
 
@@ -15,6 +15,15 @@ import {
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { ServiceId } from "../../definitions/backend/ServiceId";
+import {
+  firstServicesLoad,
+  markServiceAsRead
+} from "../store/actions/services";
+import {
+  isFirstVisibleServiceLoadCompletedSelector,
+  isVisibleServicesContentLoadCompletedSelector,
+  isVisibleServicesMetadataLoadCompletedSelector
+} from "../store/reducers/entities/services/firstServicesLoading";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
 
@@ -57,6 +66,36 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
     } else {
       yield put(contentServiceLoad.failure(serviceId));
     }
+
+    const isFirstServiceLoadingCompleted = yield select(
+      isFirstVisibleServiceLoadCompletedSelector
+    );
+
+    // If the service content is loaded for the first time, the app shows the service list item without badge
+    if (!isFirstServiceLoadingCompleted) {
+      yield put(markServiceAsRead(serviceId));
+    }
+
+    const isVisibleServicesContentLoadingCompleted = yield select(
+      isVisibleServicesContentLoadCompletedSelector
+    );
+
+    const isVisibleServicesMetadataLoadingCompleted = yield select(
+      isVisibleServicesMetadataLoadCompletedSelector
+    );
+
+    // Check if the first services loading is occurring yet and check when it is completed
+    //
+    // TODO: Define and manage the firstServicesLoad.failure. It could occurs when one or
+    //        more services content load fails  https://www.pivotaltracker.com/story/show/168451469
+
+    if (
+      !isFirstServiceLoadingCompleted &&
+      isVisibleServicesContentLoadingCompleted &&
+      isVisibleServicesMetadataLoadingCompleted
+    ) {
+      yield put(firstServicesLoad.success());
+    }
   });
 }
 
@@ -93,24 +132,27 @@ export function* watchContentMunicipalityLoadSaga(): Iterator<Effect> {
     action: ActionType<typeof contentMunicipalityLoad["request"]>
   ) {
     const codiceCatastale = action.payload;
-
-    const response: SagaCallReturnType<
-      typeof fetchMunicipalityMetadata
-    > = yield call(
-      fetchMunicipalityMetadata,
-      contentClient.getMunicipality,
-      codiceCatastale
-    );
-
-    if (response.isRight()) {
-      yield put(
-        contentMunicipalityLoad.success({
-          codiceCatastale,
-          data: response.value
-        })
+    try {
+      const response: SagaCallReturnType<
+        typeof fetchMunicipalityMetadata
+      > = yield call(
+        fetchMunicipalityMetadata,
+        contentClient.getMunicipality,
+        codiceCatastale
       );
-    } else {
-      yield put(contentMunicipalityLoad.failure(codiceCatastale));
+
+      if (response.isRight()) {
+        yield put(
+          contentMunicipalityLoad.success({
+            codiceCatastale,
+            data: response.value
+          })
+        );
+      } else {
+        yield put(contentMunicipalityLoad.failure(response.value));
+      }
+    } catch (e) {
+      yield put(contentMunicipalityLoad.failure(e));
     }
   });
 }

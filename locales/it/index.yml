@@ -711,7 +711,10 @@ services:
   tab:
     locals: Locali
     national: Nazionali
-    otherServices: Altri servizi
+    all: Tutti
+  loading:
+    title: Sto caricando l'elenco dei servizi
+    subtitle: attendi qualche secondo..  
   enableAll: Attiva tutti
   disableAll: Disattiva tutti
   disableAllTitle: Vuoi davvero disattivare tutti i servizi?

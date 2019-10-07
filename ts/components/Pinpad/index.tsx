@@ -27,6 +27,7 @@ interface Props {
   onCancel?: () => void;
   onPinResetHandler?: () => void;
   onFingerPrintReq?: () => void;
+  onDeleteLastDigit?: () => void;
 }
 
 interface State {
@@ -74,13 +75,17 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   }
 
-  private deleteLastDigit = () =>
+  private deleteLastDigit = () => {
     this.setState(prev => ({
       value:
         prev.value.length > 0
           ? prev.value.slice(0, prev.value.length - 1)
           : prev.value
     }));
+    if (this.props.onDeleteLastDigit) {
+      this.props.onDeleteLastDigit();
+    }
+  };
 
   private pinPadDigits: ComponentProps<typeof KeyPad>["digits"] = [
     [

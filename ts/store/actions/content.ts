@@ -18,7 +18,7 @@ export const contentMunicipalityLoad = createAsyncAction(
 )<
   CodiceCatastale,
   { codiceCatastale: CodiceCatastale; data: MunicipalityMetadata },
-  CodiceCatastale
+  Error
 >();
 
 export type ContentActions =

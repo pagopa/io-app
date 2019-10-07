@@ -6,7 +6,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { unreadServicesByIdSelector } from "../store/reducers/entities/services/readStateByServiceId";
+import { servicesBadgeValueSelector } from "../store/reducers/entities/services";
 import { GlobalState } from "../store/reducers/types";
 import TabIconComponent from "./ui/TabIconComponent";
 
@@ -30,9 +30,8 @@ class ServiceTabIcon extends React.PureComponent<Props> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  const unreadServicesById = unreadServicesByIdSelector(state);
   return {
-    unreadServices: unreadServicesById.length
+    unreadServices: servicesBadgeValueSelector(state)
   };
 }
 

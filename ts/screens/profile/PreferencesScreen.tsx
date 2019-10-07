@@ -8,6 +8,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
 
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -198,6 +199,8 @@ class PreferencesScreen extends React.Component<Props, State> {
               iconName={"io-languages"}
               onPress={languageAlert}
             />
+
+            <EdgeBorderComponent />
           </List>
         </ScreenContent>
       </TopScreenComponent>
