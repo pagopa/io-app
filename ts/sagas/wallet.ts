@@ -341,8 +341,6 @@ function* startOrResumeAddCreditCardSaga(
 function* startOrResumePaymentActivationSaga(
   action: ActionType<typeof runStartOrResumePaymentActivationSaga>
 ) {
-  // create a new promise to abort payment
-  createNewPromise();
   while (true) {
     // before each step we select the updated payment state to know what has
     // been already done.
@@ -464,8 +462,7 @@ function* pollTransactionSaga(
 
 // tslint:disable-next-line: no-let prefer-const
 let resolveShouldAbort: (v: boolean) => void;
-// tslint:disable-next-line: no-let prefer-const
-let shouldAbort: Promise<boolean>;
+
 /**
  * This saga attempts to delete the active payment, if there's one.
  *
@@ -486,12 +483,12 @@ function* deleteActivePaymentSaga() {
 }
 
 /**
- * Return a Promise from a DeferredPromise
+ * Return a Promise used to abort polling
  */
 function createNewPromise() {
   const defPromise = DeferredPromise<boolean>();
   resolveShouldAbort = defPromise.e2;
-  shouldAbort = defPromise.e1;
+  return defPromise.e1;
 }
 
 /**
@@ -523,7 +520,7 @@ export function* watchWalletSaga(
     apiUrlPrefix,
     sessionToken,
     constantPollingFetch(
-      shouldAbort,
+      createNewPromise(),
       PAYMENT_ID_MAX_POLLING_RETRIES,
       PAYMENT_ID_RETRY_DELAY_MILLIS
     )
