@@ -1,0 +1,19 @@
+diff --git a/node_modules/instabug-reactnative/index.d.ts b/node_modules/instabug-reactnative/index.d.ts
+index f081181..643b688 100644
+--- a/node_modules/instabug-reactnative/index.d.ts
++++ b/node_modules/instabug-reactnative/index.d.ts
+@@ -9,7 +9,7 @@ export namespace BugReporting {
+   function setInvocationOptions(invocationOptions: invocationOptions[]): void;
+   function onInvokeHandler(handler: () => void): void;
+   function onReportSubmitHandler(preSendingHandler: () => void): void;
+-  function onSDKDismissedHandler(handler: (dismiss: dismissType, report: reportType) => void): void;
++  function onSDKDismissedHandler(handler: (dismiss: string, report: string) => void): void;
+   function setDidSelectPromptOptionHandler(didSelectPromptOptionHandler: () => void): void;
+   function setShakingThresholdForiPhone(iPhoneShakingThreshold: number): void;
+   function setShakingThresholdForiPad(iPadShakingThreshold: number): void;
+diff --git a/node_modules/instabug-reactnative/ios/.DS_Store b/node_modules/instabug-reactnative/ios/.DS_Store
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/instabug-reactnative/ios/Instabug.framework/.DS_Store b/node_modules/instabug-reactnative/ios/Instabug.framework/.DS_Store
+new file mode 100644
+index 0000000..e69de29

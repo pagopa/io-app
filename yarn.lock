@@ -4359,10 +4359,10 @@ inquirer@^3.0.6:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-instabug-reactnative@8.4.1:
-  version "8.4.1"
-  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-8.4.1.tgz#e98c328e0da530648517e7ab483b47208a057f6c"
-  integrity sha512-vURCIGWcioq6Rp8dN+atd3z5R3rQMIW7E1bqCKGHE8rYB2wvUuRS99VNbW6F08bVSnQQdjrgHcO91SBSoI5M9g==
+instabug-reactnative@8.7.1:
+  version "8.7.1"
+  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-8.7.1.tgz#22bb9930425024cac7060bf6f47156091be4cf5f"
+  integrity sha512-XfQhDsdYGeuEOLaKDh+tgCj7AsBjcx7ydK/laRrg2/a7yFgnnGm/OJQKa3inJeaL7QKxFvXN6aWC9EJaF03l+A==
 
 invariant@2.2.4, invariant@^2.2.0, invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
@@ -6853,10 +6853,10 @@ pascalcase@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
 
-patch-package@6.1.2:
-  version "6.1.2"
-  resolved "https://registry.yarnpkg.com/patch-package/-/patch-package-6.1.2.tgz#9ed0b3defb5c34ecbef3f334ddfb13e01b3d3ff6"
-  integrity sha512-5GnzR8lEyeleeariG+hGabUnD2b1yL7AIGFjlLo95zMGRWhZCel58IpeKD46wwPb7i+uNhUI8unV56ogk8Bgqg==
+patch-package@6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/patch-package/-/patch-package-6.2.0.tgz#677de858e352b6ca4e6cb48a6efde2cec9fde566"
+  integrity sha512-HWlQflaBBMjLBfOWomfolF8aqsFDeNbSNro1JDUgYqnVvPM5OILJ9DQdwIRiKmGaOsmHvhkl1FYkvv1I9r2ZJw==
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     chalk "^2.4.2"

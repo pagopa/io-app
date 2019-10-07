@@ -1,6 +1,5 @@
-import { BugReporting, Chats, Replies } from "instabug-reactnative";
-
 import { none, Option, some } from "fp-ts/lib/Option";
+import { BugReporting, Replies } from "instabug-reactnative";
 import { Button } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -29,12 +28,19 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
     const chat = "chat";
     this.setState({ instabugReportType: some(chat) });
     this.props.dispatchIBReportOpen(chat);
+    BugReporting.setReportTypes([
+      BugReporting.reportType.bug,
+      BugReporting.reportType.feedback,
+      BugReporting.reportType.question
+    ]);
     // Check if there are previous chat
     Replies.hasChats(hasChats => {
       if (hasChats) {
         Replies.show();
       } else {
-        Chats.show();
+        BugReporting.showWithOptions(BugReporting.reportType.question, [
+          BugReporting.option.emailFieldOptional
+        ]);
       }
     });
   };
