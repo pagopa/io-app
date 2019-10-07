@@ -6,7 +6,7 @@ import { emailAcknowledged } from "../../store/actions/onboarding";
 
 /**
  * Launch email saga that consists of:
- * - acknowledgement screen if email already exists and is valid and the user
+ * - acknowledgement screen if email already exists and it is valid and the user
  *   does not want to change it
  * - editing and validation screen, otherwise
  */
@@ -25,11 +25,11 @@ export function* checkAcknowledgedEmailSaga(): IterableIterator<Effect> {
     if (isValid) {
       // If email exists and it's valid, navigate to the Email Screen in order
       // to wait for the user to check it out and press "Continue". Otherwise
-      // a new email registration process is run
+      // a new email registration process will be run
       yield put(navigateToEmailScreen());
 
-      // Wait for the user to press "Continue" button after having checked out
-      // theirs own email
+      // Wait until user checks his email and he presses "Continue" button
+      // after having checked out theirs own email
       yield take(emailAcknowledged);
     }
   }
