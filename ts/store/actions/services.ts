@@ -43,6 +43,9 @@ export const loadService = createAsyncAction(
   "SERVICE_LOAD_FAILURE"
 )<string, ServicePublic, string>();
 
+export const refreshService = createStandardAction("SERVICE_REFRESH_REQUEST")<
+  ServicePublic
+>();
 //
 //  mark service as read
 //
@@ -68,6 +71,7 @@ export type ServicesActions =
   | ActionType<typeof firstServicesLoad>
   | ActionType<typeof loadVisibleServices>
   | ActionType<typeof loadService>
+  | ActionType<typeof refreshService>
   | ActionType<typeof markServiceAsRead>
   | ActionType<typeof removeServiceTuples>
   | ActionType<typeof showServiceDetails>;

@@ -37,7 +37,8 @@ import { clearCache, resetProfileState } from "../store/actions/profile";
 import {
   firstServicesLoad,
   loadService,
-  loadVisibleServices
+  loadVisibleServices,
+  refreshService
 } from "../store/actions/services";
 import {
   idpSelector,
@@ -72,6 +73,7 @@ import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadServiceRequestHandler } from "./startup/loadServiceRequestHandler";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { loadVisibleServicesRequestHandler } from "./startup/loadVisibleServicesHandler";
+import { refreshServiceRequestHandler } from "./startup/refreshServiceRequestHandler";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
@@ -296,6 +298,12 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield takeEvery(
     getType(loadService.request),
     loadServiceRequestHandler,
+    backendClient.getService
+  );
+
+  yield takeEvery(
+    getType(refreshService),
+    refreshServiceRequestHandler,
     backendClient.getService
   );
 
