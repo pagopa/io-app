@@ -38,6 +38,11 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center"
   },
+  content: {
+    paddingHorizontal: customVariables.contentPadding,
+    backgroundColor: customVariables.contentBackground,
+    flex: 1
+  },
   spacerSmall: { height: 12 },
   spacerLarge: { height: 24 },
   email: {
@@ -88,7 +93,7 @@ export class EmailScreen extends React.PureComponent<Props> {
           title={I18n.t("onboarding.email.title")}
           subtitle={I18n.t("onboarding.email.subtitle")}
         >
-          <View content={true}>
+          <View style={styles.content}>
             <Text style={styles.emailLabel}>
               {I18n.t("onboarding.email.emailInputLabel")}
             </Text>
