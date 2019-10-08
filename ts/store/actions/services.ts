@@ -37,15 +37,15 @@ export const loadVisibleServices = createAsyncAction(
 // load single service
 //
 
+type ServiceLoadFailurePayload = {
+  service_id: string;
+  to_remove?: boolean;
+};
 export const loadService = createAsyncAction(
   "SERVICE_LOAD_REQUEST",
   "SERVICE_LOAD_SUCCESS",
   "SERVICE_LOAD_FAILURE"
-)<string, ServicePublic, string>();
-
-export const refreshService = createStandardAction("SERVICE_REFRESH_REQUEST")<
-  ServicePublic
->();
+)<string, ServicePublic, ServiceLoadFailurePayload>();
 //
 //  mark service as read
 //
@@ -71,7 +71,6 @@ export type ServicesActions =
   | ActionType<typeof firstServicesLoad>
   | ActionType<typeof loadVisibleServices>
   | ActionType<typeof loadService>
-  | ActionType<typeof refreshService>
   | ActionType<typeof markServiceAsRead>
   | ActionType<typeof removeServiceTuples>
   | ActionType<typeof showServiceDetails>;

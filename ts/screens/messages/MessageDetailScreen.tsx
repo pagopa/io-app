@@ -19,7 +19,7 @@ import {
   setMessageReadState
 } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
-import { refreshService } from "../../store/actions/services";
+import { loadService } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -267,23 +267,23 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   public componentDidMount() {
-    const { potMessage, potService } = this.props;
+    const { potMessage, potService, refreshService } = this.props;
     // if the message is loaded then refresh sender service data
-    if (pot.isSome(potMessage) && pot.isSome(potService)) {
-      this.props.refreshService(potService.value);
+    if (pot.isSome(potMessage) && !pot.isLoading(potService)) {
+      refreshService(potMessage.value.sender_service_id);
     }
     this.setMessageReadState();
   }
 
   public componentDidUpdate(prevProps: Props) {
-    const { potMessage, potService } = this.props;
+    const { potMessage, potService, refreshService } = this.props;
     const { potMessage: prevPotMessage } = prevProps;
     if (
       !pot.isSome(prevPotMessage) &&
       pot.isSome(potMessage) &&
-      pot.isSome(potService)
+      !pot.isLoading(potService)
     ) {
-      this.props.refreshService(potService.value);
+      refreshService(potMessage.value.sender_service_id);
     }
     this.setMessageReadState();
   }
@@ -333,8 +333,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
   return {
-    refreshService: (service: ServicePublic) =>
-      dispatch(refreshService(service)),
+    refreshService: (serviceId: string) =>
+      dispatch(loadService.request(serviceId)),
     contentServiceLoad: (serviceId: ServiceId) =>
       dispatch(contentServiceLoad.request(serviceId)),
     loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>

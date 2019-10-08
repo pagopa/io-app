@@ -25,9 +25,12 @@ const reducer = (
   switch (action.type) {
     case getType(loadService.request):
       // Use the ID as object key
+      const prevServiceRequest = state[action.payload] || pot.noneLoading;
       return {
         ...state,
-        [action.payload]: pot.noneLoading
+        [action.payload]: pot.isError(prevServiceRequest)
+          ? pot.noneLoading
+          : prevServiceRequest
       };
 
     case getType(loadService.success):
@@ -39,9 +42,17 @@ const reducer = (
 
     case getType(loadService.failure):
       // Use the ID as object key
+      const { service_id, to_remove } = action.payload;
+      const prevServiceFailure = state[service_id];
+      const nextServiceFailure =
+        !to_remove &&
+        prevServiceFailure !== undefined &&
+        !pot.isLoading(prevServiceFailure)
+          ? prevServiceFailure
+          : pot.noneError(Error());
       return {
         ...state,
-        [action.payload]: pot.noneError(Error())
+        [service_id]: nextServiceFailure
       };
 
     case getType(removeServiceTuples): {
