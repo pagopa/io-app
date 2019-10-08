@@ -6,11 +6,11 @@ import { emailInsert } from "../../store/actions/onboarding";
 /**
  * Launch email saga that consists of:
  * If user have an existing email:
- * - acknowledgement screen if email already exists and is valid and the user
+ * - acknowledgement screen if email already exists and it is valid and the user
  *   does not want to change it
  * - editing and validation screen, otherwise
  *
- * If user doesn't have an email must specify a valid email.s
+ * If user doesn't have an email, an add email screen is provided
  */
 export function* checkAcknowledgedEmailSaga(): IterableIterator<Effect> {
   // Check if user profile has email

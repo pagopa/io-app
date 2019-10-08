@@ -1,5 +1,6 @@
 /**
- * A screen where user after login (with CIE) can set email address if is not present in the profile.
+ * A screen where user after login (with CIE) can set email address if it is
+ * not present in the profile.
  */
 
 import { none, Option, some } from "fp-ts/lib/Option";
