@@ -6,13 +6,6 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
 import React from "react";
 
-export type PrivateSelectorViewInterface = Readonly<{
-  component: React.ReactNode;
-}>;
-
-// tslint:disable-next-line: no-commented-code
-// type Props = PrivateSelectorViewInterface;
-
 export function withConditionalView<P extends T, T>(
   WrappedComponent: React.ComponentType<P>,
   check: (props: P) => boolean,

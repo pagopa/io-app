@@ -416,7 +416,7 @@ export default connect(
 )(
   withConditionalView<Props, RemindEmailValidationInterface>(
     WalletHomeScreen,
-    props => !props.email, // TODO: add condition of email verification
+    props => !props.email, // TODO: add condition of email verification !props.email for test
     RemindEmailValidationOverlay
   )
 );
