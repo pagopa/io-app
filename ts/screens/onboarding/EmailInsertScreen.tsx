@@ -5,6 +5,7 @@
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { EmailString } from "italia-ts-commons/lib/strings";
 
 import { Content, Form, Text, View } from "native-base";
 
@@ -63,13 +64,6 @@ type State = Readonly<{
 }>;
 
 /**
- * A valid Email
- */
-export const Email = RegExp(
-  '^(([^<>()\\[\\]\\\\.,;:\\s@"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$'
-);
-
-/**
  * A screen to allow user to insert an email address.
  */
 class EmailScreen extends React.PureComponent<Props, State> {
@@ -83,11 +77,11 @@ class EmailScreen extends React.PureComponent<Props, State> {
    */
   private renderFooterButtons() {
     const continueButtonProps = {
-      disabled: !this.isFormValid(),
+      disabled: this.isValidEmail() !== true,
       onPress: () => this.props.dispatch(emailInsert()),
       title: I18n.t("global.buttons.continue"),
       block: true,
-      primary: this.isFormValid()
+      primary: this.isValidEmail()
     };
 
     return (
@@ -95,22 +89,26 @@ class EmailScreen extends React.PureComponent<Props, State> {
     );
   }
 
+  /** validate email returning three possible values:
+   * - _true_,      if email is valid.
+   * - _false_,     if email has been already changed from the user and it is not
+   * valid.
+   * - _undefined_, if email field is empty. This state is consumed by
+   * LabelledItem Component and it used for style pourposes ONLY.
+   */
   private isValidEmail() {
     return this.state.email
       .map(value => {
-        return Email.test(value);
+        return EmailString.decode(value).isRight();
       })
       .toUndefined();
   }
 
   private updateEmailState(value: string) {
     this.setState({
-      email: value && value !== EMPTY_EMAIL ? some(value) : none
+      email: value !== EMPTY_EMAIL ? some(value) : none
     });
   }
-
-  private isFormValid = () =>
-    Email.test(this.state.email.getOrElse(EMPTY_EMAIL));
 
   public render() {
     return (
