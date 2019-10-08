@@ -107,7 +107,7 @@ export function* loadUserMetadata(
   const visibleServices: VisibleServicesState = yield select(
     visibleServicesSelector
   );
-  if (pot.isNone(visibleServices)) {
+  if (pot.isNone(visibleServices) && pot.isError(visibleServices)) {
     yield put(loadVisibleServices.request());
   }
   return some(userMetadataOrError.value);

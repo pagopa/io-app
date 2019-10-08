@@ -68,50 +68,37 @@ const reducer = combineReducers<ServicesState, Action>({
 
 export const servicesSelector = (state: GlobalState) => state.entities.services;
 
-// TODO: the following 3 seletors (isVisibleServicesContentLoadCompletedSelector,
-// isAnyServicesContentLoadFailedSelector, isVisibleServicesMetadataLoadCompletedSelector)
-// could be integrated giving as output a pot instead of a bool
-export const isVisibleServicesContentLoadCompletedSelector = createSelector(
+// A selector to monitor the state of the service loading
+export const visibleServicesContentLoadStateSelector = createSelector(
   [servicesByIdSelector, visibleServicesSelector],
   (servicesById, visibleServices) => {
-    if (!pot.isSome(visibleServices)) {
-      return false;
-    }
-    const servicesLoading = visibleServices.value.findIndex(service => {
-      const serviceContent = servicesById[service.service_id];
-      return serviceContent === undefined || pot.isLoading(serviceContent);
-    });
-    return servicesLoading === -1;
-  }
-);
+    // tslint:disable-next-line: no-let
+    let state: pot.Pot<boolean, Error> = pot.none;
 
-export const isAnyServicesContentLoadFailedSelector = createSelector(
-  [
-    visibleServicesSelector,
-    isFirstVisibleServiceLoadCompletedSelector,
-    isVisibleServicesContentLoadCompletedSelector,
-    servicesByIdSelector
-  ],
-  (
-    visibleServices,
-    isFirstServiceLoading,
-    isVisibleServicesContentLoadCompleted,
-    servicesById
-  ) => {
-    if (
-      pot.isNone(isFirstServiceLoading) &&
-      pot.isSome(visibleServices) &&
-      isVisibleServicesContentLoadCompleted
-    ) {
-      return (
-        visibleServices.value.findIndex(service => {
-          const serviceContent = servicesById[service.service_id];
-          return serviceContent !== undefined && pot.isError(serviceContent);
-        }) !== -1
+    if (pot.isSome(visibleServices) && servicesById !== {}) {
+      const visibleServicesById = visibleServices.value.map(
+        service => servicesById[service.service_id]
       );
-    } else {
-      return undefined;
+      const areServicesLoading =
+        visibleServicesById.findIndex(vs => {
+          return vs === undefined || pot.isLoading(vs);
+        }) !== -1;
+
+      const isServicesLoadFailed =
+        visibleServicesById.findIndex(service => {
+          return service !== undefined && pot.isError(service);
+        }) !== -1;
+
+      if (areServicesLoading) {
+        state = pot.noneLoading;
+      } else if (isServicesLoadFailed) {
+        state = pot.noneError(Error("Unable to load one or more services"));
+      } else {
+        state = pot.some(true);
+      }
     }
+
+    return state;
   }
 );
 
@@ -161,19 +148,19 @@ export const organizationsOfInterestSelector = createSelector(
 // Selector to get if services content and metadata are still being loaded
 export const isLoadingServicesSelector = createSelector(
   [
-    isVisibleServicesContentLoadCompletedSelector,
+    visibleServicesContentLoadStateSelector,
     isVisibleServicesMetadataLoadCompletedSelector,
     visibleServicesSelector
   ],
   (
-    isVisibleServicesContentLoadCompleted,
+    visibleServicesContentLoadState,
     isVisibleServicesMetadataLoadCompleted,
     visibleServices
   ) =>
     pot.isLoading(visibleServices) ||
     (pot.isSome(visibleServices) &&
       !pot.isError(visibleServices) &&
-      (!isVisibleServicesContentLoadCompleted ||
+      (pot.isLoading(visibleServicesContentLoadState) ||
         !isVisibleServicesMetadataLoadCompleted))
 );
 

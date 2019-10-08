@@ -1,15 +1,11 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
 import {
   firstServicesLoad,
   loadVisibleServices
 } from "../../../actions/services";
 import { Action } from "../../../actions/types";
-import {
-  userMetadataLoad,
-  userMetadataUpsert
-} from "../../../actions/userMetadata";
+import { userMetadataLoad } from "../../../actions/userMetadata";
 import { GlobalState } from "../../types";
 
 export type FirstLoadingState = Readonly<{
@@ -26,6 +22,14 @@ export const firstLoadingReducer = (
   action: Action
 ): FirstLoadingState => {
   switch (action.type) {
+    case getType(firstServicesLoad.request): {
+      return {
+        isFirstServicesLoadingCompleted: pot.toLoading(
+          state.isFirstServicesLoadingCompleted
+        )
+      };
+    }
+
     case getType(firstServicesLoad.success): {
       return {
         isFirstServicesLoadingCompleted: pot.some(true)
@@ -41,7 +45,22 @@ export const firstLoadingReducer = (
       };
     }
 
-    case getType(loadVisibleServices.failure): {
+    case getType(loadVisibleServices.request):
+    case getType(userMetadataLoad.request): {
+      if (pot.isError(state.isFirstServicesLoadingCompleted)) {
+        return {
+          isFirstServicesLoadingCompleted: pot.toLoading(
+            state.isFirstServicesLoadingCompleted
+          )
+        };
+      } else {
+        return {
+          ...state
+        };
+      }
+    }
+
+    case getType(loadVisibleServices.failure):
       if (pot.isNone(state.isFirstServicesLoadingCompleted)) {
         return {
           isFirstServicesLoadingCompleted: pot.toError(
@@ -49,8 +68,11 @@ export const firstLoadingReducer = (
             Error("Failed to load visibleServices")
           )
         };
+      } else {
+        return {
+          ...state
+        };
       }
-    }
 
     case getType(userMetadataLoad.failure): {
       if (pot.isNone(state.isFirstServicesLoadingCompleted)) {
@@ -60,16 +82,9 @@ export const firstLoadingReducer = (
             Error("Failed to load userMetadata")
           )
         };
-      }
-    }
-
-    case getType(userMetadataUpsert.failure): {
-      if (pot.isNone(state.isFirstServicesLoadingCompleted)) {
+      } else {
         return {
-          isFirstServicesLoadingCompleted: pot.toError(
-            state.isFirstServicesLoadingCompleted,
-            Error("Failed to upsert userMetadata")
-          )
+          ...state
         };
       }
     }

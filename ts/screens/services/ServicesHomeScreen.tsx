@@ -44,14 +44,14 @@ import {
 } from "../../store/actions/userMetadata";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
-  isAnyServicesContentLoadFailedSelector,
   isLoadingServicesSelector,
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
   organizationsOfInterestSelector,
   selectedLocalServicesSectionsSelector,
-  ServicesSectionState
+  ServicesSectionState,
+  visibleServicesContentLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
@@ -221,7 +221,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     // on mount, update visible services
-    this.props.refreshServices();
+    if (!pot.isLoading(this.props.isFirstServiceLoadCompleted)) {
+      this.props.refreshServices();
+    }
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",
@@ -493,24 +495,25 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <NavigationEvents
           onWillFocus={() => this.setState({ isLongPressEnabled: false })}
         />
-        {pot.isSome(this.props.potUserMetadata) ? (
+        {pot.isError(this.props.potUserMetadata) &&
+        pot.isNone(this.props.potUserMetadata) ? (
+          this.renderErrorContent(this.props.retryUserMetadataLoad)
+        ) : (
           <React.Fragment>
             <ScreenContentHeader
               title={I18n.t("services.title")}
               icon={require("../../../img/icons/services-icon.png")}
               fixed={Platform.OS === "ios"}
             />
-            {pot.isSome(this.props.isFirstServiceLoadCompleted) ||
-            pot.isError(this.props.isFirstServiceLoadCompleted)
-              ? this.props.isServicesContentLoadFailed
+            {pot.isLoading(this.props.isFirstServiceLoadCompleted) ||
+            pot.isLoading(this.props.potUserMetadata)
+              ? this.renderFirstServiceLoadingContent()
+              : pot.isError(this.props.visibleServicesContentLoadState)
                 ? this.renderErrorContent(this.props.refreshServices)
-                : this.renderTabs()
-              : this.renderFirstServiceLoadingContent()}
+                : this.renderTabs()}
             {this.state.isLongPressEnabled &&
               this.renderLongPressFooterButtons()}
           </React.Fragment>
-        ) : (
-          this.renderErrorContent(this.props.retryUserMetadataLoad)
         )}
       </TopScreenComponent>
     );
@@ -725,7 +728,9 @@ const mapStateToProps = (state: GlobalState) => {
     isFirstServiceLoadCompleted: isFirstVisibleServiceLoadCompletedSelector(
       state
     ),
-    isServicesContentLoadFailed: isAnyServicesContentLoadFailedSelector(state),
+    visibleServicesContentLoadState: visibleServicesContentLoadStateSelector(
+      state
+    ),
     profile: profileSelector(state),
     readServices: readServicesByIdSelector(state),
     localTabSections,
@@ -740,9 +745,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  retryUserMetadataLoad: () => {
-    dispatch(userMetadataLoad.request());
-  },
+  retryUserMetadataLoad: () => dispatch(userMetadataLoad.request()),
   refreshServices: () => dispatch(loadVisibleServices.request()),
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,

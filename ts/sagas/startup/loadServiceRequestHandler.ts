@@ -1,10 +1,11 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { contentServiceLoad } from "../../store/actions/content";
 import { firstServicesLoad, loadService } from "../../store/actions/services";
-import { isAnyServicesContentLoadFailedSelector } from "../../store/reducers/entities/services";
+import { visibleServicesContentLoadStateSelector } from "../../store/reducers/entities/services";
 import { SagaCallReturnType } from "../../types/utils";
 /**
  * A generator to load the service details from the Backend
@@ -42,14 +43,11 @@ export function* loadServiceRequestHandler(
   }
 
   // If at least one service loading fails, the first services load is considered as failed
-  const isAnyServicesContentLoadFailed = yield select(
-    isAnyServicesContentLoadFailedSelector
+  const visibleServicesContentLoadState: pot.Pot<boolean, Error> = yield select(
+    visibleServicesContentLoadStateSelector
   );
-  if (isAnyServicesContentLoadFailed) {
-    yield put(
-      firstServicesLoad.failure(
-        Error("Failed to load the content of one or more services")
-      )
-    );
+
+  if (pot.isError(visibleServicesContentLoadState)) {
+    yield put(firstServicesLoad.failure(visibleServicesContentLoadState.error));
   }
 }

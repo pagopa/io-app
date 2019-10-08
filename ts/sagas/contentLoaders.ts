@@ -21,8 +21,8 @@ import {
   markServiceAsRead
 } from "../store/actions/services";
 import {
-  isVisibleServicesContentLoadCompletedSelector,
-  isVisibleServicesMetadataLoadCompletedSelector
+  isVisibleServicesMetadataLoadCompletedSelector,
+  visibleServicesContentLoadStateSelector
 } from "../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../store/reducers/entities/services/firstServicesLoading";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
@@ -78,18 +78,20 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       yield put(markServiceAsRead(serviceId));
     }
 
-    const isVisibleServicesContentLoadingCompleted = yield select(
-      isVisibleServicesContentLoadCompletedSelector
-    );
-
     const isVisibleServicesMetadataLoadingCompleted = yield select(
       isVisibleServicesMetadataLoadCompletedSelector
     );
 
+    const visibleServicesContentLoadState: pot.Pot<
+      boolean,
+      Error
+    > = yield select(visibleServicesContentLoadStateSelector);
+
     // Check if the first services loading is occurring yet and check when it is completed
     if (
       pot.isNone(isFirstServiceLoadingCompleted) &&
-      isVisibleServicesContentLoadingCompleted &&
+      pot.isSome(visibleServicesContentLoadState) &&
+      visibleServicesContentLoadState.value === true &&
       isVisibleServicesMetadataLoadingCompleted
     ) {
       yield put(firstServicesLoad.success());
