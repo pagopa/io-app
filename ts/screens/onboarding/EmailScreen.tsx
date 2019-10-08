@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
   emailWithIcon: {
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: 4 // correct icon position to align it with baseline of email text
   },
   content: {
     paddingHorizontal: customVariables.contentPadding,
@@ -103,7 +104,7 @@ export class EmailScreen extends React.PureComponent<Props> {
                 name="io-envelope"
                 accessible={true}
                 accessibilityLabel={I18n.t("onboarding.email.title")}
-                size={18}
+                size={24}
               />
               <Text style={styles.email}>{profileEmail}</Text>
             </View>
