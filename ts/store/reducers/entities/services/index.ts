@@ -116,8 +116,9 @@ export const isLoadingServicesSelector = createSelector(
 //
 
 // Check if the passed service is local or national through data included into the service metadata.
-// If service metadata aren't loaded, the service is treated as local, otherwise it returns
-// true  if service scope is equal to the filter localization parameter
+// If the localization parameter is expressed, the corresponding item is not included into section if:
+// -  the localization paramenter is different to the service scope
+// -  service metadata load fails,
 const hasLocalization = (
   service: pot.Pot<ServicePublic, Error>,
   servicesMetadataById: ServiceMetadataById,
@@ -127,17 +128,15 @@ const hasLocalization = (
     return true;
   }
 
+  // if service is Error, the corresponding item is not included into section
   if (pot.isSome(service)) {
     const potServiceMetadata =
       servicesMetadataById[service.value.service_id] || pot.none;
     if (pot.isSome(potServiceMetadata)) {
       return potServiceMetadata.value.scope === localization;
-    } else {
-      return localization === ScopeEnum.LOCAL; // if metadata load fails, the service is treated as local
     }
-  } else {
-    return false; // if service is Error, the corresponding item is not included into section
   }
+  return false;
 };
 
 /**
