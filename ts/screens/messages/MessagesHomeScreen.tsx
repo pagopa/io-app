@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
   activeTextStyle: {
     ...makeFontStyleObject(Platform.select, "600"),
     fontSize: Platform.OS === "android" ? 16 : undefined,
-    fontWeight: Platform.OS === "android" ? "normal" : "bold"
+    fontWeight: Platform.OS === "android" ? "normal" : "bold",
+    color: customVariables.brandPrimary
   },
   textStyle: {
     fontSize: customVariables.fontSizeSmall
