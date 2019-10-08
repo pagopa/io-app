@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, Platform, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
   emailWithIcon: {
     flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center",
-    marginTop: 4 // correct icon position to align it with baseline of email text
+    alignItems: "center"
   },
   content: {
     paddingHorizontal: customVariables.contentPadding,
@@ -51,6 +50,9 @@ const styles = StyleSheet.create({
     color: customVariables.h1Color,
     fontSize: 18,
     marginLeft: 8
+  },
+  icon: {
+    marginTop: Platform.OS === "android" ? 3 : 0 // correct icon position to align it with baseline of email text}
   }
 });
 
@@ -105,6 +107,7 @@ export class EmailScreen extends React.PureComponent<Props> {
                 accessible={true}
                 accessibilityLabel={I18n.t("onboarding.email.title")}
                 size={24}
+                style={styles.icon}
               />
               <Text style={styles.email}>{profileEmail}</Text>
             </View>
