@@ -5,39 +5,21 @@
 import I18n from "i18n-js";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image } from "react-native";
+import { Image } from "react-native";
 import TopScreenComponent from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
-type Props = {
-  onClose: () => void;
+export type RemindEmailValidationInterface = {
   email: string;
+  validateEmail: () => void;
 };
 
 export default class RemindEmailValidationOverlay extends React.PureComponent<
-  Props
+  RemindEmailValidationInterface
 > {
-  private handleBackPress = () => {
-    this.props.onClose();
-    return true;
-  };
-
-  public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-  }
-
-  public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
-  }
-
   public render() {
     return (
-      <TopScreenComponent
-        customRightIcon={{
-          iconName: "io-close",
-          onPress: this.props.onClose
-        }}
-      >
+      <TopScreenComponent appLogo={true}>
         <Content>
           <Image
             style={{ alignSelf: "center" }}
@@ -79,7 +61,7 @@ export default class RemindEmailValidationOverlay extends React.PureComponent<
           rightButton={{
             block: true,
             primary: true,
-            onPress: this.props.onClose,
+            onPress: this.props.validateEmail,
             title: I18n.t("global.buttons.ok")
           }}
         />

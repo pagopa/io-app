@@ -10,7 +10,6 @@ import * as React from "react";
 import { Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
-  NavigationEvents,
   NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
@@ -18,12 +17,13 @@ import {
 import { connect } from "react-redux";
 
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
+import { withConditionalView } from "../../components/helpers/withConditionalView";
+import RemindEmailValidationOverlay, {
+  RemindEmailValidationInterface
+} from "../../components/RemindEmailValidationOverlay";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
@@ -57,7 +57,7 @@ type OwnProps = Readonly<{
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  LightModalContextInterface &
+  RemindEmailValidationInterface &
   OwnProps;
 
 const styles = StyleSheet.create({
@@ -128,35 +128,19 @@ const styles = StyleSheet.create({
 class WalletHomeScreen extends React.Component<Props, never> {
   private navListener?: NavigationEventSubscription;
 
-  private showEmailVerificationModal = () =>
-    this.props.showModal(
-      <RemindEmailValidationOverlay
-        onClose={() => {
-          this.props.hideModal();
-          this.props.navigation.goBack();
-        }}
-        email={this.props.email}
-      />
-    );
-
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
 
-    if (true) {
-      // TODO: add condition of email verification
-      this.props.loadWallets();
-      this.props.loadTransactions();
-      this.navListener = this.props.navigation.addListener("didFocus", () => {
-        setStatusBarColorAndBackground(
-          "light-content",
-          customVariables.brandDarkGray
-        );
-      }); // tslint:disable-line no-object-mutation
-    } else {
-      this.showEmailVerificationModal()
-    }
+    this.props.loadWallets();
+    this.props.loadTransactions();
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      setStatusBarColorAndBackground(
+        "light-content",
+        customVariables.brandDarkGray
+      );
+    }); // tslint:disable-line no-object-mutation
   }
 
   public componentWillUnmount() {
@@ -393,11 +377,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
         footerContent={footerContent}
         refreshControl={walletRefreshControl}
       >
-        <NavigationEvents
-          onWillFocus={() => {
-            /*this.showEmailVerificationModal()*/
-          }} // TODO: add condition related to email validation
-        />
         {transactionContent}
       </WalletLayout>
     );
@@ -427,10 +406,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     );
   },
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
-  loadWallets: () => dispatch(fetchWalletsRequest())
+  loadWallets: () => dispatch(fetchWalletsRequest()),
+  validateEmail: () => undefined // TODO: add onPress of email verification
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(WalletHomeScreen));
+)(
+  withConditionalView<Props, RemindEmailValidationInterface>(
+    WalletHomeScreen,
+    props => !props.email, // TODO: add condition of email verification
+    RemindEmailValidationOverlay
+  )
+);
