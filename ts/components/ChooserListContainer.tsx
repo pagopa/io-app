@@ -161,7 +161,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
               />
             </ButtonWithoutOpacity>
           )}
-        </Right>
+        </Right> 
       </React.Fragment>
     );
   }

@@ -32,8 +32,7 @@ const ICON_SIZE = 24;
 const styles = StyleSheet.create({
   listItem: {
     paddingLeft: 0,
-    paddingRight: 0,
-    backgroundColor: "white"
+    paddingRight: 0
   },
   spacingBase: {
     paddingTop: 6,
