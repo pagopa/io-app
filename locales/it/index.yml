@@ -310,6 +310,18 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include tos_fingerprint_not_enrolled.md
+  email:
+    title: Il tuo indirizzo email
+    subtitle: Alcune funzioni di IO hanno bisogno della tua email.
+    emailInputLabel: Indirizzo email personale
+    emailInfo: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
+      usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
+      il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
+      casella di posta elettronica.
+    ctaEdit: Modifica email
+    help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
+      indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
+      tuo provider di servizi SPID.
 pin_login:
   pin:
     pinInfo: Inserisci il PIN

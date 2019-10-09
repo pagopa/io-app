@@ -5,7 +5,7 @@
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 
-import { loadService } from "../../../actions/services";
+import { updateOrganizations } from "../../../actions/organizations";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -23,7 +23,7 @@ const reducer = (
   action: Action
 ): OrganizationNamesByFiscalCodeState => {
   switch (action.type) {
-    case getType(loadService.success):
+    case getType(updateOrganizations):
       return {
         ...state,
         [action.payload.organization_fiscal_code]:
