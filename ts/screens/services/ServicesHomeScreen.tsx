@@ -792,10 +792,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   retryUserMetadataLoad: () => dispatch(userMetadataLoad.request()),
-  refreshServices: () => {
-    dispatch(loadVisibleServices.request());
-    dispatch(userMetadataLoad.request());
-  },
+  refreshServices: () => dispatch(loadVisibleServices.request()),
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
     profile: ProfileState
