@@ -27,6 +27,8 @@ const styles = StyleSheet.create({
   }
 });
 
+type StyleType = { [key in string]: string | number };
+
 type Props =
   | Readonly<{
       type: "masked";
@@ -34,6 +36,7 @@ type Props =
       icon: string;
       inputMaskProps: TextInputMaskProps;
       isValid?: boolean;
+      iconStyle?: StyleType;
     }>
   | Readonly<{
       type: "text";
@@ -41,6 +44,7 @@ type Props =
       icon: string;
       inputProps: TextInputProps;
       isValid?: boolean;
+      iconStyle?: StyleType;
     }>;
 
 export class LabelledItem extends React.Component<Props> {
@@ -61,6 +65,7 @@ export class LabelledItem extends React.Component<Props> {
             size={variables.iconSize3}
             color={variables.brandDarkGray}
             name={this.props.icon}
+            style={this.props.iconStyle}
           />
           {this.props.type === "masked" ? (
             <MaskedInput

@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
   boldH4: {
     fontWeight: customVariables.textBoldWeight,
     paddingTop: customVariables.spacerLargeHeight
+  },
+  icon: {
+    marginTop: Platform.OS === "android" ? 4 : 6 // correct icon position to align it with baseline of email text}
   }
 });
 
@@ -147,6 +150,7 @@ class EmailScreen extends React.PureComponent<Props, State> {
                     onChangeText: (value: string) =>
                       this.updateEmailState(value)
                   }}
+                  iconStyle={styles.icon}
                 />
               </Form>
             </View>
