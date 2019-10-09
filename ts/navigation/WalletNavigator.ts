@@ -4,6 +4,7 @@ import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
+import PaymentSecureCodeScreen from "../screens/wallet/payment/PaymentSecureCodeScreen";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../screens/wallet/payment/PickPspScreen";
 import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
@@ -62,6 +63,10 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.PAYMENT_PICK_PAYMENT_METHOD]: {
       screen: PickPaymentMethodScreen
+    },
+    // For Maestro card
+    [ROUTES.PAYMENT_ENTER_SECURE_CODE]: {
+      screen: PaymentSecureCodeScreen
     }
   },
   {
