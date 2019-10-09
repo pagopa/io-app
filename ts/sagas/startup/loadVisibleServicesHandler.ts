@@ -126,7 +126,7 @@ export function* loadVisibleServicesRequestHandler(
       yield put(sessionExpired());
       return;
     } else {
-      throw Error();
+      throw Error("An error occurred loading visible services");
     }
   } catch (error) {
     yield put(loadVisibleServices.failure(error));

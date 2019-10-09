@@ -79,8 +79,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import {
   UserMetadata,
-  userMetadataSelector,
-  UserMetadataState
+  userMetadataSelector
 } from "../../store/reducers/userMetadata";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
@@ -245,8 +244,18 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   public componentDidMount() {
-    // on mount, update visible services
-    this.props.refreshServices(this.props.potUserMetadata);
+    // On mount, update visible services and user metadata if their
+    // refresh, at startup, fails
+    if (pot.isError(this.props.potUserMetadata)) {
+      this.props.refreshUserMetadata();
+    }
+    if (
+      pot.isError(this.props.visibleServices) &&
+      !pot.isLoading(this.props.visibleServices)
+    ) {
+      this.props.refreshServices();
+    }
+
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "dark-content",
@@ -290,7 +299,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           leftButton={{
             block: true,
             primary: true,
-            onPress: this.props.retryUserMetadataLoad,
+            onPress: this.props.refreshUserMetadata,
             title: I18n.t("global.buttons.retry")
           }}
         />
@@ -669,9 +678,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               this.props.isLoadingServices ||
               pot.isLoading(this.props.potUserMetadata)
             }
-            onRefresh={() =>
-              this.props.refreshServices(this.props.potUserMetadata)
-            }
+            onRefresh={() => {
+              this.props.refreshUserMetadata();
+              this.props.refreshServices();
+            }}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
@@ -845,15 +855,8 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  retryUserMetadataLoad: () => {
-    dispatch(userMetadataLoad.request());
-  },
-  refreshServices: (potUserMetadata?: UserMetadataState) => {
-    if (potUserMetadata && pot.isError(potUserMetadata)) {
-      dispatch(userMetadataLoad.request());
-    }
-    dispatch(loadVisibleServices.request());
-  },
+  refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
+  refreshServices: () => dispatch(loadVisibleServices.request()),
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
     profile: ProfileState
