@@ -152,7 +152,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
     return (
       <BaseScreenComponent
         goBack={this.props.onCancel}
-        headerTitle={I18n.t("wallet.ConfirmPayment.header")}
+        headerTitle={I18n.t("wallet.confirmPayment.header")}
       >
         <Content noPadded={true}>
           <PaymentBannerComponent
@@ -163,12 +163,12 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           />
           <View style={styles.paddedLR}>
             <View spacer={true} extralarge={true} />
-            <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
+            <H1>{I18n.t("wallet.confirmPayment.askConfirm")}</H1>
             <View spacer={true} />
             <Grid>
               <Row>
                 <Col>
-                  <Text>{I18n.t("wallet.ConfirmPayment.partialAmount")}</Text>
+                  <Text>{I18n.t("wallet.confirmPayment.partialAmount")}</Text>
                 </Col>
                 <Col>
                   <Text bold={true} style={styles.textRight}>
@@ -182,9 +182,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 <Row>
                   <Col size={4}>
                     <Text>
-                      {`${I18n.t("wallet.ConfirmPayment.fee")} `}
+                      {`${I18n.t("wallet.confirmPayment.fee")} `}
                       <Text link={true} onPress={this.showHelp}>
-                        {I18n.t("wallet.ConfirmPayment.why")}
+                        {I18n.t("wallet.confirmPayment.why")}
                       </Text>
                     </Text>
                   </Col>
@@ -200,7 +200,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               <Row style={styles.divider}>
                 <Col>
                   <View spacer={true} large={true} />
-                  <H1>{I18n.t("wallet.ConfirmPayment.totalAmount")}</H1>
+                  <H1>{I18n.t("wallet.confirmPayment.totalAmount")}</H1>
                 </Col>
                 <Col>
                   <View spacer={true} large={true} />
@@ -244,7 +244,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <View spacer={true} />
 
                   <Text style={styles.textCenter}>
-                    {I18n.t("wallet.ConfirmPayment.info")}
+                    {I18n.t("wallet.confirmPayment.info")}
                   </Text>
                   <View spacer={true} extralarge={true} />
                 </Col>
@@ -260,7 +260,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             primary={true}
             onPress={() => this.props.runAuthorizationAndPayment()}
           >
-            <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
+            <Text>{I18n.t("wallet.confirmPayment.goToPay")}</Text>
           </Button>
           <View spacer={true} />
           <View style={styles.parent}>
@@ -280,7 +280,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               bordered={true}
               onPress={() => this.props.pickPaymentMethod()}
             >
-              <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
+              <Text>{I18n.t("wallet.confirmPayment.change")}</Text>
             </Button>
           </View>
         </View>
@@ -301,7 +301,7 @@ const mapStateToProps = ({ wallet }: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const onTransactionTimeout = () => {
     dispatch(backToEntrypointPayment());
-    showToast(I18n.t("wallet.ConfirmPayment.transactionTimeout"), "warning");
+    showToast(I18n.t("wallet.confirmPayment.transactionTimeout"), "warning");
   };
 
   const onTransactionValid = (tx: Transaction) => {
@@ -326,7 +326,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       // update the transactions state
       dispatch(fetchTransactionsRequest());
       // navigate to the resulting transaction details
-      showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
+      showToast(I18n.t("wallet.confirmPayment.transactionSuccess"), "success");
     } else {
       // on failure:
       // navigate to entrypoint of payment or wallet home
@@ -337,7 +337,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       dispatch(runDeleteActivePaymentSaga());
       // reset the payment state
       dispatch(paymentInitializeState());
-      showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
+      showToast(I18n.t("wallet.confirmPayment.transactionFailure"), "danger");
     }
   };
 
@@ -365,10 +365,10 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       identificationRequest(
         false,
         {
-          message: I18n.t("wallet.ConfirmPayment.identificationMessage")
+          message: I18n.t("wallet.confirmPayment.identificationMessage")
         },
         {
-          label: I18n.t("wallet.ConfirmPayment.cancelPayment"),
+          label: I18n.t("wallet.confirmPayment.cancelPayment"),
           onCancel: () => undefined
         },
         {
@@ -401,12 +401,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       ActionSheet.show(
         {
           options: [
-            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
-            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
+            I18n.t("wallet.confirmPayment.confirmCancelPayment"),
+            I18n.t("wallet.confirmPayment.confirmContinuePayment")
           ],
           destructiveButtonIndex: 0,
           cancelButtonIndex: 1,
-          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
+          title: I18n.t("wallet.confirmPayment.confirmCancelTitle")
         },
         buttonIndex => {
           if (buttonIndex === 0) {
@@ -418,7 +418,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
             // reset the payment state
             dispatch(paymentInitializeState());
             showToast(
-              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
+              I18n.t("wallet.confirmPayment.cancelPaymentSuccess"),
               "success"
             );
           }

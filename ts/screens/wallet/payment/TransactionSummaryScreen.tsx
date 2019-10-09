@@ -142,19 +142,19 @@ class TransactionSummaryScreen extends React.Component<Props> {
       ActionSheet.show(
         {
           options: [
-            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
-            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
+            I18n.t("wallet.confirmPayment.confirmCancelPayment"),
+            I18n.t("wallet.confirmPayment.confirmContinuePayment")
           ],
           destructiveButtonIndex: 0,
           cancelButtonIndex: 1,
-          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
+          title: I18n.t("wallet.confirmPayment.confirmCancelTitle")
         },
         buttonIndex => {
           if (buttonIndex === 0) {
             this.props.resetPayment();
             this.props.navigation.goBack();
             showToast(
-              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
+              I18n.t("wallet.confirmPayment.cancelPaymentSuccess"),
               "success"
             );
           }

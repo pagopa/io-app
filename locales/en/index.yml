@@ -399,7 +399,7 @@ wallet:
     link: Find out more
     maxFee: Maximum fee
     onUpdateWalletPspFailure: Operation failed, please retry
-  ConfirmPayment:
+  confirmPayment:
     header: Confirm transaction
     cancelPayment: Cancel the transaction
     goToPay: Confirm and pay
@@ -420,6 +420,8 @@ wallet:
     confirmCancelPayment: Cancel this payment
     confirmContinuePayment: Continue with the payment
     cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
+    insertCode: Enter the card security code
+    insertCVC: Re-enter the three-letter code (CVC, CVV) found on the back of your card
   payWith:
     noWallets:
       title: No payment methods found

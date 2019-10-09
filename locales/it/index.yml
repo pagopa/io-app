@@ -409,7 +409,7 @@ wallet:
     link: Per saperne di più
     maxFee: Commissione massima
     onUpdateWalletPspFailure: Operazione fallita, riprova
-  ConfirmPayment:
+  confirmPayment:
     header: Conferma pagamento
     cancelPayment: Annulla l'operazione
     goToPay: Conferma e paga
@@ -430,6 +430,8 @@ wallet:
     confirmCancelPayment: Annulla il pagamento
     confirmContinuePayment: Continua con il pagamento
     cancelPaymentSuccess: Il pagamento di questo avviso è stato annullato, potrai pagarlo nuovamente tra qualche minuto
+    insertCode: Inserisci il codice di sicurezza della carta
+    insertCVC: Inserisci nuovamente il codice di tre lettere (CVC, CVV) che trovi sul retro della tua carta
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato
