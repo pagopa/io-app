@@ -26,29 +26,40 @@ export function* watchLogoutSaga(
     // Issue a logout request to the backend, asking to delete the session
     // FIXME: if there's no connectivity to the backend, this request will
     //        block for a while.
-    const response: SagaCallReturnType<typeof logout> = yield call(logout, {});
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        yield put(logoutSuccess(action.payload));
+    try {
+      const response: SagaCallReturnType<typeof logout> = yield call(
+        logout,
+        {}
+      );
+      if (response.isRight()) {
+        if (response.value.status === 200) {
+          yield put(logoutSuccess(action.payload));
+        } else {
+          // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
+          const error = Error(
+            response.value.status === 500 && response.value.value.title
+              ? response.value.value.title
+              : "Unknown error"
+          );
+          yield put(logoutFailure({ error, options: action.payload }));
+        }
       } else {
-        // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
-        const error = Error(
-          response.value.status === 500 && response.value.value.title
-            ? response.value.value.title
-            : "Unknown error"
-        );
-        yield put(logoutFailure({ error, options: action.payload }));
+        const logoutError = {
+          error: Error(readableReport(response.value)),
+          options: action.payload
+        };
+        yield put(logoutFailure(logoutError));
       }
-    } else {
+      // Force the login by expiring the session
+      // FIXME: possibly reset the navigation stack as the watcher of
+      // SESSION_EXPIRED will save the navigation state and later restore it
+      yield put(sessionExpired());
+    } catch (error) {
       const logoutError = {
-        error: Error(readableReport(response.value)),
+        error,
         options: action.payload
       };
       yield put(logoutFailure(logoutError));
     }
-    // Force the login by expiring the session
-    // FIXME: possibly reset the navigation stack as the watcher of
-    // SESSION_EXPIRED will save the navigation state and later restore it
-    yield put(sessionExpired());
   });
 }
