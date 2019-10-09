@@ -509,8 +509,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <NavigationEvents
           onWillFocus={() => this.setState({ isLongPressEnabled: false })}
         />
-        {pot.isError(this.props.potUserMetadata) &&
-        pot.isNone(this.props.potUserMetadata) ? (
+        {pot.isError(this.props.potUserMetadata) ? (
           this.renderErrorContent(this.props.retryUserMetadataLoad)
         ) : this.props.isSearchEnabled ? (
           this.renderSearch()
@@ -521,8 +520,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               icon={require("../../../img/icons/services-icon.png")}
               fixed={Platform.OS === "ios"}
             />
-            {pot.isLoading(this.props.isFirstServiceLoadCompleted) ||
-            pot.isLoading(this.props.potUserMetadata)
+            {pot.isNone(this.props.isFirstServiceLoadCompleted) &&
+            pot.isLoading(this.props.isFirstServiceLoadCompleted)
               ? this.renderFirstServiceLoadingContent()
               : pot.isError(this.props.visibleServicesContentLoadState)
                 ? this.renderErrorContent(this.props.refreshServices)
@@ -793,7 +792,10 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   retryUserMetadataLoad: () => dispatch(userMetadataLoad.request()),
-  refreshServices: () => dispatch(loadVisibleServices.request()),
+  refreshServices: () => {
+    dispatch(loadVisibleServices.request());
+    dispatch(userMetadataLoad.request());
+  },
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
     profile: ProfileState
