@@ -718,7 +718,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.nationalTabSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoadingServices}
-            onRefresh={this.props.refreshServices}
+            onRefresh={() => {
+              this.props.refreshUserMetadata();
+              this.props.refreshServices();
+            }}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onLongPressItem={this.handleOnLongPressItem}
@@ -750,7 +753,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.allTabSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoadingServices}
-            onRefresh={this.props.refreshServices}
+            onRefresh={() => {
+              this.props.refreshUserMetadata();
+              this.props.refreshServices();
+            }}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onLongPressItem={this.handleOnLongPressItem}
