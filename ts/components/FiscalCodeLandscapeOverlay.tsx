@@ -1,8 +1,8 @@
 /**
  * A component to show the fiscal code fac-simile in Landscape
  */
-import { Body, Container, View } from "native-base";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Body, Container, View } from "native-base";
 import * as React from "react";
 import {
   BackHandler,

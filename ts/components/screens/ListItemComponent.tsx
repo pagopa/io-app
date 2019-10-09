@@ -1,12 +1,6 @@
 import { ListItem, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Platform,
-  StyleProp,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  ViewStyle
-} from "react-native";
+import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import Switch from "../../components/ui/Switch";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
@@ -79,9 +73,12 @@ const styles = StyleSheet.create({
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
     return (
-      <TouchableWithoutFeedback
+      <ListItem
+        style={[styles.listItem, styles.flexRow, this.props.style]}
         onPress={this.props.onPress}
         onLongPress={this.props.onLongPress}
+        first={this.props.isFirstItem}
+        last={this.props.isLastItem || this.props.hideSeparator}
       >
         <View style={styles.flexColumn}>
           <View style={styles.flexRow}>
@@ -101,25 +98,40 @@ export default class ListItemComponent extends React.Component<Props> {
                 {this.props.title}
               </Text>
             </View>
-            {this.props.subTitle && (
-              <Text
-                numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-                style={styles.description}
-              >
-                {this.props.subTitle}
-              </Text>
-            )}
+            {!this.props.iconName &&
+              !this.props.hideIcon &&
+              (this.props.isLongPressEnabled ? (
+                <Switch
+                  key={this.props.keySwitch}
+                  value={this.props.switchValue}
+                  onValueChange={this.props.onSwitchValueChanged}
+                />
+              ) : (
+                <IconFont
+                  name="io-right"
+                  size={ICON_SIZE}
+                  color={customVariables.contentPrimaryBackground}
+                />
+              ))}
           </View>
-          {this.props.iconName && (
-            <IconFont
-              name={this.props.iconName}
-              size={ICON_SIZE * 2}
-              style={{ alignSelf: "center" }}
-              color={customVariables.contentPrimaryBackground}
-            />
+          {this.props.subTitle && (
+            <Text
+              numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
+              style={styles.description}
+            >
+              {this.props.subTitle}
+            </Text>
           )}
-        </ListItem>
-      </TouchableWithoutFeedback>
+        </View>
+        {this.props.iconName && (
+          <IconFont
+            name={this.props.iconName}
+            size={ICON_SIZE * 2}
+            style={{ alignSelf: "center" }}
+            color={customVariables.contentPrimaryBackground}
+          />
+        )}
+      </ListItem>
     );
   }
 }

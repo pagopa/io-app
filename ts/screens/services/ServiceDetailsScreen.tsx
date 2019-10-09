@@ -6,12 +6,7 @@ import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  Image,
-  Linking,
-  StyleSheet,
-} from "react-native";
+import { Alert, Image, Linking, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 

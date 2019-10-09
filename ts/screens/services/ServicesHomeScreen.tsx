@@ -10,7 +10,7 @@
 import { left } from "fp-ts/lib/Either";
 import { Option, some, Some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, Tab, Tabs, Text, View } from "native-base";
+import { Content, Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -22,6 +22,7 @@ import {
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 import ChooserListContainer from "../../components/ChooserListContainer";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -457,15 +458,15 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private renderLongPressFooterButtons = () => {
     return (
       <View style={styles.buttonBar}>
-        <Button
+        <ButtonWithoutOpacity
           block={true}
           bordered={true}
           onPress={this.handleOnLongPressItem}
           style={styles.buttonBarLeft}
         >
           <Text>{I18n.t("services.close")}</Text>
-        </Button>
-        <Button
+        </ButtonWithoutOpacity>
+        <ButtonWithoutOpacity
           block={true}
           primary={true}
           style={styles.buttonBarRight}
@@ -486,7 +487,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               ? I18n.t("services.enableAll")
               : I18n.t("services.disableAll")}
           </Text>
-        </Button>
+        </ButtonWithoutOpacity>
       </View>
     );
   };

@@ -1,6 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet } from "react-native";
 import { format } from "../../utils/dates";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
@@ -62,7 +62,7 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
     if (isOpen) {
       return (
         <View>
-          <TouchableWithoutFeedback onPress={this.toggleRawInfo}>
+          <TouchableWithoutOpacity onPress={this.toggleRawInfo}>
             <View style={styles.toggleContainer}>
               <TouchableWithoutOpacity>
                 <Text style={styles.linkStyle}>
@@ -72,7 +72,7 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
 
               <IconFont name="io-close" color={variables.textLinkColor} />
             </View>
-          </TouchableWithoutFeedback>
+          </TouchableWithoutOpacity>
           <View style={styles.rawInfoContainer}>
             <Text>
               <Text bold={true}>
