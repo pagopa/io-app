@@ -6,7 +6,12 @@ import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Clipboard, Image, Linking, StyleSheet } from "react-native";
+import {
+  Alert,
+  Image,
+  Linking,
+  StyleSheet,
+} from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -24,6 +29,7 @@ import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { openMaps } from "../../utils/openMaps";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
@@ -31,7 +37,7 @@ import {
   EnabledChannels,
   getBlockedChannels,
   getEnabledChannelsForService
-} from "./common";
+} from "../preferences/common";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -84,7 +90,7 @@ function renderInformationRow(
   );
 }
 
-class OldServiceDetailsScreen extends React.Component<Props, State> {
+class ServiceDetailsScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
@@ -434,7 +440,8 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
             {renderInformationRow(
               "C.F.",
               service.organization_fiscal_code,
-              () => Clipboard.setString(service.organization_fiscal_code)
+              () =>
+                clipboardSetStringWithFeedback(service.organization_fiscal_code)
             )}
             {address &&
               renderInformationRow(
@@ -462,9 +469,9 @@ class OldServiceDetailsScreen extends React.Component<Props, State> {
               )}
             {this.props.isDebugModeEnabled &&
               renderInformationRow("ID", service.service_id, () =>
-                Clipboard.setString(service.service_id)
+                clipboardSetStringWithFeedback(service.service_id)
               )}
-            <View spacer={true} large={true} />
+            <View spacer={true} extralarge={true} />
           </Grid>
         </Content>
       </BaseScreenComponent>
@@ -481,4 +488,4 @@ const mapStateToProps = (state: GlobalState) => ({
     state.persistedPreferences.wasServiceAlertDisplayedOnce
 });
 
-export default connect(mapStateToProps)(OldServiceDetailsScreen);
+export default connect(mapStateToProps)(ServiceDetailsScreen);

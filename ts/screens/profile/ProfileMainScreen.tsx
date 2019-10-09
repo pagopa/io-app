@@ -1,7 +1,7 @@
 /**
  * A component to show the main screen of the Profile section
  */
-import { H3, List, ListItem, Switch, Text, Toast, View } from "native-base";
+import { H3, List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -13,10 +13,11 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
-
+import Switch from "../../components/ui/Switch";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
@@ -413,6 +414,9 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 )}
               </React.Fragment>
             )}
+
+            {/* end list */}
+            <EdgeBorderComponent />
           </List>
         </ScrollView>
       );

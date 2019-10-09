@@ -19,7 +19,7 @@ import {
   loadMessageWithRelations,
   setMessageReadState
 } from "../../store/actions/messages";
-import { navigateToOldServiceDetailsScreen } from "../../store/actions/navigation";
+import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -27,7 +27,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import OldServiceDetailsScreen from "../preferences/OldServiceDetailsScreen";
+import ServiceDetailsScreen from "../services/ServiceDetailsScreen";
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
@@ -116,7 +116,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     // When a service gets selected, before navigating to the service detail
     // screen, we issue a contentServiceLoad to refresh the service metadata
     this.props.contentServiceLoad(service.service_id);
-    this.props.navigateToOldServiceDetailsScreen({
+    this.props.navigateToServiceDetailsScreen({
       service
     });
   };
@@ -325,9 +325,9 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
       dispatch(loadMessageWithRelations.request(meta)),
     setMessageReadState: (isRead: boolean) =>
       dispatch(setMessageReadState(messageId, isRead)),
-    navigateToOldServiceDetailsScreen: (
-      params: InferNavigationParams<typeof OldServiceDetailsScreen>
-    ) => dispatch(navigateToOldServiceDetailsScreen(params))
+    navigateToServiceDetailsScreen: (
+      params: InferNavigationParams<typeof ServiceDetailsScreen>
+    ) => dispatch(navigateToServiceDetailsScreen(params))
   };
 };
 

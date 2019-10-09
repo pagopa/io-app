@@ -2,6 +2,7 @@
  * A component to show the fiscal code fac-simile in Landscape
  */
 import { Body, Container, View } from "native-base";
+import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import {
   BackHandler,
@@ -12,8 +13,8 @@ import {
 } from "react-native";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { UserProfile } from "../../definitions/backend/UserProfile";
+import { Municipality } from "../../definitions/content/Municipality";
 import IconFont from "../components/ui/IconFont";
-import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
 import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
 import FiscalCodeComponent from "./FiscalCodeComponent";
@@ -22,7 +23,7 @@ import AppHeader from "./ui/AppHeader";
 type Props = Readonly<{
   onCancel: () => void;
   profile: UserProfile;
-  municipality: MunicipalityState;
+  municipality: pot.Pot<Municipality, Error>;
   showBackSide?: boolean;
 }>;
 

@@ -63,7 +63,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
         <FiscalCodeLandscapeOverlay
           onCancel={this.props.hideModal}
           profile={this.props.profile}
-          municipality={this.props.municipality}
+          municipality={this.props.municipality.data}
           showBackSide={showBackSide}
         />
       );
@@ -71,14 +71,23 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
   }
 
   public componentDidMount() {
-    if (
-      this.props.profile !== undefined &&
-      pot.isNone(this.props.municipality.data)
-    ) {
+    if (this.props.profile !== undefined) {
       const maybeCodiceCatastale = CodiceCatastale.decode(
         this.props.profile.fiscal_code.substring(11, 15)
       );
-      maybeCodiceCatastale.map(c => this.props.loadMunicipality(c));
+      // if the maybeCodiceCatastale stored value is different from the requiring one
+      // we need to ask for an update
+      const isNeededToUpdate = pot.getOrElse(
+        pot.map(
+          this.props.municipality.codiceCatastale,
+          c =>
+            maybeCodiceCatastale.isRight() && maybeCodiceCatastale.value !== c
+        ),
+        true
+      );
+      if (pot.isNone(this.props.municipality.data) || isNeededToUpdate) {
+        maybeCodiceCatastale.map(c => this.props.loadMunicipality(c));
+      }
     }
   }
 
@@ -119,7 +128,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       type={"Full"}
                       profile={this.props.profile}
                       getBackSide={false}
-                      municipality={this.props.municipality}
+                      municipality={this.props.municipality.data}
                     />
                   </View>
                 </TouchableWithoutOpacity>
@@ -130,7 +139,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       type={"Full"}
                       profile={this.props.profile}
                       getBackSide={true}
-                      municipality={this.props.municipality}
+                      municipality={this.props.municipality.data}
                     />
                   </View>
                 </TouchableWithoutOpacity>

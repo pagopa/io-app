@@ -140,10 +140,10 @@ function getCardFromState(state: State): Option<CreditCard> {
 // list of cards to be displayed
 const displayedCards: { [key: string]: any } = {
   MASTERCARD: cardIcons.MASTERCARD,
-  MAESTRO: cardIcons.MAESTRO,
   VISA: cardIcons.VISA,
   VISAELECTRON: cardIcons.VISAELECTRON,
-  POSTEPAY: cardIcons.POSTEPAY
+  POSTEPAY: cardIcons.POSTEPAY,
+  AMEX: cardIcons.AMEX
 };
 
 class AddCardScreen extends React.Component<Props, State> {

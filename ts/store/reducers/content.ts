@@ -8,6 +8,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
+import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
@@ -16,6 +17,7 @@ import {
   contentServiceLoad
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
+import { removeServiceTuples } from "../actions/services";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -25,9 +27,7 @@ import { GlobalState } from "./types";
  */
 export type ContentState = Readonly<{
   servicesMetadata: {
-    byId: {
-      [key: string]: pot.Pot<ServiceMetadata, string> | undefined;
-    };
+    byId: ServiceMetadataById;
   };
   municipality: MunicipalityState;
 }>;
@@ -35,6 +35,10 @@ export type ContentState = Readonly<{
 export type MunicipalityState = Readonly<{
   codiceCatastale: pot.Pot<CodiceCatastale, Error>;
   data: pot.Pot<MunicipalityMetadata, Error>;
+}>;
+
+export type ServiceMetadataById = Readonly<{
+  [key: string]: pot.Pot<ServiceMetadata, string> | undefined;
 }>;
 
 const initialContentState: ContentState = {
@@ -50,6 +54,9 @@ const initialContentState: ContentState = {
 // Selectors
 export const municipalitySelector = (state: GlobalState) =>
   state.content.municipality;
+
+export const servicesMetadataByIdSelector = (state: GlobalState) =>
+  state.content.servicesMetadata.byId;
 
 export default function content(
   state: ContentState = initialContentState,
@@ -110,13 +117,53 @@ export default function content(
         }
       };
 
+    case getType(contentMunicipalityLoad.failure):
+      return {
+        ...state,
+        municipality: {
+          codiceCatastale: pot.toError(
+            state.municipality.codiceCatastale,
+            action.payload
+          ),
+          data: pot.toError(state.municipality.data, action.payload)
+        }
+      };
+
     case getType(clearCache):
       return {
         ...state,
         servicesMetadata: { ...initialContentState.servicesMetadata }
       };
 
+    case getType(removeServiceTuples): {
+      // removeServiceTuples is dispatched to remove from the store
+      // the service content (and, here, metadata) related to services that are
+      // no more visible and that are not related to messages list
+
+      // references of the services to be removed from the store
+      const serviceTuples: ReadonlyArray<ITuple2<string, string | undefined>> =
+        action.payload;
+
+      const newServicesMetadataByIdState = {
+        ...state.servicesMetadata.byId
+      };
+      serviceTuples.forEach(
+        // tslint:disable-next-line no-object-mutation
+        tuple => delete newServicesMetadataByIdState[tuple.e1]
+      );
+      return {
+        ...state,
+        servicesMetadata: {
+          byId: newServicesMetadataByIdState
+        }
+      };
+    }
+
     default:
       return state;
   }
 }
+
+// selector
+export const servicesMetadataSelector = (state: GlobalState) =>
+  state.content.servicesMetadata;
