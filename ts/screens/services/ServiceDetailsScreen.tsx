@@ -9,6 +9,7 @@ import * as React from "react";
 import { Alert, Image, Linking, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
