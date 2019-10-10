@@ -219,8 +219,7 @@ export const navigateToPaymentManualDataInsertion = (
     params
   });
 
-export const navigateToPaymentSecureCodeScreen = () => {
+export const navigateToPaymentEnterSecureCode = () =>
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_ENTER_SECURE_CODE
   });
-};

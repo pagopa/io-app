@@ -432,6 +432,7 @@ wallet:
     confirmCancelPayment: Cancel this payment
     confirmContinuePayment: Continue with the payment
     cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
+    securityVerification: Security verification
     insertCode: Enter the card security code
     insertCVC: Re-enter the three-letter code (CVC, CVV) found on the back of your card
   payWith:

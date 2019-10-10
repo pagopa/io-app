@@ -31,14 +31,14 @@ type Props =
   | Readonly<{
       type: "masked";
       label: string;
-      icon: string;
+      icon?: string;
       inputMaskProps: TextInputMaskProps;
       isValid?: boolean;
     }>
   | Readonly<{
       type: "text";
       label: string;
-      icon: string;
+      icon?: string;
       inputProps: TextInputProps;
       isValid?: boolean;
     }>;
@@ -57,11 +57,16 @@ export class LabelledItem extends React.Component<Props> {
             this.props.isValid === undefined ? false : this.props.isValid
           }
         >
-          <IconFont
-            size={variables.iconSize3}
-            color={variables.brandDarkGray}
-            name={this.props.icon}
-          />
+          {this.props.icon ? (
+            <IconFont
+              size={variables.iconSize3}
+              color={variables.brandDarkGray}
+              name={this.props.icon}
+            />
+          ) : (
+            undefined
+          )}
+
           {this.props.type === "masked" ? (
             <MaskedInput
               placeholderTextColor={color(variables.brandGray)
