@@ -29,7 +29,7 @@ import customVariables from "../../theme/variables";
 
 type NavigationParams = {
   biometryType: BiometrySimpleType;
-  isController: boolean;
+  isInPreference: boolean;
 };
 
 type Props = ReduxProps &
@@ -116,11 +116,13 @@ export class EmailScreen extends React.PureComponent<Props> {
       }
     };
 
-    const isController = this.props.navigation.getParam("isController");
+    const isInPreference = this.props.navigation.getParam("isInPreference");
 
     return (
       <TopScreenComponent
-        goBack={isController ? this.props.navigation.goBack : this.handleGoBack}
+        goBack={
+          isInPreference ? this.props.navigation.goBack : this.handleGoBack
+        }
         title={I18n.t("onboarding.email.title")}
         contextualHelp={{
           title: I18n.t("onboarding.email.title"),
@@ -130,7 +132,7 @@ export class EmailScreen extends React.PureComponent<Props> {
         <ScreenContent
           title={I18n.t("onboarding.email.title")}
           subtitle={
-            isController ? undefined : I18n.t("onboarding.email.subtitle")
+            isInPreference ? undefined : I18n.t("onboarding.email.subtitle")
           }
         >
           <View style={styles.content}>
@@ -150,16 +152,18 @@ export class EmailScreen extends React.PureComponent<Props> {
             </View>
             <View style={styles.spacerLarge} />
             <Text>
-              {isController
+              {isInPreference
                 ? `${I18n.t("onboarding.email.emailInfo2")} \n`
                 : I18n.t("onboarding.email.emailInfo")}
               <Text bold={true}>
-                {isController && I18n.t("onboarding.email.emailAlert")}
+                {isInPreference && I18n.t("onboarding.email.emailAlert")}
               </Text>
             </Text>
           </View>
         </ScreenContent>
-        <FooterWithButtons {...(isController ? footerProps1 : footerProps2)} />
+        <FooterWithButtons
+          {...(isInPreference ? footerProps1 : footerProps2)}
+        />
       </TopScreenComponent>
     );
   }
