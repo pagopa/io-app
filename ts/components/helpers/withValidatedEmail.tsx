@@ -1,6 +1,5 @@
 /**
- * Provides a mechanism to display non-native modals (i.e. overlays)
- * on top of the root component.
+ * A HOC to display the WrappedComponent when the email is valid , otherwise the RemindEmailValidationOverlay will be displayed
  */
 
 import React from "react";
