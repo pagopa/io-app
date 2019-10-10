@@ -1,3 +1,6 @@
+/**
+ * A screen to display the email used by IO
+ */
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
 import { Text, View } from "native-base";
@@ -8,7 +11,10 @@ import { connect } from "react-redux";
 
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import FooterWithButtons, {
+  SingleButton,
+  TwoButtonsInlineHalf
+} from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -25,11 +31,10 @@ type NavigationParams = {
   biometryType: BiometrySimpleType;
 };
 
-type OwnProps = ReduxProps &
+type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   NavigationScreenProps<NavigationParams>;
-
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   emailLabel: { fontSize: 14 },
@@ -83,6 +88,33 @@ export class EmailScreen extends React.PureComponent<Props> {
       .map(_ => untag(_.spid_email))
       .getOrElse("");
 
+    const footerProps1: SingleButton = {
+      type: "SingleButton",
+      leftButton: {
+        bordered: true,
+        onPress: () => {
+          /* TODO */
+        },
+        title: "Modifica indirizzo email"
+      }
+    };
+
+    const footerProps2: TwoButtonsInlineHalf = {
+      type: "TwoButtonsInlineHalf",
+      leftButton: {
+        block: true,
+        bordered: true,
+        title: I18n.t("onboarding.email.ctaEdit"),
+        onPress: unavailableAlert
+      },
+      rightButton: {
+        block: true,
+        primary: true,
+        title: I18n.t("global.buttons.continue"),
+        onPress: this.props.acknowledgeEmail
+      }
+    };
+
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
@@ -94,7 +126,11 @@ export class EmailScreen extends React.PureComponent<Props> {
       >
         <ScreenContent
           title={I18n.t("onboarding.email.title")}
-          subtitle={I18n.t("onboarding.email.subtitle")}
+          subtitle={
+            this.props.isController
+              ? undefined
+              : I18n.t("onboarding.email.subtitle")
+          }
         >
           <View style={styles.content}>
             <Text style={styles.emailLabel}>
@@ -112,23 +148,19 @@ export class EmailScreen extends React.PureComponent<Props> {
               <Text style={styles.email}>{profileEmail}</Text>
             </View>
             <View style={styles.spacerLarge} />
-            <Text>{I18n.t("onboarding.email.emailInfo")}</Text>
+            <Text>
+              {this.props.isController
+                ? `${I18n.t("onboarding.email.emailInfo2")} \n`
+                : I18n.t("onboarding.email.emailInfo")}
+              <Text bold={true}>
+                {this.props.isController &&
+                  I18n.t("onboarding.email.emailAlert")}
+              </Text>
+            </Text>
           </View>
         </ScreenContent>
         <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={{
-            block: true,
-            bordered: true,
-            title: I18n.t("onboarding.email.ctaEdit"),
-            onPress: unavailableAlert
-          }}
-          rightButton={{
-            block: true,
-            primary: true,
-            title: I18n.t("global.buttons.continue"),
-            onPress: this.props.acknowledgeEmail
-          }}
+          {...(this.props.isController ? footerProps1 : footerProps2)}
         />
       </TopScreenComponent>
     );
@@ -136,7 +168,8 @@ export class EmailScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(state.profile)
+  optionProfile: pot.toOption(state.profile),
+  isController: false
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

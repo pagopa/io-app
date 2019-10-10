@@ -25,12 +25,12 @@ type OwnButtonProps = {
 
 type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
 
-interface SingleButton {
+export interface SingleButton {
   type: "SingleButton";
   leftButton: FooterButtonProps;
 }
 
-interface TwoButtonsInlineHalf {
+export interface TwoButtonsInlineHalf {
   type: "TwoButtonsInlineHalf";
   leftButton: FooterButtonProps;
   rightButton: FooterButtonProps;

@@ -318,6 +318,13 @@ onboarding:
       usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
       il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
       casella di posta elettronica.
+    emailInfo2: Puoi modificare questo indirizzo, che dovrai validare cliccando su un  
+      link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che 
+      dipendono dalla email (pagamenti, inoltro messaggi, etc.) saranno disattivate.
+    emailAlert: "Attenzione: il tuo account PagoPA è associato alla tua email,
+                quindi se la modifichi non troverai più elencati
+                nell'applicazione le tue transazioni ed i tuoi metodi di
+                pagamento."
     ctaEdit: Modifica email
     help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
       indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
