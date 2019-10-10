@@ -78,14 +78,16 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
   public render(): React.ReactNode {
     return (
       <BaseScreenComponent
+        primary={true}
         goBack={true}
+        dark={true}
         headerTitle={I18n.t("wallet.confirmPayment.securityVerification")}
       >
         <NavigationEvents onWillFocus={undefined} />
         <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
           <ScreenContentHeader
             title={I18n.t("wallet.confirmPayment.insertCode")}
-            icon={require("../../../../img/icons/service-icon.png")}
+            icon={require("../../../../img/wallet/cvc-icon.png")}
             // fixed={Platform.OS === "ios"}
           />
           <Content scrollEnabled={false}>
