@@ -802,6 +802,7 @@ const mapStateToProps = (state: GlobalState) => {
   const nationalTabSections = nationalServicesSectionsSelector(state);
   const allTabSections = notSelectedServicesSectionsSelector(state);
 
+  // All visibile services organized in sections
   const allSections: ReadonlyArray<ServicesSectionState> = [
     ...localTabSections,
     ...allTabSections
