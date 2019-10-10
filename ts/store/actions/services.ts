@@ -37,16 +37,11 @@ export const loadVisibleServices = createAsyncAction(
 // load single service
 //
 
-type ServiceLoadFailurePayload = {
-  error?: Error;
-  service_id: string;
-  to_remove?: boolean;
-};
 export const loadService = createAsyncAction(
   "SERVICE_LOAD_REQUEST",
   "SERVICE_LOAD_SUCCESS",
   "SERVICE_LOAD_FAILURE"
-)<string, ServicePublic, ServiceLoadFailurePayload>();
+)<string, ServicePublic, string>();
 //
 //  mark service as read
 //

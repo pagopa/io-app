@@ -34,17 +34,10 @@ export function* loadServiceRequestHandler(
       // Service metadata contains service scope (national/local) used to identify where
       // the service should be displayed into the ServiceHomeScreen
       yield put(contentServiceLoad.request(response.value.value.service_id));
-    } else if (response.value.status === 400 || response.value.status === 401) {
-      yield put(
-        loadService.failure({
-          service_id: action.payload,
-          to_remove: true
-        })
-      );
     } else {
       throw Error();
     }
   } catch (error) {
-    yield put(loadService.failure({ service_id: action.payload, error }));
+    yield put(loadService.failure(action.payload));
   }
 }

@@ -45,20 +45,16 @@ const reducer = (
 
     case getType(loadService.failure):
       // Use the ID as object key
-      const { service_id, to_remove, error = Error() } = action.payload;
-      const prevServiceFailure = state[service_id];
-      if (to_remove) {
-        const clonedState = { ...state }; // tslint:disable-next-line: no-object-mutation
-        delete clonedState[service_id];
-        return clonedState;
-      }
+      const serviceId = action.payload;
+      const prevServiceFailure = state[serviceId];
+      const error = Error(serviceId);
       const nextServiceFailure =
         prevServiceFailure !== undefined && pot.isSome(prevServiceFailure)
           ? pot.someError(prevServiceFailure.value, error)
           : pot.noneError(error);
       return {
         ...state,
-        [service_id]: nextServiceFailure
+        [serviceId]: nextServiceFailure
       };
 
     case getType(removeServiceTuples): {
