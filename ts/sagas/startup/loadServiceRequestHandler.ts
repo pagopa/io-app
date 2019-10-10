@@ -44,7 +44,7 @@ export function* loadServiceRequestHandler(
     } else {
       throw Error();
     }
-  } catch {
-    yield put(loadService.failure({ service_id: action.payload }));
+  } catch (error) {
+    yield put(loadService.failure({ service_id: action.payload, error }));
   }
 }

@@ -24,13 +24,16 @@ const reducer = (
 ): ServicesByIdState => {
   switch (action.type) {
     case getType(loadService.request):
-      // Use the ID as object key
-      const prevServiceRequest = state[action.payload] || pot.noneLoading;
+      // Use the ID as object key
+      const cachedValue = state[action.payload];
+      const prevServiceRequest =
+        cachedValue && pot.isSome(cachedValue) && !pot.isLoading(cachedValue)
+          ? pot.someLoading(cachedValue.value)
+          : pot.noneLoading;
+
       return {
         ...state,
-        [action.payload]: pot.isError(prevServiceRequest)
-          ? pot.noneLoading
-          : prevServiceRequest
+        [action.payload]: prevServiceRequest
       };
 
     case getType(loadService.success):
@@ -42,14 +45,17 @@ const reducer = (
 
     case getType(loadService.failure):
       // Use the ID as object key
-      const { service_id, to_remove } = action.payload;
+      const { service_id, to_remove, error = Error() } = action.payload;
       const prevServiceFailure = state[service_id];
+      if (to_remove) {
+        const clonedState = { ...state }; // tslint:disable-next-line: no-object-mutation
+        delete clonedState[service_id];
+        return clonedState;
+      }
       const nextServiceFailure =
-        !to_remove &&
-        prevServiceFailure !== undefined &&
-        !pot.isLoading(prevServiceFailure)
-          ? prevServiceFailure
-          : pot.noneError(Error());
+        prevServiceFailure !== undefined && pot.isSome(prevServiceFailure)
+          ? pot.someError(prevServiceFailure.value, error)
+          : pot.noneError(error);
       return {
         ...state,
         [service_id]: nextServiceFailure

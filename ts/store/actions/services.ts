@@ -38,6 +38,7 @@ export const loadVisibleServices = createAsyncAction(
 //
 
 type ServiceLoadFailurePayload = {
+  error?: Error;
   service_id: string;
   to_remove?: boolean;
 };
