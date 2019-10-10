@@ -1,5 +1,5 @@
 /**
- * A component to remind the user to validate it email
+ * A component to remind the user to validate his/her email
  */
 
 import I18n from "i18n-js";

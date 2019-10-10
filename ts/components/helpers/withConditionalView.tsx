@@ -1,6 +1,5 @@
 /**
- * Provides a mechanism to display non-native modals (i.e. overlays)
- * on top of the root component.
+ * A HOC to display the WrappedComponent when the check function is verified , otherwise the ConditionComponent will be displayed
  */
 
 import hoistNonReactStatics from "hoist-non-react-statics";

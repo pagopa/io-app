@@ -17,7 +17,7 @@ import {
 import { connect } from "react-redux";
 
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import { withValidEmail } from "../../components/helpers/withValidEmail";
+import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
@@ -404,7 +404,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadWallets: () => dispatch(fetchWalletsRequest())
 });
 
-export default withValidEmail(
+export default withValidatedEmail(
   connect(
     mapStateToProps,
     mapDispatchToProps

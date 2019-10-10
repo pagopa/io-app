@@ -15,7 +15,9 @@ const mapStateToProps = (state: GlobalState) => ({
   isValidEmail: !state // TODO: get the proper isValidEmail from store
 });
 
-export function withValidEmail<P>(WrappedComponent: React.ComponentType<P>) {
+export function withValidatedEmail<P>(
+  WrappedComponent: React.ComponentType<P>
+) {
   return connect(
     mapStateToProps,
     null
