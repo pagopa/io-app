@@ -6,17 +6,17 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
 import React from "react";
 
-export function withConditionalView<P extends T, T>(
+export function withConditionalView<P, T, C>(
   WrappedComponent: React.ComponentType<P>,
-  check: (props: P) => boolean,
-  ConditionComponent: React.ComponentType<T>
+  check: (props: T) => boolean,
+  ConditionComponent: React.ComponentType<C>
 ) {
-  class ConditionalView extends React.Component<P> {
+  class ConditionalView extends React.Component<T | P | C> {
     public render() {
-      return check(this.props) ? (
-        <WrappedComponent {...this.props} />
+      return check(this.props as T) ? (
+        <WrappedComponent {...this.props as P} />
       ) : (
-        <ConditionComponent {...this.props} />
+        <ConditionComponent {...this.props as C} />
       );
     }
   }

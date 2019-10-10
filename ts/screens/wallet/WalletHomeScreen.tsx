@@ -17,10 +17,7 @@ import {
 import { connect } from "react-redux";
 
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import { withConditionalView } from "../../components/helpers/withConditionalView";
-import RemindEmailValidationOverlay, {
-  RemindEmailValidationInterface
-} from "../../components/RemindEmailValidationOverlay";
+import { withValidEmail } from "../../components/helpers/withValidEmail";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
@@ -57,7 +54,6 @@ type OwnProps = Readonly<{
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  RemindEmailValidationInterface &
   OwnProps;
 
 const styles = StyleSheet.create({
@@ -387,8 +383,7 @@ const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  readTransactions: transactionsReadSelector(state),
-  email: "test@email.it" // TODO: get the proper email from store
+  readTransactions: transactionsReadSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -406,17 +401,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     );
   },
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
-  loadWallets: () => dispatch(fetchWalletsRequest()),
-  validateEmail: () => undefined // TODO: add onPress of email verification
+  loadWallets: () => dispatch(fetchWalletsRequest())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(
-  withConditionalView<Props, RemindEmailValidationInterface>(
-    WalletHomeScreen,
-    props => !props.email, // TODO: add condition of email verification !props.email for test
-    RemindEmailValidationOverlay
-  )
+export default withValidEmail(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(WalletHomeScreen)
 );

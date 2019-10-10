@@ -6,17 +6,18 @@ import I18n from "i18n-js";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image } from "react-native";
+import { connect } from "react-redux";
+import { navigateBack } from "../store/actions/navigation";
+import { Dispatch } from "../store/actions/types";
+import { GlobalState } from "../store/reducers/types";
 import TopScreenComponent from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
-export type RemindEmailValidationInterface = {
-  email: string;
-  validateEmail: () => void;
-};
+// tslint:disable-next-line:no-use-before-declare
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
-export default class RemindEmailValidationOverlay extends React.PureComponent<
-  RemindEmailValidationInterface
-> {
+class RemindEmailValidationOverlay extends React.PureComponent<Props> {
   public render() {
     return (
       <TopScreenComponent appLogo={true}>
@@ -54,7 +55,7 @@ export default class RemindEmailValidationOverlay extends React.PureComponent<
             block: true,
             bordered: true,
             onPress: () => {
-              /* TODO */
+              this.props.navigateBack();
             },
             title: I18n.t("reminders.email.button2")
           }}
@@ -69,3 +70,18 @@ export default class RemindEmailValidationOverlay extends React.PureComponent<
     );
   }
 }
+
+// tslint:disable-next-line: variable-name
+const mapStateToProps = (_state: GlobalState) => ({
+  email: "test@email.it" // TODO: get the proper email from store
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateBack: () => dispatch(navigateBack()),
+  validateEmail: () => undefined // TODO: add onPress of email verification https://www.pivotaltracker.com/story/show/168662501
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RemindEmailValidationOverlay);
