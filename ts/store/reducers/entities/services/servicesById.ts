@@ -48,7 +48,7 @@ const reducer = (
       const { service_id, to_remove, error = Error() } = action.payload;
       const prevServiceFailure = state[service_id];
       if (to_remove) {
-        const clonedState = { ...state }; // tslint:disable-next-line: no-object-mutation
+        const clonedState = { ...state }; // tslint:disable-next-line: no-object-mutation
         delete clonedState[service_id];
         return clonedState;
       }
