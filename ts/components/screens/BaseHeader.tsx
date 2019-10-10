@@ -88,7 +88,6 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
             </Button>
           )}
         {isSearchAvailable && <SearchButton searchType={searchType} />}
-        
       </Right>
     );
   };

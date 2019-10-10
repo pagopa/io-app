@@ -6,7 +6,11 @@ import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 
-import { forgetCurrentSession, logoutSuccess } from "../actions/authentication";
+import {
+  forgetCurrentSession,
+  logoutFailure,
+  logoutSuccess
+} from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
@@ -93,7 +97,9 @@ export function createRootReducer(
   persistConfigs: ReadonlyArray<PersistConfig>
 ) {
   return (state: GlobalState | undefined, action: Action): GlobalState => {
+    // despite logout fails the user must be logged out
     if (
+      isActionOf(logoutFailure, action) ||
       isActionOf(logoutSuccess, action) ||
       isActionOf(forgetCurrentSession, action)
     ) {
@@ -106,8 +112,9 @@ export function createRootReducer(
        */
       state =
         state &&
-        isActionOf(logoutSuccess, action) &&
-        !action.payload.keepUserData
+        ((isActionOf(logoutSuccess, action) && !action.payload.keepUserData) ||
+          (isActionOf(logoutFailure, action) &&
+            !action.payload.options.keepUserData))
           ? ({
               authentication: { _persist: state.authentication._persist }
             } as GlobalState)

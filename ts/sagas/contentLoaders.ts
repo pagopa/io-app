@@ -132,24 +132,27 @@ export function* watchContentMunicipalityLoadSaga(): Iterator<Effect> {
     action: ActionType<typeof contentMunicipalityLoad["request"]>
   ) {
     const codiceCatastale = action.payload;
-
-    const response: SagaCallReturnType<
-      typeof fetchMunicipalityMetadata
-    > = yield call(
-      fetchMunicipalityMetadata,
-      contentClient.getMunicipality,
-      codiceCatastale
-    );
-
-    if (response.isRight()) {
-      yield put(
-        contentMunicipalityLoad.success({
-          codiceCatastale,
-          data: response.value
-        })
+    try {
+      const response: SagaCallReturnType<
+        typeof fetchMunicipalityMetadata
+      > = yield call(
+        fetchMunicipalityMetadata,
+        contentClient.getMunicipality,
+        codiceCatastale
       );
-    } else {
-      yield put(contentMunicipalityLoad.failure(codiceCatastale));
+
+      if (response.isRight()) {
+        yield put(
+          contentMunicipalityLoad.success({
+            codiceCatastale,
+            data: response.value
+          })
+        );
+      } else {
+        yield put(contentMunicipalityLoad.failure(response.value));
+      }
+    } catch (e) {
+      yield put(contentMunicipalityLoad.failure(e));
     }
   });
 }

@@ -18,8 +18,7 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps &
-  ReturnType<typeof mapStateToProps>;
+type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
 class EmailDetailsScreen extends React.PureComponent<Props> {
   public render() {
@@ -47,7 +46,9 @@ class EmailDetailsScreen extends React.PureComponent<Props> {
           type={"SingleButton"}
           leftButton={{
             bordered: true,
-            onPress: () => {/* TODO */},
+            onPress: () => {
+              /* TODO */
+            },
             title: "Modifica indirizzo email"
           }}
         />

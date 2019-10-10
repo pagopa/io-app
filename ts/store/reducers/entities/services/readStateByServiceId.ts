@@ -1,7 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
 import { clearCache } from "../../../actions/profile";
 import {
   markServiceAsRead,
@@ -9,8 +6,6 @@ import {
 } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
-import { isFirstVisibleServiceLoadCompletedSelector } from "./firstServicesLoading";
-import { visibleServicesSelector } from "./visibleServices";
 
 export type ReadStateByServicesId = Readonly<{
   [key: string]: boolean | undefined;
@@ -22,27 +17,6 @@ const INITIAL_STATE: ReadStateByServicesId = {};
 export const readServicesByIdSelector = (
   state: GlobalState
 ): ReadStateByServicesId => state.entities.services.readState;
-
-// Get the number of visible services that are not yet marked as read
-export const servicesBadgeValueSelector = createSelector(
-  [
-    visibleServicesSelector,
-    readServicesByIdSelector,
-    isFirstVisibleServiceLoadCompletedSelector
-  ],
-  (
-    visibleServicesById,
-    readServicesById,
-    isFirstVisibleServicesLoadCompleted
-  ) => {
-    return isFirstVisibleServicesLoadCompleted &&
-      pot.isSome(visibleServicesById)
-      ? visibleServicesById.value.filter(
-          service => readServicesById[service.service_id] === undefined
-        ).length
-      : 0;
-  }
-);
 
 // Reducer
 export function readServicesByIdReducer(
