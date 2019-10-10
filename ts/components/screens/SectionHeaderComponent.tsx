@@ -17,6 +17,7 @@ type Props = Readonly<{
   sectionHeader: string;
   style?: StyleProp<ViewStyle>;
   logoUri?: React.ComponentProps<typeof MultiImage>["source"];
+  rightItem?: React.ReactNode;
 }>;
 
 const styles = StyleSheet.create({
@@ -57,6 +58,7 @@ export default class SectionHeaderComponent extends React.Component<Props> {
           <OrganizationLogo logoUri={this.props.logoUri} />
         )}
         <H5 style={styles.sectionTitle}>{this.props.sectionHeader}</H5>
+        {this.props.rightItem}
       </View>
     );
   }
