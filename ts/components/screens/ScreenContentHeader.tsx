@@ -6,7 +6,7 @@ import { isIphoneX } from "react-native-iphone-x-helper";
 import variables from "../../theme/variables";
 import ScreenHeader from "../ScreenHeader";
 type Props = Readonly<{
-  title?: string;
+  title: string;
   icon?: ImageSourcePropType;
   subtitle?: string;
   banner?: React.ReactNode;

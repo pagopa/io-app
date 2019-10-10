@@ -1,14 +1,13 @@
 import { createStackNavigator } from "react-navigation";
 
+import EmailScreen from "../screens/onboarding/EmailScreen";
 import BiometricRecognitionScreen from "../screens/profile/BiometricRecognitionScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
+import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import { PrivacyMainScreen } from "../screens/profile/PrivacyMainScreen";
 import { PrivacyScreen } from "../screens/profile/PrivacyScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
-
-import EmailDetailsScreen from "../screens/profile/EmailDetailsScreen";
-import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import ROUTES from "./routes";
 
 /**
@@ -37,8 +36,8 @@ const ProfileNavigator = createStackNavigator(
     [ROUTES.PROFILE_FISCAL_CODE]: {
       screen: FiscalCodeScreen
     },
-    [ROUTES.EMAIL_DETAILS_SCREEN]: {
-      screen: EmailDetailsScreen
+    [ROUTES.EMAIL_SCREEN]: {
+      screen: EmailScreen
     }
   },
   {

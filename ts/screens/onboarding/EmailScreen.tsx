@@ -29,6 +29,7 @@ import customVariables from "../../theme/variables";
 
 type NavigationParams = {
   biometryType: BiometrySimpleType;
+  isController: boolean;
 };
 
 type Props = ReduxProps &
@@ -115,9 +116,11 @@ export class EmailScreen extends React.PureComponent<Props> {
       }
     };
 
+    const isController = this.props.navigation.getParam("isController");
+
     return (
       <TopScreenComponent
-        goBack={this.handleGoBack}
+        goBack={isController ? this.props.navigation.goBack : this.handleGoBack}
         title={I18n.t("onboarding.email.title")}
         contextualHelp={{
           title: I18n.t("onboarding.email.title"),
@@ -127,9 +130,7 @@ export class EmailScreen extends React.PureComponent<Props> {
         <ScreenContent
           title={I18n.t("onboarding.email.title")}
           subtitle={
-            this.props.isController
-              ? undefined
-              : I18n.t("onboarding.email.subtitle")
+            isController ? undefined : I18n.t("onboarding.email.subtitle")
           }
         >
           <View style={styles.content}>
@@ -149,27 +150,23 @@ export class EmailScreen extends React.PureComponent<Props> {
             </View>
             <View style={styles.spacerLarge} />
             <Text>
-              {this.props.isController
+              {isController
                 ? `${I18n.t("onboarding.email.emailInfo2")} \n`
                 : I18n.t("onboarding.email.emailInfo")}
               <Text bold={true}>
-                {this.props.isController &&
-                  I18n.t("onboarding.email.emailAlert")}
+                {isController && I18n.t("onboarding.email.emailAlert")}
               </Text>
             </Text>
           </View>
         </ScreenContent>
-        <FooterWithButtons
-          {...(this.props.isController ? footerProps1 : footerProps2)}
-        />
+        <FooterWithButtons {...(isController ? footerProps1 : footerProps2)} />
       </TopScreenComponent>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(state.profile),
-  isController: false
+  optionProfile: pot.toOption(state.profile)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

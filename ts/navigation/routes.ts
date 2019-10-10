@@ -71,7 +71,7 @@ const ROUTES = {
   PROFILE_FISCAL_CODE: "PROFILE_FISCAL_CODE",
 
   // Preferences
-  EMAIL_DETAILS_SCREEN: "EMAIL_DETAILS_SCREEN",
+  EMAIL_SCREEN: "EMAIL_SCREEN",
 
   // Used when the App is in background
   BACKGROUND: "BACKGROUND"
