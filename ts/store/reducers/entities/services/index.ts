@@ -119,7 +119,7 @@ export const isLoadingServicesSelector = createSelector(
 // If the localization parameter is expressed, the corresponding item is not included into section if:
 // -  the localization paramenter is different to the service scope
 // -  service metadata load fails,
-const hasLocalization = (
+const isInScope = (
   service: pot.Pot<ServicePublic, Error>,
   servicesMetadataById: ServiceMetadataById,
   localization?: ScopeEnum
@@ -171,7 +171,7 @@ const getServices = (
         .filter(
           service =>
             isDefined(service) &&
-            hasLocalization(service, servicesMetadata.byId, localization) &&
+            isInScope(service, servicesMetadata.byId, localization) &&
             isVisibleService(visibleServices, service)
         )
         .sort(
