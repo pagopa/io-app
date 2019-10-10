@@ -64,6 +64,10 @@ const styles = StyleSheet.create({
   icon: {
     color: customVariables.brandPrimaryInverted,
     lineHeight: 24
+  },
+  emptyListContentTitle: {
+    paddingTop: customVariables.contentPadding,
+    textAlign: "center"
   }
 });
 
@@ -90,6 +94,23 @@ class ServicesSectionsList extends React.PureComponent<Props> {
           </Button>
           <View spacer={true} extralarge={true} />
           <Image source={require("../../../img/services/icon-places.png")} />
+        </View>
+      )
+    );
+  }
+
+  // View for empty list in National and All tabs
+  private othersListEmptyComponent() {
+    return (
+      !this.props.isLocal && (
+        <View style={styles.headerContentWrapper}>
+          <View spacer={true} large={true} />
+          <Image
+            source={require("../../../img/services/icon-loading-services.png")}
+          />
+          <Text style={styles.emptyListContentTitle}>
+            {I18n.t("services.emptyListMessage")}
+          </Text>
         </View>
       )
     );
@@ -129,7 +150,9 @@ class ServicesSectionsList extends React.PureComponent<Props> {
         onSelect={this.props.onSelect}
         readServices={this.props.readServices}
         ListEmptyComponent={
-          this.props.isLocal ? this.localListEmptyComponent() : undefined
+          this.props.isLocal
+            ? this.localListEmptyComponent()
+            : this.othersListEmptyComponent()
         }
         onLongPressItem={this.props.onLongPressItem}
         isLongPressEnabled={this.props.isLongPressEnabled}
