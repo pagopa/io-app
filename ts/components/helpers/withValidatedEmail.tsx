@@ -1,5 +1,5 @@
 /**
- * A HOC to display the WrappedComponent when the email is valid , otherwise the RemindEmailValidationOverlay will be displayed
+ * A HOC to display the WrappedComponent when the email is validated, otherwise the RemindEmailValidationOverlay will be displayed
  */
 
 import React from "react";
