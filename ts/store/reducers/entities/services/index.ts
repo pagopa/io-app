@@ -116,15 +116,15 @@ export const isLoadingServicesSelector = createSelector(
 //
 
 // Check if the passed service is local or national through data included into the service metadata.
-// If the localization parameter is expressed, the corresponding item is not included into section if:
-// -  the localization paramenter is different to the service scope
+// If the scope parameter is expressed, the corresponding item is not included into section if:
+// -  the scope paramenter is different to the service scope
 // -  service metadata load fails,
 const isInScope = (
   service: pot.Pot<ServicePublic, Error>,
   servicesMetadataById: ServiceMetadataById,
-  localization?: ScopeEnum
+  scope?: ScopeEnum
 ) => {
-  if (localization === undefined) {
+  if (scope === undefined) {
     return true;
   }
 
@@ -133,7 +133,7 @@ const isInScope = (
     const potServiceMetadata =
       servicesMetadataById[service.value.service_id] || pot.none;
     if (pot.isSome(potServiceMetadata)) {
-      return potServiceMetadata.value.scope === localization;
+      return potServiceMetadata.value.scope === scope;
     }
   }
   return false;
@@ -142,7 +142,7 @@ const isInScope = (
 /**
  * A generalized function to generate sections of organizations including the available services for each organization
  * optional input:
- * - localization: if undefined, all available organizations are included. If expressed, it requires service metadata being loaded
+ * - scope: if undefined, all available organizations are included. If expressed, it requires service metadata being loaded
  * - organizationsFiscalCodesSelected: if provided, sections will include only the passed organizations
  */
 const getServices = (
@@ -152,7 +152,7 @@ const getServices = (
   servicesMetadata: {
     byId: ServiceMetadataById;
   },
-  localization?: ScopeEnum,
+  scope?: ScopeEnum,
   selectedOrganizationsFiscalCodes?: ReadonlyArray<string>
 ) => {
   const organizationsFiscalCodes =
@@ -171,7 +171,7 @@ const getServices = (
         .filter(
           service =>
             isDefined(service) &&
-            isInScope(service, servicesMetadata.byId, localization) &&
+            isInScope(service, servicesMetadata.byId, scope) &&
             isVisibleService(visibleServices, service)
         )
         .sort(
