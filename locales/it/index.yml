@@ -11,6 +11,7 @@ global:
     dayMonth: "DD/MM"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
+  genericError: Ooops, qualcosa è andato storto, riprova per piacere!   
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
