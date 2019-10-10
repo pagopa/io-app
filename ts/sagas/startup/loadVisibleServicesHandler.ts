@@ -40,6 +40,9 @@ export function* loadVisibleServicesRequestHandler(
       {}
     );
     if (response.isLeft()) {
+      yield put(
+        loadVisibleServices.failure(Error(readableReport(response.value)))
+      );
       throw Error(readableReport(response.value));
     }
     if (response.value.status === 200) {
@@ -123,9 +126,9 @@ export function* loadVisibleServicesRequestHandler(
       yield put(sessionExpired());
       return;
     } else {
-      throw Error();
+      throw Error("An error occurred loading visible services");
     }
-  } catch {
-    yield put(loadVisibleServices.failure());
+  } catch (error) {
+    yield put(loadVisibleServices.failure(error));
   }
 }
