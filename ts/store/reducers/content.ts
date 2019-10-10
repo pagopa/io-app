@@ -132,7 +132,8 @@ export default function content(
     case getType(clearCache):
       return {
         ...state,
-        servicesMetadata: { ...initialContentState.servicesMetadata }
+        servicesMetadata: { ...initialContentState.servicesMetadata },
+        municipality: { ...initialContentState.municipality }
       };
 
     case getType(removeServiceTuples): {
