@@ -21,13 +21,13 @@ import {
 import Barcode from "react-native-barcode-builder";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { UserProfile } from "../../definitions/backend/UserProfile";
-import { MunicipalityState } from "../store/reducers/content";
+import { Municipality } from "../../definitions/content/Municipality";
 import customVariables from "../theme/variables";
 import { extractFiscalCodeData } from "../utils/profile";
 
 interface BaseProps {
   profile: UserProfile;
-  municipality: MunicipalityState;
+  municipality: pot.Pot<Municipality, Error>;
   getBackSide: boolean;
   type: "Full" | "Landscape";
 }
@@ -321,7 +321,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     content: string,
     fullStyle: StyleProp<ViewStyle>,
     landscapeStyle: StyleProp<ViewStyle>,
-    isLandscape: boolean
+    isLandscape: boolean,
+    selectable: boolean = false
   ) {
     return (
       <Text
@@ -332,6 +333,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             ? [styles.landscapeText, landscapeStyle]
             : [styles.fullText, fullStyle]
         ]}
+        selectable={selectable}
       >
         {content.toUpperCase()}
       </Text>
@@ -340,21 +342,20 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
   private renderFrontContent(
     profile: UserProfile,
-    municipality: MunicipalityState,
+    municipality: pot.Pot<Municipality, Error>,
     isLandscape: boolean
   ) {
-    const fiscalCodeData = extractFiscalCodeData(
-      profile.fiscal_code,
-      municipality
-    );
+    const fiscalCode = profile.fiscal_code;
+    const fiscalCodeData = extractFiscalCodeData(fiscalCode, municipality);
 
     return (
       <React.Fragment>
         {this.renderItem(
-          profile.fiscal_code,
+          fiscalCode,
           styles.fullFiscalCodeText,
           styles.landscapeFiscalCodeText,
-          isLandscape
+          isLandscape,
+          true
         )}
 
         {this.renderItem(
@@ -371,7 +372,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           isLandscape
         )}
 
-        {pot.isSome(municipality.data) &&
+        {pot.isSome(municipality) &&
           this.renderItem(
             fiscalCodeData.denominazione,
             styles.fullBirthPlaceText,
@@ -387,7 +388,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
             isLandscape
           )}
 
-        {pot.isSome(municipality.data) &&
+        {pot.isSome(municipality) &&
           this.renderItem(
             fiscalCodeData.siglaProvincia,
             styles.fullBirthCityText,

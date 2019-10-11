@@ -3,14 +3,16 @@
  */
 import I18n from "i18n-js";
 import { Button, Text, View } from "native-base";
-import React, { ComponentProps } from "react";
+import React from "react";
 import { Image, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ServicesSectionState } from "../../store/reducers/entities/services";
+import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
+import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
 import ServiceList from "./ServiceList";
-import ServiceSectionListComponent from "./ServiceSectionListComponent";
 
 type AnimatedProps = {
   animated?: {
@@ -20,17 +22,22 @@ type AnimatedProps = {
 };
 
 type OwnProps = {
+  sections: ReadonlyArray<ServicesSectionState>;
+  profile: ProfileState;
   onChooserAreasOfInterestPress?: () => void;
   selectedOrganizationsFiscalCodes?: Set<string>;
   isLocal?: boolean;
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
   onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
+  renderRightIcon?: (section: ServicesSectionState) => React.ReactNode;
+  isRefreshing: boolean;
+  onRefresh: () => void;
+  onSelect: (service: ServicePublic) => void;
+  readServices: ReadStateByServicesId;
 };
 
-type Props = AnimatedProps &
-  OwnProps &
-  ComponentProps<typeof ServiceSectionListComponent>;
+type Props = AnimatedProps & OwnProps;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -112,28 +119,22 @@ class ServicesSectionsList extends React.PureComponent<Props> {
   };
 
   private renderList = () => {
-    const {
-      animated,
-      profile,
-      sections,
-      isRefreshing,
-      onRefresh,
-      onSelect,
-      readServices
-    } = this.props;
     return (
       <ServiceList
-        animated={animated}
-        sections={sections}
-        profile={profile}
-        isRefreshing={isRefreshing}
-        onRefresh={onRefresh}
-        onSelect={onSelect}
-        readServices={readServices}
-        ListEmptyComponent={this.localListEmptyComponent()}
+        animated={this.props.animated}
+        sections={this.props.sections}
+        profile={this.props.profile}
+        isRefreshing={this.props.isRefreshing}
+        onRefresh={this.props.onRefresh}
+        onSelect={this.props.onSelect}
+        readServices={this.props.readServices}
+        ListEmptyComponent={
+          this.props.isLocal ? this.localListEmptyComponent() : undefined
+        }
         onLongPressItem={this.props.onLongPressItem}
         isLongPressEnabled={this.props.isLongPressEnabled}
         onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
+        renderRightIcon={this.props.renderRightIcon}
       />
     );
   };
