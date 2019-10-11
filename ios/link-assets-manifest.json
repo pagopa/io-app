@@ -46,8 +46,12 @@
       "sha1": "f81d3a5f38c6bda1fb3547bf91fe0b68b54066c5"
     },
     {
+      "path": "assets/fonts/io-icon-font/.DS_Store",
+      "sha1": "df2fbeb1400acda0909a32c1cf6bf492f1121e07"
+    },
+    {
       "path": "assets/fonts/io-icon-font/io-icon-font.ttf",
-      "sha1": "2f705ebfed8f7e085623c42eea8b36e4a1b77846"
+      "sha1": "471a1de261b78cdd1aacac722360a50c024d38eb"
     },
     {
       "path": "assets/fonts/Ionicons/Ionicons.ttf",
@@ -58,8 +62,28 @@
       "sha1": "47b573e3824cd5e02a1a3ae99e2735b49e0256e4"
     },
     {
+      "path": "assets/fonts/RobotoMono/RobotoMono-Bold.ttf",
+      "sha1": "fe961419f07925a6157fc9336465ffc9733559f8"
+    },
+    {
+      "path": "assets/fonts/RobotoMono/RobotoMono-BoldItalic.ttf",
+      "sha1": "0616f8fbbcea1445bbf6d3785dc1fecc4be0f5fc"
+    },
+    {
+      "path": "assets/fonts/RobotoMono/RobotoMono-Light.ttf",
+      "sha1": "497e1b333f3f42db8d8c6a00c1a815f9736a91f6"
+    },
+    {
+      "path": "assets/fonts/RobotoMono/RobotoMono-LightItalic.ttf",
+      "sha1": "7532e32aeb53d6884145355b69da58a270a2c404"
+    },
+    {
       "path": "assets/fonts/RobotoMono/RobotoMono-Regular.ttf",
-      "sha1": "69a65c2b797d2fa124b4c709097e761b7857a035"
+      "sha1": "5d9f74e520201742179c673e33e19d8633fd4b46"
+    },
+    {
+      "path": "assets/fonts/RobotoMono/RobotoMono-RegularItalic.ttf",
+      "sha1": "b2863e22d4491bd1866a7ab4f1d6f52db07166a6"
     }
   ]
 }

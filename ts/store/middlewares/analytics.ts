@@ -22,7 +22,6 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
-import { backendInfoLoadFailure } from "../actions/backendInfo";
 import { contentServiceLoad } from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
@@ -44,7 +43,7 @@ import {
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
 } from "../actions/notifications";
-import { tosAccept } from "../actions/onboarding";
+import { tosAccepted } from "../actions/onboarding";
 import { createPinSuccess } from "../actions/pinset";
 import {
   profileFirstLogin,
@@ -68,7 +67,6 @@ import {
   paymentVerifica
 } from "../actions/wallet/payment";
 import {
-  fetchTransactionFailure,
   fetchTransactionsFailure,
   fetchTransactionsRequest,
   fetchTransactionsSuccess
@@ -92,11 +90,9 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
-// tslint:disable-next-line:cognitive-complexity
-// tslint:disable-next-line: no-big-function
+// tslint:disable cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
-  // tslint:disable-next-line: no-big-function
 ): Promise<any> => {
   switch (action.type) {
     //
@@ -105,6 +101,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(applicationChangeState):
       return mp.track("APP_STATE_CHANGE", {
         APPLICATION_STATE_NAME: action.payload
+      });
+    //
+    // Onboarding (with properties)
+    //
+    case getType(tosAccepted):
+      return mp.track(action.type, {
+        acceptedTosVersion: action.payload
       });
     //
     // Authentication actions (with properties)
@@ -131,6 +134,13 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(profileFirstLogin):
       return mp.track(action.type, action.payload);
 
+    //
+    // Content actions (with properties)
+    //
+    case getType(contentServiceLoad.failure):
+      return mp.track(action.type, {
+        serviceId: action.payload
+      });
     //
     // Wallet actions (with properties)
     //
@@ -173,57 +183,19 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
           kind: action.payload.kind
         });
       }
-    // failure actions (reason in the payload, as a string)
-    // service failures
-    case getType(loadService.failure):
-    case getType(loadVisibleServices.failure):
-    // session
-    case getType(sessionInformationLoadFailure):
-    // profile failures
-    case getType(updateNotificationInstallationFailure):
-    case getType(logoutFailure):
-    // backend info failures
-    case getType(backendInfoLoadFailure):
-    // content failures
-    case getType(contentServiceLoad.failure):
-    // messages
-    case getType(loadMessages.failure):
     //
-    // wallet / payment failures
+    // Wallet / payment failure actions (reason in the payload)
     //
-    case getType(deleteWalletFailure):
-    case getType(fetchWalletsFailure):
     case getType(addWalletCreditCardFailure):
     case getType(paymentAttiva.failure):
     case getType(paymentVerifica.failure):
     case getType(paymentIdPolling.failure):
     case getType(paymentCheck.failure):
-    case getType(paymentUpdateWalletPsp.failure):
       return mp.track(action.type, {
-        // contains failure details as a string
         reason: action.payload
-      });
-    // failures (reason in the payload, as an error)
-    // profile
-    case getType(profileLoadFailure):
-    case getType(profileUpsert.failure):
-    // wallet / payment
-    case getType(setFavouriteWalletFailure):
-    case getType(fetchTransactionFailure):
-    case getType(fetchTransactionsFailure):
-    case getType(paymentDeletePayment.failure):
-    case getType(payCreditCardVerificationFailure):
-    case getType(paymentFetchPspsForPaymentId.failure):
-    case getType(paymentExecutePayment.failure):
-      return mp.track(action.type, {
-        // contains failure details as an error
-        reason: action.payload.message
       });
 
     // Messages actions with properties
-    case getType(loadMessage.failure): {
-      return mp.track(action.type, { reason: action.payload.error });
-    }
     case getType(removeMessages): {
       return mp.track(action.type, action.payload);
     }
@@ -248,10 +220,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loginSuccess):
     case getType(loginFailure):
     case getType(sessionInformationLoadSuccess):
+    case getType(sessionInformationLoadFailure):
     case getType(sessionExpired):
     case getType(sessionInvalid):
     case getType(logoutSuccess):
-
+    case getType(logoutFailure):
     // identification
     case getType(identificationRequest):
     case getType(identificationStart):
@@ -261,38 +234,45 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(identificationPinReset):
     // onboarding
     case getType(analyticsOnboardingStarted):
-    case getType(tosAccept.success):
     case getType(createPinSuccess):
     // profile
-
+    case getType(profileLoadFailure):
     case getType(profileUpsert.success):
-
+    case getType(profileUpsert.failure):
     // messages
     case getType(loadMessages.request):
+    case getType(loadMessages.failure):
     case getType(loadMessages.success):
     case getType(loadMessagesCancel):
     case getType(loadMessage.success):
+    case getType(loadMessage.failure):
     // services
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):
+    case getType(loadVisibleServices.failure):
     case getType(loadService.request):
     case getType(loadService.success):
+    case getType(loadService.failure):
     // content
     case getType(contentServiceLoad.success):
     // wallet
     case getType(fetchWalletsRequest):
+    case getType(fetchWalletsFailure):
     case getType(addWalletCreditCardInit):
     case getType(addWalletCreditCardRequest):
     case getType(payCreditCardVerificationRequest):
     case getType(payCreditCardVerificationSuccess):
+    case getType(payCreditCardVerificationFailure):
     case getType(creditCardCheckout3dsRequest):
     case getType(creditCardCheckout3dsSuccess):
     case getType(deleteWalletRequest):
     case getType(deleteWalletSuccess):
+    case getType(deleteWalletFailure):
     case getType(setFavouriteWalletRequest):
     case getType(setFavouriteWalletSuccess):
+    case getType(setFavouriteWalletFailure):
     case getType(fetchTransactionsRequest):
-
+    case getType(fetchTransactionsFailure):
     // payment
     case getType(paymentInitializeState):
     case getType(paymentAttiva.success):
@@ -302,15 +282,20 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentCheck.success):
     case getType(paymentFetchPspsForPaymentId.request):
     case getType(paymentFetchPspsForPaymentId.success):
+    case getType(paymentFetchPspsForPaymentId.failure):
     case getType(paymentUpdateWalletPsp.request):
     case getType(paymentUpdateWalletPsp.success):
+    case getType(paymentUpdateWalletPsp.failure):
     case getType(paymentExecutePayment.request):
     case getType(paymentExecutePayment.success):
+    case getType(paymentExecutePayment.failure):
     case getType(paymentCompletedFailure):
     case getType(paymentDeletePayment.request):
     case getType(paymentDeletePayment.success):
+    case getType(paymentDeletePayment.failure):
     // other
     case getType(updateNotificationsInstallationToken):
+    case getType(updateNotificationInstallationFailure):
       return mp.track(action.type);
   }
   return Promise.resolve();

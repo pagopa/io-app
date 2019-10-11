@@ -1,23 +1,31 @@
+import { Option } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
 import {
   FlatList,
-  ListRenderItem,
+  ListRenderItemInfo,
   RefreshControl,
   StyleSheet
 } from "react-native";
 
 import customVariables from "../theme/variables";
+import { ComponentProps } from "../types/react";
+import ChooserListItem from "./ChooserListItem";
+import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 
 type OwnProps<T> = {
   items: ReadonlyArray<T>;
-  keyExtractor: (item: T, index: number) => string;
-  renderItem: ListRenderItem<T>;
+  keyExtractor: (item: T) => string;
+  itemTitleExtractor: (item: T) => string;
   isRefreshing: boolean;
   onRefresh?: () => void;
+  selectedItemIds: Option<Set<string>>;
 };
 
-type Props<T> = OwnProps<T>;
+type ChooserListItemProps = "itemIconComponent" | "onPressItem";
+
+type Props<T> = OwnProps<T> &
+  Pick<ComponentProps<typeof ChooserListItem>, ChooserListItemProps>;
 
 const styles = StyleSheet.create({
   itemSeparator: {
@@ -31,13 +39,39 @@ const styles = StyleSheet.create({
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 class ChooserList<T> extends React.Component<Props<T>> {
+  /**
+   * Render item list
+   */
+  private renderItem = (info: ListRenderItemInfo<T>) => {
+    const {
+      itemTitleExtractor,
+      keyExtractor,
+      itemIconComponent,
+      selectedItemIds,
+      onPressItem
+    } = this.props;
+    const item = info.item;
+    const itemId = keyExtractor(item);
+    const isSelected = selectedItemIds.map(_ => _.has(itemId)).getOrElse(false);
+
+    return (
+      <ChooserListItem
+        itemTitle={itemTitleExtractor(item)}
+        itemId={itemId}
+        isItemSelected={isSelected}
+        itemIconComponent={itemIconComponent}
+        onPressItem={onPressItem}
+      />
+    );
+  };
+
   public render() {
     const {
       onRefresh,
       isRefreshing,
       items,
       keyExtractor,
-      renderItem
+      selectedItemIds
     } = this.props;
 
     const refreshControl = (
@@ -50,9 +84,11 @@ class ChooserList<T> extends React.Component<Props<T>> {
         removeClippedSubviews={false}
         data={items}
         keyExtractor={keyExtractor}
-        renderItem={renderItem}
+        renderItem={this.renderItem}
         ItemSeparatorComponent={ItemSeparatorComponent}
         refreshControl={refreshControl}
+        extraData={selectedItemIds}
+        ListFooterComponent={items.length > 0 && <EdgeBorderComponent />}
       />
     );
   }

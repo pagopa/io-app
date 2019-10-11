@@ -38,8 +38,8 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import {
-  navigateToPaymentTransactionSummaryScreen,
-  navigateToWalletHome
+  navigateBack,
+  navigateToPaymentTransactionSummaryScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
@@ -160,9 +160,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
-      bordered: true,
-      onPress: this.props.navigateToWalletHome,
+      cancel: true,
+      onPress: this.props.goBack,
       title: I18n.t("global.buttons.cancel")
     };
     return (
@@ -271,7 +270,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  goBack: () => {
+    dispatch(navigateBack());
+  },
   navigateToTransactionSummary: (
     rptId: RptId,
     initialAmount: AmountInEuroCents

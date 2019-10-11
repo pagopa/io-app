@@ -1,16 +1,7 @@
 /**
  * A component to show the main screen of the Profile section
  */
-import {
-  Button,
-  H3,
-  List,
-  ListItem,
-  Switch,
-  Text,
-  Toast,
-  View
-} from "native-base";
+import { Button, H3, List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -22,19 +13,19 @@ import {
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
+  NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import Switch from "../../components/ui/Switch";
 
-import ExperimentalFeaturesBanner from "../../components/ExperimentalFeaturesBanner";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
@@ -64,6 +55,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -113,6 +105,23 @@ const getAppLongVersion = () => {
 };
 
 class ProfileMainScreen extends React.PureComponent<Props> {
+  private navListener?: NavigationEventSubscription;
+
+  public componentDidMount() {
+    this.navListener = this.props.navigation.addListener("didFocus", () => {
+      setStatusBarColorAndBackground(
+        "light-content",
+        customVariables.brandDarkGray
+      );
+    }); // tslint:disable-line no-object-mutation
+  }
+
+  public componentWillUnmount() {
+    if (this.navListener) {
+      this.navListener.remove();
+    }
+  }
+
   private handleClearCachePress = () => {
     this.props.clearCache();
     Toast.show({ text: "The cache has been cleared." });
@@ -179,6 +188,46 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     );
   };
 
+  private showModal() {
+    this.props.showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
+      />
+    );
+  }
+
+  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
+    if (enabled) {
+      Alert.alert(
+        I18n.t("profile.main.pagoPaEnvironment.alertConfirmTitle"),
+        I18n.t("profile.main.pagoPaEnvironment.alertConfirmMessage"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.confirm"),
+            style: "destructive",
+            onPress: () => {
+              this.props.setPagoPATestEnabled(enabled);
+              this.showModal();
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      this.props.setPagoPATestEnabled(enabled);
+      this.showModal();
+    }
+  };
+
+  /**
+   * since no experimental features are available we hide this method (see https://www.pivotaltracker.com/story/show/168263994).
+   * It could be usefull when new experimental features will be available
+   */
+  /*
   private onExperimentalFeaturesToggle = (enabled: boolean) => {
     if (enabled) {
       Alert.alert(
@@ -205,15 +254,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       this.props.dispatchPreferencesExperimentalFeaturesSetEnabled(enabled);
     }
   };
-
-  private onPagoPAEnvironmentToggle = (enabled: boolean) => {
-    this.props.setPagoPATestEnabled(enabled);
-    this.props.showModal(
-      <AlertModal
-        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-      />
-    );
-  };
+  */
 
   private confirmResetAlert = () =>
     Alert.alert(
@@ -248,8 +289,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       sessionToken,
       walletToken,
       notificationToken,
-      notificationId,
-      isExperimentalFeaturesEnabled
+      notificationId
     } = this.props;
 
     // TODO: once isExperimentalFeaturesEnabled is removed, shift again screenContent into the main return
@@ -299,18 +339,22 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             <SectionHeaderComponent
               sectionHeader={I18n.t("profile.main.developersSectionHeader")}
             />
-
-            {this.developerListItem(
+            {
+              // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
+              // It could be usefull when new experimental features will be available
+              /*
+              this.developerListItem(
               I18n.t("profile.main.experimentalFeatures.confirmTitle"),
               this.props.isExperimentalFeaturesEnabled,
               this.onExperimentalFeaturesToggle
-            )}
+            )*/
+            }
 
             {this.developerListItem(
-              I18n.t("profile.main.pagoPaEnv"),
+              I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
               this.props.isPagoPATestEnabled,
               this.onPagoPAEnvironmentToggle,
-              I18n.t("profile.main.pagoPAEnvAlert")
+              I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
             )}
 
             {this.developerListItem(
@@ -375,12 +419,15 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                 )}
               </React.Fragment>
             )}
+
+            {/* end list */}
+            <EdgeBorderComponent />
           </List>
         </ScrollView>
       );
     };
 
-    return this.props.isExperimentalFeaturesEnabled ? (
+    return (
       <DarkLayout
         allowGoBack={false}
         bounces={false}
@@ -402,26 +449,10 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
           )
         }}
+        banner={undefined}
       >
         {screenContent()}
       </DarkLayout>
-    ) : (
-      <TopScreenComponent
-        title={I18n.t("profile.main.screenTitle")}
-        appLogo={true}
-      >
-        <ScreenContentHeader
-          title={I18n.t("profile.main.screenTitle")}
-          icon={require("../../../img/icons/gears.png")}
-          subtitle={I18n.t("profile.main.screenSubtitle")}
-          banner={
-            isExperimentalFeaturesEnabled
-              ? ExperimentalFeaturesBanner
-              : undefined
-          }
-        />
-        {screenContent()}
-      </TopScreenComponent>
     );
   }
 }

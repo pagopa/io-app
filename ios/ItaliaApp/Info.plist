@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>20</string>
+	<string>24</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -89,8 +89,13 @@
 		<string>TitilliumWeb-Regular.ttf</string>
 		<string>TitilliumWeb-SemiBold.ttf</string>
 		<string>TitilliumWeb-SemiBoldItalic.ttf</string>
-		<string>RobotoMono-Regular.ttf</string>
 		<string>Ionicons.ttf</string>
+		<string>RobotoMono-Bold.ttf</string>
+		<string>RobotoMono-BoldItalic.ttf</string>
+		<string>RobotoMono-Light.ttf</string>
+		<string>RobotoMono-LightItalic.ttf</string>
+		<string>RobotoMono-Regular.ttf</string>
+		<string>RobotoMono-RegularItalic.ttf</string>
 		<string>io-icon-font.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

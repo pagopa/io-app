@@ -11,6 +11,7 @@ global:
     dayMonth: "MM/DD" 
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
+  genericError: Ooops, something did not work as expected, please try again!
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -26,6 +27,7 @@ global:
     back: Back
     confirm: Confirm
     close: Close
+    exit: Exit
     saveSelection: Save the selection
   navigator:
     messages: messages
@@ -115,6 +117,8 @@ profile:
     privacy:
       title: Privacy
       description: Export data, delete account
+      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+      updated: It is required to accept the new version of Terms and Conditions
       text: !include privacy.md
     termsAndConditions:
       title: Terms and Conditions
@@ -138,13 +142,15 @@ profile:
       confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
       bannerMessage: You are using experimental features that may be incomplete or unstable.
     pagoPaEnvironment:
+      pagoPaEnv: PagoPA Test Environment
+      pagoPAEnvAlert: This change requires app reboot
+      alertConfirmTitle: Do you want to use the pagoPA test environment?
+      alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
       alertMessage: The application must be restarted for the changes to take effect.
     accountSectionHeader: Account
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
-    pagoPaEnv: PagoPA Test Environment
-    pagoPAEnvAlert: This change requires app reboot
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
@@ -256,6 +262,14 @@ authentication:
     login:
       title: Login error
       body: There was an error with the login, please retry!
+    spid:
+      unknown: Unknown error 
+      error_19: "You have entered an incorrect username or password too many times: try again in a few minutes or contact your SPID identity provider to change your credentials."
+      error_20: "For security reasons IO requires a login with a second authentication factor: contact your SPID identity provider to understand how to use it."
+      error_21: "It's been too long since you started accessing: please start over again."
+      error_22: "To use IO you must allow access to some of your data: log in again and give your consent to the transfer of data."
+      error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
+      error_25: "You have canceled the login operation: you can try again whenever you want."
   expiredSessionBanner:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
@@ -277,8 +291,9 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
-  resetConfirm: Are you sure you want to interrupt the IO activation?
-    You can do this again at any time logging in with your SPID account.
+  alert:
+    title: Do you really want to log out?
+    description: You will have to log in again to use the app
   fingerprint:
     headerTitle: Activation
     title: Biometric authentication
@@ -289,6 +304,18 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include tos_fingerprint_not_enrolled.md
+  email:
+    title: Your email address
+    subtitle: Some IO app functions need your email.
+    emailInputLabel: Personal email address
+    emailInfo: This is the email address associated to your SPID account. You can
+      use in IO app a different email address, if you wish. To make operative the
+      new email address, you will need to validate it by clicking on the link you
+      will receive by email.
+    ctaEdit: Edit email
+    help: Your SPID profile communicates your email to IO app. If you find the address
+      wrong or you no longer use it, you can edit it directly from your SPID services
+      provider account.
 pin_login:
   pin:
     pinInfo: Enter the PIN
@@ -348,7 +375,7 @@ wallet:
   delete:
     successful: Card successfully deleted
     failed: The card could not be deleted
-    alert: 'Warning: the payment method had been removed from wallet'
+    alert: 'The payment method used for payment of the transaction has been removed from the wallet'
   newPaymentMethod:
     add: add
     addButton: Add a new method
@@ -509,7 +536,7 @@ wallet:
       manually insert the transaction-related data (IUV and the entity/company code).
     setManually: Insert data manually
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
-    cameraUsagePerissionInfobox:
+    cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
       message: "IO app needs Camera usage permission to shoot at the QR code"
   whyAFee:
@@ -562,8 +589,9 @@ messages:
   yesterday: yesterday
   errorLoading:
     details: Error loading message details
-    senderService:  Sender service unknown
-    senderInfo: Service info unknown
+    senderInfo:  Sender service unknown
+    serviceInfo: Service info unknown
+    departmentInfo: Department info unknown
   cta:
     archive: Archive
     unarchive: Unarchive
@@ -655,7 +683,7 @@ services:
   serviceIsEnabled: The service is enabled
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications
-  emailNotifications: Email Notifications
+  emailForwarding: Email forwarding
   tosLink: Terms and conditions
   privacyLink: Privacy information
   otherAppsInfo: You can find this service also
@@ -668,11 +696,20 @@ services:
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
     addButton: Add your areas of interest
+    editButton: Change the areas of interest
     searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
   tab:
     locals: Local
     national: National
-    otherServices: Other services
+    all: All
+  loading:
+    title: Loading the services list
+    subtitle: wait few seconds..
+  enableAll: Enable all
+  disableAll: Disable all
+  disableAllTitle: "Do you really want to disable all the services?"
+  disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
+  close: Close
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."

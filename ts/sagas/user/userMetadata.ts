@@ -21,6 +21,7 @@ import {
 } from "../../store/actions/userMetadata";
 import {
   backendUserMetadataToUserMetadata,
+  emptyUserMetadata,
   UserMetadata,
   userMetadataSelector,
   userMetadataToBackendUserMetadata
@@ -45,6 +46,11 @@ export function* fetchUserMetadata(
     }
 
     if (response.value.status !== 200) {
+      if (response.value.status === 204) {
+        // Return an empty object cause profile has no metadata yet (204 === No Content)
+        return right(emptyUserMetadata);
+      }
+
       const error =
         response.value.status === 500 ? response.value.value.title : undefined;
       // Return the error
@@ -83,6 +89,7 @@ export function* loadUserMetadata(
   const userMetadataOrError = backendUserMetadataToUserMetadata(
     backendUserMetadata
   );
+
   if (userMetadataOrError.isLeft()) {
     yield put(userMetadataLoad.failure(userMetadataOrError.value));
     return none;
@@ -100,9 +107,18 @@ export function* watchLoadUserMetadata(
 ) {
   yield takeLatest(
     getType(userMetadataLoad.request),
-    loadUserMetadata,
+    loadUserMetadataManager,
     getUserMetadata
   );
+}
+
+/**
+ * Call loadUserMetadata saga.
+ */
+export function* loadUserMetadataManager(
+  getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"]
+) {
+  yield fork(loadUserMetadata, getUserMetadata);
 }
 
 /**
@@ -160,13 +176,12 @@ export function* upsertUserMetadata(
 
   // The version of the new userMetadata must be one more
   // the old one.
-  const currentVersion = pot.getOrElse(
+  const currentVersion: number = pot.getOrElse(
     pot.map(currentUserMetadata, _ => _.version),
     0
   );
 
-  // tslint:disable-next-line: no-useless-cast
-  if (userMetadata.version !== (currentVersion as number) + 1) {
+  if (userMetadata.version !== currentVersion + 1) {
     yield put(
       userMetadataUpsert.failure(
         new Error(TypedI18n.t("userMetadata.errors.upsertVersion"))

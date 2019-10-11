@@ -2,6 +2,7 @@ import { View } from "native-base";
 import * as React from "react";
 import {
   ImageSourcePropType,
+  RefreshControlProps,
   StatusBar,
   StyleProp,
   ViewStyle
@@ -27,6 +28,8 @@ type Props = Readonly<{
   topContentHeight?: number;
   footerContent?: React.ReactNode;
   contextualHelp?: { title: string; body: () => React.ReactNode };
+  banner?: React.ReactNode;
+  contentRefreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
 
 const styles = StyleSheet.create({
@@ -38,13 +41,14 @@ const styles = StyleSheet.create({
 
 export default class DarkLayout extends React.Component<Props> {
   private screenContent() {
+    const { banner } = this.props;
     return (
       <React.Fragment>
         <View style={styles.headerContents}>
           <View spacer={true} />
           {this.props.topContent}
         </View>
-
+        {banner}
         {this.props.children}
       </React.Fragment>
     );
@@ -63,6 +67,7 @@ export default class DarkLayout extends React.Component<Props> {
           backgroundColor={customVariables.brandDarkGray}
           barStyle={"light-content"}
         />
+
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
             hideHeader={this.props.hideHeader}
@@ -75,6 +80,7 @@ export default class DarkLayout extends React.Component<Props> {
               this.props.topContentHeight ? this.props.topContentHeight : 0
             }
             animationOffset={40}
+            contentRefreshControl={this.props.contentRefreshControl}
           >
             {this.screenContent()}
           </AnimatedScreenContent>
@@ -85,7 +91,11 @@ export default class DarkLayout extends React.Component<Props> {
             icon={this.props.icon}
             dark={true}
             contentStyle={this.props.contentStyle}
-            bounces={this.props.bounces}
+            bounces={
+              this.props.bounces ||
+              this.props.contentRefreshControl !== undefined
+            }
+            contentRefreshControl={this.props.contentRefreshControl}
           >
             {this.screenContent()}
           </ScreenContent>

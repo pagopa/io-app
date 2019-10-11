@@ -1,6 +1,9 @@
 import { getType } from "typesafe-actions";
 import { clearCache } from "../../../actions/profile";
-import { showServiceDetails } from "../../../actions/services";
+import {
+  markServiceAsRead,
+  showServiceDetails
+} from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -10,15 +13,13 @@ export type ReadStateByServicesId = Readonly<{
 
 const INITIAL_STATE: ReadStateByServicesId = {};
 
-export const readStateByServiceIdSelector = (id: string) => (
-  state: GlobalState
-): boolean | undefined => state.entities.services.readState[id] !== undefined;
-
-export const readServicesSelector = (
+// Selectors
+export const readServicesByIdSelector = (
   state: GlobalState
 ): ReadStateByServicesId => state.entities.services.readState;
 
-export function readStateByServiceIdReducer(
+// Reducer
+export function readServicesByIdReducer(
   state = INITIAL_STATE,
   action: Action
 ): ReadStateByServicesId {
@@ -29,6 +30,13 @@ export function readStateByServiceIdReducer(
         ...state,
         [action.payload.service_id]: true
       };
+
+    case getType(markServiceAsRead):
+      return {
+        ...state,
+        [action.payload]: true
+      };
+
     case getType(clearCache):
       return INITIAL_STATE;
 
@@ -37,4 +45,4 @@ export function readStateByServiceIdReducer(
   }
 }
 
-export default readStateByServiceIdReducer;
+export default readServicesByIdReducer;

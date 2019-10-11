@@ -17,6 +17,7 @@ import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
+  isEmailEditingAndValidationEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -34,12 +35,20 @@ import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
-import { loadService, loadVisibleServices } from "../store/actions/services";
+import {
+  firstServicesLoad,
+  loadService,
+  loadVisibleServices
+} from "../store/actions/services";
 import {
   idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import {
+  servicesByIdSelector,
+  ServicesByIdState
+} from "../store/reducers/entities/services/servicesById";
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -58,6 +67,7 @@ import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
+import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
@@ -208,16 +218,29 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // tslint:disable-next-line:no-let
   let storedPin: PinString;
 
+  // Start watching for profile update requests as the checkProfileEnabledSaga
+  // may need to update the profile.
+  yield fork(
+    watchProfileUpsertRequestsSaga,
+    backendClient.createOrUpdateProfile
+  );
+
+  // Start the watchAbortOnboardingSaga
+  const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
+
   if (!previousSessionToken || isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no PIN set, thus we need
     // to pass through the onboarding process.
 
-    // Start the watchAbortOnboardingSaga
-    const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
-    yield call(checkAcceptedTosSaga);
+    // Ask to accept ToS if it is the first access on IO or if there is a new available version
+    yield call(checkAcceptedTosSaga, userProfile);
+
     storedPin = yield call(checkConfiguredPinSaga);
     yield call(checkAcknowledgedFingerprintSaga);
+    if (isEmailEditingAndValidationEnabled) {
+      yield call(checkAcknowledgedEmailSaga);
+    }
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
   } else {
@@ -234,6 +257,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
         yield put(startApplicationInitialization());
         return;
       }
+      // Ask to accept ToS if there is a new available version
+      yield call(checkAcceptedTosSaga, userProfile);
+
+      // Stop the watchAbortOnboardingSaga
+      yield cancel(watchAbortOnboardingSagaTask);
     }
   }
 
@@ -259,13 +287,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix
   );
 
-  // Start watching for profile update requests as the checkProfileEnabledSaga
-  // may need to update the profile.
-  yield fork(
-    watchProfileUpsertRequestsSaga,
-    backendClient.createOrUpdateProfile
-  );
-
   // Check that profile is up to date (e.g. inbox enabled)
   yield call(checkProfileEnabledSaga, userProfile);
 
@@ -288,6 +309,15 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     loadVisibleServicesRequestHandler,
     backendClient.getVisibleServices
   );
+
+  // Trigger the services content and metadata  being loaded/refreshed.
+  // If the services list is empty (first app startup), the services load will
+  // requires more time and the services section displays a dedicated message to the user
+  const servicesById: ServicesByIdState = yield select(servicesByIdSelector);
+  if (Object.keys(servicesById).length === 0) {
+    yield put(firstServicesLoad.request());
+  }
+  yield put(loadVisibleServices.request());
 
   // Load messages when requested
   yield fork(watchMessagesLoadOrCancelSaga, backendClient.getMessages);

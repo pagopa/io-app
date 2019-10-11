@@ -1,4 +1,4 @@
-import { Option } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
@@ -22,6 +22,7 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import customVariables from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import MessageListItem from "./MessageListItem";
 
 type ItemLayout = {
@@ -56,6 +57,7 @@ type Props = OwnProps & AnimatedProps;
 type State = {
   prevMessageStates?: ReadonlyArray<MessageState>;
   itemLayouts: ReadonlyArray<ItemLayout>;
+  longPressedItemIndex: Option<number>;
 };
 
 const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
@@ -187,18 +189,17 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 class MessageList extends React.Component<Props, State> {
   private flatListRef = React.createRef<typeof AnimatedFlatList>();
 
-  private scrollToTop = () => {
+  private scrollTo = (index: number, animated: boolean = false) => {
     if (this.flatListRef.current && this.props.messageStates.length > 0) {
-      this.flatListRef.current
-        .getNode()
-        .scrollToIndex({ animated: false, index: 0 });
+      this.flatListRef.current.getNode().scrollToIndex({ animated, index });
     }
   };
 
   constructor(props: Props) {
     super(props);
     this.state = {
-      itemLayouts: []
+      itemLayouts: [],
+      longPressedItemIndex: none
     };
   }
 
@@ -221,10 +222,9 @@ class MessageList extends React.Component<Props, State> {
 
   private renderItem = (info: ListRenderItemInfo<MessageState>) => {
     const { meta, isRead, message: potMessage } = info.item;
-    const { paymentsByRptId, onPressItem, onLongPressItem } = this.props;
+    const { paymentsByRptId, onPressItem } = this.props;
 
     const potService = this.props.servicesById[meta.sender_service_id];
-
     if (
       potService &&
       (pot.isLoading(potService) || pot.isLoading(potMessage))
@@ -250,8 +250,8 @@ class MessageList extends React.Component<Props, State> {
       potService !== undefined
         ? pot.isNone(potService)
           ? ({
-              organization_name: I18n.t("messages.errorLoading.senderService"),
-              department_name: I18n.t("messages.errorLoading.senderInfo")
+              organization_name: I18n.t("messages.errorLoading.senderInfo"),
+              department_name: I18n.t("messages.errorLoading.serviceInfo")
             } as ServicePublic)
           : pot.toUndefined(potService)
         : undefined;
@@ -279,7 +279,7 @@ class MessageList extends React.Component<Props, State> {
           service={service}
           payment={payment}
           onPress={onPressItem}
-          onLongPress={onLongPressItem}
+          onLongPress={this.onLongPress}
           isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
           isSelected={this.props.selectedMessageIds
             .map(_ => _.has(info.item.meta.id))
@@ -294,6 +294,27 @@ class MessageList extends React.Component<Props, State> {
     index: number
   ) => {
     return this.state.itemLayouts[index];
+  };
+
+  private onLongPress = (id: string) => {
+    const { messageStates, onLongPressItem } = this.props;
+    onLongPressItem(id);
+    const lastIndex = messageStates.length - 1;
+    if (id === messageStates[lastIndex].meta.id) {
+      this.setState({
+        longPressedItemIndex: some(lastIndex)
+      });
+    }
+  };
+
+  private handleOnLayoutChange = () => {
+    const { longPressedItemIndex } = this.state;
+    if (longPressedItemIndex.isSome()) {
+      this.scrollTo(longPressedItemIndex.value, true);
+      this.setState({
+        longPressedItemIndex: none
+      });
+    }
   };
 
   public render() {
@@ -313,7 +334,7 @@ class MessageList extends React.Component<Props, State> {
 
     return (
       <React.Fragment>
-        <NavigationEvents onWillFocus={this.scrollToTop} />
+        <NavigationEvents onWillFocus={() => this.scrollTo(0)} />
         <AnimatedFlatList
           ref={this.flatListRef}
           scrollEnabled={true}
@@ -330,6 +351,10 @@ class MessageList extends React.Component<Props, State> {
           renderItem={this.renderItem}
           getItemLayout={this.getItemLayout}
           onScroll={animated ? animated.onScroll : undefined}
+          onLayout={this.handleOnLayoutChange}
+          ListFooterComponent={
+            messageStates.length > 0 && <EdgeBorderComponent />
+          }
         />
       </React.Fragment>
     );

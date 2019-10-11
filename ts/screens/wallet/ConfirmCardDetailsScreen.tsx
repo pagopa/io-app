@@ -7,11 +7,12 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import { Modal, Switch } from "react-native";
+import { Modal } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
+import Switch from "../../components/ui/Switch";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import Checkout3DsComponent from "../../components/Checkout3DsComponent";
@@ -112,7 +113,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
 
     const secondaryButtonProps = {
       block: true,
-      light: true,
       bordered: true,
       onPress: this.goBack,
       title: I18n.t("global.buttons.back")
@@ -215,7 +215,8 @@ const mapStateToProps = (state: GlobalState) => {
     error,
     checkout3dsUrl: pot.isLoading(creditCardCheckout3ds)
       ? pot.toOption(creditCardCheckout3ds)
-      : none
+      : none,
+    loadingOpacity: 0.98
   };
 };
 

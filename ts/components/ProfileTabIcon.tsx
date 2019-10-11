@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { GlobalState } from "../store/reducers/types";
-import customVariables from "../theme/variables";
 import IconFont from "./ui/IconFont";
 
 type OwnProps = {
@@ -17,14 +16,14 @@ type Props = OwnProps & ReturnType<typeof mapStateToProps>;
  */
 class ProfileTabIcon extends React.PureComponent<Props> {
   public render() {
-    const { size, color, isExperimentalFeaturesEnabled } = this.props;
-
+    const { size, color } = this.props;
+    // since no experimental features are available we force the flag to false (see https://www.pivotaltracker.com/story/show/168263994)
+    // when new experimental features will be avaible, pick this flag from props
+    const isExperimentalFeaturesEnabled = false;
     return (
       <IconFont
         size={size}
-        color={
-          isExperimentalFeaturesEnabled ? customVariables.brandHighlight : color
-        }
+        color={color}
         name={isExperimentalFeaturesEnabled ? "io-profilo-exp" : "io-profilo"}
       />
     );

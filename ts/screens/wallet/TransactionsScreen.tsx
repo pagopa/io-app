@@ -5,7 +5,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { RefreshControl, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -20,6 +20,10 @@ import {
   navigateToWalletList
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import {
+  fetchTransactionsRequest,
+  readTransaction
+} from "../../store/actions/wallet/transactions";
 import {
   deleteWalletRequest,
   setFavouriteWalletRequest
@@ -112,6 +116,19 @@ class TransactionsScreen extends React.Component<Props> {
       _ => _ === selectedWallet.idWallet
     );
 
+    const transactionsRefreshControl = (
+      <RefreshControl
+        onRefresh={() => {
+          this.props.loadTransactions();
+        }}
+        // The refresh control spinner is displayed only at pull-to-refresh
+        // while, during the transactions reload, it is displayed the custom transaction
+        // list spinner
+        refreshing={false}
+        tintColor={"transparent"}
+      />
+    );
+
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
@@ -119,6 +136,7 @@ class TransactionsScreen extends React.Component<Props> {
         topContent={this.headerContent(selectedWallet, isFavorite)}
         hideHeader={true}
         hasDynamicSubHeader={true}
+        refreshControl={transactionsRefreshControl}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
@@ -127,6 +145,7 @@ class TransactionsScreen extends React.Component<Props> {
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
           }
+          readTransactions={this.props.readTransactions}
           ListEmptyComponent={ListEmptyComponent}
         />
       </WalletLayout>
@@ -138,17 +157,21 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   transactions: getWalletTransactionsCreator(
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state),
-  favoriteWallet: getFavoriteWalletId(state)
+  favoriteWallet: getFavoriteWalletId(state),
+  readTransactions: state.entities.transactionsRead
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToTransactionDetailsScreen: (transaction: Transaction) =>
+  loadTransactions: () => dispatch(fetchTransactionsRequest()),
+  navigateToTransactionDetailsScreen: (transaction: Transaction) => {
+    dispatch(readTransaction(transaction));
     dispatch(
       navigateToTransactionDetailsScreen({
         transaction,
         isPaymentCompletedTransaction: false
       })
-    ),
+    );
+  },
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
   deleteWallet: (walletId: number) =>

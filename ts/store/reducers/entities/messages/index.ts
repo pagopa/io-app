@@ -60,12 +60,14 @@ export const lexicallyOrderedMessagesStateSelector = createSelector(
     )
 );
 
-export const messagesUnreadSelector = createSelector(
+export const messagesUnreadedAndUnarchivedSelector = createSelector(
   lexicallyOrderedMessagesStateSelector,
   potMessagesState =>
     pot.getOrElse(
       pot.map(potMessagesState, _ =>
-        _.filter(messageState => !messageState.isRead)
+        _.filter(
+          messageState => !messageState.isRead && !messageState.isArchived
+        )
       ),
       []
     ).length
