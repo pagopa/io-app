@@ -41,7 +41,7 @@ const reducer = (
       // Use the ID as object key
       return {
         ...state,
-        [action.payload]: pot.noneError(Error())
+        [action.payload.service_id]: pot.noneError(action.payload.error)
       };
 
     case getType(removeServiceTuples): {

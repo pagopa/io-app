@@ -31,26 +31,34 @@ export function* loadMessage(
   if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {
     return right(cachedMessage);
   }
+  try {
+    // Fetch the message from the Backend
+    const maybeMessage: SagaCallReturnType<typeof fetchMessage> = yield call(
+      fetchMessage,
+      getMessage,
+      meta
+    );
 
-  // Fetch the message from the Backend
-  const maybeMessage: SagaCallReturnType<typeof fetchMessage> = yield call(
-    fetchMessage,
-    getMessage,
-    meta
-  );
-
-  if (maybeMessage.isLeft()) {
+    if (maybeMessage.isLeft()) {
+      yield put(
+        loadMessageAction.failure({
+          id: meta.id,
+          error: maybeMessage.value
+        })
+      );
+    } else {
+      yield put(loadMessageAction.success(maybeMessage.value));
+    }
+    return maybeMessage;
+  } catch (error) {
     yield put(
       loadMessageAction.failure({
         id: meta.id,
-        error: maybeMessage.value.message
+        error
       })
     );
-  } else {
-    yield put(loadMessageAction.success(maybeMessage.value));
+    return left(error);
   }
-
-  return maybeMessage;
 }
 
 /**

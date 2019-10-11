@@ -95,7 +95,12 @@ describe("messages", () => {
         .call(fetchMessage, getMessage, { id: testMessageId1 })
         // Return 200 with a valid message as getMessage response
         .next(left(Error("Error")))
-        .put(loadMessageAction.failure({ id: testMessageId1, error: "Error" }))
+        .put(
+          loadMessageAction.failure({
+            id: testMessageId1,
+            error: Error("Error")
+          })
+        )
         .next()
         .returns(left(Error("Error")));
     });

@@ -69,7 +69,7 @@ export function* fetchWalletsRequestHandler(
       throw Error(readablePrivacyReport(getResponse.value));
     }
   } catch (error) {
-    yield put(fetchWalletsFailure(error.message));
+    yield put(fetchWalletsFailure(error));
   }
 }
 
@@ -484,7 +484,7 @@ export function* paymentCheckRequestHandler(
     } else {
       yield put(paymentCheck.failure(undefined));
     }
-  } catch {
+  } catch (error) {
     yield put(paymentCheck.failure(undefined));
   }
 }

@@ -98,7 +98,7 @@ describe("checkProfileEnabledSaga", () => {
     })
       .put(upsertAction)
       .put(startApplicationInitialization())
-      .dispatch(profileUpsert.failure(Error("error")))
+      .dispatch(profileUpsert.failure(Error()))
       .run();
   });
 });

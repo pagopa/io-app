@@ -30,7 +30,9 @@ export function* loadSessionInformationSaga(
   );
   // Ko we got an error
   if (response.isLeft()) {
-    yield put(sessionInformationLoadFailure(readableReport(response.value)));
+    yield put(
+      sessionInformationLoadFailure(Error(readableReport(response.value)))
+    );
     return none;
   }
 
@@ -46,6 +48,6 @@ export function* loadSessionInformationSaga(
     response.value.status === 400
       ? response.value.value.title || errorMsgDefault
       : errorMsgDefault;
-  yield put(sessionInformationLoadFailure(error));
+  yield put(sessionInformationLoadFailure(Error(error)));
   return none;
 }

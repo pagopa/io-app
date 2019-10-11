@@ -42,7 +42,7 @@ describe("loadSessionInformationSaga", () => {
       ])
       .put(
         sessionInformationLoadFailure(
-          'value ["some error occurred"] at [root] is not a valid [null]'
+          Error('value ["some error occurred"] at [root] is not a valid [null]')
         )
       )
       .run();

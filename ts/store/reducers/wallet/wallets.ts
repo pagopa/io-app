@@ -85,7 +85,7 @@ export const walletsSelector = createSelector(
   // (e.g. by insertion date, expiration date, ...)
   (
     potWallets: ReturnType<typeof getWallets>
-  ): pot.Pot<ReadonlyArray<Wallet>, string> =>
+  ): pot.Pot<ReadonlyArray<Wallet>, Error> =>
     pot.map(potWallets, wallets =>
       [...wallets].sort(
         // sort by date, descending
@@ -146,7 +146,10 @@ const reducer = (
     case getType(paymentUpdateWalletPsp.failure):
       return {
         ...state,
-        favoriteWalletId: pot.toError(state.favoriteWalletId, action.payload),
+        favoriteWalletId: pot.toError(
+          state.favoriteWalletId,
+          action.payload.message
+        ),
         walletById: pot.toError(state.walletById, action.payload)
       };
 

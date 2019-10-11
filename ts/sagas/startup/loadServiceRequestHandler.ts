@@ -75,7 +75,7 @@ export function* loadServiceRequestHandler(
     } else {
       throw Error(`response status ${response.value.status}`);
     }
-  } catch (e) {
-    yield put(loadService.failure(e.message));
+  } catch (error) {
+    yield put(loadService.failure({ service_id: action.payload, error }));
   }
 }

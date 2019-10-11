@@ -38,25 +38,32 @@ export function* updateInstallationSaga(
   if (notificationsInstallation.token === undefined) {
     return undefined;
   }
-  // Send the request to the backend
-  const response: SagaCallReturnType<
-    typeof createOrUpdateInstallation
-  > = yield call(createOrUpdateInstallation, {
-    installationID: notificationsInstallation.id,
-    installation: {
-      platform: notificationsPlatform,
-      pushChannel: notificationsInstallation.token
-    }
-  });
+  try {
+    // Send the request to the backend
+    const response: SagaCallReturnType<
+      typeof createOrUpdateInstallation
+    > = yield call(createOrUpdateInstallation, {
+      installationID: notificationsInstallation.id,
+      installation: {
+        platform: notificationsPlatform,
+        pushChannel: notificationsInstallation.token
+      }
+    });
 
-  /**
-   * If the response isLeft (got an error) dispatch a failure action
-   */
-  if (response.isLeft()) {
-    yield put(
-      updateNotificationInstallationFailure(readableReport(response.value))
-    );
+    /**
+     * If the response isLeft (got an error) dispatch a failure action
+     */
+    if (response.isLeft()) {
+      yield put(
+        updateNotificationInstallationFailure(
+          Error(readableReport(response.value))
+        )
+      );
+      return undefined;
+    }
+    return response.value.status;
+  } catch (error) {
+    yield put(updateNotificationInstallationFailure(error));
     return undefined;
   }
-  return response.value.status;
 }

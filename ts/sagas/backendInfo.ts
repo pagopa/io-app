@@ -56,7 +56,7 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
         ({ status }) => `response status ${status}`
       );
 
-      yield put(backendInfoLoadFailure(errorDescription));
+      yield put(backendInfoLoadFailure(new Error(errorDescription)));
 
       // tslint:disable-next-line:saga-yield-return-type
       yield call(startTimer, BACKEND_INFO_RETRY_INTERVAL);
