@@ -69,7 +69,7 @@ type State = Readonly<{
 /**
  * A screen to allow user to insert an email address.
  */
-class EmailScreen extends React.PureComponent<Props, State> {
+class EmailInsertScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = INITIAL_STATE;
@@ -199,4 +199,4 @@ function mapStateToProps(state: GlobalState) {
   };
 }
 
-export default connect(mapStateToProps)(EmailScreen);
+export default connect(mapStateToProps)(EmailInsertScreen);

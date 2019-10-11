@@ -9,6 +9,7 @@ import {
   forgetCurrentSession,
   idpSelected,
   loginSuccess,
+  logoutFailure,
   logoutSuccess,
   sessionExpired,
   sessionInformationLoadSuccess,
@@ -174,7 +175,8 @@ const reducer = (
   if (
     (isActionOf(sessionExpired, action) ||
       isActionOf(sessionInvalid, action) ||
-      isActionOf(logoutSuccess, action)) &&
+      isActionOf(logoutSuccess, action) ||
+      isActionOf(logoutFailure, action)) &&
     isLoggedIn(state)
   ) {
     return {
