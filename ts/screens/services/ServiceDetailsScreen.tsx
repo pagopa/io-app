@@ -76,12 +76,7 @@ function renderInformationRow(
   return (
     <View style={styles.infoItem}>
       <Text>{label}</Text>
-      <Button
-        primary={true}
-        small={true}
-        onPress={onPress}
-        style={{ alignSelf: "flex-start" }}
-      >
+      <Button primary={true} small={true} onPress={onPress}>
         <Text uppercase={false} ellipsizeMode="tail" numberOfLines={1}>
           {info}
         </Text>
