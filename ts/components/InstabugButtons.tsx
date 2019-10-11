@@ -11,6 +11,7 @@ import {
 } from "../store/actions/debug";
 import { requestInstabugInfoLoad } from "../store/actions/instabug";
 import { Dispatch } from "../store/actions/types";
+import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugMessage";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import CustomBadge from "./ui/CustomBadge";
@@ -26,7 +27,6 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 type State = {
   instabugReportType: Option<string>;
-  badgeValue: number;
 };
 
 const styles = StyleSheet.create({
@@ -76,21 +76,10 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
     ]);
   };
 
-  // This method update the badgeValue state
-  private handleUpdateBadge = () => {
-    Replies.getUnreadRepliesCount(count => {
-      this.setState({
-        badgeValue: count
-      });
-      // return count;
-    });
-  };
-
   constructor(props: Props) {
     super(props);
     this.state = {
-      instabugReportType: none,
-      badgeValue: 0
+      instabugReportType: none
     };
   }
   public componentDidMount() {
@@ -108,12 +97,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
         }
       }
     );
-    this.handleUpdateBadge();
     this.props.dispatchInstabugRequest();
-  }
-
-  public componentWillMount(): void {
-    this.handleUpdateBadge();
   }
 
   public render() {
@@ -131,7 +115,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
           <CustomBadge
             badgeStyle={styles.badgeStyle}
             textStyle={styles.textStyle}
-            badgeValue={this.state.badgeValue}
+            badgeValue={this.props.badge.value}
           />
           <Button onPress={this.handleIBBugPress} transparent={true}>
             <IconFont
@@ -148,7 +132,8 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  badge: instabugMessageStateSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
