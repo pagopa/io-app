@@ -278,6 +278,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   public componentDidUpdate(prevProps: Props) {
     const { potMessage, potService, refreshService } = this.props;
     const { potMessage: prevPotMessage } = prevProps;
+    // if the message was not yet loaded in the component's mount, the service is refreshed here once the message is loaded
     if (
       !pot.isSome(prevPotMessage) &&
       pot.isSome(potMessage) &&
