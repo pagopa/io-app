@@ -207,11 +207,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadMessage.failure):
     case getType(logoutFailure):
     case getType(loadService.failure):
+    case getType(contentServiceLoad.failure):
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
     // Failures with reason as Error
-    case getType(contentServiceLoad.failure):
     case getType(sessionInformationLoadFailure):
     case getType(profileLoadFailure):
     case getType(profileUpsert.failure):
