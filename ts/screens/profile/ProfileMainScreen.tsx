@@ -33,11 +33,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import {
-  LogoutOption,
-  logoutRequest,
-  sessionExpired
-} from "../../store/actions/authentication";
+import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesExperimentalFeaturesSetEnabled,
@@ -127,12 +123,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     Toast.show({ text: "The cache has been cleared." });
   };
 
-  private logout = (logoutOption: LogoutOption) => {
-    this.props.logout(logoutOption);
-
-    this.props.hideModal();
-  };
-
   private developerListItem(
     title: string,
     switchValue: boolean,
@@ -175,7 +165,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     this.props.showModal(
       <SelectLogoutOption
         onCancel={this.props.hideModal}
-        onOptionSelected={this.logout}
         header={
           <View>
             <H3 style={styles.modalHeader}>
@@ -475,7 +464,6 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
-  logout: (logoutOption: LogoutOption) => dispatch(logoutRequest(logoutOption)),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),
