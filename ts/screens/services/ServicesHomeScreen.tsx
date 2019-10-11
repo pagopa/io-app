@@ -562,9 +562,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
         onScroll={(value: number) => {
           const { currentTab, isLongPressEnabled } = this.state;
-          const percScrollTab = Math.abs(value - currentTab) * 100;
-          if (percScrollTab > 50 && isLongPressEnabled) {
-            this.setState({ isLongPressEnabled: false });
+          if (isLongPressEnabled && Math.abs(value - currentTab) > 0.5) {
+            this.setState({
+              isLongPressEnabled: false
+            });
           }
         }}
         onChangeTab={(evt: any) => {
