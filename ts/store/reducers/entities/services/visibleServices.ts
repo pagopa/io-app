@@ -31,7 +31,7 @@ export const visibleServicesReducer = (
       return pot.some(action.payload);
 
     case getType(loadVisibleServices.failure):
-      return pot.toError(state, Error());
+      return pot.toError(state, action.payload);
 
     case getType(clearCache):
       return INITIAL_STATE;

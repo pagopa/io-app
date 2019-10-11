@@ -169,34 +169,33 @@ export const isLoadingServicesSelector = createSelector(
 //
 
 // Check if the passed service is local or national through data included into the service metadata.
-// If service metadata aren't loaded, the service is treated as local, otherwise it returns
-// true  if service scope is equal to the filter localization parameter
-const hasLocalization = (
+// If the scope parameter is expressed, the corresponding item is not included into section if:
+// -  the scope paramenter is different to the service scope
+// -  service metadata load fails,
+const isInScope = (
   service: pot.Pot<ServicePublic, Error>,
   servicesMetadataById: ServiceMetadataById,
-  localization?: ScopeEnum
+  scope?: ScopeEnum
 ) => {
-  if (localization === undefined) {
+  if (scope === undefined) {
     return true;
   }
 
+  // if service is Error, the corresponding item is not included into section
   if (pot.isSome(service)) {
     const potServiceMetadata =
       servicesMetadataById[service.value.service_id] || pot.none;
     if (pot.isSome(potServiceMetadata)) {
-      return potServiceMetadata.value.scope === localization;
-    } else {
-      return localization === ScopeEnum.LOCAL; // if metadata load fails, the service is treated as local
+      return potServiceMetadata.value.scope === scope;
     }
-  } else {
-    return false; // if service is Error, the corresponding item is not included into section
   }
+  return false;
 };
 
 /**
  * A generalized function to generate sections of organizations including the available services for each organization
  * optional input:
- * - localization: if undefined, all available organizations are included. If expressed, it requires service metadata being loaded
+ * - scope: if undefined, all available organizations are included. If expressed, it requires service metadata being loaded
  * - organizationsFiscalCodesSelected: if provided, sections will include only the passed organizations
  */
 const getServices = (
@@ -206,7 +205,7 @@ const getServices = (
   servicesMetadata: {
     byId: ServiceMetadataById;
   },
-  localization?: ScopeEnum,
+  scope?: ScopeEnum,
   selectedOrganizationsFiscalCodes?: ReadonlyArray<string>
 ) => {
   const organizationsFiscalCodes =
@@ -225,7 +224,7 @@ const getServices = (
         .filter(
           service =>
             isDefined(service) &&
-            hasLocalization(service, servicesMetadata.byId, localization) &&
+            isInScope(service, servicesMetadata.byId, scope) &&
             isVisibleService(visibleServices, service)
         )
         .sort(
