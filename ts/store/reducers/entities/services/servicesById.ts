@@ -24,7 +24,7 @@ const reducer = (
 ): ServicesByIdState => {
   switch (action.type) {
     case getType(loadService.request):
-      // Use the ID as object key
+      // When you make a request to load a previously loaded service its state is updated with a someLoading pot, otherwise its state is updated with a oneLoading pot
       const cachedValue = state[action.payload];
       const prevServiceRequest =
         cachedValue && pot.isSome(cachedValue) && !pot.isLoading(cachedValue)
@@ -44,17 +44,16 @@ const reducer = (
       };
 
     case getType(loadService.failure):
-      // Use the ID as object key
-      const serviceId = action.payload;
-      const prevServiceFailure = state[serviceId];
-      const error = Error(serviceId);
+      // when a request to load a previously loaded service fails its state is updated with a someError pot, otherwise its state is updated with a noneError pot
+      const { service_id, error } = action.payload;
+      const prevServiceFailure = state[service_id];
       const nextServiceFailure =
         prevServiceFailure !== undefined && pot.isSome(prevServiceFailure)
           ? pot.someError(prevServiceFailure.value, error)
           : pot.noneError(error);
       return {
         ...state,
-        [serviceId]: nextServiceFailure
+        [service_id]: nextServiceFailure
       };
 
     case getType(removeServiceTuples): {

@@ -76,6 +76,6 @@ export function* loadServiceRequestHandler(
       throw Error();
     }
   } catch (error) {
-    yield put(loadService.failure(action.payload));
+    yield put(loadService.failure({ service_id: action.payload, error }));
   }
 }
