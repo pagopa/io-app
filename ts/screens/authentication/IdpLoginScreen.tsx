@@ -11,7 +11,6 @@ import { idpLoginUrlChanged } from "../../store/actions/authentication";
 import * as pot from "italia-ts-commons/lib/pot";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
@@ -31,8 +30,7 @@ type OwnProps = {
 
 type Props = ReturnType<typeof mapStateToProps> &
   OwnProps &
-  ReturnType<typeof mapDispatchToProps> &
-  LightModalContextInterface;
+  ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   requestState: pot.Pot<true, "LOADING_ERROR" | "LOGIN_ERROR">;

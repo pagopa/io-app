@@ -395,6 +395,8 @@ wallet:
     successful: The card was added successfully!
     failed: The card could not be added
     failedCardAlreadyExists: The card you are adding already exists
+    contextualHelpTitle: How to add a payment method
+    contextualHelpContent: !include how_add_payment_method.md
   textMsg:
     title: Text confirmation code
     header: Confirmation code
@@ -488,6 +490,9 @@ wallet:
   errorTransaction:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
+  detailsTransaction:
+    contextualHelpTitle: Transaction details
+    contextualHelpContent: !include transaction_details.md
   total: Total
   amount: Amount
   payAmount: Amount to pay

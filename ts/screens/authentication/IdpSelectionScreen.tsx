@@ -8,7 +8,6 @@ import IdpsGrid from "../../components/IdpsGrid";
 import { InfoBanner } from "../../components/InfoBanner";
 import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 
 import * as config from "../../config";
@@ -34,10 +33,7 @@ interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
 }
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReduxProps &
-  OwnProps &
-  LightModalContextInterface;
+type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 
 const idps: ReadonlyArray<IdentityProvider> = [
   {

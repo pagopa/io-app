@@ -402,12 +402,17 @@ wallet:
     successful: Carta aggiunta con successo
     failed: Impossibile aggiungere la carta
     failedCardAlreadyExists: La carta che stai inserendo è già presente
+    contextualHelpTitle: Come aggiungere un metodo di pagamento
+    contextualHelpContent: !include how_add_payment_method.md
   textMsg:
     title: Codice di conferma
     header: Codice di Conferma SMS
     newCode: Richiedi nuovo codice
     info: Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono
   transactionDetails: Dettagli della transazione
+  detailsTransaction:
+    contextualHelpTitle: Dettagli della transazione
+    contextualHelpContent: !include transaction_details.md
   saveCard:
     header: Salva la carta
     title: Vuoi salvare questa carta?

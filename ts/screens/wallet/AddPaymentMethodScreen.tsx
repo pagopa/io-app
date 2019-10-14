@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
@@ -58,6 +59,14 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
     return (
       <BaseScreenComponent
         goBack={true}
+        contextualHelp={{
+          title: I18n.t("wallet.newPaymentMethod.contextualHelpTitle"),
+          body: () => (
+            <Markdown>
+              {I18n.t("wallet.newPaymentMethod.contextualHelpContent")}
+            </Markdown>
+          )
+        }}
         headerTitle={
           inPayment.isSome()
             ? I18n.t("wallet.payWith.header")
