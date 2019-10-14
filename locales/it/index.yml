@@ -664,6 +664,8 @@ messages:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
 messageDetails:
+  contextualHelpTitle: Dettagli del messaggio
+  contextualHelpContent: !include message_detail.md
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
   loadingText: Caricamento dei dettagli del messaggio in corso...
