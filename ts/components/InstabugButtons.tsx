@@ -3,18 +3,46 @@ import { BugReporting, Chats, Replies } from "instabug-reactnative";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { Button } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import {
   instabugReportClosed,
   instabugReportOpened
 } from "../store/actions/debug";
+import { requestInstabugInfoLoad } from "../store/actions/instabug";
 import { Dispatch } from "../store/actions/types";
+import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugMessage";
 import { GlobalState } from "../store/reducers/types";
+import variables from "../theme/variables";
+import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
 
 interface OwnProps {
   color?: string;
 }
+
+const styles = StyleSheet.create({
+  textStyle: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+  badgeStyle: {
+    backgroundColor: variables.brandPrimary,
+    borderColor: "white",
+    borderWidth: 2,
+    position: "absolute",
+    elevation: 0.1,
+    shadowColor: "white",
+    height: 19,
+    width: 19,
+    left: 20,
+    bottom: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
+    justifyContent: "center",
+    alignContent: "center"
+  }
+});
 
 type Props = ReturnType<typeof mapStateToProps> &
   OwnProps &
@@ -69,6 +97,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
         }
       }
     );
+    this.props.dispatchInstabugRequest();
   }
 
   public render() {
@@ -83,6 +112,11 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
               accessibilityLabel="io-chat"
             />
           </Button>
+          <CustomBadge
+            badgeStyle={styles.badgeStyle}
+            textStyle={styles.textStyle}
+            badgeValue={this.props.badge.value}
+          />
           <Button onPress={this.handleIBBugPress} transparent={true}>
             <IconFont
               name="io-bug"
@@ -98,14 +132,16 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  badge: instabugMessageStateSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIBReportOpen: (type: string) =>
     dispatch(instabugReportOpened({ type })),
   dispatchIBReportClosed: (type: string, how: string) =>
-    dispatch(instabugReportClosed({ type, how }))
+    dispatch(instabugReportClosed({ type, how })),
+  dispatchInstabugRequest: () => dispatch(requestInstabugInfoLoad())
 });
 
 export const InstabugButtons = connect(
