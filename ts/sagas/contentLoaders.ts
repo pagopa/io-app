@@ -160,7 +160,7 @@ export function* watchContentMunicipalityLoadSaga(): Iterator<Effect> {
           })
         );
       } else {
-        yield put(contentMunicipalityLoad.failure(response.value));
+        throw response.value;
       }
     } catch (e) {
       yield put(contentMunicipalityLoad.failure(e));

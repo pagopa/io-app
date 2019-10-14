@@ -87,16 +87,10 @@ export function* fetchTransactionsRequestHandler(
       if (response.value.status === 200) {
         yield put(fetchTransactionsSuccess(response.value.value.data));
       } else {
-        yield put(
-          fetchTransactionsFailure(
-            Error(`response status ${response.value.status}`)
-          )
-        );
+        throw Error(`response status ${response.value.status}`);
       }
     } else {
-      yield put(
-        fetchTransactionsFailure(Error(readablePrivacyReport(response.value)))
-      );
+      throw Error(readablePrivacyReport(response.value));
     }
   } catch (error) {
     yield put(fetchTransactionsFailure(error));
@@ -479,12 +473,10 @@ export function* paymentCheckRequestHandler(
         //       https://www.pivotaltracker.com/story/show/161053093
         yield put(paymentCheck.success(true));
       } else {
-        yield put(paymentCheck.failure(response.value));
+        throw response.value;
       }
     } else {
-      yield put(
-        paymentCheck.failure(Error(readablePrivacyReport(response.value)))
-      );
+      throw Error(readablePrivacyReport(response.value));
     }
   } catch (error) {
     yield put(paymentCheck.failure(error));
@@ -520,11 +512,7 @@ export function* paymentExecutePaymentRequestHandler(
         throw Error(`response status ${response.value.status}`);
       }
     } else {
-      yield put(
-        paymentExecutePayment.failure(
-          Error(readablePrivacyReport(response.value))
-        )
-      );
+      throw Error(readablePrivacyReport(response.value));
     }
   } catch (e) {
     yield put(paymentExecutePayment.failure(e));
@@ -632,7 +620,7 @@ export function* paymentAttivaRequestHandler(
         yield put(paymentAttiva.success(response.value.value));
       } else if (response.value.status === 500) {
         // Attiva failed
-        yield put(paymentAttiva.failure(response.value.value.detail));
+        throw response.value.value.detail;
       } else {
         throw Error(`response status ${response.value.status}`);
       }
@@ -675,7 +663,7 @@ export function* paymentIdPollingRequestHandler(
         yield put(paymentIdPolling.success(response.value.value.idPagamento));
       } else if (response.value.status === 400) {
         // Attiva failed
-        yield put(paymentIdPolling.failure("PAYMENT_ID_TIMEOUT"));
+        throw Error("PAYMENT_ID_TIMEOUT");
       } else {
         throw Error(`response status ${response.value.status}`);
       }
