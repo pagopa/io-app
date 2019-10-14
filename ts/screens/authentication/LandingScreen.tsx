@@ -79,6 +79,7 @@ const LandingScreen: React.SFC<Props> = props => {
   ));
 
   return (
+    // insert here contextual help
     <BaseScreenComponent>
       {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
 
