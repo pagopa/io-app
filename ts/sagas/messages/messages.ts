@@ -40,12 +40,7 @@ export function* loadMessage(
     );
 
     if (maybeMessage.isLeft()) {
-      yield put(
-        loadMessageAction.failure({
-          id: meta.id,
-          error: maybeMessage.value
-        })
-      );
+      throw maybeMessage.value;
     } else {
       yield put(loadMessageAction.success(maybeMessage.value));
     }
