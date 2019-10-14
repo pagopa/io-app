@@ -7,7 +7,6 @@ import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { ContextualHelp } from "../../components/ContextualHelp";
 
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCard";
@@ -82,7 +81,6 @@ const LandingScreen: React.SFC<Props> = props => {
   ));
 
   return (
-    // insert here contextual help
     <BaseScreenComponent
       contextualHelp={{
         title: I18n.t("authentication.landing.contextualHelpTitle"),
