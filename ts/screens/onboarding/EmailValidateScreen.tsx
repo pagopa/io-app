@@ -99,7 +99,8 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
             block: true,
             bordered: true,
             title: I18n.t("onboarding.email.ctaEdit"),
-            onPress: unavailableAlert
+            onPress: unavailableAlert,
+            buttonFontSize: 15
           }}
           rightButton={{
             block: true,
