@@ -102,6 +102,7 @@ export const paymentCheck = createAsyncAction(
   true,
   | OmitStatusFromResponse<TypeofApiResponse<CheckPaymentUsingGETT>, 200>
   | undefined
+  | Error
 >();
 
 //

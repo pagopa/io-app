@@ -54,12 +54,7 @@ export function* updateInstallationSaga(
      * If the response isLeft (got an error) dispatch a failure action
      */
     if (response.isLeft()) {
-      yield put(
-        updateNotificationInstallationFailure(
-          Error(readableReport(response.value))
-        )
-      );
-      return undefined;
+      throw Error(readableReport(response.value));
     }
     return response.value.status;
   } catch (error) {

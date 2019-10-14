@@ -72,7 +72,7 @@ const reducer = (
         ...state,
         [id]: {
           ...prevState,
-          message: pot.noneError(action.payload.id)
+          message: pot.noneError(action.payload.error.message)
         }
       };
     }

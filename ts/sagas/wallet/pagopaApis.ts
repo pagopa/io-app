@@ -482,10 +482,12 @@ export function* paymentCheckRequestHandler(
         yield put(paymentCheck.failure(response.value));
       }
     } else {
-      yield put(paymentCheck.failure(undefined));
+      yield put(
+        paymentCheck.failure(Error(readablePrivacyReport(response.value)))
+      );
     }
   } catch (error) {
-    yield put(paymentCheck.failure(undefined));
+    yield put(paymentCheck.failure(error));
   }
 }
 
