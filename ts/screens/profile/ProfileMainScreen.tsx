@@ -385,8 +385,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     if (this.state.numberOfTaps === 4) {
                       this.setState({ showPagoPAtestSwitch: true });
                     } else {
+                      const numberOfTaps = this.state.numberOfTaps + 1;
                       this.setState({
-                        numberOfTaps: this.state.numberOfTaps + 1
+                        numberOfTaps
                       });
                     }
                   },
