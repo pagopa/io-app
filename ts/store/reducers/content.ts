@@ -103,8 +103,8 @@ export default function content(
       return {
         ...state,
         municipality: {
-          codiceCatastale: pot.none,
-          data: pot.none
+          codiceCatastale: pot.noneLoading,
+          data: pot.noneLoading
         }
       };
 
