@@ -49,9 +49,7 @@ class TabIconComponent extends React.PureComponent<Props> {
           <CustomBadge
             badgeStyle={styles.badgeStyle}
             textStyle={styles.textStyle}
-            badgeValue={
-              badgeValue > MAX_BADGE_VALUE ? MAX_BADGE_VALUE : badgeValue
-            }
+            badgeValue={Math.min(badgeValue, MAX_BADGE_VALUE)}
           />
         ) : null}
       </View>

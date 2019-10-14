@@ -16,7 +16,10 @@ export function* watchInstabugSaga(
   }
   // tslint:disable-next-line:no-commented-code
   // console.warn("get repliesCount");
-  const repliesCount = Replies.getUnreadRepliesCount(count => count);
+  var repliesCount = 0;
+  Replies.getUnreadRepliesCount(count => {
+    repliesCount = count;
+  });
   yield put(responseInstabugInfoLoaded(repliesCount));
   while (retryPeriodically) {
     // tslint:disable-next-line:no-commented-code
@@ -25,9 +28,10 @@ export function* watchInstabugSaga(
     // tslint:disable-next-line:no-commented-code
     // console.warn("stop waiting");
     // console.warn("get repliesCount");
-    const repliesCountPeriodically = Replies.getUnreadRepliesCount(
-      count => count
-    );
+    var repliesCountPeriodically = 0;
+    Replies.getUnreadRepliesCount(count => {
+      repliesCountPeriodically = count;
+    });
     yield put(responseInstabugInfoLoaded(repliesCountPeriodically));
   }
 }
