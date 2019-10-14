@@ -201,6 +201,8 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
+    contextualHelpTitle: Come accedere all'app IO
+    contextualHelpContent: !include how_access_io.md
     login: Entra con SPID
     nospid: Non hai SPID? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
@@ -284,6 +286,8 @@ authentication:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
 onboarding:
+  contextualHelpTitle: Come funziona il riconoscimento biometrico
+  contextualHelpContent: !include how_biometric_recognition_works.md
   tos:
     headerTitle: Attivazione
     continue: Continua
@@ -668,6 +672,8 @@ messages:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
 messageDetails:
+  contextualHelpTitle: Dettagli del messaggio
+  contextualHelpContent: !include message_detail.md
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
   loadingText: Caricamento dei dettagli del messaggio in corso...

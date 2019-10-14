@@ -12,6 +12,8 @@ import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCard";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
+import Markdown from "../../components/ui/Markdown";
 
 import { isDevEnvironment } from "../../config";
 
@@ -31,7 +33,7 @@ type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReduxProps & OwnProps;
+type Props = ReduxProps & OwnProps & LightModalContextInterface;
 
 const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   {
@@ -79,10 +81,17 @@ const LandingScreen: React.SFC<Props> = props => {
   ));
 
   return (
-    // insert here contextual help
-    <BaseScreenComponent>
+    <BaseScreenComponent
+      contextualHelp={{
+        title: I18n.t("authentication.landing.contextualHelpTitle"),
+        body: () => (
+          <Markdown>
+            {I18n.t("authentication.landing.contextualHelpContent")}
+          </Markdown>
+        )
+      }}
+    >
       {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
-
       <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
         <View spacer={true} large={true} />
         <HorizontalScroll cards={cardComponents} />

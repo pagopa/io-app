@@ -12,6 +12,7 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { contentServiceLoad } from "../../store/actions/content";
 import {
@@ -292,6 +293,14 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   public render() {
     return (
       <BaseScreenComponent
+        contextualHelp={{
+          title: I18n.t("messageDetails.contextualHelpTitle"),
+          body: () => (
+            <Markdown>
+              {I18n.t("messageDetails.contextualHelpContent")}
+            </Markdown>
+          )
+        }}
         headerTitle={I18n.t("messageDetails.headerTitle")}
         goBack={this.goBack}
       >

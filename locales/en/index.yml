@@ -197,6 +197,8 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
+    contextualHelpTitle: How to access the IO app
+    contextualHelpContent: !include how_access_io.md
     login: Login with SPID
     nospid: Don't have SPID? Find out more
     card1-title: All messages in one place
@@ -278,6 +280,8 @@ authentication:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
 onboarding:
+  contextualHelpTitle: How biometric recognition works
+  contextualHelpContent: !include how_biometric_recognition_works.md
   tos:
     headerTitle: Activation
     continue: Continue
@@ -658,6 +662,8 @@ messages:
       title: You haven't any scheduled deadline.
       subtitle:  Use the button above to check out past deadlines.
 messageDetails:
+  contextualHelpTitle: Message details
+  contextualHelpContent: !include message_detail.md
   headerTitle: Message
   emptyMessage: No content
   loadingText: Loading message details in progress...
