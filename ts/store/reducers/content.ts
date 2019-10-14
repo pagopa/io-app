@@ -103,8 +103,8 @@ export default function content(
       return {
         ...state,
         municipality: {
-          codiceCatastale: pot.none,
-          data: pot.none
+          codiceCatastale: pot.noneLoading,
+          data: pot.noneLoading
         }
       };
 
@@ -132,7 +132,8 @@ export default function content(
     case getType(clearCache):
       return {
         ...state,
-        servicesMetadata: { ...initialContentState.servicesMetadata }
+        servicesMetadata: { ...initialContentState.servicesMetadata },
+        municipality: { ...initialContentState.municipality }
       };
 
     case getType(removeServiceTuples): {
