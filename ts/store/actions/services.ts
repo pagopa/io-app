@@ -31,18 +31,22 @@ export const loadVisibleServices = createAsyncAction(
   "SERVICES_VISIBLE_LOAD_REQUEST",
   "SERVICES_VISIBLE_LOAD_SUCCESS",
   "SERVICES_VISIBLE_LOAD_FAILURE"
-)<void, PaginatedServiceTupleCollection["items"], void>();
+)<void, PaginatedServiceTupleCollection["items"], Error>();
 
 //
 // load single service
 //
 
+type ServiceLoadFailurePayload = {
+  error: Error;
+  service_id: string;
+};
+
 export const loadService = createAsyncAction(
   "SERVICE_LOAD_REQUEST",
   "SERVICE_LOAD_SUCCESS",
   "SERVICE_LOAD_FAILURE"
-)<string, ServicePublic, string>();
-
+)<string, ServicePublic, ServiceLoadFailurePayload>();
 //
 //  mark service as read
 //
