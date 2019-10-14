@@ -5,6 +5,7 @@ import { TypeOfApiResponseStatus } from "italia-ts-commons/lib/requests";
 import { Platform } from "react-native";
 import { call, Effect, put, select } from "redux-saga/effects";
 
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { PlatformEnum } from "../../definitions/backend/Platform";
 import { CreateOrUpdateInstallationT } from "../../definitions/backend/requestTypes";
 import { BackendClient } from "../api/backend";
@@ -37,23 +38,27 @@ export function* updateInstallationSaga(
   if (notificationsInstallation.token === undefined) {
     return undefined;
   }
-  // Send the request to the backend
-  const response: SagaCallReturnType<
-    typeof createOrUpdateInstallation
-  > = yield call(createOrUpdateInstallation, {
-    installationID: notificationsInstallation.id,
-    installation: {
-      platform: notificationsPlatform,
-      pushChannel: notificationsInstallation.token
-    }
-  });
+  try {
+    // Send the request to the backend
+    const response: SagaCallReturnType<
+      typeof createOrUpdateInstallation
+    > = yield call(createOrUpdateInstallation, {
+      installationID: notificationsInstallation.id,
+      installation: {
+        platform: notificationsPlatform,
+        pushChannel: notificationsInstallation.token
+      }
+    });
 
-  /**
-   * If the response isLeft (got an error) dispatch a failure action
-   */
-  if (response.isLeft()) {
-    yield put(updateNotificationInstallationFailure());
+    /**
+     * If the response isLeft (got an error) dispatch a failure action
+     */
+    if (response.isLeft()) {
+      throw Error(readableReport(response.value));
+    }
+    return response.value.status;
+  } catch (error) {
+    yield put(updateNotificationInstallationFailure(error));
     return undefined;
   }
-  return response.value.status;
 }
