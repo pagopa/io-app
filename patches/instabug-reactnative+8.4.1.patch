@@ -27,16 +27,13 @@ index 0000000..9e26dfe
 \ No newline at end of file
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/compile_library_classes/debug/classes.jar b/node_modules/instabug-reactnative/android/build/intermediates/compile_library_classes/debug/classes.jar
 new file mode 100644
-index 0000000..82fe683
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/compile_library_classes/debug/classes.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/instabug-reactnative/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar
 new file mode 100644
-index 0000000..df8d4b6
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/incremental/debug-mergeJniLibs/merge-state b/node_modules/instabug-reactnative/android/build/intermediates/incremental/debug-mergeJniLibs/merge-state
 new file mode 100644
-index 0000000..f3b0453
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/incremental/debug-mergeJniLibs/merge-state differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/instabug-reactnative/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
 new file mode 100644
 index 0000000..1b08bc9
@@ -82,112 +79,85 @@ index 0000000..609f9f1
 \ No newline at end of file
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/BuildConfig.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/BuildConfig.class
 new file mode 100644
-index 0000000..eacac44
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/BuildConfig.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$1.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$1.class
 new file mode 100644
-index 0000000..d1d9257
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$10.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$10.class
 new file mode 100644
-index 0000000..a9f19c8
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$10.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$11.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$11.class
 new file mode 100644
-index 0000000..0c20e49
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$11.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$12.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$12.class
 new file mode 100644
-index 0000000..84b86ea
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$12.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$13.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$13.class
 new file mode 100644
-index 0000000..c874d49
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$13.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$14.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$14.class
 new file mode 100644
-index 0000000..cd8dd16
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$14.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$15.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$15.class
 new file mode 100644
-index 0000000..b808982
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$15.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$16.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$16.class
 new file mode 100644
-index 0000000..f6ab6a4
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$16.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$2.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$2.class
 new file mode 100644
-index 0000000..d0b9890
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$2.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$3.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$3.class
 new file mode 100644
-index 0000000..0fe2828
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$3.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$4.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$4.class
 new file mode 100644
-index 0000000..d81504a
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$4.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$5.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$5.class
 new file mode 100644
-index 0000000..60320f6
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$5.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$6.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$6.class
 new file mode 100644
-index 0000000..eeaca6a
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$6.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$7.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$7.class
 new file mode 100644
-index 0000000..5b5de6e
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$7.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$8.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$8.class
 new file mode 100644
-index 0000000..cd04533
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$8.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$9.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$9.class
 new file mode 100644
-index 0000000..598a9b4
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule$9.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule.class
 new file mode 100644
-index 0000000..35ecd2f
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativeModule.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativePackage$Builder.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativePackage$Builder.class
 new file mode 100644
-index 0000000..9e03089
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativePackage$Builder.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativePackage.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativePackage.class
 new file mode 100644
-index 0000000..ff443b9
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/RNInstabugReactnativePackage.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/ArrayUtil$1.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/ArrayUtil$1.class
 new file mode 100644
-index 0000000..4b2b723
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/ArrayUtil$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/ArrayUtil.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/ArrayUtil.class
 new file mode 100644
-index 0000000..47eae9b
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/ArrayUtil.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/InstabugUtil.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/InstabugUtil.class
 new file mode 100644
-index 0000000..c50c35a
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/InstabugUtil.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/MapUtil$1.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/MapUtil$1.class
 new file mode 100644
-index 0000000..5def0a6
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/MapUtil$1.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/MapUtil.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/MapUtil.class
 new file mode 100644
-index 0000000..e7e659e
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/MapUtil.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/ReportUtil.class b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/ReportUtil.class
 new file mode 100644
-index 0000000..6587ec5
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/instabug/reactlibrary/utils/ReportUtil.class differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/library_java_res/debug/res.jar b/node_modules/instabug-reactnative/android/build/intermediates/library_java_res/debug/res.jar
 new file mode 100644
-index 0000000..15cb0ec
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/library_java_res/debug/res.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/library_manifest/debug/AndroidManifest.xml b/node_modules/instabug-reactnative/android/build/intermediates/library_manifest/debug/AndroidManifest.xml
 new file mode 100644
 index 0000000..78398a9
@@ -3359,8 +3329,7 @@ index 0000000..5e5bb76
 +xml rn_dev_preferences
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/runtime_library_classes/debug/classes.jar b/node_modules/instabug-reactnative/android/build/intermediates/runtime_library_classes/debug/classes.jar
 new file mode 100644
-index 0000000..82fe683
-Binary files /dev/null and b/node_modules/instabug-reactnative/android/build/intermediates/runtime_library_classes/debug/classes.jar differ
+index 0000000..e69de29
 diff --git a/node_modules/instabug-reactnative/android/build/intermediates/symbols/debug/R.txt b/node_modules/instabug-reactnative/android/build/intermediates/symbols/debug/R.txt
 new file mode 100644
 index 0000000..4b682d2
@@ -7341,7 +7310,7 @@ index 0000000..e736fc3
 +		ADDED from /Users/matteo/Documents/GitHub/io-app/node_modules/instabug-reactnative/android/src/main/AndroidManifest.xml
 +		INJECTED from /Users/matteo/Documents/GitHub/io-app/node_modules/instabug-reactnative/android/src/main/AndroidManifest.xml
 diff --git a/node_modules/instabug-reactnative/index.d.ts b/node_modules/instabug-reactnative/index.d.ts
-index 09ec669..f90f907 100644
+index 09ec669..2cc0823 100644
 --- a/node_modules/instabug-reactnative/index.d.ts
 +++ b/node_modules/instabug-reactnative/index.d.ts
 @@ -14,7 +14,7 @@ export namespace BugReporting {
