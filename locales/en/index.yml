@@ -197,6 +197,8 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
+    contextualHelpTitle: How to access the IO app
+    contextualHelpContext: !include how_access_io.md
     login: Login with SPID
     nospid: Don't have SPID? Find out more
     card1-title: All messages in one place
