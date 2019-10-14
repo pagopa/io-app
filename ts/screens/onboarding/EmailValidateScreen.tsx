@@ -16,13 +16,19 @@ import {
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
+import customVariables from "../../theme/variables";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
-  spacerLarge: { height: 40 }
+  spacerLarge: { height: 40 },
+  content: {
+    paddingHorizontal: customVariables.contentPadding,
+    backgroundColor: customVariables.contentBackground,
+    flex: 1
+  }
 });
 
 const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
@@ -68,7 +74,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
         }}
       >
         <ScreenContent title={I18n.t("onboarding.email.validation.title")}>
-          <View content={true}>
+          <View style={styles.content}>
             <Markdown>
               {I18n.t("onboarding.email.validation.info", {
                 email: profileEmail
