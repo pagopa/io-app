@@ -13,8 +13,6 @@ export function* watchInstabugSaga(
   if (!retryPeriodically) {
 
   }
-  // tslint:disable-next-line:no-commented-code
-  // console.warn("get repliesCount");
 
   Replies.getUnreadRepliesCount(count => {
     repliesCount = count;
