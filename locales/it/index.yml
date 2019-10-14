@@ -255,8 +255,12 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
+    contextualHelpTitle: Chi è il tuo Identity Provider
+    contextualHelpContent: !include who_is_idp.md
   idp_login:
     headerTitle: Accedi
+    contextualHelpTitle: Qual è la tua password
+    contextualHelpContent: !include what_is_password.md
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
@@ -297,6 +301,8 @@ onboarding:
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
     confirmInvalid: i due pin non coincidono
+    contextualHelpTitle: Qual è il tuo pin
+    contextualHelpContent: !include what_is_pin.md
   alert: 
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
@@ -585,6 +591,8 @@ cardComponent:
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
 messages:
+  contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
+  contextualHelpContent: !include how_to_use_messages.md
   counting:
     zero: Nessun messaggio
     one: Hai 1 messaggio

@@ -4,12 +4,14 @@ import { Image, NavState, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import Markdown from "../../components/ui/Markdown";
 
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
 
 import * as pot from "italia-ts-commons/lib/pot";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
@@ -29,7 +31,8 @@ type OwnProps = {
 
 type Props = ReturnType<typeof mapStateToProps> &
   OwnProps &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  LightModalContextInterface;
 
 type State = {
   requestState: pot.Pot<true, "LOADING_ERROR" | "LOGIN_ERROR">;
@@ -242,6 +245,14 @@ class IdpLoginScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent
         goBack={true}
+        contextualHelp={{
+          title: I18n.t("authentication.idp_login.contextualHelpTitle"),
+          body: () => (
+            <Markdown>
+              {I18n.t("authentication.idp_login.contextualHelpContent")}
+            </Markdown>
+          )
+        }}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
           loggedOutWithIdpAuth.idp.name
         }`}

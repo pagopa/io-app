@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
+import Markdown from "../../components/ui/Markdown";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
 import { abortOnboarding } from "../../store/actions/onboarding";
@@ -302,6 +303,14 @@ class PinScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
+        contextualHelp={{
+          title: I18n.t("onboarding.pin.contextualHelpTitle"),
+          body: () => (
+            <Markdown>
+              {I18n.t("onboarding.pin.contextualHelpContent")}
+            </Markdown>
+          )
+        }}
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
         {this.renderContent(pinState)}

@@ -8,6 +8,8 @@ import IdpsGrid from "../../components/IdpsGrid";
 import { InfoBanner } from "../../components/InfoBanner";
 import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
+import Markdown from "../../components/ui/Markdown";
 
 import * as config from "../../config";
 
@@ -32,7 +34,10 @@ interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
 }
 
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReduxProps &
+  OwnProps &
+  LightModalContextInterface;
 
 const idps: ReadonlyArray<IdentityProvider> = [
   {
@@ -136,6 +141,14 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
   return (
     <BaseScreenComponent
       goBack={goBack}
+      contextualHelp={{
+        title: I18n.t("authentication.idp_selection.contextualHelpTitle"),
+        body: () => (
+          <Markdown>
+            {I18n.t("authentication.idp_selection.contextualHelpContent")}
+          </Markdown>
+        )
+      }}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
       <Content noPadded={true} overScrollMode="never" bounces={false}>

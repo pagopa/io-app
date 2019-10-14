@@ -249,8 +249,12 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider
+    contextualHelpTitle: Who is your Identity Provider
+    contextualHelpContent: !include who_is_idp.md
   idp_login:
     headerTitle: Login
+    contextualHelpTitle: What is your password
+    contextualHelpContent: !include what_is_password.md
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
@@ -291,6 +295,8 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
+    contextualHelpTitle: What is your pin
+    contextualHelpContent: !include what_is_pin.md
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
@@ -575,6 +581,8 @@ cardComponent:
   detailsAndTransactions: Details and transactions
   pick: Pay with this method
 messages:
+  contextualHelpTitle: What you can do in your messages
+  contextualHelpContent: !include how_to_use_messages.md
   counting:
     zero: No message
     one: You have 1 message

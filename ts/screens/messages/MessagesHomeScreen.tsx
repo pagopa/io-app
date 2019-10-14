@@ -17,6 +17,7 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
   loadMessages,
@@ -162,6 +163,12 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     const { isSearchEnabled } = this.props;
     return (
       <TopScreenComponent
+        contextualHelp={{
+          title: I18n.t("messages.contextualHelpTitle"),
+          body: () => (
+            <Markdown>{I18n.t("messages.contextualHelpContent")}</Markdown>
+          )
+        }}
         title={I18n.t("messages.contentTitle")}
         isSearchAvailable={true}
         searchType="Messages"
