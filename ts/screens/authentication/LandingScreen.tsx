@@ -86,7 +86,7 @@ const LandingScreen: React.SFC<Props> = props => {
         title: I18n.t("authentication.landing.contextualHelpTitle"),
         body: () => (
           <Markdown>
-            {I18n.t("authentication.landing.contextualHelpContext")}
+            {I18n.t("authentication.landing.contextualHelpContent")}
           </Markdown>
         )
       }}

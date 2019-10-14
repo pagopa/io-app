@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { Alert } from "react-native";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
@@ -89,6 +90,12 @@ export class FingerprintScreen extends React.PureComponent<Props> {
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
         title={I18n.t("onboarding.fingerprint.title")}
+        contextualHelp={{
+          title: I18n.t("onboarding.contextualHelpTitle"),
+          body: () => (
+            <Markdown>{I18n.t("onboarding.contextualHelpContent")}</Markdown>
+          )
+        }}
       >
         <ScreenContent
           title={I18n.t("onboarding.fingerprint.title")}

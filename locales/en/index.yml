@@ -198,7 +198,7 @@ spid:
 authentication:
   landing:
     contextualHelpTitle: How to access the IO app
-    contextualHelpContext: !include how_access_io.md
+    contextualHelpContent: !include how_access_io.md
     login: Login with SPID
     nospid: Don't have SPID? Find out more
     card1-title: All messages in one place
@@ -276,6 +276,8 @@ authentication:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
 onboarding:
+  contextualHelpTitle: How biometric recognition works
+  contextualHelpContent: !include how_biometric_recognition_works.md
   tos:
     headerTitle: Activation
     continue: Continue

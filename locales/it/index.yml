@@ -202,7 +202,7 @@ spid:
 authentication:
   landing:
     contextualHelpTitle: Come accedere all'app IO
-    contextualHelpContext: !include how_access_io.md
+    contextualHelpContent: !include how_access_io.md
     login: Entra con SPID
     nospid: Non hai SPID? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
@@ -282,6 +282,8 @@ authentication:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
 onboarding:
+  contextualHelpTitle: Come funziona il riconoscimento biometrico
+  contextualHelpContent: !include how_biometric_recognition_works.md
   tos:
     headerTitle: Attivazione
     continue: Continua
