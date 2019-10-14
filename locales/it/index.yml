@@ -709,7 +709,7 @@ biometric_recognition:
 services:
   title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
-  servicesHelp: !include preferences_services_help.md
+  servicesHelp: !include services_home.md
   serviceIsEnabled: Il servizio è attivo
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Notifiche push

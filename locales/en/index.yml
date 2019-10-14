@@ -698,7 +698,7 @@ biometric_recognition:
 services:
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
-  servicesHelp: !include preferences_services_help.md
+  servicesHelp: !include services_home.md
   serviceIsEnabled: The service is enabled
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications
