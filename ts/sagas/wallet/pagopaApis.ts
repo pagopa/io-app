@@ -620,7 +620,7 @@ export function* paymentAttivaRequestHandler(
         yield put(paymentAttiva.success(response.value.value));
       } else if (response.value.status === 500) {
         // Attiva failed
-        throw response.value.value.detail;
+        throw Error(response.value.value.detail);
       } else {
         throw Error(`response status ${response.value.status}`);
       }
