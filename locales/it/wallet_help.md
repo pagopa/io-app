@@ -1,8 +1,7 @@
-Qui sono elencati i tuoi metodi di pagamento e lo storico delle tue transazioni. IO integra infatti pagoPA, la piattaforma dei pagamenti per la Pubblica Amministrazione.
+**Nella sezione Portafoglio sono elencati i tuoi metodi di pagamento e lo storico delle transizioni effettuate con PagoPA**, la piattaforma dei pagamenti per la Pubblica Amministrazione. 
 
-IO supporta per ora solo le carta di credito/debito: aggiungeremo presto altri metodi di pagamento che potrai usare comodamente dall'app, come PayPal, Satispay, Bancomat Pay e altri. Può accadere quindi che, nonostante tu abbia dei metodi di pagamento registrati, alcuni di essi non compaiano, in quanto ancora non compatibili.
+Se hai completato dei pagamenti con PagoPA come utente autenticato già prima dell'installazione dell'app IO, troverai qui lo storico completo di tutte le transazioni effettuate. 
 
-Se hai completato dei pagamenti tramite pagoPA come utente autenticato, troverai qui le relative operazioni.
-Se hai usato la versione web di pagoPA con un email diversa da quella che hai associato a SPID, potresti non trovare i metodi di pagamento salvati in precedenza e le tue operazioni precedenti: non preoccuparti, puoi continuare ad usare l'app e tutte le tue operazioni verrano comunque registrate correttamente.
+Qui potrai inoltre pagare direttamente gli importi ricevuti in un avviso di pagamento cartaceo, se quest'ultimo riporta il logo di PagoPA: inquadra il QR code che trovi nell'avviso cartaceo e completa il pagamento direttamente dall'app. 
 
-Se hai ricevuto un avviso di pagamento cartaceo, e in questo avviso trovi il logo pagoPA, lo puoi pagare direttamente da IO.Premi il pulsante <b> paga un avviso </b>, inquadra il QR code che trovi nell'avviso cartaceo, e completa il pagamento dall'app, usando i metodi di pagamento che hai salvato.
+IO supporta al momento solo pagamenti con carta di credito/debito ma presto saranno aggiunti altri metodi di pagamento come PayPal, Satispay e altri.
