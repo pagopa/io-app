@@ -354,7 +354,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             />
             {
               // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
-              // It could be usefull when new experimental features will be available
+              // It could be useful when new experimental features will be available
               /*
               this.developerListItem(
               I18n.t("profile.main.experimentalFeatures.confirmTitle"),
@@ -363,7 +363,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             )*/
             }
 
-            {this.state.showPagoPAtestSwitch &&
+            {(this.props.isPagoPATestEnabled ||
+              this.state.showPagoPAtestSwitch) &&
               this.developerListItem(
                 I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
                 this.props.isPagoPATestEnabled,
