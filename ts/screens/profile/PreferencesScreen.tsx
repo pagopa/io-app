@@ -12,6 +12,7 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
@@ -137,8 +138,18 @@ class PreferencesScreen extends React.Component<Props, State> {
       .map(_ => translateLocale(_[0]))
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 
+    const contextualHelp = {
+      title: I18n.t("profile.preferences.contextualHelpTitle"),
+      body: () => (
+        <Markdown>
+          {I18n.t("profile.preferences.contextualHelpContent")}
+        </Markdown>
+      )
+    };
+
     return (
       <TopScreenComponent
+        contextualHelp={contextualHelp}
         title={I18n.t("profile.preferences.title")}
         goBack={() => this.props.navigation.goBack()}
       >

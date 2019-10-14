@@ -154,6 +154,8 @@ profile:
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
+    contextualHelpTitle: Your preferences
+    contextualHelpContent: !include preferences_home_help.md
     list:
       biometric_recognition: Biometric recognition
       biometric_recognition_status: 

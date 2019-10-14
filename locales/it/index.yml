@@ -158,6 +158,8 @@ profile:
     title: Preferenze
     subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
       Amministrazione.
+    contextualHelpTitle: Le tue preferenze
+    contextualHelpContent: !include preferences_home_help.md
     list:
       biometric_recognition: Riconoscimento biometrico
       biometric_recognition_status: 
