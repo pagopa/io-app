@@ -240,17 +240,20 @@ class IdpLoginScreen extends React.Component<Props, State> {
       return null;
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
+
+    const contextualHelp = {
+      title: I18n.t("authentication.idp_login.contextualHelpTitle"),
+      body: () => (
+        <Markdown>
+          {I18n.t("authentication.idp_login.contextualHelpContent")}
+        </Markdown>
+      )
+    };
+
     return (
       <BaseScreenComponent
         goBack={true}
-        contextualHelp={{
-          title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-          body: () => (
-            <Markdown>
-              {I18n.t("authentication.idp_login.contextualHelpContent")}
-            </Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
           loggedOutWithIdpAuth.idp.name
         }`}

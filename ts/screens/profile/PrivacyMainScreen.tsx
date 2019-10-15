@@ -7,6 +7,7 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 
@@ -18,12 +19,20 @@ type OwnProps = Readonly<{
 
 type Props = OwnProps;
 
+const contextualHelp = {
+  title: I18n.t("profile.main.privacy.contextualHelpTitle"),
+  body: () => (
+    <Markdown>{I18n.t("profile.main.privacy.contextualHelpContent")}</Markdown>
+  )
+};
+
 /**
  * A component to show the main screen of the Privacy section
  */
 export const PrivacyMainScreen: React.SFC<Props> = props => (
   <TopScreenComponent
     goBack={() => props.navigation.goBack()}
+    contextualHelp={contextualHelp}
     title={I18n.t("profile.main.screenTitle")}
   >
     <ScreenContent
