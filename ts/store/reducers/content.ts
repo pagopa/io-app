@@ -96,8 +96,7 @@ export default function content(
           byId: {
             ...state.servicesMetadata.byId,
             [action.payload.serviceId]: pot.toError(
-              state.servicesMetadata.byId[action.payload.serviceId] ||
-                pot.none,
+              state.servicesMetadata.byId[action.payload.serviceId] || pot.none,
               action.payload.error
             )
           }
