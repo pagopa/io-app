@@ -8,13 +8,19 @@ type Props = {
   badgeValue: number;
 };
 
+const MAX_BADGE_VALUE = 99;
+
+/**
+ * A simple badge used for show the number of messages to read
+ *
+ */
 export default class CustomBadge extends React.PureComponent<Props> {
   public render() {
     return (
       this.props.badgeValue > 0 && (
         <Badge style={this.props.badgeStyle}>
           <Text badge={true} style={this.props.textStyle}>
-            {this.props.badgeValue}
+            {Math.min(this.props.badgeValue, MAX_BADGE_VALUE)}
           </Text>
         </Badge>
       )

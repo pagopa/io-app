@@ -19,14 +19,14 @@ const reducer = (
   state: InstabugMessageState = INITIAL_STATE,
   action: Action
 ): InstabugMessageState => {
-  if (action.type === getType(responseInstabugInfoLoaded)) {
-    return {
-      ...state,
-      value: action.payload
-    };
-  } else {
-    return state;
+  switch (action.type) {
+    case getType(responseInstabugInfoLoaded):
+      return {
+        ...state,
+        value: action.payload
+      };
   }
+  return state;
 };
 
 export default reducer;
