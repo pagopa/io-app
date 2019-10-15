@@ -51,11 +51,11 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
   yield takeEvery(getType(contentServiceLoad.request), function*(
     action: ActionType<typeof contentServiceLoad["request"]>
   ) {
-    const service_id = action.payload;
+    const serviceId = action.payload;
     try {
       const response: SagaCallReturnType<
         typeof getServiceMetadata
-      > = yield call(getServiceMetadata, service_id);
+      > = yield call(getServiceMetadata, serviceId);
 
       if (response.isLeft()) {
         const error = response.fold(
@@ -69,19 +69,19 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
         response.isRight() && response.value.status === 200
           ? response.value.value
           : undefined;
-      yield put(contentServiceLoad.success({ service_id, data }));
+      yield put(contentServiceLoad.success({ serviceId, data }));
       // If the service is loaded for the first time, the app shows the service list item without badge
       const isFirstServiceLoadingCompleted = yield select(
         isFirstVisibleServiceLoadCompletedSelector
       );
       if (pot.isNone(isFirstServiceLoadingCompleted)) {
-        yield put(markServiceAsRead(service_id));
+        yield put(markServiceAsRead(serviceId));
       }
     } catch (e) {
       yield put(
         contentServiceLoad.failure({
-          service_id,
-          error: e || Error(`Unable to load metadata for service ${service_id}`)
+          serviceId,
+          error: e || Error(`Unable to load metadata for service ${serviceId}`)
         })
       );
     }

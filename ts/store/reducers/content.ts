@@ -84,7 +84,7 @@ export default function content(
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload.service_id]: metadata
+            [action.payload.serviceId]: metadata
           }
         }
       };
@@ -95,8 +95,8 @@ export default function content(
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload.service_id]: pot.toError(
-              state.servicesMetadata.byId[action.payload.service_id] ||
+            [action.payload.serviceId]: pot.toError(
+              state.servicesMetadata.byId[action.payload.serviceId] ||
                 pot.none,
               action.payload.error
             )

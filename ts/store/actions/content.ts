@@ -9,7 +9,7 @@ import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 // If false, the failure payload could be just the serviceID as before
 export type ContentServiceFailure = {
   error: Error;
-  service_id: string;
+  serviceId: string;
 };
 export const contentServiceLoad = createAsyncAction(
   "CONTENT_SERVICE_LOAD_REQUEST",
@@ -17,7 +17,7 @@ export const contentServiceLoad = createAsyncAction(
   "CONTENT_SERVICE_LOAD_FAILURE"
 )<
   ServiceId,
-  { service_id: ServiceId; data?: ServiceMetadata },
+  { serviceId: ServiceId; data?: ServiceMetadata },
   ContentServiceFailure
 >();
 
