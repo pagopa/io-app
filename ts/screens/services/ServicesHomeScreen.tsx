@@ -126,6 +126,7 @@ type State = {
   enableHeaderAnimation: boolean;
   isLongPressEnabled: boolean;
   enableServices: boolean;
+  showToast: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -217,7 +218,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       currentTabServicesId: [],
       enableHeaderAnimation: false,
       isLongPressEnabled: false,
-      enableServices: false
+      enableServices: false,
+      showToast: false
     };
   }
 
@@ -261,10 +263,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     if (pot.isError(this.props.potUserMetadata)) {
       this.props.refreshUserMetadata();
     }
+
+    // TODO: substitute with content service load state
     if (
-      pot.isError(this.props.visibleServices) &&
-      !pot.isLoading(this.props.visibleServices) &&
-      !pot.isLoading(this.props.isFirstServiceLoadCompleted)
+      !pot.isLoading(this.props.visibleServicesContentLoadState) &&
+      !pot.isLoading(this.props.visibleServicesMetadataLoadState)
     ) {
       this.props.refreshServices();
     }
@@ -354,10 +357,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     } else {
       // A toast is displayed if upsert userMetadata load fails
       if (
-        pot.isSome(this.props.isFirstServiceLoadCompleted) &&
         prevProps.potUserMetadata !== this.props.potUserMetadata &&
         pot.isSome(this.props.potUserMetadata) &&
-        pot.isError(this.props.potUserMetadata)
+        pot.isError(this.props.potUserMetadata) &&
+        this.state.showToast === true
       ) {
         showToast(
           I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
@@ -367,9 +370,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
       // A toast is displayed if refresh visible services fails
       if (
-        pot.isSome(this.props.isFirstServiceLoadCompleted) &&
         prevProps.visibleServices !== this.props.visibleServices &&
-        pot.isError(this.props.visibleServices)
+        pot.isError(this.props.visibleServices) &&
+        this.state.showToast === true
       ) {
         showToast(I18n.t("global.genericError"), "danger");
       }
@@ -566,9 +569,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <NavigationEvents
           onWillFocus={() => this.setState({ isLongPressEnabled: false })}
         />
-        {pot.isError(this.props.potUserMetadata) ? (
+        {!this.state.showToast && pot.isError(this.props.potUserMetadata) ? (
           this.renderErrorContent(this.props.refreshUserMetadata)
-        ) : pot.isError(this.props.visibleServicesContentLoadState) ||
+        ) : (!this.state.showToast &&
+          pot.isError(this.props.visibleServicesContentLoadState)) ||
         pot.isError(this.props.visibleServicesMetadataLoadState) ? (
           this.renderErrorContent(this.props.refreshServices)
         ) : this.props.isSearchEnabled ? (
@@ -628,7 +632,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             <ServicesSearch
               sectionsState={this.props.allSections}
               profile={this.props.profile}
-              onRefresh={this.props.refreshServices}
+              onRefresh={() => {
+                this.setState({ showToast: true });
+                this.props.refreshServices();
+              }}
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
               readServices={this.props.readServices}
@@ -636,6 +643,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           )
       )
       .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
+  };
+
+  private refreshScreenContent = () => {
+    this.setState({ showToast: true });
+    this.props.refreshUserMetadata();
+    this.props.refreshServices();
   };
 
   /**
@@ -706,10 +719,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               this.props.isLoadingServices ||
               pot.isLoading(this.props.potUserMetadata)
             }
-            onRefresh={() => {
-              this.props.refreshUserMetadata();
-              this.props.refreshServices();
-            }}
+            onRefresh={this.refreshScreenContent}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
@@ -746,10 +756,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.nationalTabSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoadingServices}
-            onRefresh={() => {
-              this.props.refreshUserMetadata();
-              this.props.refreshServices();
-            }}
+            onRefresh={this.refreshScreenContent}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onLongPressItem={this.handleOnLongPressItem}
@@ -781,10 +788,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             sections={this.props.allTabSections}
             profile={this.props.profile}
             isRefreshing={this.props.isLoadingServices}
-            onRefresh={() => {
-              this.props.refreshUserMetadata();
-              this.props.refreshServices();
-            }}
+            onRefresh={this.refreshScreenContent}
             onSelect={this.onServiceSelect}
             readServices={this.props.readServices}
             onLongPressItem={this.handleOnLongPressItem}
