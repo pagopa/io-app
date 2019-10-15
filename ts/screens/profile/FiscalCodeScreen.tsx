@@ -74,17 +74,8 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
       const maybeCodiceCatastale = CodiceCatastale.decode(
         this.props.profile.fiscal_code.substring(11, 15)
       );
-      // if the maybeCodiceCatastale stored value is different from the requiring one
-      // we need to ask for an update
-      const isNeededToUpdate = pot.getOrElse(
-        pot.map(
-          this.props.municipality.codiceCatastale,
-          c =>
-            maybeCodiceCatastale.isRight() && maybeCodiceCatastale.value !== c
-        ),
-        true
-      );
-      if (pot.isNone(this.props.municipality.data) || isNeededToUpdate) {
+      // if municipality data are none we request a load
+      if (pot.isNone(this.props.municipality.data)) {
         maybeCodiceCatastale.map(c => this.props.loadMunicipality(c));
       }
     }

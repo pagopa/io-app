@@ -35,7 +35,7 @@ interface BaseProps {
 }
 
 interface FullCommonProps extends BaseProps {
-  isFavorite?: pot.Pot<boolean, Error>;
+  isFavorite?: pot.Pot<boolean, string>;
   onSetFavorite?: (willBeFavorite: boolean) => void;
   hideMenu?: boolean;
   hideFavoriteIcon?: boolean;
