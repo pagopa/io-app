@@ -153,6 +153,8 @@ profile:
   preferences:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
+    contextualHelpTitle: Your preferences
+    contextualHelpContent: !include preferences_home_help.md
     list:
       biometric_recognition: Biometric recognition
       biometric_recognition_status: 
@@ -730,6 +732,7 @@ services:
   close: Close
 serviceDetail:
   headerTitle: "Service details"
+  contextualHelpContent: !include service_details.md
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
   disableTitle: "Do you really want to disable the service?"
   disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"

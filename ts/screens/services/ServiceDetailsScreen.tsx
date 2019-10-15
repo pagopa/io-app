@@ -229,9 +229,17 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     // URIs for the service logo
     const logoUris = logosForService(service);
 
+    const contextualHelp = {
+      title: I18n.t("serviceDetail.headerTitle"),
+      body: () => (
+        <Markdown>{I18n.t("serviceDetail.contextualHelpContent")}</Markdown>
+      )
+    };
+
     return (
       <BaseScreenComponent
         goBack={this.goBack}
+        contextualHelp={contextualHelp}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
       >
         <Content>

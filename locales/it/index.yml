@@ -157,6 +157,8 @@ profile:
     title: Preferenze
     subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
       Amministrazione.
+    contextualHelpTitle: Le tue preferenze
+    contextualHelpContent: !include preferences_home_help.md
     list:
       biometric_recognition: Riconoscimento biometrico
       biometric_recognition_status: 
@@ -741,6 +743,7 @@ services:
   close: Chiudi
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
+  contextualHelpContent: !include service_details.md
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
   disableTitle: "Vuoi davvero disattivare il servizio?"
   disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"

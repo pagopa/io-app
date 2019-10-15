@@ -45,9 +45,9 @@ type State = {
 };
 
 const contextualHelp = {
-  title: I18n.t("pin_login.unlock_screen.help.title"),
+  title: I18n.t("onboarding.pin.contextualHelpTitle"),
   body: () => (
-    <Markdown>{I18n.t("pin_login.unlock_screen.help.content")}</Markdown>
+    <Markdown>{I18n.t("onboarding.pin.contextualHelpContent")}</Markdown>
   )
 };
 
