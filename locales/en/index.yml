@@ -84,7 +84,7 @@ profile:
   fiscalCode:
     title: Your personal documents
     fiscalCode: Fiscal code
-    help: !include fiscal_code.md
+    help: !include profile/fiscal_code.md
     content: The fiscal code fac-simile does not substitute the physical document but it allows both data and barcode being read
     facSimile: FAC-SIMILE
   sections:
@@ -178,9 +178,9 @@ profile:
     unavailable:
       title: This setting is set up on your SPID profile
       message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
-    language: 
-      title: This setting is set up in system preferences
-      message: IO inherits language from the operating system of this device
+    language:
+      contextualHelpTitle: How to manage the language on IO
+      contextualHelpContent: !include profile/profile_preferences_language.md
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version

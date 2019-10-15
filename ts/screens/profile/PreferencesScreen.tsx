@@ -7,11 +7,14 @@ import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
+import { ContextualHelp } from "../../components/ContextualHelp";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
@@ -30,12 +33,6 @@ const unavailableAlert = () =>
     I18n.t("profile.preferences.unavailable.message")
   );
 
-const languageAlert = () =>
-  Alert.alert(
-    I18n.t("profile.preferences.language.title"),
-    I18n.t("profile.preferences.language.message")
-  );
-
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -43,7 +40,8 @@ type OwnProps = Readonly<{
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  ReduxProps;
+  ReduxProps &
+  LightModalContextInterface;
 
 type State = {
   isFingerprintAvailable: boolean;
@@ -147,6 +145,20 @@ class PreferencesScreen extends React.Component<Props, State> {
       )
     };
 
+    const showLanguage = () => {
+      this.props.showModal(
+        <ContextualHelp
+          onClose={this.props.hideModal}
+          title={I18n.t("profile.preferences.language.contextualHelpTitle")}
+          body={() => (
+            <Markdown>
+              {I18n.t("profile.preferences.language.contextualHelpContent")}
+            </Markdown>
+          )}
+        />
+      );
+    };
+
     return (
       <TopScreenComponent
         contextualHelp={contextualHelp}
@@ -208,7 +220,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.language")}
               subTitle={languages}
               iconName={"io-languages"}
-              onPress={languageAlert}
+              onPress={showLanguage}
             />
 
             <EdgeBorderComponent />
@@ -236,4 +248,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PreferencesScreen);
+)(withLightModalContext(PreferencesScreen));
