@@ -51,33 +51,37 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
   yield takeEvery(getType(contentServiceLoad.request), function*(
     action: ActionType<typeof contentServiceLoad["request"]>
   ) {
-    const serviceId = action.payload;
-
+    const service_id = action.payload;
     try {
       const response: SagaCallReturnType<
         typeof getServiceMetadata
-      > = yield call(getServiceMetadata, serviceId);
+      > = yield call(getServiceMetadata, service_id);
 
       if (response.isLeft()) {
-        throw Error(readableReport(response.value));
+        const error = response.fold(
+          readableReport,
+          ({ status }) => `response status ${status}`
+        );
+        throw Error(error);
       }
+
       const data =
         response.isRight() && response.value.status === 200
           ? response.value.value
           : undefined;
-      yield put(contentServiceLoad.success({ serviceId, data }));
+      yield put(contentServiceLoad.success({ service_id, data }));
       // If the service is loaded for the first time, the app shows the service list item without badge
       const isFirstServiceLoadingCompleted = yield select(
         isFirstVisibleServiceLoadCompletedSelector
       );
       if (pot.isNone(isFirstServiceLoadingCompleted)) {
-        yield put(markServiceAsRead(serviceId));
+        yield put(markServiceAsRead(service_id));
       }
     } catch (e) {
       yield put(
         contentServiceLoad.failure({
-          serviceId: action.payload,
-          error: e || Error(`Unable to load metadata for service ${serviceId}`)
+          service_id,
+          error: e || Error(`Unable to load metadata for service ${service_id}`)
         })
       );
     }
@@ -154,7 +158,7 @@ export function* watchContentMunicipalityLoadSaga(): Iterator<Effect> {
           })
         );
       } else {
-        yield put(contentMunicipalityLoad.failure(response.value));
+        throw response.value;
       }
     } catch (e) {
       yield put(contentMunicipalityLoad.failure(e));

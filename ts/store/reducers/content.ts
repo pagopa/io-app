@@ -84,7 +84,7 @@ export default function content(
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload.serviceId]: metadata
+            [action.payload.service_id]: metadata
           }
         }
       };
@@ -95,7 +95,11 @@ export default function content(
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload.serviceId]: pot.noneError(action.payload.error)
+            [action.payload.service_id]: pot.toError(
+              state.servicesMetadata.byId[action.payload.service_id] ||
+                pot.none,
+              action.payload.error
+            )
           }
         }
       };
