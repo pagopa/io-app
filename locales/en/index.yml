@@ -180,6 +180,9 @@ profile:
     language:
       contextualHelpTitle: How to manage the language on IO
       contextualHelpContent: !include profile/profile_preferences_language.md
+    email:
+      contextualHelpTitle: How to manage your email
+      contextualHelpContent: !include profile/profile_preferences_email_address.md
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version

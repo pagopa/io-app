@@ -184,6 +184,9 @@ profile:
     language:
       contextualHelpTitle: Come gestire la lingua su IO
       contextualHelpContent: !include profile/profile_preferences_language.md
+    email:
+      contextualHelpTitle: Come gestire la tua mail
+      contextualHelpContent: !include profile/profile_preferences_email_address.md
 userMetadata:
   errors:
     upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
