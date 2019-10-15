@@ -76,8 +76,8 @@ export function* loadServiceRequestHandler(
     } else {
       throw Error();
     }
-  } catch {
-    yield put(loadService.failure(action.payload));
+  } catch (error) {
+    yield put(loadService.failure({ service_id: action.payload, error }));
   }
 
   // If at least one service loading fails, the first services load is considered as failed
