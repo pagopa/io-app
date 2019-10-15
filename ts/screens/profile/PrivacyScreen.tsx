@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
 });
 
 const contextualHelp = {
-  title: I18n.t("profile.main.privacy.contextualHelpTitle"),
+  title: I18n.t("profile.main.privacy.contextualHelpTitlePolicy"),
   body: () => (
-    <Markdown>{I18n.t("profile.main.privacy.contextualHelpContent")}</Markdown>
+    <Markdown>{I18n.t("profile.main.privacy.contextualHelpContentPolicy")}</Markdown>
   )
 };
 /**
