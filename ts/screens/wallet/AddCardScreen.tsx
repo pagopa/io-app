@@ -18,6 +18,7 @@ import {
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import Markdown from "../../components/ui/Markdown";
 import { isExpired } from "./../../utils/dates";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -213,10 +214,18 @@ class AddCardScreen extends React.Component<Props, State> {
       ).map(_ => ["", undefined])
     );
 
+    const contextualHelp = {
+      title: I18n.t("wallet.saveCard.contextualHelpTitle"),
+      body: () => (
+        <Markdown>{I18n.t("wallet.saveCard.contextualHelpContent")}</Markdown>
+      )
+    };
+
     return (
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("wallet.addCardTitle")}
+        contextualHelp={contextualHelp}
       >
         <ScrollView
           bounces={false}

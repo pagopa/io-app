@@ -422,6 +422,8 @@ wallet:
     contextualHelpTitle: Dettagli della transazione
     contextualHelpContent: !include wallet/transaction_details.md
   saveCard:
+    contextualHelpTitle: Salvare una carta su IO
+    contextualHelpContent: !include wallet/wallet_card.md
     header: Salva la carta
     title: Vuoi salvare questa carta?
     infoTitle: Imposta la carta come metodo di pagamento preferito

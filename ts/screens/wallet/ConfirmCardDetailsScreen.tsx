@@ -12,6 +12,7 @@ import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
+import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -117,6 +118,12 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       onPress: this.goBack,
       title: I18n.t("global.buttons.back")
     };
+    const contextualHelp = {
+      title: I18n.t("wallet.saveCard.contextualHelpTitle"),
+      body: () => (
+        <Markdown>{I18n.t("wallet.saveCard.contextualHelpContent")}</Markdown>
+      )
+    };
 
     return (
       <BaseScreenComponent
@@ -126,6 +133,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             ? I18n.t("wallet.saveCardInPayment.header")
             : I18n.t("wallet.saveCard.header")
         }
+        contextualHelp={contextualHelp}
       >
         <Content>
           <H1>

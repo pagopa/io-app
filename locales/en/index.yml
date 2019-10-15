@@ -411,6 +411,8 @@ wallet:
     newCode: Request a new code
     info: Insert the code that was sent by text to your mobile phone
   saveCard:
+    contextualHelpTitle: Save a card to IO
+    contextualHelpContent: !include wallet/wallet_card.md
     header: Save the card
     title: Do you want to save this card?
     infoTitle: Set the card as favourite payment method
