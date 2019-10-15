@@ -80,7 +80,7 @@ inbox:
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
   contextualHelpTitle: What you can do in your Profile
-  contextualHelpContent: !include profile_home.md
+  contextualHelpContent: !include profile/profile_home.md
   fiscalCode:
     title: Your personal documents
     fiscalCode: Fiscal code
@@ -119,11 +119,11 @@ profile:
       description: Export data, delete account
       header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
       updated: It is required to accept the new version of Terms and Conditions
-      text: !include privacy.md
+      text: !include profile/privacy.md
       contextualHelpTitlePolicy: What is the information on the processing of personal data
-      contextualHelpContentPolicy: !include profile_privacy_policy.md
+      contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
       contextualHelpTitle: Your privacy settings
-      contextualHelpContent: !include privacy_main.md
+      contextualHelpContent: !include profile/privacy_main.md
     termsAndConditions:
       title: Terms and Conditions
       description: Review Terms & Conditions of the app
@@ -159,7 +159,7 @@ profile:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
     contextualHelpTitle: Your preferences
-    contextualHelpContent: !include preferences_home_help.md
+    contextualHelpContent: !include profile/preferences_home_help.md
     list:
       biometric_recognition: Biometric recognition
       biometric_recognition_status: 
@@ -174,7 +174,6 @@ profile:
         not_selected: Not selected
     empty:
       default: No preference set
-    preferencesHelp: !include preferences_home_help.md
     unavailable:
       title: This setting is set up on your SPID profile
       message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
@@ -204,7 +203,7 @@ spid:
 authentication:
   landing:
     contextualHelpTitle: How to access the IO app
-    contextualHelpContent: !include how_access_io.md
+    contextualHelpContent: !include onboarding/how_access_io.md
     login: Login with SPID
     nospid: Don't have SPID? Find out more
     card1-title: All messages in one place
@@ -258,11 +257,11 @@ authentication:
     headerTitle: Home
     contentTitle: Select your Identity Provider
     contextualHelpTitle: Who is your Identity Provider
-    contextualHelpContent: !include who_is_idp.md
+    contextualHelpContent: !include onboarding/who_is_idp.md
   idp_login:
     headerTitle: Login
     contextualHelpTitle: What is your password
-    contextualHelpContent: !include what_is_password.md
+    contextualHelpContent: !include onboarding/what_is_password.md
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
@@ -287,7 +286,7 @@ authentication:
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
 onboarding:
   contextualHelpTitle: How biometric recognition works
-  contextualHelpContent: !include how_biometric_recognition_works.md
+  contextualHelpContent: !include onboarding/how_biometric_recognition_works.md
   tos:
     headerTitle: Activation
     continue: Continue
@@ -306,7 +305,7 @@ onboarding:
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
     contextualHelpTitle: What is your pin
-    contextualHelpContent: !include what_is_pin.md
+    contextualHelpContent: !include onboarding/what_is_pin.md
   alert:
     title: Do you really want to log out?
     description: You will have to log in again to use the app
@@ -314,12 +313,12 @@ onboarding:
     headerTitle: Activation
     title: Biometric authentication
     body:
-      enrolledText: !include tos_fingerprint_enrolled.md
+      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
         fingerprint: your fingerprint
         faceId: FaceID
         touchId: TouchID
-      notEnrolledText: !include tos_fingerprint_not_enrolled.md
+      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   email:
     title: Your email address
     subtitle: Some IO app functions need your email.
@@ -375,7 +374,7 @@ payment:
   recipientFiscalCode: Recipient fiscal code
 wallet:
   wallet: Wallet
-  walletHelp: !include wallet_help.md
+  walletHelp: !include wallet/wallet_help.md
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
@@ -402,7 +401,7 @@ wallet:
     failed: The card could not be added
     failedCardAlreadyExists: The card you are adding already exists
     contextualHelpTitle: How to add a payment method
-    contextualHelpContent: !include how_add_payment_method.md
+    contextualHelpContent: !include wallet/how_add_payment_method.md
   textMsg:
     title: Text confirmation code
     header: Confirmation code
@@ -498,7 +497,7 @@ wallet:
   transactionDetails: Transaction details
   detailsTransaction:
     contextualHelpTitle: Transaction details
-    contextualHelpContent: !include transaction_details.md
+    contextualHelpContent: !include wallet/transaction_details.md
   total: Total
   amount: Amount
   payAmount: Amount to pay
@@ -562,7 +561,7 @@ wallet:
       message: "IO app needs Camera usage permission to shoot at the QR code"
   whyAFee:
     title: Why do I have to pay a fee?
-    text: !include why_a_fee.md
+    text: !include wallet/why_a_fee.md
   errors:
     PAYMENT_DUPLICATED: This notice has been already paid! ;-)
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
@@ -597,7 +596,7 @@ cardComponent:
   pick: Pay with this method
 messages:
   contextualHelpTitle: What you can do in your messages
-  contextualHelpContent: !include how_to_use_messages.md
+  contextualHelpContent: !include messages/how_to_use_messages.md
   counting:
     zero: No message
     one: You have 1 message
@@ -674,7 +673,7 @@ messages:
       subtitle:  Use the button above to check out past deadlines.
 messageDetails:
   contextualHelpTitle: Message details
-  contextualHelpContent: !include message_detail.md
+  contextualHelpContent: !include messages/message_detail.md
   headerTitle: Message
   emptyMessage: No content
   loadingText: Loading message details in progress...
@@ -697,7 +696,7 @@ biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition
   contextualHelpTitle: How works biometric recognition
-  contextualHelpContent: !include preferences_biometric_recognition_help.md
+  contextualHelpContent: !include profile/preferences_biometric_recognition_help.md
   switchLabel: Enable biometric recognition
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
@@ -705,7 +704,7 @@ biometric_recognition:
 services:
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
-  servicesHelp: !include services_home.md
+  servicesHelp: !include services/services_home.md
   serviceIsEnabled: The service is enabled
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications
@@ -738,7 +737,7 @@ services:
   close: Close
 serviceDetail:
   headerTitle: "Service details"
-  contextualHelpContent: !include service_details.md
+  contextualHelpContent: !include services/service_details.md
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
   disableTitle: "Do you really want to disable the service?"
   disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"

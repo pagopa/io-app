@@ -81,7 +81,7 @@ inbox:
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
   contextualHelpTitle: Cosa puoi fare nel tuo Profilo
-  contextualHelpContent: !include profile_home.md
+  contextualHelpContent: !include profile/profile_home.md
   fiscalCode:
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
@@ -120,11 +120,11 @@ profile:
       description: Esporta dati, cancella account
       header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
       updated: E' necessario prendere visione della nuova versione dell'Informativa
-      text: !include privacy.md
+      text: !include profile/privacy.md
       contextualHelpTitlePolicy: Cos'è l'informativa sul trattamento dei dati personali
-      contextualHelpContentPolicy: !include profile_privacy_policy.md
+      contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
       contextualHelpTitle: Le tue impostazioni di privacy
-      contextualHelpContent: !include privacy_main.md
+      contextualHelpContent: !include profile/privacy_main.md
     termsAndConditions:
       title: Termini e condizioni d'uso
       description: Rivedi i termini e le condizioni d'uso dell'app
@@ -163,7 +163,7 @@ profile:
     subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
       Amministrazione.
     contextualHelpTitle: Le tue preferenze
-    contextualHelpContent: !include preferences_home_help.md
+    contextualHelpContent: !include profile/preferences_home_help.md
     list:
       biometric_recognition: Riconoscimento biometrico
       biometric_recognition_status: 
@@ -178,7 +178,6 @@ profile:
         not_selected: Non Selezionato
     empty:
       default: Nessuna preferenza impostata
-    preferencesHelp: !include preferences_home_help.md
     unavailable:
       title: Questa preferenza è impostata nel tuo profilo SPID
       message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
@@ -208,7 +207,7 @@ spid:
 authentication:
   landing:
     contextualHelpTitle: Come accedere all'app IO
-    contextualHelpContent: !include how_access_io.md
+    contextualHelpContent: !include onboarding/how_access_io.md
     login: Entra con SPID
     nospid: Non hai SPID? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
@@ -264,11 +263,11 @@ authentication:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
     contextualHelpTitle: Chi è il tuo Identity Provider
-    contextualHelpContent: !include who_is_idp.md
+    contextualHelpContent: !include onboarding/who_is_idp.md
   idp_login:
     headerTitle: Accedi
     contextualHelpTitle: Qual è la tua password
-    contextualHelpContent: !include what_is_password.md
+    contextualHelpContent: !include onboarding/what_is_password.md
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
@@ -293,7 +292,7 @@ authentication:
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
 onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
-  contextualHelpContent: !include how_biometric_recognition_works.md
+  contextualHelpContent: !include onboarding/how_biometric_recognition_works.md
   tos:
     headerTitle: Attivazione
     continue: Continua
@@ -312,7 +311,7 @@ onboarding:
     confirmValid: grazie, puoi continuare
     confirmInvalid: i due pin non coincidono
     contextualHelpTitle: Qual è il tuo pin
-    contextualHelpContent: !include what_is_pin.md
+    contextualHelpContent: !include onboarding/what_is_pin.md
   alert: 
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
@@ -320,12 +319,12 @@ onboarding:
     headerTitle: Attivazione
     title: Autenticazione biometrica
     body:
-      enrolledText: !include tos_fingerprint_enrolled.md
+      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
         fingerprint: la tua impronta digitale
         faceId: FaceID
         touchId: TouchID
-      notEnrolledText: !include tos_fingerprint_not_enrolled.md
+      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   email:
     title: Il tuo indirizzo email
     subtitle: Alcune funzioni di IO hanno bisogno della tua email.
@@ -382,7 +381,7 @@ payment:
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
   wallet: Portafoglio
-  walletHelp: !include wallet_help.md
+  walletHelp: !include wallet/wallet_help.md
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
@@ -409,7 +408,7 @@ wallet:
     failed: Impossibile aggiungere la carta
     failedCardAlreadyExists: La carta che stai inserendo è già presente
     contextualHelpTitle: Come aggiungere un metodo di pagamento
-    contextualHelpContent: !include how_add_payment_method.md
+    contextualHelpContent: !include wallet/how_add_payment_method.md
   textMsg:
     title: Codice di conferma
     header: Codice di Conferma SMS
@@ -418,7 +417,7 @@ wallet:
   transactionDetails: Dettagli della transazione
   detailsTransaction:
     contextualHelpTitle: Dettagli della transazione
-    contextualHelpContent: !include transaction_details.md
+    contextualHelpContent: !include wallet/transaction_details.md
   saveCard:
     header: Salva la carta
     title: Vuoi salvare questa carta?
@@ -571,7 +570,7 @@ wallet:
       message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
   whyAFee:
     title: Perché devo pagare le commissioni?
-    text: !include why_a_fee.md
+    text: !include wallet/why_a_fee.md
   errors:
     PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
@@ -607,7 +606,7 @@ cardComponent:
   pick: Paga con questo metodo
 messages:
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
-  contextualHelpContent: !include how_to_use_messages.md
+  contextualHelpContent: !include messages/how_to_use_messages.md
   counting:
     zero: Nessun messaggio
     one: Hai 1 messaggio
@@ -684,7 +683,7 @@ messages:
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
 messageDetails:
   contextualHelpTitle: Dettagli del messaggio
-  contextualHelpContent: !include message_detail.md
+  contextualHelpContent: !include messages/message_detail.md
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
   loadingText: Caricamento dei dettagli del messaggio in corso...
@@ -708,7 +707,7 @@ biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico
   contextualHelpTitle: Come funziona il riconoscimento biometrico
-  contextualHelpContent: !include preferences_biometric_recognition_help.md
+  contextualHelpContent: !include profile/preferences_biometric_recognition_help.md
   switchLabel: Attiva il riconoscimento biometrico
   enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
   enroll_btnLabel: Vai alle impostazioni
@@ -716,7 +715,7 @@ biometric_recognition:
 services:
   title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
-  servicesHelp: !include services_home.md
+  servicesHelp: !include services/services_home.md
   serviceIsEnabled: Il servizio è attivo
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Notifiche push
@@ -749,7 +748,7 @@ services:
   close: Chiudi
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
-  contextualHelpContent: !include service_details.md
+  contextualHelpContent: !include services/service_details.md
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
   disableTitle: "Vuoi davvero disattivare il servizio?"
   disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"

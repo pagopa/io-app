@@ -96,7 +96,9 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
         contextualHelp={{
           title: I18n.t("biometric_recognition.contextualHelpTitle"),
           body: () => (
-            <Markdown>{I18n.t("biometric_recognition.contextualHelpContent")}</Markdown>
+            <Markdown>
+              {I18n.t("biometric_recognition.contextualHelpContent")}
+            </Markdown>
           )
         }}
       >
