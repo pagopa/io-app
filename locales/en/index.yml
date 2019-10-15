@@ -82,7 +82,7 @@ profile:
   contextualHelpTitle: What you can do in your Profile
   contextualHelpContent: !include profile_home.md
   fiscalCode:
-    title: Personal documents
+    title: Your personal documents
     fiscalCode: Fiscal code
     help: !include fiscal_code.md
     content: The fiscal code fac-simile does not substitute the physical document but it allows both data and barcode being read
@@ -120,6 +120,8 @@ profile:
       header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
       updated: It is required to accept the new version of Terms and Conditions
       text: !include privacy.md
+      contextualHelpTitle: What is the information on the processing of personal data
+      contextualHelpContent: !include profile_privacy_policy.md
     termsAndConditions:
       title: Terms and Conditions
       description: Review Terms & Conditions of the app
@@ -692,7 +694,8 @@ notifications:
 biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition
-  help: !include preferences_biometric_recognition_help.md
+  contextualHelpTitle: How works biometric recognition
+  contextualHelpContent: !include preferences_biometric_recognition_help.md
   switchLabel: Enable biometric recognition
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings

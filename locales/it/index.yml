@@ -83,7 +83,7 @@ profile:
   contextualHelpTitle: Cosa puoi fare nel tuo Profilo
   contextualHelpContent: !include profile_home.md
   fiscalCode:
-    title: Documenti personali
+    title: I tuoi documenti personali
     fiscalCode: Codice fiscale
     help: !include fiscal_code.md
     content: Il fac-simile del codice fiscale non sostituisce il documento fisico ma ne permette la lettura dei dati o del codice a barre sul retro
@@ -121,6 +121,8 @@ profile:
       header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
       updated: E' necessario prendere visione della nuova versione dell'Informativa
       text: !include privacy.md
+      contextualHelpTitle: Cos'è l'informativa sul trattamento dei dati personali
+      contextualHelpContent: !include profile_privacy_policy.md
     termsAndConditions:
       title: Termini e condizioni d'uso
       description: Rivedi i termini e le condizioni d'uso dell'app
@@ -703,7 +705,8 @@ notifications:
 biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico
-  help: !include preferences_biometric_recognition_help.md
+  contextualHelpTitle: Come funziona il riconoscimento biometrico
+  contextualHelpContent: !include preferences_biometric_recognition_help.md
   switchLabel: Attiva il riconoscimento biometrico
   enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
   enroll_btnLabel: Vai alle impostazioni
