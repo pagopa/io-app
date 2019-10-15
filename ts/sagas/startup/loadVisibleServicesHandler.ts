@@ -4,11 +4,13 @@ import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 import { all, call, Effect, put, select } from "redux-saga/effects";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
+import { contentServiceLoad } from "../../store/actions/content";
 import {
   loadService,
   loadVisibleServices,
   removeServiceTuples
 } from "../../store/actions/services";
+import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import {
   MessagesIdsByServiceId,
   messagesIdsByServiceIdSelector
@@ -100,13 +102,13 @@ export function* loadVisibleServicesRequestHandler(
       // Dispatch action to remove the services from the redux store
       yield put(removeServiceTuples(serviceTuplesToRemove));
 
+      // Chack what services content should be loaded
       const serviceIdsToLoad = visibleServices
         .filter(service => {
           const serviceId = service.service_id;
           const storedService = storedServicesById[serviceId];
-
           return (
-            // The service:
+            // The service content:
             // - is not in the redux store
             storedService === undefined ||
             // - is in the redux store as PotNone and not loading
@@ -118,9 +120,31 @@ export function* loadVisibleServicesRequestHandler(
           );
         })
         .map(_ => _.service_id);
-
-      // Parallel fetch of those services that we haven't loaded yet or need to be updated
+      // Parallel fetch of those services content that we haven't loaded yet or need to be updated
       yield all(serviceIdsToLoad.map(id => put(loadService.request(id))));
+
+      // Check what services metadata should be loaded
+      // Metadata has no version SO they are updated only if:
+      // - service content version is updated ( after loadService.request service metadata are loaded again)
+      // - service metadata stored on redux store are error (meaning somthing wrong at its load)
+      // If service metadata are pot.none, we assume any metadata is availabe for the service
+      const servicesMetadataById = yield select(servicesMetadataByIdSelector);
+      const serviceIdsToLoad2 = visibleServices
+        .filter(service => {
+          const serviceId = service.service_id;
+          const storedMetadata = servicesMetadataById[serviceId];
+          return (
+            // Service load is completed and service metadata is in the redux store as potError and not loading
+            serviceIdsToLoad.indexOf(serviceId) === -1 &&
+            !pot.isLoading(storedMetadata) &&
+            (pot.isError(storedMetadata) || pot.isNone(storedMetadata))
+          );
+        })
+        .map(_ => _.service_id);
+      // Parallel fetch of those services metadata that we haven't loaded yet or need to be updated
+      yield all(
+        serviceIdsToLoad2.map(id => put(contentServiceLoad.request(id)))
+      );
     } else if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());

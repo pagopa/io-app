@@ -38,7 +38,7 @@ export type MunicipalityState = Readonly<{
 }>;
 
 export type ServiceMetadataById = Readonly<{
-  [key: string]: pot.Pot<ServiceMetadata, string> | undefined;
+  [key: string]: pot.Pot<ServiceMetadata, Error>;
 }>;
 
 const initialContentState: ContentState = {
@@ -76,25 +76,26 @@ export default function content(
         }
       };
     case getType(contentServiceLoad.success):
+      const metadata = action.payload.data
+        ? pot.some(action.payload.data)
+        : pot.none;
       return {
         ...state,
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload.serviceId]: pot.some(action.payload.data)
+            [action.payload.serviceId]: metadata
           }
         }
       };
+
     case getType(contentServiceLoad.failure):
       return {
         ...state,
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload]: pot.toError(
-              state.servicesMetadata.byId[action.payload] || pot.none,
-              action.payload
-            )
+            [action.payload.serviceId]: pot.noneError(action.payload.error)
           }
         }
       };

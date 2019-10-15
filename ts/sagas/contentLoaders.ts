@@ -20,10 +20,7 @@ import {
   firstServicesLoad,
   markServiceAsRead
 } from "../store/actions/services";
-import {
-  isVisibleServicesMetadataLoadCompletedSelector,
-  visibleServicesContentLoadStateSelector
-} from "../store/reducers/entities/services";
+import { visibleServicesMetadataLoadStateSelector } from "../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../store/reducers/entities/services/firstServicesLoading";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
@@ -49,52 +46,60 @@ function getServiceMetadata(
  * TODO: do not retrieve the content on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
+// tslint:disable-next-line:cognitive-complexity
 export function* watchContentServiceLoadSaga(): Iterator<Effect> {
   yield takeEvery(getType(contentServiceLoad.request), function*(
     action: ActionType<typeof contentServiceLoad["request"]>
   ) {
     const serviceId = action.payload;
 
-    const response: SagaCallReturnType<typeof getServiceMetadata> = yield call(
-      getServiceMetadata,
-      serviceId
-    );
+    try {
+      const response: SagaCallReturnType<
+        typeof getServiceMetadata
+      > = yield call(getServiceMetadata, serviceId);
 
-    if (response.isRight() && response.value.status === 200) {
-      yield put(
-        contentServiceLoad.success({ serviceId, data: response.value.value })
+      if (response.isLeft()) {
+        throw Error(readableReport(response.value));
+      }
+      const data =
+        response.isRight() && response.value.status === 200
+          ? response.value.value
+          : undefined;
+      yield put(contentServiceLoad.success({ serviceId, data }));
+      // If the service is loaded for the first time, the app shows the service list item without badge
+      const isFirstServiceLoadingCompleted = yield select(
+        isFirstVisibleServiceLoadCompletedSelector
       );
-    } else {
-      yield put(contentServiceLoad.failure(serviceId));
+      if (pot.isNone(isFirstServiceLoadingCompleted)) {
+        yield put(markServiceAsRead(serviceId));
+      }
+    } catch (e) {
+      yield put(
+        contentServiceLoad.failure({
+          serviceId: action.payload,
+          error: e || Error(`Unable to load metadata for service ${serviceId}`)
+        })
+      );
     }
 
-    const isFirstServiceLoadingCompleted: pot.Pot<
-      boolean,
-      Error
-    > = yield select(isFirstVisibleServiceLoadCompletedSelector);
-
-    // If the service content is loaded for the first time, the app shows the service list item without badge
-    if (pot.isNone(isFirstServiceLoadingCompleted)) {
-      yield put(markServiceAsRead(serviceId));
-    }
-
-    const isVisibleServicesMetadataLoadingCompleted = yield select(
-      isVisibleServicesMetadataLoadCompletedSelector
+    // Check if the first services loading is going on and, when it ends up, check is errors occur
+    const isFirstServiceLoadCompleted: pot.Pot<boolean, Error> = yield select(
+      isFirstVisibleServiceLoadCompletedSelector
     );
+    if (pot.isNone(isFirstServiceLoadCompleted)) {
+      const visibleServicesMetadataLoadState = yield select(
+        visibleServicesMetadataLoadStateSelector
+      );
 
-    const visibleServicesContentLoadState: pot.Pot<
-      boolean,
-      Error
-    > = yield select(visibleServicesContentLoadStateSelector);
-
-    // Check if the first services loading is occurring yet and check when it is completed
-    if (
-      pot.isNone(isFirstServiceLoadingCompleted) &&
-      pot.isSome(visibleServicesContentLoadState) &&
-      visibleServicesContentLoadState.value === true &&
-      isVisibleServicesMetadataLoadingCompleted
-    ) {
-      yield put(firstServicesLoad.success());
+      if (pot.isSome(visibleServicesMetadataLoadState)) {
+        yield put(firstServicesLoad.success());
+      } else if (pot.isError(visibleServicesMetadataLoadState)) {
+        yield put(
+          firstServicesLoad.failure(
+            Error("Error when loading metadata of one or more visible services")
+          )
+        );
+      }
     }
   });
 }

@@ -24,9 +24,7 @@ export const firstLoadingReducer = (
   switch (action.type) {
     case getType(firstServicesLoad.request): {
       return {
-        isFirstServicesLoadingCompleted: pot.toLoading(
-          state.isFirstServicesLoadingCompleted
-        )
+        isFirstServicesLoadingCompleted: pot.noneLoading
       };
     }
 
@@ -38,10 +36,7 @@ export const firstLoadingReducer = (
 
     case getType(firstServicesLoad.failure): {
       return {
-        isFirstServicesLoadingCompleted: pot.toError(
-          state.isFirstServicesLoadingCompleted,
-          action.payload
-        )
+        isFirstServicesLoadingCompleted: pot.noneError(action.payload)
       };
     }
 
@@ -49,14 +44,10 @@ export const firstLoadingReducer = (
     case getType(userMetadataLoad.request): {
       if (pot.isError(state.isFirstServicesLoadingCompleted)) {
         return {
-          isFirstServicesLoadingCompleted: pot.toLoading(
-            state.isFirstServicesLoadingCompleted
-          )
+          isFirstServicesLoadingCompleted: pot.noneLoading
         };
       } else {
-        return {
-          ...state
-        };
+        return state;
       }
     }
 
@@ -69,9 +60,7 @@ export const firstLoadingReducer = (
           )
         };
       } else {
-        return {
-          ...state
-        };
+        return state;
       }
 
     case getType(userMetadataLoad.failure): {
@@ -83,9 +72,7 @@ export const firstLoadingReducer = (
           )
         };
       } else {
-        return {
-          ...state
-        };
+        return state;
       }
     }
 

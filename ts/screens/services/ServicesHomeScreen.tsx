@@ -4,8 +4,18 @@
  * - National tab: national services sections
  * - All: local and national services sections, not including the user areas of interest
  *
- * If userMetadata are not loaded, the tabs are not displayed (missing data on the user ares
- * of interest) and it is hidden also the search option
+ * A 'loading component' is displayed (hiding the tabs content) if:
+ * - visible servcices are loading, or
+ * - userMetadata are loading
+ *
+ * An 'error component' is displayed (hiding the tabs content) if:
+ * - userMetadata load fails, or
+ * - visible services load fails
+ *
+ * A loader on tabs is displayed (not hiding the tabs content) if:
+ * - userMetadata is updating, or
+ * - visible services are refreshed
+ *
  */
 import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
@@ -65,7 +75,8 @@ import {
   organizationsOfInterestSelector,
   selectedLocalServicesSectionsSelector,
   ServicesSectionState,
-  visibleServicesContentLoadStateSelector
+  visibleServicesContentLoadStateSelector,
+  visibleServicesMetadataLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers/entities/services/firstServicesLoading";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
@@ -275,6 +286,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   // tslint:disable-next-line: readonly-array
   private scollPositions: number[] = [0, 0, 0];
 
+  // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
   private renderErrorContent(onRetry: () => void) {
     return (
       <React.Fragment>
@@ -309,6 +321,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   }
 
+  // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
   private renderFirstServiceLoadingContent() {
     return (
       <View style={[styles.center, styles.padded]}>
@@ -339,8 +352,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         });
       });
     } else {
-      // A toast is displayed if upsert userMetadata fails
+      // A toast is displayed if upsert userMetadata load fails
       if (
+        pot.isSome(this.props.isFirstServiceLoadCompleted) &&
         prevProps.potUserMetadata !== this.props.potUserMetadata &&
         pot.isSome(this.props.potUserMetadata) &&
         pot.isError(this.props.potUserMetadata)
@@ -353,6 +367,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
       // A toast is displayed if refresh visible services fails
       if (
+        pot.isSome(this.props.isFirstServiceLoadCompleted) &&
         prevProps.visibleServices !== this.props.visibleServices &&
         pot.isError(this.props.visibleServices)
       ) {
@@ -553,6 +568,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         />
         {pot.isError(this.props.potUserMetadata) ? (
           this.renderErrorContent(this.props.refreshUserMetadata)
+        ) : pot.isError(this.props.visibleServicesContentLoadState) ||
+        pot.isError(this.props.visibleServicesMetadataLoadState) ? (
+          this.renderErrorContent(this.props.refreshServices)
         ) : this.props.isSearchEnabled ? (
           this.renderSearch()
         ) : (
@@ -562,12 +580,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               icon={require("../../../img/icons/services-icon.png")}
               fixed={Platform.OS === "ios"}
             />
-            {pot.isNone(this.props.isFirstServiceLoadCompleted) &&
-            pot.isLoading(this.props.isFirstServiceLoadCompleted)
-              ? this.renderFirstServiceLoadingContent()
-              : pot.isError(this.props.visibleServicesContentLoadState)
-                ? this.renderErrorContent(this.props.refreshServices)
-                : this.renderTabs()}
+            {pot.isSome(this.props.isFirstServiceLoadCompleted)
+              ? this.renderTabs()
+              : this.renderFirstServiceLoadingContent()}
             {this.state.isLongPressEnabled &&
               this.renderLongPressFooterButtons()}
           </React.Fragment>
@@ -850,6 +865,9 @@ const mapStateToProps = (state: GlobalState) => {
       state
     ),
     visibleServicesContentLoadState: visibleServicesContentLoadStateSelector(
+      state
+    ),
+    visibleServicesMetadataLoadState: visibleServicesMetadataLoadStateSelector(
       state
     ),
     profile: profileSelector(state),

@@ -6,6 +6,7 @@ import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { ScopeEnum } from "../../../../../definitions/content/Service";
+import { Service as ServiceMetadata } from "../../../../../definitions/content/Service";
 import { isDefined } from "../../../../utils/guards";
 import { isVisibleService } from "../../../../utils/services";
 import { Action } from "../../../actions/types";
@@ -20,8 +21,8 @@ import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../organizations/organizationsByFiscalCodeReducer";
-import { firstLoadingReducer, FirstLoadingState } from "./firstServicesLoading";
 import { isFirstVisibleServiceLoadCompletedSelector } from "./firstServicesLoading";
+import { firstLoadingReducer, FirstLoadingState } from "./firstServicesLoading";
 import readServicesByIdReducer, {
   readServicesByIdSelector,
   ReadStateByServicesId
@@ -68,52 +69,62 @@ const reducer = combineReducers<ServicesState, Action>({
 
 export const servicesSelector = (state: GlobalState) => state.entities.services;
 
-// A selector to monitor the state of the service loading
+/**
+ * The function returns:
+ * - pot.none if visibleServices is not loaded or the related services load is not yet started
+ * - pot.noneLoading if at least one visible service is loading
+ * - pot.noneError if at least one visible service load fails
+ * - pot.some(true) if all services load successfully
+ * @param visibleServices - list of visible services
+ * @param item - collection indexed with respect to the services id (eg: services.byId state)
+ */
+function getItemLoadState<T>(
+  visibleServices: VisibleServicesState,
+  item: Readonly<{
+    [key: string]: pot.Pot<T, Error> | undefined;
+  }>
+) {
+  // tslint:disable-next-line: no-let
+  let state: pot.Pot<boolean, Error> = pot.none;
+
+  if (pot.isSome(visibleServices) && item !== {}) {
+    const visibleServicesById = visibleServices.value.map(
+      service => item[service.service_id]
+    );
+    const areServicesLoading =
+      visibleServicesById.findIndex(vs => {
+        return vs === undefined || pot.isLoading(vs);
+      }) !== -1;
+
+    const isServicesLoadFailed =
+      visibleServicesById.findIndex(service => {
+        return service !== undefined && pot.isError(service);
+      }) !== -1;
+
+    if (areServicesLoading) {
+      state = pot.noneLoading;
+    } else if (isServicesLoadFailed) {
+      state = pot.noneError(Error(`Unable to load one or more services`));
+    } else {
+      state = pot.some(true);
+    }
+  }
+
+  return state;
+}
+
+// A selector to monitor the state of the service content loading
 export const visibleServicesContentLoadStateSelector = createSelector(
   [servicesByIdSelector, visibleServicesSelector],
-  (servicesById, visibleServices) => {
-    // tslint:disable-next-line: no-let
-    let state: pot.Pot<boolean, Error> = pot.none;
-
-    if (pot.isSome(visibleServices) && servicesById !== {}) {
-      const visibleServicesById = visibleServices.value.map(
-        service => servicesById[service.service_id]
-      );
-      const areServicesLoading =
-        visibleServicesById.findIndex(vs => {
-          return vs === undefined || pot.isLoading(vs);
-        }) !== -1;
-
-      const isServicesLoadFailed =
-        visibleServicesById.findIndex(service => {
-          return service !== undefined && pot.isError(service);
-        }) !== -1;
-
-      if (areServicesLoading) {
-        state = pot.noneLoading;
-      } else if (isServicesLoadFailed) {
-        state = pot.noneError(Error("Unable to load one or more services"));
-      } else {
-        state = pot.some(true);
-      }
-    }
-
-    return state;
-  }
+  (servicesById, visibleServices) =>
+    getItemLoadState<ServicePublic>(visibleServices, servicesById)
 );
 
-export const isVisibleServicesMetadataLoadCompletedSelector = createSelector(
+// A selector to monitor the state of the service metadata loading
+export const visibleServicesMetadataLoadStateSelector = createSelector(
   [servicesMetadataByIdSelector, visibleServicesSelector],
-  (servicesMetadataById, visibleServices) => {
-    if (!pot.isSome(visibleServices)) {
-      return false;
-    }
-    const servicesLoading = visibleServices.value.findIndex(service => {
-      const serviceMetadata = servicesMetadataById[service.service_id];
-      return serviceMetadata === undefined || pot.isLoading(serviceMetadata);
-    });
-    return servicesLoading === -1;
-  }
+  (servicesMetadataById, visibleServices) =>
+    getItemLoadState<ServiceMetadata>(visibleServices, servicesMetadataById)
 );
 
 // A selector to get the organizations selected by the user as areas of interests
@@ -145,23 +156,16 @@ export const organizationsOfInterestSelector = createSelector(
   }
 );
 
+// TODO: substitute with visibleServicesContentLoadStateSelector and visibleServicesMetadataLoadStateSelector usage
 // Selector to get if services content and metadata are still being loaded
 export const isLoadingServicesSelector = createSelector(
   [
     visibleServicesContentLoadStateSelector,
-    isVisibleServicesMetadataLoadCompletedSelector,
-    visibleServicesSelector
+    visibleServicesMetadataLoadStateSelector
   ],
-  (
-    visibleServicesContentLoadState,
-    isVisibleServicesMetadataLoadCompleted,
-    visibleServices
-  ) =>
-    pot.isLoading(visibleServices) ||
-    (pot.isSome(visibleServices) &&
-      !pot.isError(visibleServices) &&
-      (pot.isLoading(visibleServicesContentLoadState) ||
-        !isVisibleServicesMetadataLoadCompleted))
+  (visibleServicesContentLoadState, visibleServicesMetadataLoadState) =>
+    pot.isLoading(visibleServicesContentLoadState) ||
+    pot.isLoading(visibleServicesMetadataLoadState)
 );
 
 //

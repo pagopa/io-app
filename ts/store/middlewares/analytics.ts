@@ -139,7 +139,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     //
     case getType(contentServiceLoad.failure):
       return mp.track(action.type, {
-        serviceId: action.payload
+        serviceId: action.payload.serviceId
       });
     //
     // Wallet actions (with properties)
