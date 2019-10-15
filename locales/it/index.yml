@@ -384,7 +384,8 @@ payment:
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
   wallet: Portafoglio
-  walletHelp: !include wallet/wallet_help.md
+  contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
+  contextualHelpContent: !include wallet/wallet_help.md
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento

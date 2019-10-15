@@ -113,8 +113,10 @@ export default class WalletLayout extends React.Component<Props> {
         hideHeader={hideHeader}
         footerContent={footerContent}
         contextualHelp={{
-          title: I18n.t("wallet.wallet"),
-          body: () => <Markdown>{I18n.t("wallet.walletHelp")}</Markdown>
+          title: I18n.t("wallet.contextualHelpTitle"),
+          body: () => (
+            <Markdown>{I18n.t("wallet.contextualHelpContent")}</Markdown>
+          )
         }}
         contentRefreshControl={this.props.refreshControl}
       >

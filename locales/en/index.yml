@@ -377,7 +377,8 @@ payment:
   recipientFiscalCode: Recipient fiscal code
 wallet:
   wallet: Wallet
-  walletHelp: !include wallet/wallet_help.md
+  contextualHelpTitle: What you can do in your wallet
+  contextualHelpContent: !include wallet/wallet_help.md
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
