@@ -25,7 +25,7 @@ index 09ec669..f90f907 100644
  export function setDidSelectPromptOptionHandler(didSelectPromptOptionHandler: () => void): void;
  export function setSessionProfilerEnabled(sessionProfilerEnabled: boolean): void;
 -export function getUnreadMessagesCount(messageCountCallback: () => void): void;
-+export function getUnreadMessagesCount(messageCountCallback: (count:number) => void): void;
++export function getUnreadMessagesCount(messageCountCallback: (count: number) => void): void;
  export function setPushNotificationsEnabled(isPushNotificationEnabled: boolean): void;
  export function setEmailFieldRequiredForActions(
    isEmailFieldRequired: boolean,
