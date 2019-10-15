@@ -134,17 +134,19 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
     props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
 
+  const contextualHelp = {
+    title: I18n.t("authentication.idp_selection.contextualHelpTitle"),
+    body: () => (
+      <Markdown>
+        {I18n.t("authentication.idp_selection.contextualHelpContent")}
+      </Markdown>
+    )
+  };
+
   return (
     <BaseScreenComponent
       goBack={goBack}
-      contextualHelp={{
-        title: I18n.t("authentication.idp_selection.contextualHelpTitle"),
-        body: () => (
-          <Markdown>
-            {I18n.t("authentication.idp_selection.contextualHelpContent")}
-          </Markdown>
-        )
-      }}
+      contextualHelp={contextualHelp}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
       <Content noPadded={true} overScrollMode="never" bounces={false}>

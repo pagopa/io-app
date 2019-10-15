@@ -120,8 +120,10 @@ profile:
       header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
       updated: It is required to accept the new version of Terms and Conditions
       text: !include privacy.md
-      contextualHelpTitle: What is the information on the processing of personal data
-      contextualHelpContent: !include profile_privacy_policy.md
+      contextualHelpTitlePolicy: What is the information on the processing of personal data
+      contextualHelpContentPolicy: !include profile_privacy_policy.md
+      contextualHelpTitle: Your privacy settings
+      contextualHelpContent: !include privacy_main.md
     termsAndConditions:
       title: Terms and Conditions
       description: Review Terms & Conditions of the app

@@ -121,8 +121,10 @@ profile:
       header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
       updated: E' necessario prendere visione della nuova versione dell'Informativa
       text: !include privacy.md
-      contextualHelpTitle: Cos'è l'informativa sul trattamento dei dati personali
-      contextualHelpContent: !include profile_privacy_policy.md
+      contextualHelpTitlePolicy: Cos'è l'informativa sul trattamento dei dati personali
+      contextualHelpContentPolicy: !include profile_privacy_policy.md
+      contextualHelpTitle: Le tue impostazioni di privacy
+      contextualHelpContent: !include privacy_main.md
     termsAndConditions:
       title: Termini e condizioni d'uso
       description: Rivedi i termini e le condizioni d'uso dell'app

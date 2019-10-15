@@ -1,0 +1,1 @@
+**Here you find the information related to the privacy of your profile**, in particular you can consult the information on the treatment of personal data, delete your account and export personal data associated with your profile.
