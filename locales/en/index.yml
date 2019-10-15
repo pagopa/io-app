@@ -79,6 +79,8 @@ inbox:
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
+  contextualHelpTitle: What you can do in your Profile
+  contextualHelpContent: !include profile_home.md
   fiscalCode:
     title: Personal documents
     fiscalCode: Fiscal code
@@ -102,9 +104,6 @@ profile:
     load: Error loading the profile
     upsert: Error creating or updating the profile
   main:
-    screenTitle: Profile
-    screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
-    contextualHelp: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
     clearCache: Clear cache

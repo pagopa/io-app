@@ -80,6 +80,8 @@ inbox:
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
+  contextualHelpTitle: Cosa puoi fare nel tuo Profilo
+  contextualHelpContent: !include profile_home.md
   fiscalCode:
     title: Documenti personali
     fiscalCode: Codice fiscale
@@ -103,9 +105,6 @@ profile:
     load: Errore nel caricamento del profilo
     upsert: Errore nella creazione o nell'aggiornamento del profilo
   main:
-    screenTitle: Profilo
-    screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
-    contextualHelp: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
     clearCache: Elimina cache
