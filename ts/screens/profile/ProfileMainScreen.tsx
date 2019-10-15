@@ -66,6 +66,11 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+type State = {
+  showPagoPAtestSwitch: boolean;
+  numberOfTaps: number;
+};
+
 const styles = StyleSheet.create({
   itemLeft: {
     flexDirection: "column",
@@ -104,8 +109,16 @@ const getAppLongVersion = () => {
   return `${DeviceInfo.getVersion()}${buildNumber}`;
 };
 
-class ProfileMainScreen extends React.PureComponent<Props> {
+class ProfileMainScreen extends React.PureComponent<Props, State> {
   private navListener?: NavigationEventSubscription;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showPagoPAtestSwitch: false,
+      numberOfTaps: 0
+    };
+  }
 
   public componentDidMount() {
     this.navListener = this.props.navigation.addListener("didFocus", () => {
@@ -341,7 +354,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             />
             {
               // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
-              // It could be usefull when new experimental features will be available
+              // It could be useful when new experimental features will be available
               /*
               this.developerListItem(
               I18n.t("profile.main.experimentalFeatures.confirmTitle"),
@@ -350,12 +363,14 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             )*/
             }
 
-            {this.developerListItem(
-              I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
-              this.props.isPagoPATestEnabled,
-              this.onPagoPAEnvironmentToggle,
-              I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
-            )}
+            {(this.props.isPagoPATestEnabled ||
+              this.state.showPagoPAtestSwitch) &&
+              this.developerListItem(
+                I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
+                this.props.isPagoPATestEnabled,
+                this.onPagoPAEnvironmentToggle,
+                I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
+              )}
 
             {this.developerListItem(
               I18n.t("profile.main.debugMode"),
@@ -367,7 +382,16 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               <React.Fragment>
                 {this.debugListItem(
                   `${I18n.t("profile.main.appVersion")} ${getAppLongVersion()}`,
-                  () => clipboardSetStringWithFeedback(getAppLongVersion()),
+                  () => {
+                    if (this.state.numberOfTaps === 4) {
+                      this.setState({ showPagoPAtestSwitch: true });
+                    } else {
+                      const numberOfTaps = this.state.numberOfTaps + 1;
+                      this.setState({
+                        numberOfTaps
+                      });
+                    }
+                  },
                   false
                 )}
 
