@@ -160,6 +160,9 @@ profile:
         enabled: Enabled
         disabled: Disabled
       email: Email address
+      send_email_messages: 
+        title: Forward messages via email
+        subtitle: Disable for all services
       mobile_phone: Mobile number
       language: Language
       digitalDomicile: Digital domicile

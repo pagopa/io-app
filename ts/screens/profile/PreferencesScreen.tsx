@@ -187,6 +187,16 @@ class PreferencesScreen extends React.Component<Props, State> {
             />
 
             <ListItemComponent
+              title={I18n.t(
+                "profile.preferences.list.send_email_messages.title"
+              )}
+              subTitle={I18n.t(
+                "profile.preferences.list.send_email_messages.subtitle"
+              )}
+              onPress={unavailableAlert}
+            />
+
+            <ListItemComponent
               title={I18n.t("profile.preferences.list.mobile_phone")}
               subTitle={profileData.spid_mobile_phone}
               iconName={"io-phone-number"}

@@ -164,6 +164,9 @@ profile:
         enabled: Abilitato
         disabled: Disabilitato
       email: Indirizzo email
+      send_email_messages: 
+        title: Inoltro messaggi via email
+        subtitle: Disabilita per tutti i servizi
       mobile_phone: Numero di telefono
       language: Lingua
       digitalDomicile: Domicilio digitale
