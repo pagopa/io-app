@@ -2,6 +2,7 @@ import { createStackNavigator } from "react-navigation";
 
 import BiometricRecognitionScreen from "../screens/profile/BiometricRecognitionScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
+import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import { PrivacyMainScreen } from "../screens/profile/PrivacyMainScreen";
 import { PrivacyScreen } from "../screens/profile/PrivacyScreen";
@@ -29,6 +30,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.PROFILE_PREFERENCES_BIOMETRIC_RECOGNITION]: {
       screen: BiometricRecognitionScreen
+    },
+    [ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING]: {
+      screen: EmailForwardingScreen
     },
     [ROUTES.PROFILE_PREFERENCES_CALENDAR]: {
       screen: CalendarsPreferencesScreen

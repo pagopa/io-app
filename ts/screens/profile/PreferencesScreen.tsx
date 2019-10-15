@@ -16,6 +16,7 @@ import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
+  navigateToEmailForwardingPreferenceScreen,
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
@@ -193,7 +194,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               subTitle={I18n.t(
                 "profile.preferences.list.send_email_messages.subtitle"
               )}
-              onPress={unavailableAlert}
+              onPress={this.props.navigateToEmailForwardingPreferenceScreen}
             />
 
             <ListItemComponent
@@ -228,6 +229,8 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToFingerprintPreferenceScreen: () =>
     dispatch(navigateToFingerprintPreferenceScreen()),
+  navigateToEmailForwardingPreferenceScreen: () =>
+    dispatch(navigateToEmailForwardingPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
     dispatch(navigateToCalendarPreferenceScreen())
 });

@@ -690,6 +690,19 @@ biometric_recognition:
   enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
   enroll_btnLabel: Vai alle impostazioni
   needed_to_disable: Riconoscimento richiesto per disabilitare
+send_email_messages: 
+  title: Inoltro dei messaggi via mail
+  subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a {{email}} ?
+  options:
+    disable_all:
+      label: Disabilita per tutti i servizi
+      info: Non riceverai più messaggi via mail
+    enable_all:
+      label: Abilita per tutti i servizi
+      info: Ogni messaggio verrà inoltrato alla tua mail, se il servizio lo consente
+    by_service:
+      label: Scegli servizio per servizio
+      info: Potrai scegliere nella scheda di ogni servizio di ricevere i relativi messaggi anche via mail
 services:
   title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
