@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
+import { TranslationKeys } from "../../../locales/locales";
 import { ContextualHelp } from "../../components/ContextualHelp";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 
@@ -145,30 +146,12 @@ class PreferencesScreen extends React.Component<Props, State> {
       )
     };
 
-    const showModalLanguage = () => {
+    const showModal = (title: TranslationKeys, body: TranslationKeys) => {
       this.props.showModal(
         <ContextualHelp
           onClose={this.props.hideModal}
-          title={I18n.t("profile.preferences.language.contextualHelpTitle")}
-          body={() => (
-            <Markdown>
-              {I18n.t("profile.preferences.language.contextualHelpContent")}
-            </Markdown>
-          )}
-        />
-      );
-    };
-
-    const showModalEmail = () => {
-      this.props.showModal(
-        <ContextualHelp
-          onClose={this.props.hideModal}
-          title={I18n.t("profile.preferences.email.contextualHelpTitle")}
-          body={() => (
-            <Markdown>
-              {I18n.t("profile.preferences.email.contextualHelpContent")}
-            </Markdown>
-          )}
+          title={I18n.t(title)}
+          body={() => <Markdown>{I18n.t(body)}</Markdown>}
         />
       );
     };
@@ -220,7 +203,12 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.email")}
               subTitle={profileData.spid_email}
               iconName={"io-email"}
-              onPress={showModalEmail}
+              onPress={() =>
+                showModal(
+                  "profile.preferences.email.contextualHelpTitle",
+                  "profile.preferences.email.contextualHelpContent"
+                )
+              }
             />
 
             <ListItemComponent
@@ -234,7 +222,12 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.language")}
               subTitle={languages}
               iconName={"io-languages"}
-              onPress={showModalLanguage}
+              onPress={() =>
+                showModal(
+                  "profile.preferences.language.contextualHelpTitle",
+                  "profile.preferences.language.contextualHelpContent"
+                )
+              }
             />
 
             <EdgeBorderComponent />
