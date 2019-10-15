@@ -12,8 +12,6 @@ type Props = {
   badgeValue?: number;
 };
 
-const MAX_BADGE_VALUE = 99;
-
 const styles = StyleSheet.create({
   textStyle: {
     paddingLeft: 0,
@@ -50,7 +48,7 @@ class TabIconComponent extends React.PureComponent<Props> {
           <CustomBadge
             badgeStyle={styles.badgeStyle}
             textStyle={styles.textStyle}
-            badgeValue={Math.min(badgeValue, MAX_BADGE_VALUE)}
+            badgeValue={badgeValue}
           />
         ) : null}
       </View>
