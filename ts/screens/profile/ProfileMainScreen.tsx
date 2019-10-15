@@ -468,9 +468,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           </TouchableOpacity>
         }
         contextualHelp={{
-          title: I18n.t("profile.main.screenTitle"),
+          title: I18n.t("profile.contextualHelpTitle"),
           body: () => (
-            <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
+            <Markdown>{I18n.t("profile.contextualHelpContent")}</Markdown>
           )
         }}
         banner={undefined}

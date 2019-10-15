@@ -104,6 +104,7 @@ profile:
     load: Error loading the profile
     upsert: Error creating or updating the profile
   main:
+    screenTitle: Profile
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
     clearCache: Clear cache
