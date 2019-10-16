@@ -249,6 +249,15 @@ class TransactionDetailsScreen extends React.Component<Props> {
         ? transactionWallet.creditCard
         : undefined;
 
+    const contextualHelp = {
+      title: I18n.t("wallet.detailsTransaction.contextualHelpTitle"),
+      body: () => (
+        <Markdown>
+          {I18n.t("wallet.detailsTransaction.contextualHelpContent")}
+        </Markdown>
+      )
+    };
+
     return (
       <WalletLayout
         title={I18n.t("wallet.transaction")}
@@ -259,6 +268,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         )}
         hideHeader={true}
         hasDynamicSubHeader={false}
+        contextualHelp={contextualHelp}
       >
         <NavigationEvents onWillFocus={this.handleWillFocus} />
         <Content

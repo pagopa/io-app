@@ -421,7 +421,7 @@ wallet:
   transactionDetails: Dettagli della transazione
   detailsTransaction:
     contextualHelpTitle: Dettagli della transazione
-    contextualHelpContent: !include wallet/transaction_details.md
+    contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
     contextualHelpTitle: Salvare una carta su IO
     contextualHelpContent: !include wallet/wallet_card.md
@@ -592,6 +592,12 @@ wallet:
     PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
     sendReport: Invia segnalazione
+  walletList:
+    contextualHelpTitle: I tuoi metodi di pagamento
+    contextualHelpContent: !include wallet/wallet_list.md
+  walletCardTransaction:
+    contextualHelpTitle: Transazioni effettuate con questo metodo
+    contextualHelpContent: !include wallet/wallet_card_transaction.md
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?

@@ -20,7 +20,6 @@ import {
 import customVariables from "../../theme/variables";
 import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
-import Markdown from "../ui/Markdown";
 import PagoPALogo from "./PagoPALogo";
 
 type Props = Readonly<{
@@ -32,6 +31,7 @@ type Props = Readonly<{
   footerContent?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
   refreshControl?: React.ReactElement<RefreshControlProps>;
+  contextualHelp?: { title: string; body: () => React.ReactNode };
 }>;
 
 const styles = StyleSheet.create({
@@ -112,12 +112,7 @@ export default class WalletLayout extends React.Component<Props> {
         topContent={this.props.topContent}
         hideHeader={hideHeader}
         footerContent={footerContent}
-        contextualHelp={{
-          title: I18n.t("wallet.contextualHelpTitle"),
-          body: () => (
-            <Markdown>{I18n.t("wallet.contextualHelpContent")}</Markdown>
-          )
-        }}
+        contextualHelp={this.props.contextualHelp}
         contentRefreshControl={this.props.refreshControl}
       >
         {this.props.children}

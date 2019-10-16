@@ -503,7 +503,7 @@ wallet:
   transactionDetails: Transaction details
   detailsTransaction:
     contextualHelpTitle: Transaction details
-    contextualHelpContent: !include wallet/transaction_details.md
+    contextualHelpContent: !include wallet/wallet_transaction_details.md
   total: Total
   amount: Amount
   payAmount: Amount to pay
@@ -583,6 +583,12 @@ wallet:
     PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
     sendReport: Send report
+  walletList:
+    contextualHelpTitle: Your payment methods
+    contextualHelpContent: !include wallet/wallet_list.md
+  walletCardTransaction:
+    contextualHelpTitle: Transactions made with this method
+    contextualHelpContent: !include wallet/wallet_card_transaction.md
 saveCard:
   saveCard: Save the card
   header: Do you whant to save this card?

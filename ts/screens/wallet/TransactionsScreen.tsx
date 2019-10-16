@@ -10,6 +10,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import H5 from "../../components/ui/H5";
+import Markdown from "../../components/ui/Markdown";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
@@ -129,6 +130,15 @@ class TransactionsScreen extends React.Component<Props> {
       />
     );
 
+    const contextualHelp = {
+      title: I18n.t("wallet.walletCardTransaction.contextualHelpTitle"),
+      body: () => (
+        <Markdown>
+          {I18n.t("wallet.walletCardTransaction.contextualHelpContent")}
+        </Markdown>
+      )
+    };
+
     return (
       <WalletLayout
         title={I18n.t("wallet.paymentMethod")}
@@ -137,6 +147,7 @@ class TransactionsScreen extends React.Component<Props> {
         hideHeader={true}
         hasDynamicSubHeader={true}
         refreshControl={transactionsRefreshControl}
+        contextualHelp={contextualHelp}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
