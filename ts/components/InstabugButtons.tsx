@@ -9,9 +9,8 @@ import {
   instabugReportClosed,
   instabugReportOpened
 } from "../store/actions/debug";
-import { requestInstabugInfoLoad } from "../store/actions/instabug";
 import { Dispatch } from "../store/actions/types";
-import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugMessage";
+import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import CustomBadge from "./ui/CustomBadge";
@@ -97,10 +96,10 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
         }
       }
     );
-    this.props.dispatchInstabugRequest();
   }
 
   public render() {
+    // console.warn(this.props.badge.unreadMessages)
     return (
       this.props.isDebugModeEnabled && (
         <React.Fragment>
@@ -115,7 +114,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
           <CustomBadge
             badgeStyle={styles.badgeStyle}
             textStyle={styles.textStyle}
-            badgeValue={this.props.badge.value}
+            badgeValue={this.props.badge.unreadMessages}
           />
           <Button onPress={this.handleIBBugPress} transparent={true}>
             <IconFont
@@ -140,8 +139,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIBReportOpen: (type: string) =>
     dispatch(instabugReportOpened({ type })),
   dispatchIBReportClosed: (type: string, how: string) =>
-    dispatch(instabugReportClosed({ type, how })),
-  dispatchInstabugRequest: () => dispatch(requestInstabugInfoLoad())
+    dispatch(instabugReportClosed({ type, how }))
 });
 
 export const InstabugButtons = connect(
