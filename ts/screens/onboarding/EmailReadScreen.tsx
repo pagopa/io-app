@@ -13,6 +13,7 @@ import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
+import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,
   emailAcknowledged
@@ -55,8 +56,6 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === "android" ? 3 : 0 // correct icon position to align it with baseline of email text}
   }
 });
-
-const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
 
 export class EmailReadScreen extends React.PureComponent<Props> {
   private handleGoBack = () =>
@@ -123,7 +122,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             block: true,
             bordered: true,
             title: I18n.t("onboarding.email.read.ctaEdit"),
-            onPress: unavailableAlert
+            onPress: this.props.navigateToEmailInsertScreen
           }}
           rightButton={{
             block: true,
@@ -143,7 +142,8 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
-  abortOnboarding: () => dispatch(abortOnboarding())
+  abortOnboarding: () => dispatch(abortOnboarding()),
+  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen)
 });
 
 export default connect(
