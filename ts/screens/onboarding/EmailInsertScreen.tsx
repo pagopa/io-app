@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginTop: Platform.OS === "android" ? 4 : 6 // correct icon position to align it with baseline of email text}
+  },
+  emailInput: {
+    fontWeight: customVariables.h1FontWeight,
+    color: customVariables.h1Color,
+    fontSize: 18
   }
 });
 
@@ -148,7 +153,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                     autoCapitalize: "none",
                     value: this.state.email.getOrElse(EMPTY_EMAIL),
                     onChangeText: (value: string) =>
-                      this.updateEmailState(value)
+                      this.updateEmailState(value),
+                    style: styles.emailInput
                   }}
                   iconStyle={styles.icon}
                 />
