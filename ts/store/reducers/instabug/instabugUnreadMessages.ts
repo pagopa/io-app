@@ -33,4 +33,4 @@ export default reducer;
 
 // Selector
 export const instabugMessageStateSelector = (state: GlobalState) =>
-  state.instabug.message;
+  state.instabug.unreadMessages;

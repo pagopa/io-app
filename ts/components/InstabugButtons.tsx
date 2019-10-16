@@ -99,7 +99,6 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    // console.warn(this.props.badge.unreadMessages)
     return (
       this.props.isDebugModeEnabled && (
         <React.Fragment>
@@ -114,7 +113,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
           <CustomBadge
             badgeStyle={styles.badgeStyle}
             textStyle={styles.textStyle}
-            badgeValue={this.props.badge.unreadMessages}
+            badgeValue={this.props.badge}
           />
           <Button onPress={this.handleIBBugPress} transparent={true}>
             <IconFont
