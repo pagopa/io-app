@@ -627,6 +627,14 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+        onScroll={(value: number) => {
+          const { currentTab, isLongPressEnabled } = this.state;
+          if (isLongPressEnabled && Math.abs(value - currentTab) > 0.5) {
+            this.setState({
+              isLongPressEnabled: false
+            });
+          }
+        }}
         onChangeTab={(evt: any) => {
           const { currentTab, isLongPressEnabled } = this.state;
           const nextTab: number = evt.i;
@@ -802,6 +810,7 @@ const mapStateToProps = (state: GlobalState) => {
   const nationalTabSections = nationalServicesSectionsSelector(state);
   const allTabSections = notSelectedServicesSectionsSelector(state);
 
+  // All visibile services organized in sections
   const allSections: ReadonlyArray<ServicesSectionState> = [
     ...localTabSections,
     ...allTabSections

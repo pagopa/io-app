@@ -33,7 +33,7 @@ export async function checkAndRequestPermission(): Promise<
     // In other cases ask the authorization
     const newStatus = await RNCalendarEvents.authorizeEventStore();
     return { authorized: newStatus === "authorized", asked: true };
-  } catch (error) {
+  } catch {
     return { authorized: false, asked: false };
   }
 }
@@ -46,7 +46,7 @@ export async function checkCalendarPermission() {
     const status = await RNCalendarEvents.authorizationStatus();
     // If the permission is already granted return true
     return status === "authorized";
-  } catch (error) {
+  } catch {
     return false;
   }
 }
