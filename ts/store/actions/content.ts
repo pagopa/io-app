@@ -17,7 +17,7 @@ export const contentServiceLoad = createAsyncAction(
   "CONTENT_SERVICE_LOAD_FAILURE"
 )<
   ServiceId,
-  { serviceId: ServiceId; data?: ServiceMetadata },
+  { serviceId: ServiceId; data: ServiceMetadata },
   ContentServiceFailure
 >();
 

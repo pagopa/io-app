@@ -35,17 +35,12 @@ import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
-import {
-  firstServicesLoad,
-  loadService,
-  loadVisibleServices
-} from "../store/actions/services";
+import { loadService, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
-import { visibleServicesContentLoadStateSelector } from "../store/reducers/entities/services";
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -307,14 +302,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     backendClient.getVisibleServices
   );
 
-  // At the first load of the services content the services section displays
-  // a dedicated message to the user, then isFirstServicesLoadingCompleted state wil be set at true
-  const visibleServicesContentLoadState: pot.Pot<boolean, Error> = yield select(
-    visibleServicesContentLoadStateSelector
-  );
-  if (pot.isNone(visibleServicesContentLoadState)) {
-    yield put(firstServicesLoad.request());
-  }
   // Trigger the services content and metadata being loaded/refreshed.
   yield put(loadVisibleServices.request());
 

@@ -1,26 +1,26 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as pot from "italia-ts-commons/lib/pot";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { ContentClient } from "../api/content";
-
+import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
-
+import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
   contentServiceLoad
 } from "../store/actions/content";
-
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { ServiceId } from "../../definitions/backend/ServiceId";
 import {
-  firstServicesLoad,
+  FirstServiceLoadSuccess,
   markServiceAsRead
 } from "../store/actions/services";
-import { visibleServicesMetadataLoadStateSelector } from "../store/reducers/entities/services";
+import {
+  visibleServicesContentLoadStateSelector,
+  visibleServicesMetadataLoadStateSelector
+} from "../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../store/reducers/entities/services/firstServicesLoading";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
@@ -46,7 +46,6 @@ function getServiceMetadata(
  * TODO: do not retrieve the content on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
-// tslint:disable-next-line:cognitive-complexity
 export function* watchContentServiceLoadSaga(): Iterator<Effect> {
   yield takeEvery(getType(contentServiceLoad.request), function*(
     action: ActionType<typeof contentServiceLoad["request"]>
@@ -65,17 +64,36 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
         throw Error(error);
       }
 
-      const data =
-        response.isRight() && response.value.status === 200
-          ? response.value.value
-          : undefined;
-      yield put(contentServiceLoad.success({ serviceId, data }));
-      // If the service is loaded for the first time, the app shows the service list item without badge
-      const isFirstServiceLoadingCompleted = yield select(
+      // If the service is loaded for the first time (at first startup or when the
+      // cache is cleaned), the app shows the service list item without badge
+      const isFirstVisibleServiceLoadCompleted = yield select(
         isFirstVisibleServiceLoadCompletedSelector
       );
-      if (pot.isNone(isFirstServiceLoadingCompleted)) {
+      if (!isFirstVisibleServiceLoadCompleted) {
         yield put(markServiceAsRead(serviceId));
+      }
+
+      if (response.isRight() && response.value.status === 200) {
+        yield put(contentServiceLoad.success({ serviceId, data: response.value.value }));
+      } else {
+        throw Error(`response status ${response.value.status}`);
+      }
+
+      // If all services content and metadata are loaded with success,
+      // stop considering loaded services as read
+      const visibleServicesMetadataLoadState = yield select(
+        visibleServicesMetadataLoadStateSelector
+      );
+      const visibleServicesContentLoadState = yield select(
+        visibleServicesContentLoadStateSelector
+      );
+
+      if (
+        !isFirstVisibleServiceLoadCompleted &&
+        pot.isSome(visibleServicesMetadataLoadState) &&
+        pot.isSome(visibleServicesContentLoadState)
+      ) {
+        yield put(FirstServiceLoadSuccess());
       }
     } catch (e) {
       yield put(
@@ -84,26 +102,6 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
           error: e || Error(`Unable to load metadata for service ${serviceId}`)
         })
       );
-    }
-
-    // Check if the first services loading is going on and, when it ends up, check is errors occur
-    const isFirstServiceLoadCompleted: pot.Pot<boolean, Error> = yield select(
-      isFirstVisibleServiceLoadCompletedSelector
-    );
-    if (pot.isNone(isFirstServiceLoadCompleted)) {
-      const visibleServicesMetadataLoadState = yield select(
-        visibleServicesMetadataLoadStateSelector
-      );
-
-      if (pot.isSome(visibleServicesMetadataLoadState)) {
-        yield put(firstServicesLoad.success());
-      } else if (pot.isError(visibleServicesMetadataLoadState)) {
-        yield put(
-          firstServicesLoad.failure(
-            Error("Error when loading metadata of one or more visible services")
-          )
-        );
-      }
     }
   });
 }

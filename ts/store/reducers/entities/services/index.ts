@@ -21,7 +21,6 @@ import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../organizations/organizationsByFiscalCodeReducer";
-import { isFirstVisibleServiceLoadCompletedSelector } from "./firstServicesLoading";
 import { firstLoadingReducer, FirstLoadingState } from "./firstServicesLoading";
 import readServicesByIdReducer, {
   readServicesByIdSelector,
@@ -72,62 +71,76 @@ export const servicesSelector = (state: GlobalState) => state.entities.services;
 /**
  * The function returns:
  * - pot.none if visibleServices is not loaded or the related services load is not yet started
- * - pot.noneLoading if at least one visible service is loading
- * - pot.noneError if at least one visible service load fails
- * - pot.some(true) if all services load successfully
+ * - pot.noneLoading if visibleServices or at least one visible service is loading
+ * - pot.noneError if visibleServices or at least one visible service load fails
+ * - pot.some if both visible services and all services load successfully
  * @param visibleServices - list of visible services
- * @param item - collection indexed with respect to the services id (eg: services.byId state)
+ * @param services - collection of services related data indexed with respect to the services id
+ *                   (applied for entities.services.byId state and content.servicesMetadata.byId)
  */
-function getItemLoadState<T>(
+function getServicesLoadState<T>(
   visibleServices: VisibleServicesState,
-  item: Readonly<{
+  services: Readonly<{
     [key: string]: pot.Pot<T, Error> | undefined;
   }>
-) {
-  // tslint:disable-next-line: no-let
-  let state: pot.Pot<boolean, Error> = pot.none;
-
-  if (pot.isSome(visibleServices) && item !== {}) {
+): pot.Pot<void, Error> {
+  if (pot.isSome(visibleServices) && services !== {}) {
     const visibleServicesById = visibleServices.value.map(
-      service => item[service.service_id]
+      service => services[service.service_id]
     );
+
     const areServicesLoading =
+      pot.isLoading(visibleServices) ||
       visibleServicesById.findIndex(vs => {
         return vs === undefined || pot.isLoading(vs);
       }) !== -1;
 
     const isServicesLoadFailed =
+      pot.isError(visibleServices) ||
       visibleServicesById.findIndex(service => {
         return service !== undefined && pot.isError(service);
       }) !== -1;
 
     if (areServicesLoading) {
-      state = pot.noneLoading;
+      return pot.noneLoading;
     } else if (isServicesLoadFailed) {
-      state = pot.noneError(Error(`Unable to load one or more services`));
+      return pot.noneError(Error(`Unable to load one or more services`));
     } else {
-      state = pot.some(true);
+      return pot.some(undefined);
     }
   }
 
-  return state;
+  // If visibleServices is none
+  if (pot.isLoading(visibleServices)) {
+    return pot.noneLoading;
+  } else if (pot.isError(visibleServices)) {
+    return pot.noneError(Error("Unable to load visible services"));
+  } else {
+    return pot.none;
+  }
 }
 
 // A selector to monitor the state of the service content loading
 export const visibleServicesContentLoadStateSelector = createSelector(
   [servicesByIdSelector, visibleServicesSelector],
   (servicesById, visibleServices) =>
-    getItemLoadState<ServicePublic>(visibleServices, servicesById)
+    getServicesLoadState<ServicePublic>(visibleServices, servicesById)
 );
 
 // A selector to monitor the state of the service metadata loading
 export const visibleServicesMetadataLoadStateSelector = createSelector(
   [servicesMetadataByIdSelector, visibleServicesSelector],
   (servicesMetadataById, visibleServices) =>
-    getItemLoadState<ServiceMetadata>(visibleServices, servicesMetadataById)
+    getServicesLoadState<ServiceMetadata | undefined>(
+      visibleServices,
+      servicesMetadataById
+    )
 );
 
-// A selector to get the organizations selected by the user as areas of interests
+/**
+ * A selector to get the organizations selected by the user as areas of interests
+ */
+
 export const organizationsOfInterestSelector = createSelector(
   [userMetadataSelector, servicesSelector],
   (potUserMetadata, services) => {
@@ -156,21 +169,9 @@ export const organizationsOfInterestSelector = createSelector(
   }
 );
 
-// TODO: substitute with visibleServicesContentLoadStateSelector and visibleServicesMetadataLoadStateSelector usage
-// Selector to get if services content and metadata are still being loaded
-export const isLoadingServicesSelector = createSelector(
-  [
-    visibleServicesContentLoadStateSelector,
-    visibleServicesMetadataLoadStateSelector
-  ],
-  (visibleServicesContentLoadState, visibleServicesMetadataLoadState) =>
-    pot.isLoading(visibleServicesContentLoadState) ||
-    pot.isLoading(visibleServicesMetadataLoadState)
-);
-
-//
-// Functions and selectors to get services organized in sections
-//
+/**
+ * Functions and selectors to get services organized in sections
+ */
 
 // Check if the passed service is local or national through data included into the service metadata.
 // If the scope parameter is expressed, the corresponding item is not included into section if:
@@ -189,7 +190,7 @@ const isInScope = (
   if (pot.isSome(service)) {
     const potServiceMetadata =
       servicesMetadataById[service.value.service_id] || pot.none;
-    if (pot.isSome(potServiceMetadata)) {
+    if (pot.isSome(potServiceMetadata) && potServiceMetadata.value) {
       return potServiceMetadata.value.scope === scope;
     }
   }
@@ -355,23 +356,28 @@ export const notSelectedServicesSectionsSelector = createSelector(
   }
 );
 
-// Get the sum of selected local services + national services that are not yet marked as read
+/**
+ *  Get the sum of selected local services + national services that are not yet marked as read
+ */
+
 export const servicesBadgeValueSelector = createSelector(
   [
     nationalServicesSectionsSelector,
     selectedLocalServicesSectionsSelector,
     readServicesByIdSelector,
-    isFirstVisibleServiceLoadCompletedSelector
+    visibleServicesContentLoadStateSelector,
+    visibleServicesMetadataLoadStateSelector
   ],
   (
     nationalService,
     localService,
     readServicesById,
-    isFirstVisibleServicesLoadCompleted
+    visibleServicesContentLoadState,
+    visibleServicesMetadataLoadState
   ) => {
     if (
-      pot.isSome(isFirstVisibleServicesLoadCompleted) &&
-      isFirstVisibleServicesLoadCompleted.value === true
+      pot.isSome(visibleServicesContentLoadState) &&
+      pot.isSome(visibleServicesMetadataLoadState)
     ) {
       const services: ReadonlyArray<ServicesSectionState> = [
         ...nationalService,

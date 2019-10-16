@@ -5,12 +5,11 @@ import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { contentServiceLoad } from "../../store/actions/content";
 import { updateOrganizations } from "../../store/actions/organizations";
-import { firstServicesLoad, loadService } from "../../store/actions/services";
+import { loadService } from "../../store/actions/services";
 import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
-import { visibleServicesContentLoadStateSelector } from "../../store/reducers/entities/services";
 import {
   visibleServicesSelector,
   VisibleServicesState
@@ -78,14 +77,5 @@ export function* loadServiceRequestHandler(
     }
   } catch (error) {
     yield put(loadService.failure({ service_id: action.payload, error }));
-  }
-
-  // If at least one service loading fails, the first services load is considered as failed
-  const visibleServicesContentLoadState: pot.Pot<boolean, Error> = yield select(
-    visibleServicesContentLoadStateSelector
-  );
-
-  if (pot.isError(visibleServicesContentLoadState)) {
-    yield put(firstServicesLoad.failure(visibleServicesContentLoadState.error));
   }
 }
