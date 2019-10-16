@@ -102,6 +102,7 @@ export const paymentCheck = createAsyncAction(
   true,
   | OmitStatusFromResponse<TypeofApiResponse<CheckPaymentUsingGETT>, 200>
   | undefined
+  | Error
 >();
 
 //
@@ -207,7 +208,7 @@ export const paymentDeletePayment = createAsyncAction(
   "PAYMENT_DELETE_PAYMENT_REQUEST",
   "PAYMENT_DELETE_PAYMENT_SUCCESS",
   "PAYMENT_DELETE_PAYMENT_FAILURE"
-)<PaymentDeletePaymentRequestPayload, void, void>();
+)<PaymentDeletePaymentRequestPayload, void, Error>();
 
 export const runDeleteActivePaymentSaga = createStandardAction(
   "PAYMENT_RUN_DELETE_ACTIVE_PAYMENT_SAGA"
