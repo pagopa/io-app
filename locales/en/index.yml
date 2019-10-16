@@ -303,7 +303,7 @@ wallet:
     addButton: Add a new method
     addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
       so that you don't have to re-add them from scratch for every transaction
-    successful: Thanks, the new payment method has been entered
+    successful: Thanks, the new payment method has been added
     failed: The card could not be added
     failedCardAlreadyExists: The card you are adding already exists
   textMsg:
