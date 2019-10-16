@@ -6,6 +6,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
+import { untag } from "italia-ts-commons/lib/types";
 
 import { Content, Form, Text, View } from "native-base";
 
@@ -27,7 +28,6 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
-import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
@@ -63,10 +63,6 @@ const styles = StyleSheet.create({
 
 const EMPTY_EMAIL = "";
 
-const INITIAL_STATE: State = {
-  email: none
-};
-
 type State = Readonly<{
   email: Option<string>;
 }>;
@@ -77,7 +73,7 @@ type State = Readonly<{
 class EmailInsertScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = INITIAL_STATE;
+    this.state = { email: this.props.email };
   }
 
   /**
@@ -195,13 +191,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  const potProfile = profileSelector(state);
+  const optionProfile = pot.toOption(state.profile);
 
   return {
-    email:
-      pot.isSome(potProfile) &&
-      "spid_email" in potProfile.value &&
-      potProfile.value.spid_email
+    email: optionProfile.map(_ => untag(_.spid_email))
   };
 }
 
