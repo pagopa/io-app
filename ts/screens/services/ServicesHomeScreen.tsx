@@ -16,6 +16,8 @@
  * - userMetadata is updating, or
  * - visible services are refreshed
  *
+ * If toastContent is undefined, when userMetadata/visible services are loading/error,
+ * tabs are hidden and they are displayed renderServiceLoadingPlaceholder/renderErrorPlaceholder
  */
 import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
@@ -288,7 +290,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private scollPositions: number[] = [0, 0, 0];
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
-  private renderErrorContent(onRetry: () => void) {
+  private renderErrorPlaceholder(onRetry: () => void) {
     return (
       <React.Fragment>
         <Content bounces={false}>
@@ -323,7 +325,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   }
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
-  private renderFirstServiceLoadingContent() {
+  private renderServiceLoadingPlaceholder() {
     return (
       <View style={[styles.center, styles.padded]}>
         {Platform.OS === "ios" && <View style={styles.customSpacer} />}
@@ -573,11 +575,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           onWillFocus={() => this.setState({ isLongPressEnabled: false })}
         />
         {!this.state.toastContent && pot.isError(potUserMetadata) ? (
-          this.renderErrorContent(refreshUserMetadata)
+          this.renderErrorPlaceholder(refreshUserMetadata)
         ) : !this.state.toastContent &&
+        !pot.isLoading(this.props.potUserMetadata) &&
         (pot.isError(visibleServicesContentLoadState) ||
           pot.isError(visibleServicesMetadataLoadState)) ? (
-          this.renderErrorContent(refreshServices)
+          this.renderErrorPlaceholder(refreshServices)
         ) : this.props.isSearchEnabled ? (
           this.renderSearch()
         ) : (
@@ -589,7 +592,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             />
             {this.props.isFisrtServiceLoadCompleted || this.state.toastContent
               ? this.renderTabs()
-              : this.renderFirstServiceLoadingContent()}
+              : this.renderServiceLoadingPlaceholder()}
             {this.state.isLongPressEnabled &&
               this.renderLongPressFooterButtons()}
           </React.Fragment>
