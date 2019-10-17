@@ -649,6 +649,7 @@ messages:
     emptyMessage: 
       title: You haven't any scheduled deadline.
       subtitle:  Use the button above to check out past deadlines.
+  alertVersion: It's required an update to version {{minAppVersion}} or highter
 messageDetails:
   headerTitle: Message
   emptyMessage: No content

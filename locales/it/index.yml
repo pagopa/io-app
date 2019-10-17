@@ -659,6 +659,7 @@ messages:
     emptyMessage: 
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
+  alertVersion: E' richiesto l'aggiornamento alla versione numero {{minAppVersion}} o superiore
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto

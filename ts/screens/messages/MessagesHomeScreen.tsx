@@ -40,13 +40,20 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
+import DeviceInfo from "react-native-device-info";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { AlertModal } from "../../components/ui/AlertModal";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
+
 type Props = NavigationScreenProps &
+  LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   currentTab: number;
   hasRefreshedOnceUp: boolean;
+  alertOpen: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -99,8 +106,11 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       currentTab: 0,
-      hasRefreshedOnceUp: false
+      hasRefreshedOnceUp: false,
+      alertOpen: false
     };
+
+    this.showModal = this.showModal.bind(this);
   }
 
   private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -158,8 +168,28 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     }
   }
 
+  // Show popup message to invite user to update app
+  private showModal = (message: string) => {
+    if (!this.state.alertOpen) {
+      // Wait rendering react fragment
+      setTimeout(() => {
+        this.setState({
+          alertOpen: true
+        });
+        this.props.showModal(<AlertModal message={message} />);
+      }, 300);
+    }
+  };
+
   public render() {
-    const { isSearchEnabled } = this.props;
+    const { isSearchEnabled, backendInfo } = this.props;
+    // Get min compatible version app for the backend
+    // tslint:disable-next-line: no-let
+    let minAppVersion;
+    if (backendInfo !== undefined) {
+      minAppVersion = backendInfo.minAppVersion;
+    }
+
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
@@ -174,7 +204,14 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               icon={require("../../../img/icons/message-icon.png")}
               fixed={Platform.OS === "ios"}
             />
-            {this.renderTabs()}
+            {minAppVersion !== undefined &&
+            parseFloat("50") > parseFloat(DeviceInfo.getVersion())
+              ? this.showModal(
+                  I18n.t("messages.alertVersion", {
+                    minAppVersion
+                  })
+                )
+              : this.renderTabs()}
           </React.Fragment>
         )}
         {isSearchEnabled && this.renderSearch()}
@@ -401,6 +438,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  backendInfo: state.backendInfo.serverInfo,
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state),
@@ -439,4 +477,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MessagesHomeScreen);
+)(withLightModalContext(MessagesHomeScreen));
