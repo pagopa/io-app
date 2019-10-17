@@ -18,9 +18,7 @@ type OwnProps = {
   header?: React.ReactNode;
 };
 
-type Props = OwnProps &
-  ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   isLoading: boolean;
@@ -62,17 +60,6 @@ class SelectLogoutOption extends React.PureComponent<Props, State> {
     return true;
   };
 
-  public componentDidUpdate() {
-    if (this.state.isLoading && !this.props.sessionToken) {
-      this.setState(
-        {
-          isLoading: false
-        },
-        () => this.props.onCancel()
-      );
-    }
-  }
-
   private logout = (logoutOption: LogoutOption) => {
     this.setState(
       {
@@ -83,6 +70,7 @@ class SelectLogoutOption extends React.PureComponent<Props, State> {
   };
 
   public render() {
+    // To avoid reimplementing the Loading component I used the HOC. To be edited with the story: https://www.pivotaltracker.com/story/show/169185930
     const ContainerComponent = withLoadingSpinner(() => (
       <Container>
         <Content style={styles.content}>
@@ -127,18 +115,11 @@ class SelectLogoutOption extends React.PureComponent<Props, State> {
     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
 }
-
-const mapStateToProps = (state: GlobalState) => ({
-  sessionToken: isLoggedIn(state.authentication)
-    ? state.authentication.sessionToken
-    : undefined
-});
-
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: (logoutOption: LogoutOption) => dispatch(logoutRequest(logoutOption))
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(SelectLogoutOption);
