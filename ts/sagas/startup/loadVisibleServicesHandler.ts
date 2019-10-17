@@ -102,7 +102,7 @@ export function* loadVisibleServicesRequestHandler(
       // Dispatch action to remove the services from the redux store
       yield put(removeServiceTuples(serviceTuplesToRemove));
 
-      // Chack what services content should be loaded
+      // Chack the content of what services should be loaded
       const serviceIdsToLoad = visibleServices
         .filter(service => {
           const serviceId = service.service_id;
@@ -123,18 +123,17 @@ export function* loadVisibleServicesRequestHandler(
       // Parallel fetch of those services content that we haven't loaded yet or need to be updated
       yield all(serviceIdsToLoad.map(id => put(loadService.request(id))));
 
-      // Check what services metadata should be loaded
-      // Metadata has no version SO they are updated only if:
+      // Check the metadata of what services should be loaded
+      // Metadata has no version and they are updated only if:
       // - service content version is updated ( after loadService.request service metadata are loaded again)
-      // - service metadata stored on redux store are error (meaning somthing wrong at its load)
-      // If service metadata are pot.none, we assume any metadata is availabe for the service
+      // - service metadata stored on redux store has error state (meaning somthing wrong when loaded)
       const servicesMetadataById = yield select(servicesMetadataByIdSelector);
       const serviceIdsToLoad2 = visibleServices
         .filter(service => {
           const serviceId = service.service_id;
           const storedMetadata = servicesMetadataById[serviceId];
           return (
-            // Service load is completed and service metadata is in the redux store as potError and not loading
+            // Service load never occurs or it ends up with an error
             serviceIdsToLoad.indexOf(serviceId) === -1 &&
             !pot.isLoading(storedMetadata) &&
             (pot.isError(storedMetadata) || pot.isNone(storedMetadata))
