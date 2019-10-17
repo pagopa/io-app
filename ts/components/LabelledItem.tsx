@@ -14,6 +14,7 @@ import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInputProps } from "react-native";
 import { TextInputMaskProps } from "react-native-text-input-mask";
+import { IconProps } from "react-native-vector-icons/Icon";
 import MaskedInput from "../components/ui/MaskedInput";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type StyleType = { [key in string]: string | number };
+type StyleType = IconProps["style"];
 
 type Props =
   | Readonly<{
