@@ -97,7 +97,7 @@ const LandingScreen: React.SFC<Props> = props => {
           testID="landing-button-login"
         >
           <IconFont name="io-profilo" color={variables.colorWhite} />
-          <Text>{I18n.t("authentication.landing.login")}</Text>
+          <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
         </Button>
         <View spacer={true} />
         <Button

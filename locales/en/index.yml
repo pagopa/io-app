@@ -197,7 +197,8 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
-    login: Login with SPID
+    loginSpid: Login with SPID
+    loginCie: Login with CIE
     nospid: Don't have SPID? Find out more
     card1-title: All messages in one place
     card1-content: Display all the incoming communications from Public Administrations

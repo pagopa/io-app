@@ -201,7 +201,8 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
-    login: Entra con SPID
+    loginSpid: Entra con SPID
+    loginCie: Entra con CIE
     nospid: Non hai SPID? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
     card1-content: Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni
