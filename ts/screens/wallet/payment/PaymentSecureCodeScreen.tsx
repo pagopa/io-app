@@ -7,6 +7,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { Content, Text } from "native-base";
 import * as React from "react";
 import {
+  Dimensions,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -23,6 +24,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import MaskedInput from "../../../components/ui/MaskedInput";
+import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { CreditCardCVC } from "../../../utils/input";
@@ -83,7 +85,17 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
         dark={true}
         headerTitle={I18n.t("wallet.confirmPayment.securityVerification")}
       >
+        <View
+          style={{
+            height: 40,
+            width: Dimensions.get("window").width,
+            backgroundColor: variables.brandDarkGray
+          }}
+        >
+          <Text>Insert text here</Text>
+        </View>
         <NavigationEvents onWillFocus={undefined} />
+
         <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
           <ScreenContentHeader
             title={I18n.t("wallet.confirmPayment.insertCode")}
