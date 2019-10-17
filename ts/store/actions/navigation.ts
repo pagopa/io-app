@@ -15,7 +15,7 @@ import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 
-import OldServiceDetailsScreen from "../../screens/preferences/OldServiceDetailsScreen";
+import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
@@ -76,15 +76,28 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
-export const navigateToEmailValidationScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING,
-    action: NavigationActions.navigate({
-      routeName: ROUTES.ONBOARDING_VALIDATE_EMAIL
-    })
-  });
+export const navigateToEmailValidateScreen = NavigationActions.navigate({
+  routeName: ROUTES.ONBOARDING,
+  action: NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_EMAIL_VALIDATE
+  })
+});
+
+export const navigateToEmailReadScreen = NavigationActions.navigate({
+  routeName: ROUTES.ONBOARDING,
+  action: NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_EMAIL_READ
+  })
+});
 
 export const navigateBack = NavigationActions.back;
+
+export const navigateToEmailInsertScreen = NavigationActions.navigate({
+  routeName: ROUTES.ONBOARDING_EMAIL_INSERT,
+  action: NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_EMAIL_INSERT
+  })
+});
 
 export const navigateToMessageDetailScreenAction = (
   params: InferNavigationParams<typeof MessageDetailScreen>
@@ -94,8 +107,8 @@ export const navigateToMessageDetailScreenAction = (
     params
   });
 
-export const navigateToOldServiceDetailsScreen = (
-  params: InferNavigationParams<typeof OldServiceDetailsScreen>
+export const navigateToServiceDetailsScreen = (
+  params: InferNavigationParams<typeof ServiceDetailsScreen>
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.SERVICE_DETAIL,

@@ -5,11 +5,19 @@ import { Municipality as MunicipalityMetadata } from "../../../definitions/conte
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
+export type ContentServiceFailure = {
+  error: Error;
+  service_id: string;
+};
 export const contentServiceLoad = createAsyncAction(
   "CONTENT_SERVICE_LOAD_REQUEST",
   "CONTENT_SERVICE_LOAD_SUCCESS",
   "CONTENT_SERVICE_LOAD_FAILURE"
-)<ServiceId, { serviceId: ServiceId; data: ServiceMetadata }, ServiceId>();
+)<
+  ServiceId,
+  { serviceId: ServiceId; data: ServiceMetadata },
+  ContentServiceFailure
+>();
 
 export const contentMunicipalityLoad = createAsyncAction(
   "CONTENT_MUNICIPALITY_LOAD_REQUEST",
@@ -18,7 +26,7 @@ export const contentMunicipalityLoad = createAsyncAction(
 )<
   CodiceCatastale,
   { codiceCatastale: CodiceCatastale; data: MunicipalityMetadata },
-  CodiceCatastale
+  Error
 >();
 
 export type ContentActions =

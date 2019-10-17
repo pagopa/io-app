@@ -40,6 +40,9 @@ export function* loadVisibleServicesRequestHandler(
       {}
     );
     if (response.isLeft()) {
+      yield put(
+        loadVisibleServices.failure(Error(readableReport(response.value)))
+      );
       throw Error(readableReport(response.value));
     }
     if (response.value.status === 200) {
@@ -65,7 +68,7 @@ export function* loadVisibleServicesRequestHandler(
       );
 
       // Create an array of tuples containing:
-      // - serviceId (to remove service from the servicesById section of the redux store)
+      // - serviceId (to remove service from both the servicesById and the servicesMetadataById sections of the redux store)
       // - organizationFiscalCode (to remove service from serviceIdsByOrganizationFiscalCode
       //   section of the redux store)
       const serviceTuplesToRemove = Object.keys(storedServicesById).reduce<
@@ -123,9 +126,9 @@ export function* loadVisibleServicesRequestHandler(
       yield put(sessionExpired());
       return;
     } else {
-      throw Error();
+      throw Error("An error occurred loading visible services");
     }
-  } catch {
-    yield put(loadVisibleServices.failure());
+  } catch (error) {
+    yield put(loadVisibleServices.failure(error));
   }
 }
