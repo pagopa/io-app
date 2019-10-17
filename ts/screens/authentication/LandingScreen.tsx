@@ -13,7 +13,7 @@ import { LandingCardComponent } from "../../components/LandingCard";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 
-import { isDevEnvironment } from "../../config";
+import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
 
 import I18n from "../../i18n";
 
@@ -32,13 +32,21 @@ type OwnProps = {
 };
 
 type Props = ReduxProps & OwnProps;
+const isNFCavailable = false; // simulation of the device that has nfc
+const isCIEAvailable = isNFCavailable && isCIEauthenticationEnabled;
 
 const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   {
     id: 5,
-    image: require("../../../img/landing/05.png"),
-    title: I18n.t("authentication.landing.card5-title"),
-    content: I18n.t("authentication.landing.card5-content")
+    image: isCIEAvailable
+      ? require("../../../img/landing/CIE-onboarding-illustration.png")
+      : require("../../../img/landing/05.png"),
+    title: isCIEAvailable
+      ? I18n.t("authentication.landing.loginSpidCie")
+      : I18n.t("authentication.landing.card5-title"),
+    content: isCIEAvailable
+      ? I18n.t("authentication.landing.loginSpidCieContent")
+      : I18n.t("authentication.landing.card5-content")
   },
   {
     id: 1,
@@ -89,6 +97,19 @@ const LandingScreen: React.SFC<Props> = props => {
       </Content>
 
       <View footer={true}>
+        {isCIEAvailable && (
+          <Button
+            block={true}
+            primary={true}
+            iconLeft={true}
+            onPress={navigateToIdpSelection}
+            testID="landing-button-login"
+          >
+            <IconFont name="io-profilo" color={variables.colorWhite} />
+            <Text>{I18n.t("authentication.landing.loginCie")}</Text>
+          </Button>
+        )}
+        <View spacer={true} />
         <Button
           block={true}
           primary={true}
@@ -106,8 +127,13 @@ const LandingScreen: React.SFC<Props> = props => {
           transparent={true}
           onPress={navigateToSpidInformationRequest}
         >
-          <Text>{I18n.t("authentication.landing.nospid")}</Text>
+          <Text>
+            {isCIEAvailable
+              ? I18n.t("authentication.landing.nospid-nocie")
+              : I18n.t("authentication.landing.nospid")}
+          </Text>
         </Button>
+        <View spacer={true} extralarge={true} />
       </View>
     </BaseScreenComponent>
   );
