@@ -1,7 +1,7 @@
 // TODO: it has to be updated due to https://www.pivotaltracker.com/story/show/169013940
 
 // It implies item 42, not having the corresponding serviceMetadata being loaded, is not included among the local sections
-// CHEck what happen with items 41 and 42 beign someLoading anc someError
+// Check what happen with items 41 and 42 beign someLoading and someError
 import * as pot from "italia-ts-commons/lib/pot";
 import {
   NonEmptyString,
@@ -65,7 +65,7 @@ const customServices: ServicesState = {
       department_name: "test" as DepartmentName,
       organization_fiscal_code: "4" as OrganizationFiscalCode,
       organization_name: "organization4" as OrganizationName,
-      service_id: "41" as ServiceId,
+      service_id: "42" as ServiceId,
       service_name: "service1" as ServiceName,
       version: 1
     })
@@ -181,7 +181,7 @@ describe("nationalServicesSectionsSelector", () => {
 });
 
 describe("localServicesSectionsSelector", () => {
-  it("should return the services having scope equal to LOCAL", () => {
+  it("should return the services having metadata and scope equal to LOCAL", () => {        
     expect(
       localServicesSectionsSelector.resultFunc(
         customServices,
@@ -191,51 +191,27 @@ describe("localServicesSectionsSelector", () => {
     ).toStrictEqual([{
       organizationName: customOrganizations.nameByFiscalCode['2'] as string,
       organizationFiscalCode: "2" as OrganizationFiscalCode,
-      data: [
-        pot.some({
-          department_name: "test" as DepartmentName,
-          organization_fiscal_code: "2" as OrganizationFiscalCode,
-          organization_name: "organization2" as OrganizationName,
-          service_id: "21" as ServiceId,
-          service_name: "service1" as ServiceName,
-          version: 1
-        })  
-      ]
-    },
-    {
+      data: [ customServices.byId['21'] ]
+    }, {
       organizationName: customOrganizations.nameByFiscalCode['4'] as string,
       organizationFiscalCode: "4" as OrganizationFiscalCode,
-      data: [
-        pot.someError({
-          department_name: "test" as DepartmentName,
-          organization_fiscal_code: "4" as OrganizationFiscalCode,
-          organization_name: "organization4" as OrganizationName,
-          service_id: "41" as ServiceId,
-          service_name: "service1" as ServiceName,
-          version: 1
-        }, Error('Generic error'))
-      ]
-    },]);
+      data: [ customServices.byId['41'] ]
+    }]);
   });
 });
 
 describe("notSelectedServicesSectionsSelector", () => {
-  it("should return all the services with scope equal to both NATIONAL and LOCAL if the user organizationsOfInterest is empty", () => {
-    // The selector does not include services still loading
+  it("should return all the visible services with scope equal to both NATIONAL and LOCAL if the user organizationsOfInterest is empty", () => {
     expect(notSelectedServicesSectionsSelector.resultFunc(customServices, customOrganizations.nameByFiscalCode, customServicesMetadata, [""] )
     ).toStrictEqual([{
-      organizationName: customOrganizations.nameByFiscalCode['2'] as string,
-      organizationFiscalCode: "2" as OrganizationFiscalCode,
-      data: [
-        pot.some({
-          department_name: "test" as DepartmentName,
-          organization_fiscal_code: "2" as OrganizationFiscalCode,
-          organization_name: "organization2" as OrganizationName,
-          service_id: "21" as ServiceId,
-          service_name: "service1" as ServiceName,
-          version: 1
-          })
-      ]
+        organizationName: customOrganizations.nameByFiscalCode['2'] as string,
+        organizationFiscalCode: "2" as OrganizationFiscalCode,
+        data: [ customServices.byId['21']]
+      },
+    {
+      organizationName: customOrganizations.nameByFiscalCode['4'] as string,
+      organizationFiscalCode: "4" as OrganizationFiscalCode,
+      data: [ customServices.byId['41']]
     },]);
   })
 })
