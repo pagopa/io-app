@@ -219,6 +219,11 @@ authentication:
     card5-content: In questa versione sperimentale trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
+  cie_information_request: !include cie.md
+  spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
+  request_cie: Richiedi CIE
+  cie: Carta di Identità Elettronica
+  spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -231,7 +236,7 @@ authentication:
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
   spid_information:
-    headerTitle: Non hai SPID?
+    headerTitle: Non hai SPID o la CIE?
     contentTitle: Cos'è SPID?
     moreLinkText: Per saperne di più
     subtitle: SPID è sicuro
