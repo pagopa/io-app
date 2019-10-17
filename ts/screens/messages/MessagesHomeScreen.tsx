@@ -53,7 +53,7 @@ type Props = NavigationScreenProps &
 type State = {
   currentTab: number;
   hasRefreshedOnceUp: boolean;
-  alertOpen: boolean;
+  isAlertOpen: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -107,7 +107,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     this.state = {
       currentTab: 0,
       hasRefreshedOnceUp: false,
-      alertOpen: false
+      isAlertOpen: false
     };
 
     this.showModal = this.showModal.bind(this);
@@ -170,11 +170,11 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
   // Show popup message to invite user to update app
   private showModal = (message: string) => {
-    if (!this.state.alertOpen) {
+    if (!this.state.isAlertOpen) {
       // Wait rendering react fragment
       setTimeout(() => {
         this.setState({
-          alertOpen: true
+          isAlertOpen: true
         });
         this.props.showModal(<AlertModal message={message} />);
       }, 300);
