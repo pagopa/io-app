@@ -27,7 +27,7 @@ import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
-import { ReduxProps } from "../../store/actions/types";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
@@ -35,7 +35,10 @@ type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
+type Props = ReduxProps &
+  OwnProps &
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   container: {
@@ -82,7 +85,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   private renderFooterButtons() {
     const continueButtonProps = {
       disabled: this.isValidEmail() !== true,
-      onPress: () => this.props.dispatch(emailInsert()),
+      onPress: this.props.dispatchEmailInsert,
       title: I18n.t("global.buttons.continue"),
       block: true,
       primary: this.isValidEmail()
@@ -198,4 +201,11 @@ function mapStateToProps(state: GlobalState) {
   };
 }
 
-export default connect(mapStateToProps)(EmailInsertScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchEmailInsert: () => dispatch(emailInsert())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EmailInsertScreen);
