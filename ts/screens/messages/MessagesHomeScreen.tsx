@@ -205,7 +205,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               fixed={Platform.OS === "ios"}
             />
             {minAppVersion !== undefined &&
-            parseFloat("50") > parseFloat(DeviceInfo.getVersion())
+            parseFloat(minAppVersion) > parseFloat(DeviceInfo.getVersion())
               ? this.showModal(
                   I18n.t("messages.alertVersion", {
                     minAppVersion
