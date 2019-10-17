@@ -10,6 +10,7 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,
   emailAcknowledged
@@ -99,7 +100,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
             block: true,
             bordered: true,
             title: I18n.t("onboarding.email.ctaEdit"),
-            onPress: unavailableAlert,
+            onPress: this.props.navigateToEmailInsertScreen,
             buttonFontSize: 15
           }}
           rightButton={{
@@ -120,7 +121,8 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
-  abortOnboarding: () => dispatch(abortOnboarding())
+  abortOnboarding: () => dispatch(abortOnboarding()),
+  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen)
 });
 
 export default connect(
