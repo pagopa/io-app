@@ -116,7 +116,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     if (this.navListener) {
       this.navListener.remove();
     }
-    // This ensures that any modals are closed. (eg logout)
+    // This ensures modals will be closed (if there are some opened)
     this.props.hideModal();
   }
 
