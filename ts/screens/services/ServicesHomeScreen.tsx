@@ -264,7 +264,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       this.props.refreshUserMetadata();
     }
 
-    // TODO: substitute with content service load state
     if (
       !pot.isLoading(this.props.visibleServicesContentLoadState) &&
       !pot.isLoading(this.props.visibleServicesMetadataLoadState)
