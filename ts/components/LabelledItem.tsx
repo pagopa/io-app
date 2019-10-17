@@ -30,23 +30,23 @@ const styles = StyleSheet.create({
 
 type StyleType = IconProps["style"];
 
-type Props =
-  | Readonly<{
-      type: "masked";
-      label: string;
-      icon: string;
-      inputMaskProps: TextInputMaskProps;
-      isValid?: boolean;
-      iconStyle?: StyleType;
-    }>
-  | Readonly<{
-      type: "text";
-      label: string;
-      icon: string;
-      inputProps: TextInputProps;
-      isValid?: boolean;
-      iconStyle?: StyleType;
-    }>;
+type CommonProp = Readonly<{
+  label: string;
+  icon: string;
+  isValid?: boolean;
+  iconStyle?: StyleType;
+}>;
+
+type Props = CommonProp &
+  (
+    | Readonly<{
+        type: "masked";
+        inputMaskProps: TextInputMaskProps;
+      }>
+    | Readonly<{
+        type: "text";
+        inputProps: TextInputProps;
+      }>);
 
 export class LabelledItem extends React.Component<Props> {
   public render() {
