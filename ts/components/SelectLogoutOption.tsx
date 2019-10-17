@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 import I18n from "../i18n";
 import { LogoutOption, logoutRequest } from "../store/actions/authentication";
 import { Dispatch } from "../store/actions/types";
-import { isLoggedIn } from "../store/reducers/authentication";
-import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import { withLoadingSpinner } from "./helpers/withLoadingSpinner";
 import ListItemComponent from "./screens/ListItemComponent";
