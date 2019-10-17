@@ -18,10 +18,15 @@ export const firstLoadingReducer = (
   action: Action
 ): FirstLoadingState => {
   switch (action.type) {
-    case getType(clearCache):
     case getType(FirstServiceLoadSuccess): {
       return {
         isFirstServicesLoadingCompleted: true
+      };
+    }
+
+    case getType(clearCache): {
+      return {
+        isFirstServicesLoadingCompleted: false
       };
     }
 
