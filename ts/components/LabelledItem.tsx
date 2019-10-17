@@ -14,6 +14,7 @@ import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInputProps } from "react-native";
 import { TextInputMaskProps } from "react-native-text-input-mask";
+import { IconProps } from "react-native-vector-icons/Icon";
 import MaskedInput from "../components/ui/MaskedInput";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
@@ -27,21 +28,25 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props =
-  | Readonly<{
-      type: "masked";
-      label: string;
-      icon: string;
-      inputMaskProps: TextInputMaskProps;
-      isValid?: boolean;
-    }>
-  | Readonly<{
-      type: "text";
-      label: string;
-      icon: string;
-      inputProps: TextInputProps;
-      isValid?: boolean;
-    }>;
+type StyleType = IconProps["style"];
+
+type CommonProp = Readonly<{
+  label: string;
+  icon: string;
+  isValid?: boolean;
+  iconStyle?: StyleType;
+}>;
+
+type Props = CommonProp &
+  (
+    | Readonly<{
+        type: "masked";
+        inputMaskProps: TextInputMaskProps;
+      }>
+    | Readonly<{
+        type: "text";
+        inputProps: TextInputProps;
+      }>);
 
 export class LabelledItem extends React.Component<Props> {
   public render() {
@@ -61,6 +66,7 @@ export class LabelledItem extends React.Component<Props> {
             size={variables.iconSize3}
             color={variables.brandDarkGray}
             name={this.props.icon}
+            style={this.props.iconStyle}
           />
           {this.props.type === "masked" ? (
             <MaskedInput
