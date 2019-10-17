@@ -73,9 +73,9 @@ export function* loadServiceRequestHandler(
       // the service should be displayed into the ServiceHomeScreen
       yield put(contentServiceLoad.request(response.value.value.service_id));
     } else {
-      throw Error();
+      throw Error(`response status ${response.value.status}`);
     }
-  } catch {
-    yield put(loadService.failure(action.payload));
+  } catch (error) {
+    yield put(loadService.failure({ service_id: action.payload, error }));
   }
 }

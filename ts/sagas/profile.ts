@@ -119,17 +119,13 @@ function* createOrUpdateProfileSaga(
 
     if (response.value.status !== 200) {
       // We got a error, send a SESSION_UPSERT_FAILURE action
-      const error: Error = Error(
-        response.value.value.title || I18n.t("profile.errors.upsert")
-      );
-
-      yield put(profileUpsert.failure(error));
+      throw response.value.value.title;
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
       yield put(profileUpsert.success(response.value.value));
     }
-  } catch (err) {
-    const error: Error = Error(I18n.t("profile.errors.upsert"));
+  } catch (e) {
+    const error: Error = e || Error(I18n.t("profile.errors.upsert"));
     yield put(profileUpsert.failure(error));
   }
 }

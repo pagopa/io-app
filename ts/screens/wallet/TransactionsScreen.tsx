@@ -80,7 +80,7 @@ const ListEmptyComponent = (
 class TransactionsScreen extends React.Component<Props> {
   private headerContent(
     selectedWallet: Wallet,
-    isFavorite: pot.Pot<boolean, Error>
+    isFavorite: pot.Pot<boolean, string>
   ) {
     return (
       <React.Fragment>

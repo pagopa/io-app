@@ -85,7 +85,7 @@ export function* loadMessages(
           response.value.status === 500 && response.value.value.title
             ? response.value.value.title
             : "";
-        yield put(loadMessagesAction.failure(error));
+        yield put(loadMessagesAction.failure(Error(error)));
       } else {
         // 200 ok
         yield put(
