@@ -9,11 +9,11 @@ import {
 } from "italia-ts-commons/lib/strings";
 import {
   isLoadingServicesSelector,
-  nationalServicesSectionsSelector,
-  organizationsOfInterestSelector,
-  ServicesState,
   localServicesSectionsSelector,
-  notSelectedServicesSectionsSelector
+  nationalServicesSectionsSelector,
+  notSelectedServicesSectionsSelector,
+  organizationsOfInterestSelector,
+  ServicesState
 } from "..";
 import { DepartmentName } from "../../../../../../definitions/backend/DepartmentName";
 import { OrganizationName } from "../../../../../../definitions/backend/OrganizationName";
@@ -37,30 +37,33 @@ const customServices: ServicesState = {
   byId: {
     ["11"]: pot.noneError(Error()),
     ["21"]: pot.some({
-        department_name: "test" as DepartmentName,
-        organization_fiscal_code: "2" as OrganizationFiscalCode,
-        organization_name: "organization2" as OrganizationName,
-        service_id: "21" as ServiceId,
-        service_name: "service1" as ServiceName,
-        version: 1
+      department_name: "test" as DepartmentName,
+      organization_fiscal_code: "2" as OrganizationFiscalCode,
+      organization_name: "organization2" as OrganizationName,
+      service_id: "21" as ServiceId,
+      service_name: "service1" as ServiceName,
+      version: 1
     }),
     ["22"]: undefined,
     ["31"]: pot.someLoading({
-        department_name: "test" as DepartmentName,
-        organization_fiscal_code: "3" as OrganizationFiscalCode,
-        organization_name: "organization3" as OrganizationName,
-        service_id: "31" as ServiceId,
-        service_name: "service1" as ServiceName,
-        version: 1
-    }),
-    ["41"]: pot.someError({
       department_name: "test" as DepartmentName,
-      organization_fiscal_code: "4" as OrganizationFiscalCode,
-      organization_name: "organization4" as OrganizationName,
-      service_id: "41" as ServiceId,
+      organization_fiscal_code: "3" as OrganizationFiscalCode,
+      organization_name: "organization3" as OrganizationName,
+      service_id: "31" as ServiceId,
       service_name: "service1" as ServiceName,
       version: 1
-    }, Error('Generic error')),
+    }),
+    ["41"]: pot.someError(
+      {
+        department_name: "test" as DepartmentName,
+        organization_fiscal_code: "4" as OrganizationFiscalCode,
+        organization_name: "organization4" as OrganizationName,
+        service_id: "41" as ServiceId,
+        service_name: "service1" as ServiceName,
+        version: 1
+      },
+      Error("Generic error")
+    ),
     ["42"]: pot.someLoading({
       department_name: "test" as DepartmentName,
       organization_fiscal_code: "4" as OrganizationFiscalCode,
@@ -84,7 +87,7 @@ const customServices: ServicesState = {
       { service_id: "11", version: 1 } as ServiceTuple,
       { service_id: "21", version: 1 } as ServiceTuple,
       { service_id: "22", version: 1 } as ServiceTuple,
-      { service_id: "41", version: 1 } as ServiceTuple,
+      { service_id: "41", version: 1 } as ServiceTuple
     ]
   },
   readState: {
@@ -108,12 +111,12 @@ const customOrganizations: OrganizationsState = {
     {
       name: "organization4",
       fiscalCode: "4"
-    },
+    }
   ],
   nameByFiscalCode: {
     ["2" as OrganizationFiscalCode]: "organizzazion2" as NonEmptyString,
     ["3" as OrganizationFiscalCode]: "organizzazion3" as NonEmptyString,
-    ["4" as OrganizationFiscalCode]: "organizzazion4" as NonEmptyString,
+    ["4" as OrganizationFiscalCode]: "organizzazion4" as NonEmptyString
   }
 };
 
@@ -145,19 +148,14 @@ const customServicesMetadata: { byId: ServiceMetadataById } = {
 };
 
 describe("organizationsOfInterestSelector", () => {
-  it("should be undefined if userMetadata are not loaded", () => {
+  it("should include organizations in the user organizationsOfInterest and providing visible services among those properly loaded", () => {
     expect(
-      organizationsOfInterestSelector.resultFunc(pot.none, customServices)
-    ).toBeUndefined();
-  }),
-    it("should include organizations in the user organizationsOfInterest and providing visible services among those properly loaded", () => {
-      expect(
-        organizationsOfInterestSelector.resultFunc(
-          customPotUserMetadata,
-          customServices
-        )
-      ).toStrictEqual(["2", "4"]);
-    });
+      organizationsOfInterestSelector.resultFunc(
+        customPotUserMetadata,
+        customServices
+      )
+    ).toStrictEqual(["2", "4"]);
+  });
 });
 
 describe("isLoadingServicesSelector", () => {
@@ -166,7 +164,7 @@ describe("isLoadingServicesSelector", () => {
       isLoadingServicesSelector.resultFunc(true, true, pot.toLoading(pot.none))
     ).toBe(true);
   });
-}); 
+});
 
 describe("nationalServicesSectionsSelector", () => {
   it("should return the services having scope equal to NATIONAL", () => {
@@ -181,37 +179,48 @@ describe("nationalServicesSectionsSelector", () => {
 });
 
 describe("localServicesSectionsSelector", () => {
-  it("should return the services having metadata and scope equal to LOCAL", () => {        
+  it("should return the services having metadata and scope equal to LOCAL", () => {
     expect(
       localServicesSectionsSelector.resultFunc(
         customServices,
         customOrganizations.nameByFiscalCode,
         customServicesMetadata
       )
-    ).toStrictEqual([{
-      organizationName: customOrganizations.nameByFiscalCode['2'] as string,
-      organizationFiscalCode: "2" as OrganizationFiscalCode,
-      data: [ customServices.byId['21'] ]
-    }, {
-      organizationName: customOrganizations.nameByFiscalCode['4'] as string,
-      organizationFiscalCode: "4" as OrganizationFiscalCode,
-      data: [ customServices.byId['41'] ]
-    }]);
+    ).toStrictEqual([
+      {
+        organizationName: customOrganizations.nameByFiscalCode["2"] as string,
+        organizationFiscalCode: "2" as OrganizationFiscalCode,
+        data: [customServices.byId["21"]]
+      },
+      {
+        organizationName: customOrganizations.nameByFiscalCode["4"] as string,
+        organizationFiscalCode: "4" as OrganizationFiscalCode,
+        data: [customServices.byId["41"]]
+      }
+    ]);
   });
 });
 
 describe("notSelectedServicesSectionsSelector", () => {
   it("should return all the visible services with scope equal to both NATIONAL and LOCAL if the user organizationsOfInterest is empty", () => {
-    expect(notSelectedServicesSectionsSelector.resultFunc(customServices, customOrganizations.nameByFiscalCode, customServicesMetadata, [""] )
-    ).toStrictEqual([{
-        organizationName: customOrganizations.nameByFiscalCode['2'] as string,
+    expect(
+      notSelectedServicesSectionsSelector.resultFunc(
+        customServices,
+        customOrganizations.nameByFiscalCode,
+        customServicesMetadata,
+        [""]
+      )
+    ).toStrictEqual([
+      {
+        organizationName: customOrganizations.nameByFiscalCode["2"] as string,
         organizationFiscalCode: "2" as OrganizationFiscalCode,
-        data: [ customServices.byId['21']]
+        data: [customServices.byId["21"]]
       },
-    {
-      organizationName: customOrganizations.nameByFiscalCode['4'] as string,
-      organizationFiscalCode: "4" as OrganizationFiscalCode,
-      data: [ customServices.byId['41']]
-    },]);
-  })
-})
+      {
+        organizationName: customOrganizations.nameByFiscalCode["4"] as string,
+        organizationFiscalCode: "4" as OrganizationFiscalCode,
+        data: [customServices.byId["41"]]
+      }
+    ]);
+  });
+});
