@@ -13,8 +13,6 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
-
-import * as pot from "italia-ts-commons/lib/pot";
 import { isDevEnvironment } from "../config";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
@@ -34,7 +32,7 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 8;
+const CURRENT_REDUX_STORE_VERSION = 7;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -145,27 +143,6 @@ const migrations: MigrationManifest = {
         services: {
           ...(state as PersistedGlobalState).entities.services,
           byId: {}
-        }
-      }
-    };
-  },
-
-  // Version 8
-  // convert isFirstServicesLoadingCompleted from pot to boolean
-  "8": (state: PersistedState) => {
-    const firstLoading = (state as any).entities.services.firstLoading;
-    const isFirstServicesLoadingCompleted = pot.isSome(
-      firstLoading.isFirstServicesLoadingCompleted
-    );
-    return {
-      ...state,
-      entities: {
-        ...(state as PersistedGlobalState).entities,
-        services: {
-          ...(state as PersistedGlobalState).entities.services,
-          firstLoading: {
-            isFirstServicesLoadingCompleted
-          }
         }
       }
     };
