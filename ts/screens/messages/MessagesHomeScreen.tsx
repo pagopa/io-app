@@ -53,7 +53,6 @@ type Props = NavigationScreenProps &
 type State = {
   currentTab: number;
   hasRefreshedOnceUp: boolean;
-  isAlertOpen: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -106,11 +105,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       currentTab: 0,
-      hasRefreshedOnceUp: false,
-      isAlertOpen: false
+      hasRefreshedOnceUp: false
     };
-
-    this.showModal = this.showModal.bind(this);
   }
 
   private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -145,6 +141,29 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     }
   }
 
+  public componentWillMount() {
+    const { backendInfo } = this.props;
+    // Get min compatible version app for the backend
+    // tslint:disable-next-line: no-let
+    let minAppVersion;
+    if (backendInfo !== undefined) {
+      minAppVersion = backendInfo.minAppVersion;
+    }
+    if (
+      minAppVersion !== undefined &&
+      parseFloat(minAppVersion) > parseFloat(DeviceInfo.getVersion())
+    ) {
+      // Show popup message to invite user to update app
+      this.props.showModal(
+        <AlertModal
+          message={I18n.t("messages.alertVersion", {
+            minAppVersion
+          })}
+        />
+      );
+    }
+  }
+
   public componentDidUpdate(prevprops: Props, prevstate: State) {
     // saving current list scroll position to enable header animation
     // when shifting between tabs
@@ -168,28 +187,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     }
   }
 
-  // Show popup message to invite user to update app
-  private showModal = (message: string) => {
-    if (!this.state.isAlertOpen) {
-      // Wait rendering react fragment
-      setTimeout(() => {
-        this.setState({
-          isAlertOpen: true
-        });
-        this.props.showModal(<AlertModal message={message} />);
-      }, 300);
-    }
-  };
-
   public render() {
-    const { isSearchEnabled, backendInfo } = this.props;
-    // Get min compatible version app for the backend
-    // tslint:disable-next-line: no-let
-    let minAppVersion;
-    if (backendInfo !== undefined) {
-      minAppVersion = backendInfo.minAppVersion;
-    }
-
+    const { isSearchEnabled } = this.props;
     return (
       <TopScreenComponent
         title={I18n.t("messages.contentTitle")}
@@ -204,14 +203,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               icon={require("../../../img/icons/message-icon.png")}
               fixed={Platform.OS === "ios"}
             />
-            {minAppVersion !== undefined &&
-            parseFloat(minAppVersion) > parseFloat(DeviceInfo.getVersion())
-              ? this.showModal(
-                  I18n.t("messages.alertVersion", {
-                    minAppVersion
-                  })
-                )
-              : this.renderTabs()}
+            {this.renderTabs()}
           </React.Fragment>
         )}
         {isSearchEnabled && this.renderSearch()}
