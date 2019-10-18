@@ -13,6 +13,7 @@ import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
+import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,
   emailAcknowledged
@@ -56,9 +57,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
-
-export class EmailScreen extends React.PureComponent<Props> {
+export class EmailReadScreen extends React.PureComponent<Props> {
   private handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),
@@ -86,14 +85,16 @@ export class EmailScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        title={I18n.t("onboarding.email.title")}
+        title={I18n.t("onboarding.email.read.title")}
         contextualHelp={{
-          title: I18n.t("onboarding.email.title"),
-          body: () => <Markdown>{I18n.t("onboarding.email.help")}</Markdown>
+          title: I18n.t("onboarding.email.read.title"),
+          body: () => (
+            <Markdown>{I18n.t("onboarding.email.read.help")}</Markdown>
+          )
         }}
       >
         <ScreenContent
-          title={I18n.t("onboarding.email.title")}
+          title={I18n.t("onboarding.email.read.title")}
           subtitle={I18n.t("onboarding.email.subtitle")}
         >
           <View style={styles.content}>
@@ -105,14 +106,14 @@ export class EmailScreen extends React.PureComponent<Props> {
               <IconFont
                 name="io-envelope"
                 accessible={true}
-                accessibilityLabel={I18n.t("onboarding.email.title")}
+                accessibilityLabel={I18n.t("onboarding.email.read.title")}
                 size={24}
                 style={styles.icon}
               />
               <Text style={styles.email}>{profileEmail}</Text>
             </View>
             <View style={styles.spacerLarge} />
-            <Text>{I18n.t("onboarding.email.emailInfo")}</Text>
+            <Text>{I18n.t("onboarding.email.read.emailInfo")}</Text>
           </View>
         </ScreenContent>
         <FooterWithButtons
@@ -120,8 +121,8 @@ export class EmailScreen extends React.PureComponent<Props> {
           leftButton={{
             block: true,
             bordered: true,
-            title: I18n.t("onboarding.email.ctaEdit"),
-            onPress: unavailableAlert
+            title: I18n.t("onboarding.email.read.ctaEdit"),
+            onPress: this.props.navigateToEmailInsertScreen
           }}
           rightButton={{
             block: true,
@@ -141,10 +142,11 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
-  abortOnboarding: () => dispatch(abortOnboarding())
+  abortOnboarding: () => dispatch(abortOnboarding()),
+  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen)
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EmailScreen);
+)(EmailReadScreen);
