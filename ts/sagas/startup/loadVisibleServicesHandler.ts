@@ -94,7 +94,7 @@ export function* loadVisibleServicesRequestHandler(
       yield put(removeServiceTuples(serviceTuplesToRemove));
 
       // Check which services content should be loaded
-      const serviceIdsToLoad = visibleServices
+      const serviceContentIdsToLoad = visibleServices
         .filter(service => {
           const serviceId = service.service_id;
           const storedService = storedServicesById[serviceId];
@@ -112,7 +112,9 @@ export function* loadVisibleServicesRequestHandler(
         })
         .map(_ => _.service_id);
       // Parallel fetch of those services content that we haven't loaded yet or need to be updated
-      yield all(serviceIdsToLoad.map(id => put(loadService.request(id))));
+      yield all(
+        serviceContentIdsToLoad.map(id => put(loadService.request(id)))
+      );
 
       // Check which services metadata should be loaded
       // Metadata has no version and they are updated only if:
@@ -121,13 +123,13 @@ export function* loadVisibleServicesRequestHandler(
       const servicesMetadataById: ReturnType<
         typeof servicesMetadataByIdSelector
       > = yield select(servicesMetadataByIdSelector);
-      const serviceIdsToLoad2 = visibleServices
+      const serviceMetadataIdsToLoad = visibleServices
         .filter(service => {
           const serviceId = service.service_id;
           const storedMetadata = servicesMetadataById[serviceId];
           return (
             // Service load never occurs or it ends up with an error
-            serviceIdsToLoad.indexOf(serviceId) === -1 &&
+            serviceContentIdsToLoad.indexOf(serviceId) === -1 &&
             !pot.isLoading(storedMetadata) &&
             (pot.isError(storedMetadata) || pot.isNone(storedMetadata))
           );
@@ -135,7 +137,7 @@ export function* loadVisibleServicesRequestHandler(
         .map(_ => _.service_id);
       // Parallel fetch of those services metadata that we haven't loaded yet or need to be updated
       yield all(
-        serviceIdsToLoad2.map(id => put(contentServiceLoad.request(id)))
+        serviceMetadataIdsToLoad.map(id => put(contentServiceLoad.request(id)))
       );
     } else if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow

@@ -65,19 +65,19 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
         throw Error(error);
       }
 
-      // If the service is loaded for the first time (at first startup or when the
-      // cache is cleaned), the app shows the service list item without badge
       const isFirstVisibleServiceLoadCompleted: ReturnType<
         typeof isFirstVisibleServiceLoadCompletedSelector
       > = yield select(isFirstVisibleServiceLoadCompletedSelector);
-      if (!isFirstVisibleServiceLoadCompleted) {
-        yield put(markServiceAsRead(serviceId));
-      }
 
       if (response.isRight() && response.value.status === 200) {
         yield put(
           contentServiceLoad.success({ serviceId, data: response.value.value })
         );
+        // If the service is loaded for the first time (at first startup or when the
+        // cache is cleaned), the app shows the service list item without badge
+        if (!isFirstVisibleServiceLoadCompleted) {
+          yield put(markServiceAsRead(serviceId));
+        }
       } else {
         throw Error(`response status ${response.value.status}`);
       }
