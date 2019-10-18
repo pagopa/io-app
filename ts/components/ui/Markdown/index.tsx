@@ -240,7 +240,7 @@ class Markdown extends React.PureComponent<Props, State> {
           <ActivityIndicator
             size="large"
             color={customVariables.brandPrimary}
-            animating={isLoading}
+            animating={true}
           />
         )}
         {/* Hide the WebView until we have the htmlBodyHeight */}
