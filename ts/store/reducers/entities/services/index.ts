@@ -21,7 +21,11 @@ import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../organizations/organizationsByFiscalCodeReducer";
-import { firstLoadingReducer, FirstLoadingState } from "./firstServicesLoading";
+import {
+  firstLoadingReducer,
+  FirstLoadingState,
+  isFirstVisibleServiceLoadCompletedSelector
+} from "./firstServicesLoading";
 import readServicesByIdReducer, {
   readServicesByIdSelector,
   ReadStateByServicesId
@@ -365,20 +369,15 @@ export const servicesBadgeValueSelector = createSelector(
     nationalServicesSectionsSelector,
     selectedLocalServicesSectionsSelector,
     readServicesByIdSelector,
-    visibleServicesContentLoadStateSelector,
-    visibleServicesMetadataLoadStateSelector
+    isFirstVisibleServiceLoadCompletedSelector
   ],
   (
     nationalService,
     localService,
     readServicesById,
-    visibleServicesContentLoadState,
-    visibleServicesMetadataLoadState
+    isFirstVisibleServiceLoadCompleted
   ) => {
-    if (
-      pot.isSome(visibleServicesContentLoadState) &&
-      pot.isSome(visibleServicesMetadataLoadState)
-    ) {
+    if (isFirstVisibleServiceLoadCompleted) {
       const services: ReadonlyArray<ServicesSectionState> = [
         ...nationalService,
         ...localService

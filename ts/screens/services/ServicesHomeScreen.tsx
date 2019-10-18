@@ -560,14 +560,41 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   };
 
-  public render() {
+  private renderErrorContent = () => {
     const {
-      userMetadata,
       potUserMetadata,
+      refreshServices,
       visibleServicesContentLoadState,
-      visibleServicesMetadataLoadState,
-      refreshServices
+      visibleServicesMetadataLoadState
     } = this.props;
+
+    if (!this.state.toastContent) {
+      if (pot.isError(potUserMetadata)) {
+        return this.renderErrorPlaceholder(() =>
+          this.refreshScreenContent(true)
+        );
+      } else if (
+        !pot.isLoading(potUserMetadata) &&
+        (pot.isError(visibleServicesContentLoadState) ||
+          pot.isError(visibleServicesMetadataLoadState))
+      ) {
+        return this.renderErrorPlaceholder(refreshServices);
+      }
+    }
+    return undefined;
+  };
+
+  private renderInnerContent = () => {
+    if (this.props.isFirstServiceLoadCompleted || this.state.toastContent) {
+      return this.renderTabs();
+    } else {
+      return this.renderServiceLoadingPlaceholder();
+    }
+  };
+
+  public render() {
+    const { userMetadata } = this.props;
+
     return (
       <TopScreenComponent
         title={I18n.t("services.title")}
@@ -580,13 +607,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         searchType={"Services"}
       >
         <NavigationEvents onWillFocus={this.onNavigation} />
-        {!this.state.toastContent && pot.isError(potUserMetadata) ? (
-          this.renderErrorPlaceholder(() => this.refreshScreenContent(true))
-        ) : !this.state.toastContent &&
-        !pot.isLoading(this.props.potUserMetadata) &&
-        (pot.isError(visibleServicesContentLoadState) ||
-          pot.isError(visibleServicesMetadataLoadState)) ? (
-          this.renderErrorPlaceholder(refreshServices)
+        {this.renderErrorContent() ? (
+          this.renderErrorContent()
         ) : this.props.isSearchEnabled ? (
           this.renderSearch()
         ) : (
@@ -596,9 +618,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               icon={require("../../../img/icons/services-icon.png")}
               fixed={Platform.OS === "ios"}
             />
-            {this.props.isFirstServiceLoadCompleted || this.state.toastContent
-              ? this.renderTabs()
-              : this.renderServiceLoadingPlaceholder()}
+            {this.renderInnerContent()}
             {this.state.isLongPressEnabled &&
               this.renderLongPressFooterButtons()}
           </React.Fragment>
