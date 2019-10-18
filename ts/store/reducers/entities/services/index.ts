@@ -84,22 +84,22 @@ function getServicesLoadState<T>(
     [key: string]: pot.Pot<T, Error> | undefined;
   }>
 ): pot.Pot<void, Error> {
-  if (pot.isSome(visibleServices) && services !== {}) {
+  if (pot.isSome(visibleServices) && Object.keys(services).length > 0) {
     const visibleServicesById = visibleServices.value.map(
       service => services[service.service_id]
     );
 
+    // check if there is at least one service in loading state
     const areServicesLoading =
       pot.isLoading(visibleServices) ||
-      visibleServicesById.findIndex(vs => {
-        return vs === undefined || pot.isLoading(vs);
-      }) !== -1;
+      visibleServicesById.some(vs => vs === undefined || pot.isLoading(vs));
 
+    // check if there is at least one service in error state
     const isServicesLoadFailed =
       pot.isError(visibleServices) ||
-      visibleServicesById.findIndex(service => {
-        return service !== undefined && pot.isError(service);
-      }) !== -1;
+      visibleServicesById.some(
+        service => service !== undefined && pot.isError(service)
+      );
 
     if (areServicesLoading) {
       return pot.noneLoading;

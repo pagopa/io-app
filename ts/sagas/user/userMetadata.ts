@@ -20,10 +20,7 @@ import {
   userMetadataLoad,
   userMetadataUpsert
 } from "../../store/actions/userMetadata";
-import {
-  visibleServicesSelector,
-  VisibleServicesState
-} from "../../store/reducers/entities/services/visibleServices";
+import { visibleServicesSelector } from "../../store/reducers/entities/services/visibleServices";
 import {
   backendUserMetadataToUserMetadata,
   emptyUserMetadata,
@@ -104,9 +101,9 @@ export function* loadUserMetadata(
 
   // If, at startup, the load of both user metadata and visible services fails,
   // it grants visible services are loaded again
-  const visibleServices: VisibleServicesState = yield select(
-    visibleServicesSelector
-  );
+  const visibleServices: ReturnType<
+    typeof visibleServicesSelector
+  > = yield select(visibleServicesSelector);
   if (pot.isError(visibleServices)) {
     yield put(loadVisibleServices.request());
   }

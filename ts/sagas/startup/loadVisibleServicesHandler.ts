@@ -11,14 +11,8 @@ import {
   removeServiceTuples
 } from "../../store/actions/services";
 import { servicesMetadataByIdSelector } from "../../store/reducers/content";
-import {
-  MessagesIdsByServiceId,
-  messagesIdsByServiceIdSelector
-} from "../../store/reducers/entities/messages/messagesIdsByServiceId";
-import {
-  servicesByIdSelector,
-  ServicesByIdState
-} from "../../store/reducers/entities/services/servicesById";
+import { messagesIdsByServiceIdSelector } from "../../store/reducers/entities/messages/messagesIdsByServiceId";
+import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { SagaCallReturnType } from "../../types/utils";
 
 type VisibleServiceVersionById = {
@@ -42,9 +36,6 @@ export function* loadVisibleServicesRequestHandler(
       {}
     );
     if (response.isLeft()) {
-      yield put(
-        loadVisibleServices.failure(Error(readableReport(response.value)))
-      );
       throw Error(readableReport(response.value));
     }
     if (response.value.status === 200) {
@@ -61,13 +52,13 @@ export function* loadVisibleServicesRequestHandler(
         {}
       );
 
-      const storedServicesById: ServicesByIdState = yield select(
-        servicesByIdSelector
-      );
+      const storedServicesById: ReturnType<
+        typeof servicesByIdSelector
+      > = yield select(servicesByIdSelector);
 
-      const messagesIdsByServiceId: MessagesIdsByServiceId = yield select(
-        messagesIdsByServiceIdSelector
-      );
+      const messagesIdsByServiceId: ReturnType<
+        typeof messagesIdsByServiceIdSelector
+      > = yield select(messagesIdsByServiceIdSelector);
 
       // Create an array of tuples containing:
       // - serviceId (to remove service from both the servicesById and the servicesMetadataById sections of the redux store)
@@ -102,7 +93,7 @@ export function* loadVisibleServicesRequestHandler(
       // Dispatch action to remove the services from the redux store
       yield put(removeServiceTuples(serviceTuplesToRemove));
 
-      // Chack the content of what services should be loaded
+      // Check which services content should be loaded
       const serviceIdsToLoad = visibleServices
         .filter(service => {
           const serviceId = service.service_id;
@@ -123,11 +114,13 @@ export function* loadVisibleServicesRequestHandler(
       // Parallel fetch of those services content that we haven't loaded yet or need to be updated
       yield all(serviceIdsToLoad.map(id => put(loadService.request(id))));
 
-      // Check the metadata of what services should be loaded
+      // Check which services metadata should be loaded
       // Metadata has no version and they are updated only if:
       // - service content version is updated ( after loadService.request service metadata are loaded again)
-      // - service metadata stored on redux store has error state (meaning somthing wrong when loaded)
-      const servicesMetadataById = yield select(servicesMetadataByIdSelector);
+      // - service metadata stored on redux store has error state (meaning somthing gone wrong when loaded)
+      const servicesMetadataById: ReturnType<
+        typeof servicesMetadataByIdSelector
+      > = yield select(servicesMetadataByIdSelector);
       const serviceIdsToLoad2 = visibleServices
         .filter(service => {
           const serviceId = service.service_id;

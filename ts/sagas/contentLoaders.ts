@@ -46,6 +46,7 @@ function getServiceMetadata(
  * TODO: do not retrieve the content on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
+// tslint:disable-next-line:cognitive-complexity
 export function* watchContentServiceLoadSaga(): Iterator<Effect> {
   yield takeEvery(getType(contentServiceLoad.request), function*(
     action: ActionType<typeof contentServiceLoad["request"]>
@@ -66,9 +67,9 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
 
       // If the service is loaded for the first time (at first startup or when the
       // cache is cleaned), the app shows the service list item without badge
-      const isFirstVisibleServiceLoadCompleted = yield select(
-        isFirstVisibleServiceLoadCompletedSelector
-      );
+      const isFirstVisibleServiceLoadCompleted: ReturnType<
+        typeof isFirstVisibleServiceLoadCompletedSelector
+      > = yield select(isFirstVisibleServiceLoadCompletedSelector);
       if (!isFirstVisibleServiceLoadCompleted) {
         yield put(markServiceAsRead(serviceId));
       }
@@ -83,19 +84,19 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
 
       // If all services content and metadata are loaded with success,
       // stop considering loaded services as read
-      const visibleServicesMetadataLoadState = yield select(
-        visibleServicesMetadataLoadStateSelector
-      );
-      const visibleServicesContentLoadState = yield select(
-        visibleServicesContentLoadStateSelector
-      );
-
-      if (
-        !isFirstVisibleServiceLoadCompleted &&
-        pot.isSome(visibleServicesMetadataLoadState) &&
-        pot.isSome(visibleServicesContentLoadState)
-      ) {
-        yield put(FirstServiceLoadSuccess());
+      if (!isFirstVisibleServiceLoadCompleted) {
+        const visibleServicesMetadataLoadState: ReturnType<
+          typeof visibleServicesMetadataLoadStateSelector
+        > = yield select(visibleServicesMetadataLoadStateSelector);
+        const visibleServicesContentLoadState: ReturnType<
+          typeof visibleServicesContentLoadStateSelector
+        > = yield select(visibleServicesContentLoadStateSelector);
+        if (
+          pot.isSome(visibleServicesMetadataLoadState) &&
+          pot.isSome(visibleServicesContentLoadState)
+        ) {
+          yield put(FirstServiceLoadSuccess());
+        }
       }
     } catch (e) {
       yield put(
