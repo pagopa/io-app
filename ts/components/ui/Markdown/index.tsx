@@ -236,11 +236,11 @@ class Markdown extends React.PureComponent<Props, State> {
 
     return (
       <React.Fragment>
-        {isLoadingComplete && (
+        {isLoading && (
           <ActivityIndicator
             size="large"
             color={customVariables.brandPrimary}
-            animating={isLoadingComplete}
+            animating={isLoading}
           />
         )}
         {/* Hide the WebView until we have the htmlBodyHeight */}
