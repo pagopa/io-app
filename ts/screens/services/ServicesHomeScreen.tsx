@@ -39,7 +39,6 @@ import {
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ChooserListContainer from "../../components/ChooserListContainer";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -55,7 +54,6 @@ import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { contentServiceLoad } from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
@@ -598,7 +596,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               icon={require("../../../img/icons/services-icon.png")}
               fixed={Platform.OS === "ios"}
             />
-            {this.props.isFisrtServiceLoadCompleted || this.state.toastContent
+            {this.props.isFirstServiceLoadCompleted || this.state.toastContent
               ? this.renderTabs()
               : this.renderServiceLoadingPlaceholder()}
             {this.state.isLongPressEnabled &&
@@ -906,7 +904,7 @@ const mapStateToProps = (state: GlobalState) => {
     state
   );
 
-  const isFisrtServiceLoadCompleted =
+  const isFirstServiceLoadCompleted =
     pot.isSome(visibleServicesContentLoadState) &&
     pot.isSome(visibleServicesMetadataLoadState);
 
@@ -918,7 +916,7 @@ const mapStateToProps = (state: GlobalState) => {
     selectableOrganizations,
     selectedOrganizations: organizationsOfInterestSelector(state),
     isLoadingServices,
-    isFisrtServiceLoadCompleted,
+    isFirstServiceLoadCompleted,
     visibleServicesContentLoadState,
     visibleServicesMetadataLoadState,
     profile: profileSelector(state),
@@ -985,8 +983,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  contentServiceLoad: (serviceId: ServiceId) =>
-    dispatch(contentServiceLoad.request(serviceId)),
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => dispatch(navigateToServiceDetailsScreen(params)),
