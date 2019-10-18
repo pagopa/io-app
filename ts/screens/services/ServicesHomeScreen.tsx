@@ -710,7 +710,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           Platform.OS === "ios" && {
             transform: [
               {
-                // hasRefreshedOnceUp is used to avoid unwanted refresh of
+                // enableHeaderAnimation is used to avoid unwanted refresh of
                 // animation
                 translateY: this.state.enableHeaderAnimation
                   ? this.animatedScrollPositions[
