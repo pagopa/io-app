@@ -18,6 +18,7 @@ import { ContentActions } from "./content";
 import { DebugActions } from "./debug";
 import { DeepLinkActions } from "./deepLink";
 import { IdentificationActions } from "./identification";
+import { InstabugInfoActions } from "./instabug";
 import { InstallationActions } from "./installation";
 import { MessagesActions } from "./messages";
 import { NavigationActions } from "./navigation";
@@ -60,7 +61,8 @@ export type Action =
   | CalendarEventsActions
   | SearchActions
   | PaymentsActions
-  | OrganizationsActions;
+  | OrganizationsActions
+  | InstabugInfoActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
