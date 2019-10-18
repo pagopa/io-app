@@ -550,7 +550,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private onNavigation = () => {
     this.setState({ isLongPressEnabled: false });
-    // If cache is cleaned and the page had been rendered jet,
+    // If cache has been cleaned and the page is already rendered,
     // it grants content is refreshed
     if (
       pot.isNone(this.props.visibleServices) &&
