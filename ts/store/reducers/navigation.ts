@@ -6,6 +6,7 @@ import {
 import { getType } from "typesafe-actions";
 
 import AppNavigator from "../../navigation/AppNavigator";
+import { logoutFailure } from "../actions/authentication";
 import { navigationRestore } from "../actions/navigation";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -21,6 +22,9 @@ export const navigationStateSelector = (state: GlobalState): NavigationState =>
 
 function nextState(state: NavigationState, action: Action): NavigationState {
   switch (action.type) {
+    // Used to restart application after logout
+    case getType(logoutFailure):
+      return INITIAL_STATE;
     /**
      * The getStateForAction method only accepts NavigationActions so we need to
      * check the action type.
