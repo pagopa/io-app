@@ -1,11 +1,12 @@
 import { Effect } from "redux-saga";
-import { put } from "redux-saga/effects";
+import { cancel, fork, put, take, takeEvery } from "redux-saga/effects";
+import { getType } from "typesafe-actions";
 import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen,
   navigateToEmailValidateScreen
 } from "../../store/actions/navigation";
-import {} from "../../store/actions/navigation";
+import { emailAcknowledged, emailInsert } from "../../store/actions/onboarding";
 
 /**
  * Launch email saga that consists of:
@@ -45,4 +46,20 @@ export function* checkAcknowledgedEmailSaga(): IterableIterator<Effect> {
 
     yield put(navigateToEmailInsertScreen);
   }
+
+  const watchEditEmailSagaTask = yield fork(watchEditEmailSaga);
+
+  // Wait for the user to press "Continue" button after having checked out
+  // theirs own email
+  yield take(emailAcknowledged);
+
+  yield cancel(watchEditEmailSagaTask);
+}
+
+export function* watchEditEmailSaga(): Iterator<Effect> {
+  yield takeEvery([getType(emailInsert)], function*() {
+    // Wait for the user to press "Continue" button after having inserted
+    // theirs own email
+    yield put(navigateToEmailValidateScreen);
+  });
 }
