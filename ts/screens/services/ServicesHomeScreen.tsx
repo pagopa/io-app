@@ -259,14 +259,14 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   public componentDidMount() {
     // On mount, update visible services and user metadata if their
-    // refresh, at startup, fails
+    // refresh fails
     if (pot.isError(this.props.potUserMetadata)) {
       this.props.refreshUserMetadata();
     }
 
     if (
-      !pot.isLoading(this.props.visibleServicesContentLoadState) &&
-      !pot.isLoading(this.props.visibleServicesMetadataLoadState)
+      pot.isError(this.props.visibleServicesContentLoadState) ||
+      pot.isError(this.props.visibleServicesMetadataLoadState)
     ) {
       this.props.refreshServices();
     }
@@ -566,7 +566,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     const {
       userMetadata,
       potUserMetadata,
-      refreshUserMetadata,
       visibleServicesContentLoadState,
       visibleServicesMetadataLoadState,
       refreshServices
@@ -584,7 +583,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       >
         <NavigationEvents onWillFocus={this.onNavigation} />
         {!this.state.toastContent && pot.isError(potUserMetadata) ? (
-          this.renderErrorPlaceholder(refreshUserMetadata)
+          this.renderErrorPlaceholder(() => this.refreshScreenContent(true))
         ) : !this.state.toastContent &&
         !pot.isLoading(this.props.potUserMetadata) &&
         (pot.isError(visibleServicesContentLoadState) ||
@@ -663,8 +662,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
   };
 
-  private refreshScreenContent = () => {
-    this.setState({ toastContent: I18n.t("global.genericError") });
+  private refreshScreenContent = (hideToast: boolean = false) => {
+    if (!hideToast) {
+      this.setState({ toastContent: I18n.t("global.genericError") });
+    }
     this.props.refreshUserMetadata();
     this.props.refreshServices();
   };
