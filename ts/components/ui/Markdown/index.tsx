@@ -231,7 +231,7 @@ class Markdown extends React.PureComponent<Props, State> {
       height: htmlBodyHeight
     };
 
-    const isLoadingComplete =
+    const isLoading =
       html === undefined || (html !== "" && htmlBodyHeight === 0);
 
     return (
