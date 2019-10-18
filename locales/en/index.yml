@@ -230,6 +230,7 @@ authentication:
     tosLinkText: rules on the processing of personal data
     continue: Continue
   spid_information:
+    spid: !include spid.md
     headerTitle: What is SPID?
     contentTitle: Don't have SPID or CIE?
     moreLinkText: Learn more
@@ -743,3 +744,4 @@ reminders:
   loadMoreData: loads the deadlines of the previous period
 openMaps:
   genericError: An error occurred while opening the map
+genericError: An error occurred
