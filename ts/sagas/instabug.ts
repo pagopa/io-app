@@ -1,7 +1,7 @@
 import { Replies } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, Effect, fork, put } from "redux-saga/effects";
-import { responseInstabugUnreadMessagesLoaded } from "../store/actions/instabug";
+import { instabugUnreadMessagesLoaded } from "../store/actions/instabug";
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
 
@@ -13,15 +13,15 @@ const loadInstabugUnreadMessages = () => {
   });
 };
 
-// refresh instabug messages time rate
-const INSTABUG_INFO_LOAD_INTERVAL: Millisecond = (5 * 1000) as Millisecond;
+// refresh instabug unread messages time rate, for now it is 5 min
+const INSTABUG_INFO_LOAD_INTERVAL: Millisecond = (5 * 60 * 1000) as Millisecond;
 
 function* watchInstabugSaga(): IterableIterator<Effect> {
   while (true) {
     const repliesCount: SagaCallReturnType<
       typeof loadInstabugUnreadMessages
     > = yield call(loadInstabugUnreadMessages);
-    yield put(responseInstabugUnreadMessagesLoaded(repliesCount));
+    yield put(instabugUnreadMessagesLoaded(repliesCount));
     yield call(startTimer, INSTABUG_INFO_LOAD_INTERVAL);
   }
 }
