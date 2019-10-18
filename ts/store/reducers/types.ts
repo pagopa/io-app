@@ -10,6 +10,7 @@ import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
 import { EntitiesState } from "./entities";
 import { IdentificationState } from "./identification";
+import { InstabugUnreadMessagesState } from "./instabug/instabugUnreadMessages";
 import { InstallationState } from "./installation";
 import { NavigationHistoryState } from "./navigationHistory";
 import { NotificationsState } from "./notifications";
@@ -33,6 +34,7 @@ export type GlobalState = Readonly<{
   backendInfo: BackendInfoState;
   deepLink: DeepLinkState;
   entities: EntitiesState;
+  instabug: InstabugUnreadMessagesState;
   nav: NavigationState;
   network: NetworkState;
   notifications: NotificationsState;
