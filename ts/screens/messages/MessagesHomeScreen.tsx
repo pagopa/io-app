@@ -53,6 +53,7 @@ type Props = NavigationScreenProps &
 type State = {
   currentTab: number;
   hasRefreshedOnceUp: boolean;
+  isOutdatedVersion: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -105,7 +106,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       currentTab: 0,
-      hasRefreshedOnceUp: false
+      hasRefreshedOnceUp: false,
+      isOutdatedVersion: false
     };
   }
 
@@ -153,6 +155,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       minAppVersion !== undefined &&
       parseFloat(minAppVersion) > parseFloat(DeviceInfo.getVersion())
     ) {
+      this.setState({ isOutdatedVersion: true });
       // Show popup message to invite user to update app
       this.props.showModal(
         <AlertModal
@@ -203,7 +206,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               icon={require("../../../img/icons/message-icon.png")}
               fixed={Platform.OS === "ios"}
             />
-            {this.renderTabs()}
+            {this.state.isOutdatedVersion ? undefined : this.renderTabs()}
           </React.Fragment>
         )}
         {isSearchEnabled && this.renderSearch()}
