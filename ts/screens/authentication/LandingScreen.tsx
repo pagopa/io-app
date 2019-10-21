@@ -105,7 +105,7 @@ const LandingScreen: React.SFC<Props> = props => {
             onPress={undefined} // here navigate to identity card check
             testID="landing-button-login-cie"
           >
-            <IconFont name="io-profilo" color={variables.colorWhite} />
+            <IconFont name="io-cie" color={variables.colorWhite} />
             <Text>{I18n.t("authentication.landing.loginCie")}</Text>
           </Button>
         )}
