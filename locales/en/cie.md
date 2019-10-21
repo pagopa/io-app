@@ -1,9 +1,9 @@
-**CIE**, la Carta di Identità Elettronica, ti permette di accedere a tutti i servizi della Pubblica Amministrazione. La puoi usare per accedere comodamente ad IO sul tuo smartphone. Ti servirà anche il pin che ti viene consegnto metà in anagrafe e metà per posta insieme alla carta.
+**EIC**, the Electronic Identity Card, allows you to access all the services of the Public Administration. You can use it to conveniently access IO on your smartphone. You will also need the pin that is given to you half in the registry and half by mail together with the card.
 
-# CIE è sicura
+# EIC is safe
 
-Insieme a SPID, CIE è l'unico strumento che consente di certificare la propria identità digitale con il massimo livello di sicurezza.
+Together with SPID, EIC is the only tool that allows you to certify your digital identity with the highest level of security.
 
-# Come ottenere CIE
+# How to get EIC
 
-Puoi fare richiesta delle CIE presso l'anagrafe del tuo comune di residenza o dimora: per saperne di più vai su [www.cartaidentita.interno.gov.it](https://www.cartaidentita.interno.gov.it)
+You can apply for the EIC at the registry office of your municipality of residence or residence: to learn more go to [www.cartaidentita.interno.gov.it](https://www.cartaidentita.interno.gov.it)
