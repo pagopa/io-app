@@ -37,9 +37,9 @@ import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
+import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
-import { formatDateAsLocal } from "./../../utils/dates";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
