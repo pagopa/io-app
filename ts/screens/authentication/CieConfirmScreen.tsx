@@ -9,6 +9,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 
@@ -24,24 +25,38 @@ type State = Readonly<{
 }>;
 
 const screenWidth = Dimensions.get("screen").width;
+const boxDimension = 200;
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
     padding: variables.contentPadding
   },
   container: {
-    width: screenWidth,
+    width: boxDimension,
+    height: boxDimension,
     alignItems: "center",
     alignContent: "flex-start",
-    flex: 1
+    flex: 1,
+    backgroundColor: "yellow"
+  },
+  containerBox: {
+    width: screenWidth,
+    height: 200,
+    alignItems: "center",
+    alignContent: "flex-start",
+    flex: 1,
+    backgroundColor: "red"
   },
   image: {
     width: 180,
     height: 180,
-    resizeMode: "contain",
+    resizeMode: "cover",
     borderColor: variables.brandLightGray,
     borderWidth: 1.5,
     borderRadius: Platform.OS === "ios" ? 180 / 2 : 180
+  },
+  text: {
+    fontSize: variables.fontSizeBase
   }
 });
 
@@ -56,14 +71,23 @@ class CieConfirmScreen extends React.Component<Props, State> {
         <NavigationEvents onWillFocus={undefined} />
         <View style={styles.contentContainerStyle}>
           <H1>{I18n.t("authentication.landing.ok")}</H1>
-          <Text>{I18n.t("authentication.landing.cardOk")}</Text>
+          <Text style={styles.text}>
+            {I18n.t("authentication.landing.cardOk")}
+          </Text>
         </View>
-        <View spacer={true} />
-        <View style={styles.container}>
-          <Image
-            source={require("../../../img/landing/place-card-illustration.png")}
-            style={styles.image}
-          />
+        <View spacer={true} extralarge={true} />
+        <View style={styles.containerBox}>
+          <View style={styles.container}>
+            <Image
+              source={require("../../../img/landing/place-card-illustration.png")}
+              style={styles.image}
+            />
+            <IconFont
+              name="io-success"
+              color={variables.textLinkColor}
+              size={50}
+            />
+          </View>
         </View>
       </BaseScreenComponent>
     );
