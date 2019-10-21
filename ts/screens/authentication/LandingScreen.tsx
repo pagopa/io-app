@@ -32,7 +32,7 @@ type OwnProps = {
 };
 
 type Props = ReduxProps & OwnProps;
-const isNFCavailable = false; // simulation of the device that has nfc
+const isNFCavailable = true; // waiting for sdk cie implementation
 const isCIEAvailable = isNFCavailable && isCIEauthenticationEnabled;
 
 const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
@@ -102,8 +102,8 @@ const LandingScreen: React.SFC<Props> = props => {
             block={true}
             primary={true}
             iconLeft={true}
-            onPress={navigateToIdpSelection}
-            testID="landing-button-login"
+            onPress={undefined} // here navigate to identity card check
+            testID="landing-button-login-cie"
           >
             <IconFont name="io-profilo" color={variables.colorWhite} />
             <Text>{I18n.t("authentication.landing.loginCie")}</Text>
@@ -115,7 +115,7 @@ const LandingScreen: React.SFC<Props> = props => {
           primary={true}
           iconLeft={true}
           onPress={navigateToIdpSelection}
-          testID="landing-button-login"
+          testID="landing-button-login-spid"
         >
           <IconFont name="io-profilo" color={variables.colorWhite} />
           <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
