@@ -4,6 +4,7 @@ import {
 } from "react-navigation";
 
 import { environment } from "../config";
+import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
@@ -18,6 +19,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: {
     screen: IdpSelectionScreen
+  },
+  [ROUTES.AUTHENTICATION_CIE]: {
+    screen: CardSelectionScreen
   },
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
     screen: IdpLoginScreen
