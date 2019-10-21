@@ -1,3 +1,4 @@
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
 const ringSettings = {
   dimension: ringDimensionMin,
   opacity: 0.3,
-  duration: 2200
+  duration: 2200 as Millisecond
 };
 
 /**
@@ -67,6 +68,7 @@ const ringSettings = {
  */
 const CardSelectionScreen: React.SFC<Props> = props => {
   return (
+    // With the following animation we can represent 3 circles that light up similar to a 'radar' effect
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
@@ -84,20 +86,23 @@ const CardSelectionScreen: React.SFC<Props> = props => {
             <AnimatedRing
               dimension={ringSettings.dimension}
               opacity={ringSettings.opacity}
-              interval={0}
+              interval={0 as Millisecond}
               duration={ringSettings.duration}
+              boxDimension={boxDimension}
             />
             <AnimatedRing
               dimension={ringSettings.dimension}
               opacity={ringSettings.opacity}
-              interval={ringSettings.duration / 3}
+              interval={(ringSettings.duration / 3) as Millisecond}
               duration={ringSettings.duration}
+              boxDimension={boxDimension}
             />
             <AnimatedRing
               dimension={ringSettings.dimension}
               opacity={ringSettings.opacity}
-              interval={(ringSettings.duration / 3) * 2}
+              interval={((ringSettings.duration / 3) * 2) as Millisecond}
               duration={ringSettings.duration}
+              boxDimension={boxDimension}
             />
 
             <Image
