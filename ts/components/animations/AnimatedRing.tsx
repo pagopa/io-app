@@ -19,7 +19,7 @@ interface Props {
   boxDimension: number;
 }
 /**
- * Create a ring with opacity with the primary color
+ * Create a ring with opacity and scale effect with the primary color
  */
 export default class AnimatedRing extends React.Component<Props> {
   constructor(props: Props) {
