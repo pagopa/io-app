@@ -1,6 +1,7 @@
 import { createStackNavigator } from "react-navigation";
 
-import EmailScreen from "../screens/onboarding/EmailScreen";
+import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
+import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import BiometricRecognitionScreen from "../screens/profile/BiometricRecognitionScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
@@ -36,8 +37,11 @@ const ProfileNavigator = createStackNavigator(
     [ROUTES.PROFILE_FISCAL_CODE]: {
       screen: FiscalCodeScreen
     },
-    [ROUTES.EMAIL_SCREEN]: {
-      screen: EmailScreen
+    [ROUTES.READ_EMAIL_SCREEN]: {
+      screen: EmailReadScreen
+    },
+    [ROUTES.INSERT_EMAIL_SCREEN]: {
+      screen: EmailInsertScreen
     }
   },
   {

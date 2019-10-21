@@ -313,12 +313,16 @@ onboarding:
   email:
     insert:
       headerTitle: Attivazione
-      title: Inserisci la tua email
+      titleInsert: Inserisci la tua email
+      titleEdit: Modifica la tua email
       help:
         title: Email
         content: !include email_insert_help.md
-    subtitle: Alcune funzioni di IO hanno bisogno della tua email.
-    emailInputLabel: Indirizzo email personale
+    subtitleInsert: Alcune funzioni di IO hanno bisogno della tua email.
+    subtitleEdit: L'email che avevi inserto in precedenza è
+    subtitleValidated: L'email che avevi inserto e validato in precedenza è
+    emailInsertInputLabel: Indirizzo email personale
+    emailEditInputLabel: Nuovo indirizzo email personale
     emailInfo: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
       usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
       il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua

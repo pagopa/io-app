@@ -8,7 +8,6 @@ import * as React from "react";
 import { Alert, Platform, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons, {
@@ -18,7 +17,7 @@ import FooterWithButtons, {
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
+import ROUTES from "../../navigation/routes";
 import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,
@@ -29,8 +28,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
 type NavigationParams = {
-  biometryType: BiometrySimpleType;
-  isInPreference: boolean;
+  isOnboardingCompleted?: boolean;
 };
 
 type Props = ReduxProps &
@@ -92,10 +90,11 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       type: "SingleButton",
       leftButton: {
         bordered: true,
-        onPress: () => {
-          /* TODO */
-        },
-        title: "Modifica indirizzo email"
+        onPress: () =>
+          this.props.navigation.navigate(ROUTES.INSERT_EMAIL_SCREEN, {
+            isEditing: true
+          }),
+        title: I18n.t("onboarding.email.read.ctaEdit")
       }
     };
 
@@ -115,12 +114,16 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       }
     };
 
-    const isInPreference = this.props.navigation.getParam("isInPreference");
+    const isOnboardingCompleted = this.props.navigation.getParam(
+      "isOnboardingCompleted"
+    );
 
     return (
       <TopScreenComponent
         goBack={
-          isInPreference ? this.props.navigation.goBack : this.handleGoBack
+          isOnboardingCompleted
+            ? this.props.navigation.goBack
+            : this.handleGoBack
         }
         title={I18n.t("onboarding.email.read.title")}
         contextualHelp={{
@@ -131,14 +134,16 @@ export class EmailReadScreen extends React.PureComponent<Props> {
         }}
       >
         <ScreenContent
-title={I18n.t("onboarding.email.read.title")}
+          title={I18n.t("onboarding.email.read.title")}
           subtitle={
-            isInPreference ? undefined : I18n.t("onboarding.email.subtitle")
+            isOnboardingCompleted
+              ? undefined
+              : I18n.t("onboarding.email.subtitleInsert")
           }
         >
           <View style={styles.content}>
             <Text style={styles.emailLabel}>
-              {I18n.t("onboarding.email.emailInputLabel")}
+              {I18n.t("onboarding.email.emailInsertInputLabel")}
             </Text>
             <View style={styles.spacerSmall} />
             <View style={styles.emailWithIcon}>
@@ -153,17 +158,17 @@ title={I18n.t("onboarding.email.read.title")}
             </View>
             <View style={styles.spacerLarge} />
             <Text>
-              {isInPreference
+              {isOnboardingCompleted
                 ? `${I18n.t("onboarding.email.emailInfo2")} \n`
                 : I18n.t("onboarding.email.emailInfo")}
               <Text bold={true}>
-                {isInPreference && I18n.t("onboarding.email.emailAlert")}
+                {isOnboardingCompleted && I18n.t("onboarding.email.emailAlert")}
               </Text>
             </Text>
           </View>
         </ScreenContent>
         <FooterWithButtons
-          {...(isInPreference ? footerProps1 : footerProps2)}
+          {...(isOnboardingCompleted ? footerProps1 : footerProps2)}
         />
       </TopScreenComponent>
     );

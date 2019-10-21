@@ -184,8 +184,8 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.email")}
               subTitle={profileData.spid_email}
               onPress={() =>
-                this.props.navigation.navigate(ROUTES.EMAIL_SCREEN, {
-                  isInPreference: true
+                this.props.navigation.navigate(ROUTES.READ_EMAIL_SCREEN, {
+                  isOnboardingCompleted: true
                 })
               }
             />
