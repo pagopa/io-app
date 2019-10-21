@@ -100,37 +100,34 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
 
   public render() {
     return (
-      this.props.isDebugModeEnabled && (
-        <React.Fragment>
-          <Button onPress={this.handleIBChatPress} transparent={true}>
-            <IconFont
-              name="io-chat"
-              color={this.props.color}
-              accessible={true}
-              accessibilityLabel="io-chat"
-            />
-          </Button>
-          <CustomBadge
-            badgeStyle={styles.badgeStyle}
-            textStyle={styles.textStyle}
-            badgeValue={this.props.badge}
+      <React.Fragment>
+        <Button onPress={this.handleIBChatPress} transparent={true}>
+          <IconFont
+            name="io-chat"
+            color={this.props.color}
+            accessible={true}
+            accessibilityLabel="io-chat"
           />
-          <Button onPress={this.handleIBBugPress} transparent={true}>
-            <IconFont
-              name="io-bug"
-              color={this.props.color}
-              accessible={true}
-              accessibilityLabel="io-bug"
-            />
-          </Button>
-        </React.Fragment>
-      )
+        </Button>
+        <CustomBadge
+          badgeStyle={styles.badgeStyle}
+          textStyle={styles.textStyle}
+          badgeValue={this.props.badge}
+        />
+        <Button onPress={this.handleIBBugPress} transparent={true}>
+          <IconFont
+            name="io-bug"
+            color={this.props.color}
+            accessible={true}
+            accessibilityLabel="io-bug"
+          />
+        </Button>
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isDebugModeEnabled: state.debug.isDebugModeEnabled,
   badge: instabugMessageStateSelector(state)
 });
 
