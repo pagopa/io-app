@@ -1,7 +1,7 @@
-import { none, Option } from "fp-ts/lib/Option";
-import { Col, Content, Grid, H1, Text, View } from "native-base";
+import { Option } from "fp-ts/lib/Option";
+import { H1, Text, View } from "native-base";
 import * as React from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import { Dimensions, Image, Platform, StyleSheet } from "react-native";
 import {
   NavigationEvents,
   NavigationScreenProp,
@@ -9,7 +9,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-// import I18n from "../../i18n";
+import I18n from "../../i18n";
 import variables from "../../theme/variables";
 
 type OwnProps = Readonly<{
@@ -32,14 +32,16 @@ const styles = StyleSheet.create({
   container: {
     width: screenWidth,
     alignItems: "center",
-    alignContent: "flex-start"
+    alignContent: "flex-start",
+    flex: 1
   },
   image: {
-    width: screenWidth / 2,
-    height: screenWidth / 2,
+    width: 180,
+    height: 180,
     resizeMode: "contain",
     borderColor: variables.brandLightGray,
-    borderWidth: 1
+    borderWidth: 1.5,
+    borderRadius: Platform.OS === "ios" ? 180 / 2 : 180
   }
 });
 
@@ -52,28 +54,16 @@ class CieConfirmScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent goBack={true}>
         <NavigationEvents onWillFocus={undefined} />
-        <Content
-          contentContainerStyle={styles.contentContainerStyle}
-          noPadded={true}
-        >
-          <H1>Ok</H1>
-          <Text>
-            Ok, la tua carta è valida! Attendi ancora qualche secondo..
-          </Text>
-        </Content>
+        <View style={styles.contentContainerStyle}>
+          <H1>{I18n.t("authentication.landing.ok")}</H1>
+          <Text>{I18n.t("authentication.landing.cardOk")}</Text>
+        </View>
+        <View spacer={true} />
         <View style={styles.container}>
           <Image
-            source={require("../../../img/landing/cie/place-card-illustration.png")}
+            source={require("../../../img/landing/place-card-illustration.png")}
             style={styles.image}
           />
-          <View spacer={true} />
-          <Grid>
-            <Col size={1} />
-            <Col size={7}>
-              <View spacer={true} />
-            </Col>
-            <Col size={1} />
-          </Grid>
         </View>
       </BaseScreenComponent>
     );

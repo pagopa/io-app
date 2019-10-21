@@ -219,6 +219,8 @@ authentication:
     card5-content: In questa versione sperimentale trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
+    ok: Ok
+    cardOk: Ok, la tua carta è valida! Attendi ancora qualche secondo..
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
