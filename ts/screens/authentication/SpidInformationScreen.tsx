@@ -3,9 +3,13 @@
  */
 import {
   Button,
+  Col,
   Container,
   Content,
+  Grid,
   H1,
+  H2,
+  Row,
   Tab,
   Tabs,
   Text,
@@ -50,6 +54,20 @@ const styles = StyleSheet.create({
 });
 
 class SpidInformationScreen extends React.Component<Props, never> {
+  private getValueContent(value: string, content: string) {
+    return (
+      <Row style={styles.row}>
+        <Col size={1}>
+          <H2 style={styles.value}>{value}</H2>
+        </Col>
+        <Col size={5}>
+          <Text>{content}</Text>
+        </Col>
+        <Col size={2} />
+      </Row>
+    );
+  }
+
   private browseToLink(url: string) {
     Linking.openURL(url).catch(() => {
       Toast.show({ text: I18n.t("genericError") });
@@ -75,6 +93,27 @@ class SpidInformationScreen extends React.Component<Props, never> {
                 <Markdown>
                   {I18n.t("authentication.spid_information.spid")}
                 </Markdown>
+                <Grid>
+                  {this.getValueContent(
+                    I18n.t("authentication.spid_information.point1-value"),
+                    I18n.t("authentication.spid_information.point1-content")
+                  )}
+
+                  {this.getValueContent(
+                    I18n.t("authentication.spid_information.point2-value"),
+                    I18n.t("authentication.spid_information.point2-content")
+                  )}
+
+                  {this.getValueContent(
+                    I18n.t("authentication.spid_information.point3-value"),
+                    I18n.t("authentication.spid_information.point3-content")
+                  )}
+
+                  {this.getValueContent(
+                    I18n.t("authentication.spid_information.point4-value"),
+                    I18n.t("authentication.spid_information.point4-content")
+                  )}
+                </Grid>
                 <View spacer={true} extralarge={true} />
               </Content>
               <View footer={true}>
