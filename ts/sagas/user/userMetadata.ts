@@ -96,6 +96,7 @@ export function* loadUserMetadata(
   }
 
   yield put(userMetadataLoad.success(userMetadataOrError.value));
+
   return some(userMetadataOrError.value);
 }
 
