@@ -3,6 +3,7 @@ import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -57,6 +58,8 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
           onPress={unavailableAlert}
           useExtendedSubTitle={true}
         />
+
+        <EdgeBorderComponent />
       </List>
     </ScreenContent>
   </TopScreenComponent>

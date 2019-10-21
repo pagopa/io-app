@@ -17,6 +17,7 @@ import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
+  isEmailEditingAndValidationEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -34,20 +35,12 @@ import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
-import {
-  firstServicesLoad,
-  loadService,
-  loadVisibleServices
-} from "../store/actions/services";
+import { loadService, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
-import {
-  servicesByIdSelector,
-  ServicesByIdState
-} from "../store/reducers/entities/services/servicesById";
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -66,6 +59,7 @@ import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
+import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
@@ -236,6 +230,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
     storedPin = yield call(checkConfiguredPinSaga);
     yield call(checkAcknowledgedFingerprintSaga);
+
+    if (isEmailEditingAndValidationEnabled) {
+      yield call(checkAcknowledgedEmailSaga);
+    }
+
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
   } else {
@@ -305,13 +304,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     backendClient.getVisibleServices
   );
 
-  // Trigger the services content and metadata  being loaded/refreshed.
-  // If the services list is empty (first app startup), the services load will
-  // requires more time and the services section displays a dedicated message to the user
-  const servicesById: ServicesByIdState = yield select(servicesByIdSelector);
-  if (Object.keys(servicesById).length === 0) {
-    yield put(firstServicesLoad.request());
-  }
+  // Trigger the services content and metadata being loaded/refreshed.
   yield put(loadVisibleServices.request());
 
   // Load messages when requested
