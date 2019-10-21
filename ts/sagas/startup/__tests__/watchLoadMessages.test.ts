@@ -108,7 +108,7 @@ describe("watchLoadMessages", () => {
         .call(getMessages, {})
         // Return an error message as getMessages response
         .next(right({ status: 500, value: { title: "Backend error" } }))
-        .put(loadMessagesAction.failure("Backend error"))
+        .put(loadMessagesAction.failure(Error("Backend error")))
         .next()
         .next()
         .isDone();
