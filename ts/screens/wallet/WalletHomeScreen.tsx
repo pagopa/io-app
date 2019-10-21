@@ -26,6 +26,7 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
+  navigateToCieOK,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
@@ -315,9 +316,10 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <Button
         block={true}
         onPress={
-          pot.isSome(potWallets)
-            ? this.props.navigateToPaymentScanQrCode
-            : undefined
+          this.props.navigateToCIEOK
+          // pot.isSome(potWallets)
+          //   ? this.props.navigateToPaymentScanQrCode
+          //   : undefined
         }
       >
         <IconFont name="io-qr" style={styles.white} />
@@ -398,7 +400,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     );
   },
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
-  loadWallets: () => dispatch(fetchWalletsRequest())
+  loadWallets: () => dispatch(fetchWalletsRequest()),
+  navigateToCIEOK: () => dispatch(navigateToCieOK())
 });
 
 export default connect(
