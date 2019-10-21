@@ -231,15 +231,18 @@ class Markdown extends React.PureComponent<Props, State> {
       height: htmlBodyHeight
     };
 
+    const isLoading =
+      html === undefined || (html !== "" && htmlBodyHeight === 0);
+
     return (
       <React.Fragment>
-        <ActivityIndicator
-          size="large"
-          color={customVariables.brandPrimary}
-          animating={
-            html === undefined || (html !== "" && htmlBodyHeight === 0)
-          }
-        />
+        {isLoading && (
+          <ActivityIndicator
+            size="large"
+            color={customVariables.brandPrimary}
+            animating={true}
+          />
+        )}
         {/* Hide the WebView until we have the htmlBodyHeight */}
         {html && (
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
