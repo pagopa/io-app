@@ -81,7 +81,6 @@ const CardSelectionScreen: React.SFC<Props> = props => {
           <Text style={styles.description}>
             {I18n.t("cie.layCardMessageA")}
           </Text>
-          <View spacer={true} />
           <View style={{ alignItems: "center", height: boxDimension }}>
             <AnimatedRing
               dimension={ringSettings.dimension}
@@ -110,7 +109,6 @@ const CardSelectionScreen: React.SFC<Props> = props => {
               style={styles.img}
             />
           </View>
-          <View spacer={true} />
           <Text style={styles.description}>
             {I18n.t("cie.layCardMessageB")}
           </Text>
