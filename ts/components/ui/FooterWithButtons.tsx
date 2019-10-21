@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 
 type OwnButtonProps = {
   title: string;
+  buttonFontSize?: number;
 };
 
 type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
@@ -54,7 +55,11 @@ export default class FooterWithButtons extends React.Component<Props, never> {
 
     const {
       type,
-      rightButton: { title: rightButtonTitle, ...otherPropsRightButton }
+      rightButton: {
+        title: rightButtonTitle,
+        buttonFontSize: fontSize,
+        ...otherPropsRightButton
+      }
     } = this.props;
 
     return (
@@ -68,7 +73,9 @@ export default class FooterWithButtons extends React.Component<Props, never> {
               : styles.button
           }
         >
-          <Text numberOfLines={1}>{rightButtonTitle}</Text>
+          <Text numberOfLines={1} style={{ fontSize }}>
+            {rightButtonTitle}
+          </Text>
         </Button>
       </React.Fragment>
     );
@@ -77,13 +84,14 @@ export default class FooterWithButtons extends React.Component<Props, never> {
   public render() {
     const {
       title: leftButtonTitle,
+      buttonFontSize: fontSize,
       ...otherPropsLeftButton
     } = this.props.leftButton;
 
     return (
       <View footer={true} style={styles.container}>
         <Button style={styles.button} {...otherPropsLeftButton}>
-          <Text>{leftButtonTitle}</Text>
+          <Text style={{ fontSize }}>{leftButtonTitle}</Text>
         </Button>
         {this.renderRightButton()}
       </View>
