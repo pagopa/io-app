@@ -291,18 +291,18 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   }
 
   public render() {
+    const contextualHelp = {
+      title: I18n.t("messageDetails.contextualHelpTitle"),
+      body: () => (
+        <Markdown>{I18n.t("messageDetails.contextualHelpContent")}</Markdown>
+      )
+    };
+
     return (
       <BaseScreenComponent
-        contextualHelp={{
-          title: I18n.t("messageDetails.contextualHelpTitle"),
-          body: () => (
-            <Markdown>
-              {I18n.t("messageDetails.contextualHelpContent")}
-            </Markdown>
-          )
-        }}
         headerTitle={I18n.t("messageDetails.headerTitle")}
         goBack={this.goBack}
+        contextualHelp={contextualHelp}
       >
         {this.renderCurrentState()}
       </BaseScreenComponent>

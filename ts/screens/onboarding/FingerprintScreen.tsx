@@ -85,17 +85,18 @@ export class FingerprintScreen extends React.PureComponent<Props> {
   public render() {
     const biometryType = this.props.navigation.getParam("biometryType");
 
+    const contextualHelp = {
+      title: I18n.t("onboarding.contextualHelpTitle"),
+      body: () => (
+        <Markdown>{I18n.t("onboarding.contextualHelpContent")}</Markdown>
+      )
+    };
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
         title={I18n.t("onboarding.fingerprint.title")}
-        contextualHelp={{
-          title: I18n.t("onboarding.contextualHelpTitle"),
-          body: () => (
-            <Markdown>{I18n.t("onboarding.contextualHelpContent")}</Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
       >
         <ScreenContent
           title={I18n.t("onboarding.fingerprint.title")}

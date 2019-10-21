@@ -82,16 +82,15 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       .map(_ => untag(_.spid_email))
       .getOrElse("");
 
+    const contextualHelp = {
+      title: I18n.t("onboarding.email.read.title"),
+      body: () => <Markdown>{I18n.t("onboarding.email.read.help")}</Markdown>
+    };
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
         title={I18n.t("onboarding.email.read.title")}
-        contextualHelp={{
-          title: I18n.t("onboarding.email.read.title"),
-          body: () => (
-            <Markdown>{I18n.t("onboarding.email.read.help")}</Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
       >
         <ScreenContent
           title={I18n.t("onboarding.email.read.title")}

@@ -82,6 +82,11 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
   }
 
   public render() {
+    const contextualHelp = {
+      title: I18n.t("profile.fiscalCode.title"),
+      body: () => <Markdown>{I18n.t("profile.fiscalCode.help")}</Markdown>
+    };
+
     return (
       <React.Fragment>
         <DarkLayout
@@ -90,10 +95,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
             <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
           }
           contentStyle={styles.darkBg}
-          contextualHelp={{
-            title: I18n.t("profile.fiscalCode.title"),
-            body: () => <Markdown>{I18n.t("profile.fiscalCode.help")}</Markdown>
-          }}
+          contextualHelp={contextualHelp}
           hideHeader={true}
           topContent={
             <React.Fragment>

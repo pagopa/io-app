@@ -56,17 +56,20 @@ const styles = StyleSheet.create({
 class AddPaymentMethodScreen extends React.PureComponent<Props> {
   public render(): React.ReactNode {
     const inPayment = this.props.navigation.getParam("inPayment");
+
+    const contextualHelp = {
+      title: I18n.t("wallet.newPaymentMethod.contextualHelpTitle"),
+      body: () => (
+        <Markdown>
+          {I18n.t("wallet.newPaymentMethod.contextualHelpContent")}
+        </Markdown>
+      )
+    };
+
     return (
       <BaseScreenComponent
         goBack={true}
-        contextualHelp={{
-          title: I18n.t("wallet.newPaymentMethod.contextualHelpTitle"),
-          body: () => (
-            <Markdown>
-              {I18n.t("wallet.newPaymentMethod.contextualHelpContent")}
-            </Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
         headerTitle={
           inPayment.isSome()
             ? I18n.t("wallet.payWith.header")

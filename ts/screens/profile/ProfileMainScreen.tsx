@@ -442,6 +442,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       );
     };
 
+    const contextualHelp = {
+      title: I18n.t("profile.contextualHelpTitle"),
+      body: () => <Markdown>{I18n.t("profile.contextualHelpContent")}</Markdown>
+    };
+
     return (
       <DarkLayout
         allowGoBack={false}
@@ -458,12 +463,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             <FiscalCodeComponent type={"Preview"} />
           </TouchableOpacity>
         }
-        contextualHelp={{
-          title: I18n.t("profile.contextualHelpTitle"),
-          body: () => (
-            <Markdown>{I18n.t("profile.contextualHelpContent")}</Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
         banner={undefined}
       >
         {screenContent()}

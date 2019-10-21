@@ -300,17 +300,17 @@ class PinScreen extends React.Component<Props, State> {
   public render() {
     const { pinState } = this.state;
 
+    const contextualHelp = {
+      title: I18n.t("onboarding.pin.contextualHelpTitle"),
+      body: () => (
+        <Markdown>{I18n.t("onboarding.pin.contextualHelpContent")}</Markdown>
+      )
+    };
+
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
-        contextualHelp={{
-          title: I18n.t("onboarding.pin.contextualHelpTitle"),
-          body: () => (
-            <Markdown>
-              {I18n.t("onboarding.pin.contextualHelpContent")}
-            </Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
         {this.renderContent(pinState)}

@@ -89,18 +89,19 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
   public render() {
     const { isFingerprintAvailable } = this.state;
 
+    const contextualHelp = {
+      title: I18n.t("biometric_recognition.contextualHelpTitle"),
+      body: () => (
+        <Markdown>
+          {I18n.t("biometric_recognition.contextualHelpContent")}
+        </Markdown>
+      )
+    };
     return (
       <TopScreenComponent
         title={I18n.t("biometric_recognition.title")}
         goBack={this.goBack}
-        contextualHelp={{
-          title: I18n.t("biometric_recognition.contextualHelpTitle"),
-          body: () => (
-            <Markdown>
-              {I18n.t("biometric_recognition.contextualHelpContent")}
-            </Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
       >
         <ScreenContentHeader
           title={I18n.t("biometric_recognition.title")}

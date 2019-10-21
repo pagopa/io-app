@@ -161,14 +161,15 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
   public render() {
     const { isSearchEnabled } = this.props;
+    const contextualHelp = {
+      title: I18n.t("messages.contextualHelpTitle"),
+      body: () => (
+        <Markdown>{I18n.t("messages.contextualHelpContent")}</Markdown>
+      )
+    };
     return (
       <TopScreenComponent
-        contextualHelp={{
-          title: I18n.t("messages.contextualHelpTitle"),
-          body: () => (
-            <Markdown>{I18n.t("messages.contextualHelpContent")}</Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
         title={I18n.t("messages.contentTitle")}
         isSearchAvailable={true}
         searchType="Messages"

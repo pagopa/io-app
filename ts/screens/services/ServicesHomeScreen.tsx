@@ -535,14 +535,16 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   public render() {
+    const contextualHelp = {
+      title: I18n.t("services.title"),
+      body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
+    };
+
     return (
       <TopScreenComponent
         title={I18n.t("services.title")}
         appLogo={true}
-        contextualHelp={{
-          title: I18n.t("services.title"),
-          body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
-        }}
+        contextualHelp={contextualHelp}
         isSearchAvailable={this.props.userMetadata !== undefined}
         searchType={"Services"}
       >

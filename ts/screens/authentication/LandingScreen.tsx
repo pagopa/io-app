@@ -80,17 +80,16 @@ const LandingScreen: React.SFC<Props> = props => {
     <LandingCardComponent key={`card-${p.id}`} {...p} />
   ));
 
+  const contextualHelp = {
+    title: I18n.t("authentication.landing.contextualHelpTitle"),
+    body: () => (
+      <Markdown>
+        {I18n.t("authentication.landing.contextualHelpContent")}
+      </Markdown>
+    )
+  };
   return (
-    <BaseScreenComponent
-      contextualHelp={{
-        title: I18n.t("authentication.landing.contextualHelpTitle"),
-        body: () => (
-          <Markdown>
-            {I18n.t("authentication.landing.contextualHelpContent")}
-          </Markdown>
-        )
-      }}
-    >
+    <BaseScreenComponent contextualHelp={contextualHelp}>
       {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
       <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
         <View spacer={true} large={true} />

@@ -118,18 +118,17 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   public render() {
+    const contextualHelp = {
+      title: I18n.t("onboarding.email.insert.help.title"),
+      body: () => (
+        <Markdown>{I18n.t("onboarding.email.insert.help.content")}</Markdown>
+      )
+    };
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.email.insert.headerTitle")}
-        contextualHelp={{
-          title: I18n.t("onboarding.email.insert.help.title"),
-          body: () => (
-            <Markdown>
-              {I18n.t("onboarding.email.insert.help.content")}
-            </Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
       >
         <View style={styles.container}>
           <Content noPadded={true} style={styles.content} scrollEnabled={false}>
