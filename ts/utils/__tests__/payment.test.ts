@@ -76,3 +76,39 @@ describe("cleanTransactionDescription", () => {
     });
   });
 });
+
+import { isBrandMaestro } from "../payment";
+
+describe("isBrandMaestro", () => {
+  it("control if it is Maestro card", () => {
+    const card1: { [key: string]: any } = {
+      id: 1464,
+      holder: "Mario Rossi",
+      pan: "************0111",
+      expireMonth: "05",
+      expireYear: "22",
+      brand: "Maestro"
+    };
+    const card2: { [key: string]: any } = {
+      id: 1464,
+      holder: "Mario Rossi",
+      pan: "************0112",
+      expireMonth: "05",
+      expireYear: "22",
+      brand: "MasterCard"
+    };
+    const card3: { [key: string]: any } = {
+      id: 1464,
+      holder: "Mario Rossi",
+      pan: "************0113",
+      expireMonth: "05",
+      expireYear: "22",
+      brand: "Visa"
+    };
+
+    const cards: ReadonlyArray<any> = [card1, card2, card3];
+    for (const card of cards) {
+      expect(isBrandMaestro(card));
+    }
+  });
+});

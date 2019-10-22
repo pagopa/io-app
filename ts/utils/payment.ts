@@ -14,7 +14,7 @@ import I18n from "../i18n";
 
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
-import { Psp, Wallet } from "../types/pagopa";
+import { CreditCard, Psp, Wallet } from "../types/pagopa";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -121,4 +121,11 @@ export const cleanTransactionDescription = (description: string): string => {
   return descriptionParts.length > 1
     ? descriptionParts[descriptionParts.length - 1].trim()
     : "";
+};
+
+/**
+ * This function control if card brand is MAESTRO.
+ */
+export const isBrandMaestro = (card: CreditCard): boolean => {
+  return card.brand === "MAESTRO";
 };
