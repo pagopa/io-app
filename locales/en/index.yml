@@ -323,24 +323,37 @@ onboarding:
         touchId: TouchID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
   email:
+    validation:
+      title: Remember to validate your email address
+      headerTitle: Email validation
+      info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
+        click simply on that link.<br/>
+        Until you will not validate your email address, some app functionalities
+        (payments, messages forwarding by email, etc.) will not be available, but you
+        will be able to use some other functions anyway (i.e. services, messages, etc.)"
+      ctaValidate: Send a new validation email
+      emailSentFeedback: Email sent
+      help: Your SPID profile communicates your email to IO app. If you find the address
+        wrong or that you do not use it anymore, you can edit it directly from your SPID
+        services provider account.
     insert:
       headerTitle: Activation
       title: Insert your email
       help:
         title: Email
         content: !include email_insert_help.md
-    subtitle: Some IO app functions need your email.
-    emailInputLabel: Personal email address
     read:
       title: Your email address
       emailInfo: This is the email address associated to your SPID account. You can
         use in IO app a different email address, if you wish. To make operative the
         new email address, you will need to validate it by clicking on the link you
         will receive by email.
-      ctaEdit: Edit email
       help: Your SPID profile communicates your email to IO app. If you find the address
         wrong or you no longer use it, you can edit it directly from your SPID services
         provider account.
+    ctaEdit: Edit email
+    subtitle: Some IO app functions need your email.
+    emailInputLabel: Personal email address
 pin_login:
   pin:
     pinInfo: Enter the PIN
