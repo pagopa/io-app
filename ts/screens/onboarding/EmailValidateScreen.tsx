@@ -1,18 +1,15 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
-import { Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Platform, StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,
@@ -22,42 +19,25 @@ import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
-type NavigationParams = {
-  biometryType: BiometrySimpleType;
-};
-
-type OwnProps = ReduxProps &
-  ReturnType<typeof mapStateToProps> &
-  NavigationScreenProps<NavigationParams>;
+type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
-  emailLabel: { fontSize: 14 },
-  emailWithIcon: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center"
-  },
+  spacerLarge: { height: 40 },
   content: {
     paddingHorizontal: customVariables.contentPadding,
     backgroundColor: customVariables.contentBackground,
     flex: 1
-  },
-  spacerSmall: { height: 12 },
-  spacerLarge: { height: 24 },
-  email: {
-    fontWeight: customVariables.h1FontWeight,
-    color: customVariables.h1Color,
-    fontSize: 18,
-    marginLeft: 8
-  },
-  icon: {
-    marginTop: Platform.OS === "android" ? 3 : 0 // correct icon position to align it with baseline of email text}
   }
 });
 
-export class EmailReadScreen extends React.PureComponent<Props> {
+const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
+
+/**
+ * A screen as reminder to the user to validate his email address
+ */
+export class EmailValidateScreen extends React.PureComponent<Props> {
   private handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),
@@ -85,35 +65,33 @@ export class EmailReadScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        title={I18n.t("onboarding.email.read.title")}
+        headerTitle={I18n.t("onboarding.email.validation.headerTitle")}
+        title={I18n.t("onboarding.email.validation.title")}
         contextualHelp={{
-          title: I18n.t("onboarding.email.read.title"),
+          title: I18n.t("onboarding.email.validation.title"),
           body: () => (
-            <Markdown>{I18n.t("onboarding.email.read.help")}</Markdown>
+            <Markdown>{I18n.t("onboarding.email.validation.help")}</Markdown>
           )
         }}
       >
-        <ScreenContent
-          title={I18n.t("onboarding.email.read.title")}
-          subtitle={I18n.t("onboarding.email.subtitle")}
-        >
+        <ScreenContent title={I18n.t("onboarding.email.validation.title")}>
           <View style={styles.content}>
-            <Text style={styles.emailLabel}>
-              {I18n.t("onboarding.email.emailInputLabel")}
-            </Text>
-            <View style={styles.spacerSmall} />
-            <View style={styles.emailWithIcon}>
-              <IconFont
-                name="io-envelope"
-                accessible={true}
-                accessibilityLabel={I18n.t("onboarding.email.read.title")}
-                size={24}
-                style={styles.icon}
-              />
-              <Text style={styles.email}>{profileEmail}</Text>
-            </View>
+            <Markdown>
+              {I18n.t("onboarding.email.validation.info", {
+                email: profileEmail
+              })}
+            </Markdown>
             <View style={styles.spacerLarge} />
-            <Text>{I18n.t("onboarding.email.read.emailInfo")}</Text>
+            <View>
+              <Button
+                light={true}
+                block={true}
+                bordered={true}
+                onPress={unavailableAlert}
+              >
+                <Text>{I18n.t("onboarding.email.validation.ctaValidate")}</Text>
+              </Button>
+            </View>
           </View>
         </ScreenContent>
         <FooterWithButtons
@@ -122,7 +100,8 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             block: true,
             bordered: true,
             title: I18n.t("onboarding.email.ctaEdit"),
-            onPress: this.props.navigateToEmailInsertScreen
+            onPress: this.props.navigateToEmailInsertScreen,
+            buttonFontSize: 15
           }}
           rightButton={{
             block: true,
@@ -149,4 +128,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EmailReadScreen);
+)(EmailValidateScreen);

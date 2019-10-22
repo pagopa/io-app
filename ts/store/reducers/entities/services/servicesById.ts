@@ -24,7 +24,8 @@ const reducer = (
 ): ServicesByIdState => {
   switch (action.type) {
     case getType(loadService.request):
-      // When you make a request to load a previously loaded service its state is updated with a someLoading pot, otherwise its state is updated with a oneLoading pot
+      // When a previously loaded service is loaded again, its state
+      // is updated with a someLoading pot, otherwise its state is updated with a noneLoading pot
       const cachedValue = state[action.payload];
       const prevServiceRequest =
         cachedValue && pot.isSome(cachedValue) && !pot.isLoading(cachedValue)
