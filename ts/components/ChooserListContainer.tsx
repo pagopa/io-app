@@ -294,7 +294,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
           </View>
         </Content>
         <KeyboardAvoidingView
-          behavior="padding"
+          behavior={Platform.OS === "android" ? "height" : "padding"}
           keyboardVerticalOffset={Platform.select({
             ios: 0,
             android: customVariables.contentPadding

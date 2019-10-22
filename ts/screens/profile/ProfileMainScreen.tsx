@@ -28,11 +28,7 @@ import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import {
-  LogoutOption,
-  logoutRequest,
-  sessionExpired
-} from "../../store/actions/authentication";
+import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesExperimentalFeaturesSetEnabled,
@@ -128,17 +124,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     if (this.navListener) {
       this.navListener.remove();
     }
+    // This ensures modals will be closed (if there are some opened)
+    this.props.hideModal();
   }
 
   private handleClearCachePress = () => {
     this.props.clearCache();
     Toast.show({ text: "The cache has been cleared." });
-  };
-
-  private logout = (logoutOption: LogoutOption) => {
-    this.props.logout(logoutOption);
-
-    this.props.hideModal();
   };
 
   private developerListItem(
@@ -183,7 +175,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.props.showModal(
       <SelectLogoutOption
         onCancel={this.props.hideModal}
-        onOptionSelected={this.logout}
         header={
           <View>
             <H3 style={styles.modalHeader}>
@@ -494,7 +485,6 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
-  logout: (logoutOption: LogoutOption) => dispatch(logoutRequest(logoutOption)),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),

@@ -5,9 +5,11 @@ import { Municipality as MunicipalityMetadata } from "../../../definitions/conte
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
+// TODO: check if response with code !== 200 can mean different errors.
+// If false, the failure payload could be just the serviceID as before
 export type ContentServiceFailure = {
   error: Error;
-  service_id: string;
+  serviceId: string;
 };
 export const contentServiceLoad = createAsyncAction(
   "CONTENT_SERVICE_LOAD_REQUEST",
