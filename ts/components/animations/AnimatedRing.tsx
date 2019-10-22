@@ -15,7 +15,6 @@ interface Props {
   dimension: number;
   duration: Millisecond;
   interval: Millisecond;
-  opacity: number;
   boxDimension: number;
 }
 /**
@@ -51,8 +50,7 @@ export default class AnimatedRing extends React.Component<Props> {
             width: this.props.dimension,
             height: this.props.dimension,
             borderRadius: this.props.dimension / 2,
-            bottom: this.props.boxDimension / 2 - this.props.dimension / 2,
-            opacity: this.props.opacity
+            bottom: this.props.boxDimension / 2 - this.props.dimension / 2
           },
           {
             opacity: this.animatedValue.interpolate({
@@ -63,13 +61,13 @@ export default class AnimatedRing extends React.Component<Props> {
               {
                 scaleX: this.animatedValue.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [1, 1.5]
+                  outputRange: [1, 1.4]
                 })
               },
               {
                 scaleY: this.animatedValue.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [1, 1.5]
+                  outputRange: [1, 1.4]
                 })
               }
             ]
