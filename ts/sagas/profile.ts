@@ -48,7 +48,7 @@ export function* loadProfile(
       yield put(sessionExpired());
     }
     throw response
-      ? response.value.value
+      ? Error(`response status ${response.value.status}`)
       : Error(I18n.t("profile.errors.load"));
   } catch (error) {
     yield put(profileLoadFailure(error));
