@@ -142,7 +142,7 @@ export function* loadMessages(
     }
   } catch (error) {
     // Dispatch failure action
-    yield put(loadMessagesAction.failure(error.message));
+    yield put(loadMessagesAction.failure(error));
   } finally {
     if (yield cancelled()) {
       // If the task is cancelled send a loadMessagesCancelled action.
