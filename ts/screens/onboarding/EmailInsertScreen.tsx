@@ -95,6 +95,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         ? () => {
             // TODO1
             // TODO2
+            Alert.alert('Not implemented')
           }
         : this.props.dispatchEmailInsert,
       title: I18n.t("global.buttons.continue"),
@@ -237,6 +238,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 function mapStateToProps(state: GlobalState) {
   const optionProfile = pot.toOption(profileSelector(state));
   // TODO: get info on validation from profile
+  //      https://www.pivotaltracker.com/story/show/168662501  
   const isEmailValidated = true;
   return {
     email: optionProfile.map(_ => untag(_.spid_email)),
