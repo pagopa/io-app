@@ -20,7 +20,7 @@ interface OwnProps {
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
 // Image dimension
 const imgDimension = 180;
-const boxDimension = 252;
+const boxDimension = 245;
 const ringDimensionMin = imgDimension;
 
 const styles = StyleSheet.create({
