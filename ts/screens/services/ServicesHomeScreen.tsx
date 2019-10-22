@@ -606,7 +606,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   public render() {
-
     const contextualHelp = {
       title: I18n.t("services.title"),
       body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
