@@ -116,9 +116,6 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
    * LabelledItem Component and it used for style pourposes ONLY.
    */
   private isValidEmail() {
-    if (this.state.email === some(EMPTY_EMAIL)) {
-      return undefined;
-    }
     return this.state.email
       .map(value => {
         if (EMPTY_EMAIL === value) {
