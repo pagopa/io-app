@@ -101,7 +101,11 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   public render() {
     return (
       <React.Fragment>
-        <Button onPress={this.handleIBChatPress} transparent={true} activeOpacity={1}>
+        <Button
+          onPress={this.handleIBChatPress}
+          transparent={true}
+          activeOpacity={1}
+        >
           <IconFont
             name="io-chat"
             color={this.props.color}
@@ -114,7 +118,11 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
           textStyle={styles.textStyle}
           badgeValue={this.props.badge}
         />
-        <Button onPress={this.handleIBBugPress} transparent={true} activeOpacity={1}>
+        <Button
+          onPress={this.handleIBBugPress}
+          transparent={true}
+          activeOpacity={1}
+        >
           <IconFont
             name="io-bug"
             color={this.props.color}
