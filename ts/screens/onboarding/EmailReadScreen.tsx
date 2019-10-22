@@ -99,7 +99,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
           this.props.navigation.navigate(ROUTES.INSERT_EMAIL_SCREEN, {
             isEditing: true
           }),
-        title: I18n.t("onboarding.email.read.ctaEdit")
+        title: I18n.t("email.edit.cta")
       }
     };
 
@@ -108,7 +108,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       leftButton: {
         block: true,
         bordered: true,
-        title: I18n.t("onboarding.email.read.ctaEdit"),
+        title: I18n.t("email.edit.cta"),
         onPress: this.props.navigateToEmailInsertScreen
       },
       rightButton: {
@@ -130,32 +130,28 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             ? this.props.navigation.goBack
             : this.handleGoBack
         }
-        title={I18n.t("onboarding.email.read.title")}
+        title={I18n.t("profile.preferences.list.email")}
         contextualHelp={{
-          title: I18n.t("onboarding.email.read.title"),
-          body: () => (
-            <Markdown>{I18n.t("onboarding.email.read.help")}</Markdown>
-          )
+          title: I18n.t("email.read.title"),
+          body: () => <Markdown>{I18n.t("email.read.help")}</Markdown>
         }}
       >
         <ScreenContent
-          title={I18n.t("onboarding.email.read.title")}
+          title={I18n.t("email.read.title")}
           subtitle={
-            isFromProfileSection
-              ? undefined
-              : I18n.t("onboarding.email.subtitleInsert")
+            isFromProfileSection ? undefined : I18n.t("email.insert.subtitle")
           }
         >
           <View style={styles.content}>
             <Text style={styles.emailLabel}>
-              {I18n.t("onboarding.email.emailInsertInputLabel")}
+              {I18n.t("email.insert.label")}
             </Text>
             <View style={styles.spacerSmall} />
             <View style={styles.emailWithIcon}>
               <IconFont
                 name="io-envelope"
                 accessible={true}
-                accessibilityLabel={I18n.t("onboarding.email.read.title")}
+                accessibilityLabel={I18n.t("email.read.title")}
                 size={24}
                 style={styles.icon}
               />
@@ -164,10 +160,10 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             <View style={styles.spacerLarge} />
             <Text>
               {isFromProfileSection
-                ? `${I18n.t("onboarding.email.emailInfo2")} \n`
-                : I18n.t("onboarding.email.emailInfo")}
+                ? `${I18n.t("email.read.details")} \n`
+                : I18n.t("email.read.info")}
               <Text bold={true}>
-                {isFromProfileSection && I18n.t("onboarding.email.emailAlert")}
+                {isFromProfileSection && I18n.t("email.read.alert")}
               </Text>
             </Text>
           </View>

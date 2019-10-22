@@ -279,6 +279,49 @@ authentication:
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
+email:
+  read:
+    title: Il tuo indirizzo email
+    info: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
+      usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
+      il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
+      casella di posta elettronica.
+    details: Puoi modificare questo indirizzo, che dovrai validare cliccando su un  
+      link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che 
+      dipendono dalla email (pagamenti, inoltro messaggi, etc.) saranno disattivate.
+    alert: "Attenzione: il tuo account PagoPA è associato alla tua email,
+      quindi se la modifichi non troverai più elencati
+      nell'applicazione le tue transazioni ed i tuoi metodi di pagamento."
+    help: (onb.email.help) (onb.help.read.help) Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
+      indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
+      tuo provider di servizi SPID.
+  insert:
+    header: Attivazione
+    title: Inserisci la tua email
+    subtitle: Alcune funzioni di IO hanno bisogno della tua email
+    label: Indirizzo email personale
+    help:
+      title: Email
+      content: !include email_insert_help.md
+  edit:
+    title: Modifica la tua email
+    subtitle: L'email che avevi inserto in precedenza è
+    validated: L'email che avevi inserto e validato in precedenza è
+    label: Nuovo indirizzo email personale
+    cta: Modifica email
+  validate:
+    title: Ricorda di validare il tuo indirizzo email
+    header: Validazione email
+    info: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
+      clicca semplicemente su quel link.<br/>
+      Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
+      inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
+      usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
+    cta: Invia una nuova email di validazione
+    sent: Email inviata
+    help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
+      indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
+      tuo provider di servizi SPID.
 onboarding:
   tos:
     headerTitle: Attivazione
@@ -310,59 +353,6 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include tos_fingerprint_not_enrolled.md
-  email:
-    validation:
-      title: Ricorda di validare il tuo indirizzo email
-      headerTitle: Validazione email
-      info: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
-        clicca semplicemente su quel link.<br/>
-        Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
-        inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
-        usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
-      ctaValidate: Invia una nuova email di validazione
-      emailSentFeedback: Invia una nuova email di validazione
-      help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
-        indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
-        tuo provider di servizi SPID.
-    insert:
-      headerTitle: Attivazione
-      titleInsert: Inserisci la tua email
-      titleEdit: Modifica la tua email
-      help:
-        title: Email
-        content: !include email_insert_help.md
-    subtitleInsert: Alcune funzioni di IO hanno bisogno della tua email.
-    subtitleEdit: L'email che avevi inserto in precedenza è
-    subtitleValidated: L'email che avevi inserto e validato in precedenza è
-    emailInsertInputLabel: Indirizzo email personale
-    emailEditInputLabel: Nuovo indirizzo email personale
-    emailInfo: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
-      usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
-      il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
-      casella di posta elettronica.
-    emailInfo2: Puoi modificare questo indirizzo, che dovrai validare cliccando su un  
-      link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che 
-      dipendono dalla email (pagamenti, inoltro messaggi, etc.) saranno disattivate.
-    emailAlert: "Attenzione: il tuo account PagoPA è associato alla tua email,
-                quindi se la modifichi non troverai più elencati
-                nell'applicazione le tue transazioni ed i tuoi metodi di
-                pagamento."
-    ctaEdit: Modifica email
-    help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
-      indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
-      tuo provider di servizi SPID.
-    read:
-      title: Il tuo indirizzo email
-      emailInfo: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
-        usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
-        il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
-        casella di posta elettronica.
-      help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
-        indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
-        tuo provider di servizi SPID.
-    ctaEdit: Modifica email
-    subtitle: Alcune funzioni di IO hanno bisogno della tua email.
-    emailInputLabel: Indirizzo email personale
 pin_login:
   pin:
     pinInfo: Inserisci il PIN

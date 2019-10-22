@@ -66,19 +66,17 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        headerTitle={I18n.t("onboarding.email.validation.headerTitle")}
-        title={I18n.t("onboarding.email.validation.title")}
+        headerTitle={I18n.t("email.validate.header")}
+        title={I18n.t("email.validate.title")}
         contextualHelp={{
-          title: I18n.t("onboarding.email.validation.title"),
-          body: () => (
-            <Markdown>{I18n.t("onboarding.email.validation.help")}</Markdown>
-          )
+          title: I18n.t("email.validate.title"),
+          body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
         }}
       >
-        <ScreenContent title={I18n.t("onboarding.email.validation.title")}>
+        <ScreenContent title={I18n.t("email.validate.title")}>
           <View style={styles.content}>
             <Markdown>
-              {I18n.t("onboarding.email.validation.info", {
+              {I18n.t("email.validate.info", {
                 email: profileEmail
               })}
             </Markdown>
@@ -90,7 +88,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
                 bordered={true}
                 onPress={unavailableAlert}
               >
-                <Text>{I18n.t("onboarding.email.validation.ctaValidate")}</Text>
+                <Text>{I18n.t("email.validate.cta")}</Text>
               </Button>
             </View>
           </View>
@@ -100,7 +98,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
           leftButton={{
             block: true,
             bordered: true,
-            title: I18n.t("onboarding.email.ctaEdit"),
+            title: I18n.t("email.edit.cta"),
             onPress: this.props.navigateToEmailInsertScreen,
             buttonFontSize: 15
           }}

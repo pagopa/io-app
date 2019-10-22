@@ -149,33 +149,29 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         }
         headerTitle={
           isEditing
-            ? I18n.t("onboarding.email.insert.titleEdit")
-            : I18n.t("onboarding.email.insert.headerTitle")
+            ? I18n.t("profile.preferences.list.email")
+            : I18n.t("email.insert.header")
         }
         contextualHelp={{
-          title: I18n.t("onboarding.email.insert.help.title"),
-          body: () => (
-            <Markdown>
-              {I18n.t("onboarding.email.insert.help.content")}
-            </Markdown>
-          )
+          title: I18n.t("email.insert.help.title"),
+          body: () => <Markdown>{I18n.t("email.insert.help.content")}</Markdown>
         }}
       >
         <View style={styles.container}>
           <Content noPadded={true} style={styles.content} scrollEnabled={false}>
             <H4 style={[styles.boldH4, styles.horizontalPadding]}>
               {isEditing
-                ? I18n.t("onboarding.email.insert.titleEdit")
-                : I18n.t("onboarding.email.insert.titleInsert")}
+                ? I18n.t("email.edit.title")
+                : I18n.t("email.insert.title")}
             </H4>
             <View spacer={true} />
             <View style={styles.horizontalPadding}>
               <Text>
                 {isEditing
                   ? this.props.isEmailValidated
-                    ? I18n.t("onboarding.email.subtitleValidated")
-                    : I18n.t("onboarding.email.subtitleEdit")
-                  : I18n.t("onboarding.email.subtitleInsert")}
+                    ? I18n.t("email.edit.validated")
+                    : I18n.t("email.edit.subtitle")
+                  : I18n.t("email.insert.subtitle")}
                 <Text style={styles.darkestGray}>
                   {isEditing ? ` ${this.props.email.getOrElse("")}` : ""}
                 </Text>
@@ -188,8 +184,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                   type={"text"}
                   label={
                     isEditing
-                      ? I18n.t("onboarding.email.emailEditInputLabel")
-                      : I18n.t("onboarding.email.emailInsertInputLabel")
+                      ? I18n.t("email.edit.label")
+                      : I18n.t("email.insert.label")
                   }
                   icon="io-envelope"
                   isValid={this.isValidEmail()}
