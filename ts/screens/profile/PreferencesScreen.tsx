@@ -20,6 +20,7 @@ import {
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { checkCalendarPermission } from "../../utils/calendar";
 import { getLocalePrimary } from "../../utils/locale";
@@ -185,7 +186,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               subTitle={profileData.spid_email}
               onPress={() =>
                 this.props.navigation.navigate(ROUTES.READ_EMAIL_SCREEN, {
-                  isOnboardingCompleted: true
+                  isFromProfileSection: true
                 })
               }
             />
@@ -214,7 +215,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
-  potProfile: pot.toOption(state.profile),
+  potProfile: pot.toOption(profileSelector(state)),
   isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
   preferredCalendar: state.persistedPreferences.preferredCalendar
 });

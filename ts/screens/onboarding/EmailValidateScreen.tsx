@@ -16,6 +16,7 @@ import {
   emailAcknowledged
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
@@ -116,7 +117,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(state.profile)
+  optionProfile: pot.toOption(profileSelector(state))
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

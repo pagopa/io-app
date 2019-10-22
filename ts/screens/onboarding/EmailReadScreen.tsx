@@ -1,5 +1,9 @@
 /**
  * A screen to display the email used by IO
+ * The _isFromProfileSection_ navigation parameter let the screen being adapted
+ * if:
+ * - it is displayed during the user onboarding
+ * - it is displayed after the onboarding (navigation from the profile section)
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
@@ -24,11 +28,12 @@ import {
   emailAcknowledged
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
 type NavigationParams = {
-  isOnboardingCompleted?: boolean;
+  isFromProfileSection?: boolean;
 };
 
 type Props = ReduxProps &
@@ -114,14 +119,14 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       }
     };
 
-    const isOnboardingCompleted = this.props.navigation.getParam(
-      "isOnboardingCompleted"
+    const isFromProfileSection = this.props.navigation.getParam(
+      "isFromProfileSection"
     );
 
     return (
       <TopScreenComponent
         goBack={
-          isOnboardingCompleted
+          isFromProfileSection
             ? this.props.navigation.goBack
             : this.handleGoBack
         }
@@ -136,7 +141,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
         <ScreenContent
           title={I18n.t("onboarding.email.read.title")}
           subtitle={
-            isOnboardingCompleted
+            isFromProfileSection
               ? undefined
               : I18n.t("onboarding.email.subtitleInsert")
           }
@@ -158,17 +163,17 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             </View>
             <View style={styles.spacerLarge} />
             <Text>
-              {isOnboardingCompleted
+              {isFromProfileSection
                 ? `${I18n.t("onboarding.email.emailInfo2")} \n`
                 : I18n.t("onboarding.email.emailInfo")}
               <Text bold={true}>
-                {isOnboardingCompleted && I18n.t("onboarding.email.emailAlert")}
+                {isFromProfileSection && I18n.t("onboarding.email.emailAlert")}
               </Text>
             </Text>
           </View>
         </ScreenContent>
         <FooterWithButtons
-          {...(isOnboardingCompleted ? footerProps1 : footerProps2)}
+          {...(isFromProfileSection ? footerProps1 : footerProps2)}
         />
       </TopScreenComponent>
     );
@@ -176,7 +181,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(state.profile)
+  optionProfile: pot.toOption(profileSelector(state))
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

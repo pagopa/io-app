@@ -25,6 +25,7 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
@@ -82,15 +83,18 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   /**
    * Footer
    *
-   * TODO: add navigation to the dedicated modal + save the inserted new email
-   *          https://www.pivotaltracker.com/story/show/169264055
+   * TODO1: add navigation to the dedicated modal
+   *          https://www.pivotaltracker.com/story/show/168247501
+   * TODO:2 save the inserted new email
+   *          https://www.pivotaltracker.com/n/projects/2048617/stories/169264055
    */
   private renderFooterButtons() {
     const continueButtonProps = {
       disabled: this.isValidEmail() !== true,
       onPress: this.isEditing
         ? () => {
-            // TODO
+            // TODO1
+            // TODO2
           }
         : this.props.dispatchEmailInsert,
       title: I18n.t("global.buttons.continue"),
@@ -235,7 +239,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  const optionProfile = pot.toOption(state.profile);
+  const optionProfile = pot.toOption(profileSelector(state));
   // TODO: get info on validation from profile
   const isEmailValidated = true;
   return {
