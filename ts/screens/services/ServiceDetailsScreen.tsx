@@ -30,13 +30,13 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { openMaps } from "../../utils/openMaps";
+import { logosForService } from "../../utils/services";
+import { showToast } from "../../utils/showToast";
 import {
   EnabledChannels,
   getBlockedChannels,
   getEnabledChannelsForService
-} from "../../utils/profile";
-import { logosForService } from "../../utils/services";
-import { showToast } from "../../utils/showToast";
+} from "../preferences/common";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
