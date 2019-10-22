@@ -25,7 +25,7 @@ type State = Readonly<{
 }>;
 
 const screenWidth = Dimensions.get("screen").width;
-const boxDimension = 200;
+const boxDimension = 180;
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -33,30 +33,31 @@ const styles = StyleSheet.create({
   },
   container: {
     width: boxDimension,
-    height: boxDimension,
-    alignItems: "center",
-    alignContent: "flex-start",
     flex: 1,
-    backgroundColor: "yellow"
+    alignContent: "flex-start"
   },
   containerBox: {
     width: screenWidth,
-    height: 200,
+    height: boxDimension,
     alignItems: "center",
     alignContent: "flex-start",
-    flex: 1,
-    backgroundColor: "red"
+    flex: 1
   },
   image: {
-    width: 180,
-    height: 180,
+    width: boxDimension,
+    height: boxDimension,
     resizeMode: "cover",
+    position: "absolute",
+    alignItems: "flex-end",
     borderColor: variables.brandLightGray,
     borderWidth: 1.5,
-    borderRadius: Platform.OS === "ios" ? 180 / 2 : 180
+    borderRadius: Platform.OS === "ios" ? boxDimension / 2 : boxDimension
   },
   text: {
     fontSize: variables.fontSizeBase
+  },
+  success: {
+    justifyContent: "flex-start"
   }
 });
 
@@ -83,6 +84,7 @@ class CieConfirmScreen extends React.Component<Props, State> {
               style={styles.image}
             />
             <IconFont
+              style={styles.success}
               name="io-success"
               color={variables.textLinkColor}
               size={50}
