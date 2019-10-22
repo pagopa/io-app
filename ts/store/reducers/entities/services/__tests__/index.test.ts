@@ -8,12 +8,13 @@ import {
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
 import {
-  isLoadingServicesSelector,
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
   organizationsOfInterestSelector,
-  ServicesState
+  ServicesState,
+  visibleServicesContentLoadStateSelector,
+  visibleServicesMetadataLoadStateSelector
 } from "..";
 import { DepartmentName } from "../../../../../../definitions/backend/DepartmentName";
 import { OrganizationName } from "../../../../../../definitions/backend/OrganizationName";
@@ -122,7 +123,7 @@ const customOrganizations: OrganizationsState = {
 
 const customServicesMetadata: { byId: ServiceMetadataById } = {
   byId: {
-    ["11"]: pot.none,
+    ["11"]: pot.noneLoading,
     ["21"]: pot.some({
       description: "Descrizione servizio",
       email: "info@test.it",
@@ -132,8 +133,8 @@ const customServicesMetadata: { byId: ServiceMetadataById } = {
       tos_url: "http://www.tos.it",
       web_url: "https://weburl.it"
     }),
-    ["22"]: pot.none,
-    ["31"]: pot.noneError("Generic error"),
+    ["22"]: pot.noneLoading,
+    ["31"]: pot.noneError(Error("Generic error")),
     ["41"]: pot.some({
       description: "Descrizione servizio",
       email: "info@test.it",
@@ -143,7 +144,7 @@ const customServicesMetadata: { byId: ServiceMetadataById } = {
       tos_url: "http://www.tos.it",
       web_url: "https://weburl.it"
     }),
-    ["42"]: pot.none
+    ["42"]: pot.noneLoading
   }
 };
 
@@ -155,14 +156,6 @@ describe("organizationsOfInterestSelector", () => {
         customServices
       )
     ).toStrictEqual(["2", "4"]);
-  });
-});
-
-describe("isLoadingServicesSelector", () => {
-  it("should do be true if visibleServices are loading", () => {
-    expect(
-      isLoadingServicesSelector.resultFunc(true, true, pot.toLoading(pot.none))
-    ).toBe(true);
   });
 });
 
@@ -222,5 +215,21 @@ describe("notSelectedServicesSectionsSelector", () => {
         data: [customServices.byId["41"]]
       }
     ]);
+  });
+});
+
+describe("visibleServicesContentLoadStateSelector", () => {
+  it("should do be pot.noneLoading if at least one visible service is loading", () => {
+    expect(
+      visibleServicesContentLoadStateSelector.resultFunc(customServices.byId, customServices.visible)
+    ).toBe(pot.noneLoading);
+  });
+});
+
+describe("visibleServicesMetadataLoadStateSelector", () => {
+  it("should do be pot.noneError if any visible service is loading at least one visible service is error", () => {
+    expect(
+      visibleServicesMetadataLoadStateSelector.resultFunc(customServicesMetadata.byId, customServices.visible)
+    ).toBe(pot.noneLoading);
   });
 });

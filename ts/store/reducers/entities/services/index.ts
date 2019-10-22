@@ -142,7 +142,7 @@ export const visibleServicesMetadataLoadStateSelector = createSelector(
 );
 
 /**
- * A selector to get the organizations selected by the user as areas of interests 
+ * A selector to get the organizations selected by the user as areas of interests
  * which provide visible services
  */
 export const organizationsOfInterestSelector = createSelector(
