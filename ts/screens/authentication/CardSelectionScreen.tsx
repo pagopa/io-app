@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 const ringSettings = {
   dimension: ringDimensionMin,
   opacity: 0.3,
-  duration: 2200 as Millisecond
+  duration: 2100 as Millisecond
 };
 
 /**

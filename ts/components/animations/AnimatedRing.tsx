@@ -35,7 +35,8 @@ export default class AnimatedRing extends React.Component<Props> {
         Animated.timing(this.animatedValue, {
           toValue: 1,
           duration: this.props.duration,
-          easing: Easing.ease
+          easing: Easing.ease,
+          useNativeDriver: true
         })
       ).start();
     }, this.props.interval);
@@ -62,13 +63,13 @@ export default class AnimatedRing extends React.Component<Props> {
               {
                 scaleX: this.animatedValue.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [1, 1.4]
+                  outputRange: [1, 1.5]
                 })
               },
               {
                 scaleY: this.animatedValue.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [1, 1.4]
+                  outputRange: [1, 1.5]
                 })
               }
             ]
