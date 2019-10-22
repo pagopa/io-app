@@ -1,29 +1,27 @@
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
+import * as pot from "italia-ts-commons/lib/pot";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, put, select, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { ContentClient } from "../api/content";
-
+import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
-
+import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
   contentServiceLoad
 } from "../store/actions/content";
-
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { ServiceId } from "../../definitions/backend/ServiceId";
 import {
-  firstServicesLoad,
+  FirstServiceLoadSuccess,
   markServiceAsRead
 } from "../store/actions/services";
 import {
-  isFirstVisibleServiceLoadCompletedSelector,
-  isVisibleServicesContentLoadCompletedSelector,
-  isVisibleServicesMetadataLoadCompletedSelector
-} from "../store/reducers/entities/services/firstServicesLoading";
+  visibleServicesContentLoadStateSelector,
+  visibleServicesMetadataLoadStateSelector
+} from "../store/reducers/entities/services";
+import { isFirstVisibleServiceLoadCompletedSelector } from "../store/reducers/entities/services/firstServicesLoading";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
 
@@ -48,6 +46,7 @@ function getServiceMetadata(
  * TODO: do not retrieve the content on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
+// tslint:disable-next-line:cognitive-complexity
 export function* watchContentServiceLoadSaga(): Iterator<Effect> {
   yield takeEvery(getType(contentServiceLoad.request), function*(
     action: ActionType<typeof contentServiceLoad["request"]>
@@ -58,54 +57,54 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
         typeof getServiceMetadata
       > = yield call(getServiceMetadata, serviceId);
 
+      if (response.isLeft()) {
+        const error = response.fold(
+          readableReport,
+          ({ status }) => `response status ${status}`
+        );
+        throw Error(error);
+      }
+
+      const isFirstVisibleServiceLoadCompleted: ReturnType<
+        typeof isFirstVisibleServiceLoadCompletedSelector
+      > = yield select(isFirstVisibleServiceLoadCompletedSelector);
+
       if (response.isRight() && response.value.status === 200) {
         yield put(
           contentServiceLoad.success({ serviceId, data: response.value.value })
         );
+        // If the service is loaded for the first time (at first startup or when the
+        // cache is cleaned), the app shows the service list item without badge
+        if (!isFirstVisibleServiceLoadCompleted) {
+          yield put(markServiceAsRead(serviceId));
+        }
       } else {
-        const errorDescription = response.fold(
-          readableReport,
-          ({ status }) => `response status ${status}`
-        );
-        yield put(
-          contentServiceLoad.failure({
-            service_id: serviceId,
-            error: Error(`${errorDescription} - serviceId ${serviceId}`)
-          })
-        );
+        throw Error(`response status ${response.value.status}`);
       }
 
-      const isFirstServiceLoadingCompleted = yield select(
-        isFirstVisibleServiceLoadCompletedSelector
-      );
-
-      // If the service content is loaded for the first time, the app shows the service list item without badge
-      if (!isFirstServiceLoadingCompleted) {
-        yield put(markServiceAsRead(serviceId));
+      // If all services content and metadata are loaded with success,
+      // stop considering loaded services as read
+      if (!isFirstVisibleServiceLoadCompleted) {
+        const visibleServicesMetadataLoadState: ReturnType<
+          typeof visibleServicesMetadataLoadStateSelector
+        > = yield select(visibleServicesMetadataLoadStateSelector);
+        const visibleServicesContentLoadState: ReturnType<
+          typeof visibleServicesContentLoadStateSelector
+        > = yield select(visibleServicesContentLoadStateSelector);
+        if (
+          pot.isSome(visibleServicesMetadataLoadState) &&
+          pot.isSome(visibleServicesContentLoadState)
+        ) {
+          yield put(FirstServiceLoadSuccess());
+        }
       }
-
-      const isVisibleServicesContentLoadingCompleted = yield select(
-        isVisibleServicesContentLoadCompletedSelector
+    } catch (e) {
+      yield put(
+        contentServiceLoad.failure({
+          serviceId,
+          error: e || Error(`Unable to load metadata for service ${serviceId}`)
+        })
       );
-
-      const isVisibleServicesMetadataLoadingCompleted = yield select(
-        isVisibleServicesMetadataLoadCompletedSelector
-      );
-
-      // Check if the first services loading is occurring yet and check when it is completed
-      //
-      // TODO: Define and manage the firstServicesLoad.failure. It could occurs when one or
-      //        more services content load fails  https://www.pivotaltracker.com/story/show/168451469
-
-      if (
-        !isFirstServiceLoadingCompleted &&
-        isVisibleServicesContentLoadingCompleted &&
-        isVisibleServicesMetadataLoadingCompleted
-      ) {
-        yield put(firstServicesLoad.success());
-      }
-    } catch (error) {
-      yield put(contentServiceLoad.failure({ service_id: serviceId, error }));
     }
   });
 }
