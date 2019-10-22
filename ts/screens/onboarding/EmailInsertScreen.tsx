@@ -135,7 +135,9 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   private isEditing = this.props.navigation.getParam("isEditing") || false;
 
   public componentDidMount() {
-    this.setState({ email: some(EMPTY_EMAIL) });
+    if (this.isEditing) {
+      this.setState({ email: some(EMPTY_EMAIL) });
+    }
   }
 
   public render() {
