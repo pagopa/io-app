@@ -73,10 +73,11 @@ export default class FooterWithButtons extends React.Component<Props, never> {
               ? styles.buttonTwoThirds
               : styles.button
           }
-        />
-        <Text numberOfLines={1} style={{ fontSize }}>
-          {rightButtonTitle}
-        </Text>
+        >
+          <Text numberOfLines={1} style={{ fontSize }}>
+            {rightButtonTitle}
+          </Text>
+        </ButtonWithoutOpacity>
       </React.Fragment>
     );
   }
