@@ -21,6 +21,7 @@ import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import entitiesReducer from "./entities";
 import identificationReducer from "./identification";
+import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
 import installationReducer from "./installation";
 import navigationReducer from "./navigation";
 import navigationHistoryReducer from "./navigationHistory";
@@ -71,6 +72,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   persistedPreferences: persistedPreferencesReducer,
   identification: identificationReducer,
   navigationHistory: navigationHistoryReducer,
+  instabug: instabugUnreadMessagesReducer,
 
   //
   // persisted state

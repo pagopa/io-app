@@ -132,7 +132,7 @@ export const getBlockedChannels = (
     .mapNullable(
       profile =>
         InitializedProfile.is(profile)
-          ? profile.blocked_inbox_or_channels
+          ? { ...profile.blocked_inbox_or_channels }
           : null
     )
     .getOrElse({});
