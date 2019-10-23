@@ -10,12 +10,8 @@ import { resetToAuthenticationRoute } from "../../store/actions/navigation";
  */
 export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
   yield takeLatest(getType(sessionExpired), function*() {
-    /**
-     * TODO: clarify what use case the saveNavigationStateSaga should cover
-     */
-    // Save the navigation state
-    // yield call(saveNavigationStateSaga);
 
+    // reset navigation route history
     yield put(resetToAuthenticationRoute);
 
     // Re-initialize the app
