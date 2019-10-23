@@ -214,7 +214,7 @@ authentication:
       the icons to report bugs or start a chat with the development team.
       We're waiting for your feedbacks!
   cie_information_request: !include cie.md
-  spid_or_cie: To use IO you must have one of these digital tools, which certify your identity with certainty.
+  spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
   request_cie: Request EIC
   cie: Electronic Identity Card
   spid: SPID
