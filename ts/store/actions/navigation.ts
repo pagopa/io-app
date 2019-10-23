@@ -233,3 +233,8 @@ export const navigateToPaymentManualDataInsertion = (
     routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
     params
   });
+
+export const navigateToCieInvalidScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_EXPIRED_SCREEN
+  });
