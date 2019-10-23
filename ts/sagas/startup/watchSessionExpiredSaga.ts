@@ -10,7 +10,6 @@ import { resetToAuthenticationRoute } from "../../store/actions/navigation";
  */
 export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
   yield takeLatest(getType(sessionExpired), function*() {
-
     // reset navigation route history
     yield put(resetToAuthenticationRoute);
 
