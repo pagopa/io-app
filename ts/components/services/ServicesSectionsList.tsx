@@ -99,7 +99,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
     );
   }
 
-  // View for empty list in National and All tabs
+  // component used when the list is empty
   private emptyListComponent() {
     return (
       <View style={styles.headerContentWrapper}>
@@ -138,6 +138,10 @@ class ServicesSectionsList extends React.PureComponent<Props> {
   };
 
   private renderList = () => {
+    // empty component is different from local and others (national and all)
+    const emptyComponent = this.props.isLocal
+      ? this.localListEmptyComponent()
+      : this.emptyListComponent();
     return (
       <ServiceList
         animated={this.props.animated}
@@ -147,11 +151,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
         onRefresh={this.props.onRefresh}
         onSelect={this.props.onSelect}
         readServices={this.props.readServices}
-        ListEmptyComponent={
-          this.props.isLocal
-            ? this.localListEmptyComponent()
-            : this.emptyListComponent()
-        }
+        ListEmptyComponent={emptyComponent}
         onLongPressItem={this.props.onLongPressItem}
         isLongPressEnabled={this.props.isLongPressEnabled}
         onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
