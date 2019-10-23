@@ -6,8 +6,7 @@ import { BackendClient } from "../../api/backend";
 import {
   logoutFailure,
   logoutRequest,
-  logoutSuccess,
-  sessionExpired
+  logoutSuccess
 } from "../../store/actions/authentication";
 
 import { readableReport } from "italia-ts-commons/lib/reporters";
@@ -50,8 +49,6 @@ export function* watchLogoutSaga(
         };
         yield put(logoutFailure(logoutError));
       }
-      // Force the login by expiring the session
-      yield put(sessionExpired());
     } catch (error) {
       const logoutError = {
         error,
