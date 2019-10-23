@@ -7,7 +7,6 @@ import {
   Container,
   Content,
   Grid,
-  H1,
   H2,
   Row,
   Tab,
@@ -79,7 +78,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
       <BaseScreenComponent goBack={true}>
         <Container>
           <View style={{ margin: 24 }}>
-            <H1>{I18n.t("authentication.spid_information.contentTitle")}</H1>
+            <H2>{I18n.t("authentication.spid_information.contentTitle")}</H2>
 
             <View spacer={true} large={true} />
             <Text>{I18n.t("authentication.spid_or_cie")}</Text>
@@ -128,7 +127,10 @@ class SpidInformationScreen extends React.Component<Props, never> {
                 </Button>
               </View>
             </Tab>
-            <Tab heading={I18n.t("authentication.cie")}>
+            <Tab
+              heading={I18n.t("authentication.cie")}
+              activeTextStyle={{ fontSize: 14 }}
+            >
               <Content>
                 <Markdown>
                   {I18n.t("authentication.cie_information_request")}
