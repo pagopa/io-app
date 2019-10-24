@@ -7,7 +7,6 @@ import {
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
-import { connect } from "react-redux";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
@@ -69,4 +68,4 @@ class CieExpiredOrInvalidScreen extends React.Component<Props, State> {
   }
 }
 
-export default connect()(CieExpiredOrInvalidScreen);
+export default CieExpiredOrInvalidScreen;
