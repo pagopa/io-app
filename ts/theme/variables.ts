@@ -47,6 +47,7 @@ const customVariables = Object.assign(materialVariables, {
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
   colorWhite: "#FFFFFF",
+  disabledService: "#909DA8",
 
   calendarExpirableColor: "#D0021B",
 

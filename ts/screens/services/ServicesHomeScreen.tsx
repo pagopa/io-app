@@ -99,13 +99,13 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { getLogoForOrganization } from "../../utils/organizations";
-import { showToast } from "../../utils/showToast";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 import {
   getChannelsforServicesList,
   getProfileChannelsforServicesList
-} from "../preferences/common";
+} from "../../utils/profile";
+import { showToast } from "../../utils/showToast";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
