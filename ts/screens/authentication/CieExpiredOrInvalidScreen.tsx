@@ -41,7 +41,6 @@ class CieExpiredOrInvalidScreen extends React.Component<Props, State> {
     return (
       <Container>
         <BaseScreenComponent goBack={true}>
-          <NavigationEvents onWillFocus={undefined} />
           <View style={styles.contentContainerStyle}>
             <H1>{I18n.t("authentication.landing.expiredCardTitle")}</H1>
             <View spacer={true} />
