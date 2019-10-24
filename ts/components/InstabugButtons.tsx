@@ -9,7 +9,7 @@ import {
   instabugReportClosed,
   instabugReportOpened
 } from "../store/actions/debug";
-import { updateInstabugUnreadMessagesLoaded } from "../store/actions/instabug";
+import { updateInstabugBadge } from "../store/actions/instabug";
 import { Dispatch } from "../store/actions/types";
 import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
@@ -94,7 +94,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
             this.state.instabugReportType.value,
             dismiss
           );
-          this.props.dispatchUpdateInstabugBadge(this.props.badge);
+          this.props.dispatchUpdateInstabugBadge();
         }
       }
     );
@@ -138,9 +138,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(instabugReportOpened({ type })),
   dispatchIBReportClosed: (type: string, how: string) =>
     dispatch(instabugReportClosed({ type, how })),
-  dispatchUpdateInstabugBadge: (badgeValue: number) => {
-    dispatch(updateInstabugUnreadMessagesLoaded(badgeValue));
-  }
+  dispatchUpdateInstabugBadge: () => dispatch(updateInstabugBadge())
 });
 
 export const InstabugButtons = connect(
