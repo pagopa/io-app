@@ -17,10 +17,7 @@ import { IdentityProvider } from "../../models/IdentityProvider";
 
 import ROUTES from "../../navigation/routes";
 
-import {
-  forgetCurrentSession,
-  idpSelected
-} from "../../store/actions/authentication";
+import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
