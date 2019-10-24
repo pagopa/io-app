@@ -25,7 +25,7 @@ import { IdentityProvider } from "../models/IdentityProvider";
 import AppNavigator from "../navigation/AppNavigator";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
-import { updateInstabugBadge } from "../store/actions/instabug";
+import { updateInstabugUnreadMessages } from "../store/actions/instabug";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { loadMessageWithRelations } from "../store/actions/messages";
 import {
@@ -306,7 +306,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     backendClient.getVisibleServices
   );
   // Update number of instabug unread messages
-  yield takeEvery(updateInstabugBadge, updateInstabugBadgeSaga);
+  yield takeEvery(updateInstabugUnreadMessages, updateInstabugBadgeSaga);
 
   // Trigger the services content and metadata being loaded/refreshed.
   yield put(loadVisibleServices.request());

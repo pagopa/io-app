@@ -7,10 +7,10 @@ export const instabugUnreadMessagesLoaded = createStandardAction(
   "INSTABUG_UNREAD_MESSAGES_LOADED"
 )<number>();
 
-export const updateInstabugBadge = createStandardAction(
-  "UPDATE_INSTABUG_BADGE"
+export const updateInstabugUnreadMessages = createStandardAction(
+  "UPDATE_INSTABUG_UNREAD_MESSAGES"
 )();
 
 export type InstabugInfoActions =
   | ActionType<typeof instabugUnreadMessagesLoaded>
-  | ActionType<typeof updateInstabugBadge>;
+  | ActionType<typeof updateInstabugUnreadMessages>;
