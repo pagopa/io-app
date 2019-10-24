@@ -6,15 +6,9 @@ import {
   StackActions
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
-
-import { InferNavigationParams } from "../../types/react";
-
 import ROUTES from "../../navigation/routes";
-
-import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
-
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
-
+import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
@@ -27,6 +21,7 @@ import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErro
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
+import { InferNavigationParams } from "../../types/react";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState

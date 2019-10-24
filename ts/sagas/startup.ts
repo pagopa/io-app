@@ -121,6 +121,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Instantiate a backend client from the session token
   const backendClient = BackendClient(apiUrlPrefix, sessionToken);
 
+  // Handles the expiration of the session token
+  yield fork(watchSessionExpiredSaga);
+
   // Start the notification installation update as early as
   // possible to begin receiving push notifications
   const installationResponseStatus: SagaCallReturnType<
@@ -134,7 +137,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // when we're using the previous session token, that session has expired
     // so we need to reset the session token and restart from scratch.
     yield put(sessionExpired());
-    yield put(startApplicationInitialization());
     return;
   }
 
@@ -322,8 +324,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Watch for the app going to background/foreground
   yield fork(watchApplicationActivitySaga);
-  // Handles the expiration of the session token
-  yield fork(watchSessionExpiredSaga);
   // Logout the user by expiring the session
   yield fork(watchLogoutSaga, backendClient.logout);
   // Watch for requests to reset the PIN.
