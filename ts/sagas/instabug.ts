@@ -1,7 +1,10 @@
 import { Replies } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { call, Effect, fork, put } from "redux-saga/effects";
-import { instabugUnreadMessagesLoaded } from "../store/actions/instabug";
+import {
+  instabugUnreadMessagesLoaded,
+  updateInstabugUnreadMessagesLoaded
+} from "../store/actions/instabug";
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
 
@@ -24,6 +27,13 @@ function* watchInstabugSaga(): IterableIterator<Effect> {
     yield put(instabugUnreadMessagesLoaded(repliesCount));
     yield call(startTimer, INSTABUG_INFO_LOAD_INTERVAL);
   }
+}
+
+export function* updateInstabugSaga(): IterableIterator<Effect> {
+  const repliesCount: SagaCallReturnType<
+    typeof loadInstabugUnreadMessages
+  > = yield call(loadInstabugUnreadMessages);
+  yield put(updateInstabugUnreadMessagesLoaded(repliesCount));
 }
 
 export default function* root(): IterableIterator<Effect> {

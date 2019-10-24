@@ -2,7 +2,10 @@
  * Instabug message reducer
  */
 import { getType } from "typesafe-actions";
-import { instabugUnreadMessagesLoaded } from "../../actions/instabug";
+import {
+  instabugUnreadMessagesLoaded,
+  updateInstabugUnreadMessagesLoaded
+} from "../../actions/instabug";
 
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
@@ -20,7 +23,9 @@ const reducer = (
   action: Action
 ): InstabugUnreadMessagesState => {
   switch (action.type) {
-    case getType(instabugUnreadMessagesLoaded):
+    case getType(
+      instabugUnreadMessagesLoaded || updateInstabugUnreadMessagesLoaded
+    ):
       return {
         unreadMessages: action.payload
       };

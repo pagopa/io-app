@@ -54,6 +54,7 @@ import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
 } from "./identification";
+import { updateInstabugSaga } from "./instabug";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
@@ -303,7 +304,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     loadVisibleServicesRequestHandler,
     backendClient.getVisibleServices
   );
-
+  yield call(updateInstabugSaga);
   // Trigger the services content and metadata being loaded/refreshed.
   yield put(loadVisibleServices.request());
 
