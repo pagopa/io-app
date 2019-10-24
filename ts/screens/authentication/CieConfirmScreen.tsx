@@ -7,7 +7,6 @@ import {
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
-import { connect } from "react-redux";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -26,6 +25,7 @@ type State = Readonly<{
 
 const screenWidth = Dimensions.get("screen").width;
 const boxDimension = 180;
+const cieImage = require("../../../img/landing/place-card-illustration.png");
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -73,16 +73,13 @@ class CieConfirmScreen extends React.Component<Props, State> {
         <View style={styles.contentContainerStyle}>
           <H1>{I18n.t("authentication.landing.ok")}</H1>
           <Text style={styles.text}>
-            {I18n.t("authentication.landing.cardOk")}
+            {I18n.t("authentication.landing.cieCardValid")}
           </Text>
         </View>
         <View spacer={true} extralarge={true} />
         <View style={styles.containerBox}>
           <View style={styles.container}>
-            <Image
-              source={require("../../../img/landing/place-card-illustration.png")}
-              style={styles.image}
-            />
+            <Image source={cieImage} style={styles.image} />
             <IconFont
               style={styles.success}
               name="io-success"
@@ -96,4 +93,4 @@ class CieConfirmScreen extends React.Component<Props, State> {
   }
 }
 
-export default connect()(CieConfirmScreen);
+export default CieConfirmScreen;
