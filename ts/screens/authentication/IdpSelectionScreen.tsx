@@ -1,4 +1,4 @@
-import { Button, Content, H3, Text, View } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -148,9 +148,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
           </React.Fragment>
         )}
         <ScreenHeader
-          heading={
-            <H3>{I18n.t("authentication.idp_selection.contentTitle")}</H3>
-          }
+          heading={I18n.t("authentication.idp_selection.contentTitle")}
         />
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />

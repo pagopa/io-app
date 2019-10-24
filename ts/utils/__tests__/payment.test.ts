@@ -108,7 +108,11 @@ describe("isBrandMaestro", () => {
 
     const cards: ReadonlyArray<any> = [card1, card2, card3];
     for (const card of cards) {
-      expect(isBrandMaestro(card));
+      if (card.brand === "Maestro") {
+        expect(isBrandMaestro(card)).toEqual(true);
+      } else {
+        expect(isBrandMaestro(card)).toEqual(false);
+      }
     }
   });
 });
