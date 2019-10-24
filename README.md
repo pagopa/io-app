@@ -77,9 +77,16 @@ The authentication flow is as follows:
 
 ## How to contribute
 
+In the following there are instructions to build the app in your computer for development purposes.
+
 ### Pre-requisites
 
-#### nodenv
+You need a MacOS or Linux based computer. 
+The following instructions have been tested on a MacOS running Mojave and in Linux Ubuntu 18.04 running in a Virtual Machine.
+
+Linux based instructions should work also in a Windows based system with WSL as it is equivalent to a Linux enviroment, but they have not been tested. 
+
+#### Install nodenv
 
 On macOS and Linux we recommend the use of [nodenv](https://github.com/nodenv/nodenv) for managing multiple versions of NodeJS.
 
@@ -87,11 +94,77 @@ The node version used in this project is stored in [.node-version](.node-version
 
 If you already have nodenv installed and configured on your system, the correct version node will be set when you access the app directory.
 
-#### yarn
+To install, follow the steps described below.
 
-For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/).
+##### Install nodenv on MacOS
 
-#### rbenv
+Install [brew](https://brew.sh) following the installation instructions in the home page.
+
+Install `nodeenv` with the command:
+
+```
+brew install nodenv
+```
+
+Brew installs nodenv in the path so no more steps are needed.
+
+##### Install nodenv on Linux 
+
+This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
+
+```
+git clone https://github.com/nodenv/nodenv-installer
+./nodenv-installer/bin/nodenv-installer
+```
+
+Add `nodenv` to the PATH as follows:
+
+echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >>$HOME/.bashrc
+
+#### Add the nodenv initialization
+
+Either on Mac or Linux you need to add to your shell the initialization command:
+
+echo 'eval "$(nodenv init -)"' >>$HOME/.bashrc
+
+(if you use a different shell than bash you may need to adapt the command to your shell initialization files).
+
+Finally you can reload your shell initialization either by logout/login or with `source $HOME/.bashrc`.
+
+#### Verify nodenv is working correctly
+
+You should verify that the output of the `nodenv version` command and the content of the file .node-version are the same:
+
+For example (replace `<work-dir>` with your actual work directory):
+
+```
+$ cd `<work-dir>/io-app`
+$ nodenv version
+10.13.0 (set by <work-dir>/io-app/.node-version)
+$ cat .node-version
+10.13.0
+```
+
+#### Install yarn
+
+For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/). 
+
+On Mac you can install it with:
+
+```
+brew install yarn
+```
+
+On Linux use:
+
+```
+curl -o- -L https://yarnpkg.com/install.sh | bash
+source $HOME/.bashrc
+```
+
+Verify it was installed correctly with the command `which yarn`. It should tell you the path of the command. 
+
+#### Install rbenv
 
 On macOS and Linux, for managing multiple versions of Ruby (needed for _Fastlane_ and _CocoaPods_), we recommend the use of [rbenv](https://github.com/rbenv/rbenv).
 
@@ -99,7 +172,68 @@ The Ruby version used in this project is stored in [.ruby-version](.ruby-version
 
 If you already have rbenv installed and configured on your system, the correct Ruby version will be set, when you access the app directory.
 
-Some dependencies (eg CocoaPods) are installed via [bundler](https://bundler.io/).
+To install, follow the steps described below.
+
+##### Installing `rbenv` on MacOS
+
+You should already have installed `brew` so use:
+
+`brew install rbenv`
+
+##### Installing `rbenv` on Linux 
+
+This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
+
+```
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+```
+
+Add `rbenv` to the PATH as follows then reload the intialization file
+
+```
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >>$HOME/.bashrc
+source $HOME/.bashrc
+```
+
+#### Add the rbenv initialization
+
+Either on Mac or Linux you need to add to your shell the initialization command:
+
+```
+echo 'eval "$(nodenv init -)"' >>$HOME/.bashrc
+```
+
+(if you use a different shell than bash you may need to adapt the command to your shell initialization files).
+
+Finally you can reload your shell initialization either by logout/login or with `source $HOME/.bashrc`.
+
+#### Verify rbenv is working correctly
+
+You should verify that the output of the `nodenv version` command and the content of the file `.node-version` are the same:
+
+For example (replace `<work-dir>` with your actual work directory):
+
+```
+$ cd <work-dir>/io-app
+$ rbenv version
+2.4.2 (set by <work-dir>/io-app/.ruby-version)
+$ cat .ruby-version
+2.4.2
+```
+
+#### Install bundler
+
+Some dependencies (eg CocoaPods) are installed via [bundler](https://bundler.io/). 
+
+Bundler is a Ruby application and it is recommended you install bundler version 2.0.2 using the ruby managed by rbenv, with this procedure:
+
+```
+cd <work-dir>/io-app
+rbenv install
+rbenv global $(cat .ruby-version)
+gem install bundler:2.0.2
+```
+
 
 #### React Native
 
