@@ -1,16 +1,14 @@
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { Effect } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
-
+import { startApplicationInitialization } from "../../store/actions/application";
 import {
   logoutFailure,
   logoutRequest,
-  logoutSuccess,
-  sessionExpired
+  logoutSuccess
 } from "../../store/actions/authentication";
-
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaCallReturnType } from "../../types/utils";
 
 /**
@@ -50,10 +48,6 @@ export function* watchLogoutSaga(
         };
         yield put(logoutFailure(logoutError));
       }
-      // Force the login by expiring the session
-      // FIXME: possibly reset the navigation stack as the watcher of
-      // SESSION_EXPIRED will save the navigation state and later restore it
-      yield put(sessionExpired());
     } catch (error) {
       const logoutError = {
         error,
@@ -61,5 +55,6 @@ export function* watchLogoutSaga(
       };
       yield put(logoutFailure(logoutError));
     }
+    yield put(startApplicationInitialization());
   });
 }
