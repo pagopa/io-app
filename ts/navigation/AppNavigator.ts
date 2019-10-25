@@ -55,14 +55,15 @@ const navigator = createStackNavigator(
       screen: BackgroundScreen
     },
     [ROUTES.AUTHENTICATION]: {
-      // The navigator used for unauthenticated users
+      // The navigator used during authentication
       screen: AuthenticationNavigator
     },
     [ROUTES.ONBOARDING]: {
+      // The navigator user during onboarding for authenticated users
       screen: OnboardingNavigator
     },
     [ROUTES.MAIN]: {
-      // The navigator used for authenticated users
+      // The navigator used after onboaring for authenticated users
       screen: MainNavigator
     }
   },
