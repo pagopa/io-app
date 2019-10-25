@@ -145,7 +145,7 @@ profile:
       confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
       bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     pagoPaEnvironment:
-      pagoPaEnv: Ambiente PagoPA di Test
+      pagoPaEnv: Ambiente pagoPA di Test
       pagoPAEnvAlert: La modifica richiede il riavvio dell'app
       alertConfirmTitle: Vuoi usare l'ambiente di test pagoPA?
       alertConfirmMessage: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
@@ -289,7 +289,7 @@ email:
     details: Puoi modificare questo indirizzo, che dovrai validare cliccando su un  
       link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che 
       dipendono dalla email (pagamenti, inoltro messaggi, etc.) saranno disattivate.
-    alert: "Attenzione: il tuo account PagoPA è associato alla tua email,
+    alert: "Attenzione: il tuo account pagoPA è associato alla tua email,
       quindi se la modifichi non troverai più elencati
       nell'applicazione le tue transazioni ed i tuoi metodi di pagamento."
     help: (onb.email.help) (onb.help.read.help) Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
@@ -447,7 +447,7 @@ wallet:
   pickPsp:
     title: Scegli il gestore
     info: Questa carta non è stata emessa da nessun istituto che fa parte del circuito
-      PagoPA.
+      pagoPA.
     infoBold: Scegli il soggetto economico
     info2: che dovrà gestire la tua transazione.
     link: Per saperne di più
@@ -570,7 +570,7 @@ wallet:
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     chooser: Carica immagine dalla galleria
-    wrongQrCode: Non è un QR Code PagoPA!
+    wrongQrCode: Non è un QR Code pagoPA!
     byCameraTitle: QR Code avviso
     cameraUsageInfo: Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
@@ -589,7 +589,7 @@ wallet:
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poichè questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
     PAYMENT_UNKNOWN: Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.
-    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su PagoPA, il pagamento non può essere effettuato.
+    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su pagoPA, il pagamento non può essere effettuato.
     GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
     MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
     PAYMENT_ONGOING_NOCANCEL: Un pagamento per questo avviso è già in corso, riprova tra 30 minuti.
