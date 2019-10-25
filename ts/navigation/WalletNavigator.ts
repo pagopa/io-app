@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation";
-import CieConfirmScreen from "../screens/authentication/CieConfirmScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
@@ -63,10 +62,6 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.PAYMENT_PICK_PAYMENT_METHOD]: {
       screen: PickPaymentMethodScreen
-    },
-    // For Cie ok
-    [ROUTES.CIE_CONFIRM_SCREEN]: {
-      screen: CieConfirmScreen
     }
   },
   {
