@@ -26,7 +26,7 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 
 import { DevScreenButton } from "../../components/DevScreenButton";
-
+import * as config from "../../config";
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
@@ -69,7 +69,9 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
 const LandingScreen: React.SFC<Props> = props => {
   const navigateToMarkdown = () => props.navigation.navigate(ROUTES.MARKDOWN);
   const navigateToIdpSelection = () =>
-    props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
+    config.isCIEauthenticationEnabled
+      ? props.navigation.navigate(ROUTES.AUTHENTICATION_CIE_NFC_NOT_ENABLED)
+      : props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
   const navigateToSpidInformationRequest = () =>
     props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);

@@ -219,6 +219,12 @@ authentication:
     card5-content: In questa versione sperimentale trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
+  cie:
+    enableNfcTitle: Attiva NFC
+    enableNfcContent: Per permettere all'app di verificare la tua carta d'identità elettronica devi prima attivare la funzione NFC del tuuo dispositivo. Torna qui quando avrai finito!
+    enableNfcHelp: Non hai la Carta di Identità Elettronica?
+    nfcEnabledTitle: NFC Attivo
+    nfcEnabledContent: "Grazie per aver attivato nfc sul tuo dispositivo: puoi proseguire con l'autenticazione!"
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -770,3 +776,4 @@ reminders:
   loadMoreData: carica le scadenze del periodo precedente
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
+genericError: Si è verificato un errore

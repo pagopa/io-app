@@ -213,6 +213,12 @@ authentication:
     card5-content: In this experimental version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
       We're waiting for your feedbacks!
+  cie:
+    enableNfcTitle: Enable NFC
+    enableNfcContent: To allow the app to verify your electronic ID card, you must first activate the NFC function of your device. Come back here when you're done!
+    enableNfcHelp: Don't have an Electronic Identity Card?
+    nfcEnabledTitle: NFC Enabled
+    nfcEnabledContent: "Thank you for activating NFC on your device: you can proceed with authentication!"
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
@@ -759,3 +765,4 @@ reminders:
   loadMoreData: loads the deadlines of the previous period
 openMaps:
   genericError: An error occurred while opening the map
+genericError: An error occurred
