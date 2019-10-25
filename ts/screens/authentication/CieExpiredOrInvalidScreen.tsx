@@ -1,4 +1,3 @@
-import { Option } from "fp-ts/lib/Option";
 import { Container, H1, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Linking, StyleSheet } from "react-native";
