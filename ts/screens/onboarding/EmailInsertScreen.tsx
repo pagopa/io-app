@@ -95,7 +95,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         ? () => {
             // TODO1
             // TODO2
-            Alert.alert("Not implemented");
+            Alert.alert(I18n.t("global.notImplemented"));
           }
         : this.props.dispatchEmailInsert,
       title: I18n.t("global.buttons.continue"),
@@ -144,9 +144,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     const { isEditing } = this;
     return (
       <BaseScreenComponent
-        goBack={() =>
-          isEditing ? this.props.navigation.goBack() : this.handleGoBack()
-        }
+        goBack={this.handleGoBack}
         headerTitle={
           isEditing
             ? I18n.t("profile.preferences.list.email")
@@ -172,9 +170,11 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                     ? I18n.t("email.edit.validated")
                     : I18n.t("email.edit.subtitle")
                   : I18n.t("email.insert.subtitle")}
-                <Text style={styles.darkestGray}>
-                  {isEditing ? ` ${this.props.email.getOrElse("")}` : ""}
-                </Text>
+                {isEditing && (
+                  <Text style={styles.darkestGray}>
+                    {` ${this.props.email.getOrElse("")}`}
+                  </Text>
+                )}
               </Text>
             </View>
             <View spacer={true} />
@@ -216,22 +216,27 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  private handleGoBack = () =>
-    Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.exit"),
-          style: "default",
-          onPress: () => this.props.dispatch(abortOnboarding())
-        }
-      ]
-    );
+  private handleGoBack = () => {
+    if (this.isEditing) {
+      this.props.navigation.goBack();
+    } else {
+      Alert.alert(
+        I18n.t("onboarding.alert.title"),
+        I18n.t("onboarding.alert.description"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.exit"),
+            style: "default",
+            onPress: () => this.props.dispatch(abortOnboarding())
+          }
+        ]
+      );
+    }
+  };
 }
 
 function mapStateToProps(state: GlobalState) {

@@ -119,9 +119,8 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       }
     };
 
-    const isFromProfileSection = this.props.navigation.getParam(
-      "isFromProfileSection"
-    );
+    const isFromProfileSection =
+      this.props.navigation.getParam("isFromProfileSection") || false;
 
     return (
       <TopScreenComponent

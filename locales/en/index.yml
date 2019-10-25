@@ -280,11 +280,11 @@ email:
       use in IO app a different email address, if you wish. To make operative the
       new email address, you will need to validate it by clicking on the link you
       will receive by email.
-    details: You can change this adress, that you should validate clicking on 
+    details: You can change this address, then you should validate it by clicking on
       the link we will sent to your email address. In the meanwhile, those 
       functionalities of IO depending on the email (payments, messages forwarding,
       etc.) will be disabled.
-    alert: "Warning: your PAgoPa account is associated to your email. 
+    alert: "Warning: your pagoPa account is associated to your email. 
       So, if you change it, IO will no more list your registered payment methods
       and transactions."
     help: Your SPID profile communicates your email to IO app. If you find the address
@@ -301,22 +301,22 @@ email:
   edit:
     title: Modify your email
     subtitle: The email you inserted is
-    validated: The email you both inserted and validated is
+    validated: The email you inserted and validated is
     label: New personal email address
-    cta: Edit email
+    cta: Edit email address
   validate:
-    title: Ricorda di validare il tuo indirizzo email
-    header: Validazione email
-    info: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
-      clicca semplicemente su quel link.<br/>
-      Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
-      inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
-      usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
-    cta: Invia una nuova email di validazione
-    sent: Email inviata
-    help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
-      indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
-      tuo provider di servizi SPID.
+    title: Remember to validate your email address
+    header: Email Validation
+    info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
+      click simply on that link.<br/>
+      Until you will not validate your email address, some app functionalities
+      (payments, messages forwarding by email, etc.) will not be available, but you
+      will be able to use some other functions anyway (i.e. services, messages, etc.)"
+    cta: Send a new validation email
+    sent: Email sent
+    help: Your SPID profile communicates your email to IO app. If you find the address
+      wrong or that you do not use it anymore, you can edit it directly from your SPID
+      services provider account.
 onboarding:
   tos:
     headerTitle: Activation
@@ -755,6 +755,7 @@ identification:
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint
+    title: Biometric identification
     popup:
       reason: Identification
       title: Identification required

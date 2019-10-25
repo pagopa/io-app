@@ -292,7 +292,7 @@ email:
     alert: "Attenzione: il tuo account pagoPA è associato alla tua email,
       quindi se la modifichi non troverai più elencati
       nell'applicazione le tue transazioni ed i tuoi metodi di pagamento."
-    help: (onb.email.help) (onb.help.read.help) Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
+    help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
       indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
       tuo provider di servizi SPID.
   insert:
@@ -308,7 +308,7 @@ email:
     subtitle: L'email che avevi inserto in precedenza è
     validated: L'email che avevi inserto e validato in precedenza è
     label: Nuovo indirizzo email personale
-    cta: Modifica email
+    cta: Modifica indirizzo email
   validate:
     title: Ricorda di validare il tuo indirizzo email
     header: Validazione email
@@ -765,6 +765,7 @@ identification:
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
+    title: Identificazione Biometrica
     popup:
       reason: Identificazione
       title: Identificazione richiesta
