@@ -326,7 +326,7 @@ export function* deleteWalletRequestHandler(
       );
     }
   } catch (e) {
-    const failureAction = deleteWalletFailure(e.message);
+    const failureAction = deleteWalletFailure(e);
     yield put(failureAction);
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);
