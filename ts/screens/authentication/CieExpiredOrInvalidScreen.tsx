@@ -1,12 +1,8 @@
 import { Option } from "fp-ts/lib/Option";
-import { Container, H1, Text, View } from "native-base";
+import { Container, H1, Text, Toast, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import {
-  NavigationEvents,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { Linking, StyleSheet } from "react-native";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
@@ -37,6 +33,14 @@ class CieExpiredOrInvalidScreen extends React.Component<Props, State> {
     super(props);
   }
 
+  private browseToLink() {
+    const url =
+      "https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/";
+    Linking.openURL(url).catch(() => {
+      Toast.show({ text: I18n.t("genericError") });
+    });
+  }
+
   public render(): React.ReactNode {
     return (
       <Container>
@@ -48,7 +52,7 @@ class CieExpiredOrInvalidScreen extends React.Component<Props, State> {
               {I18n.t("authentication.landing.expiredCardContent")}
             </Text>
             <View spacer={true} />
-            <Text link={true} onPress={undefined}>
+            <Text link={true} onPress={() => this.browseToLink()}>
               {I18n.t("authentication.landing.expiredCardHelp")}
             </Text>
           </View>
