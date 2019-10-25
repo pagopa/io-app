@@ -26,7 +26,6 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
-  navigateToCieInvalidScreen,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
@@ -316,10 +315,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <Button
         block={true}
         onPress={
-          this.props.navigateToCieInvalidScreen
-          // pot.isSome(potWallets)
-          // ? this.props.navigateToPaymentScanQrCode
-          // : undefined
+          pot.isSome(potWallets)
+            ? this.props.navigateToPaymentScanQrCode
+            : undefined
         }
       >
         <IconFont name="io-qr" style={styles.white} />
@@ -386,7 +384,6 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToCieInvalidScreen: () => dispatch(navigateToCieInvalidScreen()),
   navigateToWalletAddPaymentMethod: () =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),

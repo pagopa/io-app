@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation";
-import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
@@ -63,10 +62,6 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.PAYMENT_PICK_PAYMENT_METHOD]: {
       screen: PickPaymentMethodScreen
-    },
-    // For expired cie screen
-    [ROUTES.CIE_EXPIRED_SCREEN]: {
-      screen: CieExpiredOrInvalidScreen
     }
   },
   {

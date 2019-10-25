@@ -4,6 +4,7 @@ import {
 } from "react-navigation";
 
 import { environment } from "../config";
+import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
@@ -27,6 +28,10 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.MARKDOWN]: {
     screen: MarkdownScreen
+  },
+  // For expired cie screen
+  [ROUTES.CIE_EXPIRED_SCREEN]: {
+    screen: CieExpiredOrInvalidScreen
   }
 };
 

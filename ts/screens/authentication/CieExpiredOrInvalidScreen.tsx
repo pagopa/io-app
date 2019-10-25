@@ -14,11 +14,6 @@ type OwnProps = Readonly<{
 
 type Props = OwnProps;
 
-type State = Readonly<{
-  securityCode: Option<string>;
-  holder: Option<string>;
-}>;
-
 const styles = StyleSheet.create({
   contentContainerStyle: {
     padding: variables.contentPadding
@@ -28,7 +23,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class CieExpiredOrInvalidScreen extends React.Component<Props, State> {
+class CieExpiredOrInvalidScreen extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
