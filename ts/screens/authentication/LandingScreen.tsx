@@ -27,6 +27,8 @@ import { ComponentProps } from "../../types/react";
 
 import { DevScreenButton } from "../../components/DevScreenButton";
 
+import * as config from "../../config";
+
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
@@ -71,8 +73,10 @@ const LandingScreen: React.SFC<Props> = props => {
   const navigateToIdpSelection = () =>
     props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
-  const navigateToSpidInformationRequest = () =>
-    props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
+  const navigateToSpidCieInformationRequest = () =>
+    config.isCIEauthenticationEnabled
+      ? props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION)
+      : props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
   const cardComponents = cardProps.map(p => (
     <LandingCardComponent key={`card-${p.id}`} {...p} />
@@ -104,7 +108,7 @@ const LandingScreen: React.SFC<Props> = props => {
           block={true}
           small={true}
           transparent={true}
-          onPress={navigateToSpidInformationRequest}
+          onPress={navigateToSpidCieInformationRequest}
         >
           <Text>{I18n.t("authentication.landing.nospid")}</Text>
         </Button>

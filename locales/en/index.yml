@@ -232,7 +232,8 @@ authentication:
   spid_information:
     spid: !include spid.md
     headerTitle: What is SPID?
-    contentTitle: Don't have SPID or CIE?
+    contentTitle: Don't have SPID?
+    contentTitleCie: Don't have SPID or CIE?
     moreLinkText: Learn more
     subtitle: SPID is safe
     paragraph1: SPID, the Public System of Digital Identity, allows you to access
