@@ -64,12 +64,9 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
         <View>
           <TouchableWithoutOpacity onPress={this.toggleRawInfo}>
             <View style={styles.toggleContainer}>
-              <TouchableWithoutOpacity>
-                <Text style={styles.linkStyle}>
-                  {I18n.t("messageDetails.rawInfoLink.hideLabel")}
-                </Text>
-              </TouchableWithoutOpacity>
-
+              <Text style={styles.linkStyle}>
+                {I18n.t("messageDetails.rawInfoLink.hideLabel")}
+              </Text>
               <IconFont name="io-close" color={variables.textLinkColor} />
             </View>
           </TouchableWithoutOpacity>
