@@ -1,15 +1,15 @@
 /**
- * A screen where the user is warned of a problem with the NFC connection.
+ * A screen where the user is warned of a problem about the NFC card reading.
  * TODO: The contextualHelp will be added in https://www.pivotaltracker.com/n/projects/2048617/stories/169392558
  */
 
-import { Container, H2, View } from "native-base";
+import { Container, H2, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 
 type OwnProps = {
@@ -17,6 +17,15 @@ type OwnProps = {
 };
 
 type Props = OwnProps;
+
+const styles = StyleSheet.create({
+  textStyle: {
+    marginTop: 24
+  },
+  container: {
+    margin: 24
+  }
+});
 
 class InvalidNfcConnectionScreen extends React.Component<Props, never> {
   /**
@@ -50,13 +59,13 @@ class InvalidNfcConnectionScreen extends React.Component<Props, never> {
       <Container>
         <BaseScreenComponent goBack={true}>
           <Container>
-            <View style={{ margin: 24 }}>
+            <View style={styles.container}>
               <H2>
                 {I18n.t("authentication.landing.cie.noNfcConnectionTitle")}
               </H2>
-              <Markdown>
+              <Text style={styles.textStyle}>
                 {I18n.t("authentication.landing.cie.noNfcConnectionContent")}
-              </Markdown>
+              </Text>
             </View>
           </Container>
         </BaseScreenComponent>

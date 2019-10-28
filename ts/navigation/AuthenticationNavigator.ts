@@ -6,6 +6,7 @@ import {
 import { environment } from "../config";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
+import InvalidNfcConnectionScreen from "../screens/authentication/InvalidNfcConnectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
@@ -14,7 +15,7 @@ import ROUTES from "./routes";
 // Routes loaded in production mode
 const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.AUTHENTICATION_LANDING]: {
-    screen: LandingScreen
+    screen: InvalidNfcConnectionScreen
   },
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: {
     screen: IdpSelectionScreen
