@@ -4,7 +4,7 @@ import {
 } from "react-navigation";
 
 import { environment } from "../config";
-import CieConfirmScreen from "../screens/authentication/CieConfirmScreen";
+import CieValidScreen from "../screens/authentication/CieValidScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
@@ -29,8 +29,8 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.MARKDOWN]: {
     screen: MarkdownScreen
   },
-  [ROUTES.CIE_CONFIRM_SCREEN]: {
-    screen: CieConfirmScreen
+  [ROUTES.CIE_VALID_SCREEN]: {
+    screen: CieValidScreen
   }
 };
 
