@@ -50,16 +50,17 @@ export function* watchLogoutSaga(
         };
         yield put(logoutFailure(logoutError));
       }
-      // Force the login by expiring the session
-      // FIXME: possibly reset the navigation stack as the watcher of
-      // SESSION_EXPIRED will save the navigation state and later restore it
-      yield put(sessionExpired());
     } catch (error) {
       const logoutError = {
         error,
         options: action.payload
       };
       yield put(logoutFailure(logoutError));
+    } finally {
+      // Force the login by expiring the session
+      // FIXME: possibly reset the navigation stack as the watcher of
+      // SESSION_EXPIRED will save the navigation state and later restore it
+      yield put(sessionExpired());
     }
   });
 }
