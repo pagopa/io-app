@@ -55,6 +55,10 @@ export function* watchLogoutSaga(
       };
       yield put(logoutFailure(logoutError));
     }
-    yield put(startApplicationInitialization());
+    // If keepUserData is false, startApplicationInitialization is
+    // dispatched within the componentDidMount of IngressScreen
+    if (action.payload.keepUserData) {
+      yield put(startApplicationInitialization());
+    }
   });
 }
