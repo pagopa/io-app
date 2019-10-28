@@ -51,12 +51,19 @@ const styles = StyleSheet.create({
     flex: 1
   },
   animatedStartPosition: {
-    bottom: Platform.OS === "ios" ? SCROLL_RANGE_FOR_ANIMATION : 0
+    bottom: SCROLL_RANGE_FOR_ANIMATION
   },
   listContainer: {
     flex: 1
   }
 });
+
+type AnimationProps = {
+  // paddingForAnimation has value equal to screen header. It is necessary
+  // because header has absolute position
+  paddingForAnimation: boolean;
+  AnimatedCTAStyle?: any;
+};
 
 type OwnProps = {
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
@@ -69,9 +76,10 @@ type OwnProps = {
 
 type Props = Pick<
   ComponentProps<typeof MessageAgenda>,
-  "servicesById" | "paymentsByRptId"
+  "servicesById" | "paymentsByRptId" | "animated"
 > &
   OwnProps &
+  AnimationProps &
   InjectedWithItemsSelectionProps;
 
 type State = {
@@ -504,12 +512,16 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
   public render() {
     const {
+      animated,
+      AnimatedCTAStyle,
+      paddingForAnimation,
       messagesState,
       servicesById,
       paymentsByRptId,
       selectedItemIds,
       resetSelection
     } = this.props;
+
     const { allMessageIdsState, isWorking, sectionsToRender } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
@@ -518,6 +530,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       <View style={styles.listWrapper}>
         <View style={styles.listContainer}>
           <MessageAgenda
+            {...this.props}
             ref={this.messageAgendaRef}
             sections={sectionsToRender}
             servicesById={servicesById}
@@ -528,6 +541,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             onLongPressItem={this.handleOnLongPressItem}
             onMoreDataRequest={this.onLoadMoreDataRequest}
             onContentSizeChange={this.onContentSizeChange}
+            animated={animated}
           />
         </View>
         <ListSelectionBar
@@ -537,7 +551,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           onToggleAllSelection={this.toggleAllMessagesSelection}
           onResetSelection={resetSelection}
           primaryButtonText={I18n.t("messages.cta.archive")}
-          containerStyle={[styles.animatedStartPosition]}
+          containerStyle={[
+            AnimatedCTAStyle,
+            paddingForAnimation && styles.animatedStartPosition
+          ]}
         />
       </View>
     );

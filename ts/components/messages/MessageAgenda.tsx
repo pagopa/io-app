@@ -4,8 +4,11 @@ import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
+  Animated,
   Dimensions,
   Image,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Platform,
   SectionList,
   SectionListData,
@@ -150,6 +153,13 @@ type SelectedSectionListProps = Pick<
   "refreshing" | "onContentSizeChange"
 >;
 
+type AnimatedProps = {
+  animated?: {
+    onScroll: (_: NativeSyntheticEvent<NativeScrollEvent>) => void;
+    scrollEventThrottle?: number;
+  };
+};
+
 type OwnProps = {
   sections: Sections;
   servicesById: ServicesByIdState;
@@ -160,7 +170,7 @@ type OwnProps = {
   selectedMessageIds: Option<Set<string>>;
 };
 
-type Props = OwnProps & SelectedSectionListProps;
+type Props = OwnProps & SelectedSectionListProps & AnimatedProps;
 
 type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
@@ -259,12 +269,22 @@ const FakeItemComponent = (
   </View>
 );
 
+const AnimatedPullSectionList = Animated.createAnimatedComponent(
+  PullSectionList
+);
+
 /**
  * A component to render messages with due_date in a agenda like form.
  */
-class MessageAgenda extends React.PureComponent<Props, State> {
+class MessageAgenda extends React.Component<Props, State>{
   // Ref to section list
-  private sectionListRef = React.createRef<any>();
+  private sectionListRef = React.createRef<typeof PullSectionList>();
+
+  private scrollTo = (index: number, animated: boolean = false) => {
+    if (this.sectionListRef.current && this.props.sections.length > 0) {
+      //this.sectionListRef.current.
+    }
+  };
 
   constructor(props: Props) {
     super(props);
@@ -293,6 +313,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   private loadMoreData() {
     this.props.onMoreDataRequest();
   }
+
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
     const isFake = info.section.fake;
@@ -397,8 +418,19 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     );
   }
 
+  private handleOnLayoutChange = () => {
+    /* const { selectedMessageIds } = this.state;
+    if (selectedMessageIds.isSome()) {
+      this.scrollTo(longPressedItemIndex.value, true);
+      this.setState({
+        longPressedItemIndex: none
+      });
+    } */
+  };
+
   public render() {
     const {
+      animated,
       sections,
       servicesById,
       paymentsByRptId,
@@ -407,9 +439,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     } = this.props;
 
     return (
-      <View style={styles.fill}>
+      <React.Fragment>
         {sections.length === 0 && this.topIndicatorRender()}
-        <PullSectionList
+        <AnimatedPullSectionList
           loadMoreData={this.loadMoreData}
           topIndicatorRender={this.topIndicatorRender}
           topIndicatorHeight={TOP_INDICATOR_HEIGHT}
@@ -427,22 +459,25 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           keyExtractor={keyExtractor}
           getItemLayout={this.getItemLayout}
           bounces={false}
+          animatedOnScroll={animated}
+          //onScroll={animated ? animated.onScroll : undefined}
           style={[
             {
               marginTop: sections.length === 0 ? MARGIN_TOP_EMPTY_LIST : 0
             },
             styles.scrollList
           ]}
-          scrollEventThrottle={8}
+          scrollEventThrottle={animated ? animated.scrollEventThrottle : 8}
           ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
+          onLayout={this.handleOnLayoutChange}
         />
-      </View>
+      </React.Fragment>
     );
   }
 
   public scrollToLocation = (params: SectionListScrollParams) => {
     if (this.sectionListRef.current !== null) {
-      this.sectionListRef.current.scrollToLocation(params);
+      // this.sectionListRef.current.scrollToLocation(params);
     }
   };
 }

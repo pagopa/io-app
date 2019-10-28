@@ -26,6 +26,7 @@ declare module "react-native-pull" {
     isPullEnd?: () => void;
     sectionsLength?: number;
     loadMoreData?: () => void;
+    animatedOnScroll?: any;
   };
 
   export class PullView extends React.Component<PullProps & ScrollViewProps> {}
