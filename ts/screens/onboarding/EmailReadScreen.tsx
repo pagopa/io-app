@@ -21,8 +21,10 @@ import FooterWithButtons, {
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
-import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
+import {
+  navigateBack,
+  navigateToEmailInsertScreen
+} from "../../store/actions/navigation";
 import {
   abortOnboarding,
   emailAcknowledged
@@ -72,22 +74,27 @@ export class EmailReadScreen extends React.PureComponent<Props> {
     body: () => <Markdown>{I18n.t("email.read.help")}</Markdown>
   };
 
-  private handleGoBack = () =>
-    Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.exit"),
-          style: "default",
-          onPress: () => this.props.abortOnboarding()
-        }
-      ]
-    );
+  private handleGoBack = (isFromProfileSection: boolean) => {
+    if (isFromProfileSection) {
+      this.props.navigateBack();
+    } else {
+      Alert.alert(
+        I18n.t("onboarding.alert.title"),
+        I18n.t("onboarding.alert.description"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.exit"),
+            style: "default",
+            onPress: () => this.props.abortOnboarding()
+          }
+        ]
+      );
+    }
+  };
 
   public render() {
     const { optionProfile } = this.props;
@@ -96,14 +103,15 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       .map(_ => untag(_.spid_email))
       .getOrElse("");
 
+    const isFromProfileSection =
+      this.props.navigation.getParam("isFromProfileSection") || false;
+
     const footerProps1: SingleButton = {
       type: "SingleButton",
       leftButton: {
         bordered: true,
         onPress: () =>
-          this.props.navigation.navigate(ROUTES.INSERT_EMAIL_SCREEN, {
-            isEditing: true
-          }),
+          this.props.navigateToEmailInsertScreen(isFromProfileSection),
         title: I18n.t("email.edit.cta")
       }
     };
@@ -114,7 +122,8 @@ export class EmailReadScreen extends React.PureComponent<Props> {
         block: true,
         bordered: true,
         title: I18n.t("email.edit.cta"),
-        onPress: this.props.navigateToEmailInsertScreen
+        onPress: () =>
+          this.props.navigateToEmailInsertScreen(isFromProfileSection)
       },
       rightButton: {
         block: true,
@@ -124,16 +133,9 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       }
     };
 
-    const isFromProfileSection =
-      this.props.navigation.getParam("isFromProfileSection") || false;
-
     return (
       <TopScreenComponent
-        goBack={
-          isFromProfileSection
-            ? this.props.navigation.goBack
-            : this.handleGoBack
-        }
+        goBack={() => this.handleGoBack(isFromProfileSection)}
         title={I18n.t("profile.preferences.list.email")}
         contextualHelp={this.contextualHelp}
       >
@@ -184,7 +186,12 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
-  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen)
+  navigateToEmailInsertScreen: (isFromProfileSection: boolean) => {
+    dispatch(navigateToEmailInsertScreen({ isFromProfileSection }));
+  },
+  navigateBack: () => {
+    dispatch(navigateBack());
+  }
 });
 
 export default connect(

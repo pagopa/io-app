@@ -30,7 +30,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
 type NavigationParams = {
-  isEditing?: boolean;
+  isFromProfileSection?: boolean;
 };
 
 type Props = ReduxProps &
@@ -96,7 +96,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   private renderFooterButtons() {
     const continueButtonProps = {
       disabled: this.isValidEmail() !== true,
-      onPress: this.isEditing
+      onPress: this.isFromProfileSection
         ? () => {
             // TODO1
             // TODO2
@@ -137,21 +137,22 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     });
   }
 
-  private isEditing = this.props.navigation.getParam("isEditing") || false;
+  private isFromProfileSection =
+    this.props.navigation.getParam("isFromProfileSection") || false;
 
   public componentDidMount() {
-    if (this.isEditing) {
+    if (this.isFromProfileSection) {
       this.setState({ email: some(EMPTY_EMAIL) });
     }
   }
 
   public render() {
-    const { isEditing } = this;
+    const { isFromProfileSection } = this;
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
         headerTitle={
-          isEditing
+          isFromProfileSection
             ? I18n.t("profile.preferences.list.email")
             : I18n.t("email.insert.header")
         }
@@ -160,19 +161,19 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         <View style={styles.container}>
           <Content noPadded={true} style={styles.content} scrollEnabled={false}>
             <H4 style={[styles.boldH4, styles.horizontalPadding]}>
-              {isEditing
+              {isFromProfileSection
                 ? I18n.t("email.edit.title")
                 : I18n.t("email.insert.title")}
             </H4>
             <View spacer={true} />
             <View style={styles.horizontalPadding}>
               <Text>
-                {isEditing
+                {isFromProfileSection
                   ? this.props.isEmailValidated
                     ? I18n.t("email.edit.validated")
                     : I18n.t("email.edit.subtitle")
                   : I18n.t("email.insert.subtitle")}
-                {isEditing && (
+                {isFromProfileSection && (
                   <Text style={styles.darkestGray}>
                     {` ${this.props.email.getOrElse("")}`}
                   </Text>
@@ -185,7 +186,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                 <LabelledItem
                   type={"text"}
                   label={
-                    isEditing
+                    isFromProfileSection
                       ? I18n.t("email.edit.label")
                       : I18n.t("email.insert.label")
                   }
@@ -219,7 +220,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   private handleGoBack = () => {
-    if (this.isEditing) {
+    if (this.isFromProfileSection) {
       this.props.navigation.goBack();
     } else {
       Alert.alert(

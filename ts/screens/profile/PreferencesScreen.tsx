@@ -14,10 +14,10 @@ import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
+  navigateToEmailReadScreen,
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
@@ -83,18 +83,18 @@ class PreferencesScreen extends React.Component<Props, State> {
     this.state = INITIAL_STATE;
   }
 
-  private handleEmailOnPress() {
-    if (isEmailEditingAndValidationEnabled) {
+  private handleEmailOnPress = () => {
+    if (!isEmailEditingAndValidationEnabled) {
       if (this.props.isEmailValidated) {
-        this.props.navigation.navigate(ROUTES.READ_EMAIL_SCREEN, {
-          isFromProfileSection: true
-        });
+        this.props.navigateToEmailInsertScreen();
       } else {
         // TODO: add navigation to the dedicated screen
         //  https://www.pivotaltracker.com/story/show/168247501
       }
+    } else {
+      unavailableAlert();
     }
-  }
+  };
 
   public componentWillMount() {
     getFingerprintSettings().then(
@@ -223,21 +223,26 @@ class PreferencesScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  languages: fromNullable(state.preferences.languages),
-  potProfile: pot.toOption(profileSelector(state)),
-  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-  preferredCalendar: state.persistedPreferences.preferredCalendar,
+function mapStateToProps(state: GlobalState) {
   // TODO: get info on validation from profile
   //      https://www.pivotaltracker.com/story/show/168662501
-  isEmailValidated: true
-});
+  const isEmailValidated = true;
+  return {
+    languages: fromNullable(state.preferences.languages),
+    potProfile: pot.toOption(profileSelector(state)),
+    isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
+    preferredCalendar: state.persistedPreferences.preferredCalendar,
+    isEmailValidated
+  };
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToFingerprintPreferenceScreen: () =>
     dispatch(navigateToFingerprintPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
-    dispatch(navigateToCalendarPreferenceScreen())
+    dispatch(navigateToCalendarPreferenceScreen()),
+  navigateToEmailInsertScreen: () =>
+    dispatch(navigateToEmailReadScreen({ isFromProfileSection: true }))
 });
 
 export default connect(
