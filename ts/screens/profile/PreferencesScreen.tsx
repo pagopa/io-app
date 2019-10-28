@@ -12,6 +12,7 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
@@ -83,13 +84,15 @@ class PreferencesScreen extends React.Component<Props, State> {
   }
 
   private handleEmailOnPress() {
-    if (this.props.isEmailValidated) {
-      this.props.navigation.navigate(ROUTES.READ_EMAIL_SCREEN, {
-        isFromProfileSection: true
-      });
-    } else {
-      // TODO: add navigation to the dedicated screen
-      //  https://www.pivotaltracker.com/story/show/168247501
+    if (isEmailEditingAndValidationEnabled) {
+      if (this.props.isEmailValidated) {
+        this.props.navigation.navigate(ROUTES.READ_EMAIL_SCREEN, {
+          isFromProfileSection: true
+        });
+      } else {
+        // TODO: add navigation to the dedicated screen
+        //  https://www.pivotaltracker.com/story/show/168247501
+      }
     }
   }
 
