@@ -82,6 +82,17 @@ class PreferencesScreen extends React.Component<Props, State> {
     this.state = INITIAL_STATE;
   }
 
+  private handleEmailOnPress() {
+    if (this.props.isEmailValidated) {
+      this.props.navigation.navigate(ROUTES.READ_EMAIL_SCREEN, {
+        isFromProfileSection: true
+      });
+    } else {
+      // TODO: add navigation to the dedicated screen
+      //  https://www.pivotaltracker.com/story/show/168247501
+    }
+  }
+
   public componentWillMount() {
     getFingerprintSettings().then(
       biometryTypeOrUnsupportedReason => {
@@ -184,11 +195,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             <ListItemComponent
               title={I18n.t("profile.preferences.list.email")}
               subTitle={profileData.spid_email}
-              onPress={() =>
-                this.props.navigation.navigate(ROUTES.READ_EMAIL_SCREEN, {
-                  isFromProfileSection: true
-                })
-              }
+              onPress={this.handleEmailOnPress}
             />
 
             <ListItemComponent
@@ -217,7 +224,10 @@ const mapStateToProps = (state: GlobalState) => ({
   languages: fromNullable(state.preferences.languages),
   potProfile: pot.toOption(profileSelector(state)),
   isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-  preferredCalendar: state.persistedPreferences.preferredCalendar
+  preferredCalendar: state.persistedPreferences.preferredCalendar,
+  // TODO: get info on validation from profile
+  //      https://www.pivotaltracker.com/story/show/168662501
+  isEmailValidated: true
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
