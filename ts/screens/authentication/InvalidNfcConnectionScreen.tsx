@@ -1,6 +1,8 @@
 /**
  * A screen where the user is warned of a problem with the NFC connection.
+ * TODO: The contextualHelp will be added in https://www.pivotaltracker.com/n/projects/2048617/stories/169392558
  */
+
 import { Container, H2, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
