@@ -33,8 +33,7 @@ import {
   Animated,
   Image,
   Platform,
-  StyleSheet,
-  TouchableOpacity
+  StyleSheet
 } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import {
@@ -54,6 +53,7 @@ import { SearchNoResultMessage } from "../../components/search/SearchNoResultMes
 import OrganizationLogo from "../../components/services/OrganizationLogo";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesSectionsList from "../../components/services/ServicesSectionsList";
+import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -659,14 +659,14 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       }
     };
     return (
-      <TouchableOpacity onPress={onPressItem}>
+      <TouchableWithoutOpacity onPress={onPressItem}>
         <IconFont
           name={"io-trash"}
           color={"#C7D1D9"}
           size={17}
           style={styles.icon}
         />
-      </TouchableOpacity>
+      </TouchableWithoutOpacity>
     );
   };
 
