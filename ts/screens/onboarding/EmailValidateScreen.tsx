@@ -123,7 +123,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
-  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen)
+  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen({isFromProfileSection: false}))
 });
 
 export default connect(

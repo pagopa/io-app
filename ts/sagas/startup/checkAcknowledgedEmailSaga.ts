@@ -37,14 +37,14 @@ export function* checkAcknowledgedEmailSaga(): IterableIterator<Effect> {
       // If email exists and it's valid, navigate to the Email Screen in order
       // to wait for the user to check it out and press "Continue". Otherwise
       // a new email registration process will be run
-      yield put(navigateToEmailReadScreen);
+      yield put(navigateToEmailReadScreen({isFromProfileSection: false}));
     } else {
       yield put(navigateToEmailValidateScreen);
     }
   } else {
     // No email is provided, user must insert the Email address.
 
-    yield put(navigateToEmailInsertScreen);
+    yield put(navigateToEmailInsertScreen({isFromProfileSection: false}));
   }
 
   const watchEditEmailSagaTask = yield fork(watchEditEmailSaga);
