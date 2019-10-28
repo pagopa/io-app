@@ -39,6 +39,11 @@ const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
  * A screen as reminder to the user to validate his email address
  */
 export class EmailValidateScreen extends React.PureComponent<Props> {
+  private contextualHelp = {
+    title: I18n.t("email.validate.title"),
+    body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
+  };
+
   private handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),
@@ -68,10 +73,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
         goBack={this.handleGoBack}
         headerTitle={I18n.t("email.validate.header")}
         title={I18n.t("email.validate.title")}
-        contextualHelp={{
-          title: I18n.t("email.validate.title"),
-          body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
-        }}
+        contextualHelp={this.contextualHelp}
       >
         <ScreenContent title={I18n.t("email.validate.title")}>
           <View style={styles.content}>

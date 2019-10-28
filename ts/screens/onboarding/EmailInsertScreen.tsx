@@ -80,6 +80,11 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     this.state = { email: this.props.email };
   }
 
+  private contextualHelp = {
+    title: I18n.t("email.insert.help.title"),
+    body: () => <Markdown>{I18n.t("email.insert.help.content")}</Markdown>
+  };
+
   /**
    * Footer
    *
@@ -150,10 +155,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             ? I18n.t("profile.preferences.list.email")
             : I18n.t("email.insert.header")
         }
-        contextualHelp={{
-          title: I18n.t("email.insert.help.title"),
-          body: () => <Markdown>{I18n.t("email.insert.help.content")}</Markdown>
-        }}
+        contextualHelp={this.contextualHelp}
       >
         <View style={styles.container}>
           <Content noPadded={true} style={styles.content} scrollEnabled={false}>

@@ -67,6 +67,11 @@ const styles = StyleSheet.create({
 });
 
 export class EmailReadScreen extends React.PureComponent<Props> {
+  private contextualHelp = {
+    title: I18n.t("email.read.title"),
+    body: () => <Markdown>{I18n.t("email.read.help")}</Markdown>
+  };
+
   private handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),
@@ -130,10 +135,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             : this.handleGoBack
         }
         title={I18n.t("profile.preferences.list.email")}
-        contextualHelp={{
-          title: I18n.t("email.read.title"),
-          body: () => <Markdown>{I18n.t("email.read.help")}</Markdown>
-        }}
+        contextualHelp={this.contextualHelp}
       >
         <ScreenContent
           title={I18n.t("email.read.title")}
