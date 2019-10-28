@@ -81,7 +81,7 @@ In the following there are instructions to build the app in your computer for de
 
 ### Pre-requisites
 
-You need a recent macOS , Linux or Windows 10 based computer, and an Unix based development environment. On macOS and Linux this enviromnet is available in the base install, while on Windows you need to install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10), the Windows Subsystem for Linux.
+You need a recent macOS , Linux or Windows 10 based computer, and an Unix based development environment. On macOS and Linux this environment is available in the base install, while on Windows you need to install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10), the Windows Subsystem for Linux.
 
 The following instructions have been tested on a macOS running Mojave, on Linux Ubuntu 18.04 and on Windows with Ubuntu 18.04 installed with WSL. The described procedure assume you are using the `bash` shell; they may work with other shells but you may need to tweak the configuration for your shell. In the following when we will refer to Linux we also mean Windows with WSL.
 
