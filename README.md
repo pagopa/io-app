@@ -81,10 +81,9 @@ In the following there are instructions to build the app in your computer for de
 
 ### Pre-requisites
 
-You need a MacOS or Linux based computer. 
-The following instructions have been tested on a MacOS running Mojave and in Linux Ubuntu 18.04 running in a Virtual Machine.
+You need a recent macOS , Linux or Windows 10 based computer, and an Unix based development environment. On macOS and Linux this enviromnet is available in the base install, while on Windows you need to install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10), the Windows Subsystem for Linux.
 
-Linux based instructions should work also in a Windows based system with WSL as it is equivalent to a Linux enviroment, but they have not been tested. 
+The following instructions have been tested on a macOS running Mojave, on Linux Ubuntu 18.04 and on Windows with Ubuntu 18.04 installed with WSL. The described procedure assume you are using the `bash` shell; they may work with other shells but you may need to tweak the configuration for your shell. In the following when we will refer to Linux we also mean Windows with WSL.
 
 #### Install nodenv
 
@@ -96,17 +95,17 @@ If you already have nodenv installed and configured on your system, the correct 
 
 To install, follow the steps described below.
 
-##### Install nodenv on MacOS
+##### Install nodenv on macOS
 
-Install [brew](https://brew.sh) following the installation instructions in the home page.
+First, if you do not have it already, install [brew](https://brew.sh) following the installation instructions in the home page.
 
-Install `nodeenv` with the command:
+Install `nodenv` with the command:
 
 ```
 brew install nodenv
 ```
 
-Brew installs nodenv in the path so no more steps are needed.
+Brew installs `nodenv` in the path so no more steps are needed. Check you have it available with the command `which nodenv`.
 
 ##### Install nodenv on Linux 
 
@@ -117,30 +116,40 @@ git clone https://github.com/nodenv/nodenv-installer
 ./nodenv-installer/bin/nodenv-installer
 ```
 
-Add `nodenv` to the PATH as follows:
+Add `nodenv` to the PATH, then reload the configuation as follows:
 
-echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >>$HOME/.bashrc
+```
+echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >>~/.bashrc
+source ~/.bashrc
+```
 
-#### Add the nodenv initialization
+Check you have it available with the command `which nodenv`.
 
-Either on Mac or Linux you need to add to your shell the initialization command:
+#### Completing and verifying configuration
 
-echo 'eval "$(nodenv init -)"' >>$HOME/.bashrc
+Either on Mac or Linux you need to add to your shell the initialization command and reload the configuration:
+
+```
+echo 'eval "$(nodenv init -)"' >>~/.bashrc
+source ~/.bashrc
+```
 
 (if you use a different shell than bash you may need to adapt the command to your shell initialization files).
 
-Finally you can reload your shell initialization either by logout/login or with `source $HOME/.bashrc`.
-
-#### Verify nodenv is working correctly
-
-You should verify that the output of the `nodenv version` command and the content of the file .node-version are the same:
-
-For example (replace `<work-dir>` with your actual work directory):
+Finally you can install your version of `node` using `nodenv` (replace `<work-dir>` with your actual work directory)
 
 ```
-$ cd `<work-dir>/io-app`
+cd <work-dir>/io-app
+nodenv install
+```
+
+You should now verify that the output of the `nodenv version` command and the version of the node in the PATH are the same as the content of the `.node-version` file. For example:
+
+```
 $ nodenv version
 10.13.0 (set by <work-dir>/io-app/.node-version)
+$ node -v
+v10.13.0
 $ cat .node-version
 10.13.0
 ```
@@ -149,20 +158,24 @@ $ cat .node-version
 
 For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/). 
 
-On Mac you can install it with:
+
+Yarn is a node application. IF you have alredy installed in your system version of node compatible with yarn, you can install it as a global command with:
 
 ```
-brew install yarn
+npm install -g yarn
 ```
 
-On Linux use:
+If you do not have node already installed you can install  `yarn` using `nodenv` with this procedure:
 
 ```
+cd <work-dir>/io-app
+nodenv global $(cat .node-version)
 curl -o- -L https://yarnpkg.com/install.sh | bash
-source $HOME/.bashrc
 ```
 
-Verify it was installed correctly with the command `which yarn`. It should tell you the path of the command. 
+Now you have to login and logout again from the terminal as yarn installs the configuration in different places on macOS or Linux.
+
+Verify it was installed correctly with the command `which yarn`. It should tell you the installation path of the command. 
 
 #### Install rbenv
 
@@ -174,42 +187,62 @@ If you already have rbenv installed and configured on your system, the correct R
 
 To install, follow the steps described below.
 
-##### Installing `rbenv` on MacOS
+##### Installing `rbenv` on macOS
 
 You should already have installed `brew` so use:
 
-`brew install rbenv`
+```
+brew install rbenv
+```
+
+Brew installs `rbenv` in the path so no more steps are needed.
 
 ##### Installing `rbenv` on Linux 
 
-This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
+This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. 
 
 ```
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+mkdir ~/.rbenv/plugins
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 ```
 
 Add `rbenv` to the PATH as follows then reload the intialization file
 
 ```
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >>$HOME/.bashrc
-source $HOME/.bashrc
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >>~/.bashrc
+source ~/.bashrc
 ```
 
-#### Add the rbenv initialization
+Verify you have installed it correctly with the command `which rbenv`.
 
-Either on Mac or Linux you need to add to your shell the initialization command:
+#### Completing and verifying configuration
+
+Either on Mac or Linux you need to add to your shell the initialization command thjen reload the configuration:
 
 ```
-echo 'eval "$(nodenv init -)"' >>$HOME/.bashrc
+echo 'eval "$(rbenv init -)"' >>~/.bashrc
+source ~/.bashrc
 ```
 
 (if you use a different shell than bash you may need to adapt the command to your shell initialization files).
 
-Finally you can reload your shell initialization either by logout/login or with `source $HOME/.bashrc`.
 
-#### Verify rbenv is working correctly
+Before you can install your version of Ruby, you need a C compiler and some libraries. On Ubuntu or Debian based systems use:
 
-You should verify that the output of the `nodenv version` command and the content of the file `.node-version` are the same:
+```
+sudo apt-get update
+sudo apt-get install build-essential libssl-dev libreadline-dev zlib1g-dev
+ ```
+
+Now you can install your version of `ruby` using `rbenv` (replace `<work-dir>` with your actual work directory)
+
+```
+cd <work-dir>/io-app
+rbenv install
+```
+
+You should verify that the output of the `rbenv version` command and the content of the file `.ruby-version` are the same:
 
 For example (replace `<work-dir>` with your actual work directory):
 
@@ -217,23 +250,35 @@ For example (replace `<work-dir>` with your actual work directory):
 $ cd <work-dir>/io-app
 $ rbenv version
 2.4.2 (set by <work-dir>/io-app/.ruby-version)
+$ ruby -v
+ruby 2.4.2p198 (2017-09-14 revision 59899) [x86_64-linux]
 $ cat .ruby-version
 2.4.2
 ```
 
 #### Install bundler
 
-Some dependencies (eg CocoaPods) are installed via [bundler](https://bundler.io/). 
+Some dependencies are installed via [bundler](https://bundler.io/) and [cocoapods](https://cocoapods.org/) 
 
-Bundler is a Ruby application and it is recommended you install bundler version 2.0.2 using the ruby managed by rbenv, with this procedure:
+Note that on Linux you do not need CocoaPods as you can only build for Android.
+
+Bundler is a Ruby application. If you have installed a version of Ruby in your system you can use it to install the required tools with:
+
+```
+sudo gem install bundler:2.0.2
+```
+
+In some version of Linux you may not have Ruby installed. In some versions of macOS, bundler is not able to install the dependencies because the ruby provided by the system is not complete enough. 
+
+In those cases, you need to install the bundler using the ruby installed by `rbenv` using the following procedure.
 
 ```
 cd <work-dir>/io-app
-rbenv install
 rbenv global $(cat .ruby-version)
 gem install bundler:2.0.2
 ```
 
+Verify it was installed correctly with the command `which bundle`. It should show the installation path of the command. 
 
 #### React Native
 
@@ -243,34 +288,15 @@ If you have a macOS system, you can follow both the tutorial for iOS and for And
 
 ### Building and launching on the simulator
 
-#### Dependencies
-
-First we install the libraries used by the project:
-
-```
-$ bundle install
-$ yarn install
-$ cd ios
-$ pod install
-```
-
-#### Generating API definitions and translations
-
-The second step is to generate the definitions from the openapi specs and from the YAML translations:
-
-```
-$ yarn generate:all
-```
-
 #### App build configuration
 
-Finally, we copy the sample configuration for the app.
+As a first step,  copy the sample configuration for the app.
 
 ```
 $ cp .env.example .env
 ```
 
-Here is a still NOT complete table of the environment variables you can set:
+You need to edit it to match your environment. Here is a still NOT complete table of the environment variables you can set (check the comments in the file for more informations)ç
 
 | NAME                           | DEFAULT |                                                                                                 |
 |--------------------------------|---------|-------------------------------------------------------------------------------------------------|
@@ -279,6 +305,26 @@ Here is a still NOT complete table of the environment variables you can set:
 | `TOT_MESSAGE_FETCH_WORKERS` | 5 | Number of workers to create for message detail fetching. This means that we will have at most a number of concurrent fetches (of the message detail) equal to the number of the workers.
 
 _Note: The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or are fully working._
+
+
+#### Dependencies
+
+Now you can install the libraries used by the project:
+
+```
+$ bundle install
+$ yarn install
+$ cd ios        # skip on linux
+$ pod install   # skip on linux
+```
+
+#### Generating API definitions and translations
+
+Finally, generate the definitions from the openapi specs and from the YAML translations:
+
+```
+$ yarn generate:all
+```
 
 #### Installation on the simulator
 
