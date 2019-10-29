@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
 });
 
 class CiePinScreen extends React.Component<Props, State> {
+  // @ts-ignore
   private pinConfirmComponent: CiePinpad | null = null;
 
   constructor(props: Props) {
@@ -89,18 +90,6 @@ class CiePinScreen extends React.Component<Props, State> {
       }
     });
   };
-
-  public onPinReset() {
-    if (this.pinConfirmComponent) {
-      // tslint:disable-next-line:no-commented-code
-      // this.pinConfirmComponent.debounceClear();
-    }
-    this.setState({
-      pinState: {
-        state: "PinUnselected"
-      }
-    });
-  }
 
   // Render a different header when the user need to confirm the PIN
   public renderContentHeader() {

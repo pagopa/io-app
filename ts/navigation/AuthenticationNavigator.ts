@@ -4,7 +4,6 @@ import {
 } from "react-navigation";
 
 import { environment } from "../config";
-import CiePinScreen from "../screens/authentication/CiePinScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
@@ -15,7 +14,7 @@ import ROUTES from "./routes";
 // Routes loaded in production mode
 const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.AUTHENTICATION_LANDING]: {
-    screen: CiePinScreen
+    screen: LandingScreen
   },
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: {
     screen: IdpSelectionScreen
