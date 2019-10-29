@@ -48,11 +48,8 @@ export const isVisibleService = (
   return (
     service &&
     pot.getOrElse(
-      pot.map(
-        visibleServices,
-        services =>
-          services.findIndex(item => service.service_id === item.service_id) !==
-          -1
+      pot.map(visibleServices, services =>
+        services.some(item => service.service_id === item.service_id)
       ),
       false
     )

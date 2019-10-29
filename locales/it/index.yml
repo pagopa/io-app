@@ -219,6 +219,11 @@ authentication:
     card5-content: In questa versione sperimentale trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
+    cie:
+      noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
+      noNfcConnectionContent: !include cie/noNfcConnection.md
+    ok: Ok
+    cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -311,24 +316,37 @@ onboarding:
         touchId: TouchID
       notEnrolledText: !include tos_fingerprint_not_enrolled.md
   email:
+    validation:
+      title: Ricorda di validare il tuo indirizzo email
+      headerTitle: Validazione email
+      info: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
+        clicca semplicemente su quel link.<br/>
+        Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
+        inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
+        usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
+      ctaValidate: Invia una nuova email di validazione
+      emailSentFeedback: Invia una nuova email di validazione
+      help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
+        indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
+        tuo provider di servizi SPID.
     insert:
       headerTitle: Attivazione
       title: Inserisci la tua email
       help:
         title: Email
         content: !include email_insert_help.md
-    subtitle: Alcune funzioni di IO hanno bisogno della tua email.
-    emailInputLabel: Indirizzo email personale
     read:
       title: Il tuo indirizzo email
       emailInfo: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
         usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
         il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
         casella di posta elettronica.
-      ctaEdit: Modifica email
       help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
         indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
         tuo provider di servizi SPID.
+    ctaEdit: Modifica email
+    subtitle: Alcune funzioni di IO hanno bisogno della tua email.
+    emailInputLabel: Indirizzo email personale
 pin_login:
   pin:
     pinInfo: Inserisci il PIN
@@ -728,6 +746,7 @@ services:
   disableAllTitle: Vuoi davvero disattivare tutti i servizi?
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finchè non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
+  emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
