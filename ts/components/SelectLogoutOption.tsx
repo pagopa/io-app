@@ -7,7 +7,7 @@ import I18n from "../i18n";
 import { LogoutOption, logoutRequest } from "../store/actions/authentication";
 import { Dispatch } from "../store/actions/types";
 import variables from "../theme/variables";
-import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
+import { withLoadingSpinner } from "./helpers/withLoadingSpinner";
 import ListItemComponent from "./screens/ListItemComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
@@ -68,40 +68,42 @@ class SelectLogoutOption extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    return (
-      <LoadingSpinnerOverlay isLoading={this.state.isLoading}>
-        <Container>
-          <Content style={styles.content}>
-            {this.props.header || null}
-            <List>
-              <ListItemComponent
-                title={I18n.t("profile.logout.cta.keepData.title")}
-                subTitle={I18n.t("profile.logout.cta.keepData.description")}
-                onPress={() => this.logout({ keepUserData: true })}
-                useExtendedSubTitle={true}
-              />
+    // Using the loading spinner HOC to avoid reimplementing the Loading component
+    // TODO - this part can be improved within this story https://www.pivotaltracker.com/story/show/169425266
+    const ContainerComponent = withLoadingSpinner(() => (
+      <Container>
+        <Content style={styles.content}>
+          {this.props.header || null}
+          <List>
+            <ListItemComponent
+              title={I18n.t("profile.logout.cta.keepData.title")}
+              subTitle={I18n.t("profile.logout.cta.keepData.description")}
+              onPress={() => this.logout({ keepUserData: true })}
+              useExtendedSubTitle={true}
+            />
 
-              <ListItemComponent
-                title={I18n.t("profile.logout.cta.resetData.title")}
-                subTitle={I18n.t("profile.logout.cta.resetData.description")}
-                onPress={() => this.logout({ keepUserData: false })}
-                useExtendedSubTitle={true}
-              />
-            </List>
-            <View style={styles.separator} />
-          </Content>
-          <FooterWithButtons
-            type="SingleButton"
-            leftButton={{
-              bordered: true,
-              onPress: this.props.onCancel,
-              title: I18n.t("global.buttons.cancel"),
-              block: true
-            }}
-          />
-        </Container>
-      </LoadingSpinnerOverlay>
-    );
+            <ListItemComponent
+              title={I18n.t("profile.logout.cta.resetData.title")}
+              subTitle={I18n.t("profile.logout.cta.resetData.description")}
+              onPress={() => this.logout({ keepUserData: false })}
+              useExtendedSubTitle={true}
+            />
+          </List>
+          <View style={styles.separator} />
+        </Content>
+        <FooterWithButtons
+          type="SingleButton"
+          leftButton={{
+            bordered: true,
+            onPress: this.props.onCancel,
+            title: I18n.t("global.buttons.cancel"),
+            block: true
+          }}
+        />
+      </Container>
+    ));
+
+    return <ContainerComponent isLoading={this.state.isLoading} />;
   }
 
   public componentDidMount() {
