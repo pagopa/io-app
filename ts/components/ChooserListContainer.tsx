@@ -309,7 +309,7 @@ export default <T extends {}>() => {
       toggleItemSelection,
       resetSelection,
       setSelectedItemIds,
-      ...rest
+      ...otherProps
     } = props;
     return (
       <ChooserListContainer<T>
@@ -317,7 +317,7 @@ export default <T extends {}>() => {
         toggleItemSelection={toggleItemSelection}
         resetSelection={resetSelection}
         setSelectedItemIds={setSelectedItemIds}
-        {...rest}
+        {...otherProps}
       />
     );
   };
