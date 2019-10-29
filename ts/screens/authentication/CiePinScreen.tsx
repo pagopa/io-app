@@ -106,7 +106,6 @@ class CiePinScreen extends React.Component<Props, State> {
     return (
       <View style={styles.container}>
         <CiePinpad
-          inactiveColor={variables.brandLightGray}
           description={I18n.t("authentication.landing.cie.pinCardContent")}
           onFulfill={this.onPinConfirmFulfill}
           ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation

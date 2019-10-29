@@ -8,7 +8,6 @@ import { PinString } from "../../types/PinString";
 import { InputBox } from "./InputBox";
 
 interface Props {
-  inactiveColor: string;
   description: string;
   onFulfill: (code: PinString, isValid: boolean) => void;
   onCancel?: () => void;
@@ -98,8 +97,6 @@ class CiePinpad extends React.PureComponent<Props, State> {
   };
 
   public inputBoxGenerator = (item: number, i: number) => {
-    const { inactiveColor } = this.props;
-
     const isSelected = (obj: number, index: number) => {
       switch (true) {
         case index === 0:
@@ -126,7 +123,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
       <InputBox
         key={`${i}-InputBox`}
         color={variables.brandDarkestGray}
-        inactiveColor={inactiveColor}
+        inactiveColor={variables.brandLightGray}
         num={
           this.state.codeSplit.length < item + 1
             ? "0"
