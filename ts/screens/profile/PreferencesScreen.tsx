@@ -1,13 +1,11 @@
+import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import { untag } from "italia-ts-commons/lib/types";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
-
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -81,10 +79,11 @@ class PreferencesScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = INITIAL_STATE;
+    this.handleEmailOnPress = this.handleEmailOnPress.bind(this);
   }
 
-  private handleEmailOnPress = () => {
-    if (!isEmailEditingAndValidationEnabled) {
+  private handleEmailOnPress() {
+    if (isEmailEditingAndValidationEnabled) {
       if (this.props.isEmailValidated) {
         this.props.navigateToEmailInsertScreen();
       } else {
@@ -94,7 +93,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     } else {
       unavailableAlert();
     }
-  };
+  }
 
   public componentWillMount() {
     getFingerprintSettings().then(

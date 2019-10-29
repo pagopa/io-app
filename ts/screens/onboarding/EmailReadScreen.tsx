@@ -68,13 +68,18 @@ const styles = StyleSheet.create({
   }
 });
 
-export class EmailReadScreen extends React.PureComponent<Props> {
-  private contextualHelp = {
-    title: I18n.t("email.read.title"),
-    body: () => <Markdown>{I18n.t("email.read.help")}</Markdown>
-  };
+const contextualHelp = {
+  title: I18n.t("email.read.title"),
+  body: () => <Markdown>{I18n.t("email.read.help")}</Markdown>
+};
 
-  private handleGoBack = (isFromProfileSection: boolean) => {
+export class EmailReadScreen extends React.PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.handleGoBack = this.handleGoBack.bind(this);
+  }
+
+  private handleGoBack(isFromProfileSection: boolean) {
     if (isFromProfileSection) {
       this.props.navigateBack();
     } else {
@@ -94,7 +99,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
         ]
       );
     }
-  };
+  }
 
   public render() {
     const { optionProfile } = this.props;
@@ -137,7 +142,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       <TopScreenComponent
         goBack={() => this.handleGoBack(isFromProfileSection)}
         title={I18n.t("profile.preferences.list.email")}
-        contextualHelp={this.contextualHelp}
+        contextualHelp={contextualHelp}
       >
         <ScreenContent
           title={I18n.t("email.read.title")}

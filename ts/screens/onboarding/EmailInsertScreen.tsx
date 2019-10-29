@@ -39,10 +39,7 @@ type Props = ReduxProps &
   NavigationScreenProps<NavigationParams>;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  content: {
+  flex: {
     flex: 1
   },
   horizontalPadding: {
@@ -53,7 +50,7 @@ const styles = StyleSheet.create({
     paddingTop: customVariables.spacerLargeHeight
   },
   icon: {
-    marginTop: Platform.OS === "android" ? 4 : 6 // correct icon position to align it with baseline of email text}
+    marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
   },
   emailInput: {
     fontWeight: customVariables.h1FontWeight,
@@ -67,6 +64,11 @@ const styles = StyleSheet.create({
 
 const EMPTY_EMAIL = "";
 
+const contextualHelp = {
+  title: I18n.t("email.insert.help.title"),
+  body: () => <Markdown>{I18n.t("email.insert.help.content")}</Markdown>
+};
+
 type State = Readonly<{
   email: Option<string>;
 }>;
@@ -78,12 +80,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { email: this.props.email };
+    this.handleGoBack = this.handleGoBack.bind(this);
+    this.isValidEmail = this.isValidEmail.bind(this);
+    this.updateEmailState = this.updateEmailState.bind(this);
   }
-
-  private contextualHelp = {
-    title: I18n.t("email.insert.help.title"),
-    body: () => <Markdown>{I18n.t("email.insert.help.content")}</Markdown>
-  };
 
   /**
    * Footer
@@ -137,6 +137,28 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     });
   }
 
+  private handleGoBack() {
+    if (this.isFromProfileSection) {
+      this.props.navigation.goBack();
+    } else {
+      Alert.alert(
+        I18n.t("onboarding.alert.title"),
+        I18n.t("onboarding.alert.description"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.exit"),
+            style: "default",
+            onPress: () => this.props.dispatch(abortOnboarding())
+          }
+        ]
+      );
+    }
+  }
+
   private isFromProfileSection =
     this.props.navigation.getParam("isFromProfileSection") || false;
 
@@ -156,10 +178,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             ? I18n.t("profile.preferences.list.email")
             : I18n.t("email.insert.header")
         }
-        contextualHelp={this.contextualHelp}
+        contextualHelp={contextualHelp}
       >
-        <View style={styles.container}>
-          <Content noPadded={true} style={styles.content} scrollEnabled={false}>
+        <View style={styles.flex}>
+          <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
             <H4 style={[styles.boldH4, styles.horizontalPadding]}>
               {isFromProfileSection
                 ? I18n.t("email.edit.title")
@@ -218,28 +240,6 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       </BaseScreenComponent>
     );
   }
-
-  private handleGoBack = () => {
-    if (this.isFromProfileSection) {
-      this.props.navigation.goBack();
-    } else {
-      Alert.alert(
-        I18n.t("onboarding.alert.title"),
-        I18n.t("onboarding.alert.description"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.exit"),
-            style: "default",
-            onPress: () => this.props.dispatch(abortOnboarding())
-          }
-        ]
-      );
-    }
-  };
 }
 
 function mapStateToProps(state: GlobalState) {
