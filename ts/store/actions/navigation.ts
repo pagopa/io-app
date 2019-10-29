@@ -76,13 +76,19 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
-export const navigateToEmailReadScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING,
-    action: NavigationActions.navigate({
-      routeName: ROUTES.ONBOARDING_EMAIL_READ
-    })
-  });
+export const navigateToEmailValidateScreen = NavigationActions.navigate({
+  routeName: ROUTES.ONBOARDING,
+  action: NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_EMAIL_VALIDATE
+  })
+});
+
+export const navigateToEmailReadScreen = NavigationActions.navigate({
+  routeName: ROUTES.ONBOARDING,
+  action: NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_EMAIL_READ
+  })
+});
 
 export const navigateBack = NavigationActions.back;
 
@@ -226,4 +232,9 @@ export const navigateToPaymentManualDataInsertion = (
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
     params
+  });
+
+export const navigateToCieValid = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_VALID_SCREEN
   });

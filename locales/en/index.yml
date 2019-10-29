@@ -213,6 +213,11 @@ authentication:
     card5-content: In this experimental version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
       We're waiting for your feedbacks!
+    cie:
+      noNfcConnectionTitle: Are you sure you put the card down?
+      noNfcConnectionContent: !include cie/noNfcConnection.md
+    ok: Ok
+    cieCardValid: Ok, your card is valid! Wait a few more seconds..
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
@@ -305,24 +310,37 @@ onboarding:
         touchId: TouchID
       notEnrolledText: !include tos_fingerprint_not_enrolled.md
   email:
+    validation:
+      title: Remember to validate your email address
+      headerTitle: Email validation
+      info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
+        click simply on that link.<br/>
+        Until you will not validate your email address, some app functionalities
+        (payments, messages forwarding by email, etc.) will not be available, but you
+        will be able to use some other functions anyway (i.e. services, messages, etc.)"
+      ctaValidate: Send a new validation email
+      emailSentFeedback: Email sent
+      help: Your SPID profile communicates your email to IO app. If you find the address
+        wrong or that you do not use it anymore, you can edit it directly from your SPID
+        services provider account.
     insert:
       headerTitle: Activation
       title: Insert your email
       help:
         title: Email
         content: !include email_insert_help.md
-    subtitle: Some IO app functions need your email.
-    emailInputLabel: Personal email address
     read:
       title: Your email address
       emailInfo: This is the email address associated to your SPID account. You can
         use in IO app a different email address, if you wish. To make operative the
         new email address, you will need to validate it by clicking on the link you
         will receive by email.
-      ctaEdit: Edit email
       help: Your SPID profile communicates your email to IO app. If you find the address
         wrong or you no longer use it, you can edit it directly from your SPID services
         provider account.
+    ctaEdit: Edit email
+    subtitle: Some IO app functions need your email.
+    emailInputLabel: Personal email address
 pin_login:
   pin:
     pinInfo: Enter the PIN
@@ -717,6 +735,7 @@ services:
   disableAllTitle: "Do you really want to disable all the services?"
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
+  emptyListMessage: There are no services available at this time, pull down to refresh
 serviceDetail:
   headerTitle: "Service details"
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
