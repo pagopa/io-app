@@ -219,6 +219,9 @@ authentication:
     card5-content: In questa versione sperimentale trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
+    cie:
+      noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
+      noNfcConnectionContent: !include cie/noNfcConnection.md
     ok: Ok
     cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
   spid_information_request:

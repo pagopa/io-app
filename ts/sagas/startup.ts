@@ -303,7 +303,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     loadVisibleServicesRequestHandler,
     backendClient.getVisibleServices
   );
-
   // Trigger the services content and metadata being loaded/refreshed.
   yield put(loadVisibleServices.request());
 
