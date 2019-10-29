@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class CieConfirmScreen extends React.Component<Props, State> {
+class CieValidScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
   }
@@ -93,4 +93,4 @@ class CieConfirmScreen extends React.Component<Props, State> {
   }
 }
 
-export default CieConfirmScreen;
+export default CieValidScreen;

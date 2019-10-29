@@ -236,5 +236,5 @@ export const navigateToPaymentManualDataInsertion = (
 
 export const navigateToCieValid = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.CIE_CONFIRM_SCREEN
+    routeName: ROUTES.CIE_VALID_SCREEN
   });
