@@ -202,7 +202,7 @@ authentication:
     loginSpidCie: Login with SPID or CIE
     loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
     nospid: Don't have SPID? Find out more
-    nospid-nocie: Don't have Spid or CIE? Find out more
+    nospid-nocie: Don't have SPID or CIE? Find out more
     card1-title: All messages in one place
     card1-content: Display all the incoming communications from Public Administrations
     card2-title: Use your favourite payment methods

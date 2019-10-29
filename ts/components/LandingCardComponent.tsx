@@ -41,8 +41,7 @@ export const LandingCardComponent: React.SFC<Props> = card => (
       <Col size={1} />
       <Col size={7}>
         <Text bold={true} alignCenter={true} style={styles.text}>
-          {" "}
-          {card.title}{" "}
+          {card.title}
         </Text>
         <View spacer={true} />
         <Text alignCenter={true}> {card.content} </Text>

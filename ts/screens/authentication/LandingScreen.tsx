@@ -9,7 +9,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import { HorizontalScroll } from "../../components/HorizontalScroll";
-import { LandingCardComponent } from "../../components/LandingCard";
+import { LandingCardComponent } from "../../components/LandingCardComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 
