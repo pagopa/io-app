@@ -45,7 +45,7 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
       <Overlay
         {...overlayProps}
         foreground={
-          isLoading ? (
+          isLoading && (
             <BoxedRefreshIndicator
               caption={
                 loadingCaption && (
@@ -66,8 +66,6 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
                 )
               }
             />
-          ) : (
-            undefined
           )
         }
       >
