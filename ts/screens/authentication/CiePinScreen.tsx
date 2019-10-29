@@ -7,7 +7,6 @@ import {
   StyleSheet
 } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
 
 import CiePinpad from "../../components/CiePinpad";
 import ScreenHeader from "../../components/ScreenHeader";
@@ -168,4 +167,4 @@ class CiePinScreen extends React.Component<Props, State> {
   }
 }
 
-export default connect()(CiePinScreen);
+export default CiePinScreen;
