@@ -96,7 +96,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
           );
           // when user dismisses instabug report (chat or bug) we update the unread messages counter.
           // This is because user could have read or reply to some messages
-          this.props.dispatchUpdateInstabugBadge();
+          this.props.dispatchUpdateInstabugUnreadMessagesCounter();
         }
       }
     );
@@ -140,7 +140,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(instabugReportOpened({ type })),
   dispatchIBReportClosed: (type: string, how: string) =>
     dispatch(instabugReportClosed({ type, how })),
-  dispatchUpdateInstabugBadge: () => dispatch(updateInstabugUnreadMessages())
+  dispatchUpdateInstabugUnreadMessagesCounter: () =>
+    dispatch(updateInstabugUnreadMessages())
 });
 
 export const InstabugButtons = connect(
