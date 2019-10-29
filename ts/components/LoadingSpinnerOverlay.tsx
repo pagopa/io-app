@@ -19,7 +19,7 @@ type Props = Readonly<{
   isLoading: boolean;
   loadingCaption?: string;
   loadingOpacity?: number;
-  onCancel?: any;
+  onCancel?: () => void;
 }>;
 
 /**
