@@ -94,6 +94,8 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
             this.state.instabugReportType.value,
             dismiss
           );
+          // when user dismisses instabug report (chat or bug) we update the unread messages counter.
+          // This is because user could have read or reply to some messages
           this.props.dispatchUpdateInstabugBadge();
         }
       }
