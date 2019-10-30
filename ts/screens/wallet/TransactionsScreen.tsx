@@ -66,6 +66,15 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelp = {
+  title: I18n.t("wallet.walletCardTransaction.contextualHelpTitle"),
+  body: () => (
+    <Markdown>
+      {I18n.t("wallet.walletCardTransaction.contextualHelpContent")}
+    </Markdown>
+  )
+};
+
 const ListEmptyComponent = (
   <Content
     scrollEnabled={false}
@@ -129,15 +138,6 @@ class TransactionsScreen extends React.Component<Props> {
         tintColor={"transparent"}
       />
     );
-
-    const contextualHelp = {
-      title: I18n.t("wallet.walletCardTransaction.contextualHelpTitle"),
-      body: () => (
-        <Markdown>
-          {I18n.t("wallet.walletCardTransaction.contextualHelpContent")}
-        </Markdown>
-      )
-    };
 
     return (
       <WalletLayout

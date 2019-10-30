@@ -67,6 +67,14 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
     content: I18n.t("authentication.landing.card4-content")
   }
 ];
+const contextualHelp = {
+  title: I18n.t("authentication.landing.contextualHelpTitle"),
+  body: () => (
+    <Markdown>
+      {I18n.t("authentication.landing.contextualHelpContent")}
+    </Markdown>
+  )
+};
 
 const LandingScreen: React.SFC<Props> = props => {
   const navigateToMarkdown = () => props.navigation.navigate(ROUTES.MARKDOWN);
@@ -79,15 +87,6 @@ const LandingScreen: React.SFC<Props> = props => {
   const cardComponents = cardProps.map(p => (
     <LandingCardComponent key={`card-${p.id}`} {...p} />
   ));
-
-  const contextualHelp = {
-    title: I18n.t("authentication.landing.contextualHelpTitle"),
-    body: () => (
-      <Markdown>
-        {I18n.t("authentication.landing.contextualHelpContent")}
-      </Markdown>
-    )
-  };
   return (
     <BaseScreenComponent contextualHelp={contextualHelp}>
       {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}

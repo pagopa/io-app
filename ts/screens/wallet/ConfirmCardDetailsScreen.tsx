@@ -64,6 +64,13 @@ type State = Readonly<{
   setAsFavourite: boolean;
 }>;
 
+const contextualHelp = {
+  title: I18n.t("wallet.saveCard.contextualHelpTitle"),
+  body: () => (
+    <Markdown>{I18n.t("wallet.saveCard.contextualHelpContent")}</Markdown>
+  )
+};
+
 class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   public componentDidMount() {
     // reset the credit card boarding state on mount
@@ -117,12 +124,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       bordered: true,
       onPress: this.goBack,
       title: I18n.t("global.buttons.back")
-    };
-    const contextualHelp = {
-      title: I18n.t("wallet.saveCard.contextualHelpTitle"),
-      body: () => (
-        <Markdown>{I18n.t("wallet.saveCard.contextualHelpContent")}</Markdown>
-      )
     };
 
     return (

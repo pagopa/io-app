@@ -65,6 +65,13 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const contextualHelp = {
+  title: I18n.t("wallet.walletList.contextualHelpTitle"),
+  body: () => (
+    <Markdown>{I18n.t("wallet.walletList.contextualHelpContent")}</Markdown>
+  )
+};
+
 class WalletsScreen extends React.Component<Props> {
   private renderWallet = (info: ListRenderItemInfo<Wallet>) => {
     const item = info.item;
@@ -117,12 +124,6 @@ class WalletsScreen extends React.Component<Props> {
         tintColor={"transparent"}
       />
     );
-    const contextualHelp = {
-      title: I18n.t("wallet.walletList.contextualHelpTitle"),
-      body: () => (
-        <Markdown>{I18n.t("wallet.walletList.contextualHelpContent")}</Markdown>
-      )
-    };
 
     return (
       <WalletLayout

@@ -118,6 +118,15 @@ const styles = StyleSheet.create({
     backgroundColor: variables.contentAlternativeBackground
   }
 });
+
+const contextualHelp = {
+  title: I18n.t("authentication.idp_selection.contextualHelpTitle"),
+  body: () => (
+    <Markdown>
+      {I18n.t("authentication.idp_selection.contextualHelpContent")}
+    </Markdown>
+  )
+};
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
@@ -132,15 +141,6 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
   const onIdpSelected = (idp: IdentityProvider) => {
     props.dispatch(idpSelected(idp));
     props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
-  };
-
-  const contextualHelp = {
-    title: I18n.t("authentication.idp_selection.contextualHelpTitle"),
-    body: () => (
-      <Markdown>
-        {I18n.t("authentication.idp_selection.contextualHelpContent")}
-      </Markdown>
-    )
   };
 
   return (

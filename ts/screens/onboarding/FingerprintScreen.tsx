@@ -31,6 +31,11 @@ type OwnProps = NavigationScreenProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
+const contextualHelp = {
+  title: I18n.t("onboarding.contextualHelpTitle"),
+  body: () => <Markdown>{I18n.t("onboarding.contextualHelpContent")}</Markdown>
+};
+
 export class FingerprintScreen extends React.PureComponent<Props> {
   /**
    * Print the only BiometrySimplePrintableType values that are passed to the UI
@@ -85,12 +90,6 @@ export class FingerprintScreen extends React.PureComponent<Props> {
   public render() {
     const biometryType = this.props.navigation.getParam("biometryType");
 
-    const contextualHelp = {
-      title: I18n.t("onboarding.contextualHelpTitle"),
-      body: () => (
-        <Markdown>{I18n.t("onboarding.contextualHelpContent")}</Markdown>
-      )
-    };
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}

@@ -29,6 +29,7 @@ const contextualHelp = {
     </Markdown>
   )
 };
+
 /**
  * A screen to show the Privacy policy to the user.
  */

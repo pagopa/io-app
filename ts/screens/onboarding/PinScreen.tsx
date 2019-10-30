@@ -70,6 +70,13 @@ const styles = StyleSheet.create({
   header: { lineHeight: 40 }
 });
 
+const contextualHelp = {
+  title: I18n.t("onboarding.pin.contextualHelpTitle"),
+  body: () => (
+    <Markdown>{I18n.t("onboarding.pin.contextualHelpContent")}</Markdown>
+  )
+};
+
 class PinScreen extends React.Component<Props, State> {
   private pinConfirmComponent: Pinpad | null = null;
 
@@ -299,13 +306,6 @@ class PinScreen extends React.Component<Props, State> {
 
   public render() {
     const { pinState } = this.state;
-
-    const contextualHelp = {
-      title: I18n.t("onboarding.pin.contextualHelpTitle"),
-      body: () => (
-        <Markdown>{I18n.t("onboarding.pin.contextualHelpContent")}</Markdown>
-      )
-    };
 
     return (
       <BaseScreenComponent

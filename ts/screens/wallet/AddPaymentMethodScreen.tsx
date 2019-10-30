@@ -53,18 +53,18 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelp = {
+  title: I18n.t("wallet.newPaymentMethod.contextualHelpTitle"),
+  body: () => (
+    <Markdown>
+      {I18n.t("wallet.newPaymentMethod.contextualHelpContent")}
+    </Markdown>
+  )
+};
+
 class AddPaymentMethodScreen extends React.PureComponent<Props> {
   public render(): React.ReactNode {
     const inPayment = this.props.navigation.getParam("inPayment");
-
-    const contextualHelp = {
-      title: I18n.t("wallet.newPaymentMethod.contextualHelpTitle"),
-      body: () => (
-        <Markdown>
-          {I18n.t("wallet.newPaymentMethod.contextualHelpContent")}
-        </Markdown>
-      )
-    };
 
     return (
       <BaseScreenComponent

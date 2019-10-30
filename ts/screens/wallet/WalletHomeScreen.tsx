@@ -118,6 +118,11 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelp = {
+  title: I18n.t("wallet.contextualHelpTitle"),
+  body: () => <Markdown>{I18n.t("wallet.contextualHelpContent")}</Markdown>
+};
+
 /**
  * Wallet Home Screen
  */
@@ -361,10 +366,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
         tintColor={"transparent"} // iOS
       />
     );
-    const contextualHelp = {
-      title: I18n.t("wallet.contextualHelpTitle"),
-      body: () => <Markdown>{I18n.t("wallet.contextualHelpContent")}</Markdown>
-    };
 
     return (
       <WalletLayout

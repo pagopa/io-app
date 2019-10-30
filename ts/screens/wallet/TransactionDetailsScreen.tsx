@@ -116,6 +116,15 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelp = {
+  title: I18n.t("wallet.detailsTransaction.contextualHelpTitle"),
+  body: () => (
+    <Markdown>
+      {I18n.t("wallet.detailsTransaction.contextualHelpContent")}
+    </Markdown>
+  )
+};
+
 class TransactionDetailsScreen extends React.Component<Props> {
   private displayedWallet(transactionWallet: Wallet | undefined) {
     return transactionWallet ? (
@@ -248,15 +257,6 @@ class TransactionDetailsScreen extends React.Component<Props> {
       transactionWallet !== undefined
         ? transactionWallet.creditCard
         : undefined;
-
-    const contextualHelp = {
-      title: I18n.t("wallet.detailsTransaction.contextualHelpTitle"),
-      body: () => (
-        <Markdown>
-          {I18n.t("wallet.detailsTransaction.contextualHelpContent")}
-        </Markdown>
-      )
-    };
 
     return (
       <WalletLayout

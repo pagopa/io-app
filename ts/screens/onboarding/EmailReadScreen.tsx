@@ -68,6 +68,15 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelp = {
+  title: I18n.t("profile.preferences.email.contextualHelpTitle"),
+  body: () => (
+    <Markdown>
+      {I18n.t("profile.preferences.email.contextualHelpContent")}
+    </Markdown>
+  )
+};
+
 export class EmailReadScreen extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
@@ -107,15 +116,6 @@ export class EmailReadScreen extends React.PureComponent<Props> {
     const profileEmail = optionProfile
       .map(_ => untag(_.spid_email))
       .getOrElse("");
-
-    const contextualHelp = {
-      title: I18n.t("profile.preferences.email.contextualHelpTitle"),
-      body: () => (
-        <Markdown>
-          {I18n.t("profile.preferences.email.contextualHelpContent")}
-        </Markdown>
-      )
-    };
 
     const footerProps1: SingleButton = {
       type: "SingleButton",

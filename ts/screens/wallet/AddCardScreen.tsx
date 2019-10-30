@@ -83,6 +83,13 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelp = {
+  title: I18n.t("wallet.saveCard.contextualHelpTitle"),
+  body: () => (
+    <Markdown>{I18n.t("wallet.saveCard.contextualHelpContent")}</Markdown>
+  )
+};
+
 const CARD_LOGOS_COLUMNS = 4;
 const EMPTY_CARD_HOLDER = "";
 const EMPTY_CARD_PAN = "";
@@ -213,13 +220,6 @@ class AddCardScreen extends React.Component<Props, State> {
         CARD_LOGOS_COLUMNS - (size(displayedCards) % CARD_LOGOS_COLUMNS)
       ).map(_ => ["", undefined])
     );
-
-    const contextualHelp = {
-      title: I18n.t("wallet.saveCard.contextualHelpTitle"),
-      body: () => (
-        <Markdown>{I18n.t("wallet.saveCard.contextualHelpContent")}</Markdown>
-      )
-    };
 
     return (
       <BaseScreenComponent

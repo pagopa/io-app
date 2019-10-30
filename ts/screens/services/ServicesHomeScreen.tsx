@@ -218,6 +218,11 @@ const styles = StyleSheet.create({
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
+const contextualHelp = {
+  title: I18n.t("services.title"),
+  body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
+};
+
 class ServicesHomeScreen extends React.Component<Props, State> {
   private navListener?: NavigationEventSubscription;
 
@@ -606,11 +611,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const contextualHelp = {
-      title: I18n.t("services.title"),
-      body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
-    };
-
     const { userMetadata } = this.props;
     return (
       <TopScreenComponent

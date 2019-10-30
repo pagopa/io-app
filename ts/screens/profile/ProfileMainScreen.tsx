@@ -99,6 +99,11 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelp = {
+  title: I18n.t("profile.contextualHelpTitle"),
+  body: () => <Markdown>{I18n.t("profile.contextualHelpContent")}</Markdown>
+};
+
 const getAppLongVersion = () => {
   const buildNumber =
     Platform.OS === "ios" ? ` (${DeviceInfo.getBuildNumber()})` : "";
@@ -441,11 +446,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           </List>
         </ScrollView>
       );
-    };
-
-    const contextualHelp = {
-      title: I18n.t("profile.contextualHelpTitle"),
-      body: () => <Markdown>{I18n.t("profile.contextualHelpContent")}</Markdown>
     };
 
     return (

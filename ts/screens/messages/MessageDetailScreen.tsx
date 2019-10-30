@@ -110,6 +110,13 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelp = {
+  title: I18n.t("messageDetails.contextualHelpTitle"),
+  body: () => (
+    <Markdown>{I18n.t("messageDetails.contextualHelpContent")}</Markdown>
+  )
+};
+
 export class MessageDetailScreen extends React.PureComponent<Props, never> {
   private goBack = () => this.props.navigation.goBack();
 
@@ -291,13 +298,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   }
 
   public render() {
-    const contextualHelp = {
-      title: I18n.t("messageDetails.contextualHelpTitle"),
-      body: () => (
-        <Markdown>{I18n.t("messageDetails.contextualHelpContent")}</Markdown>
-      )
-    };
-
     return (
       <BaseScreenComponent
         headerTitle={I18n.t("messageDetails.headerTitle")}

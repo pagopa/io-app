@@ -59,6 +59,13 @@ const INITIAL_STATE: State = {
   hasCalendarPermission: false
 };
 
+const contextualHelp = {
+  title: I18n.t("profile.preferences.contextualHelpTitle"),
+  body: () => (
+    <Markdown>{I18n.t("profile.preferences.contextualHelpContent")}</Markdown>
+  )
+};
+
 /**
  * Translates the primary languages of the provided locales.
  *
@@ -152,15 +159,6 @@ class PreferencesScreen extends React.Component<Props, State> {
       .filter(_ => _.length > 0)
       .map(_ => translateLocale(_[0]))
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
-
-    const contextualHelp = {
-      title: I18n.t("profile.preferences.contextualHelpTitle"),
-      body: () => (
-        <Markdown>
-          {I18n.t("profile.preferences.contextualHelpContent")}
-        </Markdown>
-      )
-    };
 
     const showModal = (title: TranslationKeys, body: TranslationKeys) => {
       this.props.showModal(

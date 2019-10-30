@@ -91,6 +91,11 @@ const styles = StyleSheet.create({
 });
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
+
+const contextualHelp = {
+  title: I18n.t("messages.contextualHelpTitle"),
+  body: () => <Markdown>{I18n.t("messages.contextualHelpContent")}</Markdown>
+};
 /**
  * A screen that contains all the Tabs related to messages.
  */
@@ -161,12 +166,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
   public render() {
     const { isSearchEnabled } = this.props;
-    const contextualHelp = {
-      title: I18n.t("messages.contextualHelpTitle"),
-      body: () => (
-        <Markdown>{I18n.t("messages.contextualHelpContent")}</Markdown>
-      )
-    };
+
     return (
       <TopScreenComponent
         contextualHelp={contextualHelp}
