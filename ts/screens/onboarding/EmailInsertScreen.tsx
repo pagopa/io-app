@@ -64,11 +64,6 @@ const styles = StyleSheet.create({
 
 const EMPTY_EMAIL = "";
 
-const contextualHelp = {
-  title: I18n.t("email.insert.help.title"),
-  body: () => <Markdown>{I18n.t("email.insert.help.content")}</Markdown>
-};
-
 type State = Readonly<{
   email: Option<string>;
 }>;

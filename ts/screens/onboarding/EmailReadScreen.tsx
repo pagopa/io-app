@@ -68,11 +68,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const contextualHelp = {
-  title: I18n.t("email.read.title"),
-  body: () => <Markdown>{I18n.t("email.read.help")}</Markdown>
-};
-
 export class EmailReadScreen extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
@@ -117,7 +112,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       title: I18n.t("onboarding.email.read.title"),
       body: () => <Markdown>{I18n.t("onboarding.email.read.help")}</Markdown>
     };
-  
+
     const footerProps1: SingleButton = {
       type: "SingleButton",
       leftButton: {
