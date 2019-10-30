@@ -319,7 +319,7 @@ onboarding:
     confirmValid: grazie, puoi continuare
     confirmInvalid: i due pin non coincidono
     contextualHelpTitle: Qual è il tuo pin
-    contextualHelpContent: !include onboarding/what_is_pin.md
+    contextualHelpContent: !include onboarding/onboarding_pin.md
   alert: 
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
