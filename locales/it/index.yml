@@ -81,7 +81,7 @@ inbox:
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
   contextualHelpTitle: Cosa puoi fare nel tuo Profilo
-  contextualHelpContent: !include profile/profile_main.md
+  contextualHelpContent: !include profile/profile_account_main.md
   fiscalCode:
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
@@ -124,7 +124,7 @@ profile:
       contextualHelpTitlePolicy: Cos'è l'informativa sul trattamento dei dati personali
       contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
       contextualHelpTitle: Le tue impostazioni di privacy
-      contextualHelpContent: !include profile/privacy_main.md
+      contextualHelpContent: !include profile/profile_privacy_main.md
     termsAndConditions:
       title: Termini e condizioni d'uso
       description: Rivedi i termini e le condizioni d'uso dell'app

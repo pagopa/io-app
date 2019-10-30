@@ -80,7 +80,7 @@ inbox:
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
   contextualHelpTitle: What you can do in your Profile
-  contextualHelpContent: !include profile/profile_main.md
+  contextualHelpContent: !include profile/profile_account_main.md
   fiscalCode:
     title: Your personal documents
     fiscalCode: Fiscal code
@@ -123,7 +123,7 @@ profile:
       contextualHelpTitlePolicy: What is the information on the processing of personal data
       contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
       contextualHelpTitle: Your privacy settings
-      contextualHelpContent: !include profile/privacy_main.md
+      contextualHelpContent: !include profile/profile_privacy_main.md
     termsAndConditions:
       title: Terms and Conditions
       description: Review Terms & Conditions of the app
