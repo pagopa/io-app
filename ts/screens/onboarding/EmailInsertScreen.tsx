@@ -68,7 +68,7 @@ type State = Readonly<{
   email: Option<string>;
 }>;
 
-// TODO in https://www.pivotaltracker.com/n/projects/2048617/stories/169392558
+// TODO: update content (https://www.pivotaltracker.com/n/projects/2048617/stories/169392558)
 const contextualHelp = {
   title: I18n.t("onboarding.email.insert.help.title"),
   body: () => (
