@@ -422,7 +422,7 @@ pin_login:
   unlock_screen:
     help:
       title: Accesso con PIN
-      content: !include pin_unlock_help.md
+      content: !include onboarding/onboarding_pin.md
   forgetPin:
     confirmTitle: Hai dimenticato il PIN?
     confirmMsg: Per poter scegliere un nuovo PIN dovrai fare di nuovo accesso con SPID.

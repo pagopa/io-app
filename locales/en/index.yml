@@ -416,7 +416,7 @@ pin_login:
   unlock_screen:
     help:
       title: Access with PIN
-      content: !include pin_unlock_help.md
+      content: !include onboarding/onboarding_pin.md
   forgetPin:
     confirmTitle: Did you forget the PIN?
     confirmMsg: To be able to choose a new PIN you will need to log in again with SPID.
