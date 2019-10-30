@@ -6,14 +6,11 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
 import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
-import {
-  EnabledChannels,
-  getEnabledChannelsForService
-} from "../../utils/profile";
+import { getEnabledChannelsForService } from "../../utils/profile";
 import ListItemComponent from "../screens/ListItemComponent";
 
 interface State {
-  uiEnabledChannels: EnabledChannels;
+  switchValue: boolean;
 }
 
 type Props = Readonly<{
@@ -54,6 +51,36 @@ export default class NewServiceListItem extends React.PureComponent<
   Props,
   State
 > {
+  constructor(props: Props) {
+    super(props);
+    const potService = this.props.item;
+    const uiEnabledChannels = pot.map(potService, service =>
+      getEnabledChannelsForService(this.props.profile, service.service_id)
+    );
+    const switchValue =
+      pot.isSome(uiEnabledChannels) && uiEnabledChannels.value.inbox;
+    this.state = {
+      switchValue
+    };
+  }
+
+  public componentDidUpdate() {
+    const potService = this.props.item;
+    const uiEnabledChannels = pot.map(potService, service =>
+      getEnabledChannelsForService(this.props.profile, service.service_id)
+    );
+    const switchValue =
+      pot.isSome(uiEnabledChannels) && uiEnabledChannels.value.inbox;
+    if (
+      switchValue !== this.state.switchValue &&
+      !pot.isUpdating(this.props.profile)
+    ) {
+      this.setState({
+        switchValue
+      });
+    }
+  }
+
   private getServiceKey = (
     potService: pot.Pot<ServicePublic, Error>
   ): string => {
@@ -65,34 +92,36 @@ export default class NewServiceListItem extends React.PureComponent<
       `service-switch`
     );
   };
+
+  private onItemSwitchValueChanged(value: boolean) {
+    const potService = this.props.item;
+    return this.props.onItemSwitchValueChanged
+      ? pot.toUndefined(
+          pot.map(potService, service => {
+            if (
+              this.props.onItemSwitchValueChanged &&
+              !pot.isUpdating(this.props.profile)
+            ) {
+              this.setState({
+                switchValue: value
+              });
+              this.props.onItemSwitchValueChanged(service, value);
+            }
+          })
+        )
+      : undefined;
+  }
+
   // tslint:disable-next-line:cognitive-complexity
   public render() {
+    const { switchValue } = this.state;
     const potService = this.props.item;
-    const enabledChannels = pot.map(potService, service =>
-      getEnabledChannelsForService(this.props.profile, service.service_id)
-    );
-
-    const isServiceDisabled = pot.toUndefined(
-      pot.map(enabledChannels, m => m.inbox === false)
-    );
 
     const onPress = !this.props.isLongPressEnabled
       ? pot.toUndefined(
           pot.map(potService, service => () => this.props.onSelect(service))
         )
       : undefined;
-
-    const onItemSwitchValueChanged = (value: boolean) => {
-      return this.props.onItemSwitchValueChanged
-        ? pot.toUndefined(
-            pot.map(potService, service => {
-              if (this.props.onItemSwitchValueChanged) {
-                this.props.onItemSwitchValueChanged(service, value);
-              }
-            })
-          )
-        : undefined;
-    };
 
     const serviceName = pot.isLoading(potService)
       ? I18n.t("global.remoteStates.loading")
@@ -108,9 +137,12 @@ export default class NewServiceListItem extends React.PureComponent<
         onLongPress={this.props.onLongPress}
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
-        isItemDisabled={isServiceDisabled}
-        onSwitchValueChanged={onItemSwitchValueChanged}
-        switchValue={pot.isSome(enabledChannels) && enabledChannels.value.inbox}
+        isItemDisabled={!switchValue}
+        onSwitchValueChanged={(value: boolean) =>
+          this.onItemSwitchValueChanged(value)
+        }
+        switchValue={switchValue}
+        switchDisabled={pot.isUpdating(this.props.profile)}
         keySwitch={this.getServiceKey(potService)}
         isLongPressEnabled={this.props.isLongPressEnabled}
       />
