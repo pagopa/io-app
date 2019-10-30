@@ -313,7 +313,7 @@ email:
     subtitle: L'email che avevi inserto in precedenza è
     validated: L'email che avevi inserto e validato in precedenza è
     label: Nuovo indirizzo email personale
-    cta: Modifica indirizzo email
+    cta: Modifica email
   validate:
     title: Ricorda di validare il tuo indirizzo email
     header: Validazione email

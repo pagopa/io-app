@@ -79,8 +79,12 @@ export class EmailReadScreen extends React.PureComponent<Props> {
     this.handleGoBack = this.handleGoBack.bind(this);
   }
 
-  private handleGoBack(isFromProfileSection: boolean) {
-    if (isFromProfileSection) {
+  get isFromProfileSection() {
+    return this.props.navigation.getParam("isFromProfileSection") || false;
+  }
+
+  private handleGoBack() {
+    if (this.isFromProfileSection) {
       this.props.navigateBack();
     } else {
       Alert.alert(
@@ -94,7 +98,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
           {
             text: I18n.t("global.buttons.exit"),
             style: "default",
-            onPress: () => this.props.abortOnboarding()
+            onPress: this.props.abortOnboarding
           }
         ]
       );
@@ -102,22 +106,20 @@ export class EmailReadScreen extends React.PureComponent<Props> {
   }
 
   public render() {
+    const { isFromProfileSection } = this;
     const { optionProfile } = this.props;
 
     const profileEmail = optionProfile
       .map(_ => untag(_.spid_email))
       .getOrElse("");
 
-    const isFromProfileSection =
-      this.props.navigation.getParam("isFromProfileSection") || false;
-
     const footerProps1: SingleButton = {
       type: "SingleButton",
       leftButton: {
         bordered: true,
+        title: I18n.t("email.edit.cta"),
         onPress: () =>
-          this.props.navigateToEmailInsertScreen(isFromProfileSection),
-        title: I18n.t("email.edit.cta")
+          this.props.navigateToEmailInsertScreen(isFromProfileSection)
       }
     };
 
@@ -140,7 +142,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 
     return (
       <TopScreenComponent
-        goBack={() => this.handleGoBack(isFromProfileSection)}
+        goBack={this.handleGoBack}
         title={I18n.t("profile.preferences.list.email")}
         contextualHelp={contextualHelp}
       >

@@ -308,7 +308,7 @@ email:
     subtitle: The email you inserted is
     validated: The email you inserted and validated is
     label: New personal email address
-    cta: Edit email address
+    cta: Edit email
   validate:
     title: Remember to validate your email address
     header: Email Validation

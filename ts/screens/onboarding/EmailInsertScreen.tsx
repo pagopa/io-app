@@ -159,8 +159,9 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     }
   }
 
-  private isFromProfileSection =
-    this.props.navigation.getParam("isFromProfileSection") || false;
+  get isFromProfileSection() {
+    return this.props.navigation.getParam("isFromProfileSection") || false;
+  }
 
   public componentDidMount() {
     if (this.isFromProfileSection) {
