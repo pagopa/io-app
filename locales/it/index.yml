@@ -410,7 +410,7 @@ payment:
 wallet:
   wallet: Portafoglio
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
-  contextualHelpContent: !include wallet/wallet_help.md
+  contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
@@ -437,7 +437,7 @@ wallet:
     failed: Impossibile aggiungere la carta
     failedCardAlreadyExists: La carta che stai inserendo è già presente
     contextualHelpTitle: Come aggiungere un metodo di pagamento
-    contextualHelpContent: !include wallet/how_add_payment_method.md
+    contextualHelpContent: !include wallet/wallet_add_payment_method.md
   textMsg:
     title: Codice di conferma
     header: Codice di Conferma SMS

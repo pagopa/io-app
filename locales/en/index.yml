@@ -403,7 +403,7 @@ payment:
 wallet:
   wallet: Wallet
   contextualHelpTitle: What you can do in your wallet
-  contextualHelpContent: !include wallet/wallet_help.md
+  contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
   paymentMethods: Payment methods
   paymentMethod: Payment method
@@ -430,7 +430,7 @@ wallet:
     failed: The card could not be added
     failedCardAlreadyExists: The card you are adding already exists
     contextualHelpTitle: How to add a payment method
-    contextualHelpContent: !include wallet/how_add_payment_method.md
+    contextualHelpContent: !include wallet/wallet_add_payment_method.md
   textMsg:
     title: Text confirmation code
     header: Confirmation code
