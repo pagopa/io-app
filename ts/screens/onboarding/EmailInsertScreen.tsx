@@ -7,18 +7,15 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
 import { untag } from "italia-ts-commons/lib/types";
-
 import { Content, Form, Text, View } from "native-base";
-
 import * as React from "react";
-
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
   StyleSheet
 } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -28,23 +25,21 @@ import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
+type NavigationParams = {
+  isFromProfileSection?: boolean;
 };
 
 type Props = ReduxProps &
-  OwnProps &
   ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  NavigationScreenProps<NavigationParams>;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  content: {
+  flex: {
     flex: 1
   },
   horizontalPadding: {
@@ -55,16 +50,24 @@ const styles = StyleSheet.create({
     paddingTop: customVariables.spacerLargeHeight
   },
   icon: {
-    marginTop: Platform.OS === "android" ? 4 : 6 // correct icon position to align it with baseline of email text}
+    marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
   },
   emailInput: {
     fontWeight: customVariables.h1FontWeight,
     color: customVariables.h1Color,
     fontSize: 18
+  },
+  darkestGray: {
+    color: customVariables.brandDarkestGray
   }
 });
 
 const EMPTY_EMAIL = "";
+
+const contextualHelp = {
+  title: I18n.t("email.insert.help.title"),
+  body: () => <Markdown>{I18n.t("email.insert.help.content")}</Markdown>
+};
 
 type State = Readonly<{
   email: Option<string>;
@@ -77,15 +80,29 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { email: this.props.email };
+    this.handleGoBack = this.handleGoBack.bind(this);
+    this.isValidEmail = this.isValidEmail.bind(this);
+    this.updateEmailState = this.updateEmailState.bind(this);
   }
 
   /**
    * Footer
+   *
+   * TODO1: add navigation to the dedicated modal
+   *          https://www.pivotaltracker.com/story/show/168247501
+   * TODO:2 save the inserted new email
+   *          https://www.pivotaltracker.com/n/projects/2048617/stories/169264055
    */
   private renderFooterButtons() {
     const continueButtonProps = {
       disabled: this.isValidEmail() !== true,
-      onPress: this.props.dispatchEmailInsert,
+      onPress: this.isFromProfileSection
+        ? () => {
+            // TODO1
+            // TODO2
+            Alert.alert(I18n.t("global.notImplemented"));
+          }
+        : this.props.dispatchEmailInsert,
       title: I18n.t("global.buttons.continue"),
       block: true,
       primary: this.isValidEmail()
@@ -106,6 +123,9 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   private isValidEmail() {
     return this.state.email
       .map(value => {
+        if (EMPTY_EMAIL === value) {
+          return undefined;
+        }
         return EmailString.decode(value).isRight();
       })
       .toUndefined();
@@ -117,6 +137,38 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     });
   }
 
+  private handleGoBack() {
+    if (this.isFromProfileSection) {
+      this.props.navigation.goBack();
+    } else {
+      Alert.alert(
+        I18n.t("onboarding.alert.title"),
+        I18n.t("onboarding.alert.description"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.exit"),
+            style: "default",
+            onPress: () => this.props.dispatch(abortOnboarding())
+          }
+        ]
+      );
+    }
+  }
+
+  get isFromProfileSection() {
+    return this.props.navigation.getParam("isFromProfileSection") || false;
+  }
+
+  public componentDidMount() {
+    if (this.isFromProfileSection) {
+      this.setState({ email: some(EMPTY_EMAIL) });
+    }
+  }
+
   public render() {
     const contextualHelp = {
       title: I18n.t("onboarding.email.insert.help.title"),
@@ -124,27 +176,49 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         <Markdown>{I18n.t("onboarding.email.insert.help.content")}</Markdown>
       )
     };
+    const { isFromProfileSection } = this;
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
-        headerTitle={I18n.t("onboarding.email.insert.headerTitle")}
+        headerTitle={
+          isFromProfileSection
+            ? I18n.t("profile.preferences.list.email")
+            : I18n.t("email.insert.header")
+        }
         contextualHelp={contextualHelp}
       >
-        <View style={styles.container}>
-          <Content noPadded={true} style={styles.content} scrollEnabled={false}>
+        <View style={styles.flex}>
+          <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
             <H4 style={[styles.boldH4, styles.horizontalPadding]}>
-              {I18n.t("onboarding.email.insert.title")}
+              {isFromProfileSection
+                ? I18n.t("email.edit.title")
+                : I18n.t("email.insert.title")}
             </H4>
             <View spacer={true} />
             <View style={styles.horizontalPadding}>
-              <Text>{I18n.t("onboarding.email.subtitle")}</Text>
+              <Text>
+                {isFromProfileSection
+                  ? this.props.isEmailValidated
+                    ? I18n.t("email.edit.validated")
+                    : I18n.t("email.edit.subtitle")
+                  : I18n.t("email.insert.subtitle")}
+                {isFromProfileSection && (
+                  <Text style={styles.darkestGray}>
+                    {` ${this.props.email.getOrElse("")}`}
+                  </Text>
+                )}
+              </Text>
             </View>
             <View spacer={true} />
             <View style={styles.horizontalPadding}>
               <Form>
                 <LabelledItem
                   type={"text"}
-                  label={I18n.t("onboarding.email.emailInputLabel")}
+                  label={
+                    isFromProfileSection
+                      ? I18n.t("email.edit.label")
+                      : I18n.t("email.insert.label")
+                  }
                   icon="io-envelope"
                   isValid={this.isValidEmail()}
                   inputProps={{
@@ -173,30 +247,16 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       </BaseScreenComponent>
     );
   }
-
-  private handleGoBack = () =>
-    Alert.alert(
-      I18n.t("onboarding.alert.title"),
-      I18n.t("onboarding.alert.description"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.exit"),
-          style: "default",
-          onPress: () => this.props.dispatch(abortOnboarding())
-        }
-      ]
-    );
 }
 
 function mapStateToProps(state: GlobalState) {
-  const optionProfile = pot.toOption(state.profile);
-
+  const optionProfile = pot.toOption(profileSelector(state));
+  // TODO: get info on validation from profile
+  //      https://www.pivotaltracker.com/story/show/168662501
+  const isEmailValidated = true;
   return {
-    email: optionProfile.map(_ => untag(_.spid_email))
+    email: optionProfile.map(_ => untag(_.spid_email)),
+    isEmailValidated
   };
 }
 

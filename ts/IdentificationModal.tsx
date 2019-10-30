@@ -384,7 +384,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       })
       .catch((error: AuthenticationError) => {
         if (isDebugBiometricIdentificationEnabled) {
-          Alert.alert("Biometric identification", `KO: ${error.code}`);
+          Alert.alert("identification.biometric.title", `KO: ${error.code}`);
         }
         if (
           error.code !== "USER_CANCELED" &&

@@ -19,10 +19,10 @@ const DEFAULT_FETCH_TIMEOUT_MS = 5000;
 // default max retries for fetch
 const DEFAULT_FETCH_MAX_RETRIES = 3;
 
-// default timeout of fetch for calling the PagoPA SOAP APIs
+// default timeout of fetch for calling the pagoPA SOAP APIs
 const DEFAULT_FETCH_PAGOPA_TIMEOUT_MS = 60000;
 
-// default timeout of fetch for calling certain PagoPA Payment Manager APIs
+// default timeout of fetch for calling certain pagoPA Payment Manager APIs
 // that usually take longer than the other APIs (e.g. the payment related
 // operations)
 const DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS = 10000;
