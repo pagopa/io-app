@@ -633,7 +633,7 @@ cardComponent:
   pick: Pay with this method
 messages:
   contextualHelpTitle: What you can do in your messages
-  contextualHelpContent: !include messages/how_to_use_messages.md
+  contextualHelpContent: !include messages/messages_home.md
   counting:
     zero: No message
     one: You have 1 message
