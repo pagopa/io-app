@@ -75,22 +75,16 @@ const customServices: ServicesState = {
     })
   },
   byOrgFiscalCode: {
-    // tslint:disable-next-line: readonly-array
-    ["2"]: ["21", "22"] as ServiceId[],
-    // tslint:disable-next-line: readonly-array
-    ["3"]: ["31"] as ServiceId[],
-    // tslint:disable-next-line: readonly-array
-    ["4"]: ["41", "42"] as ServiceId[]
+    ["2"]: ["21" as ServiceId, "22" as ServiceId] as ReadonlyArray<ServiceId>,
+    ["3"]: ["31" as ServiceId] as ReadonlyArray<ServiceId>,
+    ["4"]: ["41" as ServiceId, "42" as ServiceId] as ReadonlyArray<ServiceId>
   },
-  visible: {
-    kind: "PotSome",
-    value: [
-      { service_id: "11", version: 1 } as ServiceTuple,
-      { service_id: "21", version: 1 } as ServiceTuple,
-      { service_id: "22", version: 1 } as ServiceTuple,
-      { service_id: "41", version: 1 } as ServiceTuple
-    ]
-  },
+  visible: pot.some([
+    { service_id: "11", version: 1 } as ServiceTuple,
+    { service_id: "21", version: 1 } as ServiceTuple,
+    { service_id: "22", version: 1 } as ServiceTuple,
+    { service_id: "41", version: 1 } as ServiceTuple
+  ]),
   readState: {
     ["21"]: true
   },
@@ -221,7 +215,10 @@ describe("notSelectedServicesSectionsSelector", () => {
 describe("visibleServicesContentLoadStateSelector", () => {
   it("should do be pot.noneLoading if at least one visible service is loading", () => {
     expect(
-      visibleServicesContentLoadStateSelector.resultFunc(customServices.byId, customServices.visible)
+      visibleServicesContentLoadStateSelector.resultFunc(
+        customServices.byId,
+        customServices.visible
+      )
     ).toBe(pot.noneLoading);
   });
 });
@@ -229,7 +226,10 @@ describe("visibleServicesContentLoadStateSelector", () => {
 describe("visibleServicesMetadataLoadStateSelector", () => {
   it("should do be pot.noneError if any visible service is loading at least one visible service is error", () => {
     expect(
-      visibleServicesMetadataLoadStateSelector.resultFunc(customServicesMetadata.byId, customServices.visible)
+      visibleServicesMetadataLoadStateSelector.resultFunc(
+        customServicesMetadata.byId,
+        customServices.visible
+      )
     ).toBe(pot.noneLoading);
   });
 });
