@@ -24,6 +24,7 @@ type Props = Readonly<{
   isItemDisabled?: boolean;
   onSwitchValueChanged?: (value: boolean) => void;
   switchValue?: boolean;
+  switchDisabled?: boolean;
   keySwitch?: string;
   isLongPressEnabled?: boolean;
 }>;
@@ -105,6 +106,7 @@ export default class ListItemComponent extends React.Component<Props> {
                   key={this.props.keySwitch}
                   value={this.props.switchValue}
                   onValueChange={this.props.onSwitchValueChanged}
+                  disabled={this.props.switchDisabled}
                 />
               ) : (
                 <IconFont
