@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
 
 const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
 
+const contextualHelp = {
+  title: I18n.t("onboarding.email.validation.title"),
+  body: () => <Markdown>{I18n.t("onboarding.email.validation.help")}</Markdown>
+};
+
 /**
  * A screen as reminder to the user to validate his email address
  */
@@ -67,12 +72,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.email.validation.headerTitle")}
         title={I18n.t("onboarding.email.validation.title")}
-        contextualHelp={{
-          title: I18n.t("onboarding.email.validation.title"),
-          body: () => (
-            <Markdown>{I18n.t("onboarding.email.validation.help")}</Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
       >
         <ScreenContent title={I18n.t("onboarding.email.validation.title")}>
           <View style={styles.content}>

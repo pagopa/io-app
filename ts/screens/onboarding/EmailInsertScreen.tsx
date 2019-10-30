@@ -66,6 +66,13 @@ const styles = StyleSheet.create({
 
 const EMPTY_EMAIL = "";
 
+const contextualHelp = {
+  title: I18n.t("onboarding.email.insert.help.title"),
+  body: () => (
+    <Markdown>{I18n.t("onboarding.email.insert.help.content")}</Markdown>
+  )
+};
+
 type State = Readonly<{
   email: Option<string>;
 }>;
@@ -122,14 +129,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       <BaseScreenComponent
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.email.insert.headerTitle")}
-        contextualHelp={{
-          title: I18n.t("onboarding.email.insert.help.title"),
-          body: () => (
-            <Markdown>
-              {I18n.t("onboarding.email.insert.help.content")}
-            </Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
       >
         <View style={styles.container}>
           <Content noPadded={true} style={styles.content} scrollEnabled={false}>

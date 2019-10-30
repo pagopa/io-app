@@ -18,8 +18,6 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-import Switch from "../../components/ui/Switch";
-
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
@@ -31,6 +29,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
+import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
@@ -93,11 +92,15 @@ const styles = StyleSheet.create({
   whiteBg: {
     backgroundColor: customVariables.colorWhite
   },
-
   noRightPadding: {
     paddingRight: 0
   }
 });
+
+const contextualHelp = {
+  title: I18n.t("profile.main.screenTitle"),
+  body: () => <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
+};
 
 const getAppLongVersion = () => {
   const buildNumber =
@@ -458,12 +461,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             <FiscalCodeComponent type={"Preview"} />
           </TouchableOpacity>
         }
-        contextualHelp={{
-          title: I18n.t("profile.main.screenTitle"),
-          body: () => (
-            <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
         banner={undefined}
       >
         {screenContent()}

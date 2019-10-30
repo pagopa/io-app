@@ -39,11 +39,9 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.colorWhite,
     marginBottom: 10
   },
-
   flex1: {
     flex: 1
   },
-
   shadow: {
     // iOS
     shadowColor: "#000",
@@ -72,6 +70,11 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.colorWhite
   }
 });
+
+const contextualHelp = {
+  title: I18n.t("wallet.wallet"),
+  body: () => <Markdown>{I18n.t("wallet.walletHelp")}</Markdown>
+};
 
 export default class WalletLayout extends React.Component<Props> {
   private dynamicSubHeader() {
@@ -112,10 +115,7 @@ export default class WalletLayout extends React.Component<Props> {
         topContent={this.props.topContent}
         hideHeader={hideHeader}
         footerContent={footerContent}
-        contextualHelp={{
-          title: I18n.t("wallet.wallet"),
-          body: () => <Markdown>{I18n.t("wallet.walletHelp")}</Markdown>
-        }}
+        contextualHelp={contextualHelp}
         contentRefreshControl={this.props.refreshControl}
       >
         {this.props.children}

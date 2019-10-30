@@ -34,6 +34,11 @@ const INITIAL_STATE: State = {
   isFingerprintAvailable: true
 };
 
+const contextualHelp = {
+  title: I18n.t("biometric_recognition.title"),
+  body: () => <Markdown>{I18n.t("biometric_recognition.help")}</Markdown>
+};
+
 /**
  * Implements the biometric recognition preference screen where the user can
  * opt for explicitly not using fingerprint. This class shows up two possible
@@ -93,12 +98,7 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
       <TopScreenComponent
         title={I18n.t("biometric_recognition.title")}
         goBack={this.goBack}
-        contextualHelp={{
-          title: I18n.t("biometric_recognition.title"),
-          body: () => (
-            <Markdown>{I18n.t("biometric_recognition.help")}</Markdown>
-          )
-        }}
+        contextualHelp={contextualHelp}
       >
         <ScreenContentHeader
           title={I18n.t("biometric_recognition.title")}

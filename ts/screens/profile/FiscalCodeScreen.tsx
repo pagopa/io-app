@@ -55,6 +55,11 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelp = {
+  title: I18n.t("profile.fiscalCode.title"),
+  body: () => <Markdown>{I18n.t("profile.fiscalCode.help")}</Markdown>
+};
+
 class FiscalCodeScreen extends React.PureComponent<Props> {
   private showModal(showBackSide: boolean = false) {
     if (this.props.profile) {
@@ -90,10 +95,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
             <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
           }
           contentStyle={styles.darkBg}
-          contextualHelp={{
-            title: I18n.t("profile.fiscalCode.title"),
-            body: () => <Markdown>{I18n.t("profile.fiscalCode.help")}</Markdown>
-          }}
+          contextualHelp={contextualHelp}
           hideHeader={true}
           topContent={
             <React.Fragment>
