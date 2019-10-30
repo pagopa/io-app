@@ -1,4 +1,4 @@
-import { Body, Button, Left, Right, Text, View } from "native-base";
+import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -8,6 +8,7 @@ import I18n from "../../i18n";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
 import SearchButton, { SearchType } from "../search/SearchButton";
@@ -79,14 +80,13 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
         {!isSearchEnabled && <InstabugButtons />}
         {onShowHelp &&
           !isSearchEnabled && (
-            <Button
+            <ButtonWithoutOpacity
               onPress={onShowHelp}
               style={styles.helpButton}
               transparent={true}
-              activeOpacity={1}
             >
               <IconFont name="io-question" />
-            </Button>
+            </ButtonWithoutOpacity>
           )}
         {isSearchAvailable && <SearchButton searchType={searchType} />}
       </Right>

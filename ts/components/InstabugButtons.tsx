@@ -1,7 +1,6 @@
 import { BugReporting, Chats, Replies } from "instabug-reactnative";
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { Button } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -14,6 +13,7 @@ import { Dispatch } from "../store/actions/types";
 import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
+import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
 import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
 
@@ -105,10 +105,9 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   public render() {
     return (
       <React.Fragment>
-        <Button
+        <ButtonWithoutOpacity
           onPress={this.handleIBChatPress}
           transparent={true}
-          activeOpacity={1}
         >
           <IconFont
             name="io-chat"
@@ -116,16 +115,15 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
             accessible={true}
             accessibilityLabel="io-chat"
           />
-        </Button>
+        </ButtonWithoutOpacity>
         <CustomBadge
           badgeStyle={styles.badgeStyle}
           textStyle={styles.textStyle}
           badgeValue={this.props.badge}
         />
-        <Button
+        <ButtonWithoutOpacity
           onPress={this.handleIBBugPress}
           transparent={true}
-          activeOpacity={1}
         >
           <IconFont
             name="io-bug"
@@ -133,7 +131,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
             accessible={true}
             accessibilityLabel="io-bug"
           />
-        </Button>
+        </ButtonWithoutOpacity>
       </React.Fragment>
     );
   }

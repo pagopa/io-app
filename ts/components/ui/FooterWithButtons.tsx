@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
@@ -25,7 +25,7 @@ type OwnButtonProps = {
   buttonFontSize?: number;
 };
 
-type FooterButtonProps = ComponentProps<ButtonWithoutOpacity> & OwnButtonProps;
+type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
 
 export interface SingleButton {
   type: "SingleButton";
