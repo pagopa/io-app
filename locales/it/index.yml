@@ -81,7 +81,7 @@ inbox:
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
   contextualHelpTitle: Cosa puoi fare nel tuo Profilo
-  contextualHelpContent: !include profile/profile_home.md
+  contextualHelpContent: !include profile/profile_main.md
   fiscalCode:
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
@@ -163,7 +163,7 @@ profile:
     subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
       Amministrazione.
     contextualHelpTitle: Le tue preferenze
-    contextualHelpContent: !include profile/preferences_home_help.md
+    contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       biometric_recognition: Riconoscimento biometrico
       biometric_recognition_status: 
@@ -187,6 +187,12 @@ profile:
     email:
       contextualHelpTitle: Come gestire la tua mail
       contextualHelpContent: !include profile/profile_preferences_email_address.md
+      forward:
+        contextualHelpTitle: Come gestire l'inoltro dei messaggi
+        contextualHelpContent: !include profile/profile_preferences_email_forward.md
+    calendar:
+      contextualHelpTitle: Cos'è il tuo calendario preferito
+      contextualHelpContent: !include profile/profile_preferences_calendar.md
 userMetadata:
   errors:
     upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
@@ -787,7 +793,7 @@ biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico
   contextualHelpTitle: Come funziona il riconoscimento biometrico
-  contextualHelpContent: !include profile/preferences_biometric_recognition_help.md
+  contextualHelpContent: !include profile/profile_preferences_biometric_recognition.md
   switchLabel: Attiva il riconoscimento biometrico
   enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
   enroll_btnLabel: Vai alle impostazioni

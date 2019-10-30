@@ -80,7 +80,7 @@ inbox:
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
   contextualHelpTitle: What you can do in your Profile
-  contextualHelpContent: !include profile/profile_home.md
+  contextualHelpContent: !include profile/profile_main.md
   fiscalCode:
     title: Your personal documents
     fiscalCode: Fiscal code
@@ -159,7 +159,7 @@ profile:
     title: Preferences
     subtitle: This settings will be used by all services of the Public Amministration.
     contextualHelpTitle: Your preferences
-    contextualHelpContent: !include profile/preferences_home_help.md
+    contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       biometric_recognition: Biometric recognition
       biometric_recognition_status: 
@@ -183,6 +183,12 @@ profile:
     email:
       contextualHelpTitle: How to manage your email
       contextualHelpContent: !include profile/profile_preferences_email_address.md
+      forward:
+        contextualHelpTitle: How to handle message forwarding
+        contextualHelpContent: !include profile/profile_preferences_email_forward.md
+    calendar:
+      contextualHelpTitle: What is your favorite calendar
+      contextualHelpContent: !include profile/profile_preferences_calendar.md
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version
@@ -777,7 +783,7 @@ biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition
   contextualHelpTitle: How works biometric recognition
-  contextualHelpContent: !include profile/preferences_biometric_recognition_help.md
+  contextualHelpContent: !include profile/profile_preferences_biometric_recognition.md
   switchLabel: Enable biometric recognition
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
