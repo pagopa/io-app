@@ -143,8 +143,8 @@ export const visibleServicesMetadataLoadStateSelector = createSelector(
 
 /**
  * A selector to get the organizations selected by the user as areas of interests
+ * which provide visible services
  */
-
 export const organizationsOfInterestSelector = createSelector(
   [userMetadataSelector, servicesSelector],
   (potUserMetadata, services) => {
@@ -209,7 +209,6 @@ const isInScope = (
  */
 const getServices = (
   services: ServicesState,
-  visibleServices: VisibleServicesState,
   organizations: OrganizationNamesByFiscalCodeState,
   servicesMetadata: {
     byId: ServiceMetadataById;
@@ -234,7 +233,7 @@ const getServices = (
           service =>
             isDefined(service) &&
             isInScope(service, servicesMetadata.byId, scope) &&
-            isVisibleService(visibleServices, service)
+            isVisibleService(services.visible, service)
         )
         .sort(
           (a, b) =>
@@ -263,57 +262,35 @@ const getServices = (
 export const nationalServicesSectionsSelector = createSelector(
   [
     servicesSelector,
-    visibleServicesSelector,
     organizationNamesByFiscalCodeSelector,
     servicesMetadataSelector
   ],
-  (services, visibleServices, organizations, servicesMetadata) =>
-    getServices(
-      services,
-      visibleServices,
-      organizations,
-      servicesMetadata,
-      ScopeEnum.NATIONAL
-    )
+  (services, organizations, servicesMetadata) =>
+    getServices(services, organizations, servicesMetadata, ScopeEnum.NATIONAL)
 );
 
 // A selector providing sections related to local services
 export const localServicesSectionsSelector = createSelector(
   [
     servicesSelector,
-    visibleServicesSelector,
     organizationNamesByFiscalCodeSelector,
     servicesMetadataSelector
   ],
-  (services, visibleServices, organizations, servicesMetadata) =>
-    getServices(
-      services,
-      visibleServices,
-      organizations,
-      servicesMetadata,
-      ScopeEnum.LOCAL
-    )
+  (services, organizations, servicesMetadata) =>
+    getServices(services, organizations, servicesMetadata, ScopeEnum.LOCAL)
 );
 
 // A selector providing sections related to the organizations selected by the user
 export const selectedLocalServicesSectionsSelector = createSelector(
   [
     servicesSelector,
-    visibleServicesSelector,
     organizationNamesByFiscalCodeSelector,
     servicesMetadataSelector,
     organizationsOfInterestSelector
   ],
-  (
-    services,
-    visibleServices,
-    organizations,
-    servicesMetadata,
-    selectedOrganizations
-  ) =>
+  (services, organizations, servicesMetadata, selectedOrganizations) =>
     getServices(
       services,
-      visibleServices,
       organizations,
       servicesMetadata,
       undefined,
@@ -327,18 +304,11 @@ export const selectedLocalServicesSectionsSelector = createSelector(
 export const notSelectedServicesSectionsSelector = createSelector(
   [
     servicesSelector,
-    visibleServicesSelector,
     organizationNamesByFiscalCodeSelector,
     servicesMetadataSelector,
     organizationsOfInterestSelector
   ],
-  (
-    services,
-    visibleServices,
-    organizations,
-    servicesMetadata,
-    selectedOrganizations
-  ) => {
+  (services, organizations, servicesMetadata, selectedOrganizations) => {
     // tslint:disable-next-line:no-let
     let notSelectedOrganizations;
     if (organizations !== undefined) {
@@ -351,7 +321,6 @@ export const notSelectedServicesSectionsSelector = createSelector(
 
     return getServices(
       services,
-      visibleServices,
       organizations,
       servicesMetadata,
       undefined,
