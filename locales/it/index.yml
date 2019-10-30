@@ -300,7 +300,7 @@ authentication:
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
 onboarding:
   contextualHelpTitle: Come funziona il riconoscimento biometrico
-  contextualHelpContent: !include onboarding/how_biometric_recognition_works.md
+  contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Attivazione
     continue: Continua

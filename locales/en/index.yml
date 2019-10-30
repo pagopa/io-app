@@ -294,7 +294,7 @@ authentication:
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
 onboarding:
   contextualHelpTitle: How biometric recognition works
-  contextualHelpContent: !include onboarding/how_biometric_recognition_works.md
+  contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Activation
     continue: Continue
