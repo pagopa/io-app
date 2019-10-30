@@ -210,7 +210,7 @@ spid:
 authentication:
   landing:
     contextualHelpTitle: Come accedere all'app IO
-    contextualHelpContent: !include onboarding/how_access_io.md
+    contextualHelpContent: !include authentication/authentication_landing.md
     login: Entra con SPID
     nospid: Non hai SPID? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
@@ -271,7 +271,7 @@ authentication:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
     contextualHelpTitle: Chi è il tuo Identity Provider
-    contextualHelpContent: !include onboarding/who_is_idp.md
+    contextualHelpContent: !include authentication/authentication_idp_selection.md
   idp_login:
     headerTitle: Accedi
     contextualHelpTitle: Qual è la tua password
