@@ -268,8 +268,8 @@ authentication:
     contextualHelpContent: !include authentication/authentication_idp_selection.md
   idp_login:
     headerTitle: Login
-    contextualHelpTitle: What is your password
-    contextualHelpContent: !include onboarding/what_is_password.md
+    contextualHelpTitle: How authentication works
+    contextualHelpContent: !include authentication/authentication_idp_login.md
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
