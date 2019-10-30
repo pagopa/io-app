@@ -165,6 +165,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   public render() {
+    // TODO in https://www.pivotaltracker.com/n/projects/2048617/stories/169392558
     const contextualHelp = {
       title: I18n.t("onboarding.email.insert.help.title"),
       body: () => (

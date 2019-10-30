@@ -109,8 +109,12 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       .getOrElse("");
 
     const contextualHelp = {
-      title: I18n.t("onboarding.email.read.title"),
-      body: () => <Markdown>{I18n.t("onboarding.email.read.help")}</Markdown>
+      title: I18n.t("profile.preferences.email.contextualHelpTitle"),
+      body: () => (
+        <Markdown>
+          {I18n.t("profile.preferences.email.contextualHelpContent")}
+        </Markdown>
+      )
     };
 
     const footerProps1: SingleButton = {

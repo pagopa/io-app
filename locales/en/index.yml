@@ -397,15 +397,6 @@ onboarding:
       help:
         title: Email
         content: !include email_insert_help.md
-    read:
-      title: Your email address
-      emailInfo: This is the email address associated to your SPID account. You can
-        use in IO app a different email address, if you wish. To make operative the
-        new email address, you will need to validate it by clicking on the link you
-        will receive by email.
-      help: Your SPID profile communicates your email to IO app. If you find the address
-        wrong or you no longer use it, you can edit it directly from your SPID services
-        provider account.
     ctaEdit: Edit email
     subtitle: Some IO app functions need your email.
     emailInputLabel: Personal email address

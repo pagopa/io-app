@@ -39,6 +39,7 @@ const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
  * A screen as reminder to the user to validate his email address
  */
 export class EmailValidateScreen extends React.PureComponent<Props> {
+  // TODO in https://www.pivotaltracker.com/n/projects/2048617/stories/169392558
   private contextualHelp = {
     title: I18n.t("email.validate.title"),
     body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
