@@ -223,6 +223,11 @@ authentication:
     card5-content: In this experimental version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
       We're waiting for your feedbacks!
+    cie:
+      noNfcConnectionTitle: Are you sure you put the card down?
+      noNfcConnectionContent: !include cie/noNfcConnection.md
+    ok: Ok
+    cieCardValid: Ok, your card is valid! Wait a few more seconds..
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
@@ -767,6 +772,7 @@ services:
   disableAllTitle: "Do you really want to disable all the services?"
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
+  emptyListMessage: There are no services available at this time, pull down to refresh
 serviceDetail:
   headerTitle: "Service details"
   contextualHelpContent: !include services/service_details.md

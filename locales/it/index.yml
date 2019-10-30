@@ -229,6 +229,11 @@ authentication:
     card5-content: In questa versione sperimentale trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
+    cie:
+      noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
+      noNfcConnectionContent: !include cie/noNfcConnection.md
+    ok: Ok
+    cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -778,6 +783,7 @@ services:
   disableAllTitle: Vuoi davvero disattivare tutti i servizi?
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finchè non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
+  emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   contextualHelpContent: !include services/service_details.md

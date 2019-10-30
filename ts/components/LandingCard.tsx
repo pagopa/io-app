@@ -17,7 +17,7 @@ type Props = {
 
 const screenWidth = Dimensions.get("screen").width;
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   card: {
     width: screenWidth,
     alignItems: "center",
@@ -31,8 +31,8 @@ const style = StyleSheet.create({
 });
 
 export const LandingCardComponent: React.SFC<Props> = card => (
-  <View style={style.card}>
-    <Image source={card.image} style={style.image} />
+  <View style={styles.card}>
+    <Image source={card.image} style={styles.image} />
     <View spacer={true} />
     <Grid>
       <Col size={1} />
