@@ -1,3 +1,7 @@
+/**
+ * A screen to show if the fingerprint is supported to the user.
+ */
+
 import { Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
@@ -28,9 +32,6 @@ type OwnProps = NavigationScreenProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
-/**
- * A screen to show if the fingerprint is supported to the user.
- */
 export class FingerprintScreen extends React.PureComponent<Props> {
   /**
    * Print the only BiometrySimplePrintableType values that are passed to the UI

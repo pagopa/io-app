@@ -17,6 +17,7 @@ import {
   emailAcknowledged
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
@@ -39,6 +40,11 @@ const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
  * A screen as reminder to the user to validate his email address
  */
 export class EmailValidateScreen extends React.PureComponent<Props> {
+  private contextualHelp = {
+    title: I18n.t("email.validate.title"),
+    body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
+  };
+
   private handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),
@@ -66,19 +72,14 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        headerTitle={I18n.t("onboarding.email.validation.headerTitle")}
-        title={I18n.t("onboarding.email.validation.title")}
-        contextualHelp={{
-          title: I18n.t("onboarding.email.validation.title"),
-          body: () => (
-            <Markdown>{I18n.t("onboarding.email.validation.help")}</Markdown>
-          )
-        }}
+        headerTitle={I18n.t("email.validate.header")}
+        title={I18n.t("email.validate.title")}
+        contextualHelp={this.contextualHelp}
       >
-        <ScreenContent title={I18n.t("onboarding.email.validation.title")}>
+        <ScreenContent title={I18n.t("email.validate.title")}>
           <View style={styles.content}>
             <Markdown>
-              {I18n.t("onboarding.email.validation.info", {
+              {I18n.t("email.validate.info", {
                 email: profileEmail
               })}
             </Markdown>
@@ -90,7 +91,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
                 bordered={true}
                 onPress={unavailableAlert}
               >
-                <Text>{I18n.t("onboarding.email.validation.ctaValidate")}</Text>
+                <Text>{I18n.t("email.validate.cta")}</Text>
               </ButtonWithoutOpacity>
             </View>
           </View>
@@ -100,7 +101,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
           leftButton={{
             block: true,
             bordered: true,
-            title: I18n.t("onboarding.email.ctaEdit"),
+            title: I18n.t("email.edit.cta"),
             onPress: this.props.navigateToEmailInsertScreen,
             buttonFontSize: 15
           }}
@@ -117,13 +118,14 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(state.profile)
+  optionProfile: pot.toOption(profileSelector(state))
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
-  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen)
+  navigateToEmailInsertScreen: () =>
+    dispatch(navigateToEmailInsertScreen({ isFromProfileSection: false }))
 });
 
 export default connect(

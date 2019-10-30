@@ -114,7 +114,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
 
   /**
-   * Handles valid PagoPA QR codes
+   * Handles valid pagoPA QR codes
    */
   private onValidQrCode = (data: ITuple2<RptId, AmountInEuroCents>) => {
     this.setState({
@@ -124,7 +124,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   };
 
   /**
-   * Handles invalid PagoPA QR codes
+   * Handles invalid pagoPA QR codes
    */
   private onInvalidQrCode = () => {
     showToast(I18n.t("wallet.QRtoPay.wrongQrCode"), "danger");

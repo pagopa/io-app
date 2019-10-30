@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignContent: "center",
+    justifyContent: "center",
     flex: 1
   },
   buttonTwoThirds: {
@@ -26,12 +27,12 @@ type OwnButtonProps = {
 
 type FooterButtonProps = ComponentProps<ButtonWithoutOpacity> & OwnButtonProps;
 
-interface SingleButton {
+export interface SingleButton {
   type: "SingleButton";
   leftButton: FooterButtonProps;
 }
 
-interface TwoButtonsInlineHalf {
+export interface TwoButtonsInlineHalf {
   type: "TwoButtonsInlineHalf";
   leftButton: FooterButtonProps;
   rightButton: FooterButtonProps;

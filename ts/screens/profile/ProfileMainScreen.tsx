@@ -297,6 +297,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       return (
         <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
+          <View spacer={true} />
           <List withContentLateralPadding={true}>
             {/* Preferences */}
             <ListItemComponent

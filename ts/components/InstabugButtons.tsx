@@ -9,6 +9,7 @@ import {
   instabugReportClosed,
   instabugReportOpened
 } from "../store/actions/debug";
+import { updateInstabugUnreadMessages } from "../store/actions/instabug";
 import { Dispatch } from "../store/actions/types";
 import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
@@ -93,6 +94,9 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
             this.state.instabugReportType.value,
             dismiss
           );
+          // when user dismisses instabug report (chat or bug) we update the unread messages counter.
+          // This is because user could have read or reply to some messages
+          this.props.dispatchUpdateInstabugUnreadMessagesCounter();
         }
       }
     );
@@ -143,7 +147,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIBReportOpen: (type: string) =>
     dispatch(instabugReportOpened({ type })),
   dispatchIBReportClosed: (type: string, how: string) =>
-    dispatch(instabugReportClosed({ type, how }))
+    dispatch(instabugReportClosed({ type, how })),
+  dispatchUpdateInstabugUnreadMessagesCounter: () =>
+    dispatch(updateInstabugUnreadMessages())
 });
 
 export const InstabugButtons = connect(
