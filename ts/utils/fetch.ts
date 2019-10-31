@@ -71,13 +71,10 @@ export function retryLogicForTransientResponseError(
   p: (r: Response) => boolean,
   retryLogic: (
     t: RetriableTask<Error, Response>,
-    onShouldAbort?: () => Promise<boolean>
+    shouldAbort?: Promise<boolean>
   ) => TaskEither<Error | "max-retries" | "retry-aborted", Response>
 ): typeof retryLogic {
-  return (
-    t: RetriableTask<Error, Response>,
-    onShouldAbort?: () => Promise<boolean>
-  ) =>
+  return (t: RetriableTask<Error, Response>, shouldAbort?: Promise<boolean>) =>
     retryLogic(
       // when the result of the task is a Response that satisfies
       // the predicate p, map it to a transient error
@@ -88,7 +85,7 @@ export function retryLogicForTransientResponseError(
             : right<never, Response>(r)
         )
       ),
-      onShouldAbort
+      shouldAbort
     );
 }
 
@@ -98,7 +95,7 @@ export function retryLogicForTransientResponseError(
  * createFetchRequestForApi when creating "getPaymentId"
  */
 export const constantPollingFetch = (
-  onShouldAbort: () => Promise<boolean>,
+  shouldAbort: Promise<boolean>,
   retries: number,
   delay: number,
   timeout: Millisecond = 1000 as Millisecond
@@ -123,7 +120,7 @@ export const constantPollingFetch = (
   );
 
   // TODO: remove the cast once we upgrade to tsc >= 3.1
-  return retriableFetch(retryWithTransient404s, onShouldAbort)(
+  return retriableFetch(retryWithTransient404s, shouldAbort)(
     timeoutFetch as typeof fetch
   );
 };

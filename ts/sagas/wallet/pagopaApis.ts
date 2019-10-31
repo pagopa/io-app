@@ -326,7 +326,7 @@ export function* deleteWalletRequestHandler(
       );
     }
   } catch (e) {
-    const failureAction = deleteWalletFailure(e);
+    const failureAction = deleteWalletFailure(e.message);
     yield put(failureAction);
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);
@@ -575,7 +575,7 @@ export function* paymentVerificaRequestHandler(
         yield put(paymentVerifica.success(response.value.value));
       } else if (response.value.status === 500) {
         // Verifica failed with a 500, that usually means there was an error
-        // interacting with pagoPA that we can interpret
+        // interacting with Pagopa that we can interpret
         yield put(paymentVerifica.failure(response.value.value.detail));
       } else {
         throw Error(`response status ${response.value.status}`);
@@ -657,6 +657,7 @@ export function* paymentIdPollingRequestHandler(
         test: isPagoPATestEnabled
       }
     );
+    const response = responses.e1;
     if (response.isRight()) {
       // Attiva succeeded
       if (response.value.status === 200) {

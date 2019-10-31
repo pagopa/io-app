@@ -1,4 +1,5 @@
 import * as t from "io-ts";
+import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
@@ -12,6 +13,7 @@ import {
   RequestHeaders,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
+import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Omit } from "italia-ts-commons/lib/types";
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -44,9 +46,8 @@ import {
   upsertUserMetadataDefaultDecoder,
   UpsertUserMetadataT
 } from "../../definitions/backend/requestTypes";
-
 import { SessionToken } from "../types/SessionToken";
-import { defaultRetryingFetch } from "../utils/fetch";
+import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 
 /**
  * Here we have to redefine the auto-generated UserProfile type since the
@@ -120,6 +121,19 @@ function ParamAuthorizationBearerHeaderProducer<
     };
   };
 }
+
+/**
+ * We will retry for as many times when polling for a payment ID.
+ * The total maximum time we are going to wait will be:
+ *
+ * PAYMENT_ID_MAX_POLLING_RETRIES * PAYMENT_ID_RETRY_DELAY_MILLIS (milliseconds)
+ */
+const PAYMENT_ID_MAX_POLLING_RETRIES = 180;
+
+/**
+ * How much time to wait between retries when polling for a payment ID
+ */
+const PAYMENT_ID_RETRY_DELAY_MILLIS = 1000;
 
 //
 // Create client
@@ -295,8 +309,32 @@ export function BackendClient(
     postAttivaRpt: withBearerToken(
       createFetchRequestForApi(attivaRptT, options)
     ),
-    getPaymentId: withBearerToken(
-      createFetchRequestForApi(getPaymentIdT, options)
-    )
+    getPaymentId: (
+      params: Pick<
+        {
+          codiceContestoPagamento: string;
+          test?: boolean;
+          Bearer: string;
+        },
+        "codiceContestoPagamento" | "test"
+      >
+    ) => {
+      const deferredPromise = DeferredPromise<boolean>();
+      const aConstantPollingFetch = constantPollingFetch(
+        // Ref to the promise
+        deferredPromise.e1,
+        PAYMENT_ID_MAX_POLLING_RETRIES,
+        PAYMENT_ID_RETRY_DELAY_MILLIS
+      );
+      const f = withBearerToken(
+        createFetchRequestForApi(getPaymentIdT, {
+          ...options,
+          fetchApi: aConstantPollingFetch
+        })
+      );
+      // Ref to the resolve
+      const res = f(params);
+      return Tuple2<typeof res, (v: boolean) => void>(res, deferredPromise.e2);
+    }
   };
 }

@@ -6,7 +6,6 @@
 
 import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { DeferredPromise } from "italia-ts-commons/lib/promises";
 import { NavigationActions } from "react-navigation";
 import { delay } from "redux-saga";
 import {
@@ -108,19 +107,6 @@ import {
 } from "../store/middlewares/analytics";
 import { SessionManager } from "../utils/SessionManager";
 import { paymentsDeleteUncompletedSaga } from "./payments";
-
-/**
- * We will retry for as many times when polling for a payment ID.
- * The total maximum time we are going to wait will be:
- *
- * PAYMENT_ID_MAX_POLLING_RETRIES * PAYMENT_ID_RETRY_DELAY_MILLIS (milliseconds)
- */
-const PAYMENT_ID_MAX_POLLING_RETRIES = 180;
-
-/**
- * How much time to wait between retries when polling for a payment ID
- */
-const PAYMENT_ID_RETRY_DELAY_MILLIS = 1000;
 
 /**
  * Configure the max number of retries and delay between retries when polling
@@ -315,14 +301,6 @@ function* startOrResumeAddCreditCardSaga(
 }
 
 /**
- * Promise and her resolve function used to stop polling task
- */
-// tslint:disable-next-line: no-let prefer-const
-let resolveShouldAbort: (v: boolean) => void;
-// tslint:disable-next-line: no-let prefer-const
-let abortPromise: Promise<boolean>;
-
-/**
  * This saga will run in sequence the requests needed to activate a payment:
  *
  * 1) attiva -> nodo
@@ -336,7 +314,7 @@ let abortPromise: Promise<boolean>;
  * be executed (either because it never executed or because it previously
  * returned an error).
  *
- * Not that the pagoPA activation flow is not really resumable in case a step
+ * Not that the Pagopa activation flow is not really resumable in case a step
  * returns an error (i.e. the steps are not idempotent).
  *
  * TODO: the resume logic may be made more intelligent by analyzing the error
@@ -349,10 +327,6 @@ let abortPromise: Promise<boolean>;
 function* startOrResumePaymentActivationSaga(
   action: ActionType<typeof runStartOrResumePaymentActivationSaga>
 ) {
-  // Create a new Deferred Promise used to stop polling task
-  const defPromise = DeferredPromise<boolean>();
-  resolveShouldAbort = defPromise.e2;
-  abortPromise = defPromise.e1;
   while (true) {
     // before each step we select the updated payment state to know what has
     // been already done.
@@ -478,8 +452,6 @@ function* pollTransactionSaga(
  * This is a best effort operation as the result is actually ignored.
  */
 function* deleteActivePaymentSaga() {
-  // Call resolve promise
-  resolveShouldAbort(true);
   const potPaymentId: GlobalState["wallet"]["payment"]["paymentId"] = yield select<
     GlobalState
   >(_ => _.wallet.payment.paymentId);
@@ -495,7 +467,7 @@ function* deleteActivePaymentSaga() {
  * Main wallet saga.
  *
  * This saga is responsible for handling actions the mostly correspond to API
- * requests towards the pagoPA "nodo" and the pagoPA "PaymentManager" APIs.
+ * requests towards the Pagopa "nodo" and the Pagopa "PaymentManager" APIs.
  *
  * This saga gets forked from the startup saga each time the user authenticates
  * and a new PagopaToken gets received from the backend. Infact, the
@@ -512,18 +484,6 @@ export function* watchWalletSaga(
     apiUrlPrefix,
     sessionToken,
     defaultRetryingFetch(fetchPagoPaTimeout, 0)
-  );
-
-  // Backend client for polling for paymentId - uses an instance of fetch that
-  // considers a 404 as a transient error and retries with a constant delay
-  const pollingPagopaNodoClient = BackendClient(
-    apiUrlPrefix,
-    sessionToken,
-    constantPollingFetch(
-      () => abortPromise.then(),
-      PAYMENT_ID_MAX_POLLING_RETRIES,
-      PAYMENT_ID_RETRY_DELAY_MILLIS
-    )
   );
 
   // Client for the PagoPA PaymentManager
@@ -651,7 +611,7 @@ export function* watchWalletSaga(
   yield takeLatest(
     getType(paymentIdPolling.request),
     paymentIdPollingRequestHandler,
-    pollingPagopaNodoClient.getPaymentId
+    pagopaNodoClient.getPaymentId
   );
 
   yield takeLatest(
