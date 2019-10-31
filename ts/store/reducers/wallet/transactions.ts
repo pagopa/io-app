@@ -56,7 +56,7 @@ export const latestTransactionsSelector = createSelector(
           .sort(
             (a, b) =>
               // FIXME: code here is checking for NaN assuming creation dates may
-              //        be undefined, but since we override the pagopa Wallet
+              //        be undefined, but since we override the pagoPA Wallet
               //        type to force creation dates to always be defined and we
               //        use that new type for parsing responses, we ignore
               //        wallets with undefined creation dates... so the check
