@@ -1,9 +1,7 @@
-import { Option } from "fp-ts/lib/Option";
 import { Container, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
@@ -13,10 +11,6 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 type Props = OwnProps;
-type State = Readonly<{
-  securityCode: Option<string>;
-  holder: Option<string>;
-}>;
 const styles = StyleSheet.create({
   contentContainerStyle: {
     padding: customVariables.contentPadding
@@ -26,7 +20,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class UnrecognizedCie extends React.Component<Props, State> {
+class UnrecognizedCie extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -55,6 +49,10 @@ class UnrecognizedCie extends React.Component<Props, State> {
               {I18n.t("authentication.landing.unknownCardContent")}
             </Text>
             <View spacer={true} />
+            {
+              // to know more about CIE, open CIE info screen
+              // TODO: https://www.pivotaltracker.com/story/show/169167508
+            }
             <Text link={true} onPress={undefined}>
               {I18n.t("authentication.landing.unknownCardHelpLink")}
             </Text>
@@ -69,4 +67,4 @@ class UnrecognizedCie extends React.Component<Props, State> {
     );
   }
 }
-export default connect()(UnrecognizedCie);
+export default UnrecognizedCie;

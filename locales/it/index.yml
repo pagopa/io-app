@@ -220,7 +220,7 @@ authentication:
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
     unknownCardTitle: Carta sconosciuta
-    unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronca (CIE).
+    unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
     unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
   spid_information_request:
     headerTitle: Non hai SPID?
