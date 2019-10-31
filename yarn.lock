@@ -4763,9 +4763,10 @@ italia-ts-commons@5.1.1, italia-ts-commons@^5.0.1:
     json-set-map "^1.0.2"
     validator "^10.1.0"
 
-"italia-ts-commons@git://github.com/teamdigitale/io-ts-commons.git#62d2f2524ad24aa4d67b8c4c38b4c0b9e0bd445f":
+italia-ts-commons@5.1.11:
   version "5.1.11"
-  resolved "git://github.com/teamdigitale/io-ts-commons.git#62d2f2524ad24aa4d67b8c4c38b4c0b9e0bd445f"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-5.1.11.tgz#323a5727371f995cd70c6f3b10a9407de687d83e"
+  integrity sha512-8TPHDzK1mZtn4QRH6KypTfFBxYOEShsc8nVLCdVlwVAEJwMiFWr6bL2CeO5WZ+Dt3RmUZz0MXCpN5u8WPKGT5Q==
   dependencies:
     fp-ts "1.12.0"
     io-ts "1.8.5"
