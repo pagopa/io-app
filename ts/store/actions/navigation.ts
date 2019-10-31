@@ -242,7 +242,7 @@ export const navigateToCieInvalidScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_EXPIRED_SCREEN
   });
-  
+
 export const navigateToCieValid = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_VALID_SCREEN
