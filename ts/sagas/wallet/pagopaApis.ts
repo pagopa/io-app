@@ -650,7 +650,7 @@ export function* paymentIdPollingRequestHandler(
       typeof isPagoPATestEnabledSelector
     > = yield select<GlobalState>(isPagoPATestEnabledSelector);
 
-    const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
+    const responses: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
       getPaymentIdApi,
       {
         codiceContestoPagamento: action.payload.codiceContestoPagamento,
