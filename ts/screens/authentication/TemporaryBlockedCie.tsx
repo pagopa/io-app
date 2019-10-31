@@ -1,22 +1,15 @@
-import { Option } from "fp-ts/lib/Option";
 import { Button, Container, H1, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 
-type OwnProps = Readonly<{
+type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-}>;
-type Props = OwnProps;
-type State = Readonly<{
-  securityCode: Option<string>;
-  holder: Option<string>;
 }>;
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -27,7 +20,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class TemporaryBlockedCie extends React.Component<Props, State> {
+class TemporaryBlockedCie extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -36,13 +29,13 @@ class TemporaryBlockedCie extends React.Component<Props, State> {
     const cancelButtonProps = {
       block: true,
       cancel: true,
-      onPress: (): boolean => this.props.navigation.goBack(),
+      onPress: this.props.navigation.goBack,
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {
       block: true,
       primary: true,
-      onPress: () => undefined,
+      onPress: () => Alert.alert(I18n.t("global.notImplemented")),
       title: I18n.t("authentication.cie.temporaryBlockedCieDoneButton")
     };
 
@@ -86,10 +79,10 @@ class TemporaryBlockedCie extends React.Component<Props, State> {
               block={true}
               primary={true}
               iconLeft={true}
-              onPress={undefined}
-              testID="landing-button-login-cie"
+              onPress={() => Alert.alert(I18n.t("global.notImplemented"))}
+              testID={"landing-button-login-cie"}
             >
-              <IconFont name="io-cie" color={customVariables.colorWhite} />
+              <IconFont name={"io-cie"} color={customVariables.colorWhite} />
               <Text>
                 {I18n.t("authentication.cie.temporaryBlockedCieOpenCieID")}
               </Text>
@@ -97,7 +90,7 @@ class TemporaryBlockedCie extends React.Component<Props, State> {
           </View>
         </BaseScreenComponent>
         <FooterWithButtons
-          type="TwoButtonsInlineThird"
+          type={"TwoButtonsInlineThird"}
           rightButton={retryButtonProps}
           leftButton={cancelButtonProps}
         />
@@ -105,4 +98,4 @@ class TemporaryBlockedCie extends React.Component<Props, State> {
     );
   }
 }
-export default connect()(TemporaryBlockedCie);
+export default TemporaryBlockedCie;

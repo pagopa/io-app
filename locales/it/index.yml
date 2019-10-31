@@ -237,10 +237,10 @@ authentication:
     temporaryBlockedCieContent2-bold: "codice PUK "
     temporaryBlockedCieContent3: "che ti è stato consegnato insieme alla carta."
     temporaryBlockedCieContent4: "Per completare questa operazione devi però "
-    temporaryBlockedCieContent4-bold: "utilizzare una apposita app gratuita"
+    temporaryBlockedCieContent4-bold: "utilizzare un'apposita app gratuita"
     temporaryBlockedCieContent5: ", che si chiama "
     temporaryBlockedCieContent5-bold: "CieID."
-    temporaryBlockedCieContent6: "Puoi accedere nuovamente ad IO quando avrai sbloccato la carta."
+    temporaryBlockedCieContent6: "Potrai accedere nuovamente ad IO quando avrai sbloccato la carta."
     temporaryBlockedCieDoneButton: "Fatto, carta sbloccata!"
     temporaryBlockedCieOpenCieID: "Apri CieID"
   spid_information:
