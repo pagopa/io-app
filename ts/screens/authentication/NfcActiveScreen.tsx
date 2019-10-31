@@ -1,17 +1,15 @@
 import { Container, H1, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 
-type OwnProps = Readonly<{
+type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
-
-type Props = OwnProps;
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -45,7 +43,7 @@ class NfcActiveScreen extends React.Component<Props> {
           }}
           rightButton={{
             cancel: false,
-            onPress: () => undefined,
+            onPress: () => Alert.alert(I18n.t("global.notImplemented")),
             title: I18n.t("global.buttons.continue"),
             block: true
           }}

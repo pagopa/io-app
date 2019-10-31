@@ -226,7 +226,7 @@ authentication:
     cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
   cie:
     enableNfcTitle: Attiva NFC
-    enableNfcContent: Per permettere all'app di verificare la tua carta d'identità elettronica devi prima attivare la funzione NFC del tuuo dispositivo. Torna qui quando avrai finito!
+    enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
     enableNfcHelp: Non hai la Carta di Identità Elettronica?
     nfcEnabledTitle: NFC Attivo
     nfcEnabledContent: "Grazie per aver attivato nfc sul tuo dispositivo: puoi proseguire con l'autenticazione!"

@@ -8,11 +8,9 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import variables from "../../theme/variables";
 
-type OwnProps = Readonly<{
+type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
-
-type Props = OwnProps;
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -43,7 +41,7 @@ class NfcStartScreen extends React.Component<Props> {
               {I18n.t("authentication.cie.enableNfcContent")}
             </Text>
             <View spacer={true} />
-            <Text link={true} onPress={() => this.browseToLink()}>
+            <Text link={true} onPress={this.browseToLink}>
               {I18n.t("authentication.cie.enableNfcHelp")}
             </Text>
           </View>
@@ -52,7 +50,7 @@ class NfcStartScreen extends React.Component<Props> {
           type="TwoButtonsInlineThird"
           leftButton={{
             cancel: true,
-            onPress: (): boolean => this.props.navigation.goBack(),
+            onPress: this.props.navigation.goBack,
             title: I18n.t("global.buttons.cancel"),
             block: true
           }}

@@ -220,7 +220,7 @@ authentication:
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
   cie:
     enableNfcTitle: Enable NFC
-    enableNfcContent: To allow the app to verify your electronic ID card, you must first activate the NFC function of your device. Come back here when you're done!
+    enableNfcContent: For allowing the app to verify your electronic ID card, you must first activate the NFC function of your device. Come back here when you're done!
     enableNfcHelp: Don't have an Electronic Identity Card?
     nfcEnabledTitle: NFC Enabled
     nfcEnabledContent: "Thank you for activating NFC on your device: you can proceed with authentication!"
@@ -292,7 +292,7 @@ email:
       new email address, you will need to validate it by clicking on the link you
       will receive by email.
     details: You can change this address, then you should validate it by clicking on
-      the link we will sent to your email address. In the meanwhile, those
+      the link we will send to your email address. In the meanwhile, those
       functionalities of IO depending on the email (payments, messages forwarding,
       etc.) will be disabled.
     alert: "Warning: your pagoPa account is associated to your email.
