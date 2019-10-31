@@ -230,6 +230,19 @@ authentication:
     paragraph3: Proseguendo dichiari di accettare le
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
+  cie:
+    temporaryBlockedCieTitle: Carta bloccata temporaneamente
+    temporaryBlockedCieContent1: "La carta utilizzata è stata bloccata perché hai provato ad accedere troppe volte con un PIN errato."
+    temporaryBlockedCieContent2: "Non c'è problema: puoi sbloccarla con il "
+    temporaryBlockedCieContent2-bold: "codice PUK "
+    temporaryBlockedCieContent3: "che ti è stato consegnato insieme alla carta."
+    temporaryBlockedCieContent4: "Per completare questa operazione devi però "
+    temporaryBlockedCieContent4-bold: "utilizzare una apposita app gratuita"
+    temporaryBlockedCieContent5: ", che si chiama "
+    temporaryBlockedCieContent5-bold: "CieID."
+    temporaryBlockedCieContent6: "Puoi accedere nuovamente ad IO quando avrai sbloccato la carta."
+    temporaryBlockedCieDoneButton: "Fatto, carta sbloccata!"
+    temporaryBlockedCieOpenCieID: "Apri CieID"
   spid_information:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
