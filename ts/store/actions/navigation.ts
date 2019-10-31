@@ -8,6 +8,8 @@ import {
 import { ActionType, createStandardAction } from "typesafe-actions";
 import ROUTES from "../../navigation/routes";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
+import EmailInsertScreen from "../../screens/onboarding/EmailInsertScreen";
+import EmailReadScreen from "../../screens/onboarding/EmailReadScreen";
 import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
@@ -85,21 +87,23 @@ export const navigateToEmailValidateScreen = NavigationActions.navigate({
   })
 });
 
-export const navigateToEmailReadScreen = NavigationActions.navigate({
-  routeName: ROUTES.ONBOARDING,
-  action: NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING_EMAIL_READ
-  })
-});
+export const navigateToEmailReadScreen = (
+  params: InferNavigationParams<typeof EmailReadScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.READ_EMAIL_SCREEN,
+    params
+  });
 
 export const navigateBack = NavigationActions.back;
 
-export const navigateToEmailInsertScreen = NavigationActions.navigate({
-  routeName: ROUTES.ONBOARDING_EMAIL_INSERT,
-  action: NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING_EMAIL_INSERT
-  })
-});
+export const navigateToEmailInsertScreen = (
+  params: InferNavigationParams<typeof EmailInsertScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.INSERT_EMAIL_SCREEN,
+    params
+  });
 
 export const navigateToMessageDetailScreenAction = (
   params: InferNavigationParams<typeof MessageDetailScreen>
