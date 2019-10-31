@@ -34,7 +34,7 @@ const cardMapIcon: { [key in string]: any } = {
 
 const defaultCardIcon = require("../../../../img/wallet/cards-icons/unknown.png");
 /**
- * PagoPA's "brandLogo" field contains an url to an image
+ * pagoPA's "brandLogo" field contains an url to an image
  * From the given url it will check if there is a matching and an icon will be returned
  * If there is NO matching a default card icon will be returned
  * Consider to evaluate the field "brand" instead of "brandLogo"
