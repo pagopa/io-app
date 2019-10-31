@@ -94,7 +94,7 @@ import ServiceDetailsScreen from "./ServiceDetailsScreen";
 type OwnProps = NavigationScreenProps;
 
 type ReduxMergedProps = Readonly<{
-  dispatchUpdateOrganizationsOfInterestMetadata: (
+  updateOrganizationsOfInterestMetadata: (
     selectedItemIds: Option<Set<string>>
   ) => void;
 }>;
@@ -671,8 +671,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           onServiceSelect={this.onServiceSelect}
           handleOnLongPressItem={this.handleOnLongPressItem}
           isLongPressEnabled={this.state.isLongPressEnabled}
-          dispatchUpdateOrganizationsOfInterestMetadata={
-            this.props.dispatchUpdateOrganizationsOfInterestMetadata
+          updateOrganizationsOfInterestMetadata={
+            this.props.updateOrganizationsOfInterestMetadata
           }
           onItemSwitchValueChanged={this.onItemSwitchValueChanged}
           tabOffset={this.animatedScrollPositions[0]}
@@ -863,7 +863,7 @@ const mergeProps = (
 ) => {
   // If the user updates the area of interest, the upsert of
   // the user metadata stored on backend is triggered
-  const dispatchUpdateOrganizationsOfInterestMetadata = (
+  const updateOrganizationsOfInterestMetadata = (
     selectedItemIds: Option<Set<string>>
   ) => {
     if (selectedItemIds.isSome() && stateProps.userMetadata) {
@@ -880,7 +880,7 @@ const mergeProps = (
     ...dispatchProps,
     ...ownProps,
     ...{
-      dispatchUpdateOrganizationsOfInterestMetadata
+      updateOrganizationsOfInterestMetadata
     }
   };
 };

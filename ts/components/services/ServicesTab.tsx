@@ -42,7 +42,7 @@ type OwnProps = Readonly<{
   onServiceSelect: (service: ServicePublic) => void;
   handleOnLongPressItem: () => void;
   isLongPressEnabled: boolean;
-  dispatchUpdateOrganizationsOfInterestMetadata?: (
+  updateOrganizationsOfInterestMetadata?: (
     selectedItemIds: Option<Set<string>>
   ) => void;
   onItemSwitchValueChanged: (service: ServicePublic, value: boolean) => void;
@@ -116,17 +116,15 @@ class ServicesTab extends React.PureComponent<Props> {
   private onSaveAreasOfInterest = (
     selectedFiscalCodes: Option<Set<string>>
   ) => {
-    if (this.props.dispatchUpdateOrganizationsOfInterestMetadata) {
+    if (this.props.updateOrganizationsOfInterestMetadata) {
       this.setState({
         toastErrorMessage: I18n.t(
           "serviceDetail.onUpdateEnabledChannelsFailure"
         )
       });
-      this.props.dispatchUpdateOrganizationsOfInterestMetadata(
-        selectedFiscalCodes
-      );
-      this.props.hideModal();
+      this.props.updateOrganizationsOfInterestMetadata(selectedFiscalCodes);
     }
+    this.props.hideModal();
   };
 
   private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => {
@@ -150,7 +148,7 @@ class ServicesTab extends React.PureComponent<Props> {
       <TouchableOpacity onPress={onPressItem}>
         <IconFont
           name={"io-trash"}
-          color={"#C7D1D9"}
+          color={customVariables.brandMildGray}
           size={17}
           style={styles.icon}
         />
