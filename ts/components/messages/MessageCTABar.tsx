@@ -28,6 +28,7 @@ import {
   navigateToPaymentTransactionSummaryScreen
 } from "../../store/actions/navigation";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
+import { loadService } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import {
@@ -407,7 +408,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   private renderPaymentButton(
     maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
   ) {
-    const { payment, service, small, disabled } = this.props;
+    const { message, payment, service, small, disabled } = this.props;
 
     if (
       maybeMessagePaymentExpirationInfo.isNone() ||
@@ -435,6 +436,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       ? this.navigateToMessageDetail
       : !disabled && !paid && amount.isSome() && rptId.isSome()
         ? () => {
+            this.props.refreshService(message.sender_service_id);
             this.props.dispatchPaymentInitializeState();
             this.props.dispatchNavigateToPaymentTransactionSummaryScreen({
               rptId: rptId.value,
@@ -697,6 +699,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  refreshService: (serviceId: string) =>
+    dispatch(loadService.request(serviceId)),
   dispatchNavigateToMessageDetail: (messageId: string) =>
     dispatch(navigateToMessageDetailScreenAction({ messageId })),
   dispatchPaymentInitializeState: () => dispatch(paymentInitializeState()),

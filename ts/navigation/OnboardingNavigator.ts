@@ -25,10 +25,10 @@ const navigator = createStackNavigator(
     [ROUTES.ONBOARDING_EMAIL_VALIDATE]: {
       screen: EmailValidateScreen
     },
-    [ROUTES.ONBOARDING_EMAIL_INSERT]: {
+    [ROUTES.INSERT_EMAIL_SCREEN]: {
       screen: EmailInsertScreen
     },
-    [ROUTES.ONBOARDING_EMAIL_READ]: {
+    [ROUTES.READ_EMAIL_SCREEN]: {
       screen: EmailReadScreen
     }
   },
