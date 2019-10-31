@@ -37,7 +37,7 @@ class NfcActiveScreen extends React.Component<Props> {
           type="TwoButtonsInlineThird"
           leftButton={{
             cancel: true,
-            onPress: (): boolean => this.props.navigation.goBack(),
+            onPress: this.props.navigation.goBack,
             title: I18n.t("global.buttons.cancel"),
             block: true
           }}
