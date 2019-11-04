@@ -215,6 +215,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(sessionInformationLoadFailure):
     case getType(profileLoadFailure):
     case getType(profileUpsert.failure):
+    case getType(loginFailure):
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
     case getType(fetchWalletsFailure):
@@ -238,7 +239,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(analyticsAuthenticationStarted):
     case getType(analyticsAuthenticationCompleted):
     case getType(loginSuccess):
-    case getType(loginFailure):
     case getType(sessionInformationLoadSuccess):
 
     case getType(sessionExpired):
