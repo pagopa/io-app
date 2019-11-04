@@ -23,7 +23,7 @@ type Props = Readonly<{
 }>;
 
 /**
- * A HOC to display and overlay spinner conditionally
+ * A Component to display and overlay spinner conditionally
  */
 class LoadingSpinnerOverlay extends React.Component<Props> {
   public render() {
