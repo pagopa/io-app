@@ -3,8 +3,8 @@ import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
-
 import {
+  NavigationEvents,
   NavigationEventSubscription,
   NavigationScreenProps
 } from "react-navigation";
@@ -167,6 +167,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         searchType="Messages"
         appLogo={true}
       >
+        <NavigationEvents onWillFocus={this.onRefreshMessages} />
         {!isSearchEnabled && (
           <React.Fragment>
             <ScreenContentHeader
