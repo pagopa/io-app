@@ -36,7 +36,7 @@ export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<
   SessionToken
 >();
 
-export const loginFailure = createStandardAction("LOGIN_FAILURE")();
+export const loginFailure = createStandardAction("LOGIN_FAILURE")<Error>();
 
 export const logoutRequest = createStandardAction("LOGOUT_REQUEST")<
   LogoutOption
