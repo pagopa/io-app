@@ -1,5 +1,5 @@
 /**
- * Render the PagoPA Logo according to the environment (Test or Production)
+ * Render the pagoPA Logo according to the environment (Test or Production)
  */
 import * as React from "react";
 import { Image } from "react-native";
