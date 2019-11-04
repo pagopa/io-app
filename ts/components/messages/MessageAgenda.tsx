@@ -4,11 +4,8 @@ import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
-  Animated,
   Dimensions,
   Image,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
   Platform,
   SectionList,
   SectionListData,
@@ -118,7 +115,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: Platform.OS === "ios" ? 35 : 0
+    bottom: 0 // Platform.OS === "ios" ? 35 : 0
   }
 });
 
@@ -153,13 +150,6 @@ type SelectedSectionListProps = Pick<
   "refreshing" | "onContentSizeChange"
 >;
 
-type AnimatedProps = {
-  animated?: {
-    onScroll: (_: NativeSyntheticEvent<NativeScrollEvent>) => void;
-    scrollEventThrottle?: number;
-  };
-};
-
 type OwnProps = {
   sections: Sections;
   servicesById: ServicesByIdState;
@@ -168,9 +158,10 @@ type OwnProps = {
   onLongPressItem: (id: string) => void;
   onMoreDataRequest: () => void;
   selectedMessageIds: Option<Set<string>>;
+  animated?: object;
 };
 
-type Props = OwnProps & SelectedSectionListProps & AnimatedProps;
+type Props = OwnProps & SelectedSectionListProps;
 
 type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
@@ -269,22 +260,12 @@ const FakeItemComponent = (
   </View>
 );
 
-const AnimatedPullSectionList = Animated.createAnimatedComponent(
-  PullSectionList
-);
-
 /**
  * A component to render messages with due_date in a agenda like form.
  */
-class MessageAgenda extends React.Component<Props, State>{
+class MessageAgenda extends React.PureComponent<Props, State> {
   // Ref to section list
-  private sectionListRef = React.createRef<typeof PullSectionList>();
-
-  private scrollTo = (index: number, animated: boolean = false) => {
-    if (this.sectionListRef.current && this.props.sections.length > 0) {
-      //this.sectionListRef.current.
-    }
-  };
+  private sectionListRef = React.createRef<any>();
 
   constructor(props: Props) {
     super(props);
@@ -313,7 +294,6 @@ class MessageAgenda extends React.Component<Props, State>{
   private loadMoreData() {
     this.props.onMoreDataRequest();
   }
-
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
     const isFake = info.section.fake;
@@ -418,19 +398,8 @@ class MessageAgenda extends React.Component<Props, State>{
     );
   }
 
-  private handleOnLayoutChange = () => {
-    /* const { selectedMessageIds } = this.state;
-    if (selectedMessageIds.isSome()) {
-      this.scrollTo(longPressedItemIndex.value, true);
-      this.setState({
-        longPressedItemIndex: none
-      });
-    } */
-  };
-
   public render() {
     const {
-      animated,
       sections,
       servicesById,
       paymentsByRptId,
@@ -439,17 +408,19 @@ class MessageAgenda extends React.Component<Props, State>{
     } = this.props;
 
     return (
-      <React.Fragment>
+      <View style={styles.fill}>
         {sections.length === 0 && this.topIndicatorRender()}
-        <AnimatedPullSectionList
+        <PullSectionList
           loadMoreData={this.loadMoreData}
           topIndicatorRender={this.topIndicatorRender}
           topIndicatorHeight={TOP_INDICATOR_HEIGHT}
           sectionsLength={sections.length}
           ref={this.sectionListRef}
+          animated={this.props.animated}
           ListEmptyComponent={ListEmptyComponent}
           renderSectionHeader={this.renderSectionHeader}
           renderItem={this.renderItem}
+          fakeItemHeight={FAKE_ITEM_HEIGHT}
           ItemSeparatorComponent={ItemSeparatorComponent}
           sections={sections}
           extraData={{ servicesById, paymentsByRptId }}
@@ -459,25 +430,22 @@ class MessageAgenda extends React.Component<Props, State>{
           keyExtractor={keyExtractor}
           getItemLayout={this.getItemLayout}
           bounces={false}
-          animatedOnScroll={animated}
-          //onScroll={animated ? animated.onScroll : undefined}
           style={[
             {
               marginTop: sections.length === 0 ? MARGIN_TOP_EMPTY_LIST : 0
             },
             styles.scrollList
           ]}
-          scrollEventThrottle={animated ? animated.scrollEventThrottle : 8}
+          scrollEventThrottle={8}
           ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
-          onLayout={this.handleOnLayoutChange}
         />
-      </React.Fragment>
+      </View>
     );
   }
 
   public scrollToLocation = (params: SectionListScrollParams) => {
     if (this.sectionListRef.current !== null) {
-      // this.sectionListRef.current.scrollToLocation(params);
+      this.sectionListRef.current.scrollToLocation(params);
     }
   };
 }

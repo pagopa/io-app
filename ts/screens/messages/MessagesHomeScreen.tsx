@@ -306,47 +306,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             animated={
               Platform.OS === "ios"
                 ? {
-                    onScroll: Animated.event(
-                      [
-                        {
-                          nativeEvent: {
-                            contentOffset: {
-                              y: this.animatedScrollPositions[0]
-                            }
-                          }
-                        }
-                      ],
-                      {
-                        useNativeDriver: true
-                      }
-                    ),
-                    scrollEventThrottle: 8 // target is 120fps
-                  }
-                : undefined
-            }
-            paddingForAnimation={Platform.OS === "ios"}
-            AnimatedCTAStyle={
-              Platform.OS === "ios"
-                ? {
-                    transform: [
-                      {
-                        translateY: this.animatedScrollPositions[
-                          this.state.currentTab
-                        ].interpolate({
-                          inputRange: [
-                            0,
-                            SCROLL_RANGE_FOR_ANIMATION / 2,
-                            SCROLL_RANGE_FOR_ANIMATION
-                          ],
-                          outputRange: [
-                            0,
-                            SCROLL_RANGE_FOR_ANIMATION * 0.75,
-                            SCROLL_RANGE_FOR_ANIMATION
-                          ],
-                          extrapolate: "clamp"
-                        })
-                      }
-                    ]
+                    animatedValue: this.animatedScrollPositions[1],
+                    scrollRangeAnimation: SCROLL_RANGE_FOR_ANIMATION
                   }
                 : undefined
             }

@@ -1,9 +1,9 @@
 diff --git a/node_modules/react-native-pull/PullSectionList.js b/node_modules/react-native-pull/PullSectionList.js
 new file mode 100644
-index 0000000..f72e93a
+index 0000000..052c947
 --- /dev/null
 +++ b/node_modules/react-native-pull/PullSectionList.js
-@@ -0,0 +1,56 @@
+@@ -0,0 +1,70 @@
 +﻿'use strict';
 +
 +import React, { Component } from 'react';
@@ -56,7 +56,21 @@ index 0000000..f72e93a
 +
 +    getScrollable() {
 +        return (
-+            <SectionList ref={(c) => {this.scroll = c;}} scrollEnabled={this.state.scrollEnabled} onScroll={this.onScroll} {...this.props} />
++            <SectionList
++            ref={c => {
++                this.scroll = c;
++            }}
++            scrollEnabled={this.state.scrollEnabled}
++            onScroll={e => {
++                if (
++                e.nativeEvent.contentOffset.y <
++                this.animationScrollRangeAnimation / 2
++                ) {
++                this.onScroll(e);
++                }
++            }}
++            {...this.props}
++            />
 +        );
 +    }
 +}
@@ -74,7 +88,7 @@ index 54404ff..4ff55b4 100644
              </ScrollView>
          );
 diff --git a/node_modules/react-native-pull/Pullable.js b/node_modules/react-native-pull/Pullable.js
-index 1c647a7..a08e803 100644
+index 1c647a7..9075b4f 100644
 --- a/node_modules/react-native-pull/Pullable.js
 +++ b/node_modules/react-native-pull/Pullable.js
 @@ -3,16 +3,11 @@
@@ -95,7 +109,28 @@ index 1c647a7..a08e803 100644
  import styles from './style/index.js';
  
  // const padding = 2; //scrollview与外面容器的距离
-@@ -91,7 +86,19 @@ export default class extends Component {
+@@ -46,8 +41,19 @@ export default class extends Component {
+             pullPan: new Animated.ValueXY(this.defaultXY),
+             scrollEnabled: this.defaultScrollEnabled,
+             flag: defaultFlag,
+-            height: 0
++            height: 0,
++            animationScrollCountActive: 0
+         });
++        this.animatedValueProps =
++            this.props.animated.animatedValue !== undefined &&
++            this.props.animated.animatedValue !== null
++            ? this.props.animated.animatedValue
++            : undefined;
++        this.animationScrollRangeAnimation =
++            this.props.animated.scrollRangeAnimation !== undefined &&
++            this.props.animated.scrollRangeAnimation !== null
++            ? this.props.animated.scrollRangeAnimation
++            : undefined;        
+         this.gesturePosition = {x: 0, y: 0};
+         this.onScroll = this.onScroll.bind(this);
+         this.onLayout = this.onLayout.bind(this);
+@@ -91,7 +97,19 @@ export default class extends Component {
              } else if(this.props.onPushing && this.props.onPushing(this.gesturePosition)) {
                  // do nothing, handling by this.props.onPushing
              } else {
@@ -116,7 +151,7 @@ index 1c647a7..a08e803 100644
              }
              return;
          } else if (isDownGesture(gesture.dx, gesture.dy)) { //下拉
-@@ -118,8 +125,6 @@ export default class extends Component {
+@@ -118,8 +136,6 @@ export default class extends Component {
              if (!this.flag.pullrelease) {
                  if (this.props.onPullRelease) {
                       this.props.onPullRelease(this.resolveHandler);
@@ -125,7 +160,51 @@ index 1c647a7..a08e803 100644
                  }
              }
              this.setFlag(flagPullrelease); //完成下拉，已松开
-@@ -173,7 +178,11 @@ export default class extends Component {
+@@ -132,12 +148,38 @@ export default class extends Component {
+     }
+ 
+     onScroll(e) {
+-        if (e.nativeEvent.contentOffset.y <= 0) {
+-            this.setState({scrollEnabled: this.defaultScrollEnabled});
+-        } else if(!this.isPullState()) {
+-            this.setState({scrollEnabled: true});
++        if (e.nativeEvent.contentOffset.y < 0) {
++          this.setState({ scrollEnabled: this.defaultScrollEnabled });
++        } else if (e.nativeEvent.contentOffset.y === 0) {
++          this.setState({ scrollEnabled: this.defaultScrollEnabled });
++          if (this.animatedValueProps._value !== 0) {
++            Animated.timing(this.animatedValueProps, {
++              toValue: 0,
++              duration: 0
++            }).start();
++          }
++        } else if (!this.isPullState()) {
++          this.setState({ scrollEnabled: true });
++          if (this.state.animationScrollCountActive < 100) {
++            this.setState(prev => ({
++              animationScrollCountActive: prev.animationScrollCountActive + 1
++            }));
++            
++            var toValue = this.flag.pullrelease
++              ? e.nativeEvent.contentOffset.y * 5 + this.props.topIndicatorHeight
++              : e.nativeEvent.contentOffset.y * 5;
++    
++            Animated.timing(this.animatedValueProps, {
++              toValue: toValue,
++              duration: 0
++            }).start(() => {
++              this.setState(prev => ({
++                animationScrollCountActive: prev.animationScrollCountActive - 1
++              }));
++            });
++          }
+         }
+-    }
++      }
+ 
+     isPullState() {
+         return this.flag.pulling || this.flag.pullok || this.flag.pullrelease;
+@@ -173,7 +215,11 @@ export default class extends Component {
  
      resetDefaultXYHandler() {
          this.flag = defaultFlag;
@@ -138,7 +217,40 @@ index 1c647a7..a08e803 100644
      }
  
      componentWillUpdate(nextProps, nextState) {
-@@ -206,7 +215,7 @@ export default class extends Component {
+@@ -193,20 +239,31 @@ export default class extends Component {
+     render() {
+         let refreshControl = this.props.refreshControl;
+         return (
+-            <View style={[styles.wrap, this.props.style]} onLayout={this.onLayout}>
+-                <Animated.View ref={(c) => {this.ani = c;}} style={[this.state.pullPan.getLayout()]}>
+-                    {this.renderTopIndicator()}
+-                    <View ref={(c) => {this.scrollContainer = c;}} {...this.panResponder.panHandlers} style={{width: this.state.width, height: this.state.height}}>
+-                        {this.getScrollable(refreshControl)}
+-                    </View>
+-                </Animated.View>
+-            </View>
++          <View style={[styles.wrap, this.props.style]} onLayout={this.onLayout}>
++            <Animated.View
++              ref={c => {
++                this.ani = c;
++              }}
++              style={[this.state.pullPan.getLayout()]}
++            >
++              {this.renderTopIndicator()}
++              <View
++                ref={c => {
++                  this.scrollContainer = c;
++                }}
++                {...this.panResponder.panHandlers}
++                style={{ width: this.state.width, height: this.state.height }}
++              >
++                {this.getScrollable(refreshControl)}
++              </View>
++            </Animated.View>
++          </View>
+         );
+-    }
++      }
  
      renderTopIndicator() {
          let { pulling, pullok, pullrelease } = this.flag;
@@ -147,7 +259,7 @@ index 1c647a7..a08e803 100644
              return this.defaultTopIndicatorRender(pulling, pullok, pullrelease, this.gesturePosition);
          } else {
              return this.props.topIndicatorRender(pulling, pullok, pullrelease, this.gesturePosition);
-@@ -218,28 +227,15 @@ export default class extends Component {
+@@ -218,28 +275,15 @@ export default class extends Component {
      make changes directly to a component without using state/props to trigger a re-render of the entire subtree
      */
      defaultTopIndicatorRender(pulling, pullok, pullrelease, gesturePosition) {
