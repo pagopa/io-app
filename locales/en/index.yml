@@ -142,7 +142,7 @@ profile:
       confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
       bannerMessage: You are using experimental features that may be incomplete or unstable.
     pagoPaEnvironment:
-      pagoPaEnv: PagoPA Test Environment
+      pagoPaEnv: pagoPA Test Environment
       pagoPAEnvAlert: This change requires app reboot
       alertConfirmTitle: Do you want to use the pagoPA test environment?
       alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
@@ -213,6 +213,9 @@ authentication:
     card5-content: In this experimental version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
       We're waiting for your feedbacks!
+    expiredCardTitle: Card expired or no longer valid
+    expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
+    expiredCardHelp: How to renew your Electronic Identity Card?
     cie:
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
@@ -278,6 +281,50 @@ authentication:
   expiredSessionBanner:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
+email:
+  read: 
+    title: Your email address
+    info: This is the email address associated to your SPID account. You can
+      use in IO app a different email address, if you wish. To make operative the
+      new email address, you will need to validate it by clicking on the link you
+      will receive by email.
+    details: You can change this address, then you should validate it by clicking on
+      the link we will sent to your email address. In the meanwhile, those 
+      functionalities of IO depending on the email (payments, messages forwarding,
+      etc.) will be disabled.
+    alert: "Warning: your pagoPa account is associated to your email. 
+      So, if you change it, IO will no more list your registered payment methods
+      and transactions."
+    help: Your SPID profile communicates your email to IO app. If you find the address
+      wrong or you no longer use it, you can edit it directly from your SPID services
+      provider account.
+  insert:
+    header: Activation
+    title: Insert your email
+    subtitle: Some IO app functionalities need your email.
+    label: Personal email address
+    help:
+      title: Email
+      content: !include email_insert_help.md
+  edit:
+    title: Modify your email
+    subtitle: The email you inserted is
+    validated: The email you inserted and validated is
+    label: New personal email address
+    cta: Edit email
+  validate:
+    title: Remember to validate your email address
+    header: Email Validation
+    info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
+      click simply on that link.<br/>
+      Until you will not validate your email address, some app functionalities
+      (payments, messages forwarding by email, etc.) will not be available, but you
+      will be able to use some other functions anyway (i.e. services, messages, etc.)"
+    cta: Send a new validation email
+    sent: Email sent
+    help: Your SPID profile communicates your email to IO app. If you find the address
+      wrong or that you do not use it anymore, you can edit it directly from your SPID
+      services provider account.
 onboarding:
   tos:
     headerTitle: Activation
@@ -309,38 +356,6 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include tos_fingerprint_not_enrolled.md
-  email:
-    validation:
-      title: Remember to validate your email address
-      headerTitle: Email validation
-      info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
-        click simply on that link.<br/>
-        Until you will not validate your email address, some app functionalities
-        (payments, messages forwarding by email, etc.) will not be available, but you
-        will be able to use some other functions anyway (i.e. services, messages, etc.)"
-      ctaValidate: Send a new validation email
-      emailSentFeedback: Email sent
-      help: Your SPID profile communicates your email to IO app. If you find the address
-        wrong or that you do not use it anymore, you can edit it directly from your SPID
-        services provider account.
-    insert:
-      headerTitle: Activation
-      title: Insert your email
-      help:
-        title: Email
-        content: !include email_insert_help.md
-    read:
-      title: Your email address
-      emailInfo: This is the email address associated to your SPID account. You can
-        use in IO app a different email address, if you wish. To make operative the
-        new email address, you will need to validate it by clicking on the link you
-        will receive by email.
-      help: Your SPID profile communicates your email to IO app. If you find the address
-        wrong or you no longer use it, you can edit it directly from your SPID services
-        provider account.
-    ctaEdit: Edit email
-    subtitle: Some IO app functions need your email.
-    emailInputLabel: Personal email address
 pin_login:
   pin:
     pinInfo: Enter the PIN
@@ -431,7 +446,7 @@ wallet:
   endPayment: Your payment has been completed successfully
   pickPsp:
     title: Choose the manager
-    info: This card does not belong to the PagoPA payment network.
+    info: This card does not belong to the pagoPA payment network.
     infoBold: Choose the economic operator
     info2: which will have to manage yout payment.
     link: Find out more
@@ -555,7 +570,7 @@ wallet:
   chooseMethod: Select the desired method
   QRtoPay:
     chooser: Pick image from gallery
-    wrongQrCode: Not a PagoPA QR Code!
+    wrongQrCode: Not a pagoPA QR Code!
     byCameraTitle: Notice QR Code
     cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
       manually insert the transaction-related data (IUV and the entity/company code).
@@ -574,7 +589,7 @@ wallet:
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
     PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
     PAYMENT_UNKNOWN: This notice is not being recognized by the administration that provided it, the payment cannot be started.
-    DOMAIN_UNKNOWN: This notice has been generated by an administration that is not part of the PagoPA network, the payment cannot be started.
+    DOMAIN_UNKNOWN: This notice has been generated by an administration that is not part of the pagoPA network, the payment cannot be started.
     GENERIC_ERROR: "Ooops, something did not work as expected! It's probably a temporary issue, please try again!"
     MISSING_PAYMENT_ID: The administration that provided this notice is having issued handling it right now, please retry!
     PAYMENT_ONGOING_NOCANCEL: Another payment for this notice is going on, retry after 30 minutes.
@@ -748,6 +763,7 @@ identification:
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint
+    title: Biometric identification
     popup:
       reason: Identification
       title: Identification required
@@ -764,3 +780,4 @@ reminders:
   loadMoreData: loads the deadlines of the previous period
 openMaps:
   genericError: An error occurred while opening the map
+genericError: An error occurred
