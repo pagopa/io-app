@@ -219,6 +219,9 @@ authentication:
     card5-content: In questa versione sperimentale trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
+    expiredCardTitle: Carta scaduta o non più valida
+    expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
+    expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
     cie:
       noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
@@ -800,3 +803,4 @@ reminders:
   loadMoreData: carica le scadenze del periodo precedente
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
+genericError: Si è verificato un errore
