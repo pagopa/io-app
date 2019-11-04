@@ -327,7 +327,7 @@ function* startOrResumeAddCreditCardSaga(
  * be executed (either because it never executed or because it previously
  * returned an error).
  *
- * Not that the Pagopa activation flow is not really resumable in case a step
+ * Not that the pagoPA activation flow is not really resumable in case a step
  * returns an error (i.e. the steps are not idempotent).
  *
  * TODO: the resume logic may be made more intelligent by analyzing the error
@@ -480,7 +480,7 @@ function* deleteActivePaymentSaga() {
  * Main wallet saga.
  *
  * This saga is responsible for handling actions the mostly correspond to API
- * requests towards the Pagopa "nodo" and the Pagopa "PaymentManager" APIs.
+ * requests towards the pagoPA "nodo" and the pagoPA "PaymentManager" APIs.
  *
  * This saga gets forked from the startup saga each time the user authenticates
  * and a new PagopaToken gets received from the backend. Infact, the
