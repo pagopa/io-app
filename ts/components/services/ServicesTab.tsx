@@ -4,6 +4,7 @@ import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab } from "native-base";
 import * as React from "react";
+import { createFactory } from "react";
 import { Animated, Platform, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -94,8 +95,12 @@ class ServicesTab extends React.PureComponent<Props> {
       hideModal,
       selectedOrganizations
     } = this.props;
+
+    const OrganizationsList = createFactory(
+      ChooserListContainer<Organization>()
+    );
     this.props.showModal(
-      <ChooserListContainer<Organization>
+      <OrganizationsList
         items={selectableOrganizations}
         initialSelectedItemIds={some(new Set(selectedOrganizations || []))}
         keyExtractor={(item: Organization) => item.fiscalCode}
