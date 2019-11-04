@@ -25,7 +25,7 @@
  */
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, Tabs, Text, View } from "native-base";
+import { Button, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -37,13 +37,13 @@ import {
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesTab from "../../components/services/ServicesTab";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -201,9 +201,41 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       toastErrorMessage: EMPTY_MESSAGE,
       isInnerContentRendered: false
     };
+    this.updateLongPressButtonScope = this.updateLongPressButtonScope.bind(
+      this
+    );
+    this.handleOnLongPressItem = this.handleOnLongPressItem.bind(this);
+    this.onServiceSelect = this.onServiceSelect.bind(this);
+    this.showAlertOnDisableServices = this.showAlertOnDisableServices.bind(
+      this
+    );
+    this.onItemSwitchValueChanged = this.onItemSwitchValueChanged.bind(this);
+    this.disableOrEnableTabServices = this.disableOrEnableTabServices.bind(
+      this
+    );
+    this.renderLongPressFooterButtons = this.renderLongPressFooterButtons.bind(
+      this
+    );
+    this.onNavigation = this.onNavigation.bind(this);
+    this.renderErrorContent = this.renderErrorContent.bind(this);
+    this.renderInnerContent = this.renderInnerContent.bind(this);
+    this.renderSearch = this.renderSearch.bind(this);
+    this.refreshServices = this.refreshServices.bind(this);
+    this.refreshScreenContent = this.refreshScreenContent.bind(this);
+    this.updateToastMessage = this.updateToastMessage.bind(this);
+    this.handleOnScroll = this.handleOnScroll.bind(this);
+    this.handleOnChangeTab = this.handleOnChangeTab.bind(this);
+    this.renderTabs = this.renderTabs.bind(this);
   }
 
-  private updateLongPressButtonScope = () => {
+  // A toast will be displayed if an error occurs.
+  private updateToastMessage(error: string) {
+    this.setState({
+      toastErrorMessage: error
+    });
+  }
+
+  private updateLongPressButtonScope() {
     const currentTabServicesChannels = this.props.getServicesChannels(
       this.props.tabsServicesId[this.state.currentTab],
       this.props.profile
@@ -221,9 +253,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       // if at least one tab service is enabled the footer primary button allows services are massively disabled
       this.setState({ enableServices: false });
     }
-  };
+  }
 
-  private handleOnLongPressItem = () => {
+  private handleOnLongPressItem() {
     if (!this.props.isSearchEnabled) {
       this.updateLongPressButtonScope();
       const isLongPressEnabled = !this.state.isLongPressEnabled;
@@ -235,7 +267,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         currentTabServicesId
       });
     }
-  };
+  }
 
   public componentDidMount() {
     // On mount, update visible services and user metadata if their
@@ -267,41 +299,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   // tslint:disable-next-line: readonly-array
   private scollPositions: number[] = [0, 0, 0];
-
-  // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
-  private renderErrorPlaceholder(onRetry: () => void) {
-    return (
-      <React.Fragment>
-        <Content bounces={false}>
-          <View style={styles.center}>
-            <View spacer={true} extralarge={true} />
-            <Image
-              source={require("../../../img/wallet/errors/generic-error-icon.png")}
-            />
-            <View spacer={true} />
-            <Text bold={true} alignCenter={true} style={styles.errorText}>
-              {I18n.t("wallet.errors.GENERIC_ERROR")}
-            </Text>
-            <View spacer={true} extralarge={true} />
-            <View spacer={true} extralarge={true} />
-            <Text alignCenter={true} style={styles.errorText2}>
-              {I18n.t("wallet.errorTransaction.submitBugText")}
-            </Text>
-            <View spacer={true} extralarge={true} />
-          </View>
-        </Content>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            block: true,
-            primary: true,
-            onPress: onRetry,
-            title: I18n.t("global.buttons.retry")
-          }}
-        />
-      </React.Fragment>
-    );
-  }
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
   private renderServiceLoadingPlaceholder() {
@@ -369,19 +366,19 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   }
 
-  private onServiceSelect = (service: ServicePublic) => {
+  private onServiceSelect(service: ServicePublic) {
     // when a service gets selected the service is recorded as read
     this.props.serviceDetailsLoad(service);
     this.props.navigateToServiceDetailsScreen({
       service
     });
-  };
+  }
 
-  private showAlertOnDisableServices = (
+  private showAlertOnDisableServices(
     title: string,
     msg: string,
     onConfirmPress: () => void
-  ) => {
+  ) {
     Alert.alert(
       title,
       msg,
@@ -402,12 +399,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       ],
       { cancelable: false }
     );
-  };
+  }
 
-  private onItemSwitchValueChanged = (
-    service: ServicePublic,
-    value: boolean
-  ) => {
+  private onItemSwitchValueChanged(service: ServicePublic, value: boolean) {
     // check if the alert of disable service has not been shown already and if the service is active
     if (!this.props.wasServiceAlertDisplayedOnce && !value) {
       this.showAlertOnDisableServices(
@@ -429,7 +423,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       );
     }
     this.updateLongPressButtonScope();
-  };
+  }
 
   public componentWillUnmount() {
     if (this.navListener) {
@@ -438,16 +432,16 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   }
 
   // This method enable or disable services and update the enableServices props
-  private disableOrEnableTabServices = () => {
+  private disableOrEnableTabServices() {
     this.props.disableOrEnableServices(
       this.state.currentTabServicesId,
       this.props.profile,
       this.state.enableServices
     );
     this.updateLongPressButtonScope();
-  };
+  }
 
-  private renderLongPressFooterButtons = () => {
+  private renderLongPressFooterButtons() {
     return (
       <View style={styles.buttonBar}>
         <Button
@@ -482,9 +476,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         </Button>
       </View>
     );
-  };
+  }
 
-  private onNavigation = () => {
+  private onNavigation() {
     this.setState({ isLongPressEnabled: false });
     // If cache has been cleaned and the page is already rendered,
     // it grants content is refreshed
@@ -494,32 +488,34 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     ) {
       this.refreshScreenContent();
     }
-  };
+  }
 
-  private renderErrorContent = () => {
+  private renderErrorContent() {
     if (this.state.isInnerContentRendered) {
       return undefined;
     }
 
     switch (this.props.loadDataFailure) {
       case "userMetadaLoadFailure":
-        return this.renderErrorPlaceholder(() =>
-          this.refreshScreenContent(true)
+        return (
+          <GenericErrorComponent
+            onRetry={() => this.refreshScreenContent(true)}
+          />
         );
       case "servicesLoadFailure":
-        return this.renderErrorPlaceholder(this.props.refreshServices);
+        return <GenericErrorComponent onRetry={this.refreshScreenContent} />;
       default:
         return undefined;
     }
-  };
+  }
 
-  private renderInnerContent = () => {
+  private renderInnerContent() {
     if (this.state.isInnerContentRendered) {
       return this.renderTabs();
     } else {
       return this.renderServiceLoadingPlaceholder();
     }
-  };
+  }
 
   public render() {
     const { userMetadata } = this.props;
@@ -559,63 +555,66 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /**
    * Render ServicesSearch component.
    */
-  private renderSearch = () => {
+  private renderSearch() {
     return this.props.searchText
       .map(
         _ =>
           _.length < MIN_CHARACTER_SEARCH_TEXT ? (
-            <SearchNoResultMessage errorType="InvalidSearchBarText" />
+            <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
           ) : (
             <ServicesSearch
               sectionsState={this.props.allSections}
               profile={this.props.profile}
-              onRefresh={() => {
-                this.setState({
-                  toastErrorMessage: I18n.t("global.genericError")
-                });
-                this.props.refreshServices();
-              }}
+              onRefresh={this.refreshServices}
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
               readServices={this.props.readServices}
             />
           )
       )
-      .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
-  };
+      .getOrElse(<SearchNoResultMessage errorType={"InvalidSearchBarText"} />);
+  }
 
-  private refreshScreenContent = (hideToast: boolean = false) => {
+  private refreshServices() {
+    this.setState({
+      toastErrorMessage: I18n.t("global.genericError")
+    });
+    this.props.refreshServices();
+  }
+
+  private refreshScreenContent(hideToast: boolean = false) {
     if (!hideToast) {
       this.setState({ toastErrorMessage: I18n.t("global.genericError") });
     }
     this.props.refreshUserMetadata();
     this.props.refreshServices();
-  };
+  }
 
-  private handleOnScroll = (value: number) => {
+  private handleOnScroll(value: number) {
     const { currentTab, isLongPressEnabled } = this.state;
     if (isLongPressEnabled && Math.abs(value - currentTab) > 0.5) {
       this.setState({
         isLongPressEnabled: false
       });
     }
-  };
+  }
 
-  private handleOnChangeTab = (evt: any) => {
+  private handleOnChangeTab(evt: any) {
     const { currentTab, isLongPressEnabled } = this.state;
     const nextTab: number = evt.i;
     const isSameTab = currentTab === nextTab;
     this.setState({
       currentTab: nextTab,
+      enableHeaderAnimation: true,
       isLongPressEnabled: isSameTab && isLongPressEnabled
     });
-  };
+  }
 
   /**
    * Render Locals, Nationals and Other services tabs.
    */
   // tslint:disable no-big-function
-  private renderTabs = () => {
+  private renderTabs() {
     const {
       localTabSections,
       nationalTabSections,
@@ -674,6 +673,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           updateOrganizationsOfInterestMetadata={
             this.props.updateOrganizationsOfInterestMetadata
           }
+          updateToast={() =>
+            this.setState({
+              toastErrorMessage: I18n.t(
+                "serviceDetail.onUpdateEnabledChannelsFailure"
+              )
+            })
+          }
           onItemSwitchValueChanged={this.onItemSwitchValueChanged}
           tabOffset={this.animatedScrollPositions[0]}
         />
@@ -707,7 +713,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         />
       </AnimatedTabs>
     );
-  };
+  }
 }
 
 const mapStateToProps = (state: GlobalState) => {

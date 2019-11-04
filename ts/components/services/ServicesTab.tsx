@@ -37,9 +37,10 @@ import ServicesSectionsList from "./ServicesSectionsList";
 type OwnProps = Readonly<{
   heading: string;
   isLocal?: boolean;
+  updateToast?: () => void;
   sections: ReadonlyArray<ServicesSectionState>;
   isRefreshing: boolean;
-  onRefresh: (hideToast: boolean) => void;
+  onRefresh: (hideToast?: boolean) => void; // tslint:disable-line bool-param-default
   onServiceSelect: (service: ServicePublic) => void;
   handleOnLongPressItem: () => void;
   isLongPressEnabled: boolean;
@@ -72,24 +73,35 @@ const styles = StyleSheet.create({
   }
 });
 
+function renderOrganizationLogo(organizationFiscalCode: string) {
+  return (
+    <OrganizationLogo
+      logoUri={getLogoForOrganization(organizationFiscalCode)}
+      imageStyle={styles.organizationLogo}
+    />
+  );
+}
+
+function organizationContainsText(item: Organization, searchText: string) {
+  return isTextIncludedCaseInsensitive(item.name, searchText);
+}
+
 class ServicesTab extends React.PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {};
+    this.onSaveAreasOfInterest = this.onSaveAreasOfInterest.bind(this);
+    this.showChooserAreasOfInterestModal = this.showChooserAreasOfInterestModal.bind(
+      this
+    );
+    this.renderLocalQuickSectionDeletion = this.renderLocalQuickSectionDeletion.bind(
+      this
+    );
+  }
   /**
    * For tab Locals
    */
-  private renderOrganizationLogo = (organizationFiscalCode: string) => {
-    return (
-      <OrganizationLogo
-        logoUri={getLogoForOrganization(organizationFiscalCode)}
-        imageStyle={styles.organizationLogo}
-      />
-    );
-  };
-
-  private organizationContainsText(item: Organization, searchText: string) {
-    return isTextIncludedCaseInsensitive(item.name, searchText);
-  }
-
-  private showChooserAreasOfInterestModal = () => {
+  private showChooserAreasOfInterestModal() {
     const {
       selectableOrganizations,
       hideModal,
@@ -105,44 +117,36 @@ class ServicesTab extends React.PureComponent<Props> {
         initialSelectedItemIds={some(new Set(selectedOrganizations || []))}
         keyExtractor={(item: Organization) => item.fiscalCode}
         itemTitleExtractor={(item: Organization) => item.name}
-        itemIconComponent={left((fiscalCode: string) =>
-          this.renderOrganizationLogo(fiscalCode)
-        )}
+        itemIconComponent={left(renderOrganizationLogo)}
         onCancel={hideModal}
         onSave={this.onSaveAreasOfInterest}
         isRefreshEnabled={false}
-        matchingTextPredicate={this.organizationContainsText}
+        matchingTextPredicate={organizationContainsText}
         noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
         noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
       />
     );
-  };
+  }
 
-  private onSaveAreasOfInterest = (
-    selectedFiscalCodes: Option<Set<string>>
-  ) => {
+  private onSaveAreasOfInterest(selectedFiscalCodes: Option<Set<string>>) {
     if (this.props.updateOrganizationsOfInterestMetadata) {
-      this.setState({
-        toastErrorMessage: I18n.t(
-          "serviceDetail.onUpdateEnabledChannelsFailure"
-        )
-      });
+      if (this.props.updateToast) {
+        this.props.updateToast();
+      }
       this.props.updateOrganizationsOfInterestMetadata(selectedFiscalCodes);
     }
     this.props.hideModal();
-  };
+  }
 
-  private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => {
+  private renderLocalQuickSectionDeletion(section: ServicesSectionState) {
     const onPressItem = () => {
       if (this.props.userMetadata && this.props.selectedOrganizations) {
+        if (this.props.updateToast) {
+          this.props.updateToast();
+        }
         const updatedAreasOfInterest = this.props.selectedOrganizations.filter(
           item => item !== section.organizationFiscalCode
         );
-        this.setState({
-          toastErrorMessage: I18n.t(
-            "serviceDetail.onUpdateEnabledChannelsFailure"
-          )
-        });
         this.props.saveSelectedOrganizationItems(
           this.props.userMetadata,
           updatedAreasOfInterest
@@ -159,9 +163,9 @@ class ServicesTab extends React.PureComponent<Props> {
         />
       </TouchableOpacity>
     );
-  };
+  }
 
-  private onTabScroll = (tabOffset: Animated.Value) => {
+  private onTabScroll(tabOffset: Animated.Value) {
     return {
       onScroll: Animated.event(
         [
@@ -177,7 +181,7 @@ class ServicesTab extends React.PureComponent<Props> {
       ),
       scrollEventThrottle: 8 // target is 120fps
     };
-  };
+  }
 
   public render() {
     return (
@@ -191,7 +195,7 @@ class ServicesTab extends React.PureComponent<Props> {
           sections={this.props.sections}
           profile={this.props.profile}
           isRefreshing={this.props.isRefreshing}
-          onRefresh={() => this.props.onRefresh}
+          onRefresh={this.props.onRefresh}
           onSelect={this.props.onServiceSelect}
           readServices={this.props.readServices}
           onChooserAreasOfInterestPress={
