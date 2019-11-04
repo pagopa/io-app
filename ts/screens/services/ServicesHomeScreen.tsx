@@ -531,15 +531,17 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   // This method enable or disable services and update the enableServices props
   private disableOrEnableTabServices = () => {
-    if (pot.isUpdating(this.props.profile)) {
+    const { profile } = this.props;
+    if (pot.isUpdating(profile)) {
       return;
     }
+    const { currentTabServicesId, enableServices } = this.state;
     this.props.disableOrEnableServices(
-      this.state.currentTabServicesId,
-      this.props.profile,
-      this.state.enableServices
+      currentTabServicesId,
+      profile,
+      enableServices
     );
-    this.setState({ enableServices: !this.state.enableServices });
+    this.setState({ enableServices: !enableServices });
   };
 
   private renderLongPressFooterButtons = () => {
