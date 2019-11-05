@@ -21,21 +21,19 @@ const styles = StyleSheet.create({
 });
 
 class UnrecognizedCie extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   public render(): React.ReactNode {
     const cancelButtonProps = {
       block: true,
       cancel: true,
-      onPress: (): boolean => this.props.navigation.goBack(),
+      onPress: (): void => {
+        this.props.navigation.goBack();
+      },
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {
       block: true,
       primary: true,
-      onPress: () => undefined,
+      onPress: (): void => undefined,
       title: I18n.t("global.buttons.retry")
     };
 
