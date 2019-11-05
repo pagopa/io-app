@@ -223,10 +223,10 @@ authentication:
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
   cie:
     enableNfcTitle: Enable NFC
-    enableNfcContent: For allowing the app to verify your electronic ID card, you must first activate the NFC function of your device. Come back here when you're done!
+    enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
     enableNfcHelp: Don't have an Electronic Identity Card?
     nfcEnabledTitle: NFC Enabled
-    nfcEnabledContent: "Thank you for activating NFC on your device: you can proceed with authentication!"
+    nfcEnabledContent: "Thank you for activating the NFC functionality on your device: you can proceed with authentication!"
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?

@@ -50,13 +50,15 @@ class NfcStartScreen extends React.Component<Props> {
           type="TwoButtonsInlineThird"
           leftButton={{
             cancel: true,
-            onPress: this.props.navigation.goBack,
+            onPress: (): void => {
+              this.props.navigation.goBack();
+            },
             title: I18n.t("global.buttons.cancel"),
             block: true
           }}
           rightButton={{
             cancel: false,
-            onPress: () =>
+            onPress: (): boolean =>
               this.props.navigation.navigate(
                 ROUTES.AUTHENTICATION_CIE_NFC_ENABLED
               ),
