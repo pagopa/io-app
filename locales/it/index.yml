@@ -85,7 +85,7 @@ profile:
   fiscalCode:
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
-    help: !include profile/fiscal_code.md
+    help: !include profile/profile_fiscal_code.md
     content: Il fac-simile del codice fiscale non sostituisce il documento fisico ma ne permette la lettura dei dati o del codice a barre sul retro
     facSimile: FAC-SIMILE
   sections:

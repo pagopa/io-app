@@ -1,2 +1,2 @@
-**In the Profile section you can manage all your settings.**
-In particular, here you can manage your prefects, your privacy and your account. In this section you can also access your documents in digital format by selecting the cards that appear at the top of the screen.
+**The Profile section allows you to manage all your settings.** In particular, you can manage your preferences, privacy and account.  
+In this section you can also access your identity documents in a digital format: interact with the cards in the top part of the screen to see more details.

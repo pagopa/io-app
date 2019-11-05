@@ -220,8 +220,8 @@ const styles = StyleSheet.create({
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
 const contextualHelp = {
-  title: I18n.t("services.title"),
-  body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
+  title: I18n.t("services.contextualHelpTitle"),
+  body: () => <Markdown>{I18n.t("services.contextualHelpContent")}</Markdown>
 };
 
 class ServicesHomeScreen extends React.Component<Props, State> {

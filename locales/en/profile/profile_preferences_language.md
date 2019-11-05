@@ -1,3 +1,2 @@
-**At the moment IO inherits the language from your device's operating system:** 
-you can change the language from your phone settings, and you will automatically find it updated even within the app.
-The language of the message content is instead defined by each communication entity for communication: at their discretion the sending of a translated content in different languages.
+**At the moment the IO app inherits the language from the device Operating System:** you can change the language directly from your phone settings, and it will be automatically updated in the app as well.    
+The language of each specific message is instead defined by each Administration: at their discretion, they decide it to send the message in Italian only or translate the content in different languages.

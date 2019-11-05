@@ -1,1 +1,1 @@
-**Here you find the information related to the privacy of your profile**, in particular you can consult the information on the treatment of personal data, delete your account and export personal data associated with your profile.
+**Here you can find all the information related to your privacy profile:** details on the treatment of personal data, possibility to delete your account and to export all the personal data associated with your profile.
