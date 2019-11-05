@@ -283,7 +283,7 @@ authentication:
     contextualHelpContent: !include authentication/authentication_idp_selection.md
   idp_login:
     headerTitle: Accedi
-    contextualHelpTitle: Come funziona l'autenticazione
+    contextualHelpTitle: Qual è la tua password
     contextualHelpContent: !include authentication/authentication_idp_login.md
   errors:
     notoken: La sessione non è pronta o non è valida
@@ -370,7 +370,7 @@ onboarding:
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
     confirmInvalid: i due pin non coincidono
-    contextualHelpTitle: Qual è il tuo pin
+    contextualHelpTitle: Qual è il tuo PIN
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert: 
     title: Vuoi davvero uscire da IO?

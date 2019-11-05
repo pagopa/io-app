@@ -1,4 +1,2 @@
-To access the IO app you will need to authenticate with your SPID identity (Public Digital Identity System) or by using the CIE (Electronic Identity Card).
-**Thanks to these registration systems your access to the app will always be secure.**  
-To request a digital identity SPID you can visit [spid-gov.it] (https://www.spid.gov.it) and choose an Identity Provider from those proposed.
-If you are interested in applying for the CIE, you can consult more information on your Municipality's website and book an appointment.
+**You can register in the IO app by using your SPID identity (Public Digital Identity System) or your CIE (Electronic Identity Card).** Your security is guaranteed thanks to the use of those strong authentication methods.  
+If you don’t have a SPID identity and you want to request one, you can visit [spid-gov.it] (https://www.spid.gov.it) and choose one of the proposed identity providers. If you are interested in applying for the CIE, you can visit the website of your municipality for more information, and book an appointment with them.

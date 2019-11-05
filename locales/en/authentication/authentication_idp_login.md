@@ -1,3 +1,2 @@
-To log in, enter your Fiscal Code and password in the appropriate fields.  
-**The password is the alphanumeric code you set when creating your SPID Digital Identity.** If you do not remember it, you can select password recovery and start the relevant procedure, managed directly by the Identity Provider.  
-Once I enter the CF and password, you will receive the OTP from your Identity Provider: confirm the access request and return to the IO app to continue onboarding. You will find at this point a screen that authorizes the Identity Provider to transmit to IO a series of information necessary to enable you to use the app, and the different services offered by public bodies through IO: it is necessary to press "authorize" to give your consent and continue the authentication process.
+**In the log in page, you are asked to enter your Fiscal Code and password.** Your password is the alphanumeric code that you set when you activated your SPID identity.  
+If you don’t remember it, please select password recovery to start the related procedure with your specific Identity Provider.

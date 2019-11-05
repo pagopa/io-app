@@ -211,7 +211,7 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
-    contextualHelpTitle: How to access the IO app
+    contextualHelpTitle: How to register in the IO app
     contextualHelpContent: !include authentication/authentication_landing.md
     login: Login with SPID
     nospid: Don't have SPID? Find out more
@@ -277,7 +277,7 @@ authentication:
     contextualHelpContent: !include authentication/authentication_idp_selection.md
   idp_login:
     headerTitle: Login
-    contextualHelpTitle: How authentication works
+    contextualHelpTitle: What is your password
     contextualHelpContent: !include authentication/authentication_idp_login.md
   errors:
     notoken: The session is not ready or is invalid
@@ -346,7 +346,7 @@ email:
       wrong or that you do not use it anymore, you can edit it directly from your SPID
       services provider account.
 onboarding:
-  contextualHelpTitle: How biometric recognition works
+  contextualHelpTitle: How does the biometric recognition work
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Activation
@@ -365,7 +365,7 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
-    contextualHelpTitle: What is your pin
+    contextualHelpTitle: What is your PIN
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
     title: Do you really want to log out?

@@ -1,4 +1,2 @@
-**The PIN is the security code that keeps your data protected in the IO app, and is set by you when you first log in**.  
-If this is the first time you enter the app, freely set your numeric code and save it so you can use it during all subsequent logins.  
-If you have already set it and don't remember it, you can select "Forgotten PIN" and set a new code.  
-The PIN is linked to the device on which you set it: if you change phone, you will have to set it again the first time you log in to the IO app.
+**The PIN is the security code that protects your data while using the IO app.** The PIN is defined by you at the moment of the first log in.  
+If this is the first time you enter in the application, you are free to set the numeric code you like and save it for any future log in. If you have already set the PIN in a previous moment but can’t remember it now, please select “Forgotten PIN” to set a new code. The PIN is directly linked to the device on which you’ve set it: in case you change your phone, you will be asked to set it again from scratch at the first log in.
