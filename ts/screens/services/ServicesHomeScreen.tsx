@@ -27,6 +27,7 @@ import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Tab, Tabs, Text, View } from "native-base";
+import { createFactory } from "react";
 import * as React from "react";
 import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";

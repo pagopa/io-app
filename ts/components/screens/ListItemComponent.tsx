@@ -4,7 +4,6 @@ import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import Switch from "../../components/ui/Switch";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
 import IconFont from "./../ui/IconFont";
 import { BadgeComponent } from "./BadgeComponent";
 
@@ -31,9 +30,6 @@ type Props = Readonly<{
 const ICON_SIZE = 24;
 
 const styles = StyleSheet.create({
-  highlight: {
-    flex: 1
-  },
   listItem: {
     paddingLeft: 0,
     paddingRight: 0,
@@ -77,70 +73,66 @@ const styles = StyleSheet.create({
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
     return (
-      <TouchableWithoutOpacity
-        style={styles.highlight}
+      <ListItem
         onPress={this.props.onPress}
         onLongPress={this.props.onLongPress}
+        style={[styles.listItem, styles.flexRow, this.props.style]}
+        first={this.props.isFirstItem}
+        last={this.props.isLastItem || this.props.hideSeparator}
+        underlayColor={"white"}
       >
-        <ListItem
-          disabled={true}
-          style={[styles.listItem, styles.flexRow, this.props.style]}
-          first={this.props.isFirstItem}
-          last={this.props.isLastItem || this.props.hideSeparator}
-        >
-          <View style={styles.flexColumn}>
-            <View style={styles.flexRow}>
-              <View style={styles.flexRow2}>
-                {this.props.hasBadge && (
-                  <View style={styles.spacingBase}>
-                    <BadgeComponent />
-                  </View>
-                )}
-                <Text
-                  numberOfLines={2}
-                  style={[
-                    styles.serviceName,
-                    this.props.isItemDisabled && styles.disabledItem
-                  ]}
-                >
-                  {this.props.title}
-                </Text>
-              </View>
-              {!this.props.iconName &&
-                !this.props.hideIcon &&
-                (this.props.isLongPressEnabled ? (
-                  <Switch
-                    key={this.props.keySwitch}
-                    value={this.props.switchValue}
-                    onValueChange={this.props.onSwitchValueChanged}
-                  />
-                ) : (
-                  <IconFont
-                    name="io-right"
-                    size={ICON_SIZE}
-                    color={customVariables.contentPrimaryBackground}
-                  />
-                ))}
-            </View>
-            {this.props.subTitle && (
+        <View style={styles.flexColumn}>
+          <View style={styles.flexRow}>
+            <View style={styles.flexRow2}>
+              {this.props.hasBadge && (
+                <View style={styles.spacingBase}>
+                  <BadgeComponent />
+                </View>
+              )}
               <Text
-                numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-                style={styles.description}
+                numberOfLines={2}
+                style={[
+                  styles.serviceName,
+                  this.props.isItemDisabled && styles.disabledItem
+                ]}
               >
-                {this.props.subTitle}
+                {this.props.title}
               </Text>
-            )}
+            </View>
+            {!this.props.iconName &&
+              !this.props.hideIcon &&
+              (this.props.isLongPressEnabled ? (
+                <Switch
+                  key={this.props.keySwitch}
+                  value={this.props.switchValue}
+                  onValueChange={this.props.onSwitchValueChanged}
+                />
+              ) : (
+                <IconFont
+                  name="io-right"
+                  size={ICON_SIZE}
+                  color={customVariables.contentPrimaryBackground}
+                />
+              ))}
           </View>
-          {this.props.iconName && (
-            <IconFont
-              name={this.props.iconName}
-              size={ICON_SIZE * 2}
-              style={{ alignSelf: "center" }}
-              color={customVariables.contentPrimaryBackground}
-            />
+          {this.props.subTitle && (
+            <Text
+              numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
+              style={styles.description}
+            >
+              {this.props.subTitle}
+            </Text>
           )}
-        </ListItem>
-      </TouchableWithoutOpacity>
+        </View>
+        {this.props.iconName && (
+          <IconFont
+            name={this.props.iconName}
+            size={ICON_SIZE * 2}
+            style={{ alignSelf: "center" }}
+            color={customVariables.contentPrimaryBackground}
+          />
+        )}
+      </ListItem>
     );
   }
 }
