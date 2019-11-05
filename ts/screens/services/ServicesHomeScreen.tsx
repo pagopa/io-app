@@ -485,8 +485,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       hideModal,
       selectedOrganizations
     } = this.props;
+
+    const OrganizationsList = createFactory(
+      ChooserListContainer<Organization>()
+    );
     this.props.showModal(
-      <ChooserListContainer<Organization>
+      <OrganizationsList
         items={selectableOrganizations}
         initialSelectedItemIds={some(new Set(selectedOrganizations || []))}
         keyExtractor={(item: Organization) => item.fiscalCode}

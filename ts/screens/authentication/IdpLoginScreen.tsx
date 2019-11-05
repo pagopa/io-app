@@ -136,7 +136,9 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleLoginFailure = (errorCode?: string) => {
-    this.props.dispatchLoginFailure();
+    this.props.dispatchLoginFailure(
+      new Error(`login failure with code ${errorCode || "n/a"}`)
+    );
     this.setState({
       requestState: pot.noneError("LOGIN_ERROR"),
       errorCode
@@ -276,7 +278,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIdpLoginUrlChanged: (url: string) =>
     dispatch(idpLoginUrlChanged({ url })),
   dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
-  dispatchLoginFailure: () => dispatch(loginFailure())
+  dispatchLoginFailure: (error: Error) => dispatch(loginFailure(error))
 });
 
 export default connect(
