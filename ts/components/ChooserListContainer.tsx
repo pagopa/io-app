@@ -204,7 +204,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
 
     return (
       <FooterWithButtons
-        type="TwoButtonsInlineThird"
+        type={"TwoButtonsInlineThird"}
         leftButton={cancelButtonProps}
         rightButton={saveButtonProps}
       />
@@ -302,11 +302,24 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
   }
 }
 
-type Without<T, K> = Pick<T, Exclude<keyof T, K>>;
-type ExternalProps<T> = Without<OtherProps<T>, "classes">;
-
-type ChooserListContainerType = <T>(props: ExternalProps<T>) => any;
-
-export default (withItemsSelection(
-  ChooserListContainer
-) as unknown) as ChooserListContainerType;
+export default <T extends {}>() => {
+  const hocComponent = (props: Props<T>) => {
+    const {
+      selectedItemIds,
+      toggleItemSelection,
+      resetSelection,
+      setSelectedItemIds,
+      ...otherProps
+    } = props;
+    return (
+      <ChooserListContainer<T>
+        selectedItemIds={selectedItemIds}
+        toggleItemSelection={toggleItemSelection}
+        resetSelection={resetSelection}
+        setSelectedItemIds={setSelectedItemIds}
+        {...otherProps}
+      />
+    );
+  };
+  return withItemsSelection(hocComponent);
+};
