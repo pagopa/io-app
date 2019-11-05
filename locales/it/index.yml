@@ -226,7 +226,7 @@ authentication:
       noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
       cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
-      cardRemovedEarlyContent: Tieni la carta appoggiata allo smartphone finchè nello schermo non comparirà una conferma. Basterà qualche secondo.
+      cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
     ok: Ok
     cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
   spid_information_request:

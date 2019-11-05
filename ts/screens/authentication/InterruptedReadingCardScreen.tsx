@@ -23,10 +23,6 @@ const styles = StyleSheet.create({
 });
 
 class InterruptedReadingCardScreen extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   /**
    * Footer
    */

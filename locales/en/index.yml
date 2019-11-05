@@ -220,7 +220,7 @@ authentication:
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
       cardRemovedEarlyTitle: You have removed the card too soon
-      cardRemovedEarlyContent: Hold the card on your smartphone until a confirmation appears on the screen. It will take a few seconds.
+      cardRemovedEarlyContent: hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
     ok: Ok
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
   spid_information_request:
