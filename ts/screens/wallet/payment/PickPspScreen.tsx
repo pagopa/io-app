@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
 /**
  * Select a PSP to be used for a the current selected wallet
  */
+// TODO: Add onPress props in line 105
 class PickPspScreen extends React.Component<Props> {
   public render(): React.ReactNode {
     const availablePsps = this.props.navigation.getParam("psps");
@@ -101,11 +102,7 @@ class PickPspScreen extends React.Component<Props> {
             {`${I18n.t("wallet.pickPsp.info")} `}
             <Text bold={true}>{`${I18n.t("wallet.pickPsp.infoBold")} `}</Text>
             <Text>{`${I18n.t("wallet.pickPsp.info2")} `}</Text>
-            <TouchableWithoutOpacity>
-              <Text style={styles.linkStyle}>
-                {I18n.t("wallet.pickPsp.link")}
-              </Text>
-            </TouchableWithoutOpacity>
+            <Text link={true}>{I18n.t("wallet.pickPsp.link")}</Text>
           </Text>
           <View spacer={true} />
           <FlatList
