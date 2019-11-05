@@ -446,7 +446,7 @@ payment:
   recipientFiscalCode: Recipient fiscal code
 wallet:
   wallet: Wallet
-  contextualHelpTitle: What you can do in your wallet
+  contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
   paymentMethods: Payment methods
@@ -656,7 +656,7 @@ wallet:
     contextualHelpTitle: Your payment methods
     contextualHelpContent: !include wallet/wallet_list.md
   walletCardTransaction:
-    contextualHelpTitle: Transactions made with this method
+    contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
 saveCard:
   saveCard: Save the card
@@ -785,7 +785,8 @@ biometric_recognition:
 services:
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
-  servicesHelp: !include services/services_home.md
+  contextualHelpTitle: About this section
+  contextualHelpContent: !include services/services_home.md
   serviceIsEnabled: The service is enabled
   serviceNotEnabled: The service is not enabled
   pushNotifications: Push Notifications
