@@ -5,13 +5,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
-import { GlobalState } from "../../store/reducers/types";
+import { isEmailEditingAndValidationEnabled } from "../../config";
 import { withConditionalView } from "./withConditionalView";
 
 export type Props = ReturnType<typeof mapStateToProps>;
 
-const mapStateToProps = (state: GlobalState) => ({
-  isValidEmail: !state // TODO: get the proper isValidEmail from store
+const mapStateToProps = () => ({
+  isValidEmail: !isEmailEditingAndValidationEnabled // TODO: get the proper isValidEmail from store
 });
 
 export function withValidatedEmail<P>(
