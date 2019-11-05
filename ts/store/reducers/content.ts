@@ -37,8 +37,10 @@ export type MunicipalityState = Readonly<{
   data: pot.Pot<MunicipalityMetadata, Error>;
 }>;
 
+// TODO: evaluate if consider this specific case or just assume all
+// the data are included into visibel service metadata
 export type ServiceMetadataById = Readonly<{
-  [key: string]: pot.Pot<ServiceMetadata, string> | undefined;
+  [key: string]: pot.Pot<ServiceMetadata, Error>;
 }>;
 
 const initialContentState: ContentState = {
@@ -85,15 +87,16 @@ export default function content(
           }
         }
       };
+
     case getType(contentServiceLoad.failure):
       return {
         ...state,
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload]: pot.toError(
-              state.servicesMetadata.byId[action.payload] || pot.none,
-              action.payload
+            [action.payload.serviceId]: pot.toError(
+              state.servicesMetadata.byId[action.payload.serviceId] || pot.none,
+              action.payload.error
             )
           }
         }
@@ -103,8 +106,8 @@ export default function content(
       return {
         ...state,
         municipality: {
-          codiceCatastale: pot.none,
-          data: pot.none
+          codiceCatastale: pot.noneLoading,
+          data: pot.noneLoading
         }
       };
 
@@ -132,7 +135,8 @@ export default function content(
     case getType(clearCache):
       return {
         ...state,
-        servicesMetadata: { ...initialContentState.servicesMetadata }
+        servicesMetadata: { ...initialContentState.servicesMetadata },
+        municipality: { ...initialContentState.municipality }
       };
 
     case getType(removeServiceTuples): {

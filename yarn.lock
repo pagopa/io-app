@@ -4763,6 +4763,16 @@ italia-ts-commons@5.1.1, italia-ts-commons@^5.0.1:
     json-set-map "^1.0.2"
     validator "^10.1.0"
 
+italia-ts-commons@5.1.11:
+  version "5.1.11"
+  resolved "https://registry.yarnpkg.com/italia-ts-commons/-/italia-ts-commons-5.1.11.tgz#323a5727371f995cd70c6f3b10a9407de687d83e"
+  integrity sha512-8TPHDzK1mZtn4QRH6KypTfFBxYOEShsc8nVLCdVlwVAEJwMiFWr6bL2CeO5WZ+Dt3RmUZz0MXCpN5u8WPKGT5Q==
+  dependencies:
+    fp-ts "1.12.0"
+    io-ts "1.8.5"
+    json-set-map "^1.0.2"
+    validator "^10.1.0"
+
 italia-tslint-rules@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/italia-tslint-rules/-/italia-tslint-rules-1.1.0.tgz#abf340da1b768979d87b53ff04e86b0050ded5f7"
@@ -6853,10 +6863,10 @@ pascalcase@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
 
-patch-package@6.1.2:
-  version "6.1.2"
-  resolved "https://registry.yarnpkg.com/patch-package/-/patch-package-6.1.2.tgz#9ed0b3defb5c34ecbef3f334ddfb13e01b3d3ff6"
-  integrity sha512-5GnzR8lEyeleeariG+hGabUnD2b1yL7AIGFjlLo95zMGRWhZCel58IpeKD46wwPb7i+uNhUI8unV56ogk8Bgqg==
+patch-package@6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/patch-package/-/patch-package-6.2.0.tgz#677de858e352b6ca4e6cb48a6efde2cec9fde566"
+  integrity sha512-HWlQflaBBMjLBfOWomfolF8aqsFDeNbSNro1JDUgYqnVvPM5OILJ9DQdwIRiKmGaOsmHvhkl1FYkvv1I9r2ZJw==
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     chalk "^2.4.2"

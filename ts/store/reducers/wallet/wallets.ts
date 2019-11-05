@@ -35,7 +35,7 @@ import { GlobalState } from "../types";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
-  favoriteWalletId: pot.Pot<Wallet["idWallet"], Error>;
+  favoriteWalletId: pot.Pot<Wallet["idWallet"], string>;
   creditCardAddWallet: PotFromActions<
     typeof addWalletCreditCardSuccess,
     typeof addWalletCreditCardFailure
@@ -146,7 +146,10 @@ const reducer = (
     case getType(paymentUpdateWalletPsp.failure):
       return {
         ...state,
-        favoriteWalletId: pot.toError(state.favoriteWalletId, action.payload),
+        favoriteWalletId: pot.toError(
+          state.favoriteWalletId,
+          action.payload.message
+        ),
         walletById: pot.toError(state.walletById, action.payload)
       };
 
@@ -180,7 +183,10 @@ const reducer = (
     case getType(setFavouriteWalletFailure):
       return {
         ...state,
-        favoriteWalletId: pot.toError(state.favoriteWalletId, action.payload)
+        favoriteWalletId: pot.toError(
+          state.favoriteWalletId,
+          action.payload.message
+        )
       };
 
     //

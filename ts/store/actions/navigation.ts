@@ -15,6 +15,8 @@ import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 
+import EmailInsertScreen from "../../screens/onboarding/EmailInsertScreen";
+import EmailReadScreen from "../../screens/onboarding/EmailReadScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
@@ -76,13 +78,30 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
-export const navigateToEmailScreen = () =>
+export const navigateToEmailValidateScreen = NavigationActions.navigate({
+  routeName: ROUTES.ONBOARDING,
+  action: NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_EMAIL_VALIDATE
+  })
+});
+
+export const navigateToEmailReadScreen = (
+  params: InferNavigationParams<typeof EmailReadScreen>
+) =>
   NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING,
-    action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_EMAIL })
+    routeName: ROUTES.READ_EMAIL_SCREEN,
+    params
   });
 
 export const navigateBack = NavigationActions.back;
+
+export const navigateToEmailInsertScreen = (
+  params: InferNavigationParams<typeof EmailInsertScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.INSERT_EMAIL_SCREEN,
+    params
+  });
 
 export const navigateToMessageDetailScreenAction = (
   params: InferNavigationParams<typeof MessageDetailScreen>
@@ -217,4 +236,14 @@ export const navigateToPaymentManualDataInsertion = (
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
     params
+  });
+
+export const navigateToCieInvalidScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_EXPIRED_SCREEN
+  });
+
+export const navigateToCieValid = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_VALID_SCREEN
   });

@@ -46,6 +46,8 @@ export function* loadServiceRequestHandler(
         organizationNamesByFiscalCodeSelector
       );
 
+      yield put(loadService.success(response.value.value));
+
       if (organizations) {
         const service = pot.some(response.value.value);
         const fc = service.value.organization_fiscal_code;
@@ -66,16 +68,14 @@ export function* loadServiceRequestHandler(
         }
       }
 
-      yield put(loadService.success(response.value.value));
-
       // Once the service content is loaded, the service metadata loading is requested.
       // Service metadata contains service scope (national/local) used to identify where
       // the service should be displayed into the ServiceHomeScreen
       yield put(contentServiceLoad.request(response.value.value.service_id));
     } else {
-      throw Error();
+      throw Error(`response status ${response.value.status}`);
     }
-  } catch {
-    yield put(loadService.failure(action.payload));
+  } catch (error) {
+    yield put(loadService.failure({ service_id: action.payload, error }));
   }
 }
