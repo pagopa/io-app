@@ -1,8 +1,9 @@
 /**
  * A component to remind the user to validate his/her email
  */
-
 import I18n from "i18n-js";
+import * as pot from "italia-ts-commons/lib/pot";
+import { untag } from "italia-ts-commons/lib/types";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image } from "react-native";
@@ -19,6 +20,10 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 class RemindEmailValidationOverlay extends React.PureComponent<Props> {
   public render() {
+    const { optionProfile } = this.props;
+    const profileEmail = optionProfile
+      .map(_ => untag(_.spid_email))
+      .getOrElse("");
     return (
       <TopScreenComponent appLogo={true}>
         <Content>
@@ -33,7 +38,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props> {
           <View spacer={true} />
           <Text>
             {I18n.t("reminders.email.modal1")}
-            <Text bold={true}>{` ${this.props.email}: `}</Text>
+            <Text bold={true}>{` ${profileEmail}: `}</Text>
             {I18n.t("reminders.email.modal2")}
           </Text>
           <View spacer={true} />
@@ -72,8 +77,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props> {
 }
 
 // tslint:disable-next-line: variable-name
-const mapStateToProps = (_state: GlobalState) => ({
-  email: "test@email.it" // TODO: get the proper email from store
+const mapStateToProps = (state: GlobalState) => ({
+  optionProfile: pot.toOption(state.profile)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
