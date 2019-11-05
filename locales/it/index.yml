@@ -227,6 +227,7 @@ authentication:
       noNfcConnectionContent: !include cie/noNfcConnection.md
     ok: Ok
     cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
+    cieLoginWait: Attendi qualche secondo..
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?

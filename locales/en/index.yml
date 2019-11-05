@@ -221,6 +221,7 @@ authentication:
       noNfcConnectionContent: !include cie/noNfcConnection.md
     ok: Ok
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
+    cieLoginWait: Wait a few seconds..
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
