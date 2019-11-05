@@ -32,8 +32,9 @@ type OwnProps = {
 };
 
 type Props = ReduxProps & OwnProps;
-const isNFCavailable = true; // waiting for sdk cie implementation
-const isCIEAvailable = isNFCavailable && isCIEauthenticationEnabled;
+const isCIEAuthenticationSupported = true; // waiting for sdk cie implementation
+const isCIEAvailable =
+  isCIEAuthenticationSupported && isCIEauthenticationEnabled;
 
 const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   {
