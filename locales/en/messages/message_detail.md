@@ -1,2 +1,1 @@
-**Here you can view the detail of the communication received from an entity integrated into the IO app.**  
-If you have any doubts or questions about the specific content of the message, you can contact the agency using the contact details found at the bottom of this message or in the "Services" section.
+Here you can read the details of the communication sent by one of the Administrations integrated into the IO app. If you have any doubts or questions about the specific content of the message, please contact the specific institutions or office by checking the contact details in the footer of the message, or in the “Services” section.
