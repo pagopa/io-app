@@ -1,6 +1,6 @@
-import { Container, H1, Text, Toast, View } from "native-base";
+import { Container, H1, Text, View } from "native-base";
 import * as React from "react";
-import { Linking, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -22,14 +22,6 @@ const styles = StyleSheet.create({
 });
 
 class NfcStartScreen extends React.Component<Props> {
-  private browseToLink() {
-    Linking.openURL(
-      "https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/"
-    ).catch(() => {
-      Toast.show({ text: I18n.t("genericError") });
-    });
-  }
-
   public render(): React.ReactNode {
     return (
       <Container>
@@ -41,7 +33,14 @@ class NfcStartScreen extends React.Component<Props> {
               {I18n.t("authentication.cie.enableNfcContent")}
             </Text>
             <View spacer={true} />
-            <Text link={true} onPress={this.browseToLink}>
+            <Text
+              link={true}
+              onPress={(): boolean =>
+                this.props.navigation.navigate(
+                  ROUTES.AUTHENTICATION_SPID_INFORMATION
+                )
+              }
+            >
               {I18n.t("authentication.cie.enableNfcHelp")}
             </Text>
           </View>
