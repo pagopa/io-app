@@ -10,7 +10,10 @@ import customVariables from "../../theme/variables";
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
-type Props = OwnProps;
+type Props = OwnProps &
+  Readonly<{
+    onRetry: () => void;
+  }>;
 const styles = StyleSheet.create({
   contentContainerStyle: {
     padding: customVariables.contentPadding
@@ -25,15 +28,13 @@ class UnrecognizedCieScreen extends React.Component<Props> {
     const cancelButtonProps = {
       block: true,
       cancel: true,
-      onPress: (): void => {
-        this.props.navigation.goBack();
-      },
+      onPress: this.props.navigation.goBack,
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {
       block: true,
       primary: true,
-      onPress: (): void => undefined,
+      onPress: this.props.onRetry,
       title: I18n.t("global.buttons.retry")
     };
 
