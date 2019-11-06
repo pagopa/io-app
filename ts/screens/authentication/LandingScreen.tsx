@@ -32,22 +32,16 @@ type OwnProps = {
 };
 
 type Props = ReduxProps & OwnProps;
-const isCIEAuthenticationSupported = true; // waiting for sdk cie implementation
+const isCIEAuthenticationSupported = false; // waiting for sdk cie implementation
 const isCIEAvailable =
   isCIEAuthenticationSupported && isCIEauthenticationEnabled;
 
 const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   {
     id: 5,
-    image: isCIEAvailable
-      ? require("../../../img/landing/CIE-onboarding-illustration.png")
-      : require("../../../img/landing/05.png"),
-    title: isCIEAvailable
-      ? I18n.t("authentication.landing.loginSpidCie")
-      : I18n.t("authentication.landing.card5-title"),
-    content: isCIEAvailable
-      ? I18n.t("authentication.landing.loginSpidCieContent")
-      : I18n.t("authentication.landing.card5-content")
+    image: require("../../../img/landing/05.png"),
+    title: I18n.t("authentication.landing.card5-title"),
+    content: I18n.t("authentication.landing.card5-content")
   },
   {
     id: 1,
@@ -69,9 +63,15 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   },
   {
     id: 4,
-    image: require("../../../img/landing/04.png"),
-    title: I18n.t("authentication.landing.card4-title"),
-    content: I18n.t("authentication.landing.card4-content")
+    image: isCIEAvailable
+      ? require("../../../img/landing/CIE-onboarding-illustration.png")
+      : require("../../../img/landing/04.png"),
+    title: isCIEAvailable
+      ? I18n.t("authentication.landing.loginSpidCie")
+      : I18n.t("authentication.landing.card4-title"),
+    content: isCIEAvailable
+      ? I18n.t("authentication.landing.loginSpidCieContent")
+      : I18n.t("authentication.landing.card4-content")
   }
 ];
 
