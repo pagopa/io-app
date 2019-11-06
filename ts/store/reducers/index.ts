@@ -21,6 +21,7 @@ import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import entitiesReducer from "./entities";
 import identificationReducer from "./identification";
+import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
 import installationReducer from "./installation";
 import navigationReducer from "./navigation";
 import navigationHistoryReducer from "./navigationHistory";
@@ -63,14 +64,13 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   network: networkReducer,
   nav: navigationReducer,
   deepLink: deepLinkReducer,
-  installation: installationReducer,
   wallet: walletReducer,
   backendInfo: backendInfoReducer,
-  content: contentReducer,
   preferences: preferencesReducer,
-  persistedPreferences: persistedPreferencesReducer,
   identification: identificationReducer,
   navigationHistory: navigationHistoryReducer,
+  instabug: instabugUnreadMessagesReducer,
+  search: searchReducer,
 
   //
   // persisted state
@@ -89,8 +89,10 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   userMetadata: userMetadataReducer,
   entities: entitiesReducer,
   debug: debugReducer,
-  search: searchReducer,
-  payments: paymentsReducer
+  persistedPreferences: persistedPreferencesReducer,
+  installation: installationReducer,
+  payments: paymentsReducer,
+  content: contentReducer
 });
 
 export function createRootReducer(
