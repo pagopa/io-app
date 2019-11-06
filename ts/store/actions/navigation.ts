@@ -6,6 +6,7 @@ import {
   StackActions
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
+import PaymentSecureCodeScreen from "../../screens/wallet/payment/PaymentSecureCodeScreen";
 
 import { InferNavigationParams } from "../../types/react";
 
@@ -238,11 +239,14 @@ export const navigateToPaymentManualDataInsertion = (
     params
   });
 
-export const navigateToPaymentEnterSecureCode = () =>
+export const navigateToPaymentEnterSecureCode = (
+  params: InferNavigationParams<typeof PaymentSecureCodeScreen>
+) =>
   NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_ENTER_SECURE_CODE
+    routeName: ROUTES.PAYMENT_ENTER_SECURE_CODE,
+    params
   });
-  
+
 export const navigateToCieInvalidScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_EXPIRED_SCREEN

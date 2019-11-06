@@ -26,7 +26,6 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
-  navigateToPaymentEnterSecureCode,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
@@ -316,11 +315,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
       <Button
         block={true}
         onPress={
-          this.props.navigateToMAESTRO
-          // only for test
-          // pot.isSome(potWallets)
-          //   ? this.props.navigateToPaymentScanQrCode
-          //   : undefined
+          pot.isSome(potWallets)
+            ? this.props.navigateToPaymentScanQrCode
+            : undefined
         }
       >
         <IconFont name="io-qr" style={styles.white} />
@@ -390,7 +387,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletAddPaymentMethod: () =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
   navigateToWalletList: () => dispatch(navigateToWalletList()),
-  navigateToMAESTRO: () => dispatch(navigateToPaymentEnterSecureCode()),
   navigateToPaymentScanQrCode: () => dispatch(navigateToPaymentScanQrCode()),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));

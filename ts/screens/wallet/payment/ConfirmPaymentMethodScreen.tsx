@@ -25,6 +25,7 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import { identificationRequest } from "../../../store/actions/identification";
 import {
+  navigateToPaymentEnterSecureCode,
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
   navigateToTransactionDetailsScreen
@@ -258,7 +259,14 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <Button
             block={true}
             primary={true}
-            onPress={() => this.props.runAuthorizationAndPayment()}
+            onPress={() => {
+              if (true) {
+                // controllare se carta MAestro
+                this.props.navigateToPaymentEnterSecureCode();
+              } else {
+                this.props.runAuthorizationAndPayment();
+              }
+            }}
           >
             <Text>{I18n.t("wallet.confirmPayment.goToPay")}</Text>
           </Button>
@@ -361,6 +369,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   };
 
   const runAuthorizationAndPayment = () =>
+    // inserire qui controllo MAESTRO
     dispatch(
       identificationRequest(
         false,
@@ -426,7 +435,16 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       );
     },
     runAuthorizationAndPayment,
-    onRetry: runAuthorizationAndPayment
+    onRetry: runAuthorizationAndPayment,
+    navigateToPaymentEnterSecureCode: () =>
+      dispatch(
+        navigateToPaymentEnterSecureCode({
+          verifica: props.navigation.getParam("verifica"),
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          idPayment: props.navigation.getParam("idPayment")
+        })
+      )
   };
 };
 

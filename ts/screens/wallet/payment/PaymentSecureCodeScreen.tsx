@@ -4,47 +4,55 @@
  */
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { Content, Text } from "native-base";
+import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import { ActionSheet, Content, Text } from "native-base";
 import * as React from "react";
 import {
-  Dimensions,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet
 } from "react-native";
-import {
-  NavigationEvents,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import MaskedInput from "../../../components/ui/MaskedInput";
-import View from "../../../components/ui/TextWithIcon";
+import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
+import { navigateToPaymentPickPaymentMethodScreen } from "../../../store/actions/navigation";
+import { Dispatch } from "../../../store/actions/types";
+import {
+  backToEntrypointPayment,
+  paymentInitializeState,
+  runDeleteActivePaymentSaga
+} from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
+import { AmountToImporto } from "../../../utils/amounts";
 import { CreditCardCVC } from "../../../utils/input";
+import { showToast } from "../../../utils/showToast";
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
+type NavigationParams = Readonly<{
+  verifica: PaymentRequestsGetResponse;
+  rptId: RptId;
+  initialAmount: AmountInEuroCents;
+  idPayment: string;
 }>;
+type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = OwnProps;
+type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = Readonly<{
   securityCode: Option<string>;
-  holder: Option<string>;
 }>;
 
 const EMPTY_CARD_SECURITY_CODE = "";
 
 const INITIAL_STATE: State = {
-  securityCode: none,
-  holder: none
+  securityCode: none
 };
 
 const styles = StyleSheet.create({
@@ -78,53 +86,59 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
       .toUndefined();
   }
   public render(): React.ReactNode {
+    const verifica = this.props.navigation.getParam("verifica");
+    const currentAmount = AmountToImporto.encode(
+      verifica.importoSingoloVersamento
+    );
+
+    const paymentReason = verifica.causaleVersamento;
+
     return (
       <BaseScreenComponent
-        primary={true}
         goBack={true}
-        dark={true}
         headerTitle={I18n.t("wallet.confirmPayment.securityVerification")}
       >
-        <View
-          style={{
-            height: 40,
-            width: Dimensions.get("window").width,
-            backgroundColor: variables.brandDarkGray
-          }}
-        >
-          <Text>Insert text here</Text>
-        </View>
-        <NavigationEvents onWillFocus={undefined} />
-
-        <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
-          <ScreenContentHeader
-            title={I18n.t("wallet.confirmPayment.insertCode")}
-            icon={require("../../../../img/wallet/cvc-icon.png")}
-            // fixed={Platform.OS === "ios"}
+        <Content noPadded={true}>
+          <PaymentBannerComponent
+            currentAmount={currentAmount}
+            paymentReason={paymentReason}
           />
-          <Content scrollEnabled={false}>
-            <LabelledItem
-              type={"masked"}
-              label={""}
-              icon=""
-              isValid={this.isValidSecurityCode()}
-              inputMaskProps={{
-                ref: this.securityCodeRef,
-                value: this.state.securityCode.getOrElse(
-                  EMPTY_CARD_SECURITY_CODE
-                ),
-                placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
-                keyboardType: "numeric",
-                returnKeyType: "done",
-                maxLength: 4,
-                secureTextEntry: true,
-                mask: "[0009]",
-                onChangeText: (_, value) => this.updateSecurityCodeState(value)
-              }}
+          <NavigationEvents onWillFocus={undefined} />
+
+          <ScrollView
+            style={styles.whiteBg}
+            keyboardShouldPersistTaps="handled"
+          >
+            <ScreenContentHeader
+              title={I18n.t("wallet.confirmPayment.insertCode")}
+              icon={require("../../../../img/wallet/cvc-icon.png")}
+              // fixed={Platform.OS === "ios"}
             />
-            <Text>{I18n.t("wallet.confirmPayment.insertCVC")}</Text>
-          </Content>
-        </ScrollView>
+            <Content scrollEnabled={false}>
+              <LabelledItem
+                type={"masked"}
+                label={""}
+                icon=""
+                isValid={this.isValidSecurityCode()}
+                inputMaskProps={{
+                  ref: this.securityCodeRef,
+                  value: this.state.securityCode.getOrElse(
+                    EMPTY_CARD_SECURITY_CODE
+                  ),
+                  placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
+                  keyboardType: "numeric",
+                  returnKeyType: "done",
+                  maxLength: 4,
+                  secureTextEntry: true,
+                  mask: "[0009]",
+                  onChangeText: (_, value) =>
+                    this.updateSecurityCodeState(value)
+                }}
+              />
+              <Text>{I18n.t("wallet.confirmPayment.insertCVC")}</Text>
+            </Content>
+          </ScrollView>
+        </Content>
         <KeyboardAvoidingView
           behavior="padding"
           keyboardVerticalOffset={Platform.select({
@@ -146,7 +160,7 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
       block: true,
       light: true,
       bordered: true,
-      onPress: undefined,
+      onPress: this.props.onCancel,
       cancel: true,
       title: I18n.t("global.buttons.cancel")
     };
@@ -154,7 +168,7 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
       block: true,
       primary: true,
       disabled: false,
-      onPress: undefined,
+      onPress: () => this.props.pickPaymentMethod(),
       title: I18n.t("global.buttons.continue")
     };
 
@@ -168,4 +182,43 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
   }
 }
 
-export default connect()(PaymentSecureCodeScreen);
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
+  onCancel: () => {
+    ActionSheet.show(
+      {
+        options: [
+          I18n.t("wallet.confirmPayment.confirmCancelPayment"),
+          I18n.t("wallet.confirmPayment.confirmContinuePayment")
+        ],
+        destructiveButtonIndex: 0,
+        cancelButtonIndex: 1,
+        title: I18n.t("wallet.confirmPayment.confirmCancelTitle")
+      },
+      buttonIndex => {
+        if (buttonIndex === 0) {
+          // on cancel:
+          // navigate to entrypoint of payment or wallet home
+          dispatch(backToEntrypointPayment());
+          // delete the active payment from pagoPA
+          dispatch(runDeleteActivePaymentSaga());
+          // reset the payment state
+          dispatch(paymentInitializeState());
+          showToast(
+            I18n.t("wallet.confirmPayment.cancelPaymentSuccess"),
+            "success"
+          );
+        }
+      }
+    );
+  },
+  pickPaymentMethod: () =>
+    dispatch(
+      navigateToPaymentPickPaymentMethodScreen({
+        rptId: props.navigation.getParam("rptId"),
+        initialAmount: props.navigation.getParam("initialAmount"),
+        verifica: props.navigation.getParam("verifica"),
+        idPayment: props.navigation.getParam("idPayment")
+      })
+    )
+});
+export default connect(mapDispatchToProps)(PaymentSecureCodeScreen);
