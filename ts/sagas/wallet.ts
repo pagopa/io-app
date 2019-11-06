@@ -42,7 +42,8 @@ import {
   paymentUpdateWalletPsp,
   paymentVerifica,
   runDeleteActivePaymentSaga,
-  runStartOrResumePaymentActivationSaga
+  runStartOrResumePaymentActivationSaga,
+  stopPollingPaymentId
 } from "../store/actions/wallet/payment";
 import {
   fetchPsp,
@@ -79,7 +80,7 @@ import {
 } from "../types/pagopa";
 import { SessionToken } from "../types/SessionToken";
 
-import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
+import { defaultRetryingFetch } from "../utils/fetch";
 
 import {
   addWalletCreditCardRequestHandler,
@@ -460,6 +461,9 @@ function* deleteActivePaymentSaga() {
     yield put(
       paymentDeletePayment.request({ paymentId: maybePaymentId.value })
     );
+  } else {
+    // Stop polling task to get payment id
+    yield put(stopPollingPaymentId());
   }
 }
 
@@ -647,6 +651,11 @@ export function* watchWalletSaga(
     fetchPspRequestHandler,
     paymentManagerClient,
     pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(stopPollingPaymentId),
+    pagopaNodoClient.stopPollingTask
   );
 
   yield fork(paymentsDeleteUncompletedSaga);

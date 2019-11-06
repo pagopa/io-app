@@ -13,7 +13,6 @@ import {
   RequestHeaders,
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Omit } from "italia-ts-commons/lib/types";
 import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -139,6 +138,7 @@ const PAYMENT_ID_RETRY_DELAY_MILLIS = 1000;
 // Create client
 //
 
+// tslint:disable-next-line: no-big-function
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
@@ -148,6 +148,14 @@ export function BackendClient(
     baseUrl,
     fetchApi
   };
+
+  /**
+   * Promise and her resolve function used to stop polling task
+   */
+  // tslint:disable-next-line: no-let prefer-const
+  let resolveShouldAbort: (v: boolean) => void;
+  // tslint:disable-next-line: no-let prefer-const
+  let shouldAbort: Promise<boolean>;
 
   const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
@@ -319,10 +327,12 @@ export function BackendClient(
         "codiceContestoPagamento" | "test"
       >
     ) => {
-      const deferredPromise = DeferredPromise<boolean>();
+      // Ref to the promise and the resolve function
+      const defPromise = DeferredPromise<boolean>();
+      shouldAbort = defPromise.e1;
+      resolveShouldAbort = defPromise.e2;
       const aConstantPollingFetch = constantPollingFetch(
-        // Ref to the promise
-        deferredPromise.e1,
+        shouldAbort,
         PAYMENT_ID_MAX_POLLING_RETRIES,
         PAYMENT_ID_RETRY_DELAY_MILLIS
       );
@@ -332,9 +342,12 @@ export function BackendClient(
           fetchApi: aConstantPollingFetch
         })
       );
-      // Ref to the resolve
-      const res = f(params);
-      return Tuple2<typeof res, (v: boolean) => void>(res, deferredPromise.e2);
+      return f(params);
+    },
+    stopPollingTask: () => {
+      if (resolveShouldAbort) {
+        return resolveShouldAbort(true);
+      }
     }
   };
 }

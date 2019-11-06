@@ -40,6 +40,13 @@ export const backToEntrypointPayment = createStandardAction(
   "BACK_TO_PAYMENT_ENTRYPOINT_ROUTE"
 )();
 
+/**
+ * For stop the polling to get payment id
+ */
+export const stopPollingPaymentId = createStandardAction(
+  "STOP_POLLING_PAYMENT_ID"
+)();
+
 //
 // verifica
 //
@@ -246,4 +253,5 @@ export type PaymentActions =
   | ActionType<typeof paymentCompletedFailure>
   | ActionType<typeof paymentDeletePayment>
   | ActionType<typeof runDeleteActivePaymentSaga>
-  | ActionType<typeof runStartOrResumePaymentActivationSaga>;
+  | ActionType<typeof runStartOrResumePaymentActivationSaga>
+  | ActionType<typeof stopPollingPaymentId>;

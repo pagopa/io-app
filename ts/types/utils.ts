@@ -1,7 +1,6 @@
 // tslint:disable:readonly-array
 
 import { Pot } from "italia-ts-commons/lib/pot";
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Effect } from "redux-saga";
 import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
 
@@ -12,11 +11,7 @@ export type SagaCallReturnType<
   ? B
   : R extends IterableIterator<infer B1 | Effect>
     ? B1
-    : R extends Promise<infer B2>
-      ? B2
-      : R extends ITuple2<Promise<infer B3>, (v: boolean) => void>
-        ? ITuple2<B3, (v: boolean) => void>
-        : never;
+    : R extends Promise<infer B2> ? B2 : never;
 
 /**
  * Extracts the type of the payload of a typesafe action

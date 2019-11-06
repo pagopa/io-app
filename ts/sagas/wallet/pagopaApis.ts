@@ -650,20 +650,19 @@ export function* paymentIdPollingRequestHandler(
       typeof isPagoPATestEnabledSelector
     > = yield select<GlobalState>(isPagoPATestEnabledSelector);
 
-    const responses: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
+    const response: SagaCallReturnType<typeof getPaymentIdApi> = yield call(
       getPaymentIdApi,
       {
         codiceContestoPagamento: action.payload.codiceContestoPagamento,
         test: isPagoPATestEnabled
       }
     );
-    const response = responses.e1;
     if (response.isRight()) {
-      // Attiva succeeded
+      // Get payment id succeeded
       if (response.value.status === 200) {
         yield put(paymentIdPolling.success(response.value.value.idPagamento));
       } else if (response.value.status === 400) {
-        // Attiva failed
+        // Get payment id failed
         throw Error("PAYMENT_ID_TIMEOUT");
       } else {
         throw Error(`response status ${response.value.status}`);
