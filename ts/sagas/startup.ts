@@ -232,7 +232,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     yield call(checkAcknowledgedFingerprintSaga);
 
     if (isEmailEditingAndValidationEnabled) {
-      yield call(checkAcknowledgedEmailSaga);
+      yield call(checkAcknowledgedEmailSaga, userProfile);
     }
 
     // Stop the watchAbortOnboardingSaga

@@ -1,6 +1,8 @@
 import { Effect } from "redux-saga";
 import { cancel, fork, put, take, takeEvery } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import { UserProfile } from "../../../definitions/backend/UserProfile";
 import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen,
@@ -17,23 +19,23 @@ import { emailAcknowledged, emailInsert } from "../../store/actions/onboarding";
  *
  * If user doesn't have an email, an add email screen is provided
  */
-export function* checkAcknowledgedEmailSaga(): IterableIterator<Effect> {
+export function* checkAcknowledgedEmailSaga(
+  userProfile: UserProfile
+): IterableIterator<Effect> {
   // Check if user profile has email
   // TODO: put email existence check here
   // To test #168246944 set emailExists = true;
   // To test #168247020, #168247105 set emailExists = false;
-  const emailExists: boolean = true;
 
-  if (emailExists) {
+  if (InitializedProfile.is(userProfile) && userProfile.email !== undefined) {
     // Email exists
 
     // Check if email is valid
     // TODO: put email validation API query here
     // To test #168246944 set isValid = true;
     // To test #168247105 set isValid = false;
-    const isValid: boolean = true;
 
-    if (isValid) {
+    if (userProfile.is_email_validated) {
       // If email exists and it's valid, navigate to the Email Screen in order
       // to wait for the user to check it out and press "Continue". Otherwise
       // a new email registration process will be run
