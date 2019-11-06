@@ -4,7 +4,7 @@ import { Image, NavState, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
 
@@ -204,7 +204,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
           )}
 
           <View style={styles.errorButtonsContainer}>
-            <ButtonWithoutOpacity
+            <ButtonDefaultOpacity
               onPress={this.goBack}
               style={styles.cancelButtonStyle}
               block={true}
@@ -212,15 +212,15 @@ class IdpLoginScreen extends React.Component<Props, State> {
               bordered={true}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </ButtonWithoutOpacity>
-            <ButtonWithoutOpacity
+            </ButtonDefaultOpacity>
+            <ButtonDefaultOpacity
               onPress={this.setRequestStateToLoading}
               style={{ flex: 2 }}
               block={true}
               primary={true}
             >
               <Text>{I18n.t("global.buttons.retry")}</Text>
-            </ButtonWithoutOpacity>
+            </ButtonDefaultOpacity>
           </View>
         </View>
       );

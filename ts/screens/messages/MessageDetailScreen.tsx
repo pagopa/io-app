@@ -10,7 +10,7 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -172,13 +172,13 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
               <Text numberOfLines={1}>{`ID: ${messageId}`}</Text>
             </View>
             <View style={styles.erroStateMessageDataRight}>
-              <ButtonWithoutOpacity
+              <ButtonDefaultOpacity
                 xsmall={true}
                 bordered={true}
                 onPress={() => clipboardSetStringWithFeedback(messageId)}
               >
                 <Text>{I18n.t("clipboard.copyText")}</Text>
-              </ButtonWithoutOpacity>
+              </ButtonDefaultOpacity>
             </View>
           </View>
           <Text alignCenter={true} style={styles.errorStateMessageRetry}>
@@ -189,22 +189,22 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
           </Text>
         </View>
         <View style={styles.errorStateFooterWrapper}>
-          <ButtonWithoutOpacity
+          <ButtonDefaultOpacity
             block={true}
             cancel={true}
             onPress={this.goBack}
             style={styles.errorStateCancelButton}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </ButtonWithoutOpacity>
-          <ButtonWithoutOpacity
+          </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             onPress={onRetry}
             style={styles.errorStateRetryButton}
           >
             <Text>{I18n.t("global.buttons.retry")}</Text>
-          </ButtonWithoutOpacity>
+          </ButtonDefaultOpacity>
         </View>
       </View>
     );

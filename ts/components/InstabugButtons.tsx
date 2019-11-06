@@ -13,7 +13,7 @@ import { Dispatch } from "../store/actions/types";
 import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
-import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
 
@@ -105,7 +105,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   public render() {
     return (
       <React.Fragment>
-        <ButtonWithoutOpacity
+        <ButtonDefaultOpacity
           onPress={this.handleIBChatPress}
           transparent={true}
         >
@@ -115,13 +115,13 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
             accessible={true}
             accessibilityLabel="io-chat"
           />
-        </ButtonWithoutOpacity>
+        </ButtonDefaultOpacity>
         <CustomBadge
           badgeStyle={styles.badgeStyle}
           textStyle={styles.textStyle}
           badgeValue={this.props.badge}
         />
-        <ButtonWithoutOpacity
+        <ButtonDefaultOpacity
           onPress={this.handleIBBugPress}
           transparent={true}
         >
@@ -131,7 +131,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
             accessible={true}
             accessibilityLabel="io-bug"
           />
-        </ButtonWithoutOpacity>
+        </ButtonDefaultOpacity>
       </React.Fragment>
     );
   }

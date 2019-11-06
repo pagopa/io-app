@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 const styles = StyleSheet.create({
@@ -23,10 +23,10 @@ interface Props {
 }
 
 export const AddPaymentMethodButton: React.SFC<Props> = ({ onPress }) => (
-  <TouchableWithoutOpacity onPress={onPress} style={styles.button}>
+  <TouchableDefaultOpacity onPress={onPress} style={styles.button}>
     <IconFont name="io-plus" color={customVariables.colorWhite} />
     <Text style={styles.label}>
       {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
     </Text>
-  </TouchableWithoutOpacity>
+  </TouchableDefaultOpacity>
 );

@@ -25,7 +25,7 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { format } from "../../utils/dates";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import MessageListItem from "./MessageListItem";
 
@@ -384,7 +384,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           height: TOP_INDICATOR_HEIGHT
         }}
       >
-        <ButtonWithoutOpacity
+        <ButtonDefaultOpacity
           block={true}
           primary={true}
           small={true}
@@ -393,7 +393,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           onPress={this.loadMoreData}
         >
           <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
-        </ButtonWithoutOpacity>
+        </ButtonDefaultOpacity>
       </View>
     );
   }

@@ -8,7 +8,7 @@ import I18n from "../../i18n";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
 import SearchButton, { SearchType } from "../search/SearchButton";
@@ -80,13 +80,13 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
         {!isSearchEnabled && <InstabugButtons />}
         {onShowHelp &&
           !isSearchEnabled && (
-            <ButtonWithoutOpacity
+            <ButtonDefaultOpacity
               onPress={onShowHelp}
               style={styles.helpButton}
               transparent={true}
             >
               <IconFont name="io-question" />
-            </ButtonWithoutOpacity>
+            </ButtonDefaultOpacity>
           )}
         {isSearchAvailable && <SearchButton searchType={searchType} />}
       </Right>

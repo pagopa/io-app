@@ -34,7 +34,7 @@ import {
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import TouchableWithoutOpacity from "../../../components/TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
@@ -78,11 +78,6 @@ const styles = StyleSheet.create({
 
   noLeftMargin: {
     marginLeft: 0
-  },
-
-  linkStyle: {
-    color: variables.brandPrimary,
-    fontWeight: "bold"
   }
 });
 
@@ -180,11 +175,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           <Content scrollEnabled={false}>
             <H1>{I18n.t("wallet.insertManually.title")}</H1>
             <Text>{I18n.t("wallet.insertManually.info")}</Text>
-            <TouchableWithoutOpacity onPress={this.showModal}>
-              <Text style={styles.linkStyle}>
-                {I18n.t("wallet.insertManually.link")}
-              </Text>
-            </TouchableWithoutOpacity>
+            <TouchableDefaultOpacity onPress={this.showModal}>
+              <Text link={true}>{I18n.t("wallet.insertManually.link")}</Text>
+            </TouchableDefaultOpacity>
 
             <Form>
               <Item

@@ -16,7 +16,7 @@ import {
 import variables from "../theme/variables";
 import customVariables from "../theme/variables";
 import { areSetEqual } from "../utils/options";
-import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";
 import ChooserListSearch from "./ChooserListSearch";
@@ -138,7 +138,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
                   .darken(0.2)
                   .string()}
               />
-              <ButtonWithoutOpacity
+              <ButtonDefaultOpacity
                 onPress={this.onPressCancel}
                 transparent={true}
               >
@@ -147,10 +147,10 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
                   accessible={true}
                   accessibilityLabel={I18n.t("global.buttons.close")}
                 />
-              </ButtonWithoutOpacity>
+              </ButtonDefaultOpacity>
             </Item>
           ) : (
-            <ButtonWithoutOpacity
+            <ButtonDefaultOpacity
               onPress={this.handleSearchPress}
               transparent={true}
             >
@@ -159,7 +159,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
                 accessible={true}
                 accessibilityLabel={I18n.t("global.actions.search")}
               />
-            </ButtonWithoutOpacity>
+            </ButtonDefaultOpacity>
           )}
         </Right>
       </React.Fragment>

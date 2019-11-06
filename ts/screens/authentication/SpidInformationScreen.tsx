@@ -7,7 +7,7 @@ import { Linking } from "react-native";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -101,13 +101,13 @@ class SpidInformationScreen extends React.Component<Props, never> {
         </Content>
 
         <View footer={true}>
-          <ButtonWithoutOpacity
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             onPress={this.browseToLink}
           >
             <Text>{I18n.t("authentication.spid_information.knowMore")}</Text>
-          </ButtonWithoutOpacity>
+          </ButtonDefaultOpacity>
         </View>
       </BaseScreenComponent>
     );

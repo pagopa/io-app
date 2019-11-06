@@ -15,7 +15,7 @@ import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
 import { BadgeComponent } from "../screens/BadgeComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
-import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
 
@@ -112,7 +112,7 @@ export default class TransactionsList extends React.Component<Props> {
     const amount = formatNumberAmount(centsToAmount(item.amount.amount));
     const recipient = item.merchant;
     return (
-      <TouchableWithoutOpacity
+      <TouchableDefaultOpacity
         onPress={() => this.props.navigateToTransactionDetails(item)}
       >
         <Grid style={styles.transaction}>
@@ -131,7 +131,7 @@ export default class TransactionsList extends React.Component<Props> {
             </Left>
           </Row>
         </Grid>
-      </TouchableWithoutOpacity>
+      </TouchableDefaultOpacity>
     );
   };
 

@@ -10,7 +10,7 @@ import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import ButtonWithoutOpacity from "../../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
@@ -238,13 +238,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               }
               bottomContent={
                 <View>
-                  <ButtonWithoutOpacity
+                  <ButtonDefaultOpacity
                     onPress={this.showImagePicker}
                     style={styles.button}
                     bordered={true}
                   >
                     <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
-                  </ButtonWithoutOpacity>
+                  </ButtonDefaultOpacity>
                   <View style={styles.content}>
                     <View spacer={true} />
                     <Text style={[styles.padded, styles.bottomText]}>
@@ -277,14 +277,14 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                     {I18n.t("wallet.QRtoPay.enroll_cta")}
                   </Text>
 
-                  <ButtonWithoutOpacity
+                  <ButtonDefaultOpacity
                     onPress={openAppSettings}
                     style={styles.notAuthorizedBtn}
                   >
                     <Text>
                       {I18n.t("biometric_recognition.enroll_btnLabel")}
                     </Text>
-                  </ButtonWithoutOpacity>
+                  </ButtonDefaultOpacity>
                 </View>
               }
             />

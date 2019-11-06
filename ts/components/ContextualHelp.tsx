@@ -10,7 +10,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
-import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import AppHeader from "./ui/AppHeader";
 
 import themeVariables from "../theme/variables";
@@ -34,12 +34,12 @@ export class ContextualHelp extends React.Component<Props> {
         <AppHeader noLeft={true}>
           <Body />
           <Right>
-            <ButtonWithoutOpacity
+            <ButtonDefaultOpacity
               onPress={() => this.props.onClose()}
               transparent={true}
             >
               <IconFont name="io-close" />
-            </ButtonWithoutOpacity>
+            </ButtonDefaultOpacity>
           </Right>
         </AppHeader>
         <Content

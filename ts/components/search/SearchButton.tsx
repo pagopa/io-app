@@ -15,7 +15,7 @@ import {
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
@@ -59,7 +59,7 @@ class SearchButton extends React.Component<Props, State> {
                 .darken(0.2)
                 .string()}
             />
-            <ButtonWithoutOpacity
+            <ButtonDefaultOpacity
               onPress={this.onSearchDisable}
               transparent={true}
             >
@@ -69,10 +69,10 @@ class SearchButton extends React.Component<Props, State> {
                 accessible={true}
                 accessibilityLabel={I18n.t("global.buttons.close")}
               />
-            </ButtonWithoutOpacity>
+            </ButtonDefaultOpacity>
           </Item>
         ) : (
-          <ButtonWithoutOpacity
+          <ButtonDefaultOpacity
             onPress={this.handleSearchPress}
             transparent={true}
           >
@@ -82,7 +82,7 @@ class SearchButton extends React.Component<Props, State> {
               accessible={true}
               accessibilityLabel={I18n.t("global.actions.search")}
             />
-          </ButtonWithoutOpacity>
+          </ButtonDefaultOpacity>
         )}
       </React.Fragment>
     );

@@ -12,7 +12,7 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
@@ -20,7 +20,7 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
-import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -158,14 +158,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   private debugListItem(title: string, onPress: () => void, isDanger: boolean) {
     return (
       <ListItem style={styles.noRightPadding}>
-        <ButtonWithoutOpacity
+        <ButtonDefaultOpacity
           info={!isDanger}
           danger={isDanger}
           small={true}
           onPress={onPress}
         >
           <Text numberOfLines={1}>{title}</Text>
-        </ButtonWithoutOpacity>
+        </ButtonDefaultOpacity>
       </ListItem>
     );
   }
@@ -446,13 +446,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         title={I18n.t("profile.main.screenTitle")}
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={
-          <TouchableWithoutOpacity
+          <TouchableDefaultOpacity
             onPress={() =>
               this.props.navigation.navigate(ROUTES.PROFILE_FISCAL_CODE)
             }
           >
             <FiscalCodeComponent type={"Preview"} />
-          </TouchableWithoutOpacity>
+          </TouchableDefaultOpacity>
         }
         contextualHelp={{
           title: I18n.t("profile.main.screenTitle"),

@@ -17,7 +17,7 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { UNKNOWN_RECIPIENT } from "../../types/unknown";
 import { formatNumberAmount } from "../../utils/stringBuilder";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 const styles = StyleSheet.create({
   rightButtonText: {
@@ -74,7 +74,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           <View spacer={true} />
         </Col>
         <Right>
-          <ButtonWithoutOpacity
+          <ButtonDefaultOpacity
             small={true}
             transparent={true}
             onPress={props.onCancel}
@@ -82,7 +82,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
             <Text white={true} style={styles.rightButtonText}>
               {I18n.t("global.buttons.cancel").toUpperCase()}
             </Text>
-          </ButtonWithoutOpacity>
+          </ButtonDefaultOpacity>
           <View spacer={true} />
         </Right>
       </Row>

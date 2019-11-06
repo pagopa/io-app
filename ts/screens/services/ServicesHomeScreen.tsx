@@ -38,7 +38,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ChooserListContainer from "../../components/ChooserListContainer";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -48,7 +48,7 @@ import { SearchNoResultMessage } from "../../components/search/SearchNoResultMes
 import OrganizationLogo from "../../components/services/OrganizationLogo";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesSectionsList from "../../components/services/ServicesSectionsList";
-import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -534,15 +534,15 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private renderLongPressFooterButtons = () => {
     return (
       <View style={styles.buttonBar}>
-        <ButtonWithoutOpacity
+        <ButtonDefaultOpacity
           block={true}
           bordered={true}
           onPress={this.handleOnLongPressItem}
           style={styles.buttonBarLeft}
         >
           <Text>{I18n.t("services.close")}</Text>
-        </ButtonWithoutOpacity>
-        <ButtonWithoutOpacity
+        </ButtonDefaultOpacity>
+        <ButtonDefaultOpacity
           block={true}
           primary={true}
           style={styles.buttonBarRight}
@@ -563,7 +563,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               ? I18n.t("services.enableAll")
               : I18n.t("services.disableAll")}
           </Text>
-        </ButtonWithoutOpacity>
+        </ButtonDefaultOpacity>
       </View>
     );
   };
@@ -658,14 +658,14 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       }
     };
     return (
-      <TouchableWithoutOpacity onPress={onPressItem}>
+      <TouchableDefaultOpacity onPress={onPressItem}>
         <IconFont
           name={"io-trash"}
           color={"#C7D1D9"}
           size={17}
           style={styles.icon}
         />
-      </TouchableWithoutOpacity>
+      </TouchableDefaultOpacity>
     );
   };
 

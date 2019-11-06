@@ -12,8 +12,8 @@ import variables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
-import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
@@ -84,10 +84,6 @@ const styles = StyleSheet.create({
   serviceMultiImage: {
     width: 60,
     height: 60
-  },
-  linkStyle: {
-    color: variables.textLinkColor,
-    fontWeight: "bold"
   }
 });
 
@@ -132,18 +128,18 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
             <Grid style={styles.serviceContainer}>
               <Col>
                 <H4>{service.organization_name}</H4>
-                <TouchableWithoutOpacity onPress={onServiceLinkPress}>
-                  <H6 style={styles.linkStyle}>{service.service_name}</H6>
-                </TouchableWithoutOpacity>
+                <TouchableDefaultOpacity onPress={onServiceLinkPress}>
+                  <H6>{service.service_name}</H6>
+                </TouchableDefaultOpacity>
               </Col>
               {service.service_id && (
                 <Col style={styles.serviceCol}>
-                  <TouchableWithoutOpacity onPress={onServiceLinkPress}>
+                  <TouchableDefaultOpacity onPress={onServiceLinkPress}>
                     <MultiImage
                       style={styles.serviceMultiImage}
                       source={logosForService(service)}
                     />
-                  </TouchableWithoutOpacity>
+                  </TouchableDefaultOpacity>
                 </Col>
               )}
             </Grid>
@@ -160,7 +156,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                 <Text style={styles.messageIDLabelText}>ID: {message.id}</Text>
               </View>
               <View style={styles.messageIDBtnContainer}>
-                <ButtonWithoutOpacity
+                <ButtonDefaultOpacity
                   light={true}
                   bordered={true}
                   primary={true}
@@ -181,7 +177,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                   >
                     {I18n.t("clipboard.copyText")}
                   </Text>
-                </ButtonWithoutOpacity>
+                </ButtonDefaultOpacity>
               </View>
             </View>
           )}

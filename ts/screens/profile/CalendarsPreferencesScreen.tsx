@@ -6,11 +6,11 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import * as pot from "italia-ts-commons/lib/pot";
-import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
@@ -34,15 +34,11 @@ const styles = StyleSheet.create({
   separator: {
     paddingTop: 25,
     width: "100%"
-  },
-  linkStyle: {
-    color: customVariables.brandPrimary,
-    fontWeight: "bold"
   }
 });
 
 const TouchableComponent =
-  Platform.OS === "ios" ? TouchableHighlight : TouchableWithoutOpacity;
+  Platform.OS === "ios" ? TouchableHighlight : TouchableDefaultOpacity;
 
 type CalendarItemProps = {
   calendar: Calendar;
@@ -55,9 +51,9 @@ type CalendarItemProps = {
 const CalendarItem: React.SFC<CalendarItemProps> = props => (
   <TouchableComponent onPress={props.onPress}>
     <View style={styles.calendarItemWrapper}>
-      <TouchableWithoutOpacity>
-        <Text style={styles.linkStyle}>{props.calendar.title}</Text>
-      </TouchableWithoutOpacity>
+      <TouchableDefaultOpacity>
+        <Text link={true}>{props.calendar.title}</Text>
+      </TouchableDefaultOpacity>
       <IconFont
         name="io-right"
         color={customVariables.contentPrimaryBackground}
@@ -141,9 +137,9 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
           {pot.isError(calendars) && (
             <React.Fragment>
               <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
-              <ButtonWithoutOpacity onPress={this.fetchCalendars}>
+              <ButtonDefaultOpacity onPress={this.fetchCalendars}>
                 <Text>{I18n.t("global.buttons.retry")}</Text>
-              </ButtonWithoutOpacity>
+              </ButtonDefaultOpacity>
             </React.Fragment>
           )}
           {pot.isSome(calendars) && (

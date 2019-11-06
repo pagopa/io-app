@@ -7,7 +7,7 @@ import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCard";
@@ -90,7 +90,7 @@ const LandingScreen: React.SFC<Props> = props => {
       </Content>
 
       <View footer={true}>
-        <ButtonWithoutOpacity
+        <ButtonDefaultOpacity
           block={true}
           primary={true}
           iconLeft={true}
@@ -99,16 +99,16 @@ const LandingScreen: React.SFC<Props> = props => {
         >
           <IconFont name="io-profilo" color={variables.colorWhite} />
           <Text>{I18n.t("authentication.landing.login")}</Text>
-        </ButtonWithoutOpacity>
+        </ButtonDefaultOpacity>
         <View spacer={true} />
-        <ButtonWithoutOpacity
+        <ButtonDefaultOpacity
           block={true}
           small={true}
           transparent={true}
           onPress={navigateToSpidInformationRequest}
         >
           <Text>{I18n.t("authentication.landing.nospid")}</Text>
-        </ButtonWithoutOpacity>
+        </ButtonDefaultOpacity>
       </View>
     </BaseScreenComponent>
   );

@@ -9,7 +9,7 @@ import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
-import TouchableWithoutOpacity from "../../components/TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
@@ -113,7 +113,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                 showsHorizontalScrollIndicator={false}
               >
                 <View style={styles.largeSpacer} />
-                <TouchableWithoutOpacity onPress={() => this.showModal()}>
+                <TouchableDefaultOpacity onPress={() => this.showModal()}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -122,9 +122,9 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       municipality={this.props.municipality.data}
                     />
                   </View>
-                </TouchableWithoutOpacity>
+                </TouchableDefaultOpacity>
                 <View style={styles.spacer} />
-                <TouchableWithoutOpacity onPress={() => this.showModal()}>
+                <TouchableDefaultOpacity onPress={() => this.showModal()}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -133,7 +133,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       municipality={this.props.municipality.data}
                     />
                   </View>
-                </TouchableWithoutOpacity>
+                </TouchableDefaultOpacity>
 
                 <View style={styles.largeSpacer} />
               </ScrollView>

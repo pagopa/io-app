@@ -28,6 +28,7 @@ type Props = Readonly<{
 }>;
 
 const ICON_SIZE = 24;
+const underlayColor = "transparent";
 
 const styles = StyleSheet.create({
   listItem: {
@@ -79,7 +80,7 @@ export default class ListItemComponent extends React.Component<Props> {
         style={[styles.listItem, styles.flexRow, this.props.style]}
         first={this.props.isFirstItem}
         last={this.props.isLastItem || this.props.hideSeparator}
-        underlayColor={"white"}
+        underlayColor={underlayColor}
       >
         <View style={styles.flexColumn}>
           <View style={styles.flexRow}>

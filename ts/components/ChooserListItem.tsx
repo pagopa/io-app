@@ -4,8 +4,8 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import variables from "../theme/variables";
 import customVariables from "../theme/variables";
-import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
-import TouchableWithoutOpacity from "./TouchableWithoutOpacity";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
 
 type Props = Readonly<{
@@ -61,7 +61,7 @@ export default class ChooserListItem extends React.Component<Props> {
       : itemIconComponent;
 
     return (
-      <TouchableWithoutOpacity onPress={this.handleOnPress}>
+      <TouchableDefaultOpacity onPress={this.handleOnPress}>
         <View style={styles.container}>
           {icon && <View>{icon}</View>}
           <View style={styles.content}>
@@ -69,11 +69,11 @@ export default class ChooserListItem extends React.Component<Props> {
               {itemTitle}
             </Text>
           </View>
-          <ButtonWithoutOpacity onPress={this.handleOnPress} transparent={true}>
+          <ButtonDefaultOpacity onPress={this.handleOnPress} transparent={true}>
             <IconFont name={iconName} color={iconColor} />
-          </ButtonWithoutOpacity>
+          </ButtonDefaultOpacity>
         </View>
-      </TouchableWithoutOpacity>
+      </TouchableDefaultOpacity>
     );
   }
 

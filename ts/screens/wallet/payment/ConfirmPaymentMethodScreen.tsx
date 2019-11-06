@@ -13,13 +13,13 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import ButtonWithoutOpacity from "../../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import TouchableWithoutOpacity from "../../../components/TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
@@ -103,11 +103,6 @@ const styles = StyleSheet.create({
 
   textCenter: {
     textAlign: "center"
-  },
-
-  linkStyle: {
-    color: variables.brandPrimary,
-    fontWeight: "bold"
   }
 });
 
@@ -190,11 +185,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <Col size={4}>
                     <Text>
                       {`${I18n.t("wallet.ConfirmPayment.fee")} `}
-                      <TouchableWithoutOpacity onPress={this.showHelp}>
-                        <Text style={styles.linkStyle}>
+                      <TouchableDefaultOpacity onPress={this.showHelp}>
+                        <Text link={true}>
                           {I18n.t("wallet.ConfirmPayment.why")}
                         </Text>
-                      </TouchableWithoutOpacity>
+                      </TouchableDefaultOpacity>
                     </Text>
                   </Col>
 
@@ -239,11 +234,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                           wallet.psp.businessName
                         } `
                       : I18n.t("payment.noPsp")}
-                    <TouchableWithoutOpacity onPress={this.props.pickPsp}>
-                      <Text style={styles.linkStyle}>
-                        {I18n.t("payment.changePsp")}
-                      </Text>
-                    </TouchableWithoutOpacity>
+                    <TouchableDefaultOpacity onPress={this.props.pickPsp}>
+                      <Text link={true}>{I18n.t("payment.changePsp")}</Text>
+                    </TouchableDefaultOpacity>
                   </Text>
                   <View spacer={true} />
                 </Col>
@@ -266,25 +259,25 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
         </Content>
 
         <View footer={true}>
-          <ButtonWithoutOpacity
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             onPress={() => this.props.runAuthorizationAndPayment()}
           >
             <Text>{I18n.t("wallet.ConfirmPayment.goToPay")}</Text>
-          </ButtonWithoutOpacity>
+          </ButtonDefaultOpacity>
           <View spacer={true} />
           <View style={styles.parent}>
-            <ButtonWithoutOpacity
+            <ButtonDefaultOpacity
               style={styles.child}
               block={true}
               cancel={true}
               onPress={this.props.onCancel}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </ButtonWithoutOpacity>
+            </ButtonDefaultOpacity>
             <View hspacer={true} />
-            <ButtonWithoutOpacity
+            <ButtonDefaultOpacity
               style={[styles.child, styles.childTwice]}
               block={true}
               light={true}
@@ -292,7 +285,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               onPress={() => this.props.pickPaymentMethod()}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
-            </ButtonWithoutOpacity>
+            </ButtonDefaultOpacity>
           </View>
         </View>
       </BaseScreenComponent>

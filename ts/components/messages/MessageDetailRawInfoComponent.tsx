@@ -7,7 +7,7 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 type OwnProps = {
@@ -34,11 +34,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 2,
     borderLeftColor: variables.brandLightGray,
     paddingLeft: 10
-  },
-
-  linkStyle: {
-    color: variables.brandPrimary,
-    fontWeight: "bold"
   }
 });
 
@@ -62,14 +57,14 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
     if (isOpen) {
       return (
         <View>
-          <TouchableWithoutOpacity onPress={this.toggleRawInfo}>
+          <TouchableDefaultOpacity onPress={this.toggleRawInfo}>
             <View style={styles.toggleContainer}>
-              <Text style={styles.linkStyle}>
+              <Text link={true}>
                 {I18n.t("messageDetails.rawInfoLink.hideLabel")}
               </Text>
               <IconFont name="io-close" color={variables.textLinkColor} />
             </View>
-          </TouchableWithoutOpacity>
+          </TouchableDefaultOpacity>
           <View style={styles.rawInfoContainer}>
             <Text>
               <Text bold={true}>
@@ -92,11 +87,11 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
                   )}: `}</Text>
                   {service.department_name}
                 </Text>
-                <TouchableWithoutOpacity onPress={onServiceLinkPress}>
-                  <Text style={styles.linkStyle}>
+                <TouchableDefaultOpacity onPress={onServiceLinkPress}>
+                  <Text link={true}>
                     {`${I18n.t("messageDetails.rawInfoLabels.serviceName")}: `}
                   </Text>
-                </TouchableWithoutOpacity>
+                </TouchableDefaultOpacity>
 
                 <Text>
                   <Text bold={true}>ID: </Text>
@@ -111,14 +106,14 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
 
     return (
       <View>
-        <TouchableWithoutOpacity onPress={this.toggleRawInfo}>
+        <TouchableDefaultOpacity onPress={this.toggleRawInfo}>
           <View style={styles.toggleContainer}>
-            <Text style={styles.linkStyle}>
+            <Text link={true}>
               {I18n.t("messageDetails.rawInfoLink.showLabel")}
             </Text>
             <IconFont name="io-right" color={variables.textLinkColor} />
           </View>
-        </TouchableWithoutOpacity>
+        </TouchableDefaultOpacity>
       </View>
     );
   }

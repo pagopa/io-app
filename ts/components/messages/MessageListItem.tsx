@@ -14,9 +14,9 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { BadgeComponent } from "../screens/BadgeComponent";
-import TouchableWithoutOpacity from "../TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
 
@@ -160,7 +160,7 @@ class MessageListItem extends React.PureComponent<Props> {
       : variables.unselectedColor;
 
     return (
-      <TouchableWithoutOpacity
+      <TouchableDefaultOpacity
         style={styles.highlight}
         onPress={this.handlePress}
         onLongPress={this.handleLongPress}
@@ -198,12 +198,12 @@ class MessageListItem extends React.PureComponent<Props> {
             </View>
             <View style={styles.contentRight}>
               {isSelectionModeEnabled ? (
-                <ButtonWithoutOpacity
+                <ButtonDefaultOpacity
                   onPress={this.handleLongPress}
                   transparent={true}
                 >
                   <IconFont name={iconName} color={iconColor} />
-                </ButtonWithoutOpacity>
+                </ButtonDefaultOpacity>
               ) : (
                 <IconFont
                   name="io-right"
@@ -226,7 +226,7 @@ class MessageListItem extends React.PureComponent<Props> {
             </View>
           )}
         </View>
-      </TouchableWithoutOpacity>
+      </TouchableDefaultOpacity>
     );
   }
 }

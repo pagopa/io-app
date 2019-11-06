@@ -1,12 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Container, Content, Text, View } from "native-base";
 import React from "react";
-import {
-  BackHandler,
-  Platform,
-  StyleSheet,
-  TouchableHighlight
-} from "react-native";
+import { BackHandler, StyleSheet } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 
 import { connect } from "react-redux";
@@ -15,8 +10,8 @@ import { GlobalState } from "../store/reducers/types";
 import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
-import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
-import TouchableWithoutOpacity from "./TouchableWithoutOpacity";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
 const styles = StyleSheet.create({
@@ -35,15 +30,8 @@ const styles = StyleSheet.create({
   separator: {
     height: 10,
     width: "100%"
-  },
-  linkStyle: {
-    color: customVariables.brandPrimary,
-    fontWeight: "bold"
   }
 });
-
-const TouchableComponent =
-  Platform.OS === "ios" ? TouchableHighlight : TouchableWithoutOpacity;
 
 type CalendarItemProps = {
   calendar: Calendar;
@@ -54,18 +42,15 @@ type CalendarItemProps = {
  * Renders a Calendar as FlatList item
  */
 const CalendarItem: React.SFC<CalendarItemProps> = props => (
-  <TouchableComponent onPress={props.onPress}>
+  <TouchableDefaultOpacity onPress={props.onPress}>
     <View style={styles.calendarItemWrapper}>
-      <TouchableWithoutOpacity>
-        <Text style={styles.linkStyle}>{props.calendar.title}</Text>
-      </TouchableWithoutOpacity>
-
+      <Text link={true}>{props.calendar.title}</Text>
       <IconFont
         name="io-right"
         color={customVariables.contentPrimaryBackground}
       />
     </View>
-  </TouchableComponent>
+  </TouchableDefaultOpacity>
 );
 
 type Props = {
@@ -125,9 +110,9 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
           {pot.isError(calendars) && (
             <React.Fragment>
               <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
-              <ButtonWithoutOpacity onPress={this.fetchCalendars}>
+              <ButtonDefaultOpacity onPress={this.fetchCalendars}>
                 <Text>{I18n.t("global.buttons.retry")}</Text>
-              </ButtonWithoutOpacity>
+              </ButtonDefaultOpacity>
             </React.Fragment>
           )}
           {pot.isSome(calendars) && (

@@ -11,7 +11,7 @@ import { ServicesSectionState } from "../../store/reducers/entities/services";
 import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import ServiceList from "./ServiceList";
 
@@ -81,7 +81,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
             {I18n.t("services.areasOfInterest.selectMessage")}
           </Text>
           <View spacer={true} large={true} />
-          <ButtonWithoutOpacity
+          <ButtonDefaultOpacity
             small={true}
             primary={true}
             style={styles.button}
@@ -92,7 +92,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
             <Text style={styles.textButton}>
               {I18n.t("services.areasOfInterest.addButton")}
             </Text>
-          </ButtonWithoutOpacity>
+          </ButtonDefaultOpacity>
           <View spacer={true} extralarge={true} />
           <Image source={require("../../../img/services/icon-places.png")} />
         </View>
@@ -121,7 +121,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
       this.props.selectedOrganizationsFiscalCodes &&
       this.props.selectedOrganizationsFiscalCodes.size > 0 && (
         <View style={styles.headerContentWrapper}>
-          <ButtonWithoutOpacity
+          <ButtonDefaultOpacity
             small={true}
             primary={!this.props.isLongPressEnabled}
             style={styles.button}
@@ -132,7 +132,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
             <Text style={styles.textButton}>
               {I18n.t("services.areasOfInterest.editButton")}
             </Text>
-          </ButtonWithoutOpacity>
+          </ButtonDefaultOpacity>
         </View>
       )
     );

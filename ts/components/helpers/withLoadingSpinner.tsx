@@ -4,7 +4,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import { Overlay } from "../ui/Overlay";
 
@@ -59,13 +59,13 @@ export function withLoadingSpinner<
                 }
                 action={
                   onCancel && (
-                    <ButtonWithoutOpacity
+                    <ButtonDefaultOpacity
                       onPress={onCancel}
                       cancel={true}
                       style={styles.cancelButtonStyle}
                     >
                       <Text>{I18n.t("global.buttons.cancel")}</Text>
-                    </ButtonWithoutOpacity>
+                    </ButtonDefaultOpacity>
                   )
                 }
               />

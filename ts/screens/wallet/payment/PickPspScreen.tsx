@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import TouchableWithoutOpacity from "../../../components/TouchableWithoutOpacity";
+import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
@@ -71,11 +71,6 @@ const styles = StyleSheet.create({
   bottomBorder: {
     borderBottomWidth: 1,
     borderBottomColor: variables.brandGray
-  },
-
-  linkStyle: {
-    color: variables.brandPrimary,
-    fontWeight: "bold"
   }
 });
 
@@ -112,7 +107,7 @@ class PickPspScreen extends React.Component<Props> {
             data={availablePsps}
             keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => (
-              <TouchableWithoutOpacity
+              <TouchableDefaultOpacity
                 onPress={() => this.props.pickPsp(item.id)}
               >
                 <View style={styles.listItem}>
@@ -143,7 +138,7 @@ class PickPspScreen extends React.Component<Props> {
                     </Col>
                   </Grid>
                 </View>
-              </TouchableWithoutOpacity>
+              </TouchableDefaultOpacity>
             )}
           />
         </Content>

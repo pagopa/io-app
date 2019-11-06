@@ -16,7 +16,7 @@ import { UserProfile } from "../../definitions/backend/UserProfile";
 import { Municipality } from "../../definitions/content/Municipality";
 import IconFont from "../components/ui/IconFont";
 import customVariables from "../theme/variables";
-import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
 
@@ -114,12 +114,12 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
           <View spacer={true} large={true} />
         </ScrollView>
         <View style={styles.closeButton}>
-          <ButtonWithoutOpacity
+          <ButtonDefaultOpacity
             transparent={true}
             onPress={() => this.props.onCancel()}
           >
             <IconFont name="io-close" color={customVariables.colorWhite} />
-          </ButtonWithoutOpacity>
+          </ButtonDefaultOpacity>
         </View>
       </Container>
     );

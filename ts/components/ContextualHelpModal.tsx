@@ -11,7 +11,7 @@ import * as React from "react";
 import { InteractionManager, Modal, StyleSheet } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
-import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 
@@ -73,9 +73,9 @@ export class ContextualHelpModal extends React.Component<Props, State> {
           <AppHeader noLeft={true}>
             <Body />
             <Right>
-              <ButtonWithoutOpacity onPress={onClose} transparent={true}>
+              <ButtonDefaultOpacity onPress={onClose} transparent={true}>
                 <IconFont name="io-close" />
-              </ButtonWithoutOpacity>
+              </ButtonDefaultOpacity>
             </Right>
           </AppHeader>
 

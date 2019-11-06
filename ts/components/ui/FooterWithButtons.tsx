@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { ComponentProps } from "../../types/react";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 const styles = StyleSheet.create({
   container: {
@@ -67,7 +67,7 @@ export default class FooterWithButtons extends React.Component<Props, never> {
     return (
       <React.Fragment>
         <View hspacer={true} />
-        <ButtonWithoutOpacity
+        <ButtonDefaultOpacity
           {...otherPropsRightButton}
           style={
             type === "TwoButtonsInlineThird"
@@ -78,7 +78,7 @@ export default class FooterWithButtons extends React.Component<Props, never> {
           <Text numberOfLines={1} style={{ fontSize }}>
             {rightButtonTitle}
           </Text>
-        </ButtonWithoutOpacity>
+        </ButtonDefaultOpacity>
       </React.Fragment>
     );
   }
@@ -92,9 +92,9 @@ export default class FooterWithButtons extends React.Component<Props, never> {
 
     return (
       <View footer={true} style={styles.container}>
-        <ButtonWithoutOpacity style={styles.button} {...otherPropsLeftButton}>
+        <ButtonDefaultOpacity style={styles.button} {...otherPropsLeftButton}>
           <Text style={{ fontSize }}>{leftButtonTitle}</Text>
-        </ButtonWithoutOpacity>
+        </ButtonDefaultOpacity>
         {this.renderRightButton()}
       </View>
     );

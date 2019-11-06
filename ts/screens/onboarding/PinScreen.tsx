@@ -8,7 +8,7 @@ import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -251,14 +251,14 @@ class PinScreen extends React.Component<Props, State> {
     const onPress = () => this.setPin(pin);
     return (
       <React.Fragment>
-        <ButtonWithoutOpacity
+        <ButtonDefaultOpacity
           block={true}
           primary={true}
           disabled={false}
           onPress={onPress}
         >
           <Text>{I18n.t("onboarding.pin.continue")}</Text>
-        </ButtonWithoutOpacity>
+        </ButtonDefaultOpacity>
         <View spacer={true} />
       </React.Fragment>
     );
@@ -272,13 +272,13 @@ class PinScreen extends React.Component<Props, State> {
 
         {pinState.state !== "PinUnselected" && (
           <React.Fragment>
-            <ButtonWithoutOpacity
+            <ButtonDefaultOpacity
               block={true}
               bordered={true}
               onPress={() => this.onPinReset()}
             >
               <Text>{I18n.t("onboarding.pin.reset")}</Text>
-            </ButtonWithoutOpacity>
+            </ButtonDefaultOpacity>
           </React.Fragment>
         )}
       </View>

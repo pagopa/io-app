@@ -3,7 +3,7 @@ import { Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import variables from "../../theme/variables";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 type Digit = ITuple2<string, () => void> | undefined;
 
@@ -69,7 +69,7 @@ const renderPinCol = (
         : {};
   return (
     <Col key={key}>
-      <ButtonWithoutOpacity
+      <ButtonDefaultOpacity
         onPress={handler}
         disabled={isDisabled}
         style={buttonStyle}
@@ -100,7 +100,7 @@ const renderPinCol = (
             style={{ width: 40, height: 48 }}
           />
         )}
-      </ButtonWithoutOpacity>
+      </ButtonDefaultOpacity>
     </Col>
   );
 };

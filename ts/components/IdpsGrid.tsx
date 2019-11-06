@@ -9,7 +9,7 @@ import {
 
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
-import ButtonWithoutOpacity from "./ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 
 type OwnProps = {
   // Array of Identity Provider to show in the grid.
@@ -52,7 +52,7 @@ const renderItem = (props: Props) => (
   const { item } = info;
   const onPress = () => onIdpSelected(item);
   return (
-    <ButtonWithoutOpacity
+    <ButtonDefaultOpacity
       key={item.id}
       accessible={true}
       accessibilityLabel={item.name}
@@ -64,7 +64,7 @@ const renderItem = (props: Props) => (
       testID={`idp-${item.id}-button`}
     >
       <Image source={item.logo} style={styles.idpLogo} />
-    </ButtonWithoutOpacity>
+    </ButtonDefaultOpacity>
   );
 };
 

@@ -11,7 +11,7 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { MessagePaymentExpirationInfo } from "../../utils/messages";
 import { formatPaymentAmount } from "../../utils/payment";
-import ButtonWithoutOpacity from "../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo;
   small?: boolean;
   disabled?: boolean;
-  onPress: ComponentProps<typeof ButtonWithoutOpacity>["onPress"];
+  onPress: ComponentProps<typeof ButtonDefaultOpacity>["onPress"];
 };
 
 const baseStyles = StyleSheet.create({
@@ -187,7 +187,7 @@ class PaymentButton extends React.PureComponent<Props> {
     const hideIcon = isUnexpirable || isExpired || !small;
 
     return (
-      <ButtonWithoutOpacity
+      <ButtonDefaultOpacity
         disabled={disabled || paid}
         light={true}
         onPress={paid ? undefined : onPress}
@@ -226,7 +226,7 @@ class PaymentButton extends React.PureComponent<Props> {
         >
           {getButtonText(messagePaymentExpirationInfo, paid)}
         </Text>
-      </ButtonWithoutOpacity>
+      </ButtonDefaultOpacity>
     );
   }
 }

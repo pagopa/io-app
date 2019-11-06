@@ -20,7 +20,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
@@ -92,7 +92,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
           </Content>
         )}
         <View footer={true}>
-          <ButtonWithoutOpacity
+          <ButtonDefaultOpacity
             block={true}
             light={true}
             bordered={true}
@@ -103,7 +103,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
                 ? I18n.t("global.buttons.back")
                 : I18n.t("global.buttons.cancel")}
             </Text>
-          </ButtonWithoutOpacity>
+          </ButtonDefaultOpacity>
         </View>
       </BaseScreenComponent>
     );

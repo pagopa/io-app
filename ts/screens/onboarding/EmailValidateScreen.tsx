@@ -4,7 +4,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import ButtonWithoutOpacity from "../../components/ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -85,14 +85,14 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
             </Markdown>
             <View style={styles.spacerLarge} />
             <View>
-              <ButtonWithoutOpacity
+              <ButtonDefaultOpacity
                 light={true}
                 block={true}
                 bordered={true}
                 onPress={unavailableAlert}
               >
                 <Text>{I18n.t("email.validate.cta")}</Text>
-              </ButtonWithoutOpacity>
+              </ButtonDefaultOpacity>
             </View>
           </View>
         </ScreenContent>

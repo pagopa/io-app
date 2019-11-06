@@ -20,7 +20,7 @@ import variables from "../../../theme/variables";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { isExpiredCard } from "../../../utils/wallet";
-import ButtonWithoutOpacity from "../../ButtonWithoutOpacity";
+import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
@@ -250,7 +250,7 @@ export default class CardComponent extends React.Component<Props> {
     );
 
     return (
-      <ButtonWithoutOpacity
+      <ButtonDefaultOpacity
         style={[styles.footerButton, buttonStyle]}
         block={true}
         iconRight={true}
@@ -262,7 +262,7 @@ export default class CardComponent extends React.Component<Props> {
           size={variables.iconSize2}
           style={footerTextStyle}
         />
-      </ButtonWithoutOpacity>
+      </ButtonDefaultOpacity>
     );
   }
 
