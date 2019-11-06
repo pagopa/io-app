@@ -261,7 +261,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             primary={true}
             onPress={() => {
               if (true) {
-                // controllare se carta MAestro
+                // è una carta Maestro
                 this.props.navigateToPaymentEnterSecureCode();
               } else {
                 this.props.runAuthorizationAndPayment();
@@ -442,7 +442,9 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           verifica: props.navigation.getParam("verifica"),
           rptId: props.navigation.getParam("rptId"),
           initialAmount: props.navigation.getParam("initialAmount"),
-          idPayment: props.navigation.getParam("idPayment")
+          idPayment: props.navigation.getParam("idPayment"),
+          psps: props.navigation.getParam("psps"),
+          wallet: props.navigation.getParam("wallet")
         })
       )
   };

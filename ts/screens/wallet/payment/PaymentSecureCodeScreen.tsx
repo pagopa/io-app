@@ -23,14 +23,21 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import MaskedInput from "../../../components/ui/MaskedInput";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
-import { navigateToPaymentPickPaymentMethodScreen } from "../../../store/actions/navigation";
+import { identificationRequest } from "../../../store/actions/identification";
+import {
+  navigateToPaymentEnterSecureCode,
+  navigateToPaymentPickPaymentMethodScreen, navigateToPaymentPickPspScreen,
+  navigateToTransactionDetailsScreen
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  backToEntrypointPayment,
+  backToEntrypointPayment, paymentCompletedFailure, paymentCompletedSuccess, paymentExecutePayment,
   paymentInitializeState,
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
+import { fetchTransactionsRequest, runPollTransactionSaga } from "../../../store/actions/wallet/transactions";
 import variables from "../../../theme/variables";
+import { isCompletedTransaction, isSuccessTransaction, Psp, Transaction, Wallet } from "../../../types/pagopa";
 import { AmountToImporto } from "../../../utils/amounts";
 import { CreditCardCVC } from "../../../utils/input";
 import { showToast } from "../../../utils/showToast";
@@ -40,6 +47,8 @@ type NavigationParams = Readonly<{
   rptId: RptId;
   initialAmount: AmountInEuroCents;
   idPayment: string;
+  wallet: Wallet;
+  psps: ReadonlyArray<Psp>;
 }>;
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
@@ -168,7 +177,7 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
       block: true,
       primary: true,
       disabled: false,
-      onPress: () => this.props.pickPaymentMethod(),
+      onPress: () => this.props.runAuthorizationAndPayment(),
       title: I18n.t("global.buttons.continue")
     };
 
@@ -182,43 +191,151 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  onCancel: () => {
-    ActionSheet.show(
-      {
-        options: [
-          I18n.t("wallet.confirmPayment.confirmCancelPayment"),
-          I18n.t("wallet.confirmPayment.confirmContinuePayment")
-        ],
-        destructiveButtonIndex: 0,
-        cancelButtonIndex: 1,
-        title: I18n.t("wallet.confirmPayment.confirmCancelTitle")
-      },
-      buttonIndex => {
-        if (buttonIndex === 0) {
-          // on cancel:
-          // navigate to entrypoint of payment or wallet home
-          dispatch(backToEntrypointPayment());
-          // delete the active payment from pagoPA
-          dispatch(runDeleteActivePaymentSaga());
-          // reset the payment state
-          dispatch(paymentInitializeState());
-          showToast(
-            I18n.t("wallet.confirmPayment.cancelPaymentSuccess"),
-            "success"
+const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
+  const onTransactionTimeout = () => {
+    dispatch(backToEntrypointPayment());
+    showToast(I18n.t("wallet.confirmPayment.transactionTimeout"), "warning");
+  };
+
+  const onTransactionValid = (tx: Transaction) => {
+    if (isSuccessTransaction(tx)) {
+      // on success:
+      dispatch(
+        navigateToTransactionDetailsScreen({
+          isPaymentCompletedTransaction: true,
+          transaction: tx
+        })
+      );
+      // signal success
+      dispatch(
+        paymentCompletedSuccess({
+          transaction: tx,
+          rptId: props.navigation.getParam("rptId"),
+          kind: "COMPLETED"
+        })
+      );
+      // reset the payment state
+      dispatch(paymentInitializeState());
+      // update the transactions state
+      dispatch(fetchTransactionsRequest());
+      // navigate to the resulting transaction details
+      showToast(I18n.t("wallet.confirmPayment.transactionSuccess"), "success");
+    } else {
+      // on failure:
+      // navigate to entrypoint of payment or wallet home
+      dispatch(backToEntrypointPayment());
+      // signal faliure
+      dispatch(paymentCompletedFailure());
+      // delete the active payment from pagoPA
+      dispatch(runDeleteActivePaymentSaga());
+      // reset the payment state
+      dispatch(paymentInitializeState());
+      showToast(I18n.t("wallet.confirmPayment.transactionFailure"), "danger");
+    }
+  };
+
+  const onIdentificationSuccess = () => {
+    dispatch(
+      paymentExecutePayment.request({
+        wallet: props.navigation.getParam("wallet"),
+        idPayment: props.navigation.getParam("idPayment"),
+        onSuccess: action => {
+          dispatch(
+            runPollTransactionSaga({
+              id: action.payload.id,
+              isValid: isCompletedTransaction,
+              onTimeout: onTransactionTimeout,
+              onValid: onTransactionValid
+            })
           );
         }
-      }
-    );
-  },
-  pickPaymentMethod: () =>
-    dispatch(
-      navigateToPaymentPickPaymentMethodScreen({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        idPayment: props.navigation.getParam("idPayment")
       })
-    )
-});
-export default connect(mapDispatchToProps)(PaymentSecureCodeScreen);
+    );
+  };
+
+  const runAuthorizationAndPayment = () =>
+    // inserire qui controllo MAESTRO
+    dispatch(
+      identificationRequest(
+        false,
+        {
+          message: I18n.t("wallet.confirmPayment.identificationMessage")
+        },
+        {
+          label: I18n.t("wallet.confirmPayment.cancelPayment"),
+          onCancel: () => undefined
+        },
+        {
+          onSuccess: onIdentificationSuccess
+        }
+      )
+    );
+  return {
+    pickPaymentMethod: () =>
+      dispatch(
+        navigateToPaymentPickPaymentMethodScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          idPayment: props.navigation.getParam("idPayment")
+        })
+      ),
+    pickPsp: () =>
+      dispatch(
+        navigateToPaymentPickPspScreen({
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          verifica: props.navigation.getParam("verifica"),
+          idPayment: props.navigation.getParam("idPayment"),
+          psps: props.navigation.getParam("psps"),
+          wallet: props.navigation.getParam("wallet")
+        })
+      ),
+    onCancel: () => {
+      ActionSheet.show(
+        {
+          options: [
+            I18n.t("wallet.confirmPayment.confirmCancelPayment"),
+            I18n.t("wallet.confirmPayment.confirmContinuePayment")
+          ],
+          destructiveButtonIndex: 0,
+          cancelButtonIndex: 1,
+          title: I18n.t("wallet.confirmPayment.confirmCancelTitle")
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            // on cancel:
+            // navigate to entrypoint of payment or wallet home
+            dispatch(backToEntrypointPayment());
+            // delete the active payment from pagoPA
+            dispatch(runDeleteActivePaymentSaga());
+            // reset the payment state
+            dispatch(paymentInitializeState());
+            showToast(
+              I18n.t("wallet.confirmPayment.cancelPaymentSuccess"),
+              "success"
+            );
+          }
+        }
+      );
+    },
+    runAuthorizationAndPayment,
+    onRetry: runAuthorizationAndPayment,
+    navigateToPaymentEnterSecureCode: () =>
+      dispatch(
+        navigateToPaymentEnterSecureCode({
+          verifica: props.navigation.getParam("verifica"),
+          rptId: props.navigation.getParam("rptId"),
+          initialAmount: props.navigation.getParam("initialAmount"),
+          idPayment: props.navigation.getParam("idPayment"),
+          psps: props.navigation.getParam("psps"),
+          wallet: props.navigation.getParam("wallet")
+        })
+      )
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(PaymentSecureCodeScreen);
