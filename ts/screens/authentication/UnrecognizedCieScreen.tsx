@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class UnrecognizedCie extends React.Component<Props> {
+class UnrecognizedCieScreen extends React.Component<Props> {
   public render(): React.ReactNode {
     const cancelButtonProps = {
       block: true,
@@ -65,4 +65,4 @@ class UnrecognizedCie extends React.Component<Props> {
     );
   }
 }
-export default UnrecognizedCie;
+export default UnrecognizedCieScreen;
