@@ -233,18 +233,9 @@ authentication:
     tosLinkText: rules on the processing of personal data
     continue: Continue
   cie:
-    temporaryBlockedCieTitle: Card temporarily blocked
-    temporaryBlockedCieContent1: "The card used has been blocked because you tried to log in too many times with an incorrect PIN."
-    temporaryBlockedCieContent2: "No problem: you can unlock it with the "
-    temporaryBlockedCieContent2-bold: "PUK code"
-    temporaryBlockedCieContent3: "which was delivered to you along with the card."
-    temporaryBlockedCieContent4: "To complete this operation you must however "
-    temporaryBlockedCieContent4-bold: "use a special free app"
-    temporaryBlockedCieContent5: ", which is called "
-    temporaryBlockedCieContent5-bold: "CieID."
-    temporaryBlockedCieContent6: You will be allowed to log in with CIE on IO again after you unlock the card.
-    temporaryBlockedCieDoneButton: "Done, card unlocked!"
-    temporaryBlockedCieOpenCieID: "Open CieID"
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
+    temporarilyBlockedCieOpenCieID: "Open CieID"
   spid_information:
     headerTitle: What is SPID?
     contentTitle: Don't have SPID?
