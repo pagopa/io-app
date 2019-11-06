@@ -11,7 +11,10 @@ type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps;
+type Props = OwnProps &
+  Readonly<{
+    onRetry: () => void;
+  }>;
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -26,25 +29,27 @@ class InterruptedReadingCardScreen extends React.Component<Props> {
   /**
    * Footer
    */
-  private renderFooterButtons() {
-    const cancelButtonProps = {
+  get cancelButtonProps() {
+    return {
       cancel: true,
-      onPress: (): boolean => this.props.navigation.goBack(),
+      onPress: this.props.navigation.goBack,
       title: I18n.t("global.buttons.cancel"),
       block: true
     };
-
-    const retryButtonProps = {
-      onPress: undefined,
+  }
+  get retryButtonProps() {
+    return {
+      onPress: this.props.onRetry,
       title: I18n.t("global.buttons.retry"),
       block: true
     };
-
+  }
+  private renderFooterButtons() {
     return (
       <FooterWithButtons
         type={"TwoButtonsInlineThird"}
-        leftButton={cancelButtonProps}
-        rightButton={retryButtonProps}
+        leftButton={this.cancelButtonProps}
+        rightButton={this.retryButtonProps}
       />
     );
   }
