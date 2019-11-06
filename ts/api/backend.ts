@@ -39,8 +39,8 @@ import {
   GetUserProfileT,
   getVisibleServicesDefaultDecoder,
   GetVisibleServicesT,
-  upsertProfileDefaultDecoder,
-  UpsertProfileT,
+  updateProfileDefaultDecoder,
+  UpdateProfileT,
   upsertUserMetadataDefaultDecoder,
   UpsertUserMetadataT
 } from "../../definitions/backend/requestTypes";
@@ -185,13 +185,13 @@ export function BackendClient(
     response_decoder: getUserProfileDecoder(UserProfileUnion)
   };
 
-  const createOrUpdateProfileT: UpsertProfileT = {
+  const createOrUpdateProfileT: UpdateProfileT = {
     method: "post",
     url: () => "/api/v1/profile",
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
     body: p => JSON.stringify(p.extendedProfile),
-    response_decoder: upsertProfileDefaultDecoder()
+    response_decoder: updateProfileDefaultDecoder()
   };
 
   const getUserMetadataT: GetUserMetadataT = {

@@ -6,7 +6,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
-import { untag } from "italia-ts-commons/lib/types";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -17,6 +16,7 @@ import {
 } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -80,9 +80,6 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { email: this.props.email };
-    this.handleGoBack = this.handleGoBack.bind(this);
-    this.isValidEmail = this.isValidEmail.bind(this);
-    this.updateEmailState = this.updateEmailState.bind(this);
   }
 
   /**
@@ -120,7 +117,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
    * - _undefined_, if email field is empty. This state is consumed by
    * LabelledItem Component and it used for style pourposes ONLY.
    */
-  private isValidEmail() {
+  private isValidEmail = () => {
     return this.state.email
       .map(value => {
         if (EMPTY_EMAIL === value) {
@@ -129,15 +126,15 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         return EmailString.decode(value).isRight();
       })
       .toUndefined();
-  }
+  };
 
-  private updateEmailState(value: string) {
+  private updateEmailState = (value: string) => {
     this.setState({
       email: value !== EMPTY_EMAIL ? some(value) : none
     });
-  }
+  };
 
-  private handleGoBack() {
+  private handleGoBack = () => {
     if (this.isFromProfileSection) {
       this.props.navigation.goBack();
     } else {
@@ -152,12 +149,12 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           {
             text: I18n.t("global.buttons.exit"),
             style: "default",
-            onPress: () => this.props.dispatch(abortOnboarding())
+            onPress: this.props.dispatchAbortOnboarding
           }
         ]
       );
     }
-  }
+  };
 
   get isFromProfileSection() {
     return this.props.navigation.getParam("isFromProfileSection") || false;
@@ -218,8 +215,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                   inputProps={{
                     autoCapitalize: "none",
                     value: this.state.email.getOrElse(EMPTY_EMAIL),
-                    onChangeText: (value: string) =>
-                      this.updateEmailState(value),
+                    onChangeText: this.updateEmailState,
                     style: styles.emailInput
                   }}
                   iconStyle={styles.icon}
@@ -244,18 +240,26 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  const optionProfile = pot.toOption(profileSelector(state));
+  const profile = profileSelector(state);
+  const optionProfile = pot.toOption(profile);
   // TODO: get info on validation from profile
   //      https://www.pivotaltracker.com/story/show/168662501
-  const isEmailValidated = true;
+  const isEmailValidated =
+    InitializedProfile.is(profile) && profile.is_email_validated === true;
   return {
-    email: optionProfile.map(_ => untag(_.spid_email)),
+    email: optionProfile.map(_ => {
+      if (InitializedProfile.is(profile) && profile.email) {
+        return profile.email;
+      }
+      return EMPTY_EMAIL;
+    }),
     isEmailValidated
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchEmailInsert: () => dispatch(emailInsert())
+  dispatchEmailInsert: () => dispatch(emailInsert()),
+  dispatchAbortOnboarding: () => dispatch(abortOnboarding())
 });
 
 export default connect(
