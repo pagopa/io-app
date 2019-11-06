@@ -28,6 +28,7 @@ import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Content, Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
+import { createFactory } from "react";
 import {
   Alert,
   Animated,
@@ -498,8 +499,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       hideModal,
       selectedOrganizations
     } = this.props;
+
+    const OrganizationsList = createFactory(
+      ChooserListContainer<Organization>()
+    );
     this.props.showModal(
-      <ChooserListContainer<Organization>
+      <OrganizationsList
         items={selectableOrganizations}
         initialSelectedItemIds={some(new Set(selectedOrganizations || []))}
         keyExtractor={(item: Organization) => item.fiscalCode}
