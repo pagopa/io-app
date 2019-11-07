@@ -46,6 +46,7 @@ import {
   isLoggedIn,
   isLoggedInWithSessionInfo
 } from "../../store/reducers/authentication";
+import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
@@ -483,7 +484,7 @@ const mapStateToProps = (state: GlobalState) => ({
     : undefined,
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  isDebugModeEnabled: isDebugModeEnabledSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isExperimentalFeaturesEnabled:
     state.persistedPreferences.isExperimentalFeaturesEnabled
