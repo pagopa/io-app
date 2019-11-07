@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandPrimary
   },
   textStyle: {
+    color: customVariables.brandDarkGray,
     fontSize: customVariables.fontSizeSmall
   }
 });
