@@ -219,6 +219,8 @@ authentication:
     cie:
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
+      cardRemovedEarlyTitle: You have removed the card too soon
+      cardRemovedEarlyContent: hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
     ok: Ok
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
   cie:
@@ -227,6 +229,9 @@ authentication:
     enableNfcHelp: Don't have an Electronic Identity Card?
     nfcEnabledTitle: NFC Enabled
     nfcEnabledContent: "Thank you for activating the NFC functionality on your device: you can proceed with authentication!"
+    unknownCardTitle: Unknown card
+    unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
+    unknownCardHelpLink: What is the Electronic Identity Card?
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
@@ -295,7 +300,7 @@ email:
       new email address, you will need to validate it by clicking on the link you
       will receive by email.
     details: You can change this address, then you should validate it by clicking on
-      the link we will send to your email address. In the meanwhile, those
+      the link we will sent to your email address. In the meanwhile, those
       functionalities of IO depending on the email (payments, messages forwarding,
       etc.) will be disabled.
     alert: "Warning: your pagoPa account is associated to your email.
