@@ -34,7 +34,7 @@
     "io-ts": "1.8.5",
     "italia-pagopa-commons": "^1.0.0",
     "italia-ts-commons": "5.1.11",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "native-base": "2.13.8",
     "native-base-shoutem-theme": "0.3.1",
     "path-browserify": "0.0.0",
