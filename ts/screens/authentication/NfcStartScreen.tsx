@@ -2,6 +2,7 @@ import { Container, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
@@ -26,9 +27,11 @@ class NfcStartScreen extends React.Component<Props> {
     return (
       <Container>
         <BaseScreenComponent goBack={true}>
+          <ScreenHeader
+            heading={<H1>{I18n.t("authentication.cie.enableNfcTitle")}</H1>}
+            icon={require("../../../img/icons/nfc-icon.png")}
+          />
           <View style={styles.contentContainerStyle}>
-            <H1>{I18n.t("authentication.cie.enableNfcTitle")}</H1>
-            <View spacer={true} />
             <Text style={styles.text}>
               {I18n.t("authentication.cie.enableNfcContent")}
             </Text>
