@@ -63,6 +63,7 @@ import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
+import { instabugBackgroundSaga } from "./startup/instabugBackgroundSaga";
 import { loadServiceRequestHandler } from "./startup/loadServiceRequestHandler";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { loadVisibleServicesRequestHandler } from "./startup/loadVisibleServicesHandler";
@@ -80,7 +81,6 @@ import {
   watchUpserUserMetadata
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
-
 /**
  * Handles the application startup and the main application logic loop
  */
@@ -321,6 +321,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Watch for the app going to background/foreground
   yield fork(watchApplicationActivitySaga);
+  // --------- Instabug local notification saga
+  yield fork(instabugBackgroundSaga);
   // Handles the expiration of the session token
   yield fork(watchSessionExpiredSaga);
   // Logout the user by expiring the session
