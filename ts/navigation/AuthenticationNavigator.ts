@@ -8,6 +8,7 @@ import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInv
 import CieValidScreen from "../screens/authentication/CieValidScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
+import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
@@ -37,6 +38,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   // For valid cie screen
   [ROUTES.CIE_VALID_SCREEN]: {
     screen: CieValidScreen
+  },
+  [ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN]: {
+    screen: InterruptedReadingCardScreen
   }
 };
 
