@@ -221,6 +221,9 @@ authentication:
       noNfcConnectionContent: !include cie/noNfcConnection.md
       cardRemovedEarlyTitle: You have removed the card too soon
       cardRemovedEarlyContent: hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
+      incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
+      incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
+      incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
     ok: Ok
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
     cieLoginWait: Wait a few seconds..
