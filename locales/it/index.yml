@@ -229,6 +229,7 @@ authentication:
       cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
     ok: Ok
     cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
+    cieLoginWait: Attendi qualche secondo..
     unknownCardTitle: Carta sconosciuta
     unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
     unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
