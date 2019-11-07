@@ -2,6 +2,9 @@ const ROUTES = {
   // Ingress
   INGRESS: "INGRESS",
 
+  // Check version app
+  FORCE_UPDATE_APP: "FORCE_UPDATE_APP",
+
   // Authentication
   AUTHENTICATION: "AUTHENTICATION",
   AUTHENTICATION_LANDING: "AUTHENTICATION_LANDING",

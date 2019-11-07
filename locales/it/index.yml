@@ -703,7 +703,6 @@ messages:
     emptyMessage:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
-  alertVersion: E' richiesto l'aggiornamento alla versione numero {{minAppVersion}} o superiore
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
@@ -797,3 +796,6 @@ reminders:
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
 genericError: Si è verificato un errore
+titleUpdateApp: Aggiorna IO!
+messageUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare l'app è necessario aggiornarla all'ultima versione."
+btnUpdateApp: Aggiorna l'app IO

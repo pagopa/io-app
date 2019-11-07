@@ -8,6 +8,7 @@ import OnboardingNavigator from "./OnboardingNavigator";
 import ROUTES from "./routes";
 
 import { Animated, Easing } from "react-native";
+import UpdateAppScreen from "../screens/UpdateAppScreen";
 
 function transitionConfig(): TransitionConfig {
   // FIXME: we should be able to skip the blue background
@@ -50,6 +51,10 @@ const navigator = createStackNavigator(
       // On component mount, the screen will dispatch an
       // APPLICATION_INITIALIZED action that gets handled by the startup saga.
       screen: IngressScreen
+    },
+    [ROUTES.FORCE_UPDATE_APP]: {
+      // Force update the app by this screen if current version is not supported
+      screen: UpdateAppScreen
     },
     [ROUTES.BACKGROUND]: {
       screen: BackgroundScreen

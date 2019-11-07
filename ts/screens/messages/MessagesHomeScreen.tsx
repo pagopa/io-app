@@ -40,20 +40,13 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
-import DeviceInfo from "react-native-device-info";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import { AlertModal } from "../../components/ui/AlertModal";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
-
 type Props = NavigationScreenProps &
-  LightModalContextInterface &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   currentTab: number;
   hasRefreshedOnceUp: boolean;
-  isOutdatedVersion: boolean;
 };
 
 // Scroll range is directly influenced by floating header height
@@ -106,8 +99,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       currentTab: 0,
-      hasRefreshedOnceUp: false,
-      isOutdatedVersion: false
+      hasRefreshedOnceUp: false
     };
   }
 
@@ -140,30 +132,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
   public componentWillUnmount() {
     if (this.navListener) {
       this.navListener.remove();
-    }
-  }
-
-  public componentWillMount() {
-    const { backendInfo } = this.props;
-    // Get min compatible version app for the backend
-    // tslint:disable-next-line: no-let
-    let minAppVersion;
-    if (backendInfo !== undefined) {
-      minAppVersion = backendInfo.minAppVersion;
-    }
-    if (
-      minAppVersion !== undefined &&
-      parseFloat(minAppVersion) > parseFloat(DeviceInfo.getVersion())
-    ) {
-      this.setState({ isOutdatedVersion: true });
-      // Show popup message to invite user to update app
-      this.props.showModal(
-        <AlertModal
-          message={I18n.t("messages.alertVersion", {
-            minAppVersion
-          })}
-        />
-      );
     }
   }
 
@@ -206,7 +174,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
               icon={require("../../../img/icons/message-icon.png")}
               fixed={Platform.OS === "ios"}
             />
-            {this.state.isOutdatedVersion ? undefined : this.renderTabs()}
+            {this.renderTabs()}
           </React.Fragment>
         )}
         {isSearchEnabled && this.renderSearch()}
@@ -433,7 +401,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  backendInfo: state.backendInfo.serverInfo,
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state),
@@ -472,4 +439,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(MessagesHomeScreen));
+)(MessagesHomeScreen);
