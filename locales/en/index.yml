@@ -226,6 +226,7 @@ authentication:
       cardRemovedEarlyContent: hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
     ok: Ok
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
+    cieLoginWait: Wait a few seconds..
     unknownCardTitle: Unknown card
     unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
     unknownCardHelpLink: What is the Electronic Identity Card?
