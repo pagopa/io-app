@@ -34,8 +34,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     };
   }
   public componentDidUpdate(prevprops: Props, prevstate: State) {
-    // tslint:disable-next-line: no-console
-    console.log("componentDidUpdate", this.props);
     const { isValidEmail } = this.props;
     const { dispatched } = this.state;
     if (
