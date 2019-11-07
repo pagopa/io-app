@@ -21,16 +21,11 @@ const styles = StyleSheet.create({
 });
 
 class IncorrectCiePinScreen extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
   public render(): React.ReactNode {
     const cancelButtonProps = {
       block: true,
       cancel: true,
-      onPress: (): void => {
-        this.props.navigation.goBack();
-      },
+      onPress: this.props.navigation.goBack,
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {
