@@ -95,7 +95,7 @@ class CiePinScreen extends React.Component<Props, State> {
     return (
       <ScreenHeader
         heading={<H2>{I18n.t("authentication.landing.cie.pinCardTitle")}</H2>}
-        icon={require("../../../img/cie/icons/icon_insert_cie_pin.png")}
+        icon={require("../../../img/icons/icon_insert_cie_pin.png")}
       />
     );
   }
