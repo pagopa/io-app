@@ -247,3 +247,8 @@ export const navigateToCieValid = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_VALID_SCREEN
   });
+
+export const navigateToCieSuccessScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_SUCCESS_SCREEN
+  });

@@ -5,6 +5,7 @@ import {
 
 import { environment } from "../config";
 import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
+import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
 import CieValidScreen from "../screens/authentication/CieValidScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
@@ -37,6 +38,10 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   // For valid cie screen
   [ROUTES.CIE_VALID_SCREEN]: {
     screen: CieValidScreen
+  },
+  // For CIE success screen
+  [ROUTES.CIE_SUCCESS_SCREEN]: {
+    screen: CieSuccessScreen
   }
 };
 
