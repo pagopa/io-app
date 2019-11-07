@@ -22,12 +22,12 @@ import { SessionToken } from "../../types/SessionToken";
 export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   yield put(analyticsAuthenticationStarted());
 
+  // Reset the navigation stack and navigate to the authentication screen
+  yield put(resetToAuthenticationRoute);
+
   const isSessionExpired: boolean = yield select<GlobalState>(
     isSessionExpiredSelector
   );
-
-  // Reset the navigation stack and navigate to the authentication screen
-  yield put(resetToAuthenticationRoute);
   if (isSessionExpired) {
     // If the user is unauthenticated because of the expired session,
     // navigate to the IDP selection screen.
