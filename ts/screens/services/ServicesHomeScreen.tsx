@@ -573,18 +573,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   };
 
-  private onNavigation = () => {
-    this.setState({ isLongPressEnabled: false });
-    // If cache has been cleaned and the page is already rendered,
-    // it grants content is refreshed
-    if (
-      pot.isNone(this.props.visibleServices) &&
-      !pot.isLoading(this.props.visibleServices)
-    ) {
-      this.refreshScreenContent();
-    }
-  };
-
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
       return undefined;
@@ -624,7 +612,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         isSearchAvailable={userMetadata !== undefined}
         searchType={"Services"}
       >
-        <NavigationEvents onWillFocus={this.onNavigation} />
         {this.renderErrorContent() ? (
           this.renderErrorContent()
         ) : this.props.isSearchEnabled ? (
