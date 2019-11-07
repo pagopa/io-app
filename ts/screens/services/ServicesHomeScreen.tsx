@@ -39,7 +39,6 @@ import {
 } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import {
-  NavigationEvents,
   NavigationEventSubscription,
   NavigationScreenProps
 } from "react-navigation";
