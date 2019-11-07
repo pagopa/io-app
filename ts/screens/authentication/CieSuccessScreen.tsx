@@ -22,9 +22,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 100
   },
-  icon: {
-    color: variables.brandPrimary
-  },
   text: {
     textAlign: "center",
     marginTop: 10
@@ -36,7 +33,11 @@ class CieSuccessScreen extends React.Component<Props> {
     return (
       <BaseScreenComponent goBack={true}>
         <View style={styles.container}>
-          <IconFont style={styles.icon} name="io-success" size={ICON_SIZE} />
+          <IconFont
+            size={ICON_SIZE}
+            color={variables.brandPrimary}
+            name="io-success"
+          />
           <View spacer={true} />
           <Text style={styles.text}>
             {I18n.t("authentication.landing.cieLoginWait")}
