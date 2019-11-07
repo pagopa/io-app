@@ -247,3 +247,8 @@ export const navigateToCieValid = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_VALID_SCREEN
   });
+
+export const navigateToInterruptedReadingCie = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN
+  });
