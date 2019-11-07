@@ -12,6 +12,7 @@ import * as React from "react";
 import { Alert, Platform, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons, {
@@ -201,7 +202,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EmailReadScreen);
+export default withValidatedEmail(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(EmailReadScreen)
+);
