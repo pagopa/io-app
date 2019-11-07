@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { clearCache } from "../../../actions/profile";
 import { FirstServiceLoadSuccess } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -21,12 +20,6 @@ export const firstLoadingReducer = (
     case getType(FirstServiceLoadSuccess): {
       return {
         isFirstServicesLoadingCompleted: true
-      };
-    }
-
-    case getType(clearCache): {
-      return {
-        isFirstServicesLoadingCompleted: false
       };
     }
 

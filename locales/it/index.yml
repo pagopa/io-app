@@ -108,7 +108,10 @@ profile:
     contextualHelp: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
-    clearCache: Elimina cache
+    cache:
+      alert: Sei sicuro di voler eliminare la cache?
+      clear: Elimina cache
+      cleared: La cache è stata eliminata.
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
       confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.

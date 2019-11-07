@@ -3,7 +3,6 @@ import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
-
 import {
   NavigationEventSubscription,
   NavigationScreenProps
