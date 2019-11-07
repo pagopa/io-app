@@ -1,12 +1,7 @@
-import { Option } from "fp-ts/lib/Option";
 import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, Image, Platform, StyleSheet } from "react-native";
-import {
-  NavigationEvents,
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -17,11 +12,6 @@ type OwnProps = Readonly<{
 }>;
 
 type Props = OwnProps;
-
-type State = Readonly<{
-  securityCode: Option<string>;
-  holder: Option<string>;
-}>;
 
 const screenWidth = Dimensions.get("screen").width;
 const boxDimension = 180;
@@ -61,7 +51,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class CieValidScreen extends React.Component<Props, State> {
+class CieValidScreen extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -69,7 +59,6 @@ class CieValidScreen extends React.Component<Props, State> {
   public render(): React.ReactNode {
     return (
       <BaseScreenComponent goBack={true}>
-        <NavigationEvents onWillFocus={undefined} />
         <View style={styles.contentContainerStyle}>
           <H1>{I18n.t("authentication.landing.ok")}</H1>
           <Text style={styles.text}>
