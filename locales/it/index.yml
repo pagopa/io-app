@@ -232,6 +232,7 @@ authentication:
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
     ok: Ok
     cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
+    cieLoginWait: Attendi qualche secondo..
     unknownCardTitle: Carta sconosciuta
     unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
     unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
