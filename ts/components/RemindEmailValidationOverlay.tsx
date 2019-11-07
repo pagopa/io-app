@@ -8,7 +8,7 @@ import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Image } from "react-native";
 import { connect } from "react-redux";
-import { setDebugModeEnabled } from "../store/actions/debug";
+import { isEmailEditingAndValidationEnabled } from "../config";
 import {
   navigateBack,
   navigateToEmailInsertScreen
@@ -124,14 +124,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 // tslint:disable-next-line: variable-name
 const mapStateToProps = (state: GlobalState) => ({
   optionProfile: pot.toOption(state.profile),
-  isValidEmail: !state.debug.isDebugModeEnabled // TODO: get the proper isValidEmail from store
+  isValidEmail: !isEmailEditingAndValidationEnabled && !!state // TODO: get the proper isValidEmail from store
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
-  validateEmail: () => dispatch(setDebugModeEnabled(false)), // TODO: add onPress of email verification https://www.pivotaltracker.com/story/show/168662501
+  validateEmail: () => undefined, // TODO: add onPress of email verification https://www.pivotaltracker.com/story/show/168662501
   navigateToEmailInsertScreen: () => {
-    dispatch(navigateToEmailInsertScreen({ isFromProfileSection: false }));
+    dispatch(navigateToEmailInsertScreen({ isFromProfileSection: true }));
   }
 });
 
