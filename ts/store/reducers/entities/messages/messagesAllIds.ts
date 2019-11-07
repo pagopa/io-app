@@ -29,7 +29,7 @@ const reducer = (
       return pot.some(action.payload);
 
     case getType(loadMessages.failure):
-      return pot.toError(state, action.payload);
+      return pot.toError(state, action.payload.message);
 
     case getType(clearCache):
       return INITIAL_STATE;

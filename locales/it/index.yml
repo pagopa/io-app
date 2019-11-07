@@ -11,7 +11,7 @@ global:
     dayMonth: "DD/MM"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
-  genericError: Ooops, qualcosa è andato storto, riprova per piacere!   
+  genericError: Ooops, qualcosa è andato storto, riprova per piacere!
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
@@ -89,14 +89,14 @@ profile:
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
-  logout: 
+  logout:
     menulabel: Esci da questa identità SPID
-    cta: 
+    cta:
       header: Come vuoi uscire dall'app?
-      keepData: 
+      keepData:
         title: Esci ma conserva i miei dati
         description: Per poter usare IO dovrai nuovamente accedere con la tua identità SPID, ma tutti i tuoi dati verranno conservati nell'applicazione (stato di lettura, etc.) e saranno immediatamente disponibili quando lanci l'app.
-      resetData: 
+      resetData:
         title: Esci e resetta l'applicazione
         description: "L'app IO verrà ripristinata al suo stato iniziale, come fosse appena installata: se vuoi accedere con una diversa identità, o pensi di non volere più utilizzare l'app IO, puoi scegliere questa opzione. Tutti i dati che IO ha salvato sul tuo dispositivo verranno cancellati."
   errors:
@@ -108,7 +108,10 @@ profile:
     contextualHelp: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
-    clearCache: Elimina cache
+    cache:
+      alert: Sei sicuro di voler eliminare la cache?
+      clear: Elimina cache
+      cleared: La cache è stata eliminata.
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
       confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
@@ -145,7 +148,7 @@ profile:
       confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
       bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     pagoPaEnvironment:
-      pagoPaEnv: Ambiente PagoPA di Test
+      pagoPaEnv: Ambiente pagoPA di Test
       pagoPAEnvAlert: La modifica richiede il riavvio dell'app
       alertConfirmTitle: Vuoi usare l'ambiente di test pagoPA?
       alertConfirmMessage: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
@@ -160,7 +163,7 @@ profile:
       Amministrazione.
     list:
       biometric_recognition: Riconoscimento biometrico
-      biometric_recognition_status: 
+      biometric_recognition_status:
         enabled: Abilitato
         disabled: Disabilitato
       email: Indirizzo email
@@ -219,6 +222,23 @@ authentication:
     card5-content: In questa versione sperimentale trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
+    expiredCardTitle: Carta scaduta o non più valida
+    expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
+    expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+    cie:
+      noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
+      noNfcConnectionContent: !include cie/noNfcConnection.md
+      cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
+      cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+      incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
+      incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
+      incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
+    ok: Ok
+    cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
+    cieLoginWait: Attendi qualche secondo..
+    unknownCardTitle: Carta sconosciuta
+    unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+    unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -260,9 +280,9 @@ authentication:
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
-    network: 
+    network:
       title: Problema di accesso
-      body: L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi. 
+      body: L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi.
             Se disponi di un altra identità SPID scegli un provider alternativo.
             Puoi segnalarci il problema con l’icona della coccinella in alto a destra.
     login:
@@ -279,6 +299,49 @@ authentication:
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
+email:
+  read:
+    title: Il tuo indirizzo email
+    info: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
+      usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
+      il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
+      casella di posta elettronica.
+    details: Puoi modificare questo indirizzo, che dovrai validare cliccando su un
+      link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che
+      dipendono dalla email (pagamenti, inoltro messaggi, etc.) saranno disattivate.
+    alert: "Attenzione: il tuo account pagoPA è associato alla tua email,
+      quindi se la modifichi non troverai più elencati
+      nell'applicazione le tue transazioni ed i tuoi metodi di pagamento."
+    help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
+      indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
+      tuo provider di servizi SPID.
+  insert:
+    header: Attivazione
+    title: Inserisci la tua email
+    subtitle: Alcune funzioni di IO hanno bisogno della tua email
+    label: Indirizzo email personale
+    help:
+      title: Email
+      content: !include email_insert_help.md
+  edit:
+    title: Modifica la tua email
+    subtitle: L'email che avevi inserto in precedenza è
+    validated: L'email che avevi inserto e validato in precedenza è
+    label: Nuovo indirizzo email personale
+    cta: Modifica email
+  validate:
+    title: Ricorda di validare il tuo indirizzo email
+    header: Validazione email
+    info: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
+      clicca semplicemente su quel link.<br/>
+      Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
+      inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
+      usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
+    cta: Invia una nuova email di validazione
+    sent: Email inviata
+    help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
+      indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
+      tuo provider di servizi SPID.
 onboarding:
   tos:
     headerTitle: Attivazione
@@ -297,7 +360,7 @@ onboarding:
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
     confirmInvalid: i due pin non coincidono
-  alert: 
+  alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
   fingerprint:
@@ -310,18 +373,6 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include tos_fingerprint_not_enrolled.md
-  email:
-    title: Il tuo indirizzo email
-    subtitle: Alcune funzioni di IO hanno bisogno della tua email.
-    emailInputLabel: Indirizzo email personale
-    emailInfo: Questo è l'indirizzo email che hai associato all'account SPID. Puoi
-      usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
-      il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
-      casella di posta elettronica.
-    ctaEdit: Modifica email
-    help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
-      indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
-      tuo provider di servizi SPID.
 pin_login:
   pin:
     pinInfo: Inserisci il PIN
@@ -416,7 +467,7 @@ wallet:
   pickPsp:
     title: Scegli il gestore
     info: Questa carta non è stata emessa da nessun istituto che fa parte del circuito
-      PagoPA.
+      pagoPA.
     infoBold: Scegli il soggetto economico
     info2: che dovrà gestire la tua transazione.
     link: Per saperne di più
@@ -447,7 +498,7 @@ wallet:
     noWallets:
       title: Nessun metodo di pagamento salvato
       text: Aggiungi un metodo di pagamento per procedere con il pagamento
-    header: Scelta metodo di pagamamento
+    header: Scelta metodo di pagamento
     title: Paga con
     text: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
     fetchPspFailure: Errore temporaneo, riprova
@@ -539,7 +590,7 @@ wallet:
   chooseMethod: Scegli il metodo che preferisci
   QRtoPay:
     chooser: Carica immagine dalla galleria
-    wrongQrCode: Non è un QR Code PagoPA!
+    wrongQrCode: Non è un QR Code pagoPA!
     byCameraTitle: QR Code avviso
     cameraUsageInfo: Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
@@ -558,7 +609,7 @@ wallet:
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poichè questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
     PAYMENT_UNKNOWN: Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.
-    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su PagoPA, il pagamento non può essere effettuato.
+    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su pagoPA, il pagamento non può essere effettuato.
     GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
     MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
     PAYMENT_ONGOING_NOCANCEL: Un pagamento per questo avviso è già in corso, riprova tra 30 minuti.
@@ -631,7 +682,7 @@ messages:
     reminderTitle: "Promemoria per: {{title}}"
     reminderAddSuccess: "Promemoria aggiunto"
     reminderAddFailure: "Errore durante l'aggiunta del promemoria, riprova per piacere"
-    reminderRemoveRequest: 
+    reminderRemoveRequest:
       title: Sei sicuro di voler rimuovere il promemoria?
       ok: Rimuovi promemoria
       cancel: Annulla l'operazione
@@ -652,11 +703,11 @@ messages:
       title: Il tuo archivio è vuoto.
       subtitle: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
   inbox:
-    emptyMessage: 
+    emptyMessage:
       title: La tua lista dei messaggi è vuota.
       subtitle: Aggiorna per vedere se ti sono arrivati nuovi messaggi.
   deadlines:
-    emptyMessage: 
+    emptyMessage:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
 messageDetails:
@@ -715,12 +766,13 @@ services:
     all: Tutti
   loading:
     title: Sto caricando l'elenco dei servizi
-    subtitle: attendi qualche secondo..  
+    subtitle: attendi qualche secondo..
   enableAll: Attiva tutti
   disableAll: Disattiva tutti
   disableAllTitle: Vuoi davvero disattivare tutti i servizi?
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finchè non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
+  emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
@@ -733,6 +785,7 @@ identification:
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
+    title: Identificazione Biometrica
     popup:
       reason: Identificazione
       title: Identificazione richiesta
@@ -740,7 +793,7 @@ identification:
       fallbackLabel: Usa il PIN
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
-  removeRequest: 
+  removeRequest:
     title: Sei sicuro di voler rimuovere l'evento?
     ok: Rimuovi evento
     cancel: Annulla l'operazione
@@ -749,3 +802,4 @@ reminders:
   loadMoreData: carica le scadenze del periodo precedente
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
+genericError: Si è verificato un errore

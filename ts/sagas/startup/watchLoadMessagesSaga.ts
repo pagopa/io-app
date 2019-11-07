@@ -85,7 +85,7 @@ export function* loadMessages(
           response.value.status === 500 && response.value.value.title
             ? response.value.value.title
             : "";
-        yield put(loadMessagesAction.failure(error));
+        yield put(loadMessagesAction.failure(Error(error)));
       } else {
         // 200 ok
         yield put(
@@ -142,7 +142,7 @@ export function* loadMessages(
     }
   } catch (error) {
     // Dispatch failure action
-    yield put(loadMessagesAction.failure(error.message));
+    yield put(loadMessagesAction.failure(error));
   } finally {
     if (yield cancelled()) {
       // If the task is cancelled send a loadMessagesCancelled action.
