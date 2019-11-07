@@ -18,7 +18,8 @@ type LoginResult = LoginSuccess | LoginFailure;
 
 // Prefixes for LOGIN SUCCESS/ERROR
 const LOGIN_SUCCESS_PREFIX = "/profile.html?token=";
-const LOGIN_FAILURE_PREFIX = "/error.html?errorCode=";
+const LOGIN_FAILURE_PREFIX = "/error.html";
+const LOGIN_FAILURE_WITH_ERROR_CODE_PREFIX = "/error.html?errorCode=";
 
 export const extractLoginResult = (url: string): LoginResult | undefined => {
   // Check for LOGIN_SUCCESS
@@ -35,14 +36,24 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
   }
 
   // Check for LOGIN_FAILURE
-  const failureTokenPathPos = url.indexOf(LOGIN_FAILURE_PREFIX);
-  if (failureTokenPathPos !== -1) {
-    const errCode = url.substr(
-      failureTokenPathPos + LOGIN_FAILURE_PREFIX.length
+  if (url.indexOf(LOGIN_FAILURE_PREFIX) !== -1) {
+    const failureWithErrorCodeTokenPathPos = url.indexOf(
+      LOGIN_FAILURE_WITH_ERROR_CODE_PREFIX
     );
+    // try to extract error code
+    if (failureWithErrorCodeTokenPathPos !== -1) {
+      const errCode = url.substr(
+        failureWithErrorCodeTokenPathPos +
+          LOGIN_FAILURE_WITH_ERROR_CODE_PREFIX.length
+      );
+      return {
+        success: false,
+        errorCode: errCode.length > 0 ? errCode : undefined
+      };
+    }
     return {
       success: false,
-      errorCode: errCode && errCode.length > 0 ? errCode : undefined
+      errorCode: undefined
     };
   }
   // Url is not LOGIN related
