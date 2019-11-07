@@ -8,7 +8,7 @@ global:
   dateFormats:
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
-    dayMonth: "MM/DD" 
+    dayMonth: "MM/DD"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, something did not work as expected, please try again!
@@ -90,12 +90,12 @@ profile:
   unknown: UNKNOWN
   logout:
     menulabel: Logout from this SPID identity
-    cta: 
+    cta:
       header: How do you want to quit the app?
-      keepData: 
+      keepData:
         title: Quit keeping all data
         description: In order to use IO, you will log in with you SPID identity again, but any data will be conserved by this app (reading status, etc.) and will be immediately available at next launch.
-      resetData: 
+      resetData:
         title: Quit and reset this app
         description: "IO app will be restored to its initial state, as if it would just be installed: if you want log in with a different identity, or if you are into not using IO app anymore, you should choose this option. All data saved by IO on this device will be deleted."
   errors:
@@ -156,7 +156,7 @@ profile:
     subtitle: This settings will be used by all services of the Public Amministration.
     list:
       biometric_recognition: Biometric recognition
-      biometric_recognition_status: 
+      biometric_recognition_status:
         enabled: Enabled
         disabled: Disabled
       email: Email address
@@ -172,7 +172,7 @@ profile:
     unavailable:
       title: This setting is set up on your SPID profile
       message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
-    language: 
+    language:
       title: This setting is set up in system preferences
       message: IO inherits language from the operating system of this device
 userMetadata:
@@ -219,8 +219,13 @@ authentication:
     cie:
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
+      cardRemovedEarlyTitle: You have removed the card too soon
+      cardRemovedEarlyContent: hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
     ok: Ok
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
+    unknownCardTitle: Unknown card
+    unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
+    unknownCardHelpLink: What is the Electronic Identity Card?
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
@@ -266,7 +271,7 @@ authentication:
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
-    network: 
+    network:
       title: Access problem
       body: The selected identity provider is not available at this time, you can try again later.
             If you have another SPID, choose an alternative provider.
@@ -275,7 +280,7 @@ authentication:
       title: Login error
       body: There was an error with the login, please retry!
     spid:
-      unknown: Unknown error 
+      unknown: Unknown error
       error_19: "You have entered an incorrect username or password too many times: try again in a few minutes or contact your SPID identity provider to change your credentials."
       error_20: "For security reasons IO requires a login with a second authentication factor: contact your SPID identity provider to understand how to use it."
       error_21: "It's been too long since you started accessing: please start over again."
@@ -286,17 +291,17 @@ authentication:
     title: Security notice
     message: To keep you private information safe, please login again with your SPID credentials, thanks!
 email:
-  read: 
+  read:
     title: Your email address
     info: This is the email address associated to your SPID account. You can
       use in IO app a different email address, if you wish. To make operative the
       new email address, you will need to validate it by clicking on the link you
       will receive by email.
     details: You can change this address, then you should validate it by clicking on
-      the link we will sent to your email address. In the meanwhile, those 
+      the link we will sent to your email address. In the meanwhile, those
       functionalities of IO depending on the email (payments, messages forwarding,
       etc.) will be disabled.
-    alert: "Warning: your pagoPa account is associated to your email. 
+    alert: "Warning: your pagoPa account is associated to your email.
       So, if you change it, IO will no more list your registered payment methods
       and transactions."
     help: Your SPID profile communicates your email to IO app. If you find the address
@@ -665,7 +670,7 @@ messages:
     reminderTitle: "Reminder for: {{title}}"
     reminderAddSuccess: "Reminder added"
     reminderAddFailure: "Error adding reminder, please retry"
-    reminderRemoveRequest: 
+    reminderRemoveRequest:
       title: Are you sure you want to remove this reminder?
       ok: Remove reminder
       cancel: Cancel the operation
@@ -686,11 +691,11 @@ messages:
       title: Your archive is empty.
       subtitle: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
   inbox:
-    emptyMessage: 
+    emptyMessage:
       title: Your message list is empty.
       subtitle: Refresh to check for any new messages.
   deadlines:
-    emptyMessage: 
+    emptyMessage:
       title: You haven't any scheduled deadline.
       subtitle:  Use the button above to check out past deadlines.
 messageDetails:
@@ -775,7 +780,7 @@ identification:
       fallbackLabel: Use the PIN
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
-  removeRequest: 
+  removeRequest:
     title: Are you sure you want to remove this event?
     ok: Remove event
     cancel: Cancel the operation
