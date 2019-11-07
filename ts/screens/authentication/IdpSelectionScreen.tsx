@@ -110,8 +110,6 @@ const styles = StyleSheet.create({
  * A screen where the user choose the SPID IPD to login with.
  */
 const IdpSelectionScreen: React.SFC<Props> = props => {
-  const goBack = () => props.navigation.goBack();
-
   const onIdpSelected = (idp: IdentityProvider) => {
     props.dispatch(idpSelected(idp));
     props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
@@ -119,7 +117,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
 
   return (
     <BaseScreenComponent
-      goBack={goBack}
+      goBack={props.navigation.goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
       <Content noPadded={true} overScrollMode="never" bounces={false}>
@@ -139,7 +137,12 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
-          <Button block={true} light={true} bordered={true} onPress={goBack}>
+          <Button
+            block={true}
+            light={true}
+            bordered={true}
+            onPress={props.navigation.goBack}
+          >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </Button>
         </View>
