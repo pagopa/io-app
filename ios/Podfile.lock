@@ -110,7 +110,7 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Mixpanel
 
 EXTERNAL SOURCES:
@@ -177,4 +177,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 2281a3465f7eab3ed7ddb7ddaf800f639b4a9133
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.6.1
