@@ -43,6 +43,7 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   // For CIE success screen
   [ROUTES.CIE_SUCCESS_SCREEN]: {
     screen: CieSuccessScreen
+  },
   [ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN]: {
     screen: InterruptedReadingCardScreen
   }
