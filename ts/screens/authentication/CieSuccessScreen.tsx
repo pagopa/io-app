@@ -32,10 +32,6 @@ const styles = StyleSheet.create({
 });
 
 class CieSuccessScreen extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   public render(): React.ReactNode {
     return (
       <BaseScreenComponent goBack={true}>
