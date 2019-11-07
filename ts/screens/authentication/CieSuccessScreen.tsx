@@ -7,6 +7,8 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 
+const ICON_SIZE = 80;
+
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -21,9 +23,7 @@ const styles = StyleSheet.create({
     marginBottom: 100
   },
   icon: {
-    fontFamily: "io-icon-font",
-    color: variables.brandPrimary,
-    lineHeight: 0
+    color: variables.brandPrimary
   },
   text: {
     textAlign: "center",
@@ -36,12 +36,7 @@ class CieSuccessScreen extends React.Component<Props> {
     return (
       <BaseScreenComponent goBack={true}>
         <View style={styles.container}>
-          <IconFont
-            style={{ justifyContent: "center" }}
-            name="io-success"
-            color={variables.textLinkColor}
-            size={80}
-          />
+          <IconFont style={styles.icon} name="io-success" size={ICON_SIZE} />
           <View spacer={true} />
           <Text style={styles.text}>
             {I18n.t("authentication.landing.cieLoginWait")}
