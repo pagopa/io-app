@@ -3,9 +3,15 @@
  *
  */
 
-import { Container, H2, Text, View } from "native-base";
+import { Button, Container, H2, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  Image,
+  Linking,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import BaseScreenComponent from "../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../components/ui/FooterWithButtons";
@@ -39,20 +45,66 @@ class UpdateAppScreen extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
   }
+
+  // No Event on back button android
+  private handleBackPress = () => {
+    return true;
+  };
+
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  private openAppStore() {
+    if (Platform.OS === "ios") {
+      // tslint:disable-next-line: no-floating-promises
+      Linking.openURL(
+        "itms://itunes.apple.com/us/app/apple-store/it.teamdigitale.app.IO?mt=8"
+      );
+    } else {
+      // tslint:disable-next-line: no-floating-promises
+      Linking.openURL("market://details?id=it.teamdigitale.app.italiaapp");
+    }
+  }
+
   /**
-   * Footer
+   * Footer iOS button
    */
-  private renderFooterButtons() {
+  private renderIosFooter() {
+    return (
+      <View footer={true}>
+        <React.Fragment>
+          <Button
+            block={true}
+            primary={true}
+            onPress={() => this.openAppStore()}
+          >
+            <Text>{I18n.t("btnUpdateApp")}</Text>
+          </Button>
+          <View spacer={true} />
+        </React.Fragment>
+      </View>
+    );
+  }
+
+  /**
+   * Footer Android buttons
+   */
+  private renderAndroidFooter() {
     const cancelButtonProps = {
       cancel: true,
       block: true,
-      onPress: undefined,
+      onPress: () => BackHandler.exitApp(),
       title: I18n.t("global.buttons.cancel")
     };
     const updateButtonProps = {
       block: true,
       primary: true,
-      onPress: undefined,
+      onPress: () => this.openAppStore(),
       title: I18n.t("btnUpdateApp")
     };
 
@@ -81,7 +133,9 @@ class UpdateAppScreen extends React.PureComponent<Props> {
             </View>
           </Container>
         </BaseScreenComponent>
-        {this.renderFooterButtons()}
+        {Platform.OS === "android"
+          ? this.renderAndroidFooter()
+          : this.renderIosFooter()}
         <View />
       </Container>
     );
