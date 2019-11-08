@@ -238,6 +238,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     if (!loggedOutWithIdpAuth) {
       // FIXME: perhaps as a safe bet, navigate to the IdP selection screen on mount?
+      //      https://www.pivotaltracker.com/story/show/169541951
       return null;
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
