@@ -28,7 +28,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
-import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import {
   NavigationEventSubscription,
   NavigationScreenProps
@@ -88,7 +87,10 @@ import {
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import {
+  getHeaderHeight,
+  setStatusBarColorAndBackground
+} from "../../utils/statusBar";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -123,13 +125,7 @@ type DataLoadFailure =
 const EMPTY_MESSAGE = "";
 
 // Scroll range is directly influenced by floating header height
-const SCROLL_RANGE_FOR_ANIMATION =
-  customVariables.appHeaderHeight +
-  (Platform.OS === "ios"
-    ? isIphoneX()
-      ? 18
-      : getStatusBarHeight(true)
-    : customVariables.spacerHeight);
+const SCROLL_RANGE_FOR_ANIMATION = getHeaderHeight;
 
 const styles = StyleSheet.create({
   tabBarContainer: {
@@ -181,20 +177,16 @@ const styles = StyleSheet.create({
   errorText2: {
     fontSize: customVariables.fontSizeSmall
   },
-  buttonBar: {
+  varBar: {
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",
     backgroundColor: customVariables.colorWhite,
     padding: 10
   },
-  buttonBarLeft: {
+  buttonBar: {
     flex: 2,
     marginEnd: 5
-  },
-  buttonBarRight: {
-    flex: 2,
-    marginStart: 5
   }
 });
 
@@ -282,7 +274,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private scollPositions: number[] = [0, 0, 0];
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
-  private renderServiceLoadingPlaceholder = () => {
+  private renderServiceLoadingPlaceholder() {
     return (
       <View style={[styles.center, styles.padded]}>
         {Platform.OS === "ios" && <View style={styles.customSpacer} />}
@@ -296,7 +288,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <Text>{I18n.t("services.loading.subtitle")}</Text>
       </View>
     );
-  };
+  }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
     // saving current list scroll position to enable header animation
@@ -427,19 +419,19 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private renderLongPressFooterButtons = () => {
     return (
-      <View style={styles.buttonBar}>
+      <View style={styles.varBar}>
         <Button
           block={true}
           bordered={true}
           onPress={this.handleOnLongPressItem}
-          style={styles.buttonBarLeft}
+          style={styles.buttonBar}
         >
           <Text>{I18n.t("services.close")}</Text>
         </Button>
         <Button
           block={true}
           primary={true}
-          style={styles.buttonBarRight}
+          style={styles.buttonBar}
           onPress={() => {
             if (!this.props.wasServiceAlertDisplayedOnce) {
               this.showAlertOnDisableServices(
