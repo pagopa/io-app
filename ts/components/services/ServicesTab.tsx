@@ -87,21 +87,10 @@ function organizationContainsText(item: Organization, searchText: string) {
 }
 
 class ServicesTab extends React.PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {};
-    this.onSaveAreasOfInterest = this.onSaveAreasOfInterest.bind(this);
-    this.showChooserAreasOfInterestModal = this.showChooserAreasOfInterestModal.bind(
-      this
-    );
-    this.renderLocalQuickSectionDeletion = this.renderLocalQuickSectionDeletion.bind(
-      this
-    );
-  }
   /**
    * For tab Locals
    */
-  private showChooserAreasOfInterestModal() {
+  private showChooserAreasOfInterestModal = () => {
     const {
       selectableOrganizations,
       hideModal,
@@ -126,9 +115,11 @@ class ServicesTab extends React.PureComponent<Props> {
         noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
       />
     );
-  }
+  };
 
-  private onSaveAreasOfInterest(selectedFiscalCodes: Option<Set<string>>) {
+  private onSaveAreasOfInterest = (
+    selectedFiscalCodes: Option<Set<string>>
+  ) => {
     if (this.props.updateOrganizationsOfInterestMetadata) {
       if (this.props.updateToast) {
         this.props.updateToast();
@@ -136,25 +127,26 @@ class ServicesTab extends React.PureComponent<Props> {
       this.props.updateOrganizationsOfInterestMetadata(selectedFiscalCodes);
     }
     this.props.hideModal();
-  }
+  };
 
-  private renderLocalQuickSectionDeletion(section: ServicesSectionState) {
-    const onPressItem = () => {
-      if (this.props.userMetadata && this.props.selectedOrganizations) {
-        if (this.props.updateToast) {
-          this.props.updateToast();
-        }
-        const updatedAreasOfInterest = this.props.selectedOrganizations.filter(
-          item => item !== section.organizationFiscalCode
-        );
-        this.props.saveSelectedOrganizationItems(
-          this.props.userMetadata,
-          updatedAreasOfInterest
-        );
+  private onPressItem = (section: ServicesSectionState) => {
+    if (this.props.userMetadata && this.props.selectedOrganizations) {
+      if (this.props.updateToast) {
+        this.props.updateToast();
       }
-    };
+      const updatedAreasOfInterest = this.props.selectedOrganizations.filter(
+        item => item !== section.organizationFiscalCode
+      );
+      this.props.saveSelectedOrganizationItems(
+        this.props.userMetadata,
+        updatedAreasOfInterest
+      );
+    }
+  };
+
+  private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => {
     return (
-      <TouchableOpacity onPress={onPressItem}>
+      <TouchableOpacity onPress={() => this.onPressItem(section)}>
         <IconFont
           name={"io-trash"}
           color={customVariables.brandMildGray}
@@ -163,9 +155,9 @@ class ServicesTab extends React.PureComponent<Props> {
         />
       </TouchableOpacity>
     );
-  }
+  };
 
-  private onTabScroll(tabOffset: Animated.Value) {
+  private onTabScroll = (tabOffset: Animated.Value) => {
     return {
       onScroll: Animated.event(
         [
@@ -181,7 +173,7 @@ class ServicesTab extends React.PureComponent<Props> {
       ),
       scrollEventThrottle: 8 // target is 120fps
     };
-  }
+  };
 
   public render() {
     return (
