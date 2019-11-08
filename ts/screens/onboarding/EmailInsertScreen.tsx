@@ -92,7 +92,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
    * Footer
    *
    * TODO1: add navigation to the dedicated modal
-   *          https://www.pivotaltracker.com/story/show/168247501
+   *          https://www.pivotaltracker.com/story/show/169545858
    * TODO:2 save the inserted new email
    *          https://www.pivotaltracker.com/n/projects/2048617/stories/169264055
    */

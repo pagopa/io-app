@@ -11,7 +11,7 @@ global:
     dayMonth: "DD/MM"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
-  genericError: Ooops, qualcosa è andato storto, riprova per piacere!   
+  genericError: Ooops, qualcosa è andato storto, riprova per piacere!
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
@@ -91,14 +91,14 @@ profile:
   sections:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
-  logout: 
+  logout:
     menulabel: Esci da questa identità SPID
-    cta: 
+    cta:
       header: Come vuoi uscire dall'app?
-      keepData: 
+      keepData:
         title: Esci ma conserva i miei dati
         description: Per poter usare IO dovrai nuovamente accedere con la tua identità SPID, ma tutti i tuoi dati verranno conservati nell'applicazione (stato di lettura, etc.) e saranno immediatamente disponibili quando lanci l'app.
-      resetData: 
+      resetData:
         title: Esci e resetta l'applicazione
         description: "L'app IO verrà ripristinata al suo stato iniziale, come fosse appena installata: se vuoi accedere con una diversa identità, o pensi di non volere più utilizzare l'app IO, puoi scegliere questa opzione. Tutti i dati che IO ha salvato sul tuo dispositivo verranno cancellati."
   errors:
@@ -108,7 +108,10 @@ profile:
     screenTitle: Profilo
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
-    clearCache: Elimina cache
+    cache:
+      alert: Sei sicuro di voler eliminare la cache?
+      clear: Elimina cache
+      cleared: La cache è stata eliminata.
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
       confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
@@ -166,7 +169,7 @@ profile:
     contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       biometric_recognition: Riconoscimento biometrico
-      biometric_recognition_status: 
+      biometric_recognition_status:
         enabled: Abilitato
         disabled: Disabilitato
       email: Indirizzo email
@@ -241,8 +244,17 @@ authentication:
     cie:
       noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
+      cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
+      cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+      incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
+      incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
+      incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
     ok: Ok
     cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
+    cieLoginWait: Attendi qualche secondo..
+    unknownCardTitle: Carta sconosciuta
+    unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+    unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -288,9 +300,9 @@ authentication:
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
-    network: 
+    network:
       title: Problema di accesso
-      body: L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi. 
+      body: L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi.
             Se disponi di un altra identità SPID scegli un provider alternativo.
             Puoi segnalarci il problema con l’icona della coccinella in alto a destra.
     login:
@@ -314,8 +326,8 @@ email:
       usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
       il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
       casella di posta elettronica.
-    details: Puoi modificare questo indirizzo, che dovrai validare cliccando su un  
-      link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che 
+    details: Puoi modificare questo indirizzo, che dovrai validare cliccando su un
+      link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che
       dipendono dalla email (pagamenti, inoltro messaggi, etc.) saranno disattivate.
     alert: "Attenzione: il tuo account pagoPA è associato alla tua email,
       quindi se la modifichi non troverai più elencati
@@ -372,7 +384,7 @@ onboarding:
     confirmInvalid: i due pin non coincidono
     contextualHelpTitle: Qual è il tuo PIN
     contextualHelpContent: !include onboarding/onboarding_pin.md
-  alert: 
+  alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
   fingerprint:
@@ -541,7 +553,7 @@ wallet:
     noWallets:
       title: Nessun metodo di pagamento salvato
       text: Aggiungi un metodo di pagamento per procedere con il pagamento
-    header: Scelta metodo di pagamamento
+    header: Scelta metodo di pagamento
     title: Paga con
     text: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
     fetchPspFailure: Errore temporaneo, riprova
@@ -733,7 +745,7 @@ messages:
     reminderTitle: "Promemoria per: {{title}}"
     reminderAddSuccess: "Promemoria aggiunto"
     reminderAddFailure: "Errore durante l'aggiunta del promemoria, riprova per piacere"
-    reminderRemoveRequest: 
+    reminderRemoveRequest:
       title: Sei sicuro di voler rimuovere il promemoria?
       ok: Rimuovi promemoria
       cancel: Annulla l'operazione
@@ -754,11 +766,11 @@ messages:
       title: Il tuo archivio è vuoto.
       subtitle: Tieni premuto su un messaggio per spostarlo in archivio. Puoi anche archiviare più messaggi contemporaneamente. I messaggi archiviati verranno comunque conservati e saranno disponibili nei risultati di ricerca.
   inbox:
-    emptyMessage: 
+    emptyMessage:
       title: La tua lista dei messaggi è vuota.
       subtitle: Aggiorna per vedere se ti sono arrivati nuovi messaggi.
   deadlines:
-    emptyMessage: 
+    emptyMessage:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
 messageDetails:
@@ -821,7 +833,7 @@ services:
     all: Tutti
   loading:
     title: Sto caricando l'elenco dei servizi
-    subtitle: attendi qualche secondo..  
+    subtitle: attendi qualche secondo..
   enableAll: Attiva tutti
   disableAll: Disattiva tutti
   disableAllTitle: Vuoi davvero disattivare tutti i servizi?
@@ -849,7 +861,7 @@ identification:
       fallbackLabel: Usa il PIN
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
-  removeRequest: 
+  removeRequest:
     title: Sei sicuro di voler rimuovere l'evento?
     ok: Rimuovi evento
     cancel: Annulla l'operazione

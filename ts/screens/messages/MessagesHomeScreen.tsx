@@ -3,7 +3,6 @@ import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
-
 import {
   NavigationEventSubscription,
   NavigationScreenProps
@@ -83,9 +82,11 @@ const styles = StyleSheet.create({
   activeTextStyle: {
     ...makeFontStyleObject(Platform.select, "600"),
     fontSize: Platform.OS === "android" ? 16 : undefined,
-    fontWeight: Platform.OS === "android" ? "normal" : "bold"
+    fontWeight: Platform.OS === "android" ? "normal" : "bold",
+    color: customVariables.brandPrimary
   },
   textStyle: {
+    color: customVariables.brandDarkGray,
     fontSize: customVariables.fontSizeSmall
   }
 });
