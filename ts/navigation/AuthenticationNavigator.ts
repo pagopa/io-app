@@ -4,10 +4,10 @@ import {
 } from "react-navigation";
 
 import { environment } from "../config";
+import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
 import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
 import CieValidScreen from "../screens/authentication/CieValidScreen";
-import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";

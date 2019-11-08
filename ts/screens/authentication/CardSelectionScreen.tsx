@@ -3,21 +3,17 @@ import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
 import AnimatedRing from "../../components/animations/AnimatedRing";
 import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { ReduxProps } from "../../store/actions/types";
-import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
 interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
 }
 
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
+type Props = OwnProps;
 // Image dimension
 const imgDimension = 180;
 const boxDimension = 245;
@@ -71,19 +67,21 @@ const CardSelectionScreen: React.SFC<Props> = props => {
         <View style={{ alignItems: "center", height: boxDimension }}>
           <AnimatedRing
             dimension={ringSettings.dimension}
-            interval={0 as Millisecond}
+            startAnimationAfter={0 as Millisecond}
             duration={ringSettings.duration}
             boxDimension={boxDimension}
           />
           <AnimatedRing
             dimension={ringSettings.dimension}
-            interval={(ringSettings.duration / 3) as Millisecond}
+            startAnimationAfter={(ringSettings.duration / 3) as Millisecond}
             duration={ringSettings.duration}
             boxDimension={boxDimension}
           />
           <AnimatedRing
             dimension={ringSettings.dimension}
-            interval={((ringSettings.duration / 3) * 2) as Millisecond}
+            startAnimationAfter={
+              ((ringSettings.duration / 3) * 2) as Millisecond
+            }
             duration={ringSettings.duration}
             boxDimension={boxDimension}
           />
@@ -98,11 +96,7 @@ const CardSelectionScreen: React.SFC<Props> = props => {
         </Text>
       </Content>
       <View footer={true}>
-        <Button
-          onPress={() => props.navigation.goBack()}
-          cancel={true}
-          block={true}
-        >
+        <Button onPress={props.navigation.goBack} cancel={true} block={true}>
           <Text>{I18n.t("global.buttons.cancel")}</Text>
         </Button>
       </View>
@@ -110,8 +104,4 @@ const CardSelectionScreen: React.SFC<Props> = props => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  isSessionExpired: isSessionExpiredSelector(state)
-});
-
-export default connect(mapStateToProps)(CardSelectionScreen);
+export default CardSelectionScreen;
