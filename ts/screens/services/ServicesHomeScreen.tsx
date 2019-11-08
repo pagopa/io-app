@@ -80,6 +80,7 @@ import {
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
+import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import {
@@ -89,7 +90,6 @@ import {
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
-import { makeFontStyleObject } from '../../theme/fonts';
 
 type OwnProps = NavigationScreenProps;
 
@@ -507,7 +507,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       default:
         return undefined;
     }
-  }
+  };
 
   private renderInnerContent() {
     if (this.state.isInnerContentRendered) {
