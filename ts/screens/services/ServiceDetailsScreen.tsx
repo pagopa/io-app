@@ -97,7 +97,7 @@ function renderInformationRow(
     <View style={styles.infoItem}>
       <Text>{label}</Text>
       <Button primary={true} small={true} onPress={onPress}>
-        <Text ellipsizeMode={"tail"} numberOfLines={1}>
+        <Text uppercase={false} ellipsizeMode={"tail"} numberOfLines={1}>
           {info}
         </Text>
       </Button>
