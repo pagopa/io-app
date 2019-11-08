@@ -28,7 +28,7 @@ type Props = OwnProps;
 const styles = StyleSheet.create({
   text: {
     marginTop: customVariables.contentPadding,
-    fontSize: 20
+    fontSize: 18
   },
   container: {
     margin: customVariables.contentPadding,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start"
   },
   img: {
-    marginTop: customVariables.contentPadding,
+    marginTop: customVariables.contentPaddingLarge,
     alignSelf: "center"
   }
 });
