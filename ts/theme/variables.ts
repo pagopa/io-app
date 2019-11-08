@@ -15,7 +15,7 @@ import { ThemeSimpleValue } from "./types";
 // tslint:disable-next-line:no-object-mutation
 const customVariables = Object.assign(materialVariables, {
   // Android
-  btnUppercaseAndroidText: false,
+  buttonUppercaseAndroidText: false,
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
