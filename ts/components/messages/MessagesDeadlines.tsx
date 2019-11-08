@@ -19,8 +19,8 @@ import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/enti
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
+import { HEADER_HEIGHT } from "../../utils/constants";
 import { DateFromISOString } from "../../utils/dates";
-import { getHeaderHeight } from "../../utils/statusBar";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
@@ -36,7 +36,7 @@ import MessageAgenda, {
 // How many past months to load in batch
 const PAST_DATA_MONTHS = 3;
 
-const SCROLL_RANGE_FOR_ANIMATION = getHeaderHeight;
+const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   listWrapper: {

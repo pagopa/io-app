@@ -82,15 +82,13 @@ import {
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
+import { HEADER_HEIGHT } from "../../utils/constants";
 import {
   getChannelsforServicesList,
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import {
-  getHeaderHeight,
-  setStatusBarColorAndBackground
-} from "../../utils/statusBar";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -125,7 +123,7 @@ type DataLoadFailure =
 const EMPTY_MESSAGE = "";
 
 // Scroll range is directly influenced by floating header height
-const SCROLL_RANGE_FOR_ANIMATION = getHeaderHeight;
+const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   tabBarContainer: {

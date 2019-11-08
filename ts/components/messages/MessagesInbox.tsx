@@ -7,7 +7,7 @@ import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import customVariables from "../../theme/variables";
-import { getHeaderHeight } from "../../utils/statusBar";
+import { HEADER_HEIGHT } from "../../utils/constants";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
@@ -15,7 +15,7 @@ import {
 import { ListSelectionBar } from "../ListSelectionBar";
 import MessageList from "./MessageList";
 
-const SCROLL_RANGE_FOR_ANIMATION = getHeaderHeight;
+const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   listWrapper: {

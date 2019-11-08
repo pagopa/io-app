@@ -36,10 +36,8 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import {
-  getHeaderHeight,
-  setStatusBarColorAndBackground
-} from "../../utils/statusBar";
+import { HEADER_HEIGHT } from "../../utils/constants";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -51,7 +49,7 @@ type State = {
 };
 
 // Scroll range is directly influenced by floating header height
-const SCROLL_RANGE_FOR_ANIMATION = getHeaderHeight;
+const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   tabBarContainer: {
