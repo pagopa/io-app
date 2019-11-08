@@ -214,40 +214,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       toastErrorMessage: EMPTY_MESSAGE,
       isInnerContentRendered: false
     };
-    this.updateLongPressButtonScope = this.updateLongPressButtonScope.bind(
-      this
-    );
-    this.handleOnLongPressItem = this.handleOnLongPressItem.bind(this);
-    this.onServiceSelect = this.onServiceSelect.bind(this);
-    this.showAlertOnDisableServices = this.showAlertOnDisableServices.bind(
-      this
-    );
-    this.onItemSwitchValueChanged = this.onItemSwitchValueChanged.bind(this);
-    this.disableOrEnableTabServices = this.disableOrEnableTabServices.bind(
-      this
-    );
-    this.renderLongPressFooterButtons = this.renderLongPressFooterButtons.bind(
-      this
-    );
-    this.renderErrorContent = this.renderErrorContent.bind(this);
-    this.renderInnerContent = this.renderInnerContent.bind(this);
-    this.renderSearch = this.renderSearch.bind(this);
-    this.refreshServices = this.refreshServices.bind(this);
-    this.refreshScreenContent = this.refreshScreenContent.bind(this);
-    this.updateToastMessage = this.updateToastMessage.bind(this);
-    this.handleOnScroll = this.handleOnScroll.bind(this);
-    this.handleOnChangeTab = this.handleOnChangeTab.bind(this);
-    this.renderTabs = this.renderTabs.bind(this);
   }
 
-  // A toast will be displayed if an error occurs.
-  private updateToastMessage(error: string) {
-    this.setState({
-      toastErrorMessage: error
-    });
-  }
-
-  private updateLongPressButtonScope() {
+  private updateLongPressButtonScope = () => {
     const currentTabServicesChannels = this.props.getServicesChannels(
       this.props.tabsServicesId[this.state.currentTab],
       this.props.profile
@@ -265,9 +234,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       // if at least one tab service is enabled the footer primary button allows services are massively disabled
       this.setState({ enableServices: false });
     }
-  }
+  };
 
-  private handleOnLongPressItem() {
+  private handleOnLongPressItem = () => {
     if (!this.props.isSearchEnabled) {
       this.updateLongPressButtonScope();
       const isLongPressEnabled = !this.state.isLongPressEnabled;
@@ -279,7 +248,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         currentTabServicesId
       });
     }
-  }
+  };
 
   public componentDidMount() {
     // On mount, update visible services and user metadata if their
@@ -313,7 +282,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private scollPositions: number[] = [0, 0, 0];
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
-  private renderServiceLoadingPlaceholder() {
+  private renderServiceLoadingPlaceholder = () => {
     return (
       <View style={[styles.center, styles.padded]}>
         {Platform.OS === "ios" && <View style={styles.customSpacer} />}
@@ -327,7 +296,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <Text>{I18n.t("services.loading.subtitle")}</Text>
       </View>
     );
-  }
+  };
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
     // saving current list scroll position to enable header animation
@@ -378,19 +347,19 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   }
 
-  private onServiceSelect(service: ServicePublic) {
+  private onServiceSelect = (service: ServicePublic) => {
     // when a service gets selected the service is recorded as read
     this.props.serviceDetailsLoad(service);
     this.props.navigateToServiceDetailsScreen({
       service
     });
-  }
+  };
 
-  private showAlertOnDisableServices(
+  private showAlertOnDisableServices = (
     title: string,
     msg: string,
     onConfirmPress: () => void
-  ) {
+  ) => {
     Alert.alert(
       title,
       msg,
@@ -411,9 +380,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       ],
       { cancelable: false }
     );
-  }
+  };
 
-  private onItemSwitchValueChanged(service: ServicePublic, value: boolean) {
+  private onItemSwitchValueChanged = (
+    service: ServicePublic,
+    value: boolean
+  ) => {
     // check if the alert of disable service has not been shown already and if the service is active
     if (!this.props.wasServiceAlertDisplayedOnce && !value) {
       this.showAlertOnDisableServices(
@@ -435,7 +407,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       );
     }
     this.updateLongPressButtonScope();
-  }
+  };
 
   public componentWillUnmount() {
     if (this.navListener) {
@@ -444,16 +416,16 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   }
 
   // This method enable or disable services and update the enableServices props
-  private disableOrEnableTabServices() {
+  private disableOrEnableTabServices = () => {
     this.props.disableOrEnableServices(
       this.state.currentTabServicesId,
       this.props.profile,
       this.state.enableServices
     );
     this.updateLongPressButtonScope();
-  }
+  };
 
-  private renderLongPressFooterButtons() {
+  private renderLongPressFooterButtons = () => {
     return (
       <View style={styles.buttonBar}>
         <Button
@@ -488,7 +460,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         </Button>
       </View>
     );
-  }
+  };
 
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
@@ -509,13 +481,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   };
 
-  private renderInnerContent() {
+  private renderInnerContent = () => {
     if (this.state.isInnerContentRendered) {
       return this.renderTabs();
     } else {
       return this.renderServiceLoadingPlaceholder();
     }
-  }
+  };
 
   public render() {
     const { userMetadata } = this.props;
@@ -554,7 +526,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /**
    * Render ServicesSearch component.
    */
-  private renderSearch() {
+  private renderSearch = () => {
     return this.props.searchText
       .map(
         _ =>
@@ -572,33 +544,33 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           )
       )
       .getOrElse(<SearchNoResultMessage errorType={"InvalidSearchBarText"} />);
-  }
+  };
 
-  private refreshServices() {
+  private refreshServices = () => {
     this.setState({
       toastErrorMessage: I18n.t("global.genericError")
     });
     this.props.refreshServices();
-  }
+  };
 
-  private refreshScreenContent(hideToast: boolean = false) {
+  private refreshScreenContent = (hideToast: boolean = false) => {
     if (!hideToast) {
       this.setState({ toastErrorMessage: I18n.t("global.genericError") });
     }
     this.props.refreshUserMetadata();
     this.props.refreshServices();
-  }
+  };
 
-  private handleOnScroll(value: number) {
+  private handleOnScroll = (value: number) => {
     const { currentTab, isLongPressEnabled } = this.state;
     if (isLongPressEnabled && Math.abs(value - currentTab) > 0.5) {
       this.setState({
         isLongPressEnabled: false
       });
     }
-  }
+  };
 
-  private handleOnChangeTab(evt: any) {
+  private handleOnChangeTab = (evt: any) => {
     const { currentTab, isLongPressEnabled } = this.state;
     const nextTab: number = evt.i;
     const isSameTab = currentTab === nextTab;
@@ -607,13 +579,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       enableHeaderAnimation: true,
       isLongPressEnabled: isSameTab && isLongPressEnabled
     });
-  }
+  };
 
   /**
    * Render Locals, Nationals and Other services tabs.
    */
   // tslint:disable no-big-function
-  private renderTabs() {
+  private renderTabs = () => {
     const {
       localTabSections,
       nationalTabSections,
@@ -712,7 +684,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         />
       </AnimatedTabs>
     );
-  }
+  };
 }
 
 const mapStateToProps = (state: GlobalState) => {
