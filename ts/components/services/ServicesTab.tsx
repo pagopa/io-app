@@ -1,3 +1,6 @@
+/**
+ * A component to render a tab containing a list of services organized in sections
+ */
 import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
@@ -56,6 +59,8 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   LightModalContextInterface;
 
+const ICON_SIZE = 17;
+
 const styles = StyleSheet.create({
   activeTextStyle: {
     ...makeFontStyleObject(Platform.select, "600"),
@@ -69,9 +74,11 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   icon: {
-    paddingHorizontal: (24 - 17) / 2 // (io-right icon width) - (io-trash icon width)
+    paddingHorizontal: (24 - ICON_SIZE) / 2 // (io-right icon width) - (io-trash icon width)
   }
 });
+
+const OrganizationsList = createFactory(ChooserListContainer<Organization>());
 
 function renderOrganizationLogo(organizationFiscalCode: string) {
   return (
@@ -97,9 +104,6 @@ class ServicesTab extends React.PureComponent<Props> {
       selectedOrganizations
     } = this.props;
 
-    const OrganizationsList = createFactory(
-      ChooserListContainer<Organization>()
-    );
     this.props.showModal(
       <OrganizationsList
         items={selectableOrganizations}
@@ -150,7 +154,7 @@ class ServicesTab extends React.PureComponent<Props> {
         <IconFont
           name={"io-trash"}
           color={customVariables.brandMildGray}
-          size={17}
+          size={ICON_SIZE}
           style={styles.icon}
         />
       </TouchableOpacity>
