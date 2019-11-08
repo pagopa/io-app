@@ -50,6 +50,7 @@ class TemporarilyBlockedCieScreen extends React.Component<Props> {
               block={true}
               primary={true}
               iconLeft={true}
+              // TODO: add redirect to the store or, if installed, to the CieID app https://www.pivotaltracker.com/story/show/169642034
               onPress={(): void => Alert.alert(I18n.t("global.notImplemented"))}
               testID={"landing-button-login-cie"}
             >
