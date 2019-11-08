@@ -107,7 +107,10 @@ profile:
     contextualHelp: Here you will find information and data related to security, identity, account and personal data.
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
-    clearCache: Clear cache
+    cache:
+      alert: Are you sure you want to clear the cache?
+      clear: Clear cache
+      cleared: The cache has been cleared.
     resetPin:
       confirmTitle: Are you sure you want to reset your PIN?
       confirmMsg: You will be asked again to log in with SPID.
@@ -220,11 +223,14 @@ authentication:
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
       cardRemovedEarlyTitle: You have removed the card too soon
-      cardRemovedEarlyContent: hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
-      pinCardTitle: Enter the PIN of your card
+      cardRemovedEarlyContent: hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.      pinCardTitle: Enter the PIN of your card
       pinCardContent: The PIN code consists of 8 digits. Four digits that were delivered to you at the registry office and another four digits have been sent to you at home, along with the card. Put them together, in that order, and enter them here please.
+      incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
+      incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
+      incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
     ok: Ok
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
+    cieLoginWait: Wait a few seconds..
     unknownCardTitle: Unknown card
     unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
     unknownCardHelpLink: What is the Electronic Identity Card?
