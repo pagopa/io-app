@@ -19,7 +19,6 @@ import * as React from "react";
 import { Linking } from "react-native";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Markdown from "../../components/ui/Markdown";
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class SpidInformationScreen extends React.Component<Props, never> {
+class SpidCIEInformationScreen extends React.Component<Props, never> {
   private getValueContent(value: string, content: string) {
     return (
       <Row style={styles.row}>
@@ -129,7 +128,10 @@ class SpidInformationScreen extends React.Component<Props, never> {
             </Tab>
             <Tab
               heading={I18n.t("authentication.cie")}
-              activeTextStyle={{ fontSize: 14 }}
+              activeTextStyle={{
+                fontSize: 14,
+                color: customVariables.brandPrimary
+              }}
             >
               <Content>
                 <Markdown>
@@ -158,4 +160,4 @@ class SpidInformationScreen extends React.Component<Props, never> {
   }
 }
 
-export default connect()(SpidInformationScreen);
+export default SpidCIEInformationScreen;
