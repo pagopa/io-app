@@ -109,6 +109,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       showPagoPAtestSwitch: false,
       numberOfTaps: 0
     };
+    this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
 
   public componentDidMount() {
@@ -128,10 +129,27 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.props.hideModal();
   }
 
-  private handleClearCachePress = () => {
-    this.props.clearCache();
-    Toast.show({ text: "The cache has been cleared." });
-  };
+  private handleClearCachePress() {
+    Alert.alert(
+      I18n.t("profile.main.cache.alert"),
+      undefined,
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "destructive",
+          onPress: () => {
+            this.props.clearCache();
+            Toast.show({ text: I18n.t("profile.main.cache.cleared") });
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  }
 
   private developerListItem(
     title: string,
@@ -418,7 +436,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   )}
 
                 {this.debugListItem(
-                  I18n.t("profile.main.clearCache"),
+                  I18n.t("profile.main.cache.clear"),
                   this.handleClearCachePress,
                   true
                 )}
