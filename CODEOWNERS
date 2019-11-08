@@ -1,5 +1,5 @@
 # see https://help.github.com/en/articles/about-code-owners#example-of-a-codeowners-file
 
-* @cloudify @francescopersico @undermaken
+* @francescopersico @undermaken
 
-/locales/ @cloudify @matteodesanti @francescopersico @undermaken
+/locales/ @matteodesanti @francescopersico @undermaken

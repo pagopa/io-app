@@ -77,7 +77,7 @@ function renderInformationRow(
     <View style={styles.infoItem}>
       <Text>{label}</Text>
       <Button primary={true} small={true} onPress={onPress}>
-        <Text ellipsizeMode="tail" numberOfLines={1}>
+        <Text uppercase={false} ellipsizeMode="tail" numberOfLines={1}>
           {info}
         </Text>
       </Button>
@@ -102,18 +102,20 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   }
 
   public componentWillReceiveProps(nextProps: Props) {
-    if (pot.isError(this.props.profile) !== pot.isError(nextProps.profile)) {
+    if (pot.isError(nextProps.profile) && !pot.isError(this.props.profile)) {
       // in case of new or resolved errors while updating the profile, we show a toast and
       // reset the UI to match the state of the profile preferences
       showToast(
         I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
         "danger"
       );
+
+      const uiEnabledChannels = getEnabledChannelsForService(
+        nextProps.profile,
+        nextProps.navigation.getParam("service").service_id
+      );
       this.setState({
-        uiEnabledChannels: getEnabledChannelsForService(
-          nextProps.profile,
-          nextProps.navigation.getParam("service").service_id
-        )
+        uiEnabledChannels
       });
     }
   }

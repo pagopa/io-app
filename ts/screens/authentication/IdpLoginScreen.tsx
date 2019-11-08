@@ -135,7 +135,9 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleLoginFailure = (errorCode?: string) => {
-    this.props.dispatchLoginFailure();
+    this.props.dispatchLoginFailure(
+      new Error(`login failure with code ${errorCode || "n/a"}`)
+    );
     this.setState({
       requestState: pot.noneError("LOGIN_ERROR"),
       errorCode
@@ -236,6 +238,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
 
     if (!loggedOutWithIdpAuth) {
       // FIXME: perhaps as a safe bet, navigate to the IdP selection screen on mount?
+      //      https://www.pivotaltracker.com/story/show/169541951
       return null;
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
@@ -275,7 +278,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIdpLoginUrlChanged: (url: string) =>
     dispatch(idpLoginUrlChanged({ url })),
   dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
-  dispatchLoginFailure: () => dispatch(loginFailure())
+  dispatchLoginFailure: (error: Error) => dispatch(loginFailure(error))
 });
 
 export default connect(
