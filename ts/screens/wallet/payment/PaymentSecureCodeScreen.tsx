@@ -26,18 +26,31 @@ import I18n from "../../../i18n";
 import { identificationRequest } from "../../../store/actions/identification";
 import {
   navigateToPaymentEnterSecureCode,
-  navigateToPaymentPickPaymentMethodScreen, navigateToPaymentPickPspScreen,
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentPickPspScreen,
   navigateToTransactionDetailsScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
-  backToEntrypointPayment, paymentCompletedFailure, paymentCompletedSuccess, paymentExecutePayment,
+  backToEntrypointPayment,
+  paymentCompletedFailure,
+  paymentCompletedSuccess,
+  paymentExecutePayment,
   paymentInitializeState,
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
-import { fetchTransactionsRequest, runPollTransactionSaga } from "../../../store/actions/wallet/transactions";
+import {
+  fetchTransactionsRequest,
+  runPollTransactionSaga
+} from "../../../store/actions/wallet/transactions";
 import variables from "../../../theme/variables";
-import { isCompletedTransaction, isSuccessTransaction, Psp, Transaction, Wallet } from "../../../types/pagopa";
+import {
+  isCompletedTransaction,
+  isSuccessTransaction,
+  Psp,
+  Transaction,
+  Wallet
+} from "../../../types/pagopa";
 import { AmountToImporto } from "../../../utils/amounts";
 import { CreditCardCVC } from "../../../utils/input";
 import { showToast } from "../../../utils/showToast";
