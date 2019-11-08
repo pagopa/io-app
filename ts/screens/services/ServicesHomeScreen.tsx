@@ -351,6 +351,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   // tslint:disable-next-line: cognitive-complexity
   public componentDidUpdate(prevProps: Props, prevState: State) {
+    // if some errors occur while updating profile, we will show a message in a toast
+    // profile could be updated by enabling/disabling on or more channel of a service
     if (pot.isError(this.props.profile) && !pot.isError(prevProps.profile)) {
       showToast(
         I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
