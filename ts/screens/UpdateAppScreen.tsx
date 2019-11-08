@@ -61,9 +61,10 @@ class UpdateAppScreen extends React.PureComponent<Props> {
 
   private openAppStore() {
     if (Platform.OS === "ios") {
+      // TODO: when the app is open to the published replace the link to testflight with the io-app link
       // tslint:disable-next-line: no-floating-promises
       Linking.openURL(
-        "itms://itunes.apple.com/us/app/apple-store/it.teamdigitale.app.IO?mt=8"
+        "itms-apps://itunes.apple.com/it/app/testflight/id899247664?mt=8"
       );
     } else {
       // tslint:disable-next-line: no-floating-promises
