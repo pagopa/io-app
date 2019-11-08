@@ -7,17 +7,12 @@ import {
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
 import PaymentSecureCodeScreen from "../../screens/wallet/payment/PaymentSecureCodeScreen";
-
 import { InferNavigationParams } from "../../types/react";
-
 import ROUTES from "../../navigation/routes";
-
-import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
-
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
-
 import EmailInsertScreen from "../../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../../screens/onboarding/EmailReadScreen";
+import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
@@ -59,6 +54,13 @@ export const navigateToMainNavigatorAction = StackActions.reset({
       routeName: ROUTES.MAIN
     })
   ]
+});
+
+export const navigateToIdpSelectionScreenAction = NavigationActions.navigate({
+  routeName: ROUTES.AUTHENTICATION,
+  action: NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
+  })
 });
 
 export const navigateToOnboardingPinScreenAction = NavigationActions.navigate({
@@ -255,6 +257,11 @@ export const navigateToCieInvalidScreen = () =>
 export const navigateToCieValid = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_VALID_SCREEN
+  });
+
+export const navigateToCieSuccessScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_SUCCESS_SCREEN
   });
 
 export const navigateToInterruptedReadingCie = () =>
