@@ -18,8 +18,6 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-import Switch from "../../components/ui/Switch";
-
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
@@ -31,6 +29,7 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
+import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
@@ -114,6 +113,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       showPagoPAtestSwitch: false,
       numberOfTaps: 0
     };
+    this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
 
   public componentDidMount() {
@@ -133,10 +133,27 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.props.hideModal();
   }
 
-  private handleClearCachePress = () => {
-    this.props.clearCache();
-    Toast.show({ text: "The cache has been cleared." });
-  };
+  private handleClearCachePress() {
+    Alert.alert(
+      I18n.t("profile.main.cache.alert"),
+      undefined,
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "destructive",
+          onPress: () => {
+            this.props.clearCache();
+            Toast.show({ text: I18n.t("profile.main.cache.cleared") });
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  }
 
   private developerListItem(
     title: string,
@@ -423,7 +440,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   )}
 
                 {this.debugListItem(
-                  I18n.t("profile.main.clearCache"),
+                  I18n.t("profile.main.cache.clear"),
                   this.handleClearCachePress,
                   true
                 )}

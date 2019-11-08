@@ -39,7 +39,6 @@ import {
 } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import {
-  NavigationEvents,
   NavigationEventSubscription,
   NavigationScreenProps
 } from "react-navigation";
@@ -176,9 +175,11 @@ const styles = StyleSheet.create({
   activeTextStyle: {
     ...makeFontStyleObject(Platform.select, "600"),
     fontSize: Platform.OS === "android" ? 16 : undefined,
-    fontWeight: Platform.OS === "android" ? "normal" : "bold"
+    fontWeight: Platform.OS === "android" ? "normal" : "bold",
+    color: customVariables.brandPrimary
   },
   textStyle: {
+    color: customVariables.brandDarkGray,
     fontSize: customVariables.fontSizeSmall
   },
   center: {
@@ -590,18 +591,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   };
 
-  private onNavigation = () => {
-    this.setState({ isLongPressEnabled: false });
-    // If cache has been cleaned and the page is already rendered,
-    // it grants content is refreshed
-    if (
-      pot.isNone(this.props.visibleServices) &&
-      !pot.isLoading(this.props.visibleServices)
-    ) {
-      this.refreshScreenContent();
-    }
-  };
-
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
       return undefined;
@@ -641,7 +630,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         isSearchAvailable={userMetadata !== undefined}
         searchType={"Services"}
       >
-        <NavigationEvents onWillFocus={this.onNavigation} />
         {this.renderErrorContent() ? (
           this.renderErrorContent()
         ) : this.props.isSearchEnabled ? (
