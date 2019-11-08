@@ -1,20 +1,17 @@
 import { testSaga } from "redux-saga-test-plan";
-
 import { getType } from "typesafe-actions";
-
+import { removeScheduledNotificationAccessSpid } from "../../../boot/scheduleLocalNotifications";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../store/actions/analytics";
 import { loginSuccess } from "../../../store/actions/authentication";
-import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
+import {
+  navigateToIdpSelectionScreenAction,
+  resetToAuthenticationRoute
+} from "../../../store/actions/navigation";
 import { isSessionExpiredSelector } from "../../../store/reducers/authentication";
-
 import { SessionToken } from "../../../types/SessionToken";
-
-import { NavigationActions } from "react-navigation";
-import { removeScheduledNotificationAccessSpid } from "../../../boot/scheduleLocalNotifications";
-import ROUTES from "../../../navigation/routes";
 import { authenticationSaga } from "../authenticationSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
@@ -25,10 +22,10 @@ describe("authenticationSaga", () => {
       .next()
       .put(analyticsAuthenticationStarted())
       .next()
-      .select(isSessionExpiredSelector)
-      .next(false)
       .put(resetToAuthenticationRoute)
       .next()
+      .select(isSessionExpiredSelector)
+      .next(false)
       .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
       .call(removeScheduledNotificationAccessSpid)
@@ -43,13 +40,11 @@ describe("authenticationSaga", () => {
       .next()
       .put(analyticsAuthenticationStarted())
       .next()
+      .put(resetToAuthenticationRoute)
+      .next()
       .select(isSessionExpiredSelector)
       .next(true)
-      .put(
-        NavigationActions.navigate({
-          routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
-        })
-      )
+      .put(navigateToIdpSelectionScreenAction)
       .next()
       .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
