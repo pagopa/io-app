@@ -271,8 +271,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   /**
-   * if we are displaying the loading screen and we got no error on loading
-   * data then we can show the content
+   * if we are displaying the loading screen and we got no errors on loading
+   * data, then we can show the content
    */
   private canRenderContent = () => {
     if (
