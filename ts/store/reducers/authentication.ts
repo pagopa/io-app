@@ -6,7 +6,6 @@ import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
 import {
-  forgetCurrentSession,
   idpSelected,
   loginSuccess,
   logoutFailure,
@@ -185,12 +184,6 @@ const reducer = (
       reason: isActionOf(sessionExpired, action)
         ? "SESSION_EXPIRED"
         : "NOT_LOGGED_IN"
-    };
-  }
-
-  if (isActionOf(forgetCurrentSession, action)) {
-    return {
-      ...INITIAL_STATE
     };
   }
 
