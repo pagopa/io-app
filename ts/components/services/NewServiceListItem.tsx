@@ -53,24 +53,15 @@ export default class NewServiceListItem extends React.PureComponent<
 > {
   constructor(props: Props) {
     super(props);
-    const potService = this.props.item;
-    const uiEnabledChannels = pot.map(potService, service =>
-      getEnabledChannelsForService(this.props.profile, service.service_id)
-    );
-    const switchValue =
-      pot.isSome(uiEnabledChannels) && uiEnabledChannels.value.inbox;
+    this.onItemSwitchValueChanged = this.onItemSwitchValueChanged.bind(this);
+    const switchValue = this.isInboxChannelEnabled();
     this.state = {
       switchValue
     };
   }
 
   public componentDidUpdate() {
-    const potService = this.props.item;
-    const uiEnabledChannels = pot.map(potService, service =>
-      getEnabledChannelsForService(this.props.profile, service.service_id)
-    );
-    const switchValue =
-      pot.isSome(uiEnabledChannels) && uiEnabledChannels.value.inbox;
+    const switchValue = this.isInboxChannelEnabled();
     if (
       switchValue !== this.state.switchValue &&
       !pot.isUpdating(this.props.profile)
@@ -93,26 +84,35 @@ export default class NewServiceListItem extends React.PureComponent<
     );
   };
 
-  private onItemSwitchValueChanged(value: boolean) {
+  private isInboxChannelEnabled() {
     const potService = this.props.item;
-    return this.props.onItemSwitchValueChanged
-      ? pot.toUndefined(
-          pot.map(potService, service => {
-            if (
-              this.props.onItemSwitchValueChanged &&
-              !pot.isUpdating(this.props.profile)
-            ) {
-              this.setState({
-                switchValue: value
-              });
-              this.props.onItemSwitchValueChanged(service, value);
-            }
-          })
-        )
-      : undefined;
+    const uiEnabledChannels = pot.map(potService, service =>
+      getEnabledChannelsForService(this.props.profile, service.service_id)
+    );
+    return pot.isSome(uiEnabledChannels) && uiEnabledChannels.value.inbox;
   }
 
-  // tslint:disable-next-line:cognitive-complexity
+  private onItemSwitchValueChanged(value: boolean) {
+    const potService = this.props.item;
+    if (this.props.onItemSwitchValueChanged !== undefined) {
+      const onItemSwitchValueChanged = this.props.onItemSwitchValueChanged;
+      return pot.toUndefined(
+        pot.map(potService, service => {
+          if (
+            !pot.isUpdating(this.props.profile) &&
+            this.state.switchValue !== value
+          ) {
+            this.setState({
+              switchValue: value
+            });
+            onItemSwitchValueChanged(service, value);
+          }
+        })
+      );
+    }
+    return undefined;
+  }
+
   public render() {
     const { switchValue } = this.state;
     const potService = this.props.item;
@@ -138,9 +138,7 @@ export default class NewServiceListItem extends React.PureComponent<
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
         isItemDisabled={!switchValue}
-        onSwitchValueChanged={(value: boolean) =>
-          this.onItemSwitchValueChanged(value)
-        }
+        onSwitchValueChanged={this.onItemSwitchValueChanged}
         switchValue={switchValue}
         switchDisabled={pot.isUpdating(this.props.profile)}
         keySwitch={this.getServiceKey(potService)}

@@ -234,8 +234,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       isInnerContentRendered: false
     };
   }
-
-  private isEnableServices = (): boolean => {
+  /**
+   * return true if all services have INBOX channel disabled
+   */
+  private areAllServicesInboxChannelDisabled = (): boolean => {
     const currentTabServicesChannels = this.props.getServicesChannels(
       this.props.tabsServicesId[this.state.currentTab],
       this.props.profile
@@ -251,7 +253,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private handleOnLongPressItem = () => {
     if (!this.props.isSearchEnabled) {
-      const enableServices = this.isEnableServices();
+      const enableServices = this.areAllServicesInboxChannelDisabled();
       const isLongPressEnabled = !this.state.isLongPressEnabled;
       const currentTabServicesId = this.props.tabsServicesId[
         this.state.currentTab
@@ -356,7 +358,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       );
     }
 
-    const enableServices = this.isEnableServices();
+    const enableServices = this.areAllServicesInboxChannelDisabled();
     if (enableServices !== prevState.enableServices) {
       this.setState({ enableServices });
     }
@@ -467,7 +469,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         value
       );
     }
-    const enableServices = this.isEnableServices();
+    const enableServices = this.areAllServicesInboxChannelDisabled();
     this.setState({ enableServices });
   };
 
