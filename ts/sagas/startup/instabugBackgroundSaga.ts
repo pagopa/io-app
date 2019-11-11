@@ -26,6 +26,12 @@ const loadInstabugUnreadMessages = () => {
  * Listen to APP_STATE_CHANGE_ACTION and if needed force the user to identify
  */
 export function* instabugBackgroundSaga(): IterableIterator<Effect> {
+  const messaggiAttuali: SagaCallReturnType<
+    typeof loadInstabugUnreadMessages
+  > = yield call(loadInstabugUnreadMessages);
+  yield put(instabugUnreadMessagesLoaded(messaggiAttuali));
+  console.log("Messaggi attuali");
+  console.log(messaggiAttuali);
   const backgroundActivityTimeoutMillis = 2 * 1000;
 
   const notification = () => {
@@ -67,8 +73,11 @@ export function* instabugBackgroundSaga(): IterableIterator<Effect> {
         > = yield call(loadInstabugUnreadMessages);
 
         yield put(instabugUnreadMessagesLoaded(instabugRepliesCount));
+        console.log("Messaggi arrivati");
+        console.log(instabugRepliesCount);
 
-        if (instabugRepliesCount > 0) {
+        if (instabugRepliesCount > messaggiAttuali) {
+          console.log("Ho un nuovo messaggio");
           yield call(notification);
         }
         // Timer fired we need to identify the user
