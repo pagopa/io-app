@@ -6,11 +6,7 @@ import {
   analyticsAuthenticationStarted
 } from "../../../store/actions/analytics";
 import { loginSuccess } from "../../../store/actions/authentication";
-import {
-  navigateToIdpSelectionScreenAction,
-  resetToAuthenticationRoute
-} from "../../../store/actions/navigation";
-import { isSessionExpiredSelector } from "../../../store/reducers/authentication";
+import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { SessionToken } from "../../../types/SessionToken";
 import { authenticationSaga } from "../authenticationSaga";
 
@@ -24,8 +20,6 @@ describe("authenticationSaga", () => {
       .next()
       .put(resetToAuthenticationRoute)
       .next()
-      .select(isSessionExpiredSelector)
-      .next(false)
       .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
       .call(removeScheduledNotificationAccessSpid)
@@ -41,10 +35,6 @@ describe("authenticationSaga", () => {
       .put(analyticsAuthenticationStarted())
       .next()
       .put(resetToAuthenticationRoute)
-      .next()
-      .select(isSessionExpiredSelector)
-      .next(true)
-      .put(navigateToIdpSelectionScreenAction)
       .next()
       .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
