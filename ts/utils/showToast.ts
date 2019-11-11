@@ -2,7 +2,14 @@ import { Toast } from "native-base";
 
 type Type = "danger" | "success" | "warning";
 
-export const showToast = (text: string, type: Type = "danger") =>
+type ToastPosition = "top" | "bottom" | "center";
+
+export const showToast = (
+  text: string,
+  type: Type = "danger",
+  position: ToastPosition = "bottom",
+  onClose?: () => void
+) =>
   Toast.show({
     text,
     type,
@@ -13,5 +20,7 @@ export const showToast = (text: string, type: Type = "danger") =>
     },
     buttonStyle: {
       backgroundColor: "transparent"
-    }
+    },
+    position,
+    onClose
   });

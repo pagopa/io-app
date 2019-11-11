@@ -64,6 +64,10 @@ export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
 
+export const removeSessionExpiredFlag = createStandardAction(
+  "REMOVE_SESSION_EXPIRED_FLAG"
+)();
+
 export type AuthenticationActions =
   | ActionType<typeof idpSelected>
   | ActionType<typeof idpLoginUrlChanged>
@@ -75,4 +79,5 @@ export type AuthenticationActions =
   | ActionType<typeof sessionInformationLoadSuccess>
   | ActionType<typeof sessionInformationLoadFailure>
   | ActionType<typeof sessionExpired>
-  | ActionType<typeof sessionInvalid>;
+  | ActionType<typeof sessionInvalid>
+  | ActionType<typeof removeSessionExpiredFlag>;

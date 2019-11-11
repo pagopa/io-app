@@ -5,33 +5,27 @@
 
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-
+import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCard";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-
 import { isDevEnvironment } from "../../config";
-
 import I18n from "../../i18n";
-
 import ROUTES from "../../navigation/routes";
-
+import { removeSessionExpiredFlag } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
-
+import { isSessionExpiredSelector } from "../../store/reducers/authentication";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-
 import { ComponentProps } from "../../types/react";
+import { showToast } from "../../utils/showToast";
 
-import { DevScreenButton } from "../../components/DevScreenButton";
-
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
-
-type Props = ReduxProps & OwnProps;
+type Props = ReduxProps &
+  ReturnType<typeof mapStateToProps> &
+  NavigationScreenProps;
 
 const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   {
@@ -66,51 +60,73 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   }
 ];
 
-const LandingScreen: React.SFC<Props> = props => {
-  const navigateToMarkdown = () => props.navigation.navigate(ROUTES.MARKDOWN);
-  const navigateToIdpSelection = () =>
-    props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
+const cardComponents = cardProps.map(p => (
+  <LandingCardComponent key={`card-${p.id}`} {...p} />
+));
 
-  const navigateToSpidInformationRequest = () =>
-    props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
+class LandingScreen extends React.PureComponent<Props> {
+  private navigateToMarkdown = () =>
+    this.props.navigation.navigate(ROUTES.MARKDOWN);
+  private navigateToIdpSelection = () =>
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
+  private navigateToSpidInformationRequest = () =>
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
-  const cardComponents = cardProps.map(p => (
-    <LandingCardComponent key={`card-${p.id}`} {...p} />
-  ));
+  public componentDidMount() {
+    if (this.props.isSessionExpired) {
+      showToast(
+        I18n.t("authentication.expiredSessionBanner.message"),
+        "warning",
+        "top",
+        // Update anuthentication state to make toast is no more shown
+        () => {
+          this.props.dispatch(removeSessionExpiredFlag());
+        }
+      );
+    }
+  }
 
-  return (
-    <BaseScreenComponent>
-      {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
+  public render() {
+    return (
+      <BaseScreenComponent>
+        {isDevEnvironment() && (
+          <DevScreenButton onPress={this.navigateToMarkdown} />
+        )}
 
-      <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
-        <View spacer={true} large={true} />
-        <HorizontalScroll cards={cardComponents} />
-        <View spacer={true} />
-      </Content>
+        <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
+          <View spacer={true} large={true} />
+          <HorizontalScroll cards={cardComponents} />
+          <View spacer={true} />
+        </Content>
 
-      <View footer={true}>
-        <Button
-          block={true}
-          primary={true}
-          iconLeft={true}
-          onPress={navigateToIdpSelection}
-          testID="landing-button-login"
-        >
-          <IconFont name="io-profilo" color={variables.colorWhite} />
-          <Text>{I18n.t("authentication.landing.login")}</Text>
-        </Button>
-        <View spacer={true} />
-        <Button
-          block={true}
-          small={true}
-          transparent={true}
-          onPress={navigateToSpidInformationRequest}
-        >
-          <Text>{I18n.t("authentication.landing.nospid")}</Text>
-        </Button>
-      </View>
-    </BaseScreenComponent>
-  );
-};
+        <View footer={true}>
+          <Button
+            block={true}
+            primary={true}
+            iconLeft={true}
+            onPress={this.navigateToIdpSelection}
+            testID={"landing-button-login"}
+          >
+            <IconFont name={"io-profilo"} color={variables.colorWhite} />
+            <Text>{I18n.t("authentication.landing.login")}</Text>
+          </Button>
+          <View spacer={true} />
+          <Button
+            block={true}
+            small={true}
+            transparent={true}
+            onPress={this.navigateToSpidInformationRequest}
+          >
+            <Text>{I18n.t("authentication.landing.nospid")}</Text>
+          </Button>
+        </View>
+      </BaseScreenComponent>
+    );
+  }
+}
 
-export default connect()(LandingScreen);
+const mapStateToProps = (state: GlobalState) => ({
+  isSessionExpired: isSessionExpiredSelector(state)
+});
+
+export default connect(mapStateToProps)(LandingScreen);
