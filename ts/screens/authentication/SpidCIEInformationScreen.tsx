@@ -26,11 +26,9 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 
-type OwnProps = {
+type Props = {
   navigation: NavigationScreenProp<NavigationState>;
 };
-
-type Props = OwnProps;
 
 const styles = StyleSheet.create({
   value: {
@@ -48,6 +46,13 @@ const styles = StyleSheet.create({
   tabBarUnderline: {
     borderBottomColor: customVariables.brandPrimary,
     borderBottomWidth: customVariables.tabUnderlineHeight
+  },
+  viewStyle: {
+    padding: customVariables.contentPadding
+  },
+  activeTextStyle: {
+    fontSize: 14,
+    color: customVariables.brandPrimary
   }
 });
 
@@ -76,7 +81,7 @@ class SpidCIEInformationScreen extends React.Component<Props, never> {
     return (
       <BaseScreenComponent goBack={true}>
         <Container>
-          <View style={{ margin: 24 }}>
+          <View style={styles.viewStyle}>
             <H2>{I18n.t("authentication.spid_information.contentTitleCie")}</H2>
 
             <View spacer={true} large={true} />
@@ -128,10 +133,7 @@ class SpidCIEInformationScreen extends React.Component<Props, never> {
             </Tab>
             <Tab
               heading={I18n.t("authentication.cie")}
-              activeTextStyle={{
-                fontSize: 14,
-                color: customVariables.brandPrimary
-              }}
+              activeTextStyle={styles.activeTextStyle}
             >
               <Content>
                 <Markdown>
