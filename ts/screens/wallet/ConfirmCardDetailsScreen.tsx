@@ -163,11 +163,19 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             </Col>
           </Grid>
         </Content>
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-        />
+        {isInPayment ? (
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={secondaryButtonProps}
+            rightButton={primaryButtonProps}
+          />
+        ) : (
+          <FooterWithButtons
+            type={"TwoButtonsInlineHalf"}
+            leftButton={secondaryButtonProps}
+            rightButton={primaryButtonProps}
+          />
+        )}
         <Modal
           animationType="fade"
           transparent={false}
