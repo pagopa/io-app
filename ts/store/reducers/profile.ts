@@ -30,8 +30,12 @@ export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
 
 export const emailProfileSelector = (profile: ProfileState) => {
-  if (InitializedProfile.is(profile) && profile.email) {
-    return some(profile.email as string);
+  if (
+    pot.isSome(profile) &&
+    InitializedProfile.is(profile.value) &&
+    profile.value.email
+  ) {
+    return some(profile.value.email as string);
   }
   return none;
 };

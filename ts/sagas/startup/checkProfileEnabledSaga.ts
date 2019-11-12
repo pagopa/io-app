@@ -25,8 +25,7 @@ export function* checkProfileEnabledSaga(
     yield put(
       profileUpsert.request({
         is_inbox_enabled: true,
-        is_webhook_enabled: true,
-        email: profile.spid_email
+        is_webhook_enabled: true
       })
     );
     const action:

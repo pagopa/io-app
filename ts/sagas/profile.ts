@@ -119,6 +119,8 @@ function* createOrUpdateProfileSaga(
       // We got a error, send a SESSION_UPSERT_FAILURE action
       throw new Error(response.value.value.title);
     } else {
+      console.warn("OK");
+      console.warn(JSON.stringify(newProfile));
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
       yield put(profileUpsert.success(response.value.value));
     }

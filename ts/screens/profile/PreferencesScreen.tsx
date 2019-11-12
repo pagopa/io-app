@@ -141,6 +141,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
     const email = this.props.email.getOrElse("");
+    console.warn(JSON.stringify(email));
     const phoneNumber = potProfile
       .map(_ => untag(_.spid_mobile_phone))
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
