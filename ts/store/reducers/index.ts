@@ -6,11 +6,7 @@ import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 
-import {
-  forgetCurrentSession,
-  logoutFailure,
-  logoutSuccess
-} from "../actions/authentication";
+import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
@@ -102,8 +98,7 @@ export function createRootReducer(
     // despite logout fails the user must be logged out
     if (
       isActionOf(logoutFailure, action) ||
-      isActionOf(logoutSuccess, action) ||
-      isActionOf(forgetCurrentSession, action)
+      isActionOf(logoutSuccess, action)
     ) {
       // Purge the stored redux-persist state
       persistConfigs.forEach(persistConfig => purgeStoredState(persistConfig));

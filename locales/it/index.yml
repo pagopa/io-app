@@ -108,7 +108,10 @@ profile:
     contextualHelp: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
-    clearCache: Elimina cache
+    cache:
+      alert: Sei sicuro di voler eliminare la cache?
+      clear: Elimina cache
+      cleared: La cache è stata eliminata.
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
       confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
@@ -231,8 +234,12 @@ authentication:
       noNfcConnectionContent: !include cie/noNfcConnection.md
       cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
       cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+      incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
+      incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
+      incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
     ok: Ok
     cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
+    cieLoginWait: Attendi qualche secondo..
     unknownCardTitle: Carta sconosciuta
     unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
     unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
