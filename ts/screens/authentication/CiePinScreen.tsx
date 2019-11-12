@@ -53,12 +53,8 @@ const styles = StyleSheet.create({
 });
 
 class CiePinScreen extends React.Component<Props, State> {
-  // @ts-ignore
-  private pinConfirmComponent: CiePinpad | null = null;
-
   constructor(props: Props) {
     super(props);
-
     // Initial state with PinUnselected
     this.state = {
       pinState: {
@@ -107,7 +103,6 @@ class CiePinScreen extends React.Component<Props, State> {
         <CiePinpad
           description={I18n.t("authentication.landing.cie.pinCardContent")}
           onFulfill={this.onPinConfirmFulfill}
-          ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
           onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
         />
       </View>
@@ -134,24 +129,26 @@ class CiePinScreen extends React.Component<Props, State> {
     };
 
     return (
-      <React.Fragment>
-        <Button block={true} primary={true} onPress={onPress}>
-          <Text>{I18n.t("onboarding.pin.continue")}</Text>
-        </Button>
-        <View spacer={true} />
-      </React.Fragment>
+      <Button block={true} primary={true} onPress={onPress}>
+        <Text>{I18n.t("onboarding.pin.continue")}</Text>
+      </Button>
     );
   }
 
   public renderFooter(pinState: PinState) {
-    return <View footer={true}>{this.renderContinueButton(pinState)}</View>;
+    return (
+      <View footer={true}>
+        {this.renderContinueButton(pinState)}
+        <View spacer={true} />
+      </View>
+    );
   }
 
   public render() {
     const { pinState } = this.state;
 
     return (
-      <BaseScreenComponent goBack={() => this.props.navigation.goBack()}>
+      <BaseScreenComponent goBack={true}>
         {this.renderContent()}
         <KeyboardAvoidingView
           behavior={Platform.OS === "android" ? "height" : "padding"}
