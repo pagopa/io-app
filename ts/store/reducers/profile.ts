@@ -4,6 +4,7 @@
  * are managed by different global reducers.
  */
 
+import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
@@ -16,6 +17,7 @@ import {
 } from "../actions/profile";
 import { Action } from "../actions/types";
 
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<UserProfileUnion, Error>;
@@ -26,6 +28,13 @@ const INITIAL_STATE: ProfileState = pot.none;
 
 export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
+
+export const emailProfileSelector = (profile: ProfileState) => {
+  if (InitializedProfile.is(profile) && profile.email) {
+    return some(profile.email as string);
+  }
+  return none;
+};
 
 const reducer = (
   state: ProfileState = INITIAL_STATE,
@@ -52,7 +61,7 @@ const reducer = (
       if (pot.isSome(state)) {
         const currentProfile = state.value;
         const newProfile = action.payload;
-
+        console.warn(`profile version-> ${newProfile.version}`);
         // The API profile is still absent
         if (
           !currentProfile.has_profile &&

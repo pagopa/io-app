@@ -19,7 +19,10 @@ import {
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { profileSelector } from "../../store/reducers/profile";
+import {
+  profileSelector,
+  emailProfileSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { checkCalendarPermission } from "../../utils/calendar";
 import { getLocalePrimary } from "../../utils/locale";
@@ -137,15 +140,10 @@ class PreferencesScreen extends React.Component<Props, State> {
     const { potProfile } = this.props;
     const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
-    const profileData = potProfile
-      .map(_ => ({
-        spid_email: untag(_.spid_email),
-        spid_mobile_phone: untag(_.spid_mobile_phone)
-      }))
-      .getOrElse({
-        spid_email: I18n.t("global.remoteStates.notAvailable"),
-        spid_mobile_phone: I18n.t("global.remoteStates.notAvailable")
-      });
+    const email = this.props.email.getOrElse("");
+    const phoneNumber = potProfile
+      .map(_ => untag(_.spid_mobile_phone))
+      .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
@@ -196,13 +194,13 @@ class PreferencesScreen extends React.Component<Props, State> {
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.email")}
-              subTitle={profileData.spid_email}
+              subTitle={email}
               onPress={this.handleEmailOnPress}
             />
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.mobile_phone")}
-              subTitle={profileData.spid_mobile_phone}
+              subTitle={phoneNumber}
               iconName={"io-phone-number"}
               onPress={unavailableAlert}
             />
@@ -229,6 +227,7 @@ function mapStateToProps(state: GlobalState) {
   return {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
+    email: emailProfileSelector(state.profile),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar,
     isEmailValidated

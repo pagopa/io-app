@@ -24,10 +24,15 @@ import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
+import { profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { profileSelector } from "../../store/reducers/profile";
+import {
+  profileSelector,
+  emailProfileSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 
 type NavigationParams = {
   isFromProfileSection?: boolean;
@@ -82,6 +87,21 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     this.state = { email: this.props.email };
   }
 
+  private continueOnPress = () => {
+    this.state.email.map(e => {
+      this.props.dispatchEmailUpdate(e as EmailString);
+    });
+    /*
+    return this.isFromProfileSection
+      ? () => {
+          this.state.email.map(e => {
+            this.props.dispatchEmailUpdate(e as EmailString);
+          });
+        }
+      : this.props.dispatchEmailInsert;
+      */
+  };
+
   /**
    * Footer
    *
@@ -90,16 +110,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
    * TODO:2 save the inserted new email
    *          https://www.pivotaltracker.com/n/projects/2048617/stories/169264055
    */
-  private renderFooterButtons() {
+  private renderFooterButtons = () => {
     const continueButtonProps = {
       disabled: this.isValidEmail() !== true,
-      onPress: this.isFromProfileSection
-        ? () => {
-            // TODO1
-            // TODO2
-            Alert.alert(I18n.t("global.notImplemented"));
-          }
-        : this.props.dispatchEmailInsert,
+      onPress: this.continueOnPress,
       title: I18n.t("global.buttons.continue"),
       block: true,
       primary: this.isValidEmail()
@@ -108,7 +122,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     return (
       <FooterWithButtons type="SingleButton" leftButton={continueButtonProps} />
     );
-  }
+  };
 
   /** validate email returning three possible values:
    * - _true_,      if email is valid.
@@ -241,23 +255,24 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
 function mapStateToProps(state: GlobalState) {
   const profile = profileSelector(state);
-  const optionProfile = pot.toOption(profile);
   // TODO: get info on validation from profile
   //      https://www.pivotaltracker.com/story/show/168662501
   const isEmailValidated =
     InitializedProfile.is(profile) && profile.is_email_validated === true;
   return {
-    email: optionProfile.map(_ => {
-      if (InitializedProfile.is(profile) && profile.email) {
-        return profile.email;
-      }
-      return EMPTY_EMAIL;
-    }),
-    isEmailValidated
+    email: emailProfileSelector(profile),
+    isEmailValidated,
+    isLoading: pot.isLoading(profile) || pot.isUpdating(profile)
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchEmailUpdate: (email: EmailString) =>
+    dispatch(
+      profileUpsert.request({
+        email
+      })
+    ),
   dispatchEmailInsert: () => dispatch(emailInsert()),
   dispatchAbortOnboarding: () => dispatch(abortOnboarding())
 });
@@ -265,4 +280,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EmailInsertScreen);
+)(withLoadingSpinner(EmailInsertScreen));

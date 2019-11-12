@@ -190,7 +190,7 @@ export function BackendClient(
     url: () => "/api/v1/profile",
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
-    body: p => JSON.stringify(p.extendedProfile),
+    body: p => JSON.stringify(p.profile),
     response_decoder: updateProfileDefaultDecoder()
   };
 

@@ -101,13 +101,11 @@ function* createOrUpdateProfileSaga(
     const response: SagaCallReturnType<
       typeof createOrUpdateProfile
     > = yield call(createOrUpdateProfile, {
-      extendedProfile: newProfile
+      profile: newProfile
     });
 
     if (response.isLeft()) {
-      yield put(
-        profileUpsert.failure(new Error(readableReport(response.value)))
-      );
+      throw new Error(readableReport(response.value));
       return;
     }
 
@@ -119,12 +117,13 @@ function* createOrUpdateProfileSaga(
 
     if (response.value.status !== 200) {
       // We got a error, send a SESSION_UPSERT_FAILURE action
-      throw response.value.value.title;
+      throw new Error(response.value.value.title);
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
       yield put(profileUpsert.success(response.value.value));
     }
   } catch (e) {
+    console.warn(`ERRORE->${e}`);
     const error: Error = e || Error(I18n.t("profile.errors.upsert"));
     yield put(profileUpsert.failure(error));
   }

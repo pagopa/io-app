@@ -19,6 +19,7 @@ import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 
@@ -65,7 +66,12 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
     const { optionProfile } = this.props;
 
     const profileEmail = optionProfile
-      .map(_ => untag(_.spid_email))
+      .map(profile => {
+        if (InitializedProfile.is(profile) && profile.email) {
+          return profile.email;
+        }
+        return "";
+      })
       .getOrElse("");
 
     return (
