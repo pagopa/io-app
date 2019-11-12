@@ -23,6 +23,7 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import { navigateToEmailValidateScreen } from "../../store/actions/navigation";
 import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
@@ -34,7 +35,6 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
-import { navigateToEmailValidateScreen } from "../../store/actions/navigation";
 
 type NavigationParams = {
   isFromProfileSection?: boolean;
