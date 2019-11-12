@@ -240,12 +240,28 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   };
 
+  /**
+   * if we are displaying the loading screen and we got no errors on loading
+   * data, then we can show the content
+   */
+  private canRenderContent = () => {
+    if (
+      !this.state.isInnerContentRendered &&
+      this.props.isFirstServiceLoadCompleted &&
+      this.props.loadDataFailure === undefined
+    ) {
+      this.setState({ isInnerContentRendered: true });
+    }
+  };
+
   public componentDidMount() {
     // On mount, update visible services and user metadata if their
     // refresh fails
     if (pot.isError(this.props.potUserMetadata)) {
       this.props.refreshUserMetadata();
     }
+
+    this.canRenderContent();
 
     if (
       pot.isError(this.props.visibleServicesContentLoadState) ||
@@ -303,13 +319,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       });
     }
 
-    if (
-      !this.state.isInnerContentRendered &&
-      this.props.isFirstServiceLoadCompleted &&
-      this.props.loadDataFailure === undefined
-    ) {
-      this.setState({ isInnerContentRendered: true });
-    }
+    this.canRenderContent();
 
     if (this.state.isInnerContentRendered) {
       if (
