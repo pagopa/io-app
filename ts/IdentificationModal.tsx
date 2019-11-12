@@ -237,10 +237,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const { identificationState, isFingerprintEnabled, dispatch } = this.props;
 
     // Check min version app supported
-    const isVersionAppSupported =
-      this.props.backendInfo !== undefined &&
-      parseFloat(this.props.backendInfo.minAppVersion) <=
+    // tslint:disable-next-line: no-let
+    let isVersionAppSupported = true;
+    if (this.props.backendInfo !== undefined) {
+      isVersionAppSupported =
+        parseFloat(this.props.backendInfo.minAppVersion) <=
         parseFloat(DeviceInfo.getVersion());
+    }
 
     if (identificationState.kind !== "started" || !isVersionAppSupported) {
       return null;
