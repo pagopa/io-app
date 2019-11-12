@@ -16,10 +16,9 @@ import {
   emailAcknowledged
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { profileSelector } from "../../store/reducers/profile";
+import { emailProfileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 
@@ -63,17 +62,6 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
     );
 
   public render() {
-    const { optionProfile } = this.props;
-
-    const profileEmail = optionProfile
-      .map(profile => {
-        if (InitializedProfile.is(profile) && profile.email) {
-          return profile.email;
-        }
-        return "";
-      })
-      .getOrElse("");
-
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
@@ -85,7 +73,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
           <View style={styles.content}>
             <Markdown>
               {I18n.t("email.validate.info", {
-                email: profileEmail
+                email: this.props.email.getOrElse("")
               })}
             </Markdown>
             <View style={styles.spacerLarge} />
@@ -123,7 +111,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(profileSelector(state))
+  email: emailProfileSelector(state.profile)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

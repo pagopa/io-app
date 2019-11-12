@@ -119,13 +119,10 @@ function* createOrUpdateProfileSaga(
       // We got a error, send a SESSION_UPSERT_FAILURE action
       throw new Error(response.value.value.title);
     } else {
-      console.warn("OK");
-      console.warn(JSON.stringify(newProfile));
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
       yield put(profileUpsert.success(response.value.value));
     }
   } catch (e) {
-    console.warn(`ERRORE->${e}`);
     const error: Error = e || Error(I18n.t("profile.errors.upsert"));
     yield put(profileUpsert.failure(error));
   }

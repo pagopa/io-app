@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -27,12 +27,14 @@ import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
-  profileSelector,
-  emailProfileSelector
+  emailProfileSelector,
+  isProfileEmailValidated,
+  profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { showToast } from "../../utils/showToast";
+import { navigateToEmailValidateScreen } from "../../store/actions/navigation";
 
 type NavigationParams = {
   isFromProfileSection?: boolean;
@@ -91,15 +93,6 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     this.state.email.map(e => {
       this.props.dispatchEmailUpdate(e as EmailString);
     });
-    /*
-    return this.isFromProfileSection
-      ? () => {
-          this.state.email.map(e => {
-            this.props.dispatchEmailUpdate(e as EmailString);
-          });
-        }
-      : this.props.dispatchEmailInsert;
-      */
   };
 
   /**
@@ -112,7 +105,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
    */
   private renderFooterButtons = () => {
     const continueButtonProps = {
-      disabled: this.isValidEmail() !== true,
+      disabled: this.isValidEmail() !== true && !this.props.isLoading,
       onPress: this.continueOnPress,
       title: I18n.t("global.buttons.continue"),
       block: true,
@@ -142,7 +135,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       .toUndefined();
   };
 
-  private updateEmailState = (value: string) => {
+  private handleOnChangeEmailText = (value: string) => {
     this.setState({
       email: value !== EMPTY_EMAIL ? some(value) : none
     });
@@ -177,6 +170,22 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   public componentDidMount() {
     if (this.isFromProfileSection) {
       this.setState({ email: some(EMPTY_EMAIL) });
+    }
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    // if we were updating the profile
+    if (pot.isUpdating(prevProps.profile)) {
+      // and we got an error
+      if (pot.isError(this.props.profile)) {
+        // display a toast with error
+      } else if (pot.isSome(this.props.profile)) {
+        // display a success toast
+        // TODO change toast with an appropriate message
+        showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
+        // go back
+        this.props.dispatchNavigateToEmailValidateScreen();
+      }
     }
   }
 
@@ -229,7 +238,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                   inputProps={{
                     autoCapitalize: "none",
                     value: this.state.email.getOrElse(EMPTY_EMAIL),
-                    onChangeText: this.updateEmailState,
+                    onChangeText: this.handleOnChangeEmailText,
                     style: styles.emailInput
                   }}
                   iconStyle={styles.icon}
@@ -255,14 +264,11 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
 function mapStateToProps(state: GlobalState) {
   const profile = profileSelector(state);
-  // TODO: get info on validation from profile
-  //      https://www.pivotaltracker.com/story/show/168662501
-  const isEmailValidated =
-    InitializedProfile.is(profile) && profile.is_email_validated === true;
   return {
+    profile,
     email: emailProfileSelector(profile),
-    isEmailValidated,
-    isLoading: pot.isLoading(profile) || pot.isUpdating(profile)
+    isEmailValidated: isProfileEmailValidated(profile),
+    isLoading: pot.isUpdating(profile)
   };
 }
 
@@ -274,7 +280,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     ),
   dispatchEmailInsert: () => dispatch(emailInsert()),
-  dispatchAbortOnboarding: () => dispatch(abortOnboarding())
+  dispatchAbortOnboarding: () => dispatch(abortOnboarding()),
+  dispatchNavigateToEmailValidateScreen: () =>
+    dispatch(navigateToEmailValidateScreen)
 });
 
 export default connect(

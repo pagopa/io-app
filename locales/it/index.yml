@@ -325,8 +325,8 @@ email:
       content: !include email_insert_help.md
   edit:
     title: Modifica la tua email
-    subtitle: L'email che avevi inserto in precedenza è
-    validated: L'email che avevi inserto e validato in precedenza è
+    subtitle: L'email che avevi inserito in precedenza è
+    validated: L'email che avevi inserito e validato in precedenza è
     label: Nuovo indirizzo email personale
     cta: Modifica email
   validate:

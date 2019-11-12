@@ -30,7 +30,10 @@ import {
   emailAcknowledged
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { profileSelector } from "../../store/reducers/profile";
+import {
+  profileSelector,
+  emailProfileSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
@@ -107,11 +110,6 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 
   public render() {
     const { isFromProfileSection } = this;
-    const { optionProfile } = this.props;
-
-    const profileEmail = optionProfile
-      .map(_ => untag(_.spid_email))
-      .getOrElse("");
 
     const footerProps1: SingleButton = {
       type: "SingleButton",
@@ -165,7 +163,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
                 size={24}
                 style={styles.icon}
               />
-              <Text style={styles.email}>{profileEmail}</Text>
+              <Text style={styles.email}>{this.props.email.getOrElse("")}</Text>
             </View>
             <View style={styles.spacerLarge} />
             <Text>
@@ -187,7 +185,8 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(profileSelector(state))
+  optionProfile: pot.toOption(profileSelector(state)),
+  email: emailProfileSelector(state.profile)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

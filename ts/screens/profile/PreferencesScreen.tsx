@@ -86,16 +86,7 @@ class PreferencesScreen extends React.Component<Props, State> {
   }
 
   private handleEmailOnPress() {
-    if (isEmailEditingAndValidationEnabled) {
-      if (this.props.isEmailValidated) {
-        this.props.navigateToEmailInsertScreen();
-      } else {
-        // TODO: add navigation to the dedicated screen
-        //  https://www.pivotaltracker.com/story/show/168247501
-      }
-    } else {
-      unavailableAlert();
-    }
+    this.props.navigateToEmailInsertScreen();
   }
 
   public componentWillMount() {
@@ -141,7 +132,6 @@ class PreferencesScreen extends React.Component<Props, State> {
     const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
     const email = this.props.email.getOrElse("");
-    console.warn(JSON.stringify(email));
     const phoneNumber = potProfile
       .map(_ => untag(_.spid_mobile_phone))
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
@@ -222,16 +212,12 @@ class PreferencesScreen extends React.Component<Props, State> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  // TODO: get info on validation from profile
-  //      https://www.pivotaltracker.com/story/show/168662501
-  const isEmailValidated = true;
   return {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
     email: emailProfileSelector(state.profile),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-    preferredCalendar: state.persistedPreferences.preferredCalendar,
-    isEmailValidated
+    preferredCalendar: state.persistedPreferences.preferredCalendar
   };
 }
 

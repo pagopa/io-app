@@ -4,7 +4,7 @@
  * are managed by different global reducers.
  */
 
-import { none, some } from "fp-ts/lib/Option";
+import { Option, none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
@@ -29,16 +29,30 @@ const INITIAL_STATE: ProfileState = pot.none;
 export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
 
-export const emailProfileSelector = (profile: ProfileState) => {
-  if (
-    pot.isSome(profile) &&
-    InitializedProfile.is(profile.value) &&
-    profile.value.email
-  ) {
-    return some(profile.value.email as string);
-  }
-  return none;
-};
+// return the email (as a string) if the profile pot is some and its value is of kind InitializedProfile
+export const emailProfileSelector = (profile: ProfileState): Option<string> =>
+  pot.getOrElse(
+    pot.map(profile, p => {
+      if (InitializedProfile.is(p) && p.email) {
+        return some(p.email as string);
+      }
+      return none;
+    }),
+    none
+  );
+
+// return true if the profile pot is some and its field is_email_validated exists and it's true
+export const isProfileEmailValidated = (profile: ProfileState): boolean =>
+  pot.getOrElse(
+    pot.map(
+      profile,
+      p =>
+        InitializedProfile.is(p) &&
+        p.is_email_validated !== undefined &&
+        p.is_email_validated === true
+    ),
+    false
+  );
 
 const reducer = (
   state: ProfileState = INITIAL_STATE,
@@ -65,7 +79,6 @@ const reducer = (
       if (pot.isSome(state)) {
         const currentProfile = state.value;
         const newProfile = action.payload;
-        console.warn(`profile version-> ${newProfile.version}`);
         // The API profile is still absent
         if (
           !currentProfile.has_profile &&
@@ -76,6 +89,7 @@ const reducer = (
             ...currentProfile,
             has_profile: true,
             email: newProfile.email,
+            is_email_enabled: newProfile.is_email_enabled,
             is_inbox_enabled: newProfile.is_inbox_enabled === true,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
             preferred_languages: newProfile.preferred_languages,
