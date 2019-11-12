@@ -30,7 +30,7 @@ export function getResourceNameFromUrl(
 export function handleItemOnPress(
   value: string,
   valueType?: "MAP" | "COPY" | "LINK"
-) {
+): () => void {
   return valueType === "MAP"
     ? () => openMaps(value)
     : valueType === "COPY"

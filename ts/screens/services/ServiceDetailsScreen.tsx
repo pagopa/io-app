@@ -90,7 +90,7 @@ function renderInformationRow(
       <Button
         primary={true}
         small={true}
-        onPress={() => handleItemOnPress(value, valueType)}
+        onPress={handleItemOnPress(value, valueType)}
       >
         <Text uppercase={false} ellipsizeMode={"tail"} numberOfLines={1}>
           {info}
@@ -108,7 +108,7 @@ function renderInformationLinkRow(
 ) {
   return (
     <View style={styles.infoItem}>
-      <TouchableOpacity onPress={() => handleItemOnPress(value, valueType)}>
+      <TouchableOpacity onPress={handleItemOnPress(value, valueType)}>
         <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
           {info}
         </Text>
@@ -126,7 +126,7 @@ function renderInformationImageRow(
   return (
     <View style={styles.infoItem}>
       <Text>{label}</Text>
-      <TouchableOpacity onPress={() => handleItemOnPress(url, "LINK")}>
+      <TouchableOpacity onPress={handleItemOnPress(url, "LINK")}>
         <Image
           style={styles.badgeLogo}
           resizeMode={"contain"}
