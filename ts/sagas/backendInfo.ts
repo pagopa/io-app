@@ -48,7 +48,6 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
         "backendVersion",
         backendInfoResponse.value.value.version
       );
-
       // tslint:disable-next-line:saga-yield-return-type
       yield call(startTimer, BACKEND_INFO_LOAD_INTERVAL);
     } else {
