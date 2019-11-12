@@ -9,7 +9,6 @@ import {
   loginSuccess,
   logoutFailure,
   logoutSuccess,
-  removeSessionExpiredFlag,
   sessionExpired,
   sessionInformationLoadSuccess,
   sessionInvalid
@@ -176,21 +175,6 @@ const reducer = (
         sessionInfo: action.payload
       }
     };
-  }
-
-  if (isActionOf(removeSessionExpiredFlag, action) && isSessionExpired(state)) {
-    if (state.kind === "LoggedOutWithoutIdp") {
-      return {
-        reason: "NOT_LOGGED_IN",
-        kind: state.kind
-      };
-    } else {
-      return {
-        reason: "NOT_LOGGED_IN",
-        kind: state.kind,
-        idp: state.idp
-      };
-    }
   }
 
   if (

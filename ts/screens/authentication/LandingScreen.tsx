@@ -15,7 +15,6 @@ import IconFont from "../../components/ui/IconFont";
 import { isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { removeSessionExpiredFlag } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
@@ -77,11 +76,7 @@ class LandingScreen extends React.PureComponent<Props> {
       showToast(
         I18n.t("authentication.expiredSessionBanner.message"),
         "warning",
-        "top",
-        // Update anuthentication state to make toast is no more shown
-        () => {
-          this.props.dispatch(removeSessionExpiredFlag());
-        }
+        "top"
       );
     }
   }
