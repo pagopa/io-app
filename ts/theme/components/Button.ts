@@ -102,6 +102,7 @@ export default (): Theme => {
     elevation: 0,
     shadowOffset: { width: 0, height: 0 },
     shadowRadius: 0,
-    shadowOpacity: 0
+    shadowOpacity: 0,
+    alignSelf: "flex-start" // This attribute is necessary to solve the problem reported on Pivotal https://www.pivotaltracker.com/story/show/168290964/comments/207570370
   };
 };
