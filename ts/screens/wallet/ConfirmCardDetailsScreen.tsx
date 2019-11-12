@@ -147,7 +147,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
               size: 32
             }}
           >
-            <Text bold={true}>{I18n.t("wallet.saveCard.notice")}</Text>
+            <Text>{I18n.t("wallet.saveCard.notice")}</Text>
           </NoticeBox>
           <View spacer={true} />
           <Grid>
