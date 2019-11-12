@@ -1,6 +1,6 @@
 import { Container, H1, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -38,23 +38,18 @@ class NfcStartScreen extends React.Component<Props> {
             <View spacer={true} />
             <Text
               link={true}
-              onPress={(): boolean =>
-                this.props.navigation.navigate(
-                  ROUTES.AUTHENTICATION_SPID_INFORMATION
-                )
-              }
+              // TODO Add redirect to SPID and CIE information screen https://www.pivotaltracker.com/story/show/169167508
+              onPress={() => Alert.alert(I18n.t("global.notImplemented"))}
             >
               {I18n.t("authentication.cie.enableNfcHelp")}
             </Text>
           </View>
         </BaseScreenComponent>
         <FooterWithButtons
-          type="TwoButtonsInlineThird"
+          type={"TwoButtonsInlineThird"}
           leftButton={{
             cancel: true,
-            onPress: (): void => {
-              this.props.navigation.goBack();
-            },
+            onPress: this.props.navigation.goBack,
             title: I18n.t("global.buttons.cancel"),
             block: true
           }}

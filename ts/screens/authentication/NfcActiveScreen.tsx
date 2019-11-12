@@ -37,18 +37,17 @@ class NfcActiveScreen extends React.Component<Props> {
           </View>
         </BaseScreenComponent>
         <FooterWithButtons
-          type="TwoButtonsInlineThird"
+          type={"TwoButtonsInlineThird"}
           leftButton={{
             cancel: true,
-            onPress: (): void => {
-              this.props.navigation.goBack();
-            },
+            onPress: this.props.navigation.goBack,
             title: I18n.t("global.buttons.cancel"),
             block: true
           }}
           rightButton={{
             cancel: false,
-            onPress: (): void => Alert.alert(I18n.t("global.notImplemented")),
+            // TODO: proceed with authentication https://www.pivotaltracker.com/story/show/169685147
+            onPress: () => Alert.alert(I18n.t("global.notImplemented")),
             title: I18n.t("global.buttons.continue"),
             block: true
           }}
