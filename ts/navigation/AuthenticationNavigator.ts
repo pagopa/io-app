@@ -22,7 +22,7 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
     screen: LandingScreen
   },
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: {
-    screen: IdpSelectionScreen
+    screen: CiePinScreen
   },
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
     screen: IdpLoginScreen
