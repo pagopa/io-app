@@ -79,6 +79,16 @@ const styles = StyleSheet.create({
   }
 });
 
+const handleItemOnPress = (
+  value: string,
+  valueType?: "MAP" | "COPY" | "LINK"
+  ) =>
+    valueType === "MAP"
+      ? () => openMaps(value)
+      : valueType === "COPY"
+        ? () => clipboardSetStringWithFeedback(value)
+        : () => Linking.openURL(value).then(() => 0, () => 0);
+
 // Renders a row in the service information panel as a primary block button
 function renderInformationRow(
   label: string,
@@ -86,17 +96,10 @@ function renderInformationRow(
   value: string,
   valueType?: "MAP" | "COPY" | "LINK"
 ) {
-  const onPress =
-    valueType === "MAP"
-      ? () => openMaps(value)
-      : valueType === "COPY"
-        ? () => clipboardSetStringWithFeedback(value)
-        : () => Linking.openURL(value).then(() => 0, () => 0);
-
   return (
     <View style={styles.infoItem}>
       <Text>{label}</Text>
-      <Button primary={true} small={true} onPress={onPress}>
+      <Button primary={true} small={true} onPress={()=> handleItemOnPress(value, valueType)}>
         <Text uppercase={false} ellipsizeMode={"tail"} numberOfLines={1}>
           {info}
         </Text>
@@ -111,16 +114,10 @@ function renderInformationLinkRow(
   value: string,
   valueType?: "MAP" | "COPY" | "LINK"
 ) {
-  const onPress =
-    valueType === "MAP"
-      ? () => openMaps(value)
-      : valueType === "COPY"
-        ? () => clipboardSetStringWithFeedback(value)
-        : () => Linking.openURL(value).then(() => 0, () => 0);
-
+  
   return (
     <View style={styles.infoItem}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={()=> handleItemOnPress(value, valueType)}>
         <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
           {info}
         </Text>
@@ -184,8 +181,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       });
     }
   }
-
-  private goBack = () => this.props.navigation.goBack();
 
   /**
    * Dispatches a profileUpsertRequest to trigger an asynchronous update of the
@@ -360,7 +355,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     const logoUris = logosForService(service);
     return (
       <BaseScreenComponent
-        goBack={this.goBack}
+        goBack={this.props.navigation.goBack}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
       >
         <Content>
