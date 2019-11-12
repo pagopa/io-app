@@ -4,7 +4,6 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, fork, put } from "redux-saga/effects";
 
-import DeviceInfo from "react-native-device-info";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { BackendPublicClient } from "../api/backendPublic";
 import { setInstabugUserAttribute } from "../boot/configureInstabug";
@@ -15,15 +14,12 @@ import {
 } from "../store/actions/backendInfo";
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
-import { forceUpdateSaga } from "./startup/forceUpdate";
 
 // load backend info every hour
 const BACKEND_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
 
 // retry loading backend info every 10 seconds on error
 const BACKEND_INFO_RETRY_INTERVAL = 60 * 60 * 10 * 1000;
-
-const getAppVersion = DeviceInfo.getVersion();
 
 function* backendInfoWatcher(): IterableIterator<Effect> {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
@@ -51,12 +47,6 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
       setInstabugUserAttribute(
         "backendVersion",
         backendInfoResponse.value.value.version
-      );
-
-      yield call(
-        forceUpdateSaga,
-        parseFloat(backendInfoResponse.value.value.minAppVersion),
-        parseFloat(getAppVersion)
       );
 
       // tslint:disable-next-line:saga-yield-return-type

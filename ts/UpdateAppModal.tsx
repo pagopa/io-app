@@ -9,21 +9,19 @@ import {
   BackHandler,
   Image,
   Linking,
+  Modal,
   Platform,
   StyleSheet
 } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import BaseScreenComponent from "../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../components/ui/FooterWithButtons";
-import I18n from "../i18n";
+import DeviceInfo from "react-native-device-info";
+import { connect } from "react-redux";
+import BaseScreenComponent from "./components/screens/BaseScreenComponent";
+import FooterWithButtons from "./components/ui/FooterWithButtons";
+import I18n from "./i18n";
+import { GlobalState } from "./store/reducers/types";
+import customVariables from "./theme/variables";
 
-import customVariables from "../theme/variables";
-
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type Props = OwnProps;
+type Props = ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   text: {
@@ -41,11 +39,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class UpdateAppScreen extends React.PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
+class UpdateAppModal extends React.PureComponent<Props> {
   // No Event on back button android
   private handleBackPress = () => {
     return true;
@@ -119,8 +113,18 @@ class UpdateAppScreen extends React.PureComponent<Props> {
   }
 
   public render() {
+    // Check min version app supported
+    const isVersionAppSupported =
+      this.props.backendInfo !== undefined &&
+      parseFloat(this.props.backendInfo.minAppVersion) <=
+        parseFloat(DeviceInfo.getVersion());
+
+    if (isVersionAppSupported) {
+      return null;
+    }
+
     return (
-      <Container>
+      <Modal>
         <BaseScreenComponent appLogo={true} goBack={false}>
           <Container>
             <View style={styles.container}>
@@ -129,7 +133,7 @@ class UpdateAppScreen extends React.PureComponent<Props> {
               <View spacer={true} large={true} />
               <Image
                 style={styles.img}
-                source={require("../../img/icons/update-icon.png")}
+                source={require("../img/icons/update-icon.png")}
               />
             </View>
           </Container>
@@ -138,9 +142,13 @@ class UpdateAppScreen extends React.PureComponent<Props> {
           ? this.renderAndroidFooter()
           : this.renderIosFooter()}
         <View />
-      </Container>
+      </Modal>
     );
   }
 }
 
-export default UpdateAppScreen;
+const mapStateToProps = (state: GlobalState) => ({
+  backendInfo: state.backendInfo.serverInfo
+});
+
+export default connect(mapStateToProps)(UpdateAppModal);

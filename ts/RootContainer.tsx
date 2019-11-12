@@ -25,6 +25,7 @@ import {
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
 import { GlobalState } from "./store/reducers/types";
+import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 // tslint:disable-next-line:no-use-before-declare
@@ -129,6 +130,7 @@ class RootContainer extends React.PureComponent<Props> {
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
         <IdentificationModal />
+        <UpdateAppModal />
         <LightModalRoot />
       </Root>
     );
