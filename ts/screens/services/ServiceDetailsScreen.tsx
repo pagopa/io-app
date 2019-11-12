@@ -10,7 +10,6 @@ import {
   Alert,
   Image,
   ImageSourcePropType,
-  Linking,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
@@ -36,8 +35,6 @@ import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persi
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import { openMaps } from "../../utils/openMaps";
 import {
   EnabledChannels,
   getBlockedChannels,
@@ -45,6 +42,7 @@ import {
 } from "../../utils/profile";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
+import { handleItemOnPress } from "../../utils/url";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -79,16 +77,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const handleItemOnPress = (
-  value: string,
-  valueType?: "MAP" | "COPY" | "LINK"
-  ) =>
-    valueType === "MAP"
-      ? () => openMaps(value)
-      : valueType === "COPY"
-        ? () => clipboardSetStringWithFeedback(value)
-        : () => Linking.openURL(value).then(() => 0, () => 0);
-
 // Renders a row in the service information panel as a primary block button
 function renderInformationRow(
   label: string,
@@ -99,7 +87,11 @@ function renderInformationRow(
   return (
     <View style={styles.infoItem}>
       <Text>{label}</Text>
-      <Button primary={true} small={true} onPress={()=> handleItemOnPress(value, valueType)}>
+      <Button
+        primary={true}
+        small={true}
+        onPress={() => handleItemOnPress(value, valueType)}
+      >
         <Text uppercase={false} ellipsizeMode={"tail"} numberOfLines={1}>
           {info}
         </Text>
@@ -114,10 +106,9 @@ function renderInformationLinkRow(
   value: string,
   valueType?: "MAP" | "COPY" | "LINK"
 ) {
-  
   return (
     <View style={styles.infoItem}>
-      <TouchableOpacity onPress={()=> handleItemOnPress(value, valueType)}>
+      <TouchableOpacity onPress={() => handleItemOnPress(value, valueType)}>
         <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
           {info}
         </Text>
@@ -135,9 +126,7 @@ function renderInformationImageRow(
   return (
     <View style={styles.infoItem}>
       <Text>{label}</Text>
-      <TouchableOpacity
-        onPress={() => Linking.openURL(url).then(() => 0, () => 0)}
-      >
+      <TouchableOpacity onPress={() => handleItemOnPress(url, "LINK")}>
         <Image
           style={styles.badgeLogo}
           resizeMode={"contain"}

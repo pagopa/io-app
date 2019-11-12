@@ -1,3 +1,7 @@
+import { Linking } from "react-native";
+import { clipboardSetStringWithFeedback } from "./clipboard";
+import { openMaps } from "./openMaps";
+
 /**
  * Generic utilities for url parsing
  */
@@ -14,4 +18,22 @@ export function getResourceNameFromUrl(
   const splitted = resourceUrl.split("/");
   const resourceName = splitted[splitted.length - 1].toLowerCase();
   return includeExt ? resourceName : resourceName.split(".")[0];
+}
+
+/**
+ * Return the fucntion to:
+ * - copy the value, if valueType is COPY
+ * - navigate to the map, if valueType is MAP
+ * - navigate to a browser, if valueType is LINK
+ */
+
+export function handleItemOnPress(
+  value: string,
+  valueType?: "MAP" | "COPY" | "LINK"
+) {
+  return valueType === "MAP"
+    ? () => openMaps(value)
+    : valueType === "COPY"
+      ? () => clipboardSetStringWithFeedback(value)
+      : () => Linking.openURL(value).then(() => 0, () => 0);
 }
