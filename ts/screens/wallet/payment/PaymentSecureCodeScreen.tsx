@@ -5,6 +5,7 @@
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Content, Text } from "native-base";
 import * as React from "react";
 import {
@@ -16,10 +17,14 @@ import {
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { withErrorModal } from "../../../components/helpers/withErrorModal";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import MaskedInput from "../../../components/ui/MaskedInput";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
@@ -43,6 +48,7 @@ import {
   fetchTransactionsRequest,
   runPollTransactionSaga
 } from "../../../store/actions/wallet/transactions";
+import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import {
   isCompletedTransaction,
@@ -56,16 +62,20 @@ import { CreditCardCVC } from "../../../utils/input";
 import { showToast } from "../../../utils/showToast";
 
 type NavigationParams = Readonly<{
-  verifica: PaymentRequestsGetResponse;
   rptId: RptId;
   initialAmount: AmountInEuroCents;
+  verifica: PaymentRequestsGetResponse;
   idPayment: string;
   wallet: Wallet;
   psps: ReadonlyArray<Psp>;
 }>;
+
 type OwnProps = NavigationInjectedProps<NavigationParams>;
 
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  LightModalContextInterface &
+  OwnProps;
 
 type State = Readonly<{
   securityCode: Option<string>;
@@ -204,6 +214,15 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
   }
 }
 
+const mapStateToProps = ({ wallet }: GlobalState) => ({
+  isLoading:
+    pot.isLoading(wallet.payment.transaction) ||
+    pot.isLoading(wallet.payment.confirmedTransaction),
+  error: pot.isError(wallet.payment.transaction)
+    ? some(wallet.payment.transaction.error.message)
+    : none
+});
+
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const onTransactionTimeout = () => {
     dispatch(backToEntrypointPayment());
@@ -267,7 +286,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   };
 
   const runAuthorizationAndPayment = () =>
-    // inserire qui controllo MAESTRO
     dispatch(
       identificationRequest(
         false,
@@ -349,6 +367,13 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(PaymentSecureCodeScreen);
+)(
+  withLightModalContext(
+    withErrorModal(
+      withLoadingSpinner(PaymentSecureCodeScreen),
+      (_: string) => _
+    )
+  )
+);

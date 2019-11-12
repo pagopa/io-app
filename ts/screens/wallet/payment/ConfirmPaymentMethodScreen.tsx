@@ -260,6 +260,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             block={true}
             primary={true}
             onPress={() => {
+              // const card = wallet.creditCard;
+              // control if brand card is Maestro
+              // if (card !== undefined && isBrandMaestro(card)) {
+              //   this.props.navigateToPaymentEnterSecureCode();
+              // }
               if (true) {
                 // è una carta Maestro
                 this.props.navigateToPaymentEnterSecureCode();
