@@ -24,6 +24,7 @@ type OwnProps = {
 type Props = ReduxProps & OwnProps;
 
 type PinUnselected = {
+  // Initial state
   state: "PinUnselected";
 };
 
@@ -114,6 +115,7 @@ class CiePinScreen extends React.Component<Props, State> {
     return (
       <ScrollView>
         {this.renderContentHeader()}
+        <View spacer={true} />
         {this.renderCodeInput()}
       </ScrollView>
     );

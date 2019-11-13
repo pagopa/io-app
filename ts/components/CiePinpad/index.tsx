@@ -53,7 +53,6 @@ class CiePinpad extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.updateCode = this.updateCode.bind(this);
     this.inputBoxGenerator = this.inputBoxGenerator.bind(this);
     this.inputs = [];
     this.state = {
@@ -63,49 +62,13 @@ class CiePinpad extends React.PureComponent<Props, State> {
     };
   }
 
-  /* private deleteLastDigit = () => {
-    this.setState(prev => ({
-      value:
-        prev.value.length > 0
-          ? prev.value.slice(0, prev.value.length - 1)
-          : prev.value
-    }));
-
-    this.setState(prev => ({
-      pinSelected: prev.pinSelected > 0 ? prev.pinSelected - 1 : 0
-    }));
-
-    if (this.props.onDeleteLastDigit) {
-      this.props.onDeleteLastDigit();
-    }
-  };*/
-
-  /* private handleChangeText = (inputValue: string) => {
-    const array = inputValue.split("");
-    this.setState({
-      value: inputValue,
-      pinSelected: inputValue.length - 1,
-      codeSplit: array
-    });
-
-    // Pin is fulfilled
-    if (inputValue.length === ARRAY_PIN.length) {
-      this.props.onFulfill(inputValue as PinString, true);
-    }
-  };*/
-
-  // private handlePinDigit = (digit: string) => this.handleChangeText(`${digit}`);
-  public updateCode = (char: string) => {
-    alert(char);
-  };
-
   private handleOnChangeText = (text: string, index: number) => {
     // tslint:disable-next-line: readonly-array
     const tempPin = [...this.state.pin];
     tempPin.splice(index, 1, text);
     const pin: ReadonlyArray<string> = tempPin;
     this.setState({ pin });
-    if (pin.some(p => p === "") === false) {
+    if (!pin.some(p => p === "")) {
       this.props.onFulfill(pin.join("") as PinString, true);
     }
   };
@@ -119,11 +82,12 @@ class CiePinpad extends React.PureComponent<Props, State> {
       if (index === 0) {
         return;
       }
+      if (index !== 0) {
+        this.inputs[index - 1].focus(); // it change the focus on the previous input
+      }
       // check if a deletion is going.
-      // if yes change focus on the previous input
       if (!this.state.pin[index] || this.state.pin[index].length === 0) {
         this.inputs[index - 1].setState({ value: "" });
-        this.inputs[index - 1].focus();
       }
       return;
     }
@@ -135,29 +99,6 @@ class CiePinpad extends React.PureComponent<Props, State> {
   };
 
   private inputBoxGenerator = (i: number) => {
-    // tslint:disable-next-line:no-commented-code
-    /*const isSelected = (obj: number, index: number) => {
-      switch (true) {
-        case index === 0:
-          return this.state.pinSelected === 0 && this.state.value.length < 1;
-        case index === 1:
-          return this.state.pinSelected === 0 && this.state.value.length === 1;
-        case index > 1:
-          return this.state.pinSelected === obj - 1;
-      }
-      return false;
-    };
-
-    const wasSelected = (obj: number, index: number) => {
-      switch (true) {
-        case index !== ARRAY_PIN.length - 1:
-          return this.state.pinSelected === obj;
-        case index === ARRAY_PIN.length - 1:
-          return false;
-      }
-      return false;
-    };*/
-
     const margin = 2;
     const width = 36;
     const screenWidth = Dimensions.get("window").width;
@@ -168,13 +109,12 @@ class CiePinpad extends React.PureComponent<Props, State> {
     // compute a new width to fit it
     // consider margin from both sides too
 
-    const targetWidth =
+    const targetDimension =
       widthNeeded > screenWidth
         ? (screenWidth - totalMargins) / PIN_LENGTH
         : width;
 
     // tslint:disable-next-line:no-commented-code
-    // console.warn(`${i}->${this.state.pin[i]}`);
     return (
       <View style={{ alignItems: "center" }} key={`input_view-${i}`}>
         <TextInput
@@ -186,8 +126,8 @@ class CiePinpad extends React.PureComponent<Props, State> {
             }
           }}
           style={{
-            width: targetWidth,
-            height: targetWidth,
+            width: targetDimension,
+            height: targetDimension,
             textAlign: "center"
           }}
           key={`textinput-${i}`}
@@ -208,27 +148,14 @@ class CiePinpad extends React.PureComponent<Props, State> {
               ? variables.brandLightGray
               : variables.brandDarkestGray
           }
-          placeHolderStyle={{ ...styles.placeHolderStyle, width: targetWidth }}
+          placeHolderStyle={{
+            ...styles.placeHolderStyle,
+            width: targetDimension
+          }}
           key={`baseline-${i}`}
         />
       </View>
     );
-
-    // return (
-    //   <InputBox
-    //     key={`${i}-InputBox`}
-    //     color={variables.brandDarkestGray}
-    //     inactiveColor={variables.brandLightGray}
-    //     num={
-    //       this.state.codeSplit.length < item + 1
-    //         ? "0"
-    //         : this.state.codeSplit[item]
-    //     }
-    //     wasSelected={wasSelected(item, i)}
-    //     isSelected={isSelected(item, i)}
-    //     isPopulated={this.state.value.length - 1 >= item}
-    //   />
-    // );
   };
 
   public render() {
