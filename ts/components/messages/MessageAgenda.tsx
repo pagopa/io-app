@@ -1,9 +1,10 @@
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   Platform,
@@ -33,9 +34,6 @@ const SECTION_HEADER_HEIGHT = 48;
 const ITEM_HEIGHT = 158;
 const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
-
-const TOP_INDICATOR_HEIGHT = 70;
-const MARGIN_TOP_EMPTY_LIST = 30;
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -164,6 +162,9 @@ type Props = OwnProps & SelectedSectionListProps;
 type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
+  fristSectionListUpdate: boolean;
+  elementVisible: number;
+  isLoading: boolean;
 };
 
 export const isFakeItem = (item: any): item is FakeItem => {
@@ -268,9 +269,54 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      itemLayouts: []
+      itemLayouts: [],
+      fristSectionListUpdate: true,
+      elementVisible: 0,
+      isLoading: false
     };
     this.loadMoreData = this.loadMoreData.bind(this);
+  }
+
+  // tslint:disable-next-line: no-empty
+  public componentDidMount() {}
+
+  public componentDidUpdate(prevProps: Props, prevState: State) {
+    if (
+      prevProps.refreshing !== this.props.refreshing &&
+      prevState.prevSections !== this.state.prevSections &&
+      this.sectionListRef !== undefined &&
+      this.props.sections !== undefined
+    ) {
+      // tslint:disable-next-line: no-collapsible-if
+      if (this.props.sections.length >= 4) {
+        setTimeout(() => {
+          this.scrollToLocation({
+            animated: false,
+            itemIndex: 0,
+            sectionIndex: Platform.OS === "ios" ? 2 : 1
+          });
+        });
+      }
+    }
+
+    // tslint:disable-next-line: triple-equals
+    if (this.props.refreshing === false && this.props.sections.length < 4) {
+      this.loadMoreData();
+    }
+
+    if (prevProps.refreshing !== this.props.refreshing) {
+      if (this.props.refreshing === true) {
+        this.setState({
+          isLoading: true
+        });
+      } else {
+        setTimeout(() => {
+          this.setState({
+            isLoading: false
+          });
+        }, 500);
+      }
+    }
   }
 
   public static getDerivedStateFromProps(
@@ -372,69 +418,69 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return this.state.itemLayouts[index];
   };
 
-  private topIndicatorRender() {
+  public render() {
+    const { sections, servicesById, paymentsByRptId } = this.props;
+    const { isLoading } = this.state;
+
     return (
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          height: TOP_INDICATOR_HEIGHT
+          flex: 1,
+          width: Dimensions.get("window").width
         }}
       >
-        <Button
-          block={true}
-          primary={true}
-          small={true}
-          bordered={true}
-          style={styles.button}
-          onPress={this.loadMoreData}
-        >
-          <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
-        </Button>
-      </View>
-    );
-  }
-
-  public render() {
-    const {
-      sections,
-      servicesById,
-      paymentsByRptId,
-      refreshing,
-      onContentSizeChange
-    } = this.props;
-
-    return (
-      <View style={styles.fill}>
-        {sections.length === 0 && this.topIndicatorRender()}
         <SectionList
-          // loadMoreData={this.loadMoreData}
-          // topIndicatorRender={this.topIndicatorRender}
-          // topIndicatorHeight={TOP_INDICATOR_HEIGHT}
-          // sectionsLength={sections.length}
-          ref={this.sectionListRef}
-          ListEmptyComponent={ListEmptyComponent}
-          renderSectionHeader={this.renderSectionHeader}
-          renderItem={this.renderItem}
-          ItemSeparatorComponent={ItemSeparatorComponent}
           sections={sections}
           extraData={{ servicesById, paymentsByRptId }}
-          refreshing={refreshing}
-          onContentSizeChange={onContentSizeChange}
-          // stickySectionHeadersEnabled={true}
-          keyExtractor={keyExtractor}
-          getItemLayout={this.getItemLayout}
+          inverted={false}
           bounces={false}
-          style={[
-            {
-              marginTop: sections.length === 0 ? MARGIN_TOP_EMPTY_LIST : 0
-            },
-            styles.scrollList
-          ]}
-          scrollEventThrottle={8}
+          keyExtractor={keyExtractor}
+          ref={this.sectionListRef}
+          onScroll={e => {
+            const scrollPosition = e.nativeEvent.contentOffset.y;
+            if (scrollPosition === 0) {
+              setTimeout(() => {
+                this.loadMoreData();
+              }, Platform.OS === "ios" ? 50 : 350);
+            }
+          }}
+          renderItem={this.renderItem}
+          renderSectionHeader={this.renderSectionHeader}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+          getItemLayout={this.getItemLayout}
           ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
+          ListEmptyComponent={sections.length === 0 && ListEmptyComponent}
         />
+        {isLoading && (
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 50,
+              zIndex: 99,
+              display: isLoading ? "flex" : "none",
+              backgroundColor: "#fff"
+            }}
+          >
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "column",
+                alignContent: "center",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <ActivityIndicator
+                style={{ alignSelf: "center" }}
+                size="large"
+                color={variables.brandDarkGray}
+              />
+            </View>
+          </View>
+        )}
       </View>
     );
   }
