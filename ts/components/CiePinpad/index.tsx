@@ -10,17 +10,17 @@ import {
 import variables from "../../theme/variables";
 import { Baseline } from "../Pinpad/Placeholders";
 
-interface Props {
+type Props = {
   description: string;
   pinLength: number;
   onPinChanged: (pin: string) => void;
-}
+};
 
-interface State {
+type State = {
   pin: ReadonlyArray<string>;
   pinSelected: number;
   codeSplit: ReadonlyArray<string>;
-}
+};
 
 const styles = StyleSheet.create({
   placeholderContainer: {
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   }
 });
 
+const CIE_PIN_LENGHT = 8;
 /**
  * A customized CodeInput component.
  */
@@ -105,10 +106,10 @@ class CiePinpad extends React.PureComponent<Props, State> {
   };
 
   private inputBoxGenerator = (i: number) => {
-    const margin = 2;
     const width = 36;
-    const screenWidth = Dimensions.get("window").width;
+    const margin = 2;
     const totalMargins = margin * 2 * (this.props.pinLength - 1);
+    const screenWidth = Dimensions.get("window").width;
     const widthNeeded = width * this.props.pinLength + totalMargins;
 
     // if we have not enough space to place inputs
@@ -141,7 +142,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
           secureTextEntry={true}
           keyboardType="number-pad"
           autoFocus={false}
-          caretHidden={true}
+          caretHidden={true} // The caret is disabled to avoid confusing the user
           value={this.state.pin[i]}
           onChangeText={text => this.handleOnChangeText(text, i)}
           onKeyPress={({ nativeEvent }) =>
@@ -166,10 +167,11 @@ class CiePinpad extends React.PureComponent<Props, State> {
   };
 
   public render() {
+    // As many input boxes are created as CIE_PIN_LENGTH
     return (
       <View>
         <View style={styles.placeholderContainer}>
-          {Array(8)
+          {Array(CIE_PIN_LENGHT)
             .fill("")
             .map((_, i) => {
               return this.inputBoxGenerator(i);

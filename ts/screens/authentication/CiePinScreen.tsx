@@ -15,7 +15,6 @@ import I18n from "../../i18n";
 
 import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
-import { PinString } from "../../types/PinString";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -84,6 +83,8 @@ class CiePinScreen extends React.Component<Props, State> {
     );
   }
 
+  // TODO: To implement
+  // tslint:disable-next-line:no-empty
   private handleOnContinuePressButton = () => {};
 
   public renderContinueButton() {
@@ -114,6 +115,7 @@ class CiePinScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent goBack={true}>
         {this.renderContent()}
+        {this.renderFooter()}
         <KeyboardAvoidingView
           behavior={Platform.OS === "android" ? "height" : "padding"}
           keyboardVerticalOffset={Platform.select({
@@ -121,7 +123,6 @@ class CiePinScreen extends React.Component<Props, State> {
             android: variables.contentPadding
           })}
         />
-        {this.renderFooter()}
       </BaseScreenComponent>
     );
   }
