@@ -8,14 +8,12 @@ import {
 } from "react-native";
 
 import variables from "../../theme/variables";
-import { PinString } from "../../types/PinString";
 import { Baseline } from "../Pinpad/Placeholders";
 
 interface Props {
   description: string;
-  onFulfill: (code: PinString, isValid: boolean) => void;
-  onCancel?: () => void;
-  onDeleteLastDigit?: () => void;
+  pinLength: number;
+  onPinChanged: (pin: string) => void;
 }
 
 interface State {
@@ -43,8 +41,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const PIN_LENGTH = 8;
-
 /**
  * A customized CodeInput component.
  */
@@ -56,21 +52,24 @@ class CiePinpad extends React.PureComponent<Props, State> {
     this.inputBoxGenerator = this.inputBoxGenerator.bind(this);
     this.inputs = [];
     this.state = {
-      pin: new Array(8).fill(""),
+      pin: new Array(this.props.pinLength).fill(""),
       pinSelected: 0,
       codeSplit: []
     };
   }
 
   private handleOnChangeText = (text: string, index: number) => {
+    const pin = this.updatePin(text, index);
+    this.props.onPinChanged(pin.join(""));
+  };
+
+  private updatePin = (text: string, index: number): string[] => {
     // tslint:disable-next-line: readonly-array
     const tempPin = [...this.state.pin];
     tempPin.splice(index, 1, text);
     const pin: ReadonlyArray<string> = tempPin;
     this.setState({ pin });
-    if (!pin.some(p => p === "")) {
-      this.props.onFulfill(pin.join("") as PinString, true);
-    }
+    return tempPin;
   };
 
   private handleOnKeyPress = (
@@ -89,9 +88,10 @@ class CiePinpad extends React.PureComponent<Props, State> {
       //   // }
       // }
       // check if a deletion is going.
-      if (!this.state.pin[index] || this.state.pin[index].length === 0) {
-        this.inputs[index - 1].setState({ value: "" });
 
+      if (!this.state.pin[index] || this.state.pin[index].length === 0) {
+        this.updatePin("", index - 1);
+        this.inputs[index - 1].focus();
       }
       return;
     }
@@ -106,8 +106,8 @@ class CiePinpad extends React.PureComponent<Props, State> {
     const margin = 2;
     const width = 36;
     const screenWidth = Dimensions.get("window").width;
-    const totalMargins = margin * 2 * (PIN_LENGTH - 1);
-    const widthNeeded = width * PIN_LENGTH + totalMargins;
+    const totalMargins = margin * 2 * (this.props.pinLength - 1);
+    const widthNeeded = width * this.props.pinLength + totalMargins;
 
     // if we have not enough space to place inputs
     // compute a new width to fit it
@@ -115,7 +115,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
 
     const targetDimension =
       widthNeeded > screenWidth
-        ? (screenWidth - totalMargins) / PIN_LENGTH
+        ? (screenWidth - totalMargins) / this.props.pinLength
         : width;
 
     // tslint:disable-next-line:no-commented-code
@@ -124,7 +124,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
         <TextInput
           ref={c => {
             // collect all inputs refs
-            if (c !== null && this.inputs.length < PIN_LENGTH) {
+            if (c !== null && this.inputs.length < this.props.pinLength) {
               // tslint:disable-next-line: no-object-mutation
               this.inputs = [...this.inputs, c];
             }
@@ -139,7 +139,8 @@ class CiePinpad extends React.PureComponent<Props, State> {
           secureTextEntry={true}
           keyboardType="number-pad"
           autoFocus={false}
-          caretHidden={false}
+          caretHidden={true}
+          value={this.state.pin[i]}
           onChangeText={text => this.handleOnChangeText(text, i)}
           onKeyPress={({ nativeEvent }) =>
             this.handleOnKeyPress(nativeEvent, i)

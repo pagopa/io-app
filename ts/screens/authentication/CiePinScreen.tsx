@@ -23,26 +23,8 @@ type OwnProps = {
 
 type Props = ReduxProps & OwnProps;
 
-type PinUnselected = {
-  // Initial state
-  state: "PinUnselected";
-};
-
-type PinSelected = {
-  state: "PinSelected";
-  // User selected PIN
-  pin: PinString;
-};
-
-type PinConfirmed = {
-  state: "PinConfirmed";
-  pin: PinString;
-};
-
-type PinState = PinUnselected | PinSelected | PinConfirmed;
-
 type State = {
-  pinState: PinState;
+  pin: string;
 };
 
 const styles = StyleSheet.create({
@@ -53,38 +35,18 @@ const styles = StyleSheet.create({
   }
 });
 
+const CIE_PIN_LENGTH = 8;
+
 class CiePinScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    // Initial state with PinUnselected
-    this.state = {
-      pinState: {
-        state: "PinUnselected"
-      }
-    };
+    this.state = { pin: "" };
   }
 
-  // Method called when the PIN is filled and cancel button is pressed
-  public onPinConfirmRemoveLastDigit = () => {
-    console.warn("cancello");
-    if (this.state.pinState.state === "PinConfirmed") {
-      const pinState: PinSelected = {
-        ...this.state.pinState,
-        state: "PinSelected"
-      };
-      this.setState({
-        pinState
-      });
-    }
-  };
-
   // Method called when the PIN is filled
-  public onPinConfirmFulfill = (code: PinString) => {
+  public handelOnPinChanged = (pin: string) => {
     this.setState({
-      pinState: {
-        state: "PinConfirmed",
-        pin: code
-      }
+      pin
     });
   };
 
@@ -103,9 +65,9 @@ class CiePinScreen extends React.Component<Props, State> {
     return (
       <View style={styles.container}>
         <CiePinpad
+          pinLength={CIE_PIN_LENGTH}
           description={I18n.t("authentication.landing.cie.pinCardContent")}
-          onFulfill={this.onPinConfirmFulfill}
-          onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
+          onPinChanged={this.handelOnPinChanged}
         />
       </View>
     );
@@ -122,35 +84,33 @@ class CiePinScreen extends React.Component<Props, State> {
     );
   }
 
-  public renderContinueButton(pinState: PinState) {
-    if (pinState.state !== "PinConfirmed") {
-      return;
-    }
+  private handleOnContinuePressButton = () => {};
 
-    const onPress = () => {
-      // TODO
-      console.warn(pinState.state);
-    };
-
+  public renderContinueButton() {
     return (
-      <Button block={true} primary={true} onPress={onPress}>
+      <Button
+        block={true}
+        primary={true}
+        onPress={this.handleOnContinuePressButton}
+      >
         <Text>{I18n.t("onboarding.pin.continue")}</Text>
       </Button>
     );
   }
 
-  public renderFooter(pinState: PinState) {
+  public renderFooter() {
+    if (this.state.pin.length < CIE_PIN_LENGTH) {
+      return;
+    }
     return (
       <View footer={true}>
-        {this.renderContinueButton(pinState)}
+        {this.renderContinueButton()}
         <View spacer={true} />
       </View>
     );
   }
 
   public render() {
-    const { pinState } = this.state;
-
     return (
       <BaseScreenComponent goBack={true}>
         {this.renderContent()}
@@ -160,11 +120,8 @@ class CiePinScreen extends React.Component<Props, State> {
             ios: 0,
             android: variables.contentPadding
           })}
-        >
-          {pinState.state === "PinConfirmed" &&
-            pinState.pin.length === 8 &&
-            this.renderFooter(pinState)}
-        </KeyboardAvoidingView>
+        />
+        {this.renderFooter()}
       </BaseScreenComponent>
     );
   }
