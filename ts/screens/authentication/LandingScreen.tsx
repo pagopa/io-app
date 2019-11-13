@@ -7,32 +7,24 @@ import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
+import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-
 import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
-
 import I18n from "../../i18n";
-
 import ROUTES from "../../navigation/routes";
-
 import { ReduxProps } from "../../store/actions/types";
-
 import variables from "../../theme/variables";
-
 import { ComponentProps } from "../../types/react";
-
-import { DevScreenButton } from "../../components/DevScreenButton";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
 type Props = ReduxProps & OwnProps;
-const isCIEAuthenticationSupported = false; // waiting for sdk cie implementation
+const isCIEAuthenticationSupported = false; // TODO: waiting for sdk cie implementation
 const isCIEAvailable =
   isCIEAuthenticationSupported && isCIEauthenticationEnabled;
 
@@ -103,10 +95,10 @@ const LandingScreen: React.SFC<Props> = props => {
             block={true}
             primary={true}
             iconLeft={true}
-            onPress={undefined} // here navigate to identity card check
-            testID="landing-button-login-cie"
+            onPress={undefined} // TODO: here navigate to identity card check
+            testID={"landing-button-login-cie"}
           >
-            <IconFont name="io-cie" color={variables.colorWhite} />
+            <IconFont name={"io-cie"} color={variables.colorWhite} />
             <Text>{I18n.t("authentication.landing.loginCie")}</Text>
           </Button>
         )}
@@ -116,9 +108,9 @@ const LandingScreen: React.SFC<Props> = props => {
           primary={true}
           iconLeft={true}
           onPress={navigateToIdpSelection}
-          testID="landing-button-login-spid"
+          testID={"landing-button-login-spid"}
         >
-          <IconFont name="io-profilo" color={variables.colorWhite} />
+          <IconFont name={"io-profilo"} color={variables.colorWhite} />
           <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
         </Button>
         <View spacer={true} />
