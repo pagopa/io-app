@@ -16,7 +16,6 @@ import {
 import variables from "../../theme/variables";
 
 import startCase from "lodash/startCase";
-import { PullSectionList } from "react-native-pull";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -409,11 +408,11 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return (
       <View style={styles.fill}>
         {sections.length === 0 && this.topIndicatorRender()}
-        <PullSectionList
-          loadMoreData={this.loadMoreData}
-          topIndicatorRender={this.topIndicatorRender}
-          topIndicatorHeight={TOP_INDICATOR_HEIGHT}
-          sectionsLength={sections.length}
+        <SectionList
+          // loadMoreData={this.loadMoreData}
+          // topIndicatorRender={this.topIndicatorRender}
+          // topIndicatorHeight={TOP_INDICATOR_HEIGHT}
+          // sectionsLength={sections.length}
           ref={this.sectionListRef}
           ListEmptyComponent={ListEmptyComponent}
           renderSectionHeader={this.renderSectionHeader}
@@ -423,7 +422,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           extraData={{ servicesById, paymentsByRptId }}
           refreshing={refreshing}
           onContentSizeChange={onContentSizeChange}
-          stickySectionHeadersEnabled={true}
+          // stickySectionHeadersEnabled={true}
           keyExtractor={keyExtractor}
           getItemLayout={this.getItemLayout}
           bounces={false}
