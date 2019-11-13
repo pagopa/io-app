@@ -61,6 +61,12 @@ class CiePinpad extends React.PureComponent<Props, State> {
   private handleOnChangeText = (text: string, index: number) => {
     const pin = this.updatePin(text, index);
     this.props.onPinChanged(pin.join(""));
+    // if it is not the last element, change focus on next element
+    // handleOnKeyPress is used to handle the Backspace press
+    if (index + 1 < this.inputs.length) {
+      this.inputs[index + 1].focus();
+      return;
+    }
   };
 
   private updatePin = (text: string, index: number): string[] => {
@@ -93,11 +99,6 @@ class CiePinpad extends React.PureComponent<Props, State> {
         this.updatePin("", index - 1);
         this.inputs[index - 1].focus();
       }
-      return;
-    }
-    // if it is not the last element, change focus on next element
-    if (index + 1 < this.inputs.length) {
-      this.inputs[index + 1].focus();
       return;
     }
   };
