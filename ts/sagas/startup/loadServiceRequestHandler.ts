@@ -46,6 +46,8 @@ export function* loadServiceRequestHandler(
         organizationNamesByFiscalCodeSelector
       );
 
+      yield put(loadService.success(response.value.value));
+
       if (organizations) {
         const service = pot.some(response.value.value);
         const fc = service.value.organization_fiscal_code;
@@ -65,8 +67,6 @@ export function* loadServiceRequestHandler(
           yield put(updateOrganizations(response.value.value));
         }
       }
-
-      yield put(loadService.success(response.value.value));
 
       // Once the service content is loaded, the service metadata loading is requested.
       // Service metadata contains service scope (national/local) used to identify where

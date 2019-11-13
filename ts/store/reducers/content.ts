@@ -37,8 +37,10 @@ export type MunicipalityState = Readonly<{
   data: pot.Pot<MunicipalityMetadata, Error>;
 }>;
 
+// TODO: evaluate if consider this specific case or just assume all
+// the data are included into visibel service metadata
 export type ServiceMetadataById = Readonly<{
-  [key: string]: pot.Pot<ServiceMetadata, string> | undefined;
+  [key: string]: pot.Pot<ServiceMetadata, Error>;
 }>;
 
 const initialContentState: ContentState = {
@@ -85,16 +87,16 @@ export default function content(
           }
         }
       };
+
     case getType(contentServiceLoad.failure):
       return {
         ...state,
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload.service_id]: pot.toError(
-              state.servicesMetadata.byId[action.payload.service_id] ||
-                pot.none,
-              action.payload.error.message
+            [action.payload.serviceId]: pot.toError(
+              state.servicesMetadata.byId[action.payload.serviceId] || pot.none,
+              action.payload.error
             )
           }
         }

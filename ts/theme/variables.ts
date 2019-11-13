@@ -15,7 +15,7 @@ import { ThemeSimpleValue } from "./types";
 // tslint:disable-next-line:no-object-mutation
 const customVariables = Object.assign(materialVariables, {
   // Android
-  btnUppercaseAndroidText: false,
+  buttonUppercaseAndroidText: false,
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
@@ -46,7 +46,8 @@ const customVariables = Object.assign(materialVariables, {
 
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
-  colorWhite: "white",
+  colorWhite: "#FFFFFF",
+  disabledService: "#909DA8",
 
   calendarExpirableColor: "#D0021B",
 
@@ -274,7 +275,10 @@ const customVariables = Object.assign(materialVariables, {
 
   // IconFont
   selectedColor: "#0073E6",
-  unselectedColor: "#5C6F82"
+  unselectedColor: "#5C6F82",
+
+  // Checkbox
+  checkboxDefaultColor: "transparent"
 });
 
 export default customVariables;

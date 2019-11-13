@@ -1,25 +1,26 @@
+import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
+import { untag } from "italia-ts-commons/lib/types";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
-
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
   navigateToEmailForwardingPreferenceScreen,
+  navigateToEmailReadScreen,
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { checkCalendarPermission } from "../../utils/calendar";
 import { getLocalePrimary } from "../../utils/locale";
@@ -79,6 +80,20 @@ class PreferencesScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = INITIAL_STATE;
+    this.handleEmailOnPress = this.handleEmailOnPress.bind(this);
+  }
+
+  private handleEmailOnPress() {
+    if (isEmailEditingAndValidationEnabled) {
+      if (this.props.isEmailValidated) {
+        this.props.navigateToEmailInsertScreen();
+      } else {
+        // TODO: add navigation to the dedicated screen
+        //  https://www.pivotaltracker.com/story/show/168247501
+      }
+    } else {
+      unavailableAlert();
+    }
   }
 
   public componentWillMount() {
@@ -183,8 +198,7 @@ class PreferencesScreen extends React.Component<Props, State> {
             <ListItemComponent
               title={I18n.t("profile.preferences.list.email")}
               subTitle={profileData.spid_email}
-              iconName={"io-email"}
-              onPress={unavailableAlert}
+              onPress={this.handleEmailOnPress}
             />
 
             <ListItemComponent
@@ -219,12 +233,18 @@ class PreferencesScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  languages: fromNullable(state.preferences.languages),
-  potProfile: pot.toOption(state.profile),
-  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-  preferredCalendar: state.persistedPreferences.preferredCalendar
-});
+function mapStateToProps(state: GlobalState) {
+  // TODO: get info on validation from profile
+  //      https://www.pivotaltracker.com/story/show/168662501
+  const isEmailValidated = true;
+  return {
+    languages: fromNullable(state.preferences.languages),
+    potProfile: pot.toOption(profileSelector(state)),
+    isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
+    preferredCalendar: state.persistedPreferences.preferredCalendar,
+    isEmailValidated
+  };
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToFingerprintPreferenceScreen: () =>
@@ -232,7 +252,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToEmailForwardingPreferenceScreen: () =>
     dispatch(navigateToEmailForwardingPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
-    dispatch(navigateToCalendarPreferenceScreen())
+    dispatch(navigateToCalendarPreferenceScreen()),
+  navigateToEmailInsertScreen: () =>
+    dispatch(navigateToEmailReadScreen({ isFromProfileSection: true }))
 });
 
 export default connect(

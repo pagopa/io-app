@@ -71,7 +71,8 @@ export function userMetadataToBackendUserMetadata(
 export const INITIAL_STATE: UserMetadataState = pot.none;
 
 // Selectors
-export const userMetadataSelector = (state: GlobalState) => state.userMetadata;
+export const userMetadataSelector = (state: GlobalState): UserMetadataState =>
+  state.userMetadata;
 
 const userMetadataReducer = (
   state: UserMetadataState = INITIAL_STATE,
