@@ -82,12 +82,16 @@ class CiePinpad extends React.PureComponent<Props, State> {
       if (index === 0) {
         return;
       }
-      if (index !== 0) {
-        this.inputs[index - 1].focus(); // it change the focus on the previous input
-      }
+      // if (index !== 0) {
+      //   this.inputs[index - 1].focus(); // it change the focus on the previous input
+      //   // if (this.props.onDeleteLastDigit) {
+      //   //   this.props.onDeleteLastDigit();
+      //   // }
+      // }
       // check if a deletion is going.
       if (!this.state.pin[index] || this.state.pin[index].length === 0) {
         this.inputs[index - 1].setState({ value: "" });
+
       }
       return;
     }

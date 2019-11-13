@@ -64,8 +64,9 @@ class CiePinScreen extends React.Component<Props, State> {
     };
   }
 
-  // Method called when the confirmation CodeInput is valid and cancel button is pressed
+  // Method called when the PIN is filled and cancel button is pressed
   public onPinConfirmRemoveLastDigit = () => {
+    console.warn("cancello");
     if (this.state.pinState.state === "PinConfirmed") {
       const pinState: PinSelected = {
         ...this.state.pinState,
@@ -77,7 +78,7 @@ class CiePinScreen extends React.Component<Props, State> {
     }
   };
 
-  // Method called when the confirmation CodeInput is filled
+  // Method called when the PIN is filled
   public onPinConfirmFulfill = (code: PinString) => {
     this.setState({
       pinState: {
@@ -97,7 +98,7 @@ class CiePinScreen extends React.Component<Props, State> {
     );
   }
 
-  // Render select/confirm CiePinpad component
+  // Render CiePinpad component
   public renderCodeInput() {
     return (
       <View style={styles.container}>
@@ -128,6 +129,7 @@ class CiePinScreen extends React.Component<Props, State> {
 
     const onPress = () => {
       // TODO
+      console.warn(pinState.state);
     };
 
     return (
@@ -159,7 +161,9 @@ class CiePinScreen extends React.Component<Props, State> {
             android: variables.contentPadding
           })}
         >
-          {pinState.state === "PinConfirmed" && this.renderFooter(pinState)}
+          {pinState.state === "PinConfirmed" &&
+            pinState.pin.length === 8 &&
+            this.renderFooter(pinState)}
         </KeyboardAvoidingView>
       </BaseScreenComponent>
     );
