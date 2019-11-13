@@ -15,7 +15,7 @@ import { ThemeSimpleValue } from "./types";
 // tslint:disable-next-line:no-object-mutation
 const customVariables = Object.assign(materialVariables, {
   // Android
-  btnUppercaseAndroidText: false,
+  buttonUppercaseAndroidText: false,
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
@@ -275,7 +275,10 @@ const customVariables = Object.assign(materialVariables, {
 
   // IconFont
   selectedColor: "#0073E6",
-  unselectedColor: "#5C6F82"
+  unselectedColor: "#5C6F82",
+
+  // Checkbox
+  checkboxDefaultColor: "transparent"
 });
 
 export default customVariables;

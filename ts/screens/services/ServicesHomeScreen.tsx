@@ -39,7 +39,6 @@ import {
 } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import {
-  NavigationEvents,
   NavigationEventSubscription,
   NavigationScreenProps
 } from "react-navigation";
@@ -176,9 +175,11 @@ const styles = StyleSheet.create({
   activeTextStyle: {
     ...makeFontStyleObject(Platform.select, "600"),
     fontSize: Platform.OS === "android" ? 16 : undefined,
-    fontWeight: Platform.OS === "android" ? "normal" : "bold"
+    fontWeight: Platform.OS === "android" ? "normal" : "bold",
+    color: customVariables.brandPrimary
   },
   textStyle: {
+    color: customVariables.brandDarkGray,
     fontSize: customVariables.fontSizeSmall
   },
   center: {
@@ -269,12 +270,28 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   };
 
+  /**
+   * if we are displaying the loading screen and we got no errors on loading
+   * data, then we can show the content
+   */
+  private canRenderContent = () => {
+    if (
+      !this.state.isInnerContentRendered &&
+      this.props.isFirstServiceLoadCompleted &&
+      this.props.loadDataFailure === undefined
+    ) {
+      this.setState({ isInnerContentRendered: true });
+    }
+  };
+
   public componentDidMount() {
     // On mount, update visible services and user metadata if their
     // refresh fails
     if (pot.isError(this.props.potUserMetadata)) {
       this.props.refreshUserMetadata();
     }
+
+    this.canRenderContent();
 
     if (
       pot.isError(this.props.visibleServicesContentLoadState) ||
@@ -367,13 +384,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       });
     }
 
-    if (
-      !this.state.isInnerContentRendered &&
-      this.props.isFirstServiceLoadCompleted &&
-      this.props.loadDataFailure === undefined
-    ) {
-      this.setState({ isInnerContentRendered: true });
-    }
+    this.canRenderContent();
 
     if (this.state.isInnerContentRendered) {
       if (
@@ -573,18 +584,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   };
 
-  private onNavigation = () => {
-    this.setState({ isLongPressEnabled: false });
-    // If cache has been cleaned and the page is already rendered,
-    // it grants content is refreshed
-    if (
-      pot.isNone(this.props.visibleServices) &&
-      !pot.isLoading(this.props.visibleServices)
-    ) {
-      this.refreshScreenContent();
-    }
-  };
-
   private renderErrorContent = () => {
     if (this.state.isInnerContentRendered) {
       return undefined;
@@ -624,7 +623,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         isSearchAvailable={userMetadata !== undefined}
         searchType={"Services"}
       >
-        <NavigationEvents onWillFocus={this.onNavigation} />
         {this.renderErrorContent() ? (
           this.renderErrorContent()
         ) : this.props.isSearchEnabled ? (
