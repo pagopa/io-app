@@ -29,7 +29,7 @@ import { profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
   emailProfileSelector,
-  isProfileEmailValidated,
+  isProfileEmailValidatedSelector,
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -267,7 +267,7 @@ function mapStateToProps(state: GlobalState) {
   return {
     profile,
     email: emailProfileSelector(profile),
-    isEmailValidated: isProfileEmailValidated(profile),
+    isEmailValidated: isProfileEmailValidatedSelector(profile),
     isLoading: pot.isUpdating(profile)
   };
 }

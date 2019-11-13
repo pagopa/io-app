@@ -4,7 +4,7 @@
  * are managed by different global reducers.
  */
 
-import { Option, none, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
@@ -18,6 +18,7 @@ import {
 import { Action } from "../actions/types";
 
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import { UserProfile } from "../../../definitions/backend/UserProfile";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<UserProfileUnion, Error>;
@@ -41,18 +42,18 @@ export const emailProfileSelector = (profile: ProfileState): Option<string> =>
     none
   );
 
+export const hasProfileEmail = (user: UserProfile): boolean =>
+  InitializedProfile.is(user) && user.email !== undefined;
+
+export const isProfileEmailValidated = (user: UserProfile): boolean =>
+  InitializedProfile.is(user) &&
+  user.is_email_validated !== undefined &&
+  user.is_email_validated === true;
+
 // return true if the profile pot is some and its field is_email_validated exists and it's true
-export const isProfileEmailValidated = (profile: ProfileState): boolean =>
-  pot.getOrElse(
-    pot.map(
-      profile,
-      p =>
-        InitializedProfile.is(p) &&
-        p.is_email_validated !== undefined &&
-        p.is_email_validated === true
-    ),
-    false
-  );
+export const isProfileEmailValidatedSelector = (
+  profile: ProfileState
+): boolean => pot.getOrElse(pot.map(profile, p => hasProfileEmail(p)), false);
 
 const reducer = (
   state: ProfileState = INITIAL_STATE,

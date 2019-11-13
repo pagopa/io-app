@@ -1,7 +1,6 @@
 import { Effect } from "redux-saga";
 import { cancel, fork, put, take, takeEvery } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { UserProfile } from "../../../definitions/backend/UserProfile";
 import {
   navigateToEmailInsertScreen,
@@ -9,6 +8,10 @@ import {
   navigateToEmailValidateScreen
 } from "../../store/actions/navigation";
 import { emailAcknowledged, emailInsert } from "../../store/actions/onboarding";
+import {
+  hasProfileEmail,
+  isProfileEmailValidated
+} from "../../store/reducers/profile";
 
 /**
  * Launch email saga that consists of:
@@ -27,7 +30,7 @@ export function* checkAcknowledgedEmailSaga(
   // To test #168246944 set emailExists = true;
   // To test #168247020, #168247105 set emailExists = false;
 
-  if (InitializedProfile.is(userProfile) && userProfile.email !== undefined) {
+  if (hasProfileEmail(userProfile)) {
     // Email exists
 
     // Check if email is valid
@@ -35,7 +38,7 @@ export function* checkAcknowledgedEmailSaga(
     // To test #168246944 set isValid = true;
     // To test #168247105 set isValid = false;
 
-    if (userProfile.is_email_validated) {
+    if (isProfileEmailValidated(userProfile)) {
       // If email exists and it's valid, navigate to the Email Screen in order
       // to wait for the user to check it out and press "Continue". Otherwise
       // a new email registration process will be run
