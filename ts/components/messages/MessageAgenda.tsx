@@ -475,7 +475,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             >
               <ActivityIndicator
                 style={{ alignSelf: "center" }}
-                size="large"
+                size="small"
                 color={variables.brandDarkGray}
               />
             </View>
