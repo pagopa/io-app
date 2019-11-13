@@ -52,6 +52,8 @@
 	</dict>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>The app needs NSBluetoothAlwaysUsageDescription permission</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>IO needs access to the calendar to add event reminders</string>
 	<key>NSCameraUsageDescription</key>
