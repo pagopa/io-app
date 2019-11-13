@@ -69,6 +69,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
     }
   };
 
+  // tslint:disable-next-line: readonly-array
   private updatePin = (text: string, index: number): string[] => {
     // tslint:disable-next-line: readonly-array
     const tempPin = [...this.state.pin];
