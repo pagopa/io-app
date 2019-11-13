@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-
+const buttonTextSize = 15;
 const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
 
 /**
@@ -96,13 +96,13 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
             bordered: true,
             title: I18n.t("email.edit.cta"),
             onPress: this.props.navigateToEmailInsertScreen,
-            buttonFontSize: 15
+            buttonFontSize: buttonTextSize
           }}
           rightButton={{
             block: true,
             primary: true,
             title: I18n.t("global.buttons.continue"),
-            onPress: this.props.acknowledgeEmail
+            onPress: () => this.props.acknowledgeEmail(this.props.is)
           }}
         />
       </TopScreenComponent>
@@ -115,7 +115,8 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  acknowledgeEmail: () => dispatch(emailAcknowledged()),
+  acknowledgeEmail: (isFromProfileSection: boolean) =>
+    dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
   navigateToEmailInsertScreen: () =>
     dispatch(navigateToEmailInsertScreen({ isFromProfileSection: false }))

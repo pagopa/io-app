@@ -38,17 +38,13 @@ export function* checkAcknowledgedEmailSaga(
     // To test #168246944 set isValid = true;
     // To test #168247105 set isValid = false;
 
-    if (isProfileEmailValidated(userProfile)) {
-      // If email exists and it's valid, navigate to the Email Screen in order
-      // to wait for the user to check it out and press "Continue". Otherwise
-      // a new email registration process will be run
-      yield put(navigateToEmailReadScreen({ isFromProfileSection: false }));
-    } else {
+    if (!isProfileEmailValidated(userProfile)) {
+      // If email exists but it is not validate we show a screen as a reminder to validate it or
+      // where the user can edit the email added but not validated yet
       yield put(navigateToEmailValidateScreen);
     }
   } else {
     // No email is provided, user must insert the Email address.
-
     yield put(navigateToEmailInsertScreen({ isFromProfileSection: false }));
   }
 
