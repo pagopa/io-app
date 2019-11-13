@@ -1,5 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
+import Reactotron from "reactotron-react-native";
 import { NavigationState } from "react-navigation";
+import { reactotronRedux } from "reactotron-redux";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
 import { createLogger } from "redux-logger";
@@ -212,6 +214,13 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
    * If available use redux-devtool version of the compose function that allow
    * the inspection of the store from the devtool.
    */
+
+  const RTron = Reactotron.setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `react-native` or `@react-native-community/async-storage` depending on where you get it from
+    .configure() // controls connection & communication settings
+    .use(reactotronRedux())
+    .useReactNative() // add all built-in react native plugins
+    .connect(); // let's connect!
+
   const composeEnhancers =
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const enhancer: StoreEnhancer = composeEnhancers(
@@ -221,8 +230,9 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
       navigationHistory,
       navigation,
       analytics.actionTracking, // generic tracker for selected redux actions
-      analytics.screenTracking // tracks screen navigation
-    )
+      analytics.screenTracking // tracks screen navigation,
+    ),
+    RTron.createEnhancer()
   );
 
   const store: Store = createStore<PersistedGlobalState, Action, {}, {}>(

@@ -138,6 +138,8 @@
     "prettier": "1.14.2",
     "react-native-typescript-transformer": "^1.2.12",
     "react-test-renderer": "16.8.3",
+    "reactotron-react-native": "^4.0.2",
+    "reactotron-redux": "^3.1.2",
     "redux-saga-test-plan": "^3.7.0",
     "rn-nodeify": "^10.0.1",
     "ts-jest": "24.0.1",
