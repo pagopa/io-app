@@ -1,7 +1,7 @@
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
   ActivityIndicator,
@@ -12,8 +12,7 @@ import {
   SectionListData,
   SectionListRenderItem,
   SectionListScrollParams,
-  StyleSheet,
-  ScrollView
+  StyleSheet
 } from "react-native";
 import variables from "../../theme/variables";
 
@@ -94,6 +93,13 @@ const styles = StyleSheet.create({
   itemSeparator: {
     height: ITEM_SEPARATOR_HEIGHT,
     backgroundColor: customVariables.brandLightGray
+  },
+  button: {
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    marginTop: variables.contentPadding,
+    width: screenWidth - variables.contentPadding * 2
   },
 
   // Animation progress
@@ -398,14 +404,17 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     const { isLoading } = this.state;
 
     const ListEmptyComponent = (
-      <View
-        style={styles.emptyListWrapper}
-        onTouchMove={() => {
-          if (!isLoading) {
-            this.loadMoreData();
-          }
-        }}
-      >
+      <View style={styles.emptyListWrapper}>
+        <Button
+          block={true}
+          primary={true}
+          small={true}
+          bordered={true}
+          style={styles.button}
+          onPress={this.loadMoreData}
+        >
+          <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
+        </Button>
         <View spacer={true} />
         <Image
           source={require("../../../img/messages/empty-due-date-list-icon.png")}
@@ -435,7 +444,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           ref={this.sectionListRef}
           onScroll={e => {
             const scrollPosition = e.nativeEvent.contentOffset.y;
-            if (scrollPosition === 0 && !isLoading) {
+            if (scrollPosition < 50 && !isLoading) {
               this.loadMoreData();
             }
           }}

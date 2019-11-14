@@ -709,7 +709,7 @@ messages:
   deadlines:
     emptyMessage:
       title: Non hai scadenze in programma.
-      subtitle: Aggiorna per vedere le scadenze già trascorse.
+      subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
 messageDetails:
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
