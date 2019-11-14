@@ -1,15 +1,15 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
+import { NavigationScreenProps } from "react-navigation";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,
@@ -19,8 +19,6 @@ import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { emailProfileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { NavigationScreenProps } from "react-navigation";
-import ROUTES from "../../navigation/routes";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 type NavigationParams = {

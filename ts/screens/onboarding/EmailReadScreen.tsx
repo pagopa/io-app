@@ -6,7 +6,6 @@
  * - it is displayed after the onboarding (navigation from the profile section)
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, StyleSheet } from "react-native";
@@ -31,8 +30,8 @@ import {
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
-  profileSelector,
-  emailProfileSelector
+  emailProfileSelector,
+  profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";

@@ -30,7 +30,6 @@ export function* checkAcknowledgedEmailSaga(
   // TODO: put email existence check here
   // To test #168246944 set emailExists = true;
   // To test #168247020, #168247105 set emailExists = false;
-  console.warn(JSON.stringify(userProfile));
   if (hasProfileEmail(userProfile)) {
     // Email exists
 
