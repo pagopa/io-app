@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     paddingRight: 0,
     height: 50,
     width: screenWidth,
-    zIndex: 99,
-    backgroundColor: "#fff"
+    zIndex: 999,
+    backgroundColor: customVariables.colorWhite
   }
 });
 
