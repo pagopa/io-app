@@ -5,6 +5,7 @@
 
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
+import { ScrollView } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -83,9 +84,11 @@ const LandingScreen: React.SFC<Props> = props => {
       {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
 
       <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
-        <View spacer={true} large={true} />
-        <HorizontalScroll cards={cardComponents} />
-        <View spacer={true} />
+        <ScrollView>
+          <View spacer={true} large={true} />
+          <HorizontalScroll cards={cardComponents} />
+          <View spacer={true} />
+        </ScrollView>
       </Content>
 
       <View footer={true}>
