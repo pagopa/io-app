@@ -12,7 +12,8 @@ import {
   SectionListData,
   SectionListRenderItem,
   SectionListScrollParams,
-  StyleSheet
+  StyleSheet,
+  ScrollView
 } from "react-native";
 import variables from "../../theme/variables";
 
@@ -231,21 +232,6 @@ const generateItemLayouts = (sections: Sections) => {
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
-const ListEmptyComponent = (
-  <View style={styles.emptyListWrapper}>
-    <View spacer={true} />
-    <Image
-      source={require("../../../img/messages/empty-due-date-list-icon.png")}
-    />
-    <Text style={styles.emptyListContentTitle}>
-      {I18n.t("messages.deadlines.emptyMessage.title")}
-    </Text>
-    <Text style={styles.emptyListContentSubtitle}>
-      {I18n.t("messages.deadlines.emptyMessage.subtitle")}
-    </Text>
-  </View>
-);
-
 const FakeItemComponent = (
   <View style={styles.itemEmptyWrapper}>
     <Text style={styles.itemEmptyText}>{I18n.t("reminders.emptyMonth")}</Text>
@@ -276,17 +262,18 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       this.props.sections !== undefined &&
       this.props.sections.length >= 4
     ) {
-      setTimeout(() => {
-        this.scrollToLocation({
-          animated: false,
-          itemIndex: 0,
-          sectionIndex: Platform.OS === "ios" ? 2 : 1
-        });
-      }, 1);
+      this.scrollToLocation({
+        animated: false,
+        itemIndex: 0,
+        sectionIndex: Platform.OS === "ios" ? 2 : 1
+      });
     }
 
-    // The first load data
-    if (this.props.refreshing === false && this.props.sections.length < 4) {
+    if (
+      this.props.refreshing === false &&
+      this.props.sections.length < 4 &&
+      this.props.sections.length !== 0
+    ) {
       this.loadMoreData();
     }
 
@@ -410,6 +397,28 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     const { sections, servicesById, paymentsByRptId } = this.props;
     const { isLoading } = this.state;
 
+    const ListEmptyComponent = (
+      <View
+        style={styles.emptyListWrapper}
+        onTouchMove={() => {
+          if (!isLoading) {
+            this.loadMoreData();
+          }
+        }}
+      >
+        <View spacer={true} />
+        <Image
+          source={require("../../../img/messages/empty-due-date-list-icon.png")}
+        />
+        <Text style={styles.emptyListContentTitle}>
+          {I18n.t("messages.deadlines.emptyMessage.title")}
+        </Text>
+        <Text style={styles.emptyListContentSubtitle}>
+          {I18n.t("messages.deadlines.emptyMessage.subtitle")}
+        </Text>
+      </View>
+    );
+
     return (
       <View
         style={{
@@ -426,7 +435,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           ref={this.sectionListRef}
           onScroll={e => {
             const scrollPosition = e.nativeEvent.contentOffset.y;
-            if (scrollPosition < 70 && !isLoading) {
+            if (scrollPosition === 0 && !isLoading) {
               this.loadMoreData();
             }
           }}
