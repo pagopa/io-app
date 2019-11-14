@@ -5,6 +5,7 @@ import {
 
 import { environment } from "../config";
 import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
+import CiePinScreen from "../screens/authentication/CiePinScreen";
 import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
 import CieValidScreen from "../screens/authentication/CieValidScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
@@ -46,6 +47,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN]: {
     screen: InterruptedReadingCardScreen
+  },
+  [ROUTES.CIE_PIN_SCREEN]: {
+    screen: CiePinScreen
   }
 };
 
