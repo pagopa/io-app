@@ -30,17 +30,16 @@ const INITIAL_STATE: ProfileState = pot.none;
 export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
 
+export const getEmailProfile = (user: UserProfile): Option<string> => {
+  if (InitializedProfile.is(user) && user.email) {
+    return some(user.email as string);
+  }
+  return none;
+};
+
 // return the email (as a string) if the profile pot is some and its value is of kind InitializedProfile
 export const emailProfileSelector = (profile: ProfileState): Option<string> =>
-  pot.getOrElse(
-    pot.map(profile, p => {
-      if (InitializedProfile.is(p) && p.email) {
-        return some(p.email as string);
-      }
-      return none;
-    }),
-    none
-  );
+  pot.getOrElse(pot.map(profile, p => getEmailProfile(p)), none);
 
 export const hasProfileEmail = (user: UserProfile): boolean =>
   InitializedProfile.is(user) && user.email !== undefined;

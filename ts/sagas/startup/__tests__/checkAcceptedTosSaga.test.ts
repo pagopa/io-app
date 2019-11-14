@@ -29,6 +29,7 @@ describe("checkAcceptedTosSaga", () => {
     has_profile: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
+    is_email_enabled: false,
     email: "test@example.com" as EmailString,
     spid_email: "test@example.com" as EmailString,
     family_name: "Connor",

@@ -7,6 +7,10 @@ import { instabugToken } from "../config";
 import I18n from "../i18n";
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
+import {
+  isProfileEmailValidated,
+  getEmailProfile
+} from "../store/reducers/profile";
 
 type InstabugLocales = { [k in Locales]: Instabug.locale };
 
@@ -51,10 +55,13 @@ export const setInstabugProfileAttributes = (
   profile: UserProfile,
   maybeIdp: Option<IdentityProvider>
 ) => {
-  Instabug.identifyUserWithEmail(
-    profile.spid_email,
-    `${profile.name} ${profile.family_name}`
-  );
+  const maybeEmail = getEmailProfile(profile);
+  if (maybeEmail.isSome()) {
+    Instabug.identifyUserWithEmail(
+      maybeEmail.value,
+      `${profile.name} ${profile.family_name}`
+    );
+  }
 
   setInstabugUserAttribute("fiscalcode", profile.fiscal_code);
 
