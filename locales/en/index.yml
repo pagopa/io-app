@@ -452,7 +452,7 @@ wallet:
     infoTitle: Set the card as favourite payment method
     info: This payment method will be automatically proposed for the next payment
     save: Save the card
-    notice: To verify the card, 2 euro cents will be charged and immediately reversed.
+    notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
     temporaryError: There was a temporary problem while saving this card, please retry.
   saveCardInPayment:
     header: Pay with this card
