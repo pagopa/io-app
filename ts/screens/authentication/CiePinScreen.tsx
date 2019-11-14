@@ -49,7 +49,8 @@ class CiePinScreen extends React.Component<Props, State> {
     });
   };
 
-  // Render a different header when the user need to confirm the PIN
+  // Render the header of the CiePinScreen
+  // N.B. In this ScreenHeader the heading overlaps the icon, it is solved in https://www.pivotaltracker.com/n/projects/2048617/stories/169674841
   public renderContentHeader() {
     return (
       <ScreenHeader
@@ -100,7 +101,7 @@ class CiePinScreen extends React.Component<Props, State> {
   }
 
   public renderFooter() {
-    if (this.state.pin.length < CIE_PIN_LENGTH) {
+    if (this.state.pin.length !== CIE_PIN_LENGTH) {
       return;
     }
     return (

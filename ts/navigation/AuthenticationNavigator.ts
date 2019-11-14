@@ -11,8 +11,7 @@ import CieValidScreen from "../screens/authentication/CieValidScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
-// tslint:disable-next-line:no-commented-code
-// import LandingScreen from "../screens/authentication/LandingScreen";
+import LandingScreen from "../screens/authentication/LandingScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
@@ -20,10 +19,10 @@ import ROUTES from "./routes";
 // Routes loaded in production mode
 const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.AUTHENTICATION_LANDING]: {
-    screen: CiePinScreen
+    screen: LandingScreen
   },
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: {
-    screen: CiePinScreen
+    screen: IdpSelectionScreen
   },
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
     screen: IdpLoginScreen
