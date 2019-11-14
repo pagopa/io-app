@@ -24,7 +24,7 @@ type OwnProps = {
 };
 
 type Props = ReduxProps & OwnProps;
-const isCIEAuthenticationSupported = false; // TODO: waiting for sdk cie implementation
+const isCIEAuthenticationSupported = false; // TODO: waiting for sdk cie implementation https://www.pivotaltracker.com/story/show/169730204
 const isCIEAvailable =
   isCIEAuthenticationSupported && isCIEauthenticationEnabled;
 
