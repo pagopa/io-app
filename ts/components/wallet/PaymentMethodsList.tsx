@@ -31,6 +31,8 @@ type IPaymentMethod = Readonly<{
   onPress?: () => void;
 }>;
 
+const underlayColor = "transparent";
+
 const styles = StyleSheet.create({
   listItem: {
     marginLeft: 0,
@@ -110,7 +112,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
               <ListItem
                 style={[styles.listItem]}
                 onPress={itemInfo.item.onPress}
-                activeOpacity={1}
+                underlayColor={underlayColor}
               >
                 <Left>
                   <Grid>

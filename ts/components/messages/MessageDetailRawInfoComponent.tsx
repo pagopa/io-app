@@ -89,7 +89,10 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
                 </Text>
                 <TouchableDefaultOpacity onPress={onServiceLinkPress}>
                   <Text link={true}>
-                    {`${I18n.t("messageDetails.rawInfoLabels.serviceName")}: `}
+                    <Text bold={true}>{`${I18n.t(
+                      "messageDetails.rawInfoLabels.serviceName"
+                    )}: `}</Text>
+                    {service.service_name}
                   </Text>
                 </TouchableDefaultOpacity>
 
