@@ -32,12 +32,14 @@ describe("checkProfileEnabledSaga", () => {
 
   const upsertAction = profileUpsert.request({
     is_inbox_enabled: true,
-    is_webhook_enabled: true,
-    email: profile.spid_email
+    is_webhook_enabled: true
   });
 
   const updatedProfile: InitializedProfile = {
     ...profile,
+    is_email_enabled: false,
+    is_inbox_enabled: false,
+    is_webhook_enabled: false,
     version: 1 as NonNegativeInteger
   };
 
