@@ -106,7 +106,6 @@ function* createOrUpdateProfileSaga(
 
     if (response.isLeft()) {
       throw new Error(readableReport(response.value));
-      return;
     }
 
     if (response.value.status === 401) {

@@ -10,7 +10,6 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
@@ -20,8 +19,8 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
-  profileSelector,
-  emailProfileSelector
+  emailProfileSelector,
+  profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { checkCalendarPermission } from "../../utils/calendar";
