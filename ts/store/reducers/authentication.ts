@@ -106,8 +106,7 @@ export function isSessionExpired(
 // Selectors
 
 export const isSessionExpiredSelector = (state: GlobalState) =>
-  !isLoggedIn(state.authentication) &&
-  state.authentication.reason === "SESSION_EXPIRED";
+  !isLoggedIn(state.authentication) && isSessionExpired(state.authentication);
 
 export const sessionTokenSelector = (
   state: GlobalState
