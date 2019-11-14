@@ -6,11 +6,8 @@ import { Locales } from "../../locales/locales";
 import { instabugToken } from "../config";
 import I18n from "../i18n";
 import { IdentityProvider } from "../models/IdentityProvider";
+import { getEmailProfile } from "../store/reducers/profile";
 import variables from "../theme/variables";
-import {
-  isProfileEmailValidated,
-  getEmailProfile
-} from "../store/reducers/profile";
 
 type InstabugLocales = { [k in Locales]: Instabug.locale };
 
