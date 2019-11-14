@@ -6,7 +6,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Image } from "react-native";
+import { Alert, BackHandler, Image } from "react-native";
 import { connect } from "react-redux";
 import { isEmailEditingAndValidationEnabled } from "../config";
 import {
@@ -33,6 +33,20 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       dispatched: false
     };
   }
+
+  private handleBackPress = () => {
+    this.props.navigateBack();
+    return true;
+  };
+
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
   public componentDidUpdate(prevprops: Props, prevstate: State) {
     const { isValidEmail } = this.props;
     const { dispatched } = this.state;
@@ -57,7 +71,12 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       .map(_ => untag(_.spid_email))
       .getOrElse("");
     return (
-      <TopScreenComponent appLogo={true}>
+      <TopScreenComponent
+        customRightIcon={{
+          iconName: "io-close",
+          onPress: this.props.navigateBack
+        }}
+      >
         <Content>
           <Image
             style={{ alignSelf: "center" }}
