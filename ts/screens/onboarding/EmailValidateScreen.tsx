@@ -19,10 +19,17 @@ import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { emailProfileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { NavigationScreenProps } from "react-navigation";
+import ROUTES from "../../navigation/routes";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
+type NavigationParams = {
+  isFromProfileSection?: boolean;
+};
 
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = OwnProps &
+  ReturnType<typeof mapDispatchToProps> &
+  NavigationScreenProps<NavigationParams>;
 
 const styles = StyleSheet.create({
   spacerLarge: { height: 40 },
@@ -43,6 +50,10 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
     title: I18n.t("email.validate.title"),
     body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
   };
+
+  get isFromProfileSection() {
+    return this.props.navigation.getParam("isFromProfileSection") || false;
+  }
 
   private handleGoBack = () =>
     Alert.alert(
@@ -95,14 +106,20 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
             block: true,
             bordered: true,
             title: I18n.t("email.edit.cta"),
-            onPress: this.props.navigateToEmailInsertScreen,
+            onPress: () =>
+              this.props.navigateToEmailInsertScreen(this.isFromProfileSection),
             buttonFontSize: buttonTextSize
           }}
           rightButton={{
             block: true,
             primary: true,
             title: I18n.t("global.buttons.continue"),
-            onPress: () => this.props.acknowledgeEmail(this.props.is)
+            onPress: () =>
+              this.isFromProfileSection
+                ? this.props.navigation.navigate(
+                    ROUTES.PROFILE_PREFERENCES_HOME
+                  )
+                : this.props.acknowledgeEmail()
           }}
         />
       </TopScreenComponent>
@@ -115,11 +132,10 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  acknowledgeEmail: (isFromProfileSection: boolean) =>
-    dispatch(emailAcknowledged()),
+  acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
-  navigateToEmailInsertScreen: () =>
-    dispatch(navigateToEmailInsertScreen({ isFromProfileSection: false }))
+  navigateToEmailInsertScreen: (isFromProfileSection: boolean) =>
+    dispatch(navigateToEmailInsertScreen({ isFromProfileSection }))
 });
 
 export default connect(

@@ -30,6 +30,7 @@ export function* checkAcknowledgedEmailSaga(
   // TODO: put email existence check here
   // To test #168246944 set emailExists = true;
   // To test #168247020, #168247105 set emailExists = false;
+  console.warn(JSON.stringify(userProfile));
   if (hasProfileEmail(userProfile)) {
     // Email exists
 
@@ -41,7 +42,7 @@ export function* checkAcknowledgedEmailSaga(
     if (!isProfileEmailValidated(userProfile)) {
       // If email exists but it is not validate we show a screen as a reminder to validate it or
       // where the user can edit the email added but not validated yet
-      yield put(navigateToEmailValidateScreen);
+      yield put(navigateToEmailValidateScreen({}));
     }
     // if the user profile is just created (first onboarding) we show
     // the screen where user's email used in app is displayed
@@ -68,6 +69,6 @@ export function* watchEditEmailSaga(): Iterator<Effect> {
   yield takeEvery([getType(emailInsert)], function*() {
     // Wait for the user to press "Continue" button after having inserted
     // theirs own email
-    yield put(navigateToEmailValidateScreen);
+    yield put(navigateToEmailValidateScreen({}));
   });
 }

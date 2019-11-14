@@ -144,7 +144,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   private handleGoBack = () => {
     if (this.isFromProfileSection) {
       this.props.navigation.goBack();
-    } else { // we are in onboarding phase
+    } else {
+      // we are in onboarding phase
       Alert.alert(
         I18n.t("onboarding.alert.title"),
         I18n.t("onboarding.alert.description"),
@@ -184,7 +185,9 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         // TODO change toast with an appropriate message
         showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
         // go back
-        this.props.dispatchNavigateToEmailValidateScreen();
+        this.props.dispatchNavigateToEmailValidateScreen(
+          this.isFromProfileSection
+        );
       }
     }
   }
@@ -281,8 +284,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     ),
   dispatchEmailInsert: () => dispatch(emailInsert()),
   dispatchAbortOnboarding: () => dispatch(abortOnboarding()),
-  dispatchNavigateToEmailValidateScreen: () =>
-    dispatch(navigateToEmailValidateScreen)
+  dispatchNavigateToEmailValidateScreen: (isFromProfileSection: boolean) =>
+    dispatch(navigateToEmailValidateScreen({ isFromProfileSection }))
 });
 
 export default connect(
