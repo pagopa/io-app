@@ -1,14 +1,13 @@
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
-import { Image, Platform, StyleSheet } from "react-native";
-import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
-
-import { none, Option, some } from "fp-ts/lib/Option";
+import { Image, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import customVariables from "../../theme/variables";
+import { HEADER_HEIGHT } from "../../utils/constants";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
@@ -16,13 +15,7 @@ import {
 import { ListSelectionBar } from "../ListSelectionBar";
 import MessageList from "./MessageList";
 
-const SCROLL_RANGE_FOR_ANIMATION =
-  customVariables.appHeaderHeight +
-  (Platform.OS === "ios"
-    ? isIphoneX()
-      ? 18
-      : getStatusBarHeight(true)
-    : customVariables.spacerHeight);
+const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   listWrapper: {
