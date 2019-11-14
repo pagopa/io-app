@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     textAlign: "center",
-    fontSize: variables.fontSize2
+    fontSize: variables.fontSize3
   }
 });
 
