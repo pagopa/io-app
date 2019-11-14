@@ -1,5 +1,7 @@
 ---
 global:
+  symbols:
+    question: "?"
   localization:
     decimalSeparator: ","
   date:
@@ -743,7 +745,7 @@ biometric_recognition:
   needed_to_disable: Riconoscimento richiesto per disabilitare
 send_email_messages: 
   title: Inoltro dei messaggi via mail
-  subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a {{email}} ?
+  subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a
   options:
     disable_all:
       label: Disabilita per tutti i servizi

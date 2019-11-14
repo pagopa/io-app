@@ -1,5 +1,7 @@
 ---
 global:
+  symbols:
+    question: "?"
   localization:
     decimalSeparator: "."
   date:
@@ -733,7 +735,7 @@ biometric_recognition:
   needed_to_disable: Recognition required to disable
 send_email_messages: 
   title: Forward messages by email
-  subtitle: Do you want IO to forward messages contents by email to {{email}} ?
+  subtitle: Do you want IO to forward messages contents by email to
   options:
     disable_all:
       label: Disable for all services

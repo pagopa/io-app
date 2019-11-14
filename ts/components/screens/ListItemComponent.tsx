@@ -17,6 +17,8 @@ type Props = Readonly<{
   isLastItem?: boolean;
   hasBadge?: boolean;
   iconName?: string;
+  smallIconSize?: boolean;
+  iconOnTop?: boolean;
   hideIcon?: boolean;
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -67,6 +69,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingRight: ICON_SIZE,
     alignSelf: "flex-start"
+  },
+  center: {
+    alignSelf: "center"
+  },
+  alignToStart: {
+    alignSelf: 'flex-start'
   }
 });
 
@@ -108,7 +116,7 @@ export default class ListItemComponent extends React.Component<Props> {
                 />
               ) : (
                 <IconFont
-                  name="io-right"
+                  name={"io-right"}
                   size={ICON_SIZE}
                   color={customVariables.contentPrimaryBackground}
                 />
@@ -124,12 +132,15 @@ export default class ListItemComponent extends React.Component<Props> {
           )}
         </View>
         {this.props.iconName && (
-          <IconFont
-            name={this.props.iconName}
-            size={ICON_SIZE * 2}
-            style={{ alignSelf: "center" }}
-            color={customVariables.contentPrimaryBackground}
-          />
+          <View style={this.props.iconOnTop && styles.alignToStart}>
+            <IconFont
+              name={this.props.iconName}
+              size={this.props.smallIconSize ? ICON_SIZE : ICON_SIZE * 2}
+              style={styles.center}
+              color={customVariables.contentPrimaryBackground}
+            />
+          </View>
+          
         )}
       </ListItem>
     );

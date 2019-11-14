@@ -1,3 +1,7 @@
+/**
+ * Implements the preferences screen where the user can see and update his
+ * email, mobile number, preferred language, biometric recognition usage and digital address.
+ */
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
@@ -72,10 +76,6 @@ function translateLocale(locale: string): string {
     .getOrElse(locale);
 }
 
-/**
- * Implements the preferences screen where the user can see and update his
- * email, mobile number, preferred language, biometric recognition usage and digital address.
- */
 class PreferencesScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
