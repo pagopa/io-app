@@ -275,6 +275,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       });
     }
 
+    // Load a min (>5) of section to activate scroll
     if (
       this.props.refreshing === false &&
       this.props.sections.length < 4 &&
