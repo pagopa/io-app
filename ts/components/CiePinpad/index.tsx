@@ -128,11 +128,11 @@ class CiePinpad extends React.PureComponent<Props, State> {
               this.inputs = [...this.inputs, c];
             }
           }}
-          style={[
-            styles.textInputStyle,
-            { width: targetDimension },
-            { height: targetDimension }
-          ]}
+          style={{
+            ...styles.textInputStyle,
+            width: targetDimension,
+            height: targetDimension
+          }}
           key={`textinput-${i}`}
           maxLength={1}
           secureTextEntry={true}
