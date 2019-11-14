@@ -69,7 +69,7 @@ class SelectLogoutOption extends React.PureComponent<Props, State> {
 
   public render() {
     // Using the loading spinner HOC to avoid reimplementing the Loading component
-    // TODO - this part can be improved within this story https://www.pivotaltracker.com/story/show/169185930
+    // TODO - this part can be improved within this story https://www.pivotaltracker.com/story/show/169425266
     const ContainerComponent = withLoadingSpinner(() => (
       <Container>
         <Content style={styles.content}>
