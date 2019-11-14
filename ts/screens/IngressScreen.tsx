@@ -11,6 +11,7 @@ import {
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import ConnectionBar from "../components/ConnectionBar";
 
 import I18n from "../i18n";
 
@@ -62,6 +63,7 @@ class IngressScreen extends React.PureComponent<Props> {
     );
     return (
       <Container style={styles.container}>
+        <ConnectionBar />
         <Text white={true} alignCenter={true}>
           {I18n.t("startup.title")}
         </Text>

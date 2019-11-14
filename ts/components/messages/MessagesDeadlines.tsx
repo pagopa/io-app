@@ -14,14 +14,12 @@ import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { View } from "native-base";
 import React from "react";
 import { Platform, SectionListScrollParams, StyleSheet } from "react-native";
-import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
-
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
-import customVariables from "../../theme/variables";
 import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
+import { HEADER_HEIGHT } from "../../utils/constants";
 import { DateFromISOString } from "../../utils/dates";
 import {
   InjectedWithItemsSelectionProps,
@@ -38,13 +36,7 @@ import MessageAgenda, {
 // How many past months to load in batch
 const PAST_DATA_MONTHS = 3;
 
-const SCROLL_RANGE_FOR_ANIMATION =
-  customVariables.appHeaderHeight +
-  (Platform.OS === "ios"
-    ? isIphoneX()
-      ? 18
-      : getStatusBarHeight(true)
-    : customVariables.spacerHeight);
+const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   listWrapper: {
