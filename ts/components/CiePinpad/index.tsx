@@ -84,12 +84,12 @@ class CiePinpad extends React.PureComponent<Props, State> {
     index: number
   ) => {
     if (nativeEvent.key === "Backspace") {
-      // if it is the first element, do nothing
-      // if (index === 0) {
-      //   return;
-      // }
       // check if a deletion is going. If yes, set the focus to the previous input
-      if (!this.state.pin[index] || this.state.pin[index].length === 0) {
+      // it works only if the index is not the first element
+      if (
+        (!this.state.pin[index] || this.state.pin[index].length === 0) &&
+        index > 0
+      ) {
         this.updatePin("", index - 1);
         this.inputs[index - 1].focus();
       }
@@ -97,7 +97,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
     }
   };
 
-  private inputBoxGenerator = (i: number) => {
+  private readonly inputBoxGenerator = (i: number) => {
     const totalMargins = margin * 2 * (this.props.pinLength - 1);
     const widthNeeded = width * this.props.pinLength + totalMargins;
 
@@ -129,7 +129,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
           maxLength={1}
           secureTextEntry={true}
           keyboardType="number-pad"
-          autoFocus={false}
+          autoFocus={i === 0} // The focus is on the first TextInput, in this way the opening of the keyboard is automatic
           caretHidden={true} // The caret is disabled to avoid confusing the user
           value={this.state.pin[i]}
           onChangeText={text => this.handleOnChangeText(text, i)}
@@ -137,9 +137,9 @@ class CiePinpad extends React.PureComponent<Props, State> {
             this.handleOnKeyPress(nativeEvent, i)
           }
         />
-
         <Baseline
           color={
+            // The color is based on the current box
             !this.state.pin[i] || this.state.pin[i].length === 0
               ? variables.brandLightGray
               : variables.brandDarkestGray
@@ -155,7 +155,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    // As many input boxes are created as CIE_PIN_LENGTH
+    // As many input boxes are created as pinLength props
     return (
       <View>
         <View style={styles.placeholderContainer}>
@@ -167,10 +167,6 @@ class CiePinpad extends React.PureComponent<Props, State> {
         </View>
         <View spacer={true} />
         <Text>{this.props.description}</Text>
-        {
-          // FOR DEBUG PURPOSES ONLY
-        }
-        <Text>{`PIN->${this.state.pin.join("")}`}</Text>
       </View>
     );
   }
