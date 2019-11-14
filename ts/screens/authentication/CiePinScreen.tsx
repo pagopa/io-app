@@ -1,3 +1,7 @@
+/**
+ * A screen that allow the user to insert the Cie PIN.
+ */
+
 import { Button, H2, Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -42,7 +46,7 @@ class CiePinScreen extends React.Component<Props, State> {
     this.state = { pin: "" };
   }
 
-  // Method called when the PIN is filled
+  // Method called when the PIN changes
   public handelOnPinChanged = (pin: string) => {
     this.setState({
       pin

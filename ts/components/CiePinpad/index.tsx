@@ -36,15 +36,22 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     marginRight: 2,
     marginTop: 2
+  },
+  textInputStyle: {
+    textAlign: "center",
+    fontSize: variables.fontSize2
   }
 });
 
 const width = 36;
 const margin = 2;
 const screenWidth = Dimensions.get("window").width;
+const sideMargin = 8;
+
 /**
  * A customized CodeInput component.
  */
+
 class CiePinpad extends React.PureComponent<Props, State> {
   private inputs: ReadonlyArray<TextInput>;
 
@@ -87,8 +94,8 @@ class CiePinpad extends React.PureComponent<Props, State> {
       // check if a deletion is going. If yes, set the focus to the previous input
       // it works only if the index is not the first element
       if (
-        (!this.state.pin[index] || this.state.pin[index].length === 0) &&
-        index > 0
+        (index > 0 && !this.state.pin[index]) ||
+        this.state.pin[index].length === 0
       ) {
         this.updatePin("", index - 1);
         this.inputs[index - 1].focus();
@@ -98,7 +105,8 @@ class CiePinpad extends React.PureComponent<Props, State> {
   };
 
   private readonly inputBoxGenerator = (i: number) => {
-    const totalMargins = margin * 2 * (this.props.pinLength - 1);
+    const totalMargins =
+      margin * 2 * (this.props.pinLength - 1) + sideMargin * 2;
     const widthNeeded = width * this.props.pinLength + totalMargins;
 
     // if we have not enough space to place inputs
@@ -120,11 +128,11 @@ class CiePinpad extends React.PureComponent<Props, State> {
               this.inputs = [...this.inputs, c];
             }
           }}
-          style={{
-            width: targetDimension,
-            height: targetDimension,
-            textAlign: "center"
-          }}
+          style={[
+            styles.textInputStyle,
+            { width: targetDimension },
+            { height: targetDimension }
+          ]}
           key={`textinput-${i}`}
           maxLength={1}
           secureTextEntry={true}
