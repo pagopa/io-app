@@ -218,7 +218,7 @@ Verify you have installed it correctly with the command `which rbenv`.
 
 #### Completing and verifying configuration
 
-Either on Mac or Linux you need to add to your shell the initialization command thjen reload the configuration:
+Either on Mac or Linux you need to add to your shell the initialization command then reload the configuration:
 
 ```
 echo 'eval "$(rbenv init -)"' >>~/.bashrc
