@@ -50,6 +50,12 @@ export const isProfileEmailValidated = (user: UserProfile): boolean =>
   user.is_email_validated !== undefined &&
   user.is_email_validated === true;
 
+/**
+ * on first onboarding the user's profile has version equals to 0
+ */
+export const isProfileFirstOnBoarding = (user: UserProfile): boolean =>
+  InitializedProfile.is(user) && user.version === 0;
+
 // return true if the profile pot is some and its field is_email_validated exists and it's true
 export const isProfileEmailValidatedSelector = (
   profile: ProfileState
