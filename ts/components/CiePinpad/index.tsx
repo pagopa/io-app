@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const CIE_PIN_LENGHT = 8;
 const width = 36;
 const margin = 2;
 const screenWidth = Dimensions.get("window").width;
@@ -160,7 +159,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
     return (
       <View>
         <View style={styles.placeholderContainer}>
-          {Array(CIE_PIN_LENGHT)
+          {Array(this.props.pinLength)
             .fill("")
             .map((_, i) => {
               return this.inputBoxGenerator(i);
