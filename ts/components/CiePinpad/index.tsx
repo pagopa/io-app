@@ -18,8 +18,6 @@ type Props = {
 
 type State = {
   pin: ReadonlyArray<string>;
-  pinSelected: number;
-  codeSplit: ReadonlyArray<string>;
 };
 
 const styles = StyleSheet.create({
@@ -42,6 +40,9 @@ const styles = StyleSheet.create({
 });
 
 const CIE_PIN_LENGHT = 8;
+const width = 36;
+const margin = 2;
+const screenWidth = Dimensions.get("window").width;
 /**
  * A customized CodeInput component.
  */
@@ -53,9 +54,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
     this.inputBoxGenerator = this.inputBoxGenerator.bind(this);
     this.inputs = [];
     this.state = {
-      pin: new Array(this.props.pinLength).fill(""),
-      pinSelected: 0,
-      codeSplit: []
+      pin: new Array(this.props.pinLength).fill("")
     };
   }
 
@@ -74,6 +73,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
   private updatePin = (text: string, index: number): string[] => {
     // tslint:disable-next-line: readonly-array
     const tempPin = [...this.state.pin];
+    // replace the pin char at the index position
     tempPin.splice(index, 1, text);
     const pin: ReadonlyArray<string> = tempPin;
     this.setState({ pin });
@@ -86,17 +86,10 @@ class CiePinpad extends React.PureComponent<Props, State> {
   ) => {
     if (nativeEvent.key === "Backspace") {
       // if it is the first element, do nothing
-      if (index === 0) {
-        return;
-      }
-      // if (index !== 0) {
-      //   this.inputs[index - 1].focus(); // it change the focus on the previous input
-      //   // if (this.props.onDeleteLastDigit) {
-      //   //   this.props.onDeleteLastDigit();
-      //   // }
+      // if (index === 0) {
+      //   return;
       // }
-      // check if a deletion is going.
-
+      // check if a deletion is going. If yes, set the focus to the previous input
       if (!this.state.pin[index] || this.state.pin[index].length === 0) {
         this.updatePin("", index - 1);
         this.inputs[index - 1].focus();
@@ -106,10 +99,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
   };
 
   private inputBoxGenerator = (i: number) => {
-    const width = 36;
-    const margin = 2;
     const totalMargins = margin * 2 * (this.props.pinLength - 1);
-    const screenWidth = Dimensions.get("window").width;
     const widthNeeded = width * this.props.pinLength + totalMargins;
 
     // if we have not enough space to place inputs
@@ -121,7 +111,6 @@ class CiePinpad extends React.PureComponent<Props, State> {
         ? (screenWidth - totalMargins) / this.props.pinLength
         : width;
 
-    // tslint:disable-next-line:no-commented-code
     return (
       <View style={{ alignItems: "center" }} key={`input_view-${i}`}>
         <TextInput
