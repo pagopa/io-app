@@ -1,56 +1,67 @@
+/**
+ * A screens to express the preferences related to email forwarding.
+ */
+import * as pot from "italia-ts-commons/lib/pot";
 import { List, Text } from "native-base";
 import * as React from "react";
-import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
+import { updateEmailNotificationPreferences } from "../../store/actions/persistedPreferences";
+import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
+import {
+  visibleServicesSelector,
+  VisibleServicesState
+} from "../../store/reducers/entities/services/visibleServices";
+import {
+  EmailEnum,
+  EmailNotificationPreferences,
+  emailNotificationPreferencesSelector
+} from "../../store/reducers/persistedPreferences";
+import {
+  profileSelector,
+  ProfileState,
+  spidEmailSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from '../../theme/variables';
-import { spidEmailSelector, ProfileState, profileSelector } from '../../store/reducers/profile';
-import { Dispatch } from 'redux';
-import { getProfileChannelsforServicesList } from '../../utils/profile';
-import { profileUpsert } from '../../store/actions/profile';
-import { visibleServicesSelector, VisibleServicesState } from '../../store/reducers/entities/services/visibleServices';
-import { updateEmailNotificationPreferences } from '../../store/actions/persistedPreferences';
-import { EmailNotificationPreferences, EmailEnum, emailNotificationPreferencesSelector } from '../../store/reducers/persistedPreferences';
+import customVariables from "../../theme/variables";
+import { getProfileChannelsforServicesList } from "../../utils/profile";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
 
-type Props = OwnProps & 
-ReturnType<typeof mapStateToProps> & 
-ReturnType<typeof mapDispatchToProps> &
-ReduxProps;
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
+  ReduxProps;
 
-function renderListItem (
+function renderListItem(
   title: string,
   subTitle: string,
   isActive: boolean,
   onPress: () => void
-){
-  //TODO:  manage both reading and saving of preference about notifications
-  return(
+) {
+  // TODO:  manage both reading and saving of preference about notifications
+  return (
     <ListItemComponent
-              title={title}
-              subTitle={subTitle}
-              iconName={isActive ? "io-radio-on" : "io-radio-off"}
-              smallIconSize={true}
-              iconOnTop={true}
-              useExtendedSubTitle={true}
-              onPress={onPress}
+      title={title}
+      subTitle={subTitle}
+      iconName={isActive ? "io-radio-on" : "io-radio-off"}
+      smallIconSize={true}
+      iconOnTop={true}
+      useExtendedSubTitle={true}
+      onPress={onPress}
     />
-  )
+  );
 }
 
-/**
- * Implements the preferences screen related to email forwarding.
- */
 class EmailForwardingScreen extends React.Component<Props> {
   public render() {
     return (
@@ -59,10 +70,10 @@ class EmailForwardingScreen extends React.Component<Props> {
         goBack={this.props.navigation.goBack}
       >
         <ScreenContent title={I18n.t("send_email_messages.title")}>
-          <Text style={{paddingHorizontal: customVariables.contentPadding}}>
+          <Text style={{ paddingHorizontal: customVariables.contentPadding }}>
             {I18n.t("send_email_messages.subtitle")}
             <Text bold={true}>{` ${this.props.userEmail}`}</Text>
-            <Text>{I18n.t("global.symbols.question")}</Text>  
+            <Text>{I18n.t("global.symbols.question")}</Text>
           </Text>
           <List withContentLateralPadding={true}>
             {renderListItem(
@@ -74,10 +85,11 @@ class EmailForwardingScreen extends React.Component<Props> {
                 this.props.setCustomEmailNotification(EmailEnum.DISABLE_ALL);
 
                 this.props.disableOrEnableServices(
-                this.props.visibleServices,
-                this.props.profile,
-                false
-              )}
+                  this.props.visibleServices,
+                  this.props.profile,
+                  false
+                );
+              }
             )}
 
             {renderListItem(
@@ -89,10 +101,11 @@ class EmailForwardingScreen extends React.Component<Props> {
                 this.props.setCustomEmailNotification(EmailEnum.ENABLE_ALL);
 
                 this.props.disableOrEnableServices(
-                this.props.visibleServices,
-                this.props.profile,
-                true
-              )}
+                  this.props.visibleServices,
+                  this.props.profile,
+                  true
+                );
+              }
             )}
 
             {renderListItem(
@@ -111,19 +124,24 @@ class EmailForwardingScreen extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const potVisibleServices: VisibleServicesState =  visibleServicesSelector(state);
+  const potVisibleServices: VisibleServicesState = visibleServicesSelector(
+    state
+  );
   const visibleServices = pot.getOrElse(
-    pot.map(potVisibleServices, visibleServices => 
-    visibleServices.map(service => service.service_id)
-  ), []);
-  
+    pot.map(potVisibleServices, services =>
+      services.map(service => service.service_id)
+    ),
+    []
+  );
+
   return {
     profile: profileSelector(state),
     visibleServices,
     // TODO: refer to the proper address in the new user profile CREATE STORY
     userEmail: spidEmailSelector(state),
     emailNotificationPreference: emailNotificationPreferencesSelector(state)
-}}
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   disableOrEnableServices: (
@@ -142,8 +160,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  setCustomEmailNotification: (preference: EmailNotificationPreferences) => 
+  setCustomEmailNotification: (preference: EmailNotificationPreferences) =>
     dispatch(updateEmailNotificationPreferences(preference))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EmailForwardingScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EmailForwardingScreen);

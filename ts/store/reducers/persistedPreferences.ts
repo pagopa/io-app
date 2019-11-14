@@ -30,7 +30,10 @@ export enum EmailEnum {
   "CUSTOM" = "CUSTOM"
 }
 
-export type EmailNotificationPreferences = EmailEnum.CUSTOM | EmailEnum.DISABLE_ALL | EmailEnum.ENABLE_ALL;
+export type EmailNotificationPreferences =
+  | EmailEnum.CUSTOM
+  | EmailEnum.DISABLE_ALL
+  | EmailEnum.ENABLE_ALL;
 
 const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
@@ -77,11 +80,11 @@ export default function preferencesReducer(
     };
   }
 
-  if(isActionOf(updateEmailNotificationPreferences, action)) {
+  if (isActionOf(updateEmailNotificationPreferences, action)) {
     return {
       ...state,
       emailNotificationPreferences: action.payload
-    }
+    };
   }
 
   return state;
@@ -94,5 +97,5 @@ export const isPagoPATestEnabledSelector = (state: GlobalState) =>
 export const wasServiceAlertDisplayedOnceSelector = (state: GlobalState) =>
   state.persistedPreferences.wasServiceAlertDisplayedOnce;
 
-export const emailNotificationPreferencesSelector = (state: GlobalState) => 
-  state.persistedPreferences.emailNotificationPreferences
+export const emailNotificationPreferencesSelector = (state: GlobalState) =>
+  state.persistedPreferences.emailNotificationPreferences;

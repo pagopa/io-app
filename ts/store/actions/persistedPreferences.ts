@@ -4,7 +4,7 @@
 
 import { Calendar } from "react-native-calendar-events";
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { EmailNotificationPreferences } from '../reducers/persistedPreferences';
+import { EmailNotificationPreferences } from "../reducers/persistedPreferences";
 
 export const preferenceFingerprintIsEnabledSaveSuccess = createStandardAction(
   "PREFERENCES_FINGERPRINT_SAVE_SUCCESS"

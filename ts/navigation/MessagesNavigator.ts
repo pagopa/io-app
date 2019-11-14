@@ -2,13 +2,13 @@ import { createStackNavigator } from "react-navigation";
 
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
+import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import ROUTES from "./routes";
-import EmailForwardingScreen from '../screens/profile/EmailForwardingScreen';
 
 const MessagesNavigator = createStackNavigator(
   {
     [ROUTES.MESSAGES_HOME]: {
-      screen:EmailForwardingScreen
+      screen: EmailForwardingScreen
     },
     [ROUTES.MESSAGE_DETAIL]: {
       screen: MessageDetailScreen

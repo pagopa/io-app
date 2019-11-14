@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   alignToStart: {
-    alignSelf: 'flex-start'
+    alignSelf: "flex-start"
   }
 });
 
@@ -140,7 +140,6 @@ export default class ListItemComponent extends React.Component<Props> {
               color={customVariables.contentPrimaryBackground}
             />
           </View>
-          
         )}
       </ListItem>
     );

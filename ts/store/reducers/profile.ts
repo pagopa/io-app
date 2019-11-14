@@ -16,9 +16,9 @@ import {
 } from "../actions/profile";
 import { Action } from "../actions/types";
 
+import I18n from "i18n-js";
+import { untag } from "italia-ts-commons/lib/types";
 import { GlobalState } from "./types";
-import { untag } from 'italia-ts-commons/lib/types';
-import I18n from 'i18n-js';
 
 export type ProfileState = pot.Pot<UserProfileUnion, Error>;
 
@@ -31,11 +31,10 @@ export const profileSelector = (state: GlobalState): ProfileState =>
 
 export const spidEmailSelector = (state: GlobalState) => {
   const optionProfile = pot.toOption(state.profile);
-  const spidEmail = optionProfile
-      .map(_ => untag(_.spid_email))
-      .getOrElse(I18n.t("global.remoteStates.notAvailable"));
-  return spidEmail
-}
+  return optionProfile
+    .map(_ => untag(_.spid_email))
+    .getOrElse(I18n.t("global.remoteStates.notAvailable"));
+};
 
 const reducer = (
   state: ProfileState = INITIAL_STATE,
