@@ -223,7 +223,9 @@ authentication:
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
       cardRemovedEarlyTitle: You have removed the card too soon
-      cardRemovedEarlyContent: hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
+      cardRemovedEarlyContent: Hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
+      pinCardTitle: Enter the PIN of your card
+      pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
       incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
       incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
       incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
@@ -455,7 +457,7 @@ wallet:
     infoTitle: Set the card as favourite payment method
     info: This payment method will be automatically proposed for the next payment
     save: Save the card
-    notice: To verify the card, 2 euro cents will be charged and immediately reversed.
+    notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
     temporaryError: There was a temporary problem while saving this card, please retry.
   saveCardInPayment:
     header: Pay with this card

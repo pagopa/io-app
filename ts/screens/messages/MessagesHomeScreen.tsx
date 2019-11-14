@@ -2,7 +2,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
-import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import {
   NavigationEventSubscription,
   NavigationScreenProps
@@ -37,6 +36,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
+import { HEADER_HEIGHT } from "../../utils/constants";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type Props = NavigationScreenProps &
@@ -49,13 +49,7 @@ type State = {
 };
 
 // Scroll range is directly influenced by floating header height
-const SCROLL_RANGE_FOR_ANIMATION =
-  customVariables.appHeaderHeight +
-  (Platform.OS === "ios"
-    ? isIphoneX()
-      ? 18
-      : getStatusBarHeight(true)
-    : customVariables.spacerHeight);
+const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   tabBarContainer: {
