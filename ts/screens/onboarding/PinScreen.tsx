@@ -134,9 +134,6 @@ class PinScreen extends React.Component<Props, State> {
   };
 
   public onPinReset() {
-    if (this.pinConfirmComponent) {
-      this.pinConfirmComponent.debounceClear();
-    }
     this.setState({
       pinState: {
         state: "PinUnselected"

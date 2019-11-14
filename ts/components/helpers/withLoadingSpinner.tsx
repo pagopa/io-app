@@ -1,21 +1,6 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
-import { Text } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import I18n from "../../i18n";
-import variables from "../../theme/variables";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
-import { Overlay } from "../ui/Overlay";
-
-const styles = StyleSheet.create({
-  textCaption: {
-    padding: variables.contentPadding
-  },
-  cancelButtonStyle: {
-    alignSelf: "center"
-  }
-});
+import LoadingSpinnerOverlay from "../LoadingSpinnerOverlay";
 
 /**
  * A HOC to display and overlay spinner conditionally
@@ -39,43 +24,15 @@ export function withLoadingSpinner<
         loadingOpacity,
         onCancel
       } = this.props;
-      const overlayProps =
-        loadingOpacity !== undefined
-          ? {
-              opacity: 1,
-              backgroundColor: `rgba(255,255,255,${loadingOpacity})`
-            }
-          : undefined;
       return (
-        <Overlay
-          {...overlayProps}
-          foreground={
-            isLoading ? (
-              <BoxedRefreshIndicator
-                caption={
-                  <Text alignCenter={true} style={styles.textCaption}>
-                    {loadingCaption ? loadingCaption : ""}
-                  </Text>
-                }
-                action={
-                  onCancel && (
-                    <ButtonDefaultOpacity
-                      onPress={onCancel}
-                      cancel={true}
-                      style={styles.cancelButtonStyle}
-                    >
-                      <Text>{I18n.t("global.buttons.cancel")}</Text>
-                    </ButtonDefaultOpacity>
-                  )
-                }
-              />
-            ) : (
-              undefined
-            )
-          }
+        <LoadingSpinnerOverlay
+          isLoading={isLoading}
+          loadingCaption={loadingCaption}
+          loadingOpacity={loadingOpacity}
+          onCancel={onCancel}
         >
           <WrappedComponent {...this.props} />
-        </Overlay>
+        </LoadingSpinnerOverlay>
       );
     }
   }
