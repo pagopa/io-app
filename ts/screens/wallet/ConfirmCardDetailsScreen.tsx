@@ -147,7 +147,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
               size: 32
             }}
           >
-            <Text bold={true}>{I18n.t("wallet.saveCard.notice")}</Text>
+            <Text>{I18n.t("wallet.saveCard.notice")}</Text>
           </NoticeBox>
           <View spacer={true} />
           <Grid>
@@ -163,11 +163,19 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             </Col>
           </Grid>
         </Content>
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-        />
+        {isInPayment ? (
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={secondaryButtonProps}
+            rightButton={primaryButtonProps}
+          />
+        ) : (
+          <FooterWithButtons
+            type={"TwoButtonsInlineHalf"}
+            leftButton={secondaryButtonProps}
+            rightButton={primaryButtonProps}
+          />
+        )}
         <Modal
           animationType="fade"
           transparent={false}
