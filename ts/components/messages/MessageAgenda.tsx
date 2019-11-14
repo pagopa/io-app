@@ -95,24 +95,17 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.brandLightGray
   },
 
-  // animation scrollview
-  fill: {
-    flex: 1
-  },
-  button: {
-    alignContent: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-    marginTop: variables.contentPadding,
-    width: screenWidth - variables.contentPadding * 2
-  },
-  scrollList: {
-    backgroundColor: variables.colorWhite,
+  // Animation progress
+  contentProgress: {
     position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: Platform.OS === "ios" ? 35 : 0
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 0,
+    paddingRight: 0,
+    height: 50,
+    width: screenWidth,
+    zIndex: 99,
+    backgroundColor: "#fff"
   }
 });
 
@@ -277,45 +270,37 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     this.loadMoreData = this.loadMoreData.bind(this);
   }
 
-  // tslint:disable-next-line: no-empty
-  public componentDidMount() {}
-
-  public componentDidUpdate(prevProps: Props, prevState: State) {
+  public componentDidUpdate(prevProps: Props) {
     if (
-      prevProps.refreshing !== this.props.refreshing &&
-      prevState.prevSections !== this.state.prevSections &&
       this.sectionListRef !== undefined &&
-      this.props.sections !== undefined
+      this.props.sections !== undefined &&
+      this.props.sections.length >= 4
     ) {
-      // tslint:disable-next-line: no-collapsible-if
-      if (this.props.sections.length >= 4) {
-        setTimeout(() => {
-          this.scrollToLocation({
-            animated: false,
-            itemIndex: 0,
-            sectionIndex: Platform.OS === "ios" ? 2 : 1
-          });
+      setTimeout(() => {
+        this.scrollToLocation({
+          animated: false,
+          itemIndex: 0,
+          sectionIndex: Platform.OS === "ios" ? 2 : 1
         });
-      }
+      }, 1);
     }
 
-    // tslint:disable-next-line: triple-equals
+    // The first load data
     if (this.props.refreshing === false && this.props.sections.length < 4) {
       this.loadMoreData();
     }
 
-    if (prevProps.refreshing !== this.props.refreshing) {
-      if (this.props.refreshing === true) {
+    // Change status loading to show progress
+    if (
+      prevProps.refreshing !== this.props.refreshing &&
+      this.props.refreshing === false
+    ) {
+      // We leave half a second longer to show the progress even for faster requests
+      setTimeout(() => {
         this.setState({
-          isLoading: true
+          isLoading: false
         });
-      } else {
-        setTimeout(() => {
-          this.setState({
-            isLoading: false
-          });
-        }, 500);
-      }
+      }, 300);
     }
   }
 
@@ -336,6 +321,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   private loadMoreData() {
+    this.setState({
+      isLoading: true
+    });
     this.props.onMoreDataRequest();
   }
 
@@ -426,7 +414,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       <View
         style={{
           flex: 1,
-          width: Dimensions.get("window").width
+          width: screenWidth
         }}
       >
         <SectionList
@@ -438,10 +426,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           ref={this.sectionListRef}
           onScroll={e => {
             const scrollPosition = e.nativeEvent.contentOffset.y;
-            if (scrollPosition === 0) {
-              setTimeout(() => {
-                this.loadMoreData();
-              }, Platform.OS === "ios" ? 50 : 350);
+            if (scrollPosition < 70 && !isLoading) {
+              this.loadMoreData();
             }
           }}
           renderItem={this.renderItem}
@@ -453,32 +439,16 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         />
         {isLoading && (
           <View
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 50,
-              zIndex: 99,
-              display: isLoading ? "flex" : "none",
-              backgroundColor: "#fff"
-            }}
+            style={[
+              styles.contentProgress,
+              { display: isLoading ? "flex" : "none" }
+            ]}
           >
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "column",
-                alignContent: "center",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
-              <ActivityIndicator
-                style={{ alignSelf: "center" }}
-                size="small"
-                color={variables.brandDarkGray}
-              />
-            </View>
+            <ActivityIndicator
+              style={{ alignSelf: "center" }}
+              size="small"
+              color={variables.brandDarkGray}
+            />
           </View>
         )}
       </View>
