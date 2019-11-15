@@ -137,7 +137,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
   private handleOnChangeEmailText = (value: string) => {
     this.setState({
-      email: value !== EMPTY_EMAIL ? some(value) : none
+      email: value !== EMPTY_EMAIL ? some(value.toLowerCase().trim()) : none
     });
   };
 
@@ -240,6 +240,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                   isValid={this.isValidEmail()}
                   inputProps={{
                     autoCapitalize: "none",
+                    keyboardType: "email-address",
                     value: this.state.email.getOrElse(EMPTY_EMAIL),
                     onChangeText: this.handleOnChangeEmailText,
                     style: styles.emailInput

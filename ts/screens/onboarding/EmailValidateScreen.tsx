@@ -1,9 +1,12 @@
+import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
+import { EmailString } from "italia-ts-commons/lib/strings";
 import { NavigationScreenProps } from "react-navigation";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
@@ -15,10 +18,16 @@ import {
   abortOnboarding,
   emailAcknowledged
 } from "../../store/actions/onboarding";
+import { profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { emailProfileSelector } from "../../store/reducers/profile";
+import {
+  emailProfileSelector,
+  isProfileEmailValidatedSelector,
+  profileSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { showToast } from "../../utils/showToast";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 type NavigationParams = {
@@ -38,7 +47,6 @@ const styles = StyleSheet.create({
   }
 });
 const buttonTextSize = 15;
-const unavailableAlert = () => Alert.alert(I18n.t("global.notImplemented"));
 
 /**
  * A screen as reminder to the user to validate his email address
@@ -53,6 +61,26 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
     return this.props.navigation.getParam("isFromProfileSection") || false;
   }
 
+  public componentDidUpdate(prevProps: Props) {
+    // if we were updating the profile
+    if (pot.isUpdating(prevProps.profile)) {
+      // and we got an error
+      if (pot.isError(this.props.profile)) {
+        // display a toast with error
+      } else if (pot.isSome(this.props.profile)) {
+        // display a success toast
+        // TODO change toast with an appropriate message
+        showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
+      }
+    }
+  }
+
+  private handleSendAgainButton = () => {
+    this.props.email.map(e => {
+      this.props.dispatchEmailUpdate(e as EmailString);
+    });
+  };
+
   private handleGoBack = () =>
     Alert.alert(
       I18n.t("onboarding.alert.title"),
@@ -65,7 +93,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => this.props.abortOnboarding()
+          onPress: this.props.abortOnboarding
         }
       ]
     );
@@ -73,7 +101,11 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
   public render() {
     return (
       <TopScreenComponent
-        goBack={this.handleGoBack}
+        goBack={
+          this.isFromProfileSection
+            ? this.props.navigation.goBack
+            : this.handleGoBack
+        }
         headerTitle={I18n.t("email.validate.header")}
         title={I18n.t("email.validate.title")}
         contextualHelp={this.contextualHelp}
@@ -91,7 +123,7 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
                 light={true}
                 block={true}
                 bordered={true}
-                onPress={unavailableAlert}
+                onPress={this.handleSendAgainButton}
               >
                 <Text>{I18n.t("email.validate.cta")}</Text>
               </Button>
@@ -125,11 +157,23 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  email: emailProfileSelector(state.profile)
-});
+function mapStateToProps(state: GlobalState) {
+  const profile = profileSelector(state);
+  return {
+    profile,
+    email: emailProfileSelector(profile),
+    isEmailValidated: isProfileEmailValidatedSelector(profile),
+    isLoading: pot.isUpdating(profile)
+  };
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchEmailUpdate: (email: EmailString) =>
+    dispatch(
+      profileUpsert.request({
+        email
+      })
+    ),
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
   navigateToEmailInsertScreen: (isFromProfileSection: boolean) =>
@@ -139,4 +183,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EmailValidateScreen);
+)(withLoadingSpinner(EmailValidateScreen));
