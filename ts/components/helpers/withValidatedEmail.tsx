@@ -15,6 +15,13 @@ import { withConditionalView } from "./withConditionalView";
 
 export type ModalProps = LightModalContextInterface;
 
+/*
+  ModalRemindEmailValidationOverlay is the component that allows viewing the email reminder via light modal.
+  The light modal is activated via the onWillFocus listener of the NavigationEvents component.
+  The light modal is hidden in two moments:
+    - ModalRemindEmailValidationOverlay is unmounted
+    - A navigation request is made (eg navigationBack) and the onWillBlur listener is activated
+      */
 class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
   public componentWillUnmount() {
     this.props.hideModal();

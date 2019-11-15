@@ -6,7 +6,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, BackHandler, Image } from "react-native";
+import { Alert, BackHandler, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { isEmailEditingAndValidationEnabled } from "../config";
 import {
@@ -25,6 +25,11 @@ type State = {
   dispatched: boolean;
 };
 
+const styles = StyleSheet.create({
+  imageChecked: { alignSelf: "center" },
+  emailTitle: { textAlign: "center" }
+});
+
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -32,6 +37,15 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       dispatched: false
     };
   }
+
+  private handleOkPress = () => {
+    this.setState(
+      {
+        dispatched: true
+      },
+      this.props.validateEmail
+    );
+  };
 
   private handleBackPress = () => {
     this.props.navigateBack();
@@ -49,6 +63,11 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   public componentDidUpdate(prevprops: Props, prevstate: State) {
     const { isValidEmail } = this.props;
     const { dispatched } = this.state;
+    // The dispatched property is used to store the information that the user
+    // has pressed on the OK button, a new email validation is requested.
+    // In the case where the request has been made and the user's email is still invalid,
+    // the navigateBack is called, otherwise the component will be automatically
+    // unmounted from the withValidatedEmail HOC
     if (
       !prevprops.isValidEmail &&
       !isValidEmail &&
@@ -78,13 +97,11 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       >
         <Content>
           <Image
-            style={{ alignSelf: "center" }}
+            style={styles.imageChecked}
             source={require("../../img/email-checked-icon.png")}
           />
           <View spacer={true} extralarge={true} />
-          <H2 style={{ textAlign: "center" }}>
-            {I18n.t("reminders.email.title")}
-          </H2>
+          <H2 style={styles.emailTitle}>{I18n.t("reminders.email.title")}</H2>
           <View spacer={true} />
           <Text>
             {I18n.t("reminders.email.modal1")}
@@ -123,14 +140,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           rightButton={{
             block: true,
             primary: true,
-            onPress: () => {
-              this.setState(
-                {
-                  dispatched: true
-                },
-                this.props.validateEmail
-              );
-            },
+            onPress: this.handleOkPress,
             title: I18n.t("global.buttons.ok")
           }}
         />
