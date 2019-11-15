@@ -15,6 +15,7 @@ import { startupSaga } from "./startup";
 import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 import { apiUrlPrefix } from "../config";
+import { loadingEmailNotificationPreferencesSaga } from "./startup/loadingEmailNotificationPreferencesSaga";
 import {
   watchBackToEntrypointPaymentSaga,
   watchPaymentInitializeSaga
@@ -38,6 +39,7 @@ export default function* root(): Iterator<Effect> {
     call(networkSaga, connectionMonitorParameters),
     call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),
+    call(loadingEmailNotificationPreferencesSaga),
     call(watchContentServiceLoadSaga),
     call(watchContentMunicipalityLoadSaga),
     call(watchPaymentInitializeSaga),

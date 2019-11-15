@@ -1,16 +1,17 @@
 /**
  * A reducer for persisted preferences.
  */
+import { none, Option } from "fp-ts/lib/Option";
+import { some } from "fp-ts/lib/Option";
 import { Calendar } from "react-native-calendar-events";
 import { isActionOf } from "typesafe-actions";
-
 import {
+  customEmailChannelSetEnabled,
   preferenceFingerprintIsEnabledSaveSuccess,
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferredCalendarSaveSuccess,
-  serviceAlertDisplayedOnceSuccess,
-  updateEmailNotificationPreferences
+  serviceAlertDisplayedOnceSuccess
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -21,19 +22,8 @@ export type PersistedPreferencesState = Readonly<{
   wasServiceAlertDisplayedOnce?: boolean;
   isPagoPATestEnabled: boolean;
   isExperimentalFeaturesEnabled: boolean;
-  emailNotificationPreferences: EmailNotificationPreferences;
+  isCustomEmailChannelEnabled: Option<boolean>;
 }>;
-
-export enum EmailEnum {
-  "DISABLE_ALL" = "DISABLE_ALL",
-  "ENABLE_ALL" = "ENABLE_ALL",
-  "CUSTOM" = "CUSTOM"
-}
-
-export type EmailNotificationPreferences =
-  | EmailEnum.CUSTOM
-  | EmailEnum.DISABLE_ALL
-  | EmailEnum.ENABLE_ALL;
 
 const initialPreferencesState: PersistedPreferencesState = {
   isFingerprintEnabled: undefined,
@@ -41,7 +31,7 @@ const initialPreferencesState: PersistedPreferencesState = {
   wasServiceAlertDisplayedOnce: false,
   isPagoPATestEnabled: false,
   isExperimentalFeaturesEnabled: false,
-  emailNotificationPreferences: EmailEnum.DISABLE_ALL
+  isCustomEmailChannelEnabled: none
 };
 
 export default function preferencesReducer(
@@ -80,10 +70,10 @@ export default function preferencesReducer(
     };
   }
 
-  if (isActionOf(updateEmailNotificationPreferences, action)) {
+  if (isActionOf(customEmailChannelSetEnabled, action)) {
     return {
       ...state,
-      emailNotificationPreferences: action.payload
+      isCustomEmailChannelEnabled: some(action.payload)
     };
   }
 
@@ -97,5 +87,5 @@ export const isPagoPATestEnabledSelector = (state: GlobalState) =>
 export const wasServiceAlertDisplayedOnceSelector = (state: GlobalState) =>
   state.persistedPreferences.wasServiceAlertDisplayedOnce;
 
-export const emailNotificationPreferencesSelector = (state: GlobalState) =>
-  state.persistedPreferences.emailNotificationPreferences;
+export const isCustomEmailChannelEnabledSelector = (state: GlobalState) =>
+  state.persistedPreferences.isCustomEmailChannelEnabled;

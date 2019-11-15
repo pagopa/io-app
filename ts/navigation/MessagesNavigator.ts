@@ -8,7 +8,7 @@ import ROUTES from "./routes";
 const MessagesNavigator = createStackNavigator(
   {
     [ROUTES.MESSAGES_HOME]: {
-      screen: EmailForwardingScreen
+      screen: MessagesHomeScreen
     },
     [ROUTES.MESSAGE_DETAIL]: {
       screen: MessageDetailScreen

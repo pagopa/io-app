@@ -4,20 +4,17 @@
  * are managed by different global reducers.
  */
 
+import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
+import { untag } from "italia-ts-commons/lib/types";
 import { getType } from "typesafe-actions";
-
 import { UserProfileUnion } from "../../api/backend";
-
 import {
   profileLoadSuccess,
   profileUpsert,
   resetProfileState
 } from "../actions/profile";
 import { Action } from "../actions/types";
-
-import I18n from "i18n-js";
-import { untag } from "italia-ts-commons/lib/types";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<UserProfileUnion, Error>;
@@ -35,6 +32,12 @@ export const spidEmailSelector = (state: GlobalState) => {
     .map(_ => untag(_.spid_email))
     .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 };
+
+// TODO: why the screen tells about inbox but the set is no email only?
+export const isEmailEnabledSelector = (state: GlobalState): boolean =>
+  pot.isSome(state.profile) && "is_inbox_enabled" in state.profile.value
+    ? state.profile.value.is_inbox_enabled
+    : false;
 
 const reducer = (
   state: ProfileState = INITIAL_STATE,
@@ -72,7 +75,7 @@ const reducer = (
             ...currentProfile,
             has_profile: true,
             email: newProfile.email,
-            is_inbox_enabled: newProfile.is_inbox_enabled === true,
+            is_inbox_enabled: newProfile.is_inbox_enabled,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
             preferred_languages: newProfile.preferred_languages,
             blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,
@@ -90,7 +93,7 @@ const reducer = (
           return pot.some({
             ...currentProfile,
             email: newProfile.email,
-            is_inbox_enabled: newProfile.is_inbox_enabled === true,
+            is_inbox_enabled: newProfile.is_inbox_enabled,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
             preferred_languages: newProfile.preferred_languages,
             blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,

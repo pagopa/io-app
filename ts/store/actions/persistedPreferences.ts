@@ -4,7 +4,6 @@
 
 import { Calendar } from "react-native-calendar-events";
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { EmailNotificationPreferences } from "../reducers/persistedPreferences";
 
 export const preferenceFingerprintIsEnabledSaveSuccess = createStandardAction(
   "PREFERENCES_FINGERPRINT_SAVE_SUCCESS"
@@ -26,9 +25,9 @@ export const preferencesExperimentalFeaturesSetEnabled = createStandardAction(
   "PREFERENCES_EXPERIMENTAL_FEATURES_SET_ENABLED"
 )<boolean>();
 
-export const updateEmailNotificationPreferences = createStandardAction(
-  "UPDATE_EMAIL_NOTIFICATION_PREFERENCES"
-)<EmailNotificationPreferences>();
+export const customEmailChannelSetEnabled = createStandardAction(
+  "CUSTOM_EMAIL_CHANNEL_SET_ENABLED"
+)<boolean>();
 
 export type PersistedPreferencesActions = ActionType<
   // tslint:disable-next-line: max-union-size
@@ -37,5 +36,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof serviceAlertDisplayedOnceSuccess
   | typeof preferencesPagoPaTestEnvironmentSetEnabled
   | typeof preferencesExperimentalFeaturesSetEnabled
-  | typeof updateEmailNotificationPreferences
+  | typeof customEmailChannelSetEnabled
 >;
