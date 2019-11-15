@@ -10,7 +10,7 @@ export function withConditionalView<P, T, C>(
   check: (props: T) => boolean,
   ConditionComponent: React.ComponentType<C>
 ) {
-  class ConditionalView extends React.Component<T | P | C> {
+  class ConditionalView extends React.Component {
     public render() {
       return check(this.props as T) ? (
         <WrappedComponent {...this.props as P} />

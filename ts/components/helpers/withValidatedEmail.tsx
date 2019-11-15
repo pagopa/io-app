@@ -10,19 +10,12 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { isEmailEditingAndValidationEnabled } from "../../config";
-import { navigateBack } from "../../store/actions/navigation";
-import { Dispatch } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { withConditionalView } from "./withConditionalView";
 
-export type ModalProps = ReturnType<typeof mapDispatchToProps> &
-  LightModalContextInterface;
+export type ModalProps = LightModalContextInterface;
 
 class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
-  constructor(props: ModalProps) {
-    super(props);
-  }
-
   public componentWillUnmount() {
     this.props.hideModal();
   }
@@ -41,14 +34,9 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateBack: () => dispatch(navigateBack())
-});
-
-const ConditionalView = connect(
-  null,
-  mapDispatchToProps
-)(withLightModalContext(ModalRemindEmailValidationOverlay));
+const ConditionalView = withLightModalContext<ModalProps>(
+  ModalRemindEmailValidationOverlay
+);
 
 export type Props = ReturnType<typeof mapStateToProps>;
 
@@ -63,7 +51,7 @@ export function withValidatedEmail<P>(
     mapStateToProps,
     null
   )(
-    withConditionalView(
+    withConditionalView<P, Props, ModalProps>(
       WrappedComponent,
       (props: Props) => props.isValidEmail,
       ConditionalView
