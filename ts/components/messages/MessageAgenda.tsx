@@ -263,18 +263,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-    if (
-      this.sectionListRef !== undefined &&
-      this.props.sections !== undefined &&
-      this.props.sections.length >= 4
-    ) {
-      this.scrollToLocation({
-        animated: false,
-        itemIndex: 0,
-        sectionIndex: Platform.OS === "ios" ? 2 : 1
-      });
-    }
-
     // Load a min (>5) of section to activate scroll
     if (
       this.props.refreshing === false &&
@@ -294,6 +282,18 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         this.setState({
           isLoading: false
         });
+        // Set scroll position when the new elements have been loaded
+        if (
+          this.sectionListRef !== undefined &&
+          this.props.sections !== undefined &&
+          this.props.sections.length >= 4
+        ) {
+          this.scrollToLocation({
+            animated: false,
+            itemIndex: 0,
+            sectionIndex: Platform.OS === "ios" ? 2 : 1
+          });
+        }
       }, 300);
     }
   }
