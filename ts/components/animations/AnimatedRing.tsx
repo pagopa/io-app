@@ -34,18 +34,19 @@ export default class AnimatedRing extends React.Component<Props, State> {
   private animatedValue = new Animated.Value(0);
 
   public componentDidMount() {
-    this.setState({
-      idTimeoutAnim: setTimeout(() => {
-        Animated.loop(
-          Animated.timing(this.animatedValue, {
-            toValue: 1,
-            duration: this.props.duration,
-            easing: Easing.ease,
-            useNativeDriver: true
-          })
-        ).start();
-      }, this.props.startAnimationAfter)
-    });
+    // Here an animation is created: a ring expands its area in a time interval and repeat it infinitely.
+    // The animation starts with a delay passed in the props
+    const idTimeoutAnim = setTimeout(() => {
+      Animated.loop(
+        Animated.timing(this.animatedValue, {
+          toValue: 1,
+          duration: this.props.duration,
+          easing: Easing.ease,
+          useNativeDriver: true
+        })
+      ).start();
+    }, this.props.startAnimationAfter);
+    this.setState({ idTimeoutAnim });
   }
 
   public componentWillUnmount() {

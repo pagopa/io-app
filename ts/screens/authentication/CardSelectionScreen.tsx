@@ -39,16 +39,22 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: boxDimension / 2 - imgDimension / 2,
     overflow: "hidden"
+  },
+  titleHeader: {
+    marginTop: 35
   }
 });
 
 const ringSettings = {
   dimension: ringDimensionMin,
+  // Three different animation start delays (one is 0), one for each ring
+  delayX1: 700 as Millisecond,
+  delayX2: 1400 as Millisecond,
   duration: 2100 as Millisecond
 };
 
 /**
- * The screen where the user is guided through the use of the card with the nfc
+ *  This screen drives the user through the using of the CIE card interacting with the NFC
  */
 const CardSelectionScreen: React.SFC<Props> = props => {
   return (
@@ -59,7 +65,7 @@ const CardSelectionScreen: React.SFC<Props> = props => {
     >
       <Content noPadded={true} bounces={false}>
         <ScreenHeader
-          heading={<H2 style={{ marginTop: 35 }}>{I18n.t("cie.title")}</H2>}
+          heading={<H2 style={styles.titleHeader}>{I18n.t("cie.title")}</H2>}
         />
         <Text style={styles.messageHeader}>
           {I18n.t("cie.layCardMessageHeader")}
@@ -73,15 +79,13 @@ const CardSelectionScreen: React.SFC<Props> = props => {
           />
           <AnimatedRing
             dimension={ringSettings.dimension}
-            startAnimationAfter={(ringSettings.duration / 3) as Millisecond}
+            startAnimationAfter={ringSettings.delayX1}
             duration={ringSettings.duration}
             boxDimension={boxDimension}
           />
           <AnimatedRing
             dimension={ringSettings.dimension}
-            startAnimationAfter={
-              ((ringSettings.duration / 3) * 2) as Millisecond
-            }
+            startAnimationAfter={ringSettings.delayX2}
             duration={ringSettings.duration}
             boxDimension={boxDimension}
           />
