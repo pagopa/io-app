@@ -18,7 +18,7 @@ import { profileSelector, ProfileState } from "../../store/reducers/profile";
  * A saga to match if the user has, on previous installations, customized settings related to the
  * forwarding of notifications on the verified email
  */
-export function* loadingEmailNotificationPreferencesSaga(): IterableIterator<
+export function* checkEmailNotificationPreferencesSaga(): IterableIterator<
   Effect
 > {
   const isCustomEmailChannelEnabled: Option<boolean> = yield select(

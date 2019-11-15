@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage";
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
@@ -32,7 +33,7 @@ import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 7;
+const CURRENT_REDUX_STORE_VERSION = 8;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -143,6 +144,21 @@ const migrations: MigrationManifest = {
         services: {
           ...(state as PersistedGlobalState).entities.services,
           byId: {}
+        }
+      }
+    };
+  },
+
+  // Version 8
+  // we empty the visible services list to grant the preferences about the email notifications are loaded
+  "8": (state: PersistedState) => {
+    return {
+      ...state,
+      entities: {
+        ...(state as PersistedGlobalState).entities,
+        services: {
+          ...(state as PersistedGlobalState).entities.services,
+          visible: pot.none
         }
       }
     };
