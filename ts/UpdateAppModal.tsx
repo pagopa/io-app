@@ -13,15 +13,11 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
 import BaseScreenComponent from "./components/screens/BaseScreenComponent";
 import FooterWithButtons from "./components/ui/FooterWithButtons";
 import I18n from "./i18n";
-import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
-
-type Props = ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   text: {
@@ -39,7 +35,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class UpdateAppModal extends React.PureComponent<Props> {
+class UpdateAppModal extends React.PureComponent<{}> {
   // No Event on back button android
   private handleBackPress = () => {
     return true;
@@ -113,45 +109,29 @@ class UpdateAppModal extends React.PureComponent<Props> {
   }
 
   public render() {
-    if (this.props.backendInfo !== undefined) {
-      // Check min version app supported
-      const isVersionAppSupported =
-        parseFloat(this.props.backendInfo.minAppVersion) <=
-        parseFloat(DeviceInfo.getVersion());
-      if (isVersionAppSupported) {
-        return null;
-      } else {
-        // Current version not supported
-        return (
-          <Modal>
-            <BaseScreenComponent appLogo={true} goBack={false}>
-              <Container>
-                <View style={styles.container}>
-                  <H2>{I18n.t("titleUpdateApp")}</H2>
-                  <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
-                  <View spacer={true} large={true} />
-                  <Image
-                    style={styles.img}
-                    source={require("../img/icons/update-icon.png")}
-                  />
-                </View>
-              </Container>
-            </BaseScreenComponent>
-            {Platform.OS === "android"
-              ? this.renderAndroidFooter()
-              : this.renderIosFooter()}
-            <View />
-          </Modal>
-        );
-      }
-    } else {
-      return null;
-    }
+    // Current version not supported
+    return (
+      <Modal>
+        <BaseScreenComponent appLogo={true} goBack={false}>
+          <Container>
+            <View style={styles.container}>
+              <H2>{I18n.t("titleUpdateApp")}</H2>
+              <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
+              <View spacer={true} large={true} />
+              <Image
+                style={styles.img}
+                source={require("../img/icons/update-icon.png")}
+              />
+            </View>
+          </Container>
+        </BaseScreenComponent>
+        {Platform.OS === "android"
+          ? this.renderAndroidFooter()
+          : this.renderIosFooter()}
+        <View />
+      </Modal>
+    );
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  backendInfo: state.backendInfo.serverInfo
-});
-
-export default connect(mapStateToProps)(UpdateAppModal);
+export default connect()(UpdateAppModal);

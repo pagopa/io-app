@@ -24,7 +24,6 @@ import { authenticateConfig } from "./utils/biometric";
 
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
-import DeviceInfo from "react-native-device-info";
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
@@ -236,16 +235,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   public render() {
     const { identificationState, isFingerprintEnabled, dispatch } = this.props;
 
-    // Check min version app supported
-    // tslint:disable-next-line: no-let
-    let isVersionAppSupported = true;
-    if (this.props.backendInfo !== undefined) {
-      isVersionAppSupported =
-        parseFloat(this.props.backendInfo.minAppVersion) <=
-        parseFloat(DeviceInfo.getVersion());
-    }
-
-    if (identificationState.kind !== "started" || !isVersionAppSupported) {
+    if (identificationState.kind !== "started") {
       return null;
     }
 
@@ -410,7 +400,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  backendInfo: state.backendInfo.serverInfo,
   identificationState: state.identification,
   isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
   appState: state.appState.appState

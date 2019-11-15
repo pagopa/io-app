@@ -10,6 +10,7 @@ import {
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 
+import DeviceInfo from "react-native-device-info";
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import FlagSecureComponent from "./components/FlagSecure";
@@ -115,6 +116,19 @@ class RootContainer extends React.PureComponent<Props> {
     }
   }
 
+  // Check min version app supported
+  private isVersionAppSupported() {
+    // If the backend-info is not available (es. request http error) continue to use app
+    if (this.props.backendInfo !== undefined) {
+      return (
+        parseFloat(this.props.backendInfo.minAppVersion) <=
+        parseFloat(DeviceInfo.getVersion())
+      );
+    } else {
+      return true;
+    }
+  }
+
   public render() {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
@@ -129,8 +143,11 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
-        <IdentificationModal />
-        <UpdateAppModal />
+        {this.isVersionAppSupported() ? (
+          <IdentificationModal />
+        ) : (
+          <UpdateAppModal />
+        )}
         <LightModalRoot />
       </Root>
     );
@@ -139,7 +156,8 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   deepLinkState: state.deepLink,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  backendInfo: state.backendInfo.serverInfo
 });
 
 const mapDispatchToProps = {
