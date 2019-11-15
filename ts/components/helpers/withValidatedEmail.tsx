@@ -34,7 +34,7 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
   }
 }
 
-const ConditionalView = withLightModalContext<ModalProps>(
+const ConditionalView = withLightModalContext(
   ModalRemindEmailValidationOverlay
 );
 
@@ -51,7 +51,7 @@ export function withValidatedEmail<P>(
     mapStateToProps,
     null
   )(
-    withConditionalView<P, Props, ModalProps>(
+    withConditionalView(
       WrappedComponent,
       (props: Props) => props.isValidEmail,
       ConditionalView

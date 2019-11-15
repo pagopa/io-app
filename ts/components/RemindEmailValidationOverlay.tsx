@@ -18,7 +18,6 @@ import { GlobalState } from "../store/reducers/types";
 import TopScreenComponent from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
-// tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
@@ -140,7 +139,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 }
 
-// tslint:disable-next-line: variable-name
 const mapStateToProps = (state: GlobalState) => ({
   optionProfile: pot.toOption(state.profile),
   isValidEmail: !isEmailEditingAndValidationEnabled && !!state // TODO: get the proper isValidEmail from store
