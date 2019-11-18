@@ -214,7 +214,7 @@ function mapStateToProps(state: GlobalState) {
   return {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
-    email: emailProfileSelector(state.profile),
+    email: emailProfileSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar
   };
