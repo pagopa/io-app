@@ -204,8 +204,12 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
-    login: Entra con SPID
+    loginSpid: Entra con SPID
+    loginCie: Entra con CIE
+    loginSpidCie: Accedi con SPID o CIE
+    loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
     nospid: Non hai SPID? Scopri di più
+    nospid-nocie: Non hai SPID o CIE? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
     card1-content: Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni
       Pubbliche
@@ -230,6 +234,8 @@ authentication:
       noNfcConnectionContent: !include cie/noNfcConnection.md
       cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
       cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+      pinCardTitle: Inserisci il PIN della tua carta
+      pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
       incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
@@ -250,6 +256,10 @@ authentication:
     paragraph3: Proseguendo dichiari di accettare le
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
+  cie:
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
+    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   spid_information:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -456,7 +466,7 @@ wallet:
     info: Al prossimo pagamento ti verrà automaticamente proposto questo metodo di
       pagamento
     save: Salva la carta
-    notice: Per verificare la carta verrà effettuata una transazione di 2 centesimi di euro, che verrà stornata e non ti verrà addebitata.
+    notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
     temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
   saveCardInPayment:
     header: Paga con questa carta
@@ -800,6 +810,12 @@ calendarEvents:
 reminders:
   emptyMonth: Non ci sono scadenze in questo mese
   loadMoreData: carica le scadenze del periodo precedente
+  email:
+    title: Ricorda di validare il tuo indirizzo email
+    modal1: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email. \n Ti abbiamo inviato una email a"
+    modal2: "apri il tuo client di posta e clicca semplicemente sul link."
+    button1: Invia una nuova email di validazione
+    button2: Modifica indirizzo email
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
 genericError: Si è verificato un errore
