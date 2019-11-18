@@ -334,6 +334,8 @@ email:
     validated: The email you inserted and validated is
     label: New personal email address
     cta: Edit email
+    upsert_ok: The email update request was sent successfully
+    upsert_ko: Error in update email request, try again
   validate:
     title: Remember to validate your email address
     header: Email Validation

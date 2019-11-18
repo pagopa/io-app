@@ -17,6 +17,7 @@ import {
 } from "../actions/profile";
 import { Action } from "../actions/types";
 
+import { createSelector } from "reselect";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { UserProfile } from "../../../definitions/backend/UserProfile";
 import { GlobalState } from "./types";
@@ -37,28 +38,36 @@ export const getEmailProfile = (user: UserProfile): Option<string> => {
   return none;
 };
 
-// return the email (as a string) if the profile pot is some and its value is of kind InitializedProfile
-export const emailProfileSelector = (profile: ProfileState): Option<string> =>
-  pot.getOrElse(pot.map(profile, p => getEmailProfile(p)), none);
+// return the email (as a string) if the profile pot is some and its value is of kind InitializedProfile and it has an email
+export const emailProfileSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): Option<string> =>
+    pot.getOrElse(pot.map(profile, p => getEmailProfile(p)), none)
+);
 
+// return true if the profile has an email
 export const hasProfileEmail = (user: UserProfile): boolean =>
   InitializedProfile.is(user) && user.email !== undefined;
 
+// return true if the profile has an email and it is validated
 export const isProfileEmailValidated = (user: UserProfile): boolean =>
   InitializedProfile.is(user) &&
   user.is_email_validated !== undefined &&
   user.is_email_validated === true;
 
-/**
- * on first onboarding the user's profile has version equals to 0
- */
+// return true if the profile has version equals to 0
 export const isProfileFirstOnBoarding = (user: UserProfile): boolean =>
   InitializedProfile.is(user) && user.version === 0;
 
 // return true if the profile pot is some and its field is_email_validated exists and it's true
-export const isProfileEmailValidatedSelector = (
-  profile: ProfileState
-): boolean => pot.getOrElse(pot.map(profile, p => hasProfileEmail(p)), false);
+export const isProfileEmailValidatedSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): boolean =>
+    pot.getOrElse(
+      pot.map(profile, p => hasProfileEmail(p) && isProfileEmailValidated(p)),
+      false
+    )
+);
 
 const reducer = (
   state: ProfileState = INITIAL_STATE,

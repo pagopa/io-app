@@ -339,6 +339,8 @@ email:
     validated: L'email che avevi inserito e validato in precedenza è
     label: Nuovo indirizzo email personale
     cta: Modifica email
+    upsert_ok: La richiesta di modifica email è stata inviata correttamente
+    upsert_ko: Errore nella richiesta di modifica email, riprovare
   validate:
     title: Ricorda di validare il tuo indirizzo email
     header: Validazione email

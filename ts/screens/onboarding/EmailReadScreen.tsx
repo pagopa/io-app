@@ -185,7 +185,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   optionProfile: pot.toOption(profileSelector(state)),
-  email: emailProfileSelector(state.profile)
+  email: emailProfileSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

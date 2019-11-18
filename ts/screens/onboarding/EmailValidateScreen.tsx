@@ -67,10 +67,10 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
       // and we got an error
       if (pot.isError(this.props.profile)) {
         // display a toast with error
+        showToast(I18n.t("email.edit.upsert_ko"), "danger");
       } else if (pot.isSome(this.props.profile)) {
         // display a success toast
-        // TODO change toast with an appropriate message
-        showToast(I18n.t("wallet.newPaymentMethod.successful"), "success");
+        showToast(I18n.t("email.edit.upsert_ok"), "success");
       }
     }
   }
@@ -161,8 +161,8 @@ function mapStateToProps(state: GlobalState) {
   const profile = profileSelector(state);
   return {
     profile,
-    email: emailProfileSelector(profile),
-    isEmailValidated: isProfileEmailValidatedSelector(profile),
+    email: emailProfileSelector(state),
+    isEmailValidated: isProfileEmailValidatedSelector(state),
     isLoading: pot.isUpdating(profile)
   };
 }
