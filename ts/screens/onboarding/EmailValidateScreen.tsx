@@ -28,10 +28,16 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
+import { Millisecond } from "italia-ts-commons/lib/units";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 type NavigationParams = {
   isFromProfileSection?: boolean;
+};
+
+type State = {
+  ctaSendEmailValidationText: string;
+  isCtaSentEmailValidationDisabled: boolean;
 };
 
 type Props = OwnProps &
@@ -47,11 +53,28 @@ const styles = StyleSheet.create({
   }
 });
 const buttonTextSize = 15;
+const emailSentTimout = 10000 as Millisecond; // 10 seconds
 
 /**
  * A screen as reminder to the user to validate his email address
  */
-export class EmailValidateScreen extends React.PureComponent<Props> {
+export class EmailValidateScreen extends React.PureComponent<Props, State> {
+  private idTimeout?: number;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+      isCtaSentEmailValidationDisabled: false
+    };
+  }
+
+  public componentWillUnmount() {
+    if (this.idTimeout !== undefined) {
+      clearTimeout(this.idTimeout);
+    }
+  }
+
   private contextualHelp = {
     title: I18n.t("email.validate.title"),
     body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
@@ -71,6 +94,22 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
       } else if (pot.isSome(this.props.profile)) {
         // display a success toast
         showToast(I18n.t("email.edit.upsert_ok"), "success");
+        // schedule a timeout to make the cta button disabled and reporting
+        // the string that email has been sent.
+        // after timeout we restore the default state
+        // tslint:disable-next-line: no-object-mutation
+        this.idTimeout = setTimeout(() => {
+          // tslint:disable-next-line: no-object-mutation
+          this.idTimeout = undefined;
+          this.setState({
+            ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+            isCtaSentEmailValidationDisabled: false
+          });
+        }, emailSentTimout);
+        this.setState({
+          ctaSendEmailValidationText: I18n.t("email.validate.sent"),
+          isCtaSentEmailValidationDisabled: true
+        });
       }
     }
   }
@@ -123,9 +162,10 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
                 light={true}
                 block={true}
                 bordered={true}
+                disabled={this.state.isCtaSentEmailValidationDisabled}
                 onPress={this.handleSendAgainButton}
               >
-                <Text>{I18n.t("email.validate.cta")}</Text>
+                <Text>{this.state.ctaSendEmailValidationText}</Text>
               </Button>
             </View>
           </View>

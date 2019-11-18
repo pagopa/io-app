@@ -10,16 +10,19 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
   navigateToEmailReadScreen,
+  navigateToEmailValidateScreen,
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
   emailProfileSelector,
+  isProfileEmailValidatedSelector,
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -85,7 +88,17 @@ class PreferencesScreen extends React.Component<Props, State> {
   }
 
   private handleEmailOnPress() {
-    this.props.navigateToEmailInsertScreen();
+    if (isEmailEditingAndValidationEnabled) {
+      if (this.props.isEmailValidated) {
+        // let the user know more about his email
+        this.props.navigateToEmailReadScreen();
+      } else {
+        // show a screen as a reminder to validate or where he can change his email address
+        this.props.navigateToEmailValidateScreen();
+      }
+    } else {
+      unavailableAlert();
+    }
   }
 
   public componentWillMount() {
@@ -215,6 +228,7 @@ function mapStateToProps(state: GlobalState) {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
     email: emailProfileSelector(state),
+    isEmailValidated: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar
   };
@@ -225,7 +239,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToFingerprintPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
     dispatch(navigateToCalendarPreferenceScreen()),
-  navigateToEmailInsertScreen: () =>
+  navigateToEmailValidateScreen: () =>
+    dispatch(navigateToEmailValidateScreen({ isFromProfileSection: true })),
+  navigateToEmailReadScreen: () =>
     dispatch(navigateToEmailReadScreen({ isFromProfileSection: true }))
 });
 
