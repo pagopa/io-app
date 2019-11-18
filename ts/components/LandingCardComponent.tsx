@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
     width: screenWidth / 2,
     height: screenWidth / 2,
     resizeMode: "contain"
+  },
+  text: {
+    fontSize: 20
   }
 });
 
@@ -38,8 +41,7 @@ export const LandingCardComponent: React.SFC<Props> = card => (
       <Grid>
         <Col size={1} />
         <Col size={7}>
-          <Text bold={true} alignCenter={true}>
-            {" "}
+          <Text bold={true} alignCenter={true} style={styles.text}>
             {card.title}{" "}
           </Text>
           <View spacer={true} />
