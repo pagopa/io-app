@@ -23,6 +23,7 @@ import {
   startEmailValidation
 } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import {
   emailProfileSelector,
   isProfileEmailValidatedSelector
@@ -30,7 +31,6 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
-import { emailValidationSelector } from "../../store/reducers/emailValidation";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 type NavigationParams = {
@@ -154,13 +154,13 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
   public render() {
     return (
       <TopScreenComponent
-        goBack={
+        goBack={() => {
           // if we come profile section go back,
           // otherwise we are in onboarding phase and we have to abort it
           this.isFromProfileSection
             ? this.props.navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME)
-            : this.handleGoBack
-        }
+            : this.handleGoBack();
+        }}
         headerTitle={I18n.t("email.validate.header")}
         title={I18n.t("email.validate.title")}
         contextualHelp={this.contextualHelp}
