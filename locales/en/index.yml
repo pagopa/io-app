@@ -250,6 +250,10 @@ authentication:
     paragraph3: Continuing you declare to accept the
     tosLinkText: rules on the processing of personal data
     continue: Continue
+  cie:
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
+    temporarilyBlockedCieOpenCieID: "Open CieID"
   spid_information:
     headerTitle: What is SPID?
     contentTitle: Don't have SPID?
