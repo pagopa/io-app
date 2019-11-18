@@ -19,13 +19,16 @@ import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import H4 from "../../components/ui/H4";
+import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
+import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
@@ -62,6 +65,27 @@ const styles = StyleSheet.create({
     width: 150,
     height: 50,
     alignSelf: "flex-start"
+  },
+  switchRow: {
+    justifyContent: "space-between",
+    paddingVertical: 12
+  },
+  otherSwitchRow: {
+    paddingLeft: 8,
+    borderTopColor: customVariables.itemSeparator,
+    borderTopWidth: 1 / 3
+  },
+  flexRow: {
+    flexDirection: "row"
+  },
+  enabledColor: {
+    color: customVariables.brandDarkestGray
+  },
+  disabledColor: {
+    color: customVariables.disabledService
+  },
+  info: {
+    marginTop: -5
   }
 });
 
@@ -121,6 +145,25 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   }
 
   private goBack = () => this.props.navigation.goBack();
+
+  // collect the service
+  private service = this.props.navigation.getParam("service");
+  private serviceId = this.service.service_id;
+
+  // finds out which channels are enabled in the user profile
+  private profileEnabledChannels = getEnabledChannelsForService(
+    this.props.profile,
+    this.serviceId
+  );
+
+  // whether last attempt to save the preferences failed
+  private profileVersion = pot
+    .toOption(this.props.profile)
+    .mapNullable(_ => (_.has_profile ? _.version : null))
+    .getOrElse(0 as NonNegativeInteger);
+
+  // URIs for the service logo
+  private logoUris = logosForService(this.service);
 
   /**
    * Dispatches a profileUpsertRequest to trigger an asynchronous update of the
@@ -189,17 +232,18 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
   };
 
+  private navigateToEmailPreferences = () =>
+    this.props.navigation.navigate(ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING);
+
   // tslint:disable-next-line:cognitive-complexity no-big-function
   public render() {
-    // collect the service
-    const service = this.props.navigation.getParam("service");
-    const serviceId = service.service_id;
-
-    // finds out which channels are enabled in the user profile
-    const profileEnabledChannels = getEnabledChannelsForService(
-      this.props.profile,
-      serviceId
-    );
+    const {
+      service,
+      serviceId,
+      profileEnabledChannels,
+      profileVersion,
+      logoUris
+    } = this;
 
     // collect the service metadata
     const potServiceMetadata =
@@ -208,6 +252,11 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     const serviceMetadata = pot.getOrElse(potServiceMetadata, {} as pot.PotType<
       typeof potServiceMetadata
     >);
+
+    const messageForwardingState =
+      this.state.uiEnabledChannels.inbox && this.state.uiEnabledChannels.email
+        ? I18n.t("serviceDetail.enabled")
+        : I18n.t("serviceDetail.disabled");
 
     const {
       description,
@@ -221,15 +270,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       email,
       pec
     } = serviceMetadata;
-
-    // whether last attempt to save the preferences failed
-    const profileVersion = pot
-      .toOption(this.props.profile)
-      .mapNullable(_ => (_.has_profile ? _.version : null))
-      .getOrElse(0 as NonNegativeInteger);
-
-    // URIs for the service logo
-    const logoUris = logosForService(service);
 
     return (
       <BaseScreenComponent
@@ -251,113 +291,139 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               </Col>
             </Row>
             <View spacer={true} large={true} />
-            <Row>
-              <Col size={10}>
-                <Text
-                  primary={
-                    profileEnabledChannels.inbox !==
-                    this.state.uiEnabledChannels.inbox
-                  }
-                >
-                  {profileEnabledChannels.inbox
-                    ? I18n.t("services.serviceIsEnabled")
-                    : I18n.t("services.serviceNotEnabled")}
-                </Text>
-              </Col>
-              <Col size={2}>
-                <Switch
-                  key={`switch-inbox-${profileVersion}`}
-                  value={this.state.uiEnabledChannels.inbox}
-                  disabled={
-                    profileEnabledChannels.inbox !==
-                      this.state.uiEnabledChannels.inbox ||
-                    pot.isUpdating(this.props.profile)
-                  }
-                  onValueChange={(value: boolean) => {
-                    if (!value && !this.props.wasServiceAlertDisplayedOnce) {
-                      this.showAlertOnServiceDisabling();
-                    } else {
-                      // compute the updated map of enabled channels
-                      const newUiEnabledChannels = {
-                        ...this.state.uiEnabledChannels,
-                        inbox: value
-                      };
-                      this.dispatchNewEnabledChannels(newUiEnabledChannels);
-                    }
-                  }}
-                />
-              </Col>
-            </Row>
-            <View spacer={true} />
-            <Row>
-              <Col size={1} />
-              <Col size={9}>
-                <Text
-                  primary={
-                    profileEnabledChannels.push !==
-                    this.state.uiEnabledChannels.push
-                  }
-                >
-                  {I18n.t("services.pushNotifications")}
-                </Text>
-              </Col>
-              <Col size={2}>
-                <Switch
-                  key={`switch-push-${profileVersion}`}
-                  value={
-                    this.state.uiEnabledChannels.inbox &&
-                    this.state.uiEnabledChannels.push
-                  }
-                  disabled={
-                    !this.state.uiEnabledChannels.inbox ||
-                    pot.isUpdating(this.props.profile)
-                  }
-                  onValueChange={(value: boolean) => {
+            <Row style={styles.switchRow}>
+              <Text
+                primary={
+                  profileEnabledChannels.inbox !==
+                  this.state.uiEnabledChannels.inbox
+                }
+                bold={true}
+                style={
+                  this.state.uiEnabledChannels.inbox
+                    ? styles.enabledColor
+                    : styles.disabledColor
+                }
+              >
+                {profileEnabledChannels.inbox
+                  ? I18n.t("services.serviceIsEnabled")
+                  : I18n.t("services.serviceNotEnabled")}
+              </Text>
+              <Switch
+                key={`switch-inbox-${profileVersion}`}
+                value={this.state.uiEnabledChannels.inbox}
+                disabled={
+                  profileEnabledChannels.inbox !==
+                    this.state.uiEnabledChannels.inbox ||
+                  pot.isUpdating(this.props.profile)
+                }
+                onValueChange={(value: boolean) => {
+                  if (!value && !this.props.wasServiceAlertDisplayedOnce) {
+                    this.showAlertOnServiceDisabling();
+                  } else {
                     // compute the updated map of enabled channels
                     const newUiEnabledChannels = {
                       ...this.state.uiEnabledChannels,
-                      push: value
+                      inbox: value
                     };
                     this.dispatchNewEnabledChannels(newUiEnabledChannels);
-                  }}
-                />
-              </Col>
+                  }
+                }}
+              />
             </Row>
-            <View spacer={true} />
-            <Row>
-              <Col size={1} />
-              <Col size={9}>
+            <Row style={[styles.switchRow, styles.otherSwitchRow]}>
+              <Text
+                primary={
+                  profileEnabledChannels.push !==
+                  this.state.uiEnabledChannels.push
+                }
+                bold={true}
+                style={
+                  this.state.uiEnabledChannels.inbox &&
+                  this.state.uiEnabledChannels.push
+                    ? styles.enabledColor
+                    : styles.disabledColor
+                }
+              >
+                {I18n.t("services.pushNotifications")}
+              </Text>
+              <Switch
+                key={`switch-push-${profileVersion}`}
+                value={
+                  this.state.uiEnabledChannels.inbox &&
+                  this.state.uiEnabledChannels.push
+                }
+                disabled={
+                  !this.state.uiEnabledChannels.inbox ||
+                  pot.isUpdating(this.props.profile)
+                }
+                onValueChange={(value: boolean) => {
+                  // compute the updated map of enabled channels
+                  const newUiEnabledChannels = {
+                    ...this.state.uiEnabledChannels,
+                    push: value
+                  };
+                  this.dispatchNewEnabledChannels(newUiEnabledChannels);
+                }}
+              />
+            </Row>
+            <Row style={[styles.switchRow, styles.otherSwitchRow]}>
+              <View style={styles.flexRow}>
+                {!this.props.isCustomEmailChannelEnabled && (
+                  <IconFont
+                    name={"io-lucchetto"}
+                    color={customVariables.brandDarkGray}
+                  />
+                )}
                 <Text
                   primary={
                     profileEnabledChannels.email !==
                     this.state.uiEnabledChannels.email
                   }
+                  bold={true}
+                  style={
+                    this.state.uiEnabledChannels.inbox &&
+                    this.state.uiEnabledChannels.email &&
+                    this.props.isCustomEmailChannelEnabled
+                      ? styles.enabledColor
+                      : styles.disabledColor
+                  }
                 >
                   {I18n.t("services.emailForwarding")}
                 </Text>
-              </Col>
-              <Col size={2}>
-                <Switch
-                  key={`switch-email-${profileVersion}`}
-                  disabled={
-                    !this.state.uiEnabledChannels.inbox ||
-                    pot.isUpdating(this.props.profile)
-                  }
-                  value={
-                    this.state.uiEnabledChannels.inbox &&
-                    this.state.uiEnabledChannels.email
-                  }
-                  onValueChange={(value: boolean) => {
-                    // compute the updated map of enabled channels
-                    const newUiEnabledChannels = {
-                      ...this.state.uiEnabledChannels,
-                      email: value
-                    };
-                    this.dispatchNewEnabledChannels(newUiEnabledChannels);
-                  }}
-                />
-              </Col>
+              </View>
+              <Switch
+                key={`switch-email-${profileVersion}`}
+                disabled={
+                  !this.state.uiEnabledChannels.inbox ||
+                  pot.isUpdating(this.props.profile) ||
+                  !this.props.isCustomEmailChannelEnabled
+                }
+                value={
+                  this.state.uiEnabledChannels.inbox &&
+                  this.state.uiEnabledChannels.email
+                }
+                onValueChange={(value: boolean) => {
+                  // compute the updated map of enabled channels
+                  const newUiEnabledChannels = {
+                    ...this.state.uiEnabledChannels,
+                    email: value
+                  };
+                  this.dispatchNewEnabledChannels(newUiEnabledChannels);
+                }}
+              />
             </Row>
+            {!this.props.isCustomEmailChannelEnabled && (
+              <Row style={styles.info}>
+                <Text>
+                  {I18n.t("serviceDetail.lockedMailAlert", {
+                    enabled: messageForwardingState
+                  })}
+                  <Text link={true} onPress={this.navigateToEmailPreferences}>
+                    {` ${I18n.t("serviceDetail.updatePreferences")}`}
+                  </Text>
+                </Text>
+              </Row>
+            )}
             <View spacer={true} large={true} />
             {description && <Markdown animated={true}>{description}</Markdown>}
             {description && <View spacer={true} large={true} />}
@@ -476,13 +542,21 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  services: state.entities.services,
-  content: state.content,
-  profile: state.profile,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled,
-  wasServiceAlertDisplayedOnce:
-    state.persistedPreferences.wasServiceAlertDisplayedOnce
-});
+const mapStateToProps = (state: GlobalState) => {
+  const potIsCustomEmailChannelEnabled = isCustomEmailChannelEnabledSelector(
+    state
+  );
+  return {
+    services: state.entities.services,
+    content: state.content,
+    profile: state.profile,
+    isDebugModeEnabled: state.debug.isDebugModeEnabled,
+    wasServiceAlertDisplayedOnce:
+      state.persistedPreferences.wasServiceAlertDisplayedOnce,
+    isCustomEmailChannelEnabled: potIsCustomEmailChannelEnabled.isSome()
+      ? potIsCustomEmailChannelEnabled.value
+      : false
+  };
+};
 
 export default connect(mapStateToProps)(ServiceDetailsScreen);
