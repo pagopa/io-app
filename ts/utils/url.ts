@@ -21,7 +21,7 @@ export function getResourceNameFromUrl(
 }
 
 /**
- * Return the fucntion to:
+ * Return the function to:
  * - copy the value, if valueType is COPY
  * - navigate to the map, if valueType is MAP
  * - navigate to a browser, if valueType is LINK
