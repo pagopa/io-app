@@ -63,11 +63,6 @@ export function* instabugBackgroundSaga(): IterableIterator<Effect> {
         yield call(startTimer, backgroundActivityTimeoutMillis);
         identificationBackgroundTimer = undefined;
 
-        // tslint:disable-next-line:no-commented-code
-        // const instabugUnreadState: ReturnType<
-        //   typeof instabugMessageStateSelector
-        // > = yield select<GlobalState>(instabugMessageStateSelector);
-
         const instabugRepliesCount: SagaCallReturnType<
           typeof loadInstabugUnreadMessages
         > = yield call(loadInstabugUnreadMessages);
@@ -80,8 +75,6 @@ export function* instabugBackgroundSaga(): IterableIterator<Effect> {
           console.log("Ho un nuovo messaggio");
           yield call(notification);
         }
-        // Timer fired we need to identify the user
-        // yield put(identificationRequest());
       });
     } else if (
       lastState !== "active" &&
