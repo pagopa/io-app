@@ -259,3 +259,8 @@ export const navigateToInterruptedReadingCie = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN
   });
+
+export const navigateToCiePinScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_PIN_SCREEN
+  });
