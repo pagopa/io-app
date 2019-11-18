@@ -52,6 +52,8 @@ export const setInstabugProfileAttributes = (
   profile: UserProfile,
   maybeIdp: Option<IdentityProvider>
 ) => {
+  // should happen user has not a valid email (e.g. login with CIE)
+  // TO DO update identifyUserWithEmail when user has an email validated https://www.pivotaltracker.com/story/show/169761487
   const maybeEmail = getEmailProfile(profile);
   if (maybeEmail.isSome()) {
     Instabug.identifyUserWithEmail(
