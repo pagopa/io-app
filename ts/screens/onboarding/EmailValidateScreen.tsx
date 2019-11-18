@@ -18,7 +18,7 @@ import {
   abortOnboarding,
   emailAcknowledged
 } from "../../store/actions/onboarding";
-import { profileUpsert } from "../../store/actions/profile";
+import { profileUpsert, requestLoadProfile } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
   emailProfileSelector,
@@ -75,6 +75,10 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
     }
   }
 
+  public componentDidMount() {
+    this.props.requestLoadProfile();
+  }
+
   private contextualHelp = {
     title: I18n.t("email.validate.title"),
     body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
@@ -118,6 +122,14 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
     this.props.email.map(e => {
       this.props.dispatchEmailUpdate(e as EmailString);
     });
+  };
+
+  private handleContinueButton = () => {
+    if (this.isFromProfileSection) {
+      this.props.navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME);
+      return;
+    }
+    this.props.acknowledgeEmail();
   };
 
   private handleGoBack = () =>
@@ -184,12 +196,7 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
             block: true,
             primary: true,
             title: I18n.t("global.buttons.continue"),
-            onPress: () =>
-              this.isFromProfileSection
-                ? this.props.navigation.navigate(
-                    ROUTES.PROFILE_PREFERENCES_HOME
-                  )
-                : this.props.acknowledgeEmail()
+            onPress: this.handleContinueButton
           }}
         />
       </TopScreenComponent>
@@ -217,7 +224,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
   navigateToEmailInsertScreen: (isFromProfileSection: boolean) =>
-    dispatch(navigateToEmailInsertScreen({ isFromProfileSection }))
+    dispatch(navigateToEmailInsertScreen({ isFromProfileSection })),
+  requestLoadProfile: () => {
+    dispatch(requestLoadProfile());
+  }
 });
 
 export default connect(

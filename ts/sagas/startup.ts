@@ -34,7 +34,11 @@ import {
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
-import { clearCache, resetProfileState } from "../store/actions/profile";
+import {
+  clearCache,
+  requestLoadProfile,
+  resetProfileState
+} from "../store/actions/profile";
 import { loadService, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
@@ -303,6 +307,13 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     loadVisibleServicesRequestHandler,
     backendClient.getVisibleServices
   );
+
+  yield takeLatest(
+    getType(requestLoadProfile),
+    loadProfile,
+    backendClient.getProfile
+  );
+
   // Trigger the services content and metadata being loaded/refreshed.
   yield put(loadVisibleServices.request());
 

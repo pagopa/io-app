@@ -26,6 +26,7 @@ export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Iterator<Effect | Option<UserProfileUnion>> {
   try {
+    console.warn("LOADING");
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
       {}
