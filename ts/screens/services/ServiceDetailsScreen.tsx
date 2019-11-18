@@ -503,7 +503,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isValidEmail: !isEmailEditingAndValidationEnabled && !!state, // TODO: get the proper isValidEmail from store  
+  isValidEmail: !isEmailEditingAndValidationEnabled && !!state, // TODO: get the proper isValidEmail from store
   services: servicesSelector(state),
   servicesMetadataById: servicesMetadataByIdSelector(state),
   profile: profileSelector(state),
