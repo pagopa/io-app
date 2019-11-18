@@ -23,7 +23,7 @@ const loadInstabugUnreadMessages = () => {
 };
 
 /**
- * Listen to APP_STATE_CHANGE_ACTION and if needed force the user to identify
+ * Listen to APP_STATE_CHANGE_ACTION and control instabug unread messages
  */
 export function* instabugBackgroundSaga(): IterableIterator<Effect> {
   const messaggiAttuali: SagaCallReturnType<
