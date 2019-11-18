@@ -16,6 +16,7 @@ import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
+import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 
@@ -120,11 +121,13 @@ const LandingScreen: React.SFC<Props> = props => {
           transparent={true}
           onPress={navigateToSpidInformationRequest}
         >
-          <Text>
-            {isCIEAvailable
-              ? I18n.t("authentication.landing.nospid-nocie")
-              : I18n.t("authentication.landing.nospid")}
-          </Text>
+          <View>
+            <Text bold={true} style={{ color: customVariables.brandPrimary }}>
+              {isCIEAvailable
+                ? I18n.t("authentication.landing.nospid-nocie")
+                : I18n.t("authentication.landing.nospid")}
+            </Text>
+          </View>
         </Button>
         <View spacer={true} extralarge={true} />
       </View>
