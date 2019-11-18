@@ -4,7 +4,7 @@
 
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import { Dimensions, Image, ScrollView, StyleSheet } from "react-native";
 import { Col } from "react-native-easy-grid";
 import { Grid } from "react-native-easy-grid";
 
@@ -31,21 +31,23 @@ const styles = StyleSheet.create({
 });
 
 export const LandingCardComponent: React.SFC<Props> = card => (
-  <View style={styles.card}>
-    <Image source={card.image} style={styles.image} />
-    <View spacer={true} />
-    <Grid>
-      <Col size={1} />
-      <Col size={7}>
-        <Text bold={true} alignCenter={true}>
-          {" "}
-          {card.title}{" "}
-        </Text>
-        <View spacer={true} />
-        <Text alignCenter={true}> {card.content} </Text>
-        <View spacer={true} />
-      </Col>
-      <Col size={1} />
-    </Grid>
-  </View>
+  <ScrollView>
+    <View style={styles.card}>
+      <Image source={card.image} style={styles.image} />
+      <View spacer={true} />
+      <Grid>
+        <Col size={1} />
+        <Col size={7}>
+          <Text bold={true} alignCenter={true}>
+            {" "}
+            {card.title}{" "}
+          </Text>
+          <View spacer={true} />
+          <Text alignCenter={true}> {card.content} </Text>
+          <View spacer={true} />
+        </Col>
+        <Col size={1} />
+      </Grid>
+    </View>
+  </ScrollView>
 );
