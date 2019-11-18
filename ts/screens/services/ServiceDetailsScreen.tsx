@@ -23,6 +23,7 @@ import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
+import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
@@ -396,11 +397,13 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 disabled={
                   !this.state.uiEnabledChannels.inbox ||
                   pot.isUpdating(this.props.profile) ||
+                  !this.props.isValidEmail ||
                   !this.props.isCustomEmailChannelEnabled
                 }
                 value={
                   this.state.uiEnabledChannels.inbox &&
-                  this.state.uiEnabledChannels.email
+                    this.state.uiEnabledChannels.email &&
+                    this.props.isValidEmail
                 }
                 onValueChange={(value: boolean) => {
                   // compute the updated map of enabled channels
@@ -547,6 +550,7 @@ const mapStateToProps = (state: GlobalState) => {
     state
   );
   return {
+    isValidEmail: !isEmailEditingAndValidationEnabled && !!state, // TODO: get the proper isValidEmail from store
     services: state.entities.services,
     content: state.content,
     profile: state.profile,
