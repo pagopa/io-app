@@ -200,8 +200,12 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
-    login: Login with SPID
+    loginSpid: Login with SPID
+    loginCie: Login with CIE
+    loginSpidCie: Login with SPID or CIE
+    loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
     nospid: Don't have SPID? Find out more
+    nospid-nocie: Don't have SPID or CIE? Find out more
     card1-title: All messages in one place
     card1-content: Display all the incoming communications from Public Administrations
     card2-title: Use your favourite payment methods
@@ -246,6 +250,10 @@ authentication:
     paragraph3: Continuing you declare to accept the
     tosLinkText: rules on the processing of personal data
     continue: Continue
+  cie:
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
+    temporarilyBlockedCieOpenCieID: "Open CieID"
   spid_information:
     headerTitle: What is SPID?
     contentTitle: Don't have SPID?

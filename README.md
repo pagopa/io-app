@@ -159,7 +159,7 @@ $ cat .node-version
 For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/). 
 
 
-Yarn is a node application. IF you have alredy installed in your system version of node compatible with yarn, you can install it as a global command with:
+Yarn is a node application. IF you have already installed in your system version of node compatible with yarn, you can install it as a global command with:
 
 ```
 npm install -g yarn

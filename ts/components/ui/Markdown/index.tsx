@@ -184,6 +184,7 @@ type OwnProps = {
   children: string;
   animated?: boolean;
   useCustomSortedList?: boolean;
+  onLoadEnd?: () => void;
   onError?: (error: any) => void;
   /**
    * The code will be inserted in the html body between
@@ -324,6 +325,9 @@ class Markdown extends React.PureComponent<Props, State> {
 
   // When the injected html is loaded inject the script to notify the height
   private handleLoadEnd = () => {
+    if (this.props.onLoadEnd) {
+      this.props.onLoadEnd();
+    }
     if (this.webViewRef.current) {
       this.webViewRef.current.injectJavaScript(NOTIFY_BODY_HEIGHT_SCRIPT);
     }

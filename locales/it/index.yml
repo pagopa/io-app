@@ -204,8 +204,12 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
-    login: Entra con SPID
+    loginSpid: Entra con SPID
+    loginCie: Entra con CIE
+    loginSpidCie: Accedi con SPID o CIE
+    loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
     nospid: Non hai SPID? Scopri di più
+    nospid-nocie: Non hai SPID o CIE? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
     card1-content: Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni
       Pubbliche
@@ -252,6 +256,10 @@ authentication:
     paragraph3: Proseguendo dichiari di accettare le
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
+  cie:
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
+    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   spid_information:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
