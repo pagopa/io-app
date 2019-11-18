@@ -253,7 +253,7 @@ authentication:
   cie:
     temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
     temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
-    temporarilyBlockedCieOpenCieID: "Apri CieID"
+    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   spid_information:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
