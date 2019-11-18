@@ -9,10 +9,10 @@ import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
-import { LandingCardComponent } from "../../components/LandingCard";
+import { LandingCardComponent } from "../../components/LandingCardComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import { isDevEnvironment } from "../../config";
+import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
@@ -25,6 +25,9 @@ import { showToast } from "../../utils/showToast";
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   NavigationScreenProps;
+const isCIEAuthenticationSupported = false; // TODO: waiting for sdk cie implementation https://www.pivotaltracker.com/story/show/169730204
+const isCIEAvailable =
+  isCIEAuthenticationSupported && isCIEauthenticationEnabled;
 
 const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   {
@@ -53,9 +56,15 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   },
   {
     id: 4,
-    image: require("../../../img/landing/04.png"),
-    title: I18n.t("authentication.landing.card4-title"),
-    content: I18n.t("authentication.landing.card4-content")
+    image: isCIEAvailable
+      ? require("../../../img/landing/CIE-onboarding-illustration.png")
+      : require("../../../img/landing/04.png"),
+    title: isCIEAvailable
+      ? I18n.t("authentication.landing.loginSpidCie")
+      : I18n.t("authentication.landing.card4-title"),
+    content: isCIEAvailable
+      ? I18n.t("authentication.landing.loginSpidCieContent")
+      : I18n.t("authentication.landing.card4-content")
   }
 ];
 
@@ -114,6 +123,45 @@ class LandingScreen extends React.PureComponent<Props> {
           >
             <Text>{I18n.t("authentication.landing.nospid")}</Text>
           </Button>
+        </View>
+        <View footer={true}>
+          {isCIEAvailable && (
+            <Button
+              block={true}
+              primary={true}
+              iconLeft={true}
+              onPress={undefined} // TODO: here navigate to identity card check
+              testID={"landing-button-login-cie"}
+            >
+              <IconFont name={"io-cie"} color={variables.colorWhite} />
+              <Text>{I18n.t("authentication.landing.loginCie")}</Text>
+            </Button>
+          )}
+          <View spacer={true} />
+          <Button
+            block={true}
+            primary={true}
+            iconLeft={true}
+            onPress={this.navigateToIdpSelection}
+            testID={"landing-button-login-spid"}
+          >
+            <IconFont name={"io-profilo"} color={variables.colorWhite} />
+            <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
+          </Button>
+          <View spacer={true} />
+          <Button
+            block={true}
+            small={true}
+            transparent={true}
+            onPress={this.navigateToSpidInformationRequest}
+          >
+            <Text>
+              {isCIEAvailable
+                ? I18n.t("authentication.landing.nospid-nocie")
+                : I18n.t("authentication.landing.nospid")}
+            </Text>
+          </Button>
+          <View spacer={true} extralarge={true} />
         </View>
       </BaseScreenComponent>
     );
