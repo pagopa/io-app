@@ -346,6 +346,8 @@ email:
       will be able to use some other functions anyway (i.e. services, messages, etc.)"
     cta: Send a new validation email
     sent: Email sent
+    send_validation_ok: Email Validation sent
+    send_validation_ko: Some errors occured while sending email validation. Try again.
     help: Your SPID profile communicates your email to IO app. If you find the address
       wrong or that you do not use it anymore, you can edit it directly from your SPID
       services provider account.

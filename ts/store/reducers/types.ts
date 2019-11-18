@@ -18,7 +18,7 @@ import { OnboardingState } from "./onboarding";
 import { PaymentsState } from "./payments";
 import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
-import { ProfileState } from "./profile";
+import { EmailValidationState, ProfileState } from "./profile";
 import { SearchState } from "./search";
 import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
@@ -51,6 +51,7 @@ export type GlobalState = Readonly<{
   search: SearchState;
   payments: PaymentsState;
   userMetadata: UserMetadataState;
+  emailValidation: EmailValidationState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

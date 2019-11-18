@@ -351,6 +351,8 @@ email:
       usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
     cta: Invia una nuova email di validazione
     sent: Email inviata
+    send_validation_ok: Email di validazione inviata
+    send_validation_ko: Errore nell'invio della email di validazione. Riprova.
     help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
       indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
       tuo provider di servizi SPID.

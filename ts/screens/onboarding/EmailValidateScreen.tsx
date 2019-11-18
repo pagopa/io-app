@@ -25,12 +25,12 @@ import {
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
   emailProfileSelector,
-  isProfileEmailValidatedSelector,
-  profileSelector
+  isProfileEmailValidatedSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
+import { emailValidationSelector } from "../../store/reducers/emailValidation";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 type NavigationParams = {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   }
 });
 const buttonTextSize = 15;
-const emailSentTimout = 10000 as Millisecond; // 10 seconds
+const emailSentTimeout = 10000 as Millisecond; // 10 seconds
 
 /**
  * A screen as reminder to the user to validate his email address
@@ -91,15 +91,15 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props) {
-    // if we were updating the profile
-    if (pot.isUpdating(prevProps.profile)) {
+    // if we were sending again the validation email
+    if (pot.isLoading(prevProps.emailValidation)) {
       // and we got an error
-      if (pot.isError(this.props.profile)) {
+      if (pot.isError(this.props.emailValidation)) {
         // display a toast with error
-        showToast(I18n.t("email.edit.upsert_ko"), "danger");
-      } else if (pot.isSome(this.props.profile)) {
+        showToast(I18n.t("email.validate.send_validation_ko"), "danger");
+      } else if (pot.isSome(this.props.emailValidation)) {
         // display a success toast
-        showToast(I18n.t("email.edit.upsert_ok"), "success");
+        showToast(I18n.t("email.validate.send_validation_ok"), "success");
         // schedule a timeout to make the cta button disabled and reporting
         // the string that email has been sent.
         // after timeout we restore the default state
@@ -111,7 +111,7 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
             ctaSendEmailValidationText: I18n.t("email.validate.cta"),
             isCtaSentEmailValidationDisabled: false
           });
-        }, emailSentTimout);
+        }, emailSentTimeout);
         this.setState({
           ctaSendEmailValidationText: I18n.t("email.validate.sent"),
           isCtaSentEmailValidationDisabled: true
@@ -155,8 +155,10 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
     return (
       <TopScreenComponent
         goBack={
+          // if we come profile section go back,
+          // otherwise we are in onboarding phase and we have to abort it
           this.isFromProfileSection
-            ? this.props.navigation.goBack
+            ? this.props.navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME)
             : this.handleGoBack
         }
         headerTitle={I18n.t("email.validate.header")}
@@ -207,12 +209,12 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  const profile = profileSelector(state);
+  const emailValidation = emailValidationSelector(state);
   return {
-    profile,
+    emailValidation,
     email: emailProfileSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
-    isLoading: pot.isUpdating(profile)
+    isLoading: pot.isLoading(emailValidation)
   };
 }
 
