@@ -17,30 +17,18 @@ import {
 /**
  * Launch email saga that consists of:
  * If user have an existing email:
- * - acknowledgement screen if email already exists and it is valid and the user
- *   does not want to change it
- * - editing and validation screen, otherwise
- *
- * If user doesn't have an email, an add email screen is provided
+ * - acknowledgement screen if the email is validate (eg SPID) and this if the first onboarding
+ * - if the email is not validated promt a screen to inform and remember about validation
+ * - if the user has not an email (eg CIE) a screen will be prompt to insert his own email addredd
  */
 export function* checkAcknowledgedEmailSaga(
   userProfile: UserProfile
 ): IterableIterator<Effect> {
-  // Check if user profile has email
-  // TODO: put email existence check here
-  // To test #168246944 set emailExists = true;
-  // To test #168247020, #168247105 set emailExists = false;
+  // check if the profile has an email
   if (hasProfileEmail(userProfile)) {
-    // Email exists
-
-    // Check if email is valid
-    // TODO: put email validation API query here
-    // To test #168246944 set isValid = true;
-    // To test #168247105 set isValid = false;
-
+    // If email exists but it is not validate we show a screen as a reminder to validate it or
+    // where the user can edit the email added but not validated yet
     if (!isProfileEmailValidated(userProfile)) {
-      // If email exists but it is not validate we show a screen as a reminder to validate it or
-      // where the user can edit the email added but not validated yet
       yield put(navigateToEmailValidateScreen({}));
     }
     // if the user profile is just created (first onboarding) we show
