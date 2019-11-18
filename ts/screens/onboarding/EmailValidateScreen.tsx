@@ -4,7 +4,7 @@ import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
-import { EmailString } from "italia-ts-commons/lib/strings";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { NavigationScreenProps } from "react-navigation";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -18,7 +18,10 @@ import {
   abortOnboarding,
   emailAcknowledged
 } from "../../store/actions/onboarding";
-import { profileUpsert, requestLoadProfile } from "../../store/actions/profile";
+import {
+  requestLoadProfile,
+  startEmailValidation
+} from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
   emailProfileSelector,
@@ -28,7 +31,6 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
-import { Millisecond } from "italia-ts-commons/lib/units";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
 type NavigationParams = {
@@ -119,8 +121,8 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
   }
 
   private handleSendAgainButton = () => {
-    this.props.email.map(e => {
-      this.props.dispatchEmailUpdate(e as EmailString);
+    this.props.email.map(_ => {
+      this.props.dispatchSendEmailValidation();
     });
   };
 
@@ -215,12 +217,7 @@ function mapStateToProps(state: GlobalState) {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchEmailUpdate: (email: EmailString) =>
-    dispatch(
-      profileUpsert.request({
-        email
-      })
-    ),
+  dispatchSendEmailValidation: () => dispatch(startEmailValidation.request()),
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
   navigateToEmailInsertScreen: (isFromProfileSection: boolean) =>

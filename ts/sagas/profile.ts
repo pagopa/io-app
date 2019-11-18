@@ -15,7 +15,8 @@ import { sessionExpired } from "../store/actions/authentication";
 import {
   profileLoadFailure,
   profileLoadSuccess,
-  profileUpsert
+  profileUpsert,
+  startEmailValidation
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -26,7 +27,6 @@ export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Iterator<Effect | Option<UserProfileUnion>> {
   try {
-    console.warn("LOADING");
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
       {}
@@ -138,5 +138,49 @@ export function* watchProfileUpsertRequestsSaga(
     getType(profileUpsert.request),
     createOrUpdateProfileSaga,
     createOrUpdateProfile
+  );
+}
+
+export function* startEmailValidationProcessSaga(
+  startEmailValidationProcess: ReturnType<
+    typeof BackendClient
+  >["startEmailValidationProcess"]
+): Iterator<Effect | Option<UserProfileUnion>> {
+  try {
+    const response: SagaCallReturnType<
+      typeof startEmailValidationProcess
+    > = yield call(startEmailValidationProcess, {});
+    // we got an error, throw it
+    if (response.isLeft()) {
+      throw Error(readableReport(response.value));
+    }
+    if (response.value.status === 202) {
+      yield put(startEmailValidation.success());
+      return some(response.value.value);
+    }
+    if (response.value.status === 401) {
+      // in case we got an expired session while loading the profile, we reset
+      // the session
+      yield put(sessionExpired());
+    }
+    throw response
+      ? Error(`response status ${response.value.status}`)
+      : Error(I18n.t("profile.errors.load"));
+  } catch (error) {
+    yield put(startEmailValidation.failure(error));
+  }
+  return none;
+}
+
+// This function listens for request to send again the email validation to profile email and calls the needed saga.
+export function* watchProfileSendEmailValidationSaga(
+  startEmailValidationProcess: ReturnType<
+    typeof BackendClient
+  >["startEmailValidationProcess"]
+): Iterator<Effect> {
+  yield takeLatest(
+    getType(startEmailValidation.request),
+    startEmailValidationProcessSaga,
+    startEmailValidationProcess
   );
 }

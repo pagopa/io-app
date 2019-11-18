@@ -37,6 +37,12 @@ export const profileUpsert = createAsyncAction(
   "PROFILE_UPSERT_FAILURE"
 )<ProfileUpsertPayload, InitializedProfile, Error>();
 
+export const startEmailValidation = createAsyncAction(
+  "START_EMAIL_VALIDATION_REQUEST",
+  "START_EMAIL_VALIDATION_SUCCESS",
+  "START_EMAIL_VALIDATION_FAILURE"
+)<void, void, Error>();
+
 type ProfileFirstLoginPayload = {
   fiscal_code: InitializedProfile["fiscal_code"];
   spid_email: InitializedProfile["spid_email"];
@@ -53,5 +59,6 @@ export type ProfileActions =
   | ActionType<typeof requestLoadProfile>
   | ActionType<typeof profileLoadFailure>
   | ActionType<typeof profileUpsert>
+  | ActionType<typeof startEmailValidation>
   | ActionType<typeof profileFirstLogin>
   | ActionType<typeof clearCache>;

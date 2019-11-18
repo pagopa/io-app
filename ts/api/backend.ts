@@ -39,6 +39,8 @@ import {
   GetUserProfileT,
   getVisibleServicesDefaultDecoder,
   GetVisibleServicesT,
+  startEmailValidationProcessDefaultDecoder,
+  StartEmailValidationProcessT,
   updateProfileDefaultDecoder,
   UpdateProfileT,
   upsertUserMetadataDefaultDecoder,
@@ -202,6 +204,15 @@ export function BackendClient(
     response_decoder: getUserMetadataDefaultDecoder()
   };
 
+  const postStartEmailValidationProcessT: StartEmailValidationProcessT = {
+    method: "post",
+    url: () => "/api/v1/email-validation-process",
+    query: _ => ({}),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    body: _ => JSON.stringify({}),
+    response_decoder: startEmailValidationProcessDefaultDecoder()
+  };
+
   const createOrUpdateUserMetadataT: UpsertUserMetadataT = {
     method: "post",
     url: () => "/api/v1/user-metadata",
@@ -297,6 +308,9 @@ export function BackendClient(
     ),
     getPaymentId: withBearerToken(
       createFetchRequestForApi(getPaymentIdT, options)
+    ),
+    startEmailValidationProcess: withBearerToken(
+      createFetchRequestForApi(postStartEmailValidationProcessT, options)
     )
   };
 }

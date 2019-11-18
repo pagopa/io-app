@@ -60,7 +60,11 @@ import {
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
-import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
+import {
+  loadProfile,
+  watchProfileSendEmailValidationSaga,
+  watchProfileUpsertRequestsSaga
+} from "./profile";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
@@ -219,6 +223,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(
     watchProfileUpsertRequestsSaga,
     backendClient.createOrUpdateProfile
+  );
+
+  yield fork(
+    watchProfileSendEmailValidationSaga,
+    backendClient.startEmailValidationProcess
   );
 
   // Start the watchAbortOnboardingSaga
