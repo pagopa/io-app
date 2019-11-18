@@ -402,8 +402,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 }
                 value={
                   this.state.uiEnabledChannels.inbox &&
-                    this.state.uiEnabledChannels.email &&
-                    this.props.isValidEmail
+                  this.state.uiEnabledChannels.email &&
+                  this.props.isValidEmail
                 }
                 onValueChange={(value: boolean) => {
                   // compute the updated map of enabled channels

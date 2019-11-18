@@ -1,8 +1,6 @@
 import { createStackNavigator } from "react-navigation";
-
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
-import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import ROUTES from "./routes";
 
 const MessagesNavigator = createStackNavigator(
