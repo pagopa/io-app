@@ -18,39 +18,33 @@ interface Props {
   boxDimension: number;
 }
 
-type State = {
-  // Return value of setTimeout
-  idTimeoutAnim: number;
-};
-
 /**
  * Create a ring with opacity and scale effect with the primary color
  */
-export default class AnimatedRing extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-  }
+export default class AnimatedRing extends React.Component<Props> {
+  private idTimeout?: number;
 
   private animatedValue = new Animated.Value(0);
 
   public componentDidMount() {
-    this.setState({
-      idTimeoutAnim: setTimeout(() => {
-        Animated.loop(
-          Animated.timing(this.animatedValue, {
-            toValue: 1,
-            duration: this.props.duration,
-            easing: Easing.ease,
-            useNativeDriver: true
-          })
-        ).start();
-      }, this.props.startAnimationAfter)
-    });
+    // tslint:disable-next-line: no-object-mutation
+    this.idTimeout = setTimeout(() => {
+      Animated.loop(
+        Animated.timing(this.animatedValue, {
+          toValue: 1,
+          duration: this.props.duration,
+          easing: Easing.ease,
+          useNativeDriver: true
+        })
+      ).start();
+    }, this.props.startAnimationAfter);
   }
 
   public componentWillUnmount() {
-    // Clear timeout
-    clearTimeout(this.state.idTimeoutAnim);
+    if (this.idTimeout !== undefined) {
+      // Clear timeout
+      clearTimeout(this.idTimeout);
+    }
   }
 
   public render() {
