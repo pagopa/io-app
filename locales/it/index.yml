@@ -234,6 +234,8 @@ authentication:
       noNfcConnectionContent: !include cie/noNfcConnection.md
       cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
       cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+      pinCardTitle: Inserisci il PIN della tua carta
+      pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
       incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
@@ -460,7 +462,7 @@ wallet:
     info: Al prossimo pagamento ti verrà automaticamente proposto questo metodo di
       pagamento
     save: Salva la carta
-    notice: Per verificare la carta verrà effettuata una transazione di 2 centesimi di euro, che verrà stornata e non ti verrà addebitata.
+    notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
     temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
   saveCardInPayment:
     header: Paga con questa carta
