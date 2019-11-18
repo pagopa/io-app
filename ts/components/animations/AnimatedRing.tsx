@@ -18,25 +18,19 @@ interface Props {
   boxDimension: number;
 }
 
-type State = {
-  // Return value of setTimeout
-  idTimeoutAnim: number;
-};
-
 /**
  * Create a ring with opacity and scale effect with the primary color
  */
-export default class AnimatedRing extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-  }
+export default class AnimatedRing extends React.Component<Props> {
+  private idTimeout?: number;
 
   private animatedValue = new Animated.Value(0);
 
   public componentDidMount() {
     // Here an animation is created: a ring expands its area in a time interval and repeat it infinitely.
     // The animation starts with a delay passed in the props
-    const idTimeoutAnim = setTimeout(() => {
+    // tslint:disable-next-line: no-object-mutation
+    this.idTimeout = setTimeout(() => {
       Animated.loop(
         Animated.timing(this.animatedValue, {
           toValue: 1,
@@ -46,12 +40,13 @@ export default class AnimatedRing extends React.Component<Props, State> {
         })
       ).start();
     }, this.props.startAnimationAfter);
-    this.setState({ idTimeoutAnim });
   }
 
   public componentWillUnmount() {
-    // Clear timeout
-    clearTimeout(this.state.idTimeoutAnim);
+    if (this.idTimeout) {
+      // Clear timeout
+      clearTimeout(this.idTimeout);
+    }
   }
 
   public render() {
