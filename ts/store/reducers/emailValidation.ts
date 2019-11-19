@@ -16,6 +16,7 @@ export type EmailValidationState = pot.Pot<void, Error>;
 
 const INITIAL_STATE: EmailValidationState = pot.none;
 
+// return the pot of email validation
 export const emailValidationSelector = (
   state: GlobalState
 ): EmailValidationState => state.emailValidation;

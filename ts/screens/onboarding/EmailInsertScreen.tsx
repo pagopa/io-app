@@ -86,7 +86,7 @@ type State = Readonly<{
 class EmailInsertScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { email: this.props.email };
+    this.state = { email: this.props.optionEmail };
   }
 
   private continueOnPress = () => {
@@ -221,7 +221,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                   : I18n.t("email.insert.subtitle")}
                 {isFromProfileSection && (
                   <Text style={styles.darkestGray}>
-                    {` ${this.props.email.getOrElse("")}`}
+                    {` ${this.props.optionEmail.getOrElse("")}`}
                   </Text>
                 )}
               </Text>

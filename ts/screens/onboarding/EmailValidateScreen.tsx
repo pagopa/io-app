@@ -72,6 +72,7 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount() {
+    // if a timeout is running we have to stop it
     if (this.idTimeout !== undefined) {
       clearTimeout(this.idTimeout);
     }
@@ -97,6 +98,9 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
       if (pot.isError(this.props.emailValidation)) {
         // display a toast with error
         showToast(I18n.t("email.validate.send_validation_ko"), "danger");
+        this.setState({
+          isCtaSentEmailValidationDisabled: false
+        });
       } else if (pot.isSome(this.props.emailValidation)) {
         // display a success toast
         showToast(I18n.t("email.validate.send_validation_ok"), "success");
@@ -120,9 +124,13 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
     }
   }
 
-  private handleSendAgainButton = () => {
+  private handleSendEmailValidationButton = () => {
+    // send email validation only if it exists
     this.props.optionEmail.map(_ => {
       this.props.dispatchSendEmailValidation();
+    });
+    this.setState({
+      isCtaSentEmailValidationDisabled: true
     });
   };
 
@@ -179,7 +187,7 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
                 block={true}
                 bordered={true}
                 disabled={this.state.isCtaSentEmailValidationDisabled}
-                onPress={this.handleSendAgainButton}
+                onPress={this.handleSendEmailValidationButton}
               >
                 <Text>{this.state.ctaSendEmailValidationText}</Text>
               </Button>

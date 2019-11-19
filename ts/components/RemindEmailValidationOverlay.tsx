@@ -4,6 +4,7 @@
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, BackHandler, Image, StyleSheet } from "react-native";
@@ -13,7 +14,9 @@ import {
   navigateBack,
   navigateToEmailInsertScreen
 } from "../store/actions/navigation";
+import { startEmailValidation } from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
+import { emailValidationSelector } from "../store/reducers/emailValidation";
 import {
   emailProfileSelector,
   isProfileEmailValidatedSelector
@@ -27,6 +30,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 type State = {
   dispatched: boolean;
+  ctaSendEmailValidationText: string;
+  isCtaSentEmailValidationDisabled: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -34,11 +39,16 @@ const styles = StyleSheet.create({
   emailTitle: { textAlign: "center" }
 });
 
+const emailSentTimeout = 10000 as Millisecond; // 10 seconds
+
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
+  private idTimeout?: number;
   constructor(props: Props) {
     super(props);
     this.state = {
-      dispatched: false
+      dispatched: false,
+      ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+      isCtaSentEmailValidationDisabled: false
     };
   }
 
@@ -62,9 +72,23 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   public componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    // if a timeout is running we have to stop it
+    if (this.idTimeout !== undefined) {
+      clearTimeout(this.idTimeout);
+    }
   }
 
-  public componentDidUpdate(prevprops: Props, prevstate: State) {
+  private handleSendEmailValidationButton = () => {
+    // send email validation only if it exists
+    this.props.optionEmail.map(_ => {
+      this.props.dispatchSendEmailValidation();
+    });
+    this.setState({
+      isCtaSentEmailValidationDisabled: true
+    });
+  };
+
+  public componentDidUpdate(prevProps: Props, prevstate: State) {
     const { isEmailValidate } = this.props;
     const { dispatched } = this.state;
     // The dispatched property is used to store the information that the user
@@ -73,7 +97,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     // the navigateBack is called, otherwise the component will be automatically
     // unmounted from the withValidatedEmail HOC
     if (
-      !prevprops.isEmailValidate &&
+      !prevProps.isEmailValidate &&
       !isEmailValidate &&
       prevstate.dispatched &&
       dispatched
@@ -84,6 +108,31 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         },
         this.props.navigateBack
       );
+    }
+    // if we were sending again the validation email
+    if (pot.isLoading(prevProps.emailValidation)) {
+      // and we got an error
+      if (pot.isError(this.props.emailValidation)) {
+        this.setState({
+          isCtaSentEmailValidationDisabled: false
+        });
+      } else if (pot.isSome(this.props.emailValidation)) {
+        // schedule a timeout to make the cta button disabled and reporting
+        // the string that email has been sent.
+        // after timeout we restore the default state
+        // tslint:disable-next-line: no-object-mutation
+        this.idTimeout = setTimeout(() => {
+          // tslint:disable-next-line: no-object-mutation
+          this.idTimeout = undefined;
+          this.setState({
+            ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+            isCtaSentEmailValidationDisabled: false
+          });
+        }, emailSentTimeout);
+        this.setState({
+          ctaSendEmailValidationText: I18n.t("email.validate.sent")
+        });
+      }
     }
   }
 
@@ -114,10 +163,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             block={true}
             light={true}
             bordered={true}
-            onPress={() => {
-              // https://www.pivotaltracker.com/story/show/168247365
-              Alert.alert(I18n.t("global.notImplemented"));
-            }}
+            disabled={this.state.isCtaSentEmailValidationDisabled}
+            onPress={this.handleSendEmailValidationButton}
           >
             <Text>{I18n.t("reminders.email.button1")}</Text>
           </Button>
@@ -152,7 +199,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => {
   const isEmailValidated = isProfileEmailValidatedSelector(state);
+  const emailValidation = emailValidationSelector(state);
   return {
+    emailValidation,
     optionEmail: emailProfileSelector(state),
     isEmailValidate: isEmailEditingAndValidationEnabled
       ? isEmailValidated
@@ -161,6 +210,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchSendEmailValidation: () => dispatch(startEmailValidation.request()),
   navigateBack: () => dispatch(navigateBack()),
   validateEmail: () => undefined, // TODO: add onPress of email verification https://www.pivotaltracker.com/story/show/168662501
   navigateToEmailInsertScreen: () => {
