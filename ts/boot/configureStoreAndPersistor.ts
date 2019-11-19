@@ -13,7 +13,6 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
-
 import { isDevEnvironment } from "../config";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
@@ -89,7 +88,7 @@ const migrations: MigrationManifest = {
   },
 
   // Version 4
-  // we added a state to monitor what pagopa environment is selected
+  // we added a state to monitor what pagoPA environment is selected
   "4": (state: PersistedState) => {
     return (state as PersistedGlobalState).persistedPreferences
       .isPagoPATestEnabled === undefined
@@ -140,9 +139,9 @@ const migrations: MigrationManifest = {
     return {
       ...state,
       entities: {
-        ...(state as any).entities,
+        ...(state as PersistedGlobalState).entities,
         services: {
-          ...(state as any).entities.services,
+          ...(state as PersistedGlobalState).entities.services,
           byId: {}
         }
       }
@@ -168,7 +167,8 @@ const rootPersistConfig: PersistConfig = {
     "persistedPreferences",
     "installation",
     "payments",
-    "content"
+    "content",
+    "userMetadata"
   ],
   // Transform functions used to manipulate state on store/rehydrate
   transforms: [DateISO8601Transform, PotTransform]

@@ -2,18 +2,46 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { BugReporting, Replies } from "instabug-reactnative";
 import { Button } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import {
   instabugReportClosed,
   instabugReportOpened
 } from "../store/actions/debug";
+import { updateInstabugUnreadMessages } from "../store/actions/instabug";
 import { Dispatch } from "../store/actions/types";
+import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
+import variables from "../theme/variables";
+import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
 
 interface OwnProps {
   color?: string;
 }
+
+const styles = StyleSheet.create({
+  textStyle: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+  badgeStyle: {
+    backgroundColor: variables.brandPrimary,
+    borderColor: "white",
+    borderWidth: 2,
+    position: "absolute",
+    elevation: 0.1,
+    shadowColor: "white",
+    height: 19,
+    width: 19,
+    left: 20,
+    bottom: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
+    justifyContent: "center",
+    alignContent: "center"
+  }
+});
 
 type Props = ReturnType<typeof mapStateToProps> &
   OwnProps &
@@ -72,6 +100,9 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
             this.state.instabugReportType.value,
             dismiss
           );
+          // when user dismisses instabug report (chat or bug) we update the unread messages counter.
+          // This is because user could have read or reply to some messages
+          this.props.dispatchUpdateInstabugUnreadMessagesCounter();
         }
       }
     );
@@ -79,39 +110,44 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
 
   public render() {
     return (
-      this.props.isDebugModeEnabled && (
-        <React.Fragment>
-          <Button onPress={this.handleIBChatPress} transparent={true}>
-            <IconFont
-              name="io-chat"
-              color={this.props.color}
-              accessible={true}
-              accessibilityLabel="io-chat"
-            />
-          </Button>
-          <Button onPress={this.handleIBBugPress} transparent={true}>
-            <IconFont
-              name="io-bug"
-              color={this.props.color}
-              accessible={true}
-              accessibilityLabel="io-bug"
-            />
-          </Button>
-        </React.Fragment>
-      )
+      <React.Fragment>
+        <Button onPress={this.handleIBChatPress} transparent={true}>
+          <IconFont
+            name="io-chat"
+            color={this.props.color}
+            accessible={true}
+            accessibilityLabel="io-chat"
+          />
+        </Button>
+        <CustomBadge
+          badgeStyle={styles.badgeStyle}
+          textStyle={styles.textStyle}
+          badgeValue={this.props.badge}
+        />
+        <Button onPress={this.handleIBBugPress} transparent={true}>
+          <IconFont
+            name="io-bug"
+            color={this.props.color}
+            accessible={true}
+            accessibilityLabel="io-bug"
+          />
+        </Button>
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  badge: instabugMessageStateSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchIBReportOpen: (type: string) =>
     dispatch(instabugReportOpened({ type })),
   dispatchIBReportClosed: (type: string, how: string) =>
-    dispatch(instabugReportClosed({ type, how }))
+    dispatch(instabugReportClosed({ type, how })),
+  dispatchUpdateInstabugUnreadMessagesCounter: () =>
+    dispatch(updateInstabugUnreadMessages())
 });
 
 export const InstabugButtons = connect(

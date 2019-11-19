@@ -22,6 +22,7 @@ import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
+import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
@@ -30,13 +31,13 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { openMaps } from "../../utils/openMaps";
-import { logosForService } from "../../utils/services";
-import { showToast } from "../../utils/showToast";
 import {
   EnabledChannels,
   getBlockedChannels,
   getEnabledChannelsForService
-} from "../preferences/common";
+} from "../../utils/profile";
+import { logosForService } from "../../utils/services";
+import { showToast } from "../../utils/showToast";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -77,7 +78,7 @@ function renderInformationRow(
     <View style={styles.infoItem}>
       <Text>{label}</Text>
       <Button primary={true} small={true} onPress={onPress}>
-        <Text ellipsizeMode="tail" numberOfLines={1}>
+        <Text uppercase={false} ellipsizeMode="tail" numberOfLines={1}>
           {info}
         </Text>
       </Button>
@@ -102,18 +103,20 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   }
 
   public componentWillReceiveProps(nextProps: Props) {
-    if (pot.isError(this.props.profile) !== pot.isError(nextProps.profile)) {
+    if (pot.isError(nextProps.profile) && !pot.isError(this.props.profile)) {
       // in case of new or resolved errors while updating the profile, we show a toast and
       // reset the UI to match the state of the profile preferences
       showToast(
         I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
         "danger"
       );
+
+      const uiEnabledChannels = getEnabledChannelsForService(
+        nextProps.profile,
+        nextProps.navigation.getParam("service").service_id
+      );
       this.setState({
-        uiEnabledChannels: getEnabledChannelsForService(
-          nextProps.profile,
-          nextProps.navigation.getParam("service").service_id
-        )
+        uiEnabledChannels
       });
     }
   }
@@ -339,11 +342,13 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   key={`switch-email-${profileVersion}`}
                   disabled={
                     !this.state.uiEnabledChannels.inbox ||
-                    pot.isUpdating(this.props.profile)
+                    pot.isUpdating(this.props.profile) ||
+                    !this.props.isValidEmail
                   }
                   value={
                     this.state.uiEnabledChannels.inbox &&
-                    this.state.uiEnabledChannels.email
+                    this.state.uiEnabledChannels.email &&
+                    this.props.isValidEmail
                   }
                   onValueChange={(value: boolean) => {
                     // compute the updated map of enabled channels
@@ -475,6 +480,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
+  isValidEmail: !isEmailEditingAndValidationEnabled && !!state, // TODO: get the proper isValidEmail from store
   services: state.entities.services,
   content: state.content,
   profile: state.profile,

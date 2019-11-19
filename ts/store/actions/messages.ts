@@ -20,7 +20,7 @@ export const loadMessage = createAsyncAction(
 )<
   CreatedMessageWithoutContent,
   CreatedMessageWithContent,
-  { id: string; error?: string }
+  { id: string; error: Error }
 >();
 
 export const loadMessageWithRelations = createAsyncAction(
@@ -33,7 +33,7 @@ export const loadMessages = createAsyncAction(
   "MESSAGES_LOAD_REQUEST",
   "MESSAGES_LOAD_SUCCESS",
   "MESSAGES_LOAD_FAILURE"
-)<void, ReadonlyArray<string>, string>();
+)<void, ReadonlyArray<string>, Error>();
 
 export const loadMessagesCancel = createStandardAction(
   "MESSAGES_LOAD_CANCEL"

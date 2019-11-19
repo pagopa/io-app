@@ -4,8 +4,14 @@ import {
 } from "react-navigation";
 
 import { environment } from "../config";
+import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
+import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
+import CiePinScreen from "../screens/authentication/CiePinScreen";
+import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
+import CieValidScreen from "../screens/authentication/CieValidScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
+import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
@@ -19,6 +25,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: {
     screen: IdpSelectionScreen
   },
+  [ROUTES.AUTHENTICATION_CIE]: {
+    screen: CardSelectionScreen
+  },
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
     screen: IdpLoginScreen
   },
@@ -27,6 +36,24 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.MARKDOWN]: {
     screen: MarkdownScreen
+  },
+  // For expired cie screen
+  [ROUTES.CIE_EXPIRED_SCREEN]: {
+    screen: CieExpiredOrInvalidScreen
+  },
+  // For valid cie screen
+  [ROUTES.CIE_VALID_SCREEN]: {
+    screen: CieValidScreen
+  },
+  // For CIE success screen
+  [ROUTES.CIE_SUCCESS_SCREEN]: {
+    screen: CieSuccessScreen
+  },
+  [ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN]: {
+    screen: InterruptedReadingCardScreen
+  },
+  [ROUTES.CIE_PIN_SCREEN]: {
+    screen: CiePinScreen
   }
 };
 

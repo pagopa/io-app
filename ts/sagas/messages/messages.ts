@@ -4,7 +4,6 @@
  */
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
-import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select } from "redux-saga/effects";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
@@ -14,6 +13,7 @@ import { loadMessage as loadMessageAction } from "../../store/actions/messages";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
+import { readablePrivacyReport } from "../../utils/reporters";
 
 /**
  * A saga to fetch a message from the Backend and save it in the redux store.
@@ -31,26 +31,29 @@ export function* loadMessage(
   if (cachedMessage !== undefined && pot.isSome(cachedMessage.message)) {
     return right(cachedMessage);
   }
+  try {
+    // Fetch the message from the Backend
+    const maybeMessage: SagaCallReturnType<typeof fetchMessage> = yield call(
+      fetchMessage,
+      getMessage,
+      meta
+    );
 
-  // Fetch the message from the Backend
-  const maybeMessage: SagaCallReturnType<typeof fetchMessage> = yield call(
-    fetchMessage,
-    getMessage,
-    meta
-  );
-
-  if (maybeMessage.isLeft()) {
+    if (maybeMessage.isLeft()) {
+      throw maybeMessage.value;
+    } else {
+      yield put(loadMessageAction.success(maybeMessage.value));
+    }
+    return maybeMessage;
+  } catch (error) {
     yield put(
       loadMessageAction.failure({
         id: meta.id,
-        error: maybeMessage.value.message
+        error
       })
     );
-  } else {
-    yield put(loadMessageAction.success(maybeMessage.value));
+    return left(error);
   }
-
-  return maybeMessage;
 }
 
 /**
@@ -66,11 +69,13 @@ export function* fetchMessage(
       { id: meta.id }
     );
     if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+      throw Error(readablePrivacyReport(response.value));
     }
     if (response.value.status !== 200) {
       const error =
-        response.value.status === 500 ? response.value.value.title : undefined;
+        response.value.status === 500
+          ? response.value.value.title
+          : `response status ${response.value.status}`;
       // Return the error
       return left(Error(error));
     }

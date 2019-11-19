@@ -18,8 +18,6 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-import Switch from "../../components/ui/Switch";
-
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
@@ -31,13 +29,10 @@ import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
+import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import {
-  LogoutOption,
-  logoutRequest,
-  sessionExpired
-} from "../../store/actions/authentication";
+import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesExperimentalFeaturesSetEnabled,
@@ -65,6 +60,11 @@ type Props = OwnProps &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+type State = {
+  showPagoPAtestSwitch: boolean;
+  numberOfTaps: number;
+};
 
 const styles = StyleSheet.create({
   itemLeft: {
@@ -104,8 +104,17 @@ const getAppLongVersion = () => {
   return `${DeviceInfo.getVersion()}${buildNumber}`;
 };
 
-class ProfileMainScreen extends React.PureComponent<Props> {
+class ProfileMainScreen extends React.PureComponent<Props, State> {
   private navListener?: NavigationEventSubscription;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showPagoPAtestSwitch: false,
+      numberOfTaps: 0
+    };
+    this.handleClearCachePress = this.handleClearCachePress.bind(this);
+  }
 
   public componentDidMount() {
     this.navListener = this.props.navigation.addListener("didFocus", () => {
@@ -120,18 +129,31 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     if (this.navListener) {
       this.navListener.remove();
     }
+    // This ensures modals will be closed (if there are some opened)
+    this.props.hideModal();
   }
 
-  private handleClearCachePress = () => {
-    this.props.clearCache();
-    Toast.show({ text: "The cache has been cleared." });
-  };
-
-  private logout = (logoutOption: LogoutOption) => {
-    this.props.logout(logoutOption);
-
-    this.props.hideModal();
-  };
+  private handleClearCachePress() {
+    Alert.alert(
+      I18n.t("profile.main.cache.alert"),
+      undefined,
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "destructive",
+          onPress: () => {
+            this.props.clearCache();
+            Toast.show({ text: I18n.t("profile.main.cache.cleared") });
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  }
 
   private developerListItem(
     title: string,
@@ -175,7 +197,6 @@ class ProfileMainScreen extends React.PureComponent<Props> {
     this.props.showModal(
       <SelectLogoutOption
         onCancel={this.props.hideModal}
-        onOptionSelected={this.logout}
         header={
           <View>
             <H3 style={styles.modalHeader}>
@@ -298,6 +319,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
       return (
         <ScrollView ref={this.ServiceListRef} style={styles.whiteBg}>
           <NavigationEvents onWillFocus={this.scrollToTop} />
+          <View spacer={true} />
           <List withContentLateralPadding={true}>
             {/* Preferences */}
             <ListItemComponent
@@ -341,7 +363,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             />
             {
               // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
-              // It could be usefull when new experimental features will be available
+              // It could be useful when new experimental features will be available
               /*
               this.developerListItem(
               I18n.t("profile.main.experimentalFeatures.confirmTitle"),
@@ -350,12 +372,14 @@ class ProfileMainScreen extends React.PureComponent<Props> {
             )*/
             }
 
-            {this.developerListItem(
-              I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
-              this.props.isPagoPATestEnabled,
-              this.onPagoPAEnvironmentToggle,
-              I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
-            )}
+            {(this.props.isPagoPATestEnabled ||
+              this.state.showPagoPAtestSwitch) &&
+              this.developerListItem(
+                I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
+                this.props.isPagoPATestEnabled,
+                this.onPagoPAEnvironmentToggle,
+                I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
+              )}
 
             {this.developerListItem(
               I18n.t("profile.main.debugMode"),
@@ -367,7 +391,16 @@ class ProfileMainScreen extends React.PureComponent<Props> {
               <React.Fragment>
                 {this.debugListItem(
                   `${I18n.t("profile.main.appVersion")} ${getAppLongVersion()}`,
-                  () => clipboardSetStringWithFeedback(getAppLongVersion()),
+                  () => {
+                    if (this.state.numberOfTaps === 4) {
+                      this.setState({ showPagoPAtestSwitch: true });
+                    } else {
+                      const numberOfTaps = this.state.numberOfTaps + 1;
+                      this.setState({
+                        numberOfTaps
+                      });
+                    }
+                  },
                   false
                 )}
 
@@ -407,7 +440,7 @@ class ProfileMainScreen extends React.PureComponent<Props> {
                   )}
 
                 {this.debugListItem(
-                  I18n.t("profile.main.clearCache"),
+                  I18n.t("profile.main.cache.clear"),
                   this.handleClearCachePress,
                   true
                 )}
@@ -475,7 +508,6 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
-  logout: (logoutOption: LogoutOption) => dispatch(logoutRequest(logoutOption)),
   clearCache: () => dispatch(clearCache()),
   setDebugModeEnabled: (enabled: boolean) =>
     dispatch(setDebugModeEnabled(enabled)),

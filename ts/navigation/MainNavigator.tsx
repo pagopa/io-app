@@ -1,8 +1,8 @@
 /**
  * Main navigator, handling the navigation within
- * the app *after* the login has occurred. This takes
- * care of displaying a tab navigator with the
- * appropriate icons
+ * the app *after* the login and onboarding have
+ * occurred. This takes care of displaying a tab
+ * navigator with the appropriate icons
  */
 
 import * as React from "react";
@@ -27,6 +27,7 @@ import ProfileNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import WalletNavigator from "./WalletNavigator";
+
 type Routes = keyof typeof ROUTES;
 
 type RouteLabelMap = { [key in Routes]?: string };

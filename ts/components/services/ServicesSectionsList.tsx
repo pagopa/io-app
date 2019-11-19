@@ -3,14 +3,16 @@
  */
 import I18n from "i18n-js";
 import { Button, Text, View } from "native-base";
-import React, { ComponentProps } from "react";
+import React from "react";
 import { Image, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { ServicesSectionState } from "../../store/reducers/entities/services";
+import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
+import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import IconFont from "../ui/IconFont";
 import ServiceList from "./ServiceList";
-import ServiceSectionListComponent from "./ServiceSectionListComponent";
 
 type AnimatedProps = {
   animated?: {
@@ -20,17 +22,22 @@ type AnimatedProps = {
 };
 
 type OwnProps = {
+  sections: ReadonlyArray<ServicesSectionState>;
+  profile: ProfileState;
   onChooserAreasOfInterestPress?: () => void;
   selectedOrganizationsFiscalCodes?: Set<string>;
   isLocal?: boolean;
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
   onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
+  renderRightIcon?: (section: ServicesSectionState) => React.ReactNode;
+  isRefreshing: boolean;
+  onRefresh: () => void;
+  onSelect: (service: ServicePublic) => void;
+  readServices: ReadStateByServicesId;
 };
 
-type Props = AnimatedProps &
-  OwnProps &
-  ComponentProps<typeof ServiceSectionListComponent>;
+type Props = AnimatedProps & OwnProps;
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -57,6 +64,10 @@ const styles = StyleSheet.create({
   icon: {
     color: customVariables.brandPrimaryInverted,
     lineHeight: 24
+  },
+  emptyListContentTitle: {
+    paddingTop: customVariables.contentPadding,
+    textAlign: "center"
   }
 });
 
@@ -88,6 +99,21 @@ class ServicesSectionsList extends React.PureComponent<Props> {
     );
   }
 
+  // component used when the list is empty
+  private emptyListComponent() {
+    return (
+      <View style={styles.headerContentWrapper}>
+        <View spacer={true} large={true} />
+        <Image
+          source={require("../../../img/services/icon-loading-services.png")}
+        />
+        <Text style={styles.emptyListContentTitle}>
+          {I18n.t("services.emptyListMessage")}
+        </Text>
+      </View>
+    );
+  }
+
   private renderEditButton = () => {
     return (
       this.props.isLocal &&
@@ -112,28 +138,24 @@ class ServicesSectionsList extends React.PureComponent<Props> {
   };
 
   private renderList = () => {
-    const {
-      animated,
-      profile,
-      sections,
-      isRefreshing,
-      onRefresh,
-      onSelect,
-      readServices
-    } = this.props;
+    // empty component is different from local and others (national and all)
+    const emptyComponent = this.props.isLocal
+      ? this.localListEmptyComponent()
+      : this.emptyListComponent();
     return (
       <ServiceList
-        animated={animated}
-        sections={sections}
-        profile={profile}
-        isRefreshing={isRefreshing}
-        onRefresh={onRefresh}
-        onSelect={onSelect}
-        readServices={readServices}
-        ListEmptyComponent={this.localListEmptyComponent()}
+        animated={this.props.animated}
+        sections={this.props.sections}
+        profile={this.props.profile}
+        isRefreshing={this.props.isRefreshing}
+        onRefresh={this.props.onRefresh}
+        onSelect={this.props.onSelect}
+        readServices={this.props.readServices}
+        ListEmptyComponent={emptyComponent}
         onLongPressItem={this.props.onLongPressItem}
         isLongPressEnabled={this.props.isLongPressEnabled}
         onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
+        renderRightIcon={this.props.renderRightIcon}
       />
     );
   };
