@@ -478,6 +478,8 @@ wallet:
     link: Find out more
     maxFee: Maximum fee
     onUpdateWalletPspFailure: Operation failed, please retry
+    contextualHelpTitle: Select a provider
+    contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
     header: Confirm transaction
     cancelPayment: Cancel the transaction
