@@ -3,11 +3,10 @@
  */
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, BackHandler, Image, StyleSheet } from "react-native";
+import { BackHandler, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { isEmailEditingAndValidationEnabled } from "../config";
 import {
