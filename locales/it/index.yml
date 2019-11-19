@@ -188,6 +188,10 @@ userMetadata:
 navigation:
   messages: Messaggi
   profile: Profilo
+cie:
+  title: Appoggia la carta
+  layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
+  layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finchè non senti un suono.
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
@@ -204,8 +208,12 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
-    login: Entra con SPID
+    loginSpid: Entra con SPID
+    loginCie: Entra con CIE
+    loginSpidCie: Accedi con SPID o CIE
+    loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
     nospid: Non hai SPID? Scopri di più
+    nospid-nocie: Non hai SPID o CIE? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
     card1-content: Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni
       Pubbliche
@@ -252,6 +260,10 @@ authentication:
     paragraph3: Proseguendo dichiari di accettare le
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
+  cie:
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
+    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   spid_information:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -802,6 +814,12 @@ calendarEvents:
 reminders:
   emptyMonth: Non ci sono scadenze in questo mese
   loadMoreData: carica le scadenze del periodo precedente
+  email:
+    title: Ricorda di validare il tuo indirizzo email
+    modal1: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email. \n Ti abbiamo inviato una email a"
+    modal2: "apri il tuo client di posta e clicca semplicemente sul link."
+    button1: Invia una nuova email di validazione
+    button2: Modifica indirizzo email
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
 genericError: Si è verificato un errore
