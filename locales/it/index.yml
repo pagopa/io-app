@@ -249,6 +249,11 @@ authentication:
     unknownCardTitle: Carta sconosciuta
     unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
     unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
+  cie_information_request: !include cie.md
+  spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
+  request_cie: Richiedi CIE
+  request_spid: Ottieni SPID
+  spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -261,12 +266,15 @@ authentication:
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
   cie:
+    cie: Carta di Identità Elettronica
     temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
     temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
     temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   spid_information:
+    spid: !include spid.md
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
+    contentTitleCie: Non hai SPID o la CIE?
     moreLinkText: Per saperne di più
     subtitle: SPID è sicuro
     paragraph1: SPID, il Sistema Pubblico di Identità Digitale, ti permette di accedere
