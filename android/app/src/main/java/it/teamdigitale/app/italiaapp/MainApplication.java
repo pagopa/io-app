@@ -8,6 +8,7 @@ import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.lewin.qrcode.QRScanReaderPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -19,7 +20,6 @@ import com.calendarevents.CalendarEventsPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
-import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import com.horcrux.svg.SvgPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -47,6 +47,12 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            		new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN,MainApplication.this)
+							.setInvocationEvent("none")
+							.setPrimaryColor("#0073E6")
+							.setFloatingEdge("left")
+							.setFloatingButtonOffsetFromTop(250)
+							.build(),
         new AsyncStoragePackage(),
         new QRScanReaderPackage(),
         new ImagePickerPackage(),
@@ -58,10 +64,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
         new RNCWebViewPackage(),
         new FingerprintAuthPackage(),
         new BackgroundTimerPackage(),
-        new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
-          .setInvocationEvent("none")
-          .setPrimaryColor("#0073E6")
-          .build(),
         new SvgPackage(),
         new RNTextInputMaskPackage(),
         new SplashScreenReactPackage(),
