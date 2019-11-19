@@ -21,7 +21,8 @@ const loadInstabugUnreadMessages = () => {
     });
   });
 };
-
+// refresh instabug unread messages time rate
+const backgroundActivityTimeoutMillis = 5 * 1000;
 /**
  * Listen to APP_STATE_CHANGE_ACTION and control instabug unread messages
  */
@@ -30,9 +31,7 @@ export function* instabugBackgroundSaga(): IterableIterator<Effect> {
     typeof loadInstabugUnreadMessages
   > = yield call(loadInstabugUnreadMessages);
   yield put(instabugUnreadMessagesLoaded(messaggiAttuali));
-  console.log("Messaggi attuali");
-  console.log(messaggiAttuali);
-  const backgroundActivityTimeoutMillis = 2 * 1000;
+  console.log("Messaggi attuali " + messaggiAttuali);
 
   const notification = () => {
     PushNotification.localNotificationSchedule({
@@ -68,8 +67,7 @@ export function* instabugBackgroundSaga(): IterableIterator<Effect> {
         > = yield call(loadInstabugUnreadMessages);
 
         yield put(instabugUnreadMessagesLoaded(instabugRepliesCount));
-        console.log("Messaggi arrivati");
-        console.log(instabugRepliesCount);
+        console.log("Messaggi arrivati " + instabugRepliesCount);
 
         if (instabugRepliesCount > messaggiAttuali) {
           console.log("Ho un nuovo messaggio");
