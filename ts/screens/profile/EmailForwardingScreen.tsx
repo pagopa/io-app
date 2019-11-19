@@ -79,12 +79,10 @@ class EmailForwardingScreen extends React.Component<Props> {
               I18n.t("send_email_messages.options.disable_all.info"),
               !this.props.isInboxEnabled,
               () => {
-                // Disable custom email notification and disable email notifications from all visible services
-                this.props.disableOrEnableAllEmailNotifications(
-                  this.props.visibleServicesId,
-                  this.props.potProfile,
-                  false
-                );
+                // Disable custom email notification and disable email notifications from all visible service
+                // The upsert of blocked_inbox_or_channels is useless: the backend will block any email notification
+                // twhen is_email_enabled is false
+                this.props.setCustomEmailChannel(false);
               }
             )}
 
@@ -94,7 +92,9 @@ class EmailForwardingScreen extends React.Component<Props> {
               this.props.isInboxEnabled &&
                 !this.props.isCustomEmailChannelEnabled,
               () => {
-                // Disable custom email notification and enable email notifications from all visible services
+                // Disable custom email notification and enable email notifications from all visible services.
+                // The upsert of blocked_inbox_or_channels is required to enable those channel that was disabled
+                // from the service detail
                 this.props.disableOrEnableAllEmailNotifications(
                   this.props.visibleServicesId,
                   this.props.potProfile,
@@ -109,7 +109,7 @@ class EmailForwardingScreen extends React.Component<Props> {
               this.props.isInboxEnabled &&
                 this.props.isCustomEmailChannelEnabled,
               // Enable custom set of the email notification for each visible service
-              () => this.props.setCustomEmailChannelEnabled()
+              () => this.props.setCustomEmailChannel(true)
             )}
 
             <EdgeBorderComponent />
@@ -162,21 +162,21 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       enable,
       "EMAIL"
     );
-    // is_inbox_enabled  and isCustomEmailChannelEnabled should be updated only if the value changes
+    // is_email_enabled and isCustomEmailChannelEnabled should be updated only if the value changes
     dispatch(
       profileUpsert.request({
         blocked_inbox_or_channels: newBlockedChannels,
-        is_inbox_enabled: enable
+        is_email_enabled: enable
       })
     );
     dispatch(customEmailChannelSetEnabled(false));
   },
-  // is_inbox_enabled and isCustomEmailChannelEnabled should be updated only if the value changes
-  setCustomEmailChannelEnabled: () => {
-    dispatch(customEmailChannelSetEnabled(true));
+  // is_email_enabled and isCustomEmailChannelEnabled should be updated only if the value changes
+  setCustomEmailChannel: (toEnable: boolean) => {
+    dispatch(customEmailChannelSetEnabled(toEnable));
     dispatch(
       profileUpsert.request({
-        is_inbox_enabled: true
+        is_email_enabled: toEnable
       })
     );
   }

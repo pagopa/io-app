@@ -8,6 +8,7 @@ import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
 import { getType } from "typesafe-actions";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { UserProfileUnion } from "../../api/backend";
 import {
   profileLoadSuccess,
@@ -33,10 +34,9 @@ export const spidEmailSelector = (state: GlobalState) => {
     .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 };
 
-// TODO: why the screen tells about inbox but the set is no email only?
 export const isEmailEnabledSelector = (state: GlobalState): boolean =>
-  pot.isSome(state.profile) && "is_inbox_enabled" in state.profile.value
-    ? state.profile.value.is_inbox_enabled
+  pot.isSome(state.profile) && InitializedProfile.is(state.profile.value)
+    ? state.profile.value.is_email_enabled
     : false;
 
 const reducer = (
