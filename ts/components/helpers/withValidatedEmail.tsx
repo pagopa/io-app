@@ -10,6 +10,7 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { isEmailEditingAndValidationEnabled } from "../../config";
+import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { withConditionalView } from "./withConditionalView";
 
@@ -47,9 +48,14 @@ const ConditionalView = withLightModalContext(
 
 export type Props = ReturnType<typeof mapStateToProps>;
 
-const mapStateToProps = (state: GlobalState) => ({
-  isValidEmail: !isEmailEditingAndValidationEnabled && !!state // TODO: get the proper isValidEmail from store
-});
+const mapStateToProps = (state: GlobalState) => {
+  const isEmailValidated = isProfileEmailValidatedSelector(state);
+  return {
+    isEmailValidate: isEmailEditingAndValidationEnabled
+      ? isEmailValidated
+      : true
+  };
+};
 
 export function withValidatedEmail<P>(
   WrappedComponent: React.ComponentType<P>
@@ -60,7 +66,7 @@ export function withValidatedEmail<P>(
   )(
     withConditionalView(
       WrappedComponent,
-      (props: Props) => props.isValidEmail,
+      (props: Props) => props.isEmailValidate,
       ConditionalView
     )
   );

@@ -121,7 +121,7 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
   }
 
   private handleSendAgainButton = () => {
-    this.props.email.map(_ => {
+    this.props.optionEmail.map(_ => {
       this.props.dispatchSendEmailValidation();
     });
   };
@@ -169,7 +169,7 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
           <View style={styles.content}>
             <Markdown>
               {I18n.t("email.validate.info", {
-                email: this.props.email.getOrElse("")
+                email: this.props.optionEmail.getOrElse("")
               })}
             </Markdown>
             <View style={styles.spacerLarge} />
@@ -212,7 +212,7 @@ function mapStateToProps(state: GlobalState) {
   const emailValidation = emailValidationSelector(state);
   return {
     emailValidation,
-    email: emailProfileSelector(state),
+    optionEmail: emailProfileSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isLoading: pot.isLoading(emailValidation)
   };

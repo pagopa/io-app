@@ -143,7 +143,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     const { potProfile } = this.props;
     const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
-    const email = this.props.email.getOrElse("");
+    const email = this.props.optionEmail.getOrElse("");
     const phoneNumber = potProfile
       .map(_ => untag(_.spid_mobile_phone))
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
@@ -227,7 +227,7 @@ function mapStateToProps(state: GlobalState) {
   return {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
-    email: emailProfileSelector(state),
+    optionEmail: emailProfileSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar

@@ -14,6 +14,10 @@ import {
   navigateToEmailInsertScreen
 } from "../store/actions/navigation";
 import { Dispatch } from "../store/actions/types";
+import {
+  emailProfileSelector,
+  isProfileEmailValidatedSelector
+} from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import TopScreenComponent from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
@@ -61,7 +65,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 
   public componentDidUpdate(prevprops: Props, prevstate: State) {
-    const { isValidEmail } = this.props;
+    const { isEmailValidate } = this.props;
     const { dispatched } = this.state;
     // The dispatched property is used to store the information that the user
     // has pressed on the OK button, a new email validation is requested.
@@ -69,8 +73,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     // the navigateBack is called, otherwise the component will be automatically
     // unmounted from the withValidatedEmail HOC
     if (
-      !prevprops.isValidEmail &&
-      !isValidEmail &&
+      !prevprops.isEmailValidate &&
+      !isEmailValidate &&
       prevstate.dispatched &&
       dispatched
     ) {
@@ -84,10 +88,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { optionProfile } = this.props;
-    const profileEmail = optionProfile
-      .map(_ => untag(_.spid_email))
-      .getOrElse("");
+    const profileEmail = this.props.optionEmail.getOrElse("");
     return (
       <TopScreenComponent
         customRightIcon={{
@@ -105,7 +106,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           <View spacer={true} />
           <Text>
             {I18n.t("reminders.email.modal1")}
-            <Text bold={true}>{` ${profileEmail}: `}</Text>
+            <Text bold={true}>{` ${profileEmail} `}</Text>
             {I18n.t("reminders.email.modal2")}
           </Text>
           <View spacer={true} />
@@ -149,10 +150,15 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(state.profile),
-  isValidEmail: !isEmailEditingAndValidationEnabled && !!state // TODO: get the proper isValidEmail from store
-});
+const mapStateToProps = (state: GlobalState) => {
+  const isEmailValidated = isProfileEmailValidatedSelector(state);
+  return {
+    optionEmail: emailProfileSelector(state),
+    isEmailValidate: isEmailEditingAndValidationEnabled
+      ? isEmailValidated
+      : true
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),

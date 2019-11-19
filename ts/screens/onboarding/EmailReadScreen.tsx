@@ -162,7 +162,9 @@ export class EmailReadScreen extends React.PureComponent<Props> {
                 size={24}
                 style={styles.icon}
               />
-              <Text style={styles.email}>{this.props.email.getOrElse("")}</Text>
+              <Text style={styles.email}>
+                {this.props.optionEmail.getOrElse("")}
+              </Text>
             </View>
             <View style={styles.spacerLarge} />
             <Text>
@@ -185,7 +187,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   optionProfile: pot.toOption(profileSelector(state)),
-  email: emailProfileSelector(state)
+  optionEmail: emailProfileSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -270,7 +270,7 @@ function mapStateToProps(state: GlobalState) {
   const profile = profileSelector(state);
   return {
     profile,
-    email: emailProfileSelector(state),
+    optionEmail: emailProfileSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isLoading: pot.isUpdating(profile)
   };
