@@ -165,7 +165,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             disabled={this.state.isCtaSentEmailValidationDisabled}
             onPress={this.handleSendEmailValidationButton}
           >
-            <Text>{I18n.t("reminders.email.button1")}</Text>
+            <Text>{this.state.ctaSendEmailValidationText}</Text>
           </Button>
         </Content>
 
