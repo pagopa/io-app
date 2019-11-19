@@ -97,13 +97,13 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
         {isSearchAvailable && <SearchButton searchType={searchType} />}
         {customRightIcon &&
           !isSearchEnabled && (
-            <Button
+            <ButtonDefaultOpacity
               onPress={customRightIcon.onPress}
               style={styles.helpButton}
               transparent={true}
             >
               <IconFont name={customRightIcon.iconName} />
-            </Button>
+            </ButtonDefaultOpacity>
           )}
       </Right>
     );
