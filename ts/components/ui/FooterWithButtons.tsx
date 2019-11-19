@@ -43,7 +43,17 @@ interface TwoButtonsInlineThird {
   rightButton: FooterButtonProps;
 }
 
-type Props = SingleButton | TwoButtonsInlineHalf | TwoButtonsInlineThird;
+interface TwoButtonsInlineThirdInverted {
+  type: "TwoButtonsInlineThirdInverted";
+  leftButton: FooterButtonProps;
+  rightButton: FooterButtonProps;
+}
+
+type Props =
+  | SingleButton
+  | TwoButtonsInlineHalf
+  | TwoButtonsInlineThird
+  | TwoButtonsInlineThirdInverted;
 
 /**
  * Implements a component that show 2 buttons in footer with select style (inlineHalf | inlineOneThird)
@@ -91,7 +101,14 @@ export default class FooterWithButtons extends React.Component<Props, never> {
 
     return (
       <View footer={true} style={styles.container}>
-        <Button style={styles.button} {...otherPropsLeftButton}>
+        <Button
+          style={
+            this.props.type === "TwoButtonsInlineThirdInverted"
+              ? styles.buttonTwoThirds
+              : styles.button
+          }
+          {...otherPropsLeftButton}
+        >
           <Text style={{ fontSize }}>{leftButtonTitle}</Text>
         </Button>
         {this.renderRightButton()}
