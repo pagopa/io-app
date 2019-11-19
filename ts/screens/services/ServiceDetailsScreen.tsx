@@ -38,6 +38,7 @@ import {
 } from "../../utils/profile";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
+import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -480,7 +481,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isValidEmail: !isEmailEditingAndValidationEnabled && !!state, // TODO: get the proper isValidEmail from store
+  isValidEmail: isEmailEditingAndValidationEnabled
+    ? isProfileEmailValidatedSelector(state)
+    : true, // TODO: get the proper isValidEmail from store
   services: state.entities.services,
   content: state.content,
   profile: state.profile,
