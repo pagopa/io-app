@@ -31,9 +31,12 @@ export function handleItemOnPress(
   value: string,
   valueType?: "MAP" | "COPY" | "LINK"
 ): () => void {
-  return valueType === "MAP"
-    ? () => openMaps(value)
-    : valueType === "COPY"
-      ? () => clipboardSetStringWithFeedback(value)
-      : () => Linking.openURL(value).then(() => 0, () => 0);
+  switch (valueType) {
+    case "MAP":
+      return () => openMaps(value);
+    case "COPY":
+      return () => clipboardSetStringWithFeedback(value);
+    default:
+      return () => Linking.openURL(value).then(() => 0, () => 0);
+  }
 }
