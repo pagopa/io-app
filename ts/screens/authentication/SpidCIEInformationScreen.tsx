@@ -90,7 +90,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
               </View>
             </Tab>
             <Tab
-              heading={I18n.t("authentication.cie")}
+              heading={I18n.t("authentication.cie.cie")}
               activeTextStyle={{ fontSize: 14 }}
             >
               <Content>
