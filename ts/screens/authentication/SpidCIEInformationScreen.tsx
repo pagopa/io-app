@@ -126,7 +126,7 @@ class SpidCIEInformationScreen extends React.Component<Props, never> {
                   onPress={() => this.browseToLink("https://www.spid.gov.it")}
                 >
                   <Text>
-                    {I18n.t("authentication.spid_information.knowMore")}
+                    {I18n.t("authentication.request_spid")}
                   </Text>
                 </Button>
               </View>
