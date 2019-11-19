@@ -734,6 +734,9 @@ notifications:
   installation:
     errorTitle: Push notifications
     errorMessage: Registration with the push notifications service generated an error
+  instabug:
+    localNotificationTitle: IO
+    localNotificationMessage: You have a new message from Instabug
 biometric_recognition:
   title: Biometric recognition
   subTitle: Enable or disable biometric recognition

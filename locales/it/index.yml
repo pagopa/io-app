@@ -744,6 +744,9 @@ notifications:
     errorTitle: Notifiche push
     errorMessage: La registrazione verso il servizio di notifiche push ha generato
       un errore
+  instabug:
+    localNotificationTitle: IO
+    localNotificationMessage: Hai un nuovo messaggio da Instabug
 biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico

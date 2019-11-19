@@ -1,8 +1,8 @@
+import { Replies } from "instabug-reactnative";
 import { Effect, Task } from "redux-saga";
 import { call, cancel, fork, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-
-import { Replies } from "instabug-reactnative";
+import I18n from "../../i18n";
 import { instabugUnreadMessagesLoaded } from "../../store/actions/instabug";
 import { SagaCallReturnType } from "../../types/utils";
 
@@ -36,8 +36,8 @@ export function* instabugBackgroundSaga(): IterableIterator<Effect> {
 
   const notification = () => {
     PushNotification.localNotificationSchedule({
-      title: "IO",
-      message: "Hai un nuovo messaggio da instabug",
+      title: I18n.t("notifications.instabug.localNotificationTitle"),
+      message: I18n.t("notifications.instabug.localNotificationMessage"),
       date: new Date(Date.now()),
       tag: "local_notification_instabug",
       userInfo: { tag: "local_notification_instabug" }
