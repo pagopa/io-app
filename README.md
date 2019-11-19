@@ -159,7 +159,7 @@ $ cat .node-version
 For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/). 
 
 
-Yarn is a node application. IF you have alredy installed in your system version of node compatible with yarn, you can install it as a global command with:
+Yarn is a node application. IF you have already installed in your system version of node compatible with yarn, you can install it as a global command with:
 
 ```
 npm install -g yarn
@@ -218,7 +218,7 @@ Verify you have installed it correctly with the command `which rbenv`.
 
 #### Completing and verifying configuration
 
-Either on Mac or Linux you need to add to your shell the initialization command thjen reload the configuration:
+Either on Mac or Linux you need to add to your shell the initialization command then reload the configuration:
 
 ```
 echo 'eval "$(rbenv init -)"' >>~/.bashrc

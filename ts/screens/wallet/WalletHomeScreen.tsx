@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
@@ -123,10 +124,12 @@ const styles = StyleSheet.create({
  */
 class WalletHomeScreen extends React.Component<Props, never> {
   private navListener?: NavigationEventSubscription;
+
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
-    // WIP WIP create pivotal story
+    // https://www.pivotaltracker.com/story/show/168836972
+
     this.props.loadWallets();
     this.props.loadTransactions();
     this.navListener = this.props.navigation.addListener("didFocus", () => {
@@ -404,7 +407,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadWallets: () => dispatch(fetchWalletsRequest())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WalletHomeScreen);
+export default withValidatedEmail(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(WalletHomeScreen)
+);
