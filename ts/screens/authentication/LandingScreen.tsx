@@ -5,6 +5,7 @@
 
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { DevScreenButton } from "../../components/DevScreenButton";
@@ -80,6 +81,12 @@ const LandingScreen: React.SFC<Props> = props => {
     <LandingCardComponent key={`card-${p.id}`} {...p} />
   ));
 
+  const styles = StyleSheet.create({
+    textInfoLink: {
+      color: customVariables.brandPrimary
+    }
+  });
+
   return (
     <BaseScreenComponent>
       {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
@@ -122,7 +129,7 @@ const LandingScreen: React.SFC<Props> = props => {
           onPress={navigateToSpidInformationRequest}
         >
           <View>
-            <Text bold={true} style={{ color: customVariables.brandPrimary }}>
+            <Text bold={true} style={styles.textInfoLink}>
               {isCIEAvailable
                 ? I18n.t("authentication.landing.nospid-nocie")
                 : I18n.t("authentication.landing.nospid")}
