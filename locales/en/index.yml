@@ -243,6 +243,11 @@ authentication:
     unknownCardTitle: Unknown card
     unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
     unknownCardHelpLink: What is the Electronic Identity Card?
+  cie_information_request: !include cie.md
+  spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
+  request_cie: Request CIE
+  request_spid: Request SPID
+  spid: SPID
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
@@ -255,12 +260,15 @@ authentication:
     tosLinkText: rules on the processing of personal data
     continue: Continue
   cie:
+    cie: Electronic Identity Card
     temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
     temporarilyBlockedCieDoneButton: "Done, card unlocked!"
     temporarilyBlockedCieOpenCieID: "Open CieID"
   spid_information:
+    spid: !include spid.md
     headerTitle: What is SPID?
     contentTitle: Don't have SPID?
+    contentTitleCie: Don't have SPID or CIE?
     moreLinkText: Learn more
     subtitle: SPID is safe
     paragraph1: SPID, the Public System of Digital Identity, allows you to access
