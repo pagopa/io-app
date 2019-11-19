@@ -495,6 +495,8 @@ wallet:
     link: Per saperne di più
     maxFee: Commissione massima
     onUpdateWalletPspFailure: Operazione fallita, riprova
+    contextualHelpTitle: Scelta del gestore
+    contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
     header: Conferma pagamento
     cancelPayment: Annulla l'operazione
