@@ -13,6 +13,7 @@ import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
+import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
@@ -33,6 +34,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.AUTHENTICATION_SPID_INFORMATION]: {
     screen: SpidInformationScreen
+  },
+  [ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION]: {
+    screen: SpidCIEInformationScreen
   },
   [ROUTES.MARKDOWN]: {
     screen: MarkdownScreen
