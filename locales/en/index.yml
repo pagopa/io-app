@@ -198,6 +198,10 @@ userMetadata:
 navigation:
   messages: Messages
   profile: Profile
+cie:
+  title: Touch the card
+  layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
+  layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
 spid:
   login: LOGIN
   loginButton: LOGIN WITH
@@ -216,8 +220,12 @@ authentication:
   landing:
     contextualHelpTitle: How to register in the IO app
     contextualHelpContent: !include authentication/authentication_landing.md
-    login: Login with SPID
+    loginSpid: Login with SPID
+    loginCie: Login with CIE
+    loginSpidCie: Login with SPID or CIE
+    loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
     nospid: Don't have SPID? Find out more
+    nospid-nocie: Don't have SPID or CIE? Find out more
     card1-title: All messages in one place
     card1-content: Display all the incoming communications from Public Administrations
     card2-title: Use your favourite payment methods
@@ -251,6 +259,11 @@ authentication:
     unknownCardTitle: Unknown card
     unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
     unknownCardHelpLink: What is the Electronic Identity Card?
+  cie_information_request: !include cie.md
+  spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
+  request_cie: Request CIE
+  request_spid: Request SPID
+  spid: SPID
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
@@ -262,9 +275,16 @@ authentication:
     paragraph3: Continuing you declare to accept the
     tosLinkText: rules on the processing of personal data
     continue: Continue
+  cie:
+    cie: Electronic Identity Card
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
+    temporarilyBlockedCieOpenCieID: "Open CieID"
   spid_information:
+    spid: !include spid.md
     headerTitle: What is SPID?
     contentTitle: Don't have SPID?
+    contentTitleCie: Don't have SPID or CIE?
     moreLinkText: Learn more
     subtitle: SPID is safe
     paragraph1: SPID, the Public System of Digital Identity, allows you to access
@@ -518,6 +538,8 @@ wallet:
     link: Find out more
     maxFee: Maximum fee
     onUpdateWalletPspFailure: Operation failed, please retry
+    contextualHelpTitle: Select a provider
+    contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
     header: Confirm transaction
     cancelPayment: Cancel the transaction
@@ -860,6 +882,13 @@ calendarEvents:
 reminders:
   emptyMonth: No reminders for this month
   loadMoreData: loads the deadlines of the previous period
+  email:
+    title: Remember to validate your email address
+    modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"
+    modal2: "open your email client and click on the link."
+    button1: Send another verification email
+    button2: Change email address
+
 openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred
