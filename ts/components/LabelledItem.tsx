@@ -37,6 +37,11 @@ type CommonProp = Readonly<{
   iconStyle?: StyleType;
 }>;
 
+type State = {
+  isEmpty: boolean;
+  hasFocus: boolean;
+};
+
 type Props = CommonProp &
   (
     | Readonly<{
@@ -48,7 +53,44 @@ type Props = CommonProp &
         inputProps: TextInputProps;
       }>);
 
-export class LabelledItem extends React.Component<Props> {
+export class LabelledItem extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { isEmpty: true, hasFocus: false };
+  }
+
+  private checkIsEmpty = (text: string) => {
+    const isEmpty = text.length === 0;
+    if (isEmpty !== this.state.isEmpty) {
+      this.setState({ isEmpty });
+    }
+  };
+
+  private handleOnChangeText = (text: string) => {
+    if (this.props.type === "text" && this.props.inputProps.onChangeText) {
+      this.props.inputProps.onChangeText(text);
+    }
+    this.checkIsEmpty(text);
+  };
+
+  private handleOnMaskedChangeText = (formatted: string, text: string) => {
+    if (
+      this.props.type === "masked" &&
+      this.props.inputMaskProps.onChangeText
+    ) {
+      this.props.inputMaskProps.onChangeText(formatted, text);
+    }
+    this.checkIsEmpty(text);
+  };
+
+  private handleOnFocus = () => {
+    this.setState({ hasFocus: true });
+  };
+
+  private handleOnBlur = () => {
+    this.setState({ hasFocus: false });
+  };
+
   public render() {
     return (
       <View>
@@ -56,7 +98,13 @@ export class LabelledItem extends React.Component<Props> {
           <Text>{this.props.label}</Text>
         </Item>
         <Item
-          style={styles.bottomLine}
+          style={{
+            ...styles.bottomLine,
+            borderColor:
+              this.state.hasFocus && this.state.isEmpty
+                ? variables.itemBorderDefaultColor
+                : undefined
+          }}
           error={this.props.isValid === undefined ? false : !this.props.isValid}
           success={
             this.props.isValid === undefined ? false : this.props.isValid
@@ -75,6 +123,9 @@ export class LabelledItem extends React.Component<Props> {
                 .string()}
               underlineColorAndroid="transparent"
               {...this.props.inputMaskProps}
+              onChangeText={this.handleOnMaskedChangeText}
+              onFocus={this.handleOnFocus}
+              onBlur={this.handleOnBlur}
             />
           ) : (
             <Input
@@ -83,6 +134,9 @@ export class LabelledItem extends React.Component<Props> {
                 .string()}
               underlineColorAndroid="transparent"
               {...this.props.inputProps}
+              onChangeText={this.handleOnChangeText}
+              onFocus={this.handleOnFocus}
+              onBlur={this.handleOnBlur}
             />
           )}
         </Item>
