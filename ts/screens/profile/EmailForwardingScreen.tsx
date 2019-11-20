@@ -30,6 +30,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
+import { showToast } from '../../utils/showToast';
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -46,7 +47,6 @@ function renderListItem(
   isActive: boolean,
   onPress: () => void
 ) {
-  // TODO:  manage both reading and saving of preference about notifications
   return (
     <ListItemComponent
       title={title}
@@ -61,6 +61,13 @@ function renderListItem(
 }
 
 class EmailForwardingScreen extends React.Component<Props> {
+  public componentDidUpdate(prevProps: Props) {
+    if(pot.isUpdating(prevProps.potProfile) && pot.isError(this.props.potProfile)){
+      showToast(I18n.t("global.genericError"))
+    }
+  }
+
+
   public render() {
     return (
       <TopScreenComponent
@@ -162,21 +169,19 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       enable,
       "EMAIL"
     );
-    // is_email_enabled and isCustomEmailChannelEnabled should be updated only if the value changes
     dispatch(
       profileUpsert.request({
         blocked_inbox_or_channels: newBlockedChannels,
-        is_email_enabled: enable
+        is_inbox_enabled: enable
       })
     );
     dispatch(customEmailChannelSetEnabled(false));
   },
-  // is_email_enabled and isCustomEmailChannelEnabled should be updated only if the value changes
-  setCustomEmailChannel: (toEnable: boolean) => {
-    dispatch(customEmailChannelSetEnabled(toEnable));
+  setCustomEmailChannel: (enable: boolean) => {
+    dispatch(customEmailChannelSetEnabled(enable));
     dispatch(
       profileUpsert.request({
-        is_email_enabled: toEnable
+        is_inbox_enabled: enable
       })
     );
   }

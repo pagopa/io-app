@@ -706,7 +706,7 @@ messages:
       ok: Rimuovi promemoria
       cancel: Annulla l'operazione
     reminderRemoveSuccess: "Promemoria eliminato"
-    reminderRemoveFailure: "Error durante l'eliminazione del promemoria, riprova per piacere"
+    reminderRemoveFailure: "Errore durante l'eliminazione del promemoria, riprova per piacere"
     preferenceCalendarSelect: "Seleziona un calendario predefinito"
     calendarPermDenied:
       title: "Sembra che i permessi per accedere al calendario siano stati negati"
