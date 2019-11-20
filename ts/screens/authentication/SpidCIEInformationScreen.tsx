@@ -43,10 +43,17 @@ const styles = StyleSheet.create({
   tabBarUnderline: {
     borderBottomColor: customVariables.brandPrimary,
     borderBottomWidth: customVariables.tabUnderlineHeight
+  },
+  viewStyle: {
+    padding: customVariables.contentPadding
+  },
+  activeTextStyle: {
+    fontSize: 14,
+    color: customVariables.brandPrimary
   }
 });
 
-class SpidInformationScreen extends React.Component<Props, never> {
+class SpidCIEInformationScreen extends React.Component<Props, never> {
   private browseToLink(url: string) {
     Linking.openURL(url).catch(() => {
       Toast.show({ text: I18n.t("genericError") });
