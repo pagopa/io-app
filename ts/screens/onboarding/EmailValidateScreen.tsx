@@ -12,7 +12,6 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
 import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,

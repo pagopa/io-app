@@ -25,10 +25,10 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import { showToast } from "../utils/showToast";
 import { withLoadingSpinner } from "./helpers/withLoadingSpinner";
 import TopScreenComponent from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import { showToast } from '../utils/showToast';
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -61,7 +61,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.props.navigateBack);
     // Periodically check the user validate his email
-    this.idPolling = setInterval(this.props.updateValidationInfo, 20000)
+    // tslint:disable-next-line: no-object-mutation
+    this.idPolling = setInterval(this.props.updateValidationInfo, 20000);
   }
 
   public componentWillUnmount() {
@@ -75,14 +76,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
     clearInterval(this.idPolling);
 
-    if(
-        this.props.isEmailValidate && 
-        !this.state.closedByUser
-      ) {
-        // If the compoment is unmounted without the user iteracion, a toast is displayed
-        // TODO: we could use the toast as customized within https://www.pivotaltracker.com/story/show/169568823
-        showToast("La mail è stata validata! Ora puoi accedere a tutte le funzionalità di IO.", "success")
-      }
+    if (this.props.isEmailValidate && !this.state.closedByUser) {
+      // If the compoment is unmounted without the user iteracion, a toast is displayed
+      // TODO: we could use the toast as customized within https://www.pivotaltracker.com/story/show/169568823
+      showToast(
+        "La mail è stata validata! Ora puoi accedere a tutte le funzionalità di IO.",
+        "success"
+      );
+    }
   }
 
   private handleSendEmailValidationButton = () => {
@@ -98,13 +99,17 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   private closeModal = () => {
     this.setState({ closedByUser: true });
     this.props.updateValidationInfo();
-  }
+  };
 
   public componentDidUpdate(prevProps: Props) {
     // In the case where the request has been made and the user's email is still invalid,
     // the navigateBack is called, otherwise the component will be automatically
     // unmounted by the withValidatedEmail HOC and the WrappedCompoent is displayed
-    if (this.state.closedByUser && !prevProps.isEmailValidate && !this.props.isEmailValidate) {
+    if (
+      this.state.closedByUser &&
+      !prevProps.isEmailValidate &&
+      !this.props.isEmailValidate
+    ) {
       this.props.navigateBack();
     }
 
