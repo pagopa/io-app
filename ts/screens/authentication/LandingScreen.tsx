@@ -12,6 +12,7 @@ import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
+import Markdown from "../../components/ui/Markdown";
 import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
