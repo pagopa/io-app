@@ -11,6 +11,7 @@ import * as React from "react";
 import { Alert, Platform, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons, {
@@ -29,6 +30,7 @@ import {
   emailAcknowledged
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
   emailProfileSelector,
   profileSelector
@@ -36,14 +38,10 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
-type NavigationParams = {
-  isFromProfileSection?: boolean;
-};
-
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationScreenProps<NavigationParams>;
+  NavigationScreenProps;
 
 const styles = StyleSheet.create({
   emailLabel: { fontSize: 14 },
@@ -82,7 +80,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
   }
 
   get isFromProfileSection() {
-    return this.props.navigation.getParam("isFromProfileSection") || false;
+    return this.props.isOnboardingCompleted;
   }
 
   private handleGoBack() {
@@ -115,8 +113,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       leftButton: {
         bordered: true,
         title: I18n.t("email.edit.cta"),
-        onPress: () =>
-          this.props.navigateToEmailInsertScreen(isFromProfileSection)
+        onPress: this.props.navigateToEmailInsertScreen
       }
     };
 
@@ -126,8 +123,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
         block: true,
         bordered: true,
         title: I18n.t("email.edit.cta"),
-        onPress: () =>
-          this.props.navigateToEmailInsertScreen(isFromProfileSection)
+        onPress: this.props.navigateToEmailInsertScreen
       },
       rightButton: {
         block: true,
@@ -187,21 +183,24 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   optionProfile: pot.toOption(profileSelector(state)),
-  optionEmail: emailProfileSelector(state)
+  optionEmail: emailProfileSelector(state),
+  isOnboardingCompleted: isOnboardingCompletedSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
-  navigateToEmailInsertScreen: (isFromProfileSection: boolean) => {
-    dispatch(navigateToEmailInsertScreen({ isFromProfileSection }));
+  navigateToEmailInsertScreen: () => {
+    dispatch(navigateToEmailInsertScreen());
   },
   navigateBack: () => {
     dispatch(navigateBack());
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EmailReadScreen);
+export default withValidatedEmail(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(EmailReadScreen)
+);

@@ -33,9 +33,6 @@ import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
 
 type OwnProps = ReduxProps & ReturnType<typeof mapStateToProps>;
-type NavigationParams = {
-  isFromProfileSection?: boolean;
-};
 
 type State = {
   ctaSendEmailValidationText: string;
@@ -44,7 +41,7 @@ type State = {
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationScreenProps<NavigationParams>;
+  NavigationScreenProps;
 
 const styles = StyleSheet.create({
   spacerLarge: { height: 40 },
@@ -86,10 +83,6 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
     title: I18n.t("email.validate.title"),
     body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
   };
-
-  get isFromProfileSection() {
-    return this.props.navigation.getParam("isFromProfileSection") || false;
-  }
 
   public componentDidUpdate(prevProps: Props) {
     // if we were sending again the validation email
@@ -135,10 +128,6 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
   };
 
   private handleContinueButton = () => {
-    if (this.isFromProfileSection) {
-      this.props.navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME);
-      return;
-    }
     this.props.acknowledgeEmail();
   };
 
@@ -162,13 +151,7 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
   public render() {
     return (
       <TopScreenComponent
-        goBack={() => {
-          // if we come profile section go back,
-          // otherwise we are in onboarding phase and we have to abort it
-          this.isFromProfileSection
-            ? this.props.navigation.navigate(ROUTES.PROFILE_PREFERENCES_HOME)
-            : this.handleGoBack();
-        }}
+        goBack={this.handleGoBack}
         headerTitle={I18n.t("email.validate.header")}
         title={I18n.t("email.validate.title")}
         contextualHelp={this.contextualHelp}
@@ -200,8 +183,7 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
             block: true,
             bordered: true,
             title: I18n.t("email.edit.cta"),
-            onPress: () =>
-              this.props.navigateToEmailInsertScreen(this.isFromProfileSection),
+            onPress: navigateToEmailInsertScreen,
             buttonFontSize: buttonTextSize
           }}
           rightButton={{
@@ -230,8 +212,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchSendEmailValidation: () => dispatch(startEmailValidation.request()),
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
-  navigateToEmailInsertScreen: (isFromProfileSection: boolean) =>
-    dispatch(navigateToEmailInsertScreen({ isFromProfileSection })),
+  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen()),
   loadProfileRequest: () => {
     dispatch(loadProfileRequest());
   }

@@ -89,13 +89,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 
   private handleEmailOnPress() {
     if (isEmailEditingAndValidationEnabled) {
-      if (this.props.isEmailValidated) {
-        // let the user know more about his email
-        this.props.navigateToEmailReadScreen();
-      } else {
-        // show a screen as a reminder to validate or where he can change his email address
-        this.props.navigateToEmailValidateScreen();
-      }
+      this.props.navigateToEmailReadScreen();
     } else {
       unavailableAlert();
     }
@@ -240,9 +234,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToCalendarPreferenceScreen: () =>
     dispatch(navigateToCalendarPreferenceScreen()),
   navigateToEmailValidateScreen: () =>
-    dispatch(navigateToEmailValidateScreen({ isFromProfileSection: true })),
-  navigateToEmailReadScreen: () =>
-    dispatch(navigateToEmailReadScreen({ isFromProfileSection: true }))
+    dispatch(navigateToEmailValidateScreen()),
+  navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen())
 });
 
 export default connect(

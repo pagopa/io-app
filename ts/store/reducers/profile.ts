@@ -6,20 +6,17 @@
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import { UserProfile } from "../../../definitions/backend/UserProfile";
 import { UserProfileUnion } from "../../api/backend";
-
 import {
   profileLoadSuccess,
   profileUpsert,
   resetProfileState
 } from "../actions/profile";
 import { Action } from "../actions/types";
-
-import { createSelector } from "reselect";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import { UserProfile } from "../../../definitions/backend/UserProfile";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<UserProfileUnion, Error>;
@@ -106,6 +103,7 @@ const reducer = (
             email: newProfile.email,
             is_email_enabled: newProfile.is_email_enabled,
             is_inbox_enabled: newProfile.is_inbox_enabled === true,
+            is_email_validated: newProfile.is_email_validated === true,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
             preferred_languages: newProfile.preferred_languages,
             blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,
@@ -124,6 +122,7 @@ const reducer = (
             ...currentProfile,
             email: newProfile.email,
             is_inbox_enabled: newProfile.is_inbox_enabled === true,
+            is_email_validated: newProfile.is_email_validated === true,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
             preferred_languages: newProfile.preferred_languages,
             blocked_inbox_or_channels: newProfile.blocked_inbox_or_channels,

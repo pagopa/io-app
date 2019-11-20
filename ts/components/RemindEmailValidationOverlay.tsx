@@ -28,6 +28,7 @@ import { GlobalState } from "../store/reducers/types";
 import { withLoadingSpinner } from "./helpers/withLoadingSpinner";
 import TopScreenComponent from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
+import { showToast } from '../utils/showToast';
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -35,6 +36,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 type State = {
   ctaSendEmailValidationText: string;
   isCtaSentEmailValidationDisabled: boolean;
+  closedByUser: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -46,16 +48,20 @@ const emailSentTimeout = 10000 as Millisecond; // 10 seconds
 
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   private idTimeout?: number;
+  private idPolling?: number;
   constructor(props: Props) {
     super(props);
     this.state = {
       ctaSendEmailValidationText: I18n.t("email.validate.cta"),
-      isCtaSentEmailValidationDisabled: false
+      isCtaSentEmailValidationDisabled: false,
+      closedByUser: false
     };
   }
 
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.props.navigateBack);
+    // Periodically check the user validate his email
+    this.idPolling = setInterval(this.props.updateValidationInfo, 20000)
   }
 
   public componentWillUnmount() {
@@ -67,25 +73,41 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     if (this.idTimeout !== undefined) {
       clearTimeout(this.idTimeout);
     }
+    clearInterval(this.idPolling);
+
+    if(
+        this.props.isEmailValidate && 
+        !this.state.closedByUser
+      ) {
+        // If the compoment is unmounted without the user iteracion, a toast is displayed
+        // TODO: we could use the toast as customized within https://www.pivotaltracker.com/story/show/169568823
+        showToast("La mail è stata validata! Ora puoi accedere a tutte le funzionalità di IO.", "success")
+      }
   }
 
   private handleSendEmailValidationButton = () => {
     // send email validation only if it exists
     this.props.optionEmail.map(_ => {
-      this.props.dispatchSendEmailValidation();
+      this.props.sendEmailValidation();
     });
     this.setState({
       isCtaSentEmailValidationDisabled: true
     });
   };
 
+  private closeModal = () => {
+    this.setState({ closedByUser: true });
+    this.props.updateValidationInfo();
+  }
+
   public componentDidUpdate(prevProps: Props) {
     // In the case where the request has been made and the user's email is still invalid,
     // the navigateBack is called, otherwise the component will be automatically
     // unmounted by the withValidatedEmail HOC and the WrappedCompoent is displayed
-    if (!prevProps.isEmailValidate && !this.props.isEmailValidate) {
+    if (this.state.closedByUser && !prevProps.isEmailValidate && !this.props.isEmailValidate) {
       this.props.navigateBack();
     }
+
     // if we were sending again the validation email
     if (pot.isLoading(prevProps.emailValidation)) {
       // and we got an error
@@ -119,7 +141,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       <TopScreenComponent
         customRightIcon={{
           iconName: "io-close",
-          onPress: this.props.updateValidationInfo
+          onPress: this.closeModal
         }}
       >
         <Content>
@@ -158,7 +180,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           rightButton={{
             block: true,
             primary: true,
-            onPress: this.props.updateValidationInfo,
+            onPress: this.closeModal,
             title: I18n.t("global.buttons.ok")
           }}
         />
@@ -183,14 +205,14 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchSendEmailValidation: () => dispatch(startEmailValidation.request()),
+  sendEmailValidation: () => dispatch(startEmailValidation.request()),
   navigateBack: () => dispatch(navigateBack()),
   updateValidationInfo: () => {
     // Refresh profile to check if the email has been validated
     dispatch(loadProfileRequest());
   },
   navigateToEmailInsertScreen: () => {
-    dispatch(navigateToEmailInsertScreen({ isFromProfileSection: true }));
+    dispatch(navigateToEmailInsertScreen());
   }
 });
 

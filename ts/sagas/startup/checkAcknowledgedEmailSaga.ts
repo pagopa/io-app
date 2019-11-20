@@ -29,18 +29,18 @@ export function* checkAcknowledgedEmailSaga(
     // If email exists but it is not validate we show a screen as a reminder to validate it or
     // where the user can edit the email added but not validated yet
     if (!isProfileEmailValidated(userProfile)) {
-      yield put(navigateToEmailValidateScreen({}));
+      yield put(navigateToEmailValidateScreen());
     }
     // if the user profile is just created (first onboarding) we show
     // the screen where user's email used in app is displayed
     else if (isProfileFirstOnBoarding(userProfile)) {
-      yield put(navigateToEmailReadScreen({ isFromProfileSection: false }));
+      yield put(navigateToEmailReadScreen());
     } else {
       return;
     }
   } else {
     // No email is provided, user must insert the Email address.
-    yield put(navigateToEmailInsertScreen({ isFromProfileSection: false }));
+    yield put(navigateToEmailInsertScreen());
   }
 
   const watchEditEmailSagaTask = yield fork(watchEditEmailSaga);
@@ -56,6 +56,6 @@ export function* watchEditEmailSaga(): Iterator<Effect> {
   yield takeEvery([getType(emailInsert)], function*() {
     // Wait for the user to press "Continue" button after having inserted
     // theirs own email
-    yield put(navigateToEmailValidateScreen({}));
+    yield put(navigateToEmailValidateScreen());
   });
 }

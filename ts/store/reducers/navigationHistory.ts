@@ -4,13 +4,14 @@
 
 import { NavigationState } from "react-navigation";
 import { getType } from "typesafe-actions";
-
+import ROUTES from "../../navigation/routes";
 import {
   navigationHistoryPop,
   navigationHistoryPush,
   navigationHistoryReset
 } from "../actions/navigationHistory";
 import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 export type NavigationHistoryState = ReadonlyArray<NavigationState>;
 
@@ -34,5 +35,11 @@ const reducer = (
       return state;
   }
 };
+
+// Selector
+
+// A selector to read the current routeMane and chack if it is the main one
+export const isOnboardingCompletedSelector = (state: GlobalState) =>
+  state.nav.routes[0].routeName === ROUTES.MAIN;
 
 export default reducer;

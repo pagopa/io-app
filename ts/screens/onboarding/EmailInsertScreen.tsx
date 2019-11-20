@@ -27,6 +27,7 @@ import { navigateToEmailValidateScreen } from "../../store/actions/navigation";
 import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
   emailProfileSelector,
   isProfileEmailValidatedSelector,
@@ -36,14 +37,10 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
 
-type NavigationParams = {
-  isFromProfileSection?: boolean;
-};
-
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationScreenProps<NavigationParams>;
+  NavigationScreenProps;
 
 const styles = StyleSheet.create({
   flex: {
@@ -165,7 +162,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   get isFromProfileSection() {
-    return this.props.navigation.getParam("isFromProfileSection") || false;
+    return this.props.isOnboardingCompleted;
   }
 
   public componentDidMount() {
@@ -185,9 +182,11 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         // display a success toast
         showToast(I18n.t("email.edit.upsert_ok"), "success");
         // go back
-        this.props.dispatchNavigateToEmailValidateScreen(
-          this.isFromProfileSection
-        );
+        if (this.props.isOnboardingCompleted) {
+          this.props.navigation.goBack();
+        } else {
+          this.props.dispatchNavigateToEmailValidateScreen();
+        }
       }
     }
   }
@@ -272,7 +271,8 @@ function mapStateToProps(state: GlobalState) {
     profile,
     optionEmail: emailProfileSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
-    isLoading: pot.isUpdating(profile)
+    isLoading: pot.isUpdating(profile),
+    isOnboardingCompleted: isOnboardingCompletedSelector(state)
   };
 }
 
@@ -285,8 +285,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     ),
   dispatchEmailInsert: () => dispatch(emailInsert()),
   dispatchAbortOnboarding: () => dispatch(abortOnboarding()),
-  dispatchNavigateToEmailValidateScreen: (isFromProfileSection: boolean) =>
-    dispatch(navigateToEmailValidateScreen({ isFromProfileSection }))
+  dispatchNavigateToEmailValidateScreen: () =>
+    dispatch(navigateToEmailValidateScreen())
 });
 
 export default connect(

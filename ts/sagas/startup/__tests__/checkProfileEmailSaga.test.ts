@@ -37,7 +37,7 @@ describe("checkAcceptedTosSaga", () => {
         checkAcknowledgedEmailSaga,
         userProfileWithEmailAndValidated
       )
-        .not.put(navigateToEmailReadScreen({ isFromProfileSection: false }))
+        .not.put(navigateToEmailReadScreen())
         .run();
     });
   });
@@ -52,7 +52,7 @@ describe("checkAcceptedTosSaga", () => {
         checkAcknowledgedEmailSaga,
         profileEmailValidatedFirstOnboarding
       )
-        .put(navigateToEmailReadScreen({ isFromProfileSection: false }))
+        .put(navigateToEmailReadScreen())
         .run();
     });
   });
@@ -67,7 +67,7 @@ describe("checkAcceptedTosSaga", () => {
         checkAcknowledgedEmailSaga,
         profileWithEmailNotValidated
       )
-        .put(navigateToEmailValidateScreen({}))
+        .put(navigateToEmailValidateScreen())
         .run();
     });
   });
@@ -80,7 +80,7 @@ describe("checkAcceptedTosSaga", () => {
     };
     it("should prompt the screen to insert it", () => {
       return expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
-        .put(navigateToEmailInsertScreen({ isFromProfileSection: false }))
+        .put(navigateToEmailInsertScreen())
         .run();
     });
   });
