@@ -27,6 +27,7 @@ import I18n from "../../i18n";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
+import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
@@ -38,7 +39,6 @@ import {
 } from "../../utils/profile";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
-import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;

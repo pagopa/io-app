@@ -36,7 +36,7 @@ import { clearNotificationPendingMessage } from "../store/actions/notifications"
 import { clearOnboarding } from "../store/actions/onboarding";
 import {
   clearCache,
-  requestLoadProfile,
+  loadProfileRequest,
   resetProfileState
 } from "../store/actions/profile";
 import { loadService, loadVisibleServices } from "../store/actions/services";
@@ -318,7 +318,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   );
 
   yield takeLatest(
-    getType(requestLoadProfile),
+    getType(loadProfileRequest),
     loadProfile,
     backendClient.getProfile
   );

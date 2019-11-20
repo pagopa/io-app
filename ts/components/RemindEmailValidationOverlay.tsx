@@ -13,14 +13,19 @@ import {
   navigateBack,
   navigateToEmailInsertScreen
 } from "../store/actions/navigation";
-import { startEmailValidation } from "../store/actions/profile";
+import {
+  loadProfileRequest,
+  startEmailValidation
+} from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
 import {
   emailProfileSelector,
-  isProfileEmailValidatedSelector
+  isProfileEmailValidatedSelector,
+  profileSelector
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import { withLoadingSpinner } from "./helpers/withLoadingSpinner";
 import TopScreenComponent from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 
@@ -28,7 +33,6 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 type State = {
-  dispatched: boolean;
   ctaSendEmailValidationText: string;
   isCtaSentEmailValidationDisabled: boolean;
 };
@@ -45,32 +49,20 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      dispatched: false,
       ctaSendEmailValidationText: I18n.t("email.validate.cta"),
       isCtaSentEmailValidationDisabled: false
     };
   }
 
-  private handleOkPress = () => {
-    this.setState(
-      {
-        dispatched: true
-      },
-      this.props.validateEmail
-    );
-  };
-
-  private handleBackPress = () => {
-    this.props.navigateBack();
-    return true;
-  };
-
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    BackHandler.addEventListener("hardwareBackPress", this.props.navigateBack);
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.props.navigateBack
+    );
     // if a timeout is running we have to stop it
     if (this.idTimeout !== undefined) {
       clearTimeout(this.idTimeout);
@@ -87,26 +79,12 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     });
   };
 
-  public componentDidUpdate(prevProps: Props, prevstate: State) {
-    const { isEmailValidate } = this.props;
-    const { dispatched } = this.state;
-    // The dispatched property is used to store the information that the user
-    // has pressed on the OK button, a new email validation is requested.
+  public componentDidUpdate(prevProps: Props) {
     // In the case where the request has been made and the user's email is still invalid,
     // the navigateBack is called, otherwise the component will be automatically
-    // unmounted from the withValidatedEmail HOC
-    if (
-      !prevProps.isEmailValidate &&
-      !isEmailValidate &&
-      prevstate.dispatched &&
-      dispatched
-    ) {
-      this.setState(
-        {
-          dispatched: false
-        },
-        this.props.navigateBack
-      );
+    // unmounted by the withValidatedEmail HOC and the WrappedCompoent is displayed
+    if (!prevProps.isEmailValidate && !this.props.isEmailValidate) {
+      this.props.navigateBack();
     }
     // if we were sending again the validation email
     if (pot.isLoading(prevProps.emailValidation)) {
@@ -141,7 +119,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       <TopScreenComponent
         customRightIcon={{
           iconName: "io-close",
-          onPress: this.props.navigateBack
+          onPress: this.props.updateValidationInfo
         }}
       >
         <Content>
@@ -174,20 +152,13 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           leftButton={{
             block: true,
             bordered: true,
-            onPress: () => {
-              this.setState(
-                {
-                  dispatched: false
-                },
-                this.props.navigateToEmailInsertScreen
-              );
-            },
+            onPress: this.props.navigateToEmailInsertScreen,
             title: I18n.t("reminders.email.button2")
           }}
           rightButton={{
             block: true,
             primary: true,
-            onPress: this.handleOkPress,
+            onPress: this.props.updateValidationInfo,
             title: I18n.t("global.buttons.ok")
           }}
         />
@@ -199,19 +170,25 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const isEmailValidated = isProfileEmailValidatedSelector(state);
   const emailValidation = emailValidationSelector(state);
+  const potProfile = profileSelector(state);
   return {
     emailValidation,
     optionEmail: emailProfileSelector(state),
     isEmailValidate: isEmailEditingAndValidationEnabled
       ? isEmailValidated
-      : true
+      : true,
+    potProfile,
+    isLoading: pot.isLoading(potProfile)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchSendEmailValidation: () => dispatch(startEmailValidation.request()),
   navigateBack: () => dispatch(navigateBack()),
-  validateEmail: () => undefined, // TODO: add onPress of email verification https://www.pivotaltracker.com/story/show/168662501
+  updateValidationInfo: () => {
+    // Refresh profile to check if the email has been validated
+    dispatch(loadProfileRequest());
+  },
   navigateToEmailInsertScreen: () => {
     dispatch(navigateToEmailInsertScreen({ isFromProfileSection: true }));
   }
@@ -220,4 +197,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RemindEmailValidationOverlay);
+)(withLoadingSpinner(RemindEmailValidationOverlay));

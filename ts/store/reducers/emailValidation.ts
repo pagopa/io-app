@@ -6,10 +6,8 @@
 
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
 import { startEmailValidation } from "../actions/profile";
 import { Action } from "../actions/types";
-
 import { GlobalState } from "./types";
 
 export type EmailValidationState = pot.Pot<void, Error>;

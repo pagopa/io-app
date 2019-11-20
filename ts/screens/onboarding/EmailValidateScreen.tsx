@@ -19,7 +19,7 @@ import {
   emailAcknowledged
 } from "../../store/actions/onboarding";
 import {
-  requestLoadProfile,
+  loadProfileRequest,
   startEmailValidation
 } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
@@ -79,7 +79,7 @@ export class EmailValidateScreen extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    this.props.requestLoadProfile();
+    this.props.loadProfileRequest();
   }
 
   private contextualHelp = {
@@ -232,8 +232,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   abortOnboarding: () => dispatch(abortOnboarding()),
   navigateToEmailInsertScreen: (isFromProfileSection: boolean) =>
     dispatch(navigateToEmailInsertScreen({ isFromProfileSection })),
-  requestLoadProfile: () => {
-    dispatch(requestLoadProfile());
+  loadProfileRequest: () => {
+    dispatch(loadProfileRequest());
   }
 });
 
