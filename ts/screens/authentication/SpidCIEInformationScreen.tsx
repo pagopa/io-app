@@ -16,7 +16,6 @@ import * as React from "react";
 import { Linking } from "react-native";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import Markdown from "../../components/ui/Markdown";
@@ -24,11 +23,9 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 
-type OwnProps = {
+type Props = {
   navigation: NavigationScreenProp<NavigationState>;
 };
-
-type Props = OwnProps;
 
 const styles = StyleSheet.create({
   value: {
@@ -60,7 +57,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
     return (
       <BaseScreenComponent goBack={true}>
         <Container>
-          <View style={{ margin: 24 }}>
+          <View style={styles.viewStyle}>
             <H2>{I18n.t("authentication.spid_information.contentTitleCie")}</H2>
 
             <View spacer={true} large={true} />
@@ -83,15 +80,13 @@ class SpidInformationScreen extends React.Component<Props, never> {
                   primary={true}
                   onPress={() => this.browseToLink("https://www.spid.gov.it")}
                 >
-                  <Text>
-                    {I18n.t("authentication.spid_information.knowMore")}
-                  </Text>
+                  <Text>{I18n.t("authentication.request_spid")}</Text>
                 </Button>
               </View>
             </Tab>
             <Tab
               heading={I18n.t("authentication.cie.cie")}
-              activeTextStyle={{ fontSize: 14 }}
+              activeTextStyle={styles.activeTextStyle}
             >
               <Content>
                 <Markdown>
@@ -120,4 +115,4 @@ class SpidInformationScreen extends React.Component<Props, never> {
   }
 }
 
-export default connect()(SpidInformationScreen);
+export default SpidCIEInformationScreen;
