@@ -50,8 +50,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
             		new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN,MainApplication.this)
 							.setInvocationEvent("none")
 							.setPrimaryColor("#0073E6")
-							.setFloatingEdge("left")
-							.setFloatingButtonOffsetFromTop(250)
 							.build(),
         new AsyncStoragePackage(),
         new QRScanReaderPackage(),
