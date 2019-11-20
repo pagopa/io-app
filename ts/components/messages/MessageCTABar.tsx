@@ -25,7 +25,8 @@ import {
 } from "../../store/actions/calendarEvents";
 import {
   navigateToMessageDetailScreenAction,
-  navigateToPaymentTransactionSummaryScreen
+  navigateToPaymentTransactionSummaryScreen,
+  navigateToWalletHome
 } from "../../store/actions/navigation";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
 import { loadService } from "../../store/actions/services";
@@ -36,6 +37,7 @@ import {
   calendarEventByMessageIdSelector
 } from "../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 import { PaidReason } from "../../store/reducers/entities/payments";
+import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { openAppSettings } from "../../utils/appSettings";
@@ -139,9 +141,8 @@ const SelectCalendarModalHeader = (
 
 class MessageCTABar extends React.PureComponent<Props, State> {
   private navigateToMessageDetail = () => {
-    const { message, dispatchNavigateToMessageDetail } = this.props;
-
-    dispatchNavigateToMessageDetail(message.id);
+    const { message, navigateToMessageDetail } = this.props;
+    navigateToMessageDetail(message.id);
   };
 
   /**
@@ -167,7 +168,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
                   } else {
                     // The event is in the store but not in the device calendar.
                     // Remove it from store too
-                    this.props.dispatchRemoveCalendarEvent(calendarEvent);
+                    this.props.removeCalendarEvent(calendarEvent);
                   }
                 },
                 // handle promise rejection
@@ -203,7 +204,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     this.props.hideModal();
 
     if (preferredCalendar === undefined) {
-      this.props.dispatchPreferredCalendarSaveSuccess(calendar);
+      this.props.preferredCalendarSaveSuccess(calendar);
     }
 
     RNCalendarEvents.saveEvent(title, {
@@ -222,7 +223,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
           "success"
         );
         // Add the calendar event to the store
-        this.props.dispatchAddCalendarEvent({
+        this.props.addCalendarEvent({
           messageId: message.id,
           eventId
         });
@@ -242,7 +243,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     RNCalendarEvents.removeEvent(calendarEvent.eventId)
       .then(_ => {
         showToast(I18n.t("messages.cta.reminderRemoveSuccess"), "success");
-        this.props.dispatchRemoveCalendarEvent({
+        this.props.removeCalendarEvent({
           messageId: calendarEvent.messageId
         });
         this.setState({
@@ -437,11 +438,17 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       : !disabled && !paid && amount.isSome() && rptId.isSome()
         ? () => {
             this.props.refreshService(message.sender_service_id);
-            this.props.dispatchPaymentInitializeState();
-            this.props.dispatchNavigateToPaymentTransactionSummaryScreen({
-              rptId: rptId.value,
-              initialAmount: amount.value
-            });
+            // TODO: optimize the managment of the payment initialization https://www.pivotaltracker.com/story/show/169702534
+            if (this.props.isEmailValidated) {
+              this.props.paymentInitializeState();
+              this.props.navigateToPaymentTransactionSummaryScreen({
+                rptId: rptId.value,
+                initialAmount: amount.value
+              });
+            } else {
+              // Navigating to Wallet home, having the email is not validated, it will be displayed RemindEmailValidationOverlay
+              this.props.navigateToWalletHomeScreen();
+            }
           }
         : undefined;
 
@@ -695,23 +702,24 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   calendarEvent: calendarEventByMessageIdSelector(ownProps.message.id)(state),
-  preferredCalendar: state.persistedPreferences.preferredCalendar
+  preferredCalendar: state.persistedPreferences.preferredCalendar,
+  isEmailValidated: isProfileEmailValidatedSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
     dispatch(loadService.request(serviceId)),
-  dispatchNavigateToMessageDetail: (messageId: string) =>
+  navigateToMessageDetail: (messageId: string) =>
     dispatch(navigateToMessageDetailScreenAction({ messageId })),
-  dispatchPaymentInitializeState: () => dispatch(paymentInitializeState()),
-  dispatchNavigateToPaymentTransactionSummaryScreen: (
-    params: NavigationParams
-  ) => dispatch(navigateToPaymentTransactionSummaryScreen(params)),
-  dispatchAddCalendarEvent: (calendarEvent: AddCalendarEventPayload) =>
+  navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome()),
+  paymentInitializeState: () => dispatch(paymentInitializeState()),
+  navigateToPaymentTransactionSummaryScreen: (params: NavigationParams) =>
+    dispatch(navigateToPaymentTransactionSummaryScreen(params)),
+  addCalendarEvent: (calendarEvent: AddCalendarEventPayload) =>
     dispatch(addCalendarEvent(calendarEvent)),
-  dispatchRemoveCalendarEvent: (calendarEvent: RemoveCalendarEventPayload) =>
+  removeCalendarEvent: (calendarEvent: RemoveCalendarEventPayload) =>
     dispatch(removeCalendarEvent(calendarEvent)),
-  dispatchPreferredCalendarSaveSuccess: (calendar: Calendar) =>
+  preferredCalendarSaveSuccess: (calendar: Calendar) =>
     dispatch(
       preferredCalendarSaveSuccess({
         preferredCalendar: calendar
