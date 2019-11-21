@@ -28,7 +28,6 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import { showToast } from "../utils/showToast";
-import { withLoadingSpinner } from "./helpers/withLoadingSpinner";
 import TopScreenComponent, {
   TopScreenComponentProps
 } from "./screens/TopScreenComponent";
@@ -56,6 +55,7 @@ const styles = StyleSheet.create({
 });
 
 const emailSentTimeout = 10000 as Millisecond; // 10 seconds
+const profilePolling = 5000 as Millisecond; // 5 seconds
 
 const EMPTY_EMAIL = "";
 
@@ -78,7 +78,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
     // Periodically (20 seconds) check if the user validate his own email address
     // tslint:disable-next-line: no-object-mutation
-    this.idPolling = setInterval(this.props.updateValidationInfo, 20000);
+    this.idPolling = setInterval(this.props.updateValidationInfo, profilePolling);
   }
 
   public componentWillUnmount() {
@@ -270,8 +270,6 @@ const mapStateToProps = (state: GlobalState) => {
     optionEmail: emailProfileSelector(state),
     isEmailValid: isEmailEditingAndValidationEnabled ? isEmailValidated : true,
     potProfile,
-    // show loader until the profile refresh is completed
-    isLoading: pot.isLoading(potProfile),
     isOnboardingCompleted: isOnboardingCompletedSelector(state)
   };
 };
@@ -293,4 +291,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLoadingSpinner(RemindEmailValidationOverlay));
+)(RemindEmailValidationOverlay);
