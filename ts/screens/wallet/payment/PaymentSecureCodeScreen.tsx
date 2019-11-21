@@ -178,7 +178,7 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
             android: variables.contentPadding
           })}
         >
-          {this.renderFooterButtons()}
+          {this.renderFooterButtons(this.state.securityCode !== undefined)}
         </KeyboardAvoidingView>
       </BaseScreenComponent>
     );
@@ -187,7 +187,7 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
   /**
    * Footer
    */
-  private renderFooterButtons() {
+  private renderFooterButtons(enabled: boolean) {
     const secondaryButtonProps = {
       block: true,
       light: true,
@@ -199,7 +199,7 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
     const primaryButtonProps = {
       block: true,
       primary: true,
-      disabled: false,
+      disabled: enabled,
       onPress: () => this.props.runAuthorizationAndPayment(),
       title: I18n.t("global.buttons.continue")
     };
