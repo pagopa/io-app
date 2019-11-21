@@ -126,7 +126,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
         goBack && (
           <Left>
             <GoBackButton
-              testID="back-button"
+              testID={"back-button"}
               onPress={goBack}
               accessible={true}
               accessibilityLabel={I18n.t("global.buttons.back")}

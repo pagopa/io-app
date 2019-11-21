@@ -26,6 +26,8 @@ type Props = OwnProps &
   Pick<ComponentProps<typeof ScreenContentHeader>, "title"> &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
 
+export type TopScreenComponentProps = Props;
+
 /**
  * Wraps a BaseScreenComponent with a title and a subtitle
  */

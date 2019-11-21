@@ -1,5 +1,5 @@
 /**
- * A screen to display the email used by IO
+ * A screen to display the email address used by IO
  * The _isFromProfileSection_ navigation parameter let the screen being adapted
  * if:
  * - it is displayed during the user onboarding
@@ -11,6 +11,7 @@ import * as React from "react";
 import { Alert, Platform, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -36,6 +37,7 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
 
 type Props = ReduxProps &
@@ -181,11 +183,20 @@ export class EmailReadScreen extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(profileSelector(state)),
-  optionEmail: emailProfileSelector(state),
-  isOnboardingCompleted: isOnboardingCompletedSelector(state)
-});
+const mapStateToProps = (state: GlobalState) => {
+  const isOnboardingCompleted = isOnboardingCompletedSelector(state);
+  const potUserMetadata = userMetadataSelector(state);
+
+  // If the screen is displayed as last item of the onboarding ,show loading spinner
+  // until the user metadata load is completed
+  const isLoading = !isOnboardingCompleted && pot.isLoading(potUserMetadata);
+  return {
+    optionProfile: pot.toOption(profileSelector(state)),
+    optionEmail: emailProfileSelector(state),
+    isOnboardingCompleted,
+    isLoading
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
@@ -202,5 +213,5 @@ export default withValidatedEmail(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(EmailReadScreen)
+  )(withLoadingSpinner(EmailReadScreen))
 );

@@ -404,7 +404,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
   loadWallets: () => dispatch(fetchWalletsRequest()),
   updateValidationInfo: () => {
-    // Refresh profile to check if the email has been validated
+    // Refresh profile to check if the email address has been validated
     dispatch(loadProfileRequest());
   }
 });

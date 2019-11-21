@@ -12,7 +12,6 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-
 import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
@@ -34,11 +33,7 @@ import {
 import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
-import {
-  clearCache,
-  loadProfileRequest,
-  resetProfileState
-} from "../store/actions/profile";
+import { clearCache, resetProfileState } from "../store/actions/profile";
 import { loadService, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
@@ -62,6 +57,7 @@ import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import {
   loadProfile,
+  watchProfileRefreshRequestsSaga,
   watchProfileSendEmailValidationSaga,
   watchProfileUpsertRequestsSaga
 } from "./profile";
@@ -225,12 +221,17 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     backendClient.createOrUpdateProfile
   );
 
+  // Start watching for requests of refresh the profile
+  yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+
+  // Start watching for the requests of a new verification email to
+  // validate the user email address
   yield fork(
     watchProfileSendEmailValidationSaga,
     backendClient.startEmailValidationProcess
   );
 
-  // Start the watchAbortOnboardingSaga
+  // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
 
   if (!previousSessionToken || isNone(maybeStoredPin)) {
@@ -238,10 +239,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // reason, he was logged in but there is no PIN set, thus we need
     // to pass through the onboarding process.
 
-    // Ask to accept ToS if it is the first access on IO or if there is a new available version
+    // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
     yield call(checkAcceptedTosSaga, userProfile);
 
     storedPin = yield call(checkConfiguredPinSaga);
+
     yield call(checkAcknowledgedFingerprintSaga);
 
     if (isEmailEditingAndValidationEnabled) {
@@ -315,12 +317,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     getType(loadVisibleServices.request),
     loadVisibleServicesRequestHandler,
     backendClient.getVisibleServices
-  );
-
-  yield takeLatest(
-    getType(loadProfileRequest),
-    loadProfile,
-    backendClient.getProfile
   );
 
   // Trigger the services content and metadata being loaded/refreshed.

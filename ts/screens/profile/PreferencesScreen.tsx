@@ -16,7 +16,6 @@ import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFin
 import {
   navigateToCalendarPreferenceScreen,
   navigateToEmailReadScreen,
-  navigateToEmailValidateScreen,
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
@@ -222,7 +221,7 @@ function mapStateToProps(state: GlobalState) {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
     optionEmail: emailProfileSelector(state),
-    isEmailValidated: isProfileEmailValidatedSelector(state),
+    isEmailValid: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar
   };
@@ -233,8 +232,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToFingerprintPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
     dispatch(navigateToCalendarPreferenceScreen()),
-  navigateToEmailValidateScreen: () =>
-    dispatch(navigateToEmailValidateScreen()),
   navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen())
 });
 

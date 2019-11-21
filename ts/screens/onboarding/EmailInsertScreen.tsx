@@ -23,7 +23,6 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { navigateToEmailValidateScreen } from "../../store/actions/navigation";
 import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
@@ -88,7 +87,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
   private continueOnPress = () => {
     this.state.email.map(e => {
-      this.props.dispatchEmailUpdate(e as EmailString);
+      this.props.updateEmail(e as EmailString);
     });
   };
 
@@ -154,7 +153,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           {
             text: I18n.t("global.buttons.exit"),
             style: "default",
-            onPress: this.props.dispatchAbortOnboarding
+            onPress: this.props.abortOnboarding
           }
         ]
       );
@@ -181,12 +180,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       } else if (pot.isSome(this.props.profile)) {
         // display a success toast
         showToast(I18n.t("email.edit.upsert_ok"), "success");
-        // go back
-        if (this.props.isOnboardingCompleted) {
-          this.props.navigation.goBack();
-        } else {
-          this.props.dispatchNavigateToEmailValidateScreen();
-        }
+        // go back (to the EmailReadScreen)
+        this.props.navigation.goBack();
       }
     }
   }
@@ -214,7 +209,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             <View style={styles.horizontalPadding}>
               <Text>
                 {isFromProfileSection
-                  ? this.props.isEmailValidated
+                  ? this.props.isEmailValid
                     ? I18n.t("email.edit.validated")
                     : I18n.t("email.edit.subtitle")
                   : I18n.t("email.insert.subtitle")}
@@ -270,23 +265,21 @@ function mapStateToProps(state: GlobalState) {
   return {
     profile,
     optionEmail: emailProfileSelector(state),
-    isEmailValidated: isProfileEmailValidatedSelector(state),
+    isEmailValid: isProfileEmailValidatedSelector(state),
     isLoading: pot.isUpdating(profile),
     isOnboardingCompleted: isOnboardingCompletedSelector(state)
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchEmailUpdate: (email: EmailString) =>
+  updateEmail: (email: EmailString) =>
     dispatch(
       profileUpsert.request({
         email
       })
     ),
-  dispatchEmailInsert: () => dispatch(emailInsert()),
-  dispatchAbortOnboarding: () => dispatch(abortOnboarding()),
-  dispatchNavigateToEmailValidateScreen: () =>
-    dispatch(navigateToEmailValidateScreen())
+  acknowledgeEmailInsert: () => dispatch(emailInsert()),
+  abortOnboarding: () => dispatch(abortOnboarding())
 });
 
 export default connect(

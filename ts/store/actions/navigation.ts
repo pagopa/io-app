@@ -78,14 +78,6 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
-export const navigateToEmailValidateScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING,
-    action: NavigationActions.navigate({
-      routeName: ROUTES.ONBOARDING_EMAIL_VALIDATE
-    })
-  });
-
 export const navigateToEmailReadScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.READ_EMAIL_SCREEN

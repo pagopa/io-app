@@ -35,7 +35,7 @@ export const getEmailProfile = (user: UserProfile): Option<string> => {
   return none;
 };
 
-// return the email (as a string) if the profile pot is some and its value is of kind InitializedProfile and it has an email
+// return the email address (as a string) if the profile pot is some and its value is of kind InitializedProfile and it has an email
 export const emailProfileSelector = createSelector(
   profileSelector,
   (profile: ProfileState): Option<string> =>

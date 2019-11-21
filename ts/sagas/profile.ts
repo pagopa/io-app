@@ -13,6 +13,7 @@ import { tosVersion } from "../config";
 import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
 import {
+  loadProfileRequest,
   profileLoadFailure,
   profileLoadSuccess,
   profileUpsert,
@@ -132,7 +133,7 @@ function* createOrUpdateProfileSaga(
   }
 }
 
-// This function listens for Profile related requests and calls the needed saga.
+// This function listens for Profile upsert requests and calls the needed saga.
 export function* watchProfileUpsertRequestsSaga(
   createOrUpdateProfile: ReturnType<
     typeof BackendClient
@@ -143,6 +144,13 @@ export function* watchProfileUpsertRequestsSaga(
     createOrUpdateProfileSaga,
     createOrUpdateProfile
   );
+}
+
+// This function listens for Profile refresh requests and calls the needed saga.
+export function* watchProfileRefreshRequestsSaga(
+  getProfile: ReturnType<typeof BackendClient>["getProfile"]
+): Iterator<Effect> {
+  yield takeLatest(getType(loadProfileRequest), loadProfile, getProfile);
 }
 
 export function* startEmailValidationProcessSaga(

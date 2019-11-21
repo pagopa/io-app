@@ -10,8 +10,7 @@ import { Version } from "../../../../definitions/backend/Version";
 import { UserProfileUnion } from "../../../api/backend";
 import {
   navigateToEmailInsertScreen,
-  navigateToEmailReadScreen,
-  navigateToEmailValidateScreen
+  navigateToEmailReadScreen
 } from "../../../store/actions/navigation";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
 
@@ -67,7 +66,7 @@ describe("checkAcceptedTosSaga", () => {
         checkAcknowledgedEmailSaga,
         profileWithEmailNotValidated
       )
-        .put(navigateToEmailValidateScreen())
+        .put(navigateToEmailInsertScreen())
         .run();
     });
   });
