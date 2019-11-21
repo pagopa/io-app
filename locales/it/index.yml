@@ -487,6 +487,8 @@ wallet:
   thanks: "✓ Grazie!"
   endPayment: Il tuo pagamento è concluso
   pickPsp:
+    contextualHelpTitle: Scelta del gestore
+    contextualHelpContent: !include pick_psp.md
     title: Scegli il gestore
     info: Questa carta non è stata emessa da nessun istituto che fa parte del circuito
       pagoPA.
@@ -496,8 +498,6 @@ wallet:
     maxFee: Commissione massima
     onUpdateWalletPspFailure: Operazione fallita, riprova
   confirmPayment:
-    contextualHelpTitle: Scelta del gestore
-    contextualHelpContent: !include pick_psp.md
     header: Conferma pagamento
     cancelPayment: Annulla l'operazione
     goToPay: Conferma e paga

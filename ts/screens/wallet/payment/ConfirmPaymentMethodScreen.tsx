@@ -53,6 +53,7 @@ import {
   Wallet
 } from "../../../types/pagopa";
 import { AmountToImporto } from "../../../utils/amounts";
+import { isBrandMaestro } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { formatNumberAmount } from "../../../utils/stringBuilder";
 
@@ -260,13 +261,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             block={true}
             primary={true}
             onPress={() => {
-              // const card = wallet.creditCard;
+              const card = wallet.creditCard;
               // control if brand card is Maestro
-              // if (card !== undefined && isBrandMaestro(card)) {
-              //   this.props.navigateToPaymentEnterSecureCode();
-              // }
-              if (true) {
-                // è una carta Maestro
+              if (card !== undefined && isBrandMaestro(card)) {
                 this.props.navigateToPaymentEnterSecureCode();
               } else {
                 this.props.runAuthorizationAndPayment();

@@ -178,7 +178,12 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
             android: variables.contentPadding
           })}
         >
-          {this.renderFooterButtons(this.state.securityCode !== undefined)}
+          {this.renderFooterButtons(
+            !(
+              this.state.securityCode.isSome() &&
+              this.state.securityCode.value.length >= 3
+            )
+          )}
         </KeyboardAvoidingView>
       </BaseScreenComponent>
     );
