@@ -80,6 +80,11 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
+export const navigateToLoadingScreen = NavigationActions.navigate({
+  routeName: ROUTES.LOADING,
+  action: NavigationActions.navigate({ routeName: ROUTES.LOADING })
+});
+
 export const navigateToEmailValidateScreen = NavigationActions.navigate({
   routeName: ROUTES.ONBOARDING,
   action: NavigationActions.navigate({
