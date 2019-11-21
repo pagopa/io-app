@@ -6,14 +6,14 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, StyleSheet } from "react-native";
+import { BackHandler, Image, StyleSheet, Alert } from "react-native";
 import { connect } from "react-redux";
 import { isEmailEditingAndValidationEnabled } from "../config";
 import {
   navigateBack,
   navigateToEmailInsertScreen
 } from "../store/actions/navigation";
-import { emailAcknowledged } from "../store/actions/onboarding";
+import { emailAcknowledged, abortOnboarding } from "../store/actions/onboarding";
 import {
   loadProfileRequest,
   startEmailValidation
@@ -34,6 +34,7 @@ import TopScreenComponent, {
 } from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import Markdown from "./ui/Markdown";
+import IconFont from "./ui/IconFont";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -163,16 +164,41 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
   };
 
+  private handleOnboardingGoBack = () =>
+    Alert.alert(
+      I18n.t("onboarding.alert.title"),
+      I18n.t("onboarding.alert.description"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "default",
+          onPress: () => this.props.abortOnboarding()
+        }
+      ]
+    ); 
+
+  private customOnboardingGoBack = (
+    <IconFont
+      name={"io-back"}
+      onPress={this.handleOnboardingGoBack}
+    />
+  );
+
   private onMainProps: TopScreenComponentProps = {
     customRightIcon: {
       iconName: "io-close",
-      onPress: this.handleOnClose,
+      onPress: this.props.navigateBack,
     }
   };
 
   private onBoardingProps: TopScreenComponentProps = {
     headerTitle: I18n.t("email.validate.header"),
-    title: I18n.t("email.validate.title")
+    title: I18n.t("email.validate.title"),
+    customGoBack: this.customOnboardingGoBack
   };
 
   public render() {
@@ -260,7 +286,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToEmailInsertScreen: () => {
     dispatch(navigateToEmailInsertScreen());
   },
-  acknowledgeEmailInsert: () => dispatch(emailAcknowledged())
+  acknowledgeEmailInsert: () => dispatch(emailAcknowledged()),
+  abortOnboarding: () => dispatch(abortOnboarding())
 });
 
 export default connect(
