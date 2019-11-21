@@ -2,16 +2,16 @@ import { Replies } from "instabug-reactnative";
 import { Effect, Task } from "redux-saga";
 import { call, cancel, fork, put, select, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
+import I18n from "../../i18n";
+import {
+  applicationChangeState,
+  ApplicationState
+} from "../../store/actions/application";
 import {
   instabugUnreadMessagesNotificationLoaded,
   updateInstabugUnreadNotification
 } from "../../store/actions/instabug";
 import { SagaCallReturnType } from "../../types/utils";
-
-import {
-  applicationChangeState,
-  ApplicationState
-} from "../../store/actions/application";
 import { startTimer } from "../../utils/timer";
 
 import PushNotification from "react-native-push-notification";
@@ -42,8 +42,8 @@ export function* instabugBackgroundSaga(): IterableIterator<Effect> {
 
   const notification = () => {
     PushNotification.localNotificationSchedule({
-      title: "localNotificationTitle", // I18n.t("notifications.instabug.localNotificationTitle")
-      message: "localNotificationMessage", // I18n.t("notifications.instabug.localNotificationMessage")
+      title: I18n.t("notifications.instabug.localNotificationTitle"),
+      message: I18n.t("notifications.instabug.localNotificationMessage"),
       date: new Date(Date.now()),
       tag: "local_notification_instabug",
       userInfo: { tag: "local_notification_instabug" }
@@ -86,7 +86,7 @@ export function* instabugBackgroundSaga(): IterableIterator<Effect> {
           );
 
           /**
-           * se le notifiche non lette, sono maggiori a 0
+           * if there are new messages
            */
           if (unreadMessagesNow > initialUnreadMessages) {
             yield call(notification);
