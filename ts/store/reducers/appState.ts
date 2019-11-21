@@ -11,6 +11,7 @@ import {
   ApplicationState
 } from "../actions/application";
 import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 export type AppState = Readonly<{
   appState: ApplicationState;
@@ -32,3 +33,6 @@ export default function appState(
   }
   return state;
 }
+
+// Selector
+export const appStateSelector = (state: GlobalState) => state.appState.appState;
