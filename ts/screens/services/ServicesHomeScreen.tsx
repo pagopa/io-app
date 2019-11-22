@@ -25,7 +25,7 @@
  */
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Tabs, Text, View } from "native-base";
+import { Button, Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
 import {
@@ -628,60 +628,74 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           }
         }
       >
-        <ServicesTab
+        <Tab
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
           heading={I18n.t("services.tab.locals")}
-          isLocal={true}
-          sections={localTabSections}
-          isRefreshing={
-            isLoadingServices ||
-            pot.isLoading(potUserMetadata) ||
-            pot.isUpdating(potUserMetadata)
-          }
-          onRefresh={this.refreshScreenContent}
-          onServiceSelect={this.onServiceSelect}
-          handleOnLongPressItem={this.handleOnLongPressItem}
-          isLongPressEnabled={this.state.isLongPressEnabled}
-          updateOrganizationsOfInterestMetadata={
-            this.props.updateOrganizationsOfInterestMetadata
-          }
-          updateToast={() =>
-            this.setState({
-              toastErrorMessage: I18n.t(
-                "serviceDetail.onUpdateEnabledChannelsFailure"
-              )
-            })
-          }
-          onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-          tabOffset={this.animatedScrollPositions[0]}
-        />
-
-        <ServicesTab
+        >
+          <ServicesTab
+            isLocal={true}
+            sections={localTabSections}
+            isRefreshing={
+              isLoadingServices ||
+              pot.isLoading(potUserMetadata) ||
+              pot.isUpdating(potUserMetadata)
+            }
+            onRefresh={this.refreshScreenContent}
+            onServiceSelect={this.onServiceSelect}
+            handleOnLongPressItem={this.handleOnLongPressItem}
+            isLongPressEnabled={this.state.isLongPressEnabled}
+            updateOrganizationsOfInterestMetadata={
+              this.props.updateOrganizationsOfInterestMetadata
+            }
+            updateToast={() =>
+              this.setState({
+                toastErrorMessage: I18n.t(
+                  "serviceDetail.onUpdateEnabledChannelsFailure"
+                )
+              })
+            }
+            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
+            tabOffset={this.animatedScrollPositions[0]}
+          />
+        </Tab>
+        <Tab
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
           heading={I18n.t("services.tab.national")}
-          sections={nationalTabSections}
-          isRefreshing={isLoadingServices || pot.isLoading(potUserMetadata)}
-          onRefresh={this.refreshScreenContent}
-          onServiceSelect={this.onServiceSelect}
-          handleOnLongPressItem={this.handleOnLongPressItem}
-          isLongPressEnabled={this.state.isLongPressEnabled}
-          onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-          tabOffset={this.animatedScrollPositions[1]}
-        />
+        >
+          <ServicesTab
+            sections={nationalTabSections}
+            isRefreshing={isLoadingServices || pot.isLoading(potUserMetadata)}
+            onRefresh={this.refreshScreenContent}
+            onServiceSelect={this.onServiceSelect}
+            handleOnLongPressItem={this.handleOnLongPressItem}
+            isLongPressEnabled={this.state.isLongPressEnabled}
+            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
+            tabOffset={this.animatedScrollPositions[1]}
+          />
+        </Tab>
 
-        <ServicesTab
+        <Tab
+          activeTextStyle={styles.activeTextStyle}
+          textStyle={styles.textStyle}
           heading={I18n.t("services.tab.all")}
-          sections={allTabSections}
-          isRefreshing={
-            isLoadingServices ||
-            pot.isLoading(potUserMetadata) ||
-            pot.isUpdating(potUserMetadata)
-          }
-          onRefresh={this.refreshScreenContent}
-          onServiceSelect={this.onServiceSelect}
-          handleOnLongPressItem={this.handleOnLongPressItem}
-          isLongPressEnabled={this.state.isLongPressEnabled}
-          onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-          tabOffset={this.animatedScrollPositions[2]}
-        />
+        >
+          <ServicesTab
+            sections={allTabSections}
+            isRefreshing={
+              isLoadingServices ||
+              pot.isLoading(potUserMetadata) ||
+              pot.isUpdating(potUserMetadata)
+            }
+            onRefresh={this.refreshScreenContent}
+            onServiceSelect={this.onServiceSelect}
+            handleOnLongPressItem={this.handleOnLongPressItem}
+            isLongPressEnabled={this.state.isLongPressEnabled}
+            onItemSwitchValueChanged={this.onItemSwitchValueChanged}
+            tabOffset={this.animatedScrollPositions[2]}
+          />
+        </Tab>
       </AnimatedTabs>
     );
   };
