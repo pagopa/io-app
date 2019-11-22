@@ -138,26 +138,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private handleGoBack = () => {
-    if (this.isFromProfileSection) {
       this.props.navigation.goBack();
-    } else {
-      // we are in onboarding phase
-      Alert.alert(
-        I18n.t("onboarding.alert.title"),
-        I18n.t("onboarding.alert.description"),
-        [
-          {
-            text: I18n.t("global.buttons.cancel"),
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.exit"),
-            style: "default",
-            onPress: this.props.abortOnboarding
-          }
-        ]
-      );
-    }
   };
 
   get isFromProfileSection() {
