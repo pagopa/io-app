@@ -62,12 +62,13 @@ describe("checkAcceptedTosSaga", () => {
       is_email_validated: false
     };
     it("should prompt the screen to remember to validate", () => {
-      return expectSaga(
-        checkAcknowledgedEmailSaga,
-        profileWithEmailNotValidated
-      )
-        .put(navigateToEmailInsertScreen())
-        .run();
+      return (
+        expectSaga(checkAcknowledgedEmailSaga, profileWithEmailNotValidated)
+          // read screen is wrapped in a HOC where if email is validate show ReadScreen
+          // otherwise a screen that remembers to validate it
+          .put(navigateToEmailReadScreen())
+          .run()
+      );
     });
   });
 

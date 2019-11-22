@@ -25,11 +25,9 @@ export function* checkAcknowledgedEmailSaga(
   // Check if the profile has an email
   if (hasProfileEmail(userProfile)) {
     if (
-      !isProfileFirstOnBoarding(userProfile) &&
-      isProfileEmailValidated(userProfile)
+      isProfileFirstOnBoarding(userProfile) ||
+      !isProfileEmailValidated(userProfile)
     ) {
-      return;
-    } else {
       // The user profile is just created (first onboarding), the conditional
       // view displays the screen to show the user's email used in app
       // OR
