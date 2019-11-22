@@ -25,8 +25,8 @@ import { Dispatch } from "../store/actions/types";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
 import { isOnboardingCompletedSelector } from "../store/reducers/navigationHistory";
 import {
-  emailProfileSelector,
   isProfileEmailValidatedSelector,
+  profileEmailSelector,
   profileSelector
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -130,6 +130,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       // and we got an error
       if (pot.isError(this.props.emailValidation)) {
         this.setState({
+          ctaSendEmailValidationText: I18n.t("email.validate.cta"),
           isCtaSentEmailValidationDisabled: false
         });
       } else if (pot.isSome(this.props.emailValidation)) {
@@ -263,7 +264,7 @@ const mapStateToProps = (state: GlobalState) => {
   const potProfile = profileSelector(state);
   return {
     emailValidation,
-    optionEmail: emailProfileSelector(state),
+    optionEmail: profileEmailSelector(state),
     isEmailValid: isEmailEditingAndValidationEnabled ? isEmailValidated : true,
     potProfile,
     isOnboardingCompleted: isOnboardingCompletedSelector(state)

@@ -28,8 +28,8 @@ import { profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
-  emailProfileSelector,
   isProfileEmailValidatedSelector,
+  profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -264,7 +264,7 @@ function mapStateToProps(state: GlobalState) {
   const profile = profileSelector(state);
   return {
     profile,
-    optionEmail: emailProfileSelector(state),
+    optionEmail: profileEmailSelector(state),
     isEmailValid: isProfileEmailValidatedSelector(state),
     isLoading: pot.isUpdating(profile),
     isOnboardingCompleted: isOnboardingCompletedSelector(state)

@@ -32,7 +32,6 @@ import {
   navigateToWalletAddPaymentMethod,
   navigateToWalletList
 } from "../../store/actions/navigation";
-import { loadProfileRequest } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import {
   fetchTransactionsRequest,
@@ -402,11 +401,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     );
   },
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
-  loadWallets: () => dispatch(fetchWalletsRequest()),
-  updateValidationInfo: () => {
-    // Refresh profile to check if the email address has been validated
-    dispatch(loadProfileRequest());
-  }
+  loadWallets: () => dispatch(fetchWalletsRequest())
 });
 
 export default withValidatedEmail(

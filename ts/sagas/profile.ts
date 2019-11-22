@@ -153,6 +153,8 @@ export function* watchProfileRefreshRequestsSaga(
   yield takeLatest(getType(loadProfileRequest), loadProfile, getProfile);
 }
 
+// make a request to start the email validation process that sends to the user
+// an email with a link to validate it
 export function* startEmailValidationProcessSaga(
   startEmailValidationProcess: ReturnType<
     typeof BackendClient

@@ -49,9 +49,11 @@ const ConditionalView = withLightModalContext(
 export type Props = ReturnType<typeof mapStateToProps>;
 
 const mapStateToProps = (state: GlobalState) => {
-  const isEmailValid = isProfileEmailValidatedSelector(state);
+  const isEmailValidated = isEmailEditingAndValidationEnabled
+    ? isProfileEmailValidatedSelector(state)
+    : true;
   return {
-    isEmailValid: isEmailEditingAndValidationEnabled ? isEmailValid : true
+    isEmailValidated
   };
 };
 
@@ -64,7 +66,7 @@ export function withValidatedEmail<P>(
   )(
     withConditionalView(
       WrappedComponent,
-      (props: Props) => props.isEmailValid,
+      (props: Props) => props.isEmailValidated,
       ConditionalView
     )
   );

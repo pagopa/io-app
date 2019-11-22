@@ -33,8 +33,8 @@ import {
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
-  emailProfileSelector,
-  profileSelector
+  profileSelector,
+  profileEmailSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
@@ -192,7 +192,7 @@ const mapStateToProps = (state: GlobalState) => {
   const isLoading = !isOnboardingCompleted && pot.isLoading(potUserMetadata);
   return {
     optionProfile: pot.toOption(profileSelector(state)),
-    optionEmail: emailProfileSelector(state),
+    optionEmail: profileEmailSelector(state),
     isOnboardingCompleted,
     isLoading
   };

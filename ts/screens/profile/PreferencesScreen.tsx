@@ -20,8 +20,8 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
-  emailProfileSelector,
   isProfileEmailValidatedSelector,
+  profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -137,9 +137,10 @@ class PreferencesScreen extends React.Component<Props, State> {
     const { hasCalendarPermission, isFingerprintAvailable } = this.state;
 
     const email = this.props.optionEmail.getOrElse("");
-    const phoneNumber = potProfile
-      .map(_ => untag(_.spid_mobile_phone))
-      .getOrElse(I18n.t("global.remoteStates.notAvailable"));
+    const phoneNumber = potProfile.fold(
+      I18n.t("global.remoteStates.notAvailable"),
+      _ => _.spid_mobile_phone
+    );
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
@@ -220,7 +221,7 @@ function mapStateToProps(state: GlobalState) {
   return {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
-    optionEmail: emailProfileSelector(state),
+    optionEmail: profileEmailSelector(state),
     isEmailValid: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar

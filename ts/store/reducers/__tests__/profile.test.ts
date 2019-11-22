@@ -8,10 +8,10 @@ import {
 import { Version } from "../../../../definitions/backend/Version";
 import { UserProfileUnion } from "../../../api/backend";
 import {
-  emailProfileSelector,
   hasProfileEmail,
   isProfileEmailValidated,
   isProfileFirstOnBoarding,
+  profileEmailSelector,
   ProfileState
 } from "../profile";
 
@@ -34,7 +34,7 @@ describe("email profile selector", () => {
   const potProfile: ProfileState = pot.some(userProfileWithEmailAndValidated);
   const someEmail = some(userProfileWithEmailAndValidated.email);
   it("should return the user's email address", () => {
-    expect(emailProfileSelector.resultFunc(potProfile)).toStrictEqual(
+    expect(profileEmailSelector.resultFunc(potProfile)).toStrictEqual(
       someEmail
     );
   });
@@ -45,7 +45,7 @@ describe("email profile selector", () => {
   });
   it("should return the user's email address", () => {
     expect(
-      emailProfileSelector.resultFunc(potProfileWithNoEmail)
+      profileEmailSelector.resultFunc(potProfileWithNoEmail)
     ).toStrictEqual(none);
   });
 

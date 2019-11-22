@@ -38,8 +38,8 @@ const reducer = (
 
 // Selector
 
-// A selector to read the current routeMane and chack if it is the main one
+// A selector to read the current route name and check if it is the main one
 export const isOnboardingCompletedSelector = (state: GlobalState) =>
-  state.nav.routes[0].routeName === ROUTES.MAIN;
+  state.nav.routes.length > 0 && state.nav.routes[0].routeName === ROUTES.MAIN;
 
 export default reducer;

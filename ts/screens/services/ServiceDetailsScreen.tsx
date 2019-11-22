@@ -344,12 +344,12 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   disabled={
                     !this.state.uiEnabledChannels.inbox ||
                     pot.isUpdating(this.props.profile) ||
-                    !this.props.isValidEmail
+                    !this.props.isEmailValidated
                   }
                   value={
                     this.state.uiEnabledChannels.inbox &&
                     this.state.uiEnabledChannels.email &&
-                    this.props.isValidEmail
+                    this.props.isEmailValidated
                   }
                   onValueChange={(value: boolean) => {
                     // compute the updated map of enabled channels
@@ -481,9 +481,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isValidEmail: isEmailEditingAndValidationEnabled
+  isEmailValidated: isEmailEditingAndValidationEnabled
     ? isProfileEmailValidatedSelector(state)
-    : true, // TODO: get the proper isValidEmail from store
+    : true,
   services: state.entities.services,
   content: state.content,
   profile: state.profile,
