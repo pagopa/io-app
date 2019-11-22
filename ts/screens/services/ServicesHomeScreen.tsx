@@ -27,7 +27,14 @@ import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Button, Tabs, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Animated, Image, Platform, StyleSheet } from "react-native";
+import {
+  Alert,
+  Animated,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet
+} from "react-native";
 import {
   NavigationEventSubscription,
   NavigationScreenProps
@@ -126,6 +133,13 @@ const EMPTY_MESSAGE = "";
 const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  topScreenContainer: {
+    flex: 1,
+    justifyContent: "flex-end"
+  },
   tabBarContainer: {
     elevation: 0,
     height: 40
@@ -493,33 +507,41 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     const { userMetadata } = this.props;
 
     return (
-      <TopScreenComponent
-        title={I18n.t("services.title")}
-        appLogo={true}
-        contextualHelp={{
-          title: I18n.t("services.title"),
-          body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
-        }}
-        isSearchAvailable={userMetadata !== undefined}
-        searchType={"Services"}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        enabled={true}
+        style={styles.container}
       >
-        {this.renderErrorContent() ? (
-          this.renderErrorContent()
-        ) : this.props.isSearchEnabled ? (
-          this.renderSearch()
-        ) : (
-          <React.Fragment>
-            <ScreenContentHeader
-              title={I18n.t("services.title")}
-              icon={require("../../../img/icons/services-icon.png")}
-              fixed={Platform.OS === "ios"}
-            />
-            {this.renderInnerContent()}
-            {this.state.isLongPressEnabled &&
-              this.renderLongPressFooterButtons()}
-          </React.Fragment>
-        )}
-      </TopScreenComponent>
+        <View style={styles.topScreenContainer}>
+          <TopScreenComponent
+            title={I18n.t("services.title")}
+            appLogo={true}
+            contextualHelp={{
+              title: I18n.t("services.title"),
+              body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
+            }}
+            isSearchAvailable={userMetadata !== undefined}
+            searchType={"Services"}
+          >
+            {this.renderErrorContent() ? (
+              this.renderErrorContent()
+            ) : this.props.isSearchEnabled ? (
+              this.renderSearch()
+            ) : (
+              <React.Fragment>
+                <ScreenContentHeader
+                  title={I18n.t("services.title")}
+                  icon={require("../../../img/icons/services-icon.png")}
+                  fixed={Platform.OS === "ios"}
+                />
+                {this.renderInnerContent()}
+                {this.state.isLongPressEnabled &&
+                  this.renderLongPressFooterButtons()}
+              </React.Fragment>
+            )}
+          </TopScreenComponent>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 
