@@ -33,8 +33,8 @@ import {
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
-  profileSelector,
-  profileEmailSelector
+  profileEmailSelector,
+  profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
