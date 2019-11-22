@@ -222,10 +222,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           </Content>
 
           <KeyboardAvoidingView
-            behavior="padding"
+            behavior={Platform.OS === "android" ? "height" : "padding"}
             keyboardVerticalOffset={Platform.select({
-              ios: 100,
-              android: 80
+              ios: 0,
+              android: customVariables.contentPadding
             })}
           >
             {this.renderFooterButtons()}

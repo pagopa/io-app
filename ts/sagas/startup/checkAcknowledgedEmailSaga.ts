@@ -34,11 +34,13 @@ export function* checkAcknowledgedEmailSaga(
       // An email exists on the user's profile but it is not validated, the conditional
       // view shows the component that reminds to validate the email address or allows the navigation to edit it.
       yield put(navigateToEmailReadScreen());
+    } else {
+      return;
     }
-  } else {
-    // No email is provided, user must insert the email address (to be validated).
-    yield put(navigateToEmailInsertScreen());
   }
+
+  // No email is provided, user must insert the email address (to be validated).
+  yield put(navigateToEmailInsertScreen());
 
   // Wait for the user to press "Continue" button after having checked out
   // his own email
