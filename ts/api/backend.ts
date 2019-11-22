@@ -1,4 +1,5 @@
 import * as t from "io-ts";
+import * as r from "italia-ts-commons/lib/requests";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
@@ -204,13 +205,50 @@ export function BackendClient(
     response_decoder: getUserMetadataDefaultDecoder()
   };
 
+  // Custom decoder until we fix the problem in the io-utils generator
+  // https://www.pivotaltracker.com/story/show/169915207
+  const startEmailValidationCustomDecoder = () => {
+    return r.composeResponseDecoders(
+      r.composeResponseDecoders(
+        r.composeResponseDecoders(
+          r.composeResponseDecoders(
+            r.composeResponseDecoders(
+              r.constantResponseDecoder<undefined, 202>(202, undefined),
+              r.ioResponseDecoder<
+                400,
+                (typeof ProblemJson)["_A"],
+                (typeof ProblemJson)["_O"]
+              >(400, ProblemJson)
+            ),
+            r.constantResponseDecoder<undefined, 401>(401, undefined)
+          ),
+          r.ioResponseDecoder<
+            404,
+            (typeof ProblemJson)["_A"],
+            (typeof ProblemJson)["_O"]
+          >(404, ProblemJson)
+        ),
+        r.ioResponseDecoder<
+          429,
+          (typeof ProblemJson)["_A"],
+          (typeof ProblemJson)["_O"]
+        >(429, ProblemJson)
+      ),
+      r.ioResponseDecoder<
+        500,
+        (typeof ProblemJson)["_A"],
+        (typeof ProblemJson)["_O"]
+      >(500, ProblemJson)
+    );
+  };
+
   const postStartEmailValidationProcessT: StartEmailValidationProcessT = {
     method: "post",
     url: () => "/api/v1/email-validation-process",
     query: _ => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     body: _ => JSON.stringify({}),
-    response_decoder: startEmailValidationProcessDefaultDecoder()
+    response_decoder: startEmailValidationCustomDecoder(t.undefined)
   };
 
   const createOrUpdateUserMetadataT: UpsertUserMetadataT = {

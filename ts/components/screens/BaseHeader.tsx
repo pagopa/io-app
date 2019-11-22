@@ -109,9 +109,27 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     );
   };
 
-  private renderLeft = () => {
-    const { isSearchEnabled, appLogo, goBack, primary, dark, customGoBack } = this.props;
+  private renderGoBack = () => {
+    const { goBack, dark, customGoBack } = this.props;
+    return customGoBack ? (
+      <Left>{customGoBack}</Left>
+    ) : (
+      goBack && (
+        <Left>
+          <GoBackButton
+            testID={"back-button"}
+            onPress={goBack}
+            accessible={true}
+            accessibilityLabel={I18n.t("global.buttons.back")}
+            white={dark}
+          />
+        </Left>
+      )
+    );
+  };
 
+  private renderLeft = () => {
+    const { isSearchEnabled, appLogo, primary } = this.props;
     return (
       !isSearchEnabled &&
       (appLogo ? (
@@ -124,22 +142,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
           </View>
         </Left>
       ) : (
-        customGoBack ? 
-          <Left>
-            {customGoBack}
-          </Left>
-          : goBack && (
-          <Left > 
-              <GoBackButton
-                testID={"back-button"}
-                onPress={goBack}
-                accessible={true}
-                accessibilityLabel={I18n.t("global.buttons.back")}
-                white={dark}
-              />
-            }
-          </Left>
-        )
+        this.renderGoBack()
       ))
     );
   };

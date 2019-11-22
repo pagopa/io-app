@@ -360,7 +360,7 @@ email:
       clicca semplicemente su quel link.<br/>Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
       inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
       usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
-    content2: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email.<br/>Ti abbiamo inviato una email a <b>{{email}}</b>:
+    content2: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email.<br/>Ti abbiamo inviato una email a <b>{{email}}</b><br/>
       apri il tuo client di posta e clicca semplicemente sul link."
     cta: Invia una nuova email di validazione
     sent: Email inviata

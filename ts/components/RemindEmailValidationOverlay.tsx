@@ -6,14 +6,17 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, StyleSheet, Alert } from "react-native";
+import { Alert, BackHandler, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { isEmailEditingAndValidationEnabled } from "../config";
 import {
   navigateBack,
   navigateToEmailInsertScreen
 } from "../store/actions/navigation";
-import { emailAcknowledged, abortOnboarding } from "../store/actions/onboarding";
+import {
+  abortOnboarding,
+  emailAcknowledged
+} from "../store/actions/onboarding";
 import {
   loadProfileRequest,
   startEmailValidation
@@ -62,7 +65,7 @@ const EMPTY_EMAIL = "";
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   private idTimeout?: number;
   private idPolling?: number;
-  
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -75,10 +78,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.props.navigateBack);
-
-    // Periodically (20 seconds) check if the user validate his own email address
+    // Periodically check if the user validate his own email address
     // tslint:disable-next-line: no-object-mutation
-    this.idPolling = setInterval(this.props.updateValidationInfo, profilePolling);
+    this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
   }
 
   public componentWillUnmount() {
@@ -114,24 +116,15 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private handleOnClose = () => {
     this.setState({ closedByUser: true });
-    this.props.updateValidationInfo();
+    this.props.reloadProfile();
     if (!this.props.isOnboardingCompleted) {
       this.props.acknowledgeEmailInsert();
+    } else {
+      this.props.navigateBack();
     }
   };
 
   public componentDidUpdate(prevProps: Props) {
-    // In the case where the request has been made and the user's email is still invalid,
-    // the navigateBack is called, otherwise the component will be automatically
-    // unmounted by the withValidatedEmail HOC and the WrappedCompoent is displayed
-    if (
-      this.state.closedByUser &&
-      !prevProps.isEmailValid &&
-      !this.props.isEmailValid
-    ) {
-      this.props.navigateBack();
-    }
-
     // if we were sending again the validation email
     if (pot.isLoading(prevProps.emailValidation)) {
       // and we got an error
@@ -179,19 +172,16 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           onPress: () => this.props.abortOnboarding()
         }
       ]
-    ); 
+    );
 
   private customOnboardingGoBack = (
-    <IconFont
-      name={"io-back"}
-      onPress={this.handleOnboardingGoBack}
-    />
+    <IconFont name={"io-back"} onPress={this.handleOnboardingGoBack} />
   );
 
   private onMainProps: TopScreenComponentProps = {
     customRightIcon: {
       iconName: "io-close",
-      onPress: this.props.navigateBack,
+      onPress: this.props.navigateBack
     }
   };
 
@@ -199,6 +189,10 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     headerTitle: I18n.t("email.validate.header"),
     title: I18n.t("email.validate.title"),
     customGoBack: this.customOnboardingGoBack
+  };
+
+  private handleOnContentLoadEnd = () => {
+    this.setState({ isContentLoadCompleted: true });
   };
 
   public render() {
@@ -219,15 +213,17 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               <View spacer={true} extralarge={true} />
             </React.Fragment>
           )}
-          <H2 style={isOnboardingCompleted ? styles.emailTitle: undefined}>{I18n.t("email.validate.title")}</H2>
+          <H2 style={isOnboardingCompleted ? styles.emailTitle : undefined}>
+            {I18n.t("email.validate.title")}
+          </H2>
           <View spacer={true} />
-          <Markdown onLoadEnd={() => this.setState({ isContentLoadCompleted: true })}>
+          <Markdown onLoadEnd={this.handleOnContentLoadEnd}>
             {isOnboardingCompleted
               ? I18n.t("email.validate.content2", { email })
               : I18n.t("email.validate.content1", { email })}
           </Markdown>
           <View spacer={true} />
-          {this.state.isContentLoadCompleted &&
+          {this.state.isContentLoadCompleted && (
             <Button
               block={true}
               light={true}
@@ -237,25 +233,25 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             >
               <Text>{this.state.ctaSendEmailValidationText}</Text>
             </Button>
-          }
+          )}
         </Content>
-          <FooterWithButtons
-            type={"TwoButtonsInlineThirdInverted"}
-            leftButton={{
-              block: true,
-              bordered: true,
-              onPress: this.props.navigateToEmailInsertScreen,
-              title: I18n.t("email.edit.title")
-            }}
-            rightButton={{
-              block: true,
-              primary: true,
-              onPress: this.handleOnClose,
-              title: isOnboardingCompleted
-                ? I18n.t("global.buttons.ok")
-                : I18n.t("global.buttons.continue")
-            }}
-          />
+        <FooterWithButtons
+          type={"TwoButtonsInlineThirdInverted"}
+          leftButton={{
+            block: true,
+            bordered: true,
+            onPress: this.props.navigateToEmailInsertScreen,
+            title: I18n.t("email.edit.title")
+          }}
+          rightButton={{
+            block: true,
+            primary: true,
+            onPress: this.handleOnClose,
+            title: isOnboardingCompleted
+              ? I18n.t("global.buttons.ok")
+              : I18n.t("global.buttons.continue")
+          }}
+        />
       </TopScreenComponent>
     );
   }
@@ -277,7 +273,7 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   sendEmailValidation: () => dispatch(startEmailValidation.request()),
   navigateBack: () => dispatch(navigateBack()),
-  updateValidationInfo: () => {
+  reloadProfile: () => {
     // Refresh profile to check if the email address has been validated
     dispatch(loadProfileRequest());
   },
