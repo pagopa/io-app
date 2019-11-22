@@ -40,7 +40,6 @@ import {
   GetUserProfileT,
   getVisibleServicesDefaultDecoder,
   GetVisibleServicesT,
-  startEmailValidationProcessDefaultDecoder,
   StartEmailValidationProcessT,
   updateProfileDefaultDecoder,
   UpdateProfileT,
@@ -128,6 +127,7 @@ function ParamAuthorizationBearerHeaderProducer<
 // Create client
 //
 
+// tslint:disable-next-line: no-big-function
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
@@ -248,7 +248,7 @@ export function BackendClient(
     query: _ => ({}),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     body: _ => JSON.stringify({}),
-    response_decoder: startEmailValidationCustomDecoder(t.undefined)
+    response_decoder: startEmailValidationCustomDecoder()
   };
 
   const createOrUpdateUserMetadataT: UpsertUserMetadataT = {
