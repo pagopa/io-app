@@ -35,8 +35,8 @@ import TopScreenComponent, {
   TopScreenComponentProps
 } from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import Markdown from "./ui/Markdown";
 import IconFont from "./ui/IconFont";
+import Markdown from "./ui/Markdown";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
