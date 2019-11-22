@@ -37,10 +37,10 @@ export function* checkAcknowledgedEmailSaga(
     } else {
       return;
     }
+  } else {
+    // No email is provided, user must insert the email address (to be validated).
+    yield put(navigateToEmailInsertScreen());
   }
-
-  // No email is provided, user must insert the email address (to be validated).
-  yield put(navigateToEmailInsertScreen());
 
   // Wait for the user to press "Continue" button after having checked out
   // his own email
