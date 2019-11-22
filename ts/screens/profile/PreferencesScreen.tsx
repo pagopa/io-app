@@ -1,6 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
