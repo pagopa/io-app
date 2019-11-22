@@ -8,11 +8,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet
-} from "react-native";
+import { KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -137,7 +133,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private handleGoBack = () => {
-      this.props.navigation.goBack();
+    this.props.navigation.goBack();
   };
 
   get isFromProfileSection() {
