@@ -9,7 +9,6 @@ import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import {
-  Alert,
   KeyboardAvoidingView,
   Platform,
   StyleSheet
