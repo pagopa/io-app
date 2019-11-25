@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
-const DEFAULT_OVERLAY_OPACITY = 0.7;
+const DEFAULT_OVERLAY_OPACITY = 1;
 const DEFAULT_BACKGROUND_COLOR = "#fff";
 
 const styles = StyleSheet.create({
@@ -34,30 +34,28 @@ type Props = Readonly<{
  *
  * Used for loading spinners and error screens.
  */
-export const Overlay: React.SFC<Props> = props => (
-  <View style={styles.container}>
-    {props.foreground && (
-      <View
-        style={[
-          styles.overlay,
-          {
-            opacity:
-              props.opacity !== undefined
-                ? props.opacity
-                : DEFAULT_OVERLAY_OPACITY
-          },
-          {
-            backgroundColor:
-              props.backgroundColor !== undefined
-                ? props.backgroundColor
-                : DEFAULT_BACKGROUND_COLOR
-          }
-        ]}
-      >
-        {props.foreground}
-      </View>
-    )}
+export const Overlay: React.SFC<Props> = props => {
+  const {
+    opacity = DEFAULT_OVERLAY_OPACITY,
+    backgroundColor = DEFAULT_BACKGROUND_COLOR
+  } = props;
+  return (
+    <View style={styles.container}>
+      {props.foreground && (
+        <View
+          style={[
+            styles.overlay,
+            {
+              opacity,
+              backgroundColor
+            }
+          ]}
+        >
+          {props.foreground}
+        </View>
+      )}
 
-    <View style={[styles.container, styles.back]}>{props.children}</View>
-  </View>
-);
+      <View style={[styles.container, styles.back]}>{props.children}</View>
+    </View>
+  );
+};
