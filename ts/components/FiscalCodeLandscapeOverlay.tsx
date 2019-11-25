@@ -69,9 +69,11 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   }
 
   private scrollToEnd = () => {
-    if (this.props.showBackSide && this.ScrollVewRef.current) {
-      this.ScrollVewRef.current.scrollToEnd({ animated: true });
-    }
+    setTimeout(() => {
+      if (this.props.showBackSide && this.ScrollVewRef.current) {
+        this.ScrollVewRef.current.scrollToEnd({ animated: true });
+      }
+    }, 300);
   };
 
   public render() {
