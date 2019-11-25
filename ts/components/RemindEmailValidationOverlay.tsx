@@ -96,10 +96,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     if (this.props.isEmailValidated && !this.state.closedByUser) {
       // If the compoment is unmounted without the user iteracion, a toast is displayed
       // TODO: we could use the toast as customized within https://www.pivotaltracker.com/story/show/169568823
-      showToast(
-        "La mail è stata validata! Ora puoi accedere a tutte le funzionalità di IO.",
-        "success"
-      );
+      showToast(I18n.t("email.validate.validation_ok"), "success");
     }
   }
 
