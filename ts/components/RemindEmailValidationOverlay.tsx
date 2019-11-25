@@ -8,7 +8,6 @@ import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, BackHandler, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { isEmailEditingAndValidationEnabled } from "../config";
 import {
   navigateBack,
   navigateToEmailInsertScreen
@@ -94,7 +93,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
     clearInterval(this.idPolling);
 
-    if (this.props.isEmailValid && !this.state.closedByUser) {
+    if (this.props.isEmailValidated && !this.state.closedByUser) {
       // If the compoment is unmounted without the user iteracion, a toast is displayed
       // TODO: we could use the toast as customized within https://www.pivotaltracker.com/story/show/169568823
       showToast(
@@ -265,7 +264,7 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     emailValidation,
     optionEmail: profileEmailSelector(state),
-    isEmailValid: isEmailEditingAndValidationEnabled ? isEmailValidated : true,
+    isEmailValidated,
     potProfile,
     isOnboardingCompleted: isOnboardingCompletedSelector(state)
   };

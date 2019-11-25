@@ -22,7 +22,6 @@ import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
-import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
@@ -481,9 +480,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isEmailValidated: isEmailEditingAndValidationEnabled
-    ? isProfileEmailValidatedSelector(state)
-    : true,
+  isEmailValidated: isProfileEmailValidatedSelector(state),
   services: state.entities.services,
   content: state.content,
   profile: state.profile,

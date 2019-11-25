@@ -44,8 +44,6 @@ export const isCIEauthenticationEnabled: boolean =
   Config.CIE_AUTHENTICATION_ENABLED === "YES";
 export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
-export const isEmailEditingAndValidationEnabled: boolean =
-  Config.EMAIL_EDITING_AND_VALIDATION_ENABLED === "YES";
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 export const instabugToken: string = Config.INSTABUG_TOKEN;

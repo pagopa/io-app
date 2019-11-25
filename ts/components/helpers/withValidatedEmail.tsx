@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import { isEmailEditingAndValidationEnabled } from "../../config";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { withConditionalView } from "./withConditionalView";
@@ -49,9 +48,7 @@ const ConditionalView = withLightModalContext(
 export type Props = ReturnType<typeof mapStateToProps>;
 
 const mapStateToProps = (state: GlobalState) => {
-  const isEmailValidated = isEmailEditingAndValidationEnabled
-    ? isProfileEmailValidatedSelector(state)
-    : true;
+  const isEmailValidated = isProfileEmailValidatedSelector(state);
   return {
     isEmailValidated
   };
