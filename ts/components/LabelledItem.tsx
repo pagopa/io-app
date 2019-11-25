@@ -35,6 +35,7 @@ type CommonProp = Readonly<{
   icon: string;
   isValid?: boolean;
   iconStyle?: StyleType;
+  focusBorderColor?: string;
 }>;
 
 type State = {
@@ -59,20 +60,29 @@ export class LabelledItem extends React.Component<Props, State> {
     this.state = { isEmpty: true, hasFocus: false };
   }
 
-  private checkIsEmpty = (text: string) => {
+  /**
+   * check if the input is empty and set the value in the state
+   */
+  private checkInputIsEmpty = (text: string) => {
     const isEmpty = text.length === 0;
     if (isEmpty !== this.state.isEmpty) {
       this.setState({ isEmpty });
     }
   };
 
+  /**
+   * handle input on change text
+   */
   private handleOnChangeText = (text: string) => {
     if (this.props.type === "text" && this.props.inputProps.onChangeText) {
       this.props.inputProps.onChangeText(text);
     }
-    this.checkIsEmpty(text);
+    this.checkInputIsEmpty(text);
   };
 
+  /**
+   * handle masked input on change text
+   */
   private handleOnMaskedChangeText = (formatted: string, text: string) => {
     if (
       this.props.type === "masked" &&
@@ -80,13 +90,19 @@ export class LabelledItem extends React.Component<Props, State> {
     ) {
       this.props.inputMaskProps.onChangeText(formatted, text);
     }
-    this.checkIsEmpty(text);
+    this.checkInputIsEmpty(text);
   };
 
+  /**
+   * keep track if input (or masked input) gains focus
+   */
   private handleOnFocus = () => {
     this.setState({ hasFocus: true });
   };
 
+  /**
+   * keep track if input (or masked input) loses focus
+   */
   private handleOnBlur = () => {
     this.setState({ hasFocus: false });
   };
@@ -103,7 +119,7 @@ export class LabelledItem extends React.Component<Props, State> {
             borderColor:
               this.state.hasFocus && this.state.isEmpty
                 ? variables.itemBorderDefaultColor
-                : undefined
+                : this.props.focusBorderColor
           }}
           error={this.props.isValid === undefined ? false : !this.props.isValid}
           success={
