@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
 export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   Props
 > {
+  private scrollTimeout?: number;
   private ScrollVewRef = React.createRef<ScrollView>();
 
   private handleBackPress = () => {
@@ -66,14 +67,22 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
 
   public componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    // if there is an active timeout, clear it!
+    if (this.scrollTimeout !== undefined) {
+      clearTimeout(this.scrollTimeout);
+    }
   }
 
   private scrollToEnd = () => {
-    setTimeout(() => {
-      if (this.props.showBackSide && this.ScrollVewRef.current) {
-        this.ScrollVewRef.current.scrollToEnd({ animated: true });
-      }
-    }, 300);
+    if (this.props.showBackSide && this.ScrollVewRef.current) {
+      // dalay the scroll to end command to wait until the ingress animation is completed
+      // tslint:disable-next-line: no-object-mutation
+      this.scrollTimeout = setTimeout(() => {
+        if (this.ScrollVewRef.current) {
+          this.ScrollVewRef.current.scrollToEnd({ animated: true });
+        }
+      }, 300);
+    }
   };
 
   public render() {
@@ -115,7 +124,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
           <View spacer={true} large={true} />
         </ScrollView>
         <View style={styles.closeButton}>
-          <Button transparent={true} onPress={() => this.props.onCancel()}>
+          <Button transparent={true} onPress={this.props.onCancel}>
             <IconFont name="io-close" color={customVariables.colorWhite} />
           </Button>
         </View>
