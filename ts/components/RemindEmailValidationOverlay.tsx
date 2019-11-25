@@ -43,6 +43,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 type State = {
   ctaSendEmailValidationText: string;
   isLoading: boolean;
+  isCtaSentEmailValidationDisabled: boolean;
   closedByUser: boolean;
   isContentLoadCompleted: boolean;
 };
@@ -71,7 +72,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       ctaSendEmailValidationText: I18n.t("email.validate.cta"),
       isLoading: false,
       closedByUser: false,
-      isContentLoadCompleted: false
+      isContentLoadCompleted: false,
+      isCtaSentEmailValidationDisabled: false
     };
   }
 
@@ -107,7 +109,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       this.props.sendEmailValidation();
     });
     this.setState({
-      isLoading: true
+      isLoading: true,
+      isCtaSentEmailValidationDisabled: true
     });
   };
 
@@ -132,7 +135,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       if (pot.isError(this.props.emailValidation)) {
         this.setState({
           ctaSendEmailValidationText: I18n.t("email.validate.cta"),
-          isLoading: false
+          isLoading: false,
+          isCtaSentEmailValidationDisabled: false
         });
       } else if (pot.isSome(this.props.emailValidation)) {
         // schedule a timeout to make the cta button disabled and showing inside
@@ -144,11 +148,12 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           this.idTimeout = undefined;
           this.setState({
             ctaSendEmailValidationText: I18n.t("email.validate.cta"),
-            isLoading: false
+            isCtaSentEmailValidationDisabled: false
           });
         }, emailSentTimeout);
         this.setState({
-          ctaSendEmailValidationText: I18n.t("email.validate.sent")
+          ctaSendEmailValidationText: I18n.t("email.validate.sent"),
+          isLoading: false
         });
       }
     }
@@ -230,7 +235,10 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               block={true}
               light={true}
               bordered={true}
-              disabled={this.state.isLoading}
+              disabled={
+                this.state.isLoading ||
+                this.state.isCtaSentEmailValidationDisabled
+              }
               onPress={this.handleSendEmailValidationButton}
             >
               <Text>{this.state.ctaSendEmailValidationText}</Text>
