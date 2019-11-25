@@ -70,6 +70,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
     // if there is an active timeout, clear it!
     if (this.scrollTimeout !== undefined) {
       clearTimeout(this.scrollTimeout);
+      this.scrollTimeout = undefined;
     }
   }
 
