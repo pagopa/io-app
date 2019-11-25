@@ -1,5 +1,5 @@
 /**
- * A component to remind the user to validate his/her email
+ * A component to remind the user to validate his email
  */
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -94,7 +94,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     clearInterval(this.idPolling);
 
     if (this.props.isEmailValidated && !this.state.closedByUser) {
-      // If the compoment is unmounted without the user iteracion, a toast is displayed
+      // If the compoment is unmounted without the user iteraction, a toast will be displayed
       // TODO: we could use the toast as customized within https://www.pivotaltracker.com/story/show/169568823
       showToast(I18n.t("email.validate.validation_ok"), "success");
     }
@@ -130,7 +130,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           isCtaSentEmailValidationDisabled: false
         });
       } else if (pot.isSome(this.props.emailValidation)) {
-        // schedule a timeout to make the cta button disabled and reporting
+        // schedule a timeout to make the cta button disabled and showing inside
         // the string that email has been sent.
         // after timeout we restore the default state
         // tslint:disable-next-line: no-object-mutation

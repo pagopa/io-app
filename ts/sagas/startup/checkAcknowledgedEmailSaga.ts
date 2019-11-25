@@ -35,6 +35,7 @@ export function* checkAcknowledgedEmailSaga(
       // view shows the component that reminds to validate the email address or allows the navigation to edit it.
       yield put(navigateToEmailReadScreen());
     } else {
+      // we can go on, no need to wait
       return;
     }
   } else {
