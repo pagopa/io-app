@@ -49,6 +49,7 @@ const customVariables = Object.assign(materialVariables, {
   cardFontColor: "#17324D",
   colorWhite: "#FFFFFF",
   disabledService: "#909DA8",
+  itemBorderDefaultColor: "#5F6F82",
 
   calendarExpirableColor: "#D0021B",
 
