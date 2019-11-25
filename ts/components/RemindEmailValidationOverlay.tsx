@@ -42,7 +42,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 type State = {
   ctaSendEmailValidationText: string;
-  isCtaSentEmailValidationDisabled: boolean;
+  isLoading: boolean;
   closedByUser: boolean;
   isContentLoadCompleted: boolean;
 };
@@ -69,7 +69,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       ctaSendEmailValidationText: I18n.t("email.validate.cta"),
-      isCtaSentEmailValidationDisabled: false,
+      isLoading: false,
       closedByUser: false,
       isContentLoadCompleted: false
     };
@@ -80,6 +80,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     // Periodically check if the user validate his own email address
     // tslint:disable-next-line: no-object-mutation
     this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
+    this.props.reloadProfile();
   }
 
   public componentWillUnmount() {
@@ -106,11 +107,15 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       this.props.sendEmailValidation();
     });
     this.setState({
-      isCtaSentEmailValidationDisabled: true
+      isLoading: true
     });
   };
 
   private handleOnClose = () => {
+    // do nothing if it is loading
+    if (this.state.isLoading) {
+      return;
+    }
     this.setState({ closedByUser: true });
     this.props.reloadProfile();
     if (!this.props.isOnboardingCompleted) {
@@ -127,7 +132,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       if (pot.isError(this.props.emailValidation)) {
         this.setState({
           ctaSendEmailValidationText: I18n.t("email.validate.cta"),
-          isCtaSentEmailValidationDisabled: false
+          isLoading: false
         });
       } else if (pot.isSome(this.props.emailValidation)) {
         // schedule a timeout to make the cta button disabled and showing inside
@@ -139,7 +144,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           this.idTimeout = undefined;
           this.setState({
             ctaSendEmailValidationText: I18n.t("email.validate.cta"),
-            isCtaSentEmailValidationDisabled: false
+            isLoading: false
           });
         }, emailSentTimeout);
         this.setState({
@@ -225,7 +230,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               block={true}
               light={true}
               bordered={true}
-              disabled={this.state.isCtaSentEmailValidationDisabled}
+              disabled={this.state.isLoading}
               onPress={this.handleSendEmailValidationButton}
             >
               <Text>{this.state.ctaSendEmailValidationText}</Text>
@@ -237,6 +242,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           leftButton={{
             block: true,
             bordered: true,
+            disabled: this.state.isLoading,
             onPress: this.props.navigateToEmailInsertScreen,
             title: I18n.t("email.edit.title")
           }}
@@ -244,6 +250,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             block: true,
             primary: true,
             onPress: this.handleOnClose,
+            disabled: this.state.isLoading,
             title: isOnboardingCompleted
               ? I18n.t("global.buttons.ok")
               : I18n.t("global.buttons.continue")
