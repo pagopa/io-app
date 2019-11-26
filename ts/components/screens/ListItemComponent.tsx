@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     elevation: 0.1,
     shadowColor: "white",
     justifyContent: "center",
-    alignContent: "center"
+    alignContent: "center",
+    marginTop: -3
   }
 });
 
