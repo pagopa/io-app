@@ -29,7 +29,7 @@ const customVariables = Object.assign(materialVariables, {
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
-  btnLightBorderColor: "#E6E9F2",
+  btnLightBorderColor: "#AEB5BF",
 
   // Color
   brandPrimary: "#0066CC",
@@ -49,6 +49,7 @@ const customVariables = Object.assign(materialVariables, {
   cardFontColor: "#17324D",
   colorWhite: "#FFFFFF",
   disabledService: "#909DA8",
+  itemBorderDefaultColor: "#5F6F82",
 
   calendarExpirableColor: "#D0021B",
 

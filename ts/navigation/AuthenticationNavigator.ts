@@ -4,13 +4,16 @@ import {
 } from "react-navigation";
 
 import { environment } from "../config";
+import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
+import CiePinScreen from "../screens/authentication/CiePinScreen";
 import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
 import CieValidScreen from "../screens/authentication/CieValidScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
+import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
@@ -23,11 +26,17 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: {
     screen: IdpSelectionScreen
   },
+  [ROUTES.AUTHENTICATION_CIE]: {
+    screen: CardSelectionScreen
+  },
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
     screen: IdpLoginScreen
   },
   [ROUTES.AUTHENTICATION_SPID_INFORMATION]: {
     screen: SpidInformationScreen
+  },
+  [ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION]: {
+    screen: SpidCIEInformationScreen
   },
   [ROUTES.MARKDOWN]: {
     screen: MarkdownScreen
@@ -46,6 +55,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN]: {
     screen: InterruptedReadingCardScreen
+  },
+  [ROUTES.CIE_PIN_SCREEN]: {
+    screen: CiePinScreen
   }
 };
 

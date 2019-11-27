@@ -3,9 +3,8 @@
  * on top of the root component.
  */
 
-import { View } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Animated, Dimensions, Easing, StyleSheet } from "react-native";
 
 export type LightModalContextInterface = Readonly<{
   component: React.ReactNode;
@@ -25,6 +24,9 @@ type Props = {};
 
 type State = LightModalContextInterface;
 
+const animatedValue = new Animated.Value(0);
+const screenWidth = Dimensions.get("screen").width;
+
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
@@ -36,13 +38,33 @@ const styles = StyleSheet.create({
   }
 });
 
+const styledAnimation = {
+  transform: [
+    {
+      translateX: animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [screenWidth, 0]
+      })
+    }
+  ]
+};
+
 export const LightModalConsumer = LightModalContext.Consumer;
 
 export class LightModalProvider extends React.Component<Props, State> {
   public showModal = (component: React.ReactNode) => {
-    this.setState({
-      component
-    });
+    this.setState(
+      {
+        component
+      },
+      () =>
+        Animated.timing(animatedValue, {
+          toValue: 1,
+          duration: 250,
+          useNativeDriver: true,
+          easing: Easing.linear
+        }).start()
+    );
   };
 
   public hideModal = () =>
@@ -68,7 +90,11 @@ export class LightModalProvider extends React.Component<Props, State> {
 export const LightModalRoot: React.SFC = () => (
   <LightModalConsumer>
     {({ component }) =>
-      component ? <View style={styles.container}>{component}</View> : null
+      component ? (
+        <Animated.View style={[styles.container, styledAnimation]}>
+          {component}
+        </Animated.View>
+      ) : null
     }
   </LightModalConsumer>
 );

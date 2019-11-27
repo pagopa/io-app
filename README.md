@@ -4,6 +4,34 @@
 
 # The mobile app of the Digital Citizenship project
 
+- [FAQ](#faq)
+  - [What is the Digital Citizenship project?](#what-is-the-digital-citizenship-project)
+  - [What is the Digital Citizenship mobile app?](#what-is-the-digital-citizenship-mobile-app)
+  - [Who develops the app?](#who-develops-the-app)
+  - [Can I use the app?](#can-i-use-the-app)
+  - [When will the app be available?](#when-will-the-app-be-available)
+  - [How can I help you?](#how-can-i-help-you)
+- [Main technologies used](#main-technologies-used)
+- [Architecture](#architecture)
+  - [SPID Authentication](#spid-authentication)
+- [How to contribute](#how-to-contribute)
+  - [Pre-requisites](#pre-requisites)
+  - [Building and launching on the simulator](#building-and-launching-on-the-simulator)
+  - [Build (release)](#build-release)
+  - [Installation on physical devices (development)](#installation-on-physical-devices-development)
+  - [Development with Backend App and Local Test IDP](#development-with-backend-app-and-local-test-idp)
+  - [Update the app icons](#update-the-app-icons)
+  - [Internationalization](#internationalization)
+  - [Error handling](#error-handling)
+  - [Connection monitoring](#connection-monitoring)
+  - [Deep linking](#deep-linking)
+  - [Fonts](#fonts)
+  - [Io-Icon-Font](#io-icon-font)
+  - [Theming](#theming)
+  - [Custom UI components](#custom-ui-components)
+  - [End to end test with Detox (experimental)](#end-to-end-test-with-detox-experimental)
+  - [Troubleshooting](#troubleshooting)
+
 ## FAQ
 
 ### What is the Digital Citizenship project?
@@ -159,7 +187,7 @@ $ cat .node-version
 For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/). 
 
 
-Yarn is a node application. IF you have alredy installed in your system version of node compatible with yarn, you can install it as a global command with:
+Yarn is a node application. IF you have already installed in your system version of node compatible with yarn, you can install it as a global command with:
 
 ```
 npm install -g yarn
@@ -218,7 +246,7 @@ Verify you have installed it correctly with the command `which rbenv`.
 
 #### Completing and verifying configuration
 
-Either on Mac or Linux you need to add to your shell the initialization command thjen reload the configuration:
+Either on Mac or Linux you need to add to your shell the initialization command then reload the configuration:
 
 ```
 echo 'eval "$(rbenv init -)"' >>~/.bashrc

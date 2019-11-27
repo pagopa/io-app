@@ -189,6 +189,10 @@ userMetadata:
 navigation:
   messages: Messaggi
   profile: Profilo
+cie:
+  title: Appoggia la carta
+  layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
+  layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finchè non senti un suono.
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
@@ -205,8 +209,12 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
-    login: Entra con SPID
+    loginSpid: Entra con SPID
+    loginCie: Entra con CIE
+    loginSpidCie: Accedi con SPID o CIE
+    loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
     nospid: Non hai SPID? Scopri di più
+    nospid-nocie: Non hai SPID o CIE? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
     card1-content: Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni
       Pubbliche
@@ -231,6 +239,8 @@ authentication:
       noNfcConnectionContent: !include cie/noNfcConnection.md
       cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
       cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+      pinCardTitle: Inserisci il PIN della tua carta
+      pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
       incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
@@ -240,6 +250,11 @@ authentication:
     unknownCardTitle: Carta sconosciuta
     unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
     unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
+  cie_information_request: !include cie.md
+  spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
+  request_cie: Richiedi CIE
+  request_spid: Ottieni SPID
+  spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
@@ -251,9 +266,16 @@ authentication:
     paragraph3: Proseguendo dichiari di accettare le
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
+  cie:
+    cie: Carta di Identità Elettronica
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
+    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   spid_information:
+    spid: !include spid.md
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
+    contentTitleCie: Non hai SPID o la CIE?
     moreLinkText: Per saperne di più
     subtitle: SPID è sicuro
     paragraph1: SPID, il Sistema Pubblico di Identità Digitale, ti permette di accedere
@@ -474,6 +496,8 @@ wallet:
     link: Per saperne di più
     maxFee: Commissione massima
     onUpdateWalletPspFailure: Operazione fallita, riprova
+    contextualHelpTitle: Scelta del gestore
+    contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
     header: Conferma pagamento
     cancelPayment: Annulla l'operazione
@@ -801,6 +825,12 @@ calendarEvents:
 reminders:
   emptyMonth: Non ci sono scadenze in questo mese
   loadMoreData: carica le scadenze del periodo precedente
+  email:
+    title: Ricorda di validare il tuo indirizzo email
+    modal1: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email. \n Ti abbiamo inviato una email a"
+    modal2: "apri il tuo client di posta e clicca semplicemente sul link."
+    button1: Invia una nuova email di validazione
+    button2: Modifica indirizzo email
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
 genericError: Si è verificato un errore
