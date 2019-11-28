@@ -8,7 +8,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
-import { KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  TextInputKeyPressEventData
+} from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -81,19 +86,13 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   private continueOnPress = () => {
-    this.state.email.map(e => {
-      this.props.updateEmail(e as EmailString);
-    });
+    if (this.isValidEmail()) {
+      this.state.email.map(e => {
+        this.props.updateEmail(e as EmailString);
+      });
+    }
   };
 
-  /**
-   * Footer
-   *
-   * TODO1: add navigation to the dedicated modal
-   *          https://www.pivotaltracker.com/story/show/169545858
-   * TODO:2 save the inserted new email
-   *          https://www.pivotaltracker.com/n/projects/2048617/stories/169264055
-   */
   private renderFooterButtons = () => {
     const continueButtonProps = {
       disabled: this.isValidEmail() !== true && !this.props.isLoading,
@@ -128,7 +127,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
   private handleOnChangeEmailText = (value: string) => {
     this.setState({
-      email: value !== EMPTY_EMAIL ? some(value.toLowerCase().trim()) : none
+      email: value !== EMPTY_EMAIL ? some(value) : none
     });
   };
 
@@ -209,6 +208,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                   icon="io-envelope"
                   isValid={this.isValidEmail()}
                   inputProps={{
+                    returnKeyType: "done",
+                    onSubmitEditing: this.continueOnPress,
                     autoCapitalize: "none",
                     keyboardType: "email-address",
                     value: this.state.email.getOrElse(EMPTY_EMAIL),
@@ -220,17 +221,16 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
               </Form>
             </View>
           </Content>
-
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "android" ? "height" : "padding"}
-            keyboardVerticalOffset={Platform.select({
-              ios: 0,
-              android: customVariables.contentPadding
-            })}
-          >
-            {this.renderFooterButtons()}
-          </KeyboardAvoidingView>
         </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "android" ? "height" : "padding"}
+          keyboardVerticalOffset={Platform.select({
+            ios: 0,
+            android: customVariables.contentPadding
+          })}
+        >
+          {this.renderFooterButtons()}
+        </KeyboardAvoidingView>
       </BaseScreenComponent>
     );
   }
