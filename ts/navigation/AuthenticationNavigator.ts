@@ -6,6 +6,7 @@ import {
 import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
+import CieNeedPrivacyScreen from "../screens/authentication/CieNeedPrivacyScreen";
 import CiePinScreen from "../screens/authentication/CiePinScreen";
 import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
 import CieValidScreen from "../screens/authentication/CieValidScreen";
@@ -58,6 +59,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.CIE_PIN_SCREEN]: {
     screen: CiePinScreen
+  },
+  [ROUTES.CIE_NEED_PRIVACY]: {
+    screen: CieNeedPrivacyScreen
   }
 };
 

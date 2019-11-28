@@ -270,6 +270,8 @@ authentication:
     temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
     temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
     temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
+    noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
+    authToSendData: !include cie/auth_to_send_data.md
   spid_information:
     spid: !include spid.md
     headerTitle: Non hai SPID?
