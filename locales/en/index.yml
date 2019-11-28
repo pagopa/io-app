@@ -163,6 +163,7 @@ profile:
         enabled: Enabled
         disabled: Disabled
       email: Email address
+      need_validate: To be validated
       mobile_phone: Mobile number
       language: Language
       digitalDomicile: Digital domicile
