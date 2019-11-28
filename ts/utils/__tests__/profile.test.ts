@@ -47,7 +47,7 @@ describe("extracting data from fiscal code", () => {
   // giulia rossi / roma / rm / 12-07-2003
   const goodCfF2 = "GLIRSS03L52H501A" as FiscalCode;
   const dataF2 = extractFiscalCodeData(goodCfF2, potGood);
-  it("should recognize the 2003", () => {
+  it("should recognize the 2003 as year of birth", () => {
     expect(dataF2.birthDate).toBeDefined();
     expect(dataF2.birthDate).toEqual("12/07/2003");
     expect(dataF2.gender).toEqual("F");
