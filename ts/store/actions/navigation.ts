@@ -8,8 +8,6 @@ import {
 import { ActionType, createStandardAction } from "typesafe-actions";
 import ROUTES from "../../navigation/routes";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
-import EmailInsertScreen from "../../screens/onboarding/EmailInsertScreen";
-import EmailReadScreen from "../../screens/onboarding/EmailReadScreen";
 import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
