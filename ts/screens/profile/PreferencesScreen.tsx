@@ -198,6 +198,11 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.email")}
               subTitle={profileData.spid_email}
               onPress={this.handleEmailOnPress}
+              titleBadge={
+                isEmailEditingAndValidationEnabled
+                  ? I18n.t("profile.preferences.list.need_validate")
+                  : undefined
+              }
             />
 
             <ListItemComponent
