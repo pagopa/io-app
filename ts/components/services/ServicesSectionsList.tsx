@@ -44,7 +44,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   headerContentWrapper: {
-    padding: customVariables.contentPadding,
+    paddingRight: customVariables.contentPadding,
+    paddingLeft: customVariables.contentPadding,
+    paddingTop: customVariables.contentPadding / 2,
+    paddingBottom: customVariables.contentPadding / 2,
     alignItems: "center"
   },
   message: {
