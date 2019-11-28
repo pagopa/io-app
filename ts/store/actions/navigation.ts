@@ -85,29 +85,16 @@ export const navigateToLoadingScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.LOADING })
 });
 
-export const navigateToEmailValidateScreen = NavigationActions.navigate({
-  routeName: ROUTES.ONBOARDING,
-  action: NavigationActions.navigate({
-    routeName: ROUTES.ONBOARDING_EMAIL_VALIDATE
-  })
-});
-
-export const navigateToEmailReadScreen = (
-  params: InferNavigationParams<typeof EmailReadScreen>
-) =>
+export const navigateToEmailReadScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.READ_EMAIL_SCREEN,
-    params
+    routeName: ROUTES.READ_EMAIL_SCREEN
   });
 
 export const navigateBack = NavigationActions.back;
 
-export const navigateToEmailInsertScreen = (
-  params: InferNavigationParams<typeof EmailInsertScreen>
-) =>
+export const navigateToEmailInsertScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.INSERT_EMAIL_SCREEN,
-    params
+    routeName: ROUTES.INSERT_EMAIL_SCREEN
   });
 
 export const navigateToMessageDetailScreenAction = (
