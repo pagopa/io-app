@@ -27,7 +27,6 @@
     "buffer": "^4.9.1",
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
-    "email-validator": "^2.0.4",
     "fp-ts": "1.12.0",
     "hoist-non-react-statics": "^3.0.1",
     "instabug-reactnative": "8.4.1",
