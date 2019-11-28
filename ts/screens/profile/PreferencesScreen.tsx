@@ -188,7 +188,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               subTitle={email}
               onPress={this.handleEmailOnPress}
               titleBadge={
-                this.props.isEmailValidated
+                this.props.isEmailValidated === false
                   ? I18n.t("profile.preferences.list.need_validate")
                   : undefined
               }
