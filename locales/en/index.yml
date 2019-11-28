@@ -264,6 +264,9 @@ authentication:
     temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
     temporarilyBlockedCieDoneButton: "Done, card unlocked!"
     temporarilyBlockedCieOpenCieID: "Open CieID"
+    readerCardTitle: Hold the card for a few seconds
+    readerCardHeader: We are reading the data of your CIE and verifying its validity.
+    readerCardFooter: Hold the card in this position for a few more seconds
   spid_information:
     spid: !include spid.md
     headerTitle: What is SPID?
