@@ -185,7 +185,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             <View style={styles.horizontalPadding}>
               <Text>
                 {isFromProfileSection
-                  ? this.props.isEmailValid
+                  ? this.props.isEmailValidated
                     ? I18n.t("email.edit.validated")
                     : I18n.t("email.edit.subtitle")
                   : I18n.t("email.insert.subtitle")}
@@ -241,7 +241,7 @@ function mapStateToProps(state: GlobalState) {
   return {
     profile,
     optionEmail: profileEmailSelector(state),
-    isEmailValid: isProfileEmailValidatedSelector(state),
+    isEmailValidated: isProfileEmailValidatedSelector(state),
     isLoading: pot.isUpdating(profile),
     isOnboardingCompleted: isOnboardingCompletedSelector(state)
   };

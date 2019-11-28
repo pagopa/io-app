@@ -439,7 +439,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         ? () => {
             this.props.refreshService(message.sender_service_id);
             // TODO: optimize the managment of the payment initialization https://www.pivotaltracker.com/story/show/169702534
-            if (this.props.isEmailValid) {
+            if (this.props.isEmailValidated) {
               this.props.paymentInitializeState();
               this.props.navigateToPaymentTransactionSummaryScreen({
                 rptId: rptId.value,
@@ -704,7 +704,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   calendarEvent: calendarEventByMessageIdSelector(ownProps.message.id)(state),
   preferredCalendar: state.persistedPreferences.preferredCalendar,
-  isEmailValid: isProfileEmailValidatedSelector(state)
+  isEmailValidated: isProfileEmailValidatedSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

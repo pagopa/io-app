@@ -188,7 +188,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               subTitle={email}
               onPress={this.handleEmailOnPress}
               titleBadge={
-                isEmailEditingAndValidationEnabled
+                this.props.isEmailValidated
                   ? I18n.t("profile.preferences.list.need_validate")
                   : undefined
               }
@@ -221,7 +221,7 @@ function mapStateToProps(state: GlobalState) {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
     optionEmail: profileEmailSelector(state),
-    isEmailValided: isProfileEmailValidatedSelector(state),
+    isEmailValidated: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar
   };
