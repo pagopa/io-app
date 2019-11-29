@@ -215,6 +215,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private renderFooter = () => {
     const { isOnboardingCompleted } = this.props;
+    // if the email has been validated
+    // show only a button to continuer
     if (this.state.emailHasBeenValidate) {
       return (
         <FooterWithButtons
@@ -229,6 +231,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         />
       );
     }
+    // show two buttons where the left one is a CTA
+    // to edit again the email
     return (
       <FooterWithButtons
         type={"TwoButtonsInlineThirdInverted"}
@@ -267,12 +271,10 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         contextualHelp={this.contextualHelp}
       >
         <Content>
-          {isOnboardingCompleted && (
-            <React.Fragment>
-              <Image style={styles.imageChecked} source={image} />
-              <View spacer={true} extralarge={true} />
-            </React.Fragment>
-          )}
+          <React.Fragment>
+            <Image style={styles.imageChecked} source={image} />
+            <View spacer={true} extralarge={true} />
+          </React.Fragment>
           <H2 style={isOnboardingCompleted ? styles.emailTitle : undefined}>
             {title}
           </H2>

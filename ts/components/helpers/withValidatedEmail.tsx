@@ -34,6 +34,11 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
 
   private hideModal = () => {
     this.props.hideModal();
+    // when the reminder modal will be closed
+    // we set acknowledgeOnEmailValidation to none because we don't want
+    // any feedback about the email validation
+    // remember that only RemindEmailValidationOverlay sets it to some, because there
+    // we want the user feedback
     this.props.dispatchAcknowledgeOnEmailValidation();
   };
 
@@ -62,7 +67,7 @@ const mapStateToProps = (state: GlobalState) => {
   const acknowledgeOnEmailValidated = emailValidationSelector(state)
     .acknowledgeOnEmailValidated;
   // we consider the email validated (-> hide the reminder screen) when
-  // the profile has the email validated flag on ON AND when the user
+  // the profile has the email validated flag on ON AND (if it is some) when the user
   // knows about the validation completed
   return {
     isEmailValidated:
