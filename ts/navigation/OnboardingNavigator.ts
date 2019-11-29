@@ -28,7 +28,7 @@ const navigator = createStackNavigator(
     [ROUTES.READ_EMAIL_SCREEN]: {
       screen: EmailReadScreen
     },
-    [ROUTES.LOADING]: {
+    [ROUTES.GENERIC_LOADING_SCREEN]: {
       screen: LoadingScreen
     }
   },
