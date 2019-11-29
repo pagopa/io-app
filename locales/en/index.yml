@@ -365,6 +365,8 @@ email:
       wrong or that you do not use it anymore, you can edit it directly from your SPID
       services provider account.
     validation_ok: Your email has been validated. You can use all the functionalities of IO.
+    validated: Email validated!
+    validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
 onboarding:
   tos:
     headerTitle: Activation

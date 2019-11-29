@@ -148,8 +148,6 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         // display a toast with error
         showToast(I18n.t("email.edit.upsert_ko"), "danger");
       } else if (pot.isSome(this.props.profile)) {
-        // display a success toast
-        showToast(I18n.t("email.edit.upsert_ok"), "success");
         // go back (to the EmailReadScreen)
         this.props.navigation.goBack();
       }

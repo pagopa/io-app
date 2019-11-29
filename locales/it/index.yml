@@ -371,6 +371,8 @@ email:
       indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
       tuo provider di servizi SPID.
     validation_ok: La mail è stata validata. Ora puoi accedere a tutte le funzionalità di IO.
+    validated: Email validata!
+    validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
 onboarding:
   tos:
     headerTitle: Attivazione
