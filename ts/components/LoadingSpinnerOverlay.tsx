@@ -32,19 +32,12 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
       children,
       isLoading,
       loadingCaption,
-      loadingOpacity,
+      loadingOpacity = 0.7,
       onCancel
     } = this.props;
-    const overlayProps =
-      loadingOpacity !== undefined
-        ? {
-            opacity: 1,
-            backgroundColor: `rgba(255,255,255,${loadingOpacity})`
-          }
-        : undefined;
     return (
       <Overlay
-        {...overlayProps}
+        backgroundColor={`rgba(255,255,255,${loadingOpacity})`}
         foreground={
           isLoading && (
             <BoxedRefreshIndicator

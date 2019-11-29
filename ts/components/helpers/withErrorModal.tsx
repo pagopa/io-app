@@ -67,7 +67,6 @@ export function withErrorModal<
 
       return (
         <Overlay
-          opacity={1}
           foreground={
             error.isSome() ? this.renderContent(errorMessage) : undefined
           }
