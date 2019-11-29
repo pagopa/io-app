@@ -18,7 +18,8 @@ import {
 } from "../store/actions/onboarding";
 import {
   loadProfileRequest,
-  startEmailValidation
+  startEmailValidation,
+  acknowledgeOnEmailValidation
 } from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
@@ -36,6 +37,7 @@ import TopScreenComponent, {
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
+import { some } from "fp-ts/lib/Option";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -46,6 +48,7 @@ type State = {
   isCtaSentEmailValidationDisabled: boolean;
   closedByUser: boolean;
   isContentLoadCompleted: boolean;
+  emailHasBeenValidate: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -73,7 +76,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       isLoading: false,
       closedByUser: false,
       isContentLoadCompleted: false,
-      isCtaSentEmailValidationDisabled: false
+      isCtaSentEmailValidationDisabled: false,
+      emailHasBeenValidate: false
     };
   }
 
@@ -83,6 +87,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     // tslint:disable-next-line: no-object-mutation
     this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
     this.props.reloadProfile();
+    this.props.dispatchAcknowledgeOnEmailValidation();
   }
 
   public componentWillUnmount() {
@@ -130,15 +135,15 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   public componentDidUpdate(prevProps: Props) {
     // if we were sending again the validation email
-    if (pot.isLoading(prevProps.emailValidation)) {
+    if (pot.isLoading(prevProps.emailValidationRequest)) {
       // and we got an error
-      if (pot.isError(this.props.emailValidation)) {
+      if (pot.isError(this.props.emailValidationRequest)) {
         this.setState({
           ctaSendEmailValidationText: I18n.t("email.validate.cta"),
           isLoading: false,
           isCtaSentEmailValidationDisabled: false
         });
-      } else if (pot.isSome(this.props.emailValidation)) {
+      } else if (pot.isSome(this.props.emailValidationRequest)) {
         // schedule a timeout to make the cta button disabled and showing inside
         // the string that email has been sent.
         // after timeout we restore the default state
@@ -156,6 +161,16 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           isLoading: false
         });
       }
+    }
+
+    // if the email becomes validated
+    if (!prevProps.isEmailValidated && this.props.isEmailValidated) {
+      // and the user doesn't know about validation
+      this.props.acknowledgeOnEmailValidated.map(v => {
+        if (v === false && this.state.emailHasBeenValidate === false) {
+          this.setState({ emailHasBeenValidate: true });
+        }
+      });
     }
   }
 
@@ -244,6 +259,12 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               <Text>{this.state.ctaSendEmailValidationText}</Text>
             </Button>
           )}
+          {this.state.isContentLoadCompleted &&
+            this.state.emailHasBeenValidate && (
+              <Button>
+                <Text>{this.state.ctaSendEmailValidationText}</Text>
+              </Button>
+            )}
         </Content>
         <FooterWithButtons
           type={"TwoButtonsInlineThirdInverted"}
@@ -274,7 +295,8 @@ const mapStateToProps = (state: GlobalState) => {
   const emailValidation = emailValidationSelector(state);
   const potProfile = profileSelector(state);
   return {
-    emailValidation,
+    emailValidationRequest: emailValidation.sendEmailValidationRequest,
+    acknowledgeOnEmailValidated: emailValidation.acknowledgeOnEmailValidated,
     optionEmail: profileEmailSelector(state),
     isEmailValidated,
     potProfile,
@@ -293,6 +315,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToEmailInsertScreen());
   },
   acknowledgeEmailInsert: () => dispatch(emailAcknowledged()),
+  dispatchAcknowledgeOnEmailValidation: () =>
+    dispatch(acknowledgeOnEmailValidation(some(false))),
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 

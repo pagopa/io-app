@@ -4,15 +4,25 @@
  * are managed by different global reducers.
  */
 
+import { none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { startEmailValidation } from "../actions/profile";
+import {
+  startEmailValidation,
+  acknowledgeOnEmailValidation
+} from "../actions/profile";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
-export type EmailValidationState = pot.Pot<void, Error>;
+export type EmailValidationState = {
+  sendEmailValidationRequest: pot.Pot<void, Error>;
+  acknowledgeOnEmailValidated: Option<boolean>;
+};
 
-const INITIAL_STATE: EmailValidationState = pot.none;
+const INITIAL_STATE: EmailValidationState = {
+  sendEmailValidationRequest: pot.none,
+  acknowledgeOnEmailValidated: none
+};
 
 // return the pot of email validation
 export const emailValidationSelector = (
@@ -26,11 +36,19 @@ const reducer = (
 ): EmailValidationState => {
   switch (action.type) {
     case getType(startEmailValidation.request):
-      return pot.noneLoading;
+      return { ...state, sendEmailValidationRequest: pot.noneLoading };
     case getType(startEmailValidation.failure):
-      return pot.toError(state, action.payload);
+      return {
+        ...state,
+        sendEmailValidationRequest: pot.toError(
+          state.sendEmailValidationRequest,
+          action.payload
+        )
+      };
     case getType(startEmailValidation.success):
-      return pot.some(undefined);
+      return { ...state, sendEmailValidationRequest: pot.some(undefined) };
+    case getType(acknowledgeOnEmailValidation):
+      return { ...state, acknowledgeOnEmailValidated: action.payload };
     default:
       return state;
   }

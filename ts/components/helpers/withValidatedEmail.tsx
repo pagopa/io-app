@@ -12,6 +12,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { withConditionalView } from "./withConditionalView";
+import { emailValidationSelector } from "../../store/reducers/emailValidation";
 
 export type ModalProps = LightModalContextInterface;
 
@@ -49,8 +50,14 @@ export type Props = ReturnType<typeof mapStateToProps>;
 
 const mapStateToProps = (state: GlobalState) => {
   const isEmailValidated = isProfileEmailValidatedSelector(state);
+  const acknowledgeOnEmailValidated = emailValidationSelector(state)
+    .acknowledgeOnEmailValidated;
+  // we consider the email validated (-> hide the reminder screen) when
+  // the profile has the email validated flag on ON AND when the user
+  // knows about the validation completed
   return {
-    isEmailValidated
+    isEmailValidated:
+      isEmailValidated && acknowledgeOnEmailValidated.fold(true, v => v)
   };
 };
 
