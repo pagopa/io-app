@@ -86,7 +86,7 @@ const ROUTES = {
   BACKGROUND: "BACKGROUND",
 
   // Loading screen
-  LOADING: "LOADING"
+  GENERIC_LOADING_SCREEN: "GENERIC_LOADING_SCREEN"
 };
 
 export default ROUTES;
