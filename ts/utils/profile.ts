@@ -47,7 +47,8 @@ export function extractFiscalCodeData(
     pot.map(municipality, m => m.denominazioneInItaliano),
     ""
   );
-  // if we can know more about date of birth
+  // if we can't know more about date of birth
+  // just return info about municipality
   if (!RegExp("^[0-9]+$").test(fiscalCode.substring(9, 11))) {
     return {
       siglaProvincia,
@@ -57,7 +58,6 @@ export function extractFiscalCodeData(
 
   const tempDay = parseInt(fiscalCode.substring(9, 11), 10);
   const gender = tempDay - 40 > 0 ? "F" : "M";
-
   const month = months[fiscalCode.charAt(8)];
 
   if (
@@ -75,12 +75,12 @@ export function extractFiscalCodeData(
   const tempYear = parseInt(fiscalCode.substring(6, 8), 10);
   // to avoid the century date collision (01 could mean 1901 or 2001)
   // we assume that if the birth date is grater than a century, the date
-  // referrs to the new century
+  // refers to the new century
   const year =
     tempYear +
     (new Date().getFullYear() - (1900 + tempYear) >= 100 ? 2000 : 1900);
   const birthDate = format(
-    new Date(year, month - 1, day), // months are indexed from index 0
+    new Date(year, month - 1, day), // months are 0-index
     "DD/MM/YYYY"
   );
 
