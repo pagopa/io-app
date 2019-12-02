@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class NfcStartScreen extends React.Component<Props> {
+class NfcDisabledScreen extends React.Component<Props> {
   private handlePressContinue = () => {
     // TODO: use CIE-module to open the NFC-OS settings page and then refresh the status
     // (if nfc is enabled or not) to
@@ -72,4 +72,4 @@ class NfcStartScreen extends React.Component<Props> {
   }
 }
 
-export default NfcStartScreen;
+export default NfcDisabledScreen;

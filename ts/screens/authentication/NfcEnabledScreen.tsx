@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class NfcActiveScreen extends React.Component<Props> {
+class NfcEnabledScreen extends React.Component<Props> {
   public render(): React.ReactNode {
     return (
       <Container>
@@ -57,4 +57,4 @@ class NfcActiveScreen extends React.Component<Props> {
   }
 }
 
-export default NfcActiveScreen;
+export default NfcEnabledScreen;
