@@ -31,7 +31,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-
+import it.ipzs.cieidsdk.native_bridge.CiePackage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,36 +45,16 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-        new MainReactPackage(),
-        new AsyncStoragePackage(),
-        new QRScanReaderPackage(),
-        new ImagePickerPackage(),
-        new FlagSecurePackage(),
-        new RNFSPackage(),
-        new AndroidOpenSettingsPackage(),
-        new RNGestureHandlerPackage(),
-        new CalendarEventsPackage(),
-        new RNCWebViewPackage(),
-        new FingerprintAuthPackage(),
-        new BackgroundTimerPackage(),
-        new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
-          .setInvocationEvent("none")
-          .setPrimaryColor("#0073E6")
-          .build(),
-        new SvgPackage(),
-        new RNTextInputMaskPackage(),
-        new SplashScreenReactPackage(),
-        new ReactNativeExceptionHandlerPackage(),
-        new RNCameraPackage(),
-        new ReactNativePushNotificationPackage(),
-        new KeychainPackage(),
-        new RNI18nPackage(),
-        new Sha256Package(),
-        new RNMixpanel(),
-        new RNDeviceInfo(),
-        new ReactNativeConfigPackage()
-      );
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
+          new ImagePickerPackage(), new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
+          new RNGestureHandlerPackage(), new CalendarEventsPackage(), new RNCWebViewPackage(),
+          new FingerprintAuthPackage(), new BackgroundTimerPackage(),
+          new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
+              .setInvocationEvent("none").setPrimaryColor("#0073E6").build(),
+          new SvgPackage(), new RNTextInputMaskPackage(), new SplashScreenReactPackage(),
+          new ReactNativeExceptionHandlerPackage(), new RNCameraPackage(), new ReactNativePushNotificationPackage(),
+          new KeychainPackage(), new RNI18nPackage(), new Sha256Package(), new RNMixpanel(), new RNDeviceInfo(),
+          new ReactNativeConfigPackage(), new CiePackage());
     }
 
     @Override
