@@ -241,9 +241,19 @@ authentication:
     ok: Ok
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
     cieLoginWait: Wait a few seconds..
+  cie:
+    enableNfcTitle: Enable NFC
+    enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
+    enableNfcHelp: Don't have an Electronic Identity Card?
+    nfcEnabledTitle: NFC Enabled
+    nfcEnabledContent: "Thank you for activating the NFC functionality on your device: you can proceed with authentication!"
     unknownCardTitle: Unknown card
     unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
     unknownCardHelpLink: What is the Electronic Identity Card?
+    cie: Electronic Identity Card
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
+    temporarilyBlockedCieOpenCieID: "Open CieID"
   cie_information_request: !include cie.md
   spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
   request_cie: Request CIE
@@ -260,11 +270,6 @@ authentication:
     paragraph3: Continuing you declare to accept the
     tosLinkText: rules on the processing of personal data
     continue: Continue
-  cie:
-    cie: Electronic Identity Card
-    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
-    temporarilyBlockedCieOpenCieID: "Open CieID"
   spid_information:
     spid: !include spid.md
     headerTitle: What is SPID?

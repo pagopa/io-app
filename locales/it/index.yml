@@ -247,9 +247,19 @@ authentication:
     ok: Ok
     cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
     cieLoginWait: Attendi qualche secondo..
+  cie:
+    enableNfcTitle: Attiva NFC
+    enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
+    enableNfcHelp: Non hai la Carta di Identità Elettronica?
+    nfcEnabledTitle: NFC Attivo
+    nfcEnabledContent: "Grazie per aver attivato la funzione NFC sul tuo dispositivo: puoi proseguire con l'autenticazione!"
     unknownCardTitle: Carta sconosciuta
     unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
     unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
+    cie: Carta di Identità Elettronica
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
+    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   cie_information_request: !include cie.md
   spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
   request_cie: Richiedi CIE
@@ -266,11 +276,6 @@ authentication:
     paragraph3: Proseguendo dichiari di accettare le
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
-  cie:
-    cie: Carta di Identità Elettronica
-    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
-    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   spid_information:
     spid: !include spid.md
     headerTitle: Non hai SPID?
