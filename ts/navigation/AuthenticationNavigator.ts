@@ -13,11 +13,11 @@ import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
+import NfcActiveScreen from "../screens/authentication/NfcActiveScreen";
 import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
-import NfcActiveScreen from "../screens/authentication/NfcActiveScreen";
 
 // Routes loaded in production mode
 const productionRouteConfigMap: NavigationRouteConfigMap = {
