@@ -21,7 +21,7 @@ import {
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { checkCalendarPermission } from "../../utils/calendar";
+import { checkAndRequestPermission } from "../../utils/calendar";
 import { getLocalePrimary } from "../../utils/locale";
 
 const unavailableAlert = () =>
@@ -106,31 +106,16 @@ class PreferencesScreen extends React.Component<Props, State> {
       },
       _ => undefined
     );
-
-    this.setState({
-      checkCalendarPermissionAndUpdateStateSubscription: this.props.navigation.addListener(
-        "willFocus",
-        this.checkCalendarPermissionAndUpdateState
-      )
-    });
   }
 
-  public componentWillUnmount() {
-    if (
-      this.state.checkCalendarPermissionAndUpdateStateSubscription !== undefined
-    ) {
-      this.state.checkCalendarPermissionAndUpdateStateSubscription.remove();
-    }
-  }
-
-  private checkCalendarPermissionAndUpdateState = () => {
-    checkCalendarPermission().then(
-      hasPermission =>
-        this.setState({
-          hasCalendarPermission: hasPermission
-        }),
-      _ => undefined
-    );
+  private checkPermissionThenGoCalendar = () => {
+    checkAndRequestPermission()
+      .then(hasPermission => {
+        if (hasPermission) {
+          this.props.navigateToCalendarPreferenceScreen();
+        }
+      })
+      .catch();
   };
 
   public render() {
@@ -178,21 +163,19 @@ class PreferencesScreen extends React.Component<Props, State> {
                 }
               />
             )}
-            {hasCalendarPermission && (
-              <ListItemComponent
-                onPress={this.props.navigateToCalendarPreferenceScreen}
-                title={I18n.t(
-                  "profile.preferences.list.preferred_calendar.title"
-                )}
-                subTitle={
-                  this.props.preferredCalendar
-                    ? this.props.preferredCalendar.title
-                    : I18n.t(
-                        "profile.preferences.list.preferred_calendar.not_selected"
-                      )
-                }
-              />
-            )}
+            <ListItemComponent
+              onPress={this.checkPermissionThenGoCalendar}
+              title={I18n.t(
+                "profile.preferences.list.preferred_calendar.title"
+              )}
+              subTitle={
+                this.props.preferredCalendar
+                  ? this.props.preferredCalendar.title
+                  : I18n.t(
+                      "profile.preferences.list.preferred_calendar.not_selected"
+                    )
+              }
+            />
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.email")}
