@@ -17,6 +17,7 @@ import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformati
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
+import NfcActiveScreen from "../screens/authentication/NfcActiveScreen";
 
 // Routes loaded in production mode
 const productionRouteConfigMap: NavigationRouteConfigMap = {
@@ -58,6 +59,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.CIE_PIN_SCREEN]: {
     screen: CiePinScreen
+  },
+  [ROUTES.CIE_NFC_ENABLED]: {
+    screen: NfcActiveScreen
   }
 };
 

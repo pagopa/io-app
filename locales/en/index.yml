@@ -250,6 +250,10 @@ authentication:
     unknownCardTitle: Unknown card
     unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
     unknownCardHelpLink: What is the Electronic Identity Card?
+    cie: Electronic Identity Card
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
+    temporarilyBlockedCieOpenCieID: "Open CieID"
   cie_information_request: !include cie.md
   spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
   request_cie: Request CIE
@@ -266,11 +270,6 @@ authentication:
     paragraph3: Continuing you declare to accept the
     tosLinkText: rules on the processing of personal data
     continue: Continue
-  cie:
-    cie: Electronic Identity Card
-    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
-    temporarilyBlockedCieOpenCieID: "Open CieID"
   spid_information:
     spid: !include spid.md
     headerTitle: What is SPID?

@@ -56,9 +56,7 @@ class NfcStartScreen extends React.Component<Props> {
           rightButton={{
             cancel: false,
             onPress: (): boolean =>
-              this.props.navigation.navigate(
-                ROUTES.AUTHENTICATION_CIE_NFC_ENABLED
-              ),
+              this.props.navigation.navigate(ROUTES.CIE_NFC_ENABLED),
             title: I18n.t("authentication.cie.enableNfcTitle"),
             block: true
           }}
