@@ -23,6 +23,13 @@ const styles = StyleSheet.create({
 });
 
 class NfcStartScreen extends React.Component<Props> {
+  private handlePressContinue = () => {
+    // TODO: use CIE-module to open the NFC-OS settings page and then refresh the status
+    // (if nfc is enabled or not) to
+    // handle the navigation properly
+    this.props.navigation.navigate(ROUTES.CIE_NFC_ENABLED);
+  };
+
   public render(): React.ReactNode {
     return (
       <Container>
@@ -55,8 +62,7 @@ class NfcStartScreen extends React.Component<Props> {
           }}
           rightButton={{
             cancel: false,
-            onPress: (): boolean =>
-              this.props.navigation.navigate(ROUTES.CIE_NFC_ENABLED),
+            onPress: this.handlePressContinue,
             title: I18n.t("authentication.cie.enableNfcTitle"),
             block: true
           }}
