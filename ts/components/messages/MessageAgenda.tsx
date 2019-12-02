@@ -6,6 +6,7 @@ import React, { ComponentProps } from "react";
 import {
   Dimensions,
   Image,
+  NetInfo,
   Platform,
   SectionList,
   SectionListData,
@@ -165,6 +166,7 @@ type Props = OwnProps & SelectedSectionListProps;
 type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
+  isConnected: boolean;
 };
 
 export const isFakeItem = (item: any): item is FakeItem => {
@@ -253,6 +255,21 @@ const ListEmptyComponent = (
   </View>
 );
 
+const ListOfflineComponent = (
+  <View style={styles.emptyListWrapper}>
+    <View spacer={true} />
+    <Image
+      source={require("../../../img/messages/empty-due-date-list-icon.png")}
+    />
+    <Text style={styles.emptyListContentTitle}>
+      {I18n.t("messages.noConnectionTitle")}
+    </Text>
+    <Text style={styles.emptyListContentSubtitle}>
+      {I18n.t("messages.noConnectionDescription")}
+    </Text>
+  </View>
+);
+
 const FakeItemComponent = (
   <View style={styles.itemEmptyWrapper}>
     <Text style={styles.itemEmptyText}>{I18n.t("reminders.emptyMonth")}</Text>
@@ -269,10 +286,30 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      itemLayouts: []
+      itemLayouts: [],
+      isConnected: true
     };
     this.loadMoreData = this.loadMoreData.bind(this);
   }
+
+  public componentDidMount() {
+    // tslint:disable-next-line: no-floating-promises
+    NetInfo.isConnected.fetch().then(isConnected => {
+      this.handleFirstConnectivityChange(isConnected);
+    });
+
+    NetInfo.isConnected.addEventListener(
+      "connectionChange",
+      this.handleFirstConnectivityChange
+    );
+  }
+
+  public handleFirstConnectivityChange = (isConnected: boolean) => {
+    // This boolean check if connection is available
+    this.setState({
+      isConnected
+    });
+  };
 
   public static getDerivedStateFromProps(
     nextProps: Props,
@@ -383,16 +420,18 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           height: TOP_INDICATOR_HEIGHT
         }}
       >
-        <Button
-          block={true}
-          primary={true}
-          small={true}
-          bordered={true}
-          style={styles.button}
-          onPress={this.loadMoreData}
-        >
-          <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
-        </Button>
+        {this.state.isConnected && (
+          <Button
+            block={true}
+            primary={true}
+            small={true}
+            bordered={true}
+            style={styles.button}
+            onPress={this.loadMoreData}
+          >
+            <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
+          </Button>
+        )}
       </View>
     );
   }
@@ -415,7 +454,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           topIndicatorHeight={TOP_INDICATOR_HEIGHT}
           sectionsLength={sections.length}
           ref={this.sectionListRef}
-          ListEmptyComponent={ListEmptyComponent}
+          ListEmptyComponent={
+            this.state.isConnected ? ListEmptyComponent : ListOfflineComponent
+          }
           renderSectionHeader={this.renderSectionHeader}
           renderItem={this.renderItem}
           ItemSeparatorComponent={ItemSeparatorComponent}

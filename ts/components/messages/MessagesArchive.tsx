@@ -2,7 +2,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, NetInfo, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
@@ -74,6 +74,7 @@ type State = {
   lastMessagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   filteredMessageStates: ReturnType<typeof generateMessagesStateArchivedArray>;
   allMessageIdsState: Option<Set<string>>;
+  isConnected: boolean;
 };
 
 const ListEmptyComponent = (paddingForAnimation: boolean) => (
@@ -87,6 +88,22 @@ const ListEmptyComponent = (paddingForAnimation: boolean) => (
     </Text>
     <Text style={styles.emptyListContentSubtitle}>
       {I18n.t("messages.archive.emptyMessage.subtitle")}
+    </Text>
+    {paddingForAnimation && <View style={styles.paddingForAnimation} />}
+  </View>
+);
+
+const ListOfflineComponent = (paddingForAnimation: boolean) => (
+  <View style={styles.emptyListWrapper}>
+    <View spacer={true} />
+    <Image
+      source={require("../../../img/messages/empty-archive-list-icon.png")}
+    />
+    <Text style={styles.emptyListContentTitle}>
+      {I18n.t("messages.noConnectionTitle")}
+    </Text>
+    <Text style={styles.emptyListContentSubtitle}>
+      {I18n.t("messages.noConnectionDescription")}
     </Text>
     {paddingForAnimation && <View style={styles.paddingForAnimation} />}
   </View>
@@ -143,9 +160,29 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     this.state = {
       lastMessagesState: pot.none,
       filteredMessageStates: [],
-      allMessageIdsState: none
+      allMessageIdsState: none,
+      isConnected: true
     };
   }
+
+  public componentDidMount() {
+    // tslint:disable-next-line: no-floating-promises
+    NetInfo.isConnected.fetch().then(isConnected => {
+      this.handleFirstConnectivityChange(isConnected);
+    });
+
+    NetInfo.isConnected.addEventListener(
+      "connectionChange",
+      this.handleFirstConnectivityChange
+    );
+  }
+
+  public handleFirstConnectivityChange = (isConnected: boolean) => {
+    // This boolean check if connection is available
+    this.setState({
+      isConnected
+    });
+  };
 
   public render() {
     const isLoading = pot.isLoading(this.props.messagesState);
@@ -156,7 +193,7 @@ class MessagesArchive extends React.PureComponent<Props, State> {
       selectedItemIds,
       resetSelection
     } = this.props;
-    const { allMessageIdsState } = this.state;
+    const { allMessageIdsState, isConnected } = this.state;
 
     return (
       <View style={styles.listWrapper}>
@@ -168,7 +205,9 @@ class MessagesArchive extends React.PureComponent<Props, State> {
             onLongPressItem={this.handleOnLongPressItem}
             refreshing={isLoading}
             selectedMessageIds={selectedItemIds}
-            ListEmptyComponent={ListEmptyComponent}
+            ListEmptyComponent={
+              isConnected ? ListEmptyComponent : ListOfflineComponent
+            }
             animated={animated}
           />
         </View>

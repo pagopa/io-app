@@ -669,6 +669,8 @@ messages:
     senderInfo:  Sender service unknown
     serviceInfo: Service info unknown
     departmentInfo: Department info unknown
+  noConnectionTitle: Offline! You cannot receive messages
+  noConnectionDescription: Connect to view messages
   cta:
     archive: Archive
     unarchive: Unarchive
