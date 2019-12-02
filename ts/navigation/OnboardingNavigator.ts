@@ -1,5 +1,6 @@
 import { createStackNavigator } from "react-navigation";
 
+import LoadingScreen from "../screens/LoadingScreen";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import EmailValidateScreen from "../screens/onboarding/EmailValidateScreen";
@@ -30,6 +31,9 @@ const navigator = createStackNavigator(
     },
     [ROUTES.READ_EMAIL_SCREEN]: {
       screen: EmailReadScreen
+    },
+    [ROUTES.LOADING]: {
+      screen: LoadingScreen
     }
   },
   {

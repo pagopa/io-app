@@ -80,6 +80,11 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
+export const navigateToLoadingScreen = NavigationActions.navigate({
+  routeName: ROUTES.LOADING,
+  action: NavigationActions.navigate({ routeName: ROUTES.LOADING })
+});
+
 export const navigateToEmailValidateScreen = NavigationActions.navigate({
   routeName: ROUTES.ONBOARDING,
   action: NavigationActions.navigate({
@@ -258,4 +263,9 @@ export const navigateToCieSuccessScreen = () =>
 export const navigateToInterruptedReadingCie = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN
+  });
+
+export const navigateToCiePinScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_PIN_SCREEN
   });
