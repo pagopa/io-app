@@ -1,21 +1,22 @@
-import { Button, Text } from "native-base";
+import { Button, List, Text } from "native-base";
 import * as React from "react";
 import {
   Platform,
   StyleSheet,
   TouchableHighlight,
-  TouchableOpacity,
-  View
+  TouchableOpacity
 } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import * as pot from "italia-ts-commons/lib/pot";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import ListItemComponent from "../../components/screens/ListItemComponent";
 
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
+import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
@@ -48,21 +49,6 @@ type CalendarItemProps = {
   calendar: Calendar;
   onPress: () => void;
 };
-
-/**
- * Renders a Calendar as FlatList item
- */
-const CalendarItem: React.SFC<CalendarItemProps> = props => (
-  <TouchableComponent onPress={props.onPress}>
-    <View style={styles.calendarItemWrapper}>
-      <Text link={true}>{props.calendar.title}</Text>
-      <IconFont
-        name="io-right"
-        color={customVariables.contentPrimaryBackground}
-      />
-    </View>
-  </TouchableComponent>
-);
 
 type OwnProps = NavigationInjectedProps;
 
@@ -114,50 +100,51 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
 
   public render() {
     const { calendars } = this.state;
+    const { defaultCalendar } = this.props;
 
     return (
-      <TopScreenComponent
-        headerTitle={I18n.t("profile.preferences.title")}
-        title={I18n.t("profile.preferences.list.preferred_calendar.title")}
-        goBack={this.props.navigation.goBack}
-      >
-        <ScreenContentHeader
+      <LoadingSpinnerOverlay isLoading={pot.isLoading(calendars)}>
+        <TopScreenComponent
+          headerTitle={I18n.t("profile.preferences.title")}
           title={I18n.t("profile.preferences.list.preferred_calendar.title")}
-          subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
-        />
-        <View
-          style={{
-            width: "100%",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingHorizontal: 25
-          }}
-        />
-        <View style={styles.content}>
-          {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
-          {pot.isError(calendars) && (
-            <React.Fragment>
-              <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
-              <Button onPress={this.fetchCalendars}>
-                <Text>{I18n.t("global.buttons.retry")}</Text>
-              </Button>
-            </React.Fragment>
-          )}
-          {pot.isSome(calendars) && (
-            <React.Fragment>
-              {calendars.value.map(calendar => (
-                <CalendarItem
-                  key={calendar.id}
-                  calendar={calendar}
-                  onPress={() => this.onCalendarSelected(calendar)}
-                />
-              ))}
-            </React.Fragment>
-          )}
-          <Text style={styles.separator}>{I18n.t("messages.cta.helper")}</Text>
-        </View>
-      </TopScreenComponent>
+          goBack={this.props.navigation.goBack}
+        >
+          <ScreenContent
+            title={I18n.t("profile.preferences.list.preferred_calendar.title")}
+            subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
+          >
+            {pot.isError(calendars) && (
+              <React.Fragment>
+                <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
+                <Button onPress={this.fetchCalendars}>
+                  <Text>{I18n.t("global.buttons.retry")}</Text>
+                </Button>
+              </React.Fragment>
+            )}
+            {pot.isSome(calendars) && (
+              <List withContentLateralPadding={true}>
+                {calendars.value.map(calendar => (
+                  <ListItemComponent
+                    key={calendar.id}
+                    title={calendar.title}
+                    hideIcon={
+                      !(defaultCalendar && calendar.id === defaultCalendar.id)
+                    }
+                    iconSize={12}
+                    iconNameSize={
+                      defaultCalendar && calendar.id === defaultCalendar.id
+                        ? "io-plus"
+                        : undefined
+                    }
+                    onPress={() => this.onCalendarSelected(calendar)}
+                  />
+                ))}
+                <EdgeBorderComponent />
+              </List>
+            )}
+          </ScreenContent>
+        </TopScreenComponent>
+      </LoadingSpinnerOverlay>
     );
   }
 
