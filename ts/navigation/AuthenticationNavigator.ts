@@ -13,6 +13,7 @@ import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
+import NfcDisabledScreen from "../screens/authentication/NfcDisabledScreen";
 import NfcEnabledScreen from "../screens/authentication/NfcEnabledScreen";
 import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
@@ -62,6 +63,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.CIE_NFC_ENABLED]: {
     screen: NfcEnabledScreen
+  },
+  [ROUTES.CIE_NFC_DISABLED]: {
+    screen: NfcDisabledScreen
   }
 };
 

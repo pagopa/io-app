@@ -94,9 +94,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
 
   private navigateToCiePinScreen = () => {
     this.props.navigation.navigate(
-      this.state.isNfcEnabled
-        ? ROUTES.CIE_PIN_SCREEN
-        : ROUTES.CIE_EXPIRED_SCREEN
+      this.state.isNfcEnabled ? ROUTES.CIE_PIN_SCREEN : ROUTES.CIE_NFC_DISABLED
     );
   };
 

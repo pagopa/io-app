@@ -6,10 +6,15 @@ const mockIsCIEAuthenticationSupported = () => Promise.resolve(true);
 const realIsNfcEnabled = cieSdk.isNFCEnabled;
 const mockIsNfcEnabled = () => Promise.resolve(false);
 
-const ios = true;
+const realOpenNfcSettings = cieSdk.openNFCSettings;
+const mockOpenNfcSettings = () => Promise.resolve();
 
-export const isCIEAuthenticationSupported = ios
+const test = true;
+
+export const isCIEAuthenticationSupported = test
   ? mockIsCIEAuthenticationSupported
   : realIsCIEAuthenticationSupported;
 
-export const isNfcEnabled = ios ? mockIsNfcEnabled : realIsNfcEnabled;
+export const isNfcEnabled = test ? mockIsNfcEnabled : realIsNfcEnabled;
+
+export const openNFCSettings = test ? mockOpenNfcSettings : realOpenNfcSettings;

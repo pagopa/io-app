@@ -2,16 +2,26 @@ import { Container, H1, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { connect } from "react-redux";
 import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
+import { ReduxProps } from "../../store/actions/types";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import { isNfcEnabled, openNFCSettings } from "../../utils/cie";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
-}>;
+}> &
+  ReturnType<typeof mapStateToProps> &
+  ReduxProps;
+
+type State = {
+  isNfcEnabled: boolean;
+};
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
@@ -22,13 +32,43 @@ const styles = StyleSheet.create({
   }
 });
 
-class NfcDisabledScreen extends React.Component<Props> {
-  private handlePressContinue = () => {
+class NfcDisabledScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { isNfcEnabled: false };
+  }
+
+  private updateNfcState = async () => {
+    const isNfcOn = await isNfcEnabled();
+    if (this.state.isNfcEnabled !== isNfcOn) {
+      this.setState({ isNfcEnabled: isNfcOn });
+    }
+  };
+
+  public async componentDidMount() {
+    await this.updateNfcState();
+  }
+
+  private handlePressContinue = async () => {
     // TODO: use CIE-module to open the NFC-OS settings page and then refresh the status
     // (if nfc is enabled or not) to
     // handle the navigation properly
-    this.props.navigation.navigate(ROUTES.CIE_NFC_ENABLED);
+    await openNFCSettings();
   };
+
+  public async componentDidUpdate(prevProps: Props, prevState: State) {
+    // When app becomes active from background the state of nfc
+    // must be updated
+    if (
+      prevProps.appState === "background" &&
+      this.props.appState === "active"
+    ) {
+      await this.updateNfcState();
+    }
+    if (!prevState.isNfcEnabled && this.state.isNfcEnabled) {
+      this.props.navigation.navigate(ROUTES.CIE_NFC_ENABLED);
+    }
+  }
 
   public render(): React.ReactNode {
     return (
@@ -72,4 +112,7 @@ class NfcDisabledScreen extends React.Component<Props> {
   }
 }
 
-export default NfcDisabledScreen;
+const mapStateToProps = (state: GlobalState) => ({
+  appState: state.appState.appState
+});
+export default connect(mapStateToProps)(NfcDisabledScreen);
