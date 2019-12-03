@@ -3,13 +3,13 @@
  * on top of the root component.
  */
 
-import { View } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Animated, Dimensions, Easing, StyleSheet, View } from "react-native";
 
 export type LightModalContextInterface = Readonly<{
   component: React.ReactNode;
   showModal: (component: React.ReactNode) => void;
+  showAnimatedModal: (component: React.ReactNode) => void;
   hideModal: () => void;
 }>;
 
@@ -18,6 +18,7 @@ export const LightModalContext = React.createContext<
 >({
   component: null,
   showModal: () => undefined,
+  showAnimatedModal: () => undefined,
   hideModal: () => undefined
 });
 
@@ -36,10 +37,45 @@ const styles = StyleSheet.create({
   }
 });
 
+const animatedValue = new Animated.Value(0);
+const compositeAnimation = Animated.timing(animatedValue, {
+  toValue: 1,
+  duration: 250,
+  useNativeDriver: true,
+  easing: Easing.linear
+});
+const animationCallback = () => compositeAnimation.start();
+const screenWidth = Dimensions.get("screen").width;
+const styledAnimation = {
+  transform: [
+    {
+      translateX: animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [screenWidth, 0]
+      })
+    }
+  ]
+};
+
 export const LightModalConsumer = LightModalContext.Consumer;
 
 export class LightModalProvider extends React.Component<Props, State> {
-  public showModal = (component: React.ReactNode) => {
+  public showAnimatedModal = (childComponent: React.ReactNode) => {
+    const component = (
+      <Animated.View style={[styles.container, styledAnimation]}>
+        {childComponent}
+      </Animated.View>
+    );
+    this.setState(
+      {
+        component
+      },
+      animationCallback
+    );
+  };
+
+  public showModal = (childComponent: React.ReactNode) => {
+    const component = <View style={[styles.container]}>{childComponent}</View>;
     this.setState({
       component
     });
@@ -53,6 +89,7 @@ export class LightModalProvider extends React.Component<Props, State> {
   public state = {
     component: null,
     showModal: this.showModal,
+    showAnimatedModal: this.showAnimatedModal,
     hideModal: this.hideModal
   };
 
@@ -66,9 +103,5 @@ export class LightModalProvider extends React.Component<Props, State> {
 }
 
 export const LightModalRoot: React.SFC = () => (
-  <LightModalConsumer>
-    {({ component }) =>
-      component ? <View style={styles.container}>{component}</View> : null
-    }
-  </LightModalConsumer>
+  <LightModalConsumer>{({ component }) => component}</LightModalConsumer>
 );
