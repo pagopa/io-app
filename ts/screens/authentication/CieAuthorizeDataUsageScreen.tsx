@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class CieNeedPrivacyScreen extends React.Component<Props, State> {
+class CieAuthorizeDataUsageScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { isLoadingCompleted: false };
@@ -76,4 +76,4 @@ class CieNeedPrivacyScreen extends React.Component<Props, State> {
   }
 }
 
-export default CieNeedPrivacyScreen;
+export default CieAuthorizeDataUsageScreen;
