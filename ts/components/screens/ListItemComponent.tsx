@@ -20,6 +20,7 @@ type Props = Readonly<{
   iconName?: string;
   iconSize?: number;
   hideIcon?: boolean;
+  paddingRightDescription?: number;
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
@@ -31,6 +32,7 @@ type Props = Readonly<{
 }>;
 
 const ICON_SIZE = 24;
+const PADDING_R_DESCRIPTION = 24;
 
 const styles = StyleSheet.create({
   listItem: {
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 14,
-    paddingRight: ICON_SIZE,
+    paddingRight: PADDING_R_DESCRIPTION,
     alignSelf: "flex-start"
   },
   badgeStyle: {
@@ -85,7 +87,8 @@ const styles = StyleSheet.create({
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
     const { iconSize = ICON_SIZE } = this.props;
-    const hasIcon = this.props.iconName || this.props.hideIcon === true;
+    const showDefaultIcon =
+      this.props.iconName === undefined && this.props.hideIcon !== true;
     return (
       <ListItem
         style={[styles.listItem, styles.flexRow, this.props.style]}
@@ -117,40 +120,45 @@ export default class ListItemComponent extends React.Component<Props> {
                 </Badge>
               )}
             </View>
-            {!hasIcon &&
+            {showDefaultIcon &&
               (this.props.isLongPressEnabled ? (
                 <Switch
                   key={this.props.keySwitch}
                   value={this.props.switchValue}
                   onValueChange={this.props.onSwitchValueChanged}
                 />
-              ) : !hasIcon ? (
+              ) : (
                 <IconFont
                   name="io-right"
-                  size={ICON_SIZE}
+                  size={iconSize}
                   color={customVariables.contentPrimaryBackground}
                 />
-              ) : (
-                undefined
               ))}
           </View>
           {this.props.subTitle && (
             <Text
               numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-              style={styles.description}
+              style={[
+                styles.description,
+                {
+                  paddingRight:
+                    this.props.paddingRightDescription || PADDING_R_DESCRIPTION
+                }
+              ]}
             >
               {this.props.subTitle}
             </Text>
           )}
         </View>
-        {this.props.iconName && (
-          <IconFont
-            name={this.props.iconName}
-            size={iconSize * 2}
-            style={{ alignSelf: "center" }}
-            color={customVariables.contentPrimaryBackground}
-          />
-        )}
+        {this.props.iconName !== undefined &&
+          this.props.hideIcon !== true && (
+            <IconFont
+              name={this.props.iconName}
+              size={iconSize * 2}
+              style={{ alignSelf: "center" }}
+              color={customVariables.contentPrimaryBackground}
+            />
+          )}
       </ListItem>
     );
   }
