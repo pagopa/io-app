@@ -1,11 +1,5 @@
 import { Button, List, Text } from "native-base";
 import * as React from "react";
-import {
-  Platform,
-  StyleSheet,
-  TouchableHighlight,
-  TouchableOpacity
-} from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -21,34 +15,6 @@ import I18n from "../../i18n";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
-
-const styles = StyleSheet.create({
-  content: {
-    padding: customVariables.contentPadding,
-    paddingTop: 48
-  },
-  calendarItemWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: customVariables.brandLightGray,
-    color: customVariables.contentPrimaryBackground
-  },
-  separator: {
-    paddingTop: 25,
-    width: "100%"
-  }
-});
-
-const TouchableComponent =
-  Platform.OS === "ios" ? TouchableHighlight : TouchableOpacity;
-
-type CalendarItemProps = {
-  calendar: Calendar;
-  onPress: () => void;
-};
 
 type OwnProps = NavigationInjectedProps;
 
