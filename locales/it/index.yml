@@ -260,6 +260,9 @@ authentication:
     temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
     temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
     temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
+    readerCardTitle: Tieni ferma la carta per qualche secondo
+    readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
+    readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
   cie_information_request: !include cie.md
   spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
   request_cie: Richiedi CIE
@@ -276,14 +279,6 @@ authentication:
     paragraph3: Proseguendo dichiari di accettare le
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
-  cie:
-    cie: Carta di Identità Elettronica
-    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
-    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
-    readerCardTitle: Tieni ferma la carta per qualche secondo
-    readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
-    readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
   spid_information:
     spid: !include spid.md
     headerTitle: Non hai SPID?
