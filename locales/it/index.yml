@@ -260,6 +260,8 @@ authentication:
     temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
     temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
     temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
+    noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
+    authToSendData: !include cie/auth_to_send_data.md
   cie_information_request: !include cie.md
   spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
   request_cie: Richiedi CIE
