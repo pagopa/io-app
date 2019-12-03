@@ -60,7 +60,6 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
 
   private onCalendarSelected = (calendar: Calendar) => {
     this.props.preferredCalendarSaveSuccess(calendar);
-
     this.props.navigation.goBack();
   };
 
@@ -89,22 +88,20 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
             )}
             {pot.isSome(calendars) && (
               <List withContentLateralPadding={true}>
-                {calendars.value.map(calendar => (
-                  <ListItemComponent
-                    key={calendar.id}
-                    title={calendar.title}
-                    hideIcon={
-                      !(defaultCalendar && calendar.id === defaultCalendar.id)
-                    }
-                    iconNameSize={12}
-                    iconName={
-                      defaultCalendar && calendar.id === defaultCalendar.id
-                        ? "io-plus"
-                        : undefined
-                    }
-                    onPress={() => this.onCalendarSelected(calendar)}
-                  />
-                ))}
+                {calendars.value.map(calendar => {
+                  const isDefaultCalendar =
+                    defaultCalendar && calendar.id === defaultCalendar.id;
+                  return (
+                    <ListItemComponent
+                      key={calendar.id}
+                      title={calendar.title}
+                      hideIcon={!isDefaultCalendar}
+                      iconSize={12}
+                      iconName={isDefaultCalendar ? "io-tick-big" : undefined}
+                      onPress={() => this.onCalendarSelected(calendar)}
+                    />
+                  );
+                })}
                 <EdgeBorderComponent />
               </List>
             )}

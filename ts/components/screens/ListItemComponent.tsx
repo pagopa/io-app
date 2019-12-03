@@ -18,7 +18,7 @@ type Props = Readonly<{
   isLastItem?: boolean;
   hasBadge?: boolean;
   iconName?: string;
-  iconNameSize?: number;
+  iconSize?: number;
   hideIcon?: boolean;
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
 
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
-    const { iconNameSize = ICON_SIZE } = this.props;
+    const { iconSize = ICON_SIZE } = this.props;
+    const hasIcon = this.props.iconName || this.props.hideIcon === true;
     return (
       <ListItem
         style={[styles.listItem, styles.flexRow, this.props.style]}
@@ -116,15 +117,14 @@ export default class ListItemComponent extends React.Component<Props> {
                 </Badge>
               )}
             </View>
-            {!this.props.iconName &&
-              !this.props.hideIcon &&
+            {!hasIcon &&
               (this.props.isLongPressEnabled ? (
                 <Switch
                   key={this.props.keySwitch}
                   value={this.props.switchValue}
                   onValueChange={this.props.onSwitchValueChanged}
                 />
-              ) : !this.props.iconName && !this.props.hideIcon ? (
+              ) : !hasIcon ? (
                 <IconFont
                   name="io-right"
                   size={ICON_SIZE}
@@ -146,7 +146,7 @@ export default class ListItemComponent extends React.Component<Props> {
         {this.props.iconName && (
           <IconFont
             name={this.props.iconName}
-            size={iconNameSize * 2}
+            size={iconSize * 2}
             style={{ alignSelf: "center" }}
             color={customVariables.contentPrimaryBackground}
           />
