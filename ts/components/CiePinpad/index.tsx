@@ -69,7 +69,7 @@ class CiePinpad extends React.PureComponent<Props, State> {
     this.props.onPinChanged(pin.join(""));
     // if it is not the last element, change focus on next element
     // handleOnKeyPress is used to handle the Backspace press
-    if (index + 1 < this.inputs.length) {
+    if (text !== "" && index + 1 < this.inputs.length) {
       this.inputs[index + 1].focus();
       return;
     }
@@ -93,11 +93,10 @@ class CiePinpad extends React.PureComponent<Props, State> {
     if (nativeEvent.key === "Backspace") {
       // check if a deletion is going. If yes, set the focus to the previous input
       // it works only if the index is not the first element
-      if (
-        (index > 0 && !this.state.pin[index]) ||
-        this.state.pin[index].length === 0
-      ) {
-        this.updatePin("", index - 1);
+      if (index > 0) {
+        if (!this.state.pin[index] || this.state.pin[index].length === 0) {
+          this.updatePin("", index - 1);
+        }
         this.inputs[index - 1].focus();
       }
       return;
