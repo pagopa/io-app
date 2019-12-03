@@ -130,8 +130,8 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
                     hideIcon={
                       !(defaultCalendar && calendar.id === defaultCalendar.id)
                     }
-                    iconSize={12}
-                    iconNameSize={
+                    iconNameSize={12}
+                    iconName={
                       defaultCalendar && calendar.id === defaultCalendar.id
                         ? "io-plus"
                         : undefined
