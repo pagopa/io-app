@@ -21,6 +21,7 @@ import {
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import { getLocalePrimary } from "../../utils/locale";
 
@@ -47,15 +48,10 @@ type Props = OwnProps &
 
 type State = {
   isFingerprintAvailable: boolean;
-  hasCalendarPermission: boolean;
-  checkCalendarPermissionAndUpdateStateSubscription?: ReturnType<
-    NavigationScreenProp<NavigationState>["addListener"]
-  >;
 };
 
 const INITIAL_STATE: State = {
-  isFingerprintAvailable: false,
-  hasCalendarPermission: false
+  isFingerprintAvailable: false
 };
 
 /**
@@ -110,9 +106,32 @@ class PreferencesScreen extends React.Component<Props, State> {
 
   private checkPermissionThenGoCalendar = () => {
     checkAndRequestPermission()
-      .then(hasPermission => {
-        if (hasPermission) {
+      .then(calendarPermission => {
+        if (calendarPermission.authorized) {
           this.props.navigateToCalendarPreferenceScreen();
+        } else if (!calendarPermission.asked) {
+          // Authorized is false (denied, restricted or undetermined)
+          // If the user denied permission previously (not in this session)
+          // prompt an alert to inform that his calendar permissions could have been turned off
+          Alert.alert(
+            I18n.t("messages.cta.calendarPermDenied.title"),
+            undefined,
+            [
+              {
+                text: I18n.t("messages.cta.calendarPermDenied.cancel"),
+                style: "cancel"
+              },
+              {
+                text: I18n.t("messages.cta.calendarPermDenied.ok"),
+                style: "default",
+                onPress: () => {
+                  // open app settings to turn on the calendar permissions
+                  openAppSettings();
+                }
+              }
+            ],
+            { cancelable: true }
+          );
         }
       })
       .catch();
@@ -120,7 +139,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 
   public render() {
     const { potProfile } = this.props;
-    const { hasCalendarPermission, isFingerprintAvailable } = this.state;
+    const { isFingerprintAvailable } = this.state;
 
     const profileData = potProfile
       .map(_ => ({
