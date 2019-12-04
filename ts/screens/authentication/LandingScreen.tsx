@@ -28,7 +28,6 @@ type OwnProps = {
 type Props = ReduxProps & OwnProps;
 type State = {
   isCIEAuthenticationSupported: boolean;
-  isNfcEnabled: boolean;
 };
 
 const getCards = (
@@ -75,15 +74,13 @@ const getCards = (
 class LandingScreen extends React.PureComponent<Props, State> {
   public constructor(props: Props) {
     super(props);
-    this.state = { isCIEAuthenticationSupported: false, isNfcEnabled: false };
+    this.state = { isCIEAuthenticationSupported: false };
   }
 
   public async componentDidMount() {
     const isCieSupported = await isCIEAuthenticationSupported();
-    const isNfcOn = await isNfcEnabled();
     this.setState({
-      isCIEAuthenticationSupported: isCieSupported,
-      isNfcEnabled: isNfcOn
+      isCIEAuthenticationSupported: isCieSupported
     });
   }
 
@@ -92,9 +89,10 @@ class LandingScreen extends React.PureComponent<Props, State> {
   private navigateToIdpSelection = () =>
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
-  private navigateToCiePinScreen = () => {
+  private navigateToCiePinScreen = async () => {
+    const isNfcOn = await isNfcEnabled();
     this.props.navigation.navigate(
-      this.state.isNfcEnabled ? ROUTES.CIE_PIN_SCREEN : ROUTES.CIE_NFC_DISABLED
+      isNfcOn ? ROUTES.CIE_PIN_SCREEN : ROUTES.CIE_NFC_DISABLED
     );
   };
 
