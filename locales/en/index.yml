@@ -259,6 +259,8 @@ authentication:
     readerCardFooter: Hold the card in this position for a few more seconds
     readerCardLostTitle: Hold the card again for a few seconds
     readerCardLostHeader: We have not yet finished reading the card data.
+    noDataTitle: To use IO you must authorize the sending of data
+    authToSendData: !include cie/auth_to_send_data.md
   cie_information_request: !include cie.md
   spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
   request_cie: Request CIE
