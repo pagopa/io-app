@@ -23,8 +23,7 @@ type State = {
 const styles = StyleSheet.create({
   placeholderContainer: {
     flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: variables.colorWhite
+    justifyContent: "center"
   },
   text: {
     alignSelf: "center",
@@ -129,12 +128,12 @@ class CiePinpad extends React.PureComponent<Props, State> {
           }}
           style={{
             ...styles.textInputStyle,
-            width: targetDimension,
-            height: targetDimension
+            width: targetDimension
           }}
           key={`textinput-${i}`}
           maxLength={1}
           secureTextEntry={true}
+          multiline={false}
           keyboardType="number-pad"
           autoFocus={i === 0} // The focus is on the first TextInput, in this way the opening of the keyboard is automatic
           caretHidden={true} // The caret is disabled to avoid confusing the user
@@ -165,12 +164,11 @@ class CiePinpad extends React.PureComponent<Props, State> {
     // As many input boxes are created as pinLength props
     return (
       <View>
+        <View spacer={true} />
         <View style={styles.placeholderContainer}>
-          {Array(this.props.pinLength)
-            .fill("")
-            .map((_, i) => {
-              return this.inputBoxGenerator(i);
-            })}
+          {this.state.pin.map((_, i) => {
+            return this.inputBoxGenerator(i);
+          })}
         </View>
         <View spacer={true} />
         <Text>{this.props.description}</Text>
