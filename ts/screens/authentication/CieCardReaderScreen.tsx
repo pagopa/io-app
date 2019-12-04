@@ -55,6 +55,8 @@ const styles = StyleSheet.create({
 
 type State = {
   progressBarValue: number;
+  // This boolean change progress color, if true the color turns red
+  isReadInterrupted: boolean;
 };
 
 /**
@@ -64,18 +66,23 @@ class CieCardReaderScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      progressBarValue: 0
+      progressBarValue: 0,
+      isReadInterrupted: false
     };
     // Start an interval to increment progress bar
     const interval = setInterval(() => {
       // After 60% decrease velocity
       if (this.state.progressBarValue < 60) {
         this.setState({
-          progressBarValue: this.state.progressBarValue + 0.5
+          progressBarValue: this.state.isReadInterrupted
+            ? this.state.progressBarValue
+            : this.state.progressBarValue + 0.5
         });
       } else {
         this.setState({
-          progressBarValue: this.state.progressBarValue + 0.2
+          progressBarValue: this.state.isReadInterrupted
+            ? this.state.progressBarValue
+            : this.state.progressBarValue + 0.2
         });
       }
       // Stop interval
@@ -104,7 +111,11 @@ class CieCardReaderScreen extends React.Component<Props, State> {
               percent={this.state.progressBarValue}
               radius={imgDimension / 2}
               borderWidth={3}
-              color={customVariables.brandPrimary}
+              color={
+                this.state.isReadInterrupted
+                  ? customVariables.brandDanger
+                  : customVariables.brandPrimary
+              }
               shadowColor={customVariables.brandLightGray}
               bgColor={customVariables.brandLightGray}
             >
