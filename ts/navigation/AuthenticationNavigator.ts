@@ -5,8 +5,8 @@ import {
 
 import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
-import CieCardReaderScreen from "../screens/authentication/CieCardReaderScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/CieAuthorizeDataUsageScreen";
+import CieCardReaderScreen from "../screens/authentication/CieCardReaderScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
 import CiePinScreen from "../screens/authentication/CiePinScreen";
 import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
