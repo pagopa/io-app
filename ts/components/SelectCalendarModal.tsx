@@ -1,94 +1,31 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Container, Content, Text, View } from "native-base";
+import { Container, Content, Text, View } from "native-base";
 import React from "react";
-import {
-  BackHandler,
-  Platform,
-  StyleSheet,
-  TouchableHighlight,
-  TouchableOpacity
-} from "react-native";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+import { BackHandler, StyleSheet } from "react-native";
+import { Calendar } from "react-native-calendar-events";
 
 import { connect } from "react-redux";
-import { GlobalState } from "../store/reducers/types";
-
-import IconFont from "../components/ui/IconFont";
 import I18n from "../i18n";
-import customVariables from "../theme/variables";
+import { GlobalState } from "../store/reducers/types";
+import CalendarsListContainer from "./CalendarsListContainer";
+import ItemSeparatorComponent from "./ItemSeparatorComponent";
+import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
+import { ScreenContentHeader } from "./screens/ScreenContentHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
+
+type Props = ReturnType<typeof mapStateToProps> & {
+  onCancel: () => void;
+  onCalendarSelected: (calendar: Calendar) => void;
+};
 
 const styles = StyleSheet.create({
   content: {
-    padding: customVariables.contentPadding,
     paddingTop: 48
-  },
-  calendarItemWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: customVariables.brandLightGray,
-    color: customVariables.contentPrimaryBackground
-  },
-  separator: {
-    height: 10,
-    width: "100%"
   }
 });
 
-const TouchableComponent =
-  Platform.OS === "ios" ? TouchableHighlight : TouchableOpacity;
-
-type CalendarItemProps = {
-  calendar: Calendar;
-  onPress: () => void;
-};
-
-/**
- * Renders a Calendar as FlatList item
- */
-const CalendarItem: React.SFC<CalendarItemProps> = props => (
-  <TouchableComponent onPress={props.onPress}>
-    <View style={styles.calendarItemWrapper}>
-      <Text link={true}>{props.calendar.title}</Text>
-      <IconFont
-        name="io-right"
-        color={customVariables.contentPrimaryBackground}
-      />
-    </View>
-  </TouchableComponent>
-);
-
-type Props = {
-  onCancel: () => void;
-  onCalendarSelected: (calendar: Calendar) => void;
-  header?: React.ReactNode;
-  defaultCalendar?: Calendar;
-};
-
 type State = {
-  calendars: pot.Pot<ReadonlyArray<Calendar>, ResourceError>;
+  isLoading: boolean;
 };
-
-type FetchError = {
-  kind: "FETCH_ERROR";
-};
-
-type ResourceError = FetchError;
-
-const mapResourceErrorToMessage = (resourceError: ResourceError): string => {
-  switch (resourceError.kind) {
-    case "FETCH_ERROR":
-      return I18n.t("messages.cta.errors.fetchCalendars");
-
-    default: {
-      // Exhaustive check
-      return ((): never => resourceError.kind)();
-    }
-  }
-};
-
 /**
  * A modal that allow the user to select one of the device available Calendars
  */
@@ -96,10 +33,9 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      calendars: pot.none
+      isLoading: true
     };
   }
-
   private onBackPress = () => {
     this.props.onCancel();
     // Returning true is mandatory to avoid the default press action to be
@@ -107,82 +43,54 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
     return true;
   };
 
-  public render() {
-    const { calendars } = this.state;
+  private onCalendarLoaded = () => {
+    this.setState({ isLoading: false });
+  };
 
+  public render() {
+    const { isLoading } = this.state;
     return (
-      <Container>
-        <Content style={styles.content}>
-          {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
-          {pot.isError(calendars) && (
-            <React.Fragment>
-              <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
-              <Button onPress={this.fetchCalendars}>
-                <Text>{I18n.t("global.buttons.retry")}</Text>
-              </Button>
-            </React.Fragment>
-          )}
-          {pot.isSome(calendars) && (
-            <React.Fragment>
-              {this.props.header || null}
-              {calendars.value.map(calendar => (
-                <CalendarItem
-                  key={calendar.id}
-                  calendar={calendar}
-                  onPress={() => this.props.onCalendarSelected(calendar)}
-                />
-              ))}
-              {this.props.defaultCalendar === undefined && (
-                <View>
-                  <View style={styles.separator} />
-                  <Text>{I18n.t("messages.cta.helper")}</Text>
-                </View>
-              )}
-            </React.Fragment>
-          )}
-        </Content>
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={{
-            disabled: pot.isLoading(calendars),
-            bordered: true,
-            onPress: this.props.onCancel,
-            title: I18n.t("global.buttons.cancel"),
-            block: true
-          }}
-        />
-      </Container>
+      <LoadingSpinnerOverlay isLoading={isLoading}>
+        <Container>
+          <Content noPadded={true} style={styles.content}>
+            <ScreenContentHeader
+              title={I18n.t("messages.cta.reminderCalendarSelect")}
+            />
+            <CalendarsListContainer
+              onCalendarSelected={this.props.onCalendarSelected}
+              onCalendarLoaded={this.onCalendarLoaded}
+              lastListItem={
+                this.props.defaultCalendar === undefined && (
+                  <View>
+                    <ItemSeparatorComponent />
+                    <Text>{I18n.t("messages.cta.helper")}</Text>
+                  </View>
+                )
+              }
+            />
+          </Content>
+          <FooterWithButtons
+            type="SingleButton"
+            leftButton={{
+              disabled: isLoading,
+              bordered: true,
+              onPress: this.props.onCancel,
+              title: I18n.t("global.buttons.cancel"),
+              block: true
+            }}
+          />
+        </Container>
+      </LoadingSpinnerOverlay>
     );
   }
 
   public componentDidMount() {
-    this.fetchCalendars();
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
   }
 
   public componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
-
-  private fetchCalendars = () => {
-    this.setState({ calendars: pot.toLoading(pot.none) });
-    // Fetch user calendars.
-    // The needed permissions are already checked/asked by the MessageCTABar component.
-    RNCalendarEvents.findCalendars()
-      .then(calendars =>
-        // Filter only the calendars that allow modifications
-        calendars.filter(calendar => calendar.allowsModifications)
-      )
-      .then(calendars => this.setState({ calendars: pot.some(calendars) }))
-      .catch(_ => {
-        const fetchError: FetchError = {
-          kind: "FETCH_ERROR"
-        };
-        this.setState({
-          calendars: pot.toError(pot.none, fetchError)
-        });
-      });
-  };
 }
 
 const mapStateToProps = (state: GlobalState) => ({
