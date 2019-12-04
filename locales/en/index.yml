@@ -257,6 +257,8 @@ authentication:
     readerCardTitle: Hold the card for a few seconds
     readerCardHeader: We are reading the data of your CIE and verifying its validity.
     readerCardFooter: Hold the card in this position for a few more seconds
+    readerCardLostTitle: Hold the card again for a few seconds
+    readerCardLostHeader: We have not yet finished reading the card data.
   cie_information_request: !include cie.md
   spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
   request_cie: Request CIE
