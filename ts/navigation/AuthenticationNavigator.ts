@@ -7,6 +7,7 @@ import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/CieAuthorizeDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
+import CIENfcScreen from "../screens/authentication/CIENfcScreen";
 import CiePinScreen from "../screens/authentication/CiePinScreen";
 import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
 import CieValidScreen from "../screens/authentication/CieValidScreen";
@@ -14,8 +15,6 @@ import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
-import NfcDisabledScreen from "../screens/authentication/NfcDisabledScreen";
-import NfcEnabledScreen from "../screens/authentication/NfcEnabledScreen";
 import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
@@ -65,11 +64,8 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.CIE_AUTHORIZE_USAGE_SCREEN]: {
     screen: CieAuthorizeDataUsageScreen
   },
-  [ROUTES.CIE_NFC_ENABLED]: {
-    screen: NfcEnabledScreen
-  },
-  [ROUTES.CIE_NFC_DISABLED]: {
-    screen: NfcDisabledScreen
+  [ROUTES.CIE_NFC_SCREEN]: {
+    screen: CIENfcScreen
   }
 };
 
