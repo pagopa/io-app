@@ -26,6 +26,8 @@ import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import { InferNavigationParams } from "../../types/react";
 import CieRequestAuthenticationScreen from "../../screens/authentication/cie/CieRequestAuthenticationScreen";
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
+import CieConfirmDataUsage from "../../screens/authentication/cie/CieConsentDataUsageScreen";
+import CieValidScreen from "../../screens/authentication/cie/CieValidScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -252,9 +254,12 @@ export const navigateToCieInvalidScreen = () =>
     routeName: ROUTES.CIE_EXPIRED_SCREEN
   });
 
-export const navigateToCieValid = () =>
+export const navigateToCieValid = (
+  params?: InferNavigationParams<typeof CieValidScreen>
+) =>
   NavigationActions.navigate({
-    routeName: ROUTES.CIE_VALID_SCREEN
+    routeName: ROUTES.CIE_VALID_SCREEN,
+    params
   });
 
 export const navigateToCieSuccessScreen = () =>
@@ -285,5 +290,13 @@ export const navigateToCieCardReaderScreen = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_CARD_READER_SCREEN,
+    params
+  });
+
+export const navigateToCieConfirmDataUsage = (
+  params?: InferNavigationParams<typeof CieConfirmDataUsage>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_CONSENT_DATA_USAGE,
     params
   });

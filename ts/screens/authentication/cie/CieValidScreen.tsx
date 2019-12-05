@@ -6,9 +6,14 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
+import { navigateToCieConfirmDataUsage } from "../../../store/actions/navigation";
+
+type NavigationParams = {
+  cieConsentUri: string;
+};
 
 type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
+  navigation: NavigationScreenProp<NavigationParams>;
 }>;
 
 type Props = OwnProps;
@@ -52,6 +57,20 @@ const styles = StyleSheet.create({
 });
 
 class CieValidScreen extends React.Component<Props> {
+  public componentDidMount() {
+    setTimeout(() => {
+      this.props.navigation.navigate(
+        navigateToCieConfirmDataUsage({
+          cieConsentUri: this.cieAuthorizationUri
+        })
+      );
+    }, 1500);
+  }
+
+  get cieAuthorizationUri(): string {
+    return this.props.navigation.getParam("cieConsentUri");
+  }
+
   public render(): React.ReactNode {
     return (
       <BaseScreenComponent goBack={true}>

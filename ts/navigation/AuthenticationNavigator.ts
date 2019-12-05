@@ -21,6 +21,7 @@ import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformati
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
+import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 
 // Routes loaded in production mode
 const productionRouteConfigMap: NavigationRouteConfigMap = {
@@ -74,6 +75,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.CIE_CARD_READER_SCREEN]: {
     screen: CieCardReaderScreen
+  },
+  [ROUTES.CIE_CONSENT_DATA_USAGE]: {
+    screen: CieConsentDataUsageScreen
   }
 };
 

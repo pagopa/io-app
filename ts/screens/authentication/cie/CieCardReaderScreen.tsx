@@ -2,6 +2,7 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, Easing, Image, StyleSheet } from "react-native";
+import cieManager, { Event as CEvent } from "react-native-cie";
 import ProgressCircle from "react-native-progress-circle";
 import {
   NavigationScreenProp,
@@ -13,6 +14,7 @@ import ScreenHeader from "../../../components/ScreenHeader";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
+import { navigateToCieValid } from "../../../store/actions/navigation";
 
 interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
@@ -93,7 +95,7 @@ class CieCardReaderScreen extends React.Component<Props, State> {
       - error (the reading is interrupted -> progress animation stops and the progress circle becomes red)
       - completed (the reading has been completed)
       */
-      readingState: "waiting_card"
+      readingState: "error"
     };
     this.progressAnimatedValue = new Animated.Value(0);
     this.progressAnimatedValue.addListener(anim => {
@@ -116,6 +118,14 @@ class CieCardReaderScreen extends React.Component<Props, State> {
     this.progressAnimation = Animated.sequence([firstAnim, secondAnim]);
   }
 
+  get ciePin(): string {
+    return this.props.navigation.getParam("ciePin");
+  }
+
+  get cieAuthorizationUri(): string {
+    return this.props.navigation.getParam("authorizationUri");
+  }
+
   public componentDidUpdate(_: Props, prevState: State) {
     // If we start reading the card, start the animation
     if (
@@ -132,6 +142,59 @@ class CieCardReaderScreen extends React.Component<Props, State> {
     ) {
       this.progressAnimation.stop();
     }
+  }
+
+  private handleCieEvent = (event: CEvent): void => {
+    switch (event.event) {
+      case "ON_TAG_DISCOVERED":
+        if (this.state.readingState !== "reading") {
+          this.setState({ readingState: "reading" });
+        }
+
+        break;
+      case "ON_TAG_LOST":
+      case "AUTHENTICATION_ERROR":
+      case "CERTIFICATE_EXPIRED":
+      case "ON_NO_INTERNET_CONNECTION":
+      case "ON_PIN_ERROR":
+        this.setState({ readingState: "error" });
+        break;
+      default:
+        break;
+    }
+  };
+
+  private handleCieError = (_: Error) => {
+    this.setState({ readingState: "error" });
+  };
+
+  private handleCieSuccess = (consentUri: string) => {
+    this.setState({ readingState: "completed" });
+    this.props.navigation.navigate(
+      navigateToCieValid({ cieConsentUri: consentUri })
+    );
+  };
+
+  public async componentWillUnmount() {
+    cieManager.removeAllListeners();
+    await cieManager.stopListeningNFC();
+  }
+
+  public componentDidMount() {
+    cieManager
+      .start()
+      .then(async () => {
+        cieManager.onEvent(this.handleCieEvent);
+        cieManager.onError(this.handleCieError);
+        cieManager.onSuccess(this.handleCieSuccess);
+        await cieManager.setPin(this.ciePin);
+        cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
+        await cieManager.startListeningNFC();
+        this.setState({ readingState: "waiting_card" });
+      })
+      .catch(() => {
+        this.setState({ readingState: "error" });
+      });
   }
 
   public render(): React.ReactNode {
