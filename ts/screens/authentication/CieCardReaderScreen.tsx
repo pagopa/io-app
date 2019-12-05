@@ -91,7 +91,7 @@ class CieCardReaderScreen extends React.Component<Props, State> {
     this.progressAnimatedValue.addListener(anim => {
       this.setState({ progressBarValue: anim.value });
     });
-    // Two animation: the first fill the progress with the primary
+    // Two animation: the first fills the progress with the primary
     // color up to progressThreshold, the second up to 100
     // from 0 to 60 in 8 secs
     const firstAnim = Animated.timing(this.progressAnimatedValue, {
@@ -106,25 +106,6 @@ class CieCardReaderScreen extends React.Component<Props, State> {
       duration: 10000
     });
     this.progressAnimation = Animated.sequence([firstAnim, secondAnim]);
-    // TODO: remove this!!
-    // Simulates error
-    // tslint:disable-next-line: no-commented-code
-    /* const reading_states: ReadingState[] = [
-      "reading",
-      "error",
-      "completed",
-      "waiting_card"
-    ];
-    let index = 0;
-    setInterval(() => {
-      this.setState({ readingState: reading_states[index] }, () => {
-        console.warn(reading_states[index]);
-        index++;
-        if (index >= reading_states.length) {
-          index = 0;
-        }
-      });
-    }, 5000); */
   }
 
   public componentDidUpdate(_: Props, prevState: State) {
