@@ -1,7 +1,7 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Animated, Easing, Image, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import AnimatedRing from "../../components/animations/AnimatedRing";
@@ -18,12 +18,7 @@ type Props = OwnProps;
 // Image dimension
 const imgDimension = 180;
 const boxDimension = 245;
-/** Every stepTimeProgress update circular progress, max value progress is 100, example
- *  50: the animation ending in 16 seconds
- *  60: the animation ending in 19 seconds
- *  ecc ecc
- */
-const stepTimeProgress = 50;
+const progressThreshold = 60;
 
 const styles = StyleSheet.create({
   messageHeader: {
@@ -67,49 +62,72 @@ const styles = StyleSheet.create({
 type State = {
   progressBarValue: number;
   // This boolean change progress color, if true the color turns red
-  isReadInterrupted: boolean;
+  error: boolean;
+  waiting_card: boolean;
+  reading: boolean;
+  completed: boolean;
 };
 
 /**
  *  This screen shown while reading the card
  */
 class CieCardReaderScreen extends React.Component<Props, State> {
+  private progressAnimation: Animated.CompositeAnimation;
+  private progressAnimatedValue: Animated.Value;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       progressBarValue: 0,
-      isReadInterrupted: false
+      /* 
+      These are the states that can occur when reading the cie (from SDK)
+      - waiting_card (we are ready for read ->radar effect)
+      - reading (we are reading the card -> progress animation)
+      - error (the reading is interrupted -> progress animation stops and the progress circle becomes red)
+      - completed (the reading has been completed)
+      */
+      error: false,
+      waiting_card: false,
+      reading: true,
+      completed: false
     };
-    // Start an interval to increment progress bar
-    const interval = setInterval(() => {
-      // After 60% decrease velocity
-      if (this.state.progressBarValue < 60) {
-        this.setState({
-          progressBarValue: this.state.isReadInterrupted
-            ? this.state.progressBarValue
-            : this.state.progressBarValue + 0.5
-        });
-      } else {
-        this.setState({
-          progressBarValue: this.state.isReadInterrupted
-            ? this.state.progressBarValue
-            : this.state.progressBarValue + 0.2
-        });
-      }
-      // Stop interval
-      if (this.state.progressBarValue >= 100 || this.state.isReadInterrupted) {
-        clearInterval(interval);
-      }
-    }, stepTimeProgress);
+    this.progressAnimatedValue = new Animated.Value(0);
+    this.progressAnimatedValue.addListener(anim => {
+      this.setState({ progressBarValue: anim.value });
+    });
+    this.progressAnimation = Animated.sequence([
+      // from 0 to 60 in 10 secs
+      Animated.timing(this.progressAnimatedValue, {
+        toValue: progressThreshold,
+        easing: Easing.linear,
+        duration: 8000
+      }),
+      // from 60 to 100 in 12 secs
+      Animated.timing(this.progressAnimatedValue, {
+        toValue: 100,
+        easing: Easing.linear,
+        duration: 10000
+      })
+    ]);
 
     // TODO: remove this!!
-    // Simulates user interruption
+    // Simulates error
     // tslint:disable-next-line: no-commented-code
     /*  setTimeout(() => {
       this.setState({
-        isReadInterrupted: true
+        error: true,
+        reading: false,
+        waiting_card: true
       });
+      this.progressAnimation.stop();
     }, 5000); */
+  }
+
+  public componentDidMount() {
+    // When card is reading start animation
+    if (this.state.reading) {
+      this.progressAnimation.start();
+    }
   }
 
   public render(): React.ReactNode {
@@ -128,20 +146,20 @@ class CieCardReaderScreen extends React.Component<Props, State> {
           <ScreenHeader
             heading={
               <H2 style={styles.titleHeader}>
-                {this.state.isReadInterrupted
+                {this.state.waiting_card
                   ? I18n.t("authentication.cie.readerCardLostTitle")
                   : I18n.t("authentication.cie.readerCardTitle")}
               </H2>
             }
           />
           <Text style={styles.messageHeader}>
-            {this.state.isReadInterrupted
+            {this.state.waiting_card
               ? I18n.t("authentication.cie.readerCardLostHeader")
               : I18n.t("authentication.cie.readerCardHeader")}
           </Text>
           <View style={styles.imgContainer}>
             <View style={styles.rings}>
-              {this.state.isReadInterrupted && (
+              {this.state.waiting_card && (
                 <AnimatedRing
                   dimension={ringSettings.dimension}
                   startAnimationAfter={0 as Millisecond}
@@ -149,7 +167,7 @@ class CieCardReaderScreen extends React.Component<Props, State> {
                   boxDimension={boxDimension}
                 />
               )}
-              {this.state.isReadInterrupted && (
+              {this.state.waiting_card && (
                 <AnimatedRing
                   dimension={ringSettings.dimension}
                   startAnimationAfter={ringSettings.delayX1}
@@ -157,7 +175,7 @@ class CieCardReaderScreen extends React.Component<Props, State> {
                   boxDimension={boxDimension}
                 />
               )}
-              {this.state.isReadInterrupted && (
+              {this.state.waiting_card && (
                 <AnimatedRing
                   dimension={ringSettings.dimension}
                   startAnimationAfter={ringSettings.delayX2}
@@ -171,7 +189,7 @@ class CieCardReaderScreen extends React.Component<Props, State> {
               radius={imgDimension / 2}
               borderWidth={3}
               color={
-                this.state.isReadInterrupted
+                this.state.error
                   ? customVariables.brandDanger
                   : customVariables.brandPrimary
               }
@@ -185,7 +203,7 @@ class CieCardReaderScreen extends React.Component<Props, State> {
             </ProgressCircle>
           </View>
           <Text style={styles.messageFooter}>
-            {this.state.isReadInterrupted
+            {this.state.waiting_card
               ? ""
               : I18n.t("authentication.cie.readerCardFooter")}
           </Text>
