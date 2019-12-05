@@ -25,6 +25,7 @@ import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScr
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import { InferNavigationParams } from "../../types/react";
 import CieRequestAuthenticationScreen from "../../screens/authentication/cie/CieRequestAuthenticationScreen";
+import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -276,5 +277,13 @@ export const navigateToCieRequestAuthenticationScreen = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_REQUEST_AUTHENTICATION_SCREEN,
+    params
+  });
+
+export const navigateToCieCardReaderScreen = (
+  params?: InferNavigationParams<typeof CieCardReaderScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_CARD_READER_SCREEN,
     params
   });

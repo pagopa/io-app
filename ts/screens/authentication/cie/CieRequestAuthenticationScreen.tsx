@@ -15,6 +15,9 @@ import variables from "../../../theme/variables";
 import { isNfcEnabled, openNFCSettings } from "../../../utils/cie";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import WebView from "react-native-webview";
+import { navigateToCieCardReaderScreen } from "../../../store/actions/navigation";
+import { Dispatch } from "../../../store/actions/types";
+import { connect } from "react-redux";
 
 const cieAuthenticationUri =
   "https://app-backend.k8s.test.cd.teamdigitale.it/login?entityID=xx_servizicie_test&authLevel=SpidL2";
@@ -32,11 +35,13 @@ type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }> &
   OwnProps &
-  NavigationScreenProps<NavigationParams>;
+  NavigationScreenProps<NavigationParams> &
+  ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   hasError: boolean;
   isLoading: boolean;
+  findOpenApp: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -80,17 +85,25 @@ const brokenLinkImage = require("../../../../img/broken-link.png");
 class CieRequestAuthenticationScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { hasError: false, isLoading: true };
+    this.state = { hasError: false, isLoading: true, findOpenApp: false };
   }
 
   private handleNavigationStateChange = (event: NavState): void => {
+    if (this.state.findOpenApp) {
+      return;
+    }
     if (event.url && event.url.indexOf("OpenApp") !== -1) {
-      console.warn("open app");
+      this.setState({ findOpenApp: true });
+      const authorizationUri = event.url;
+      this.props.dispatchNavigationToCieCardReaderScreen(
+        this.ciePin,
+        authorizationUri
+      );
     }
   };
 
-  componentDidMount() {
-    console.warn(this.props.navigation.getParam("ciePin"));
+  get ciePin(): string {
+    return this.props.navigation.getParam("ciePin");
   }
 
   private goBack = this.props.navigation.goBack;
@@ -140,7 +153,7 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
           onError={this.handleWebViewError}
           onNavigationStateChange={this.handleNavigationStateChange}
           source={{
-            uri: "https://www.google.it"
+            uri: cieAuthenticationUri
           }}
         />
       </View>
@@ -156,4 +169,14 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
   }
 }
 
-export default CieRequestAuthenticationScreen;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchNavigationToCieCardReaderScreen: (
+    ciePin: string,
+    authorizationUri: string
+  ) => dispatch(navigateToCieCardReaderScreen({ ciePin, authorizationUri }))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CieRequestAuthenticationScreen);

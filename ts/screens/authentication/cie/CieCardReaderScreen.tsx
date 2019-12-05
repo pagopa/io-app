@@ -3,18 +3,26 @@ import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, Easing, Image, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import AnimatedRing from "../../components/animations/AnimatedRing";
-import ScreenHeader from "../../components/ScreenHeader";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
+import {
+  NavigationScreenProp,
+  NavigationScreenProps,
+  NavigationState
+} from "react-navigation";
+import AnimatedRing from "../../../components/animations/AnimatedRing";
+import ScreenHeader from "../../../components/ScreenHeader";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import I18n from "../../../i18n";
+import customVariables from "../../../theme/variables";
 
 interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
 }
+type NavigationParams = {
+  ciePin: string;
+  authorizationUri: string;
+};
 
-type Props = OwnProps;
+type Props = OwnProps & NavigationScreenProps<NavigationParams>;
 // Image dimension
 const imgDimension = 180;
 const boxDimension = 245;
@@ -193,7 +201,7 @@ class CieCardReaderScreen extends React.Component<Props, State> {
               bgColor={customVariables.brandLightGray}
             >
               <Image
-                source={require("../../../img/landing/place-card-illustration.png")}
+                source={require("../../../../img/landing/place-card-illustration.png")}
                 style={styles.img}
               />
             </ProgressCircle>
