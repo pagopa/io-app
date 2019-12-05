@@ -6,6 +6,7 @@ import {
 import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/CieAuthorizeDataUsageScreen";
+import CieCardReaderScreen from "../screens/authentication/CieCardReaderScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
 import CiePinScreen from "../screens/authentication/CiePinScreen";
 import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
@@ -50,6 +51,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   // For valid cie screen
   [ROUTES.CIE_VALID_SCREEN]: {
     screen: CieValidScreen
+  },
+  [ROUTES.CIE_READER_SCREEN]: {
+    screen: CieCardReaderScreen
   },
   // For CIE success screen
   [ROUTES.CIE_SUCCESS_SCREEN]: {
