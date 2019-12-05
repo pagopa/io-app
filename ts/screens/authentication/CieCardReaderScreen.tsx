@@ -142,16 +142,20 @@ class CieCardReaderScreen extends React.Component<Props, State> {
           <ScreenHeader
             heading={
               <H2 style={styles.titleHeader}>
-                {this.state.readingState === "waiting_card"
+                {this.state.readingState === "error"
                   ? I18n.t("authentication.cie.readerCardLostTitle")
-                  : I18n.t("authentication.cie.readerCardTitle")}
+                  : this.state.readingState === "reading"
+                    ? I18n.t("authentication.cie.readerCardTitle")
+                    : I18n.t("cie.title")}
               </H2>
             }
           />
           <Text style={styles.messageHeader}>
-            {this.state.readingState === "waiting_card"
+            {this.state.readingState === "error"
               ? I18n.t("authentication.cie.readerCardLostHeader")
-              : I18n.t("authentication.cie.readerCardHeader")}
+              : this.state.readingState === "reading"
+                ? I18n.t("authentication.cie.readerCardHeader")
+                : I18n.t("cie.layCardMessageHeader")}
           </Text>
           <View style={styles.imgContainer}>
             <View style={styles.rings}>
@@ -199,9 +203,11 @@ class CieCardReaderScreen extends React.Component<Props, State> {
             </ProgressCircle>
           </View>
           <Text style={styles.messageFooter}>
-            {this.state.readingState === "waiting_card"
+            {this.state.readingState === "error"
               ? ""
-              : I18n.t("authentication.cie.readerCardFooter")}
+              : this.state.readingState === "reading"
+                ? I18n.t("authentication.cie.readerCardFooter")
+                : I18n.t("cie.layCardMessageFooter")}
           </Text>
         </Content>
         <View footer={true}>

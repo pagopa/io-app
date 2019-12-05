@@ -4,7 +4,6 @@ import {
 } from "react-navigation";
 
 import { environment } from "../config";
-import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/CieAuthorizeDataUsageScreen";
 import CieCardReaderScreen from "../screens/authentication/CieCardReaderScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
@@ -30,7 +29,7 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
     screen: IdpSelectionScreen
   },
   [ROUTES.AUTHENTICATION_CIE]: {
-    screen: CardSelectionScreen
+    screen: CieCardReaderScreen
   },
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
     screen: IdpLoginScreen
