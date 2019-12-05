@@ -14,6 +14,7 @@ type Props = {
   description: string;
   pinLength: number;
   onPinChanged: (pin: string) => void;
+  onSubmit: (pin: string) => void;
 };
 
 type State = {
@@ -139,6 +140,13 @@ class CiePinpad extends React.PureComponent<Props, State> {
           caretHidden={true} // The caret is disabled to avoid confusing the user
           value={this.state.pin[i]}
           onChangeText={text => this.handleOnChangeText(text, i)}
+          onSubmitEditing={() => {
+            if (
+              this.state.pin.map(p => p !== "").length === this.state.pin.length
+            ) {
+              this.props.onSubmit(this.state.pin.join(""));
+            }
+          }}
           onKeyPress={({ nativeEvent }) =>
             this.handleOnKeyPress(nativeEvent, i)
           }

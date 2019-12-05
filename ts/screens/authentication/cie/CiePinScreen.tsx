@@ -17,14 +17,16 @@ import ScreenHeader from "../../../components/ScreenHeader";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
 
-import { ReduxProps } from "../../../store/actions/types";
+import { connect } from "react-redux";
+import { navigateToCieRequestAuthenticationScreen } from "../../../store/actions/navigation";
+import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReduxProps & OwnProps;
+type Props = ReduxProps & OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   pin: string;
@@ -72,6 +74,7 @@ class CiePinScreen extends React.Component<Props, State> {
           pinLength={CIE_PIN_LENGTH}
           description={I18n.t("authentication.landing.cie.pinCardContent")}
           onPinChanged={this.handelOnPinChanged}
+          onSubmit={this.handleOnContinuePressButton}
         />
       </View>
     );
@@ -88,9 +91,9 @@ class CiePinScreen extends React.Component<Props, State> {
     );
   }
 
-  // TODO: To implement
-  // tslint:disable-next-line:no-empty
-  private handleOnContinuePressButton = () => {};
+  private handleOnContinuePressButton = () => {
+    this.props.dispatchNavigationToRequestAutenticationScreen(this.state.pin);
+  };
 
   public renderContinueButton() {
     return (
@@ -133,4 +136,12 @@ class CiePinScreen extends React.Component<Props, State> {
   }
 }
 
-export default CiePinScreen;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchNavigationToRequestAutenticationScreen: (ciePin: string) =>
+    dispatch(navigateToCieRequestAuthenticationScreen({ ciePin }))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CiePinScreen);

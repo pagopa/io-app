@@ -24,6 +24,7 @@ import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSu
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import { InferNavigationParams } from "../../types/react";
+import CieRequestAuthenticationScreen from "../../screens/authentication/cie/CieRequestAuthenticationScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -268,4 +269,12 @@ export const navigateToInterruptedReadingCie = () =>
 export const navigateToCiePinScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_PIN_SCREEN
+  });
+
+export const navigateToCieRequestAuthenticationScreen = (
+  params?: InferNavigationParams<typeof CieRequestAuthenticationScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_REQUEST_AUTHENTICATION_SCREEN,
+    params
   });

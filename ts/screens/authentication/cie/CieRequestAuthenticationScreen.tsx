@@ -1,26 +1,41 @@
-import { Container, H1, Text, View } from "native-base";
+import { Container, H1, Text, View, Button } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import { connect } from "react-redux";
+import { Image, NavState, StyleSheet } from "react-native";
+import {
+  NavigationScreenProp,
+  NavigationState,
+  NavigationScreenProps
+} from "react-navigation";
 import ScreenHeader from "../../../components/ScreenHeader";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import { ReduxProps } from "../../../store/actions/types";
-import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
 import { isNfcEnabled, openNFCSettings } from "../../../utils/cie";
+import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import WebView from "react-native-webview";
+
+const cieAuthenticationUri =
+  "https://app-backend.k8s.test.cd.teamdigitale.it/login?entityID=xx_servizicie_test&authLevel=SpidL2";
+
+type NavigationParams = {
+  ciePin: string;
+};
+
+type OwnProps = {
+  isLoading: boolean;
+  ciePin: string;
+};
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }> &
-  ReturnType<typeof mapStateToProps> &
-  ReduxProps;
+  OwnProps &
+  NavigationScreenProps<NavigationParams>;
 
 type State = {
-  isNfcEnabled: boolean;
+  hasError: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -29,117 +44,114 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: variables.fontSizeBase
+  },
+  errorContainer: {
+    padding: 20,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  errorTitle: {
+    fontSize: 20,
+    marginTop: 10
+  },
+
+  errorBody: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center"
+  },
+  errorButtonsContainer: {
+    position: "absolute",
+    bottom: 30,
+    flex: 1,
+    flexDirection: "row"
+  },
+  cancelButtonStyle: {
+    flex: 1,
+    marginEnd: 10
   }
 });
 
+const brokenLinkImage = require("../../../../img/broken-link.png");
+
 class CieRequestAuthenticationScreen extends React.Component<Props, State> {
-  private idInterval?: number;
   constructor(props: Props) {
     super(props);
-    this.state = { isNfcEnabled: false };
+    this.state = { hasError: false };
   }
 
-  private updateNfcState = async () => {
-    const isNfcOn = await isNfcEnabled();
-    if (this.state.isNfcEnabled !== isNfcOn) {
-      this.setState({ isNfcEnabled: isNfcOn });
+  private handleNavigationStateChange = (event: NavState): void => {
+    if (event.url && event.url.indexOf("OpenApp") !== -1) {
+      console.warn("open app");
     }
   };
 
-  private checkNfcState = async () => {
-    // it is executed repeatedly to check the nfc state
-    // we avoid to listen app state change because in most case, when user opens
-    // the nfc settings and then comes back the app doesn't change state
-    // tslint:disable-next-line: no-object-mutation
-    this.idInterval = setTimeout(async () => {
-      await this.updateNfcState();
-      await this.checkNfcState();
-    }, 300);
-  };
-
-  public async componentDidMount() {
-    await this.checkNfcState();
+  componentDidMount() {
+    console.warn(this.props.navigation.getParam("ciePin"));
   }
 
-  public componentWillUnmount() {
-    clearTimeout(this.idInterval);
-  }
+  private goBack = this.props.navigation.goBack;
 
-  private handleOnPressActivateNFC = async () => {
-    await openNFCSettings();
+  private handleWebViewError = () => {
+    this.setState({ hasError: true });
   };
-
-  private handleOnPressContinue = () => {
-    this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
-  };
-
-  private renderFooter = () => {
-    if (this.state.isNfcEnabled) {
-      return (
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={{
-            cancel: true,
-            onPress: this.props.navigation.goBack,
-            title: I18n.t("global.buttons.cancel"),
-            block: true
-          }}
-          rightButton={{
-            cancel: false,
-            onPress: this.handleOnPressContinue,
-            title: I18n.t("global.buttons.continue"),
-            block: true
-          }}
-        />
-      );
-    } else {
-      return (
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={{
-            cancel: true,
-            onPress: this.props.navigation.goBack,
-            title: I18n.t("global.buttons.cancel"),
-            block: true
-          }}
-          rightButton={{
-            cancel: false,
-            onPress: this.handleOnPressActivateNFC,
-            title: I18n.t("authentication.cie.enableNfcTitle"),
-            block: true
-          }}
-        />
-      );
-    }
-  };
-
-  public render(): React.ReactNode {
-    const heading = this.state.isNfcEnabled
-      ? I18n.t("authentication.cie.nfcEnabledTitle")
-      : I18n.t("authentication.cie.enableNfcTitle");
-
-    const content = this.state.isNfcEnabled
-      ? I18n.t("authentication.cie.nfcEnabledContent")
-      : I18n.t("authentication.cie.enableNfcContent");
-
+  private renderError = () => {
     return (
-      <Container>
-        <BaseScreenComponent goBack={true}>
-          <ScreenHeader
-            heading={<H1>{heading}</H1>}
-            icon={require("../../../../img/icons/nfc-icon.png")}
-          />
-          <View style={styles.contentContainerStyle}>
-            <Text style={styles.text}>{content}</Text>
-          </View>
-        </BaseScreenComponent>
-        {this.renderFooter()}
-      </Container>
+      <View style={styles.errorContainer}>
+        <Image source={brokenLinkImage} resizeMode="contain" />
+        <Text style={styles.errorTitle} bold={true}>
+          {I18n.t("authentication.errors.network.title")}
+        </Text>
+        )}
+        <View style={styles.errorButtonsContainer}>
+          <Button
+            onPress={this.goBack}
+            style={styles.cancelButtonStyle}
+            block={true}
+            light={true}
+            bordered={true}
+          >
+            <Text>{I18n.t("global.buttons.cancel")}</Text>
+          </Button>
+          <Button
+            onPress={undefined}
+            style={{ flex: 2 }}
+            block={true}
+            primary={true}
+          >
+            <Text>{I18n.t("global.buttons.retry")}</Text>
+          </Button>
+        </View>
+      </View>
+    );
+  };
+
+  private renderWebView() {
+    if (this.state.hasError) {
+      return this.renderError();
+    }
+    return (
+      <View style={{ flex: 1 }}>
+        <WebView
+          javaScriptEnabled={true}
+          onError={this.handleWebViewError}
+          onNavigationStateChange={this.handleNavigationStateChange}
+          source={{
+            uri: "https://www.google.it"
+          }}
+        />
+      </View>
+    );
+  }
+  public render(): React.ReactNode {
+    return (
+      <BaseScreenComponent goBack={true}>
+        {this.renderWebView()}
+      </BaseScreenComponent>
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  appState: state.appState.appState
-});
-export default connect(mapStateToProps)(CieRequestAuthenticationScreen);
+export default withLoadingSpinner(CieRequestAuthenticationScreen);

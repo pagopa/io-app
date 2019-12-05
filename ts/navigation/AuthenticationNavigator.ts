@@ -9,6 +9,7 @@ import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthor
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
 import CIENfcScreen from "../screens/authentication/cie/CieNfcScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
+import CieRequestAuthenticationScreen from "../screens/authentication/cie/CieRequestAuthenticationScreen";
 import CieSuccessScreen from "../screens/authentication/cie/CieSuccessScreen";
 import CieValidScreen from "../screens/authentication/cie/CieValidScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
@@ -66,6 +67,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.CIE_NFC_SCREEN]: {
     screen: CIENfcScreen
+  },
+  [ROUTES.CIE_REQUEST_AUTHENTICATION_SCREEN]: {
+    screen: CieRequestAuthenticationScreen
   }
 };
 

@@ -14,7 +14,7 @@ const realIsNfcEnabled = () =>
       () => resolve(false)
     );
   });
-const mockIsNfcEnabled = () => Promise.resolve(false);
+const mockIsNfcEnabled = () => Promise.resolve(true);
 
 const realOpenNfcSettings = cieSdk.openNFCSettings;
 const mockOpenNfcSettings = () => Promise.resolve();
