@@ -18,7 +18,7 @@ type Props = {
 };
 
 type State = {
-  pin: ReadonlyArray<string>;
+  pin?: string;
 };
 
 const styles = StyleSheet.create({
@@ -40,6 +40,14 @@ const styles = StyleSheet.create({
   textInputStyle: {
     textAlign: "center",
     fontSize: variables.fontSize3
+  },
+  input: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1
   }
 });
 
@@ -54,52 +62,25 @@ const sideMargin = 8;
 
 class CiePinpad extends React.PureComponent<Props, State> {
   private inputs: ReadonlyArray<TextInput>;
+  private hiddenInput?: TextInput | null;
 
   constructor(props: Props) {
     super(props);
     this.inputBoxGenerator = this.inputBoxGenerator.bind(this);
     this.inputs = [];
     this.state = {
-      pin: new Array(this.props.pinLength).fill("")
+      pin: undefined
     };
   }
 
-  private handleOnChangeText = (text: string, index: number) => {
-    const pin = this.updatePin(text, index);
-    this.props.onPinChanged(pin.join(""));
-    // if it is not the last element, change focus on next element
-    // handleOnKeyPress is used to handle the Backspace press
-    if (text !== "" && index + 1 < this.inputs.length) {
-      this.inputs[index + 1].focus();
-      return;
-    }
+  private handleOnChangeText2 = (text: string) => {
+    this.setState({ pin: text });
+    this.props.onPinChanged(text);
   };
 
-  // tslint:disable-next-line: readonly-array
-  private updatePin = (text: string, index: number): string[] => {
-    // tslint:disable-next-line: readonly-array
-    const tempPin = [...this.state.pin];
-    // replace the pin char at the index position
-    tempPin.splice(index, 1, text);
-    const pin: ReadonlyArray<string> = tempPin;
-    this.setState({ pin });
-    return tempPin;
-  };
-
-  private handleOnKeyPress = (
-    nativeEvent: TextInputKeyPressEventData,
-    index: number
-  ) => {
-    if (nativeEvent.key === "Backspace") {
-      // check if a deletion is going. If yes, set the focus to the previous input
-      // it works only if the index is not the first element
-      if (index > 0) {
-        if (!this.state.pin[index] || this.state.pin[index].length === 0) {
-          this.updatePin("", index - 1);
-        }
-        this.inputs[index - 1].focus();
-      }
-      return;
+  private handleOnFocus = () => {
+    if (this.hiddenInput) {
+      this.hiddenInput.focus();
     }
   };
 
@@ -132,29 +113,21 @@ class CiePinpad extends React.PureComponent<Props, State> {
             width: targetDimension
           }}
           key={`textinput-${i}`}
+          editable={true}
           maxLength={1}
-          secureTextEntry={true}
+          secureTextEntry={false}
           multiline={false}
           keyboardType="number-pad"
-          autoFocus={i === 0} // The focus is on the first TextInput, in this way the opening of the keyboard is automatic
+          onFocus={this.handleOnFocus}
+          autoFocus={false} // The focus is on the first TextInput, in this way the opening of the keyboard is automatic
           caretHidden={true} // The caret is disabled to avoid confusing the user
-          value={this.state.pin[i]}
-          onChangeText={text => this.handleOnChangeText(text, i)}
-          onSubmitEditing={() => {
-            if (
-              this.state.pin.map(p => p !== "").length === this.state.pin.length
-            ) {
-              this.props.onSubmit(this.state.pin.join(""));
-            }
-          }}
-          onKeyPress={({ nativeEvent }) =>
-            this.handleOnKeyPress(nativeEvent, i)
-          }
+          value={this.state.pin && i < this.state.pin.length ? "●" : ""}
+          //onChangeText={text => this.handleOnChangeText(text, i)}
         />
         <Baseline
           color={
             // The color is based on the current box
-            !this.state.pin[i] || this.state.pin[i].length === 0
+            !this.state.pin || i >= this.state.pin.length
               ? variables.brandLightGray
               : variables.brandDarkestGray
           }
@@ -172,11 +145,35 @@ class CiePinpad extends React.PureComponent<Props, State> {
     // As many input boxes are created as pinLength props
     return (
       <View>
+        <TextInput
+          style={styles.input}
+          ref={c => {
+            // tslint:disable-next-line: no-object-mutation
+            this.hiddenInput = c;
+          }}
+          maxLength={8}
+          caretHidden={true}
+          onChangeText={this.handleOnChangeText2}
+          autoFocus={true}
+          secureTextEntry={true}
+          multiline={false}
+          keyboardType="number-pad"
+          onSubmitEditing={() => {
+            if (
+              this.state.pin &&
+              this.state.pin.length === this.props.pinLength
+            ) {
+              this.props.onSubmit(this.state.pin);
+            }
+          }}
+        />
         <View spacer={true} />
         <View style={styles.placeholderContainer}>
-          {this.state.pin.map((_, i) => {
-            return this.inputBoxGenerator(i);
-          })}
+          {Array(this.props.pinLength)
+            .fill("")
+            .map((_, i) => {
+              return this.inputBoxGenerator(i);
+            })}
         </View>
         <View spacer={true} />
         <Text>{this.props.description}</Text>
