@@ -254,6 +254,11 @@ authentication:
     temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
     temporarilyBlockedCieDoneButton: "Done, card unlocked!"
     temporarilyBlockedCieOpenCieID: "Open CieID"
+    readerCardTitle: Hold the card for a few seconds
+    readerCardHeader: We are reading the data of your CIE and verifying its validity.
+    readerCardFooter: Hold the card in this position for a few more seconds
+    readerCardLostTitle: Hold the card again for a few seconds
+    readerCardLostHeader: We have not yet finished reading the card data.
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
   cie_information_request: !include cie.md
