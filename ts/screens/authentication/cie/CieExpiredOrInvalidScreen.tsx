@@ -2,10 +2,10 @@ import { Container, H1, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Linking, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import I18n from "../../i18n";
-import variables from "../../theme/variables";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import I18n from "../../../i18n";
+import variables from "../../../theme/variables";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;

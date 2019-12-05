@@ -5,12 +5,12 @@ import {
 
 import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
-import CieAuthorizeDataUsageScreen from "../screens/authentication/CieAuthorizeDataUsageScreen";
-import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
-import CIENfcScreen from "../screens/authentication/CIENfcScreen";
-import CiePinScreen from "../screens/authentication/CiePinScreen";
-import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
-import CieValidScreen from "../screens/authentication/CieValidScreen";
+import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
+import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
+import CIENfcScreen from "../screens/authentication/cie/CieNfcScreen";
+import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
+import CieSuccessScreen from "../screens/authentication/cie/CieSuccessScreen";
+import CieValidScreen from "../screens/authentication/cie/CieValidScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";

@@ -12,13 +12,13 @@ import {
 } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
-import CiePinpad from "../../components/CiePinpad";
-import ScreenHeader from "../../components/ScreenHeader";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import I18n from "../../i18n";
+import CiePinpad from "../../../components/CiePinpad";
+import ScreenHeader from "../../../components/ScreenHeader";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import I18n from "../../../i18n";
 
-import { ReduxProps } from "../../store/actions/types";
-import variables from "../../theme/variables";
+import { ReduxProps } from "../../../store/actions/types";
+import variables from "../../../theme/variables";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -59,7 +59,7 @@ class CiePinScreen extends React.Component<Props, State> {
     return (
       <ScreenHeader
         heading={<H2>{I18n.t("authentication.landing.cie.pinCardTitle")}</H2>}
-        icon={require("../../../img/icons/icon_insert_cie_pin.png")}
+        icon={require("../../../../img/icons/icon_insert_cie_pin.png")}
       />
     );
   }

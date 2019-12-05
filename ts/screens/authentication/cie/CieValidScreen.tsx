@@ -2,10 +2,10 @@ import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, Image, Platform, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import IconFont from "../../components/ui/IconFont";
-import I18n from "../../i18n";
-import variables from "../../theme/variables";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import IconFont from "../../../components/ui/IconFont";
+import I18n from "../../../i18n";
+import variables from "../../../theme/variables";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -15,7 +15,7 @@ type Props = OwnProps;
 
 const screenWidth = Dimensions.get("screen").width;
 const boxDimension = 180;
-const cieImage = require("../../../img/landing/place-card-illustration.png");
+const cieImage = require("../../../../img/landing/place-card-illustration.png");
 
 const styles = StyleSheet.create({
   contentContainerStyle: {

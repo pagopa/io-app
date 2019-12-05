@@ -2,10 +2,10 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import IconFont from "../../components/ui/IconFont";
-import I18n from "../../i18n";
-import variables from "../../theme/variables";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import IconFont from "../../../components/ui/IconFont";
+import I18n from "../../../i18n";
+import variables from "../../../theme/variables";
 
 const ICON_SIZE = 80;
 

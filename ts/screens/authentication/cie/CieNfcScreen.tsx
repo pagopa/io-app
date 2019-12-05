@@ -3,15 +3,15 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import ScreenHeader from "../../components/ScreenHeader";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import I18n from "../../i18n";
-import ROUTES from "../../navigation/routes";
-import { ReduxProps } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
-import { isNfcEnabled, openNFCSettings } from "../../utils/cie";
+import ScreenHeader from "../../../components/ScreenHeader";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import I18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
+import { ReduxProps } from "../../../store/actions/types";
+import { GlobalState } from "../../../store/reducers/types";
+import variables from "../../../theme/variables";
+import { isNfcEnabled, openNFCSettings } from "../../../utils/cie";
 
 type Props = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class CIENfcScreen extends React.Component<Props, State> {
+class CieNfcScreen extends React.Component<Props, State> {
   private idInterval?: number;
   constructor(props: Props) {
     super(props);
@@ -127,7 +127,7 @@ class CIENfcScreen extends React.Component<Props, State> {
         <BaseScreenComponent goBack={true}>
           <ScreenHeader
             heading={<H1>{heading}</H1>}
-            icon={require("../../../img/icons/nfc-icon.png")}
+            icon={require("../../../../img/icons/nfc-icon.png")}
           />
           <View style={styles.contentContainerStyle}>
             <Text style={styles.text}>{content}</Text>
@@ -142,4 +142,4 @@ class CIENfcScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => ({
   appState: state.appState.appState
 });
-export default connect(mapStateToProps)(CIENfcScreen);
+export default connect(mapStateToProps)(CieNfcScreen);
