@@ -36,6 +36,7 @@ type Props = Readonly<{
 
 type State = {
   hasError: boolean;
+  isLoading: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -79,7 +80,7 @@ const brokenLinkImage = require("../../../../img/broken-link.png");
 class CieRequestAuthenticationScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, isLoading: true };
   }
 
   private handleNavigationStateChange = (event: NavState): void => {
@@ -146,12 +147,13 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
     );
   }
   public render(): React.ReactNode {
-    return (
+    const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent goBack={true}>
         {this.renderWebView()}
       </BaseScreenComponent>
-    );
+    ));
+    return <ContainerComponent isLoading={this.state.isLoading} />;
   }
 }
 
-export default withLoadingSpinner(CieRequestAuthenticationScreen);
+export default CieRequestAuthenticationScreen;
