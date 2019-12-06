@@ -87,10 +87,7 @@ const ROUTES = {
   INSERT_EMAIL_SCREEN: "INSERT_EMAIL_SCREEN",
 
   // Used when the App is in background
-  BACKGROUND: "BACKGROUND",
-
-  // Loading screen
-  LOADING: "LOADING"
+  BACKGROUND: "BACKGROUND"
 };
 
 export default ROUTES;
