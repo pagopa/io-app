@@ -92,7 +92,6 @@ class CiePinScreen extends React.Component<Props, State> {
   }
 
   private handleOnContinuePressButton = () => {
-    //console.warn(this.state.pin);
     this.props.dispatchNavigationToRequestAutenticationScreen(this.state.pin);
   };
 

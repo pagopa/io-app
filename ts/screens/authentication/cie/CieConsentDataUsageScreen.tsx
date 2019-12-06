@@ -1,24 +1,19 @@
-import { Container, H1, Text, View, Button } from "native-base";
+import { Button, Container, H1, Text, View } from "native-base";
 import * as React from "react";
-import { Image, NavState, StyleSheet } from "react-native";
+import { BackHandler, Image, StyleSheet } from "react-native";
+import WebView from "react-native-webview";
 import {
   NavigationScreenProp,
-  NavigationState,
-  NavigationScreenProps
+  NavigationScreenProps,
+  NavigationState
 } from "react-navigation";
-import ScreenHeader from "../../../components/ScreenHeader";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
-import variables from "../../../theme/variables";
-import { isNfcEnabled, openNFCSettings } from "../../../utils/cie";
-import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import WebView from "react-native-webview";
-import { navigateToCieCardReaderScreen } from "../../../store/actions/navigation";
-import { Dispatch } from "../../../store/actions/types";
 import { connect } from "react-redux";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
+import I18n from "../../../i18n";
+import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
+import { Dispatch } from "../../../store/actions/types";
+import variables from "../../../theme/variables";
 
 type NavigationParams = {
   cieConsentUri: string;
@@ -96,6 +91,19 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     this.state = { hasError: false, isLoading: true, findOpenApp: false };
   }
 
+  private handleBackPress = () => {
+    // only for tests purpose
+    return true;
+  };
+
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
   get cieAuthorizationUri(): string {
     return this.props.navigation.getParam("cieConsentUri");
   }
@@ -163,7 +171,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   }
   public render(): React.ReactNode {
     return (
-      <BaseScreenComponent goBack={true}>
+      <BaseScreenComponent goBack={false}>
         {this.renderWebView()}
       </BaseScreenComponent>
     );
@@ -171,10 +179,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchNavigationToCieCardReaderScreen: (
-    ciePin: string,
-    authorizationUri: string
-  ) => dispatch(navigateToCieCardReaderScreen({ ciePin, authorizationUri }))
+  dispatchResetNavigation: () => dispatch(resetToAuthenticationRoute)
 });
 
 export default connect(
