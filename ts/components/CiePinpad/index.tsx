@@ -1,11 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import {
-  Dimensions,
-  StyleSheet,
-  TextInput,
-  TextInputKeyPressEventData
-} from "react-native";
+import { Dimensions, StyleSheet, TextInput } from "react-native";
 
 import variables from "../../theme/variables";
 import { Baseline } from "../Pinpad/Placeholders";
@@ -42,12 +37,14 @@ const styles = StyleSheet.create({
     fontSize: variables.fontSize3
   },
   input: {
+    backgroundColor: "red",
+    color: "transparent",
     position: "absolute",
+    width: 1,
     top: 0,
-    left: 0,
+    left: -100,
     right: 0,
-    bottom: 0,
-    zIndex: -1
+    bottom: 0
   }
 });
 
@@ -61,26 +58,34 @@ const sideMargin = 8;
  */
 
 class CiePinpad extends React.PureComponent<Props, State> {
-  private inputs: ReadonlyArray<TextInput>;
   private hiddenInput?: TextInput | null;
 
   constructor(props: Props) {
     super(props);
     this.inputBoxGenerator = this.inputBoxGenerator.bind(this);
-    this.inputs = [];
     this.state = {
       pin: undefined
     };
   }
 
-  private handleOnChangeText2 = (text: string) => {
+  private handleOnChangeText = (text: string) => {
     this.setState({ pin: text });
     this.props.onPinChanged(text);
   };
 
   private handleOnFocus = () => {
+    // force hidden input to have focus
     if (this.hiddenInput) {
       this.hiddenInput.focus();
+    }
+  };
+
+  private handleOnSubmit = () => {
+    {
+      // if pin is full filled
+      if (this.state.pin && this.state.pin.length === this.props.pinLength) {
+        this.props.onSubmit(this.state.pin);
+      }
     }
   };
 
@@ -101,13 +106,6 @@ class CiePinpad extends React.PureComponent<Props, State> {
     return (
       <View style={{ alignItems: "center" }} key={`input_view-${i}`}>
         <TextInput
-          ref={c => {
-            // collect all inputs refs
-            if (c !== null && this.inputs.length < this.props.pinLength) {
-              // tslint:disable-next-line: no-object-mutation
-              this.inputs = [...this.inputs, c];
-            }
-          }}
           style={{
             ...styles.textInputStyle,
             width: targetDimension
@@ -119,10 +117,9 @@ class CiePinpad extends React.PureComponent<Props, State> {
           multiline={false}
           keyboardType="number-pad"
           onFocus={this.handleOnFocus}
-          autoFocus={false} // The focus is on the first TextInput, in this way the opening of the keyboard is automatic
+          autoFocus={false}
           caretHidden={true} // The caret is disabled to avoid confusing the user
           value={this.state.pin && i < this.state.pin.length ? "●" : ""}
-          //onChangeText={text => this.handleOnChangeText(text, i)}
         />
         <Baseline
           color={
@@ -151,29 +148,20 @@ class CiePinpad extends React.PureComponent<Props, State> {
             // tslint:disable-next-line: no-object-mutation
             this.hiddenInput = c;
           }}
-          maxLength={8}
+          maxLength={this.props.pinLength}
           caretHidden={true}
-          onChangeText={this.handleOnChangeText2}
+          onChangeText={this.handleOnChangeText}
           autoFocus={true}
           secureTextEntry={true}
           multiline={false}
           keyboardType="number-pad"
-          onSubmitEditing={() => {
-            if (
-              this.state.pin &&
-              this.state.pin.length === this.props.pinLength
-            ) {
-              this.props.onSubmit(this.state.pin);
-            }
-          }}
+          onSubmitEditing={this.handleOnSubmit}
         />
         <View spacer={true} />
         <View style={styles.placeholderContainer}>
           {Array(this.props.pinLength)
             .fill("")
-            .map((_, i) => {
-              return this.inputBoxGenerator(i);
-            })}
+            .map((_, i) => this.inputBoxGenerator(i))}
         </View>
         <View spacer={true} />
         <Text>{this.props.description}</Text>

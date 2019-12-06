@@ -165,7 +165,12 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
         {this.renderWebView()}
       </BaseScreenComponent>
     ));
-    return <ContainerComponent isLoading={this.state.isLoading} />;
+    return (
+      <ContainerComponent
+        isLoading={this.state.isLoading}
+        loadingOpacity={1.0}
+      />
+    );
   }
 }
 
