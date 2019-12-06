@@ -22,7 +22,7 @@ const progressThreshold = 60;
 
 const styles = StyleSheet.create({
   messageHeader: {
-    minHeight: 90,
+    minHeight: 85,
     paddingRight: customVariables.contentPadding,
     paddingLeft: customVariables.contentPadding,
     paddingTop: customVariables.contentPadding,
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSizeBase
   },
   titleHeader: {
-    marginTop: 35
+    marginTop: 20,
+    minHeight: 85
   },
   imgContainer: {
     justifyContent: "center",
