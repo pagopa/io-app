@@ -254,14 +254,6 @@ export const navigateToCieInvalidScreen = () =>
     routeName: ROUTES.CIE_EXPIRED_SCREEN
   });
 
-export const navigateToCieValid = (
-  params?: InferNavigationParams<typeof CieValidScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_VALID_SCREEN,
-    params
-  });
-
 export const navigateToCieSuccessScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_SUCCESS_SCREEN
@@ -298,5 +290,13 @@ export const navigateToCieConfirmDataUsage = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_CONSENT_DATA_USAGE,
+    params
+  });
+
+export const navigateToCieValid = (
+  params?: InferNavigationParams<typeof CieValidScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_VALID_SCREEN,
     params
   });

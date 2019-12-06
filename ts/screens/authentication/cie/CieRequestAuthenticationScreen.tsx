@@ -1,23 +1,19 @@
-import { Container, H1, Text, View, Button } from "native-base";
+import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { Image, NavState, StyleSheet } from "react-native";
+import WebView from "react-native-webview";
 import {
   NavigationScreenProp,
-  NavigationState,
-  NavigationScreenProps
+  NavigationScreenProps,
+  NavigationState
 } from "react-navigation";
-import ScreenHeader from "../../../components/ScreenHeader";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
-import variables from "../../../theme/variables";
-import { isNfcEnabled, openNFCSettings } from "../../../utils/cie";
+import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import WebView from "react-native-webview";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import I18n from "../../../i18n";
 import { navigateToCieCardReaderScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { connect } from "react-redux";
+import variables from "../../../theme/variables";
 
 const cieAuthenticationUri =
   "https://app-backend.k8s.test.cd.teamdigitale.it/login?entityID=xx_servizicie_test&authLevel=SpidL2";

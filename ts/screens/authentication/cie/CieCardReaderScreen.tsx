@@ -1,7 +1,7 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { Animated, Easing, Image, StyleSheet } from "react-native";
+import { Animated, Easing, Image, StyleSheet, Vibration } from "react-native";
 import cieManager, { Event as CEvent } from "react-native-cie";
 import ProgressCircle from "react-native-progress-circle";
 import {
@@ -13,8 +13,8 @@ import AnimatedRing from "../../../components/animations/AnimatedRing";
 import ScreenHeader from "../../../components/ScreenHeader";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
-import customVariables from "../../../theme/variables";
 import { navigateToCieValid } from "../../../store/actions/navigation";
+import customVariables from "../../../theme/variables";
 
 interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
@@ -24,7 +24,11 @@ type NavigationParams = {
   authorizationUri: string;
 };
 
-type Props = OwnProps & NavigationScreenProps<NavigationParams>;
+type Props = OwnProps &
+  Readonly<{
+    navigation: NavigationScreenProp<NavigationState>;
+  }> &
+  NavigationScreenProps<NavigationParams>;
 // Image dimension
 const imgDimension = 180;
 const boxDimension = 245;
@@ -32,7 +36,7 @@ const progressThreshold = 60;
 
 const styles = StyleSheet.create({
   messageHeader: {
-    minHeight: 90,
+    minHeight: 85,
     paddingRight: customVariables.contentPadding,
     paddingLeft: customVariables.contentPadding,
     paddingTop: customVariables.contentPadding,
@@ -45,7 +49,8 @@ const styles = StyleSheet.create({
     fontSize: customVariables.fontSizeBase
   },
   titleHeader: {
-    marginTop: 35
+    marginTop: 20,
+    minHeight: 85
   },
   imgContainer: {
     justifyContent: "center",
@@ -133,6 +138,7 @@ class CieCardReaderScreen extends React.Component<Props, State> {
       this.state.readingState === "reading"
     ) {
       this.setState({ progressBarValue: 0 });
+      this.progressAnimatedValue.setValue(0);
       this.progressAnimation.start();
     }
     // If we are not in reading the card, stop the animation
@@ -148,16 +154,21 @@ class CieCardReaderScreen extends React.Component<Props, State> {
     switch (event.event) {
       case "ON_TAG_DISCOVERED":
         if (this.state.readingState !== "reading") {
-          this.setState({ readingState: "reading" });
+          this.setState({ readingState: "reading" }, () => {
+            Vibration.vibrate(100);
+          });
         }
-
         break;
       case "ON_TAG_LOST":
       case "AUTHENTICATION_ERROR":
       case "CERTIFICATE_EXPIRED":
       case "ON_NO_INTERNET_CONNECTION":
       case "ON_PIN_ERROR":
-        this.setState({ readingState: "error" });
+        if (this.state.readingState !== "error") {
+          this.setState({ readingState: "error" }, () => {
+            Vibration.vibrate(100);
+          });
+        }
         break;
       default:
         break;
@@ -169,10 +180,13 @@ class CieCardReaderScreen extends React.Component<Props, State> {
   };
 
   private handleCieSuccess = (consentUri: string) => {
-    this.setState({ readingState: "completed" });
-    this.props.navigation.navigate(
-      navigateToCieValid({ cieConsentUri: consentUri })
-    );
+    this.setState({ readingState: "completed" }, async () => {
+      cieManager.removeAllListeners();
+      await cieManager.stopListeningNFC();
+      this.props.navigation.navigate(
+        navigateToCieValid({ cieConsentUri: consentUri })
+      );
+    });
   };
 
   public async componentWillUnmount() {
@@ -213,16 +227,20 @@ class CieCardReaderScreen extends React.Component<Props, State> {
           <ScreenHeader
             heading={
               <H2 style={styles.titleHeader}>
-                {this.state.readingState === "waiting_card"
+                {this.state.readingState === "error"
                   ? I18n.t("authentication.cie.readerCardLostTitle")
-                  : I18n.t("authentication.cie.readerCardTitle")}
+                  : this.state.readingState === "reading"
+                    ? I18n.t("authentication.cie.readerCardTitle")
+                    : I18n.t("cie.title")}
               </H2>
             }
           />
           <Text style={styles.messageHeader}>
-            {this.state.readingState === "waiting_card"
+            {this.state.readingState === "error"
               ? I18n.t("authentication.cie.readerCardLostHeader")
-              : I18n.t("authentication.cie.readerCardHeader")}
+              : this.state.readingState === "reading"
+                ? I18n.t("authentication.cie.readerCardHeader")
+                : I18n.t("cie.layCardMessageHeader")}
           </Text>
           <View style={styles.imgContainer}>
             <View style={styles.rings}>
@@ -270,9 +288,11 @@ class CieCardReaderScreen extends React.Component<Props, State> {
             </ProgressCircle>
           </View>
           <Text style={styles.messageFooter}>
-            {this.state.readingState === "waiting_card"
+            {this.state.readingState === "error"
               ? ""
-              : I18n.t("authentication.cie.readerCardFooter")}
+              : this.state.readingState === "reading"
+                ? I18n.t("authentication.cie.readerCardFooter")
+                : I18n.t("cie.layCardMessageFooter")}
           </Text>
         </Content>
         <View footer={true}>

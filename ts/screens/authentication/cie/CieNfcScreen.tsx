@@ -65,6 +65,7 @@ export default class CieNfcScreen extends React.Component<Props, State> {
   };
 
   private handleOnPressContinue = () => {
+    clearTimeout(this.idInterval);
     this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
   };
 

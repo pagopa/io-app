@@ -1,22 +1,25 @@
 import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, Image, Platform, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import {
+  NavigationScreenProp,
+  NavigationScreenProps,
+  NavigationState
+} from "react-navigation";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
-import variables from "../../../theme/variables";
 import { navigateToCieConfirmDataUsage } from "../../../store/actions/navigation";
+import variables from "../../../theme/variables";
 
 type NavigationParams = {
   cieConsentUri: string;
 };
+interface OwnProps {
+  navigation: NavigationScreenProp<NavigationState>;
+}
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationParams>;
-}>;
-
-type Props = OwnProps;
+type Props = OwnProps & NavigationScreenProps<NavigationParams>;
 
 const screenWidth = Dimensions.get("screen").width;
 const boxDimension = 180;
