@@ -8,7 +8,7 @@ import { Button, Container, Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import I18n from "../../../i18n";
@@ -183,16 +183,17 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     };
   }
 
+  public componentDidMount() {
+    this.setState({ isFocused: true });
+  }
+
   public componentWillUnmount() {
     if (this.scannerReactivateTimeoutHandler) {
       // cancel the QR scanner reactivation before unmounting the component
       clearTimeout(this.scannerReactivateTimeoutHandler);
     }
+    this.setState({ isFocused: false });
   }
-
-  private handleDidFocus = () => this.setState({ isFocused: true });
-
-  private handleWillBlur = () => this.setState({ isFocused: false });
 
   public render(): React.ReactNode {
     const primaryButtonProps = {
@@ -211,10 +212,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
     return (
       <Container style={styles.white}>
-        <NavigationEvents
-          onDidFocus={this.handleDidFocus}
-          onWillBlur={this.handleWillBlur}
-        />
         <BaseHeader
           goBack={true}
           headerTitle={I18n.t("wallet.QRtoPay.byCameraTitle")}
