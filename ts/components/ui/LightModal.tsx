@@ -9,7 +9,10 @@ import { Animated, Dimensions, Easing, StyleSheet, View } from "react-native";
 export type LightModalContextInterface = Readonly<{
   component: React.ReactNode;
   showModal: (component: React.ReactNode) => void;
-  showAnimatedModal: (component: React.ReactNode) => void;
+  showAnimatedModal: (
+    component: React.ReactNode,
+    animatedValue?: AnimationLightModal
+  ) => void;
   hideModal: () => void;
 }>;
 
@@ -46,7 +49,8 @@ const compositeAnimation = Animated.timing(animatedValue, {
 });
 const animationCallback = () => compositeAnimation.start();
 const screenWidth = Dimensions.get("screen").width;
-const styledAnimation = {
+const screenHeight = Dimensions.get("screen").height;
+export const RightLeftAnimation = {
   transform: [
     {
       translateX: animatedValue.interpolate({
@@ -57,10 +61,64 @@ const styledAnimation = {
   ]
 };
 
+export const LeftRightAnimation = {
+  transform: [
+    {
+      translateX: animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-screenWidth, 0]
+      })
+    }
+  ]
+};
+
+export const BottomTopAnimation = {
+  transform: [
+    {
+      translateY: animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [screenHeight, 0]
+      })
+    }
+  ]
+};
+
+export const TopBottomAnimation = {
+  transform: [
+    {
+      translateY: animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-screenHeight, 0]
+      })
+    }
+  ]
+};
+
+export const FadeAnimation = {
+  transform: [
+    {
+      scale: animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0.5, 1]
+      })
+    }
+  ]
+};
+
+export type AnimationLightModal =
+  | typeof FadeAnimation
+  | typeof TopBottomAnimation
+  | typeof BottomTopAnimation
+  | typeof LeftRightAnimation
+  | typeof RightLeftAnimation;
+
 export const LightModalConsumer = LightModalContext.Consumer;
 
 export class LightModalProvider extends React.Component<Props, State> {
-  public showAnimatedModal = (childComponent: React.ReactNode) => {
+  public showAnimatedModal = (
+    childComponent: React.ReactNode,
+    styledAnimation: AnimationLightModal = RightLeftAnimation
+  ) => {
     const component = (
       <Animated.View style={[styles.container, styledAnimation]}>
         {childComponent}

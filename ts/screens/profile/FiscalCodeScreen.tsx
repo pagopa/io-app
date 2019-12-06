@@ -10,7 +10,10 @@ import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOver
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
 import H5 from "../../components/ui/H5";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import {
+  BottomTopAnimation,
+  LightModalContextInterface
+} from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
@@ -59,12 +62,14 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
   private showModal(showBackSide: boolean = false) {
     if (this.props.profile) {
       this.props.showAnimatedModal(
+        // tslint:disable-next-line: jsx-wrap-multiline
         <FiscalCodeLandscapeOverlay
           onCancel={this.props.hideModal}
           profile={this.props.profile}
           municipality={this.props.municipality.data}
           showBackSide={showBackSide}
-        />
+        />,
+        BottomTopAnimation
       );
     }
   }
