@@ -28,6 +28,8 @@ import CieRequestAuthenticationScreen from "../../screens/authentication/cie/Cie
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 import CieConfirmDataUsage from "../../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieValidScreen from "../../screens/authentication/cie/CieValidScreen";
+import CieIncorrectCiePinScreen from "../../screens/authentication/cie/CieWrongCiePinScreen";
+import CieWrongCiePinScreen from "../../screens/authentication/cie/CieWrongCiePinScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -298,5 +300,13 @@ export const navigateToCieValid = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_VALID_SCREEN,
+    params
+  });
+
+export const navigateToCieWrongPin = (
+  params?: InferNavigationParams<typeof CieWrongCiePinScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_WRONG_PIN_SCREEN,
     params
   });

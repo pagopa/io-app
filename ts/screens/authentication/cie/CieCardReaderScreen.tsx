@@ -13,7 +13,10 @@ import AnimatedRing from "../../../components/animations/AnimatedRing";
 import ScreenHeader from "../../../components/ScreenHeader";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
-import { navigateToCieValid } from "../../../store/actions/navigation";
+import {
+  navigateToCieValid,
+  navigateToCieWrongPin
+} from "../../../store/actions/navigation";
 import customVariables from "../../../theme/variables";
 
 interface OwnProps {
@@ -150,7 +153,7 @@ class CieCardReaderScreen extends React.Component<Props, State> {
     }
   }
 
-  private handleCieEvent = (event: CEvent): void => {
+  private handleCieEvent = async (event: CEvent) => {
     switch (event.event) {
       case "ON_TAG_DISCOVERED":
         if (this.state.readingState !== "reading") {
@@ -163,12 +166,14 @@ class CieCardReaderScreen extends React.Component<Props, State> {
       case "AUTHENTICATION_ERROR":
       case "CERTIFICATE_EXPIRED":
       case "ON_NO_INTERNET_CONNECTION":
-      case "ON_PIN_ERROR":
         if (this.state.readingState !== "error") {
           this.setState({ readingState: "error" }, () => {
             Vibration.vibrate(100);
           });
         }
+        break;
+      case "ON_PIN_ERROR":
+        await this.handleWrongPin(event.attemptsLeft);
         break;
       default:
         break;
@@ -181,17 +186,28 @@ class CieCardReaderScreen extends React.Component<Props, State> {
 
   private handleCieSuccess = (consentUri: string) => {
     this.setState({ readingState: "completed" }, async () => {
-      cieManager.removeAllListeners();
-      await cieManager.stopListeningNFC();
+      await this.stopCieManager();
       this.props.navigation.navigate(
         navigateToCieValid({ cieConsentUri: consentUri })
       );
     });
   };
 
-  public async componentWillUnmount() {
+  private handleWrongPin = async (attemptsLeft: number) => {
+    await this.stopCieManager();
+    this.props.navigation.navigate(
+      navigateToCieWrongPin({ remainingCount: attemptsLeft })
+    );
+  };
+
+  private stopCieManager = async () => {
+    this.progressAnimation.stop();
     cieManager.removeAllListeners();
     await cieManager.stopListeningNFC();
+  };
+
+  public async componentWillUnmount() {
+    await this.stopCieManager();
   }
 
   public componentDidMount() {

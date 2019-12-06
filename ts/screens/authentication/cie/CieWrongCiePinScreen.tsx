@@ -1,16 +1,31 @@
 import { Container, H1, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
+import { StyleSheet } from "react-native";
+import {
+  NavigationScreenProp,
+  NavigationScreenProps,
+  NavigationState
+} from "react-navigation";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import I18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
+import customVariables from "../../../theme/variables";
+import { isNfcEnabled } from "../../../utils/cie";
 
-type Props = Readonly<{
+interface OwnProps {
   navigation: NavigationScreenProp<NavigationState>;
+}
+type NavigationParams = {
   remainingCount: number;
-}>;
+};
+
+type Props = OwnProps &
+  Readonly<{
+    navigation: NavigationScreenProp<NavigationState>;
+  }> &
+  NavigationScreenProps<NavigationParams>;
+
 const styles = StyleSheet.create({
   contentContainerStyle: {
     padding: customVariables.contentPadding
@@ -20,7 +35,18 @@ const styles = StyleSheet.create({
   }
 });
 
-class IncorrectCiePinScreen extends React.Component<Props> {
+class CieWrongCiePinScreen extends React.Component<Props> {
+  private navigateToCiePinScreen = async () => {
+    const isNfcOn = await isNfcEnabled();
+    this.props.navigation.navigate(
+      isNfcOn ? ROUTES.CIE_PIN_SCREEN : ROUTES.CIE_NFC_SCREEN
+    );
+  };
+
+  get ciePinRemainingCount(): string {
+    return this.props.navigation.getParam("remainingCount");
+  }
+
   public render(): React.ReactNode {
     const cancelButtonProps = {
       block: true,
@@ -31,13 +57,13 @@ class IncorrectCiePinScreen extends React.Component<Props> {
     const retryButtonProps = {
       block: true,
       primary: true,
-      onPress: (): void => Alert.alert(I18n.t("global.notImplemented")),
+      onPress: this.navigateToCiePinScreen,
       title: I18n.t("global.buttons.retry")
     };
-    const remainingCount = this.props.remainingCount || 2; // TODO
+    const remainingCount = this.ciePinRemainingCount;
     return (
       <Container>
-        <BaseScreenComponent goBack={true}>
+        <BaseScreenComponent goBack={false}>
           <View style={styles.contentContainerStyle}>
             <H1>
               {I18n.t("authentication.landing.cie.incorrectCiePinTitle", {
@@ -63,4 +89,4 @@ class IncorrectCiePinScreen extends React.Component<Props> {
     );
   }
 }
-export default IncorrectCiePinScreen;
+export default CieWrongCiePinScreen;

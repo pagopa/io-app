@@ -18,6 +18,7 @@ import WebView from "react-native-webview";
 import { navigateToCieCardReaderScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { connect } from "react-redux";
+import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 
 type NavigationParams = {
   cieConsentUri: string;
@@ -74,6 +75,16 @@ const styles = StyleSheet.create({
   cancelButtonStyle: {
     flex: 1,
     marginEnd: 10
+  },
+  refreshIndicatorContainer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000
   }
 });
 
@@ -82,7 +93,7 @@ const brokenLinkImage = require("../../../../img/broken-link.png");
 class CieConsentDataUsageScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { hasError: false, isLoading: false, findOpenApp: false };
+    this.state = { hasError: false, isLoading: true, findOpenApp: false };
   }
 
   get cieAuthorizationUri(): string {
@@ -125,29 +136,37 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     );
   };
 
+  private updateLoadingState = (isLoading: boolean) =>
+    this.setState({ isLoading });
+
   private renderWebView() {
     if (this.state.hasError) {
       return this.renderError();
     }
     return (
-      <View style={{ flex: 1 }}>
+      <Container>
         <WebView
+          textZoom={100}
+          source={{ uri: this.cieAuthorizationUri }}
           javaScriptEnabled={true}
+          onLoadStart={() => this.updateLoadingState(true)}
           onError={this.handleWebViewError}
-          source={{
-            uri: this.cieAuthorizationUri
-          }}
+          onLoadEnd={() => this.updateLoadingState(false)}
         />
-      </View>
+        {this.state.isLoading && (
+          <View style={styles.refreshIndicatorContainer}>
+            <RefreshIndicator />
+          </View>
+        )}
+      </Container>
     );
   }
   public render(): React.ReactNode {
-    const ContainerComponent = withLoadingSpinner(() => (
+    return (
       <BaseScreenComponent goBack={true}>
         {this.renderWebView()}
       </BaseScreenComponent>
-    ));
-    return <ContainerComponent isLoading={this.state.isLoading} />;
+    );
   }
 }
 

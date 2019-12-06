@@ -7,12 +7,14 @@ import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
 import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
+import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
 import CIENfcScreen from "../screens/authentication/cie/CieNfcScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieRequestAuthenticationScreen from "../screens/authentication/cie/CieRequestAuthenticationScreen";
 import CieSuccessScreen from "../screens/authentication/cie/CieSuccessScreen";
 import CieValidScreen from "../screens/authentication/cie/CieValidScreen";
+import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
@@ -21,7 +23,6 @@ import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformati
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
-import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 
 // Routes loaded in production mode
 const productionRouteConfigMap: NavigationRouteConfigMap = {
@@ -78,6 +79,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.CIE_CONSENT_DATA_USAGE]: {
     screen: CieConsentDataUsageScreen
+  },
+  [ROUTES.CIE_WRONG_PIN_SCREEN]: {
+    screen: CieWrongCiePinScreen
   }
 };
 
