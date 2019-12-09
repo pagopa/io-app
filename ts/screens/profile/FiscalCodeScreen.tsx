@@ -61,16 +61,15 @@ const styles = StyleSheet.create({
 class FiscalCodeScreen extends React.PureComponent<Props> {
   private showModal(showBackSide: boolean = false) {
     if (this.props.profile) {
-      this.props.showAnimatedModal(
-        // tslint:disable-next-line: jsx-wrap-multiline
+      const component = (
         <FiscalCodeLandscapeOverlay
           onCancel={this.props.hideModal}
           profile={this.props.profile}
           municipality={this.props.municipality.data}
           showBackSide={showBackSide}
-        />,
-        BottomTopAnimation
+        />
       );
+      this.props.showAnimatedModal(component, BottomTopAnimation);
     }
   }
 

@@ -9,6 +9,7 @@ import { Animated, Dimensions, Easing, StyleSheet, View } from "react-native";
 export type LightModalContextInterface = Readonly<{
   component: React.ReactNode;
   showModal: (component: React.ReactNode) => void;
+  showModalFadeInAnimation: (component: React.ReactNode) => void;
   showAnimatedModal: (
     component: React.ReactNode,
     animatedValue?: AnimationLightModal
@@ -21,6 +22,7 @@ export const LightModalContext = React.createContext<
 >({
   component: null,
   showModal: () => undefined,
+  showModalFadeInAnimation: () => undefined,
   showAnimatedModal: () => undefined,
   hideModal: () => undefined
 });
@@ -94,7 +96,7 @@ export const TopBottomAnimation = {
   ]
 };
 
-export const FadeAnimation = {
+export const ScaleAnimation = {
   transform: [
     {
       scale: animatedValue.interpolate({
@@ -105,8 +107,14 @@ export const FadeAnimation = {
   ]
 };
 
+const fadeAnim = new Animated.Value(0);
+const FadeInAnimation = Animated.timing(fadeAnim, {
+  toValue: 1,
+  duration: 250
+});
+
 export type AnimationLightModal =
-  | typeof FadeAnimation
+  | typeof ScaleAnimation
   | typeof TopBottomAnimation
   | typeof BottomTopAnimation
   | typeof LeftRightAnimation
@@ -132,6 +140,22 @@ export class LightModalProvider extends React.Component<Props, State> {
     );
   };
 
+  public showModalFadeInAnimation = (childComponent: React.ReactNode) => {
+    const component = (
+      <Animated.View style={styles.container} opacity={fadeAnim}>
+        {childComponent}
+      </Animated.View>
+    );
+    this.setState(
+      {
+        component
+      },
+      () => {
+        FadeInAnimation.start();
+      }
+    );
+  };
+
   public showModal = (childComponent: React.ReactNode) => {
     const component = <View style={[styles.container]}>{childComponent}</View>;
     this.setState({
@@ -139,15 +163,19 @@ export class LightModalProvider extends React.Component<Props, State> {
     });
   };
 
-  public hideModal = () =>
+  public hideModal = () => {
     this.setState({
       component: null
     });
+    fadeAnim.setValue(0);
+    FadeInAnimation.stop();
+  };
 
   public state = {
     component: null,
     showModal: this.showModal,
     showAnimatedModal: this.showAnimatedModal,
+    showModalFadeInAnimation: this.showModalFadeInAnimation,
     hideModal: this.hideModal
   };
 
