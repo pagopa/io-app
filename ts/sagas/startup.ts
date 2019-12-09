@@ -28,7 +28,6 @@ import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { loadMessageWithRelations } from "../store/actions/messages";
 import {
-  navigateToLoadingScreen,
   navigateToMainNavigatorAction,
   navigateToMessageDetailScreenAction
 } from "../store/actions/navigation";
@@ -259,10 +258,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
       yield cancel(watchAbortOnboardingSagaTask);
     }
   }
-
-  //
-  // Navigate to the LoadingScreen
-  yield put(navigateToLoadingScreen);
 
   //
   // User is autenticated, session token is valid
