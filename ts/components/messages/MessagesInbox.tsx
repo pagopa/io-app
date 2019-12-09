@@ -1,8 +1,8 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { Button, Text, View } from "native-base";
 import React, { ComponentProps } from "react";
-import { Image, NetInfo, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
@@ -41,6 +41,12 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1
+  },
+  buttonRetry: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 0,
+    paddingBottom: 0
   }
 });
 
@@ -78,7 +84,7 @@ type State = {
     typeof generateMessagesStateNotArchivedArray
   >;
   allMessageIdsState: Option<Set<string>>;
-  isConnected: boolean;
+  isErrorLoading: boolean;
 };
 
 /**
@@ -105,22 +111,6 @@ const ListEmptyComponent = (paddingForAnimation: boolean) => (
     </Text>
     <Text style={styles.emptyListContentSubtitle}>
       {I18n.t("messages.inbox.emptyMessage.subtitle")}
-    </Text>
-    {paddingForAnimation && <View style={styles.paddingForAnimation} />}
-  </View>
-);
-
-const ListOfflineComponent = (paddingForAnimation: boolean) => (
-  <View style={styles.emptyListWrapper}>
-    <View spacer={true} />
-    <Image
-      source={require("../../../img/messages/empty-message-list-icon.png")}
-    />
-    <Text style={styles.emptyListContentTitle}>
-      {I18n.t("messages.noConnectionTitle")}
-    </Text>
-    <Text style={styles.emptyListContentSubtitle}>
-      {I18n.t("messages.noConnectionDescription")}
     </Text>
     {paddingForAnimation && <View style={styles.paddingForAnimation} />}
   </View>
@@ -165,34 +155,17 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       lastMessagesState: pot.none,
       filteredMessageStates: [],
       allMessageIdsState: none,
-      isConnected: true
+      isErrorLoading: false
     };
   }
 
-  public componentDidMount() {
-    // tslint:disable-next-line: no-floating-promises
-    NetInfo.isConnected.fetch().then(isConnected => {
-      this.handleFirstConnectivityChange(isConnected);
-    });
-
-    NetInfo.isConnected.addEventListener(
-      "connectionChange",
-      this.handleFirstConnectivityChange
-    );
-  }
-
-  public handleFirstConnectivityChange = (isConnected: boolean) => {
-    // This boolean check if connection is available
+  public componentDidUpdate(_: Props, prevState: State) {
     this.setState({
-      isConnected
+      // Check error during download
+      isErrorLoading:
+        pot.isError(this.props.messagesState) ||
+        (pot.isLoading(this.props.messagesState) && prevState.isErrorLoading)
     });
-  };
-
-  public componentWillUnmount() {
-    NetInfo.isConnected.removeEventListener(
-      "connectionChange",
-      this.handleFirstConnectivityChange
-    );
   }
 
   public render() {
@@ -204,7 +177,30 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       selectedItemIds,
       resetSelection
     } = this.props;
-    const { allMessageIdsState, isConnected } = this.state;
+    const { allMessageIdsState } = this.state;
+
+    // If have error in pot and the list is empty
+    const ErrorLoadingComponent = () => (
+      <View style={styles.emptyListWrapper}>
+        <View spacer={true} />
+        <Image
+          source={require("../../../img/messages/empty-message-list-icon.png")}
+        />
+        <Text style={styles.emptyListContentTitle}>
+          {I18n.t("messages.loadingErrorTitle")}
+        </Text>
+        {paddingForAnimation && <View style={styles.paddingForAnimation} />}
+        <Button
+          small={true}
+          primary={true}
+          style={styles.buttonRetry}
+          block={true}
+          onPress={this.props.onRefresh}
+        >
+          <Text>{I18n.t("global.buttons.retry")}</Text>
+        </Button>
+      </View>
+    );
 
     return (
       <View style={styles.listWrapper}>
@@ -217,7 +213,9 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             refreshing={isLoading}
             selectedMessageIds={selectedItemIds}
             ListEmptyComponent={
-              isConnected ? ListEmptyComponent : ListOfflineComponent
+              this.state.isErrorLoading
+                ? ErrorLoadingComponent
+                : ListEmptyComponent
             }
             animated={animated}
           />

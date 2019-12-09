@@ -690,8 +690,7 @@ messages:
     senderInfo:  Mittente sconosciuto
     serviceInfo: Info sul servizio mancanti
     departmentInfo: Info sul dipartimento mancanti
-  noConnectionTitle: Offline! Non puoi ricevere messaggi
-  noConnectionDescription: Connettiti per visualizzare i messaggi
+  loadingErrorTitle: Non è stato possibile caricare i messaggi
   cta:
     archive: Archivia
     unarchive: Ripristina
