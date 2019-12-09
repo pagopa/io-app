@@ -1,6 +1,5 @@
 import { createStackNavigator } from "react-navigation";
 
-import LoadingScreen from "../screens/LoadingScreen";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
