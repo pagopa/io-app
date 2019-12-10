@@ -43,7 +43,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
     return true;
   };
 
-  private onCalendarLoaded = () => {
+  private onCalendarsLoaded = () => {
     this.setState({ isLoading: false });
   };
 
@@ -58,7 +58,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
             />
             <CalendarsListContainer
               onCalendarSelected={this.props.onCalendarSelected}
-              onCalendarLoaded={this.onCalendarLoaded}
+              onCalendarsLoaded={this.onCalendarsLoaded}
               lastListItem={
                 this.props.defaultCalendar === undefined && (
                   <View>

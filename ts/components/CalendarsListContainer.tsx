@@ -14,7 +14,9 @@ import { GlobalState } from "../store/reducers/types";
 
 type OwnProps = {
   onCalendarSelected: (calendar: Calendar) => void;
-  onCalendarLoaded: () => void;
+  onCalendarsLoaded: (
+    calendars: pot.Pot<ReadonlyArray<Calendar>, ResourceError>
+  ) => void;
   lastListItem?: React.ReactNode;
 };
 
@@ -108,20 +110,23 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
         const editableCalendars = pot.some(
           calendars.filter(calendar => calendar.allowsModifications)
         );
-        this.setState(
-          { calendars: editableCalendars },
-          this.props.onCalendarLoaded
+        this.setState({ calendars: editableCalendars }, () =>
+          this.props.onCalendarsLoaded(editableCalendars)
         );
       })
       .catch(_ => {
         const fetchError: FetchError = {
           kind: "FETCH_ERROR"
         };
+        const calendars: pot.Pot<
+          ReadonlyArray<Calendar>,
+          ResourceError
+        > = pot.toError(pot.none, fetchError);
         this.setState(
           {
-            calendars: pot.toError(pot.none, fetchError)
+            calendars
           },
-          this.props.onCalendarLoaded
+          () => this.props.onCalendarsLoaded(calendars)
         );
       });
   };

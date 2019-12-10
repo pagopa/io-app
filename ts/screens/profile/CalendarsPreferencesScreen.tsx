@@ -34,7 +34,7 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
     this.props.navigation.goBack();
   };
 
-  private onCalendarLoaded = () => {
+  private onCalendarsLoaded = () => {
     this.setState({ isLoading: false });
   };
 
@@ -52,7 +52,7 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
           >
             <CalendarsListContainer
               onCalendarSelected={this.onCalendarSelected}
-              onCalendarLoaded={this.onCalendarLoaded}
+              onCalendarsLoaded={this.onCalendarsLoaded}
             />
           </ScreenContent>
         </TopScreenComponent>
