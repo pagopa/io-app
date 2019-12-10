@@ -59,10 +59,7 @@ const ringSettings = {
 const CardSelectionScreen: React.SFC<Props> = props => {
   return (
     // With the following animation we can represent 3 circles that light up similar to a 'radar' effect
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
-    >
+    <BaseScreenComponent goBack={true}>
       <Content noPadded={true} bounces={false}>
         <ScreenHeader
           heading={<H2 style={styles.titleHeader}>{I18n.t("cie.title")}</H2>}

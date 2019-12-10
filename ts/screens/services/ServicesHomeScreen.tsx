@@ -219,8 +219,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       isInnerContentRendered: false
     };
   }
-
-  private updateLongPressButtonScope = () => {
+  /**
+   * return true if all services have INBOX channel disabled
+   */
+  private areAllServicesInboxChannelDisabled = (): boolean => {
     const currentTabServicesChannels = this.props.getServicesChannels(
       this.props.tabsServicesId[this.state.currentTab],
       this.props.profile
@@ -231,25 +233,20 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     ).filter(id => currentTabServicesChannels[id].indexOf("INBOX") !== -1)
       .length;
 
-    if (disabledServices === Object.keys(currentTabServicesChannels).length) {
-      // if all tab services are disabled the footer primary button allows services are massively enabled
-      this.setState({ enableServices: true });
-    } else {
-      // if at least one tab service is enabled the footer primary button allows services are massively disabled
-      this.setState({ enableServices: false });
-    }
+    return disabledServices === Object.keys(currentTabServicesChannels).length;
   };
 
   private handleOnLongPressItem = () => {
     if (!this.props.isSearchEnabled) {
-      this.updateLongPressButtonScope();
+      const enableServices = this.areAllServicesInboxChannelDisabled();
       const isLongPressEnabled = !this.state.isLongPressEnabled;
       const currentTabServicesId = this.props.tabsServicesId[
         this.state.currentTab
       ];
       this.setState({
         isLongPressEnabled,
-        currentTabServicesId
+        currentTabServicesId,
+        enableServices
       });
     }
   };
@@ -318,7 +315,21 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   }
 
+  // tslint:disable-next-line: cognitive-complexity
   public componentDidUpdate(prevProps: Props, prevState: State) {
+    // if some errors occur while updating profile, we will show a message in a toast
+    // profile could be updated by enabling/disabling on or more channel of a service
+    if (pot.isError(this.props.profile) && !pot.isError(prevProps.profile)) {
+      showToast(
+        I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
+        "danger"
+      );
+    }
+
+    const enableServices = this.areAllServicesInboxChannelDisabled();
+    if (enableServices !== prevState.enableServices) {
+      this.setState({ enableServices });
+    }
     // saving current list scroll position to enable header animation
     // when shifting between tabs
     if (prevState.currentTab !== this.state.currentTab) {
@@ -420,7 +431,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         value
       );
     }
-    this.updateLongPressButtonScope();
+    const enableServices = this.areAllServicesInboxChannelDisabled();
+    this.setState({ enableServices });
   };
 
   public componentWillUnmount() {
@@ -431,12 +443,17 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   // This method enable or disable services and update the enableServices props
   private disableOrEnableTabServices = () => {
+    const { profile } = this.props;
+    if (pot.isUpdating(profile)) {
+      return;
+    }
+    const { currentTabServicesId, enableServices } = this.state;
     this.props.disableOrEnableServices(
-      this.state.currentTabServicesId,
-      this.props.profile,
-      this.state.enableServices
+      currentTabServicesId,
+      profile,
+      enableServices
     );
-    this.updateLongPressButtonScope();
+    this.setState({ enableServices: !enableServices });
   };
 
   private renderLongPressFooterButtons = () => {

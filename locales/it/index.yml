@@ -247,9 +247,26 @@ authentication:
     ok: Ok
     cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
     cieLoginWait: Attendi qualche secondo..
+  cie:
+    enableNfcTitle: Attiva NFC
+    enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
+    enableNfcHelp: Non hai la Carta di Identità Elettronica?
+    nfcEnabledTitle: NFC Attivo
+    nfcEnabledContent: "Grazie per aver attivato la funzione NFC sul tuo dispositivo: puoi proseguire con l'autenticazione!"
     unknownCardTitle: Carta sconosciuta
     unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
     unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
+    cie: Carta di Identità Elettronica
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
+    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
+    readerCardTitle: Tieni ferma la carta per qualche secondo
+    readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
+    readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
+    readerCardLostTitle: Avvicina nuovamente la carta
+    readerCardLostHeader: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta.
+    noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
+    authToSendData: !include cie/auth_to_send_data.md
   cie_information_request: !include cie.md
   spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
   request_cie: Richiedi CIE
@@ -266,11 +283,6 @@ authentication:
     paragraph3: Proseguendo dichiari di accettare le
     tosLinkText: regole sul trattamento dei dati personali
     continue: Continua
-  cie:
-    cie: Carta di Identità Elettronica
-    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
-    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   spid_information:
     spid: !include spid.md
     headerTitle: Non hai SPID?
@@ -503,7 +515,7 @@ wallet:
     cancelPayment: Annulla l'operazione
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
-    partialAmount: Importo da pagare
+    partialAmount: Importo dovuto
     fee: Costi di commissione
     why: Perché?
     totalAmount: Totale
@@ -565,7 +577,7 @@ wallet:
     proceed: Procedi con il pagamento
   total: Totale
   amount: Importo
-  payAmount: Importo da pagare
+  payAmount: Importo dovuto
   transactionFee: Costo operazione
   why: Perché?
   paymentReason: Causale

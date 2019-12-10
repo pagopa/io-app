@@ -9,7 +9,11 @@ import { Animated, Dimensions, Easing, StyleSheet, View } from "react-native";
 export type LightModalContextInterface = Readonly<{
   component: React.ReactNode;
   showModal: (component: React.ReactNode) => void;
-  showAnimatedModal: (component: React.ReactNode) => void;
+  showModalFadeInAnimation: (component: React.ReactNode) => void;
+  showAnimatedModal: (
+    component: React.ReactNode,
+    animatedValue?: AnimationLightModal
+  ) => void;
   hideModal: () => void;
 }>;
 
@@ -18,6 +22,7 @@ export const LightModalContext = React.createContext<
 >({
   component: null,
   showModal: () => undefined,
+  showModalFadeInAnimation: () => undefined,
   showAnimatedModal: () => undefined,
   hideModal: () => undefined
 });
@@ -46,7 +51,8 @@ const compositeAnimation = Animated.timing(animatedValue, {
 });
 const animationCallback = () => compositeAnimation.start();
 const screenWidth = Dimensions.get("screen").width;
-const styledAnimation = {
+const screenHeight = Dimensions.get("screen").height;
+export const RightLeftAnimation = {
   transform: [
     {
       translateX: animatedValue.interpolate({
@@ -57,10 +63,70 @@ const styledAnimation = {
   ]
 };
 
+export const LeftRightAnimation = {
+  transform: [
+    {
+      translateX: animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-screenWidth, 0]
+      })
+    }
+  ]
+};
+
+export const BottomTopAnimation = {
+  transform: [
+    {
+      translateY: animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [screenHeight, 0]
+      })
+    }
+  ]
+};
+
+export const TopBottomAnimation = {
+  transform: [
+    {
+      translateY: animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [-screenHeight, 0]
+      })
+    }
+  ]
+};
+
+export const ScaleAnimation = {
+  transform: [
+    {
+      scale: animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0.5, 1]
+      })
+    }
+  ]
+};
+
+const fadeAnim = new Animated.Value(0);
+const FadeInAnimation = Animated.timing(fadeAnim, {
+  toValue: 1,
+  duration: 250
+});
+
+export type AnimationLightModal =
+  | typeof ScaleAnimation
+  | typeof TopBottomAnimation
+  | typeof BottomTopAnimation
+  | typeof LeftRightAnimation
+  | typeof RightLeftAnimation;
+
 export const LightModalConsumer = LightModalContext.Consumer;
 
 export class LightModalProvider extends React.Component<Props, State> {
-  public showAnimatedModal = (childComponent: React.ReactNode) => {
+  public showAnimatedModal = (
+    childComponent: React.ReactNode,
+    styledAnimation: AnimationLightModal = RightLeftAnimation
+  ) => {
     const component = (
       <Animated.View style={[styles.container, styledAnimation]}>
         {childComponent}
@@ -74,6 +140,22 @@ export class LightModalProvider extends React.Component<Props, State> {
     );
   };
 
+  public showModalFadeInAnimation = (childComponent: React.ReactNode) => {
+    const component = (
+      <Animated.View style={styles.container} opacity={fadeAnim}>
+        {childComponent}
+      </Animated.View>
+    );
+    this.setState(
+      {
+        component
+      },
+      () => {
+        FadeInAnimation.start();
+      }
+    );
+  };
+
   public showModal = (childComponent: React.ReactNode) => {
     const component = <View style={[styles.container]}>{childComponent}</View>;
     this.setState({
@@ -81,15 +163,19 @@ export class LightModalProvider extends React.Component<Props, State> {
     });
   };
 
-  public hideModal = () =>
+  public hideModal = () => {
     this.setState({
       component: null
     });
+    fadeAnim.setValue(0);
+    FadeInAnimation.stop();
+  };
 
   public state = {
     component: null,
     showModal: this.showModal,
     showAnimatedModal: this.showAnimatedModal,
+    showModalFadeInAnimation: this.showModalFadeInAnimation,
     hideModal: this.hideModal
   };
 
