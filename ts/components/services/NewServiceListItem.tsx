@@ -96,21 +96,20 @@ export default class NewServiceListItem extends React.PureComponent<
     const potService = this.props.item;
     if (this.props.onItemSwitchValueChanged !== undefined) {
       const onItemSwitchValueChanged = this.props.onItemSwitchValueChanged;
-      return pot.toUndefined(
-        pot.map(potService, service => {
-          if (
-            !pot.isUpdating(this.props.profile) &&
-            this.state.switchValue !== value
-          ) {
-            this.setState({
-              switchValue: value
-            });
-            onItemSwitchValueChanged(service, value);
-          }
-        })
-      );
+      pot.map(potService, service => {
+        // if the service is not updating and the new value is
+        // different from the old one, then update it!
+        if (
+          !pot.isUpdating(this.props.profile) &&
+          this.state.switchValue !== value
+        ) {
+          this.setState({
+            switchValue: value
+          });
+          onItemSwitchValueChanged(service, value);
+        }
+      });
     }
-    return undefined;
   }
 
   public render() {
