@@ -145,7 +145,7 @@ export function getProfileChannelsforServicesList(
     .mapNullable(
       userProfile =>
         InitializedProfile.is(userProfile)
-          ? userProfile.blocked_inbox_or_channels
+          ? { ...userProfile.blocked_inbox_or_channels }
           : null
     )
     .getOrElse({});
