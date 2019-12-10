@@ -69,16 +69,17 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
               }
             />
           </Content>
-          <FooterWithButtons
-            type="SingleButton"
-            leftButton={{
-              disabled: isLoading,
-              bordered: true,
-              onPress: this.props.onCancel,
-              title: I18n.t("global.buttons.cancel"),
-              block: true
-            }}
-          />
+          {!isLoading && (
+            <FooterWithButtons
+              type="SingleButton"
+              leftButton={{
+                bordered: true,
+                onPress: this.props.onCancel,
+                title: I18n.t("global.buttons.cancel"),
+                block: true
+              }}
+            />
+          )}
         </Container>
       </LoadingSpinnerOverlay>
     );
