@@ -7,6 +7,8 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Platform,
   SectionList,
   SectionListData,
@@ -113,7 +115,8 @@ const styles = StyleSheet.create({
     width: screenWidth,
     zIndex: 999,
     backgroundColor: customVariables.colorWhite
-  }
+  },
+  progress: { alignSelf: "center" }
 });
 
 export type FakeItem = {
@@ -162,14 +165,17 @@ type Props = OwnProps & SelectedSectionListProps;
 type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
-  fristSectionListUpdate: boolean;
+  firstSectionListUpdate: boolean;
   elementVisible: number;
-  isLoading: boolean;
+  isLoadingProgress: boolean;
 };
 
 export const isFakeItem = (item: any): item is FakeItem => {
   return item.fake;
 };
+
+// Min number of items to activate continuos scroll
+const minItemsToScroll = 6;
 
 const keyExtractor = (_: MessageAgendaItem | FakeItem, index: number) =>
   isFakeItem(_) ? `item-${index}` : _.e1.id;
@@ -250,23 +256,31 @@ const FakeItemComponent = (
 class MessageAgenda extends React.PureComponent<Props, State> {
   // Ref to section list
   private sectionListRef = React.createRef<any>();
+  private idTimeoutProgress?: number;
 
   constructor(props: Props) {
     super(props);
     this.state = {
       itemLayouts: [],
-      fristSectionListUpdate: true,
+      firstSectionListUpdate: true,
       elementVisible: 0,
-      isLoading: false
+      isLoadingProgress: false
     };
     this.loadMoreData = this.loadMoreData.bind(this);
+  }
+
+  public componentWillUnmount() {
+    if (this.idTimeoutProgress !== undefined) {
+      clearTimeout(this.idTimeoutProgress);
+    }
   }
 
   public componentDidUpdate(prevProps: Props) {
     // Load a min (>5) of section to activate scroll
     if (
       this.props.refreshing === false &&
-      this.props.sections.length < 4 &&
+      this.props.sections.length < minItemsToScroll &&
+      // When length == 0 the button is showed
       this.props.sections.length !== 0
     ) {
       this.loadMoreData();
@@ -278,15 +292,16 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       this.props.refreshing === false
     ) {
       // We leave half a second longer to show the progress even for faster requests
-      setTimeout(() => {
+      // tslint:disable-next-line: no-object-mutation
+      this.idTimeoutProgress = setTimeout(() => {
         this.setState({
-          isLoading: false
+          isLoadingProgress: false
         });
         // Set scroll position when the new elements have been loaded
         if (
           this.sectionListRef !== undefined &&
           this.props.sections !== undefined &&
-          this.props.sections.length >= 4
+          this.props.sections.length >= minItemsToScroll
         ) {
           this.scrollToLocation({
             animated: false,
@@ -315,8 +330,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   private loadMoreData() {
+    // This state trigger progress bar
     this.setState({
-      isLoading: true
+      isLoadingProgress: true
     });
     this.props.onMoreDataRequest();
   }
@@ -400,9 +416,17 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return this.state.itemLayouts[index];
   };
 
+  // On scroll download more data
+  private onScrollHandler = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const scrollPosition = e.nativeEvent.contentOffset.y;
+    if (scrollPosition < 50 && !this.state.isLoadingProgress) {
+      this.loadMoreData();
+    }
+  };
+
   public render() {
     const { sections, servicesById, paymentsByRptId } = this.props;
-    const { isLoading } = this.state;
+    const { isLoadingProgress } = this.state;
 
     const ListEmptyComponent = (
       <View style={styles.emptyListWrapper}>
@@ -443,12 +467,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           bounces={false}
           keyExtractor={keyExtractor}
           ref={this.sectionListRef}
-          onScroll={e => {
-            const scrollPosition = e.nativeEvent.contentOffset.y;
-            if (scrollPosition < 50 && !isLoading) {
-              this.loadMoreData();
-            }
-          }}
+          onScroll={this.onScrollHandler}
           renderItem={this.renderItem}
           renderSectionHeader={this.renderSectionHeader}
           ItemSeparatorComponent={ItemSeparatorComponent}
@@ -456,15 +475,15 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
           ListEmptyComponent={sections.length === 0 && ListEmptyComponent}
         />
-        {isLoading && (
+        {isLoadingProgress && (
           <View
             style={[
               styles.contentProgress,
-              { display: isLoading ? "flex" : "none" }
+              { display: isLoadingProgress ? "flex" : "none" }
             ]}
           >
             <ActivityIndicator
-              style={{ alignSelf: "center" }}
+              style={styles.progress}
               size="small"
               color={variables.brandDarkGray}
             />
