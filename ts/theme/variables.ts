@@ -15,7 +15,7 @@ import { ThemeSimpleValue } from "./types";
 // tslint:disable-next-line:no-object-mutation
 const customVariables = Object.assign(materialVariables, {
   // Android
-  btnUppercaseAndroidText: false,
+  buttonUppercaseAndroidText: false,
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
@@ -29,7 +29,7 @@ const customVariables = Object.assign(materialVariables, {
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
-  btnLightBorderColor: "#E6E9F2",
+  btnLightBorderColor: "#AEB5BF",
 
   // Color
   brandPrimary: "#0066CC",
@@ -39,6 +39,7 @@ const customVariables = Object.assign(materialVariables, {
   brandSuccess: "#007005",
   brandDanger: "#CC3333",
   brandLightGray: "#E6E9F2",
+  brandMildGray: "#C7D1D9",
   brandDarkGray: "#5C6F82",
   brandDarkestGray: "#17324D",
   brandPrimaryLight: "#99CCFF",
@@ -48,6 +49,7 @@ const customVariables = Object.assign(materialVariables, {
   cardFontColor: "#17324D",
   colorWhite: "#FFFFFF",
   disabledService: "#909DA8",
+  itemBorderDefaultColor: "#5F6F82",
 
   calendarExpirableColor: "#D0021B",
 
@@ -275,7 +277,10 @@ const customVariables = Object.assign(materialVariables, {
 
   // IconFont
   selectedColor: "#0073E6",
-  unselectedColor: "#5C6F82"
+  unselectedColor: "#5C6F82",
+
+  // Checkbox
+  checkboxDefaultColor: "transparent"
 });
 
 export default customVariables;

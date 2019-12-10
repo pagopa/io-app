@@ -1,4 +1,4 @@
-import { ListItem, Text, View } from "native-base";
+import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import Switch from "../../components/ui/Switch";
@@ -10,6 +10,7 @@ import { BadgeComponent } from "./BadgeComponent";
 
 type Props = Readonly<{
   title: string;
+  titleBadge?: string;
   onPress?: () => void;
   onLongPress?: () => void;
   subTitle?: string;
@@ -68,6 +69,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingRight: ICON_SIZE,
     alignSelf: "flex-start"
+  },
+  badgeStyle: {
+    backgroundColor: customVariables.brandPrimary,
+    borderColor: "white",
+    borderWidth: 2,
+    elevation: 0.1,
+    shadowColor: "white",
+    justifyContent: "center",
+    alignContent: "center",
+    marginTop: -3
   }
 });
 
@@ -98,6 +109,11 @@ export default class ListItemComponent extends React.Component<Props> {
               >
                 {this.props.title}
               </Text>
+              {this.props.titleBadge && (
+                <Badge style={styles.badgeStyle}>
+                  <Text badge={true}>{this.props.titleBadge}</Text>
+                </Badge>
+              )}
             </View>
             {!this.props.iconName &&
               !this.props.hideIcon &&

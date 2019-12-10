@@ -49,7 +49,6 @@ export class AlertModal extends React.PureComponent<Props> {
   public render() {
     return (
       <Overlay
-        opacity={1}
         backgroundColor={"rgba(0,0,0,0.6)"}
         foreground={
           <View style={styles.container}>
