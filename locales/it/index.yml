@@ -515,7 +515,7 @@ wallet:
     cancelPayment: Annulla l'operazione
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
-    partialAmount: Importo da pagare
+    partialAmount: Importo dovuto
     fee: Costi di commissione
     why: Perché?
     totalAmount: Totale
@@ -577,7 +577,7 @@ wallet:
     proceed: Procedi con il pagamento
   total: Totale
   amount: Importo
-  payAmount: Importo da pagare
+  payAmount: Importo dovuto
   transactionFee: Costo operazione
   why: Perché?
   paymentReason: Causale
