@@ -34,6 +34,10 @@ interface OwnProps {
   body?: React.ReactNode;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
+  customRightIcon?: {
+    iconName: string;
+    onPress: () => void;
+  };
 }
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -71,7 +75,8 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       isSearchEnabled,
       onShowHelp,
       isSearchAvailable,
-      searchType
+      searchType,
+      customRightIcon
     } = this.props;
 
     return (
@@ -87,7 +92,18 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               <IconFont name="io-question" />
             </Button>
           )}
+
         {isSearchAvailable && <SearchButton searchType={searchType} />}
+        {customRightIcon &&
+          !isSearchEnabled && (
+            <Button
+              onPress={customRightIcon.onPress}
+              style={styles.helpButton}
+              transparent={true}
+            >
+              <IconFont name={customRightIcon.iconName} />
+            </Button>
+          )}
       </Right>
     );
   };
