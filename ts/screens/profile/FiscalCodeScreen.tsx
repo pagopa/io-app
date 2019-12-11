@@ -11,7 +11,10 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import DarkLayout from "../../components/screens/DarkLayout";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import {
+  BottomTopAnimation,
+  LightModalContextInterface
+} from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
@@ -59,7 +62,7 @@ const styles = StyleSheet.create({
 class FiscalCodeScreen extends React.PureComponent<Props> {
   private showModal(showBackSide: boolean = false) {
     if (this.props.profile) {
-      this.props.showModal(
+      const component = (
         <FiscalCodeLandscapeOverlay
           onCancel={this.props.hideModal}
           profile={this.props.profile}
@@ -67,6 +70,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
           showBackSide={showBackSide}
         />
       );
+      this.props.showAnimatedModal(component, BottomTopAnimation);
     }
   }
 

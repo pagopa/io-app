@@ -1,98 +1,21 @@
-import { Text } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet, TouchableHighlight, View } from "react-native";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+import { Calendar } from "react-native-calendar-events";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
-import * as pot from "italia-ts-commons/lib/pot";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
+import CalendarsListContainer from "../../components/CalendarsListContainer";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
-import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
-import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
-
-const styles = StyleSheet.create({
-  content: {
-    padding: customVariables.contentPadding,
-    paddingTop: 48
-  },
-  calendarItemWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: customVariables.brandLightGray,
-    color: customVariables.contentPrimaryBackground
-  },
-  separator: {
-    paddingTop: 25,
-    width: "100%"
-  }
-});
-
-const TouchableComponent =
-  Platform.OS === "ios" ? TouchableHighlight : TouchableDefaultOpacity;
-
-type CalendarItemProps = {
-  calendar: Calendar;
-  onPress: () => void;
-};
-
-/**
- * Renders a Calendar as FlatList item
- */
-const CalendarItem: React.SFC<CalendarItemProps> = props => (
-  <TouchableComponent onPress={props.onPress}>
-    <View style={styles.calendarItemWrapper}>
-      <TouchableDefaultOpacity>
-        <Text link={true}>{props.calendar.title}</Text>
-      </TouchableDefaultOpacity>
-      <IconFont
-        name="io-right"
-        color={customVariables.contentPrimaryBackground}
-      />
-    </View>
-  </TouchableComponent>
-);
+import { Dispatch } from "../../store/actions/types";
 
 type OwnProps = NavigationInjectedProps;
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  ReduxProps &
-  OwnProps;
+type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
 
 type State = {
-  calendars: pot.Pot<ReadonlyArray<Calendar>, ResourceError>;
-};
-
-const INITIAL_STATE: State = {
-  calendars: pot.none
-};
-
-type FetchError = {
-  kind: "FETCH_ERROR";
-};
-
-type ResourceError = FetchError;
-
-const mapResourceErrorToMessage = (resourceError: ResourceError): string => {
-  switch (resourceError.kind) {
-    case "FETCH_ERROR":
-      return I18n.t("messages.cta.errors.fetchCalendars");
-
-    default: {
-      // Exhaustive check
-      return ((): never => resourceError.kind)();
-    }
-  }
+  isLoading: boolean;
 };
 
 /**
@@ -101,93 +24,42 @@ const mapResourceErrorToMessage = (resourceError: ResourceError): string => {
 class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = INITIAL_STATE;
+    this.state = {
+      isLoading: true
+    };
   }
 
   private onCalendarSelected = (calendar: Calendar) => {
     this.props.preferredCalendarSaveSuccess(calendar);
-
     this.props.navigation.goBack();
   };
 
-  public render() {
-    const { calendars } = this.state;
+  private onCalendarsLoaded = () => {
+    this.setState({ isLoading: false });
+  };
 
+  public render() {
+    const { isLoading } = this.state;
     return (
-      <TopScreenComponent
-        headerTitle={I18n.t("profile.preferences.title")}
-        title={I18n.t("profile.preferences.list.preferred_calendar.title")}
-        goBack={this.props.navigation.goBack}
-      >
-        <ScreenContentHeader
-          title={I18n.t("profile.preferences.list.preferred_calendar.title")}
-          subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
-        />
-        <View
-          style={{
-            width: "100%",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingHorizontal: 25
-          }}
-        />
-        <View style={styles.content}>
-          {pot.isLoading(calendars) && <Text>Loading calendars...</Text>}
-          {pot.isError(calendars) && (
-            <React.Fragment>
-              <Text>{mapResourceErrorToMessage(calendars.error)}</Text>
-              <ButtonDefaultOpacity onPress={this.fetchCalendars}>
-                <Text>{I18n.t("global.buttons.retry")}</Text>
-              </ButtonDefaultOpacity>
-            </React.Fragment>
-          )}
-          {pot.isSome(calendars) && (
-            <React.Fragment>
-              {calendars.value.map(calendar => (
-                <CalendarItem
-                  key={calendar.id}
-                  calendar={calendar}
-                  onPress={() => this.onCalendarSelected(calendar)}
-                />
-              ))}
-            </React.Fragment>
-          )}
-          <Text style={styles.separator}>{I18n.t("messages.cta.helper")}</Text>
-        </View>
-      </TopScreenComponent>
+      <LoadingSpinnerOverlay isLoading={isLoading}>
+        <TopScreenComponent
+          headerTitle={I18n.t("profile.preferences.title")}
+          goBack={this.props.navigation.goBack}
+        >
+          <ScreenContent
+            title={I18n.t("profile.preferences.list.preferred_calendar.title")}
+            subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
+          >
+            <CalendarsListContainer
+              onCalendarSelected={this.onCalendarSelected}
+              onCalendarsLoaded={this.onCalendarsLoaded}
+            />
+          </ScreenContent>
+        </TopScreenComponent>
+      </LoadingSpinnerOverlay>
     );
   }
-
-  public componentDidMount() {
-    this.fetchCalendars();
-  }
-
-  private fetchCalendars = () => {
-    this.setState({ calendars: pot.noneLoading });
-    // Fetch user calendars.
-    RNCalendarEvents.findCalendars()
-      .then(calendars => {
-        // Filter out only calendars that allow modifications
-        const editableCalendars = calendars.filter(
-          calendar => calendar.allowsModifications
-        );
-        this.setState({ calendars: pot.some(editableCalendars) });
-      })
-      .catch(_ => {
-        const fetchError: FetchError = {
-          kind: "FETCH_ERROR"
-        };
-        this.setState({
-          calendars: pot.toError(pot.none, fetchError)
-        });
-      });
-  };
 }
-
-const mapStateToProps = (state: GlobalState) => ({
-  defaultCalendar: state.persistedPreferences.preferredCalendar
-});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   preferredCalendarSaveSuccess: (calendar: Calendar) =>
@@ -199,6 +71,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
 )(CalendarsPreferencesScreen);
