@@ -36,8 +36,7 @@ const underlayColor = "transparent";
 const styles = StyleSheet.create({
   listItem: {
     marginLeft: 0,
-    paddingRight: 0,
-    backgroundColor: "white"
+    paddingRight: 0
   },
   disabled: {
     opacity: 0.75

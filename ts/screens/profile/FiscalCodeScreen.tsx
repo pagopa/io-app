@@ -128,7 +128,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                   </View>
                 </TouchableDefaultOpacity>
                 <View style={styles.spacer} />
-                <TouchableDefaultOpacity onPress={() => this.showModal()}>
+                <TouchableDefaultOpacity onPress={() => this.showModal(true)}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
