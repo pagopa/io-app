@@ -25,7 +25,7 @@
  */
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Tab, Tabs, Text, View } from "native-base";
+import { Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -41,6 +41,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -459,15 +460,15 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private renderLongPressFooterButtons = () => {
     return (
       <View style={styles.varBar}>
-        <Button
+        <ButtonDefaultOpacity
           block={true}
           bordered={true}
           onPress={this.handleOnLongPressItem}
           style={styles.buttonBar}
         >
           <Text>{I18n.t("services.close")}</Text>
-        </Button>
-        <Button
+        </ButtonDefaultOpacity>
+        <ButtonDefaultOpacity
           block={true}
           primary={true}
           style={styles.buttonBar}
@@ -488,7 +489,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               ? I18n.t("services.enableAll")
               : I18n.t("services.disableAll")}
           </Text>
-        </Button>
+        </ButtonDefaultOpacity>
       </View>
     );
   };
