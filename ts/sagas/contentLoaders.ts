@@ -67,7 +67,6 @@ export function* watchContentServicesByScopeLoad(): Iterator<Effect> {
       > = yield call(getServicesByScope);
 
       if (response.isRight() && response.value.status === 200) {
-        console.warn(JSON.stringify(response.value.value));
         yield put(contentServicesByScopeLoad.success(response.value.value));
       } else {
         const error = response.fold(
