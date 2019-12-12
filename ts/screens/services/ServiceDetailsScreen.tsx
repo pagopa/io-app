@@ -10,7 +10,6 @@ import {
   Alert,
   Image,
   ImageSourcePropType,
-  Linking,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
