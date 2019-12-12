@@ -12,6 +12,7 @@ import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { ContextualHelp } from "../ContextualHelp";
 import { withLightModalContext } from "../helpers/withLightModalContext";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 import Markdown from "../ui/Markdown";
@@ -29,6 +30,8 @@ type IPaymentMethod = Readonly<{
   implemented: boolean;
   onPress?: () => void;
 }>;
+
+const underlayColor = "transparent";
 
 const styles = StyleSheet.create({
   listItem: {
@@ -108,6 +111,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
               <ListItem
                 style={[styles.listItem]}
                 onPress={itemInfo.item.onPress}
+                underlayColor={underlayColor}
               >
                 <Left>
                   <Grid>
@@ -153,9 +157,9 @@ class PaymentMethodsList extends React.Component<Props, never> {
           }}
         />
         <View spacer={true} large={true} />
-        <Text link={true} onPress={this.showHelp}>
-          {I18n.t("wallet.whyAFee.title")}
-        </Text>
+        <TouchableDefaultOpacity onPress={this.showHelp}>
+          <Text link={true}>{I18n.t("wallet.whyAFee.title")}</Text>
+        </TouchableDefaultOpacity>
       </View>
     );
   }

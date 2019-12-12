@@ -4,20 +4,16 @@
  */
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
+import { Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  Image,
-  Linking,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { Alert, Image, Linking, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H4 from "../../components/ui/H4";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
@@ -101,11 +97,11 @@ function renderInformationRow(
   return (
     <View style={styles.infoItem}>
       <Text>{label}</Text>
-      <Button primary={true} small={true} onPress={onPress}>
+      <ButtonDefaultOpacity primary={true} small={true} onPress={onPress}>
         <Text uppercase={false} ellipsizeMode="tail" numberOfLines={1}>
           {info}
         </Text>
-      </Button>
+      </ButtonDefaultOpacity>
     </View>
   );
 }
@@ -431,22 +427,22 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             {description && <Markdown animated={true}>{description}</Markdown>}
             {description && <View spacer={true} large={true} />}
             {tos_url && (
-              <TouchableOpacity
+              <TouchableDefaultOpacity
                 style={styles.infoItem}
                 onPress={() => Linking.openURL(tos_url).then(() => 0, () => 0)}
               >
                 <Text link={true}>{I18n.t("services.tosLink")}</Text>
-              </TouchableOpacity>
+              </TouchableDefaultOpacity>
             )}
             {privacy_url && (
-              <TouchableOpacity
+              <TouchableDefaultOpacity
                 style={styles.infoItem}
                 onPress={() =>
                   Linking.openURL(privacy_url).then(() => 0, () => 0)
                 }
               >
                 <Text link={true}>{I18n.t("services.privacyLink")}</Text>
-              </TouchableOpacity>
+              </TouchableDefaultOpacity>
             )}
             {(app_android || app_ios || web_url) && (
               <H4 style={styles.infoHeader}>
@@ -456,7 +452,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             {web_url && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppWeb")}</Text>
-                <Button
+                <ButtonDefaultOpacity
                   small={true}
                   onPress={() =>
                     Linking.openURL(web_url).then(() => 0, () => 0)
@@ -465,13 +461,13 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   <Text ellipsizeMode="tail" numberOfLines={1}>
                     {web_url}
                   </Text>
-                </Button>
+                </ButtonDefaultOpacity>
               </View>
             )}
             {app_ios && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppIos")}</Text>
-                <TouchableOpacity
+                <TouchableDefaultOpacity
                   onPress={() =>
                     Linking.openURL(app_ios).then(() => 0, () => 0)
                   }
@@ -481,13 +477,13 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                     resizeMode="contain"
                     source={require("../../../img/badges/app-store-badge.png")}
                   />
-                </TouchableOpacity>
+                </TouchableDefaultOpacity>
               </View>
             )}
             {app_android && (
               <View style={styles.infoItem}>
                 <Text>{I18n.t("services.otherAppAndroid")}</Text>
-                <TouchableOpacity
+                <TouchableDefaultOpacity
                   onPress={() =>
                     Linking.openURL(app_android).then(() => 0, () => 0)
                   }
@@ -497,7 +493,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                     resizeMode="contain"
                     source={require("../../../img/badges/google-play-badge.png")}
                   />
-                </TouchableOpacity>
+                </TouchableDefaultOpacity>
               </View>
             )}
             <H4 style={styles.infoHeader}>

@@ -5,10 +5,9 @@ import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Tab } from "native-base";
 import * as React from "react";
 import { createFactory } from "react";
-import { Animated, Platform, StyleSheet, TouchableOpacity } from "react-native";
+import { Animated, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -27,7 +26,6 @@ import {
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
-import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
@@ -38,7 +36,6 @@ import OrganizationLogo from "./OrganizationLogo";
 import ServicesSectionsList from "./ServicesSectionsList";
 
 type OwnProps = Readonly<{
-  heading: string;
   isLocal?: boolean;
   updateToast?: () => void;
   sections: ReadonlyArray<ServicesSectionState>;
@@ -62,14 +59,6 @@ type Props = OwnProps &
 const ICON_SIZE = 17;
 
 const styles = StyleSheet.create({
-  activeTextStyle: {
-    ...makeFontStyleObject(Platform.select, "600"),
-    fontSize: Platform.OS === "android" ? 16 : undefined,
-    fontWeight: Platform.OS === "android" ? "normal" : "bold"
-  },
-  textStyle: {
-    fontSize: customVariables.fontSizeSmall
-  },
   organizationLogo: {
     marginBottom: 0
   },
@@ -181,40 +170,30 @@ class ServicesTab extends React.PureComponent<Props> {
 
   public render() {
     return (
-      <Tab
-        activeTextStyle={styles.activeTextStyle}
-        textStyle={styles.textStyle}
-        heading={this.props.heading}
-      >
-        <ServicesSectionsList
-          isLocal={this.props.isLocal}
-          sections={this.props.sections}
-          profile={this.props.profile}
-          isRefreshing={this.props.isRefreshing}
-          onRefresh={this.props.onRefresh}
-          onSelect={this.props.onServiceSelect}
-          readServices={this.props.readServices}
-          onChooserAreasOfInterestPress={
-            this.props.isLocal
-              ? this.showChooserAreasOfInterestModal
-              : undefined
-          }
-          selectedOrganizationsFiscalCodes={
-            this.props.isLocal
-              ? new Set(this.props.selectedOrganizations || [])
-              : undefined
-          }
-          onLongPressItem={this.props.handleOnLongPressItem}
-          isLongPressEnabled={this.props.isLongPressEnabled}
-          onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
-          animated={this.onTabScroll(this.props.tabOffset)}
-          renderRightIcon={
-            this.props.isLocal
-              ? this.renderLocalQuickSectionDeletion
-              : undefined
-          }
-        />
-      </Tab>
+      <ServicesSectionsList
+        isLocal={this.props.isLocal}
+        sections={this.props.sections}
+        profile={this.props.profile}
+        isRefreshing={this.props.isRefreshing}
+        onRefresh={this.props.onRefresh}
+        onSelect={this.props.onServiceSelect}
+        readServices={this.props.readServices}
+        onChooserAreasOfInterestPress={
+          this.props.isLocal ? this.showChooserAreasOfInterestModal : undefined
+        }
+        selectedOrganizationsFiscalCodes={
+          this.props.isLocal
+            ? new Set(this.props.selectedOrganizations || [])
+            : undefined
+        }
+        onLongPressItem={this.props.handleOnLongPressItem}
+        isLongPressEnabled={this.props.isLongPressEnabled}
+        onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
+        animated={this.onTabScroll(this.props.tabOffset)}
+        renderRightIcon={
+          this.props.isLocal ? this.renderLocalQuickSectionDeletion : undefined
+        }
+      />
     );
   }
 }

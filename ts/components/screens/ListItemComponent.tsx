@@ -1,4 +1,4 @@
-import { ListItem, Text, View } from "native-base";
+import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import Switch from "../../components/ui/Switch";
@@ -10,6 +10,7 @@ import { BadgeComponent } from "./BadgeComponent";
 
 type Props = Readonly<{
   title: string;
+  titleBadge?: string;
   onPress?: () => void;
   onLongPress?: () => void;
   subTitle?: string;
@@ -19,18 +20,21 @@ type Props = Readonly<{
   iconName?: string;
   smallIconSize?: boolean;
   iconOnTop?: boolean;
+  iconSize?: number;
   hideIcon?: boolean;
+  paddingRightDescription?: number;
   useExtendedSubTitle?: boolean;
   style?: StyleProp<ViewStyle>;
   hideSeparator?: boolean;
   isItemDisabled?: boolean;
   onSwitchValueChanged?: (value: boolean) => void;
   switchValue?: boolean;
+  switchDisabled?: boolean;
   keySwitch?: string;
   isLongPressEnabled?: boolean;
 }>;
-
-const ICON_SIZE = 24;
+const DEFAULT_ICON_SIZE = 24;
+const PADDING_R_DESCRIPTION = 24;
 
 const styles = StyleSheet.create({
   listItem: {
@@ -67,7 +71,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 14,
-    paddingRight: ICON_SIZE,
+    paddingRight: PADDING_R_DESCRIPTION,
     alignSelf: "flex-start"
   },
   center: {
@@ -75,11 +79,24 @@ const styles = StyleSheet.create({
   },
   alignToStart: {
     alignSelf: "flex-start"
+  },
+  badgeStyle: {
+    backgroundColor: customVariables.brandPrimary,
+    borderColor: "white",
+    borderWidth: 2,
+    elevation: 0.1,
+    shadowColor: "white",
+    justifyContent: "center",
+    alignContent: "center",
+    marginTop: -3
   }
 });
 
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
+    const ICON_SIZE = this.props.iconSize || DEFAULT_ICON_SIZE;
+    const showDefaultIcon =
+      this.props.iconName === undefined && this.props.hideIcon !== true;
     return (
       <ListItem
         style={[styles.listItem, styles.flexRow, this.props.style]}
@@ -105,14 +122,19 @@ export default class ListItemComponent extends React.Component<Props> {
               >
                 {this.props.title}
               </Text>
+              {this.props.titleBadge && (
+                <Badge style={styles.badgeStyle}>
+                  <Text badge={true}>{this.props.titleBadge}</Text>
+                </Badge>
+              )}
             </View>
-            {!this.props.iconName &&
-              !this.props.hideIcon &&
+            {showDefaultIcon &&
               (this.props.isLongPressEnabled ? (
                 <Switch
                   key={this.props.keySwitch}
                   value={this.props.switchValue}
                   onValueChange={this.props.onSwitchValueChanged}
+                  disabled={this.props.switchDisabled}
                 />
               ) : (
                 <IconFont
@@ -125,22 +147,29 @@ export default class ListItemComponent extends React.Component<Props> {
           {this.props.subTitle && (
             <Text
               numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-              style={styles.description}
+              style={[
+                styles.description,
+                {
+                  paddingRight:
+                    this.props.paddingRightDescription || PADDING_R_DESCRIPTION
+                }
+              ]}
             >
               {this.props.subTitle}
             </Text>
           )}
         </View>
-        {this.props.iconName && (
-          <View style={this.props.iconOnTop && styles.alignToStart}>
-            <IconFont
-              name={this.props.iconName}
-              size={this.props.smallIconSize ? ICON_SIZE : ICON_SIZE * 2}
-              style={styles.center}
-              color={customVariables.contentPrimaryBackground}
-            />
-          </View>
-        )}
+        {this.props.iconName !== undefined &&
+          this.props.hideIcon !== true && (
+            <View style={this.props.iconOnTop && styles.alignToStart}>
+              <IconFont
+                name={this.props.iconName}
+                size={this.props.smallIconSize ? ICON_SIZE : ICON_SIZE * 2}
+                style={styles.center}
+                color={customVariables.contentPrimaryBackground}
+              />
+            </View>
+          )}
       </ListItem>
     );
   }

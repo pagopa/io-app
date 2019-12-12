@@ -30,7 +30,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
-import { showToast } from '../../utils/showToast';
+import { showToast } from "../../utils/showToast";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -62,11 +62,13 @@ function renderListItem(
 
 class EmailForwardingScreen extends React.Component<Props> {
   public componentDidUpdate(prevProps: Props) {
-    if(pot.isUpdating(prevProps.potProfile) && pot.isError(this.props.potProfile)){
-      showToast(I18n.t("global.genericError"))
+    if (
+      pot.isUpdating(prevProps.potProfile) &&
+      pot.isError(this.props.potProfile)
+    ) {
+      showToast(I18n.t("global.genericError"));
     }
   }
-
 
   public render() {
     return (
