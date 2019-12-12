@@ -13,6 +13,7 @@ import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
+import * as config from "../../config";
 import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -22,7 +23,6 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { showToast } from "../../utils/showToast";
-import * as config from "../../config";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
@@ -81,7 +81,9 @@ class LandingScreen extends React.PureComponent<Props> {
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
   private navigateToSpidCieInformationRequest = () =>
     config.isCIEauthenticationEnabled
-      ? this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION)
+      ? this.props.navigation.navigate(
+          ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION
+        )
       : this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
   public componentDidMount() {
@@ -107,48 +109,48 @@ class LandingScreen extends React.PureComponent<Props> {
           <View spacer={true} />
         </Content>
 
-      <View footer={true}>
-        {isCIEAvailable && (
+        <View footer={true}>
+          {isCIEAvailable && (
+            <ButtonDefaultOpacity
+              block={true}
+              primary={true}
+              iconLeft={true}
+              onPress={this.navigateToIdpSelection}
+              testID={"landing-button-login"}
+            >
+              <IconFont name={"io-cie"} color={variables.colorWhite} />
+              <Text>{I18n.t("authentication.landing.loginCie")}</Text>
+            </ButtonDefaultOpacity>
+          )}
+          <View spacer={true} />
           <ButtonDefaultOpacity
             block={true}
             primary={true}
             iconLeft={true}
             onPress={this.navigateToIdpSelection}
-            testID={"landing-button-login"}
+            testID={"landing-button-login-spid"}
           >
-            <IconFont name={"io-cie"} color={variables.colorWhite} />
-            <Text>{I18n.t("authentication.landing.loginCie")}</Text>
+            <IconFont name={"io-profilo"} color={variables.colorWhite} />
+            <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
           </ButtonDefaultOpacity>
-        )}
-        <View spacer={true} />
-        <ButtonDefaultOpacity
-          block={true}
-          primary={true}
-          iconLeft={true}
-          onPress={this.navigateToIdpSelection}
-          testID={"landing-button-login-spid"}
-        >
-          <IconFont name={"io-profilo"} color={variables.colorWhite} />
-          <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
-        </ButtonDefaultOpacity>
-        <View spacer={true} />
-        <ButtonDefaultOpacity
-          block={true}
-          small={true}
-          transparent={true}
-          onPress={this.navigateToSpidCieInformationRequest}
-        >
-          <Text>
-            {isCIEAvailable
-              ? I18n.t("authentication.landing.nospid-nocie")
-              : I18n.t("authentication.landing.nospid")}
-          </Text>
-        </ButtonDefaultOpacity>
-        <View spacer={true} extralarge={true} />
-      </View>
-    </BaseScreenComponent>
-  );
-};
+          <View spacer={true} />
+          <ButtonDefaultOpacity
+            block={true}
+            small={true}
+            transparent={true}
+            onPress={this.navigateToSpidCieInformationRequest}
+          >
+            <Text>
+              {isCIEAvailable
+                ? I18n.t("authentication.landing.nospid-nocie")
+                : I18n.t("authentication.landing.nospid")}
+            </Text>
+          </ButtonDefaultOpacity>
+          <View spacer={true} extralarge={true} />
+        </View>
+      </BaseScreenComponent>
+    );
+  }
 }
 
 const mapStateToProps = (state: GlobalState) => ({
