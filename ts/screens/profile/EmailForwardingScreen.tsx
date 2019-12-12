@@ -89,8 +89,8 @@ class EmailForwardingScreen extends React.Component<Props> {
               !this.props.isInboxEnabled,
               () => {
                 // Disable custom email notification and disable email notifications from all visible service
-                // The upsert of blocked_inbox_or_channels is useless: the backend will block any email notification
-                // twhen is_email_enabled is false
+                // The upsert of blocked_inbox_or_channels is avoided: the backend will block any email notification
+                // when is_email_enabled is false
                 this.props.setCustomEmailChannel(false);
               }
             )}

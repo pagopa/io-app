@@ -142,7 +142,7 @@ profile:
           associati (richiede SPID)
       exportData:
         title: Esporta i tuoi dati
-        description: Ricevi nella tua mail tutti i dati associati al tuo account in
+        description: Ricevi nella tua email tutti i dati associati al tuo account in
           un formato aperto
     developersSectionHeader: Sviluppatori
     experimentalFeatures:
@@ -211,7 +211,7 @@ spid:
   subscription:
     line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
       Amministrazione Italiana.
-    line2: Inserisci la tua e-mail per attivarla.
+    line2: Inserisci la tua email per attivarla.
 authentication:
   landing:
     loginSpid: Entra con SPID
@@ -372,10 +372,10 @@ email:
   validate:
     title: Ricorda di validare il tuo indirizzo email
     header: Validazione email
-    info: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
+    info: "Ti abbiamo inviato un'email a <b>{{email}}</b> con un link per validare l'email:
       clicca semplicemente su quel link.<br/>
       Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
-      inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
+      inoltro dei messaggi via email, ecc.) non potranno essere utilizzate, ma potrai
       usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
     cta: Invia una nuova email di validazione
     sent: Email inviata
@@ -781,18 +781,18 @@ biometric_recognition:
   enroll_btnLabel: Vai alle impostazioni
   needed_to_disable: Riconoscimento richiesto per disabilitare
 send_email_messages: 
-  title: Inoltro dei messaggi via mail
+  title: Inoltro dei messaggi via email
   subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a
   options:
     disable_all:
       label: Disabilita per tutti i servizi
-      info: Non riceverai più messaggi via mail
+      info: Non riceverai più messaggi via email
     enable_all:
       label: Abilita per tutti i servizi
       info: Ogni messaggio sarà inoltrato alla tua email, se il servizio lo consente
     by_service:
       label: Scegli servizio per servizio
-      info: Potrai scegliere nella scheda di ogni servizio di ricevere i relativi messaggi anche via mail
+      info: Potrai scegliere nella scheda di ogni servizio di ricevere i relativi messaggi anche via email
 services:
   title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
