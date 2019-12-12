@@ -2,13 +2,14 @@ import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
 import {
   BottomTopAnimation,
@@ -116,7 +117,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                 showsHorizontalScrollIndicator={false}
               >
                 <View style={styles.largeSpacer} />
-                <TouchableOpacity onPress={() => this.showModal()}>
+                <TouchableDefaultOpacity onPress={() => this.showModal()}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -125,11 +126,9 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       municipality={this.props.municipality.data}
                     />
                   </View>
-                </TouchableOpacity>
-
+                </TouchableDefaultOpacity>
                 <View style={styles.spacer} />
-
-                <TouchableOpacity onPress={() => this.showModal(true)}>
+                <TouchableDefaultOpacity onPress={() => this.showModal(true)}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -138,7 +137,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       municipality={this.props.municipality.data}
                     />
                   </View>
-                </TouchableOpacity>
+                </TouchableDefaultOpacity>
 
                 <View style={styles.largeSpacer} />
               </ScrollView>

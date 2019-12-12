@@ -1,7 +1,7 @@
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
   ActivityIndicator,
@@ -27,6 +27,7 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { format } from "../../utils/dates";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import MessageListItem from "./MessageListItem";
 

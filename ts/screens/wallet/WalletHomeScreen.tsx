@@ -5,7 +5,7 @@
  */
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
@@ -17,6 +17,7 @@ import {
 import { connect } from "react-redux";
 
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
@@ -198,16 +199,17 @@ class WalletHomeScreen extends React.Component<Props, never> {
         </Row>
         <Row>
           <View style={styles.container}>
-            <Button
+            <ButtonDefaultOpacity
               bordered={true}
               block={true}
               style={styles.bordercColorBrandGray}
               onPress={this.props.navigateToWalletAddPaymentMethod}
+              activeOpacity={1}
             >
               <Text bold={true} style={styles.colorBrandGray}>
                 {I18n.t("wallet.newPaymentMethod.addButton")}
               </Text>
-            </Button>
+            </ButtonDefaultOpacity>
           </View>
         </Row>
         <Row>
@@ -240,7 +242,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           {I18n.t("wallet.walletLoadFailure")}
         </Text>
         <View spacer={true} />
-        <Button
+        <ButtonDefaultOpacity
           block={true}
           light={true}
           bordered={true}
@@ -248,7 +250,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           onPress={this.props.loadWallets}
         >
           <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
-        </Button>
+        </ButtonDefaultOpacity>
         <View spacer={true} />
       </View>
     );
@@ -267,7 +269,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           {I18n.t("wallet.transactionsLoadFailure")}
         </Text>
         <View spacer={true} />
-        <Button
+        <ButtonDefaultOpacity
           block={true}
           light={true}
           bordered={true}
@@ -275,7 +277,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           onPress={this.props.loadTransactions}
         >
           <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
-        </Button>
+        </ButtonDefaultOpacity>
         <View spacer={true} large={true} />
       </Content>
     );
@@ -315,17 +317,18 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
     return (
-      <Button
+      <ButtonDefaultOpacity
         block={true}
         onPress={
           pot.isSome(potWallets)
             ? this.props.navigateToPaymentScanQrCode
             : undefined
         }
+        activeOpacity={1}
       >
         <IconFont name="io-qr" style={styles.white} />
         <Text>{I18n.t("wallet.payNotice")}</Text>
-      </Button>
+      </ButtonDefaultOpacity>
     );
   }
 
