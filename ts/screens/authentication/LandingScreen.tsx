@@ -3,10 +3,11 @@
  * It includes a carousel with highlights on the app functionalities
  */
 
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
@@ -21,6 +22,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { showToast } from "../../utils/showToast";
+import * as config from "../../config";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
@@ -77,8 +79,10 @@ class LandingScreen extends React.PureComponent<Props> {
     this.props.navigation.navigate(ROUTES.MARKDOWN);
   private navigateToIdpSelection = () =>
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
-  private navigateToSpidInformationRequest = () =>
-    this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
+  private navigateToSpidCieInformationRequest = () =>
+    config.isCIEauthenticationEnabled
+      ? this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION)
+      : this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
   public componentDidMount() {
     if (this.props.isSessionExpired) {
@@ -103,69 +107,48 @@ class LandingScreen extends React.PureComponent<Props> {
           <View spacer={true} />
         </Content>
 
-        <View footer={true}>
-          <Button
+      <View footer={true}>
+        {isCIEAvailable && (
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             iconLeft={true}
             onPress={this.navigateToIdpSelection}
             testID={"landing-button-login"}
           >
-            <IconFont name={"io-profilo"} color={variables.colorWhite} />
-            <Text>{I18n.t("authentication.landing.login")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Button
-            block={true}
-            small={true}
-            transparent={true}
-            onPress={this.navigateToSpidInformationRequest}
-          >
-            <Text>{I18n.t("authentication.landing.nospid")}</Text>
-          </Button>
-        </View>
-        <View footer={true}>
-          {isCIEAvailable && (
-            <Button
-              block={true}
-              primary={true}
-              iconLeft={true}
-              onPress={undefined} // TODO: here navigate to identity card check
-              testID={"landing-button-login-cie"}
-            >
-              <IconFont name={"io-cie"} color={variables.colorWhite} />
-              <Text>{I18n.t("authentication.landing.loginCie")}</Text>
-            </Button>
-          )}
-          <View spacer={true} />
-          <Button
-            block={true}
-            primary={true}
-            iconLeft={true}
-            onPress={this.navigateToIdpSelection}
-            testID={"landing-button-login-spid"}
-          >
-            <IconFont name={"io-profilo"} color={variables.colorWhite} />
-            <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
-          </Button>
-          <View spacer={true} />
-          <Button
-            block={true}
-            small={true}
-            transparent={true}
-            onPress={this.navigateToSpidInformationRequest}
-          >
-            <Text>
-              {isCIEAvailable
-                ? I18n.t("authentication.landing.nospid-nocie")
-                : I18n.t("authentication.landing.nospid")}
-            </Text>
-          </Button>
-          <View spacer={true} extralarge={true} />
-        </View>
-      </BaseScreenComponent>
-    );
-  }
+            <IconFont name={"io-cie"} color={variables.colorWhite} />
+            <Text>{I18n.t("authentication.landing.loginCie")}</Text>
+          </ButtonDefaultOpacity>
+        )}
+        <View spacer={true} />
+        <ButtonDefaultOpacity
+          block={true}
+          primary={true}
+          iconLeft={true}
+          onPress={this.navigateToIdpSelection}
+          testID={"landing-button-login-spid"}
+        >
+          <IconFont name={"io-profilo"} color={variables.colorWhite} />
+          <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
+        </ButtonDefaultOpacity>
+        <View spacer={true} />
+        <ButtonDefaultOpacity
+          block={true}
+          small={true}
+          transparent={true}
+          onPress={this.navigateToSpidCieInformationRequest}
+        >
+          <Text>
+            {isCIEAvailable
+              ? I18n.t("authentication.landing.nospid-nocie")
+              : I18n.t("authentication.landing.nospid")}
+          </Text>
+        </ButtonDefaultOpacity>
+        <View spacer={true} extralarge={true} />
+      </View>
+    </BaseScreenComponent>
+  );
+};
 }
 
 const mapStateToProps = (state: GlobalState) => ({

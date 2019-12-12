@@ -1,7 +1,6 @@
 import { BugReporting, Chats, Replies } from "instabug-reactnative";
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { Button } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -14,6 +13,7 @@ import { Dispatch } from "../store/actions/types";
 import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import CustomBadge from "./ui/CustomBadge";
 import IconFont from "./ui/IconFont";
 
@@ -105,27 +105,33 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   public render() {
     return (
       <React.Fragment>
-        <Button onPress={this.handleIBChatPress} transparent={true}>
+        <ButtonDefaultOpacity
+          onPress={this.handleIBChatPress}
+          transparent={true}
+        >
           <IconFont
             name="io-chat"
             color={this.props.color}
             accessible={true}
             accessibilityLabel="io-chat"
           />
-        </Button>
+        </ButtonDefaultOpacity>
         <CustomBadge
           badgeStyle={styles.badgeStyle}
           textStyle={styles.textStyle}
           badgeValue={this.props.badge}
         />
-        <Button onPress={this.handleIBBugPress} transparent={true}>
+        <ButtonDefaultOpacity
+          onPress={this.handleIBBugPress}
+          transparent={true}
+        >
           <IconFont
             name="io-bug"
             color={this.props.color}
             accessible={true}
             accessibilityLabel="io-bug"
           />
-        </Button>
+        </ButtonDefaultOpacity>
       </React.Fragment>
     );
   }

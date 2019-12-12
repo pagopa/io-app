@@ -1,11 +1,12 @@
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-import { Button, Content, H3, Text, View } from "native-base";
+import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
 import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -123,14 +124,14 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
-          <Button
+          <ButtonDefaultOpacity
             block={true}
             light={true}
             bordered={true}
             onPress={props.navigation.goBack}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
       </Content>
     </BaseScreenComponent>
