@@ -3,25 +3,23 @@
  * It includes a carousel with highlights on the app functionalities
  */
 
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
+import * as config from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
-import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
-
-import * as config from "../../config";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -85,12 +83,6 @@ const LandingScreen: React.SFC<Props> = props => {
     <LandingCardComponent key={`card-${p.id}`} {...p} />
   ));
 
-  const styles = StyleSheet.create({
-    textInfoLink: {
-      color: customVariables.brandPrimary
-    }
-  });
-
   return (
     <BaseScreenComponent>
       {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
@@ -103,19 +95,19 @@ const LandingScreen: React.SFC<Props> = props => {
 
       <View footer={true}>
         {isCIEAvailable && (
-          <Button
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             iconLeft={true}
-            onPress={undefined} // TODO: here navigate to identity card check
+            onPress={undefined} // TODO: here navigate to identity card check https://www.pivotaltracker.com/story/show/169730093
             testID={"landing-button-login-cie"}
           >
             <IconFont name={"io-cie"} color={variables.colorWhite} />
             <Text>{I18n.t("authentication.landing.loginCie")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
         )}
         <View spacer={true} />
-        <Button
+        <ButtonDefaultOpacity
           block={true}
           primary={true}
           iconLeft={true}
@@ -124,22 +116,20 @@ const LandingScreen: React.SFC<Props> = props => {
         >
           <IconFont name={"io-profilo"} color={variables.colorWhite} />
           <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
-        </Button>
+        </ButtonDefaultOpacity>
         <View spacer={true} />
-        <Button
+        <ButtonDefaultOpacity
           block={true}
           small={true}
           transparent={true}
           onPress={navigateToSpidCieInformationRequest}
         >
-          <View>
-            <Text bold={true} style={styles.textInfoLink}>
-              {isCIEAvailable
-                ? I18n.t("authentication.landing.nospid-nocie")
-                : I18n.t("authentication.landing.nospid")}
-            </Text>
-          </View>
-        </Button>
+          <Text>
+            {isCIEAvailable
+              ? I18n.t("authentication.landing.nospid-nocie")
+              : I18n.t("authentication.landing.nospid")}
+          </Text>
+        </ButtonDefaultOpacity>
         <View spacer={true} extralarge={true} />
       </View>
     </BaseScreenComponent>
