@@ -2,15 +2,19 @@ import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import {
+  BottomTopAnimation,
+  LightModalContextInterface
+} from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
 class FiscalCodeScreen extends React.PureComponent<Props> {
   private showModal(showBackSide: boolean = false) {
     if (this.props.profile) {
-      this.props.showModal(
+      const component = (
         <FiscalCodeLandscapeOverlay
           onCancel={this.props.hideModal}
           profile={this.props.profile}
@@ -66,6 +70,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
           showBackSide={showBackSide}
         />
       );
+      this.props.showAnimatedModal(component, BottomTopAnimation);
     }
   }
 
@@ -112,7 +117,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                 showsHorizontalScrollIndicator={false}
               >
                 <View style={styles.largeSpacer} />
-                <TouchableOpacity onPress={() => this.showModal()}>
+                <TouchableDefaultOpacity onPress={() => this.showModal()}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -121,11 +126,9 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       municipality={this.props.municipality.data}
                     />
                   </View>
-                </TouchableOpacity>
-
+                </TouchableDefaultOpacity>
                 <View style={styles.spacer} />
-
-                <TouchableOpacity onPress={() => this.showModal(true)}>
+                <TouchableDefaultOpacity onPress={() => this.showModal(true)}>
                   <View style={styles.shadow}>
                     <FiscalCodeComponent
                       type={"Full"}
@@ -134,7 +137,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
                       municipality={this.props.municipality.data}
                     />
                   </View>
-                </TouchableOpacity>
+                </TouchableDefaultOpacity>
 
                 <View style={styles.largeSpacer} />
               </ScrollView>

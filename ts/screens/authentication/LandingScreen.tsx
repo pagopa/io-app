@@ -3,35 +3,33 @@
  * It includes a carousel with highlights on the app functionalities
  */
 
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
-import { LandingCardComponent } from "../../components/LandingCard";
+import { LandingCardComponent } from "../../components/LandingCardComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-
-import { isDevEnvironment } from "../../config";
-
+import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
-
 import ROUTES from "../../navigation/routes";
-
 import { ReduxProps } from "../../store/actions/types";
-
 import variables from "../../theme/variables";
-
 import { ComponentProps } from "../../types/react";
 
-import { DevScreenButton } from "../../components/DevScreenButton";
+import * as config from "../../config";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
 type Props = ReduxProps & OwnProps;
+const isCIEAuthenticationSupported = false; // TODO: waiting for sdk cie implementation https://www.pivotaltracker.com/story/show/169730204
+const isCIEAvailable =
+  isCIEAuthenticationSupported && isCIEauthenticationEnabled;
 
 const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   {
@@ -60,9 +58,15 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   },
   {
     id: 4,
-    image: require("../../../img/landing/04.png"),
-    title: I18n.t("authentication.landing.card4-title"),
-    content: I18n.t("authentication.landing.card4-content")
+    image: isCIEAvailable
+      ? require("../../../img/landing/CIE-onboarding-illustration.png")
+      : require("../../../img/landing/04.png"),
+    title: isCIEAvailable
+      ? I18n.t("authentication.landing.loginSpidCie")
+      : I18n.t("authentication.landing.card4-title"),
+    content: isCIEAvailable
+      ? I18n.t("authentication.landing.loginSpidCieContent")
+      : I18n.t("authentication.landing.card4-content")
   }
 ];
 
@@ -71,8 +75,10 @@ const LandingScreen: React.SFC<Props> = props => {
   const navigateToIdpSelection = () =>
     props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
-  const navigateToSpidInformationRequest = () =>
-    props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
+  const navigateToSpidCieInformationRequest = () =>
+    config.isCIEauthenticationEnabled
+      ? props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION)
+      : props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
   const cardComponents = cardProps.map(p => (
     <LandingCardComponent key={`card-${p.id}`} {...p} />
@@ -89,25 +95,43 @@ const LandingScreen: React.SFC<Props> = props => {
       </Content>
 
       <View footer={true}>
-        <Button
+        {isCIEAvailable && (
+          <ButtonDefaultOpacity
+            block={true}
+            primary={true}
+            iconLeft={true}
+            onPress={undefined} // TODO: here navigate to identity card check
+            testID={"landing-button-login-cie"}
+          >
+            <IconFont name={"io-cie"} color={variables.colorWhite} />
+            <Text>{I18n.t("authentication.landing.loginCie")}</Text>
+          </ButtonDefaultOpacity>
+        )}
+        <View spacer={true} />
+        <ButtonDefaultOpacity
           block={true}
           primary={true}
           iconLeft={true}
           onPress={navigateToIdpSelection}
-          testID="landing-button-login"
+          testID={"landing-button-login-spid"}
         >
-          <IconFont name="io-profilo" color={variables.colorWhite} />
-          <Text>{I18n.t("authentication.landing.login")}</Text>
-        </Button>
+          <IconFont name={"io-profilo"} color={variables.colorWhite} />
+          <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
+        </ButtonDefaultOpacity>
         <View spacer={true} />
-        <Button
+        <ButtonDefaultOpacity
           block={true}
           small={true}
           transparent={true}
-          onPress={navigateToSpidInformationRequest}
+          onPress={navigateToSpidCieInformationRequest}
         >
-          <Text>{I18n.t("authentication.landing.nospid")}</Text>
-        </Button>
+          <Text>
+            {isCIEAvailable
+              ? I18n.t("authentication.landing.nospid-nocie")
+              : I18n.t("authentication.landing.nospid")}
+          </Text>
+        </ButtonDefaultOpacity>
+        <View spacer={true} extralarge={true} />
       </View>
     </BaseScreenComponent>
   );

@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { ComponentProps } from "../../types/react";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 const styles = StyleSheet.create({
   container: {
@@ -43,7 +44,17 @@ interface TwoButtonsInlineThird {
   rightButton: FooterButtonProps;
 }
 
-type Props = SingleButton | TwoButtonsInlineHalf | TwoButtonsInlineThird;
+interface TwoButtonsInlineThirdInverted {
+  type: "TwoButtonsInlineThirdInverted";
+  leftButton: FooterButtonProps;
+  rightButton: FooterButtonProps;
+}
+
+type Props =
+  | SingleButton
+  | TwoButtonsInlineHalf
+  | TwoButtonsInlineThird
+  | TwoButtonsInlineThirdInverted;
 
 /**
  * Implements a component that show 2 buttons in footer with select style (inlineHalf | inlineOneThird)
@@ -66,7 +77,7 @@ export default class FooterWithButtons extends React.Component<Props, never> {
     return (
       <React.Fragment>
         <View hspacer={true} />
-        <Button
+        <ButtonDefaultOpacity
           {...otherPropsRightButton}
           style={
             type === "TwoButtonsInlineThird"
@@ -77,7 +88,7 @@ export default class FooterWithButtons extends React.Component<Props, never> {
           <Text numberOfLines={1} style={{ fontSize }}>
             {rightButtonTitle}
           </Text>
-        </Button>
+        </ButtonDefaultOpacity>
       </React.Fragment>
     );
   }
@@ -91,9 +102,16 @@ export default class FooterWithButtons extends React.Component<Props, never> {
 
     return (
       <View footer={true} style={styles.container}>
-        <Button style={styles.button} {...otherPropsLeftButton}>
+        <ButtonDefaultOpacity
+          style={
+            this.props.type === "TwoButtonsInlineThirdInverted"
+              ? styles.buttonTwoThirds
+              : styles.button
+          }
+          {...otherPropsLeftButton}
+        >
           <Text style={{ fontSize }}>{leftButtonTitle}</Text>
-        </Button>
+        </ButtonDefaultOpacity>
         {this.renderRightButton()}
       </View>
     );
