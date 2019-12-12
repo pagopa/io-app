@@ -3,6 +3,7 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
+import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
 // TODO: check if response with code !== 200 can mean different errors.
@@ -31,6 +32,13 @@ export const contentMunicipalityLoad = createAsyncAction(
   Error
 >();
 
+export const contentServicesByScopeLoad = createAsyncAction(
+  "CONTENT_SERVICES_BY_SCOPE_LOAD_REQUEST",
+  "CONTENT_SERVICES_BY_SCOPE_LOAD_SUCCESS",
+  "CONTENT_SERVICES_BY_SCOPE_LOAD_FAILURE"
+)<void, ServicesByScope, Error>();
+
 export type ContentActions =
   | ActionType<typeof contentServiceLoad>
-  | ActionType<typeof contentMunicipalityLoad>;
+  | ActionType<typeof contentMunicipalityLoad>
+  | ActionType<typeof contentServicesByScopeLoad>;
