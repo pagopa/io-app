@@ -1,8 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import Reactotron from "reactotron-react-native";
 import { NavigationState } from "react-navigation";
-import { reactotronRedux } from "reactotron-redux";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
+
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
 import { createLogger } from "redux-logger";
 import {
@@ -30,6 +29,7 @@ import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
+import { RTron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
@@ -190,7 +190,9 @@ const logger = createLogger({
   duration: true
 });
 
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware(
+  __DEV__ ? { sagaMonitor: RTron.createSagaMonitor() } : {}
+);
 
 /**
  * The new react-navigation if integrated with redux need a middleware
@@ -215,25 +217,19 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
    * the inspection of the store from the devtool.
    */
 
-  const RTron = Reactotron.setAsyncStorageHandler(AsyncStorage) // AsyncStorage would either come from `react-native` or `@react-native-community/async-storage` depending on where you get it from
-    .configure() // controls connection & communication settings
-    .use(reactotronRedux())
-    .useReactNative() // add all built-in react native plugins
-    .connect(); // let's connect!
-
   const composeEnhancers =
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const enhancer: StoreEnhancer = composeEnhancers(
-    applyMiddleware(
-      sagaMiddleware,
-      logger,
-      navigationHistory,
-      navigation,
-      analytics.actionTracking, // generic tracker for selected redux actions
-      analytics.screenTracking // tracks screen navigation,
-    ),
-    RTron.createEnhancer()
+  const middlewares = applyMiddleware(
+    sagaMiddleware,
+    logger,
+    navigationHistory,
+    navigation,
+    analytics.actionTracking, // generic tracker for selected redux actions
+    analytics.screenTracking // tracks screen navigation,
   );
+  const enhancer: StoreEnhancer = __DEV__
+    ? composeEnhancers(middlewares, RTron.createEnhancer())
+    : composeEnhancers(middlewares);
 
   const store: Store = createStore<PersistedGlobalState, Action, {}, {}>(
     persistedReducer,
