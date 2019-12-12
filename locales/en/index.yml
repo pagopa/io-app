@@ -163,6 +163,7 @@ profile:
         enabled: Enabled
         disabled: Disabled
       email: Email address
+      need_validate: To be validated
       mobile_phone: Mobile number
       language: Language
       digitalDomicile: Digital domicile
@@ -184,6 +185,10 @@ userMetadata:
 navigation:
   messages: Messages
   profile: Profile
+cie:
+  title: Touch the card
+  layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
+  layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
 spid:
   login: LOGIN
   loginButton: LOGIN WITH
@@ -236,9 +241,31 @@ authentication:
     ok: Ok
     cieCardValid: Ok, your card is valid! Wait a few more seconds..
     cieLoginWait: Wait a few seconds..
+  cie:
+    enableNfcTitle: Enable NFC
+    enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
+    enableNfcHelp: Don't have an Electronic Identity Card?
+    nfcEnabledTitle: NFC Enabled
+    nfcEnabledContent: "Thank you for activating the NFC functionality on your device: you can proceed with authentication!"
     unknownCardTitle: Unknown card
     unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
     unknownCardHelpLink: What is the Electronic Identity Card?
+    cie: Electronic Identity Card
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
+    temporarilyBlockedCieOpenCieID: "Open CieID"
+    readerCardTitle: Hold the card for a few seconds
+    readerCardHeader: We are reading the data of your CIE and verifying its validity.
+    readerCardFooter: Hold the card in this position for a few more seconds
+    readerCardLostTitle: Hold the card again for a few seconds
+    readerCardLostHeader: We have not yet finished reading the card data.
+    noDataTitle: To use IO you must authorize the sending of data
+    authToSendData: !include cie/auth_to_send_data.md
+  cie_information_request: !include cie.md
+  spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
+  request_cie: Request CIE
+  request_spid: Request SPID
+  spid: SPID
   spid_information_request:
     headerTitle: Insert email address
     contentTitle: Don't have SPID?
@@ -250,13 +277,11 @@ authentication:
     paragraph3: Continuing you declare to accept the
     tosLinkText: rules on the processing of personal data
     continue: Continue
-  cie:
-    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
-    temporarilyBlockedCieOpenCieID: "Open CieID"
   spid_information:
+    spid: !include spid.md
     headerTitle: What is SPID?
     contentTitle: Don't have SPID?
+    contentTitleCie: Don't have SPID or CIE?
     moreLinkText: Learn more
     subtitle: SPID is safe
     paragraph1: SPID, the Public System of Digital Identity, allows you to access
@@ -474,6 +499,8 @@ wallet:
     link: Find out more
     maxFee: Maximum fee
     onUpdateWalletPspFailure: Operation failed, please retry
+    contextualHelpTitle: Select a provider
+    contextualHelpContent: !include pick_psp.md
   ConfirmPayment:
     header: Confirm transaction
     cancelPayment: Cancel the transaction

@@ -1,8 +1,9 @@
-import { Button, Text } from "native-base";
+import { Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../i18n";
 import variables from "../theme/variables";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
 import { Overlay } from "./ui/Overlay";
 
@@ -31,19 +32,12 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
       children,
       isLoading,
       loadingCaption,
-      loadingOpacity,
+      loadingOpacity = 0.7,
       onCancel
     } = this.props;
-    const overlayProps =
-      loadingOpacity !== undefined
-        ? {
-            opacity: 1,
-            backgroundColor: `rgba(255,255,255,${loadingOpacity})`
-          }
-        : undefined;
     return (
       <Overlay
-        {...overlayProps}
+        backgroundColor={`rgba(255,255,255,${loadingOpacity})`}
         foreground={
           isLoading && (
             <BoxedRefreshIndicator
@@ -56,13 +50,13 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
               }
               action={
                 onCancel && (
-                  <Button
+                  <ButtonDefaultOpacity
                     onPress={onCancel}
                     cancel={true}
                     style={styles.cancelButtonStyle}
                   >
                     <Text>{I18n.t("global.buttons.cancel")}</Text>
-                  </Button>
+                  </ButtonDefaultOpacity>
                 )
               }
             />
