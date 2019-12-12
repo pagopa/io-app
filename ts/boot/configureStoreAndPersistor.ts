@@ -29,7 +29,7 @@ import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
-import { RTron } from "./configureRectotron";
+import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
@@ -190,6 +190,7 @@ const logger = createLogger({
   duration: true
 });
 
+const RTron = __DEV__ ? configureReactotron() : {};
 const sagaMiddleware = createSagaMiddleware(
   __DEV__ ? { sagaMonitor: RTron.createSagaMonitor() } : {}
 );
