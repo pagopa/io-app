@@ -431,7 +431,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
     const ListEmptyComponent = (
       <View style={styles.emptyListWrapper}>
-        <Button
+        <ButtonDefaultOpacity
           block={true}
           primary={true}
           small={true}
@@ -440,7 +440,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           onPress={this.loadMoreData}
         >
           <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
-        </Button>
+        </ButtonDefaultOpacity>
         <View spacer={true} />
         <Image
           source={require("../../../img/messages/empty-due-date-list-icon.png")}
