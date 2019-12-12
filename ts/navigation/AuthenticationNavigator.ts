@@ -5,6 +5,8 @@ import {
 
 import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
+import CieAuthorizeDataUsageScreen from "../screens/authentication/CieAuthorizeDataUsageScreen";
+import CieCardReaderScreen from "../screens/authentication/CieCardReaderScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/CieExpiredOrInvalidScreen";
 import CiePinScreen from "../screens/authentication/CiePinScreen";
 import CieSuccessScreen from "../screens/authentication/CieSuccessScreen";
@@ -13,6 +15,8 @@ import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
 import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
+import NfcEnabledScreen from "../screens/authentication/NfcEnabledScreen";
+import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import ROUTES from "./routes";
@@ -34,6 +38,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.AUTHENTICATION_SPID_INFORMATION]: {
     screen: SpidInformationScreen
   },
+  [ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION]: {
+    screen: SpidCIEInformationScreen
+  },
   [ROUTES.MARKDOWN]: {
     screen: MarkdownScreen
   },
@@ -45,6 +52,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.CIE_VALID_SCREEN]: {
     screen: CieValidScreen
   },
+  [ROUTES.CIE_READER_SCREEN]: {
+    screen: CieCardReaderScreen
+  },
   // For CIE success screen
   [ROUTES.CIE_SUCCESS_SCREEN]: {
     screen: CieSuccessScreen
@@ -54,6 +64,12 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.CIE_PIN_SCREEN]: {
     screen: CiePinScreen
+  },
+  [ROUTES.CIE_AUTHORIZE_USAGE_SCREEN]: {
+    screen: CieAuthorizeDataUsageScreen
+  },
+  [ROUTES.CIE_NFC_ENABLED]: {
+    screen: NfcEnabledScreen
   }
 };
 

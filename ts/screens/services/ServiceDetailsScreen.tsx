@@ -4,19 +4,22 @@
  */
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Col, Content, Grid, H2, Row, Text, View } from "native-base";
+import { Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
   Image,
   ImageSourcePropType,
+  Linking,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
@@ -88,7 +91,7 @@ function renderInformationRow(
   return (
     <View style={styles.infoItem}>
       <Text>{label}</Text>
-      <Button
+      <ButtonDefaultOpacity
         primary={true}
         small={true}
         onPress={handleItemOnPress(value, valueType)}
@@ -96,7 +99,7 @@ function renderInformationRow(
         <Text uppercase={false} ellipsizeMode={"tail"} numberOfLines={1}>
           {info}
         </Text>
-      </Button>
+      </ButtonDefaultOpacity>
     </View>
   );
 }
@@ -109,11 +112,11 @@ function renderInformationLinkRow(
 ) {
   return (
     <View style={styles.infoItem}>
-      <TouchableOpacity onPress={handleItemOnPress(value, valueType)}>
+      <TouchableDefaultOpacity onPress={handleItemOnPress(value, valueType)}>
         <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
           {info}
         </Text>
-      </TouchableOpacity>
+      </TouchableDefaultOpacity>
     </View>
   );
 }

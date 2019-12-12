@@ -59,7 +59,7 @@ PODS:
     - React/RCTBlob
   - ReactNativePermissions (1.1.1):
     - React
-  - RNCAsyncStorage (1.5.0):
+  - RNCAsyncStorage (1.6.2):
     - React
   - RNDeviceInfo (2.1.2):
     - React
@@ -165,7 +165,7 @@ SPEC CHECKSUMS:
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-webview: 8360713396efdaee1528d0afcaaaa844b14fd2f2
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
-  RNCAsyncStorage: 9436928b444c5f5361960a7eea051a697c244b68
+  RNCAsyncStorage: 60a80e72d95bf02a01cace55d3697d9724f0d77f
   RNDeviceInfo: 75dac2d7cd6b638b512cc9266ce48a39661fed0e
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
   RNGestureHandler: aea90f0ad8e35fec23438db6fc3ad79be58bb734
