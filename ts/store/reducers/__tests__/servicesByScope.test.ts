@@ -8,8 +8,8 @@ import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { ScopeEnum } from "../../../../definitions/content/Service";
 import {
   isServiceIdInScopeSelector,
-  servicesInScopeSelector,
-  isServiceInScopeSelector
+  isServiceInScopeSelector,
+  servicesInScopeSelector
 } from "../../../store/reducers/content";
 
 const servicesByScope = {

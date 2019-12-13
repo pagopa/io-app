@@ -835,10 +835,7 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshUserMetadata: () => {
-    dispatch(userMetadataLoad.request());
-    dispatch(contentServicesByScopeLoad.request());
-  },
+  refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
   refreshServices: () => dispatch(loadVisibleServices.request()),
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
