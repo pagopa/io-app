@@ -190,6 +190,7 @@ const logger = createLogger({
   duration: true
 });
 
+// configure Reactotron if the app is running in dev mode
 const RTron = __DEV__ ? configureReactotron() : {};
 const sagaMiddleware = createSagaMiddleware(
   __DEV__ ? { sagaMonitor: RTron.createSagaMonitor() } : {}
@@ -228,6 +229,7 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
     analytics.actionTracking, // generic tracker for selected redux actions
     analytics.screenTracking // tracks screen navigation,
   );
+  // add Reactotron enhancer if the app is running in dev mode
   const enhancer: StoreEnhancer = __DEV__
     ? composeEnhancers(middlewares, RTron.createEnhancer())
     : composeEnhancers(middlewares);
