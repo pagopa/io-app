@@ -75,7 +75,27 @@ type State = {
   maybeLastLoadedStartOfMonthTime: Option<number>;
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
   allMessageIdsState: Set<string>;
-  theLastDeadlineId: string;
+  finalDeadlineId: string;
+};
+
+/**
+ * Get the last deadline, after order the sections the older is in position 0
+ */
+const getFinalDeadlineId = (sections: Sections) => {
+  if (
+    sections !== undefined &&
+    sections.length > 0 &&
+    sections[0].data[0] !== undefined
+  ) {
+    const theLastItem = sections[0].data[0];
+    if (!isFakeItem(theLastItem)) {
+      return theLastItem.e1.id;
+    } else {
+      return "";
+    }
+  } else {
+    return "";
+  }
 };
 
 /**
@@ -431,7 +451,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       sectionsToRender: [],
       maybeLastLoadedStartOfMonthTime: none,
       allMessageIdsState: new Set(),
-      theLastDeadlineId: ""
+      finalDeadlineId: ""
     };
   }
 
@@ -440,19 +460,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const { maybeLastLoadedStartOfMonthTime } = this.state;
 
     const sections = await Promise.resolve(generateSections(messagesState));
-    // Get the last deadline after order the sections
-    if (
-      sections !== undefined &&
-      sections.length > 0 &&
-      sections[0].data[0] !== undefined
-    ) {
-      const theLastItem = sections[0].data[0];
-      if (!isFakeItem(theLastItem)) {
-        this.setState({
-          theLastDeadlineId: theLastItem.e1.id
-        });
-      }
-    }
+    const finalDeadlineId = getFinalDeadlineId(sections);
+
     const sectionsToRender = await Promise.resolve(
       selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
     );
@@ -463,7 +472,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       sectionsToRender,
       allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
         sectionsToRender
-      )
+      ),
+      finalDeadlineId
     });
   }
 
@@ -521,7 +531,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       allMessageIdsState,
       isWorking,
       sectionsToRender,
-      theLastDeadlineId
+      finalDeadlineId
     } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
@@ -540,7 +550,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             onLongPressItem={this.handleOnLongPressItem}
             onMoreDataRequest={this.onLoadMoreDataRequest}
             onContentSizeChange={this.onContentSizeChange}
-            theLastDeadlineId={theLastDeadlineId}
+            theLastDeadlineId={finalDeadlineId}
           />
         </View>
         <ListSelectionBar

@@ -532,7 +532,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
                 color={variables.brandDarkGray}
               />
             ) : (
-              <Text style={styles.messageNoOthers}>NO MESSAGGI</Text>
+              <Text style={styles.messageNoOthers}>
+                {I18n.t("reminders.noOtherDeadlines")}
+              </Text>
             )}
           </View>
         )}
