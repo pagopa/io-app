@@ -1,4 +1,4 @@
-import { Option, some } from "fp-ts/lib/Option";
+import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Text, View } from "native-base";
@@ -504,7 +504,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       >
         <SectionList
           // If we not have a final deadline then we not have deadlines
-          sections={this.props.theLastDeadlineId !== "" ? sections : []}
+          sections={sections}
           extraData={{ servicesById, paymentsByRptId }}
           inverted={false}
           bounces={false}
@@ -518,26 +518,21 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
           ListEmptyComponent={sections.length === 0 && ListEmptyComponent}
         />
-        {isLoadingProgress && (
-          <View
-            style={[
-              styles.contentProgress,
-              { display: isLoadingProgress ? "flex" : "none" }
-            ]}
-          >
-            {isContinuosScrollEnabled ? (
+        {isLoadingProgress &&
+          isContinuosScrollEnabled && (
+            <View
+              style={[
+                styles.contentProgress,
+                { display: isLoadingProgress ? "flex" : "none" }
+              ]}
+            >
               <ActivityIndicator
                 style={styles.progress}
                 size="small"
                 color={variables.brandDarkGray}
               />
-            ) : (
-              <Text style={styles.messageNoOthers}>
-                {I18n.t("reminders.noOtherDeadlines")}
-              </Text>
-            )}
-          </View>
-        )}
+            </View>
+          )}
       </View>
     );
   }

@@ -460,7 +460,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const { maybeLastLoadedStartOfMonthTime } = this.state;
 
     const sections = await Promise.resolve(generateSections(messagesState));
-    const finalDeadlineId = getFinalDeadlineId(sections);
+    const finalDeadlineId = await Promise.resolve(getFinalDeadlineId(sections));
 
     const sectionsToRender = await Promise.resolve(
       selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
