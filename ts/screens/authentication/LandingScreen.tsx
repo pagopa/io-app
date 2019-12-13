@@ -5,6 +5,7 @@
 
 import { Content, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -14,13 +15,12 @@ import { LandingCardComponent } from "../../components/LandingCardComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
+import * as config from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
-
-import * as config from "../../config";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -70,6 +70,13 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   }
 ];
 
+const styles = StyleSheet.create({
+  noPadded: {
+    paddingLeft: 0,
+    paddingRight: 0
+  }
+});
+
 const LandingScreen: React.SFC<Props> = props => {
   const navigateToMarkdown = () => props.navigation.navigate(ROUTES.MARKDOWN);
   const navigateToIdpSelection = () =>
@@ -100,7 +107,7 @@ const LandingScreen: React.SFC<Props> = props => {
             block={true}
             primary={true}
             iconLeft={true}
-            onPress={undefined} // TODO: here navigate to identity card check
+            onPress={undefined} // TODO: here navigate to identity card check https://www.pivotaltracker.com/story/show/169730093
             testID={"landing-button-login-cie"}
           >
             <IconFont name={"io-cie"} color={variables.colorWhite} />
@@ -125,13 +132,12 @@ const LandingScreen: React.SFC<Props> = props => {
           transparent={true}
           onPress={navigateToSpidCieInformationRequest}
         >
-          <Text>
+          <Text style={styles.noPadded}>
             {isCIEAvailable
               ? I18n.t("authentication.landing.nospid-nocie")
               : I18n.t("authentication.landing.nospid")}
           </Text>
         </ButtonDefaultOpacity>
-        <View spacer={true} extralarge={true} />
       </View>
     </BaseScreenComponent>
   );
