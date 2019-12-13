@@ -3,7 +3,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { debounce } from "lodash";
-import { Body, Button, Content, Input, Item, Right, View } from "native-base";
+import { Body, Content, Input, Item, Right, View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import {
@@ -16,6 +16,7 @@ import {
 import variables from "../theme/variables";
 import customVariables from "../theme/variables";
 import { areSetEqual } from "../utils/options";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";
 import ChooserListSearch from "./ChooserListSearch";
@@ -137,22 +138,28 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
                   .darken(0.2)
                   .string()}
               />
-              <Button onPress={this.onPressCancel} transparent={true}>
+              <ButtonDefaultOpacity
+                onPress={this.onPressCancel}
+                transparent={true}
+              >
                 <IconFont
                   name="io-close"
                   accessible={true}
                   accessibilityLabel={I18n.t("global.buttons.close")}
                 />
-              </Button>
+              </ButtonDefaultOpacity>
             </Item>
           ) : (
-            <Button onPress={this.handleSearchPress} transparent={true}>
+            <ButtonDefaultOpacity
+              onPress={this.handleSearchPress}
+              transparent={true}
+            >
               <IconFont
                 name="io-search"
                 accessible={true}
                 accessibilityLabel={I18n.t("global.actions.search")}
               />
-            </Button>
+            </ButtonDefaultOpacity>
           )}
         </Right>
       </React.Fragment>
