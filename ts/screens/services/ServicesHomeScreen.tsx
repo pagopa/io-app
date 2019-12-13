@@ -98,6 +98,7 @@ import {
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
+import { contentServicesByScopeLoad } from "../../store/actions/content";
 
 type OwnProps = NavigationScreenProps;
 
@@ -834,7 +835,10 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
+  refreshUserMetadata: () => {
+    dispatch(userMetadataLoad.request());
+    dispatch(contentServicesByScopeLoad.request());
+  },
   refreshServices: () => dispatch(loadVisibleServices.request()),
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
