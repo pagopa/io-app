@@ -5,6 +5,7 @@
 
 import { Content, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -15,6 +16,7 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import * as config from "../../config";
 import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
+import * as config from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
@@ -69,6 +71,13 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
       : I18n.t("authentication.landing.card4-content")
   }
 ];
+
+const styles = StyleSheet.create({
+  noPadded: {
+    paddingLeft: 0,
+    paddingRight: 0
+  }
+});
 
 const cardComponents = cardProps.map(p => (
   <LandingCardComponent key={`card-${p.id}`} {...p} />
@@ -140,13 +149,12 @@ class LandingScreen extends React.PureComponent<Props> {
             transparent={true}
             onPress={this.navigateToSpidCieInformationRequest}
           >
-            <Text>
+            <Text style={styles.noPadded}>
               {isCIEAvailable
                 ? I18n.t("authentication.landing.nospid-nocie")
                 : I18n.t("authentication.landing.nospid")}
             </Text>
           </ButtonDefaultOpacity>
-          <View spacer={true} extralarge={true} />
         </View>
       </BaseScreenComponent>
     );
