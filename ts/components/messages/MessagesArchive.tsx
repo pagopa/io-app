@@ -41,12 +41,6 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1
-  },
-  buttonRetry: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 0,
-    paddingBottom: 0
   }
 });
 
@@ -186,15 +180,6 @@ class MessagesArchive extends React.PureComponent<Props, State> {
           {I18n.t("messages.loadingErrorTitle")}
         </Text>
         {paddingForAnimation && <View style={styles.paddingForAnimation} />}
-        <Button
-          small={true}
-          primary={true}
-          style={styles.buttonRetry}
-          block={true}
-          onPress={this.props.onRefresh}
-        >
-          <Text>{I18n.t("global.buttons.retry")}</Text>
-        </Button>
       </View>
     );
 
