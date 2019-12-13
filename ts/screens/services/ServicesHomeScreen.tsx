@@ -98,7 +98,6 @@ import {
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
-import { contentServicesByScopeLoad } from "../../store/actions/content";
 
 type OwnProps = NavigationScreenProps;
 
