@@ -7,7 +7,7 @@
 import { isToday } from "date-fns";
 import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
-import { H3, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import React from "react";
 import { Alert, StyleSheet } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
@@ -129,15 +129,6 @@ const styles = StyleSheet.create({
     marginLeft: 16
   }
 });
-
-const SelectCalendarModalHeader = (
-  <View>
-    <H3 style={styles.selectCalendaModalHeader}>
-      {I18n.t("messages.cta.reminderCalendarSelect")}
-    </H3>
-    <View spacer={true} large={true} />
-  </View>
-);
 
 class MessageCTABar extends React.PureComponent<Props, State> {
   private navigateToMessageDetail = () => {
@@ -363,7 +354,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
                     message,
                     due_date
                   )}
-                  header={SelectCalendarModalHeader}
                 />
               );
             }

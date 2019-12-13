@@ -2,7 +2,7 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -12,6 +12,7 @@ import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
@@ -43,7 +44,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   LightModalContextInterface &
   OwnProps;
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   contentContainerStyle: {
     flex: 1,
     padding: variables.contentPadding
@@ -87,6 +88,7 @@ const contextualHelp = {
 /**
  * Select a PSP to be used for a the current selected wallet
  */
+// TODO: Add onPress props in line 105
 class PickPspScreen extends React.Component<Props> {
   private showHelp = () => {
     this.props.showModal(
@@ -110,7 +112,7 @@ class PickPspScreen extends React.Component<Props> {
         contextualHelp={contextualHelp}
       >
         <Content
-          contentContainerStyle={style.contentContainerStyle}
+          contentContainerStyle={styles.contentContainerStyle}
           noPadded={true}
         >
           <H1>{I18n.t("wallet.pickPsp.title")}</H1>
@@ -125,28 +127,30 @@ class PickPspScreen extends React.Component<Props> {
           </Text>
           <View spacer={true} />
           <FlatList
-            ItemSeparatorComponent={() => <View style={style.bottomBorder} />}
+            ItemSeparatorComponent={() => <View style={styles.bottomBorder} />}
             removeClippedSubviews={false}
             numColumns={1}
             data={availablePsps}
             keyExtractor={item => item.id.toString()}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => this.props.pickPsp(item.id)}>
-                <View style={style.listItem}>
+              <TouchableDefaultOpacity
+                onPress={() => this.props.pickPsp(item.id)}
+              >
+                <View style={styles.listItem}>
                   <Grid>
                     <Col size={6}>
                       <View spacer={true} />
                       <Row>
                         <Image
-                          style={style.flexStart}
+                          style={styles.flexStart}
                           resizeMode={"contain"}
                           source={{ uri: item.logoPSP }}
                         />
                       </Row>
                       <Row>
-                        <Text style={style.feeText}>
+                        <Text style={styles.feeText}>
                           {`${I18n.t("wallet.pickPsp.maxFee")} `}
-                          <Text bold={true} style={style.feeText}>
+                          <Text bold={true} style={styles.feeText}>
                             {formatNumberAmount(
                               centsToAmount(item.fixedCost.amount)
                             )}
@@ -155,12 +159,12 @@ class PickPspScreen extends React.Component<Props> {
                       </Row>
                       <View spacer={true} />
                     </Col>
-                    <Col size={1} style={style.icon}>
+                    <Col size={1} style={styles.icon}>
                       <IconFont name="io-right" />
                     </Col>
                   </Grid>
                 </View>
-              </TouchableOpacity>
+              </TouchableDefaultOpacity>
             )}
           />
         </Content>

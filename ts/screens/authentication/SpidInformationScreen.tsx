@@ -1,22 +1,13 @@
 /**
  * A screen where the user can know more about spid and access to spid.gov.it
  */
-import {
-  Button,
-  Col,
-  Content,
-  Grid,
-  H1,
-  H2,
-  Row,
-  Text,
-  View
-} from "native-base";
+import { Col, Content, Grid, H1, H2, Row, Text, View } from "native-base";
 import * as React from "react";
 import { Linking } from "react-native";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -110,9 +101,13 @@ class SpidInformationScreen extends React.Component<Props, never> {
         </Content>
 
         <View footer={true}>
-          <Button block={true} primary={true} onPress={this.browseToLink}>
+          <ButtonDefaultOpacity
+            block={true}
+            primary={true}
+            onPress={this.browseToLink}
+          >
             <Text>{I18n.t("authentication.spid_information.knowMore")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
       </BaseScreenComponent>
     );

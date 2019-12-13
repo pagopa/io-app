@@ -1,16 +1,13 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import {
-  StyleSheet,
-  TouchableHighlight,
-  TouchableWithoutFeedback
-} from "react-native";
+import { StyleSheet } from "react-native";
 import { format } from "../../utils/dates";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 type OwnProps = {
@@ -60,14 +57,14 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
     if (isOpen) {
       return (
         <View>
-          <TouchableWithoutFeedback onPress={this.toggleRawInfo}>
+          <TouchableDefaultOpacity onPress={this.toggleRawInfo}>
             <View style={styles.toggleContainer}>
               <Text link={true}>
                 {I18n.t("messageDetails.rawInfoLink.hideLabel")}
               </Text>
               <IconFont name="io-close" color={variables.textLinkColor} />
             </View>
-          </TouchableWithoutFeedback>
+          </TouchableDefaultOpacity>
           <View style={styles.rawInfoContainer}>
             <Text>
               <Text bold={true}>
@@ -90,13 +87,14 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
                   )}: `}</Text>
                   {service.department_name}
                 </Text>
-
-                <Text link={true} onPress={onServiceLinkPress}>
-                  <Text bold={true}>{`${I18n.t(
-                    "messageDetails.rawInfoLabels.serviceName"
-                  )}: `}</Text>
-                  {service.service_name}
-                </Text>
+                <TouchableDefaultOpacity onPress={onServiceLinkPress}>
+                  <Text link={true}>
+                    <Text bold={true}>{`${I18n.t(
+                      "messageDetails.rawInfoLabels.serviceName"
+                    )}: `}</Text>
+                    {service.service_name}
+                  </Text>
+                </TouchableDefaultOpacity>
 
                 <Text>
                   <Text bold={true}>ID: </Text>
@@ -111,14 +109,14 @@ class MessageDetailRawInfoComponent extends React.PureComponent<Props, State> {
 
     return (
       <View>
-        <TouchableHighlight onPress={this.toggleRawInfo}>
+        <TouchableDefaultOpacity onPress={this.toggleRawInfo}>
           <View style={styles.toggleContainer}>
             <Text link={true}>
               {I18n.t("messageDetails.rawInfoLink.showLabel")}
             </Text>
             <IconFont name="io-right" color={variables.textLinkColor} />
           </View>
-        </TouchableHighlight>
+        </TouchableDefaultOpacity>
       </View>
     );
   }
