@@ -78,7 +78,6 @@ type State = {
     typeof generateMessagesStateNotArchivedArray
   >;
   allMessageIdsState: Option<Set<string>>;
-  isErrorLoading: boolean;
 };
 
 /**
@@ -148,18 +147,8 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     this.state = {
       lastMessagesState: pot.none,
       filteredMessageStates: [],
-      allMessageIdsState: none,
-      isErrorLoading: false
+      allMessageIdsState: none
     };
-  }
-
-  public componentDidUpdate(_: Props, prevState: State) {
-    this.setState({
-      // Check error during download
-      isErrorLoading:
-        pot.isError(this.props.messagesState) ||
-        (pot.isLoading(this.props.messagesState) && prevState.isErrorLoading)
-    });
   }
 
   public render() {
@@ -172,6 +161,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       resetSelection
     } = this.props;
     const { allMessageIdsState } = this.state;
+    const isErrorLoading = pot.isError(this.props.messagesState);
 
     // If have error in pot and the list is empty
     const ErrorLoadingComponent = () => (
@@ -198,9 +188,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             refreshing={isLoading}
             selectedMessageIds={selectedItemIds}
             ListEmptyComponent={
-              this.state.isErrorLoading
-                ? ErrorLoadingComponent
-                : ListEmptyComponent
+              isErrorLoading ? ErrorLoadingComponent : ListEmptyComponent
             }
             animated={animated}
           />
