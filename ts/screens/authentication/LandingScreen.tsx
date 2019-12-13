@@ -5,6 +5,7 @@
 
 import { Content, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -69,6 +70,13 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   }
 ];
 
+const styles = StyleSheet.create({
+  noPadded: {
+    paddingLeft: 0,
+    paddingRight: 0
+  }
+});
+
 const LandingScreen: React.SFC<Props> = props => {
   const navigateToMarkdown = () => props.navigation.navigate(ROUTES.MARKDOWN);
   const navigateToIdpSelection = () =>
@@ -124,13 +132,12 @@ const LandingScreen: React.SFC<Props> = props => {
           transparent={true}
           onPress={navigateToSpidCieInformationRequest}
         >
-          <Text>
+          <Text style={styles.noPadded}>
             {isCIEAvailable
               ? I18n.t("authentication.landing.nospid-nocie")
               : I18n.t("authentication.landing.nospid")}
           </Text>
         </ButtonDefaultOpacity>
-        <View spacer={true} extralarge={true} />
       </View>
     </BaseScreenComponent>
   );
