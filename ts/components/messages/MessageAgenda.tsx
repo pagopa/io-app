@@ -1,4 +1,4 @@
-import { Option } from "fp-ts/lib/Option";
+import { Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Text, View } from "native-base";
@@ -117,7 +117,13 @@ const styles = StyleSheet.create({
     zIndex: 999,
     backgroundColor: customVariables.colorWhite
   },
-  progress: { alignSelf: "center" }
+  progress: { alignSelf: "center" },
+  messageNoOthers: {
+    paddingTop: 12,
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center"
+  }
 });
 
 export type FakeItem = {
@@ -159,6 +165,7 @@ type OwnProps = {
   onLongPressItem: (id: string) => void;
   onMoreDataRequest: () => void;
   selectedMessageIds: Option<Set<string>>;
+  theLastDeadlineId: string;
 };
 
 type Props = OwnProps & SelectedSectionListProps;
@@ -169,6 +176,7 @@ type State = {
   firstSectionListUpdate: boolean;
   elementVisible: number;
   isLoadingProgress: boolean;
+  isContinuosScrollEnabled: boolean;
 };
 
 export const isFakeItem = (item: any): item is FakeItem => {
@@ -265,7 +273,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       itemLayouts: [],
       firstSectionListUpdate: true,
       elementVisible: 0,
-      isLoadingProgress: false
+      isLoadingProgress: false,
+      isContinuosScrollEnabled: true
     };
     this.loadMoreData = this.loadMoreData.bind(this);
   }
@@ -273,6 +282,34 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   public componentWillUnmount() {
     if (this.idTimeoutProgress !== undefined) {
       clearTimeout(this.idTimeoutProgress);
+    }
+  }
+
+  // This void search if the last deadline is showed
+  private checkIfLastSection() {
+    if (this.props.theLastDeadlineId === "") {
+      // No are deadlines
+      this.setState({
+        isContinuosScrollEnabled: false
+      });
+    } else {
+      // tslint:disable-next-line: no-let
+      for (const section of this.props.sections) {
+        for (const value of section.data) {
+          if (
+            !isFakeItem(value) &&
+            this.props.theLastDeadlineId === value.e1.id
+          ) {
+            this.setState({
+              isContinuosScrollEnabled: false
+            });
+            break;
+          }
+        }
+        if (!this.state.isContinuosScrollEnabled) {
+          break;
+        }
+      }
     }
   }
 
@@ -286,7 +323,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     ) {
       this.loadMoreData();
     }
-
     // Change status loading to show progress
     if (
       prevProps.refreshing !== this.props.refreshing &&
@@ -335,7 +371,12 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     this.setState({
       isLoadingProgress: true
     });
-    this.props.onMoreDataRequest();
+    // Before call other items check if the last section is showed
+    this.checkIfLastSection();
+    // Check if necessary show other data
+    if (this.state.isContinuosScrollEnabled) {
+      this.props.onMoreDataRequest();
+    }
   }
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
@@ -427,7 +468,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   public render() {
     const { sections, servicesById, paymentsByRptId } = this.props;
-    const { isLoadingProgress } = this.state;
+    const { isLoadingProgress, isContinuosScrollEnabled } = this.state;
 
     const ListEmptyComponent = (
       <View style={styles.emptyListWrapper}>
@@ -462,7 +503,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         }}
       >
         <SectionList
-          sections={sections}
+          // If we not have a final deadline then we not have deadlines
+          sections={this.props.theLastDeadlineId !== "" ? sections : []}
           extraData={{ servicesById, paymentsByRptId }}
           inverted={false}
           bounces={false}
@@ -483,11 +525,15 @@ class MessageAgenda extends React.PureComponent<Props, State> {
               { display: isLoadingProgress ? "flex" : "none" }
             ]}
           >
-            <ActivityIndicator
-              style={styles.progress}
-              size="small"
-              color={variables.brandDarkGray}
-            />
+            {isContinuosScrollEnabled ? (
+              <ActivityIndicator
+                style={styles.progress}
+                size="small"
+                color={variables.brandDarkGray}
+              />
+            ) : (
+              <Text style={styles.messageNoOthers}>NO MESSAGGI</Text>
+            )}
           </View>
         )}
       </View>

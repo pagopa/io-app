@@ -75,6 +75,7 @@ type State = {
   maybeLastLoadedStartOfMonthTime: Option<number>;
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
   allMessageIdsState: Set<string>;
+  theLastDeadlineId: string;
 };
 
 /**
@@ -429,7 +430,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       sections: [],
       sectionsToRender: [],
       maybeLastLoadedStartOfMonthTime: none,
-      allMessageIdsState: new Set()
+      allMessageIdsState: new Set(),
+      theLastDeadlineId: ""
     };
   }
 
@@ -438,6 +440,19 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const { maybeLastLoadedStartOfMonthTime } = this.state;
 
     const sections = await Promise.resolve(generateSections(messagesState));
+    // Get the last deadline after order the sections
+    if (
+      sections !== undefined &&
+      sections.length > 0 &&
+      sections[0].data[0] !== undefined
+    ) {
+      const theLastItem = sections[0].data[0];
+      if (!isFakeItem(theLastItem)) {
+        this.setState({
+          theLastDeadlineId: theLastItem.e1.id
+        });
+      }
+    }
     const sectionsToRender = await Promise.resolve(
       selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
     );
@@ -502,7 +517,12 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       selectedItemIds,
       resetSelection
     } = this.props;
-    const { allMessageIdsState, isWorking, sectionsToRender } = this.state;
+    const {
+      allMessageIdsState,
+      isWorking,
+      sectionsToRender,
+      theLastDeadlineId
+    } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
 
@@ -520,6 +540,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             onLongPressItem={this.handleOnLongPressItem}
             onMoreDataRequest={this.onLoadMoreDataRequest}
             onContentSizeChange={this.onContentSizeChange}
+            theLastDeadlineId={theLastDeadlineId}
           />
         </View>
         <ListSelectionBar
