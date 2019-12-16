@@ -1,15 +1,25 @@
+import { ServerInfo } from "../../../definitions/backend/ServerInfo";
 import { isVersionAppSupported } from "../isVersionAppSupported";
 
 describe("isVersionAppSupported", () => {
-  it("è supportata", () => {
-    expect(isVersionAppSupported("0.0.0", "1.2")).toEqual(true);
+  it("is supported", () => {
+    const backendInfo: ServerInfo = {
+      version: "123",
+      minAppVersion: "0.0.0"
+    };
+    expect(isVersionAppSupported(backendInfo, "1.2")).toEqual(true);
   });
 
-  it("non è supportata", () => {
-    expect(isVersionAppSupported("1.4.0", "1.2")).toEqual(false);
+  it("not supported", () => {
+    const backendInfo: ServerInfo = {
+      version: "123",
+      minAppVersion: "1.4.0"
+    };
+    expect(isVersionAppSupported(backendInfo, "1.2")).toEqual(false);
   });
 
-  it("è supportata, perchè il valore è indefinito", () => {
-    expect(isVersionAppSupported(undefined, "1.2")).toEqual(true);
+  it("undefined then supported", () => {
+    const backendInfo = undefined;
+    expect(isVersionAppSupported(backendInfo, "1.2")).toEqual(true);
   });
 });

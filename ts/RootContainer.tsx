@@ -134,9 +134,7 @@ class RootContainer extends React.PureComponent<Props> {
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
         {isVersionAppSupported(
-          this.props.backendInfo !== undefined
-            ? this.props.backendInfo.minAppVersion
-            : undefined,
+          this.props.backendInfo,
           DeviceInfo.getVersion()
         ) ? (
           <IdentificationModal />
