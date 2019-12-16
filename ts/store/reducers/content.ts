@@ -4,11 +4,9 @@
  * TODO: add eviction of old entries
  * https://www.pivotaltracker.com/story/show/159440294
  */
-
 import * as pot from "italia-ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
-
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { getType } from "typesafe-actions";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
@@ -37,10 +35,10 @@ export type MunicipalityState = Readonly<{
   data: pot.Pot<MunicipalityMetadata, Error>;
 }>;
 
-// TODO: evaluate if consider this specific case or just assume all
-// the data are included into visibel service metadata
+export type ServiceMetadataState = pot.Pot<ServiceMetadata | undefined, Error>;
+
 export type ServiceMetadataById = Readonly<{
-  [key: string]: pot.Pot<ServiceMetadata, Error>;
+  [key: string]: ServiceMetadataState;
 }>;
 
 const initialContentState: ContentState = {
@@ -54,6 +52,9 @@ const initialContentState: ContentState = {
 };
 
 // Selectors
+export const servicesMetadataSelector = (state: GlobalState) =>
+  state.content.servicesMetadata;
+
 export const municipalitySelector = (state: GlobalState) =>
   state.content.municipality;
 
@@ -83,7 +84,7 @@ export default function content(
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload.serviceId]: pot.some(action.payload.data)
+            [action.payload.serviceId]: action.payload.data
           }
         }
       };
@@ -167,7 +168,3 @@ export default function content(
       return state;
   }
 }
-
-// selector
-export const servicesMetadataSelector = (state: GlobalState) =>
-  state.content.servicesMetadata;

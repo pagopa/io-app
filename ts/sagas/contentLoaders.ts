@@ -69,19 +69,23 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
         typeof isFirstVisibleServiceLoadCompletedSelector
       > = yield select(isFirstVisibleServiceLoadCompletedSelector);
 
-      if (response.isRight() && response.value.status === 200) {
-        yield put(
-          contentServiceLoad.success({ serviceId, data: response.value.value })
-        );
-        // If the service is loaded for the first time (at first startup or when the
-        // cache is cleaned), the app shows the service list item without badge
-        if (!isFirstVisibleServiceLoadCompleted) {
-          yield put(markServiceAsRead(serviceId));
+      if (response.isRight()) {
+        if (response.value.status === 200 || response.value.status === 404) {
+          // If 404, the service has no saved metadata
+          const data =
+            response.value.status === 200
+              ? pot.some(response.value.value)
+              : pot.some(undefined);
+          yield put(contentServiceLoad.success({ serviceId, data }));
+          // If the service is loaded for the first time (at first startup or when the
+          // cache is cleaned), the app shows the service list item without badge
+          if (!isFirstVisibleServiceLoadCompleted) {
+            yield put(markServiceAsRead(serviceId));
+          }
+        } else {
+          throw Error(`response status ${response.value.status}`);
         }
-      } else {
-        throw Error(`response status ${response.value.status}`);
       }
-
       // If all services content and metadata are loaded with success,
       // stop considering loaded services as read
       if (!isFirstVisibleServiceLoadCompleted) {
