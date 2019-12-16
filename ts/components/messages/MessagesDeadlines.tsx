@@ -469,7 +469,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
         sectionsToRender
       ),
-      lastDeadlineId: lastDeadlineId
+      lastDeadlineId
     });
   }
 
