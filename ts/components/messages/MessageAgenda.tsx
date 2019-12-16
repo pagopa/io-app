@@ -371,8 +371,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     this.setState({
       isLoadingProgress: true
     });
-    // Before call other items check if the last section is showed
-    this.checkIfLastSection();
     // Check if necessary show other data
     if (this.state.isContinuosScrollEnabled) {
       this.props.onMoreDataRequest();
@@ -462,6 +460,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   private onScrollHandler = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollPosition = e.nativeEvent.contentOffset.y;
     if (scrollPosition < 50 && !this.state.isLoadingProgress) {
+      // Before call other items check if the last section is showed
+      this.checkIfLastSection();
       this.loadMoreData();
     }
   };
