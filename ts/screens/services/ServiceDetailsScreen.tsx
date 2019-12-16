@@ -253,9 +253,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             )}
         </React.Fragment>
       );
-    } else {
-      return undefined;
     }
+    return undefined;
   };
 
   private renderContactItems = (potServiceMetadata: ServiceMetadataState) => {
@@ -288,9 +287,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             renderInformationRow("Web", metadata.web_url, metadata.web_url)}
         </React.Fragment>
       );
-    } else {
-      return undefined;
     }
+    return undefined;
   };
 
   // show an alert describing what happen if a service is disabled on IO
