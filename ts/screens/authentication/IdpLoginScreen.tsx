@@ -35,7 +35,6 @@ type Props = ReturnType<typeof mapStateToProps> &
 type State = {
   requestState: pot.Pot<true, "LOADING_ERROR" | "LOGIN_ERROR">;
   errorCode?: string;
-  amount: number;
 };
 
 const LOGIN_BASE_URL = `${
@@ -121,8 +120,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      requestState: pot.noneLoading,
-      amount: 0
+      requestState: pot.noneLoading
     };
   }
 
@@ -134,22 +132,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
   private handleLoadingError = (): void => {
     this.setState({
       requestState: pot.noneError("LOADING_ERROR")
-    });
-
-    // this is a potentially inconsistent state update
-    this.setState({ amount: this.state.amount + 1 });
-
-    // simple solution
-    // - get data from state
-    // - update date
-    // - set state
-    const amount = this.state.amount + 1;
-    this.setState({ amount });
-
-    // react solution
-    // use the updater as argument in setState
-    this.setState((prevState: State, _: Props) => {
-      return { amount: prevState.amount + 1 };
     });
   };
 
