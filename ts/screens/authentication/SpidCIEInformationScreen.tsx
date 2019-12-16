@@ -76,7 +76,7 @@ class SpidCIEInformationScreen extends React.Component<Props, never> {
           >
             <Tab heading={I18n.t("authentication.spid")}>
               <Content>
-                <Markdown useCustomSortedList={true}>
+                <Markdown>
                   {I18n.t("authentication.spid_information.spid")}
                 </Markdown>
                 <View spacer={true} extralarge={true} />

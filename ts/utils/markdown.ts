@@ -6,6 +6,9 @@ import remarkHtml from "remark-html";
 const REMARK_CUSTOM_BLOCKS_CONFIG = {
   "IO-DEMO": {
     classes: "io-demo-block"
+  },
+  "IO-LIST": {
+    classes: "io-list-block"
   }
 };
 

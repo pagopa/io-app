@@ -117,6 +117,25 @@ div.custom-block.io-demo-block .custom-block-body::after {
   font-weight: normal;
   content: "\\50";
 }
+
+div.custom-block.io-list-block ol {
+  list-style: none;
+  counter-reset: li;
+}
+div.custom-block.io-list-block ol li::before {
+  content: counter(li);
+  counter-increment: li;
+  color: ${customVariables.brandPrimary};
+  display: inline-block;
+  width: 1em;
+  margin-left: -1.5em;
+  margin-right: 0.5em;
+  text-align: right;
+  direction: rtl;
+  font-weight: bold;
+  font-size: 32px;
+  line-height: 18px;
+}
 </style>
 `;
 
@@ -126,34 +145,7 @@ const generateInlineCss = (cssStyle: string) => {
   </style>`;
 };
 
-const generateCustomFontList = () => {
-  return `<style>
-    ol {
-      list-style: none;
-      counter-reset: li;
-    }
-    ol li::before {
-      content: counter(li);
-      counter-increment: li;
-      color: ${customVariables.brandPrimary};
-      display: inline-block;
-      width: 1em;
-      margin-left: -1.5em;
-      margin-right: 0.5em;
-      text-align: right;
-      direction: rtl;
-      font-weight: bold;
-      font-size: 32px;
-      line-height: 18px;
-    }
-  </style>`;
-};
-
-const generateHtml = (
-  content: string,
-  cssStyle?: string,
-  useCustomSortedList: boolean = false
-) => {
+const generateHtml = (content: string, cssStyle?: string) => {
   return `
   <!DOCTYPE html>
   <html>
@@ -163,7 +155,6 @@ const generateHtml = (
   <body>
   ${GLOBAL_CSS}
   ${cssStyle ? generateInlineCss(cssStyle) : ""}
-  ${useCustomSortedList ? generateCustomFontList() : ""}
   ${content}
   </body>
   </html>
@@ -183,7 +174,6 @@ const convertOldDemoMarkdownTag = (markdown: string) =>
 type OwnProps = {
   children: string;
   animated?: boolean;
-  useCustomSortedList?: boolean;
   onLoadEnd?: () => void;
   onError?: (error: any) => void;
   /**
@@ -218,44 +208,20 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const {
-      children,
-      animated,
-      onError,
-      cssStyle,
-      useCustomSortedList
-    } = this.props;
+    const { children, animated, onError, cssStyle } = this.props;
 
-    this.compileMarkdownAsync(
-      children,
-      animated,
-      onError,
-      cssStyle,
-      useCustomSortedList
-    );
+    this.compileMarkdownAsync(children, animated, onError, cssStyle);
 
     AppState.addEventListener("change", this.handleAppStateChange);
   }
 
   public componentDidUpdate(prevProps: Props) {
     const { children: prevChildren } = prevProps;
-    const {
-      children,
-      animated,
-      onError,
-      cssStyle,
-      useCustomSortedList
-    } = this.props;
+    const { children, animated, onError, cssStyle } = this.props;
 
     // If the children changes we need to re-compile it
     if (children !== prevChildren) {
-      this.compileMarkdownAsync(
-        children,
-        animated,
-        onError,
-        cssStyle,
-        useCustomSortedList
-      );
+      this.compileMarkdownAsync(children, animated, onError, cssStyle);
     }
   }
 
@@ -362,8 +328,7 @@ class Markdown extends React.PureComponent<Props, State> {
     markdown: string,
     animated: boolean = false,
     onError?: (error: any) => void,
-    cssStyle?: string,
-    useCustomSortedList: boolean = false
+    cssStyle?: string
   ) => {
     InteractionManager.runAfterInteractions(() => {
       if (animated) {
@@ -380,7 +345,7 @@ class Markdown extends React.PureComponent<Props, State> {
           error
             ? fromNullable(onError).map(_ => _(error))
             : this.setState({
-                html: generateHtml(String(file), cssStyle, useCustomSortedList)
+                html: generateHtml(String(file), cssStyle)
               });
         }
       );
