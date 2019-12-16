@@ -141,7 +141,10 @@ function renderInformationImageRow(
 }
 
 class ServiceDetailsScreen extends React.Component<Props, State> {
-  private serviceId = this.props.navigation.getParam("service").service_id;
+  get serviceId() {
+    return this.props.navigation.getParam("service").service_id;
+  }
+  
   constructor(props: Props) {
     super(props);
     // We initialize the UI by making the states of the channels the same
