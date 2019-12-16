@@ -29,6 +29,9 @@ import { GlobalState } from "./store/reducers/types";
 import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
+// Check min version app supported
+import { isVersionAppSupported } from "./utils/isVersionAppSupported";
+
 // tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -116,19 +119,6 @@ class RootContainer extends React.PureComponent<Props> {
     }
   }
 
-  // Check min version app supported
-  private isVersionAppSupported() {
-    // If the backend-info is not available (es. request http error) continue to use app
-    if (this.props.backendInfo !== undefined) {
-      return (
-        parseFloat(this.props.backendInfo.minAppVersion) <=
-        parseFloat(DeviceInfo.getVersion())
-      );
-    } else {
-      return true;
-    }
-  }
-
   public render() {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
@@ -143,7 +133,12 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
-        {this.isVersionAppSupported() ? (
+        {isVersionAppSupported(
+          this.props.backendInfo !== undefined
+            ? this.props.backendInfo.minAppVersion
+            : undefined,
+          DeviceInfo.getVersion()
+        ) ? (
           <IdentificationModal />
         ) : (
           <UpdateAppModal />
