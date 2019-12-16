@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
 
   // Animation progress
   contentProgress: {
+    display: "flex",
     position: "absolute",
     paddingTop: 10,
     paddingBottom: 10,
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
   },
   progress: { alignSelf: "center" },
   messageNoOthers: {
-    paddingTop: 12,
+    padding: 12,
     alignContent: "center",
     justifyContent: "center",
     alignSelf: "center"
@@ -165,7 +166,7 @@ type OwnProps = {
   onLongPressItem: (id: string) => void;
   onMoreDataRequest: () => void;
   selectedMessageIds: Option<Set<string>>;
-  theLastDeadlineId: string;
+  lastDeadlineId: Option<string>;
 };
 
 type Props = OwnProps & SelectedSectionListProps;
@@ -184,7 +185,7 @@ export const isFakeItem = (item: any): item is FakeItem => {
 };
 
 // Min number of items to activate continuos scroll
-const minItemsToScroll = 6;
+const minItemsToScroll = 5;
 
 const keyExtractor = (_: MessageAgendaItem | FakeItem, index: number) =>
   isFakeItem(_) ? `item-${index}` : _.e1.id;
@@ -285,32 +286,36 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     }
   }
 
-  // This void search if the last deadline is showed
-  private checkIfLastSection() {
-    if (this.props.theLastDeadlineId === "") {
+  // checks if the last section is shown, if yes disables continuos scroll
+  private checkIfIsLastSection(): boolean {
+    if (this.props.lastDeadlineId.isNone()) {
       // No are deadlines
       this.setState({
         isContinuosScrollEnabled: false
       });
+      return false;
     } else {
       // tslint:disable-next-line: no-let
       for (const section of this.props.sections) {
         for (const value of section.data) {
           if (
             !isFakeItem(value) &&
-            this.props.theLastDeadlineId === value.e1.id
+            this.props.lastDeadlineId.isSome() &&
+            this.props.lastDeadlineId.value === value.e1.id
           ) {
             this.setState({
               isContinuosScrollEnabled: false
             });
-            break;
+            return false;
           }
         }
         if (!this.state.isContinuosScrollEnabled) {
-          break;
+          return false;
         }
       }
     }
+
+    return true;
   }
 
   public componentDidUpdate(prevProps: Props) {
@@ -346,7 +351,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             sectionIndex: Platform.OS === "ios" ? 2 : 1
           });
         }
-      }, 300);
+      }, 500);
     }
   }
 
@@ -459,9 +464,12 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   // On scroll download more data
   private onScrollHandler = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const scrollPosition = e.nativeEvent.contentOffset.y;
-    if (scrollPosition < 50 && !this.state.isLoadingProgress) {
+    if (
+      scrollPosition < 50 &&
+      !this.state.isLoadingProgress &&
+      this.checkIfIsLastSection()
+    ) {
       // Before call other items check if the last section is showed
-      this.checkIfLastSection();
       this.loadMoreData();
     }
   };
@@ -515,17 +523,15 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           renderSectionHeader={this.renderSectionHeader}
           ItemSeparatorComponent={ItemSeparatorComponent}
           getItemLayout={this.getItemLayout}
+          ListHeaderComponent={
+            !isContinuosScrollEnabled && this.noOtherDeadlines
+          }
           ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
           ListEmptyComponent={sections.length === 0 && ListEmptyComponent}
         />
         {isLoadingProgress &&
           isContinuosScrollEnabled && (
-            <View
-              style={[
-                styles.contentProgress,
-                { display: isLoadingProgress ? "flex" : "none" }
-              ]}
-            >
+            <View style={styles.contentProgress}>
               <ActivityIndicator
                 style={styles.progress}
                 size="small"
@@ -536,6 +542,14 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       </View>
     );
   }
+
+  public noOtherDeadlines = () => {
+    return (
+      <View style={styles.messageNoOthers}>
+        <Text bold={true}>{I18n.t("reminders.noOtherDeadlines")}</Text>
+      </View>
+    );
+  };
 
   public scrollToLocation = (params: SectionListScrollParams) => {
     if (this.sectionListRef.current !== null) {

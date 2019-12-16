@@ -8,7 +8,8 @@ import {
   startOfToday,
   subMonths
 } from "date-fns";
-import { none, Option, some } from "fp-ts/lib/Option";
+import { index as fpIndex } from "fp-ts/lib/Array";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { View } from "native-base";
@@ -75,27 +76,22 @@ type State = {
   maybeLastLoadedStartOfMonthTime: Option<number>;
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
   allMessageIdsState: Set<string>;
-  finalDeadlineId: string;
+  lastDeadlineId: Option<string>;
 };
 
 /**
- * Get the last deadline, after order the sections the older is in position 0
+ * Get the last deadline id (the oldest in time is the first in array position)
  */
-const getFinalDeadlineId = (sections: Sections) => {
-  if (
-    sections !== undefined &&
-    sections.length > 0 &&
-    sections[0].data[0] !== undefined
-  ) {
-    const theLastItem = sections[0].data[0];
-    if (!isFakeItem(theLastItem)) {
-      return theLastItem.e1.id;
-    } else {
-      return "";
-    }
-  } else {
-    return "";
-  }
+const getLastDeadlineId = (sections: Sections): Option<string> => {
+  return fromNullable(sections)
+    .chain(s => fpIndex(0, s))
+    .chain(d => fpIndex(0, [...d.data]))
+    .fold(none, item => {
+      if (!isFakeItem(item)) {
+        return some(item.e1.id);
+      }
+      return none;
+    });
 };
 
 /**
@@ -451,7 +447,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       sectionsToRender: [],
       maybeLastLoadedStartOfMonthTime: none,
       allMessageIdsState: new Set(),
-      finalDeadlineId: ""
+      lastDeadlineId: none
     };
   }
 
@@ -460,7 +456,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const { maybeLastLoadedStartOfMonthTime } = this.state;
 
     const sections = await Promise.resolve(generateSections(messagesState));
-    const finalDeadlineId = await Promise.resolve(getFinalDeadlineId(sections));
+    const lastDeadlineId = await Promise.resolve(getLastDeadlineId(sections));
 
     const sectionsToRender = await Promise.resolve(
       selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
@@ -473,7 +469,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
         sectionsToRender
       ),
-      finalDeadlineId
+      lastDeadlineId: lastDeadlineId
     });
   }
 
@@ -531,7 +527,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       allMessageIdsState,
       isWorking,
       sectionsToRender,
-      finalDeadlineId
+      lastDeadlineId
     } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
@@ -550,7 +546,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             onLongPressItem={this.handleOnLongPressItem}
             onMoreDataRequest={this.onLoadMoreDataRequest}
             onContentSizeChange={this.onContentSizeChange}
-            theLastDeadlineId={finalDeadlineId}
+            lastDeadlineId={lastDeadlineId}
           />
         </View>
         <ListSelectionBar
