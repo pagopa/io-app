@@ -14,3 +14,13 @@ export function areSetEqual<T>(a: Option<Set<T>>, b: Option<Set<T>>) {
   items.forEach(item => diff.delete(item));
   return diff.size === 0;
 }
+
+// Check if 2 option strings has the same value
+export function areStringsEqual(
+  aa: Option<string>,
+  bb: Option<string>
+): boolean {
+  return aa.fold(false, (a: string) =>
+    bb.fold(false, (b: string) => a.match(b) !== null)
+  );
+}

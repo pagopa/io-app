@@ -355,6 +355,7 @@ email:
     title: Inserisci la tua email
     subtitle: Alcune funzioni di IO hanno bisogno della tua email
     label: Indirizzo email personale
+    alert: Stai già usando questa email
     help:
       title: Email
       content: !include email_insert_help.md

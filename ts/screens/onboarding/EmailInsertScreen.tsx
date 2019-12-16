@@ -8,7 +8,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
-import { KeyboardAvoidingView, Platform, StyleSheet } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -29,6 +34,7 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
 
 type Props = ReduxProps &
@@ -82,9 +88,17 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
 
   private continueOnPress = () => {
     if (this.isValidEmail()) {
-      this.state.email.map(e => {
-        this.props.updateEmail(e as EmailString);
-      });
+      const isTheSameEmail = areStringsEqual(
+        this.props.optionEmail,
+        this.state.email
+      );
+      if (isTheSameEmail) {
+        Alert.alert(I18n.t("email.insert.alert"));
+      } else {
+        this.state.email.map(e => {
+          this.props.updateEmail(e as EmailString);
+        });
+      }
     }
   };
 
