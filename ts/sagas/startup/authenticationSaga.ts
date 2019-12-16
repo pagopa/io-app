@@ -1,5 +1,5 @@
 import { Effect } from "redux-saga";
-import { call, put, select, take } from "redux-saga/effects";
+import { call, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import {
@@ -7,12 +7,7 @@ import {
   analyticsAuthenticationStarted
 } from "../../store/actions/analytics";
 import { loginSuccess } from "../../store/actions/authentication";
-import {
-  navigateToIdpSelectionScreenAction,
-  resetToAuthenticationRoute
-} from "../../store/actions/navigation";
-import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { GlobalState } from "../../store/reducers/types";
+import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SessionToken } from "../../types/SessionToken";
 
 /**
@@ -24,15 +19,6 @@ export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
 
   // Reset the navigation stack and navigate to the authentication screen
   yield put(resetToAuthenticationRoute);
-
-  const isSessionExpired: boolean = yield select<GlobalState>(
-    isSessionExpiredSelector
-  );
-  if (isSessionExpired) {
-    // If the user is unauthenticated because of the expired session,
-    // navigate to the IDP selection screen.
-    yield put(navigateToIdpSelectionScreenAction);
-  }
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?
