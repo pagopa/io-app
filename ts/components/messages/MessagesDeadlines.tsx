@@ -271,7 +271,7 @@ const selectPastMonthsData = (
 };
 
 // Checks if the last section is shown, if yes disables continuos scroll
-const isLastSectionPresent = (
+const checkIfIsLastSection = (
   lastDeadlineId: Option<string>,
   sections: Sections
 ): boolean => {
@@ -279,17 +279,15 @@ const isLastSectionPresent = (
     // No deadlines
     return false;
   } else {
-    // tslint:disable-next-line: no-let
-    for (const section of sections) {
-      for (const value of section.data) {
-        if (
-          !isFakeItem(value) &&
-          lastDeadlineId.isSome() &&
-          lastDeadlineId.value === value.e1.id
-        ) {
-          return true;
-        }
-      }
+    const isLastDeadLine = sections
+      .map(s => s.data)
+      .some(items =>
+        items.some(
+          item => !isFakeItem(item) && item.e1.id === lastDeadlineId.value
+        )
+      );
+    if (isLastDeadLine) {
+      return true;
     }
   }
   return false;
@@ -459,7 +457,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
                 subMonths(lastLoadedStartOfMonthTime, PAST_DATA_MONTHS)
               ).getTime()
             ),
-            isContinuosScrollEnabled: !isLastSectionPresent(
+            isContinuosScrollEnabled: !checkIfIsLastSection(
               this.state.lastDeadlineId,
               [...moreSectionsToRender, ...prevState.sectionsToRender]
             )
@@ -494,7 +492,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     );
     // Check in sections to render
     const isContinuosScrollEnabled = await Promise.resolve(
-      !isLastSectionPresent(lastDeadlineId, sectionsToRender)
+      !checkIfIsLastSection(lastDeadlineId, sectionsToRender)
     );
 
     this.setState({
@@ -527,7 +525,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       );
       // Check in sections to render
       const isContinuosScrollEnabled = await Promise.resolve(
-        !isLastSectionPresent(lastDeadlineId, sectionsToRender)
+        !checkIfIsLastSection(lastDeadlineId, sectionsToRender)
       );
 
       this.setState({
