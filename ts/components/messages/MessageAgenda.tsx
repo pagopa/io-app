@@ -298,15 +298,16 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       // We leave half a second longer to show the progress even for faster requests
       // tslint:disable-next-line: no-object-mutation
       this.idTimeoutProgress = setTimeout(() => {
+        this.setState({
+          isLoadingProgress: false
+        });
         // Set scroll position when the new elements have been loaded
         if (
           this.sectionListRef !== undefined &&
           this.props.sections !== undefined &&
-          this.props.sections.length >= minItemsToScroll
+          this.props.sections.length >= minItemsToScroll &&
+          this.props.isContinuosScrollEnabled
         ) {
-          this.setState({
-            isLoadingProgress: false
-          });
           this.scrollToLocation({
             animated: false,
             itemIndex: 0,
