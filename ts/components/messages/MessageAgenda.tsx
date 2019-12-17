@@ -167,6 +167,7 @@ type OwnProps = {
   onMoreDataRequest: () => void;
   selectedMessageIds: Option<Set<string>>;
   isContinuosScrollEnabled: boolean;
+  lastDeadlineId: Option<string>;
 };
 
 type Props = OwnProps & SelectedSectionListProps;
@@ -442,7 +443,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       sections,
       servicesById,
       paymentsByRptId,
-      isContinuosScrollEnabled
+      isContinuosScrollEnabled,
+      lastDeadlineId
     } = this.props;
     const { isLoadingProgress } = this.state;
 
@@ -471,6 +473,19 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       </View>
     );
 
+    // Show this component when the user has not deadlines
+    const ListEmptySectionsComponent = (
+      <View style={styles.emptyListWrapper}>
+        <View spacer={true} large={true} />
+        <Image
+          source={require("../../../img/messages/empty-due-date-list-icon.png")}
+        />
+        <Text style={styles.emptyListContentTitle}>
+          {I18n.t("messages.deadlines.emptyMessage.title")}
+        </Text>
+      </View>
+    );
+
     return (
       <View
         style={{
@@ -495,7 +510,11 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             !isContinuosScrollEnabled && this.noOtherDeadlines
           }
           ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
-          ListEmptyComponent={sections.length === 0 && ListEmptyComponent}
+          ListEmptyComponent={
+            sections.length === 0 && lastDeadlineId.isNone()
+              ? ListEmptySectionsComponent
+              : ListEmptyComponent
+          }
         />
         {isLoadingProgress &&
           isContinuosScrollEnabled && (

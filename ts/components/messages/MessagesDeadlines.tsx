@@ -569,7 +569,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       allMessageIdsState,
       isWorking,
       sectionsToRender,
-      isContinuosScrollEnabled
+      isContinuosScrollEnabled,
+      lastDeadlineId
     } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
@@ -589,6 +590,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             onMoreDataRequest={this.onLoadMoreDataRequest}
             onContentSizeChange={this.onContentSizeChange}
             isContinuosScrollEnabled={isContinuosScrollEnabled}
+            lastDeadlineId={lastDeadlineId}
           />
         </View>
         <ListSelectionBar
