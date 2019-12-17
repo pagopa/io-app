@@ -5,11 +5,12 @@
  * needed)
  */
 
-import { Body, Button, Container, Content, H1, Right } from "native-base";
+import { Body, Container, Content, H1, Right } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import AppHeader from "./ui/AppHeader";
 
 import themeVariables from "../theme/variables";
@@ -33,9 +34,12 @@ export class ContextualHelp extends React.Component<Props> {
         <AppHeader noLeft={true}>
           <Body />
           <Right>
-            <Button onPress={() => this.props.onClose()} transparent={true}>
+            <ButtonDefaultOpacity
+              onPress={() => this.props.onClose()}
+              transparent={true}
+            >
               <IconFont name="io-close" />
-            </Button>
+            </ButtonDefaultOpacity>
           </Right>
         </AppHeader>
         <Content

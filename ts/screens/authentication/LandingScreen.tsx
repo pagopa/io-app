@@ -3,10 +3,12 @@
  * It includes a carousel with highlights on the app functionalities
  */
 
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { StyleSheet } from "react-native";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
@@ -14,19 +16,19 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
+import * as config from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
+import { isSessionExpiredSelector } from "../../store/reducers/authentication";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
+import { showToast } from "../../utils/showToast";
 
-import * as config from "../../config";
-
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
-
-type Props = ReduxProps & OwnProps;
+type Props = ReduxProps &
+  ReturnType<typeof mapStateToProps> &
+  NavigationScreenProps;
 const isCIEAuthenticationSupported = false; // TODO: waiting for sdk cie implementation https://www.pivotaltracker.com/story/show/169730204
 const isCIEAvailable =
   isCIEAuthenticationSupported && isCIEauthenticationEnabled;
@@ -78,69 +80,97 @@ const contextualHelp = {
   )
 };
 
-const LandingScreen: React.SFC<Props> = props => {
-  const navigateToMarkdown = () => props.navigation.navigate(ROUTES.MARKDOWN);
-  const navigateToIdpSelection = () =>
-    props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
+const styles = StyleSheet.create({
+  noPadded: {
+    paddingLeft: 0,
+    paddingRight: 0
+  }
+});
 
-  const navigateToSpidCieInformationRequest = () =>
+const cardComponents = cardProps.map(p => (
+  <LandingCardComponent key={`card-${p.id}`} {...p} />
+));
+
+class LandingScreen extends React.PureComponent<Props> {
+  private navigateToMarkdown = () =>
+    this.props.navigation.navigate(ROUTES.MARKDOWN);
+  private navigateToIdpSelection = () =>
+    this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
+  private navigateToSpidCieInformationRequest = () =>
     config.isCIEauthenticationEnabled
-      ? props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION)
-      : props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
+      ? this.props.navigation.navigate(
+          ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION
+        )
+      : this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
 
-  const cardComponents = cardProps.map(p => (
-    <LandingCardComponent key={`card-${p.id}`} {...p} />
-  ));
-  return (
-    <BaseScreenComponent contextualHelp={contextualHelp}>
-      {isDevEnvironment() && <DevScreenButton onPress={navigateToMarkdown} />}
-      <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
-        <View spacer={true} large={true} />
-        <HorizontalScroll cards={cardComponents} />
-        <View spacer={true} />
-      </Content>
+  public componentDidMount() {
+    if (this.props.isSessionExpired) {
+      showToast(
+        I18n.t("authentication.expiredSessionBanner.message"),
+        "warning",
+        "top"
+      );
+    }
+  }
 
-      <View footer={true}>
-        {isCIEAvailable && (
-          <Button
+  public render() {
+    return (
+      <BaseScreenComponent contextualHelp={contextualHelp}>
+        {isDevEnvironment() && (
+          <DevScreenButton onPress={this.navigateToMarkdown} />
+        )}
+
+        <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
+          <View spacer={true} large={true} />
+          <HorizontalScroll cards={cardComponents} />
+          <View spacer={true} />
+        </Content>
+
+        <View footer={true}>
+          {isCIEAvailable && (
+            <ButtonDefaultOpacity
+              block={true}
+              primary={true}
+              iconLeft={true}
+              onPress={this.navigateToIdpSelection}
+              testID={"landing-button-login"}
+            >
+              <IconFont name={"io-cie"} color={variables.colorWhite} />
+              <Text>{I18n.t("authentication.landing.loginCie")}</Text>
+            </ButtonDefaultOpacity>
+          )}
+          <View spacer={true} />
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             iconLeft={true}
-            onPress={undefined} // TODO: here navigate to identity card check
-            testID={"landing-button-login-cie"}
+            onPress={this.navigateToIdpSelection}
+            testID={"landing-button-login-spid"}
           >
-            <IconFont name={"io-cie"} color={variables.colorWhite} />
-            <Text>{I18n.t("authentication.landing.loginCie")}</Text>
-          </Button>
-        )}
-        <View spacer={true} />
-        <Button
-          block={true}
-          primary={true}
-          iconLeft={true}
-          onPress={navigateToIdpSelection}
-          testID={"landing-button-login-spid"}
-        >
-          <IconFont name={"io-profilo"} color={variables.colorWhite} />
-          <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
-        </Button>
-        <View spacer={true} />
-        <Button
-          block={true}
-          small={true}
-          transparent={true}
-          onPress={navigateToSpidCieInformationRequest}
-        >
-          <Text>
-            {isCIEAvailable
-              ? I18n.t("authentication.landing.nospid-nocie")
-              : I18n.t("authentication.landing.nospid")}
-          </Text>
-        </Button>
-        <View spacer={true} extralarge={true} />
-      </View>
-    </BaseScreenComponent>
-  );
-};
+            <IconFont name={"io-profilo"} color={variables.colorWhite} />
+            <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
+          </ButtonDefaultOpacity>
+          <View spacer={true} />
+          <ButtonDefaultOpacity
+            block={true}
+            small={true}
+            transparent={true}
+            onPress={this.navigateToSpidCieInformationRequest}
+          >
+            <Text style={styles.noPadded}>
+              {isCIEAvailable
+                ? I18n.t("authentication.landing.nospid-nocie")
+                : I18n.t("authentication.landing.nospid")}
+            </Text>
+          </ButtonDefaultOpacity>
+        </View>
+      </BaseScreenComponent>
+    );
+  }
+}
 
-export default connect()(LandingScreen);
+const mapStateToProps = (state: GlobalState) => ({
+  isSessionExpired: isSessionExpiredSelector(state)
+});
+
+export default connect(mapStateToProps)(LandingScreen);

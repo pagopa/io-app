@@ -1,7 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
-
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
@@ -98,10 +97,16 @@ export function isLoggedIn(
   );
 }
 
-export const isSessionExpiredSelector = ({ authentication }: GlobalState) =>
-  !isLoggedIn(authentication) && authentication.reason === "SESSION_EXPIRED";
+export function isSessionExpired(
+  state: AuthenticationState
+): state is LoggedOutWithoutIdp | LoggedOutWithIdp {
+  return isLoggedOutWithIdp(state) && state.reason === "SESSION_EXPIRED";
+}
 
 // Selectors
+
+export const isSessionExpiredSelector = (state: GlobalState) =>
+  !isLoggedIn(state.authentication) && isSessionExpired(state.authentication);
 
 export const sessionTokenSelector = (
   state: GlobalState

@@ -1,12 +1,14 @@
 /**
  * A screen to show if the fingerprint is supported to the user.
  */
-import { Button, Text, View } from "native-base";
+
+import { Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { Alert } from "react-native";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import Markdown from "../../components/ui/Markdown";
@@ -114,13 +116,13 @@ export class FingerprintScreen extends React.PureComponent<Props> {
           </View>
         </ScreenContent>
         <View footer={true}>
-          <Button
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             onPress={this.props.fingerprintAcknowledgeRequest}
           >
             <Text>{I18n.t("global.buttons.continue")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
       </TopScreenComponent>
     );

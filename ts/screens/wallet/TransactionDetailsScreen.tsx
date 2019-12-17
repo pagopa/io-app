@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 import { ContextualHelp } from "../../components/ContextualHelp";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -293,20 +294,20 @@ class TransactionDetailsScreen extends React.Component<Props> {
               <H5 style={styles.value}>{totalAmount}</H5>
             )}
             {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
-            {this.labelValueRow(
-              <Text>
-                <Text note={true}>{`${I18n.t("wallet.transactionFee")} `}</Text>
-                <Text
-                  note={true}
-                  bold={true}
-                  style={styles.whyLink}
-                  onPress={this.showHelp}
-                >
-                  {I18n.t("wallet.why")}
-                </Text>
-              </Text>,
-              fee
-            )}
+            <TouchableDefaultOpacity onPress={this.showHelp}>
+              {this.labelValueRow(
+                <Text>
+                  <Text note={true}>{`${I18n.t(
+                    "wallet.transactionFee"
+                  )} `}</Text>
+
+                  <Text style={styles.whyLink} note={true} bold={true}>
+                    {I18n.t("wallet.why")}
+                  </Text>
+                </Text>,
+                fee
+              )}
+            </TouchableDefaultOpacity>
             {this.labelValueRow(
               I18n.t("wallet.paymentReason"),
               cleanTransactionDescription(transaction.description)

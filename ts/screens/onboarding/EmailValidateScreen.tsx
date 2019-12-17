@@ -1,9 +1,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -85,14 +86,14 @@ export class EmailValidateScreen extends React.PureComponent<Props> {
             </Markdown>
             <View style={styles.spacerLarge} />
             <View>
-              <Button
+              <ButtonDefaultOpacity
                 light={true}
                 block={true}
                 bordered={true}
                 onPress={unavailableAlert}
               >
                 <Text>{I18n.t("email.validate.cta")}</Text>
-              </Button>
+              </ButtonDefaultOpacity>
             </View>
           </View>
         </ScreenContent>

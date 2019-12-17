@@ -35,6 +35,7 @@ import {
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
+import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./payment/common";
@@ -144,13 +145,13 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           </H1>
           <CardComponent
             wallet={wallet}
-            type="Full"
+            type={"Full"}
             hideMenu={true}
             hideFavoriteIcon={true}
           />
           <View spacer={true} />
           <NoticeBox
-            backgroundColor={"#c1f4f2"}
+            backgroundColor={customVariables.toastColor}
             iconProps={{
               name: "io-notice",
               size: 32
