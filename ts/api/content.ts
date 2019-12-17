@@ -17,6 +17,7 @@ import { defaultRetryingFetch } from "../utils/fetch";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
+import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 
 type GetServiceT = IGetApiRequestType<
@@ -47,7 +48,6 @@ type GetMunicipalityT = IGetApiRequestType<
 
 const getMunicipalityT: GetMunicipalityT = {
   method: "get",
-  // https://github.com/teamdigitale/io-services-metadata/pull/53#issue-297680364
   url: params =>
     `/municipalities/${params.codiceCatastale[0]}/${
       params.codiceCatastale[1]
@@ -55,6 +55,21 @@ const getMunicipalityT: GetMunicipalityT = {
   query: _ => ({}),
   headers: _ => ({}),
   response_decoder: basicResponseDecoder(MunicipalityMedadata)
+};
+
+type GetServicesByScopeT = IGetApiRequestType<
+  void,
+  never,
+  never,
+  BasicResponseType<ServicesByScope>
+>;
+
+const getServicesByScopeT: GetServicesByScopeT = {
+  method: "get",
+  url: () => `/services/servicesByScope.json`,
+  query: _ => ({}),
+  headers: _ => ({}),
+  response_decoder: basicResponseDecoder(ServicesByScope)
 };
 
 /**
@@ -68,6 +83,7 @@ export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
 
   return {
     getService: createFetchRequestForApi(getServiceT, options),
-    getMunicipality: createFetchRequestForApi(getMunicipalityT, options)
+    getMunicipality: createFetchRequestForApi(getMunicipalityT, options),
+    getServicesByScope: createFetchRequestForApi(getServicesByScopeT, options)
   };
 }
