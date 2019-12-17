@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, H1, Text, View } from "native-base";
+import { H1, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
@@ -12,6 +12,8 @@ import variables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
@@ -126,18 +128,18 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
             <Grid style={styles.serviceContainer}>
               <Col>
                 <H4>{service.organization_name}</H4>
-                <H6 link={true} onPress={onServiceLinkPress}>
-                  {service.service_name}
-                </H6>
+                <TouchableDefaultOpacity onPress={onServiceLinkPress}>
+                  <H6>{service.service_name}</H6>
+                </TouchableDefaultOpacity>
               </Col>
               {service.service_id && (
                 <Col style={styles.serviceCol}>
-                  <TouchableOpacity onPress={onServiceLinkPress}>
+                  <TouchableDefaultOpacity onPress={onServiceLinkPress}>
                     <MultiImage
                       style={styles.serviceMultiImage}
                       source={logosForService(service)}
                     />
-                  </TouchableOpacity>
+                  </TouchableDefaultOpacity>
                 </Col>
               )}
             </Grid>
@@ -154,7 +156,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                 <Text style={styles.messageIDLabelText}>ID: {message.id}</Text>
               </View>
               <View style={styles.messageIDBtnContainer}>
-                <Button
+                <ButtonDefaultOpacity
                   light={true}
                   bordered={true}
                   primary={true}
@@ -175,7 +177,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                   >
                     {I18n.t("clipboard.copyText")}
                   </Text>
-                </Button>
+                </ButtonDefaultOpacity>
               </View>
             </View>
           )}
