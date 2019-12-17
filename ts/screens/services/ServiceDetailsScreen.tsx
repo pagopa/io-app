@@ -6,10 +6,15 @@ import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Col, Content, Grid, H2, Row, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Image, Linking, StyleSheet } from "react-native";
+import {
+  Alert,
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -22,11 +27,17 @@ import I18n from "../../i18n";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
+import {
+  ServiceMetadataState,
+  servicesMetadataByIdSelector
+} from "../../store/reducers/content";
+import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
+import { servicesSelector } from "../../store/reducers/entities/services";
+import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
+import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import { openMaps } from "../../utils/openMaps";
 import {
   EnabledChannels,
   getBlockedChannels,
@@ -34,14 +45,15 @@ import {
 } from "../../utils/profile";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
+import { handleItemOnPress } from "../../utils/url";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
-
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReduxProps &
+  NavigationInjectedProps<NavigationParams>;
 
 interface State {
   uiEnabledChannels: EnabledChannels;
@@ -59,22 +71,31 @@ const styles = StyleSheet.create({
     width: 150,
     height: 50,
     alignSelf: "flex-start"
+  },
+  imageHeight: {
+    height: 60
+  },
+  imageWidth: {
+    width: 60
   }
 });
 
-/**
- * Renders a row in the service information panel
- */
+// Renders a row in the service information panel as a primary block button
 function renderInformationRow(
   label: string,
   info: string,
-  onPress?: () => void
+  value: string,
+  valueType?: "MAP" | "COPY" | "LINK"
 ) {
   return (
     <View style={styles.infoItem}>
       <Text>{label}</Text>
-      <ButtonDefaultOpacity primary={true} small={true} onPress={onPress}>
-        <Text uppercase={false} ellipsizeMode="tail" numberOfLines={1}>
+      <ButtonDefaultOpacity
+        primary={true}
+        small={true}
+        onPress={handleItemOnPress(value, valueType)}
+      >
+        <Text uppercase={false} ellipsizeMode={"tail"} numberOfLines={1}>
           {info}
         </Text>
       </ButtonDefaultOpacity>
@@ -82,18 +103,57 @@ function renderInformationRow(
   );
 }
 
+// Renders a row in the service information panel as a link
+function renderInformationLinkRow(
+  info: string,
+  value: string,
+  valueType?: "MAP" | "COPY" | "LINK"
+) {
+  return (
+    <View style={styles.infoItem}>
+      <TouchableDefaultOpacity onPress={handleItemOnPress(value, valueType)}>
+        <Text link={true} ellipsizeMode={"tail"} numberOfLines={1}>
+          {info}
+        </Text>
+      </TouchableDefaultOpacity>
+    </View>
+  );
+}
+
+// Renders a row in the service information panel as labelled image
+function renderInformationImageRow(
+  label: string,
+  url: string,
+  source: ImageSourcePropType
+) {
+  return (
+    <View style={styles.infoItem}>
+      <Text>{label}</Text>
+      <TouchableOpacity onPress={handleItemOnPress(url, "LINK")}>
+        <Image
+          style={styles.badgeLogo}
+          resizeMode={"contain"}
+          source={source}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+}
+
 class ServiceDetailsScreen extends React.Component<Props, State> {
+  get serviceId() {
+    return this.props.navigation.getParam("service").service_id;
+  }
+
   constructor(props: Props) {
     super(props);
-
     // We initialize the UI by making the states of the channels the same
     // as what is set in the profile. The user will be able to change the state
-    // via the UI and the profile will be updated in the background accordingly.
-    const serviceId = this.props.navigation.getParam("service").service_id;
+    // via the UI and the profile will be updated in the background accordingly
     this.state = {
       uiEnabledChannels: getEnabledChannelsForService(
         this.props.profile,
-        serviceId
+        this.serviceId
       )
     };
   }
@@ -117,8 +177,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     }
   }
 
-  private goBack = () => this.props.navigation.goBack();
-
   /**
    * Dispatches a profileUpsertRequest to trigger an asynchronous update of the
    * profile with the new enabled channels
@@ -136,7 +194,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
     const updatedBlockedChannels = getBlockedChannels(
       this.props.profile,
-      this.props.navigation.getParam("service").service_id
+      this.serviceId
     );
 
     // compute the new blocked channels preference for the user profile
@@ -150,6 +208,88 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       })
     );
   }
+
+  private renderItems = (potServiceMetadata: ServiceMetadataState) => {
+    if (pot.isSome(potServiceMetadata) && potServiceMetadata.value) {
+      const metadata = potServiceMetadata.value;
+      return (
+        <React.Fragment>
+          {metadata.description && (
+            <Markdown animated={true}>{metadata.description}</Markdown>
+          )}
+          {metadata.description && <View spacer={true} large={true} />}
+          {metadata.tos_url &&
+            renderInformationLinkRow(
+              I18n.t("services.tosLink"),
+              metadata.tos_url
+            )}
+          {metadata.privacy_url &&
+            renderInformationLinkRow(
+              I18n.t("services.privacyLink"),
+              metadata.privacy_url
+            )}
+          {(metadata.app_android || metadata.app_ios || metadata.web_url) && (
+            <H4 style={styles.infoHeader}>
+              {I18n.t("services.otherAppsInfo")}
+            </H4>
+          )}
+          {metadata.web_url &&
+            renderInformationRow(
+              I18n.t("services.otherAppWeb"),
+              metadata.web_url,
+              metadata.web_url
+            )}
+          {metadata.app_ios &&
+            renderInformationImageRow(
+              I18n.t("services.otherAppIos"),
+              metadata.app_ios,
+              require("../../../img/badges/app-store-badge.png")
+            )}
+          {metadata.app_android &&
+            renderInformationImageRow(
+              I18n.t("services.otherAppAndroid"),
+              metadata.app_android,
+              require("../../../img/badges/google-play-badge.png")
+            )}
+        </React.Fragment>
+      );
+    }
+    return undefined;
+  };
+
+  private renderContactItems = (potServiceMetadata: ServiceMetadataState) => {
+    if (pot.isSome(potServiceMetadata) && potServiceMetadata.value) {
+      const metadata = potServiceMetadata.value;
+      return (
+        <React.Fragment>
+          {metadata.address &&
+            renderInformationRow(
+              I18n.t("services.contactAddress"),
+              metadata.address,
+              metadata.address,
+              "MAP"
+            )}
+          {metadata.phone &&
+            renderInformationRow(
+              I18n.t("services.contactPhone"),
+              metadata.phone,
+              `tel:${metadata.phone}`
+            )}
+          {metadata.email &&
+            renderInformationRow(
+              "Email",
+              metadata.email,
+              `mailto:${metadata.email}`
+            )}
+          {metadata.pec &&
+            renderInformationRow("PEC", metadata.pec, `mailto:${metadata.pec}`)}
+          {metadata.web_url &&
+            renderInformationRow("Web", metadata.web_url, metadata.web_url)}
+        </React.Fragment>
+      );
+    }
+    return undefined;
+  };
 
   // show an alert describing what happen if a service is disabled on IO
   // the alert is displayed only the first time the user disable a service
@@ -190,34 +330,13 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   public render() {
     // collect the service
     const service = this.props.navigation.getParam("service");
-    const serviceId = service.service_id;
-
     // finds out which channels are enabled in the user profile
     const profileEnabledChannels = getEnabledChannelsForService(
       this.props.profile,
-      serviceId
+      this.serviceId
     );
 
-    // collect the service metadata
-    const potServiceMetadata =
-      this.props.content.servicesMetadata.byId[serviceId] || pot.none;
-
-    const serviceMetadata = pot.getOrElse(potServiceMetadata, {} as pot.PotType<
-      typeof potServiceMetadata
-    >);
-
-    const {
-      description,
-      web_url,
-      app_ios,
-      app_android,
-      tos_url,
-      privacy_url,
-      address,
-      phone,
-      email,
-      pec
-    } = serviceMetadata;
+    const potServiceMetadata = this.props.servicesMetadataById[this.serviceId];
 
     // whether last attempt to save the preferences failed
     const profileVersion = pot
@@ -227,10 +346,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
     // URIs for the service logo
     const logoUris = logosForService(service);
-
     return (
       <BaseScreenComponent
-        goBack={this.goBack}
+        goBack={this.props.navigation.goBack}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
       >
         <Content>
@@ -240,9 +358,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 <H4>{service.organization_name}</H4>
                 <H2>{service.service_name}</H2>
               </Col>
-              <Col style={{ width: 60 }}>
+              <Col style={styles.imageWidth}>
                 <MultiImage
-                  style={{ width: 60, height: 60 }}
+                  style={[styles.imageHeight, styles.imageWidth]}
                   source={logoUris}
                 />
               </Col>
@@ -286,6 +404,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               </Col>
             </Row>
             <View spacer={true} />
+
             <Row>
               <Col size={1} />
               <Col size={9}>
@@ -321,6 +440,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               </Col>
             </Row>
             <View spacer={true} />
+
             <Row>
               <Col size={1} />
               <Col size={9}>
@@ -357,118 +477,28 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 />
               </Col>
             </Row>
-            <View spacer={true} large={true} />
-            {description && <Markdown animated={true}>{description}</Markdown>}
-            {description && <View spacer={true} large={true} />}
-            {tos_url && (
-              <TouchableDefaultOpacity
-                style={styles.infoItem}
-                onPress={() => Linking.openURL(tos_url).then(() => 0, () => 0)}
-              >
-                <Text link={true}>{I18n.t("services.tosLink")}</Text>
-              </TouchableDefaultOpacity>
-            )}
-            {privacy_url && (
-              <TouchableDefaultOpacity
-                style={styles.infoItem}
-                onPress={() =>
-                  Linking.openURL(privacy_url).then(() => 0, () => 0)
-                }
-              >
-                <Text link={true}>{I18n.t("services.privacyLink")}</Text>
-              </TouchableDefaultOpacity>
-            )}
-            {(app_android || app_ios || web_url) && (
-              <H4 style={styles.infoHeader}>
-                {I18n.t("services.otherAppsInfo")}
-              </H4>
-            )}
-            {web_url && (
-              <View style={styles.infoItem}>
-                <Text>{I18n.t("services.otherAppWeb")}</Text>
-                <ButtonDefaultOpacity
-                  small={true}
-                  onPress={() =>
-                    Linking.openURL(web_url).then(() => 0, () => 0)
-                  }
-                >
-                  <Text ellipsizeMode="tail" numberOfLines={1}>
-                    {web_url}
-                  </Text>
-                </ButtonDefaultOpacity>
-              </View>
-            )}
-            {app_ios && (
-              <View style={styles.infoItem}>
-                <Text>{I18n.t("services.otherAppIos")}</Text>
-                <TouchableDefaultOpacity
-                  onPress={() =>
-                    Linking.openURL(app_ios).then(() => 0, () => 0)
-                  }
-                >
-                  <Image
-                    style={styles.badgeLogo}
-                    resizeMode="contain"
-                    source={require("../../../img/badges/app-store-badge.png")}
-                  />
-                </TouchableDefaultOpacity>
-              </View>
-            )}
-            {app_android && (
-              <View style={styles.infoItem}>
-                <Text>{I18n.t("services.otherAppAndroid")}</Text>
-                <TouchableDefaultOpacity
-                  onPress={() =>
-                    Linking.openURL(app_android).then(() => 0, () => 0)
-                  }
-                >
-                  <Image
-                    style={styles.badgeLogo}
-                    resizeMode="contain"
-                    source={require("../../../img/badges/google-play-badge.png")}
-                  />
-                </TouchableDefaultOpacity>
-              </View>
-            )}
-            <H4 style={styles.infoHeader}>
-              {I18n.t("services.contactsAndInfo")}
-            </H4>
-            {renderInformationRow(
-              "C.F.",
-              service.organization_fiscal_code,
-              () =>
-                clipboardSetStringWithFeedback(service.organization_fiscal_code)
-            )}
-            {address &&
-              renderInformationRow(
-                I18n.t("services.contactAddress"),
-                address,
-                () => {
-                  openMaps(address);
-                }
-              )}
-            {phone &&
-              renderInformationRow(I18n.t("services.contactPhone"), phone, () =>
-                Linking.openURL(`tel:${phone}`).then(() => 0, () => 0)
-              )}
-            {email &&
-              renderInformationRow("Email", email, () =>
-                Linking.openURL(`mailto:${email}`).then(() => 0, () => 0)
-              )}
-            {pec &&
-              renderInformationRow("PEC", pec, () =>
-                Linking.openURL(`mailto:${pec}`).then(() => 0, () => 0)
-              )}
-            {web_url &&
-              renderInformationRow("Web", web_url, () =>
-                Linking.openURL(web_url).then(() => 0, () => 0)
-              )}
-            {this.props.isDebugModeEnabled &&
-              renderInformationRow("ID", service.service_id, () =>
-                clipboardSetStringWithFeedback(service.service_id)
-              )}
-            <View spacer={true} extralarge={true} />
           </Grid>
+
+          <View spacer={true} large={true} />
+          {this.renderItems(potServiceMetadata)}
+          <H4 style={styles.infoHeader}>
+            {I18n.t("services.contactsAndInfo")}
+          </H4>
+          {renderInformationRow(
+            "C.F.",
+            service.organization_fiscal_code,
+            service.organization_fiscal_code,
+            "COPY"
+          )}
+          {this.renderContactItems(potServiceMetadata)}
+          {this.props.isDebugModeEnabled &&
+            renderInformationRow(
+              "ID",
+              service.service_id,
+              service.service_id,
+              "COPY"
+            )}
+          <View spacer={true} extralarge={true} />
         </Content>
       </BaseScreenComponent>
     );
@@ -477,12 +507,12 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   isEmailValidated: isProfileEmailValidatedSelector(state),
-  services: state.entities.services,
   content: state.content,
-  profile: state.profile,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled,
-  wasServiceAlertDisplayedOnce:
-    state.persistedPreferences.wasServiceAlertDisplayedOnce
+  services: servicesSelector(state),
+  servicesMetadataById: servicesMetadataByIdSelector(state),
+  profile: profileSelector(state),
+  isDebugModeEnabled: isDebugModeEnabledSelector(state),
+  wasServiceAlertDisplayedOnce: wasServiceAlertDisplayedOnceSelector(state)
 });
 
 export default connect(mapStateToProps)(ServiceDetailsScreen);
