@@ -5,6 +5,7 @@ import { Municipality as MunicipalityMetadata } from "../../../definitions/conte
 import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
+import { ServiceMetadataState } from "../reducers/content";
 
 // TODO: check if response with code !== 200 can mean different errors.
 // If false, the failure payload could be just the serviceID as before
@@ -12,15 +13,17 @@ export type ContentServiceFailure = {
   error: Error;
   serviceId: string;
 };
+
+export type ContentServiceSuccess = {
+  serviceId: string;
+  data: ServiceMetadataState;
+};
+
 export const contentServiceLoad = createAsyncAction(
   "CONTENT_SERVICE_LOAD_REQUEST",
   "CONTENT_SERVICE_LOAD_SUCCESS",
   "CONTENT_SERVICE_LOAD_FAILURE"
-)<
-  ServiceId,
-  { serviceId: ServiceId; data: ServiceMetadata },
-  ContentServiceFailure
->();
+)<ServiceId, ContentServiceSuccess, ContentServiceFailure>();
 
 export const contentMunicipalityLoad = createAsyncAction(
   "CONTENT_MUNICIPALITY_LOAD_REQUEST",
