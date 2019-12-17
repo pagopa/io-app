@@ -8,10 +8,12 @@ import { ActionType, getType } from "typesafe-actions";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
+import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
-  contentServiceLoad
+  contentServiceLoad,
+  contentServicesByScopeLoad
 } from "../store/actions/content";
 import {
   FirstServiceLoadSuccess,
@@ -38,6 +40,45 @@ function getServiceMetadata(
       .getService({ serviceId })
       .then(resolve, e => resolve(left([{ context: [], value: e }])))
   );
+}
+
+/**
+ * Retrieves a view of services where the keys are the scopes and the value
+ * is an array contains the id of services
+ */
+function getServicesByScope(): Promise<
+  t.Validation<BasicResponseType<ServicesByScope>>
+> {
+  return new Promise((resolve, _) =>
+    contentClient
+      .getServicesByScope()
+      .then(resolve, e => resolve(left([{ context: [], value: e }])))
+  );
+}
+
+/**
+ * A saga that watches for and executes requests to load services by scope
+ */
+export function* watchContentServicesByScopeLoad(): Iterator<Effect> {
+  yield takeEvery(getType(contentServicesByScopeLoad.request), function*() {
+    try {
+      const response: SagaCallReturnType<
+        typeof getServicesByScope
+      > = yield call(getServicesByScope);
+
+      if (response.isRight() && response.value.status === 200) {
+        yield put(contentServicesByScopeLoad.success(response.value.value));
+      } else {
+        const error = response.fold(
+          readableReport,
+          ({ status }) => `response status ${status}`
+        );
+        throw Error(error);
+      }
+    } catch (e) {
+      yield put(contentServicesByScopeLoad.failure(e));
+    }
+  });
 }
 
 /**
@@ -69,19 +110,23 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
         typeof isFirstVisibleServiceLoadCompletedSelector
       > = yield select(isFirstVisibleServiceLoadCompletedSelector);
 
-      if (response.isRight() && response.value.status === 200) {
-        yield put(
-          contentServiceLoad.success({ serviceId, data: response.value.value })
-        );
-        // If the service is loaded for the first time (at first startup or when the
-        // cache is cleaned), the app shows the service list item without badge
-        if (!isFirstVisibleServiceLoadCompleted) {
-          yield put(markServiceAsRead(serviceId));
+      if (response.isRight()) {
+        if (response.value.status === 200 || response.value.status === 404) {
+          // If 404, the service has no saved metadata
+          const data =
+            response.value.status === 200
+              ? pot.some(response.value.value)
+              : pot.some(undefined);
+          yield put(contentServiceLoad.success({ serviceId, data }));
+          // If the service is loaded for the first time (at first startup or when the
+          // cache is cleaned), the app shows the service list item without badge
+          if (!isFirstVisibleServiceLoadCompleted) {
+            yield put(markServiceAsRead(serviceId));
+          }
+        } else {
+          throw Error(`response status ${response.value.status}`);
         }
-      } else {
-        throw Error(`response status ${response.value.status}`);
       }
-
       // If all services content and metadata are loaded with success,
       // stop considering loaded services as read
       if (!isFirstVisibleServiceLoadCompleted) {
