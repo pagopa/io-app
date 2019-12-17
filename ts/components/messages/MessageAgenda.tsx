@@ -174,8 +174,6 @@ type Props = OwnProps & SelectedSectionListProps;
 type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
-  firstSectionListUpdate: boolean;
-  elementVisible: number;
   isLoadingProgress: boolean;
   isContinuosScrollEnabled: boolean;
 };
@@ -272,8 +270,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       itemLayouts: [],
-      firstSectionListUpdate: true,
-      elementVisible: 0,
       isLoadingProgress: false,
       isContinuosScrollEnabled: true
     };
@@ -289,7 +285,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   // checks if the last section is shown, if yes disables continuos scroll
   private checkIfIsLastSection(): boolean {
     if (this.props.lastDeadlineId.isNone()) {
-      // No are deadlines
+      // No deadlines
       this.setState({
         isContinuosScrollEnabled: false
       });
