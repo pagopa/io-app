@@ -83,7 +83,7 @@ type State = {
 /**
  * Get the last deadline id (the oldest in time is the first in array position)
  */
-const getLastDeadlineId = (sections: Sections): Option<string> => {
+export const getLastDeadlineId = (sections: Sections): Option<string> => {
   return fromNullable(sections)
     .chain(s => fpIndex(0, s))
     .chain(d => fpIndex(0, [...d.data]))

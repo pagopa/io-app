@@ -1,0 +1,216 @@
+import { compareAsc, startOfDay } from "date-fns";
+import { none, Option, some } from "fp-ts/lib/Option";
+import { WithinRangeInteger } from "italia-ts-commons/lib/numbers";
+import * as pot from "italia-ts-commons/lib/pot";
+import {
+  FiscalCode,
+  IPatternStringTag,
+  WithinRangeString
+} from "italia-ts-commons/lib/strings";
+import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { MessageState } from "../../../store/reducers/entities/messages/messagesById";
+import { isCreatedMessageWithContentAndDueDate } from "../../../types/CreatedMessageWithContentAndDueDate";
+import {
+  MessageAgendaItem,
+  MessageAgendaSection,
+  Sections
+} from "../MessageAgenda";
+import { getLastDeadlineId } from "../MessagesDeadlines";
+
+/**
+ * Filter only the messages with a due date and group them by due_date day.
+ */
+const generateSections = (
+  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+): Sections =>
+  pot.getOrElse(
+    pot.map(
+      potMessagesState,
+      _ =>
+        // tslint:disable-next-line:readonly-array
+        _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
+          const { isRead, isArchived, message } = messageState;
+          if (
+            !isArchived &&
+            pot.isSome(message) &&
+            isCreatedMessageWithContentAndDueDate(message.value)
+          ) {
+            accumulator.push(
+              Tuple2(message.value, {
+                isRead
+              })
+            );
+          }
+
+          return accumulator;
+        }, [])
+          // Sort by due_date
+          .sort((messageAgendaItem1, messageAgendaItem2) =>
+            compareAsc(
+              messageAgendaItem1.e1.content.due_date,
+              messageAgendaItem2.e1.content.due_date
+            )
+          )
+          // Now we have an array of messages sorted by due_date.
+          // To create groups (by due_date day) we can just iterate the array and
+          // -  if the current message due_date day is different from the one of
+          //    the prevMessage create a new section
+          // -  if the current message due_date day is equal to the one of prevMessage
+          //    add the message to the last section
+          .reduce<{
+            lastTitle: Option<string>;
+            // tslint:disable-next-line:readonly-array
+            sections: MessageAgendaSection[];
+          }>(
+            (accumulator, messageAgendaItem) => {
+              // As title of the section we use the ISOString rapresentation
+              // of the due_date day.
+              const title = startOfDay(
+                messageAgendaItem.e1.content.due_date
+              ).toISOString();
+              if (
+                accumulator.lastTitle.isNone() ||
+                title !== accumulator.lastTitle.value
+              ) {
+                // We need to create a new section
+                const newSection = {
+                  title,
+                  data: [messageAgendaItem]
+                };
+                return {
+                  lastTitle: some(title),
+                  sections: [...accumulator.sections, newSection]
+                };
+              } else {
+                // We need to add the message to the last section.
+                // We are sure that pop will return at least one element because
+                // of the previous `if` step.
+                const prevSection = accumulator.sections.pop() as MessageAgendaSection;
+                const newSection = {
+                  title,
+                  data: [...prevSection.data, messageAgendaItem]
+                };
+                return {
+                  lastTitle: some(title),
+                  // We used pop so we need to re-add the section.
+                  sections: [...accumulator.sections, newSection]
+                };
+              }
+            },
+            {
+              lastTitle: none,
+              sections: []
+            }
+          ).sections
+    ),
+    []
+  );
+
+describe("Check if the message id is the same as the verification id", () => {
+  const fiscalCode = "ISPXNB32R82Y766A" as FiscalCode;
+  const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
+    kind: "PotSome",
+    value: [
+      {
+        meta: {
+          created_at: new Date(2019, 11, 25, 12, 5, 14),
+          fiscal_code: fiscalCode,
+          id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
+          sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+          time_to_live: (3600 as unknown) as number &
+            WithinRangeInteger<3600, 604800>
+        },
+        isRead: true,
+        isArchived: false,
+        message: {
+          kind: "PotSome",
+          value: {
+            content: {
+              subject: "test wrong organization name 9" as WithinRangeString<
+                10,
+                121
+              >,
+              markdown: "organization name test wrong organization…ng organization name test wrong organization name" as WithinRangeString<
+                80,
+                10001
+              >,
+              due_date: new Date(2019, 11, 2, 18, 0, 0)
+            },
+            created_at: new Date(2019, 11, 25, 12, 5, 14),
+            fiscal_code: fiscalCode,
+            id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
+            sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+            time_to_live: (3600 as unknown) as number &
+              WithinRangeInteger<3600, 604800>
+          }
+        }
+      },
+      {
+        meta: {
+          created_at: new Date(2019, 11, 21, 17, 53, 27),
+          fiscal_code: fiscalCode,
+          id: "01DQQGBXWSCNNY44CH2QZ95J7A",
+          sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+          time_to_live: (3600 as unknown) as number &
+            WithinRangeInteger<3600, 604800>
+        },
+        isRead: false,
+        isArchived: false,
+        message: {
+          kind: "PotSome",
+          value: {
+            content: {
+              subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
+              markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+                80,
+                10001
+              >,
+              due_date: new Date(2020, 11, 2, 23, 0, 0),
+              payment_data: {
+                amount: (1 as unknown) as number &
+                  WithinRangeInteger<1, 9999999999>,
+                notice_number: "002718270840468918" as string &
+                  IPatternStringTag<"^[0123][0-9]{17}$">,
+                invalid_after_due_date: true
+              }
+            },
+            created_at: new Date(2019, 11, 25, 12, 5, 14),
+            fiscal_code: fiscalCode,
+            id: "01DQQGBXWSCNNY44CH2QZ95J7A",
+            sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+            time_to_live: (3600 as unknown) as number &
+              WithinRangeInteger<3600, 604800>
+          }
+        }
+      }
+    ]
+  };
+
+  it("Should return true", async () => {
+    const sections = await Promise.resolve(generateSections(messagesState));
+    const lastDeadlineId: any = await Promise.resolve(
+      getLastDeadlineId(sections)
+    );
+
+    const id =
+      lastDeadlineId.value !== undefined
+        ? lastDeadlineId.value
+        : lastDeadlineId;
+
+    expect(id).toEqual("01DTH3SAA23QJ436BDHDXJ4H5Y");
+  });
+
+  it("Should return false", async () => {
+    const sections = await Promise.resolve(generateSections(messagesState));
+    const lastDeadlineId: any = await Promise.resolve(
+      getLastDeadlineId(sections)
+    );
+
+    const id =
+      lastDeadlineId.value !== undefined
+        ? lastDeadlineId.value
+        : lastDeadlineId;
+
+    expect(id !== "01DP8VSP2HYYMXSMHN7CV1GNHJ");
+  });
+});
