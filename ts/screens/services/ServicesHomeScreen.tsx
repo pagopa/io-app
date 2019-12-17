@@ -23,38 +23,33 @@
  *       - https://www.pivotaltracker.com/story/show/169224363s
  *       - https://www.pivotaltracker.com/story/show/169262311
  */
-import { left } from "fp-ts/lib/Either";
-import { Option, some } from "fp-ts/lib/Option";
+import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, Tab, Tabs, Text, View } from "native-base";
+import { Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
-import { createFactory } from "react";
 import {
   Alert,
   Animated,
   Image,
+  KeyboardAvoidingView,
   Platform,
-  StyleSheet,
-  TouchableOpacity
+  StyleSheet
 } from "react-native";
-import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import {
   NavigationEventSubscription,
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import ChooserListContainer from "../../components/ChooserListContainer";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
-import OrganizationLogo from "../../components/services/OrganizationLogo";
 import ServicesSearch from "../../components/services/ServicesSearch";
-import ServicesSectionsList from "../../components/services/ServicesSectionsList";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import IconFont from "../../components/ui/IconFont";
+import ServicesTab from "../../components/services/ServicesTab";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -70,12 +65,9 @@ import {
   userMetadataLoad,
   userMetadataUpsert
 } from "../../store/actions/userMetadata";
-import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
-  localServicesSectionsSelector,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
-  organizationsOfInterestSelector,
   selectedLocalServicesSectionsSelector,
   ServicesSectionState,
   visibleServicesContentLoadStateSelector,
@@ -98,20 +90,19 @@ import {
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
-import { getLogoForOrganization } from "../../utils/organizations";
+import { HEADER_HEIGHT } from "../../utils/constants";
 import {
   getChannelsforServicesList,
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
 
 type ReduxMergedProps = Readonly<{
-  dispatchUpdateOrganizationsOfInterestMetadata: (
+  updateOrganizationsOfInterestMetadata: (
     selectedItemIds: Option<Set<string>>
   ) => void;
 }>;
@@ -140,15 +131,16 @@ type DataLoadFailure =
 const EMPTY_MESSAGE = "";
 
 // Scroll range is directly influenced by floating header height
-const SCROLL_RANGE_FOR_ANIMATION =
-  customVariables.appHeaderHeight +
-  (Platform.OS === "ios"
-    ? isIphoneX()
-      ? 18
-      : getStatusBarHeight(true)
-    : customVariables.spacerHeight);
+const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  topScreenContainer: {
+    flex: 1,
+    justifyContent: "flex-end"
+  },
   tabBarContainer: {
     elevation: 0,
     height: 40
@@ -198,23 +190,16 @@ const styles = StyleSheet.create({
   errorText2: {
     fontSize: customVariables.fontSizeSmall
   },
-  buttonBar: {
+  varBar: {
     flexDirection: "row",
     zIndex: 1,
     justifyContent: "space-around",
     backgroundColor: customVariables.colorWhite,
     padding: 10
   },
-  buttonBarLeft: {
+  buttonBar: {
     flex: 2,
     marginEnd: 5
-  },
-  buttonBarRight: {
-    flex: 2,
-    marginStart: 5
-  },
-  icon: {
-    paddingHorizontal: (24 - 17) / 2 // (io-right icon width) - (io-trash icon width)
   }
 });
 
@@ -235,8 +220,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       isInnerContentRendered: false
     };
   }
-
-  private updateLongPressButtonScope = () => {
+  /**
+   * return true if all services have INBOX channel disabled
+   */
+  private areAllServicesInboxChannelDisabled = (): boolean => {
     const currentTabServicesChannels = this.props.getServicesChannels(
       this.props.tabsServicesId[this.state.currentTab],
       this.props.profile
@@ -247,25 +234,20 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     ).filter(id => currentTabServicesChannels[id].indexOf("INBOX") !== -1)
       .length;
 
-    if (disabledServices === Object.keys(currentTabServicesChannels).length) {
-      // if all tab services are disabled the footer primary button allows services are massively enabled
-      this.setState({ enableServices: true });
-    } else {
-      // if at least one tab service is enabled the footer primary button allows services are massively disabled
-      this.setState({ enableServices: false });
-    }
+    return disabledServices === Object.keys(currentTabServicesChannels).length;
   };
 
   private handleOnLongPressItem = () => {
     if (!this.props.isSearchEnabled) {
-      this.updateLongPressButtonScope();
+      const enableServices = this.areAllServicesInboxChannelDisabled();
       const isLongPressEnabled = !this.state.isLongPressEnabled;
       const currentTabServicesId = this.props.tabsServicesId[
         this.state.currentTab
       ];
       this.setState({
         isLongPressEnabled,
-        currentTabServicesId
+        currentTabServicesId,
+        enableServices
       });
     }
   };
@@ -318,41 +300,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private scollPositions: number[] = [0, 0, 0];
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
-  private renderErrorPlaceholder(onRetry: () => void) {
-    return (
-      <React.Fragment>
-        <Content bounces={false}>
-          <View style={styles.center}>
-            <View spacer={true} extralarge={true} />
-            <Image
-              source={require("../../../img/wallet/errors/generic-error-icon.png")}
-            />
-            <View spacer={true} />
-            <Text bold={true} alignCenter={true} style={styles.errorText}>
-              {I18n.t("wallet.errors.GENERIC_ERROR")}
-            </Text>
-            <View spacer={true} extralarge={true} />
-            <View spacer={true} extralarge={true} />
-            <Text alignCenter={true} style={styles.errorText2}>
-              {I18n.t("wallet.errorTransaction.submitBugText")}
-            </Text>
-            <View spacer={true} extralarge={true} />
-          </View>
-        </Content>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            block: true,
-            primary: true,
-            onPress: onRetry,
-            title: I18n.t("global.buttons.retry")
-          }}
-        />
-      </React.Fragment>
-    );
-  }
-
-  // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
   private renderServiceLoadingPlaceholder() {
     return (
       <View style={[styles.center, styles.padded]}>
@@ -369,7 +316,21 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   }
 
+  // tslint:disable-next-line: cognitive-complexity
   public componentDidUpdate(prevProps: Props, prevState: State) {
+    // if some errors occur while updating profile, we will show a message in a toast
+    // profile could be updated by enabling/disabling on or more channel of a service
+    if (pot.isError(this.props.profile) && !pot.isError(prevProps.profile)) {
+      showToast(
+        I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
+        "danger"
+      );
+    }
+
+    const enableServices = this.areAllServicesInboxChannelDisabled();
+    if (enableServices !== prevState.enableServices) {
+      this.setState({ enableServices });
+    }
     // saving current list scroll position to enable header animation
     // when shifting between tabs
     if (prevState.currentTab !== this.state.currentTab) {
@@ -471,7 +432,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         value
       );
     }
-    this.updateLongPressButtonScope();
+    const enableServices = this.areAllServicesInboxChannelDisabled();
+    this.setState({ enableServices });
   };
 
   public componentWillUnmount() {
@@ -480,88 +442,36 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   }
 
-  /**
-   * For tab Locals
-   */
-  private renderOrganizationLogo = (organizationFiscalCode: string) => {
-    return (
-      <OrganizationLogo
-        logoUri={getLogoForOrganization(organizationFiscalCode)}
-        imageStyle={styles.organizationLogo}
-      />
-    );
-  };
-
-  private organizationContainsText(item: Organization, searchText: string) {
-    return isTextIncludedCaseInsensitive(item.name, searchText);
-  }
-
-  private showChooserAreasOfInterestModal = () => {
-    const {
-      selectableOrganizations,
-      hideModal,
-      selectedOrganizations
-    } = this.props;
-
-    const OrganizationsList = createFactory(
-      ChooserListContainer<Organization>()
-    );
-    this.props.showModal(
-      <OrganizationsList
-        items={selectableOrganizations}
-        initialSelectedItemIds={some(new Set(selectedOrganizations || []))}
-        keyExtractor={(item: Organization) => item.fiscalCode}
-        itemTitleExtractor={(item: Organization) => item.name}
-        itemIconComponent={left((fiscalCode: string) =>
-          this.renderOrganizationLogo(fiscalCode)
-        )}
-        onCancel={hideModal}
-        onSave={this.onSaveAreasOfInterest}
-        isRefreshEnabled={false}
-        matchingTextPredicate={this.organizationContainsText}
-        noSearchResultsSourceIcon={require("../../../img/services/icon-no-places.png")}
-        noSearchResultsSubtitle={I18n.t("services.areasOfInterest.searchEmpty")}
-      />
-    );
-  };
-
-  private onSaveAreasOfInterest = (
-    selectedFiscalCodes: Option<Set<string>>
-  ) => {
-    this.setState({
-      toastErrorMessage: I18n.t("serviceDetail.onUpdateEnabledChannelsFailure")
-    });
-    this.props.dispatchUpdateOrganizationsOfInterestMetadata(
-      selectedFiscalCodes
-    );
-    this.props.hideModal();
-  };
-
   // This method enable or disable services and update the enableServices props
   private disableOrEnableTabServices = () => {
+    const { profile } = this.props;
+    if (pot.isUpdating(profile)) {
+      return;
+    }
+    const { currentTabServicesId, enableServices } = this.state;
     this.props.disableOrEnableServices(
-      this.state.currentTabServicesId,
-      this.props.profile,
-      this.state.enableServices
+      currentTabServicesId,
+      profile,
+      enableServices
     );
-    this.updateLongPressButtonScope();
+    this.setState({ enableServices: !enableServices });
   };
 
   private renderLongPressFooterButtons = () => {
     return (
-      <View style={styles.buttonBar}>
-        <Button
+      <View style={styles.varBar}>
+        <ButtonDefaultOpacity
           block={true}
           bordered={true}
           onPress={this.handleOnLongPressItem}
-          style={styles.buttonBarLeft}
+          style={styles.buttonBar}
         >
           <Text>{I18n.t("services.close")}</Text>
-        </Button>
-        <Button
+        </ButtonDefaultOpacity>
+        <ButtonDefaultOpacity
           block={true}
           primary={true}
-          style={styles.buttonBarRight}
+          style={styles.buttonBar}
           onPress={() => {
             if (!this.props.wasServiceAlertDisplayedOnce) {
               this.showAlertOnDisableServices(
@@ -579,7 +489,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               ? I18n.t("services.enableAll")
               : I18n.t("services.disableAll")}
           </Text>
-        </Button>
+        </ButtonDefaultOpacity>
       </View>
     );
   };
@@ -591,11 +501,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
     switch (this.props.loadDataFailure) {
       case "userMetadaLoadFailure":
-        return this.renderErrorPlaceholder(() =>
-          this.refreshScreenContent(true)
+        return (
+          <GenericErrorComponent
+            onRetry={() => this.refreshScreenContent(true)}
+          />
         );
       case "servicesLoadFailure":
-        return this.renderErrorPlaceholder(this.props.refreshServices);
+        return <GenericErrorComponent onRetry={this.refreshScreenContent} />;
       default:
         return undefined;
     }
@@ -613,64 +525,43 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     const { userMetadata } = this.props;
 
     return (
-      <TopScreenComponent
-        title={I18n.t("services.title")}
-        appLogo={true}
-        contextualHelp={{
-          title: I18n.t("services.title"),
-          body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
-        }}
-        isSearchAvailable={userMetadata !== undefined}
-        searchType={"Services"}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        enabled={true}
+        style={styles.container}
       >
-        {this.renderErrorContent() ? (
-          this.renderErrorContent()
-        ) : this.props.isSearchEnabled ? (
-          this.renderSearch()
-        ) : (
-          <React.Fragment>
-            <ScreenContentHeader
-              title={I18n.t("services.title")}
-              icon={require("../../../img/icons/services-icon.png")}
-              fixed={Platform.OS === "ios"}
-            />
-            {this.renderInnerContent()}
-            {this.state.isLongPressEnabled &&
-              this.renderLongPressFooterButtons()}
-          </React.Fragment>
-        )}
-      </TopScreenComponent>
+        <View style={styles.topScreenContainer}>
+          <TopScreenComponent
+            title={I18n.t("services.title")}
+            appLogo={true}
+            contextualHelp={{
+              title: I18n.t("services.title"),
+              body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
+            }}
+            isSearchAvailable={userMetadata !== undefined}
+            searchType={"Services"}
+          >
+            {this.renderErrorContent() ? (
+              this.renderErrorContent()
+            ) : this.props.isSearchEnabled ? (
+              this.renderSearch()
+            ) : (
+              <React.Fragment>
+                <ScreenContentHeader
+                  title={I18n.t("services.title")}
+                  icon={require("../../../img/icons/services-icon.png")}
+                  fixed={Platform.OS === "ios"}
+                />
+                {this.renderInnerContent()}
+                {this.state.isLongPressEnabled &&
+                  this.renderLongPressFooterButtons()}
+              </React.Fragment>
+            )}
+          </TopScreenComponent>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
-
-  private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => {
-    const onPressItem = () => {
-      if (this.props.userMetadata && this.props.selectedOrganizations) {
-        const updatedAreasOfInterest = this.props.selectedOrganizations.filter(
-          item => item !== section.organizationFiscalCode
-        );
-        this.setState({
-          toastErrorMessage: I18n.t(
-            "serviceDetail.onUpdateEnabledChannelsFailure"
-          )
-        });
-        this.props.saveSelectedOrganizationItems(
-          this.props.userMetadata,
-          updatedAreasOfInterest
-        );
-      }
-    };
-    return (
-      <TouchableOpacity onPress={onPressItem}>
-        <IconFont
-          name={"io-trash"}
-          color={"#C7D1D9"}
-          size={17}
-          style={styles.icon}
-        />
-      </TouchableOpacity>
-    );
-  };
 
   /**
    * Render ServicesSearch component.
@@ -680,24 +571,26 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       .map(
         _ =>
           _.length < MIN_CHARACTER_SEARCH_TEXT ? (
-            <SearchNoResultMessage errorType="InvalidSearchBarText" />
+            <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
           ) : (
             <ServicesSearch
               sectionsState={this.props.allSections}
               profile={this.props.profile}
-              onRefresh={() => {
-                this.setState({
-                  toastErrorMessage: I18n.t("global.genericError")
-                });
-                this.props.refreshServices();
-              }}
+              onRefresh={this.refreshServices}
               navigateToServiceDetail={this.onServiceSelect}
               searchText={_}
               readServices={this.props.readServices}
             />
           )
       )
-      .getOrElse(<SearchNoResultMessage errorType="InvalidSearchBarText" />);
+      .getOrElse(<SearchNoResultMessage errorType={"InvalidSearchBarText"} />);
+  };
+
+  private refreshServices = () => {
+    this.setState({
+      toastErrorMessage: I18n.t("global.genericError")
+    });
+    this.props.refreshServices();
   };
 
   private refreshScreenContent = (hideToast: boolean = false) => {
@@ -706,6 +599,26 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
     this.props.refreshUserMetadata();
     this.props.refreshServices();
+  };
+
+  private handleOnScroll = (value: number) => {
+    const { currentTab, isLongPressEnabled } = this.state;
+    if (isLongPressEnabled && Math.abs(value - currentTab) > 0.5) {
+      this.setState({
+        isLongPressEnabled: false
+      });
+    }
+  };
+
+  private handleOnChangeTab = (evt: any) => {
+    const { currentTab, isLongPressEnabled } = this.state;
+    const nextTab: number = evt.i;
+    const isSameTab = currentTab === nextTab;
+    this.setState({
+      currentTab: nextTab,
+      enableHeaderAnimation: true,
+      isLongPressEnabled: isSameTab && isLongPressEnabled
+    });
   };
 
   /**
@@ -717,33 +630,15 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       localTabSections,
       nationalTabSections,
       allTabSections,
-      profile,
       potUserMetadata,
-      isLoadingServices,
-      readServices,
-      selectedOrganizations
+      isLoadingServices
     } = this.props;
     return (
       <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
-        onScroll={(value: number) => {
-          const { currentTab, isLongPressEnabled } = this.state;
-          if (isLongPressEnabled && Math.abs(value - currentTab) > 0.5) {
-            this.setState({
-              isLongPressEnabled: false
-            });
-          }
-        }}
-        onChangeTab={(evt: any) => {
-          const { currentTab, isLongPressEnabled } = this.state;
-          const nextTab: number = evt.i;
-          const isSameTab = currentTab === nextTab;
-          this.setState({
-            currentTab: nextTab,
-            isLongPressEnabled: isSameTab && isLongPressEnabled
-          });
-        }}
+        onScroll={this.handleOnScroll}
+        onChangeTab={this.handleOnChangeTab}
         initialPage={0}
         style={
           Platform.OS === "ios" && {
@@ -778,41 +673,30 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           textStyle={styles.textStyle}
           heading={I18n.t("services.tab.locals")}
         >
-          <ServicesSectionsList
+          <ServicesTab
             isLocal={true}
             sections={localTabSections}
-            profile={profile}
             isRefreshing={
               isLoadingServices ||
               pot.isLoading(potUserMetadata) ||
               pot.isUpdating(potUserMetadata)
             }
             onRefresh={this.refreshScreenContent}
-            onSelect={this.onServiceSelect}
-            readServices={readServices}
-            onChooserAreasOfInterestPress={this.showChooserAreasOfInterestModal}
-            selectedOrganizationsFiscalCodes={
-              new Set(selectedOrganizations || [])
-            }
-            onLongPressItem={this.handleOnLongPressItem}
+            onServiceSelect={this.onServiceSelect}
+            handleOnLongPressItem={this.handleOnLongPressItem}
             isLongPressEnabled={this.state.isLongPressEnabled}
+            updateOrganizationsOfInterestMetadata={
+              this.props.updateOrganizationsOfInterestMetadata
+            }
+            updateToast={() =>
+              this.setState({
+                toastErrorMessage: I18n.t(
+                  "serviceDetail.onUpdateEnabledChannelsFailure"
+                )
+              })
+            }
             onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            animated={{
-              onScroll: Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        y: this.animatedScrollPositions[0]
-                      }
-                    }
-                  }
-                ],
-                { useNativeDriver: true }
-              ),
-              scrollEventThrottle: 8 // target is 120fps
-            }}
-            renderRightIcon={this.renderLocalQuickSectionDeletion}
+            tabOffset={this.animatedScrollPositions[0]}
           />
         </Tab>
         <Tab
@@ -820,63 +704,36 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           textStyle={styles.textStyle}
           heading={I18n.t("services.tab.national")}
         >
-          <ServicesSectionsList
+          <ServicesTab
             sections={nationalTabSections}
-            profile={profile}
             isRefreshing={isLoadingServices || pot.isLoading(potUserMetadata)}
             onRefresh={this.refreshScreenContent}
-            onSelect={this.onServiceSelect}
-            readServices={readServices}
-            onLongPressItem={this.handleOnLongPressItem}
+            onServiceSelect={this.onServiceSelect}
+            handleOnLongPressItem={this.handleOnLongPressItem}
             isLongPressEnabled={this.state.isLongPressEnabled}
             onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            animated={{
-              onScroll: Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        y: this.animatedScrollPositions[1]
-                      }
-                    }
-                  }
-                ],
-                { useNativeDriver: true }
-              ),
-              scrollEventThrottle: 8 // target is 120fps
-            }}
+            tabOffset={this.animatedScrollPositions[1]}
           />
         </Tab>
+
         <Tab
           activeTextStyle={styles.activeTextStyle}
           textStyle={styles.textStyle}
           heading={I18n.t("services.tab.all")}
         >
-          <ServicesSectionsList
+          <ServicesTab
             sections={allTabSections}
-            profile={profile}
-            isRefreshing={isLoadingServices || pot.isLoading(potUserMetadata)}
+            isRefreshing={
+              isLoadingServices ||
+              pot.isLoading(potUserMetadata) ||
+              pot.isUpdating(potUserMetadata)
+            }
             onRefresh={this.refreshScreenContent}
-            onSelect={this.onServiceSelect}
-            readServices={readServices}
-            onLongPressItem={this.handleOnLongPressItem}
+            onServiceSelect={this.onServiceSelect}
+            handleOnLongPressItem={this.handleOnLongPressItem}
             isLongPressEnabled={this.state.isLongPressEnabled}
             onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            animated={{
-              onScroll: Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        y: this.animatedScrollPositions[2]
-                      }
-                    }
-                  }
-                ],
-                { useNativeDriver: true }
-              ),
-              scrollEventThrottle: 8 // target is 120fps
-            }}
+            tabOffset={this.animatedScrollPositions[2]}
           />
         </Tab>
       </AnimatedTabs>
@@ -887,16 +744,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const potUserMetadata = userMetadataSelector(state);
   const userMetadata = pot.getOrElse(potUserMetadata, undefined);
-
-  const localServicesSections = localServicesSectionsSelector(state);
-  const selectableOrganizations = localServicesSections.map(
-    (section: ServicesSectionState) => {
-      return {
-        name: section.organizationName,
-        fiscalCode: section.organizationFiscalCode
-      };
-    }
-  );
 
   const localTabSections = selectedLocalServicesSectionsSelector(state);
   const nationalTabSections = nationalServicesSectionsSelector(state);
@@ -964,8 +811,6 @@ const mapStateToProps = (state: GlobalState) => {
       : undefined;
 
   return {
-    selectableOrganizations,
-    selectedOrganizations: organizationsOfInterestSelector(state),
     isLoadingServices,
     isFirstServiceLoadCompleted,
     visibleServicesContentLoadState,
@@ -1049,7 +894,7 @@ const mergeProps = (
 ) => {
   // If the user updates the area of interest, the upsert of
   // the user metadata stored on backend is triggered
-  const dispatchUpdateOrganizationsOfInterestMetadata = (
+  const updateOrganizationsOfInterestMetadata = (
     selectedItemIds: Option<Set<string>>
   ) => {
     if (selectedItemIds.isSome() && stateProps.userMetadata) {
@@ -1066,7 +911,7 @@ const mergeProps = (
     ...dispatchProps,
     ...ownProps,
     ...{
-      dispatchUpdateOrganizationsOfInterestMetadata
+      updateOrganizationsOfInterestMetadata
     }
   };
 };

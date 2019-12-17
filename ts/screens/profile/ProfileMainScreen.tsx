@@ -1,15 +1,9 @@
 /**
  * A component to show the main screen of the Profile section
  */
-import { Button, H3, List, ListItem, Text, Toast, View } from "native-base";
+import { H3, List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
-import {
-  Alert,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
@@ -18,6 +12,7 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import DarkLayout from "../../components/screens/DarkLayout";
@@ -25,6 +20,7 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import SelectLogoutOption from "../../components/SelectLogoutOption";
+import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -45,6 +41,7 @@ import {
   isLoggedIn,
   isLoggedInWithSessionInfo
 } from "../../store/reducers/authentication";
+import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
@@ -180,14 +177,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   private debugListItem(title: string, onPress: () => void, isDanger: boolean) {
     return (
       <ListItem style={styles.noRightPadding}>
-        <Button
+        <ButtonDefaultOpacity
           info={!isDanger}
           danger={isDanger}
           small={true}
           onPress={onPress}
         >
           <Text numberOfLines={1}>{title}</Text>
-        </Button>
+        </ButtonDefaultOpacity>
       </ListItem>
     );
   }
@@ -468,13 +465,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         title={I18n.t("profile.main.screenTitle")}
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={
-          <TouchableOpacity
+          <TouchableDefaultOpacity
             onPress={() =>
               this.props.navigation.navigate(ROUTES.PROFILE_FISCAL_CODE)
             }
           >
             <FiscalCodeComponent type={"Preview"} />
-          </TouchableOpacity>
+          </TouchableDefaultOpacity>
         }
         contextualHelp={{
           title: I18n.t("profile.main.screenTitle"),
@@ -500,7 +497,7 @@ const mapStateToProps = (state: GlobalState) => ({
     : undefined,
   notificationId: notificationsInstallationSelector(state).id,
   notificationToken: notificationsInstallationSelector(state).token,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  isDebugModeEnabled: isDebugModeEnabledSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isExperimentalFeaturesEnabled:
     state.persistedPreferences.isExperimentalFeaturesEnabled

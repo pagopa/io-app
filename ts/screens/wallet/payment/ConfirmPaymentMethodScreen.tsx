@@ -5,7 +5,7 @@ import {
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { ActionSheet, Button, Content, H1, Text, View } from "native-base";
+import { ActionSheet, Content, H1, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -13,11 +13,13 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
@@ -184,9 +186,11 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                   <Col size={4}>
                     <Text>
                       {`${I18n.t("wallet.confirmPayment.fee")} `}
-                      <Text link={true} onPress={this.showHelp}>
-                        {I18n.t("wallet.confirmPayment.why")}
-                      </Text>
+                      <TouchableDefaultOpacity onPress={this.showHelp}>
+                        <Text link={true}>
+                          {I18n.t("wallet.confirmPayment.why")}
+                        </Text>
+                      </TouchableDefaultOpacity>
                     </Text>
                   </Col>
 
@@ -231,9 +235,9 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                           wallet.psp.businessName
                         } `
                       : I18n.t("payment.noPsp")}
-                    <Text link={true} onPress={() => this.props.pickPsp()}>
-                      {I18n.t("payment.changePsp")}
-                    </Text>
+                    <TouchableDefaultOpacity onPress={this.props.pickPsp}>
+                      <Text link={true}>{I18n.t("payment.changePsp")}</Text>
+                    </TouchableDefaultOpacity>
                   </Text>
                   <View spacer={true} />
                 </Col>
@@ -256,7 +260,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
         </Content>
 
         <View footer={true}>
-          <Button
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             onPress={() => {
@@ -269,19 +273,19 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             }}
           >
             <Text>{I18n.t("wallet.confirmPayment.goToPay")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
           <View spacer={true} />
           <View style={styles.parent}>
-            <Button
+            <ButtonDefaultOpacity
               style={styles.child}
               block={true}
               cancel={true}
               onPress={this.props.onCancel}
             >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </Button>
+            </ButtonDefaultOpacity>
             <View hspacer={true} />
-            <Button
+            <ButtonDefaultOpacity
               style={[styles.child, styles.childTwice]}
               block={true}
               light={true}
@@ -289,7 +293,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               onPress={() => this.props.pickPaymentMethod()}
             >
               <Text>{I18n.t("wallet.confirmPayment.change")}</Text>
-            </Button>
+            </ButtonDefaultOpacity>
           </View>
         </View>
       </BaseScreenComponent>

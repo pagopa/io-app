@@ -34,6 +34,7 @@ import {
   runStartOrResumeAddCreditCardSaga
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
+import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./payment/common";
@@ -135,19 +136,19 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           </H1>
           <CardComponent
             wallet={wallet}
-            type="Full"
+            type={"Full"}
             hideMenu={true}
             hideFavoriteIcon={true}
           />
           <View spacer={true} />
           <NoticeBox
-            backgroundColor={"#c1f4f2"}
+            backgroundColor={customVariables.toastColor}
             iconProps={{
               name: "io-notice",
               size: 32
             }}
           >
-            <Text bold={true}>{I18n.t("wallet.saveCard.notice")}</Text>
+            <Text>{I18n.t("wallet.saveCard.notice")}</Text>
           </NoticeBox>
           <View spacer={true} />
           <Grid>
@@ -163,11 +164,19 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             </Col>
           </Grid>
         </Content>
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-        />
+        {isInPayment ? (
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={secondaryButtonProps}
+            rightButton={primaryButtonProps}
+          />
+        ) : (
+          <FooterWithButtons
+            type={"TwoButtonsInlineHalf"}
+            leftButton={secondaryButtonProps}
+            rightButton={primaryButtonProps}
+          />
+        )}
         <Modal
           animationType="fade"
           transparent={false}
