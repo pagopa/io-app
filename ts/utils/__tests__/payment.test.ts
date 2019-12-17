@@ -87,7 +87,7 @@ describe("isBrandMaestro", () => {
       pan: "************0111",
       expireMonth: "05",
       expireYear: "22",
-      brand: "Maestro"
+      brand: "MAESTRO"
     };
     const card2: { [key: string]: any } = {
       id: 1464,
@@ -95,7 +95,7 @@ describe("isBrandMaestro", () => {
       pan: "************0112",
       expireMonth: "05",
       expireYear: "22",
-      brand: "MasterCard"
+      brand: "MASTERCARD"
     };
     const card3: { [key: string]: any } = {
       id: 1464,
@@ -103,12 +103,12 @@ describe("isBrandMaestro", () => {
       pan: "************0113",
       expireMonth: "05",
       expireYear: "22",
-      brand: "Visa"
+      brand: "VISA"
     };
 
     const cards: ReadonlyArray<any> = [card1, card2, card3];
     for (const card of cards) {
-      if (card.brand === "Maestro") {
+      if (card.brand === "MAESTRO") {
         expect(isBrandMaestro(card)).toEqual(true);
       } else {
         expect(isBrandMaestro(card)).toEqual(false);

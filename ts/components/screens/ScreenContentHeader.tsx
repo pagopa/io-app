@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { ImageSourcePropType, Platform, StyleSheet } from "react-native";
 import { isIphoneX } from "react-native-iphone-x-helper";
@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
   subheaderContainer: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
+  },
+  screenHeaderHeading: {
+    flex: 1,
+    fontSize: variables.fontSize4,
+    lineHeight: 40,
+    marginRight: variables.contentPadding
   },
   fixedPosition: {
     position: "absolute",
@@ -47,7 +53,15 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
         {banner && <React.Fragment>{banner}</React.Fragment>}
         <View>
           <View spacer={true} />
-          <ScreenHeader heading={this.props.title} icon={icon} dark={dark} />
+          <ScreenHeader
+            heading={
+              <H1 style={[styles.screenHeaderHeading, dark && styles.white]}>
+                {this.props.title}
+              </H1>
+            }
+            icon={icon}
+            dark={dark}
+          />
           {subtitle ? (
             <View style={styles.subheaderContainer}>
               <Text>{subtitle}</Text>

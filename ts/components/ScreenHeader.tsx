@@ -1,13 +1,8 @@
-import { H3, View } from "native-base";
+import { View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import {
-  Dimensions,
-  Image,
-  ImageSourcePropType,
-  StyleSheet
-} from "react-native";
+import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 
 type Props = {
@@ -16,44 +11,19 @@ type Props = {
   dark?: boolean;
 };
 
-const width = Dimensions.get("window").width / 10;
-
-const padding = 20;
-const containerIconWidth = width * 2;
-const containerHeadingWidth = width * 8 - padding;
-
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row"
-  },
-  containerIcon: {
-    width: containerIconWidth,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignSelf: "center",
-    overflow: "hidden",
-    paddingRight: padding
-  },
-  containerHeading: {
-    width: containerHeadingWidth,
-    flexDirection: "column",
-    justifyContent: "center",
-    paddingLeft: padding,
-    paddingTop: 5,
-    alignSelf: "center",
-    overflow: "hidden"
+    position: "absolute",
+    right: 0,
+    width: 48,
+    zIndex: -1
   },
   image: {
     resizeMode: "contain",
-    width: 48,
-    height: 48,
-    alignSelf: "center"
+    width: "100%"
   },
   darkGrayBg: {
     backgroundColor: customVariables.brandDarkGray
-  },
-  colorWhite: {
-    color: "#fff"
   }
 });
 
@@ -66,24 +36,11 @@ class ScreenHeader extends React.Component<Props> {
     const { heading, icon, dark } = this.props;
 
     return (
-      <View style={[dark && styles.darkGrayBg, styles.container]}>
-        <View style={styles.containerHeading}>
-          <H3 style={dark && styles.colorWhite}>{heading}</H3>
-        </View>
-
+      <View style={dark && styles.darkGrayBg}>
+        {heading}
         {icon && (
-          <View style={styles.containerIcon}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                alignSelf: "center"
-              }}
-            >
-              <Image source={icon} style={styles.image} />
-            </View>
+          <View style={styles.container}>
+            <Image source={icon} style={styles.image} />
           </View>
         )}
       </View>

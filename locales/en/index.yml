@@ -492,6 +492,8 @@ wallet:
   thanks: "✓ Thank you!"
   endPayment: Your payment has been completed successfully
   pickPsp:
+    contextualHelpTitle: Select a provider
+    contextualHelpContent: !include pick_psp.md
     title: Choose the manager
     info: This card does not belong to the pagoPA payment network.
     infoBold: Choose the economic operator

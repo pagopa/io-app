@@ -127,5 +127,5 @@ export const cleanTransactionDescription = (description: string): string => {
  * This function control if card brand is MAESTRO.
  */
 export const isBrandMaestro = (card: CreditCard): boolean => {
-  return card.brand === "Maestro";
+  return card.brand === "MAESTRO";
 };
