@@ -99,6 +99,11 @@ const testOneMessage = {
   page_size: 1
 };
 
+const cachedMessagesAllIds: ReadonlyArray<string> = [
+  testMessageId1,
+  testMessageId2
+];
+
 describe("watchLoadMessages", () => {
   describe("loadMessages test plan", () => {
     it("should put MESSAGES_LOAD_FAILURE with the Error it the getMessages response is an Error", () => {
@@ -186,10 +191,6 @@ describe("watchLoadMessages", () => {
       const getMessages = jest.fn();
       const getMessage = jest.fn();
       const getService = jest.fn();
-      const cachedMessagesAllIds = [
-        testMessageMeta1.meta.id,
-        testMessageMeta2.meta.id
-      ];
       testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
         .select(messagesAllIdsSelector)
