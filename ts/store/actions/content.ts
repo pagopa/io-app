@@ -2,7 +2,6 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { Service as ServiceMetadata } from "../../../definitions/content/Service";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { ServiceMetadataState } from "../reducers/content";
