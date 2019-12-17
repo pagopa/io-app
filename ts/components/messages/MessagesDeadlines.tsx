@@ -76,6 +76,7 @@ type State = {
   maybeLastLoadedStartOfMonthTime: Option<number>;
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
   allMessageIdsState: Set<string>;
+  isContinuosScrollEnabled: boolean;
   lastDeadlineId: Option<string>;
 };
 
@@ -269,6 +270,31 @@ const selectPastMonthsData = (
   return newSections;
 };
 
+// Checks if the last section is shown, if yes disables continuos scroll
+const isLastSectionPresent = (
+  lastDeadlineId: Option<string>,
+  sections: Sections
+): boolean => {
+  if (lastDeadlineId.isNone()) {
+    // No deadlines
+    return false;
+  } else {
+    // tslint:disable-next-line: no-let
+    for (const section of sections) {
+      for (const value of section.data) {
+        if (
+          !isFakeItem(value) &&
+          lastDeadlineId.isSome() &&
+          lastDeadlineId.value === value.e1.id
+        ) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+};
+
 const selectInitialSectionsToRender = (
   sections: Sections,
   maybeLastLoadedStartOfMonthTime: Option<number>
@@ -432,6 +458,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
               startOfMonth(
                 subMonths(lastLoadedStartOfMonthTime, PAST_DATA_MONTHS)
               ).getTime()
+            ),
+            isContinuosScrollEnabled: !isLastSectionPresent(
+              this.state.lastDeadlineId,
+              [...moreSectionsToRender, ...prevState.sectionsToRender]
             )
           };
         });
@@ -447,6 +477,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       sectionsToRender: [],
       maybeLastLoadedStartOfMonthTime: none,
       allMessageIdsState: new Set(),
+      isContinuosScrollEnabled: true,
       lastDeadlineId: none
     };
   }
@@ -461,6 +492,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const sectionsToRender = await Promise.resolve(
       selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
     );
+    // Check in sections to render
+    const isContinuosScrollEnabled = await Promise.resolve(
+      !isLastSectionPresent(lastDeadlineId, sectionsToRender)
+    );
 
     this.setState({
       isWorking: false,
@@ -469,6 +504,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
         sectionsToRender
       ),
+      isContinuosScrollEnabled,
       lastDeadlineId
     });
   }
@@ -484,8 +520,14 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       });
 
       const sections = await Promise.resolve(generateSections(messagesState));
+      const lastDeadlineId = await Promise.resolve(getLastDeadlineId(sections));
+
       const sectionsToRender = await Promise.resolve(
         selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
+      );
+      // Check in sections to render
+      const isContinuosScrollEnabled = await Promise.resolve(
+        !isLastSectionPresent(lastDeadlineId, sectionsToRender)
       );
 
       this.setState({
@@ -494,7 +536,9 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         sectionsToRender,
         allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
           sectionsToRender
-        )
+        ),
+        isContinuosScrollEnabled,
+        lastDeadlineId
       });
     }
   }
@@ -527,7 +571,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       allMessageIdsState,
       isWorking,
       sectionsToRender,
-      lastDeadlineId
+      isContinuosScrollEnabled
     } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
@@ -546,7 +590,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             onLongPressItem={this.handleOnLongPressItem}
             onMoreDataRequest={this.onLoadMoreDataRequest}
             onContentSizeChange={this.onContentSizeChange}
-            lastDeadlineId={lastDeadlineId}
+            isContinuosScrollEnabled={isContinuosScrollEnabled}
           />
         </View>
         <ListSelectionBar

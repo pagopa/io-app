@@ -166,7 +166,7 @@ type OwnProps = {
   onLongPressItem: (id: string) => void;
   onMoreDataRequest: () => void;
   selectedMessageIds: Option<Set<string>>;
-  lastDeadlineId: Option<string>;
+  isContinuosScrollEnabled: boolean;
 };
 
 type Props = OwnProps & SelectedSectionListProps;
@@ -175,7 +175,6 @@ type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
   isLoadingProgress: boolean;
-  isContinuosScrollEnabled: boolean;
 };
 
 export const isFakeItem = (item: any): item is FakeItem => {
@@ -270,8 +269,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       itemLayouts: [],
-      isLoadingProgress: false,
-      isContinuosScrollEnabled: true
+      isLoadingProgress: false
     };
     this.loadMoreData = this.loadMoreData.bind(this);
   }
@@ -280,38 +278,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     if (this.idTimeoutProgress !== undefined) {
       clearTimeout(this.idTimeoutProgress);
     }
-  }
-
-  // checks if the last section is shown, if yes disables continuos scroll
-  private checkIfIsLastSection(): boolean {
-    if (this.props.lastDeadlineId.isNone()) {
-      // No deadlines
-      this.setState({
-        isContinuosScrollEnabled: false
-      });
-      return false;
-    } else {
-      // tslint:disable-next-line: no-let
-      for (const section of this.props.sections) {
-        for (const value of section.data) {
-          if (
-            !isFakeItem(value) &&
-            this.props.lastDeadlineId.isSome() &&
-            this.props.lastDeadlineId.value === value.e1.id
-          ) {
-            this.setState({
-              isContinuosScrollEnabled: false
-            });
-            return false;
-          }
-        }
-        if (!this.state.isContinuosScrollEnabled) {
-          return false;
-        }
-      }
-    }
-
-    return true;
   }
 
   public componentDidUpdate(prevProps: Props) {
@@ -332,15 +298,15 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       // We leave half a second longer to show the progress even for faster requests
       // tslint:disable-next-line: no-object-mutation
       this.idTimeoutProgress = setTimeout(() => {
-        this.setState({
-          isLoadingProgress: false
-        });
         // Set scroll position when the new elements have been loaded
         if (
           this.sectionListRef !== undefined &&
           this.props.sections !== undefined &&
           this.props.sections.length >= minItemsToScroll
         ) {
+          this.setState({
+            isLoadingProgress: false
+          });
           this.scrollToLocation({
             animated: false,
             itemIndex: 0,
@@ -373,7 +339,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       isLoadingProgress: true
     });
     // Check if necessary show other data
-    if (this.state.isContinuosScrollEnabled) {
+    if (this.props.isContinuosScrollEnabled) {
       this.props.onMoreDataRequest();
     }
   }
@@ -463,7 +429,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     if (
       scrollPosition < 50 &&
       !this.state.isLoadingProgress &&
-      this.checkIfIsLastSection()
+      this.props.isContinuosScrollEnabled
     ) {
       // Before call other items check if the last section is showed
       this.loadMoreData();
@@ -471,8 +437,13 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const { sections, servicesById, paymentsByRptId } = this.props;
-    const { isLoadingProgress, isContinuosScrollEnabled } = this.state;
+    const {
+      sections,
+      servicesById,
+      paymentsByRptId,
+      isContinuosScrollEnabled
+    } = this.props;
+    const { isLoadingProgress } = this.state;
 
     const ListEmptyComponent = (
       <View style={styles.emptyListWrapper}>
