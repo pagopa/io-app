@@ -23,7 +23,7 @@ export function areStringsEqual(
 ): boolean {
   return aa.fold(false, (a: string) =>
     bb.fold(false, (b: string) => {
-      return caseInsensitive ? a.toLowerCase === b.toLowerCase : a === b;
+      return caseInsensitive ? a.toLowerCase() === b.toLowerCase() : a === b;
     })
   );
 }

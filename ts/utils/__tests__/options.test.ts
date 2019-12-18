@@ -52,6 +52,10 @@ describe("areStringEqual", () => {
     expect(areStringsEqual(some("AA"), some("aa"))).toBeFalsy();
   });
 
+  it("should return false if the strings are not equal", () => {
+    expect(areStringsEqual(some("ab"), some("abc"), true)).toBeFalsy();
+  });
+
   it("should return false if the first string is a segment of the second one", () => {
     expect(areStringsEqual(some("ab"), some("abc"))).toBeFalsy();
   });
