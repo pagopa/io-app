@@ -12,6 +12,7 @@ import { InitializedProfile } from "../../../definitions/backend/InitializedProf
 import { UserProfile } from "../../../definitions/backend/UserProfile";
 import { UserProfileUnion } from "../../api/backend";
 import {
+  profileLoadRequest,
   profileLoadSuccess,
   profileUpsert,
   resetProfileState
@@ -73,6 +74,9 @@ const reducer = (
   switch (action.type) {
     case getType(resetProfileState):
       return pot.none;
+
+    case getType(profileLoadRequest):
+      return pot.toLoading(state);
 
     case getType(profileLoadSuccess):
       // Store the loaded Profile in the store

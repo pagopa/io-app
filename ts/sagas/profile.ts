@@ -13,8 +13,8 @@ import { tosVersion } from "../config";
 import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
 import {
-  loadProfileRequest,
   profileLoadFailure,
+  profileLoadRequest,
   profileLoadSuccess,
   profileUpsert,
   startEmailValidation
@@ -150,7 +150,7 @@ export function* watchProfileUpsertRequestsSaga(
 export function* watchProfileRefreshRequestsSaga(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Iterator<Effect> {
-  yield takeLatest(getType(loadProfileRequest), loadProfile, getProfile);
+  yield takeLatest(getType(profileLoadRequest), loadProfile, getProfile);
 }
 
 // make a request to start the email validation process that sends to the user

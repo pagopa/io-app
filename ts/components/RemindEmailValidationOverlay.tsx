@@ -19,7 +19,7 @@ import {
 } from "../store/actions/onboarding";
 import {
   acknowledgeOnEmailValidation,
-  loadProfileRequest,
+  profileLoadRequest,
   startEmailValidation
 } from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
@@ -330,7 +330,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => dispatch(navigateBack()),
   reloadProfile: () => {
     // Refresh profile to check if the email address has been validated
-    dispatch(loadProfileRequest());
+    dispatch(profileLoadRequest());
   },
   navigateToEmailInsertScreen: () => {
     dispatch(navigateToEmailInsertScreen());

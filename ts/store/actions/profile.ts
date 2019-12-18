@@ -10,15 +10,13 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
 import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-
 import { UserProfileUnion } from "../../api/backend";
 
 export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 
-export const loadProfileRequest = createStandardAction(
+export const profileLoadRequest = createStandardAction(
   "PROFILE_LOAD_REQUEST"
 )();
 export const profileLoadSuccess = createStandardAction("PROFILE_LOAD_SUCCESS")<
@@ -61,7 +59,7 @@ export const clearCache = createStandardAction("CLEAR_CACHE")();
 export type ProfileActions =
   | ActionType<typeof resetProfileState>
   | ActionType<typeof profileLoadSuccess>
-  | ActionType<typeof loadProfileRequest>
+  | ActionType<typeof profileLoadRequest>
   | ActionType<typeof profileLoadFailure>
   | ActionType<typeof profileUpsert>
   | ActionType<typeof startEmailValidation>

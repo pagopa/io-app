@@ -10,6 +10,7 @@ import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet
@@ -24,7 +25,7 @@ import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
-import { profileUpsert } from "../../store/actions/profile";
+import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
@@ -87,18 +88,11 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   private continueOnPress = () => {
+    Keyboard.dismiss();
     if (this.isValidEmail()) {
-      const isTheSameEmail = areStringsEqual(
-        this.props.optionEmail,
-        this.state.email
-      );
-      if (isTheSameEmail) {
-        Alert.alert(I18n.t("email.insert.alert"));
-      } else {
-        this.state.email.map(e => {
-          this.props.updateEmail(e as EmailString);
-        });
-      }
+      // The profile is reloaded to check if the user email
+      // has been updated wihtin another session
+      this.props.reloadProfile();
     }
   };
 
@@ -164,6 +158,26 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       } else if (pot.isSome(this.props.profile)) {
         // go back (to the EmailReadScreen)
         this.props.navigation.goBack();
+      }
+    }
+
+    // When the profile reload is completed, check if the email is changed since the last reload
+    if (
+      pot.isLoading(prevProps.profile) &&
+      !pot.isLoading(this.props.profile)
+    ) {
+      // Check both if the email has been changed within another session and
+      // if the inserted email match with the email stored into the user profile
+      const isTheSameEmail = areStringsEqual(
+        this.props.optionEmail,
+        this.state.email
+      );
+      if (isTheSameEmail) {
+        Alert.alert(I18n.t("email.insert.alert"));
+      } else {
+        this.state.email.map(e => {
+          this.props.updateEmail(e as EmailString);
+        });
       }
     }
   }
@@ -249,7 +263,7 @@ function mapStateToProps(state: GlobalState) {
     profile,
     optionEmail: profileEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
-    isLoading: pot.isUpdating(profile),
+    isLoading: pot.isUpdating(profile) || pot.isLoading(profile),
     isOnboardingCompleted: isOnboardingCompletedSelector(state)
   };
 }
@@ -262,7 +276,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     ),
   acknowledgeEmailInsert: () => dispatch(emailInsert()),
-  abortOnboarding: () => dispatch(abortOnboarding())
+  abortOnboarding: () => dispatch(abortOnboarding()),
+  reloadProfile: () => dispatch(profileLoadRequest())
 });
 
 export default connect(
