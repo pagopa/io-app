@@ -170,7 +170,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       // if the inserted email match with the email stored into the user profile
       const isTheSameEmail = areStringsEqual(
         this.props.optionEmail,
-        this.state.email
+        this.state.email,
+        true
       );
       if (isTheSameEmail) {
         Alert.alert(I18n.t("email.insert.alert"));

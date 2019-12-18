@@ -18,9 +18,12 @@ export function areSetEqual<T>(a: Option<Set<T>>, b: Option<Set<T>>) {
 // Check if 2 option strings has the same value
 export function areStringsEqual(
   aa: Option<string>,
-  bb: Option<string>
+  bb: Option<string>,
+  caseInsensitive: boolean = false
 ): boolean {
   return aa.fold(false, (a: string) =>
-    bb.fold(false, (b: string) => a.match(b) !== null)
+    bb.fold(false, (b: string) => {
+      return caseInsensitive ? a.toLowerCase === b.toLowerCase : a === b;
+    })
   );
 }
