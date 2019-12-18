@@ -182,9 +182,7 @@ describe("watchLoadMessages", () => {
         } as ReturnType<typeof messagesStateByIdSelector>)
         // Do not load any new services
         .all([])
-        .next()
-        // Do not load any new messages
-        .all([]);
+        .next();
     });
 
     it("should remove testMessageMeta2 and not call getService and getMessage if the getMessages response contains 0 new services and 0 new messages", () => {
@@ -215,9 +213,7 @@ describe("watchLoadMessages", () => {
         } as ReturnType<typeof messagesStateByIdSelector>)
         // Do not load any new services
         .all([])
-        .next()
-        // Do not load any new messages
-        .all([]);
+        .next();
     });
   });
 });
