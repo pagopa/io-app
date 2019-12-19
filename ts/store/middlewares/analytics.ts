@@ -189,7 +189,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     // Messages actions with properties
     case getType(removeMessages): {
-      return mp.track(action.type, action.payload);
+      return mp.track(action.type, {
+        messagesIdsToRemoveFromCache: action.payload
+      });
     }
     case getType(setMessageReadState): {
       if (action.payload.read === true) {
