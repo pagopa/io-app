@@ -7,7 +7,7 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
-import { UserProfileUnion } from "../api/backend";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { BackendClient } from "../api/backend";
 import { tosVersion } from "../config";
 import I18n from "../i18n";
@@ -26,7 +26,7 @@ import { SagaCallReturnType } from "../types/utils";
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
-): Iterator<Effect | Option<UserProfileUnion>> {
+): Iterator<Effect | Option<InitializedProfile>> {
   try {
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
@@ -41,7 +41,7 @@ export function* loadProfile(
       // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
       // discriminated union!
       // tslint:disable-next-line:no-useless-cast
-      yield put(profileLoadSuccess(response.value.value as UserProfileUnion));
+      yield put(profileLoadSuccess(response.value.value as InitializedProfile));
       return some(response.value.value);
     }
     if (response.value.status === 401) {
@@ -159,7 +159,7 @@ export function* startEmailValidationProcessSaga(
   startEmailValidationProcess: ReturnType<
     typeof BackendClient
   >["startEmailValidationProcess"]
-): Iterator<Effect | Option<UserProfileUnion>> {
+): Iterator<Effect | Option<InitializedProfile>> {
   try {
     const response: SagaCallReturnType<
       typeof startEmailValidationProcess

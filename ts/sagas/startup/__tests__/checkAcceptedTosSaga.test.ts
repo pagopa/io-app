@@ -9,15 +9,19 @@ import {
   FiscalCode,
   NonEmptyString
 } from "italia-ts-commons/lib/strings";
-import { UserProfileUnion } from "../../../api/backend";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { tosVersion } from "../../../config";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
 
 describe("checkAcceptedTosSaga", () => {
-  const onboardingProfile: UserProfileUnion = {
+  const onboardingProfile: InitializedProfile = {
     has_profile: false,
+    is_email_enabled: true,
+    is_inbox_enabled: true,
+    is_webhook_enabled: true,
+    version: 1 as NonNegativeInteger,
     spid_email: "test@example.com" as EmailString,
     family_name: "Connor",
     name: "John",
@@ -25,7 +29,7 @@ describe("checkAcceptedTosSaga", () => {
     spid_mobile_phone: "123" as NonEmptyString
   };
 
-  const oldOnboardedProfile: UserProfileUnion = {
+  const oldOnboardedProfile: InitializedProfile = {
     has_profile: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
@@ -39,12 +43,12 @@ describe("checkAcceptedTosSaga", () => {
     version: 1 as NonNegativeInteger
   };
 
-  const notUpdatedProfile: UserProfileUnion = {
+  const notUpdatedProfile: InitializedProfile = {
     ...oldOnboardedProfile,
     accepted_tos_version: (tosVersion - 1) as NonNegativeNumber
   };
 
-  const updatedProfile: UserProfileUnion = {
+  const updatedProfile: InitializedProfile = {
     ...oldOnboardedProfile,
     accepted_tos_version: tosVersion
   };

@@ -1,6 +1,6 @@
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
-import { UserProfile } from "../../../definitions/backend/UserProfile";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen
@@ -20,7 +20,7 @@ import {
  * - if the user has not an email address (eg CIE login), a screen will be prompt to insert his own email address
  */
 export function* checkAcknowledgedEmailSaga(
-  userProfile: UserProfile
+  userProfile: InitializedProfile
 ): IterableIterator<Effect> {
   // Check if the profile has an email
   if (hasProfileEmail(userProfile)) {

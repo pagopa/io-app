@@ -5,16 +5,15 @@ import {
   FiscalCode,
   NonEmptyString
 } from "italia-ts-commons/lib/strings";
-import { UserProfile } from "../../../../definitions/backend/UserProfile";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { Version } from "../../../../definitions/backend/Version";
-import { UserProfileUnion } from "../../../api/backend";
 import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen
 } from "../../../store/actions/navigation";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
 
-const userProfileWithEmailAndValidated: UserProfileUnion = {
+const userProfileWithEmailAndValidated: InitializedProfile = {
   has_profile: true,
   is_inbox_enabled: true,
   is_webhook_enabled: true,
@@ -42,7 +41,7 @@ describe("checkAcceptedTosSaga", () => {
   });
 
   describe("when user is on his first onboarding and he has an email and it is validated", () => {
-    const profileEmailValidatedFirstOnboarding: UserProfile = {
+    const profileEmailValidatedFirstOnboarding: InitializedProfile = {
       ...userProfileWithEmailAndValidated,
       version: 0
     };
@@ -57,7 +56,7 @@ describe("checkAcceptedTosSaga", () => {
   });
 
   describe("when user has an email and it not is validated", () => {
-    const profileWithEmailNotValidated: UserProfile = {
+    const profileWithEmailNotValidated: InitializedProfile = {
       ...userProfileWithEmailAndValidated,
       is_email_validated: false
     };
@@ -73,7 +72,7 @@ describe("checkAcceptedTosSaga", () => {
   });
 
   describe("when user has not an email", () => {
-    const profileWithNoEmail: UserProfile = {
+    const profileWithNoEmail: InitializedProfile = {
       ...userProfileWithEmailAndValidated,
       is_email_validated: false,
       email: undefined

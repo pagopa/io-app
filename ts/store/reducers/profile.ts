@@ -9,8 +9,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import { UserProfile } from "../../../definitions/backend/UserProfile";
-import { UserProfileUnion } from "../../api/backend";
 import {
   profileLoadRequest,
   profileLoadSuccess,
@@ -20,7 +18,7 @@ import {
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
-export type ProfileState = pot.Pot<UserProfileUnion, Error>;
+export type ProfileState = pot.Pot<InitializedProfile, Error>;
 
 const INITIAL_STATE: ProfileState = pot.none;
 
@@ -29,8 +27,8 @@ const INITIAL_STATE: ProfileState = pot.none;
 export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
 
-export const getProfileEmail = (user: UserProfile): Option<string> => {
-  if (InitializedProfile.is(user) && user.email) {
+export const getProfileEmail = (user: InitializedProfile): Option<string> => {
+  if (user.email !== undefined) {
     return some(user.email as string);
   }
   return none;
@@ -44,17 +42,17 @@ export const profileEmailSelector = createSelector(
 );
 
 // return true if the profile has an email
-export const hasProfileEmail = (user: UserProfile): boolean =>
+export const hasProfileEmail = (user: InitializedProfile): boolean =>
   InitializedProfile.is(user) && user.email !== undefined;
 
 // return true if the profile has an email and it is validated
-export const isProfileEmailValidated = (user: UserProfile): boolean =>
+export const isProfileEmailValidated = (user: InitializedProfile): boolean =>
   InitializedProfile.is(user) &&
   user.is_email_validated !== undefined &&
   user.is_email_validated === true;
 
 // return true if the profile has version equals to 0
-export const isProfileFirstOnBoarding = (user: UserProfile): boolean =>
+export const isProfileFirstOnBoarding = (user: InitializedProfile): boolean =>
   InitializedProfile.is(user) && user.version === 0;
 
 // return true if the profile pot is some and its field is_email_validated exists and it's true

@@ -12,7 +12,6 @@ import {
 } from "typesafe-actions";
 import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import { UserProfileUnion } from "../../api/backend";
 
 export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 
@@ -20,7 +19,7 @@ export const profileLoadRequest = createStandardAction(
   "PROFILE_LOAD_REQUEST"
 )();
 export const profileLoadSuccess = createStandardAction("PROFILE_LOAD_SUCCESS")<
-  UserProfileUnion
+  InitializedProfile
 >();
 
 export const profileLoadFailure = createAction(

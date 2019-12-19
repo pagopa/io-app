@@ -1,7 +1,7 @@
 import { Option } from "fp-ts/lib/Option";
 import Instabug from "instabug-reactnative";
 
-import { UserProfile } from "../../definitions/backend/UserProfile";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Locales } from "../../locales/locales";
 import { instabugToken } from "../config";
 import I18n from "../i18n";
@@ -49,7 +49,7 @@ export const setInstabugUserAttribute = (
 };
 
 export const setInstabugProfileAttributes = (
-  profile: UserProfile,
+  profile: InitializedProfile,
   maybeIdp: Option<IdentityProvider>
 ) => {
   // it could happen that user has not a valid email (e.g. login with CIE)

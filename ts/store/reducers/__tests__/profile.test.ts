@@ -5,8 +5,8 @@ import {
   FiscalCode,
   NonEmptyString
 } from "italia-ts-commons/lib/strings";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { Version } from "../../../../definitions/backend/Version";
-import { UserProfileUnion } from "../../../api/backend";
 import {
   hasProfileEmail,
   isProfileEmailValidated,
@@ -15,7 +15,7 @@ import {
   ProfileState
 } from "../profile";
 
-const userProfileWithEmailAndValidated: UserProfileUnion = {
+const userProfileWithEmailAndValidated: InitializedProfile = {
   has_profile: true,
   is_inbox_enabled: true,
   is_webhook_enabled: true,
