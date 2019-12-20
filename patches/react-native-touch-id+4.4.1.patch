@@ -57,7 +57,7 @@ index dc54bab..f7d216a 100644
      @ReactMethod
      public void authenticate(final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback) {
          final Activity activity = getCurrentActivity();
-+        // if fingerprintDialog is not null and it has beeen dismissed on onPause we will show it 
++        // if fingerprintDialog is not null and it has been dismissed on onPause we will show it 
 +        if (inProgress && fingerprintDialog != null && activity != null) {
 +            // Check if the fragment has not already been called
 +            Fragment prevFrag = activity.getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
