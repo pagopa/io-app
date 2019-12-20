@@ -82,7 +82,7 @@ index dc54bab..f7d216a 100644
          }
  
 -        fingerprintDialog.show(activity.getFragmentManager(), FRAGMENT_TAG);
-+        // Check if the fragment has not already been called
++        // Check if the fragment has not been already called
 +        Fragment prevFrag = activity.getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
 +        if (prevFrag==null)
 +            fingerprintDialog.show(activity.getFragmentManager(), FRAGMENT_TAG);
