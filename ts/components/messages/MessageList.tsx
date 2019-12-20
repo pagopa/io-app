@@ -227,6 +227,7 @@ class MessageList extends React.Component<Props, State> {
     const potService = this.props.servicesById[meta.sender_service_id];
     if (
       potService &&
+      !pot.isSome(potService) &&
       (pot.isLoading(potService) || pot.isLoading(potMessage))
     ) {
       return MessageListItemPlaceholder;
