@@ -96,7 +96,9 @@ class PickPspScreen extends React.Component<Props> {
         onClose={this.props.hideModal}
         title={I18n.t("wallet.confirmPayment.contextualHelpTitle")}
         body={() => (
-          <Markdown>{I18n.t("wallet.confirmPayment.contextualHelpContent")}</Markdown>
+          <Markdown>
+            {I18n.t("wallet.confirmPayment.contextualHelpContent")}
+          </Markdown>
         )}
       />
     );

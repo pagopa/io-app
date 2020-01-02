@@ -510,7 +510,6 @@ wallet:
     askConfirm: Want to proceed with the transaction?
     partialAmount: Amount to pay
     fee: Fee
-    why: Why?
     totalAmount: Total amount
     info: 'Warning: after this step it will not be possible to come back'
     info2: You are using your favourite payment method.

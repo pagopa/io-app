@@ -185,14 +185,10 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               {maybeWalletFee.isSome() && (
                 <Row>
                   <Col size={4}>
-                    <Text>
-                      {`${I18n.t("wallet.confirmPayment.fee")} `}
-                      <TouchableDefaultOpacity onPress={this.showHelp}>
-                        <Text link={true}>
-                          {I18n.t("wallet.confirmPayment.why")}
-                        </Text>
-                      </TouchableDefaultOpacity>
-                    </Text>
+                    <Text>{`${I18n.t("wallet.confirmPayment.fee")} `}</Text>
+                    <TouchableDefaultOpacity onPress={this.showHelp}>
+                      <Text link={true}>{I18n.t("wallet.why")}</Text>
+                    </TouchableDefaultOpacity>
                   </Col>
 
                   <Col size={1}>
@@ -236,10 +232,10 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                           wallet.psp.businessName
                         } `
                       : I18n.t("payment.noPsp")}
-                    <TouchableDefaultOpacity onPress={this.props.pickPsp}>
-                      <Text link={true}>{I18n.t("payment.changePsp")}</Text>
-                    </TouchableDefaultOpacity>
                   </Text>
+                  <TouchableDefaultOpacity onPress={this.props.pickPsp}>
+                    <Text link={true}>{I18n.t("payment.changePsp")}</Text>
+                  </TouchableDefaultOpacity>
                   <View spacer={true} />
                 </Col>
                 <Col size={1} />
