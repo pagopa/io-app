@@ -8,7 +8,7 @@ import { getType } from "typesafe-actions";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { clearCache } from "../../../actions/profile";
-import { loadService, removeServiceTuples } from "../../../actions/services";
+import { loadServiceContent, removeServiceTuples } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -23,7 +23,7 @@ const reducer = (
   action: Action
 ): ServicesByIdState => {
   switch (action.type) {
-    case getType(loadService.request):
+    case getType(loadServiceContent.request):
       // When a previously loaded service is loaded again, its state
       // is updated with a someLoading pot, otherwise its state is updated with a noneLoading pot
       const cachedValue = state[action.payload];
@@ -37,14 +37,14 @@ const reducer = (
         [action.payload]: prevServiceRequest
       };
 
-    case getType(loadService.success):
+    case getType(loadServiceContent.success):
       // Use the ID as object key
       return {
         ...state,
         [action.payload.service_id]: pot.some(action.payload)
       };
 
-    case getType(loadService.failure):
+    case getType(loadServiceContent.failure):
       // when a request to load a previously loaded service fails its state is updated with a someError pot, otherwise its state is updated with a noneError pot
       const { service_id, error } = action.payload;
       const prevServiceFailure = state[service_id];

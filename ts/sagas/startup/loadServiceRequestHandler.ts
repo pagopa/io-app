@@ -3,9 +3,9 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
-import { contentServiceLoad } from "../../store/actions/content";
+import { loadServiceMetadata } from "../../store/actions/content";
 import { updateOrganizations } from "../../store/actions/organizations";
-import { loadService } from "../../store/actions/services";
+import { loadServiceContent } from "../../store/actions/services";
 import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
@@ -24,9 +24,9 @@ import { isVisibleService } from "../../utils/services";
  * @param {string} id - The id of the service to load
  * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
  */
-export function* loadServiceRequestHandler(
+export function* loadServiceContentRequestHandler(
   getService: ReturnType<typeof BackendClient>["getService"],
-  action: ActionType<typeof loadService["request"]>
+  action: ActionType<typeof loadServiceContent["request"]>
 ): IterableIterator<Effect> {
   try {
     const response: SagaCallReturnType<typeof getService> = yield call(
@@ -46,7 +46,7 @@ export function* loadServiceRequestHandler(
         organizationNamesByFiscalCodeSelector
       );
 
-      yield put(loadService.success(response.value.value));
+      yield put(loadServiceContent.success(response.value.value));
 
       if (organizations) {
         const service = pot.some(response.value.value);
@@ -71,11 +71,11 @@ export function* loadServiceRequestHandler(
       // Once the service content is loaded, the service metadata loading is requested.
       // Service metadata contains service scope (national/local) used to identify where
       // the service should be displayed into the ServiceHomeScreen
-      yield put(contentServiceLoad.request(response.value.value.service_id));
+      yield put(loadServiceMetadata.request(response.value.value.service_id));
     } else {
       throw Error(`response status ${response.value.status}`);
     }
   } catch (error) {
-    yield put(loadService.failure({ service_id: action.payload, error }));
+    yield put(loadServiceContent.failure({ service_id: action.payload, error }));
   }
 }

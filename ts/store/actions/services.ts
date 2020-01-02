@@ -40,10 +40,10 @@ type ServiceLoadFailurePayload = {
   service_id: string;
 };
 
-export const loadService = createAsyncAction(
-  "SERVICE_LOAD_REQUEST",
-  "SERVICE_LOAD_SUCCESS",
-  "SERVICE_LOAD_FAILURE"
+export const loadServiceContent = createAsyncAction(
+  "SERVICE_CONTENT_LOAD_REQUEST",
+  "SERVICE_CONTENT_LOAD_SUCCESS",
+  "SERVICE_CONTENT_LOAD_FAILURE"
 )<string, ServicePublic, ServiceLoadFailurePayload>();
 //
 //  mark service as read
@@ -69,7 +69,7 @@ export const removeServiceTuples = createStandardAction(
 export type ServicesActions =
   | ActionType<typeof FirstServiceLoadSuccess>
   | ActionType<typeof loadVisibleServices>
-  | ActionType<typeof loadService>
+  | ActionType<typeof loadServiceContent>
   | ActionType<typeof markServiceAsRead>
   | ActionType<typeof removeServiceTuples>
   | ActionType<typeof showServiceDetails>;

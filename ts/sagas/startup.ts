@@ -12,7 +12,6 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-
 import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
@@ -35,7 +34,7 @@ import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
-import { loadService, loadVisibleServices } from "../store/actions/services";
+import { loadServiceContent, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
   sessionInfoSelector,
@@ -63,7 +62,7 @@ import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
-import { loadServiceRequestHandler } from "./startup/loadServiceRequestHandler";
+import { loadServiceContentRequestHandler } from "./startup/loadServiceRequestHandler";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { loadVisibleServicesRequestHandler } from "./startup/loadVisibleServicesHandler";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
@@ -293,8 +292,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
   yield takeEvery(
-    getType(loadService.request),
-    loadServiceRequestHandler,
+    getType(loadServiceContent.request),
+    loadServiceContentRequestHandler,
     backendClient.getService
   );
 

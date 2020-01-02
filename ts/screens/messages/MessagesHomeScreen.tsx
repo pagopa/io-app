@@ -21,7 +21,7 @@ import {
   setMessagesArchivedState
 } from "../../store/actions/messages";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
-import { loadService } from "../../store/actions/services";
+import { loadServiceContent } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
@@ -382,13 +382,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     if (pot.isSome(lexicallyOrderedMessagesState)) {
       lexicallyOrderedMessagesState.value.forEach(item => {
         if (servicesById[item.meta.sender_service_id] === undefined) {
-          dispatch(loadService.request(item.meta.sender_service_id));
+          dispatch(loadServiceContent.request(item.meta.sender_service_id));
         }
       });
     }
   },
   refreshService: (serviceId: string) => {
-    dispatch(loadService.request(serviceId));
+    dispatch(loadServiceContent.request(serviceId));
   },
   navigateToMessageDetail: (messageId: string) =>
     dispatch(navigateToMessageDetailScreenAction({ messageId })),

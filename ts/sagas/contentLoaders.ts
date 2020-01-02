@@ -12,7 +12,7 @@ import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
-  contentServiceLoad,
+  loadServiceMetadata,
   contentServicesByScopeLoad
 } from "../store/actions/content";
 import {
@@ -88,9 +88,9 @@ export function* watchContentServicesByScopeLoad(): Iterator<Effect> {
  * https://www.pivotaltracker.com/story/show/159440224
  */
 // tslint:disable-next-line:cognitive-complexity
-export function* watchContentServiceLoadSaga(): Iterator<Effect> {
-  yield takeEvery(getType(contentServiceLoad.request), function*(
-    action: ActionType<typeof contentServiceLoad["request"]>
+export function* watchServiceMetadataLoadSaga(): Iterator<Effect> {
+  yield takeEvery(getType(loadServiceMetadata.request), function*(
+    action: ActionType<typeof loadServiceMetadata["request"]>
   ) {
     const serviceId = action.payload;
     try {
@@ -117,7 +117,7 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
             response.value.status === 200
               ? pot.some(response.value.value)
               : pot.some(undefined);
-          yield put(contentServiceLoad.success({ serviceId, data }));
+          yield put(loadServiceMetadata.success({ serviceId, data }));
           // If the service is loaded for the first time (at first startup or when the
           // cache is cleaned), the app shows the service list item without badge
           if (!isFirstVisibleServiceLoadCompleted) {
@@ -145,7 +145,7 @@ export function* watchContentServiceLoadSaga(): Iterator<Effect> {
       }
     } catch (e) {
       yield put(
-        contentServiceLoad.failure({
+        loadServiceMetadata.failure({
           serviceId,
           error: e || Error(`Unable to load metadata for service ${serviceId}`)
         })

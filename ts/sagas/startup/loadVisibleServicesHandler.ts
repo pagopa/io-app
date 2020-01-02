@@ -4,9 +4,9 @@ import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 import { all, call, Effect, put, select } from "redux-saga/effects";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
-import { contentServiceLoad } from "../../store/actions/content";
+import { loadServiceMetadata } from "../../store/actions/content";
 import {
-  loadService,
+  loadServiceContent,
   loadVisibleServices,
   removeServiceTuples
 } from "../../store/actions/services";
@@ -113,12 +113,12 @@ export function* loadVisibleServicesRequestHandler(
         .map(_ => _.service_id);
       // Parallel fetch of those services content that we haven't loaded yet or need to be updated
       yield all(
-        serviceContentIdsToLoad.map(id => put(loadService.request(id)))
+        serviceContentIdsToLoad.map(id => put(loadServiceContent.request(id)))
       );
 
       // Check which services metadata should be loaded
       // Metadata has no version and they are updated only if:
-      // - service content version is updated ( after loadService.request service metadata are loaded again)
+      // - service content version is updated ( after loadServiceContent.request service metadata are loaded again)
       // - service metadata stored on redux store has error state (meaning somthing gone wrong when loaded)
       // - previous requests for service metadata returned an empty object (404)
       const servicesMetadataById: ReturnType<
@@ -141,7 +141,7 @@ export function* loadVisibleServicesRequestHandler(
         .map(_ => _.service_id);
       // Parallel fetch of those services metadata that we haven't loaded yet or need to be updated
       yield all(
-        serviceMetadataIdsToLoad.map(id => put(contentServiceLoad.request(id)))
+        serviceMetadataIdsToLoad.map(id => put(loadServiceMetadata.request(id)))
       );
     } else if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow

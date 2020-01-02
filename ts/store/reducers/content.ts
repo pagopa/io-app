@@ -20,7 +20,7 @@ import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {
   contentMunicipalityLoad,
-  contentServiceLoad,
+  loadServiceMetadata,
   contentServicesByScopeLoad
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
@@ -129,7 +129,7 @@ export default function content(
   action: Action
 ): ContentState {
   switch (action.type) {
-    case getType(contentServiceLoad.request):
+    case getType(loadServiceMetadata.request):
       return {
         ...state,
         servicesMetadata: {
@@ -141,7 +141,7 @@ export default function content(
           }
         }
       };
-    case getType(contentServiceLoad.success):
+    case getType(loadServiceMetadata.success):
       return {
         ...state,
         servicesMetadata: {
@@ -152,7 +152,7 @@ export default function content(
         }
       };
 
-    case getType(contentServiceLoad.failure):
+    case getType(loadServiceMetadata.failure):
       return {
         ...state,
         servicesMetadata: {

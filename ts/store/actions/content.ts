@@ -1,5 +1,4 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
@@ -18,10 +17,10 @@ export type ContentServiceSuccess = {
   data: ServiceMetadataState;
 };
 
-export const contentServiceLoad = createAsyncAction(
-  "CONTENT_SERVICE_LOAD_REQUEST",
-  "CONTENT_SERVICE_LOAD_SUCCESS",
-  "CONTENT_SERVICE_LOAD_FAILURE"
+export const loadServiceMetadata = createAsyncAction(
+  "METADATA_SERVICE_LOAD_REQUEST",
+  "METADATA_SERVICE_LOAD_SUCCESS",
+  "METADATA_SERVICE_LOAD_FAILURE"
 )<ServiceId, ContentServiceSuccess, ContentServiceFailure>();
 
 export const contentMunicipalityLoad = createAsyncAction(
@@ -41,6 +40,6 @@ export const contentServicesByScopeLoad = createAsyncAction(
 )<void, ServicesByScope, Error>();
 
 export type ContentActions =
-  | ActionType<typeof contentServiceLoad>
+  | ActionType<typeof loadServiceMetadata>
   | ActionType<typeof contentMunicipalityLoad>
   | ActionType<typeof contentServicesByScopeLoad>;
