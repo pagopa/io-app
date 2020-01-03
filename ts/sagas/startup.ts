@@ -34,7 +34,6 @@ import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
-import { loadServiceContent, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
   sessionInfoSelector,
@@ -62,9 +61,7 @@ import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
-import { loadServiceContentRequestHandler } from "./startup/loadServiceRequestHandler";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
-import { loadVisibleServicesRequestHandler } from "./startup/loadVisibleServicesHandler";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
@@ -72,6 +69,7 @@ import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRela
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
+import { watchServiceLoadSaga } from "./startup/watchServiceLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import {
   loadUserMetadata,
@@ -118,7 +116,10 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     : yield call(authenticationSaga);
 
   // Instantiate a backend client from the session token
-  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+  const backendClient: ReturnType<typeof BackendClient> = BackendClient(
+    apiUrlPrefix,
+    sessionToken
+  );
 
   // Start the notification installation update as early as
   // possible to begin receiving push notifications
@@ -291,19 +292,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
   yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
-  yield takeEvery(
-    getType(loadServiceContent.request),
-    loadServiceContentRequestHandler,
-    backendClient.getService
-  );
-
-  yield takeEvery(
-    getType(loadVisibleServices.request),
-    loadVisibleServicesRequestHandler,
-    backendClient.getVisibleServices
-  );
-  // Trigger the services content and metadata being loaded/refreshed.
-  yield put(loadVisibleServices.request());
+  yield fork(watchServiceLoadSaga, backendClient);
 
   // Load messages when requested
   yield fork(watchMessagesLoadOrCancelSaga, backendClient.getMessages);

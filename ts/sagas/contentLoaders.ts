@@ -13,16 +13,14 @@ import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
   loadServiceMetadata,
-  contentServicesByScopeLoad
+  metadataServicesByScopeLoad
 } from "../store/actions/content";
 import {
-  FirstServiceLoadSuccess,
+  firstServiceLoadSuccess,
   markServiceAsRead
 } from "../store/actions/services";
-import {
-  visibleServicesContentLoadStateSelector,
-  visibleServicesMetadataLoadStateSelector
-} from "../store/reducers/entities/services";
+import { servicesByScopeSelector } from "../store/reducers/content";
+import { visibleServicesContentLoadStateSelector } from "../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../store/reducers/entities/services/firstServicesLoading";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
@@ -60,14 +58,14 @@ function getServicesByScope(): Promise<
  * A saga that watches for and executes requests to load services by scope
  */
 export function* watchContentServicesByScopeLoad(): Iterator<Effect> {
-  yield takeEvery(getType(contentServicesByScopeLoad.request), function*() {
+  yield takeEvery(getType(metadataServicesByScopeLoad.request), function*() {
     try {
       const response: SagaCallReturnType<
         typeof getServicesByScope
       > = yield call(getServicesByScope);
 
       if (response.isRight() && response.value.status === 200) {
-        yield put(contentServicesByScopeLoad.success(response.value.value));
+        yield put(metadataServicesByScopeLoad.success(response.value.value));
       } else {
         const error = response.fold(
           readableReport,
@@ -76,7 +74,7 @@ export function* watchContentServicesByScopeLoad(): Iterator<Effect> {
         throw Error(error);
       }
     } catch (e) {
-      yield put(contentServicesByScopeLoad.failure(e));
+      yield put(metadataServicesByScopeLoad.failure(e));
     }
   });
 }
@@ -127,20 +125,20 @@ export function* watchServiceMetadataLoadSaga(): Iterator<Effect> {
           throw Error(`response status ${response.value.status}`);
         }
       }
-      // If all services content and metadata are loaded with success,
+      // If all services content and scope data are loaded with success,
       // stop considering loaded services as read
       if (!isFirstVisibleServiceLoadCompleted) {
-        const visibleServicesMetadataLoadState: ReturnType<
-          typeof visibleServicesMetadataLoadStateSelector
-        > = yield select(visibleServicesMetadataLoadStateSelector);
+        const servicesByScope: ReturnType<
+          typeof servicesByScopeSelector
+        > = yield select(servicesByScopeSelector);
         const visibleServicesContentLoadState: ReturnType<
           typeof visibleServicesContentLoadStateSelector
         > = yield select(visibleServicesContentLoadStateSelector);
         if (
-          pot.isSome(visibleServicesMetadataLoadState) &&
-          pot.isSome(visibleServicesContentLoadState)
+          pot.isSome(visibleServicesContentLoadState) &&
+          pot.isSome(servicesByScope)
         ) {
-          yield put(FirstServiceLoadSuccess());
+          yield put(firstServiceLoadSuccess());
         }
       }
     } catch (e) {

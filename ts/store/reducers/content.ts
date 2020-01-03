@@ -21,7 +21,7 @@ import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {
   contentMunicipalityLoad,
   loadServiceMetadata,
-  contentServicesByScopeLoad
+  metadataServicesByScopeLoad
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
@@ -72,7 +72,7 @@ export const municipalitySelector = (state: GlobalState) =>
 export const servicesMetadataByIdSelector = (state: GlobalState) =>
   state.content.servicesMetadata.byId;
 
-export const servicesByScope = (state: GlobalState) =>
+export const servicesByScopeSelector = (state: GlobalState) =>
   state.content.servicesByScope;
 
 /**
@@ -84,7 +84,7 @@ export const isServiceIdInScopeSelector = (
   serviceId: ServiceId,
   scope: ScopeEnum
 ) =>
-  createSelector(servicesByScope, maybeServicesByScope =>
+  createSelector(servicesByScopeSelector, maybeServicesByScope =>
     pot.getOrElse(
       pot.map(
         maybeServicesByScope,
@@ -113,7 +113,7 @@ export const servicesInScopeSelector = (
   services: ReadonlyArray<ServicePublic>,
   scope: ScopeEnum
 ) =>
-  createSelector(servicesByScope, maybeServicesByScope =>
+  createSelector(servicesByScopeSelector, maybeServicesByScope =>
     pot.getOrElse(
       pot.map(maybeServicesByScope, sbs =>
         services.filter(service => {
@@ -197,19 +197,19 @@ export default function content(
       };
 
     // services by scope
-    case getType(contentServicesByScopeLoad.request):
+    case getType(metadataServicesByScopeLoad.request):
       return {
         ...state,
         servicesByScope: pot.noneLoading
       };
 
-    case getType(contentServicesByScopeLoad.success):
+    case getType(metadataServicesByScopeLoad.success):
       return {
         ...state,
         servicesByScope: pot.some(action.payload)
       };
 
-    case getType(contentServicesByScopeLoad.failure):
+    case getType(metadataServicesByScopeLoad.failure):
       return {
         ...state,
         servicesByScope: pot.toError(state.servicesByScope, action.payload)

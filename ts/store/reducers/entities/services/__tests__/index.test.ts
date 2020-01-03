@@ -13,16 +13,14 @@ import {
   notSelectedServicesSectionsSelector,
   organizationsOfInterestSelector,
   ServicesState,
-  visibleServicesContentLoadStateSelector,
-  visibleServicesMetadataLoadStateSelector
+  visibleServicesContentLoadStateSelector
 } from "..";
 import { DepartmentName } from "../../../../../../definitions/backend/DepartmentName";
 import { OrganizationName } from "../../../../../../definitions/backend/OrganizationName";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ServiceName } from "../../../../../../definitions/backend/ServiceName";
 import { ServiceTuple } from "../../../../../../definitions/backend/ServiceTuple";
-import { ScopeEnum } from "../../../../../../definitions/content/Service";
-import { ServiceMetadataById } from "../../../content";
+import { ServicesByScope } from "../../../../../../definitions/content/ServicesByScope";
 import { UserMetadataState } from "../../../userMetadata";
 import { OrganizationsState } from "../../organizations";
 
@@ -115,32 +113,10 @@ const customOrganizations: OrganizationsState = {
   }
 };
 
-const customServicesMetadata: { byId: ServiceMetadataById } = {
-  byId: {
-    ["11"]: pot.noneLoading,
-    ["21"]: pot.some({
-      description: "Descrizione servizio",
-      email: "info@test.it",
-      phone: "800 000 000",
-      privacy_url: "http://www.privacy.it",
-      scope: ScopeEnum.LOCAL,
-      tos_url: "http://www.tos.it",
-      web_url: "https://weburl.it"
-    }),
-    ["22"]: pot.noneLoading,
-    ["31"]: pot.noneError(Error("Generic error")),
-    ["41"]: pot.some({
-      description: "Descrizione servizio",
-      email: "info@test.it",
-      phone: "800 000 000",
-      privacy_url: "http://www.privacy.it",
-      scope: ScopeEnum.LOCAL,
-      tos_url: "http://www.tos.it",
-      web_url: "https://weburl.it"
-    }),
-    ["42"]: pot.noneLoading
-  }
-};
+const customServicesByScope: pot.Pot<ServicesByScope, Error> = pot.some({
+  LOCAL: ["21", "41"],
+  NATIONAL: []
+});
 
 describe("organizationsOfInterestSelector", () => {
   it("should include organizations in the user organizationsOfInterest and providing visible services among those properly loaded", () => {
@@ -159,7 +135,7 @@ describe("nationalServicesSectionsSelector", () => {
       nationalServicesSectionsSelector.resultFunc(
         customServices,
         customOrganizations.nameByFiscalCode,
-        customServicesMetadata
+        customServicesByScope
       )
     ).toStrictEqual([]);
   });
@@ -171,7 +147,7 @@ describe("localServicesSectionsSelector", () => {
       localServicesSectionsSelector.resultFunc(
         customServices,
         customOrganizations.nameByFiscalCode,
-        customServicesMetadata
+        customServicesByScope
       )
     ).toStrictEqual([
       {
@@ -194,7 +170,7 @@ describe("notSelectedServicesSectionsSelector", () => {
       notSelectedServicesSectionsSelector.resultFunc(
         customServices,
         customOrganizations.nameByFiscalCode,
-        customServicesMetadata,
+        customServicesByScope,
         [""]
       )
     ).toStrictEqual([
@@ -217,17 +193,6 @@ describe("visibleServicesContentLoadStateSelector", () => {
     expect(
       visibleServicesContentLoadStateSelector.resultFunc(
         customServices.byId,
-        customServices.visible
-      )
-    ).toBe(pot.noneLoading);
-  });
-});
-
-describe("visibleServicesMetadataLoadStateSelector", () => {
-  it("should do be pot.noneError if any visible service is loading at least one visible service is error", () => {
-    expect(
-      visibleServicesMetadataLoadStateSelector.resultFunc(
-        customServicesMetadata.byId,
         customServices.visible
       )
     ).toBe(pot.noneLoading);

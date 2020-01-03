@@ -8,7 +8,10 @@ import { getType } from "typesafe-actions";
 
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { clearCache } from "../../../actions/profile";
-import { loadServiceContent, removeServiceTuples } from "../../../actions/services";
+import {
+  loadServiceContent,
+  removeServiceTuples
+} from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 

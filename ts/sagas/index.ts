@@ -7,8 +7,8 @@ import { all, call, Effect } from "redux-saga/effects";
 import backendInfoSaga from "./backendInfo";
 import {
   watchContentMunicipalityLoadSaga,
-  watchServiceMetadataLoadSaga,
-  watchContentServicesByScopeLoad
+  watchContentServicesByScopeLoad,
+  watchServiceMetadataLoadSaga
 } from "./contentLoaders";
 import unreadInstabugMessagesSaga from "./instabug";
 import { loadSystemPreferencesSaga } from "./preferences";

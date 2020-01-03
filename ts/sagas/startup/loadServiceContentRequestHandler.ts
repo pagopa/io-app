@@ -3,7 +3,6 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
-import { loadServiceMetadata } from "../../store/actions/content";
 import { updateOrganizations } from "../../store/actions/organizations";
 import { loadServiceContent } from "../../store/actions/services";
 import {
@@ -39,15 +38,13 @@ export function* loadServiceContentRequestHandler(
     }
 
     if (response.value.status === 200) {
+      yield put(loadServiceContent.success(response.value.value));
+
       // If the organization fiscal code is associated to different organization names,
       // it is considered valid the one declared for a visible service
-
       const organizations: OrganizationNamesByFiscalCodeState = yield select(
         organizationNamesByFiscalCodeSelector
       );
-
-      yield put(loadServiceContent.success(response.value.value));
-
       if (organizations) {
         const service = pot.some(response.value.value);
         const fc = service.value.organization_fiscal_code;
@@ -57,7 +54,7 @@ export function* loadServiceContentRequestHandler(
         );
         const isVisible = isVisibleService(visibleServices, service) || false;
         // If the organization has been previously saved in the organization entity,
-        // the organization name  is updated only if the related service is visible
+        // the organization name is updated only if the related service is visible
         if (
           !organization ||
           (organization &&
@@ -67,15 +64,12 @@ export function* loadServiceContentRequestHandler(
           yield put(updateOrganizations(response.value.value));
         }
       }
-
-      // Once the service content is loaded, the service metadata loading is requested.
-      // Service metadata contains service scope (national/local) used to identify where
-      // the service should be displayed into the ServiceHomeScreen
-      yield put(loadServiceMetadata.request(response.value.value.service_id));
     } else {
       throw Error(`response status ${response.value.status}`);
     }
   } catch (error) {
-    yield put(loadServiceContent.failure({ service_id: action.payload, error }));
+    yield put(
+      loadServiceContent.failure({ service_id: action.payload, error })
+    );
   }
 }

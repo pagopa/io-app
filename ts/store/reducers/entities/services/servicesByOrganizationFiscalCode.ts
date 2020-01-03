@@ -7,7 +7,10 @@ import { getType } from "typesafe-actions";
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { clearCache } from "../../../actions/profile";
-import { loadServiceContent, removeServiceTuples } from "../../../actions/services";
+import {
+  loadServiceContent,
+  removeServiceTuples
+} from "../../../actions/services";
 import { Action } from "../../../actions/types";
 
 /**

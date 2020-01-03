@@ -17,7 +17,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 // service loading at startup
 //
 
-export const FirstServiceLoadSuccess = createStandardAction(
+export const firstServiceLoadSuccess = createStandardAction(
   "FIRST_SERVICES_LOAD_SUCCESS"
 )<void>();
 
@@ -67,7 +67,7 @@ export const removeServiceTuples = createStandardAction(
 )<ReadonlyArray<ITuple2<string, string | undefined>>>();
 
 export type ServicesActions =
-  | ActionType<typeof FirstServiceLoadSuccess>
+  | ActionType<typeof firstServiceLoadSuccess>
   | ActionType<typeof loadVisibleServices>
   | ActionType<typeof loadServiceContent>
   | ActionType<typeof markServiceAsRead>

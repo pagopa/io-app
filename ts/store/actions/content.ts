@@ -18,9 +18,9 @@ export type ContentServiceSuccess = {
 };
 
 export const loadServiceMetadata = createAsyncAction(
-  "METADATA_SERVICE_LOAD_REQUEST",
-  "METADATA_SERVICE_LOAD_SUCCESS",
-  "METADATA_SERVICE_LOAD_FAILURE"
+  "SERVICE_METADATA_LOAD_REQUEST",
+  "SERVICE_METADATA_LOAD_SUCCESS",
+  "SERVICE_METADATA_LOAD_FAILURE"
 )<ServiceId, ContentServiceSuccess, ContentServiceFailure>();
 
 export const contentMunicipalityLoad = createAsyncAction(
@@ -33,13 +33,13 @@ export const contentMunicipalityLoad = createAsyncAction(
   Error
 >();
 
-export const contentServicesByScopeLoad = createAsyncAction(
-  "CONTENT_SERVICES_BY_SCOPE_LOAD_REQUEST",
-  "CONTENT_SERVICES_BY_SCOPE_LOAD_SUCCESS",
-  "CONTENT_SERVICES_BY_SCOPE_LOAD_FAILURE"
+export const metadataServicesByScopeLoad = createAsyncAction(
+  "METADATA_SERVICES_BY_SCOPE_LOAD_REQUEST",
+  "METADATA_SERVICES_BY_SCOPE_LOAD_SUCCESS",
+  "METADATA_SERVICES_BY_SCOPE_LOAD_FAILURE"
 )<void, ServicesByScope, Error>();
 
 export type ContentActions =
   | ActionType<typeof loadServiceMetadata>
   | ActionType<typeof contentMunicipalityLoad>
-  | ActionType<typeof contentServicesByScopeLoad>;
+  | ActionType<typeof metadataServicesByScopeLoad>;

@@ -130,9 +130,11 @@ export function* loadMessages(
           .filter(uniqueItem); // Get unique ids
 
         // Fetch the services detail in parallel
-        // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
+        // We don't need to store the results because the SERVICE_CONTENT_LOAD_REQUEST is already dispatched by each `loadServiceContent` action called.
         // We fetch services first because to show messages you need the related service info
-        yield all(pendingServicesIds.map(id => put(loadServiceContent.request(id))));
+        yield all(
+          pendingServicesIds.map(id => put(loadServiceContent.request(id)))
+        );
 
         // Fetch the messages detail in parallel
         // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
