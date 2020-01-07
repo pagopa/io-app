@@ -163,7 +163,7 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   private handleChangeText = (inputValue: string) => {
     // if the component is disabled don't handle any input
-    if (this.props.disabled === true) {
+    if (this.props.disabled) {
       return;
     }
     this.setState({ value: inputValue });
