@@ -120,6 +120,7 @@ export function* loadVisibleServicesRequestHandler(
       // Metadata has no version and they are updated only if:
       // - service content version is updated ( after loadService.request service metadata are loaded again)
       // - service metadata stored on redux store has error state (meaning somthing gone wrong when loaded)
+      // - previous requests for service metadata returned an empty object (404)
       const servicesMetadataById: ReturnType<
         typeof servicesMetadataByIdSelector
       > = yield select(servicesMetadataByIdSelector);
@@ -131,7 +132,10 @@ export function* loadVisibleServicesRequestHandler(
             // Service load never occurs or it ends up with an error
             serviceContentIdsToLoad.indexOf(serviceId) === -1 &&
             !pot.isLoading(storedMetadata) &&
-            (pot.isError(storedMetadata) || pot.isNone(storedMetadata))
+            (pot.isError(storedMetadata) ||
+              pot.isNone(storedMetadata) ||
+              (pot.isSome(storedMetadata) &&
+                storedMetadata.value === undefined))
           );
         })
         .map(_ => _.service_id);
