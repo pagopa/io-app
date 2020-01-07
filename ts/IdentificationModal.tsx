@@ -402,7 +402,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             identificationByBiometryState: "failure"
           });
         } else {
-          // it the user dismissed the biometric dialog, unlock the pin insertion
+          // if the user dismissed the biometric dialog, unlock the pin insertion
           this.setState({
             canInsertPin: true
           });
