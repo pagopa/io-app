@@ -681,6 +681,7 @@ messages:
     senderInfo:  Sender service unknown
     serviceInfo: Service info unknown
     departmentInfo: Department info unknown
+  loadingErrorTitle: Loading messages has failed
   cta:
     archive: Archive
     unarchive: Unarchive
