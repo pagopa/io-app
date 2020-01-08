@@ -30,7 +30,7 @@ import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 // Check min version app supported
-import { isVersionAppSupported } from "./utils/isVersionAppSupported";
+import { isVersionAppSupported } from "./utils/appVersion";
 
 // tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -134,7 +134,9 @@ class RootContainer extends React.PureComponent<Props> {
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
         {isVersionAppSupported(
-          this.props.backendInfo,
+          this.props.backendInfo !== undefined
+            ? this.props.backendInfo.minAppVersion
+            : undefined,
           DeviceInfo.getVersion()
         ) ? (
           <IdentificationModal />
