@@ -4,6 +4,9 @@ export const isVersionAppSupported = (
   minAppVersion: string | undefined,
   DeviceVersion: string
 ): boolean => {
+  if (minAppVersion && DeviceVersion) {
+    return true;
+  }
   return false;
   /*
   // If the backend-info is not available (es. request http error) continue to use app
