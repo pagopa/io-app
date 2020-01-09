@@ -11,8 +11,7 @@ import {
   logoutSuccess,
   sessionExpired,
   sessionInformationLoadSuccess,
-  sessionInvalid,
-  sessionInvalidateWalletToken
+  sessionInvalid
 } from "../actions/authentication";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -173,19 +172,6 @@ const reducer = (
       ...{
         kind: "LoggedInWithSessionInfo",
         sessionInfo: action.payload
-      }
-    };
-  }
-
-  if (
-    isActionOf(sessionInvalidateWalletToken, action) &&
-    isLoggedInWithSessionInfo(state)
-  ) {
-    // invalidate the wallet token (when user has an email not validated )
-    return {
-      ...state,
-      ...{
-        sessionInfo: { ...state.sessionInfo, walletToken: "" }
       }
     };
   }

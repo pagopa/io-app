@@ -55,10 +55,6 @@ export const sessionInformationLoadSuccess = createStandardAction(
   "SESSION_INFO_LOAD_SUCCESS"
 )<PublicSession>();
 
-export const sessionInvalidateWalletToken = createStandardAction(
-  "SESSION_INVALIDATE_WALLET_TOKEN"
-)();
-
 export const sessionInformationLoadFailure = createAction(
   "SESSION_INFO_LOAD_FAILURE",
   resolve => (error: Error) => resolve(error, true)
