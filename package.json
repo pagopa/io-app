@@ -84,7 +84,7 @@
     "remark-html": "9.0.0",
     "reselect": "4.0.0",
     "rn-placeholder": "^1.3.3",
-    "semver": "5.5.0",
+    "semver": "5.3.0",
     "source-map": "^0.6.1",
     "stacktrace-js": "^2.0.0",
     "tslib": "^1.9.3",
