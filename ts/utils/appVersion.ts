@@ -6,7 +6,13 @@ export const isVersionAppSupported = (
 ): boolean => {
   // If the backend-info is not available (es. request http error) continue to use app
   if (minAppVersion !== undefined) {
-    return semver.satisfies(minAppVersion, `<=${DeviceVersion}`);
+    const minVersion =
+      semver.valid(minAppVersion) === null
+        ? semver.coerce(minAppVersion)
+        : minAppVersion;
+    return minVersion !== null
+      ? semver.satisfies(minVersion, `<=${DeviceVersion}`)
+      : true;
   } else {
     return true;
   }
