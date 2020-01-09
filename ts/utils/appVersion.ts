@@ -1,4 +1,3 @@
-import semver from "semver";
 // Check min version app supported
 export const isVersionAppSupported = (
   minAppVersion: string | undefined,
@@ -7,5 +6,5 @@ export const isVersionAppSupported = (
   if (minAppVersion && DeviceVersion) {
     return true;
   }
-  return falseM;
+  return false;
 };
