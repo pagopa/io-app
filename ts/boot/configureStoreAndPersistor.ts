@@ -207,7 +207,7 @@ const logger = createLogger({
 });
 
 // configure Reactotron if the app is running in dev mode
-const RTron = __DEV__ ? configureReactotron() : {};
+export const RTron = __DEV__ ? configureReactotron() : {};
 const sagaMiddleware = createSagaMiddleware(
   __DEV__ ? { sagaMonitor: RTron.createSagaMonitor() } : {}
 );
