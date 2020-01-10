@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import I18n from "../i18n";
 import { LogoutOption, logoutRequest } from "../store/actions/authentication";
 import { Dispatch } from "../store/actions/types";
+import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import { withLoadingSpinner } from "./helpers/withLoadingSpinner";
 import ListItemComponent from "./screens/ListItemComponent";
@@ -16,11 +17,11 @@ type OwnProps = {
   header?: React.ReactNode;
 };
 
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
-type State = {
-  isLoading: boolean;
-};
+type State = {};
 
 const styles = StyleSheet.create({
   content: {
@@ -46,9 +47,7 @@ const styles = StyleSheet.create({
 class SelectLogoutOption extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      isLoading: false
-    };
+    this.state = {};
   }
 
   private onBackPress = () => {
@@ -57,16 +56,6 @@ class SelectLogoutOption extends React.PureComponent<Props, State> {
     // triggered as if the modal was not visible
     return true;
   };
-
-  private logout = (logoutOption: LogoutOption) => {
-    this.setState(
-      {
-        isLoading: true
-      },
-      () => this.props.logout(logoutOption)
-    );
-  };
-
   public render() {
     // Using the loading spinner HOC to avoid reimplementing the Loading component
     // TODO - this part can be improved within this story https://www.pivotaltracker.com/story/show/169425266
@@ -78,14 +67,14 @@ class SelectLogoutOption extends React.PureComponent<Props, State> {
             <ListItemComponent
               title={I18n.t("profile.logout.cta.keepData.title")}
               subTitle={I18n.t("profile.logout.cta.keepData.description")}
-              onPress={() => this.logout({ keepUserData: true })}
+              onPress={() => this.props.logout({ keepUserData: true })}
               useExtendedSubTitle={true}
             />
 
             <ListItemComponent
               title={I18n.t("profile.logout.cta.resetData.title")}
               subTitle={I18n.t("profile.logout.cta.resetData.description")}
-              onPress={() => this.logout({ keepUserData: false })}
+              onPress={() => this.props.logout({ keepUserData: false })}
               useExtendedSubTitle={true}
             />
           </List>
@@ -103,7 +92,7 @@ class SelectLogoutOption extends React.PureComponent<Props, State> {
       </Container>
     ));
 
-    return <ContainerComponent isLoading={this.state.isLoading} />;
+    return <ContainerComponent isLoading={this.props.isLogoutInitialized} />;
   }
 
   public componentDidMount() {
@@ -114,11 +103,25 @@ class SelectLogoutOption extends React.PureComponent<Props, State> {
     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
 }
+
+const mapStateToProps = (state: GlobalState) => {
+  return {
+    isLogoutInitialized:
+      state.authentication.kind === "LoggedInWithoutSessionInfo" ||
+      state.authentication.kind === "LoggedInWithSessionInfo"
+        ? // tslint:disable-next-line: no-redundant-boolean
+          state.authentication.logoutState === "IN_PROGRESS"
+          ? true
+          : false
+        : false
+  };
+};
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: (logoutOption: LogoutOption) => dispatch(logoutRequest(logoutOption))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SelectLogoutOption);
