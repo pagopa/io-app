@@ -37,7 +37,7 @@ enum ErrorType {
 }
 
 type State = {
-  requestState: pot.Pot<true, ErrorType.LOADING_ERROR | ErrorType.LOGIN_ERROR>;
+  requestState: pot.Pot<true, ErrorType>;
   errorCode?: string;
   loginTrace?: string;
 };
