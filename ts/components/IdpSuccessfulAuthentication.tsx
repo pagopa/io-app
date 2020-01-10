@@ -1,3 +1,6 @@
+/**
+ * A component to diplay a white tick on a blue background
+ */
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";

@@ -1,20 +1,23 @@
+/**
+ * A screen that allow the user to login with an IDP.
+ * The IDP page is opened in a WebView
+ */
+import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, NavState, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-
-import { idpLoginUrlChanged } from "../../store/actions/authentication";
-
-import * as pot from "italia-ts-commons/lib/pot";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
+import { idpLoginUrlChanged } from "../../store/actions/authentication";
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
@@ -24,17 +27,19 @@ import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { extractLoginResult } from "../../utils/login";
 
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
-
-type Props = ReturnType<typeof mapStateToProps> &
-  OwnProps &
+type Props = NavigationScreenProps &
+  ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+enum ErrorType {
+  "LOADING_ERROR" = "LOADING_ERROR",
+  "LOGIN_ERROR" = "LOGIN_ERROR"
+}
+
 type State = {
-  requestState: pot.Pot<true, "LOADING_ERROR" | "LOGIN_ERROR">;
+  requestState: pot.Pot<true, ErrorType.LOADING_ERROR | ErrorType.LOGIN_ERROR>;
   errorCode?: string;
+  loginTrace?: string;
 };
 
 const LOGIN_BASE_URL = `${
@@ -110,13 +115,7 @@ const onNavigationStateChange = (
   return false;
 };
 
-/**
- * A screen that allow the user to login with an IDP.
- * The IDP page is opened in a WebView
- */
 class IdpLoginScreen extends React.Component<Props, State> {
-  private loginTrace?: string;
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -125,13 +124,12 @@ class IdpLoginScreen extends React.Component<Props, State> {
   }
 
   private updateLoginTrace = (url: string): void => {
-    // tslint:disable-next-line: no-object-mutation
-    this.loginTrace = url;
+    this.setState({ loginTrace: url });
   };
 
   private handleLoadingError = (): void => {
     this.setState({
-      requestState: pot.noneError("LOADING_ERROR")
+      requestState: pot.noneError(ErrorType.LOADING_ERROR)
     });
   };
 
@@ -140,7 +138,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       new Error(`login failure with code ${errorCode || "n/a"}`)
     );
     this.setState({
-      requestState: pot.noneError("LOGIN_ERROR"),
+      requestState: pot.noneError(ErrorType.LOGIN_ERROR),
       errorCode
     });
   };
@@ -151,7 +149,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
-    if (event.url && event.url !== this.loginTrace) {
+    if (event.url && event.url !== this.state.loginTrace) {
       const urlChanged = event.url.split("?")[0];
       this.props.dispatchIdpLoginUrlChanged(urlChanged);
       this.updateLoginTrace(urlChanged);
@@ -189,13 +187,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
           <Image source={brokenLinkImage} resizeMode="contain" />
           <Text style={styles.errorTitle} bold={true}>
             {I18n.t(
-              errorType === "LOADING_ERROR"
+              errorType === ErrorType.LOADING_ERROR
                 ? "authentication.errors.network.title"
                 : "authentication.errors.login.title"
             )}
           </Text>
 
-          {errorType === "LOGIN_ERROR" && (
+          {errorType === ErrorType.LOGIN_ERROR && (
             <Text style={styles.errorBody}>
               {I18n.t(errorTranslationKey, {
                 defaultValue: I18n.t("authentication.errors.spid.unknown")
@@ -238,9 +236,9 @@ class IdpLoginScreen extends React.Component<Props, State> {
     }
 
     if (!loggedOutWithIdpAuth) {
-      // FIXME: perhaps as a safe bet, navigate to the IdP selection screen on mount?
-      //      https://www.pivotaltracker.com/story/show/169541951
-      return null;
+      // This condition will be true only temporarily (if the navigation occurs
+      // before the redux state is updated succesfully)
+      return <LoadingSpinnerOverlay isLoading={true} />;
     }
     const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
     return (
