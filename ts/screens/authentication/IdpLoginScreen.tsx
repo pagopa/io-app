@@ -1,5 +1,5 @@
 /**
- * A screen that allow the user to login with an IDP.
+ * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
  */
 import * as pot from "italia-ts-commons/lib/pot";
