@@ -1,5 +1,5 @@
 /**
- * A component to diplay a white tick on a blue background
+ * A component to display a white tick on a blue background
  */
 import { View } from "native-base";
 import * as React from "react";
