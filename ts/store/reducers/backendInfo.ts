@@ -43,5 +43,5 @@ export default function backendInfo(
 }
 
 // Selectors
-export const serverInfoData = (state: GlobalState) =>
+export const serverInfoDataSelector = (state: GlobalState) =>
   state.backendInfo.serverInfo;

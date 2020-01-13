@@ -30,6 +30,7 @@ import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 // Check min version app supported
+import { serverInfoDataSelector } from "./store/reducers/backendInfo";
 import { isVersionAppSupported } from "./utils/appVersion";
 
 // tslint:disable-next-line:no-use-before-declare
@@ -152,7 +153,7 @@ class RootContainer extends React.PureComponent<Props> {
 const mapStateToProps = (state: GlobalState) => ({
   deepLinkState: state.deepLink,
   isDebugModeEnabled: state.debug.isDebugModeEnabled,
-  backendInfo: state.backendInfo.serverInfo
+  backendInfo: serverInfoDataSelector(state)
 });
 
 const mapDispatchToProps = {
