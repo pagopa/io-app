@@ -107,13 +107,9 @@ class SelectLogoutOption extends React.PureComponent<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   return {
     isLogoutInitialized:
-      state.authentication.kind === "LoggedInWithoutSessionInfo" ||
-      state.authentication.kind === "LoggedInWithSessionInfo"
-        ? // tslint:disable-next-line: no-redundant-boolean
-          state.authentication.logoutState === "IN_PROGRESS"
-          ? true
-          : false
-        : false
+      (state.authentication.kind === "LoggedInWithoutSessionInfo" ||
+        state.authentication.kind === "LoggedInWithSessionInfo") &&
+      state.authentication.logoutState === "IN_PROGRESS"
   };
 };
 
