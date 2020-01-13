@@ -197,6 +197,9 @@ const styles = StyleSheet.create({
 });
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
+const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
+  ScreenContentHeader
+);
 class ServicesHomeScreen extends React.Component<Props, State> {
   private navListener?: NavigationEventSubscription;
 
@@ -528,7 +531,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               this.renderSearch()
             ) : (
               <React.Fragment>
-                <ScreenContentHeader
+                <AnimatedScreenContentHeader
                   title={I18n.t("services.title")}
                   icon={require("../../../img/icons/services-icon.png")}
                   dynamicHeight={this.getHeaderHeight(this.state.currentTab)}
