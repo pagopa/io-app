@@ -336,6 +336,7 @@ class MessageList extends React.Component<Props, State> {
       <React.Fragment>
         <NavigationEvents onWillFocus={() => this.scrollTo(0)} />
         <AnimatedFlatList
+          bounces={false}
           ref={this.flatListRef}
           scrollEnabled={true}
           data={messageStates}

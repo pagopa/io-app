@@ -131,6 +131,7 @@ class ServiceList extends React.Component<Props> {
 
     return (
       <AnimatedSectionList
+        bounces={false}
         ref={this.sectionListRef}
         scrollEnabled={true}
         scrollEventThrottle={

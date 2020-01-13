@@ -83,10 +83,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
-  ScreenContentHeader
-);
-
 class MessagesHomeScreen extends React.PureComponent<Props, State> {
   private navListener?: NavigationEventSubscription;
   constructor(props: Props) {
@@ -146,7 +142,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       >
         {!isSearchEnabled && (
           <React.Fragment>
-            <AnimatedScreenContentHeader
+            <ScreenContentHeader
               title={I18n.t("messages.contentTitle")}
               icon={require("../../../img/icons/message-icon.png")}
               dynamicHeight={this.getHeaderHeight(this.state.currentTab)}
