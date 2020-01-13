@@ -270,28 +270,18 @@ const selectPastMonthsData = (
   return newSections;
 };
 
-// Checks if the last section is shown, if yes disables continuos scroll
-const checkIfIsLastSection = (
+// return true if the last section is loaded
+const isLastSectionLoaded = (
   lastDeadlineId: Option<string>,
   sections: Sections
-): boolean => {
-  if (lastDeadlineId.isNone()) {
-    // No deadlines
-    return false;
-  } else {
-    const isLastDeadLine = sections
+): boolean =>
+  lastDeadlineId.fold(false, lastId =>
+    sections
       .map(s => s.data)
       .some(items =>
-        items.some(
-          item => !isFakeItem(item) && item.e1.id === lastDeadlineId.value
-        )
-      );
-    if (isLastDeadLine) {
-      return true;
-    }
-  }
-  return false;
-};
+        items.some(item => !isFakeItem(item) && item.e1.id === lastId)
+      )
+  );
 
 const selectInitialSectionsToRender = (
   sections: Sections,
@@ -457,7 +447,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
                 subMonths(lastLoadedStartOfMonthTime, PAST_DATA_MONTHS)
               ).getTime()
             ),
-            isContinuosScrollEnabled: !checkIfIsLastSection(
+            isContinuosScrollEnabled: !isLastSectionLoaded(
               this.state.lastDeadlineId,
               [...moreSectionsToRender, ...prevState.sectionsToRender]
             )
@@ -492,7 +482,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     );
     // Check in sections to render
     const isContinuosScrollEnabled = await Promise.resolve(
-      !checkIfIsLastSection(lastDeadlineId, sectionsToRender)
+      !isLastSectionLoaded(lastDeadlineId, sectionsToRender)
     );
 
     this.setState({
@@ -525,7 +515,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       );
       // Check in sections to render
       const isContinuosScrollEnabled = await Promise.resolve(
-        !checkIfIsLastSection(lastDeadlineId, sectionsToRender)
+        !isLastSectionLoaded(lastDeadlineId, sectionsToRender)
       );
 
       this.setState({
