@@ -19,7 +19,7 @@ ios_gems_cache_key: &ios_gems_cache_key ruby-{{ checksum "Gemfile.lock" }}
 defaults_js: &defaults_js
   <<: *defaults
   docker:
-    - image: circleci/node:8
+    - image: circleci/node:10
 
 # android builds
 defaults_android: &defaults_android
