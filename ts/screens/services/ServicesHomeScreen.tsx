@@ -610,7 +610,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   /**
    * Render Locals, Nationals and Other services tabs.
    */
-  // tslint:disable no-big-function
   private renderTabs = () => {
     const {
       localTabSections,
