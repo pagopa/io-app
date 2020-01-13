@@ -827,7 +827,7 @@ calendarEvents:
     cancel: Cancel the operation
 reminders:
   emptyMonth: No reminders for this month
-  loadMoreData: loads the deadlines of the previous period
+  loadMoreData: previous deadlines
   email:
     title: Remember to validate your email address
     modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"
