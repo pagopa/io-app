@@ -13,13 +13,12 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { View } from "native-base";
 import React from "react";
-import { Platform, SectionListScrollParams, StyleSheet } from "react-native";
+import { SectionListScrollParams, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
-import { HEADER_HEIGHT } from "../../utils/constants";
 import { DateFromISOString } from "../../utils/dates";
 import {
   InjectedWithItemsSelectionProps,
@@ -36,14 +35,9 @@ import MessageAgenda, {
 // How many past months to load in batch
 const PAST_DATA_MONTHS = 3;
 
-const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
-
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
-  },
-  animatedStartPosition: {
-    bottom: Platform.OS === "ios" ? SCROLL_RANGE_FOR_ANIMATION : 0
   },
   listContainer: {
     flex: 1
@@ -529,7 +523,6 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           onToggleAllSelection={this.toggleAllMessagesSelection}
           onResetSelection={resetSelection}
           primaryButtonText={I18n.t("messages.cta.archive")}
-          containerStyle={[styles.animatedStartPosition]}
         />
       </View>
     );
