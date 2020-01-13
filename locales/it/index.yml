@@ -837,7 +837,7 @@ calendarEvents:
     cancel: Annulla l'operazione
 reminders:
   emptyMonth: Non ci sono scadenze in questo mese
-  loadMoreData: carica le scadenze del periodo precedente
+  loadMoreData: scadenze precedenti
   noOtherDeadlines: Non ci sono altre scadenze
   email:
     title: Ricorda di validare il tuo indirizzo email

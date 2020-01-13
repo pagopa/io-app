@@ -827,7 +827,7 @@ calendarEvents:
     cancel: Cancel the operation
 reminders:
   emptyMonth: No reminders for this month
-  loadMoreData: loads the deadlines of the previous period
+  loadMoreData: previous deadlines
   noOtherDeadlines: There are no more deadlines
   email:
     title: Remember to validate your email address
