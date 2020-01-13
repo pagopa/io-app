@@ -1,7 +1,6 @@
 import { H1, Text, View } from "native-base";
 import * as React from "react";
-import { ImageSourcePropType, Platform, StyleSheet } from "react-native";
-import { isIphoneX } from "react-native-iphone-x-helper";
+import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
 
 import variables from "../../theme/variables";
 import ScreenHeader from "../ScreenHeader";
@@ -10,8 +9,8 @@ type Props = Readonly<{
   icon?: ImageSourcePropType;
   subtitle?: string;
   banner?: React.ReactNode;
-  fixed?: boolean;
   dark?: boolean;
+  dynamicHeight?: Animated.AnimatedInterpolation;
 }>;
 
 const styles = StyleSheet.create({
@@ -25,17 +24,6 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     marginRight: variables.contentPadding
   },
-  fixedPosition: {
-    position: "absolute",
-    top:
-      Platform.OS === "ios"
-        ? isIphoneX()
-          ? variables.appHeaderHeight + 42
-          : variables.appHeaderHeight + 18
-        : variables.appHeaderHeight,
-    right: 0,
-    left: 0
-  },
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
   },
@@ -46,12 +34,16 @@ const styles = StyleSheet.create({
 
 export class ScreenContentHeader extends React.PureComponent<Props> {
   public render() {
-    const { banner, subtitle, fixed, dark, icon } = this.props;
+    const { banner, subtitle, dark, icon, dynamicHeight } = this.props;
 
     return (
-      <View style={[fixed && styles.fixedPosition, dark && styles.darkGrayBg]}>
+      <View style={dark && styles.darkGrayBg}>
         {banner && <React.Fragment>{banner}</React.Fragment>}
-        <View>
+        <Animated.View
+          style={
+            dynamicHeight !== undefined && { height: dynamicHeight } // if the condition "!== undefined" is not specified, once dynamicHeight.value = 0, dynamicHeight is assumend as false
+          }
+        >
           <View spacer={true} />
           <ScreenHeader
             heading={
@@ -70,7 +62,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
           ) : (
             <View spacer={true} />
           )}
-        </View>
+        </Animated.View>
       </View>
     );
   }

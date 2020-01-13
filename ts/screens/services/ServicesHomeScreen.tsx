@@ -19,9 +19,6 @@
  * If toastContent is undefined, when userMetadata/visible services are loading/error,
  * tabs are hidden and they are displayed renderServiceLoadingPlaceholder/renderErrorPlaceholder
  *
- * TODO: fix graphycal issues at potUserMetadata or services refresh
- *       - https://www.pivotaltracker.com/story/show/169224363s
- *       - https://www.pivotaltracker.com/story/show/169262311
  */
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -116,7 +113,6 @@ type Props = ReturnType<typeof mapStateToProps> &
 type State = {
   currentTab: number;
   currentTabServicesId: ReadonlyArray<string>;
-  enableHeaderAnimation: boolean;
   isLongPressEnabled: boolean;
   enableServices: boolean;
   toastErrorMessage: string;
@@ -129,9 +125,6 @@ type DataLoadFailure =
   | undefined;
 
 const EMPTY_MESSAGE = "";
-
-// Scroll range is directly influenced by floating header height
-const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   container: {
@@ -205,6 +198,10 @@ const styles = StyleSheet.create({
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
+const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
+  ScreenContentHeader
+);
+
 class ServicesHomeScreen extends React.Component<Props, State> {
   private navListener?: NavigationEventSubscription;
 
@@ -213,13 +210,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.state = {
       currentTab: 0,
       currentTabServicesId: [],
-      enableHeaderAnimation: false,
       isLongPressEnabled: false,
       enableServices: false,
       toastErrorMessage: EMPTY_MESSAGE,
       isInnerContentRendered: false
     };
   }
+
   /**
    * return true if all services have INBOX channel disabled
    */
@@ -290,14 +287,20 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }); // tslint:disable-line no-object-mutation
   }
 
-  private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
+  private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
     new Animated.Value(0),
     new Animated.Value(0),
     new Animated.Value(0)
   ];
 
-  // tslint:disable-next-line: readonly-array
-  private scollPositions: number[] = [0, 0, 0];
+  private getHeaderHeight = (
+    currentTab: number
+  ): Animated.AnimatedInterpolation =>
+    this.animatedTabScrollPositions[currentTab].interpolate({
+      inputRange: [0, HEADER_HEIGHT * 3], // The multiplier works as workaround to solve the glitch on Android OS (https://github.com/facebook/react-native/issues/21801)
+      outputRange: [HEADER_HEIGHT, 0],
+      extrapolate: "clamp"
+    });
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
   private renderServiceLoadingPlaceholder() {
@@ -331,19 +334,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     if (enableServices !== prevState.enableServices) {
       this.setState({ enableServices });
     }
-    // saving current list scroll position to enable header animation
-    // when shifting between tabs
-    if (prevState.currentTab !== this.state.currentTab) {
-      this.animatedScrollPositions.map((__, i) => {
-        // when current tab changes, listeners are not kept, so it is needed to
-        // assign them again.
-        this.animatedScrollPositions[i].removeAllListeners();
-        this.animatedScrollPositions[i].addListener(animatedValue => {
-          // tslint:disable-next-line: no-object-mutation
-          this.scollPositions[i] = animatedValue.value;
-        });
-      });
-    }
 
     this.canRenderContent();
 
@@ -366,10 +356,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         // A toast is displayed if refresh visible services fails (on content or metadata load)
         showToast(this.state.toastErrorMessage, "danger");
       }
-    }
-
-    if (!prevState.enableHeaderAnimation && !this.props.isLoadingServices) {
-      this.setState({ enableHeaderAnimation: true });
     }
   }
 
@@ -547,10 +533,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               this.renderSearch()
             ) : (
               <React.Fragment>
-                <ScreenContentHeader
+                <AnimatedScreenContentHeader
                   title={I18n.t("services.title")}
                   icon={require("../../../img/icons/services-icon.png")}
-                  fixed={Platform.OS === "ios"}
+                  dynamicHeight={this.getHeaderHeight(this.state.currentTab)}
                 />
                 {this.renderInnerContent()}
                 {this.state.isLongPressEnabled &&
@@ -603,6 +589,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private handleOnScroll = (value: number) => {
     const { currentTab, isLongPressEnabled } = this.state;
+    // Disable the long press displayed option when the user changes tab
     if (isLongPressEnabled && Math.abs(value - currentTab) > 0.5) {
       this.setState({
         isLongPressEnabled: false
@@ -616,7 +603,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     const isSameTab = currentTab === nextTab;
     this.setState({
       currentTab: nextTab,
-      enableHeaderAnimation: true,
       isLongPressEnabled: isSameTab && isLongPressEnabled
     });
   };
@@ -640,33 +626,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         onScroll={this.handleOnScroll}
         onChangeTab={this.handleOnChangeTab}
         initialPage={0}
-        style={
-          Platform.OS === "ios" && {
-            transform: [
-              {
-                // enableHeaderAnimation is used to avoid unwanted refresh of
-                // animation
-                translateY: this.state.enableHeaderAnimation
-                  ? this.animatedScrollPositions[
-                      this.state.currentTab
-                    ].interpolate({
-                      inputRange: [
-                        0,
-                        SCROLL_RANGE_FOR_ANIMATION / 2,
-                        SCROLL_RANGE_FOR_ANIMATION
-                      ],
-                      outputRange: [
-                        SCROLL_RANGE_FOR_ANIMATION,
-                        SCROLL_RANGE_FOR_ANIMATION / 4,
-                        0
-                      ],
-                      extrapolate: "clamp"
-                    })
-                  : SCROLL_RANGE_FOR_ANIMATION
-              }
-            ]
-          }
-        }
       >
         <Tab
           activeTextStyle={styles.activeTextStyle}
@@ -696,7 +655,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               })
             }
             onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            tabOffset={this.animatedScrollPositions[0]}
+            tabScrollOffset={this.animatedTabScrollPositions[0]}
           />
         </Tab>
         <Tab
@@ -712,7 +671,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             handleOnLongPressItem={this.handleOnLongPressItem}
             isLongPressEnabled={this.state.isLongPressEnabled}
             onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            tabOffset={this.animatedScrollPositions[1]}
+            tabScrollOffset={this.animatedTabScrollPositions[1]}
           />
         </Tab>
 
@@ -733,7 +692,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             handleOnLongPressItem={this.handleOnLongPressItem}
             isLongPressEnabled={this.state.isLongPressEnabled}
             onItemSwitchValueChanged={this.onItemSwitchValueChanged}
-            tabOffset={this.animatedScrollPositions[2]}
+            tabScrollOffset={this.animatedTabScrollPositions[2]}
           />
         </Tab>
       </AnimatedTabs>

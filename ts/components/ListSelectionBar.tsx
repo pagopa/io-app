@@ -1,3 +1,6 @@
+/**
+ * A component to render a view with buttons for Cancel, Select all and Archive/Restore items
+ */
 import { Option } from "fp-ts/lib/Option";
 import { Text } from "native-base";
 import React from "react";
@@ -14,14 +17,10 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.brandLightGray,
     padding: 10
   },
-  buttonBarLeft: {
-    flex: 2
-  },
-  buttonBarRight: {
+  flex2: {
     flex: 2
   },
   buttonBarCenter: {
-    flex: 2,
     backgroundColor: customVariables.colorWhite,
     marginLeft: 10,
     marginRight: 10
@@ -38,9 +37,6 @@ type Props = {
   onResetSelection: () => void;
 };
 
-/**
- * A component to render a view with buttons for Cancel, Select all and Archive/Restore items
- */
 export class ListSelectionBar extends React.PureComponent<Props> {
   public render() {
     const {
@@ -62,14 +58,14 @@ export class ListSelectionBar extends React.PureComponent<Props> {
             bordered={true}
             light={true}
             onPress={onResetSelection}
-            style={styles.buttonBarLeft}
+            style={styles.flex2}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
           </ButtonDefaultOpacity>
           <ButtonDefaultOpacity
             block={true}
             bordered={true}
-            style={styles.buttonBarCenter}
+            style={[styles.buttonBarCenter, styles.flex2]}
             onPress={onToggleAllSelection}
           >
             <Text>
@@ -82,7 +78,7 @@ export class ListSelectionBar extends React.PureComponent<Props> {
           </ButtonDefaultOpacity>
           <ButtonDefaultOpacity
             block={true}
-            style={styles.buttonBarRight}
+            style={styles.flex2}
             disabled={selectedItemIds.value.size === 0}
             onPress={onToggleSelection}
           >
