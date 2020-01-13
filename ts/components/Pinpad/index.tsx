@@ -22,6 +22,7 @@ interface Props {
   biometryType?: any;
   compareWithCode?: string;
   inactiveColor: string;
+  disabled?: boolean;
   buttonType: ComponentProps<typeof KeyPad>["buttonType"];
   onFulfill: (code: PinString, isValid: boolean) => void;
   onCancel?: () => void;
@@ -161,6 +162,10 @@ class Pinpad extends React.PureComponent<Props, State> {
   }
 
   private handleChangeText = (inputValue: string) => {
+    // if the component is disabled don't handle any input
+    if (this.props.disabled) {
+      return;
+    }
     this.setState({ value: inputValue });
 
     // Pin is fulfilled
