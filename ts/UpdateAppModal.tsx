@@ -1,5 +1,5 @@
 /**
- * A screen where invite the user to update app because the current version is unsupported
+ * A screen to invite the user to update the app because current version is not supported yet
  *
  */
 
@@ -18,6 +18,7 @@ import BaseScreenComponent from "./components/screens/BaseScreenComponent";
 import FooterWithButtons from "./components/ui/FooterWithButtons";
 import I18n from "./i18n";
 import customVariables from "./theme/variables";
+import { showToast } from "./utils/showToast";
 
 const styles = StyleSheet.create({
   text: {
@@ -35,6 +36,17 @@ const styles = StyleSheet.create({
   }
 });
 
+const openAppStore = () => {
+  const storeUrl = Platform.select({
+    ios: "itms-apps://itunes.apple.com/it/app/testflight/id899247664?mt=8",
+    android: "market://details?id=it.teamdigitale.app.italiaapp"
+  });
+  Linking.openURL(storeUrl).catch(() => {
+    // Display an toast with an error message
+    showToast(I18n.t("msgErrorUpdateApp"), "danger");
+  });
+};
+
 class UpdateAppModal extends React.PureComponent<{}> {
   // No Event on back button android
   private handleBackPress = () => {
@@ -49,19 +61,6 @@ class UpdateAppModal extends React.PureComponent<{}> {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
-  private openAppStore() {
-    if (Platform.OS === "ios") {
-      // TODO: when the app is open to the published replace the link to testflight with the io-app link
-      // tslint:disable-next-line: no-floating-promises
-      Linking.openURL(
-        "itms-apps://itunes.apple.com/it/app/testflight/id899247664?mt=8"
-      );
-    } else {
-      // tslint:disable-next-line: no-floating-promises
-      Linking.openURL("market://details?id=it.teamdigitale.app.italiaapp");
-    }
-  }
-
   /**
    * Footer iOS button
    */
@@ -69,11 +68,7 @@ class UpdateAppModal extends React.PureComponent<{}> {
     return (
       <View footer={true}>
         <React.Fragment>
-          <Button
-            block={true}
-            primary={true}
-            onPress={() => this.openAppStore()}
-          >
+          <Button block={true} primary={true} onPress={openAppStore}>
             <Text>{I18n.t("btnUpdateApp")}</Text>
           </Button>
           <View spacer={true} />
@@ -90,12 +85,12 @@ class UpdateAppModal extends React.PureComponent<{}> {
       cancel: true,
       block: true,
       onPress: () => BackHandler.exitApp(),
-      title: I18n.t("global.buttons.cancel")
+      title: I18n.t("global.buttons.close")
     };
     const updateButtonProps = {
       block: true,
       primary: true,
-      onPress: () => this.openAppStore(),
+      onPress: openAppStore,
       title: I18n.t("btnUpdateApp")
     };
 
@@ -106,6 +101,14 @@ class UpdateAppModal extends React.PureComponent<{}> {
         rightButton={updateButtonProps}
       />
     );
+  }
+
+  // Different footer according to OS
+  get footer() {
+    return Platform.select({
+      ios: this.renderIosFooter(),
+      android: this.renderAndroidFooter()
+    });
   }
 
   public render() {
@@ -125,9 +128,7 @@ class UpdateAppModal extends React.PureComponent<{}> {
             </View>
           </Container>
         </BaseScreenComponent>
-        {Platform.OS === "android"
-          ? this.renderAndroidFooter()
-          : this.renderIosFooter()}
+        {this.footer}
         <View />
       </Modal>
     );

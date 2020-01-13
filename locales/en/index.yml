@@ -839,5 +839,6 @@ openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred
 titleUpdateApp: Update IO!
+msgErrorUpdateApp: "An error occurred while opening the app store"
 messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
 btnUpdateApp: Update the IO app
