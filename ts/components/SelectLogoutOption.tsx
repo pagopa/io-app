@@ -21,8 +21,6 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-type State = {};
-
 const styles = StyleSheet.create({
   content: {
     padding: variables.contentPadding,
@@ -44,10 +42,9 @@ const styles = StyleSheet.create({
 /**
  * A modal that allow the user to select the logout method of choice
  */
-class SelectLogoutOption extends React.PureComponent<Props, State> {
+class SelectLogoutOption extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
-    this.state = {};
   }
 
   private onBackPress = () => {
