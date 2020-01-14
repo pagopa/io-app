@@ -23,7 +23,6 @@ const run = async (root: string, locale: string) => {
   const d = await readLocaleDoc(root, locale);
   const keys = extractKeys(d.doc);
   const unusedPromises = await Promise.all(keys.map(k => isUnused(k)));
-  console.log(unusedPromises);
   const unused = keys.filter((_, idx) => unusedPromises[idx]);
   if (unused.length === 0) {
     console.log(chalk.green("no unused keys found!"));
