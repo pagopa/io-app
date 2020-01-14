@@ -859,7 +859,7 @@ calendarEvents:
     cancel: Annulla l'operazione
 reminders:
   emptyMonth: Non ci sono scadenze in questo mese
-  loadMoreData: carica le scadenze del periodo precedente
+  loadMoreData: scadenze precedenti
   email:
     title: Ricorda di validare il tuo indirizzo email
     modal1: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email. \n Ti abbiamo inviato una email a"
