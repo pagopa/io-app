@@ -12,7 +12,7 @@ import {
 import { loadServiceContentRequestHandler } from "./loadServiceContentRequestHandler";
 import { loadVisibleServicesRequestHandler } from "./loadVisibleServicesHandler";
 
-export function* watchServiceLoadSaga(
+export function* watchLoadServicesSaga(
   backendClient: ReturnType<typeof BackendClient>
 ) {
   yield takeEvery(
