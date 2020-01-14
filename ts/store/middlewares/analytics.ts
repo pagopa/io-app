@@ -273,7 +273,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadServiceContent.request):
     case getType(loadServiceContent.success):
 
-    case getType(loadServiceMetadata.request): 
+    case getType(loadServiceMetadata.request):
     case getType(loadServiceMetadata.success):
 
     // wallet

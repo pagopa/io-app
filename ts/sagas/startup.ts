@@ -66,10 +66,10 @@ import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
+import { watchLoadServicesSaga } from "./startup/watchLoadServicesSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
-import { watchLoadServicesSaga } from "./startup/watchLoadServicesSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import {
   loadUserMetadata,
