@@ -124,6 +124,12 @@ class RootContainer extends React.PureComponent<Props> {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
     //        the redux state (i.e. background)
+    const isAppOutOfDate = !isVersionAppSupported(
+      this.props.backendInfo !== undefined
+        ? this.props.backendInfo.minAppVersion
+        : undefined,
+      DeviceInfo.getVersion()
+    );
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
@@ -134,16 +140,7 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
-        {isVersionAppSupported(
-          this.props.backendInfo !== undefined
-            ? this.props.backendInfo.minAppVersion
-            : undefined,
-          DeviceInfo.getVersion()
-        ) ? (
-          <IdentificationModal />
-        ) : (
-          <UpdateAppModal />
-        )}
+        {isAppOutOfDate ? <UpdateAppModal /> : <IdentificationModal />}
         <LightModalRoot />
       </Root>
     );
