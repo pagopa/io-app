@@ -19,6 +19,7 @@ import FooterWithButtons from "./components/ui/FooterWithButtons";
 import I18n from "./i18n";
 import customVariables from "./theme/variables";
 
+const timeoutErrorMsg = 5000;
 const styles = StyleSheet.create({
   text: {
     marginTop: customVariables.contentPadding,
@@ -83,7 +84,7 @@ class UpdateAppModal extends React.PureComponent<never, State> {
         this.setState({
           isLinkError: false
         });
-      }, 5000);
+      }, timeoutErrorMsg);
     });
   };
 
