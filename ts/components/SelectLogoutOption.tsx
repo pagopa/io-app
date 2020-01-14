@@ -89,7 +89,7 @@ class SelectLogoutOption extends React.PureComponent<Props> {
       </Container>
     ));
 
-    return <ContainerComponent isLoading={this.props.isLogoutInitialized} />;
+    return <ContainerComponent isLoading={this.props.isLogoutInProgress} />;
   }
 
   public componentDidMount() {
@@ -103,7 +103,7 @@ class SelectLogoutOption extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => {
   return {
-    isLogoutInitialized:
+    isLogoutInProgress:
       (state.authentication.kind === "LoggedInWithoutSessionInfo" ||
         state.authentication.kind === "LoggedInWithSessionInfo") &&
       state.authentication.logoutState === "IN_PROGRESS"
