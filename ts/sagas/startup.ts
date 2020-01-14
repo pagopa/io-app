@@ -69,7 +69,7 @@ import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRela
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
-import { watchServiceLoadSaga } from "./startup/watchServiceLoadSaga";
+import { watchLoadServicesSaga } from "./startup/watchLoadServicesSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import {
   loadUserMetadata,
@@ -292,7 +292,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
   yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
-  yield fork(watchServiceLoadSaga, backendClient);
+  yield fork(watchLoadServicesSaga, backendClient);
 
   // Load messages when requested
   yield fork(watchMessagesLoadOrCancelSaga, backendClient.getMessages);
