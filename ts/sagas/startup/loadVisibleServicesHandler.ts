@@ -48,7 +48,6 @@ export function* loadVisibleServicesRequestHandler(
       // Check if old version of services are stored and load new available versions of services
       yield call(removeOldStoredServices, visibleServices);
       yield call(refreshStoredServices, visibleServices);
-
     } else if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());
