@@ -19,8 +19,6 @@ import { GlobalState } from "./types";
 
 // Types
 
-type LogoutState = "INACTIVE" | "IN_PROGRESS" | "COMPLETE";
-
 // reason for the user to be in the unauthenticated state
 type LoggedOutReason = "NOT_LOGGED_IN" | "SESSION_EXPIRED";
 
@@ -42,7 +40,6 @@ export type LoggedInWithoutSessionInfo = Readonly<{
   kind: "LoggedInWithoutSessionInfo";
   idp: IdentityProvider;
   sessionToken: SessionToken;
-  logoutState: LogoutState;
 }>;
 
 // The user is logged in and we also have all session info
@@ -50,18 +47,25 @@ export type LoggedInWithSessionInfo = Readonly<{
   kind: "LoggedInWithSessionInfo";
   idp: IdentityProvider;
   sessionToken: SessionToken;
-  logoutState: LogoutState;
   sessionInfo: PublicSession;
+}>;
+
+export type LogoutRequested = Readonly<{
+  kind: "LogoutRequested";
+  idp: IdentityProvider;
+  reason: LoggedOutReason;
 }>;
 
 export type AuthenticationState =
   | LoggedOutWithoutIdp
   | LoggedOutWithIdp
+  | LogoutRequested
   | LoggedInWithoutSessionInfo
   | LoggedInWithSessionInfo;
 
 type AuthenticationStateWithIdp =
   | LoggedOutWithIdp
+  | LogoutRequested
   | LoggedInWithoutSessionInfo
   | LoggedInWithSessionInfo;
 
@@ -166,8 +170,7 @@ const reducer = (
     return {
       kind: "LoggedInWithoutSessionInfo",
       idp: state.idp,
-      sessionToken: action.payload,
-      logoutState: "INACTIVE"
+      sessionToken: action.payload
     };
   }
 
@@ -185,7 +188,10 @@ const reducer = (
   if (isActionOf(logoutRequest, action) && isLoggedIn(state)) {
     return {
       ...state,
-      logoutState: "IN_PROGRESS"
+      ...{
+        kind: "LogoutRequested",
+        reason: "NOT_LOGGED_IN"
+      }
     };
   }
 

@@ -103,10 +103,7 @@ class SelectLogoutOption extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => {
   return {
-    isLogoutInProgress:
-      (state.authentication.kind === "LoggedInWithoutSessionInfo" ||
-        state.authentication.kind === "LoggedInWithSessionInfo") &&
-      state.authentication.logoutState === "IN_PROGRESS"
+    isLogoutInProgress: state.authentication.kind === "LogoutRequested"
   };
 };
 
