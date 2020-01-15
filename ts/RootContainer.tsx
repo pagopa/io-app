@@ -126,7 +126,9 @@ class RootContainer extends React.PureComponent<Props> {
     //        the redux state (i.e. background)
     const isAppOutOfDate = !isVersionAppSupported(
       this.props.backendInfo !== undefined
-        ? this.props.backendInfo.minAppVersion
+        ? Platform.OS === "ios"
+          ? this.props.backendInfo.min_app_version.ios
+          : this.props.backendInfo.min_app_version.android
         : undefined,
       DeviceInfo.getVersion()
     );
