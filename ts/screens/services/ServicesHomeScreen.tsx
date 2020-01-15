@@ -587,7 +587,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private handleOnScroll = (value: number) => {
     const { currentTab, isLongPressEnabled } = this.state;
-    // Disable the long press displayed option when the user changes tab
+    // Disable the long press option (if displayed) when the user changes tab
     if (isLongPressEnabled && Math.abs(value - currentTab) > 0.5) {
       this.setState({
         isLongPressEnabled: false
