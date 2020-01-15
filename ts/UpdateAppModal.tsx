@@ -147,12 +147,10 @@ class UpdateAppModal extends React.PureComponent<never, State> {
             <View style={styles.container}>
               <H2>{I18n.t("titleUpdateApp")}</H2>
               <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
-              <View spacer={true} large={true} />
               <Image
                 style={styles.img}
                 source={require("../img/icons/update-icon.png")}
               />
-              <View spacer={true} />
               {this.state.isLinkError && (
                 <Text style={styles.textDanger}>
                   {I18n.t("msgErrorUpdateApp")}
@@ -162,7 +160,6 @@ class UpdateAppModal extends React.PureComponent<never, State> {
           </Container>
         </BaseScreenComponent>
         {this.footer}
-        <View />
       </Modal>
     );
   }
