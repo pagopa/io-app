@@ -177,7 +177,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     );
   }
 
-  private handleOnScroll = (value: number) => {
+  private handleOnTabsScroll = (value: number) => {
     const { currentTab } = this.state;
     if (Math.abs(value - currentTab) > 0.5) {
       const nextTab = currentTab + (value - currentTab > 0 ? 1 : -1);
@@ -210,7 +210,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
-        onScroll={this.handleOnScroll}
+        onScroll={this.handleOnTabsScroll}
         onChangeTab={this.handleOnChangeTab}
         initialPage={0}
         style={{
