@@ -1,5 +1,5 @@
 /**
- * A component to display a brandDarkGray background color on the screen using it 
+ * A component to display a brandDarkGray background color on the screen using it
  */
 import { View } from "native-base";
 import * as React from "react";
