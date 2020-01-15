@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
+  currentTab: number;
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   navigateToMessageDetail: (id: string) => void;
   setMessagesArchivedState: (
@@ -456,6 +457,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const { messagesState } = this.props;
     const { messagesState: prevMessagesState } = prevProps;
     const { maybeLastLoadedStartOfMonthTime } = this.state;
+
+    if (prevProps.currentTab !== this.props.currentTab) {
+      this.props.resetSelection();
+    }
 
     if (messagesState !== prevMessagesState) {
       this.setState({
