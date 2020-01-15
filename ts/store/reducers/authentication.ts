@@ -114,6 +114,9 @@ export function isSessionExpired(
 
 // Selectors
 
+export const isLogoutRequested = (state: GlobalState) =>
+  state.authentication.kind === "LogoutRequested";
+
 export const isSessionExpiredSelector = (state: GlobalState) =>
   !isLoggedIn(state.authentication) && isSessionExpired(state.authentication);
 
