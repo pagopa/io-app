@@ -1,3 +1,8 @@
+/**
+ * A component to render the screen content header. It can include:
+ * - an image, displayed on the right
+ * - a subtitle, displayed below the title
+ */
 import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { ImageSourcePropType, Platform, StyleSheet } from "react-native";
