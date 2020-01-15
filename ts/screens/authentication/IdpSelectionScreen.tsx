@@ -1,7 +1,7 @@
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-import { Content, H3, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
