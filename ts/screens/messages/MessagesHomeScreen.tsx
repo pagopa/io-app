@@ -87,6 +87,8 @@ const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
   ScreenContentHeader
 );
 
+const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
+
 class MessagesHomeScreen extends React.PureComponent<Props, State> {
   private navListener?: NavigationEventSubscription;
   constructor(props: Props) {
@@ -159,8 +161,21 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     );
   }
 
+  private handleOnTabsScroll = (value: number) => {
+    const { currentTab } = this.state;
+    if (Math.abs(value - currentTab) > 0.5) {
+      const nextTab = currentTab + (value - currentTab > 0 ? 1 : -1);
+      this.setState({
+        currentTab: nextTab
+      });
+    }
+  };
+
   private handleOnChangeTab = (evt: any) => {
-    this.setState({ currentTab: evt.i });
+    const nextTab: number = evt.i;
+    this.setState({
+      currentTab: nextTab
+    });
   };
 
   /**
@@ -176,9 +191,10 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     } = this.props;
 
     return (
-      <Tabs
+      <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
+        onScroll={this.handleOnTabsScroll}
         onChangeTab={this.handleOnChangeTab}
         initialPage={0}
       >
@@ -188,6 +204,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           heading={I18n.t("messages.tab.inbox")}
         >
           <MessagesInbox
+            currentTab={this.state.currentTab}
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
@@ -212,6 +229,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           heading={I18n.t("messages.tab.deadlines")}
         >
           <MessagesDeadlines
+            currentTab={this.state.currentTab}
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
@@ -226,6 +244,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           heading={I18n.t("messages.tab.archive")}
         >
           <MessagesArchive
+            currentTab={this.state.currentTab}
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
@@ -244,7 +263,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
             }}
           />
         </Tab>
-      </Tabs>
+      </AnimatedTabs>
     );
   };
 

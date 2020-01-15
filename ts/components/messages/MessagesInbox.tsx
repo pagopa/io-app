@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
+  currentTab: number;
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   navigateToMessageDetail: (id: string) => void;
   setMessagesArchivedState: (
@@ -143,6 +144,12 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       filteredMessageStates: [],
       allMessageIdsState: none
     };
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    if (prevProps.currentTab !== this.props.currentTab) {
+      this.props.resetSelection();
+    }
   }
 
   public render() {
