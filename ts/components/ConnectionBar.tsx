@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    top: Platform.OS === "ios" ? 12 : 0,
+    top: -5, // negative index to avoid overlap with the ScreenContentHeader title
     width: "100%",
     zIndex: Platform.OS === "android" ? 1 : undefined
   },
