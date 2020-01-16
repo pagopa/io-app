@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
+
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
 import { createLogger } from "redux-logger";
 import {
@@ -13,7 +14,6 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
-
 import { isDevEnvironment } from "../config";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
@@ -29,6 +29,7 @@ import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
+import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
@@ -89,7 +90,7 @@ const migrations: MigrationManifest = {
   },
 
   // Version 4
-  // we added a state to monitor what pagopa environment is selected
+  // we added a state to monitor what pagoPA environment is selected
   "4": (state: PersistedState) => {
     return (state as PersistedGlobalState).persistedPreferences
       .isPagoPATestEnabled === undefined
@@ -140,9 +141,9 @@ const migrations: MigrationManifest = {
     return {
       ...state,
       entities: {
-        ...(state as any).entities,
+        ...(state as PersistedGlobalState).entities,
         services: {
-          ...(state as any).entities.services,
+          ...(state as PersistedGlobalState).entities.services,
           byId: {}
         }
       }
@@ -168,7 +169,8 @@ const rootPersistConfig: PersistConfig = {
     "persistedPreferences",
     "installation",
     "payments",
-    "content"
+    "content",
+    "userMetadata"
   ],
   // Transform functions used to manipulate state on store/rehydrate
   transforms: [DateISO8601Transform, PotTransform]
@@ -188,7 +190,11 @@ const logger = createLogger({
   duration: true
 });
 
-const sagaMiddleware = createSagaMiddleware();
+// configure Reactotron if the app is running in dev mode
+export const RTron = __DEV__ ? configureReactotron() : {};
+const sagaMiddleware = createSagaMiddleware(
+  __DEV__ ? { sagaMonitor: RTron.createSagaMonitor() } : {}
+);
 
 /**
  * The new react-navigation if integrated with redux need a middleware
@@ -212,18 +218,21 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
    * If available use redux-devtool version of the compose function that allow
    * the inspection of the store from the devtool.
    */
+
   const composeEnhancers =
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const enhancer: StoreEnhancer = composeEnhancers(
-    applyMiddleware(
-      sagaMiddleware,
-      logger,
-      navigationHistory,
-      navigation,
-      analytics.actionTracking, // generic tracker for selected redux actions
-      analytics.screenTracking // tracks screen navigation
-    )
+  const middlewares = applyMiddleware(
+    sagaMiddleware,
+    logger,
+    navigationHistory,
+    navigation,
+    analytics.actionTracking, // generic tracker for selected redux actions
+    analytics.screenTracking // tracks screen navigation,
   );
+  // add Reactotron enhancer if the app is running in dev mode
+  const enhancer: StoreEnhancer = __DEV__
+    ? composeEnhancers(middlewares, RTron.createEnhancer())
+    : composeEnhancers(middlewares);
 
   const store: Store = createStore<PersistedGlobalState, Action, {}, {}>(
     persistedReducer,

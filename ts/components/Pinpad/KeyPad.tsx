@@ -1,8 +1,9 @@
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Button, Col, Grid, Row, Text } from "native-base";
+import { Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import variables from "../../theme/variables";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 type Digit = ITuple2<string, () => void> | undefined;
 
@@ -68,7 +69,7 @@ const renderPinCol = (
         : {};
   return (
     <Col key={key}>
-      <Button
+      <ButtonDefaultOpacity
         onPress={handler}
         disabled={isDisabled}
         style={buttonStyle}
@@ -99,7 +100,7 @@ const renderPinCol = (
             style={{ width: 40, height: 48 }}
           />
         )}
-      </Button>
+      </ButtonDefaultOpacity>
     </Col>
   );
 };

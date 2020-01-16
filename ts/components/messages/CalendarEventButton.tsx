@@ -1,16 +1,17 @@
-import { Button, Text } from "native-base";
+import { Text } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 type Props = {
   isEventInDeviceCalendar: boolean;
   small?: boolean;
   disabled?: boolean;
-  onPress: ComponentProps<typeof Button>["onPress"];
+  onPress: ComponentProps<typeof ButtonDefaultOpacity>["onPress"];
   useShortLabel?: boolean;
 };
 
@@ -91,7 +92,7 @@ class CalendarEventButton extends React.PureComponent<Props> {
     const iconName = isEventInDeviceCalendar ? "io-tick-big" : "io-plus";
 
     return (
-      <Button
+      <ButtonDefaultOpacity
         disabled={disabled}
         onPress={onPress}
         style={[
@@ -125,7 +126,7 @@ class CalendarEventButton extends React.PureComponent<Props> {
               : "messages.cta.reminder"
           )}
         </Text>
-      </Button>
+      </ButtonDefaultOpacity>
     );
   }
 }

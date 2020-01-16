@@ -30,7 +30,7 @@ type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   alert: {
-    backgroundColor: "#c1f4f2",
+    backgroundColor: customVariables.toastColor,
     borderRadius: 4,
     marginTop: customVariables.spacerLargeHeight,
     marginBottom: 0,
@@ -87,7 +87,7 @@ class TosScreen extends React.PureComponent<Props> {
               block: true,
               light: true,
               bordered: true,
-              onPress: () => this.handleGoBack(),
+              onPress: this.handleGoBack,
               title: I18n.t("global.buttons.exit")
             }}
             rightButton={{

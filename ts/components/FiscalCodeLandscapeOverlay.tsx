@@ -1,6 +1,7 @@
 /**
  * A component to show the fiscal code fac-simile in Landscape
  */
+import * as pot from "italia-ts-commons/lib/pot";
 import { Body, Button, Container, View } from "native-base";
 import * as React from "react";
 import {
@@ -12,8 +13,8 @@ import {
 } from "react-native";
 import { isIphoneX } from "react-native-iphone-x-helper";
 import { UserProfile } from "../../definitions/backend/UserProfile";
+import { Municipality } from "../../definitions/content/Municipality";
 import IconFont from "../components/ui/IconFont";
-import { MunicipalityState } from "../store/reducers/content";
 import customVariables from "../theme/variables";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
@@ -21,7 +22,7 @@ import AppHeader from "./ui/AppHeader";
 type Props = Readonly<{
   onCancel: () => void;
   profile: UserProfile;
-  municipality: MunicipalityState;
+  municipality: pot.Pot<Municipality, Error>;
   showBackSide?: boolean;
 }>;
 
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
 export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
   Props
 > {
+  private scrollTimeout?: number;
   private ScrollVewRef = React.createRef<ScrollView>();
 
   private handleBackPress = () => {
@@ -65,11 +67,23 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
 
   public componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    // if there is an active timeout, clear it!
+    if (this.scrollTimeout !== undefined) {
+      clearTimeout(this.scrollTimeout);
+      // tslint:disable-next-line: no-object-mutation
+      this.scrollTimeout = undefined;
+    }
   }
 
   private scrollToEnd = () => {
     if (this.props.showBackSide && this.ScrollVewRef.current) {
-      this.ScrollVewRef.current.scrollToEnd({ animated: true });
+      // dalay the scroll to end command to wait until the ingress animation is completed
+      // tslint:disable-next-line: no-object-mutation
+      this.scrollTimeout = setTimeout(() => {
+        if (this.ScrollVewRef.current) {
+          this.ScrollVewRef.current.scrollToEnd({ animated: true });
+        }
+      }, 300);
     }
   };
 
@@ -112,7 +126,7 @@ export default class FiscalCodeLandscapeOverlay extends React.PureComponent<
           <View spacer={true} large={true} />
         </ScrollView>
         <View style={styles.closeButton}>
-          <Button transparent={true} onPress={() => this.props.onCancel()}>
+          <Button transparent={true} onPress={this.props.onCancel}>
             <IconFont name="io-close" color={customVariables.colorWhite} />
           </Button>
         </View>

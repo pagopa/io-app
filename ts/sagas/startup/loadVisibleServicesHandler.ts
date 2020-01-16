@@ -4,19 +4,15 @@ import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 import { all, call, Effect, put, select } from "redux-saga/effects";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
+import { contentServiceLoad } from "../../store/actions/content";
 import {
   loadService,
   loadVisibleServices,
   removeServiceTuples
 } from "../../store/actions/services";
-import {
-  MessagesIdsByServiceId,
-  messagesIdsByServiceIdSelector
-} from "../../store/reducers/entities/messages/messagesIdsByServiceId";
-import {
-  servicesByIdSelector,
-  ServicesByIdState
-} from "../../store/reducers/entities/services/servicesById";
+import { servicesMetadataByIdSelector } from "../../store/reducers/content";
+import { messagesIdsByServiceIdSelector } from "../../store/reducers/entities/messages/messagesIdsByServiceId";
+import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { SagaCallReturnType } from "../../types/utils";
 
 type VisibleServiceVersionById = {
@@ -56,13 +52,13 @@ export function* loadVisibleServicesRequestHandler(
         {}
       );
 
-      const storedServicesById: ServicesByIdState = yield select(
-        servicesByIdSelector
-      );
+      const storedServicesById: ReturnType<
+        typeof servicesByIdSelector
+      > = yield select(servicesByIdSelector);
 
-      const messagesIdsByServiceId: MessagesIdsByServiceId = yield select(
-        messagesIdsByServiceIdSelector
-      );
+      const messagesIdsByServiceId: ReturnType<
+        typeof messagesIdsByServiceIdSelector
+      > = yield select(messagesIdsByServiceIdSelector);
 
       // Create an array of tuples containing:
       // - serviceId (to remove service from both the servicesById and the servicesMetadataById sections of the redux store)
@@ -97,13 +93,13 @@ export function* loadVisibleServicesRequestHandler(
       // Dispatch action to remove the services from the redux store
       yield put(removeServiceTuples(serviceTuplesToRemove));
 
-      const serviceIdsToLoad = visibleServices
+      // Check which services content should be loaded
+      const serviceContentIdsToLoad = visibleServices
         .filter(service => {
           const serviceId = service.service_id;
           const storedService = storedServicesById[serviceId];
-
           return (
-            // The service:
+            // The service content:
             // - is not in the redux store
             storedService === undefined ||
             // - is in the redux store as PotNone and not loading
@@ -115,17 +111,46 @@ export function* loadVisibleServicesRequestHandler(
           );
         })
         .map(_ => _.service_id);
+      // Parallel fetch of those services content that we haven't loaded yet or need to be updated
+      yield all(
+        serviceContentIdsToLoad.map(id => put(loadService.request(id)))
+      );
 
-      // Parallel fetch of those services that we haven't loaded yet or need to be updated
-      yield all(serviceIdsToLoad.map(id => put(loadService.request(id))));
+      // Check which services metadata should be loaded
+      // Metadata has no version and they are updated only if:
+      // - service content version is updated ( after loadService.request service metadata are loaded again)
+      // - service metadata stored on redux store has error state (meaning somthing gone wrong when loaded)
+      // - previous requests for service metadata returned an empty object (404)
+      const servicesMetadataById: ReturnType<
+        typeof servicesMetadataByIdSelector
+      > = yield select(servicesMetadataByIdSelector);
+      const serviceMetadataIdsToLoad = visibleServices
+        .filter(service => {
+          const serviceId = service.service_id;
+          const storedMetadata = servicesMetadataById[serviceId];
+          return (
+            // Service load never occurs or it ends up with an error
+            serviceContentIdsToLoad.indexOf(serviceId) === -1 &&
+            !pot.isLoading(storedMetadata) &&
+            (pot.isError(storedMetadata) ||
+              pot.isNone(storedMetadata) ||
+              (pot.isSome(storedMetadata) &&
+                storedMetadata.value === undefined))
+          );
+        })
+        .map(_ => _.service_id);
+      // Parallel fetch of those services metadata that we haven't loaded yet or need to be updated
+      yield all(
+        serviceMetadataIdsToLoad.map(id => put(contentServiceLoad.request(id)))
+      );
     } else if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());
       return;
     } else {
-      throw Error();
+      throw Error("An error occurred loading visible services");
     }
-  } catch {
-    yield put(loadVisibleServices.failure());
+  } catch (error) {
+    yield put(loadVisibleServices.failure(error));
   }
 }

@@ -55,9 +55,14 @@ const styles = StyleSheet.create({
     }
   }),
 
-  amountLabel: {
-    color: variables.colorWhite,
+  amountTitleLabel: {
     fontSize: variables.fontSizeBase * 1.25,
+    fontWeight: "700",
+    lineHeight: variables.fontSizeBase * 1.5
+  },
+
+  reasonLabel: {
+    fontSize: variables.fontSizeBase,
     fontWeight: "700",
     lineHeight: variables.fontSizeBase * 1.5
   },
@@ -116,12 +121,13 @@ class PaymentSummaryComponent extends React.Component<Props> {
         <View spacer={true} large={true} />
         <Row>
           <Col size={5}>
-            <H3 style={styles.white}>
+            <Text style={[styles.amountTitleLabel, styles.white]}>
               {I18n.t("wallet.firstTransactionSummary.title")}
-            </H3>
-            <H1 style={styles.white}>
+            </Text>
+            <View spacer={true} large={true} />
+            <Text style={[styles.reasonLabel, styles.white]}>
               {paymentReason !== undefined ? paymentReason : "..."}
-            </H1>
+            </Text>
           </Col>
           <Col
             size={1}
@@ -136,7 +142,7 @@ class PaymentSummaryComponent extends React.Component<Props> {
 
         {this.labelValueRow(
           <View style={[styles.flexRow, styles.alignCenter]}>
-            <Text style={styles.amountLabel}>
+            <Text style={[styles.amountTitleLabel, styles.white]}>
               {I18n.t(
                 amountIsUpdated
                   ? "wallet.firstTransactionSummary.updatedAmount"

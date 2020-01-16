@@ -3,16 +3,14 @@ import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import {
-  EnabledChannels,
-  getEnabledChannelsForService
-} from "../../screens/preferences/common";
+
 import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
+import { getEnabledChannelsForService } from "../../utils/profile";
 import ListItemComponent from "../screens/ListItemComponent";
 
 interface State {
-  uiEnabledChannels: EnabledChannels;
+  switchValue: boolean;
 }
 
 type Props = Readonly<{
@@ -53,6 +51,27 @@ export default class NewServiceListItem extends React.PureComponent<
   Props,
   State
 > {
+  constructor(props: Props) {
+    super(props);
+    this.onItemSwitchValueChanged = this.onItemSwitchValueChanged.bind(this);
+    const switchValue = this.isInboxChannelEnabled();
+    this.state = {
+      switchValue
+    };
+  }
+
+  public componentDidUpdate() {
+    const switchValue = this.isInboxChannelEnabled();
+    if (
+      switchValue !== this.state.switchValue &&
+      !pot.isUpdating(this.props.profile)
+    ) {
+      this.setState({
+        switchValue
+      });
+    }
+  }
+
   private getServiceKey = (
     potService: pot.Pot<ServicePublic, Error>
   ): string => {
@@ -64,34 +83,44 @@ export default class NewServiceListItem extends React.PureComponent<
       `service-switch`
     );
   };
-  // tslint:disable-next-line:cognitive-complexity
-  public render() {
+
+  private isInboxChannelEnabled() {
     const potService = this.props.item;
-    const enabledChannels = pot.map(potService, service =>
+    const uiEnabledChannels = pot.map(potService, service =>
       getEnabledChannelsForService(this.props.profile, service.service_id)
     );
+    return pot.isSome(uiEnabledChannels) && uiEnabledChannels.value.inbox;
+  }
 
-    const isServiceDisabled = pot.toUndefined(
-      pot.map(enabledChannels, m => m.inbox === false)
-    );
+  private onItemSwitchValueChanged(value: boolean) {
+    const potService = this.props.item;
+    if (this.props.onItemSwitchValueChanged !== undefined) {
+      const onItemSwitchValueChanged = this.props.onItemSwitchValueChanged;
+      pot.map(potService, service => {
+        // if the service is not updating and the new value is
+        // different from the old one, then update it!
+        if (
+          !pot.isUpdating(this.props.profile) &&
+          this.state.switchValue !== value
+        ) {
+          this.setState({
+            switchValue: value
+          });
+          onItemSwitchValueChanged(service, value);
+        }
+      });
+    }
+  }
+
+  public render() {
+    const { switchValue } = this.state;
+    const potService = this.props.item;
 
     const onPress = !this.props.isLongPressEnabled
       ? pot.toUndefined(
           pot.map(potService, service => () => this.props.onSelect(service))
         )
       : undefined;
-
-    const onItemSwitchValueChanged = (value: boolean) => {
-      return this.props.onItemSwitchValueChanged
-        ? pot.toUndefined(
-            pot.map(potService, service => {
-              if (this.props.onItemSwitchValueChanged) {
-                this.props.onItemSwitchValueChanged(service, value);
-              }
-            })
-          )
-        : undefined;
-    };
 
     const serviceName = pot.isLoading(potService)
       ? I18n.t("global.remoteStates.loading")
@@ -107,9 +136,10 @@ export default class NewServiceListItem extends React.PureComponent<
         onLongPress={this.props.onLongPress}
         hideSeparator={this.props.hideSeparator}
         style={styles.listItem}
-        isItemDisabled={isServiceDisabled}
-        onSwitchValueChanged={onItemSwitchValueChanged}
-        switchValue={pot.isSome(enabledChannels) && enabledChannels.value.inbox}
+        isItemDisabled={!switchValue}
+        onSwitchValueChanged={this.onItemSwitchValueChanged}
+        switchValue={switchValue}
+        switchDisabled={pot.isUpdating(this.props.profile)}
         keySwitch={this.getServiceKey(potService)}
         isLongPressEnabled={this.props.isLongPressEnabled}
       />

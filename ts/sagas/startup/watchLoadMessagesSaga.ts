@@ -54,11 +54,6 @@ export function* loadMessages(
     > = yield select<GlobalState>(messagesAllIdsSelector);
     const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
 
-    // Load already cached messages from the store
-    const cachedMessagesById: ReturnType<
-      typeof messagesStateByIdSelector
-    > = yield select<GlobalState>(messagesStateByIdSelector);
-
     // Load already cached services from the store
     const cachedServicesById: ReturnType<
       typeof servicesByIdSelector
@@ -85,15 +80,15 @@ export function* loadMessages(
           response.value.status === 500 && response.value.value.title
             ? response.value.value.title
             : "";
-        yield put(loadMessagesAction.failure(error));
+        yield put(loadMessagesAction.failure(Error(error)));
       } else {
         // 200 ok
-        yield put(
-          loadMessagesAction.success(response.value.value.items.map(_ => _.id))
-        );
+        const responseItemsIds = response.value.value.items.map(_ => _.id);
+
+        yield put(loadMessagesAction.success(responseItemsIds));
+
         // Calculate the ids of the message no more visible that we need
         // to remove from the cache.
-        const responseItemsIds = response.value.value.items.map(_ => _.id);
         const messagesIdsToRemoveFromCache = cachedMessagesAllIds.filter(
           _ => responseItemsIds.indexOf(_) < 0
         );
@@ -107,6 +102,11 @@ export function* loadMessages(
         // but we want to process them from latest to oldest so we
         // reverse the order.
         const reversedItems = [...response.value.value.items].reverse();
+
+        // Load already cached messages from the store
+        const cachedMessagesById: ReturnType<
+          typeof messagesStateByIdSelector
+        > = yield select<GlobalState>(messagesStateByIdSelector);
 
         const shouldLoadMessage = (message: { id: string }) => {
           const cached = cachedMessagesById[message.id];
@@ -142,7 +142,7 @@ export function* loadMessages(
     }
   } catch (error) {
     // Dispatch failure action
-    yield put(loadMessagesAction.failure(error.message));
+    yield put(loadMessagesAction.failure(error));
   } finally {
     if (yield cancelled()) {
       // If the task is cancelled send a loadMessagesCancelled action.

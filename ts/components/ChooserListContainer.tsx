@@ -3,7 +3,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { debounce } from "lodash";
-import { Body, Button, Content, Input, Item, Right, View } from "native-base";
+import { Body, Content, Input, Item, Right, View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import {
@@ -16,6 +16,7 @@ import {
 import variables from "../theme/variables";
 import customVariables from "../theme/variables";
 import { areSetEqual } from "../utils/options";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";
 import ChooserListSearch from "./ChooserListSearch";
@@ -137,22 +138,28 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
                   .darken(0.2)
                   .string()}
               />
-              <Button onPress={this.onPressCancel} transparent={true}>
+              <ButtonDefaultOpacity
+                onPress={this.onPressCancel}
+                transparent={true}
+              >
                 <IconFont
                   name="io-close"
                   accessible={true}
                   accessibilityLabel={I18n.t("global.buttons.close")}
                 />
-              </Button>
+              </ButtonDefaultOpacity>
             </Item>
           ) : (
-            <Button onPress={this.handleSearchPress} transparent={true}>
+            <ButtonDefaultOpacity
+              onPress={this.handleSearchPress}
+              transparent={true}
+            >
               <IconFont
                 name="io-search"
                 accessible={true}
                 accessibilityLabel={I18n.t("global.actions.search")}
               />
-            </Button>
+            </ButtonDefaultOpacity>
           )}
         </Right>
       </React.Fragment>
@@ -204,7 +211,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
 
     return (
       <FooterWithButtons
-        type="TwoButtonsInlineThird"
+        type={"TwoButtonsInlineThird"}
         leftButton={cancelButtonProps}
         rightButton={saveButtonProps}
       />
@@ -287,7 +294,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
           </View>
         </Content>
         <KeyboardAvoidingView
-          behavior="padding"
+          behavior={Platform.OS === "android" ? "height" : "padding"}
           keyboardVerticalOffset={Platform.select({
             ios: 0,
             android: customVariables.contentPadding
@@ -302,11 +309,24 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
   }
 }
 
-type Without<T, K> = Pick<T, Exclude<keyof T, K>>;
-type ExternalProps<T> = Without<OtherProps<T>, "classes">;
-
-type ChooserListContainerType = <T>(props: ExternalProps<T>) => any;
-
-export default (withItemsSelection(
-  ChooserListContainer
-) as unknown) as ChooserListContainerType;
+export default <T extends {}>() => {
+  const hocComponent = (props: Props<T>) => {
+    const {
+      selectedItemIds,
+      toggleItemSelection,
+      resetSelection,
+      setSelectedItemIds,
+      ...otherProps
+    } = props;
+    return (
+      <ChooserListContainer<T>
+        selectedItemIds={selectedItemIds}
+        toggleItemSelection={toggleItemSelection}
+        resetSelection={resetSelection}
+        setSelectedItemIds={setSelectedItemIds}
+        {...otherProps}
+      />
+    );
+  };
+  return withItemsSelection(hocComponent);
+};

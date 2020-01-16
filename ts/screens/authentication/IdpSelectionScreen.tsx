@@ -1,38 +1,24 @@
-import { Button, Content, H3, Text, View } from "native-base";
+/**
+ * A screen where the user choose the SPID IPD to login with.
+ */
+import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
-import { InfoBanner } from "../../components/InfoBanner";
 import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-
 import * as config from "../../config";
-
 import I18n from "../../i18n";
-
 import { IdentityProvider } from "../../models/IdentityProvider";
-
 import ROUTES from "../../navigation/routes";
-
-import {
-  forgetCurrentSession,
-  idpSelected
-} from "../../store/actions/authentication";
+import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
-
-import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { GlobalState } from "../../store/reducers/types";
-
 import variables from "../../theme/variables";
 
-interface OwnProps {
-  navigation: NavigationScreenProp<NavigationState>;
-}
-
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps & OwnProps;
+type Props = ReduxProps & NavigationScreenProps;
 
 const idps: ReadonlyArray<IdentityProvider> = [
   {
@@ -117,17 +103,8 @@ const styles = StyleSheet.create({
     backgroundColor: variables.contentAlternativeBackground
   }
 });
-/**
- * A screen where the user choose the SPID IPD to login with.
- */
-const IdpSelectionScreen: React.SFC<Props> = props => {
-  const goBack = props.isSessionExpired
-    ? // If the session is expired, on back we need to reset the authentication state in the store
-      () => {
-        props.dispatch(forgetCurrentSession());
-      }
-    : () => props.navigation.goBack();
 
+const IdpSelectionScreen: React.SFC<Props> = props => {
   const onIdpSelected = (idp: IdentityProvider) => {
     props.dispatch(idpSelected(idp));
     props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
@@ -135,18 +112,10 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
 
   return (
     <BaseScreenComponent
-      goBack={goBack}
+      goBack={props.navigation.goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
       <Content noPadded={true} overScrollMode="never" bounces={false}>
-        {props.isSessionExpired && (
-          <React.Fragment>
-            <InfoBanner
-              message={I18n.t("authentication.expiredSessionBanner.message")}
-            />
-            <View spacer={true} />
-          </React.Fragment>
-        )}
         <ScreenHeader
           heading={
             <H3>{I18n.t("authentication.idp_selection.contentTitle")}</H3>
@@ -155,17 +124,18 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
-          <Button block={true} light={true} bordered={true} onPress={goBack}>
+          <ButtonDefaultOpacity
+            block={true}
+            light={true}
+            bordered={true}
+            onPress={props.navigation.goBack}
+          >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
       </Content>
     </BaseScreenComponent>
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  isSessionExpired: isSessionExpiredSelector(state)
-});
-
-export default connect(mapStateToProps)(IdpSelectionScreen);
+export default connect()(IdpSelectionScreen);

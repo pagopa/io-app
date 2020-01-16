@@ -6,7 +6,8 @@ import { CreatedMessageWithContent } from "../../../../definitions/backend/Creat
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import {
   loadMessage as loadMessageAction,
-  loadMessages as loadMessagesAction
+  loadMessages as loadMessagesAction,
+  removeMessages as removeMessagesAction
 } from "../../../store/actions/messages";
 import { loadService } from "../../../store/actions/services";
 import { messagesAllIdsSelector } from "../../../store/reducers/entities/messages/messagesAllIds";
@@ -88,6 +89,21 @@ const testMessages = {
   page_size: 2
 };
 
+const testOneMessage = {
+  items: [
+    {
+      id: testMessageId1,
+      sender_service_id: testServiceId1
+    }
+  ],
+  page_size: 1
+};
+
+const cachedMessagesAllIds: ReadonlyArray<string> = [
+  testMessageId1,
+  testMessageId2
+];
+
 describe("watchLoadMessages", () => {
   describe("loadMessages test plan", () => {
     it("should put MESSAGES_LOAD_FAILURE with the Error it the getMessages response is an Error", () => {
@@ -99,16 +115,13 @@ describe("watchLoadMessages", () => {
         .select(messagesAllIdsSelector)
         // Return an empty pot array as messagesAllIdsSelector response
         .next(pot.some([]))
-        .select(messagesStateByIdSelector)
-        // Return an empty object as messagesByIdSelectors response
-        .next({})
         .select(servicesByIdSelector)
         // Return an empty object as servicesByIdSelector response
         .next({})
         .call(getMessages, {})
         // Return an error message as getMessages response
         .next(right({ status: 500, value: { title: "Backend error" } }))
-        .put(loadMessagesAction.failure("Backend error"))
+        .put(loadMessagesAction.failure(Error("Backend error")))
         .next()
         .next()
         .isDone();
@@ -123,9 +136,6 @@ describe("watchLoadMessages", () => {
         .select(messagesAllIdsSelector)
         // Return an empty pot array as messagesAllIdsSelector response
         .next(pot.some([]))
-        .select(messagesStateByIdSelector)
-        // Return an empty object as messagesByIdSelectors response (no message already stored)
-        .next({})
         .select(servicesByIdSelector)
         // Return an empty object as servicesByIdSelector response (no service already stored)
         .next({})
@@ -134,6 +144,9 @@ describe("watchLoadMessages", () => {
         .next(right({ status: 200, value: testMessages }))
         .put(loadMessagesAction.success(testMessages.items.map(_ => _.id)))
         .next()
+        .select(messagesStateByIdSelector)
+        // Return an empty object as messagesByIdSelectors response (no message already stored)
+        .next({})
         .all([put(loadService.request("5a563817fcc896087002ea46c49a"))])
         .next(right({ status: 200, value: testServicePublic }))
         .all([
@@ -151,12 +164,6 @@ describe("watchLoadMessages", () => {
         .select(messagesAllIdsSelector)
         // Return an empty pot array as messagesAllIdsSelector response
         .next(pot.some([]))
-        .select(messagesStateByIdSelector)
-        // Return an object as messagesByIdSelectors response
-        .next({
-          [testMessageId1]: testMessageMeta1,
-          [testMessageId2]: testMessageMeta2
-        } as ReturnType<typeof messagesStateByIdSelector>)
         .select(servicesByIdSelector)
         // Return an object as servicesByIdSelector response
         .next({
@@ -167,11 +174,46 @@ describe("watchLoadMessages", () => {
         .next(right({ status: 200, value: testMessages }))
         .put(loadMessagesAction.success(testMessages.items.map(_ => _.id)))
         .next()
+        .select(messagesStateByIdSelector)
+        // Return an object as messagesByIdSelectors response
+        .next({
+          [testMessageId1]: testMessageMeta1,
+          [testMessageId2]: testMessageMeta2
+        } as ReturnType<typeof messagesStateByIdSelector>)
         // Do not load any new services
         .all([])
+        .next();
+    });
+
+    it("should remove testMessageMeta2 and not call getService and getMessage if the getMessages response contains 0 new services and 0 new messages", () => {
+      const getMessages = jest.fn();
+      const getMessage = jest.fn();
+      const getService = jest.fn();
+      testSaga(loadMessages, getMessages, getMessage, getService)
         .next()
-        // Do not load any new messages
-        .all([]);
+        .select(messagesAllIdsSelector)
+        // Return an empty pot array as messagesAllIdsSelector response
+        .next(pot.some(cachedMessagesAllIds))
+        .select(servicesByIdSelector)
+        // Return an object as servicesByIdSelector response
+        .next({
+          [testServiceId1]: pot.some(testServicePublic)
+        } as ReturnType<typeof servicesByIdSelector>)
+        .call(getMessages, {})
+        // Return 200 with a list of 2 messages as getMessages response
+        .next(right({ status: 200, value: testOneMessage }))
+        .put(loadMessagesAction.success(testOneMessage.items.map(_ => _.id)))
+        .next()
+        .put(removeMessagesAction([testMessageMeta2.meta.id]))
+        .next()
+        .select(messagesStateByIdSelector)
+        // Return an object as messagesByIdSelectors response
+        .next({
+          [testMessageId1]: testMessageMeta1
+        } as ReturnType<typeof messagesStateByIdSelector>)
+        // Do not load any new services
+        .all([])
+        .next();
     });
   });
 });

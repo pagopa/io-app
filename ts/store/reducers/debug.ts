@@ -2,6 +2,7 @@ import { getType } from "typesafe-actions";
 
 import { setDebugModeEnabled } from "../actions/debug";
 import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 export type DebugState = Readonly<{
   isDebugModeEnabled: boolean;
@@ -25,3 +26,7 @@ export function debugReducer(
 
   return state;
 }
+
+// Selector
+export const isDebugModeEnabledSelector = (state: GlobalState) =>
+  state.debug.isDebugModeEnabled;

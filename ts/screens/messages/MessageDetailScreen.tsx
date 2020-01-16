@@ -1,6 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, H3, Text, View } from "native-base";
+import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -10,6 +10,7 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -19,6 +20,7 @@ import {
   setMessageReadState
 } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
+import { loadService } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -170,13 +172,13 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
               <Text numberOfLines={1}>{`ID: ${messageId}`}</Text>
             </View>
             <View style={styles.erroStateMessageDataRight}>
-              <Button
+              <ButtonDefaultOpacity
                 xsmall={true}
                 bordered={true}
                 onPress={() => clipboardSetStringWithFeedback(messageId)}
               >
                 <Text>{I18n.t("clipboard.copyText")}</Text>
-              </Button>
+              </ButtonDefaultOpacity>
             </View>
           </View>
           <Text alignCenter={true} style={styles.errorStateMessageRetry}>
@@ -187,22 +189,22 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
           </Text>
         </View>
         <View style={styles.errorStateFooterWrapper}>
-          <Button
+          <ButtonDefaultOpacity
             block={true}
             cancel={true}
             onPress={this.goBack}
             style={styles.errorStateCancelButton}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-          <Button
+          </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             onPress={onRetry}
             style={styles.errorStateRetryButton}
           >
             <Text>{I18n.t("global.buttons.retry")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
       </View>
     );
@@ -266,10 +268,25 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   public componentDidMount() {
+    const { potMessage, potService, refreshService } = this.props;
+    // if the message is loaded then refresh sender service data
+    if (pot.isSome(potMessage) && !pot.isLoading(potService)) {
+      refreshService(potMessage.value.sender_service_id);
+    }
     this.setMessageReadState();
   }
 
-  public componentDidUpdate() {
+  public componentDidUpdate(prevProps: Props) {
+    const { potMessage, potService, refreshService } = this.props;
+    const { potMessage: prevPotMessage } = prevProps;
+    // if the message was not yet loaded in the component's mount, the service is refreshed here once the message is loaded
+    if (
+      !pot.isSome(prevPotMessage) &&
+      pot.isSome(potMessage) &&
+      !pot.isLoading(potService)
+    ) {
+      refreshService(potMessage.value.sender_service_id);
+    }
     this.setMessageReadState();
   }
 
@@ -318,6 +335,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
   return {
+    refreshService: (serviceId: string) =>
+      dispatch(loadService.request(serviceId)),
     contentServiceLoad: (serviceId: ServiceId) =>
       dispatch(contentServiceLoad.request(serviceId)),
     loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>

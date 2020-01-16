@@ -6,15 +6,11 @@ import {
   StackActions
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
-
-import { InferNavigationParams } from "../../types/react";
-
 import ROUTES from "../../navigation/routes";
-
-import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
-
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
-
+import EmailInsertScreen from "../../screens/onboarding/EmailInsertScreen";
+import EmailReadScreen from "../../screens/onboarding/EmailReadScreen";
+import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
 import AddCardScreen from "../../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen";
@@ -27,6 +23,7 @@ import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErro
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
+import { InferNavigationParams } from "../../types/react";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -58,6 +55,13 @@ export const navigateToMainNavigatorAction = StackActions.reset({
   ]
 });
 
+export const navigateToIdpSelectionScreenAction = NavigationActions.navigate({
+  routeName: ROUTES.AUTHENTICATION,
+  action: NavigationActions.navigate({
+    routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
+  })
+});
+
 export const navigateToOnboardingPinScreenAction = NavigationActions.navigate({
   routeName: ROUTES.ONBOARDING,
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_PIN })
@@ -76,7 +80,30 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
+export const navigateToEmailValidateScreen = NavigationActions.navigate({
+  routeName: ROUTES.ONBOARDING,
+  action: NavigationActions.navigate({
+    routeName: ROUTES.ONBOARDING_EMAIL_VALIDATE
+  })
+});
+
+export const navigateToEmailReadScreen = (
+  params: InferNavigationParams<typeof EmailReadScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.READ_EMAIL_SCREEN,
+    params
+  });
+
 export const navigateBack = NavigationActions.back;
+
+export const navigateToEmailInsertScreen = (
+  params: InferNavigationParams<typeof EmailInsertScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.INSERT_EMAIL_SCREEN,
+    params
+  });
 
 export const navigateToMessageDetailScreenAction = (
   params: InferNavigationParams<typeof MessageDetailScreen>
@@ -211,4 +238,29 @@ export const navigateToPaymentManualDataInsertion = (
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
     params
+  });
+
+export const navigateToCieInvalidScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_EXPIRED_SCREEN
+  });
+
+export const navigateToCieValid = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_VALID_SCREEN
+  });
+
+export const navigateToCieSuccessScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_SUCCESS_SCREEN
+  });
+
+export const navigateToInterruptedReadingCie = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN
+  });
+
+export const navigateToCiePinScreen = () =>
+  NavigationActions.navigate({
+    routeName: ROUTES.CIE_PIN_SCREEN
   });

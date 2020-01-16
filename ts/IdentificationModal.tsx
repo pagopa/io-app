@@ -42,6 +42,7 @@ type State = {
   identificationByPinState: IdentificationByPinState;
   identificationByBiometryState: IdentificationByBiometryState;
   biometryType?: BiometryPrintableSimpleType;
+  canInsertPin: boolean;
 };
 
 const contextualHelp = {
@@ -120,13 +121,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     this.state = {
       identificationByPinState: "unstarted",
-      identificationByBiometryState: "unstarted"
+      identificationByBiometryState: "unstarted",
+      canInsertPin: false
     };
   }
 
   public componentWillMount() {
     const { isFingerprintEnabled } = this.props;
-
     if (isFingerprintEnabled) {
       getFingerprintSettings().then(
         biometryType =>
@@ -138,6 +139,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           }),
         _ => 0
       );
+    } else {
+      // if the biometric is not available unlock the pin insertion
+      this.setState({ canInsertPin: true });
     }
   }
 
@@ -175,7 +179,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   biometryType !== "NOT_ENROLLED" &&
                   biometryType !== "UNAVAILABLE"
                     ? biometryType
-                    : undefined
+                    : undefined,
+                canInsertPin:
+                  biometryType === "NOT_ENROLLED" ||
+                  biometryType === "UNAVAILABLE"
               });
             }
           },
@@ -301,6 +308,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   this.onIdentificationFailureHandler
                 )
               }
+              disabled={!this.state.canInsertPin}
               compareWithCode={pin as string}
               activeColor={"white"}
               inactiveColor={"white"}
@@ -384,7 +392,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       })
       .catch((error: AuthenticationError) => {
         if (isDebugBiometricIdentificationEnabled) {
-          Alert.alert("Biometric identification", `KO: ${error.code}`);
+          Alert.alert("identification.biometric.title", `KO: ${error.code}`);
         }
         if (
           error.code !== "USER_CANCELED" &&
@@ -392,6 +400,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         ) {
           this.setState({
             identificationByBiometryState: "failure"
+          });
+        } else {
+          // if the user dismissed the biometric dialog, unlock the pin insertion
+          this.setState({
+            canInsertPin: true
           });
         }
         onIdentificationFailureHandler();

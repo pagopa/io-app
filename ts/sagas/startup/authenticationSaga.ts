@@ -1,19 +1,13 @@
 import { Effect } from "redux-saga";
-import { call, put, select, take } from "redux-saga/effects";
+import { call, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-
+import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../store/actions/analytics";
 import { loginSuccess } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
-
-import { NavigationActions } from "react-navigation";
-import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
-import ROUTES from "../../navigation/routes";
-import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 
 /**
@@ -23,23 +17,8 @@ import { SessionToken } from "../../types/SessionToken";
 export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   yield put(analyticsAuthenticationStarted());
 
-  const isSessionExpired: boolean = yield select<GlobalState>(
-    isSessionExpiredSelector
-  );
-
   // Reset the navigation stack and navigate to the authentication screen
-  if (isSessionExpired) {
-    // If the user is unauthenticated because of the expired session,
-    // navigate directly to the IDP selection screen.
-    yield put(
-      NavigationActions.navigate({
-        routeName: ROUTES.AUTHENTICATION_IDP_SELECTION
-      })
-    );
-  } else {
-    // Otherwise, navigate to the landing screen.
-    yield put(resetToAuthenticationRoute);
-  }
+  yield put(resetToAuthenticationRoute);
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?

@@ -3,7 +3,7 @@
  * pired with a message.
  *
  */
-import { Button, Text } from "native-base";
+import { Text } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 
@@ -11,6 +11,7 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { MessagePaymentExpirationInfo } from "../../utils/messages";
 import { formatPaymentAmount } from "../../utils/payment";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 type Props = {
@@ -18,7 +19,7 @@ type Props = {
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo;
   small?: boolean;
   disabled?: boolean;
-  onPress: ComponentProps<typeof Button>["onPress"];
+  onPress: ComponentProps<typeof ButtonDefaultOpacity>["onPress"];
 };
 
 const baseStyles = StyleSheet.create({
@@ -186,7 +187,7 @@ class PaymentButton extends React.PureComponent<Props> {
     const hideIcon = isUnexpirable || isExpired || !small;
 
     return (
-      <Button
+      <ButtonDefaultOpacity
         disabled={disabled || paid}
         light={true}
         onPress={paid ? undefined : onPress}
@@ -225,7 +226,7 @@ class PaymentButton extends React.PureComponent<Props> {
         >
           {getButtonText(messagePaymentExpirationInfo, paid)}
         </Text>
-      </Button>
+      </ButtonDefaultOpacity>
     );
   }
 }

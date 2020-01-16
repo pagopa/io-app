@@ -126,7 +126,34 @@ const generateInlineCss = (cssStyle: string) => {
   </style>`;
 };
 
-const generateHtml = (content: string, cssStyle?: string) => {
+const generateCustomFontList = () => {
+  return `<style>
+    ol {
+      list-style: none;
+      counter-reset: li;
+    }
+    ol li::before {
+      content: counter(li);
+      counter-increment: li;
+      color: ${customVariables.brandPrimary};
+      display: inline-block;
+      width: 1em;
+      margin-left: -1.5em;
+      margin-right: 0.5em;
+      text-align: right;
+      direction: rtl;
+      font-weight: bold;
+      font-size: 32px;
+      line-height: 18px;
+    }
+  </style>`;
+};
+
+const generateHtml = (
+  content: string,
+  cssStyle?: string,
+  useCustomSortedList: boolean = false
+) => {
   return `
   <!DOCTYPE html>
   <html>
@@ -136,6 +163,7 @@ const generateHtml = (content: string, cssStyle?: string) => {
   <body>
   ${GLOBAL_CSS}
   ${cssStyle ? generateInlineCss(cssStyle) : ""}
+  ${useCustomSortedList ? generateCustomFontList() : ""}
   ${content}
   </body>
   </html>
@@ -155,6 +183,8 @@ const convertOldDemoMarkdownTag = (markdown: string) =>
 type OwnProps = {
   children: string;
   animated?: boolean;
+  useCustomSortedList?: boolean;
+  onLoadEnd?: () => void;
   onError?: (error: any) => void;
   /**
    * The code will be inserted in the html body between
@@ -188,20 +218,44 @@ class Markdown extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const { children, animated, onError, cssStyle } = this.props;
+    const {
+      children,
+      animated,
+      onError,
+      cssStyle,
+      useCustomSortedList
+    } = this.props;
 
-    this.compileMarkdownAsync(children, animated, onError, cssStyle);
+    this.compileMarkdownAsync(
+      children,
+      animated,
+      onError,
+      cssStyle,
+      useCustomSortedList
+    );
 
     AppState.addEventListener("change", this.handleAppStateChange);
   }
 
   public componentDidUpdate(prevProps: Props) {
     const { children: prevChildren } = prevProps;
-    const { children, animated, onError, cssStyle } = this.props;
+    const {
+      children,
+      animated,
+      onError,
+      cssStyle,
+      useCustomSortedList
+    } = this.props;
 
     // If the children changes we need to re-compile it
     if (children !== prevChildren) {
-      this.compileMarkdownAsync(children, animated, onError, cssStyle);
+      this.compileMarkdownAsync(
+        children,
+        animated,
+        onError,
+        cssStyle,
+        useCustomSortedList
+      );
     }
   }
 
@@ -231,15 +285,18 @@ class Markdown extends React.PureComponent<Props, State> {
       height: htmlBodyHeight
     };
 
+    const isLoading =
+      html === undefined || (html !== "" && htmlBodyHeight === 0);
+
     return (
       <React.Fragment>
-        <ActivityIndicator
-          size="large"
-          color={customVariables.brandPrimary}
-          animating={
-            html === undefined || (html !== "" && htmlBodyHeight === 0)
-          }
-        />
+        {isLoading && (
+          <ActivityIndicator
+            size="large"
+            color={customVariables.brandPrimary}
+            animating={true}
+          />
+        )}
         {/* Hide the WebView until we have the htmlBodyHeight */}
         {html && (
           <ScrollView nestedScrollEnabled={false} style={containerStyle}>
@@ -268,6 +325,9 @@ class Markdown extends React.PureComponent<Props, State> {
 
   // When the injected html is loaded inject the script to notify the height
   private handleLoadEnd = () => {
+    if (this.props.onLoadEnd) {
+      this.props.onLoadEnd();
+    }
     if (this.webViewRef.current) {
       this.webViewRef.current.injectJavaScript(NOTIFY_BODY_HEIGHT_SCRIPT);
     }
@@ -302,7 +362,8 @@ class Markdown extends React.PureComponent<Props, State> {
     markdown: string,
     animated: boolean = false,
     onError?: (error: any) => void,
-    cssStyle?: string
+    cssStyle?: string,
+    useCustomSortedList: boolean = false
   ) => {
     InteractionManager.runAfterInteractions(() => {
       if (animated) {
@@ -319,7 +380,7 @@ class Markdown extends React.PureComponent<Props, State> {
           error
             ? fromNullable(onError).map(_ => _(error))
             : this.setState({
-                html: generateHtml(String(file), cssStyle)
+                html: generateHtml(String(file), cssStyle, useCustomSortedList)
               });
         }
       );

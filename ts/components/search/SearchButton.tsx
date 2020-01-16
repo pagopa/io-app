@@ -4,7 +4,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { Button, Input, Item } from "native-base";
+import { Input, Item } from "native-base";
 import { NavigationEvents } from "react-navigation";
 import I18n from "../../i18n";
 import {
@@ -15,6 +15,7 @@ import {
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
@@ -58,24 +59,30 @@ class SearchButton extends React.Component<Props, State> {
                 .darken(0.2)
                 .string()}
             />
-            <Button onPress={this.onSearchDisable} transparent={true}>
+            <ButtonDefaultOpacity
+              onPress={this.onSearchDisable}
+              transparent={true}
+            >
               <IconFont
                 name="io-close"
                 color={this.props.color}
                 accessible={true}
                 accessibilityLabel={I18n.t("global.buttons.close")}
               />
-            </Button>
+            </ButtonDefaultOpacity>
           </Item>
         ) : (
-          <Button onPress={this.handleSearchPress} transparent={true}>
+          <ButtonDefaultOpacity
+            onPress={this.handleSearchPress}
+            transparent={true}
+          >
             <IconFont
               name="io-search"
               color={this.props.color}
               accessible={true}
               accessibilityLabel={I18n.t("global.actions.search")}
             />
-          </Button>
+          </ButtonDefaultOpacity>
         )}
       </React.Fragment>
     );

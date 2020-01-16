@@ -2,7 +2,37 @@
 
 [![codecov](https://codecov.io/gh/teamdigitale/io-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/io-app)
 
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code-of-conduct.md)
+
 # The mobile app of the Digital Citizenship project
+
+- [FAQ](#faq)
+  - [What is the Digital Citizenship project?](#what-is-the-digital-citizenship-project)
+  - [What is the Digital Citizenship mobile app?](#what-is-the-digital-citizenship-mobile-app)
+  - [Who develops the app?](#who-develops-the-app)
+  - [Can I use the app?](#can-i-use-the-app)
+  - [When will the app be available?](#when-will-the-app-be-available)
+  - [How can I help you?](#how-can-i-help-you)
+- [Main technologies used](#main-technologies-used)
+- [Architecture](#architecture)
+  - [SPID Authentication](#spid-authentication)
+- [How to contribute](#how-to-contribute)
+  - [Pre-requisites](#pre-requisites)
+  - [Building and launching on the simulator](#building-and-launching-on-the-simulator)
+  - [Build (release)](#build-release)
+  - [Installation on physical devices (development)](#installation-on-physical-devices-development)
+  - [Development with Backend App and Local Test IDP](#development-with-backend-app-and-local-test-idp)
+  - [Update the app icons](#update-the-app-icons)
+  - [Internationalization](#internationalization)
+  - [Error handling](#error-handling)
+  - [Connection monitoring](#connection-monitoring)
+  - [Deep linking](#deep-linking)
+  - [Fonts](#fonts)
+  - [Io-Icon-Font](#io-icon-font)
+  - [Theming](#theming)
+  - [Custom UI components](#custom-ui-components)
+  - [End to end test with Detox (experimental)](#end-to-end-test-with-detox-experimental)
+  - [Troubleshooting](#troubleshooting)
 
 ## FAQ
 
@@ -77,9 +107,15 @@ The authentication flow is as follows:
 
 ## How to contribute
 
+In the following there are instructions to build the app in your computer for development purposes.
+
 ### Pre-requisites
 
-#### nodenv
+You need a recent macOS , Linux or Windows 10 based computer, and an Unix based development environment. On macOS and Linux this environment is available in the base install, while on Windows you need to install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10), the Windows Subsystem for Linux.
+
+The following instructions have been tested on a macOS running Mojave, on Linux Ubuntu 18.04 and on Windows with Ubuntu 18.04 installed with WSL. The described procedure assume you are using the `bash` shell; they may work with other shells but you may need to tweak the configuration for your shell. In the following when we will refer to Linux we also mean Windows with WSL.
+
+#### Install nodenv
 
 On macOS and Linux we recommend the use of [nodenv](https://github.com/nodenv/nodenv) for managing multiple versions of NodeJS.
 
@@ -87,11 +123,91 @@ The node version used in this project is stored in [.node-version](.node-version
 
 If you already have nodenv installed and configured on your system, the correct version node will be set when you access the app directory.
 
-#### yarn
+To install, follow the steps described below.
 
-For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/).
+##### Install nodenv on macOS
 
-#### rbenv
+First, if you do not have it already, install [brew](https://brew.sh) following the installation instructions in the home page.
+
+Install `nodenv` with the command:
+
+```
+brew install nodenv
+```
+
+Brew installs `nodenv` in the path so no more steps are needed. Check you have it available with the command `which nodenv`.
+
+##### Install nodenv on Linux 
+
+This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
+
+```
+git clone https://github.com/nodenv/nodenv-installer
+./nodenv-installer/bin/nodenv-installer
+```
+
+Add `nodenv` to the PATH, then reload the configuation as follows:
+
+```
+echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >>~/.bashrc
+source ~/.bashrc
+```
+
+Check you have it available with the command `which nodenv`.
+
+#### Completing and verifying configuration
+
+Either on Mac or Linux you need to add to your shell the initialization command and reload the configuration:
+
+```
+echo 'eval "$(nodenv init -)"' >>~/.bashrc
+source ~/.bashrc
+```
+
+(if you use a different shell than bash you may need to adapt the command to your shell initialization files).
+
+Finally you can install your version of `node` using `nodenv` (replace `<work-dir>` with your actual work directory)
+
+```
+cd <work-dir>/io-app
+nodenv install
+```
+
+You should now verify that the output of the `nodenv version` command and the version of the node in the PATH are the same as the content of the `.node-version` file. For example:
+
+```
+$ nodenv version
+10.13.0 (set by <work-dir>/io-app/.node-version)
+$ node -v
+v10.13.0
+$ cat .node-version
+10.13.0
+```
+
+#### Install yarn
+
+For the management of javascript dependencies we use [Yarn](https://yarnpkg.com/lang/en/). 
+
+
+Yarn is a node application. IF you have already installed in your system version of node compatible with yarn, you can install it as a global command with:
+
+```
+npm install -g yarn
+```
+
+If you do not have node already installed you can install  `yarn` using `nodenv` with this procedure:
+
+```
+cd <work-dir>/io-app
+nodenv global $(cat .node-version)
+curl -o- -L https://yarnpkg.com/install.sh | bash
+```
+
+Now you have to login and logout again from the terminal as yarn installs the configuration in different places on macOS or Linux.
+
+Verify it was installed correctly with the command `which yarn`. It should tell you the installation path of the command. 
+
+#### Install rbenv
 
 On macOS and Linux, for managing multiple versions of Ruby (needed for _Fastlane_ and _CocoaPods_), we recommend the use of [rbenv](https://github.com/rbenv/rbenv).
 
@@ -99,7 +215,100 @@ The Ruby version used in this project is stored in [.ruby-version](.ruby-version
 
 If you already have rbenv installed and configured on your system, the correct Ruby version will be set, when you access the app directory.
 
-Some dependencies (eg CocoaPods) are installed via [bundler](https://bundler.io/).
+To install, follow the steps described below.
+
+##### Installing `rbenv` on macOS
+
+You should already have installed `brew` so use:
+
+```
+brew install rbenv
+```
+
+Brew installs `rbenv` in the path so no more steps are needed.
+
+##### Installing `rbenv` on Linux 
+
+This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. 
+
+```
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+mkdir ~/.rbenv/plugins
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+```
+
+Add `rbenv` to the PATH as follows then reload the intialization file
+
+```
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >>~/.bashrc
+source ~/.bashrc
+```
+
+Verify you have installed it correctly with the command `which rbenv`.
+
+#### Completing and verifying configuration
+
+Either on Mac or Linux you need to add to your shell the initialization command then reload the configuration:
+
+```
+echo 'eval "$(rbenv init -)"' >>~/.bashrc
+source ~/.bashrc
+```
+
+(if you use a different shell than bash you may need to adapt the command to your shell initialization files).
+
+
+Before you can install your version of Ruby, you need a C compiler and some libraries. On Ubuntu or Debian based systems use:
+
+```
+sudo apt-get update
+sudo apt-get install build-essential libssl-dev libreadline-dev zlib1g-dev
+ ```
+
+Now you can install your version of `ruby` using `rbenv` (replace `<work-dir>` with your actual work directory)
+
+```
+cd <work-dir>/io-app
+rbenv install
+```
+
+You should verify that the output of the `rbenv version` command and the content of the file `.ruby-version` are the same:
+
+For example (replace `<work-dir>` with your actual work directory):
+
+```
+$ cd <work-dir>/io-app
+$ rbenv version
+2.4.2 (set by <work-dir>/io-app/.ruby-version)
+$ ruby -v
+ruby 2.4.2p198 (2017-09-14 revision 59899) [x86_64-linux]
+$ cat .ruby-version
+2.4.2
+```
+
+#### Install bundler
+
+Some dependencies are installed via [bundler](https://bundler.io/) and [cocoapods](https://cocoapods.org/) 
+
+Note that on Linux you do not need CocoaPods as you can only build for Android.
+
+Bundler is a Ruby application. If you have installed a version of Ruby in your system you can use it to install the required tools with:
+
+```
+sudo gem install bundler:2.0.2
+```
+
+In some version of Linux you may not have Ruby installed. In some versions of macOS, bundler is not able to install the dependencies because the ruby provided by the system is not complete enough. 
+
+In those cases, you need to install the bundler using the ruby installed by `rbenv` using the following procedure.
+
+```
+cd <work-dir>/io-app
+rbenv global $(cat .ruby-version)
+gem install bundler:2.0.2
+```
+
+Verify it was installed correctly with the command `which bundle`. It should show the installation path of the command. 
 
 #### React Native
 
@@ -109,34 +318,15 @@ If you have a macOS system, you can follow both the tutorial for iOS and for And
 
 ### Building and launching on the simulator
 
-#### Dependencies
-
-First we install the libraries used by the project:
-
-```
-$ bundle install
-$ yarn install
-$ cd ios
-$ pod install
-```
-
-#### Generating API definitions and translations
-
-The second step is to generate the definitions from the openapi specs and from the YAML translations:
-
-```
-$ yarn generate:all
-```
-
 #### App build configuration
 
-Finally, we copy the sample configuration for the app.
+As a first step,  copy the sample configuration for the app.
 
 ```
 $ cp .env.example .env
 ```
 
-Here is a still NOT complete table of the environment variables you can set:
+You need to edit it to match your environment. Here is a still NOT complete table of the environment variables you can set (check the comments in the file for more informations)ç
 
 | NAME                           | DEFAULT |                                                                                                 |
 |--------------------------------|---------|-------------------------------------------------------------------------------------------------|
@@ -145,6 +335,26 @@ Here is a still NOT complete table of the environment variables you can set:
 | `TOT_MESSAGE_FETCH_WORKERS` | 5 | Number of workers to create for message detail fetching. This means that we will have at most a number of concurrent fetches (of the message detail) equal to the number of the workers.
 
 _Note: The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or are fully working._
+
+
+#### Dependencies
+
+Now you can install the libraries used by the project:
+
+```
+$ bundle install
+$ yarn install
+$ cd ios        # skip on linux
+$ pod install   # skip on linux
+```
+
+#### Generating API definitions and translations
+
+Finally, generate the definitions from the openapi specs and from the YAML translations:
+
+```
+$ yarn generate:all
+```
 
 #### Installation on the simulator
 

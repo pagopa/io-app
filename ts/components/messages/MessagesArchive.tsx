@@ -1,14 +1,13 @@
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
-import { Image, Platform, StyleSheet } from "react-native";
-import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
-
-import { none, Option, some } from "fp-ts/lib/Option";
+import { Image, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import customVariables from "../../theme/variables";
+import { HEADER_HEIGHT } from "../../utils/constants";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
@@ -16,13 +15,7 @@ import {
 import { ListSelectionBar } from "../ListSelectionBar";
 import MessageList from "./MessageList";
 
-const SCROLL_RANGE_FOR_ANIMATION =
-  customVariables.appHeaderHeight +
-  (Platform.OS === "ios"
-    ? isIphoneX()
-      ? 18
-      : getStatusBarHeight(true)
-    : customVariables.spacerHeight);
+const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -52,6 +45,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
+  currentTab: number;
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   navigateToMessageDetail: (id: string) => void;
   setMessagesArchivedState: (
@@ -145,6 +139,12 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     return null;
   }
 
+  public componentDidUpdate(prevProps: Props) {
+    if (prevProps.currentTab !== this.props.currentTab) {
+      this.props.resetSelection();
+    }
+  }
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -164,6 +164,21 @@ class MessagesArchive extends React.PureComponent<Props, State> {
       resetSelection
     } = this.props;
     const { allMessageIdsState } = this.state;
+    const isErrorLoading = pot.isError(this.props.messagesState);
+
+    // If have error in pot and the list is empty
+    const ErrorLoadingComponent = () => (
+      <View style={styles.emptyListWrapper}>
+        <View spacer={true} />
+        <Image
+          source={require("../../../img/messages/empty-archive-list-icon.png")}
+        />
+        <Text style={styles.emptyListContentTitle}>
+          {I18n.t("messages.loadingErrorTitle")}
+        </Text>
+        {paddingForAnimation && <View style={styles.paddingForAnimation} />}
+      </View>
+    );
 
     return (
       <View style={styles.listWrapper}>
@@ -175,7 +190,9 @@ class MessagesArchive extends React.PureComponent<Props, State> {
             onLongPressItem={this.handleOnLongPressItem}
             refreshing={isLoading}
             selectedMessageIds={selectedItemIds}
-            ListEmptyComponent={ListEmptyComponent}
+            ListEmptyComponent={
+              isErrorLoading ? ErrorLoadingComponent : ListEmptyComponent
+            }
             animated={animated}
           />
         </View>

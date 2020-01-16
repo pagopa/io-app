@@ -4,17 +4,24 @@
  * TODO: add eviction of old entries
  * https://www.pivotaltracker.com/story/show/159440294
  */
-
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { createSelector } from "reselect";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { Service as ServiceMetadata } from "../../../definitions/content/Service";
+import {
+  ScopeEnum,
+  Service as ServiceMetadata
+} from "../../../definitions/content/Service";
+import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {
   contentMunicipalityLoad,
-  contentServiceLoad
+  contentServiceLoad,
+  contentServicesByScopeLoad
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
@@ -30,6 +37,7 @@ export type ContentState = Readonly<{
     byId: ServiceMetadataById;
   };
   municipality: MunicipalityState;
+  servicesByScope: pot.Pot<ServicesByScope, Error>;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -37,8 +45,10 @@ export type MunicipalityState = Readonly<{
   data: pot.Pot<MunicipalityMetadata, Error>;
 }>;
 
+export type ServiceMetadataState = pot.Pot<ServiceMetadata | undefined, Error>;
+
 export type ServiceMetadataById = Readonly<{
-  [key: string]: pot.Pot<ServiceMetadata, string> | undefined;
+  [key: string]: ServiceMetadataState;
 }>;
 
 const initialContentState: ContentState = {
@@ -48,15 +58,71 @@ const initialContentState: ContentState = {
   municipality: {
     codiceCatastale: pot.none,
     data: pot.none
-  }
+  },
+  servicesByScope: pot.none
 };
 
 // Selectors
+export const servicesMetadataSelector = (state: GlobalState) =>
+  state.content.servicesMetadata;
+
 export const municipalitySelector = (state: GlobalState) =>
   state.content.municipality;
 
 export const servicesMetadataByIdSelector = (state: GlobalState) =>
   state.content.servicesMetadata.byId;
+
+export const servicesByScope = (state: GlobalState) =>
+  state.content.servicesByScope;
+
+/**
+ * returns true if the given serviceId is contained in the relative scope
+ * @param serviceId
+ * @param scope
+ */
+export const isServiceIdInScopeSelector = (
+  serviceId: ServiceId,
+  scope: ScopeEnum
+) =>
+  createSelector(servicesByScope, maybeServicesByScope =>
+    pot.getOrElse(
+      pot.map(
+        maybeServicesByScope,
+        sbs => sbs[scope].indexOf(serviceId) !== -1
+      ),
+      false
+    )
+  );
+
+/**
+ * returns true if the given service is contained in the relative scope
+ * @param service
+ * @param scope
+ */
+export const isServiceInScopeSelector = (
+  service: ServicePublic,
+  scope: ScopeEnum
+) => isServiceIdInScopeSelector(service.service_id, scope);
+
+/**
+ * from the given services returns only these contained in the given scope
+ * @param services
+ * @param scope
+ */
+export const servicesInScopeSelector = (
+  services: ReadonlyArray<ServicePublic>,
+  scope: ScopeEnum
+) =>
+  createSelector(servicesByScope, maybeServicesByScope =>
+    pot.getOrElse(
+      pot.map(maybeServicesByScope, sbs =>
+        services.filter(service => {
+          return sbs[scope].some(sId => sId === service.service_id);
+        })
+      ),
+      []
+    )
+  );
 
 export default function content(
   state: ContentState = initialContentState,
@@ -81,19 +147,20 @@ export default function content(
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload.serviceId]: pot.some(action.payload.data)
+            [action.payload.serviceId]: action.payload.data
           }
         }
       };
+
     case getType(contentServiceLoad.failure):
       return {
         ...state,
         servicesMetadata: {
           byId: {
             ...state.servicesMetadata.byId,
-            [action.payload]: pot.toError(
-              state.servicesMetadata.byId[action.payload] || pot.none,
-              action.payload
+            [action.payload.serviceId]: pot.toError(
+              state.servicesMetadata.byId[action.payload.serviceId] || pot.none,
+              action.payload.error
             )
           }
         }
@@ -103,8 +170,8 @@ export default function content(
       return {
         ...state,
         municipality: {
-          codiceCatastale: pot.none,
-          data: pot.none
+          codiceCatastale: pot.noneLoading,
+          data: pot.noneLoading
         }
       };
 
@@ -117,10 +184,42 @@ export default function content(
         }
       };
 
+    case getType(contentMunicipalityLoad.failure):
+      return {
+        ...state,
+        municipality: {
+          codiceCatastale: pot.toError(
+            state.municipality.codiceCatastale,
+            action.payload
+          ),
+          data: pot.toError(state.municipality.data, action.payload)
+        }
+      };
+
+    // services by scope
+    case getType(contentServicesByScopeLoad.request):
+      return {
+        ...state,
+        servicesByScope: pot.noneLoading
+      };
+
+    case getType(contentServicesByScopeLoad.success):
+      return {
+        ...state,
+        servicesByScope: pot.some(action.payload)
+      };
+
+    case getType(contentServicesByScopeLoad.failure):
+      return {
+        ...state,
+        servicesByScope: pot.toError(state.servicesByScope, action.payload)
+      };
+
     case getType(clearCache):
       return {
         ...state,
-        servicesMetadata: { ...initialContentState.servicesMetadata }
+        servicesMetadata: { ...initialContentState.servicesMetadata },
+        municipality: { ...initialContentState.municipality }
       };
 
     case getType(removeServiceTuples): {
@@ -151,7 +250,3 @@ export default function content(
       return state;
   }
 }
-
-// selector
-export const servicesMetadataSelector = (state: GlobalState) =>
-  state.content.servicesMetadata;

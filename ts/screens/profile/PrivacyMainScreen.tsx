@@ -27,7 +27,7 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
     title={I18n.t("profile.main.screenTitle")}
   >
     <ScreenContent
-      title={I18n.t("profile.main.screenTitle")}
+      title={I18n.t("profile.main.mainPrivacy.screenTitle")}
       subtitle={I18n.t("profile.main.mainPrivacy.screenSubtitle")}
     >
       <List withContentLateralPadding={true}>

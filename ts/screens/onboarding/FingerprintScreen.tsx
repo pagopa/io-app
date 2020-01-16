@@ -1,9 +1,14 @@
-import { Button, Text, View } from "native-base";
+/**
+ * A screen to show if the fingerprint is supported to the user.
+ */
+
+import { Text, View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { Alert } from "react-native";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
@@ -27,9 +32,6 @@ type OwnProps = NavigationScreenProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
-/**
- * A screen to show if the fingerprint is supported to the user.
- */
 export class FingerprintScreen extends React.PureComponent<Props> {
   /**
    * Print the only BiometrySimplePrintableType values that are passed to the UI
@@ -107,13 +109,13 @@ export class FingerprintScreen extends React.PureComponent<Props> {
           </View>
         </ScreenContent>
         <View footer={true}>
-          <Button
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             onPress={this.props.fingerprintAcknowledgeRequest}
           >
             <Text>{I18n.t("global.buttons.continue")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
       </TopScreenComponent>
     );

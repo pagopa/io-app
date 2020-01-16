@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import { ComponentProps } from "../../types/react";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 const styles = StyleSheet.create({
   container: {
@@ -10,6 +11,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignContent: "center",
+    justifyContent: "center",
     flex: 1
   },
   buttonTwoThirds: {
@@ -20,16 +22,17 @@ const styles = StyleSheet.create({
 
 type OwnButtonProps = {
   title: string;
+  buttonFontSize?: number;
 };
 
 type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
 
-interface SingleButton {
+export interface SingleButton {
   type: "SingleButton";
   leftButton: FooterButtonProps;
 }
 
-interface TwoButtonsInlineHalf {
+export interface TwoButtonsInlineHalf {
   type: "TwoButtonsInlineHalf";
   leftButton: FooterButtonProps;
   rightButton: FooterButtonProps;
@@ -41,7 +44,17 @@ interface TwoButtonsInlineThird {
   rightButton: FooterButtonProps;
 }
 
-type Props = SingleButton | TwoButtonsInlineHalf | TwoButtonsInlineThird;
+interface TwoButtonsInlineThirdInverted {
+  type: "TwoButtonsInlineThirdInverted";
+  leftButton: FooterButtonProps;
+  rightButton: FooterButtonProps;
+}
+
+type Props =
+  | SingleButton
+  | TwoButtonsInlineHalf
+  | TwoButtonsInlineThird
+  | TwoButtonsInlineThirdInverted;
 
 /**
  * Implements a component that show 2 buttons in footer with select style (inlineHalf | inlineOneThird)
@@ -54,13 +67,17 @@ export default class FooterWithButtons extends React.Component<Props, never> {
 
     const {
       type,
-      rightButton: { title: rightButtonTitle, ...otherPropsRightButton }
+      rightButton: {
+        title: rightButtonTitle,
+        buttonFontSize: fontSize,
+        ...otherPropsRightButton
+      }
     } = this.props;
 
     return (
       <React.Fragment>
         <View hspacer={true} />
-        <Button
+        <ButtonDefaultOpacity
           {...otherPropsRightButton}
           style={
             type === "TwoButtonsInlineThird"
@@ -68,8 +85,10 @@ export default class FooterWithButtons extends React.Component<Props, never> {
               : styles.button
           }
         >
-          <Text numberOfLines={1}>{rightButtonTitle}</Text>
-        </Button>
+          <Text numberOfLines={1} style={{ fontSize }}>
+            {rightButtonTitle}
+          </Text>
+        </ButtonDefaultOpacity>
       </React.Fragment>
     );
   }
@@ -77,14 +96,22 @@ export default class FooterWithButtons extends React.Component<Props, never> {
   public render() {
     const {
       title: leftButtonTitle,
+      buttonFontSize: fontSize,
       ...otherPropsLeftButton
     } = this.props.leftButton;
 
     return (
       <View footer={true} style={styles.container}>
-        <Button style={styles.button} {...otherPropsLeftButton}>
-          <Text>{leftButtonTitle}</Text>
-        </Button>
+        <ButtonDefaultOpacity
+          style={
+            this.props.type === "TwoButtonsInlineThirdInverted"
+              ? styles.buttonTwoThirds
+              : styles.button
+          }
+          {...otherPropsLeftButton}
+        >
+          <Text style={{ fontSize }}>{leftButtonTitle}</Text>
+        </ButtonDefaultOpacity>
         {this.renderRightButton()}
       </View>
     );

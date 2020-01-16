@@ -1,8 +1,10 @@
+/**
+ * A component to display the list item in the MessageHomeScreen
+ */
 import { fromNullable } from "fp-ts/lib/Option";
-import { Button, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import React from "react";
-import { Platform, StyleSheet, TouchableOpacity } from "react-native";
-
+import { Platform, StyleSheet } from "react-native";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -12,7 +14,9 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { BadgeComponent } from "../screens/BadgeComponent";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import MessageCTABar from "./MessageCTABar";
 
@@ -117,7 +121,7 @@ const styles = StyleSheet.create({
 
 const UNKNOWN_SERVICE_DATA = {
   organizationName: I18n.t("messages.errorLoading.senderInfo"),
-  departmentName: I18n.t("messages.errorLoading.serviceInfo")
+  serviceName: I18n.t("messages.errorLoading.serviceInfo")
 };
 
 class MessageListItem extends React.PureComponent<Props> {
@@ -141,7 +145,7 @@ class MessageListItem extends React.PureComponent<Props> {
 
     const uiService = fromNullable(service).fold(UNKNOWN_SERVICE_DATA, _ => ({
       organizationName: _.organization_name,
-      departmentName: _.department_name
+      serviceName: _.service_name
     }));
 
     const uiDate = convertDateToWordDistance(
@@ -156,7 +160,7 @@ class MessageListItem extends React.PureComponent<Props> {
       : variables.unselectedColor;
 
     return (
-      <TouchableOpacity
+      <TouchableDefaultOpacity
         style={styles.highlight}
         onPress={this.handlePress}
         onLongPress={this.handleLongPress}
@@ -173,7 +177,7 @@ class MessageListItem extends React.PureComponent<Props> {
                 {uiService.organizationName}
               </Text>
               <Text numberOfLines={1} style={styles.serviceDepartmentName}>
-                {uiService.departmentName}
+                {uiService.serviceName}
               </Text>
             </View>
             <View style={styles.headerRight}>
@@ -194,9 +198,12 @@ class MessageListItem extends React.PureComponent<Props> {
             </View>
             <View style={styles.contentRight}>
               {isSelectionModeEnabled ? (
-                <Button onPress={this.handleLongPress} transparent={true}>
+                <ButtonDefaultOpacity
+                  onPress={this.handleLongPress}
+                  transparent={true}
+                >
                   <IconFont name={iconName} color={iconColor} />
-                </Button>
+                </ButtonDefaultOpacity>
               ) : (
                 <IconFont
                   name="io-right"
@@ -219,7 +226,7 @@ class MessageListItem extends React.PureComponent<Props> {
             </View>
           )}
         </View>
-      </TouchableOpacity>
+      </TouchableDefaultOpacity>
     );
   }
 }

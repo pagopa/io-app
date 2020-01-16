@@ -4,12 +4,13 @@
  */
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Button, Container, Text, View } from "native-base";
+import { Container, Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
@@ -113,7 +114,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
 
   /**
-   * Handles valid PagoPA QR codes
+   * Handles valid pagoPA QR codes
    */
   private onValidQrCode = (data: ITuple2<RptId, AmountInEuroCents>) => {
     this.setState({
@@ -123,7 +124,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   };
 
   /**
-   * Handles invalid PagoPA QR codes
+   * Handles invalid pagoPA QR codes
    */
   private onInvalidQrCode = () => {
     showToast(I18n.t("wallet.QRtoPay.wrongQrCode"), "danger");
@@ -237,13 +238,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               }
               bottomContent={
                 <View>
-                  <Button
+                  <ButtonDefaultOpacity
                     onPress={this.showImagePicker}
                     style={styles.button}
                     bordered={true}
                   >
                     <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
-                  </Button>
+                  </ButtonDefaultOpacity>
                   <View style={styles.content}>
                     <View spacer={true} />
                     <Text style={[styles.padded, styles.bottomText]}>
@@ -276,14 +277,14 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                     {I18n.t("wallet.QRtoPay.enroll_cta")}
                   </Text>
 
-                  <Button
+                  <ButtonDefaultOpacity
                     onPress={openAppSettings}
                     style={styles.notAuthorizedBtn}
                   >
                     <Text>
                       {I18n.t("biometric_recognition.enroll_btnLabel")}
                     </Text>
-                  </Button>
+                  </ButtonDefaultOpacity>
                 </View>
               }
             />

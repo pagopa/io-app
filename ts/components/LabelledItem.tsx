@@ -14,6 +14,7 @@ import { Input, Item, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInputProps } from "react-native";
 import { TextInputMaskProps } from "react-native-text-input-mask";
+import { IconProps } from "react-native-vector-icons/Icon";
 import MaskedInput from "../components/ui/MaskedInput";
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";
@@ -27,23 +28,85 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props =
-  | Readonly<{
-      type: "masked";
-      label: string;
-      icon: string;
-      inputMaskProps: TextInputMaskProps;
-      isValid?: boolean;
-    }>
-  | Readonly<{
-      type: "text";
-      label: string;
-      icon: string;
-      inputProps: TextInputProps;
-      isValid?: boolean;
-    }>;
+type StyleType = IconProps["style"];
 
-export class LabelledItem extends React.Component<Props> {
+type CommonProp = Readonly<{
+  label: string;
+  icon: string;
+  isValid?: boolean;
+  iconStyle?: StyleType;
+  focusBorderColor?: string;
+}>;
+
+type State = {
+  isEmpty: boolean;
+  hasFocus: boolean;
+};
+
+type Props = CommonProp &
+  (
+    | Readonly<{
+        type: "masked";
+        inputMaskProps: TextInputMaskProps;
+      }>
+    | Readonly<{
+        type: "text";
+        inputProps: TextInputProps;
+      }>);
+
+export class LabelledItem extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { isEmpty: true, hasFocus: false };
+  }
+
+  /**
+   * check if the input is empty and set the value in the state
+   */
+  private checkInputIsEmpty = (text: string) => {
+    const isEmpty = text.length === 0;
+    if (isEmpty !== this.state.isEmpty) {
+      this.setState({ isEmpty });
+    }
+  };
+
+  /**
+   * handle input on change text
+   */
+  private handleOnChangeText = (text: string) => {
+    if (this.props.type === "text" && this.props.inputProps.onChangeText) {
+      this.props.inputProps.onChangeText(text);
+    }
+    this.checkInputIsEmpty(text);
+  };
+
+  /**
+   * handle masked input on change text
+   */
+  private handleOnMaskedChangeText = (formatted: string, text: string) => {
+    if (
+      this.props.type === "masked" &&
+      this.props.inputMaskProps.onChangeText
+    ) {
+      this.props.inputMaskProps.onChangeText(formatted, text);
+    }
+    this.checkInputIsEmpty(text);
+  };
+
+  /**
+   * keep track if input (or masked input) gains focus
+   */
+  private handleOnFocus = () => {
+    this.setState({ hasFocus: true });
+  };
+
+  /**
+   * keep track if input (or masked input) loses focus
+   */
+  private handleOnBlur = () => {
+    this.setState({ hasFocus: false });
+  };
+
   public render() {
     return (
       <View>
@@ -51,7 +114,13 @@ export class LabelledItem extends React.Component<Props> {
           <Text>{this.props.label}</Text>
         </Item>
         <Item
-          style={styles.bottomLine}
+          style={{
+            ...styles.bottomLine,
+            borderColor:
+              this.state.hasFocus && this.state.isEmpty
+                ? variables.itemBorderDefaultColor
+                : this.props.focusBorderColor
+          }}
           error={this.props.isValid === undefined ? false : !this.props.isValid}
           success={
             this.props.isValid === undefined ? false : this.props.isValid
@@ -61,6 +130,7 @@ export class LabelledItem extends React.Component<Props> {
             size={variables.iconSize3}
             color={variables.brandDarkGray}
             name={this.props.icon}
+            style={this.props.iconStyle}
           />
           {this.props.type === "masked" ? (
             <MaskedInput
@@ -69,6 +139,9 @@ export class LabelledItem extends React.Component<Props> {
                 .string()}
               underlineColorAndroid="transparent"
               {...this.props.inputMaskProps}
+              onChangeText={this.handleOnMaskedChangeText}
+              onFocus={this.handleOnFocus}
+              onBlur={this.handleOnBlur}
             />
           ) : (
             <Input
@@ -77,6 +150,9 @@ export class LabelledItem extends React.Component<Props> {
                 .string()}
               underlineColorAndroid="transparent"
               {...this.props.inputProps}
+              onChangeText={this.handleOnChangeText}
+              onFocus={this.handleOnFocus}
+              onBlur={this.handleOnBlur}
             />
           )}
         </Item>
