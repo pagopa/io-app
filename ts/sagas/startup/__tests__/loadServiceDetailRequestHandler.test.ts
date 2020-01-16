@@ -11,18 +11,18 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceName } from "../../../../definitions/backend/ServiceName";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { updateOrganizations } from "../../../store/actions/organizations";
-import { loadServiceContent } from "../../../store/actions/services";
+import { loadServiceDetail } from "../../../store/actions/services";
 import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { visibleServicesSelector } from "../../../store/reducers/entities/services/visibleServices";
-import { loadServiceContentRequestHandler } from "../loadServiceContentRequestHandler";
+import { loadServiceDetailRequestHandler } from "../loadServiceDetailRequestHandler";
 
 const mockedServiceId = "A01";
 const getService = jest.fn();
 const mockedAction = {
-  type: loadServiceContent.request,
+  type: loadServiceDetail.request,
   payload: mockedServiceId
 };
 const mockedService: ServicePublic = {
@@ -41,14 +41,14 @@ const mockedVisibleServices = pot.some([
   { service_id: "A03" as ServiceId, version: 2 }
 ]);
 
-describe("loadServiceContentRequestHandler", () => {
+describe("loadServiceDetailRequestHandler", () => {
   it("returns an error if backend response is 500", () => {
-    testSaga(loadServiceContentRequestHandler, getService, mockedAction)
+    testSaga(loadServiceDetailRequestHandler, getService, mockedAction)
       .next()
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 500, value: "generic error" }))
       .put(
-        loadServiceContent.failure({
+        loadServiceDetail.failure({
           service_id: mockedServiceId,
           error: mockedGenericError
         })
@@ -57,21 +57,21 @@ describe("loadServiceContentRequestHandler", () => {
       .isDone();
   });
 
-  it("returns service content if the backand response is 200", () => {
-    testSaga(loadServiceContentRequestHandler, getService, mockedAction)
+  it("returns service detail if the backand response is 200", () => {
+    testSaga(loadServiceDetailRequestHandler, getService, mockedAction)
       .next()
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 200, value: mockedService }))
-      .put(loadServiceContent.success(mockedService))
+      .put(loadServiceDetail.success(mockedService))
       .next();
   });
 
-  it("add the organization name of the loaded service if the related fiscal code does not exist in the organizations redux state", () => {
-    testSaga(loadServiceContentRequestHandler, getService, mockedAction)
+  it("add the organization name of the loaded service detail if the related fiscal code does not exist in the organizations redux state", () => {
+    testSaga(loadServiceDetailRequestHandler, getService, mockedAction)
       .next()
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 200, value: mockedService }))
-      .put(loadServiceContent.success(mockedService))
+      .put(loadServiceDetail.success(mockedService))
       .next()
       .select(organizationNamesByFiscalCodeSelector)
       .next({})
@@ -82,18 +82,18 @@ describe("loadServiceContentRequestHandler", () => {
       .isDone();
   });
 
-  it("add the organization name of the loaded service if the related fiscal code exists in the organizations redux state related to a different name", () => {
+  it("add the organization name of the loaded service detail if the related fiscal code exists in the organizations redux state related to a different name", () => {
     const mockedOrganizationsNameByFiscalCode: OrganizationNamesByFiscalCodeState = {
       ["01"]: "ente1" as NonEmptyString,
       ["02"]: "ente2" as NonEmptyString,
       ["03"]: "ente3" as NonEmptyString
     };
 
-    testSaga(loadServiceContentRequestHandler, getService, mockedAction)
+    testSaga(loadServiceDetailRequestHandler, getService, mockedAction)
       .next()
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 200, value: mockedService }))
-      .put(loadServiceContent.success(mockedService))
+      .put(loadServiceDetail.success(mockedService))
       .next()
       .select(organizationNamesByFiscalCodeSelector)
       .next(mockedOrganizationsNameByFiscalCode)
@@ -104,18 +104,18 @@ describe("loadServiceContentRequestHandler", () => {
       .isDone();
   });
 
-  it("does nothing after service load if the related organization name exist in the organizations redux store", () => {
+  it("does nothing after service detail load if the related organization name exist in the organizations redux store", () => {
     const mockedOrganizationsNameByFiscalCode: OrganizationNamesByFiscalCodeState = {
       ["01"]: "ente1 - nuovo nome" as NonEmptyString,
       ["02"]: "ente2" as NonEmptyString,
       ["03"]: "ente3" as NonEmptyString
     };
 
-    testSaga(loadServiceContentRequestHandler, getService, mockedAction)
+    testSaga(loadServiceDetailRequestHandler, getService, mockedAction)
       .next()
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 200, value: mockedService }))
-      .put(loadServiceContent.success(mockedService))
+      .put(loadServiceDetail.success(mockedService))
       .next()
       .select(organizationNamesByFiscalCodeSelector)
       .next(mockedOrganizationsNameByFiscalCode)

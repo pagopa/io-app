@@ -13,7 +13,7 @@ import {
   notSelectedServicesSectionsSelector,
   organizationsOfInterestSelector,
   ServicesState,
-  visibleServicesContentLoadStateSelector
+  visibleServicesDetailLoadStateSelector
 } from "..";
 import { DepartmentName } from "../../../../../../definitions/backend/DepartmentName";
 import { OrganizationName } from "../../../../../../definitions/backend/OrganizationName";
@@ -188,10 +188,10 @@ describe("notSelectedServicesSectionsSelector", () => {
   });
 });
 
-describe("visibleServicesContentLoadStateSelector", () => {
+describe("visibleServicesDetailLoadStateSelector", () => {
   it("should do be pot.noneLoading if at least one visible service is loading", () => {
     expect(
-      visibleServicesContentLoadStateSelector.resultFunc(
+      visibleServicesDetailLoadStateSelector.resultFunc(
         customServices.byId,
         customServices.visible
       )

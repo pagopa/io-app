@@ -6,7 +6,7 @@ import { all, call, Effect, put, select } from "redux-saga/effects";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
-  loadServiceContent,
+  loadServiceDetail,
   loadVisibleServices,
   removeServiceTuples
 } from "../../store/actions/services";
@@ -121,12 +121,12 @@ function* refreshStoredServices(visibleServices: ReturnedVisibleServicesType) {
     typeof servicesByIdSelector
   > = yield select(servicesByIdSelector);
 
-  const serviceContentIdsToLoad = visibleServices
+  const serviceDetailIdsToLoad = visibleServices
     .filter(service => {
       const serviceId = service.service_id;
       const storedService = storedServicesById[serviceId];
       return (
-        // The service content:
+        // The service detail:
         // - is not in the redux store
         storedService === undefined ||
         // - is in the redux store as PotNone and not loading
@@ -141,6 +141,6 @@ function* refreshStoredServices(visibleServices: ReturnedVisibleServicesType) {
 
   // Parallel fetch of those services content that we haven't loaded yet or need to be updated
   yield all(
-    serviceContentIdsToLoad.map(id => put(loadServiceContent.request(id)))
+    serviceDetailIdsToLoad.map(id => put(loadServiceDetail.request(id)))
   );
 }

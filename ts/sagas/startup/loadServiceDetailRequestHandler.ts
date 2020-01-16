@@ -4,7 +4,7 @@ import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { updateOrganizations } from "../../store/actions/organizations";
-import { loadServiceContent } from "../../store/actions/services";
+import { loadServiceDetail } from "../../store/actions/services";
 import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
@@ -23,9 +23,9 @@ import { isVisibleService } from "../../utils/services";
  * @param {string} id - The id of the service to load
  * @returns {IterableIterator<Effect | Either<Error, ServicePublic>>}
  */
-export function* loadServiceContentRequestHandler(
+export function* loadServiceDetailRequestHandler(
   getService: ReturnType<typeof BackendClient>["getService"],
-  action: ActionType<typeof loadServiceContent["request"]>
+  action: ActionType<typeof loadServiceDetail["request"]>
 ): IterableIterator<Effect> {
   try {
     const response: SagaCallReturnType<typeof getService> = yield call(
@@ -38,7 +38,7 @@ export function* loadServiceContentRequestHandler(
     }
 
     if (response.value.status === 200) {
-      yield put(loadServiceContent.success(response.value.value));
+      yield put(loadServiceDetail.success(response.value.value));
 
       // If the organization fiscal code is associated to different organization names,
       // it is considered valid the one declared for a visible service
@@ -68,8 +68,6 @@ export function* loadServiceContentRequestHandler(
       throw Error(`response status ${response.value.status}`);
     }
   } catch (error) {
-    yield put(
-      loadServiceContent.failure({ service_id: action.payload, error })
-    );
+    yield put(loadServiceDetail.failure({ service_id: action.payload, error }));
   }
 }

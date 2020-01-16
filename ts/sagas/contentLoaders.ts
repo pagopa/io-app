@@ -1,3 +1,6 @@
+/**
+ * This module implements the sagas to retrive data from the content client:
+ */
 import { Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -20,7 +23,7 @@ import {
   markServiceAsRead
 } from "../store/actions/services";
 import { servicesByScopeSelector } from "../store/reducers/content";
-import { visibleServicesContentLoadStateSelector } from "../store/reducers/entities/services";
+import { visibleServicesDetailLoadStateSelector } from "../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../store/reducers/entities/services/firstServicesLoading";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
@@ -82,7 +85,7 @@ export function* watchContentServicesByScopeLoad(): Iterator<Effect> {
 /**
  * A saga that watches for and executes requests to load service metadata.
  *
- * TODO: do not retrieve the content on each request, rely on cache headers
+ * TODO: do not retrieve the metadata on each request, rely on cache headers
  * https://www.pivotaltracker.com/story/show/159440224
  */
 // tslint:disable-next-line:cognitive-complexity
@@ -132,8 +135,8 @@ export function* watchServiceMetadataLoadSaga(): Iterator<Effect> {
           typeof servicesByScopeSelector
         > = yield select(servicesByScopeSelector);
         const visibleServicesContentLoadState: ReturnType<
-          typeof visibleServicesContentLoadStateSelector
-        > = yield select(visibleServicesContentLoadStateSelector);
+          typeof visibleServicesDetailLoadStateSelector
+        > = yield select(visibleServicesDetailLoadStateSelector);
         if (
           pot.isSome(visibleServicesContentLoadState) &&
           pot.isSome(servicesByScope)

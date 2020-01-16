@@ -76,7 +76,7 @@ export const servicesSelector = (state: GlobalState) => state.entities.services;
  * - pot.some if both visible services and all services load successfully
  * @param visibleServices - list of visible services
  * @param services - collection of services related data indexed with respect to the services id
- *                   (applied for entities.services.byId state and content.servicesMetadata.byId)
+ *                   (applied for entities.services.byId state)
  */
 function getServicesLoadState<T>(
   visibleServices: VisibleServicesState,
@@ -120,8 +120,8 @@ function getServicesLoadState<T>(
   }
 }
 
-// A selector to monitor the state of the service content loading
-export const visibleServicesContentLoadStateSelector = createSelector(
+// A selector to monitor the state of the service detail loading
+export const visibleServicesDetailLoadStateSelector = createSelector(
   [servicesByIdSelector, visibleServicesSelector],
   (servicesById, visibleServices) =>
     getServicesLoadState<ServicePublic>(visibleServices, servicesById)
@@ -143,7 +143,7 @@ export const organizationsOfInterestSelector = createSelector(
       pot.map(
         potUserMetadata,
         _ =>
-          // filter organization by selecting those ones have
+          // filter organization by selecting those ones having
           // at least 1 visible service inside
           _.metadata.organizationsOfInterest
             ? _.metadata.organizationsOfInterest.filter(org => {
@@ -166,7 +166,7 @@ export const organizationsOfInterestSelector = createSelector(
 // Check if the passed service is local or national through data included into serviceByScope store item.
 // If the scope parameter is expressed, the corresponding item is not included into the section if:
 // -  the scope paramenter is different to the service scope
-// -  service content or serviceByScope loading fails
+// -  service detail or serviceByScope loading fails
 const isInScope = (
   service: pot.Pot<ServicePublic, Error>,
   servicesByScope: pot.Pot<ServicesByScope, Error>,

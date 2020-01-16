@@ -224,7 +224,7 @@ export default function content(
 
     case getType(removeServiceTuples): {
       // removeServiceTuples is dispatched to remove from the store
-      // the service content (and, here, metadata) related to services that are
+      // the service detail (and, here, metadata) related to services that are
       // no more visible and that are not related to messages list
 
       // references of the services to be removed from the store

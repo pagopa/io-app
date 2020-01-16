@@ -20,7 +20,7 @@ import {
   setMessageReadState
 } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
-import { loadServiceContent } from "../../store/actions/services";
+import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -336,7 +336,7 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
   return {
     refreshService: (serviceId: string) =>
-      dispatch(loadServiceContent.request(serviceId)),
+      dispatch(loadServiceDetail.request(serviceId)),
     loadServiceMetadata: (serviceId: ServiceId) =>
       dispatch(loadServiceMetadata.request(serviceId)),
     loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>

@@ -292,6 +292,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
   yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
+  // Load visible services and service details from backend when requested
   yield fork(watchLoadServicesSaga, backendClient);
 
   // Load messages when requested

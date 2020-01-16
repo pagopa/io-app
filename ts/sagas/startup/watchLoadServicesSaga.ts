@@ -6,18 +6,18 @@ import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { metadataServicesByScopeLoad } from "../../store/actions/content";
 import {
-  loadServiceContent,
+  loadServiceDetail,
   loadVisibleServices
 } from "../../store/actions/services";
-import { loadServiceContentRequestHandler } from "./loadServiceContentRequestHandler";
+import { loadServiceDetailRequestHandler } from "./loadServiceDetailRequestHandler";
 import { loadVisibleServicesRequestHandler } from "./loadVisibleServicesHandler";
 
 export function* watchLoadServicesSaga(
   backendClient: ReturnType<typeof BackendClient>
 ) {
   yield takeEvery(
-    getType(loadServiceContent.request),
-    loadServiceContentRequestHandler,
+    getType(loadServiceDetail.request),
+    loadServiceDetailRequestHandler,
     backendClient.getService
   );
 

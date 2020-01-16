@@ -51,7 +51,7 @@ import {
   profileLoadSuccess,
   profileUpsert
 } from "../actions/profile";
-import { loadServiceContent, loadVisibleServices } from "../actions/services";
+import { loadServiceDetail, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   paymentAttiva,
@@ -208,7 +208,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // logout / load message / failure
     case getType(loadMessage.failure):
     case getType(logoutFailure):
-    case getType(loadServiceContent.failure):
+    case getType(loadServiceDetail.failure):
     case getType(loadServiceMetadata.failure):
       return mp.track(action.type, {
         reason: action.payload.error.message
@@ -270,8 +270,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):
 
-    case getType(loadServiceContent.request):
-    case getType(loadServiceContent.success):
+    case getType(loadServiceDetail.request):
+    case getType(loadServiceDetail.success):
 
     case getType(loadServiceMetadata.request):
     case getType(loadServiceMetadata.success):
