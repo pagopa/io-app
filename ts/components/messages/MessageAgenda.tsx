@@ -1,4 +1,4 @@
-import { Option } from "fp-ts/lib/Option";
+import { isSome, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Text, View } from "native-base";
@@ -80,6 +80,12 @@ const styles = StyleSheet.create({
   sectionHeaderText: {
     fontSize: 18,
     color: customVariables.brandDarkestGray,
+    ...makeFontStyleObject(Platform.select, "600"),
+    lineHeight: 20
+  },
+  sectionHeaderHighlightText: {
+    fontSize: 18,
+    color: customVariables.brandPrimary,
     ...makeFontStyleObject(Platform.select, "600"),
     lineHeight: 20
   },
@@ -168,6 +174,7 @@ type OwnProps = {
   selectedMessageIds: Option<Set<string>>;
   isContinuosScrollEnabled: boolean;
   lastDeadlineId: Option<string>;
+  nextDeadlineId: Option<string>;
 };
 
 type Props = OwnProps & SelectedSectionListProps;
@@ -348,10 +355,24 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
     const isFake = info.section.fake;
+
+    const nextDeadlineId = isSome(this.props.nextDeadlineId)
+      ? this.props.nextDeadlineId.value
+      : undefined;
+
+    const item = info.section.data[0];
+    const sectionId = !isFakeItem(item) ? item.e1.id : undefined;
+
     return (
       <View style={styles.sectionHeaderWrapper}>
         <View style={styles.sectionHeaderContent}>
-          <Text style={styles.sectionHeaderText}>
+          <Text
+            style={
+              !isFake && sectionId === nextDeadlineId
+                ? styles.sectionHeaderHighlightText
+                : styles.sectionHeaderText
+            }
+          >
             {startCase(
               format(
                 info.section.title,
@@ -507,7 +528,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           ItemSeparatorComponent={ItemSeparatorComponent}
           getItemLayout={this.getItemLayout}
           ListHeaderComponent={
-            !isContinuosScrollEnabled && this.noOtherDeadlines
+            !isContinuosScrollEnabled &&
+            this.props.sections.length > minItemsToScroll &&
+            this.noOtherDeadlines
           }
           ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
           ListEmptyComponent={

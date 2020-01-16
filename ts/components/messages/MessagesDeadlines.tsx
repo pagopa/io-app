@@ -79,6 +79,7 @@ type State = {
   allMessageIdsState: Set<string>;
   isContinuosScrollEnabled: boolean;
   lastDeadlineId: Option<string>;
+  nextDeadlineId: Option<string>;
 };
 
 /**
@@ -94,6 +95,30 @@ export const getLastDeadlineId = (sections: Sections): Option<string> => {
       }
       return none;
     });
+};
+
+/**
+ * Get the next deadline id
+ */
+export const getNextDeadlineId = (sections: Sections): Option<string> => {
+  const date = new Date();
+  // tslint:disable-next-line: no-let
+  let lastDate = new Date();
+  // tslint:disable-next-line: no-let
+  let sectionId: Option<string> = none;
+  sections.forEach(s => {
+    const newDate = new Date(s.title);
+    if (
+      date.getTime() <= newDate.getTime() &&
+      (lastDate.getTime() === date.getTime() ||
+        lastDate.getTime() > newDate.getTime())
+    ) {
+      lastDate = new Date(s.title);
+      const item = s.data[0];
+      sectionId = !isFakeItem(item) ? some(item.e1.id) : none;
+    }
+  });
+  return sectionId;
 };
 
 /**
@@ -467,7 +492,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       maybeLastLoadedStartOfMonthTime: none,
       allMessageIdsState: new Set(),
       isContinuosScrollEnabled: true,
-      lastDeadlineId: none
+      lastDeadlineId: none,
+      nextDeadlineId: none
     };
   }
 
@@ -477,6 +503,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
     const sections = await Promise.resolve(generateSections(messagesState));
     const lastDeadlineId = await Promise.resolve(getLastDeadlineId(sections));
+    const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
 
     const sectionsToRender = await Promise.resolve(
       selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
@@ -494,7 +521,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         sectionsToRender
       ),
       isContinuosScrollEnabled,
-      lastDeadlineId
+      lastDeadlineId,
+      nextDeadlineId
     });
   }
 
@@ -514,6 +542,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
       const sections = await Promise.resolve(generateSections(messagesState));
       const lastDeadlineId = await Promise.resolve(getLastDeadlineId(sections));
+      const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
 
       const sectionsToRender = await Promise.resolve(
         selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
@@ -531,7 +560,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           sectionsToRender
         ),
         isContinuosScrollEnabled,
-        lastDeadlineId
+        lastDeadlineId,
+        nextDeadlineId
       });
     }
   }
@@ -565,7 +595,8 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       isWorking,
       sectionsToRender,
       isContinuosScrollEnabled,
-      lastDeadlineId
+      lastDeadlineId,
+      nextDeadlineId
     } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
@@ -586,6 +617,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             onContentSizeChange={this.onContentSizeChange}
             isContinuosScrollEnabled={isContinuosScrollEnabled}
             lastDeadlineId={lastDeadlineId}
+            nextDeadlineId={nextDeadlineId}
           />
         </View>
         <ListSelectionBar
