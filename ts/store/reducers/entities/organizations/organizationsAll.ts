@@ -2,6 +2,7 @@
  * A reducer to store the organization names and fiscal codes
  */
 import { getType } from "typesafe-actions";
+import { deleteOtherOrganizations } from "../../../actions/organizations";
 import { loadService } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -25,6 +26,12 @@ const reducer = (
   action: Action
 ): OrganizationsAllState => {
   switch (action.type) {
+    // when this action is performed, all elements in which the value of the fiscalCode
+    // field is not present in the payload are removed from the state array.
+    case getType(deleteOtherOrganizations):
+      return state.filter(
+        orgAll => action.payload.indexOf(orgAll.fiscalCode) !== -1
+      );
     case getType(loadService.success):
       const organization = state.find(
         _ => _.fiscalCode === action.payload.organization_fiscal_code

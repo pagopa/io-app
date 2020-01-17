@@ -9,6 +9,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { clearCache } from "../../../actions/profile";
 import { loadService, removeServiceTuples } from "../../../actions/services";
 import { Action } from "../../../actions/types";
+import { GlobalState } from "../../types";
 
 /**
  * Maps organization fiscal code to serviceId
@@ -19,6 +20,7 @@ export type ServiceIdsByOrganizationFiscalCodeState = Readonly<{
 
 const INITIAL_STATE: ServiceIdsByOrganizationFiscalCodeState = {};
 
+// tslint:disable-next-line: cognitive-complexity
 export function serviceIdsByOrganizationFiscalCodeReducer(
   state: ServiceIdsByOrganizationFiscalCodeState = INITIAL_STATE,
   action: Action
@@ -51,29 +53,32 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
     case getType(removeServiceTuples): {
       const serviceTuples = action.payload;
 
-      // Remove service id from  the array keyed by organizationFiscalCode
-      const stateUpdate = serviceTuples.reduce<
-        ServiceIdsByOrganizationFiscalCodeState
-      >((accumulator, tuple) => {
-        const serviceId = tuple.e1;
-        const organizationFiscalCode = tuple.e2;
-        const ids = fromNullable(organizationFiscalCode)
-          .map(_ => (accumulator[_] !== undefined ? accumulator[_] : state[_]))
-          .toNullable();
-        if (organizationFiscalCode && ids) {
-          const filteredIds = ids.filter(id => id !== serviceId);
-          return {
-            ...accumulator,
-            [organizationFiscalCode]: filteredIds
-          };
-        }
-        return accumulator;
-      }, {});
-
-      return {
-        ...state,
-        ...stateUpdate
-      };
+      // Remove service id from the array keyed by organizationFiscalCode
+      return serviceTuples.reduce<ServiceIdsByOrganizationFiscalCodeState>(
+        (accumulator, tuple) => {
+          const serviceId = tuple.e1;
+          const organizationFiscalCode = tuple.e2;
+          const ids = fromNullable(organizationFiscalCode)
+            .map(
+              _ => (accumulator[_] !== undefined ? accumulator[_] : state[_])
+            )
+            .toNullable();
+          if (organizationFiscalCode && ids) {
+            const filteredIds = ids.filter(id => id !== serviceId);
+            const result = {
+              ...accumulator,
+              [organizationFiscalCode]: filteredIds
+            };
+            if (!filteredIds.length) {
+              // tslint:disable-next-line no-object-mutation
+              delete result[organizationFiscalCode];
+            }
+            return result;
+          }
+          return accumulator;
+        },
+        state
+      );
     }
 
     case getType(clearCache):
@@ -83,3 +88,9 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
       return state;
   }
 }
+
+// Selectors
+export const readServicesByOrganizationCodeSelector = (
+  state: GlobalState
+): ServiceIdsByOrganizationFiscalCodeState =>
+  state.entities.services.byOrgFiscalCode;

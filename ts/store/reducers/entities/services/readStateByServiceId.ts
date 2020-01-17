@@ -2,6 +2,7 @@ import { getType } from "typesafe-actions";
 import { clearCache } from "../../../actions/profile";
 import {
   markServiceAsRead,
+  removeServiceTuples,
   showServiceDetails
 } from "../../../actions/services";
 import { Action } from "../../../actions/types";
@@ -24,6 +25,13 @@ export function readServicesByIdReducer(
   action: Action
 ): ReadStateByServicesId {
   switch (action.type) {
+    case getType(removeServiceTuples): {
+      const serviceTuples = action.payload;
+      const newState = { ...state };
+      // tslint:disable-next-line: no-object-mutation
+      serviceTuples.forEach(_ => delete newState[_.e1]);
+      return newState;
+    }
     case getType(showServiceDetails):
       // add the service to the read list
       return {
