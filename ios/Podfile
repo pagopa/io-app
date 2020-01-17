@@ -34,7 +34,6 @@ target 'ItaliaApp' do
 
   pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
 
-  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
 
@@ -47,7 +46,6 @@ target 'ItaliaApp' do
 
   pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
-  pod 'react-native-calendar-events', :path => '../node_modules/react-native-calendar-events'
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
