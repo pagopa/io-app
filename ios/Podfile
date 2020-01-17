@@ -26,7 +26,6 @@ target 'ItaliaApp' do
 
 
 
-  pod 'react-native-mixpanel', :path => '../node_modules/react-native-mixpanel'
 
 
 

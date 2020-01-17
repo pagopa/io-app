@@ -3,7 +3,6 @@ package it.teamdigitale.app.italiaapp;
 
 import androidx.multidex.MultiDexApplication;
 
-import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.facebook.react.ReactApplication;
 import com.kristiansorens.flagsecure.FlagSecurePackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
