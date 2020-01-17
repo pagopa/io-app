@@ -17,16 +17,17 @@ import {
   OrganizationNamesByFiscalCodeState
 } from "../../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { visibleServicesSelector } from "../../../store/reducers/entities/services/visibleServices";
+import { handleServiceReadabilitySaga } from "../../services/services";
 import { loadServiceDetailRequestHandler } from "../loadServiceDetailRequestHandler";
 
-const mockedServiceId = "A01";
+const mockedServiceId = "A01" as ServiceId;
 const getService = jest.fn();
 const mockedAction = {
   type: loadServiceDetail.request,
   payload: mockedServiceId
 };
 const mockedService: ServicePublic = {
-  service_id: mockedServiceId as ServiceId,
+  service_id: mockedServiceId,
   service_name: "servizio1" as ServiceName,
   organization_name: "ente1 - nuovo nome" as OrganizationName,
   department_name: "dipartimento1" as DepartmentName,
@@ -73,6 +74,8 @@ describe("loadServiceDetailRequestHandler", () => {
       .next(right({ status: 200, value: mockedService }))
       .put(loadServiceDetail.success(mockedService))
       .next()
+      .call(handleServiceReadabilitySaga, mockedServiceId)
+      .next()
       .select(organizationNamesByFiscalCodeSelector)
       .next({})
       .select(visibleServicesSelector)
@@ -95,6 +98,8 @@ describe("loadServiceDetailRequestHandler", () => {
       .next(right({ status: 200, value: mockedService }))
       .put(loadServiceDetail.success(mockedService))
       .next()
+      .call(handleServiceReadabilitySaga, mockedServiceId)
+      .next()
       .select(organizationNamesByFiscalCodeSelector)
       .next(mockedOrganizationsNameByFiscalCode)
       .select(visibleServicesSelector)
@@ -116,6 +121,8 @@ describe("loadServiceDetailRequestHandler", () => {
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 200, value: mockedService }))
       .put(loadServiceDetail.success(mockedService))
+      .next()
+      .call(handleServiceReadabilitySaga, mockedServiceId)
       .next()
       .select(organizationNamesByFiscalCodeSelector)
       .next(mockedOrganizationsNameByFiscalCode)

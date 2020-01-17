@@ -55,6 +55,7 @@ import {
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
 import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
+import { watchLoadServicesSaga } from "./services/services";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
@@ -66,7 +67,6 @@ import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
-import { watchLoadServicesSaga } from "./startup/watchLoadServicesSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";

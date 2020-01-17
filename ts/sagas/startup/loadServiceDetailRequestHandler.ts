@@ -15,6 +15,7 @@ import {
 } from "../../store/reducers/entities/services/visibleServices";
 import { SagaCallReturnType } from "../../types/utils";
 import { isVisibleService } from "../../utils/services";
+import { handleServiceReadabilitySaga } from "../services/services";
 
 /**
  * A generator to load the service details from the Backend
@@ -39,6 +40,10 @@ export function* loadServiceDetailRequestHandler(
 
     if (response.value.status === 200) {
       yield put(loadServiceDetail.success(response.value.value));
+
+      // If it is occurring during the first load of serivces,
+      // mark the service as read (it will not display the badge on the list item)
+      yield call(handleServiceReadabilitySaga, action.payload);
 
       // If the organization fiscal code is associated to different organization names,
       // it is considered valid the one declared for a visible service
