@@ -226,8 +226,6 @@ dependencies {
     implementation project(':react-native-keychain')
     implementation project(':react-native-i18n')
     implementation project(':react-native-mixpanel')
-    implementation project(':react-native-device-info')
-    implementation project(':react-native-config')
     implementation project(':react-native-community-netinfo')
     implementation "com.google.android.gms:play-services-gcm:8.1.0"
     implementation 'androidx.multidex:multidex:2.0.1'

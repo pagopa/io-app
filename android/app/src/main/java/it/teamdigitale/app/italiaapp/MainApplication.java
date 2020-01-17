@@ -5,8 +5,6 @@ import androidx.multidex.MultiDexApplication;
 
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.kevinejohn.RNMixpanel.RNMixpanel;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
 import com.imagepicker.ImagePickerPackage;
 import com.kristiansorens.flagsecure.FlagSecurePackage;
