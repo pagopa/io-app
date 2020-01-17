@@ -58,7 +58,7 @@ describe("loadServiceDetailRequestHandler", () => {
       .isDone();
   });
 
-  it("returns service detail if the backand response is 200", () => {
+  it("returns service detail if the backend response is 200", () => {
     testSaga(loadServiceDetailRequestHandler, getService, mockedAction)
       .next()
       .call(getService, { service_id: mockedServiceId })
