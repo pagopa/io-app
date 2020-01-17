@@ -5,7 +5,6 @@ import androidx.multidex.MultiDexApplication;
 
 import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.facebook.react.ReactApplication;
-import com.imagepicker.ImagePickerPackage;
 import com.kristiansorens.flagsecure.FlagSecurePackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;

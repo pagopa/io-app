@@ -211,7 +211,6 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    implementation project(':react-native-image-picker')
     implementation project(':react-native-flag-secure-android')
     implementation project(':react-native-android-open-settings')
     implementation project(':react-native-webview')
