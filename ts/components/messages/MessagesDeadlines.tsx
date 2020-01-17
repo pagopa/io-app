@@ -9,7 +9,7 @@ import {
   subMonths
 } from "date-fns";
 import { index as fpIndex } from "fp-ts/lib/Array";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, isNone, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { View } from "native-base";
@@ -101,24 +101,29 @@ export const getLastDeadlineId = (sections: Sections): Option<string> => {
  * Get the next deadline id
  */
 export const getNextDeadlineId = (sections: Sections): Option<string> => {
-  const date = new Date();
-  // tslint:disable-next-line: no-let
-  let lastDate = new Date();
-  // tslint:disable-next-line: no-let
-  let sectionId: Option<string> = none;
-  sections.forEach(s => {
-    const newDate = new Date(s.title);
-    if (
-      date.getTime() <= newDate.getTime() &&
-      (lastDate.getTime() === date.getTime() ||
-        lastDate.getTime() > newDate.getTime())
-    ) {
-      lastDate = new Date(s.title);
-      const item = s.data[0];
-      sectionId = !isFakeItem(item) ? some(item.e1.id) : none;
-    }
-  });
-  return sectionId;
+  const now = startOfDay(new Date()).getTime();
+  return sections
+    .reduce<Option<MessageAgendaItem>>((acc, curr) => {
+      const item = curr.data[0];
+      // if item is fake, return the accumulator
+      if (isFakeItem(item)) {
+        return acc;
+      }
+      const newDate = new Date(item.e1.content.due_date).getTime();
+      const diff = newDate - now;
+      // if the acc is none, we don't need to make comparison with previous value
+      if (isNone(acc)) {
+        // just check the newDate is about future
+        return diff >= 0 ? some(item) : none;
+      }
+      const lastDate = acc.value.e1.content.due_date.getTime();
+      // if the new date is about future and is less than in accomulator
+      if (diff >= 0 && diff < now - lastDate) {
+        return some(item);
+      }
+      return acc;
+    }, none)
+    .map(item => item.e1.id);
 };
 
 /**

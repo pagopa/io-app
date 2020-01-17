@@ -183,6 +183,7 @@ type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
   isLoadingProgress: boolean;
+  isFirstLoading: boolean;
 };
 
 export const isFakeItem = (item: any): item is FakeItem => {
@@ -190,7 +191,7 @@ export const isFakeItem = (item: any): item is FakeItem => {
 };
 
 // Min number of items to activate continuos scroll
-const minItemsToScroll = 5;
+const minItemsToScroll = 4;
 
 const keyExtractor = (_: MessageAgendaItem | FakeItem, index: number) =>
   isFakeItem(_) ? `item-${index}` : _.e1.id;
@@ -277,7 +278,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       itemLayouts: [],
-      isLoadingProgress: false
+      isLoadingProgress: false,
+      isFirstLoading: true
     };
     this.loadMoreData = this.loadMoreData.bind(this);
   }
@@ -288,6 +290,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     }
   }
 
+  // tslint:disable-next-line: cognitive-complexity
   public componentDidUpdate(prevProps: Props) {
     // Load a min (>5) of section to activate scroll
     if (
@@ -303,26 +306,35 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       prevProps.refreshing !== this.props.refreshing &&
       this.props.refreshing === false
     ) {
-      // We leave half a second longer to show the progress even for faster requests
-      // tslint:disable-next-line: no-object-mutation
-      this.idTimeoutProgress = setTimeout(() => {
-        this.setState({
-          isLoadingProgress: false
-        });
-        // Set scroll position when the new elements have been loaded
-        if (
-          this.sectionListRef !== undefined &&
-          this.props.sections !== undefined &&
-          this.props.sections.length >= minItemsToScroll &&
-          this.props.isContinuosScrollEnabled
-        ) {
-          this.scrollToLocation({
-            animated: false,
-            itemIndex: 0,
-            sectionIndex: Platform.OS === "ios" ? 2 : 1
+      // On first loading doesn't move list
+      if (this.state.isFirstLoading) {
+        this.loadMoreData();
+        this.setState({ isFirstLoading: false });
+      } else {
+        // We leave half a second longer to show the progress even for faster requests
+        // tslint:disable-next-line: no-object-mutation
+        this.idTimeoutProgress = setTimeout(() => {
+          this.setState({
+            isLoadingProgress: false
           });
-        }
-      }, 500);
+          // Set scroll position when the new elements have been loaded
+          if (
+            this.sectionListRef !== undefined &&
+            this.props.sections !== undefined &&
+            this.props.sections.length >= minItemsToScroll &&
+            this.props.isContinuosScrollEnabled
+          ) {
+            this.scrollToLocation({
+              animated: false,
+              itemIndex: 0,
+              sectionIndex:
+                Platform.OS === "ios"
+                  ? minItemsToScroll - 1
+                  : minItemsToScroll - 2
+            });
+          }
+        }, 300);
+      }
     }
   }
 
