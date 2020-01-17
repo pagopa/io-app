@@ -3,7 +3,6 @@ package it.teamdigitale.app.italiaapp;
 
 import androidx.multidex.MultiDexApplication;
 
-import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.facebook.react.ReactApplication;
 import com.imagepicker.ImagePickerPackage;
