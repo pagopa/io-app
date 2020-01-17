@@ -35,9 +35,7 @@ target 'ItaliaApp' do
 
 
 
-  pod 'TouchID', :path => '../node_modules/react-native-touch-id'
 
-  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
 
 

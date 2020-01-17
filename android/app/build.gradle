@@ -213,8 +213,6 @@ dependencies {
     }
     implementation project(':react-native-flag-secure-android')
     implementation project(':react-native-android-open-settings')
-    implementation project(':react-native-webview')
-    implementation project(':react-native-touch-id')
     implementation project(':react-native-text-input-mask')
     implementation project(':react-native-exception-handler')
     implementation project(':react-native-push-notification')

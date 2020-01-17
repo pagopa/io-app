@@ -6,8 +6,6 @@ import androidx.multidex.MultiDexApplication;
 import com.facebook.react.ReactApplication;
 import com.kristiansorens.flagsecure.FlagSecurePackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
-import com.reactnativecommunity.webview.RNCWebViewPackage;
-import com.rnfingerprint.FingerprintAuthPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
