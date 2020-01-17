@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Effect } from "redux-saga";
+import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { updateOrganizations } from "../../store/actions/organizations";
@@ -21,7 +21,7 @@ import { isVisibleService } from "../../utils/services";
  */
 export function* handleOrganizationNameUpdateSaga(
   service: ServicePublic
-): IterableIterator<Effect> {
+): SagaIterator {
   // If the organization fiscal code is associated to different organization names,
   // it is considered valid the one declared for a visible service
   const organizations: OrganizationNamesByFiscalCodeState = yield select(

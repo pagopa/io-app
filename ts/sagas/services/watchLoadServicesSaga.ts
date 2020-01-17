@@ -1,6 +1,4 @@
-/**
- * A saga to manage the load/refresh of visible services
- */
+import { SagaIterator } from "redux-saga";
 import { put, takeEvery } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
@@ -16,7 +14,7 @@ import { handleFirstVisibleServiceLoadSaga } from "./handleFirstVisibleServiceLo
  */
 export function* watchLoadServicesSaga(
   backendClient: ReturnType<typeof BackendClient>
-) {
+): SagaIterator {
   yield takeEvery(
     getType(loadService.request),
     loadServiceDetailRequestHandler,
@@ -29,6 +27,9 @@ export function* watchLoadServicesSaga(
     backendClient.getVisibleServices
   );
 
+  // TODO: it could be implemented in a forked saga being canceled as soon as
+  // isFirstServiceLoadCOmpleted is true (https://redux-saga.js.org/docs/advanced/TaskCancellation.html)
+  // https://www.pivotaltracker.com/story/show/170770471
   yield takeEvery(
     [getType(loadService.success), getType(contentServicesByScopeLoad.success)],
     handleFirstVisibleServiceLoadSaga

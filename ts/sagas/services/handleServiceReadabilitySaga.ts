@@ -1,4 +1,4 @@
-import { Effect } from "redux-saga";
+import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { markServiceAsRead } from "../../store/actions/services";
@@ -9,9 +9,7 @@ import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers
  * is cleaned). If true, the app shows the service list item without badge
  * @param serviceId
  */
-export function* handleServiceReadabilitySaga(
-  serviceId: string
-): IterableIterator<Effect> {
+export function* handleServiceReadabilitySaga(serviceId: string): SagaIterator {
   const isFirstVisibleServiceLoadCompleted: ReturnType<
     typeof isFirstVisibleServiceLoadCompletedSelector
   > = yield select(isFirstVisibleServiceLoadCompletedSelector);

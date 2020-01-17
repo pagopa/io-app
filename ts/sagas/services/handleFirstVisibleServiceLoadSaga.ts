@@ -1,5 +1,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Effect, put, select } from "redux-saga/effects";
+import { SagaIterator } from "redux-saga";
+import { put, select } from "redux-saga/effects";
 import { FirstServiceLoadSuccess } from "../../store/actions/services";
 import { servicesByScopeSelector } from "../../store/reducers/content";
 import { visibleServicesDetailLoadStateSelector } from "../../store/reducers/entities/services";
@@ -9,7 +10,7 @@ import { isFirstVisibleServiceLoadCompletedSelector } from "../../store/reducers
  *  A function to check if all services detail and scopes are loaded with success.
  *  If it is true, by dispatching FirstServiceLoadSuccess the app stop considering loaded services as read
  */
-export function* handleFirstVisibleServiceLoadSaga(): IterableIterator<Effect> {
+export function* handleFirstVisibleServiceLoadSaga(): SagaIterator {
   const isFirstVisibleServiceLoadCompleted: ReturnType<
     typeof isFirstVisibleServiceLoadCompletedSelector
   > = yield select(isFirstVisibleServiceLoadCompletedSelector);
