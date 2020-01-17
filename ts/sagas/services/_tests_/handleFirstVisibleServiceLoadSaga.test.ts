@@ -5,7 +5,7 @@ import { FirstServiceLoadSuccess } from "../../../store/actions/services";
 import { servicesByScopeSelector } from "../../../store/reducers/content";
 import { visibleServicesDetailLoadStateSelector } from "../../../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../../store/reducers/entities/services/firstServicesLoading";
-import { handleFirstVisibleServiceLoadSaga } from "../services";
+import { handleFirstVisibleServiceLoadSaga } from "../handleFirstVisibleServiceLoadSaga";
 
 const mockedservicesByScope: pot.Pot<ServicesByScope, Error> = pot.some({
   LOCAL: ["01", "02"],

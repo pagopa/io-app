@@ -2,7 +2,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { markServiceAsRead } from "../../../store/actions/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../../store/reducers/entities/services/firstServicesLoading";
-import { handleServiceReadabilitySaga } from "../services";
+import { handleServiceReadabilitySaga } from "../handleServiceReadabilitySaga";
 
 describe("handleServiceReadabilitySaga", () => {
   const mockedServiceId: string = "0123";

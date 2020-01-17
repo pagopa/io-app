@@ -7,10 +7,8 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceName } from "../../../../definitions/backend/ServiceName";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { loadService } from "../../../store/actions/services";
-import {
-  handleOrganizationNameUpdateSaga,
-  handleServiceReadabilitySaga
-} from "../../services/services";
+import { handleOrganizationNameUpdateSaga } from "../../services/handleOrganizationNameUpdateSaga";
+import { handleServiceReadabilitySaga } from "../../services/handleServiceReadabilitySaga";
 import { loadServiceDetailRequestHandler } from "../loadServiceDetailRequestHandler";
 
 const mockedServiceId = "A01" as ServiceId;

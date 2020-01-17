@@ -4,10 +4,8 @@ import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadService } from "../../store/actions/services";
 import { SagaCallReturnType } from "../../types/utils";
-import {
-  handleOrganizationNameUpdateSaga,
-  handleServiceReadabilitySaga
-} from "../services/services";
+import { handleOrganizationNameUpdateSaga } from "../services/handleOrganizationNameUpdateSaga";
+import { handleServiceReadabilitySaga } from "../services/handleServiceReadabilitySaga";
 
 /**
  * A generator to load the service details from the Backend

@@ -9,7 +9,7 @@ import {
 } from "../../../store/reducers/entities/organizations/organizationsByFiscalCodeReducer";
 import { visibleServicesSelector } from "../../../store/reducers/entities/services/visibleServices";
 import { mockedService } from "../../startup/__tests__/loadServiceDetailRequestHandler.test";
-import { handleOrganizationNameUpdateSaga } from "../services";
+import { handleOrganizationNameUpdateSaga } from "../handleOrganizationNameUpdateSaga";
 
 const mockedOrganizationsNameByFiscalCode: OrganizationNamesByFiscalCodeState = {
   ["01"]: "ente1" as NonEmptyString,
