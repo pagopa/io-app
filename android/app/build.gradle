@@ -220,7 +220,6 @@ dependencies {
     implementation project(':react-native-splash-screen')
     implementation project(':react-native-exception-handler')
     implementation project(':react-native-push-notification')
-    implementation project(':react-native-keychain')
     implementation project(':react-native-mixpanel')
     implementation project(':react-native-community-netinfo')
     implementation "com.google.android.gms:play-services-gcm:8.1.0"

@@ -29,7 +29,6 @@ target 'ItaliaApp' do
   pod 'react-native-mixpanel', :path => '../node_modules/react-native-mixpanel'
 
 
-  pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
 
 
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
