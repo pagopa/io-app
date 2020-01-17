@@ -1,8 +1,8 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
-import { INonEmptyStringTag } from "italia-ts-commons/lib/strings";
 import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 import { all, call, Effect, put, select } from "redux-saga/effects";
+import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
@@ -17,11 +17,6 @@ import { SagaCallReturnType } from "../../types/utils";
 type VisibleServiceVersionById = {
   [index: string]: number | undefined;
 };
-
-type ReturnedVisibleServicesType = ReadonlyArray<{
-  service_id: string & INonEmptyStringTag;
-  version: number;
-}>;
 
 /**
  * A generator to load the service details from the Backend
@@ -61,7 +56,7 @@ export function* loadVisibleServicesRequestHandler(
 }
 
 function* removeOldStoredServices(
-  visibleServices: ReturnedVisibleServicesType
+  visibleServices: PaginatedServiceTupleCollection["items"]
 ) {
   const visibleServiceVersionById = visibleServices.reduce<
     VisibleServiceVersionById
@@ -116,7 +111,9 @@ function* removeOldStoredServices(
   yield put(removeServiceTuples(serviceTuplesToRemove));
 }
 
-function* refreshStoredServices(visibleServices: ReturnedVisibleServicesType) {
+function* refreshStoredServices(
+  visibleServices: PaginatedServiceTupleCollection["items"]
+) {
   const storedServicesById: ReturnType<
     typeof servicesByIdSelector
   > = yield select(servicesByIdSelector);
