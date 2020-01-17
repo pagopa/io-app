@@ -6,7 +6,7 @@ import { PaginatedServiceTupleCollection } from "../../../definitions/backend/Pa
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import {
-  loadServiceDetail,
+  loadService,
   loadVisibleServices,
   removeServiceTuples
 } from "../../store/actions/services";
@@ -137,7 +137,5 @@ function* refreshStoredServices(
     .map(_ => _.service_id);
 
   // Parallel fetch of those services content that we haven't loaded yet or need to be updated
-  yield all(
-    serviceDetailIdsToLoad.map(id => put(loadServiceDetail.request(id)))
-  );
+  yield all(serviceDetailIdsToLoad.map(id => put(loadService.request(id))));
 }

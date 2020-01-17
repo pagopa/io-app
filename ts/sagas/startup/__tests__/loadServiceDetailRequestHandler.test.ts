@@ -11,7 +11,7 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceName } from "../../../../definitions/backend/ServiceName";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { updateOrganizations } from "../../../store/actions/organizations";
-import { loadServiceDetail } from "../../../store/actions/services";
+import { loadService } from "../../../store/actions/services";
 import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
@@ -23,7 +23,7 @@ import { loadServiceDetailRequestHandler } from "../loadServiceDetailRequestHand
 const mockedServiceId = "A01" as ServiceId;
 const getService = jest.fn();
 const mockedAction = {
-  type: loadServiceDetail.request,
+  type: loadService.request,
   payload: mockedServiceId
 };
 const mockedService: ServicePublic = {
@@ -49,7 +49,7 @@ describe("loadServiceDetailRequestHandler", () => {
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 500, value: "generic error" }))
       .put(
-        loadServiceDetail.failure({
+        loadService.failure({
           service_id: mockedServiceId,
           error: mockedGenericError
         })
@@ -63,7 +63,7 @@ describe("loadServiceDetailRequestHandler", () => {
       .next()
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 200, value: mockedService }))
-      .put(loadServiceDetail.success(mockedService))
+      .put(loadService.success(mockedService))
       .next();
   });
 
@@ -72,7 +72,7 @@ describe("loadServiceDetailRequestHandler", () => {
       .next()
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 200, value: mockedService }))
-      .put(loadServiceDetail.success(mockedService))
+      .put(loadService.success(mockedService))
       .next()
       .call(handleServiceReadabilitySaga, mockedServiceId)
       .next()
@@ -96,7 +96,7 @@ describe("loadServiceDetailRequestHandler", () => {
       .next()
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 200, value: mockedService }))
-      .put(loadServiceDetail.success(mockedService))
+      .put(loadService.success(mockedService))
       .next()
       .call(handleServiceReadabilitySaga, mockedServiceId)
       .next()
@@ -120,7 +120,7 @@ describe("loadServiceDetailRequestHandler", () => {
       .next()
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 200, value: mockedService }))
-      .put(loadServiceDetail.success(mockedService))
+      .put(loadService.success(mockedService))
       .next()
       .call(handleServiceReadabilitySaga, mockedServiceId)
       .next()

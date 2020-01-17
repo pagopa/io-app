@@ -7,10 +7,7 @@ import { getType } from "typesafe-actions";
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { clearCache } from "../../../actions/profile";
-import {
-  loadServiceDetail,
-  removeServiceTuples
-} from "../../../actions/services";
+import { loadService, removeServiceTuples } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 
 /**
@@ -27,7 +24,7 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
   action: Action
 ): ServiceIdsByOrganizationFiscalCodeState {
   switch (action.type) {
-    case getType(loadServiceDetail.success):
+    case getType(loadService.success):
       const { organization_fiscal_code, service_id } = action.payload;
       // get the current serviceIds for the organization fiscal code
       const servicesForOrganization = state[organization_fiscal_code];

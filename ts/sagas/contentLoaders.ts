@@ -15,8 +15,8 @@ import { ServicesByScope } from "../../definitions/content/ServicesByScope";
 import { ContentClient } from "../api/content";
 import {
   contentMunicipalityLoad,
-  loadServiceMetadata,
-  metadataServicesByScopeLoad
+  contentServiceLoad,
+  contentServicesByScopeLoad
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { SagaCallReturnType } from "../types/utils";
@@ -54,14 +54,14 @@ function getServicesByScope(): Promise<
  * A saga that watches for and executes requests to load services by scope
  */
 export function* watchContentServicesByScopeLoad(): Iterator<Effect> {
-  yield takeEvery(getType(metadataServicesByScopeLoad.request), function*() {
+  yield takeEvery(getType(contentServicesByScopeLoad.request), function*() {
     try {
       const response: SagaCallReturnType<
         typeof getServicesByScope
       > = yield call(getServicesByScope);
 
       if (response.isRight() && response.value.status === 200) {
-        yield put(metadataServicesByScopeLoad.success(response.value.value));
+        yield put(contentServicesByScopeLoad.success(response.value.value));
       } else {
         const error = response.fold(
           readableReport,
@@ -70,7 +70,7 @@ export function* watchContentServicesByScopeLoad(): Iterator<Effect> {
         throw Error(error);
       }
     } catch (e) {
-      yield put(metadataServicesByScopeLoad.failure(e));
+      yield put(contentServicesByScopeLoad.failure(e));
     }
   });
 }
@@ -83,8 +83,8 @@ export function* watchContentServicesByScopeLoad(): Iterator<Effect> {
  */
 // tslint:disable-next-line:cognitive-complexity
 export function* watchServiceMetadataLoadSaga(): Iterator<Effect> {
-  yield takeEvery(getType(loadServiceMetadata.request), function*(
-    action: ActionType<typeof loadServiceMetadata["request"]>
+  yield takeEvery(getType(contentServiceLoad.request), function*(
+    action: ActionType<typeof contentServiceLoad["request"]>
   ) {
     const serviceId = action.payload;
     try {
@@ -107,14 +107,14 @@ export function* watchServiceMetadataLoadSaga(): Iterator<Effect> {
             response.value.status === 200
               ? pot.some(response.value.value)
               : pot.some(undefined);
-          yield put(loadServiceMetadata.success({ serviceId, data }));
+          yield put(contentServiceLoad.success({ serviceId, data }));
         } else {
           throw Error(`response status ${response.value.status}`);
         }
       }
     } catch (e) {
       yield put(
-        loadServiceMetadata.failure({
+        contentServiceLoad.failure({
           serviceId,
           error: e || Error(`Unable to load metadata for service ${serviceId}`)
         })

@@ -20,8 +20,8 @@ import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {
   contentMunicipalityLoad,
-  loadServiceMetadata,
-  metadataServicesByScopeLoad
+  contentServiceLoad,
+  contentServicesByScopeLoad
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
@@ -129,7 +129,7 @@ export default function content(
   action: Action
 ): ContentState {
   switch (action.type) {
-    case getType(loadServiceMetadata.request):
+    case getType(contentServiceLoad.request):
       return {
         ...state,
         servicesMetadata: {
@@ -141,7 +141,7 @@ export default function content(
           }
         }
       };
-    case getType(loadServiceMetadata.success):
+    case getType(contentServiceLoad.success):
       return {
         ...state,
         servicesMetadata: {
@@ -152,7 +152,7 @@ export default function content(
         }
       };
 
-    case getType(loadServiceMetadata.failure):
+    case getType(contentServiceLoad.failure):
       return {
         ...state,
         servicesMetadata: {
@@ -197,19 +197,19 @@ export default function content(
       };
 
     // services by scope
-    case getType(metadataServicesByScopeLoad.request):
+    case getType(contentServicesByScopeLoad.request):
       return {
         ...state,
         servicesByScope: pot.noneLoading
       };
 
-    case getType(metadataServicesByScopeLoad.success):
+    case getType(contentServicesByScopeLoad.success):
       return {
         ...state,
         servicesByScope: pot.some(action.payload)
       };
 
-    case getType(metadataServicesByScopeLoad.failure):
+    case getType(contentServicesByScopeLoad.failure):
       return {
         ...state,
         servicesByScope: pot.toError(state.servicesByScope, action.payload)

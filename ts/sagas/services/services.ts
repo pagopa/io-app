@@ -6,10 +6,10 @@ import { Effect, put, select, takeEvery } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { BackendClient } from "../../api/backend";
-import { metadataServicesByScopeLoad } from "../../store/actions/content";
+import { contentServicesByScopeLoad } from "../../store/actions/content";
 import {
-  firstServiceLoadSuccess,
-  loadServiceDetail,
+  FirstServiceLoadSuccess,
+  loadService,
   loadVisibleServices,
   markServiceAsRead
 } from "../../store/actions/services";
@@ -27,7 +27,7 @@ export function* watchLoadServicesSaga(
   backendClient: ReturnType<typeof BackendClient>
 ) {
   yield takeEvery(
-    getType(loadServiceDetail.request),
+    getType(loadService.request),
     loadServiceDetailRequestHandler,
     backendClient.getService
   );
@@ -39,22 +39,19 @@ export function* watchLoadServicesSaga(
   );
 
   yield takeEvery(
-    [
-      getType(loadServiceDetail.success),
-      getType(metadataServicesByScopeLoad.success)
-    ],
+    [getType(loadService.success), getType(contentServicesByScopeLoad.success)],
     handleFirstVisibleServiceLoadSaga
   );
 
   // Load/refresh services content
   yield put(loadVisibleServices.request());
   // Load/refresh refresh services scope list
-  yield put(metadataServicesByScopeLoad.request());
+  yield put(contentServicesByScopeLoad.request());
 }
 
 /**
  *  A function to check if all services detail and scopes are loaded with success.
- *  If it is true, by dispatching firstServiceLoadSuccess the app stop considering loaded services as read
+ *  If it is true, by dispatching FirstServiceLoadSuccess the app stop considering loaded services as read
  */
 export function* handleFirstVisibleServiceLoadSaga(): IterableIterator<Effect> {
   const isFirstVisibleServiceLoadCompleted: ReturnType<
@@ -73,7 +70,7 @@ export function* handleFirstVisibleServiceLoadSaga(): IterableIterator<Effect> {
       pot.isSome(visibleServicesDetailsLoadState) &&
       pot.isSome(servicesByScope)
     ) {
-      yield put(firstServiceLoadSuccess());
+      yield put(FirstServiceLoadSuccess());
     }
   }
 }

@@ -1,7 +1,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { ServicesByScope } from "../../../../definitions/content/ServicesByScope";
-import { firstServiceLoadSuccess } from "../../../store/actions/services";
+import { FirstServiceLoadSuccess } from "../../../store/actions/services";
 import { servicesByScopeSelector } from "../../../store/reducers/content";
 import { visibleServicesDetailLoadStateSelector } from "../../../store/reducers/entities/services";
 import { isFirstVisibleServiceLoadCompletedSelector } from "../../../store/reducers/entities/services/firstServicesLoading";
@@ -34,7 +34,7 @@ describe("handleFirstVisibleServiceLoadSaga", () => {
       .next(mockedservicesByScope)
       .select(visibleServicesDetailLoadStateSelector)
       .next(pot.some(undefined))
-      .put(firstServiceLoadSuccess())
+      .put(FirstServiceLoadSuccess())
       .next()
       .isDone();
   });

@@ -28,7 +28,7 @@ import {
   navigateToPaymentTransactionSummaryScreen
 } from "../../store/actions/navigation";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
-import { loadServiceDetail } from "../../store/actions/services";
+import { loadService } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import {
@@ -690,7 +690,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
-    dispatch(loadServiceDetail.request(serviceId)),
+    dispatch(loadService.request(serviceId)),
   dispatchNavigateToMessageDetail: (messageId: string) =>
     dispatch(navigateToMessageDetailScreenAction({ messageId })),
   dispatchPaymentInitializeState: () => dispatch(paymentInitializeState()),

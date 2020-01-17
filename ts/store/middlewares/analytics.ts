@@ -22,7 +22,7 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
-import { loadServiceMetadata } from "../actions/content";
+import { contentServiceLoad } from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
@@ -51,7 +51,7 @@ import {
   profileLoadSuccess,
   profileUpsert
 } from "../actions/profile";
-import { loadServiceDetail, loadVisibleServices } from "../actions/services";
+import { loadService, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   paymentAttiva,
@@ -208,8 +208,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // logout / load message / failure
     case getType(loadMessage.failure):
     case getType(logoutFailure):
-    case getType(loadServiceDetail.failure):
-    case getType(loadServiceMetadata.failure):
+    case getType(loadService.failure):
+    case getType(contentServiceLoad.failure):
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
@@ -270,11 +270,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):
 
-    case getType(loadServiceDetail.request):
-    case getType(loadServiceDetail.success):
+    case getType(loadService.request):
+    case getType(loadService.success):
 
-    case getType(loadServiceMetadata.request):
-    case getType(loadServiceMetadata.success):
+    case getType(contentServiceLoad.request):
+    case getType(contentServiceLoad.success):
 
     // wallet
     case getType(fetchWalletsRequest):
