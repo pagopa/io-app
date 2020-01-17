@@ -3,6 +3,7 @@
  *
  */
 
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Container, H2, Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -19,7 +20,13 @@ import FooterWithButtons from "./components/ui/FooterWithButtons";
 import I18n from "./i18n";
 import customVariables from "./theme/variables";
 
-const timeoutErrorMsg = 5000;
+const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
+
+const storeUrl = Platform.select({
+  ios: "itms-apps://itunes.apple.com/it/app/testflight/id899247664?mt=8",
+  android: "market://details?id=it.teamdigitale.app.italiaapp"
+});
+
 const styles = StyleSheet.create({
   text: {
     marginTop: customVariables.contentPadding,
@@ -42,13 +49,13 @@ const styles = StyleSheet.create({
   }
 });
 
-type State = { isLinkError: boolean };
+type State = { hasError: boolean };
 
 class UpdateAppModal extends React.PureComponent<never, State> {
   constructor(props: never) {
     super(props);
     this.state = {
-      isLinkError: false
+      hasError: false
     };
   }
   private idTimeout?: number;
@@ -69,20 +76,20 @@ class UpdateAppModal extends React.PureComponent<never, State> {
   }
 
   private openAppStore = () => {
-    const storeUrl = Platform.select({
-      ios: "itms-apps://itunes.apple.com/it/app/testflight/id899247664?mt=8",
-      android: "market://details?id=it.teamdigitale.app.italiaapp"
-    });
+    // the error is already displayed
+    if (this.state.hasError) {
+      return;
+    }
     Linking.openURL(storeUrl).catch(() => {
-      // This state enables the display of an error message
+      // Change state to show the error message
       this.setState({
-        isLinkError: true
+        hasError: true
       });
       // After 5 seconds restore state
       // tslint:disable-next-line: no-object-mutation
       this.idTimeout = setTimeout(() => {
         this.setState({
-          isLinkError: false
+          hasError: false
         });
       }, timeoutErrorMsg);
     });
@@ -151,7 +158,7 @@ class UpdateAppModal extends React.PureComponent<never, State> {
                 style={styles.img}
                 source={require("../img/icons/update-icon.png")}
               />
-              {this.state.isLinkError && (
+              {this.state.hasError && (
                 <Text style={styles.textDanger}>
                   {I18n.t("msgErrorUpdateApp")}
                 </Text>

@@ -17,6 +17,18 @@ describe("appVersion", () => {
     expect(isVersionAppSupported("3.0", "1.4.1")).toEqual(false);
   });
 
+  it("is not supported", () => {
+    expect(isVersionAppSupported("1.1.23", "1.1.21")).toEqual(false);
+  });
+
+  it("is not supported", () => {
+    expect(isVersionAppSupported("1.1.2.23", "1.1.1")).toEqual(false);
+  });
+
+  it("is not supported", () => {
+    expect(isVersionAppSupported("1.4", "1.5.57")).toEqual(true);
+  });
+
   it("If the backend-info is not available (es. request http error) continue to use app", () => {
     expect(isVersionAppSupported(undefined, "1.2")).toEqual(true);
   });

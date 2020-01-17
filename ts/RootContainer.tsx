@@ -30,6 +30,7 @@ import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 // Check min version app supported
+import { fromNullable } from "fp-ts/lib/Option";
 import { serverInfoDataSelector } from "./store/reducers/backendInfo";
 import { isVersionAppSupported } from "./utils/appVersion";
 
@@ -124,15 +125,21 @@ class RootContainer extends React.PureComponent<Props> {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
     //        the redux state (i.e. background)
-    const isAppOutOfDate = !isVersionAppSupported(
-      this.props.backendInfo !== undefined
-        ? Platform.select({
-            ios: this.props.backendInfo.min_app_version.ios,
-            android: this.props.backendInfo.min_app_version.android
-          })
-        : undefined,
-      DeviceInfo.getVersion()
-    );
+
+    // The version for ios devices is composed from version app + version build
+    const deviceVersionApp = Platform.select({
+      ios: DeviceInfo.getVersion() + "." + DeviceInfo.getBuildNumber(),
+      android: DeviceInfo.getVersion()
+    });
+    const isAppOutOfDate = fromNullable(this.props.backendInfo)
+      .map(bi => {
+        const minAppVersion = Platform.select({
+          ios: bi.min_app_version.ios,
+          android: bi.min_app_version.android
+        });
+        return !isVersionAppSupported(minAppVersion, deviceVersionApp);
+      })
+      .getOrElse(false);
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
