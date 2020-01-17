@@ -11,7 +11,11 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - instabug-reactnative (8.4.1):
+    - React
   - Mixpanel (3.3.3)
+  - QrCode (1.0.2):
+    - React
   - React (0.60.5):
     - React-Core (= 0.60.5)
     - React-DevSupport (= 0.60.5)
@@ -105,6 +109,8 @@ PODS:
     - React-Core (= 0.60.5)
   - React-RCTWebSocket (0.60.5):
     - React-Core (= 0.60.5)
+  - ReactNativeExceptionHandler (2.3.0):
+    - React
   - ReactNativePermissions (1.1.1):
     - React
   - RNCAsyncStorage (1.6.1):
@@ -119,7 +125,11 @@ PODS:
     - React
   - RNKeychain (3.1.3):
     - React
+  - RNSha256 (1.2.3):
+    - React
   - RNSVG (6.5.3):
+    - React
+  - RNVectorIcons (6.4.2):
     - React
   - TouchID (4.4.1):
     - React
@@ -129,6 +139,8 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - instabug-reactnative (from `../node_modules/instabug-reactnative`)
+  - QrCode (from `../node_modules/react-native-lewin-qrcode/ios`)
   - React (from `../node_modules/react-native/`)
   - React-Core (from `../node_modules/react-native/React`)
   - React-cxxreact (from `../node_modules/react-native/ReactCommon/cxxreact`)
@@ -155,6 +167,7 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
+  - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler/ios`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -162,7 +175,9 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
+  - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - TouchID (from `../node_modules/react-native-touch-id`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -178,6 +193,10 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  instabug-reactnative:
+    :path: "../node_modules/instabug-reactnative"
+  QrCode:
+    :path: "../node_modules/react-native-lewin-qrcode/ios"
   React:
     :path: "../node_modules/react-native/"
   React-Core:
@@ -230,6 +249,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   React-RCTWebSocket:
     :path: "../node_modules/react-native/Libraries/WebSocket"
+  ReactNativeExceptionHandler:
+    :path: "../node_modules/react-native-exception-handler/ios"
   ReactNativePermissions:
     :path: "../node_modules/react-native-permissions"
   RNCAsyncStorage:
@@ -244,8 +265,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-i18n"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
+  RNSha256:
+    :path: "../node_modules/react-native-sha256"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   TouchID:
     :path: "../node_modules/react-native-touch-id"
   yoga:
@@ -256,7 +281,9 @@ SPEC CHECKSUMS:
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
+  instabug-reactnative: 0c4c569d54e47641c69486b1e558f2d49e86b949
   Mixpanel: 3c3925c27f7a321d5978319a72f53f8f0885afc5
+  QrCode: d288f3c041248649031e1d7ef6b14319242cf76a
   React: 53c53c4d99097af47cf60594b8706b4e3321e722
   React-Core: ba421f6b4f4cbe2fb17c0b6fc675f87622e78a64
   React-cxxreact: 8384287780c4999351ad9b6e7a149d9ed10a2395
@@ -283,6 +310,7 @@ SPEC CHECKSUMS:
   React-RCTText: b074d89033583d4f2eb5faf7ea2db3a13c7553a2
   React-RCTVibration: 2105b2e0e2b66a6408fc69a46c8a7fb5b2fdade0
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
+  ReactNativeExceptionHandler: 040b33d72849a0aa862d1dcb54008ccef77a935e
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
   RNDeviceInfo: 75dac2d7cd6b638b512cc9266ce48a39661fed0e
@@ -290,10 +318,12 @@ SPEC CHECKSUMS:
   RNGestureHandler: aea90f0ad8e35fec23438db6fc3ad79be58bb734
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
+  RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNSVG: 4501a5e968f1eb962f5481b0da53dfb59260e9b6
+  RNVectorIcons: 6607bd3a30291d0edb56f9bbe7ae411ee2b928b0
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
-PODFILE CHECKSUM: 935ac7ac87863c854c64d5aa60db8208f8642af0
+PODFILE CHECKSUM: e8204b882716a5cd938ba4eb2ee9a84bd1025655
 
 COCOAPODS: 1.6.1

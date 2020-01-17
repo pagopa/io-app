@@ -211,8 +211,6 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    implementation project(':@react-native-community_async-storage')
-    implementation project(':react-native-lewin-qrcode')
     implementation project(':react-native-image-picker')
     implementation project(':react-native-flag-secure-android')
     implementation project(':react-native-fs')
@@ -222,7 +220,6 @@ dependencies {
     implementation project(':react-native-webview')
     implementation project(':react-native-touch-id')
     implementation project(':react-native-background-timer')
-    implementation project(':instabug-reactnative')
     implementation project(':react-native-svg')
     implementation project(':react-native-text-input-mask')
     implementation project(':react-native-splash-screen')
@@ -231,7 +228,6 @@ dependencies {
     implementation project(':react-native-push-notification')
     implementation project(':react-native-keychain')
     implementation project(':react-native-i18n')
-    implementation project(':react-native-sha256')
     implementation project(':react-native-mixpanel')
     implementation project(':react-native-device-info')
     implementation project(':react-native-config')

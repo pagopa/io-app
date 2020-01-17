@@ -1,5 +1,5 @@
 platform :ios, '9.0'
-
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 target 'ItaliaApp' do
 
   pod 'React', :path => '../node_modules/react-native/'
@@ -15,9 +15,14 @@ target 'ItaliaApp' do
   pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text'
   pod 'React-RCTVibration', :path => '../node_modules/react-native/Libraries/Vibration'
   pod 'React-RCTWebSocket', :path => '../node_modules/react-native/Libraries/WebSocket'
-
-  # Explicitly include Yoga if you are using RN >= 0.42.0
-  pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
+  pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
+  pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
+  pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
+  pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'react-native-config', :path => '../node_modules/react-native-config'
 
@@ -51,7 +56,6 @@ target 'ItaliaApp' do
 
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
   pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
   pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
@@ -63,6 +67,12 @@ target 'ItaliaApp' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
+  target 'ItaliaAppTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+  use_native_modules!
 
 end
 
