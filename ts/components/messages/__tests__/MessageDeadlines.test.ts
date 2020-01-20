@@ -11,6 +11,7 @@ import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { MessageState } from "../../../store/reducers/entities/messages/messagesById";
 import { isCreatedMessageWithContentAndDueDate } from "../../../types/CreatedMessageWithContentAndDueDate";
 import {
+  isFakeItem,
   MessageAgendaItem,
   MessageAgendaSection,
   Sections
@@ -235,44 +236,48 @@ const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
   ]
 };
 
+const sections = generateSections(messagesState);
 describe("last id check", () => {
-  const sections = Promise.resolve(generateSections(messagesState));
-  it("should return true", async () => {
-    const lastDeadlineId = await Promise.resolve(
-      getLastDeadlineId(await sections)
-    );
+  it("should retrieve the last section loaded", async () => {
+    const lastDeadlineId = getLastDeadlineId(sections);
     expect(lastDeadlineId.isSome()).toBeTruthy();
     if (lastDeadlineId.isSome()) {
       expect(lastDeadlineId.value).toEqual("01DTH3SAA23QJ436BDHDXJ4H5Y");
     }
   });
 
-  it("should return false", async () => {
-    const lastDeadlineId: any = await Promise.resolve(
-      getLastDeadlineId(await sections)
-    );
-
-    const id =
-      lastDeadlineId.value !== undefined
-        ? lastDeadlineId.value
-        : lastDeadlineId;
-
-    expect(id !== "01DP8VSP2HYYMXSMHN7CV1GNHJ");
+  it("should return none", async () => {
+    const lastDeadlineId = getLastDeadlineId([]);
+    expect(lastDeadlineId.isNone()).toBeTruthy();
   });
 });
 
 describe("next section check", () => {
-  it("should return true", async () => {
-    const sections = await Promise.resolve(generateSections(messagesState));
-    const nextDeadlineId: any = await Promise.resolve(
-      getNextDeadlineId(sections)
-    );
+  it("should return the next (in time) section", async () => {
+    const nextDeadlineId = getNextDeadlineId(sections);
+    expect(nextDeadlineId.isSome()).toBeTruthy();
+    if (nextDeadlineId.isSome()) {
+      expect(nextDeadlineId.value).toEqual("01DQQGBXWSCNNY44CH2QZ95J7A");
+    }
+  });
 
-    const id =
-      nextDeadlineId.value !== undefined
-        ? nextDeadlineId.value
-        : nextDeadlineId;
+  it("should return none", async () => {
+    const sectionsWithNoNext = sections.filter(s => {
+      // remove next item from section
+      const item = s.data[0];
+      if (isFakeItem(item)) {
+        return true;
+      }
+      return (
+        item.e1.content.due_date.getTime() < startOfDay(new Date()).getTime()
+      );
+    });
+    const nextDeadlineId = getNextDeadlineId(sectionsWithNoNext);
+    expect(nextDeadlineId.isNone()).toBeTruthy();
+  });
 
-    expect(id).toEqual("01DQQGBXWSCNNY44CH2QZ95J7A");
+  it("should return none", async () => {
+    const nextDeadlineId = getNextDeadlineId([]);
+    expect(nextDeadlineId.isNone()).toBeTruthy();
   });
 });
