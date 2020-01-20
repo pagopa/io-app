@@ -185,6 +185,23 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     );
   }
 
+  private handleOnTabsScroll = (value: number) => {
+    const { currentTab } = this.state;
+    if (Math.abs(value - currentTab) > 0.5) {
+      const nextTab = currentTab + (value - currentTab > 0 ? 1 : -1);
+      this.setState({
+        currentTab: nextTab
+      });
+    }
+  };
+
+  private handleOnChangeTab = (evt: any) => {
+    const nextTab: number = evt.i;
+    this.setState({
+      currentTab: nextTab
+    });
+  };
+
   /**
    * Render Inbox, Deadlines and Archive tabs.
    */
@@ -201,9 +218,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
       <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
         tabBarUnderlineStyle={styles.tabBarUnderlineActive}
-        onChangeTab={(evt: any) => {
-          this.setState({ currentTab: evt.i });
-        }}
+        onScroll={this.handleOnTabsScroll}
+        onChangeTab={this.handleOnChangeTab}
         initialPage={0}
         style={{
           transform: [
@@ -233,6 +249,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           heading={I18n.t("messages.tab.inbox")}
         >
           <MessagesInbox
+            currentTab={this.state.currentTab}
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
@@ -281,6 +298,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           heading={I18n.t("messages.tab.deadlines")}
         >
           <MessagesDeadlines
+            currentTab={this.state.currentTab}
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
@@ -295,6 +313,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
           heading={I18n.t("messages.tab.archive")}
         >
           <MessagesArchive
+            currentTab={this.state.currentTab}
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}

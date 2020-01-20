@@ -360,7 +360,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
       ? this.transactionError()
       : this.transactionList(potTransactions);
 
-    const footerContent = this.footerButton(potWallets);
+    const footerContent =
+      pot.isSome(potWallets) && this.footerButton(potWallets);
 
     const walletRefreshControl = (
       <RefreshControl
