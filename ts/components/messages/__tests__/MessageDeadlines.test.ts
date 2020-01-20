@@ -238,7 +238,7 @@ const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
 
 const sections = generateSections(messagesState);
 describe("last id check", () => {
-  it("should retrieve the last section loaded", async () => {
+  it("should retrieve the last section loaded", () => {
     const lastDeadlineId = getLastDeadlineId(sections);
     expect(lastDeadlineId.isSome()).toBeTruthy();
     if (lastDeadlineId.isSome()) {
@@ -246,14 +246,14 @@ describe("last id check", () => {
     }
   });
 
-  it("should return none", async () => {
+  it("should return none", () => {
     const lastDeadlineId = getLastDeadlineId([]);
     expect(lastDeadlineId.isNone()).toBeTruthy();
   });
 });
 
 describe("next section check", () => {
-  it("should return the next (in time) section", async () => {
+  it("should return the next (in time) section", () => {
     const nextDeadlineId = getNextDeadlineId(sections);
     expect(nextDeadlineId.isSome()).toBeTruthy();
     if (nextDeadlineId.isSome()) {
@@ -261,9 +261,9 @@ describe("next section check", () => {
     }
   });
 
-  it("should return none", async () => {
+  it("should return none", () => {
     const sectionsWithNoNext = sections.filter(s => {
-      // remove next item from section
+      // remove any sections with due_date greater than today (no future)
       const item = s.data[0];
       if (isFakeItem(item)) {
         return true;
@@ -276,7 +276,7 @@ describe("next section check", () => {
     expect(nextDeadlineId.isNone()).toBeTruthy();
   });
 
-  it("should return none", async () => {
+  it("should return none", () => {
     const nextDeadlineId = getNextDeadlineId([]);
     expect(nextDeadlineId.isNone()).toBeTruthy();
   });
