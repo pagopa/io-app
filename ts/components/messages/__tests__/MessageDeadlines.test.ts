@@ -35,11 +35,12 @@ const generateSections = (
             pot.isSome(message) &&
             isCreatedMessageWithContentAndDueDate(message.value)
           ) {
-            accumulator.push(
+            return [
+              ...accumulator,
               Tuple2(message.value, {
                 isRead
               })
-            );
+            ];
           }
 
           return accumulator;
@@ -235,24 +236,20 @@ const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
 };
 
 describe("last id check", () => {
+  const sections = Promise.resolve(generateSections(messagesState));
   it("should return true", async () => {
-    const sections = await Promise.resolve(generateSections(messagesState));
-    const lastDeadlineId: any = await Promise.resolve(
-      getLastDeadlineId(sections)
+    const lastDeadlineId = await Promise.resolve(
+      getLastDeadlineId(await sections)
     );
-
-    const id =
-      lastDeadlineId.value !== undefined
-        ? lastDeadlineId.value
-        : lastDeadlineId;
-
-    expect(id).toEqual("01DTH3SAA23QJ436BDHDXJ4H5Y");
+    expect(lastDeadlineId.isSome()).toBeTruthy();
+    if (lastDeadlineId.isSome()) {
+      expect(lastDeadlineId.value).toEqual("01DTH3SAA23QJ436BDHDXJ4H5Y");
+    }
   });
 
   it("should return false", async () => {
-    const sections = await Promise.resolve(generateSections(messagesState));
     const lastDeadlineId: any = await Promise.resolve(
-      getLastDeadlineId(sections)
+      getLastDeadlineId(await sections)
     );
 
     const id =

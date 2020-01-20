@@ -513,7 +513,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const sectionsToRender = await Promise.resolve(
       selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
     );
-    // Check in sections to render
+    // If there are older deadlines the scroll must be enabled to allow data loading when requested
     const isContinuosScrollEnabled = await Promise.resolve(
       !isLastSectionLoaded(lastDeadlineId, sectionsToRender)
     );
@@ -552,7 +552,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       const sectionsToRender = await Promise.resolve(
         selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
       );
-      // Check in sections to render
+      // If there are older deadlines the scroll must be enabled to allow data loading when requested
       const isContinuosScrollEnabled = await Promise.resolve(
         !isLastSectionLoaded(lastDeadlineId, sectionsToRender)
       );
