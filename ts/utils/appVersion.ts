@@ -22,12 +22,6 @@ export const isVersionAppSupported = (
   }
 };
 
-// The version for ios devices is composed from version app + version build
-export const appVersion = Platform.select({
-  ios: `${DeviceInfo.getVersion()}.${DeviceInfo.getBuildNumber()}`,
-  android: DeviceInfo.getVersion()
-});
-
 /**
  * return true if the app must be updated
  * @param serverInfo the backend info
@@ -38,6 +32,11 @@ export const isUpdatedNeeded = (serverInfo: ServerInfo) =>
       const minAppVersion = Platform.select({
         ios: si.min_app_version.ios,
         android: si.min_app_version.android
+      });
+      // The version for ios devices is composed from version app + version build
+      const appVersion = Platform.select({
+        ios: `${DeviceInfo.getVersion()}.${DeviceInfo.getBuildNumber()}`,
+        android: DeviceInfo.getVersion()
       });
       return !isVersionAppSupported(minAppVersion, appVersion);
     })
