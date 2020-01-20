@@ -144,10 +144,12 @@ class PreferencesScreen extends React.Component<Props, State> {
     const profileData = potProfile
       .map(_ => ({
         spid_email: untag(_.spid_email),
+        email: untag(_.spid_email),
         spid_mobile_phone: untag(_.spid_mobile_phone)
       }))
       .getOrElse({
         spid_email: I18n.t("global.remoteStates.notAvailable"),
+        email: I18n.t("global.remoteStates.notAvailable"),
         spid_mobile_phone: I18n.t("global.remoteStates.notAvailable")
       });
 
@@ -200,6 +202,17 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.email")}
               subTitle={profileData.spid_email}
               onPress={this.handleEmailOnPress}
+              titleBadge={
+                isEmailEditingAndValidationEnabled
+                  ? I18n.t("profile.preferences.list.need_validate")
+                  : undefined
+              }
+            />
+
+            <ListItemComponent
+              title={I18n.t("profile.preferences.list.pagoPa_email")}
+              subTitle={profileData.email}
+              // onPress={this.handlePagoPaEmailOnPress}
               titleBadge={
                 isEmailEditingAndValidationEnabled
                   ? I18n.t("profile.preferences.list.need_validate")
