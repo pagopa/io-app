@@ -15,7 +15,7 @@ import {
   MessageAgendaSection,
   Sections
 } from "../MessageAgenda";
-import { getLastDeadlineId } from "../MessagesDeadlines";
+import { getLastDeadlineId, getNextDeadlineId } from "../MessagesDeadlines";
 
 /**
  * Filter only the messages with a due date and group them by due_date day.
@@ -106,87 +106,136 @@ const generateSections = (
     []
   );
 
-describe("Check if the message id is the same as the verification id", () => {
-  const fiscalCode = "ISPXNB32R82Y766A" as FiscalCode;
-  const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
-    kind: "PotSome",
-    value: [
-      {
-        meta: {
-          created_at: new Date(2019, 11, 25, 12, 5, 14),
+const setDate = (year: number, hour: number): Date => {
+  const d = new Date();
+  return new Date(
+    d.getFullYear() + year,
+    d.getMonth(),
+    d.getDate(),
+    hour,
+    12,
+    12
+  );
+};
+const fiscalCode = "ISPXNB32R82Y766A" as FiscalCode;
+const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
+  kind: "PotSome",
+  value: [
+    {
+      meta: {
+        created_at: setDate(-1, 12),
+        fiscal_code: fiscalCode,
+        id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
+        sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+        time_to_live: (3600 as unknown) as number &
+          WithinRangeInteger<3600, 604800>
+      },
+      isRead: true,
+      isArchived: false,
+      message: {
+        kind: "PotSome",
+        value: {
+          content: {
+            subject: "test wrong organization name 9 😊 😋 😎" as WithinRangeString<
+              10,
+              121
+            >,
+            markdown: "😊 😋 😎 organization name test wrong organization…ng organization name test wrong organization name" as WithinRangeString<
+              80,
+              10001
+            >,
+            due_date: setDate(-1, 12)
+          },
+          created_at: setDate(-1, 12),
           fiscal_code: fiscalCode,
           id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
           sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
           time_to_live: (3600 as unknown) as number &
             WithinRangeInteger<3600, 604800>
-        },
-        isRead: true,
-        isArchived: false,
-        message: {
-          kind: "PotSome",
-          value: {
-            content: {
-              subject: "test wrong organization name 9" as WithinRangeString<
-                10,
-                121
-              >,
-              markdown: "organization name test wrong organization…ng organization name test wrong organization name" as WithinRangeString<
-                80,
-                10001
-              >,
-              due_date: new Date(2019, 11, 2, 18, 0, 0)
-            },
-            created_at: new Date(2019, 11, 25, 12, 5, 14),
-            fiscal_code: fiscalCode,
-            id: "01DTH3SAA23QJ436BDHDXJ4H5Y",
-            sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
-            time_to_live: (3600 as unknown) as number &
-              WithinRangeInteger<3600, 604800>
-          }
         }
+      }
+    },
+    {
+      meta: {
+        created_at: setDate(0, 3),
+        fiscal_code: fiscalCode,
+        id: "01DQQGBXWSCNNY44CH2QZ95J7A",
+        sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+        time_to_live: (3600 as unknown) as number &
+          WithinRangeInteger<3600, 604800>
       },
-      {
-        meta: {
-          created_at: new Date(2019, 11, 21, 17, 53, 27),
+      isRead: false,
+      isArchived: false,
+      message: {
+        kind: "PotSome",
+        value: {
+          content: {
+            subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
+            markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+              80,
+              10001
+            >,
+            due_date: setDate(0, 15),
+            payment_data: {
+              amount: (1 as unknown) as number &
+                WithinRangeInteger<1, 9999999999>,
+              notice_number: "002718270840468918" as string &
+                IPatternStringTag<"^[0123][0-9]{17}$">,
+              invalid_after_due_date: true
+            }
+          },
+          created_at: setDate(0, 3),
           fiscal_code: fiscalCode,
           id: "01DQQGBXWSCNNY44CH2QZ95J7A",
           sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
           time_to_live: (3600 as unknown) as number &
             WithinRangeInteger<3600, 604800>
-        },
-        isRead: false,
-        isArchived: false,
-        message: {
-          kind: "PotSome",
-          value: {
-            content: {
-              subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
-              markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
-                80,
-                10001
-              >,
-              due_date: new Date(2020, 11, 2, 23, 0, 0),
-              payment_data: {
-                amount: (1 as unknown) as number &
-                  WithinRangeInteger<1, 9999999999>,
-                notice_number: "002718270840468918" as string &
-                  IPatternStringTag<"^[0123][0-9]{17}$">,
-                invalid_after_due_date: true
-              }
-            },
-            created_at: new Date(2019, 11, 25, 12, 5, 14),
-            fiscal_code: fiscalCode,
-            id: "01DQQGBXWSCNNY44CH2QZ95J7A",
-            sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
-            time_to_live: (3600 as unknown) as number &
-              WithinRangeInteger<3600, 604800>
-          }
         }
       }
-    ]
-  };
+    },
+    {
+      meta: {
+        created_at: setDate(1, 12),
+        fiscal_code: fiscalCode,
+        id: "01DQQGBXWSCNNY44CH2QZ95PIO",
+        sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+        time_to_live: (3600 as unknown) as number &
+          WithinRangeInteger<3600, 604800>
+      },
+      isRead: false,
+      isArchived: false,
+      message: {
+        kind: "PotSome",
+        value: {
+          content: {
+            subject: "[pagoPaTest] payment 2" as WithinRangeString<10, 121>,
+            markdown: "demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo demo" as WithinRangeString<
+              80,
+              10001
+            >,
+            due_date: setDate(1, 12),
+            payment_data: {
+              amount: (1 as unknown) as number &
+                WithinRangeInteger<1, 9999999999>,
+              notice_number: "002718270840468918" as string &
+                IPatternStringTag<"^[0123][0-9]{17}$">,
+              invalid_after_due_date: true
+            }
+          },
+          created_at: setDate(1, 12),
+          fiscal_code: fiscalCode,
+          id: "01DQQGBXWSCNNY44CH2QZ95PIO",
+          sender_service_id: "01DP8VSP2HYYMXSMHN7CV1GNHJ",
+          time_to_live: (3600 as unknown) as number &
+            WithinRangeInteger<3600, 604800>
+        }
+      }
+    }
+  ]
+};
 
-  it("Should return true", async () => {
+describe("last id check", () => {
+  it("should return true", async () => {
     const sections = await Promise.resolve(generateSections(messagesState));
     const lastDeadlineId: any = await Promise.resolve(
       getLastDeadlineId(sections)
@@ -200,7 +249,7 @@ describe("Check if the message id is the same as the verification id", () => {
     expect(id).toEqual("01DTH3SAA23QJ436BDHDXJ4H5Y");
   });
 
-  it("Should return false", async () => {
+  it("should return false", async () => {
     const sections = await Promise.resolve(generateSections(messagesState));
     const lastDeadlineId: any = await Promise.resolve(
       getLastDeadlineId(sections)
@@ -212,5 +261,21 @@ describe("Check if the message id is the same as the verification id", () => {
         : lastDeadlineId;
 
     expect(id !== "01DP8VSP2HYYMXSMHN7CV1GNHJ");
+  });
+});
+
+describe("next section check", () => {
+  it("should return true", async () => {
+    const sections = await Promise.resolve(generateSections(messagesState));
+    const nextDeadlineId: any = await Promise.resolve(
+      getNextDeadlineId(sections)
+    );
+
+    const id =
+      nextDeadlineId.value !== undefined
+        ? nextDeadlineId.value
+        : nextDeadlineId;
+
+    expect(id).toEqual("01DQQGBXWSCNNY44CH2QZ95J7A");
   });
 });

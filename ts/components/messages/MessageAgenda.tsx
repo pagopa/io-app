@@ -307,7 +307,11 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       this.props.refreshing === false
     ) {
       // On first loading doesn't move list
-      if (this.state.isFirstLoading) {
+      if (
+        this.state.isFirstLoading &&
+        this.props.sections !== undefined &&
+        this.props.sections.length > 0
+      ) {
         this.loadMoreData();
         this.setState({ isFirstLoading: false });
       } else {
