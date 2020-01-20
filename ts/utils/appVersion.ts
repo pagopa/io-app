@@ -3,23 +3,32 @@ import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import semver from "semver";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
-// Check min version app supported
+
+/**
+ * return true if appVersion >= minAppVersion
+ * @param minAppVersion the min version supported
+ * @param appVersion the version to be tested
+ */
 export const isVersionAppSupported = (
-  minAppVersion: string | undefined,
-  deviceVersion: string
+  minAppVersion: string,
+  appVersion: string
 ): boolean => {
-  // If the backend-info is not available (es. request http error) continue to use app
-  if (minAppVersion !== undefined) {
-    const minVersion =
-      semver.valid(minAppVersion) === null
-        ? semver.coerce(minAppVersion)
-        : minAppVersion;
-    return minVersion !== null
-      ? semver.satisfies(minVersion, `<=${deviceVersion}`)
-      : true;
-  } else {
+  const minVersion = semver.coerce(minAppVersion);
+  const currentAppVersion = semver.coerce(appVersion);
+  // cant compare
+  if (!minVersion || !currentAppVersion) {
     return true;
   }
+  return semver.satisfies(minVersion, `<=${currentAppVersion}`);
+};
+
+export const getAppVersion = () => {
+  const version = DeviceInfo.getVersion();
+  // if the version includes only major.minor (we manually ad the buildnumber as patch number)
+  if (version.split(".").length === 2) {
+    return `${version}.${DeviceInfo.getBuildNumber()}`;
+  }
+  return version;
 };
 
 /**
@@ -33,11 +42,7 @@ export const isUpdatedNeeded = (serverInfo: ServerInfo) =>
         ios: si.min_app_version.ios,
         android: si.min_app_version.android
       });
-      // The version for ios devices is composed from version app + version build
-      const appVersion = Platform.select({
-        ios: `${DeviceInfo.getVersion()}.${DeviceInfo.getBuildNumber()}`,
-        android: DeviceInfo.getVersion()
-      });
-      return !isVersionAppSupported(minAppVersion, appVersion);
+
+      return !isVersionAppSupported(minAppVersion, getAppVersion());
     })
     .getOrElse(false);
