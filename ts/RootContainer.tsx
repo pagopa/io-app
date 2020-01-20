@@ -10,7 +10,6 @@ import {
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 
-import DeviceInfo from "react-native-device-info";
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import FlagSecureComponent from "./components/FlagSecure";
@@ -30,9 +29,8 @@ import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 // Check min version app supported
-import { fromNullable } from "fp-ts/lib/Option";
 import { serverInfoDataSelector } from "./store/reducers/backendInfo";
-import { isVersionAppSupported } from "./utils/appVersion";
+import { isUpdatedNeeded } from "./utils/appVersion";
 
 // tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -126,20 +124,11 @@ class RootContainer extends React.PureComponent<Props> {
     //        screen, we can make this screen blue based on
     //        the redux state (i.e. background)
 
-    // The version for ios devices is composed from version app + version build
-    const deviceVersionApp = Platform.select({
-      ios: DeviceInfo.getVersion() + "." + DeviceInfo.getBuildNumber(),
-      android: DeviceInfo.getVersion()
-    });
-    const isAppOutOfDate = fromNullable(this.props.backendInfo)
-      .map(bi => {
-        const minAppVersion = Platform.select({
-          ios: bi.min_app_version.ios,
-          android: bi.min_app_version.android
-        });
-        return !isVersionAppSupported(minAppVersion, deviceVersionApp);
-      })
-      .getOrElse(false);
+    // if we have no information about the backend, don't force the update
+    const isAppOutOfDate = this.props.backendInfo
+      ? isUpdatedNeeded(this.props.backendInfo)
+      : false;
+
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
