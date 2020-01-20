@@ -292,15 +292,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   // tslint:disable-next-line: cognitive-complexity
   public componentDidUpdate(prevProps: Props) {
-    // Load a min (>5) of section to activate scroll
-    if (
-      this.props.refreshing === false &&
-      this.props.sections.length < minItemsToScroll &&
-      // When length == 0 the button is showed
-      this.props.sections.length !== 0
-    ) {
-      this.loadMoreData();
-    }
     // Change status loading to show progress
     if (
       prevProps.refreshing !== this.props.refreshing &&
@@ -323,10 +314,13 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           });
           // Set scroll position when the new elements have been loaded
           if (
-            this.sectionListRef !== undefined &&
-            this.props.sections !== undefined &&
-            this.props.sections.length >= minItemsToScroll &&
-            this.props.isContinuosScrollEnabled
+            (this.sectionListRef !== undefined &&
+              this.props.sections !== undefined &&
+              this.props.sections.length >= minItemsToScroll &&
+              this.props.isContinuosScrollEnabled) ||
+            // Check if we made one last load before blocking the scroll
+            (prevProps.sections.length !== this.props.sections.length &&
+              !this.props.isContinuosScrollEnabled)
           ) {
             this.scrollToLocation({
               animated: false,
