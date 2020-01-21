@@ -23,7 +23,7 @@ describe("refreshStoredServices", () => {
     const mockedNewVisibleServices: PaginatedServiceTupleCollection["items"] = [
       {
         service_id: mockedService.service_id,
-        version: mockedService.version + 1
+        version: mockedService.version + 1 // tslint:disable-line restrict-plus-operands
       }
     ];
     const mockedServicesById = { [mockedService.service_id]: mockedService };

@@ -142,6 +142,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
       currentAmount
     );
     const totalAmount = maybeWalletFee
+      // tslint:disable-next-line:restrict-plus-operands
       .map(walletFee => currentAmountDecoded + walletFee)
       .getOrElse(currentAmountDecoded);
 
