@@ -7940,10 +7940,10 @@ react-native-mixpanel@1.1.1:
   resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.1.1.tgz#012580fb1b42b6c0ee35d0af0a24af68cfa79b89"
   integrity sha512-jjCYGri9xQ+NO5lu9RCm+hH/u9dP++4VPhUe6O8smUiJtqhBVwQtDn+iJM/NBBQwBVq5SKaDipbYdgOHdJT2WQ==
 
-react-native-offline@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-offline/-/react-native-offline-5.1.0.tgz#e29061805abfac1d96c4acf145e88c2a0b9f456d"
-  integrity sha512-yUS4lsu3CctsVKA5OO86eGiQDeO9t9u9KRetcvQghlOYzUVDwMO1zXChvNJLosoXMG8Mw4fVz1781m/kkVMxRQ==
+react-native-offline@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-offline/-/react-native-offline-5.2.0.tgz#9196415daad92a587d7bfdfd8b7eb7884300d09d"
+  integrity sha512-BrWLz/gkaGs1wVr00Ji2T1D8f0Tt5y9KSFuX6JT55b9Gqjjs4tdpNWCpeJirLm/o5HDsU8cPpR25FxKbbcp3JQ==
   dependencies:
     "@react-native-community/netinfo" "^4.1.2"
     lodash "^4.17.11"
