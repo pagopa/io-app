@@ -327,7 +327,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
   return next(action);
 };
 // gets the current screen from navigation state
-// TODO: Need to be fixed
+// TODO: Need to be fixed https://www.pivotaltracker.com/story/show/170819360
 export function getCurrentRouteName(navNode: any): string | undefined {
   if (!navNode) {
     return undefined;

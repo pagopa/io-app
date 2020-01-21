@@ -48,8 +48,7 @@ const styles = StyleSheet.create({
     ios: {
       lineHeight: 0
     },
-    android: {
-    }
+    android: {}
   }),
 
   amountTitleLabel: {
