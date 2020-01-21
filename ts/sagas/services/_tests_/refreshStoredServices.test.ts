@@ -20,10 +20,11 @@ describe("refreshStoredServices", () => {
   };
 
   it("TO BE FIXED - loads again the services with an old version", () => {
+    const increment: number = 1;
     const mockedNewVisibleServices: PaginatedServiceTupleCollection["items"] = [
       {
         service_id: mockedService.service_id,
-        version: mockedService.version + 1
+        version: mockedService.version + increment
       }
     ];
     const mockedServicesById = { [mockedService.service_id]: mockedService };
