@@ -8,6 +8,7 @@ import {
   fork,
   put,
   select,
+  spawn,
   takeEvery,
   takeLatest
 } from "redux-saga/effects";
@@ -336,8 +337,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchApplicationActivitySaga);
   // Handles the expiration of the session token
   yield fork(watchSessionExpiredSaga);
-  // Logout the user by expiring the session
-  yield fork(watchLogoutSaga, backendClient.logout);
+  // Watch for requests to logout
+  yield spawn(watchLogoutSaga, backendClient.logout);
   // Watch for requests to reset the PIN.
   yield fork(watchPinResetSaga);
   // Watch for identification request
