@@ -1366,10 +1366,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-native@0.57.63":
-  version "0.57.63"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.57.63.tgz#56cc7e6426ffe8e3d149c86d3396496370a75396"
-  integrity sha512-viAtvjgb/6cn4gu7eEUhTxhlYZ8oOG+1OdHznWac1BgbiPEGcDmamnW/+KZR9gRjsXY9qZY+nfyzVjcwhYmlkw==
+"@types/react-native@0.60.5":
+  version "0.60.5"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.5.tgz#24371cdc724f95381f9b309b08204827dd8de251"
+  integrity sha512-OWk8r2HzDKkas5WGFfin7CFuSgDsXvO9tDUqNemitbrlXhQ41Zk1R3lv8Vsc843X8NIb/+BO0IQKw72Pd84UNA==
   dependencies:
     "@types/prop-types" "*"
     "@types/react" "*"
@@ -4795,10 +4795,10 @@ inquirer@^6.4.1:
     strip-ansi "^5.1.0"
     through "^2.3.6"
 
-instabug-reactnative@8.4.1:
-  version "8.4.1"
-  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-8.4.1.tgz#e98c328e0da530648517e7ab483b47208a057f6c"
-  integrity sha512-vURCIGWcioq6Rp8dN+atd3z5R3rQMIW7E1bqCKGHE8rYB2wvUuRS99VNbW6F08bVSnQQdjrgHcO91SBSoI5M9g==
+instabug-reactnative@8.7.0:
+  version "8.7.0"
+  resolved "https://registry.yarnpkg.com/instabug-reactnative/-/instabug-reactnative-8.7.0.tgz#ee37d6bdd59c5f3930f6db9795ff281d7bb71e03"
+  integrity sha512-us7SVX3dLu2SbbBssGlQE7tIAtW7kvEyhZZ/JxXrEYfkrSGcKnQOLKM+RgvHnb4iESuHfT6SlDQEMV+5P5GHGg==
 
 invariant@2.2.4, invariant@^2.2.0, invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
@@ -7940,7 +7940,7 @@ react-native-mixpanel@1.1.1:
   resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.1.1.tgz#012580fb1b42b6c0ee35d0af0a24af68cfa79b89"
   integrity sha512-jjCYGri9xQ+NO5lu9RCm+hH/u9dP++4VPhUe6O8smUiJtqhBVwQtDn+iJM/NBBQwBVq5SKaDipbYdgOHdJT2WQ==
 
-react-native-offline@^5.2.0:
+react-native-offline@5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/react-native-offline/-/react-native-offline-5.2.0.tgz#9196415daad92a587d7bfdfd8b7eb7884300d09d"
   integrity sha512-BrWLz/gkaGs1wVr00Ji2T1D8f0Tt5y9KSFuX6JT55b9Gqjjs4tdpNWCpeJirLm/o5HDsU8cPpR25FxKbbcp3JQ==

@@ -80,10 +80,7 @@ import com.android.build.OutputFile
 
 project.ext.react = [
   entryFile: "index.js",
-  enableHermes: false,
-  // TODO: Check if we still need this
-  extraPackagerArgs: ['--sourcemap-output', file("$buildDir/outputs/main.jsbundle.map")],
-  inputExcludes: ["ios/**", "__tests__/**", "bundle_out/**"]
+  enableHermes: false
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -211,11 +208,30 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    implementation project(':react-native-flag-secure-android')
-    implementation project(':react-native-android-open-settings')
-    implementation project(':react-native-text-input-mask')
-    implementation project(':react-native-exception-handler')
-    implementation project(':react-native-push-notification')
+    implementation project(':@react-native-community_async-storage')
+    implementation project(':react-native-lewin-qrcode')
+    implementation project(':react-native-image-picker')
+    compile project(':react-native-flag-secure-android')
+    compile project(':react-native-fs')
+    compile project(':react-native-android-open-settings')
+    compile project(':react-native-gesture-handler')
+    compile project(':react-native-calendar-events')
+    compile project(':react-native-webview')
+    compile project(':react-native-touch-id')
+    compile project(':react-native-background-timer')
+    compile project(':react-native-svg')
+    compile project(':react-native-text-input-mask')
+    compile project(':react-native-splash-screen')
+    compile project(':react-native-exception-handler')
+    compile project(':react-native-camera')
+    compile project(':react-native-push-notification')
+    compile project(':react-native-keychain')
+    compile project(':react-native-i18n')
+    compile project(':react-native-sha256')
+    compile project(':react-native-mixpanel')
+    compile project(':react-native-device-info')
+    compile project(':react-native-config')
+    compile project(':instabug-reactnative')
     implementation project(':react-native-community-netinfo')
     implementation "com.google.android.gms:play-services-gcm:8.1.0"
     implementation 'androidx.multidex:multidex:2.0.1'

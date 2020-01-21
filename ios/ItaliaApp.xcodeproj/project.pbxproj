@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* ItaliaAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ItaliaAppTests.m */; };
 		0F9E6335AF38F39B8AFE11BE /* libPods-ItaliaAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAACD7374073347FFCF0CF8F /* libPods-ItaliaAppTests.a */; };
@@ -370,6 +371,7 @@
 		00E356EE1AD99517003FC87E /* ItaliaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItaliaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ItaliaAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItaliaAppTests.m; sourceTree = "<group>"; };
+		0A32448994D570C8CCDD62DF /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 		11C2483C363E432BB4D0A583 /* TitilliumWeb-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Regular.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Regular.ttf"; sourceTree = "<group>"; };
 		13302F61209B350200C9B38F /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		133638FB213D788900B0C079 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -388,10 +390,12 @@
 		194A5D2A1F027F5A0078620E /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		1E4EECD1122B401CAC190472 /* TitilliumWeb-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-BoldItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-BoldItalic.ttf"; sourceTree = "<group>"; };
 		2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-BoldItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-BoldItalic.ttf"; sourceTree = "<group>"; };
+		2B251CF2E46840504D740643 /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 		2D52800996AA471A87A7F975 /* LICENSE.txt */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = LICENSE.txt; path = ../assets/fonts/RobotoMono/LICENSE.txt; sourceTree = "<group>"; };
 		3087D2BB18D649C9ABA70F4E /* ReactNativeExceptionHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeExceptionHandler.xcodeproj; path = "../node_modules/react-native-exception-handler/ios/ReactNativeExceptionHandler.xcodeproj"; sourceTree = "<group>"; };
 		309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Bold.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Bold.ttf"; sourceTree = "<group>"; };
 		5389C36762A04AE69D762289 /* RobotoMono-RegularItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-RegularItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-RegularItalic.ttf"; sourceTree = "<group>"; };
+		58F80D6D97CC591B7BDC2E0C /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		61CC92FB2135800100206602 /* InputMaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = InputMaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61CC930F2135818B00206602 /* InputMask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = InputMask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -406,6 +410,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A83F0572152B12C000C6389 /* ItaliaApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ItaliaApp.entitlements; path = ItaliaApp/ItaliaApp.entitlements; sourceTree = "<group>"; };
 		7E03A5F522C6155200629442 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
+		81D7E65EFEF9BBBCDB1CA4AC /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		94E88E2FB156B189552F42E9 /* Pods-ItaliaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.release.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.release.xcconfig"; sourceTree = "<group>"; };
 		A4827A715541433A928083C5 /* RNTextInputMask.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTextInputMask.xcodeproj; path = "../node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask.xcodeproj"; sourceTree = "<group>"; };
@@ -429,6 +434,7 @@
 		F550CE82F08D1D51186476D1 /* Pods-ItaliaAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaAppTests.release.xcconfig"; path = "Target Support Files/Pods-ItaliaAppTests/Pods-ItaliaAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		F5F65895457F4A8593B7110D /* libRNTextInputMask.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTextInputMask.a; sourceTree = "<group>"; };
 		F709D4AE20E44EFAAB255A8E /* TitilliumWeb-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Italic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Italic.ttf"; sourceTree = "<group>"; };
+		FBD4A950A9AC909A1EDCDA70 /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -511,12 +517,9 @@
 		132A5D6B2032B79F00AB7333 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				CF7BF3EEAED4436F8DD575A5 /* libreact-native-sha256.a */,
 				6D94E785317A4CE6840C34C0 /* libReactNativeExceptionHandler.a */,
 				F5F65895457F4A8593B7110D /* libRNTextInputMask.a */,
-				B59B6238889E4208B49E5C9D /* libRNInstabug.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				C4EA3E6B75994FF48D015082 /* libQRCode.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -747,6 +750,11 @@
 				DF11F115CF1E1FC7FA05A617 /* Instabug.framework */,
 				EC97D76D141F4681E5403F11 /* libPods-ItaliaApp.a */,
 				CAACD7374073347FFCF0CF8F /* libPods-ItaliaAppTests.a */,
+				2B251CF2E46840504D740643 /* Instabug.framework */,
+				0A32448994D570C8CCDD62DF /* Instabug.framework */,
+				58F80D6D97CC591B7BDC2E0C /* Instabug.framework */,
+				81D7E65EFEF9BBBCDB1CA4AC /* Instabug.framework */,
+				FBD4A950A9AC909A1EDCDA70 /* Instabug.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -789,6 +797,11 @@
 				616E1A2BB64E72519DD7C30F /* Strip Frameworks */,
 				EB0FFA733F5451135571F869 /* [CP] Copy Pods Resources */,
 				F98B07D8659B8C347D85D18A /* [CP] Embed Pods Frameworks */,
+				35B11A4C5C4EA73ED6B6EBA0 /* Upload Sourcemap */,
+				9469A4BBA8323D8A13EEF44B /* Upload Sourcemap */,
+				4D6E88D58183BEB136ED8338 /* Upload Sourcemap */,
+				2515FF0907EF87DC1D211C07 /* Upload Sourcemap */,
+				204462674DF49F23E5489CA4 /* Upload Sourcemap */,
 			);
 			buildRules = (
 			);
@@ -941,13 +954,6 @@
 			fileType = archive.ar;
 			path = "libRCTBlob-tvOS.a";
 			remoteRef = 132A5D712032B79F00AB7333 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		132A5D8B2032B7A000AB7333 /* libreact-native-sha256.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libreact-native-sha256.a";
-			remoteRef = 132A5D8A2032B7A000AB7333 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		13302F73209B350200C9B38F /* libRCTPushNotification.a */ = {
@@ -1254,6 +1260,78 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		204462674DF49F23E5489CA4 /* Upload Sourcemap */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Sourcemap";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "bash \"../node_modules/instabug-reactnative/ios/upload_sourcemap.sh\"\n";
+		};
+		2515FF0907EF87DC1D211C07 /* Upload Sourcemap */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Sourcemap";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "bash \"../node_modules/instabug-reactnative/ios/upload_sourcemap.sh\"\n";
+		};
+		35B11A4C5C4EA73ED6B6EBA0 /* Upload Sourcemap */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Sourcemap";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "export INSTABUG_APP_TOKEN=\"YOUR_APP_TOKEN\"\nbash \"../node_modules/instabug-reactnative/ios/upload_sourcemap.sh\"\n";
+		};
+		4D6E88D58183BEB136ED8338 /* Upload Sourcemap */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Sourcemap";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "bash \"../node_modules/instabug-reactnative/ios/upload_sourcemap.sh\"\n";
+		};
 		616E1A2BB64E72519DD7C30F /* Strip Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1281,6 +1359,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# see https://github.com/react-native-community/react-native-text-input-mask/issues/22#issuecomment-344765116\n\nEXTRA_DIR=\"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Frameworks/InputMask.framework/Frameworks\"\n\nif [[ -d \"${EXTRA_DIR}\" ]]; then\n  rm -rf \"${EXTRA_DIR}\"\nfi";
+		};
+		9469A4BBA8323D8A13EEF44B /* Upload Sourcemap */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Sourcemap";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "export INSTABUG_APP_TOKEN=\"YOUR_APP_TOKEN\"\nbash \"../node_modules/instabug-reactnative/ios/upload_sourcemap.sh\"\n";
 		};
 		95AEBF4A23D0A295000598A9 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1530,9 +1626,7 @@
 				INFOPLIST_FILE = ItaliaAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1557,9 +1651,7 @@
 				INFOPLIST_FILE = ItaliaAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
