@@ -1,9 +1,9 @@
 import * as pot from "italia-ts-commons/lib/pot";
+import { SagaIterator } from "redux-saga";
 import { all, put, select } from "redux-saga/effects";
 import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
 import { loadService } from "../../store/actions/services";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { SagaIterator } from 'redux-saga';
 
 export function* refreshStoredServices(
   visibleServices: PaginatedServiceTupleCollection["items"]
