@@ -32,8 +32,8 @@ describe("refreshStoredServices", () => {
       .next()
       .select(servicesByIdSelector)
       .next(mockedServicesById)
-      // TODO: fix the function - the test should include the following commented code
-      // because the service version is incremented https://www.pivotaltracker.com/story/show/170582079
+      // TODO: fix the function - the test should include the refresh of the visible service
+      // because the service version has been incremented https://www.pivotaltracker.com/story/show/170582079
       // .all({['0']: put(loadService.request("S01"))})
       .next()
       .isDone();
