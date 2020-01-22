@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import { all, put, select } from "redux-saga/effects";
 import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
-import { loadService } from "../../store/actions/services";
+import { loadServiceDetail } from "../../store/actions/services";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 
 /**
@@ -39,5 +39,5 @@ export function* refreshStoredServices(
     .map(_ => _.service_id);
 
   // Parallel fetch of those services content that we haven't loaded yet or need to be updated
-  yield all(serviceDetailIdsToLoad.map(id => put(loadService.request(id))));
+  yield all(serviceDetailIdsToLoad.map(id => put(loadServiceDetail.request(id))));
 }

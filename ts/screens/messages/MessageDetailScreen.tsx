@@ -14,13 +14,13 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { contentServiceLoad } from "../../store/actions/content";
+import { loadServiceMetadata } from "../../store/actions/content";
 import {
   loadMessageWithRelations,
   setMessageReadState
 } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
-import { loadService } from "../../store/actions/services";
+import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -115,8 +115,8 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   private onServiceLinkPressHandler = (service: ServicePublic) => {
     // When a service gets selected, before navigating to the service detail
-    // screen, we issue a contentServiceLoad request to refresh the service metadata
-    this.props.contentServiceLoad(service.service_id);
+    // screen, we issue a loadServiceMetadata request to refresh the service metadata
+    this.props.loadServiceMetadata(service.service_id);
     this.props.navigateToServiceDetailsScreen({
       service
     });
@@ -336,9 +336,9 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
   const messageId = ownProps.navigation.getParam("messageId");
   return {
     refreshService: (serviceId: string) =>
-      dispatch(loadService.request(serviceId)),
-    contentServiceLoad: (serviceId: ServiceId) =>
-      dispatch(contentServiceLoad.request(serviceId)),
+      dispatch(loadServiceDetail.request(serviceId)),
+    loadServiceMetadata: (serviceId: ServiceId) =>
+      dispatch(loadServiceMetadata.request(serviceId)),
     loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
       dispatch(loadMessageWithRelations.request(meta)),
     setMessageReadState: (isRead: boolean) =>

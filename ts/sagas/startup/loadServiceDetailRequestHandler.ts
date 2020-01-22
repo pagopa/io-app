@@ -2,7 +2,7 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
-import { loadService } from "../../store/actions/services";
+import { loadServiceDetail } from "../../store/actions/services";
 import { SagaCallReturnType } from "../../types/utils";
 import { handleOrganizationNameUpdateSaga } from "../services/handleOrganizationNameUpdateSaga";
 import { handleServiceReadabilitySaga } from "../services/handleServiceReadabilitySaga";
@@ -16,7 +16,7 @@ import { handleServiceReadabilitySaga } from "../services/handleServiceReadabili
  */
 export function* loadServiceDetailRequestHandler(
   getService: ReturnType<typeof BackendClient>["getService"],
-  action: ActionType<typeof loadService["request"]>
+  action: ActionType<typeof loadServiceDetail["request"]>
 ): IterableIterator<Effect> {
   try {
     const response: SagaCallReturnType<typeof getService> = yield call(
@@ -29,7 +29,7 @@ export function* loadServiceDetailRequestHandler(
     }
 
     if (response.value.status === 200) {
-      yield put(loadService.success(response.value.value));
+      yield put(loadServiceDetail.success(response.value.value));
 
       // If it is occurring during the first load of serivces,
       // mark the service as read (it will not display the badge on the list item)
@@ -41,6 +41,6 @@ export function* loadServiceDetailRequestHandler(
       throw Error(`response status ${response.value.status}`);
     }
   } catch (error) {
-    yield put(loadService.failure({ service_id: action.payload, error }));
+    yield put(loadServiceDetail.failure({ service_id: action.payload, error }));
   }
 }
