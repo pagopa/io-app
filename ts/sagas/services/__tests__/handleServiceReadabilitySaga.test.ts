@@ -5,14 +5,14 @@ import { isFirstVisibleServiceLoadCompletedSelector } from "../../../store/reduc
 import { handleServiceReadabilitySaga } from "../handleServiceReadabilitySaga";
 
 describe("handleServiceReadabilitySaga", () => {
-  const mockedServiceId: string = "0123";
+  const mockedServiceId = "0123" as ServiceId;
 
   it("makes the service with the given id being marked as read if the first service loading is not complete", () => {
     testSaga(handleServiceReadabilitySaga, mockedServiceId)
       .next()
       .select(isFirstVisibleServiceLoadCompletedSelector)
       .next(false)
-      .put(markServiceAsRead(mockedServiceId as ServiceId))
+      .put(markServiceAsRead(mockedServiceId))
       .next()
       .isDone();
   });

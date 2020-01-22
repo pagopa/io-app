@@ -38,4 +38,16 @@ describe("handleFirstVisibleServiceLoadSaga", () => {
       .next()
       .isDone();
   });
+
+  it("does nothing if the visible services are not loaded (error) and services by scope is some", () => {
+    testSaga(handleFirstVisibleServiceLoadSaga)
+      .next()
+      .select(isFirstVisibleServiceLoadCompletedSelector)
+      .next(false)
+      .select(servicesByScopeSelector)
+      .next(pot.noneError)
+      .select(visibleServicesDetailLoadStateSelector)
+      .next(pot.some(undefined))
+      .isDone();
+  });
 });

@@ -30,6 +30,14 @@ const mockedVisibleServices = pot.some([
 ]);
 
 describe("handleOrganizationNameUpdateSaga", () => {
+  it("does nothing if the organizationNamesByFiscalCodeSelector return undefined", () => {
+    testSaga(handleOrganizationNameUpdateSaga, mockedService)
+      .next()
+      .select(organizationNamesByFiscalCodeSelector)
+      .next(undefined)
+      .isDone();
+  });
+  
   it("does nothing after service detail load if the related organization name exist in the organizations redux store", () => {
     testSaga(handleOrganizationNameUpdateSaga, mockedService)
       .next()
@@ -45,8 +53,6 @@ describe("handleOrganizationNameUpdateSaga", () => {
       .next()
       .select(organizationNamesByFiscalCodeSelector)
       .next({})
-      .select(visibleServicesSelector)
-      .next(mockedVisibleServices)
       .put(updateOrganizations(mockedService))
       .next()
       .isDone();

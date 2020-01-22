@@ -29,18 +29,23 @@ export function* handleOrganizationNameUpdateSaga(
   );
   if (organizations) {
     const fc = service.organization_fiscal_code;
+
+    // The organization in stored if the corresponding fiscal code has no maches among those stored
     const organization = organizations[fc];
+    if (!organization) {
+      yield put(updateOrganizations(service));
+      return;
+    }
     const visibleServices: VisibleServicesState = yield select(
       visibleServicesSelector
     );
     const isVisible =
       isVisibleService(visibleServices, pot.some(service)) || false;
-    // If the organization has been previously saved in the organization entity,
+    
+      // If the organization has been previously saved in the organization entity,
     // the organization name is updated only if the related service is visible
-    if (
-      !organization ||
-      (organization && isVisible && organization !== service.organization_name)
-    ) {
+    // and the name has been updated
+    if (isVisible && organization !== service.organization_name) {
       yield put(updateOrganizations(service));
     }
   }

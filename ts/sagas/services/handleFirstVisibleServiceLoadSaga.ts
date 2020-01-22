@@ -22,8 +22,6 @@ export function* handleFirstVisibleServiceLoadSaga(): SagaIterator {
       typeof visibleServicesDetailLoadStateSelector
     > = yield select(visibleServicesDetailLoadStateSelector);
     if (
-      servicesByScope &&
-      visibleServicesDetailsLoadState &&
       pot.isSome(visibleServicesDetailsLoadState) &&
       pot.isSome(servicesByScope)
     ) {
