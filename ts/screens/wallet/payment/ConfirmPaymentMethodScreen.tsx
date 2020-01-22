@@ -116,7 +116,6 @@ const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
 
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   private showHelp = () => {
-    // tslint:disable-next-line:no-unused-expression
     this.props.showModal(
       <ContextualHelp
         onClose={this.props.hideModal}

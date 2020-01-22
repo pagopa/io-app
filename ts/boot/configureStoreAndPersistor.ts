@@ -35,7 +35,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 8;
+const CURRENT_REDUX_STORE_VERSION = 9;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -152,8 +152,24 @@ const migrations: MigrationManifest = {
   },
 
   // Version 8
-  // we empty the visible services list to grant the preferences about the email notifications are loaded
+  // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
+  // they will be stored only when a service details screen is displayed
   "8": (state: PersistedState) => {
+    return {
+      ...state,
+      content: {
+        ...(state as PersistedGlobalState).content,
+        servicesMetadata: {
+          ...(state as PersistedGlobalState).content.servicesMetadata,
+          byId: {}
+        }
+      }
+    };
+  },
+
+  // Version 9
+  // we empty the visible services list to grant the preferences about the email notifications are loaded
+  "9": (state: PersistedState) => {
     return {
       ...state,
       entities: {
@@ -163,8 +179,9 @@ const migrations: MigrationManifest = {
           visible: pot.none
         }
       }
-    };
+    }
   }
+    
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;

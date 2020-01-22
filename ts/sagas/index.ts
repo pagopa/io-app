@@ -3,18 +3,16 @@
  */
 import { networkSaga } from "react-native-offline";
 import { all, call, Effect } from "redux-saga/effects";
-
 import backendInfoSaga from "./backendInfo";
 import {
   watchContentMunicipalityLoadSaga,
-  watchContentServiceLoadSaga,
-  watchContentServicesByScopeLoad
+  watchContentServicesByScopeLoad,
+  watchServiceMetadataLoadSaga
 } from "./contentLoaders";
 import unreadInstabugMessagesSaga from "./instabug";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
 import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
-
 import { apiUrlPrefix } from "../config";
 import { checkEmailNotificationPreferencesSaga } from "./startup/loadingEmailNotificationPreferencesSaga";
 import {
@@ -41,7 +39,7 @@ export default function* root(): Iterator<Effect> {
     call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),
     call(checkEmailNotificationPreferencesSaga),
-    call(watchContentServiceLoadSaga),
+    call(watchServiceMetadataLoadSaga),
     call(watchContentMunicipalityLoadSaga),
     call(watchContentServicesByScopeLoad),
     call(watchPaymentInitializeSaga),

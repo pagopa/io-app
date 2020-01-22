@@ -1,5 +1,4 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
