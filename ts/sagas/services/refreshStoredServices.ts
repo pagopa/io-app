@@ -5,8 +5,6 @@ import { PaginatedServiceTupleCollection } from "../../../definitions/backend/Pa
 import { loadService } from "../../store/actions/services";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 
-
-
 /**
  * Check which services detail must be loaded. If there are, loading action will be dispatched
  * A service detail has to be loaded if one of these conditions is true

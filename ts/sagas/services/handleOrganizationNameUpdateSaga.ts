@@ -41,8 +41,8 @@ export function* handleOrganizationNameUpdateSaga(
     );
     const isVisible =
       isVisibleService(visibleServices, pot.some(service)) || false;
-    
-      // If the organization has been previously saved in the organization entity,
+
+    // If the organization has been previously saved in the organization entity,
     // the organization name is updated only if the related service is visible
     // and the name has been updated
     if (isVisible && organization !== service.organization_name) {

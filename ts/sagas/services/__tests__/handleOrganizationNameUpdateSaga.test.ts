@@ -37,7 +37,7 @@ describe("handleOrganizationNameUpdateSaga", () => {
       .next(undefined)
       .isDone();
   });
-  
+
   it("does nothing after service detail load if the related organization name exist in the organizations redux store", () => {
     testSaga(handleOrganizationNameUpdateSaga, mockedService)
       .next()
