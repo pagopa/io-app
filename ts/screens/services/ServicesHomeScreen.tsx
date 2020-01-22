@@ -587,18 +587,28 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   private refreshServices = () => {
-    this.setState({
-      toastErrorMessage: I18n.t("global.genericError")
-    });
-    this.props.refreshServices();
+    if (
+      !this.props.isLoadingServices &&
+      this.props.isFirstServiceLoadCompleted
+    ) {
+      this.setState({
+        toastErrorMessage: I18n.t("global.genericError")
+      });
+      this.props.refreshServices();
+    }
   };
 
   private refreshScreenContent = (hideToast: boolean = false) => {
-    if (!hideToast) {
-      this.setState({ toastErrorMessage: I18n.t("global.genericError") });
+    if (
+      !this.props.isLoadingServices &&
+      this.props.isFirstServiceLoadCompleted
+    ) {
+      if (!hideToast) {
+        this.setState({ toastErrorMessage: I18n.t("global.genericError") });
+      }
+      this.props.refreshUserMetadata();
+      this.props.refreshServices();
     }
-    this.props.refreshUserMetadata();
-    this.props.refreshServices();
   };
 
   private handleOnScroll = (value: number) => {
