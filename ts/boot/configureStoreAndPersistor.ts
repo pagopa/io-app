@@ -179,9 +179,8 @@ const migrations: MigrationManifest = {
           visible: pot.none
         }
       }
-    }
+    };
   }
-    
 };
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
