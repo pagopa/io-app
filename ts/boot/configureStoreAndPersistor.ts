@@ -34,7 +34,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 7;
+const CURRENT_REDUX_STORE_VERSION = 8;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -144,6 +144,22 @@ const migrations: MigrationManifest = {
         ...(state as PersistedGlobalState).entities,
         services: {
           ...(state as PersistedGlobalState).entities.services,
+          byId: {}
+        }
+      }
+    };
+  },
+
+  // Version 8
+  // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
+  // they will be stored only when a service details screen is displayed
+  "8": (state: PersistedState) => {
+    return {
+      ...state,
+      content: {
+        ...(state as PersistedGlobalState).content,
+        servicesMetadata: {
+          ...(state as PersistedGlobalState).content.servicesMetadata,
           byId: {}
         }
       }
