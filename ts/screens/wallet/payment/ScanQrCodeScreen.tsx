@@ -121,12 +121,12 @@ const settingsAlert = (
     message,
     [
       {
-        text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
-        onPress: () => settings(),
+        text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
         style: "cancel"
       },
       {
-        text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.ok")
+        text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
+        onPress: () => settings()
       }
     ],
     { cancelable: false }

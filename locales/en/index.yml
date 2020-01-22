@@ -633,7 +633,7 @@ wallet:
       message: Io App needs access to the gallery to allow you to select the image
       buttonText:
         settings: Settings
-        ok: OK
+        cancel: Cancel
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include why_a_fee.md

@@ -641,7 +641,7 @@ wallet:
       message: Io App ha bisogno dell'accesso alla galleria per permetterti di selezionare l'immagine
       buttonText:
         settings: Impostazioni
-        ok: OK
+        cancel: Annulla
   whyAFee:
     title: Perché devo pagare le commissioni?
     text: !include why_a_fee.md
