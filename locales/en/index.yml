@@ -327,7 +327,7 @@ authentication:
       error_25: "You have canceled the login operation: you can try again whenever you want."
   expiredSessionBanner:
     title: Security notice
-    message: To keep you private information safe, please login again with your SPID credentials, thanks!
+    message: To keep your private information safe, please login again with your SPID credentials, thanks!
 email:
   read:
     title: Your email address
@@ -681,6 +681,7 @@ messages:
     senderInfo:  Sender service unknown
     serviceInfo: Service info unknown
     departmentInfo: Department info unknown
+  loadingErrorTitle: Loading messages has failed
   cta:
     archive: Archive
     unarchive: Unarchive
@@ -826,7 +827,7 @@ calendarEvents:
     cancel: Cancel the operation
 reminders:
   emptyMonth: No reminders for this month
-  loadMoreData: loads the deadlines of the previous period
+  loadMoreData: previous deadlines
   email:
     title: Remember to validate your email address
     modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"

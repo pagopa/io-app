@@ -7,7 +7,8 @@ import { all, call, Effect } from "redux-saga/effects";
 import backendInfoSaga from "./backendInfo";
 import {
   watchContentMunicipalityLoadSaga,
-  watchContentServiceLoadSaga
+  watchContentServicesByScopeLoad,
+  watchServiceMetadataLoadSaga
 } from "./contentLoaders";
 import unreadInstabugMessagesSaga from "./instabug";
 import { loadSystemPreferencesSaga } from "./preferences";
@@ -38,8 +39,9 @@ export default function* root(): Iterator<Effect> {
     call(networkSaga, connectionMonitorParameters),
     call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),
-    call(watchContentServiceLoadSaga),
+    call(watchServiceMetadataLoadSaga),
     call(watchContentMunicipalityLoadSaga),
+    call(watchContentServicesByScopeLoad),
     call(watchPaymentInitializeSaga),
     call(watchBackToEntrypointPaymentSaga),
     call(unreadInstabugMessagesSaga)

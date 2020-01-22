@@ -6,7 +6,8 @@
  *
  * A 'loading component' is displayed (hiding the tabs content) if:
  * - visible servcices are loading, or
- * - userMetadata are loading
+ * - userMetadata is loading, or
+ * - servicesByScope is loading
  *
  * An 'error component' is displayed (hiding the tabs content) if:
  * - userMetadata load fails, or
@@ -25,7 +26,7 @@
  */
 import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Tab, Tabs, Text, View } from "native-base";
+import { Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -41,6 +42,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -52,6 +54,10 @@ import ServicesTab from "../../components/services/ServicesTab";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import {
+  contentServiceLoad,
+  contentServicesByScopeLoad
+} from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
@@ -64,13 +70,13 @@ import {
   userMetadataLoad,
   userMetadataUpsert
 } from "../../store/actions/userMetadata";
+import { servicesByScopeSelector } from "../../store/reducers/content";
 import {
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
   selectedLocalServicesSectionsSelector,
   ServicesSectionState,
-  visibleServicesContentLoadStateSelector,
-  visibleServicesMetadataLoadStateSelector
+  visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -219,8 +225,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       isInnerContentRendered: false
     };
   }
-
-  private updateLongPressButtonScope = () => {
+  /**
+   * return true if all services have INBOX channel disabled
+   */
+  private areAllServicesInboxChannelDisabled = (): boolean => {
     const currentTabServicesChannels = this.props.getServicesChannels(
       this.props.tabsServicesId[this.state.currentTab],
       this.props.profile
@@ -231,25 +239,20 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     ).filter(id => currentTabServicesChannels[id].indexOf("INBOX") !== -1)
       .length;
 
-    if (disabledServices === Object.keys(currentTabServicesChannels).length) {
-      // if all tab services are disabled the footer primary button allows services are massively enabled
-      this.setState({ enableServices: true });
-    } else {
-      // if at least one tab service is enabled the footer primary button allows services are massively disabled
-      this.setState({ enableServices: false });
-    }
+    return disabledServices === Object.keys(currentTabServicesChannels).length;
   };
 
   private handleOnLongPressItem = () => {
     if (!this.props.isSearchEnabled) {
-      this.updateLongPressButtonScope();
+      const enableServices = this.areAllServicesInboxChannelDisabled();
       const isLongPressEnabled = !this.state.isLongPressEnabled;
       const currentTabServicesId = this.props.tabsServicesId[
         this.state.currentTab
       ];
       this.setState({
         isLongPressEnabled,
-        currentTabServicesId
+        currentTabServicesId,
+        enableServices
       });
     }
   };
@@ -261,7 +264,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private canRenderContent = () => {
     if (
       !this.state.isInnerContentRendered &&
-      this.props.isFirstServiceLoadCompleted &&
+      pot.isSome(this.props.visibleServicesContentLoadState) &&
       this.props.loadDataFailure === undefined
     ) {
       this.setState({ isInnerContentRendered: true });
@@ -277,11 +280,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
     this.canRenderContent();
 
-    if (
-      pot.isError(this.props.visibleServicesContentLoadState) ||
-      pot.isError(this.props.visibleServicesMetadataLoadState)
-    ) {
-      this.props.refreshServices();
+    if (pot.isError(this.props.visibleServicesContentLoadState)) {
+      this.props.refreshVisibleServices();
+    }
+
+    if (pot.isError(this.props.servicesByScope)) {
+      this.props.refreshServicesByScope();
     }
 
     this.navListener = this.props.navigation.addListener("didFocus", () => {
@@ -318,7 +322,21 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     );
   }
 
+  // tslint:disable-next-line: cognitive-complexity
   public componentDidUpdate(prevProps: Props, prevState: State) {
+    // if some errors occur while updating profile, we will show a message in a toast
+    // profile could be updated by enabling/disabling on or more channel of a service
+    if (pot.isError(this.props.profile) && !pot.isError(prevProps.profile)) {
+      showToast(
+        I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
+        "danger"
+      );
+    }
+
+    const enableServices = this.areAllServicesInboxChannelDisabled();
+    if (enableServices !== prevState.enableServices) {
+      this.setState({ enableServices });
+    }
     // saving current list scroll position to enable header animation
     // when shifting between tabs
     if (prevState.currentTab !== this.state.currentTab) {
@@ -348,8 +366,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       if (
         (pot.isLoading(prevProps.visibleServicesContentLoadState) &&
           pot.isError(this.props.visibleServicesContentLoadState)) ||
-        (pot.isLoading(prevProps.visibleServicesMetadataLoadState) &&
-          pot.isError(this.props.visibleServicesMetadataLoadState))
+        (pot.isLoading(prevProps.servicesByScope) &&
+          pot.isError(this.props.servicesByScope))
       ) {
         // A toast is displayed if refresh visible services fails (on content or metadata load)
         showToast(this.state.toastErrorMessage, "danger");
@@ -420,7 +438,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         value
       );
     }
-    this.updateLongPressButtonScope();
+    const enableServices = this.areAllServicesInboxChannelDisabled();
+    this.setState({ enableServices });
   };
 
   public componentWillUnmount() {
@@ -431,26 +450,31 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   // This method enable or disable services and update the enableServices props
   private disableOrEnableTabServices = () => {
+    const { profile } = this.props;
+    if (pot.isUpdating(profile)) {
+      return;
+    }
+    const { currentTabServicesId, enableServices } = this.state;
     this.props.disableOrEnableServices(
-      this.state.currentTabServicesId,
-      this.props.profile,
-      this.state.enableServices
+      currentTabServicesId,
+      profile,
+      enableServices
     );
-    this.updateLongPressButtonScope();
+    this.setState({ enableServices: !enableServices });
   };
 
   private renderLongPressFooterButtons = () => {
     return (
       <View style={styles.varBar}>
-        <Button
+        <ButtonDefaultOpacity
           block={true}
           bordered={true}
           onPress={this.handleOnLongPressItem}
           style={styles.buttonBar}
         >
           <Text>{I18n.t("services.close")}</Text>
-        </Button>
-        <Button
+        </ButtonDefaultOpacity>
+        <ButtonDefaultOpacity
           block={true}
           primary={true}
           style={styles.buttonBar}
@@ -471,7 +495,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               ? I18n.t("services.enableAll")
               : I18n.t("services.disableAll")}
           </Text>
-        </Button>
+        </ButtonDefaultOpacity>
       </View>
     );
   };
@@ -572,7 +596,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.setState({
       toastErrorMessage: I18n.t("global.genericError")
     });
-    this.props.refreshServices();
+    this.props.refreshVisibleServices();
   };
 
   private refreshScreenContent = (hideToast: boolean = false) => {
@@ -580,7 +604,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       this.setState({ toastErrorMessage: I18n.t("global.genericError") });
     }
     this.props.refreshUserMetadata();
-    this.props.refreshServices();
+    this.props.refreshVisibleServices();
+    this.props.refreshServicesByScope();
   };
 
   private handleOnScroll = (value: number) => {
@@ -766,25 +791,20 @@ const mapStateToProps = (state: GlobalState) => {
     [2]: getTabSevicesId(allTabSections)
   };
 
-  const visibleServicesContentLoadState = visibleServicesContentLoadStateSelector(
-    state
-  );
-  const visibleServicesMetadataLoadState = visibleServicesMetadataLoadStateSelector(
+  const visibleServicesContentLoadState = visibleServicesDetailLoadStateSelector(
     state
   );
 
-  const isFirstServiceLoadCompleted =
-    pot.isSome(visibleServicesContentLoadState) &&
-    pot.isSome(visibleServicesMetadataLoadState);
+  const servicesByScope = servicesByScopeSelector(state);
 
   const isLoadingServices =
     pot.isLoading(visibleServicesContentLoadState) ||
-    pot.isLoading(visibleServicesMetadataLoadState);
+    pot.isLoading(servicesByScope);
 
   const servicesLoadingFailure =
     !pot.isLoading(potUserMetadata) &&
     (pot.isError(visibleServicesContentLoadState) ||
-      pot.isError(visibleServicesMetadataLoadState));
+      pot.isError(servicesByScope));
 
   const loadDataFailure: DataLoadFailure = pot.isError(potUserMetadata)
     ? "userMetadaLoadFailure"
@@ -794,9 +814,8 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     isLoadingServices,
-    isFirstServiceLoadCompleted,
     visibleServicesContentLoadState,
-    visibleServicesMetadataLoadState,
+    servicesByScope,
     loadDataFailure,
     profile: profileSelector(state),
     visibleServices: visibleServicesSelector(state),
@@ -817,7 +836,8 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
-  refreshServices: () => dispatch(loadVisibleServices.request()),
+  refreshVisibleServices: () => dispatch(loadVisibleServices.request()),
+  refreshServicesByScope: () => dispatch(contentServicesByScopeLoad.request()),
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
     profile: ProfileState
@@ -865,8 +885,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => dispatch(navigateToServiceDetailsScreen(params)),
-  serviceDetailsLoad: (service: ServicePublic) =>
-    dispatch(showServiceDetails(service))
+  serviceDetailsLoad: (service: ServicePublic) => {
+    dispatch(contentServiceLoad.request(service.service_id));
+    dispatch(showServiceDetails(service));
+  }
 });
 
 const mergeProps = (

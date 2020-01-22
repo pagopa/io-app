@@ -1,9 +1,9 @@
-import { Button } from "native-base";
 import * as React from "react";
 import { BackHandler } from "react-native";
 import { NavigationInjectedProps, withNavigation } from "react-navigation";
 
 import variables from "../theme/variables";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
 
 interface OwnProps {
@@ -50,12 +50,12 @@ class GoBackButton extends React.PureComponent<Props> {
     };
 
     return (
-      <Button {...buttonProps}>
+      <ButtonDefaultOpacity {...buttonProps}>
         <IconFont
           name="io-back"
           style={{ color: white ? variables.colorWhite : undefined }}
         />
-      </Button>
+      </ButtonDefaultOpacity>
     );
   }
 }

@@ -1,6 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Button, Content, H3, Text, View } from "native-base";
+import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -10,6 +10,7 @@ import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedM
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -114,7 +115,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   private onServiceLinkPressHandler = (service: ServicePublic) => {
     // When a service gets selected, before navigating to the service detail
-    // screen, we issue a contentServiceLoad to refresh the service metadata
+    // screen, we issue a contentServiceLoad request to refresh the service metadata
     this.props.contentServiceLoad(service.service_id);
     this.props.navigateToServiceDetailsScreen({
       service
@@ -171,13 +172,13 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
               <Text numberOfLines={1}>{`ID: ${messageId}`}</Text>
             </View>
             <View style={styles.erroStateMessageDataRight}>
-              <Button
+              <ButtonDefaultOpacity
                 xsmall={true}
                 bordered={true}
                 onPress={() => clipboardSetStringWithFeedback(messageId)}
               >
                 <Text>{I18n.t("clipboard.copyText")}</Text>
-              </Button>
+              </ButtonDefaultOpacity>
             </View>
           </View>
           <Text alignCenter={true} style={styles.errorStateMessageRetry}>
@@ -188,22 +189,22 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
           </Text>
         </View>
         <View style={styles.errorStateFooterWrapper}>
-          <Button
+          <ButtonDefaultOpacity
             block={true}
             cancel={true}
             onPress={this.goBack}
             style={styles.errorStateCancelButton}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-          <Button
+          </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             onPress={onRetry}
             style={styles.errorStateRetryButton}
           >
             <Text>{I18n.t("global.buttons.retry")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
       </View>
     );

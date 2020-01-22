@@ -3,10 +3,12 @@
  * It includes a carousel with highlights on the app functionalities
  */
 
-import { Button, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { StyleSheet } from "react-native";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
@@ -16,8 +18,12 @@ import { isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { ReduxProps } from "../../store/actions/types";
+import { isSessionExpiredSelector } from "../../store/reducers/authentication";
+import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
+import { showToast } from "../../utils/showToast";
+
 
 import { isCIEAuthenticationSupported, isNfcEnabled } from "../../utils/cie";
 
@@ -25,7 +31,8 @@ type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
 };
 
-type Props = ReduxProps & OwnProps;
+type Props = ReduxProps & OwnProps &
+  ReturnType<typeof mapStateToProps>;
 type State = {
   isCIEAuthenticationSupported: boolean;
 };
@@ -71,6 +78,13 @@ const getCards = (
   }
 ];
 
+const styles = StyleSheet.create({
+  noPadded: {
+    paddingLeft: 0,
+    paddingRight: 0
+  }
+});
+
 class LandingScreen extends React.PureComponent<Props, State> {
   public constructor(props: Props) {
     super(props);
@@ -82,6 +96,13 @@ class LandingScreen extends React.PureComponent<Props, State> {
     this.setState({
       isCIEAuthenticationSupported: isCieSupported
     });
+    if (this.props.isSessionExpired) {
+      showToast(
+        I18n.t("authentication.expiredSessionBanner.message"),
+        "warning",
+        "top"
+      );
+    }
   }
 
   private navigateToMarkdown = () =>
@@ -125,7 +146,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
 
         <View footer={true}>
           {this.state.isCIEAuthenticationSupported && (
-            <Button
+            <ButtonDefaultOpacity
               block={true}
               primary={true}
               iconLeft={true}
@@ -134,10 +155,10 @@ class LandingScreen extends React.PureComponent<Props, State> {
             >
               <IconFont name={"io-cie"} color={variables.colorWhite} />
               <Text>{I18n.t("authentication.landing.loginCie")}</Text>
-            </Button>
+            </ButtonDefaultOpacity>
           )}
           <View spacer={true} />
-          <Button
+          <ButtonDefaultOpacity
             block={true}
             primary={true}
             iconLeft={true}
@@ -146,20 +167,20 @@ class LandingScreen extends React.PureComponent<Props, State> {
           >
             <IconFont name={"io-profilo"} color={variables.colorWhite} />
             <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
           <View spacer={true} />
-          <Button
+          <ButtonDefaultOpacity
             block={true}
             small={true}
             transparent={true}
             onPress={this.navigateToSpidCieInformationRequest}
           >
-            <Text>
+            <Text style={styles.noPadded}>
               {this.state.isCIEAuthenticationSupported
                 ? I18n.t("authentication.landing.nospid-nocie")
                 : I18n.t("authentication.landing.nospid")}
             </Text>
-          </Button>
+          </ButtonDefaultOpacity>
           <View spacer={true} extralarge={true} />
         </View>
       </BaseScreenComponent>
@@ -167,4 +188,8 @@ class LandingScreen extends React.PureComponent<Props, State> {
   }
 }
 
-export default connect()(LandingScreen);
+const mapStateToProps = (state: GlobalState) => ({
+  isSessionExpired: isSessionExpiredSelector(state)
+});
+
+export default connect(mapStateToProps)(LandingScreen);

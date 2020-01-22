@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
+  currentTab: number;
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   navigateToMessageDetail: (id: string) => void;
   setMessagesArchivedState: (
@@ -151,6 +152,12 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     };
   }
 
+  public componentDidUpdate(prevProps: Props) {
+    if (prevProps.currentTab !== this.props.currentTab) {
+      this.props.resetSelection();
+    }
+  }
+
   public render() {
     const isLoading = pot.isLoading(this.props.messagesState);
     const {
@@ -161,6 +168,21 @@ class MessagesInbox extends React.PureComponent<Props, State> {
       resetSelection
     } = this.props;
     const { allMessageIdsState } = this.state;
+    const isErrorLoading = pot.isError(this.props.messagesState);
+
+    // If have error in pot and the list is empty
+    const ErrorLoadingComponent = () => (
+      <View style={styles.emptyListWrapper}>
+        <View spacer={true} />
+        <Image
+          source={require("../../../img/messages/empty-message-list-icon.png")}
+        />
+        <Text style={styles.emptyListContentTitle}>
+          {I18n.t("messages.loadingErrorTitle")}
+        </Text>
+        {paddingForAnimation && <View style={styles.paddingForAnimation} />}
+      </View>
+    );
 
     return (
       <View style={styles.listWrapper}>
@@ -172,7 +194,9 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             onLongPressItem={this.handleOnLongPressItem}
             refreshing={isLoading}
             selectedMessageIds={selectedItemIds}
-            ListEmptyComponent={ListEmptyComponent}
+            ListEmptyComponent={
+              isErrorLoading ? ErrorLoadingComponent : ListEmptyComponent
+            }
             animated={animated}
           />
         </View>
