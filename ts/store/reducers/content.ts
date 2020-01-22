@@ -72,7 +72,7 @@ export const municipalitySelector = (state: GlobalState) =>
 export const servicesMetadataByIdSelector = (state: GlobalState) =>
   state.content.servicesMetadata.byId;
 
-export const servicesByScope = (state: GlobalState) =>
+export const servicesByScopeSelector = (state: GlobalState) =>
   state.content.servicesByScope;
 
 /**
@@ -84,7 +84,7 @@ export const isServiceIdInScopeSelector = (
   serviceId: ServiceId,
   scope: ScopeEnum
 ) =>
-  createSelector(servicesByScope, maybeServicesByScope =>
+  createSelector(servicesByScopeSelector, maybeServicesByScope =>
     pot.getOrElse(
       pot.map(
         maybeServicesByScope,
@@ -113,7 +113,7 @@ export const servicesInScopeSelector = (
   services: ReadonlyArray<ServicePublic>,
   scope: ScopeEnum
 ) =>
-  createSelector(servicesByScope, maybeServicesByScope =>
+  createSelector(servicesByScopeSelector, maybeServicesByScope =>
     pot.getOrElse(
       pot.map(maybeServicesByScope, sbs =>
         services.filter(service => {
@@ -224,7 +224,7 @@ export default function content(
 
     case getType(removeServiceTuples): {
       // removeServiceTuples is dispatched to remove from the store
-      // the service content (and, here, metadata) related to services that are
+      // the service detail (and, here, metadata) related to services that are
       // no more visible and that are not related to messages list
 
       // references of the services to be removed from the store
