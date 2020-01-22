@@ -163,7 +163,7 @@ profile:
         enabled: Enabled
         disabled: Disabled
       email: Email address
-      pagoPa_email: PagoPA email
+      pagoPa_email: pagoPA email
       need_validate: To be validated
       mobile_phone: Mobile number
       language: Language
