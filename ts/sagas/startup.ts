@@ -54,7 +54,12 @@ import {
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
-import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
+import {
+  loadProfile,
+  watchProfileRefreshRequestsSaga,
+  watchProfileSendEmailValidationSaga,
+  watchProfileUpsertRequestsSaga
+} from "./profile";
 import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
