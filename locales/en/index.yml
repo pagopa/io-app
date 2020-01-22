@@ -835,7 +835,15 @@ calendarEvents:
     cancel: Cancel the operation
 reminders:
   emptyMonth: No reminders for this month
-  loadMoreData: loads the deadlines of the previous period
+  loadMoreData: previous deadlines
+  noOtherDeadlines: There are no more deadlines
+  email:
+    title: Remember to validate your email address
+    modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"
+    modal2: "open your email client and click on the link."
+    button1: Send another verification email
+    button2: Change email address
+
 openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred
