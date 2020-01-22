@@ -636,6 +636,12 @@ wallet:
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
       message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
+    settingsAlert:
+      title: Permesso di utilizzare la galleria da parte di IO
+      message: Io App ha bisogno dell'accesso alla galleria per permetterti di selezionare l'immagine
+      buttonText:
+        settings: Impostazioni
+        ok: OK
   whyAFee:
     title: Perché devo pagare le commissioni?
     text: !include why_a_fee.md

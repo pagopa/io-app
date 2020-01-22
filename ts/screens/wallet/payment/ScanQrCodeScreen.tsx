@@ -6,7 +6,7 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Container, Text, View } from "native-base";
 import * as React from "react";
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import { Alert, Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -113,6 +113,28 @@ const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
 
+  private settingsAlert = (
+    title: string,
+    message: string,
+    settings: () => void
+  ) => {
+    Alert.alert(
+      title,
+      message,
+      [
+        {
+          text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
+          onPress: () => settings(),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.ok")
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
   /**
    * Handles valid pagoPA QR codes
    */
@@ -172,6 +194,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           .catch(() => {
             this.onInvalidQrCode();
           });
+      } else {
+        this.settingsAlert(
+          I18n.t("wallet.QRtoPay.settingsAlert.title"),
+          I18n.t("wallet.QRtoPay.settingsAlert.message"),
+          openAppSettings
+        );
       }
     });
   };

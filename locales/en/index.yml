@@ -628,6 +628,12 @@ wallet:
     cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
       message: "IO app needs Camera usage permission to shoot at the QR code"
+    settingsAlert:
+      title: Io App Media permission
+      message: Io App needs access to the gallery to allow you to select the image
+      buttonText:
+        settings: Settings
+        ok: OK
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include why_a_fee.md
