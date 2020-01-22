@@ -5,7 +5,7 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { loadVisibleServices } from "../../store/actions/services";
 import { SagaCallReturnType } from "../../types/utils";
 import { refreshStoredServices } from "../services/refreshStoredServices";
-import { removeOldStoredServices } from "../services/removeOldStoredServices";
+import { removeUnusedStoredServices } from "../services/removeUnusedStoredServices";
 
 /**
  * A generator to load the service details from the Backend
@@ -30,7 +30,7 @@ export function* loadVisibleServicesRequestHandler(
       yield put(loadVisibleServices.success(visibleServices));
 
       // Check if old version of services are stored and load new available versions of services
-      yield call(removeOldStoredServices, visibleServices);
+      yield call(removeUnusedStoredServices, visibleServices);
       yield call(refreshStoredServices, visibleServices);
     } else if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow

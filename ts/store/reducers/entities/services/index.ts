@@ -179,9 +179,7 @@ const isInScope = (
   // if service or servicesByScope are Error, the item is not included into the section
   if (pot.isSome(service) && pot.isSome(servicesByScope)) {
     const serviceId = service.value.service_id;
-    return scope === ScopeEnum.LOCAL
-      ? servicesByScope.value.LOCAL.indexOf(serviceId) !== -1
-      : servicesByScope.value.NATIONAL.indexOf(serviceId) !== -1;
+    return servicesByScope.value[scope].indexOf(serviceId) !== -1
   }
 
   return false;

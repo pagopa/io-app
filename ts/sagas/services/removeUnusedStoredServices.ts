@@ -11,7 +11,7 @@ type VisibleServiceVersionById = {
   [index: string]: number | undefined;
 };
 
-export function* removeOldStoredServices(
+export function* removeUnusedStoredServices(
   visibleServices: PaginatedServiceTupleCollection["items"]
 ): SagaIterator {
   const visibleServiceVersionById = visibleServices.reduce<
