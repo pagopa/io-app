@@ -834,6 +834,7 @@ calendarEvents:
 reminders:
   emptyMonth: No reminders for this month
   loadMoreData: previous deadlines
+  noOtherDeadlines: There are no more deadlines
   email:
     title: Remember to validate your email address
     modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"

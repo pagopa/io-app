@@ -1,11 +1,10 @@
 /**
- * A reducer to store the services normalized by id
+ * A reducer to store the services detail normalized by id
  * It only manages SUCCESS actions because all UI state properties (like * loading/error)
  * are managed by different global reducers.
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { clearCache } from "../../../actions/profile";
 import { loadService, removeServiceTuples } from "../../../actions/services";
@@ -24,7 +23,7 @@ const reducer = (
 ): ServicesByIdState => {
   switch (action.type) {
     case getType(loadService.request):
-      // When a previously loaded service is loaded again, its state
+      // When a previously loaded service detail is loaded again, its state
       // is updated with a someLoading pot, otherwise its state is updated with a noneLoading pot
       const cachedValue = state[action.payload];
       const prevServiceRequest =
@@ -45,7 +44,8 @@ const reducer = (
       };
 
     case getType(loadService.failure):
-      // when a request to load a previously loaded service fails its state is updated with a someError pot, otherwise its state is updated with a noneError pot
+      // when a request to load a previously loaded service detail fails its state is updated
+      // with a someError pot, otherwise its state is updated with a noneError pot
       const { service_id, error } = action.payload;
       const prevServiceFailure = state[service_id];
       const nextServiceFailure =
