@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     marginTop: -cameraTextOverlapping,
     width: screenWidth - variables.contentPadding * 2,
     backgroundColor: variables.colorWhite,
-    zIndex: 2
+    zIndex: 999
   },
 
   camera: {
@@ -110,30 +110,31 @@ const styles = StyleSheet.create({
  */
 const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 
+// Alert to invite user to enable the permissions
+const settingsAlert = (
+  title: string,
+  message: string,
+  settings: () => void
+) => {
+  Alert.alert(
+    title,
+    message,
+    [
+      {
+        text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
+        onPress: () => settings(),
+        style: "cancel"
+      },
+      {
+        text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.ok")
+      }
+    ],
+    { cancelable: false }
+  );
+};
+
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
-
-  private settingsAlert = (
-    title: string,
-    message: string,
-    settings: () => void
-  ) => {
-    Alert.alert(
-      title,
-      message,
-      [
-        {
-          text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
-          onPress: () => settings(),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.ok")
-        }
-      ],
-      { cancelable: false }
-    );
-  };
 
   /**
    * Handles valid pagoPA QR codes
@@ -194,13 +195,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           .catch(() => {
             this.onInvalidQrCode();
           });
-      } else {
-        this.settingsAlert(
+      } else if (response.error !== undefined) {
+        settingsAlert(
           I18n.t("wallet.QRtoPay.settingsAlert.title"),
           I18n.t("wallet.QRtoPay.settingsAlert.message"),
           openAppSettings
         );
-      }
+      } // else if the user has not selected a file, do nothing
     });
   };
 
