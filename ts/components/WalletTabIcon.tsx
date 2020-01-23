@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getUnreadTransactionsSelector } from "../store/reducers/entities/readTransactions";
 import { GlobalState } from "../store/reducers/types";
 import TabIconComponent from "./ui/TabIconComponent";
+import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 
 type OwnProps = {
   color?: string;
@@ -30,9 +31,11 @@ class WalletTabIcon extends React.PureComponent<Props> {
 
 function mapStateToProps(state: GlobalState) {
   const transactions = getUnreadTransactionsSelector(state);
-  const unreadTransactions = pot.isSome(transactions)
-    ? Object.keys(transactions.value).length
-    : 0;
+  const isEmailValidated = isProfileEmailValidatedSelector(state);
+  const unreadTransactions =
+    pot.isSome(transactions) && isEmailValidated
+      ? Object.keys(transactions.value).length
+      : 0;
 
   return {
     unreadTransactions
