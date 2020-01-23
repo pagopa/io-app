@@ -7,7 +7,10 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { clearCache } from "../../../actions/profile";
-import { loadServiceDetail, removeServiceTuples } from "../../../actions/services";
+import {
+  loadServiceDetail,
+  removeServiceTuples
+} from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 

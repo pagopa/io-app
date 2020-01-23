@@ -39,5 +39,7 @@ export function* refreshStoredServices(
     .map(_ => _.service_id);
 
   // Parallel fetch of those services content that we haven't loaded yet or need to be updated
-  yield all(serviceDetailIdsToLoad.map(id => put(loadServiceDetail.request(id))));
+  yield all(
+    serviceDetailIdsToLoad.map(id => put(loadServiceDetail.request(id)))
+  );
 }

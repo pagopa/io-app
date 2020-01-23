@@ -3,7 +3,10 @@ import { put, takeEvery } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadVisibleServicesByScope } from "../../store/actions/content";
-import { loadServiceDetail, loadVisibleServices } from "../../store/actions/services";
+import {
+  loadServiceDetail,
+  loadVisibleServices
+} from "../../store/actions/services";
 import { loadServiceDetailRequestHandler } from "../startup/loadServiceDetailRequestHandler";
 import { loadVisibleServicesRequestHandler } from "../startup/loadVisibleServicesHandler";
 import { handleFirstVisibleServiceLoadSaga } from "./handleFirstVisibleServiceLoadSaga";
@@ -31,7 +34,10 @@ export function* watchLoadServicesSaga(
   // isFirstServiceLoadCOmpleted is true (https://redux-saga.js.org/docs/advanced/TaskCancellation.html)
   // https://www.pivotaltracker.com/story/show/170770471
   yield takeEvery(
-    [getType(loadServiceDetail.success), getType(loadVisibleServicesByScope.success)],
+    [
+      getType(loadServiceDetail.success),
+      getType(loadVisibleServicesByScope.success)
+    ],
     handleFirstVisibleServiceLoadSaga
   );
 
