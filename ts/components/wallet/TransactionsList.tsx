@@ -153,7 +153,6 @@ export default class TransactionsList extends React.Component<Props> {
     return transactions.length === 0 && ListEmptyComponent ? (
       ListEmptyComponent
     ) : (
-      // TODO: onPress should redirect to the transaction details @https://www.pivotaltracker.com/story/show/154442946
       <Content
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteContent]}
