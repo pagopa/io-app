@@ -1,6 +1,7 @@
 import { isSome, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import startCase from "lodash/startCase";
 import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
@@ -16,13 +17,12 @@ import {
   SectionListScrollParams,
   StyleSheet
 } from "react-native";
-import variables from "../../theme/variables";
-import startCase from "lodash/startCase";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { makeFontStyleObject } from "../../theme/fonts";
+import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { format } from "../../utils/dates";
