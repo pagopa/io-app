@@ -60,6 +60,10 @@ export const sessionInformationLoadFailure = createAction(
   resolve => (error: Error) => resolve(error, true)
 );
 
+export const resetAuthenticationState = createStandardAction(
+  "RESET_AUTHENTICATION_STATE"
+)();
+
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
@@ -75,4 +79,5 @@ export type AuthenticationActions =
   | ActionType<typeof sessionInformationLoadSuccess>
   | ActionType<typeof sessionInformationLoadFailure>
   | ActionType<typeof sessionExpired>
-  | ActionType<typeof sessionInvalid>;
+  | ActionType<typeof sessionInvalid>
+  | ActionType<typeof resetAuthenticationState>;
