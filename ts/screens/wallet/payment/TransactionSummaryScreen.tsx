@@ -4,7 +4,6 @@
  * TODO:
  * - integrate contextual help
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
- * - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";

@@ -237,6 +237,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   // TODO: Add a Provider and an HOC to manage multiple render states in a simpler way.
+  // https://www.pivotaltracker.com/story/show/170819221
   private renderCurrentState = () => {
     const { potMessage, potService, paymentsByRptId } = this.props;
 
