@@ -3,9 +3,9 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { getUnreadTransactionsSelector } from "../store/reducers/entities/readTransactions";
+import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import TabIconComponent from "./ui/TabIconComponent";
-import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 
 type OwnProps = {
   color?: string;
