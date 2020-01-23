@@ -26,7 +26,7 @@ declare module "native-base" {
  * included at the bottom of the screen to show the proper shadow upside the navigation bar:
  *
  * <View footer={true} noPadded={true}/>
- * 
+ *
  * TODO: check if this rule is still valid or a workaround has been implemented to avoid it been manually done
  * https://www.pivotaltracker.com/story/show/170819564
  */
