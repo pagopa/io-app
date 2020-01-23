@@ -5,7 +5,13 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Container, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Dimensions, ScrollView, StyleSheet } from "react-native";
+import {
+  Alert,
+  Dimensions,
+  Platform,
+  ScrollView,
+  StyleSheet
+} from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -181,6 +187,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       storageOptions: {
         skipBackup: true,
         path: "images"
+      },
+      permissionDenied: {
+        title: I18n.t("wallet.QRtoPay.settingsAlert.title"),
+        text: I18n.t("wallet.QRtoPay.settingsAlert.message"),
+        okTitle: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
+        reTryTitle: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings")
       }
     };
     // Open Image Library
@@ -194,7 +206,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           .catch(() => {
             this.onInvalidQrCode();
           });
-      } else if (response.error !== undefined) {
+      } else if (response.error !== undefined && Platform.OS === "ios") {
         settingsAlert(
           I18n.t("wallet.QRtoPay.settingsAlert.title"),
           I18n.t("wallet.QRtoPay.settingsAlert.message"),
