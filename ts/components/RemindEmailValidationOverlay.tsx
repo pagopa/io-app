@@ -305,7 +305,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               </Button>
             )}
         </Content>
-        {this.renderFooter()}
+        {this.state.isContentLoadCompleted && this.renderFooter()}
       </TopScreenComponent>
     );
   }
