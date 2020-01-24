@@ -6,7 +6,6 @@
  *  TODO:
  *  - integrate contextual help to obtain details on the data to insert for manually identifying the transaction
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
- *  - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 
 import { Content, Form, H1, Input, Item, Label, Text } from "native-base";

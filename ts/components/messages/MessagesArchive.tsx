@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
+  currentTab: number;
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   navigateToMessageDetail: (id: string) => void;
   setMessagesArchivedState: (
@@ -136,6 +137,12 @@ class MessagesArchive extends React.PureComponent<Props, State> {
 
     // The state must not be changed.
     return null;
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    if (prevProps.currentTab !== this.props.currentTab) {
+      this.props.resetSelection();
+    }
   }
 
   constructor(props: Props) {
