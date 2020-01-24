@@ -197,10 +197,16 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       this.props.dispatchPreferredCalendarSaveSuccess(calendar);
     }
 
+    const calendarDate: Date = new Date(dueDate);
+    // Get the time zone offset
+    const offset = calendarDate.getTimezoneOffset();
+    const formatted = -(offset / 60);
+    calendarDate.setHours(calendarDate.getHours() - formatted);
+
     RNCalendarEvents.saveEvent(title, {
       calendarId: calendar.id,
-      startDate: formatDateAsReminder(dueDate),
-      endDate: formatDateAsReminder(dueDate),
+      startDate: formatDateAsReminder(calendarDate),
+      endDate: formatDateAsReminder(calendarDate),
       allDay: true,
       alarms: []
     })
