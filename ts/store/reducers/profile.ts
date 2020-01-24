@@ -89,7 +89,7 @@ const reducer = (
     //
 
     case getType(profileUpsert.request):
-      // TODO: remove the cast after: https://www.pivotaltracker.com/story/show/160924538
+      // TODO: remove the cast after: https://www.pivotaltracker.com/story/show/160924538 (https://www.pivotaltracker.com/story/show/170819398)
       // tslint:disable-next-line:no-useless-cast
       return pot.toUpdating(state, action.payload as any);
 
