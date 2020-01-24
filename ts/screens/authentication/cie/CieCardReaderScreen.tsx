@@ -9,6 +9,7 @@ import {
   NavigationScreenProps,
   NavigationState
 } from "react-navigation";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 import AnimatedRing from "../../../components/animations/AnimatedRing";
 import ScreenHeader from "../../../components/ScreenHeader";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -83,6 +84,7 @@ type State = {
   progressBarValue: number;
   // Get the current status of the card reading
   readingState: ReadingState;
+  errorMessage: string;
 };
 
 /**
@@ -103,7 +105,8 @@ class CieCardReaderScreen extends React.Component<Props, State> {
       - error (the reading is interrupted -> progress animation stops and the progress circle becomes red)
       - completed (the reading has been completed)
       */
-      readingState: "error"
+      readingState: "waiting_card",
+      errorMessage: ""
     };
     this.progressAnimatedValue = new Animated.Value(0);
     this.progressAnimatedValue.addListener(anim => {
@@ -168,9 +171,12 @@ class CieCardReaderScreen extends React.Component<Props, State> {
       case "CERTIFICATE_EXPIRED":
       case "ON_NO_INTERNET_CONNECTION":
         if (this.state.readingState !== "error") {
-          this.setState({ readingState: "error" }, () => {
-            Vibration.vibrate(100);
-          });
+          this.setState(
+            { readingState: "error", errorMessage: event.event },
+            () => {
+              Vibration.vibrate(100);
+            }
+          );
         }
         break;
       case "ON_PIN_ERROR":
@@ -181,8 +187,8 @@ class CieCardReaderScreen extends React.Component<Props, State> {
     }
   };
 
-  private handleCieError = (_: Error) => {
-    this.setState({ readingState: "error" });
+  private handleCieError = (error: Error) => {
+    this.setState({ readingState: "error", errorMessage: error.message });
   };
 
   private handleCieSuccess = (consentUri: string) => {
@@ -304,9 +310,9 @@ class CieCardReaderScreen extends React.Component<Props, State> {
               />
             </ProgressCircle>
           </View>
-          <Text style={styles.messageFooter}>
+          <Text style={styles.messageFooter} selectable={true}>
             {this.state.readingState === "error"
-              ? ""
+              ? this.state.errorMessage
               : this.state.readingState === "reading"
                 ? I18n.t("authentication.cie.readerCardFooter")
                 : I18n.t("cie.layCardMessageFooter")}
