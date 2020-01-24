@@ -10,6 +10,7 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import {
+  profileLoadFailure,
   profileLoadRequest,
   profileLoadSuccess,
   profileUpsert,
@@ -79,6 +80,9 @@ const reducer = (
     case getType(profileLoadSuccess):
       // Store the loaded Profile in the store
       return pot.some(action.payload);
+
+    case getType(profileLoadFailure):
+      return pot.toError(state, action.payload);
 
     //
     // upsert

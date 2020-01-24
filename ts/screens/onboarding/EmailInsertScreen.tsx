@@ -2,7 +2,6 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
-
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
