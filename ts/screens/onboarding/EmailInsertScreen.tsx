@@ -213,7 +213,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                       ? I18n.t("email.edit.label")
                       : I18n.t("email.insert.label")
                   }
-                  icon="io-envelope"
+                  icon={"io-envelope"}
                   isValid={this.isValidEmail()}
                   inputProps={{
                     autoCapitalize: "none",
@@ -229,7 +229,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           </Content>
 
           <KeyboardAvoidingView
-            behavior="padding"
+            behavior={"padding"}
             keyboardVerticalOffset={Platform.select({
               ios: 100,
               android: 80

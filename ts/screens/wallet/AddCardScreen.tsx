@@ -228,7 +228,7 @@ class AddCardScreen extends React.Component<Props, State> {
             <LabelledItem
               type={"text"}
               label={I18n.t("wallet.dummyCard.labels.holder")}
-              icon="io-titolare"
+              icon={"io-titolare"}
               isValid={
                 this.state.holder.getOrElse(EMPTY_CARD_HOLDER) === ""
                   ? undefined
@@ -249,7 +249,7 @@ class AddCardScreen extends React.Component<Props, State> {
             <LabelledItem
               type={"masked"}
               label={I18n.t("wallet.dummyCard.labels.pan")}
-              icon="io-carta"
+              icon={"io-carta"}
               isValid={this.isValidPan()}
               inputMaskProps={{
                 ref: this.panRef,
@@ -271,7 +271,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 <LabelledItem
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
-                  icon="io-calendario"
+                  icon={"io-calendario"}
                   isValid={this.isValidExpirationDate()}
                   inputMaskProps={{
                     ref: this.expirationDateRef,
@@ -294,7 +294,7 @@ class AddCardScreen extends React.Component<Props, State> {
                 <LabelledItem
                   type={"masked"}
                   label={I18n.t("wallet.dummyCard.labels.securityCode")}
-                  icon="io-lucchetto"
+                  icon={"io-lucchetto"}
                   isValid={this.isValidSecurityCode()}
                   inputMaskProps={{
                     ref: this.securityCodeRef,

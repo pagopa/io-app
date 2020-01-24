@@ -149,8 +149,6 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
             <Content scrollEnabled={false}>
               <LabelledItem
                 type={"masked"}
-                label={""}
-                icon=""
                 isValid={this.isValidSecurityCode()}
                 inputMaskProps={{
                   ref: this.securityCodeRef,
@@ -172,7 +170,7 @@ class PaymentSecureCodeScreen extends React.Component<Props, State> {
           </ScrollView>
         </Content>
         <KeyboardAvoidingView
-          behavior="padding"
+          behavior={"padding"}
           keyboardVerticalOffset={Platform.select({
             ios: 0,
             android: variables.contentPadding

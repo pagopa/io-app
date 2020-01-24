@@ -8,7 +8,6 @@ import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
-import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import * as config from "../../config";
 import I18n from "../../i18n";
@@ -17,6 +16,7 @@ import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
+import { ScreenContentHeader } from '../../components/screens/ScreenContentHeader';
 
 type Props = ReduxProps & NavigationScreenProps;
 
@@ -115,9 +115,9 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
       goBack={props.navigation.goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
-      <Content noPadded={true} overScrollMode="never" bounces={false}>
-        <ScreenHeader
-          heading={I18n.t("authentication.idp_selection.contentTitle")}
+      <Content noPadded={true} overScrollMode={"never"} bounces={false}>
+        <ScreenContentHeader
+          title={I18n.t("authentication.idp_selection.contentTitle")}
         />
         <View style={styles.gridContainer} testID="idps-view">
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />

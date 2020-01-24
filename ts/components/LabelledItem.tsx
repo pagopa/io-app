@@ -30,9 +30,11 @@ const styles = StyleSheet.create({
 
 type StyleType = IconProps["style"];
 
+// TODO: isolate a component with optional label and no icon
+// 
 type CommonProp = Readonly<{
-  label: string;
-  icon: string;
+  label?: string;
+  icon?: string;
   isValid?: boolean;
   iconStyle?: StyleType;
   focusBorderColor?: string;
@@ -57,7 +59,10 @@ type Props = CommonProp &
 export class LabelledItem extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { isEmpty: true, hasFocus: false };
+    this.state = { 
+      isEmpty: true, 
+      hasFocus: false 
+    };
   }
 
   /**
@@ -126,7 +131,7 @@ export class LabelledItem extends React.Component<Props, State> {
             this.props.isValid === undefined ? false : this.props.isValid
           }
         >
-          {this.props.icon !== "" && (
+          {this.props.icon && (
             <IconFont
               size={variables.iconSize3}
               color={variables.brandDarkGray}
