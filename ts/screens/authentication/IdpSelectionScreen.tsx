@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
@@ -16,7 +17,6 @@ import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
-import { ScreenContentHeader } from '../../components/screens/ScreenContentHeader';
 
 type Props = ReduxProps & NavigationScreenProps;
 

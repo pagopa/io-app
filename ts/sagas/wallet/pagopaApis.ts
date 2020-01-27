@@ -1,7 +1,7 @@
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import { call, Effect, put, select } from "redux-saga/effects";
+import { SagaIterator } from "redux-saga";
+import { call, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import {
@@ -55,7 +55,7 @@ import { SessionManager } from "../../utils/SessionManager";
 export function* fetchWalletsRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
-): Iterator<Effect> {
+): SagaIterator {
   const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
   try {
     const getResponse: SagaCallReturnType<typeof request> = yield call(request);
@@ -79,7 +79,7 @@ export function* fetchWalletsRequestHandler(
 export function* fetchTransactionsRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
-): Iterator<Effect> {
+): SagaIterator {
   const request = pmSessionManager.withRefresh(pagoPaClient.getTransactions);
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
@@ -104,7 +104,7 @@ export function* fetchTransactionRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchTransactionRequest>
-): Iterator<Effect> {
+): SagaIterator {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getTransaction(action.payload)
   );
@@ -131,7 +131,7 @@ export function* fetchPspRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchPsp["request"]>
-): Iterator<Effect> {
+): SagaIterator {
   const request = pmSessionManager.withRefresh(
     pagoPaClient.getPsp(action.payload.idPsp)
   );
@@ -174,7 +174,7 @@ export function* setFavouriteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof setFavouriteWalletRequest>
-): Iterator<Effect> {
+): SagaIterator {
   const favouriteWalletId = action.payload;
   if (favouriteWalletId === undefined) {
     // FIXME: currently there is no way to unset a favourite wallet
@@ -288,7 +288,7 @@ export function* deleteWalletRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof deleteWalletRequest>
-): Iterator<Effect> {
+): SagaIterator {
   const deleteWalletApi = pagoPaClient.deleteWallet(action.payload.walletId);
   const deleteWalletWithRefresh = pmSessionManager.withRefresh(deleteWalletApi);
 
@@ -453,7 +453,7 @@ export function* paymentCheckRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentCheck["request"]>
-): Iterator<Effect> {
+): SagaIterator {
   // FIXME: we should not use default pagopa client for checkpayment, need to
   //        a client that doesn't retry on failure!!! checkpayment is NOT
   //        idempotent, the 2nd time it will error!
@@ -490,9 +490,13 @@ export function* paymentExecutePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentExecutePayment["request"]>
-): Iterator<Effect> {
+): SagaIterator {
   const apiPostPayment = pagoPaClient.postPayment(action.payload.idPayment, {
-    data: { tipo: "web", idWallet: action.payload.wallet.idWallet }
+    data: {
+      tipo: "web",
+      idWallet: action.payload.wallet.idWallet,
+      cvv: action.payload.cvv
+    }
   });
   const postPaymentWithRefresh = pmSessionManager.withRefresh(apiPostPayment);
   try {
@@ -526,7 +530,7 @@ export function* paymentDeletePaymentRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof paymentDeletePayment["request"]>
-): Iterator<Effect> {
+): SagaIterator {
   const apiPostPayment = pagoPaClient.deletePayment(action.payload.paymentId);
   const request = pmSessionManager.withRefresh(apiPostPayment);
   try {

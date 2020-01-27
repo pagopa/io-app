@@ -2,7 +2,6 @@ import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
@@ -90,7 +89,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               style={styles.helpButton}
               transparent={true}
             >
-              <IconFont name="io-question" />
+              <IconFont name={"io-question"} />
             </ButtonDefaultOpacity>
           )}
 
@@ -118,7 +117,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
         <Left>
           <View>
             <IconFont
-              name="io-logo"
+              name={"io-logo"}
               color={primary ? "white" : variables.brandPrimary}
             />
           </View>
@@ -127,7 +126,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
         goBack && (
           <Left>
             <GoBackButton
-              testID="back-button"
+              testID={"back-button"}
               onPress={goBack}
               accessible={true}
               accessibilityLabel={I18n.t("global.buttons.back")}

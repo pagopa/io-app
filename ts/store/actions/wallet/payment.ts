@@ -8,12 +8,10 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
 import { DetailEnum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTypes";
-
 import { Psp, Transaction, Wallet } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { EntrypointRoute } from "../../reducers/wallet/payment";
@@ -161,6 +159,7 @@ export const paymentUpdateWalletPsp = createAsyncAction(
 type PaymentExecutePaymentRequestPayload = Readonly<{
   idPayment: string;
   wallet: Wallet;
+  cvv?: string;
   onSuccess?: (
     action: ActionType<typeof paymentExecutePayment["success"]>
   ) => void;

@@ -4,16 +4,13 @@
  * needed (e.g. ToS, explaining why fees are
  * needed)
  */
-
 import { Body, Container, Content, H1, Right } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-
 import IconFont from "../components/ui/IconFont";
+import themeVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import AppHeader from "./ui/AppHeader";
-
-import themeVariables from "../theme/variables";
 
 type Props = Readonly<{
   title: string;
@@ -38,7 +35,7 @@ export class ContextualHelp extends React.Component<Props> {
               onPress={() => this.props.onClose()}
               transparent={true}
             >
-              <IconFont name="io-close" />
+              <IconFont name={"io-close"} />
             </ButtonDefaultOpacity>
           </Right>
         </AppHeader>

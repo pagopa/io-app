@@ -11,13 +11,13 @@ import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import PaymentSecureCodeOverlay from "../../../components/PaymentSecureCodeOverlay";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
@@ -27,7 +27,6 @@ import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComp
 import I18n from "../../../i18n";
 import { identificationRequest } from "../../../store/actions/identification";
 import {
-  navigateToPaymentEnterSecureCode,
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
   navigateToTransactionDetailsScreen
@@ -262,9 +261,18 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             primary={true}
             onPress={() => {
               const card = wallet.creditCard;
-              // control if brand card is Maestro
+              // control if the card brand is Maestro
               if (card !== undefined && isBrandMaestro(card)) {
-                this.props.navigateToPaymentEnterSecureCode();
+                this.props.showModal(
+                  <PaymentSecureCodeOverlay
+                    verifica={this.props.navigation.getParam("verifica")}
+                    onCancel={this.props.hideModal}
+                    onContinue={(cvv?: string) => {
+                      this.props.runAuthorizationAndPayment(cvv);
+                      this.props.hideModal();
+                    }}
+                  />
+                );
               } else {
                 this.props.runAuthorizationAndPayment();
               }
@@ -351,11 +359,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     }
   };
 
-  const onIdentificationSuccess = () => {
+  const onIdentificationSuccess = (cvv?: string) => {
     dispatch(
       paymentExecutePayment.request({
         wallet: props.navigation.getParam("wallet"),
         idPayment: props.navigation.getParam("idPayment"),
+        cvv,
         onSuccess: action => {
           dispatch(
             runPollTransactionSaga({
@@ -370,8 +379,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     );
   };
 
-  const runAuthorizationAndPayment = () =>
-    // inserire qui controllo MAESTRO
+  const runAuthorizationAndPayment = (cvv?: string) =>
     dispatch(
       identificationRequest(
         false,
@@ -383,7 +391,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           onCancel: () => undefined
         },
         {
-          onSuccess: onIdentificationSuccess
+          onSuccess: () => onIdentificationSuccess(cvv)
         }
       )
     );
@@ -437,18 +445,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       );
     },
     runAuthorizationAndPayment,
-    onRetry: runAuthorizationAndPayment,
-    navigateToPaymentEnterSecureCode: () =>
-      dispatch(
-        navigateToPaymentEnterSecureCode({
-          verifica: props.navigation.getParam("verifica"),
-          rptId: props.navigation.getParam("rptId"),
-          initialAmount: props.navigation.getParam("initialAmount"),
-          idPayment: props.navigation.getParam("idPayment"),
-          psps: props.navigation.getParam("psps"),
-          wallet: props.navigation.getParam("wallet")
-        })
-      )
+    onRetry: runAuthorizationAndPayment
   };
 };
 

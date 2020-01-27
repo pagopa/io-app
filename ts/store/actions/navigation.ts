@@ -17,7 +17,6 @@ import AddPaymentMethodScreen from "../../screens/wallet/AddPaymentMethodScreen"
 import ConfirmCardDetailsScreen from "../../screens/wallet/ConfirmCardDetailsScreen";
 import ConfirmPaymentMethodScreen from "../../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../../screens/wallet/payment/ManualDataInsertionScreen";
-import PaymentSecureCodeScreen from "../../screens/wallet/payment/PaymentSecureCodeScreen";
 import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
 import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErrorScreen";
@@ -238,14 +237,6 @@ export const navigateToPaymentManualDataInsertion = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-    params
-  });
-
-export const navigateToPaymentEnterSecureCode = (
-  params: InferNavigationParams<typeof PaymentSecureCodeScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_ENTER_SECURE_CODE,
     params
   });
 
