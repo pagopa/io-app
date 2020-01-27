@@ -139,7 +139,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private handleGoBack() {
-    if (this.isOnboardingCompleted) {
+    if (this.props.isOnboardingCompleted) {
       this.props.navigation.goBack();
     } else {
       // if the user is in onboarding phase, go back has to
