@@ -38,6 +38,7 @@ interface OwnProps {
     iconName: string;
     onPress: () => void;
   };
+  customGoBack?: React.ReactNode;
 }
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -108,9 +109,27 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     );
   };
 
-  private renderLeft = () => {
-    const { isSearchEnabled, appLogo, goBack, primary, dark } = this.props;
+  private renderGoBack = () => {
+    const { goBack, dark, customGoBack } = this.props;
+    return customGoBack ? (
+      <Left>{customGoBack}</Left>
+    ) : (
+      goBack && (
+        <Left>
+          <GoBackButton
+            testID={"back-button"}
+            onPress={goBack}
+            accessible={true}
+            accessibilityLabel={I18n.t("global.buttons.back")}
+            white={dark}
+          />
+        </Left>
+      )
+    );
+  };
 
+  private renderLeft = () => {
+    const { isSearchEnabled, appLogo, primary } = this.props;
     return (
       !isSearchEnabled &&
       (appLogo ? (
@@ -123,17 +142,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
           </View>
         </Left>
       ) : (
-        goBack && (
-          <Left>
-            <GoBackButton
-              testID={"back-button"}
-              onPress={goBack}
-              accessible={true}
-              accessibilityLabel={I18n.t("global.buttons.back")}
-              white={dark}
-            />
-          </Left>
-        )
+        this.renderGoBack()
       ))
     );
   };

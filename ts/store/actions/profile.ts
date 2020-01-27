@@ -2,6 +2,7 @@
  * Action types and action creator related to the Profile.
  */
 
+import { Option } from "fp-ts/lib/Option";
 import { Omit } from "italia-ts-commons/lib/types";
 import {
   ActionType,
@@ -9,16 +10,16 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
 import { ExtendedProfile } from "../../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 
-import { UserProfileUnion } from "../../api/backend";
-
 export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 
+export const profileLoadRequest = createStandardAction(
+  "PROFILE_LOAD_REQUEST"
+)();
 export const profileLoadSuccess = createStandardAction("PROFILE_LOAD_SUCCESS")<
-  UserProfileUnion
+  InitializedProfile
 >();
 
 export const profileLoadFailure = createAction(
@@ -34,6 +35,16 @@ export const profileUpsert = createAsyncAction(
   "PROFILE_UPSERT_FAILURE"
 )<ProfileUpsertPayload, InitializedProfile, Error>();
 
+export const startEmailValidation = createAsyncAction(
+  "START_EMAIL_VALIDATION_REQUEST",
+  "START_EMAIL_VALIDATION_SUCCESS",
+  "START_EMAIL_VALIDATION_FAILURE"
+)<void, void, Error>();
+
+export const acknowledgeOnEmailValidation = createStandardAction(
+  "ACKNOWLEDGE_ON_EMAIL_VALIDATION"
+)<Option<boolean>>();
+
 type ProfileFirstLoginPayload = {
   fiscal_code: InitializedProfile["fiscal_code"];
   spid_email: InitializedProfile["spid_email"];
@@ -47,7 +58,10 @@ export const clearCache = createStandardAction("CLEAR_CACHE")();
 export type ProfileActions =
   | ActionType<typeof resetProfileState>
   | ActionType<typeof profileLoadSuccess>
+  | ActionType<typeof profileLoadRequest>
   | ActionType<typeof profileLoadFailure>
   | ActionType<typeof profileUpsert>
+  | ActionType<typeof startEmailValidation>
+  | ActionType<typeof acknowledgeOnEmailValidation>
   | ActionType<typeof profileFirstLogin>
   | ActionType<typeof clearCache>;

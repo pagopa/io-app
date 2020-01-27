@@ -17,7 +17,6 @@ import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
-  isEmailEditingAndValidationEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -55,7 +54,12 @@ import {
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
-import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
+import {
+  loadProfile,
+  watchProfileRefreshRequestsSaga,
+  watchProfileSendEmailValidationSaga,
+  watchProfileUpsertRequestsSaga
+} from "./profile";
 import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
@@ -218,7 +222,17 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     backendClient.createOrUpdateProfile
   );
 
-  // Start the watchAbortOnboardingSaga
+  // Start watching for requests of refresh the profile
+  yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+
+  // Start watching for the requests of a new verification email to
+  // validate the user email address
+  yield fork(
+    watchProfileSendEmailValidationSaga,
+    backendClient.startEmailValidationProcess
+  );
+
+  // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
 
   if (!previousSessionToken || isNone(maybeStoredPin)) {
@@ -226,15 +240,14 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // reason, he was logged in but there is no PIN set, thus we need
     // to pass through the onboarding process.
 
-    // Ask to accept ToS if it is the first access on IO or if there is a new available version
+    // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
     yield call(checkAcceptedTosSaga, userProfile);
 
     storedPin = yield call(checkConfiguredPinSaga);
+
     yield call(checkAcknowledgedFingerprintSaga);
 
-    if (isEmailEditingAndValidationEnabled) {
-      yield call(checkAcknowledgedEmailSaga);
-    }
+    yield call(checkAcknowledgedEmailSaga, userProfile);
 
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
