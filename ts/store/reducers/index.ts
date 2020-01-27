@@ -15,6 +15,7 @@ import backendInfoReducer from "./backendInfo";
 import contentReducer from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
+import emailValidationReducer from "./emailValidation";
 import entitiesReducer from "./entities";
 import identificationReducer from "./identification";
 import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
@@ -88,7 +89,8 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   persistedPreferences: persistedPreferencesReducer,
   installation: installationReducer,
   payments: paymentsReducer,
-  content: contentReducer
+  content: contentReducer,
+  emailValidation: emailValidationReducer
 });
 
 export function createRootReducer(
