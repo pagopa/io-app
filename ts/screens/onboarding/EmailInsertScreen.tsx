@@ -181,7 +181,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         showToast(I18n.t("email.edit.upsert_ko"), "danger");
       } else if (pot.isSome(this.props.profile)) {
         // user is inserting his email from onboarding phase
-        if (!this.isFromProfileSection) {
+        if (!this.props.isOnboardingCompleted) {
           // send an ack that user checks his own email
           this.props.acknowledgeEmail();
           return;
