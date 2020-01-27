@@ -139,9 +139,11 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private handleGoBack() {
-    if (this.isFromProfileSection) {
+    if (this.isOnboardingCompleted) {
       this.props.navigation.goBack();
     } else {
+      // if the user is in onboarding phase, go back has to
+      // abort login (an user with no email can't access the home)
       Alert.alert(
         I18n.t("onboarding.alert.title"),
         I18n.t("onboarding.alert.description"),
@@ -180,6 +182,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       } else if (pot.isSome(this.props.profile)) {
         // user is inserting his email from onboarding phase
         if (!this.isFromProfileSection) {
+          // send an ack that user checks his own email
           this.props.acknowledgeEmail();
           return;
         }
