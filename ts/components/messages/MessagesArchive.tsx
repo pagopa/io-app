@@ -1,37 +1,23 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import React, { ComponentProps } from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
-import customVariables from "../../theme/variables";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
 } from "../helpers/withItemsSelection";
 import { ListSelectionBar } from "../ListSelectionBar";
+import { EmptyListComponent } from "./EmptyListComponent";
+import { ErrorLoadingComponent } from "./ErrorLoadingComponent";
 import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
-  },
-  emptyListWrapper: {
-    padding: customVariables.contentPadding,
-    alignItems: "center"
-  },
-  emptyListContentTitle: {
-    paddingTop: customVariables.contentPadding
-  },
-  emptyListContentSubtitle: {
-    textAlign: "center",
-    paddingTop: customVariables.contentPadding,
-    fontSize: customVariables.fontSizeSmall
-  },
-  paddingForAnimation: {
-    height: 55
   },
   listContainer: {
     flex: 1
@@ -63,22 +49,6 @@ type State = {
   filteredMessageStates: ReturnType<typeof generateMessagesStateArchivedArray>;
   allMessageIdsState: Option<Set<string>>;
 };
-
-const ListEmptyComponent = (paddingForAnimation: boolean) => (
-  <View style={styles.emptyListWrapper}>
-    <View spacer={true} />
-    <Image
-      source={require("../../../img/messages/empty-archive-list-icon.png")}
-    />
-    <Text style={styles.emptyListContentTitle}>
-      {I18n.t("messages.archive.emptyMessage.title")}
-    </Text>
-    <Text style={styles.emptyListContentSubtitle}>
-      {I18n.t("messages.archive.emptyMessage.subtitle")}
-    </Text>
-    {paddingForAnimation && <View style={styles.paddingForAnimation} />}
-  </View>
-);
 
 /**
  * Filter only the messages that are archived.
@@ -147,17 +117,12 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     const { allMessageIdsState } = this.state;
     const isErrorLoading = pot.isError(this.props.messagesState);
 
-    // If have error in pot and the list is empty
-    const ErrorLoadingComponent = () => (
-      <View style={styles.emptyListWrapper}>
-        <View spacer={true} />
-        <Image
-          source={require("../../../img/messages/empty-archive-list-icon.png")}
-        />
-        <Text style={styles.emptyListContentTitle}>
-          {I18n.t("messages.loadingErrorTitle")}
-        </Text>
-      </View>
+    const ListEmptyComponent = (
+      <EmptyListComponent
+        image={require("../../../img/messages/empty-archive-list-icon.png")}
+        title={I18n.t("messages.archive.emptyMessage.title")}
+        subtitle={I18n.t("messages.archive.emptyMessage.subtitle")}
+      />
     );
 
     return (
@@ -171,7 +136,7 @@ class MessagesArchive extends React.PureComponent<Props, State> {
             refreshing={isLoading}
             selectedMessageIds={selectedItemIds}
             ListEmptyComponent={
-              isErrorLoading ? ErrorLoadingComponent : ListEmptyComponent
+              isErrorLoading ? <ErrorLoadingComponent /> : ListEmptyComponent
             }
             animated={animated}
           />

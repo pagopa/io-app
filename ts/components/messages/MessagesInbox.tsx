@@ -5,35 +5,24 @@
  */
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import React, { ComponentProps } from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
-import customVariables from "../../theme/variables";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
 } from "../helpers/withItemsSelection";
 import { ListSelectionBar } from "../ListSelectionBar";
+import { EmptyListComponent } from "./EmptyListComponent";
+import { ErrorLoadingComponent } from "./ErrorLoadingComponent";
 import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
-  },
-  emptyListWrapper: {
-    padding: customVariables.contentPadding,
-    alignItems: "center"
-  },
-  emptyListContentTitle: {
-    paddingTop: customVariables.contentPadding
-  },
-  emptyListContentSubtitle: {
-    textAlign: "center",
-    paddingTop: customVariables.contentPadding,
-    fontSize: customVariables.fontSizeSmall
   },
   listContainer: {
     flex: 1
@@ -81,32 +70,12 @@ const generateMessagesStateNotArchivedArray = (
     []
   );
 
-const ListEmptyComponent = () => (
-  <View style={styles.emptyListWrapper}>
-    <View spacer={true} />
-    <Image
-      source={require("../../../img/messages/empty-message-list-icon.png")}
-    />
-    <Text style={styles.emptyListContentTitle}>
-      {I18n.t("messages.inbox.emptyMessage.title")}
-    </Text>
-    <Text style={styles.emptyListContentSubtitle}>
-      {I18n.t("messages.inbox.emptyMessage.subtitle")}
-    </Text>
-  </View>
-);
-
-// If have error in pot and the list is empty
-const ErrorLoadingComponent = () => (
-  <View style={styles.emptyListWrapper}>
-    <View spacer={true} />
-    <Image
-      source={require("../../../img/messages/empty-message-list-icon.png")}
-    />
-    <Text style={styles.emptyListContentTitle}>
-      {I18n.t("messages.loadingErrorTitle")}
-    </Text>
-  </View>
+const ListEmptyComponent = (
+  <EmptyListComponent
+    image={require("../../../img/messages/empty-message-list-icon.png")}
+    title={I18n.t("messages.inbox.emptyMessage.title")}
+    subtitle={I18n.t("messages.inbox.emptyMessage.subtitle")}
+  />
 );
 
 class MessagesInbox extends React.PureComponent<Props, State> {
@@ -169,7 +138,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             refreshing={isLoading}
             selectedMessageIds={selectedItemIds}
             ListEmptyComponent={
-              isErrorLoading ? ErrorLoadingComponent : ListEmptyComponent
+              isErrorLoading ? <ErrorLoadingComponent /> : ListEmptyComponent
             }
             animated={animated}
           />
