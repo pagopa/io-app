@@ -2,9 +2,9 @@
  * A component to render a view with buttons for Cancel, Select all and Archive/Restore items
  */
 import { Option } from "fp-ts/lib/Option";
-import { Text } from "native-base";
+import { Text, View } from "native-base";
 import React from "react";
-import { Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet } from "react-native";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  containerStyle?: StyleProp<ViewStyle>;
   selectedItemIds: Option<Set<string>>;
   allItemIds: Option<Set<string>>;
   primaryButtonText: string;
@@ -42,7 +41,6 @@ export class ListSelectionBar extends React.PureComponent<Props> {
     const {
       allItemIds,
       selectedItemIds,
-      containerStyle,
       onToggleAllSelection,
       onToggleSelection,
       onResetSelection,
@@ -52,7 +50,7 @@ export class ListSelectionBar extends React.PureComponent<Props> {
     return (
       selectedItemIds.isSome() &&
       allItemIds.isSome() && (
-        <Animated.View style={[styles.buttonBar, containerStyle]}>
+        <View style={styles.buttonBar}>
           <ButtonDefaultOpacity
             block={true}
             bordered={true}
@@ -84,7 +82,7 @@ export class ListSelectionBar extends React.PureComponent<Props> {
           >
             <Text>{primaryButtonText}</Text>
           </ButtonDefaultOpacity>
-        </Animated.View>
+        </View>
       )
     );
   }

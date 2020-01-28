@@ -127,10 +127,14 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     }
   }
 
-  private getHeaderHeight = (
-    currentTab: number
-  ): Animated.AnimatedInterpolation =>
-    this.animatedTabScrollPositions[currentTab].interpolate({
+  /**
+   * The screen header is animated: for each tab, once the y
+   * content offset of the list changes, then the related
+   * animatedTabScrollPositions value is updated and it is
+   * interpolated to get the new height for the screen header
+   */
+  private getHeaderHeight = (): Animated.AnimatedInterpolation =>
+    this.animatedTabScrollPositions[this.state.currentTab].interpolate({
       inputRange: [0, HEADER_HEIGHT * 3], // The multiplier works as workaround to solve the glitch on Android OS (https://github.com/facebook/react-native/issues/21801)
       outputRange: [HEADER_HEIGHT, 0],
       extrapolate: "clamp"
@@ -151,7 +155,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
             <AnimatedScreenContentHeader
               title={I18n.t("messages.contentTitle")}
               icon={require("../../../img/icons/message-icon.png")}
-              dynamicHeight={this.getHeaderHeight(this.state.currentTab)}
+              dynamicHeight={this.getHeaderHeight()}
             />
             {this.renderTabs()}
           </React.Fragment>
@@ -161,6 +165,8 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     );
   }
 
+  // Disable longPress options the horizontal scroll
+  // overcome the 50% of the tab width
   private handleOnTabsScroll = (value: number) => {
     const { currentTab } = this.state;
     if (Math.abs(value - currentTab) > 0.5) {
@@ -171,6 +177,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     }
   };
 
+  // Update cuttentTab state when horizontal scroll is completed
   private handleOnChangeTab = (evt: any) => {
     const nextTab: number = evt.i;
     this.setState({
