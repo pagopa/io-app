@@ -24,7 +24,6 @@ import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
-import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
@@ -35,7 +34,7 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { servicesSelector } from "../../store/reducers/entities/services";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
 import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
-import { profileSelector } from "../../store/reducers/profile";
+import { profileSelector, isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import {
@@ -499,7 +498,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   style={
                     this.state.uiEnabledChannels.inbox &&
                     this.state.uiEnabledChannels.email &&
-                    this.props.isCustomEmailChannelEnabled
+                    this.props.isCustomEmailChannelEnabled &&
+                    this.props.isEmailValidated
                       ? styles.enabledColor
                       : styles.disabledColor
                   }
@@ -512,13 +512,13 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                 disabled={
                   !this.state.uiEnabledChannels.inbox ||
                   pot.isUpdating(this.props.profile) ||
-                  !this.props.isValidEmail ||
+                  !this.props.isEmailValidated ||
                   !this.props.isCustomEmailChannelEnabled
                 }
                 value={
                   this.state.uiEnabledChannels.inbox &&
                   this.state.uiEnabledChannels.email &&
-                  this.props.isValidEmail
+                  this.props.isEmailValidated
                 }
                 onValueChange={(value: boolean) => {
                   // compute the updated map of enabled channels
@@ -575,7 +575,7 @@ const mapStateToProps = (state: GlobalState) => {
     state
   );
   return {
-    isValidEmail: !isEmailEditingAndValidationEnabled && !!state, // TODO: get the proper isValidEmail from store
+    isEmailValidated: isProfileEmailValidatedSelector(state),
     services: servicesSelector(state),
     content: state.content,
     profile: profileSelector(state),

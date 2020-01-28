@@ -43,7 +43,7 @@ function retryingFetch(
     _ => _.status === 429,
     retryLogic
   );
-  // TODO: remove the cast once we upgrade to tsc >= 3.1
+  // TODO: remove the cast once we upgrade to tsc >= 3.1 (https://www.pivotaltracker.com/story/show/170819445)
   return retriableFetch(retryWithTransient429s)(timeoutFetch as typeof fetch);
 }
 
@@ -118,6 +118,6 @@ export const constantPollingFetch = (
     retryLogic
   );
 
-  // TODO: remove the cast once we upgrade to tsc >= 3.1
+  // TODO: remove the cast once we upgrade to tsc >= 3.1 (https://www.pivotaltracker.com/story/show/170819445)
   return retriableFetch(retryWithTransient404s)(timeoutFetch as typeof fetch);
 };

@@ -46,7 +46,7 @@ export function backendUserMetadataToUserMetadata(
     );
 
     if (metadataOrError.isLeft()) {
-      // TODO: Add proper error
+      // TODO: Add proper error (https://www.pivotaltracker.com/story/show/170819415)
       return left(new Error());
     }
 

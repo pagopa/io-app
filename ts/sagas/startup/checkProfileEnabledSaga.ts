@@ -2,12 +2,12 @@ import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
-import { UserProfileUnion } from "../../api/backend";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
 import { profileFirstLogin, profileUpsert } from "../../store/actions/profile";
 
 export function* checkProfileEnabledSaga(
-  profile: UserProfileUnion
+  profile: InitializedProfile
 ): IterableIterator<Effect> {
   if (
     !profile.has_profile ||
@@ -25,8 +25,7 @@ export function* checkProfileEnabledSaga(
     yield put(
       profileUpsert.request({
         is_inbox_enabled: true,
-        is_webhook_enabled: true,
-        email: profile.spid_email
+        is_webhook_enabled: true
       })
     );
     const action:
