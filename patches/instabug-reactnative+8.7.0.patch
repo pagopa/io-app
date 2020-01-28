@@ -20,12 +20,3 @@ index f081181..3f07a5b 100644
    function setInAppNotificationsEnabled(inAppNotificationsEnabled: boolean): void;
    function setInAppNotificationSound(shouldPlaySound: boolean): void;
  }
-@@ -126,7 +126,7 @@ export function setIBGLogPrintsToConsole(printsToConsole: boolean): void;
- export function setCrashReportingEnabled(enableCrashReporter: boolean): void;
- export function setDidSelectPromptOptionHandler(didSelectPromptOptionHandler: () => void): void;
- export function setSessionProfilerEnabled(sessionProfilerEnabled: boolean): void;
--export function getUnreadMessagesCount(messageCountCallback: () => void): void;
-+export function getUnreadMessagesCount(unreadMessagesCountCallback: (count: number) => void): void;
- export function setPushNotificationsEnabled(isPushNotificationEnabled: boolean): void;
- export function setEmailFieldRequiredForActions(
-   isEmailFieldRequired: boolean,
