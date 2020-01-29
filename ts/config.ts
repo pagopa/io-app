@@ -11,7 +11,7 @@ import Config from "react-native-config";
 export const DEFAULT_APPLICATION_NAME = "io.italia.it";
 
 // default repository for fetching app content (e.g. services metadata)
-const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/teamdigitale/io-services-metadata/master" as NonEmptyString;
+const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/teamdigitale/pagopa/master" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 5000;
