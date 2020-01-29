@@ -45,6 +45,7 @@ import { checkAndRequestPermission } from "../../utils/calendar";
 import {
   format,
   formatDateAsDay,
+  formatDateAsDeadlines,
   formatDateAsMonth,
   formatDateAsReminder
 } from "../../utils/dates";
@@ -198,16 +199,10 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       this.props.preferredCalendarSaveSuccess(calendar);
     }
 
-    const calendarDate: Date = new Date(dueDate);
-    // Get the time zone offset
-    const offset = calendarDate.getTimezoneOffset();
-    const formatted = -(offset / 60);
-    calendarDate.setHours(calendarDate.getHours() - formatted);
-
     RNCalendarEvents.saveEvent(title, {
       calendarId: calendar.id,
-      startDate: formatDateAsReminder(calendarDate),
-      endDate: formatDateAsReminder(calendarDate),
+      startDate: formatDateAsReminder(dueDate),
+      endDate: formatDateAsReminder(dueDate),
       allDay: true,
       alarms: []
     })
@@ -277,12 +272,13 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       maybeMessagePaymentExpirationInfo.value.kind === "EXPIRABLE" &&
       maybeMessagePaymentExpirationInfo.value.expireStatus === "EXPIRING";
 
+    const formattedData = new Date(formatDateAsDeadlines(due_date));
     return (
       <CalendarIconComponent
         height={calendarIconComponentSize}
         width={calendarIconComponentSize}
-        month={capitalize(formatDateAsMonth(due_date))}
-        day={formatDateAsDay(due_date)}
+        month={capitalize(formatDateAsMonth(formattedData))}
+        day={formatDateAsDay(formattedData)}
         backgroundColor={
           isPaymentExpiring
             ? variables.calendarExpirableColor

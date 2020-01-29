@@ -21,7 +21,7 @@ import { MessageState } from "../../store/reducers/entities/messages/messagesByI
 import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
 import { HEADER_HEIGHT } from "../../utils/constants";
-import { DateFromISOString } from "../../utils/dates";
+import { DateFromISOString, formatDateAsDeadlines } from "../../utils/dates";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
@@ -175,7 +175,9 @@ const generateSections = (
               // As title of the section we use the ISOString rapresentation
               // of the due_date day.
               const title = startOfDay(
-                messageAgendaItem.e1.content.due_date
+                new Date(
+                  formatDateAsDeadlines(messageAgendaItem.e1.content.due_date)
+                )
               ).toISOString();
               if (
                 accumulator.lastTitle.isNone() ||

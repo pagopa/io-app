@@ -24,6 +24,12 @@ export function formatDateAsReminder(
   return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 }
 
+export function formatDateAsDeadlines(
+  date: Date
+): ReturnType<typeof dateFnsFormat> {
+  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+}
+
 /**
  *
  * It provides the format of the date depending on the system locale (DD/MM or MM/DD as default)
