@@ -1,5 +1,6 @@
 /**
  * A screens to express the preferences related to email forwarding.
+ * //TODO: magage errors (check toast etc.) + avoid useless updates
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import { List, Text } from "native-base";
@@ -23,9 +24,9 @@ import {
 import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
 import {
   isEmailEnabledSelector,
+  profileEmailSelector,
   profileSelector,
-  ProfileState,
-  spidEmailSelector
+  ProfileState
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
@@ -86,7 +87,7 @@ class EmailForwardingScreen extends React.Component<Props> {
             {renderListItem(
               I18n.t("send_email_messages.options.disable_all.label"),
               I18n.t("send_email_messages.options.disable_all.info"),
-              !this.props.isInboxEnabled,
+              !this.props.isEmailEnabled,
               () => {
                 // Disable custom email notification and disable email notifications from all visible service
                 // The upsert of blocked_inbox_or_channels is avoided: the backend will block any email notification
@@ -98,7 +99,7 @@ class EmailForwardingScreen extends React.Component<Props> {
             {renderListItem(
               I18n.t("send_email_messages.options.enable_all.label"),
               I18n.t("send_email_messages.options.enable_all.info"),
-              this.props.isInboxEnabled &&
+              this.props.isEmailEnabled &&
                 !this.props.isCustomEmailChannelEnabled,
               () => {
                 // Disable custom email notification and enable email notifications from all visible services.
@@ -115,7 +116,7 @@ class EmailForwardingScreen extends React.Component<Props> {
             {renderListItem(
               I18n.t("send_email_messages.options.by_service.label"),
               I18n.t("send_email_messages.options.by_service.info"),
-              this.props.isInboxEnabled &&
+              this.props.isEmailEnabled &&
                 this.props.isCustomEmailChannelEnabled,
               // Enable custom set of the email notification for each visible service
               () => this.props.setCustomEmailChannel(true)
@@ -144,17 +145,24 @@ const mapStateToProps = (state: GlobalState) => {
   const potIsCustomEmailChannelEnabled = isCustomEmailChannelEnabledSelector(
     state
   );
+  const isCustomEmailChannelEnabled = potIsCustomEmailChannelEnabled.fold(
+    false,
+    (b: boolean) => b
+  );
+
+  const potUserEmail = profileEmailSelector(state);
+  const userEmail = potUserEmail.fold(
+    I18n.t("global.remoteStates.notAvailable"),
+    (i: string) => i
+  );
 
   return {
     potProfile,
     isLoading: pot.isLoading(potProfile) || pot.isUpdating(potProfile),
-    isInboxEnabled: isEmailEnabledSelector(state),
-    isCustomEmailChannelEnabled: potIsCustomEmailChannelEnabled.isSome()
-      ? potIsCustomEmailChannelEnabled.value
-      : false,
+    isEmailEnabled: isEmailEnabledSelector(state),
+    isCustomEmailChannelEnabled,
     visibleServicesId,
-    // TODO: refer to the proper email address in the new user profile CREATE STORY
-    userEmail: spidEmailSelector(state)
+    userEmail
   };
 };
 
@@ -174,7 +182,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       profileUpsert.request({
         blocked_inbox_or_channels: newBlockedChannels,
-        is_inbox_enabled: enable
+        is_email_enabled: enable
       })
     );
     dispatch(customEmailChannelSetEnabled(false));
@@ -183,7 +191,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(customEmailChannelSetEnabled(enable));
     dispatch(
       profileUpsert.request({
-        is_inbox_enabled: enable
+        is_email_enabled: enable
       })
     );
   }

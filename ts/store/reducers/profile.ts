@@ -4,12 +4,12 @@
  * are managed by different global reducers.
  */
 
+import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { untag } from "italia-ts-commons/lib/types";
-import { getType } from "typesafe-actions";
-import { none, Option, some } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import {
   profileLoadFailure,
@@ -37,10 +37,22 @@ export const spidEmailSelector = (state: GlobalState) => {
     .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 };
 
-export const isEmailEnabledSelector = (state: GlobalState): boolean =>
-  pot.isSome(state.profile) && InitializedProfile.is(state.profile.value)
-    ? state.profile.value.is_email_enabled
-    : false;
+export const isEmailEnabledSelector = createSelector(
+  profileSelector,
+  profile =>
+    pot.isSome(profile) && InitializedProfile.is(profile.value)
+      ? profile.value.is_email_enabled
+      : false
+);
+
+export const isInboxEnabledSelector = createSelector(
+  profileSelector,
+  profile =>
+    pot.isSome(profile) && InitializedProfile.is(profile.value)
+      ? profile.value.is_inbox_enabled
+      : false
+);
+
 export const getProfileEmail = (user: InitializedProfile): Option<string> => {
   if (user.email !== undefined) {
     return some(user.email as string);
@@ -120,7 +132,7 @@ const reducer = (
             ...currentProfile,
             has_profile: true,
             email: newProfile.email,
-            is_email_enabled: newProfile.is_email_enabled,
+            is_email_enabled: newProfile.is_email_enabled === true,
             is_inbox_enabled: newProfile.is_inbox_enabled === true,
             is_email_validated: newProfile.is_email_validated === true,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
@@ -141,6 +153,7 @@ const reducer = (
             ...currentProfile,
             email: newProfile.email,
             is_inbox_enabled: newProfile.is_inbox_enabled === true,
+            is_email_enabled: newProfile.is_email_enabled === true,
             is_email_validated: newProfile.is_email_validated === true,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
             preferred_languages: newProfile.preferred_languages,

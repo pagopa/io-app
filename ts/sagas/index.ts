@@ -13,7 +13,7 @@ import {
 import unreadInstabugMessagesSaga from "./instabug";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
-import { checkEmailNotificationPreferencesSaga } from "./startup/loadingEmailNotificationPreferencesSaga";
+import { checkEmailNotificationPreferencesSaga } from "./startup/checkEmailNotificationPreferencesSaga";
 import {
   watchBackToEntrypointPaymentSaga,
   watchPaymentInitializeSaga
