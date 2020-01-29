@@ -6,8 +6,6 @@ import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
-import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
 import { TranslationKeys } from "../../../locales/locales";
 import { ContextualHelp } from "../../components/ContextualHelp";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -17,7 +15,6 @@ import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
-import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
@@ -209,8 +206,6 @@ class PreferencesScreen extends React.Component<Props, State> {
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.email")}
-              subTitle={profileData.spid_email}
-              iconName={"io-email"}
               subTitle={email}
               onPress={this.handleEmailOnPress}
               titleBadge={
