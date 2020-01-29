@@ -123,7 +123,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   private onServiceLinkPressHandler = (service: ServicePublic) => {
     // When a service gets selected, before navigating to the service detail
-    // screen, we issue a contentServiceLoad to refresh the service metadata
+    // screen, we issue a contentServiceLoad request to refresh the service metadata
     this.props.contentServiceLoad(service.service_id);
     this.props.navigateToServiceDetailsScreen({
       service
@@ -245,6 +245,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   // TODO: Add a Provider and an HOC to manage multiple render states in a simpler way.
+  // https://www.pivotaltracker.com/story/show/170819221
   private renderCurrentState = () => {
     const { potMessage, potService, paymentsByRptId } = this.props;
 

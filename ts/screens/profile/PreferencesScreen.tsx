@@ -1,4 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
@@ -25,7 +26,11 @@ import {
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { profileSelector } from "../../store/reducers/profile";
+import {
+  isProfileEmailValidatedSelector,
+  profileEmailSelector,
+  profileSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
@@ -87,16 +92,7 @@ class PreferencesScreen extends React.Component<Props, State> {
   }
 
   private handleEmailOnPress() {
-    if (isEmailEditingAndValidationEnabled) {
-      if (this.props.isEmailValidated) {
-        this.props.navigateToEmailInsertScreen();
-      } else {
-        // TODO: add navigation to the dedicated screen
-        //  https://www.pivotaltracker.com/story/show/168247501
-      }
-    } else {
-      unavailableAlert();
-    }
+    this.props.navigateToEmailReadScreen();
   }
 
   public componentWillMount() {
@@ -149,15 +145,11 @@ class PreferencesScreen extends React.Component<Props, State> {
     const { potProfile } = this.props;
     const { isFingerprintAvailable } = this.state;
 
-    const profileData = potProfile
-      .map(_ => ({
-        spid_email: untag(_.spid_email),
-        spid_mobile_phone: untag(_.spid_mobile_phone)
-      }))
-      .getOrElse({
-        spid_email: I18n.t("global.remoteStates.notAvailable"),
-        spid_mobile_phone: I18n.t("global.remoteStates.notAvailable")
-      });
+    const email = this.props.optionEmail.getOrElse("");
+    const phoneNumber = potProfile.fold(
+      I18n.t("global.remoteStates.notAvailable"),
+      _ => _.spid_mobile_phone
+    );
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
@@ -219,9 +211,10 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.email")}
               subTitle={profileData.spid_email}
               iconName={"io-email"}
+              subTitle={email}
               onPress={this.handleEmailOnPress}
               titleBadge={
-                isEmailEditingAndValidationEnabled
+                this.props.isEmailValidated === false
                   ? I18n.t("profile.preferences.list.need_validate")
                   : undefined
               }
@@ -229,7 +222,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.mobile_phone")}
-              subTitle={profileData.spid_mobile_phone}
+              subTitle={phoneNumber}
               iconName={"io-phone-number"}
               onPress={unavailableAlert}
             />
@@ -255,15 +248,13 @@ class PreferencesScreen extends React.Component<Props, State> {
 }
 
 function mapStateToProps(state: GlobalState) {
-  // TODO: get info on validation from profile
-  //      https://www.pivotaltracker.com/story/show/168662501
-  const isEmailValidated = true;
   return {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
+    optionEmail: profileEmailSelector(state),
+    isEmailValidated: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-    preferredCalendar: state.persistedPreferences.preferredCalendar,
-    isEmailValidated
+    preferredCalendar: state.persistedPreferences.preferredCalendar
   };
 }
 
@@ -272,8 +263,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToFingerprintPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
     dispatch(navigateToCalendarPreferenceScreen()),
-  navigateToEmailInsertScreen: () =>
-    dispatch(navigateToEmailReadScreen({ isFromProfileSection: true }))
+  navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen())
 });
 
 export default connect(

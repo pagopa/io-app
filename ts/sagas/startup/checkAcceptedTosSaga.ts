@@ -1,13 +1,13 @@
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
-import { UserProfileUnion } from "../../api/backend";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccepted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 
 export function* checkAcceptedTosSaga(
-  userProfile: UserProfileUnion
+  userProfile: InitializedProfile
 ): IterableIterator<Effect> {
   // The user has to explicitly accept the new version of ToS if:
   // - this is the first access

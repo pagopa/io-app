@@ -84,7 +84,7 @@ export class FingerprintScreen extends React.PureComponent<Props> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => this.props.abortOnboarding()
+          onPress: this.props.abortOnboarding
         }
       ]
     );

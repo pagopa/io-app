@@ -6,7 +6,8 @@
  *
  * A 'loading component' is displayed (hiding the tabs content) if:
  * - visible servcices are loading, or
- * - userMetadata are loading
+ * - userMetadata is loading, or
+ * - servicesByScope is loading
  *
  * An 'error component' is displayed (hiding the tabs content) if:
  * - userMetadata load fails, or
@@ -53,6 +54,10 @@ import ServicesTab from "../../components/services/ServicesTab";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
+import {
+  contentServiceLoad,
+  contentServicesByScopeLoad
+} from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
@@ -65,13 +70,13 @@ import {
   userMetadataLoad,
   userMetadataUpsert
 } from "../../store/actions/userMetadata";
+import { servicesByScopeSelector } from "../../store/reducers/content";
 import {
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
   selectedLocalServicesSectionsSelector,
   ServicesSectionState,
-  visibleServicesContentLoadStateSelector,
-  visibleServicesMetadataLoadStateSelector
+  visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -264,7 +269,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   private canRenderContent = () => {
     if (
       !this.state.isInnerContentRendered &&
-      this.props.isFirstServiceLoadCompleted &&
+      pot.isSome(this.props.visibleServicesContentLoadState) &&
       this.props.loadDataFailure === undefined
     ) {
       this.setState({ isInnerContentRendered: true });
@@ -280,11 +285,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
     this.canRenderContent();
 
-    if (
-      pot.isError(this.props.visibleServicesContentLoadState) ||
-      pot.isError(this.props.visibleServicesMetadataLoadState)
-    ) {
-      this.props.refreshServices();
+    if (pot.isError(this.props.visibleServicesContentLoadState)) {
+      this.props.refreshVisibleServices();
+    }
+
+    if (pot.isError(this.props.servicesByScope)) {
+      this.props.refreshServicesByScope();
     }
 
     this.navListener = this.props.navigation.addListener("didFocus", () => {
@@ -365,8 +371,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       if (
         (pot.isLoading(prevProps.visibleServicesContentLoadState) &&
           pot.isError(this.props.visibleServicesContentLoadState)) ||
-        (pot.isLoading(prevProps.visibleServicesMetadataLoadState) &&
-          pot.isError(this.props.visibleServicesMetadataLoadState))
+        (pot.isLoading(prevProps.servicesByScope) &&
+          pot.isError(this.props.servicesByScope))
       ) {
         // A toast is displayed if refresh visible services fails (on content or metadata load)
         showToast(this.state.toastErrorMessage, "danger");
@@ -591,7 +597,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.setState({
       toastErrorMessage: I18n.t("global.genericError")
     });
-    this.props.refreshServices();
+    this.props.refreshVisibleServices();
   };
 
   private refreshScreenContent = (hideToast: boolean = false) => {
@@ -599,7 +605,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       this.setState({ toastErrorMessage: I18n.t("global.genericError") });
     }
     this.props.refreshUserMetadata();
-    this.props.refreshServices();
+    this.props.refreshVisibleServices();
+    this.props.refreshServicesByScope();
   };
 
   private handleOnScroll = (value: number) => {
@@ -785,25 +792,20 @@ const mapStateToProps = (state: GlobalState) => {
     [2]: getTabSevicesId(allTabSections)
   };
 
-  const visibleServicesContentLoadState = visibleServicesContentLoadStateSelector(
-    state
-  );
-  const visibleServicesMetadataLoadState = visibleServicesMetadataLoadStateSelector(
+  const visibleServicesContentLoadState = visibleServicesDetailLoadStateSelector(
     state
   );
 
-  const isFirstServiceLoadCompleted =
-    pot.isSome(visibleServicesContentLoadState) &&
-    pot.isSome(visibleServicesMetadataLoadState);
+  const servicesByScope = servicesByScopeSelector(state);
 
   const isLoadingServices =
     pot.isLoading(visibleServicesContentLoadState) ||
-    pot.isLoading(visibleServicesMetadataLoadState);
+    pot.isLoading(servicesByScope);
 
   const servicesLoadingFailure =
     !pot.isLoading(potUserMetadata) &&
     (pot.isError(visibleServicesContentLoadState) ||
-      pot.isError(visibleServicesMetadataLoadState));
+      pot.isError(servicesByScope));
 
   const loadDataFailure: DataLoadFailure = pot.isError(potUserMetadata)
     ? "userMetadaLoadFailure"
@@ -813,9 +815,8 @@ const mapStateToProps = (state: GlobalState) => {
 
   return {
     isLoadingServices,
-    isFirstServiceLoadCompleted,
     visibleServicesContentLoadState,
-    visibleServicesMetadataLoadState,
+    servicesByScope,
     loadDataFailure,
     profile: profileSelector(state),
     visibleServices: visibleServicesSelector(state),
@@ -836,7 +837,8 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
-  refreshServices: () => dispatch(loadVisibleServices.request()),
+  refreshVisibleServices: () => dispatch(loadVisibleServices.request()),
+  refreshServicesByScope: () => dispatch(contentServicesByScopeLoad.request()),
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
     profile: ProfileState
@@ -884,8 +886,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToServiceDetailsScreen: (
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => dispatch(navigateToServiceDetailsScreen(params)),
-  serviceDetailsLoad: (service: ServicePublic) =>
-    dispatch(showServiceDetails(service))
+  serviceDetailsLoad: (service: ServicePublic) => {
+    dispatch(contentServiceLoad.request(service.service_id));
+    dispatch(showServiceDetails(service));
+  }
 });
 
 const mergeProps = (

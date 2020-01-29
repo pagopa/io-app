@@ -315,7 +315,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       notificationId
     } = this.props;
 
-    // TODO: once isExperimentalFeaturesEnabled is removed, shift again screenContent into the main return
     // tslint:disable no-big-function
     const screenContent = () => {
       return (

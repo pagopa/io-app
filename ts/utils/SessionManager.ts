@@ -72,7 +72,7 @@ export class SessionManager<T> {
           // if the token is still undefined, the refresh failed, try again
           // with a random delay to prevent the dogpile effect
           await delay(Math.ceil(Math.random() * 100) + 50);
-          // TODO: add customizable retry/backoff policy
+          // TODO: add customizable retry/backoff policy (https://www.pivotaltracker.com/story/show/170819459)
           continue;
         }
         const response = await f(this.token);
