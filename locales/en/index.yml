@@ -350,6 +350,7 @@ email:
     title: Insert your email
     subtitle: Some IO app functionalities need your email.
     label: Personal email address
+    alert: You are already using this email
     help:
       title: Email
       content: !include email_insert_help.md
@@ -359,19 +360,26 @@ email:
     validated: The email you inserted and validated is
     label: New personal email address
     cta: Edit email
+    upsert_ok: The email update request was sent successfully
+    upsert_ko: Error in update email request, try again
   validate:
     title: Remember to validate your email address
     header: Email Validation
-    info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
-      click simply on that link.<br/>
-      Until you will not validate your email address, some app functionalities
-      (payments, messages forwarding by email, etc.) will not be available, but you
-      will be able to use some other functions anyway (i.e. services, messages, etc.)"
+    content1: "We sent an email to <b>{{email}}</b> with a link to validate your email: click simply on that link.<br/>
+      Until you will not validate your email address, some app functionalities (payments, messages forwarding by email, etc.)
+      will not be available, but you will be able to use some other functions anyway (i.e. services, messages, etc.)"
+    content2: "Some functionalities of IO require you validate your email address. <br/> We sent an email to <b>{{email}}</b>:
+    open your email client and click on the link."
     cta: Send a new validation email
     sent: Email sent
+    send_validation_ok: Email Validation sent
+    send_validation_ko: Some errors occured while sending email validation. Try again.
     help: Your SPID profile communicates your email to IO app. If you find the address
       wrong or that you do not use it anymore, you can edit it directly from your SPID
       services provider account.
+    validation_ok: Your email has been validated. You can use all the functionalities of IO.
+    validated: Email validated!
+    validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
 onboarding:
   tos:
     headerTitle: Activation
