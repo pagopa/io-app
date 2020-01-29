@@ -440,7 +440,7 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
 
   private getPushSwitchRow = () => {
     const isDisabled =
-      // the preference can be updated
+      // The preference can be updated
       // natifications are globally or locally disabled or
       !this.props.isInboxEnabled ||
       !this.state.uiEnabledChannels.inbox ||
@@ -487,7 +487,7 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
    */
   private getEmailSwitchRow = () => {
     const isDisabled =
-      // the preference can be updated if
+      // The preference can be updated if
       // notifications are not disabled globally nor locally (for the given service),
       !this.props.isInboxEnabled ||
       !this.state.uiEnabledChannels.inbox ||
@@ -503,16 +503,16 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
       // notifications are enabled globally
       this.props.isInboxEnabled &&
       this.state.uiEnabledChannels.inbox &&
-      // Email is validated
+      // email is validated
       this.props.isEmailValidated &&
-      // Email notifications are enabled globally or locally (for the given service)
+      // email notifications are enabled globally or locally (for the given service)
       this.props.isEmailEnabled &&
       (!this.props.isCustomEmailChannelEnabled ||
         (this.props.isCustomEmailChannelEnabled &&
           this.state.uiEnabledChannels.email));
 
     const onValueChange = (value: boolean) => {
-      // compute the updated map of enabled channels
+      // Compute the updated map of enabled channels
       const newUiEnabledChannels = {
         ...this.state.uiEnabledChannels,
         email: value

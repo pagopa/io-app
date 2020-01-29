@@ -27,9 +27,3 @@ export function areStringsEqual(
     })
   );
 }
-
-// Good practice: to get the value of n Option
-// instead of explicitally check if item.isSome()
-function foldedGetOrElse<T>(item: Option<T>, ifNone: any) {
-  return item.fold(ifNone, (i: T) => i);
-}
