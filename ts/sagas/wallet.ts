@@ -68,7 +68,8 @@ import {
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
   runStartOrResumeAddCreditCardSaga,
-  setFavouriteWalletRequest
+  setFavouriteWalletRequest,
+  setWalletSessionEnabled
 } from "../store/actions/wallet/wallets";
 import { GlobalState } from "../store/reducers/types";
 
@@ -672,6 +673,18 @@ export function* watchWalletSaga(
     paymentManagerClient,
     pmSessionManager
   );
+
+  yield takeLatest(getType(setWalletSessionEnabled), function* handler(
+    action: ActionType<typeof setWalletSessionEnabled>
+  ) {
+    console.warn("A");
+    if (action.payload) {
+      yield call(pmSessionManager.enableSession);
+      console.warn("B");
+      return;
+    }
+    yield call(pmSessionManager.disableSession);
+  });
 
   yield fork(paymentsDeleteUncompletedSaga);
 }
