@@ -5,7 +5,6 @@
  * - integrate contextual help
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
-
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
@@ -17,14 +16,18 @@ import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
-
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
-
 import I18n from "../../../i18n";
+import {
+  navigateToPaymentManualDataInsertion,
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentTransactionErrorScreen
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   backToEntrypointPayment,
@@ -37,15 +40,6 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  navigateToPaymentManualDataInsertion,
-  navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen
-} from "../../../store/actions/navigation";
 import {
   getFavoriteWallet,
   walletsSelector
