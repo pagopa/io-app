@@ -20,7 +20,8 @@ import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
-  profileSelector
+  profileSelector,
+  profileSpidEmailSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
@@ -135,6 +136,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     const { isFingerprintAvailable } = this.state;
 
     const email = this.props.optionEmail.getOrElse("");
+    const spidEmail = this.props.optionSpidEmail.getOrElse("");
     const phoneNumber = potProfile.fold(
       I18n.t("global.remoteStates.notAvailable"),
       _ => _.spid_mobile_phone
@@ -187,23 +189,18 @@ class PreferencesScreen extends React.Component<Props, State> {
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.email")}
+              subTitle={spidEmail}
+            />
+
+            <ListItemComponent
+              title={I18n.t("profile.preferences.list.pagoPa_email")}
               subTitle={email}
-              onPress={this.handleEmailOnPress}
               titleBadge={
                 this.props.isEmailValidated === false
                   ? I18n.t("profile.preferences.list.need_validate")
                   : undefined
               }
-            />
-
-            <ListItemComponent
-              title={I18n.t("profile.preferences.list.pagoPa_email")}
-              subTitle={profileData.spid_email}
-              titleBadge={
-                isEmailEditingAndValidationEnabled
-                  ? I18n.t("profile.preferences.list.need_validate")
-                  : undefined
-              }
+              onPress={this.handleEmailOnPress}
             />
 
             <ListItemComponent
@@ -233,6 +230,7 @@ function mapStateToProps(state: GlobalState) {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
     optionEmail: profileEmailSelector(state),
+    optionSpidEmail: profileSpidEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar

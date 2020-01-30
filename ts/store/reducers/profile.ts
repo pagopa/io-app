@@ -35,11 +35,27 @@ export const getProfileEmail = (user: InitializedProfile): Option<string> => {
   return none;
 };
 
+export const getProfileSpidEmail = (
+  user: InitializedProfile
+): Option<string> => {
+  if (user.spid_email !== undefined) {
+    return some(user.spid_email as string);
+  }
+  return none;
+};
+
 // return the email address (as a string) if the profile pot is some and its value is of kind InitializedProfile and it has an email
 export const profileEmailSelector = createSelector(
   profileSelector,
   (profile: ProfileState): Option<string> =>
     pot.getOrElse(pot.map(profile, p => getProfileEmail(p)), none)
+);
+
+// return the spid email address (as a string)
+export const profileSpidEmailSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): Option<string> =>
+    pot.getOrElse(pot.map(profile, p => getProfileSpidEmail(p)), none)
 );
 
 // return true if the profile has an email
