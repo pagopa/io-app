@@ -115,29 +115,6 @@ const styles = StyleSheet.create({
  */
 const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 
-// Alert to invite user to enable the permissions
-const settingsAlert = (
-  title: string,
-  message: string,
-  settings: () => void
-) => {
-  Alert.alert(
-    title,
-    message,
-    [
-      {
-        text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
-        style: "cancel"
-      },
-      {
-        text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
-        onPress: settings
-      }
-    ],
-    { cancelable: false }
-  );
-};
-
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
 
@@ -188,6 +165,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         skipBackup: true,
         path: "images"
       },
+      // PermissionDenied message only for Android
       permissionDenied: {
         title: I18n.t("wallet.QRtoPay.settingsAlert.title"),
         text: I18n.t("wallet.QRtoPay.settingsAlert.message"),
@@ -207,10 +185,21 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
             this.onInvalidQrCode();
           });
       } else if (response.error !== undefined && Platform.OS === "ios") {
-        settingsAlert(
+        // Alert to invite user to enable the permissions
+        Alert.alert(
           I18n.t("wallet.QRtoPay.settingsAlert.title"),
           I18n.t("wallet.QRtoPay.settingsAlert.message"),
-          openAppSettings
+          [
+            {
+              text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
+              style: "cancel"
+            },
+            {
+              text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
+              onPress: openAppSettings
+            }
+          ],
+          { cancelable: false }
         );
       } // else if the user has not selected a file, do nothing
     });
