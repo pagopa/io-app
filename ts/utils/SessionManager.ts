@@ -65,14 +65,10 @@ export class SessionManager<T> {
   };
 
   /**
-   * avoid to perform any token refreshing and requests that need token
+   * enable/disable to perform action that need token and token refreshing too
    */
-  public disableSession = async () => await this.setEnabledSession(false);
-
-  /**
-   * enable to perform action that need token and token refreshing too
-   */
-  public enableSession = async () => await this.setEnabledSession(true);
+  public setSessionEnabled = async (enabled: boolean) =>
+    await this.setEnabledSession(enabled);
 
   constructor(
     private refreshSession: () => Promise<Option<T>>,

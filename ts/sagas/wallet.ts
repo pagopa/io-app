@@ -107,9 +107,9 @@ import {
   getCurrentRouteKey,
   getCurrentRouteName
 } from "../store/middlewares/analytics";
+import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { SessionManager } from "../utils/SessionManager";
 import { paymentsDeleteUncompletedSaga } from "./payments";
-import { RTron } from "../boot/configureStoreAndPersistor";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -489,6 +489,7 @@ function* deleteActivePaymentSaga() {
  * and a new PagopaToken gets received from the backend. Infact, the
  * pagoPaClient passed as paramenter to this saga, embeds the PagopaToken.
  */
+// tslint:disable-next-line: no-big-function
 export function* watchWalletSaga(
   sessionToken: SessionToken,
   walletToken: string,
@@ -540,7 +541,12 @@ export function* watchWalletSaga(
   // refreshing of the PM session when calling its APIs, keeping a shared token
   // and serializing the refresh requests.
   const pmSessionManager = new SessionManager(getPaymentManagerSession);
-
+  // check if the current profile (this saga starts only when the user is logged in)
+  // has an email address validated
+  const isEmailValidated: ReturnType<
+    typeof isProfileEmailValidatedSelector
+  > = yield select<GlobalState>(isProfileEmailValidatedSelector);
+  yield call(pmSessionManager.setSessionEnabled, isEmailValidated);
   //
   // Sagas
   //
@@ -681,9 +687,8 @@ export function* watchWalletSaga(
    * check if the email is validated. If it not the session manager has to be disabled
    */
   yield takeLatest(
-    [profileUpsert.success, profileLoadSuccess],
-    checkProfile,
-    pmSessionManager
+    [getType(profileUpsert.success), getType(profileLoadSuccess)],
+    checkProfile
   );
 
   yield takeLatest(
@@ -696,26 +701,19 @@ export function* watchWalletSaga(
 }
 
 function* checkProfile(
-  sessionManager: SessionManager<PaymentManagerToken>,
   action:
     | ActionType<typeof profileUpsert.success>
     | ActionType<typeof profileLoadSuccess>
 ) {
-  if (action.payload.is_email_validated === false) {
-    RTron.log("DISABLED");
-    yield call(enableSessionManager, false, sessionManager);
-  } else {
-    RTron.log("ENABLED");
-  }
+  const enabled = action.payload.is_email_validated === true;
+  yield put(setWalletSessionEnabled(enabled));
 }
 
 function* enableSessionManager(
   enable: boolean,
   sessionManager: SessionManager<PaymentManagerToken>
 ) {
-  yield call(
-    enable ? sessionManager.enableSession : sessionManager.disableSession
-  );
+  yield call(sessionManager.setSessionEnabled, enable);
 }
 
 /**
