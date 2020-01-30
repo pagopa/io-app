@@ -145,9 +145,9 @@ const mapStateToProps = (state: GlobalState) => {
   const potIsCustomEmailChannelEnabled = isCustomEmailChannelEnabledSelector(
     state
   );
-  const isCustomEmailChannelEnabled = potIsCustomEmailChannelEnabled.fold(
-    false,
-    (b: boolean) => b
+  const isCustomEmailChannelEnabled = pot.getOrElse(
+    potIsCustomEmailChannelEnabled,
+    false
   );
 
   const potUserEmail = profileEmailSelector(state);

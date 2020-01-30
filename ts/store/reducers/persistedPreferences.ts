@@ -1,8 +1,7 @@
 /**
  * A reducer for persisted preferences.
  */
-import { none, Option } from "fp-ts/lib/Option";
-import { some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
 import { isActionOf } from "typesafe-actions";
 import {
@@ -22,7 +21,9 @@ export type PersistedPreferencesState = Readonly<{
   wasServiceAlertDisplayedOnce?: boolean;
   isPagoPATestEnabled: boolean;
   isExperimentalFeaturesEnabled: boolean;
-  isCustomEmailChannelEnabled: Option<boolean>;
+  // TODO: create transformer for Option objects and use Option instead of pot
+  //       https://www.pivotaltracker.com/story/show/170998374
+  isCustomEmailChannelEnabled: pot.Pot<boolean, undefined>;
 }>;
 
 const initialPreferencesState: PersistedPreferencesState = {
@@ -31,7 +32,7 @@ const initialPreferencesState: PersistedPreferencesState = {
   wasServiceAlertDisplayedOnce: false,
   isPagoPATestEnabled: false,
   isExperimentalFeaturesEnabled: false,
-  isCustomEmailChannelEnabled: none
+  isCustomEmailChannelEnabled: pot.none
 };
 
 export default function preferencesReducer(
@@ -73,7 +74,7 @@ export default function preferencesReducer(
   if (isActionOf(customEmailChannelSetEnabled, action)) {
     return {
       ...state,
-      isCustomEmailChannelEnabled: some(action.payload)
+      isCustomEmailChannelEnabled: pot.some(action.payload)
     };
   }
 

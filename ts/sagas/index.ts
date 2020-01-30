@@ -13,7 +13,6 @@ import {
 import unreadInstabugMessagesSaga from "./instabug";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
-import { checkEmailNotificationPreferencesSaga } from "./startup/checkEmailNotificationPreferencesSaga";
 import {
   watchBackToEntrypointPaymentSaga,
   watchPaymentInitializeSaga
@@ -38,7 +37,6 @@ export default function* root(): Iterator<Effect> {
     call(networkSaga, connectionMonitorParameters),
     call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),
-    call(checkEmailNotificationPreferencesSaga),
     call(watchServiceMetadataLoadSaga),
     call(watchContentMunicipalityLoadSaga),
     call(watchContentServicesByScopeLoad),

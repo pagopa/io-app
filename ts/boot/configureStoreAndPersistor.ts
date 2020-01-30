@@ -205,6 +205,7 @@ const rootPersistConfig: PersistConfig = {
     "userMetadata"
   ],
   // Transform functions used to manipulate state on store/rehydrate
+  // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374
   transforms: [DateISO8601Transform, PotTransform]
 };
 
