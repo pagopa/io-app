@@ -29,7 +29,7 @@ import {
   navigateToWalletHome
 } from "../../store/actions/navigation";
 import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
-import { loadService } from "../../store/actions/services";
+import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import {
@@ -699,7 +699,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
-    dispatch(loadService.request(serviceId)),
+    dispatch(loadServiceDetail.request(serviceId)),
   navigateToMessageDetail: (messageId: string) =>
     dispatch(navigateToMessageDetailScreenAction({ messageId })),
   navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome()),

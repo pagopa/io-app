@@ -6,7 +6,7 @@ import { OrganizationName } from "../../../../definitions/backend/OrganizationNa
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceName } from "../../../../definitions/backend/ServiceName";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { loadService } from "../../../store/actions/services";
+import { loadServiceDetail } from "../../../store/actions/services";
 import { handleOrganizationNameUpdateSaga } from "../../services/handleOrganizationNameUpdateSaga";
 import { handleServiceReadabilitySaga } from "../../services/handleServiceReadabilitySaga";
 import { loadServiceDetailRequestHandler } from "../loadServiceDetailRequestHandler";
@@ -14,7 +14,7 @@ import { loadServiceDetailRequestHandler } from "../loadServiceDetailRequestHand
 const mockedServiceId = "A01" as ServiceId;
 const getService = jest.fn();
 const mockedAction = {
-  type: loadService.request,
+  type: loadServiceDetail.request,
   payload: mockedServiceId
 };
 export const mockedService: ServicePublic = {
@@ -34,7 +34,7 @@ describe("loadServiceDetailRequestHandler", () => {
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 500, value: "generic error" }))
       .put(
-        loadService.failure({
+        loadServiceDetail.failure({
           service_id: mockedServiceId,
           error: mockedGenericError
         })
@@ -48,7 +48,7 @@ describe("loadServiceDetailRequestHandler", () => {
       .next()
       .call(getService, { service_id: mockedServiceId })
       .next(right({ status: 200, value: mockedService }))
-      .put(loadService.success(mockedService))
+      .put(loadServiceDetail.success(mockedService))
       .next()
       .call(handleServiceReadabilitySaga, mockedServiceId)
       .next()
