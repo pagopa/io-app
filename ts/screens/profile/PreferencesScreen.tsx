@@ -141,7 +141,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     const { isFingerprintAvailable } = this.state;
 
     const email = this.props.optionEmail.getOrElse(
-      I18n.t("email.notAvailable")
+      I18n.t("global.remoteStates.notAvailable")
     );
     const phoneNumber = potProfile.fold(
       I18n.t("global.remoteStates.notAvailable"),
