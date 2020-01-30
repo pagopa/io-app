@@ -9,6 +9,7 @@ import {
   loginSuccess,
   logoutFailure,
   logoutSuccess,
+  resetAuthenticationState,
   sessionExpired,
   sessionInformationLoadSuccess,
   sessionInvalid
@@ -212,6 +213,10 @@ const reducer = (
         ? "SESSION_EXPIRED"
         : "NOT_LOGGED_IN"
     };
+  }
+
+  if (isActionOf(resetAuthenticationState, action) && isSessionExpired(state)) {
+    return INITIAL_STATE;
   }
 
   return state;
