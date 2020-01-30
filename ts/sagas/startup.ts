@@ -13,12 +13,10 @@ import {
   takeLatest
 } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-
 import { BackendClient } from "../api/backend";
 import { setInstabugProfileAttributes } from "../boot/configureInstabug";
 import {
   apiUrlPrefix,
-  isEmailEditingAndValidationEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../config";
@@ -36,7 +34,6 @@ import { navigationHistoryPush } from "../store/actions/navigationHistory";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import { clearOnboarding } from "../store/actions/onboarding";
 import { clearCache, resetProfileState } from "../store/actions/profile";
-import { loadService, loadVisibleServices } from "../store/actions/services";
 import {
   idpSelector,
   sessionInfoSelector,
@@ -57,16 +54,20 @@ import {
 } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import { updateInstallationSaga } from "./notifications";
-import { loadProfile, watchProfileUpsertRequestsSaga } from "./profile";
+import {
+  loadProfile,
+  watchProfileRefreshRequestsSaga,
+  watchProfileSendEmailValidationSaga,
+  watchProfileUpsertRequestsSaga
+} from "./profile";
+import { watchLoadServicesSaga } from "./services/watchLoadServicesSaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
-import { loadServiceRequestHandler } from "./startup/loadServiceRequestHandler";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
-import { loadVisibleServicesRequestHandler } from "./startup/loadVisibleServicesHandler";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
@@ -120,7 +121,10 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     : yield call(authenticationSaga);
 
   // Instantiate a backend client from the session token
-  const backendClient = BackendClient(apiUrlPrefix, sessionToken);
+  const backendClient: ReturnType<typeof BackendClient> = BackendClient(
+    apiUrlPrefix,
+    sessionToken
+  );
 
   // Start the notification installation update as early as
   // possible to begin receiving push notifications
@@ -218,7 +222,17 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     backendClient.createOrUpdateProfile
   );
 
-  // Start the watchAbortOnboardingSaga
+  // Start watching for requests of refresh the profile
+  yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+
+  // Start watching for the requests of a new verification email to
+  // validate the user email address
+  yield fork(
+    watchProfileSendEmailValidationSaga,
+    backendClient.startEmailValidationProcess
+  );
+
+  // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield fork(watchAbortOnboardingSaga);
 
   if (!previousSessionToken || isNone(maybeStoredPin)) {
@@ -226,15 +240,14 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // reason, he was logged in but there is no PIN set, thus we need
     // to pass through the onboarding process.
 
-    // Ask to accept ToS if it is the first access on IO or if there is a new available version
+    // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
     yield call(checkAcceptedTosSaga, userProfile);
 
     storedPin = yield call(checkConfiguredPinSaga);
+
     yield call(checkAcknowledgedFingerprintSaga);
 
-    if (isEmailEditingAndValidationEnabled) {
-      yield call(checkAcknowledgedEmailSaga);
-    }
+    yield call(checkAcknowledgedEmailSaga, userProfile);
 
     // Stop the watchAbortOnboardingSaga
     yield cancel(watchAbortOnboardingSagaTask);
@@ -293,19 +306,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
   yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
-  yield takeEvery(
-    getType(loadService.request),
-    loadServiceRequestHandler,
-    backendClient.getService
-  );
-
-  yield takeEvery(
-    getType(loadVisibleServices.request),
-    loadVisibleServicesRequestHandler,
-    backendClient.getVisibleServices
-  );
-  // Trigger the services content and metadata being loaded/refreshed.
-  yield put(loadVisibleServices.request());
+  // Load visible services and service details from backend when requested
+  yield fork(watchLoadServicesSaga, backendClient);
 
   // Load messages when requested
   yield fork(watchMessagesLoadOrCancelSaga, backendClient.getMessages);

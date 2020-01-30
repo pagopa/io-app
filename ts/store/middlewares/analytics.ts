@@ -273,8 +273,9 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadService.request):
     case getType(loadService.success):
 
-    // content
+    case getType(contentServiceLoad.request):
     case getType(contentServiceLoad.success):
+
     // wallet
     case getType(fetchWalletsRequest):
 
@@ -327,7 +328,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
   return next(action);
 };
 // gets the current screen from navigation state
-// TODO: Need to be fixed
+// TODO: Need to be fixed https://www.pivotaltracker.com/story/show/170819360
 export function getCurrentRouteName(navNode: any): string | undefined {
   if (!navNode) {
     return undefined;

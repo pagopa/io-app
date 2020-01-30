@@ -51,7 +51,7 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
     case getType(removeServiceTuples): {
       const serviceTuples = action.payload;
 
-      // Remove service id from  the array keyed by organizationFiscalCode
+      // Remove service id from the array keyed by organizationFiscalCode
       const stateUpdate = serviceTuples.reduce<
         ServiceIdsByOrganizationFiscalCodeState
       >((accumulator, tuple) => {
