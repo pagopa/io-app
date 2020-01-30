@@ -88,7 +88,6 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { email: this.props.optionEmail };
-    this.handleGoBack = this.handleGoBack.bind(this);
   }
 
   private continueOnPress = () => {
@@ -138,7 +137,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     });
   };
 
-  private handleGoBack() {
+  private handleGoBack = () => {
     if (this.props.isOnboardingCompleted) {
       this.props.navigation.goBack();
     } else {
