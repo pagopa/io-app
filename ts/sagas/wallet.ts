@@ -102,12 +102,14 @@ import {
 } from "./wallet/pagopaApis";
 
 import ROUTES from "../navigation/routes";
+import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
 import {
   getCurrentRouteKey,
   getCurrentRouteName
 } from "../store/middlewares/analytics";
 import { SessionManager } from "../utils/SessionManager";
 import { paymentsDeleteUncompletedSaga } from "./payments";
+import { RTron } from "../boot/configureStoreAndPersistor";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -674,21 +676,61 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
-  yield takeLatest(getType(setWalletSessionEnabled), function* handler(
-    action: ActionType<typeof setWalletSessionEnabled>
-  ) {
-    console.warn("A");
-    if (action.payload) {
-      yield call(pmSessionManager.enableSession);
-      console.warn("B");
-      return;
-    }
-    yield call(pmSessionManager.disableSession);
-  });
+  /**
+   * whenever the profile is loaded (from a load request or from un update)
+   * check if the email is validated. If it not the session manager has to be disabled
+   */
+  yield takeLatest(
+    [profileUpsert.success, profileLoadSuccess],
+    checkProfile,
+    pmSessionManager
+  );
+
+  yield takeLatest(
+    getType(setWalletSessionEnabled),
+    setWalletSessionEnabledSaga,
+    pmSessionManager
+  );
 
   yield fork(paymentsDeleteUncompletedSaga);
 }
 
+function* checkProfile(
+  sessionManager: SessionManager<PaymentManagerToken>,
+  action:
+    | ActionType<typeof profileUpsert.success>
+    | ActionType<typeof profileLoadSuccess>
+) {
+  if (action.payload.is_email_validated === false) {
+    RTron.log("DISABLED");
+    yield call(enableSessionManager, false, sessionManager);
+  } else {
+    RTron.log("ENABLED");
+  }
+}
+
+function* enableSessionManager(
+  enable: boolean,
+  sessionManager: SessionManager<PaymentManagerToken>
+) {
+  yield call(
+    enable ? sessionManager.enableSession : sessionManager.disableSession
+  );
+}
+
+/**
+ * enable the Session Manager to perform request with a fresh token
+ * otherwise the Session Manager doesn't refresh the token and it doesn't
+ * perform requests to payment manager
+ * @param sessionManager
+ * @param action
+ */
+function* setWalletSessionEnabledSaga(
+  sessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof setWalletSessionEnabled>
+): Iterator<Effect> {
+  yield call(enableSessionManager, action.payload, sessionManager);
+}
 /**
  * This saga track each time a new payment of the route from which it started is initiated
  */

@@ -48,6 +48,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { setWalletSessionEnabled } from "../../store/actions/wallet/wallets";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -446,6 +447,17 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   this.props.dispatchSessionExpired,
                   true
                 )}
+
+                {this.debugListItem(
+                  "enable wallet session",
+                  this.props.dispatchEnableWalletSession,
+                  false
+                )}
+                {this.debugListItem(
+                  "disable wallet session",
+                  this.props.dispatchDisableWalletSession,
+                  false
+                )}
               </React.Fragment>
             )}
 
@@ -513,7 +525,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
     ),
   dispatchPreferencesExperimentalFeaturesSetEnabled: (enabled: boolean) =>
-    dispatch(preferencesExperimentalFeaturesSetEnabled(enabled))
+    dispatch(preferencesExperimentalFeaturesSetEnabled(enabled)),
+  dispatchEnableWalletSession: () => dispatch(setWalletSessionEnabled(true)),
+  dispatchDisableWalletSession: () => dispatch(setWalletSessionEnabled(false))
 });
 
 export default connect(
