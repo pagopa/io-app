@@ -159,7 +159,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         ]
       );
     }
-  }
+  };
 
   get isFromProfileSection() {
     return this.props.isOnboardingCompleted;
