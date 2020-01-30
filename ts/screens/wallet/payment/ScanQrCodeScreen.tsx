@@ -131,7 +131,7 @@ const settingsAlert = (
       },
       {
         text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
-        onPress: () => settings()
+        onPress: settings
       }
     ],
     { cancelable: false }
