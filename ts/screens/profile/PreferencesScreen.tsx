@@ -138,17 +138,11 @@ class PreferencesScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const { potProfile } = this.props;
     const { isFingerprintAvailable } = this.state;
 
-    const email = this.props.optionEmail.getOrElse(
-      I18n.t("global.remoteStates.notAvailable")
-    );
-    const spidEmail = this.props.optionSpidEmail.getOrElse("");
-    const phoneNumber = potProfile.fold(
-      I18n.t("global.remoteStates.notAvailable"),
-      _ => _.spid_mobile_phone
-    );
+    const notAvailable = I18n.t("global.remoteStates.notAvailable");
+    const maybeEmail = this.props.optionEmail;
+    const maybeSpidEmail = this.props.optionSpidEmail;
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
@@ -194,17 +188,10 @@ class PreferencesScreen extends React.Component<Props, State> {
                     )
               }
             />
-            {// Check if spid email exists
-            spidEmail !== "" && (
-              <ListItemComponent
-                title={I18n.t("profile.preferences.list.email")}
-                subTitle={spidEmail}
-              />
-            )}
 
             <ListItemComponent
-              title={I18n.t("profile.preferences.list.pagoPa_email")}
-              subTitle={email}
+              title={I18n.t("profile.preferences.list.email")}
+              subTitle={maybeEmail.getOrElse(notAvailable)}
               titleBadge={
                 this.props.isEmailValidated === false
                   ? I18n.t("profile.preferences.list.need_validate")
@@ -213,12 +200,22 @@ class PreferencesScreen extends React.Component<Props, State> {
               onPress={this.handleEmailOnPress}
             />
 
+            {// Check if spid email exists
+            maybeSpidEmail.isSome() && (
+              <ListItemComponent
+                title={I18n.t("profile.preferences.list.spid_email")}
+                subTitle={maybeSpidEmail.value}
+              />
+            )}
+
+            {/** 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.mobile_phone")}
               subTitle={phoneNumber}
               iconName={"io-phone-number"}
               onPress={unavailableAlert}
             />
+            */}
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
