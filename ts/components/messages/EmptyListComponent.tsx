@@ -24,17 +24,13 @@ type Props = Readonly<{
   subtitle?: string;
 }>;
 
-export class EmptyListComponent extends React.Component<Props> {
-  public render() {
-    return (
-      <View style={styles.view}>
-        <View spacer={true} />
-        <Image source={this.props.image} />
-        <Text style={styles.title}>{this.props.title}</Text>
-        {this.props.subtitle && (
-          <Text style={styles.subtitle}>{this.props.subtitle}</Text>
-        )}
-      </View>
-    );
-  }
-}
+export const EmptyListComponent = (props: Props) => {
+  return (
+    <View style={styles.view}>
+      <View spacer={true} />
+      <Image source={props.image} />
+      <Text style={styles.title}>{props.title}</Text>
+      {props.subtitle && <Text style={styles.subtitle}>{props.subtitle}</Text>}
+    </View>
+  );
+};

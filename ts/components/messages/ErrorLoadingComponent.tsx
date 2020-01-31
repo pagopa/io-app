@@ -14,16 +14,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export class ErrorLoadingComponent extends React.Component<{}> {
-  public render() {
-    return (
-      <View style={styles.view}>
-        <View spacer={true} />
-        <Image
-          source={require("../../../img/messages/empty-message-list-icon.png")}
-        />
-        <Text style={styles.title}>{I18n.t("messages.loadingErrorTitle")}</Text>
-      </View>
-    );
-  }
-}
+export const ErrorLoadingComponent = () => {
+  return (
+    <View style={styles.view}>
+      <View spacer={true} />
+      <Image
+        source={require("../../../img/messages/empty-message-list-icon.png")}
+      />
+      <Text style={styles.title}>{I18n.t("messages.loadingErrorTitle")}</Text>
+    </View>
+  );
+};
