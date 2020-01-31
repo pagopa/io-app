@@ -297,10 +297,22 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     new Animated.Value(0)
   ];
 
-  private getHeaderHeight = (
-    currentTab: number
-  ): Animated.AnimatedInterpolation =>
-    this.animatedTabScrollPositions[currentTab].interpolate({
+  /**
+   * The screen header is animated: for each tab, once the y content offset of the
+   * list changes, then the related animatedTabScrollPositions value is updated.
+   * To reproduce a sticky effect common to all the tabs, the animation is based on
+   * the sum of the 3 scroll values.
+   */
+  private sumOfPositions01 = Animated.add(
+    this.animatedTabScrollPositions[0],
+    this.animatedTabScrollPositions[1]
+  );
+  private sumOfPositions = Animated.add(
+    this.sumOfPositions01,
+    this.animatedTabScrollPositions[2]
+  );
+  private getHeaderHeight = (): Animated.AnimatedInterpolation =>
+    this.sumOfPositions.interpolate({
       inputRange: [0, HEADER_HEIGHT * 3], // The multiplier works as workaround to solve the glitch on Android OS (https://github.com/facebook/react-native/issues/21801)
       outputRange: [HEADER_HEIGHT, 0],
       extrapolate: "clamp"
@@ -540,7 +552,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
                 <AnimatedScreenContentHeader
                   title={I18n.t("services.title")}
                   icon={require("../../../img/icons/services-icon.png")}
-                  dynamicHeight={this.getHeaderHeight(this.state.currentTab)}
+                  dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}
                 {this.state.isLongPressEnabled &&

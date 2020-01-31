@@ -104,6 +104,27 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     new Animated.Value(0)
   ];
 
+  /**
+   * The screen header is animated: for each tab, once the y content offset of the
+   * list changes, then the related animatedTabScrollPositions value is updated.
+   * To reproduce a sticky effect common to all the tabs, the animation is based on
+   * the sum of the 3 scroll values.
+   */
+  private sumOfPositions01 = Animated.add(
+    this.animatedTabScrollPositions[0],
+    this.animatedTabScrollPositions[1]
+  );
+  private sumOfPositions = Animated.add(
+    this.sumOfPositions01,
+    this.animatedTabScrollPositions[2]
+  );
+  private getHeaderHeight = (): Animated.AnimatedInterpolation =>
+    this.sumOfPositions.interpolate({
+      inputRange: [0, HEADER_HEIGHT * 3], // The multiplier works as workaround to solve the glitch on Android OS (https://github.com/facebook/react-native/issues/21801)
+      outputRange: [HEADER_HEIGHT, 0],
+      extrapolate: "clamp"
+    });
+
   private onRefreshMessages = () => {
     this.props.refreshMessages(
       this.props.lexicallyOrderedMessagesState,
@@ -126,19 +147,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       this.navListener.remove();
     }
   }
-
-  /**
-   * The screen header is animated: for each tab, once the y
-   * content offset of the list changes, then the related
-   * animatedTabScrollPositions value is updated and it is
-   * interpolated to get the new height for the screen header
-   */
-  private getHeaderHeight = (): Animated.AnimatedInterpolation =>
-    this.animatedTabScrollPositions[this.state.currentTab].interpolate({
-      inputRange: [0, HEADER_HEIGHT * 3], // The multiplier works as workaround to solve the glitch on Android OS (https://github.com/facebook/react-native/issues/21801)
-      outputRange: [HEADER_HEIGHT, 0],
-      extrapolate: "clamp"
-    });
 
   public render() {
     const { isSearchEnabled } = this.props;
