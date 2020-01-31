@@ -186,11 +186,13 @@ class PreferencesScreen extends React.Component<Props, State> {
                     )
               }
             />
-
-            <ListItemComponent
-              title={I18n.t("profile.preferences.list.email")}
-              subTitle={spidEmail}
-            />
+            {// Check if spid email exists
+            spidEmail !== "" && (
+              <ListItemComponent
+                title={I18n.t("profile.preferences.list.email")}
+                subTitle={spidEmail}
+              />
+            )}
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.pagoPa_email")}
