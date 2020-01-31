@@ -30,12 +30,6 @@ import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import { getLocalePrimary } from "../../utils/locale";
 
-const unavailableAlert = () =>
-  Alert.alert(
-    I18n.t("profile.preferences.unavailable.title"),
-    I18n.t("profile.preferences.unavailable.message")
-  );
-
 const languageAlert = () =>
   Alert.alert(
     I18n.t("profile.preferences.language.title"),
@@ -207,15 +201,6 @@ class PreferencesScreen extends React.Component<Props, State> {
                 subTitle={maybeSpidEmail.value}
               />
             )}
-
-            {/** 
-            <ListItemComponent
-              title={I18n.t("profile.preferences.list.mobile_phone")}
-              subTitle={phoneNumber}
-              iconName={"io-phone-number"}
-              onPress={unavailableAlert}
-            />
-            */}
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
