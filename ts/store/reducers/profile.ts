@@ -44,17 +44,22 @@ export const profileEmailSelector = createSelector(
 
 // return true if the profile has an email
 export const hasProfileEmail = (user: InitializedProfile): boolean =>
-  InitializedProfile.is(user) && user.email !== undefined;
+  user.email !== undefined;
+
+// return true if the profile has an email
+export const hasProfileEmailSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): boolean =>
+    pot.getOrElse(pot.map(profile, p => hasProfileEmail(p)), false)
+);
 
 // return true if the profile has an email and it is validated
 export const isProfileEmailValidated = (user: InitializedProfile): boolean =>
-  InitializedProfile.is(user) &&
-  user.is_email_validated !== undefined &&
-  user.is_email_validated === true;
+  user.is_email_validated !== undefined && user.is_email_validated === true;
 
 // return true if the profile has version equals to 0
 export const isProfileFirstOnBoarding = (user: InitializedProfile): boolean =>
-  InitializedProfile.is(user) && user.version === 0;
+  user.version === 0;
 
 // return true if the profile pot is some and its field is_email_validated exists and it's true
 export const isProfileEmailValidatedSelector = createSelector(
