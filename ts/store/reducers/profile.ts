@@ -4,7 +4,7 @@
  * are managed by different global reducers.
  */
 
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
