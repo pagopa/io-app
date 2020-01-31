@@ -13,11 +13,13 @@ import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
+  navigateToEmailInsertScreen,
   navigateToEmailReadScreen,
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
+  hasProfileEmailSelector,
   isProfileEmailValidatedSelector,
   profileEmailSelector,
   profileSelector
@@ -81,7 +83,11 @@ class PreferencesScreen extends React.Component<Props, State> {
   }
 
   private handleEmailOnPress() {
-    this.props.navigateToEmailReadScreen();
+    if (this.props.hasProfileEmail) {
+      this.props.navigateToEmailReadScreen();
+      return;
+    }
+    this.props.navigateToEmailInsertScreen();
   }
 
   public componentWillMount() {
@@ -134,7 +140,9 @@ class PreferencesScreen extends React.Component<Props, State> {
     const { potProfile } = this.props;
     const { isFingerprintAvailable } = this.state;
 
-    const email = this.props.optionEmail.getOrElse("");
+    const email = this.props.optionEmail.getOrElse(
+      I18n.t("global.remoteStates.notAvailable")
+    );
     const phoneNumber = potProfile.fold(
       I18n.t("global.remoteStates.notAvailable"),
       _ => _.spid_mobile_phone
@@ -225,7 +233,8 @@ function mapStateToProps(state: GlobalState) {
     optionEmail: profileEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-    preferredCalendar: state.persistedPreferences.preferredCalendar
+    preferredCalendar: state.persistedPreferences.preferredCalendar,
+    hasProfileEmail: hasProfileEmailSelector(state)
   };
 }
 
@@ -234,7 +243,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToFingerprintPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
     dispatch(navigateToCalendarPreferenceScreen()),
-  navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen())
+  navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen()),
+  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen())
 });
 
 export default connect(
