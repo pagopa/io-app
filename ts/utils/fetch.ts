@@ -33,7 +33,7 @@ function retryingFetch(
   const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
 
   // configure retry logic with default exponential backoff
-  // @see https://github.com/teamdigitale/italia-ts-commons/blob/master/src/backoff.ts
+  // @see https://github.com/pagopa/io-ts-commons/blob/master/src/backoff.ts
   const exponentialBackoff = calculateExponentialBackoffInterval();
   const retryLogic = withRetries<Error, Response>(
     maxRetries,
