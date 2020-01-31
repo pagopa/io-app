@@ -112,7 +112,7 @@ export const constantPollingFetch = (
   const retryLogic = withRetries<Error, Response>(retries, constantBackoff);
   // makes the retry logic map 404s to transient errors (by default only
   // timeouts are transient)
-  // see also https://github.com/teamdigitale/italia-ts-commons/blob/master/src/fetch.ts#L103
+  // see also https://github.com/pagopa/io-ts-commons/blob/master/src/fetch.ts#L103
   const retryWithTransient404s = retryLogicForTransientResponseError(
     _ => _.status === 404,
     retryLogic
