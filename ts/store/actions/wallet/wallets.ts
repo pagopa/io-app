@@ -103,6 +103,10 @@ export const setFavouriteWalletFailure = createStandardAction(
   "WALLET_SET_FAVOURITE_FAILURE"
 )<Error>();
 
+export const setWalletSessionEnabled = createStandardAction(
+  "WALLET_SET_SESSION_ENABLED"
+)<boolean>();
+
 type StartOrResumeAddCreditCardSagaPayload = Readonly<{
   creditCard: CreditCard;
   language?: string;
@@ -134,4 +138,5 @@ export type WalletsActions =
   | ActionType<typeof payCreditCardVerificationSuccess>
   | ActionType<typeof payCreditCardVerificationFailure>
   | ActionType<typeof creditCardCheckout3dsRequest>
-  | ActionType<typeof creditCardCheckout3dsSuccess>;
+  | ActionType<typeof creditCardCheckout3dsSuccess>
+  | ActionType<typeof setWalletSessionEnabled>;
