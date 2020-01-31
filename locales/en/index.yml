@@ -42,7 +42,7 @@ global:
     search: Text to search
   remoteStates:
     loading: Loading...
-    notAvailable: Non available
+    notAvailable: Not available
   notImplemented: NOT IMPLEMENTED
   search:
     invalidSearchBarText: Enter at least {{minCharacter}} characters
