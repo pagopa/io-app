@@ -19,6 +19,7 @@ import { connect } from "react-redux";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
+import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
@@ -408,9 +409,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadWallets: () => dispatch(fetchWalletsRequest())
 });
 
-export default withValidatedEmail(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(WalletHomeScreen)
+export default withValidatedPagoPaVersion(
+  withValidatedEmail(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(WalletHomeScreen)
+  )
 );
