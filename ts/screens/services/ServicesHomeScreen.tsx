@@ -52,8 +52,8 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
-  contentServiceLoad,
-  contentServicesByScopeLoad
+  loadServiceMetadata,
+  loadVisibleServicesByScope
 } from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
@@ -805,7 +805,7 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
   refreshVisibleServices: () => dispatch(loadVisibleServices.request()),
-  refreshServicesByScope: () => dispatch(contentServicesByScopeLoad.request()),
+  refreshServicesByScope: () => dispatch(loadVisibleServicesByScope.request()),
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
     profile: ProfileState
@@ -854,7 +854,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => dispatch(navigateToServiceDetailsScreen(params)),
   serviceDetailsLoad: (service: ServicePublic) => {
-    dispatch(contentServiceLoad.request(service.service_id));
+    dispatch(loadServiceMetadata.request(service.service_id));
     dispatch(showServiceDetails(service));
   }
 });

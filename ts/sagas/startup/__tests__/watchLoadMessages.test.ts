@@ -9,7 +9,7 @@ import {
   loadMessages as loadMessagesAction,
   removeMessages as removeMessagesAction
 } from "../../../store/actions/messages";
-import { loadService } from "../../../store/actions/services";
+import { loadServiceDetail } from "../../../store/actions/services";
 import { messagesAllIdsSelector } from "../../../store/reducers/entities/messages/messagesAllIds";
 import {
   messagesStateByIdSelector,
@@ -147,7 +147,7 @@ describe("watchLoadMessages", () => {
         .select(messagesStateByIdSelector)
         // Return an empty object as messagesByIdSelectors response (no message already stored)
         .next({})
-        .all([put(loadService.request("5a563817fcc896087002ea46c49a"))])
+        .all([put(loadServiceDetail.request("5a563817fcc896087002ea46c49a"))])
         .next(right({ status: 200, value: testServicePublic }))
         .all([
           put(loadMessageAction.request(testMessages.items[1] as any)),

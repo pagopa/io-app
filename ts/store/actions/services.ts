@@ -17,7 +17,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 // service loading at startup
 //
 
-export const FirstServiceLoadSuccess = createStandardAction(
+export const firstServiceLoadSuccess = createStandardAction(
   "FIRST_SERVICES_LOAD_SUCCESS"
 )<void>();
 
@@ -40,10 +40,10 @@ type ServiceLoadFailurePayload = {
   service_id: string;
 };
 
-export const loadService = createAsyncAction(
-  "SERVICE_LOAD_REQUEST",
-  "SERVICE_LOAD_SUCCESS",
-  "SERVICE_LOAD_FAILURE"
+export const loadServiceDetail = createAsyncAction(
+  "LOAD_SERVICE_DETAIL_REQUEST",
+  "LOAD_SERVICE_DETAIL_SUCCESS",
+  "LOAD_SERVICE_DETAIL_FAILURE"
 )<string, ServicePublic, ServiceLoadFailurePayload>();
 //
 //  mark service as read
@@ -67,9 +67,9 @@ export const removeServiceTuples = createStandardAction(
 )<ReadonlyArray<ITuple2<string, string | undefined>>>();
 
 export type ServicesActions =
-  | ActionType<typeof FirstServiceLoadSuccess>
+  | ActionType<typeof firstServiceLoadSuccess>
   | ActionType<typeof loadVisibleServices>
-  | ActionType<typeof loadService>
+  | ActionType<typeof loadServiceDetail>
   | ActionType<typeof markServiceAsRead>
   | ActionType<typeof removeServiceTuples>
   | ActionType<typeof showServiceDetails>;
