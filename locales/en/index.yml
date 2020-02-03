@@ -168,6 +168,7 @@ profile:
       send_email_messages: 
         title: Forward messages by email
         subtitle: Disable for all services
+      spid_email: SPID email
       need_validate: To be validated
       mobile_phone: Mobile number
       language: Language
