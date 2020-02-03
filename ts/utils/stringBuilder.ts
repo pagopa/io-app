@@ -21,5 +21,8 @@ export const formatNumberAmount = (amount: number): string =>
     format: "%n %u"
   });
 
+export const formatNumberCentsToAmount = (cents: number): string =>
+  formatNumberAmount(centsToAmount(cents));
+
 export const buildExpirationDate = (creditCard: CreditCard): string =>
   `${creditCard.expireMonth}/${creditCard.expireYear}`;
