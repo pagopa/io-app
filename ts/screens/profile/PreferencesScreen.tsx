@@ -22,18 +22,13 @@ import {
   hasProfileEmailSelector,
   isProfileEmailValidatedSelector,
   profileEmailSelector,
-  profileSelector
+  profileSelector,
+  profileSpidEmailSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import { getLocalePrimary } from "../../utils/locale";
-
-const unavailableAlert = () =>
-  Alert.alert(
-    I18n.t("profile.preferences.unavailable.title"),
-    I18n.t("profile.preferences.unavailable.message")
-  );
 
 const languageAlert = () =>
   Alert.alert(
@@ -137,16 +132,11 @@ class PreferencesScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const { potProfile } = this.props;
     const { isFingerprintAvailable } = this.state;
 
-    const email = this.props.optionEmail.getOrElse(
-      I18n.t("global.remoteStates.notAvailable")
-    );
-    const phoneNumber = potProfile.fold(
-      I18n.t("global.remoteStates.notAvailable"),
-      _ => _.spid_mobile_phone
-    );
+    const notAvailable = I18n.t("global.remoteStates.notAvailable");
+    const maybeEmail = this.props.optionEmail;
+    const maybeSpidEmail = this.props.optionSpidEmail;
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
@@ -195,21 +185,22 @@ class PreferencesScreen extends React.Component<Props, State> {
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.email")}
-              subTitle={email}
-              onPress={this.handleEmailOnPress}
+              subTitle={maybeEmail.getOrElse(notAvailable)}
               titleBadge={
                 this.props.isEmailValidated === false
                   ? I18n.t("profile.preferences.list.need_validate")
                   : undefined
               }
+              onPress={this.handleEmailOnPress}
             />
 
-            <ListItemComponent
-              title={I18n.t("profile.preferences.list.mobile_phone")}
-              subTitle={phoneNumber}
-              iconName={"io-phone-number"}
-              onPress={unavailableAlert}
-            />
+            {// Check if spid email exists
+            maybeSpidEmail.isSome() && (
+              <ListItemComponent
+                title={I18n.t("profile.preferences.list.spid_email")}
+                subTitle={maybeSpidEmail.value}
+              />
+            )}
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
@@ -231,6 +222,7 @@ function mapStateToProps(state: GlobalState) {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
     optionEmail: profileEmailSelector(state),
+    optionSpidEmail: profileSpidEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar,
