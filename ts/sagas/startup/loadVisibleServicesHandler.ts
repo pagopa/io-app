@@ -2,12 +2,12 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
+import { deleteUselessOrganizations } from "../../store/actions/organizations";
 import { loadVisibleServices } from "../../store/actions/services";
+import { servicesOrganizationsFiscalCode } from "../../store/reducers/entities/services/servicesByOrganizationFiscalCode";
 import { SagaCallReturnType } from "../../types/utils";
 import { refreshStoredServices } from "../services/refreshStoredServices";
 import { removeUnusedStoredServices } from "../services/removeUnusedStoredServices";
-import { deleteUselessOrganizations } from "../../store/actions/organizations";
-import { servicesOrganizationsFiscalCode } from "../../store/reducers/entities/services/servicesByOrganizationFiscalCode";
 
 /**
  * A generator to load the service details from the Backend
