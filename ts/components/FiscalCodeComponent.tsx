@@ -20,13 +20,13 @@ import {
 } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
-import { UserProfile } from "../../definitions/backend/UserProfile";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
 import customVariables from "../theme/variables";
 import { extractFiscalCodeData } from "../utils/profile";
 
 interface BaseProps {
-  profile: UserProfile;
+  profile: InitializedProfile;
   municipality: pot.Pot<Municipality, Error>;
   getBackSide: boolean;
   type: "Full" | "Landscape";
@@ -341,7 +341,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
   }
 
   private renderFrontContent(
-    profile: UserProfile,
+    profile: InitializedProfile,
     municipality: pot.Pot<Municipality, Error>,
     isLandscape: boolean
   ) {

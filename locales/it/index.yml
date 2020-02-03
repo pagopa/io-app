@@ -167,6 +167,7 @@ profile:
         enabled: Abilitato
         disabled: Disabilitato
       email: Indirizzo email
+      spid_email: SPID email
       need_validate: Da validare
       mobile_phone: Numero di telefono
       language: Lingua
@@ -355,28 +356,37 @@ email:
     title: Inserisci la tua email
     subtitle: Alcune funzioni di IO hanno bisogno della tua email
     label: Indirizzo email personale
+    alert: Stai già usando questa email
     help:
       title: Email
       content: !include email_insert_help.md
   edit:
     title: Modifica la tua email
-    subtitle: L'email che avevi inserto in precedenza è
-    validated: L'email che avevi inserto e validato in precedenza è
+    subtitle: L'email che avevi inserito in precedenza è
+    validated: L'email che avevi inserito e validato in precedenza è
     label: Nuovo indirizzo email personale
     cta: Modifica email
+    upsert_ok: La richiesta di modifica email è stata inviata correttamente
+    upsert_ko: Errore nella richiesta di modifica email, riprovare
   validate:
     title: Ricorda di validare il tuo indirizzo email
     header: Validazione email
-    info: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
-      clicca semplicemente su quel link.<br/>
-      Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
+    content1: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
+      clicca semplicemente su quel link.<br/>Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
       inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
       usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
+    content2: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email.<br/>Ti abbiamo inviato una email a <b>{{email}}</b>:
+      apri il tuo client di posta e clicca semplicemente sul link."
     cta: Invia una nuova email di validazione
     sent: Email inviata
+    send_validation_ok: Email di validazione inviata
+    send_validation_ko: Errore nell'invio della email di validazione. Riprova.
     help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
       indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
       tuo provider di servizi SPID.
+    validation_ok: La mail è stata validata. Ora puoi accedere a tutte le funzionalità di IO.
+    validated: Email validata!
+    validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
 onboarding:
   tos:
     headerTitle: Attivazione
@@ -838,6 +848,7 @@ calendarEvents:
 reminders:
   emptyMonth: Non ci sono scadenze in questo mese
   loadMoreData: scadenze precedenti
+  noOtherDeadlines: Non ci sono altre scadenze
   email:
     title: Ricorda di validare il tuo indirizzo email
     modal1: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email. \n Ti abbiamo inviato una email a"

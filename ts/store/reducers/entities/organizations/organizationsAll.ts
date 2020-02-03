@@ -3,7 +3,7 @@
  */
 import { getType } from "typesafe-actions";
 import { deleteUselessOrganizations } from "../../../actions/organizations";
-import { loadService } from "../../../actions/services";
+import { loadServiceDetail } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -32,7 +32,7 @@ const reducer = (
       return state.filter(
         orgAll => action.payload.indexOf(orgAll.fiscalCode) !== -1
       );
-    case getType(loadService.success):
+    case getType(loadServiceDetail.success):
       const organization = state.find(
         _ => _.fiscalCode === action.payload.organization_fiscal_code
       );
