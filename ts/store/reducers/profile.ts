@@ -4,10 +4,11 @@
  * are managed by different global reducers.
  */
 
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { EmailAddress } from "../../../definitions/backend/EmailAddress";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import {
   profileLoadFailure,
@@ -28,18 +29,26 @@ const INITIAL_STATE: ProfileState = pot.none;
 export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
 
-export const getProfileEmail = (user: InitializedProfile): Option<string> => {
-  if (user.email !== undefined) {
-    return some(user.email as string);
-  }
-  return none;
-};
+export const getProfileEmail = (
+  user: InitializedProfile
+): Option<EmailAddress> => fromNullable(user.email);
+
+export const getProfileSpidEmail = (
+  user: InitializedProfile
+): Option<EmailAddress> => fromNullable(user.spid_email);
 
 // return the email address (as a string) if the profile pot is some and its value is of kind InitializedProfile and it has an email
 export const profileEmailSelector = createSelector(
   profileSelector,
   (profile: ProfileState): Option<string> =>
     pot.getOrElse(pot.map(profile, p => getProfileEmail(p)), none)
+);
+
+// return the spid email address (as a string)
+export const profileSpidEmailSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): Option<string> =>
+    pot.getOrElse(pot.map(profile, p => getProfileSpidEmail(p)), none)
 );
 
 // return true if the profile has an email
