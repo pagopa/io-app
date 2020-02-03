@@ -6,7 +6,7 @@ import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 
 import {
-  deleteOtherOrganizations,
+  deleteUselessOrganizations,
   updateOrganizations
 } from "../../../actions/organizations";
 import { Action } from "../../../actions/types";
@@ -28,7 +28,7 @@ const reducer = (
   switch (action.type) {
     // when this action is performed, all the keys (fiscal code of the organization)
     // that are not present in the payload are removed from the state.
-    case getType(deleteOtherOrganizations):
+    case getType(deleteUselessOrganizations):
       return Object.keys(state)
         .filter(key => action.payload.indexOf(key) !== -1)
         .reduce<OrganizationNamesByFiscalCodeState>(

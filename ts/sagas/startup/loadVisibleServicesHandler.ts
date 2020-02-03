@@ -5,7 +5,7 @@ import { all, call, Effect, put, select } from "redux-saga/effects";
 import { BackendClient } from "../../api/backend";
 import { sessionExpired } from "../../store/actions/authentication";
 import { contentServiceLoad } from "../../store/actions/content";
-import { deleteOtherOrganizations } from "../../store/actions/organizations";
+import { deleteUselessOrganizations } from "../../store/actions/organizations";
 import {
   loadService,
   loadVisibleServices,
@@ -14,10 +14,7 @@ import {
 import { servicesMetadataByIdSelector } from "../../store/reducers/content";
 import { messagesIdsByServiceIdSelector } from "../../store/reducers/entities/messages/messagesIdsByServiceId";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import {
-  readServicesByOrganizationCodeSelector,
-  ServiceIdsByOrganizationFiscalCodeState
-} from "../../store/reducers/entities/services/servicesByOrganizationFiscalCode";
+import { servicesOrganizationsFiscalCode } from "../../store/reducers/entities/services/servicesByOrganizationFiscalCode";
 import { SagaCallReturnType } from "../../types/utils";
 
 type VisibleServiceVersionById = {
@@ -164,13 +161,9 @@ export function* loadVisibleServicesRequestHandler(
 // this function recovers all the organizations that have associated at least one service and sends an action
 // to delete the data of the other organizations from the store, if it exists.
 function* removeOtherOrganizationServices() {
-  const serviceIdsByOrganizationFiscalCodeState: ServiceIdsByOrganizationFiscalCodeState = yield select(
-    readServicesByOrganizationCodeSelector
+  const organizationFiscalCodes: ReadonlyArray<string> = yield select(
+    servicesOrganizationsFiscalCode
   );
 
-  yield put(
-    deleteOtherOrganizations(
-      Object.keys(serviceIdsByOrganizationFiscalCodeState)
-    )
-  );
+  yield put(deleteUselessOrganizations(organizationFiscalCodes));
 }

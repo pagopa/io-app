@@ -4,8 +4,8 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
-export const deleteOtherOrganizations = createStandardAction(
-  "DELETE_OTHER_ORGANIZATIONS"
+export const deleteUselessOrganizations = createStandardAction(
+  "DELETE_USELESS_ORGANIZATIONS"
 )<ReadonlyArray<string>>();
 
 export const updateOrganizations = createStandardAction("UPDATE_ORGANIZATIONS")<
@@ -13,5 +13,5 @@ export const updateOrganizations = createStandardAction("UPDATE_ORGANIZATIONS")<
 >();
 
 export type OrganizationsActions =
-  | ActionType<typeof deleteOtherOrganizations>
+  | ActionType<typeof deleteUselessOrganizations>
   | ActionType<typeof updateOrganizations>;
