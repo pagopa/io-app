@@ -1,8 +1,9 @@
-import { Effect, Task } from "redux-saga";
+import { Effect, SagaIterator, Task } from "redux-saga";
 import { call, cancel, fork, put, select, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { backgroundActivityTimeout } from "../../config";
+import ROUTES from "../../navigation/routes";
 import {
   applicationChangeState,
   ApplicationState
@@ -10,6 +11,7 @@ import {
 import { identificationRequest } from "../../store/actions/identification";
 import { navigateToMessageDetailScreenAction } from "../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../store/actions/notifications";
+import { navSelector } from "../../store/reducers/navigationHistory";
 import { pendingMessageStateSelector } from "../../store/reducers/notifications/pendingMessage";
 import { GlobalState } from "../../store/reducers/types";
 import { isPaymentOngoingSelector } from "../../store/reducers/wallet/payment";
@@ -42,41 +44,63 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
         // Timer fired we need to identify the user
         yield put(identificationRequest());
       });
-    } else if (
-      lastState !== "active" &&
-      newApplicationState === "active" &&
-      identificationBackgroundTimer
-    ) {
-      // Cancel the background timer if running
-
-      yield cancel(identificationBackgroundTimer);
-      identificationBackgroundTimer = undefined;
-
-      // Check if there is a payment ongoing
-      const isPaymentOngoing: ReturnType<
-        typeof isPaymentOngoingSelector
-      > = yield select<GlobalState>(isPaymentOngoingSelector);
-
-      // Check if we have a pending notification message
-      const pendingMessageState: ReturnType<
-        typeof pendingMessageStateSelector
-      > = yield select<GlobalState>(pendingMessageStateSelector);
-
-      // We only navigate to the new message from a push if we're not in a
-      // payment flow
-      if (!isPaymentOngoing && pendingMessageState) {
-        // We have a pending notification message to handle
-        const messageId = pendingMessageState.id;
-
-        // Remove the pending message from the notification state
-        yield put(clearNotificationPendingMessage());
-
-        // Navigate to message details screen
-        yield put(navigateToMessageDetailScreenAction({ messageId }));
+    } else if (lastState !== "active" && newApplicationState === "active") {
+      if (identificationBackgroundTimer) {
+        // Cancel the background timer if running
+        yield cancel(identificationBackgroundTimer);
+        identificationBackgroundTimer = undefined;
       }
+
+      yield call(watchRequiredIdentificationSaga);
+
+      yield call(watchNotificationSaga);
     }
 
     // Update the last state
     lastState = newApplicationState;
   });
+}
+
+/**
+ * Check if the user presses on a notification and redirect to the
+ * related message if any payment flow has been started
+ */
+function* watchNotificationSaga(): SagaIterator {
+  // Check if there is a payment ongoing
+  const isPaymentOngoing: ReturnType<
+    typeof isPaymentOngoingSelector
+  > = yield select<GlobalState>(isPaymentOngoingSelector);
+
+  // Check if we have a pending notification message
+  const pendingMessageState: ReturnType<
+    typeof pendingMessageStateSelector
+  > = yield select<GlobalState>(pendingMessageStateSelector);
+
+  // We only navigate to the new message from a push if we're not in a
+  // payment flow
+  if (!isPaymentOngoing && pendingMessageState) {
+    // We have a pending notification message to handle
+    const messageId = pendingMessageState.id;
+
+    // Remove the pending message from the notification state
+    yield put(clearNotificationPendingMessage());
+
+    // Navigate to message details screen
+    yield put(navigateToMessageDetailScreenAction({ messageId }));
+  }
+}
+
+function* watchRequiredIdentificationSaga() {
+  // wallet screens requiring identification before they can be displayed when app goes background
+  const whiteList: ReadonlyArray<any> = [ROUTES.WALLET_ADD_CARD];
+
+  const nav: ReturnType<typeof navSelector> = yield select<GlobalState>(
+    navSelector
+  );
+  const walletNav = nav.routes[0].routes[1].routes;
+  const currentWalletRoute = walletNav[walletNav.length - 1].routeName;
+  if (whiteList.indexOf(currentWalletRoute) !== -1) {
+    // REquest identification to display the screen
+    yield put(identificationRequest());
+  }
 }
