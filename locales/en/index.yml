@@ -156,132 +156,36 @@
       debugMode: Debug mode
     preferences:
       title: Preferences
-      description: Manage app internal preferences
-    privacy:
-      title: Privacy
-      description: Export data, delete account
-      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
-      updated: It is required to accept the new version of Terms and Conditions
-      text: !include privacy.md
-    termsAndConditions:
-      title: Terms and Conditions
-      description: Review Terms & Conditions of the app
-    mainPrivacy:
-      screenTitle: Privacy
-      screenSubtitle: Here you will find information related to your personal data.
-      privacyPolicy:
-        title: Privacy policy
-        description: Review accepted privacy terms
-      removeAccount:
-        title: Delete your account
-        description: Remove all data associated to your account from your phone and
-          our systems (SPID required)
-      exportData:
-        title: Export your data
-        description: Send to your email all your account’s data in an open format
-    developersSectionHeader: Developers
-    experimentalFeatures:
-      confirmTitle: Experimental features
-      confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
-      bannerMessage: You are using experimental features that may be incomplete or unstable.
-    pagoPaEnvironment:
-      pagoPaEnv: pagoPA Test Environment
-      pagoPAEnvAlert: This change requires app reboot
-      alertConfirmTitle: Do you want to use the pagoPA test environment?
-      alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
-      alertMessage: The application must be restarted for the changes to take effect.
-    accountSectionHeader: Account
-    appVersion: App Version
-    backendVersion: Backend Version
-    debugMode: Debug mode
-  preferences:
-    title: Preferences
-    subtitle: This settings will be used by all services of the Public Amministration.
-    list:
-      biometric_recognition: Biometric recognition
-      biometric_recognition_status:
-        enabled: Enabled
-        disabled: Disabled
-      email: Email address
-      spid_email: SPID email
-      need_validate: To be validated
-      mobile_phone: Mobile number
-      language: Language
-      digitalDomicile: Digital domicile
-      preferred_calendar:
-        title: Default Calendar
-        not_selected: Not selected
-    empty:
-      default: No preference set
-    preferencesHelp: !include preferences_home_help.md
-    unavailable:
-      title: This setting is set up on your SPID profile
-      message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
-    language:
-      title: This setting is set up in system preferences
-      message: IO inherits language from the operating system of this device
-userMetadata:
-  errors:
-    upsertVersion: Can't upsert user metadata with this version
-navigation:
-  messages: Messages
-  profile: Profile
-cie:
-  title: Touch the card
-  layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
-  layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
-spid:
-  login: LOGIN
-  loginButton: LOGIN WITH
-  selectIdp: To continue to login, select your SPID identity provider
-  selectDemoIdp: If you do not have your own SPID identity yet, browse the app in
-    demo mode
-  loginErrorAlert:
-    title: Login error
-    message: Sorry, there was an error while logging in, could you try again?
-    okLabel: Ok
-  subscription:
-    line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
-      Amministrazione Italiana.
-    line2: Inserisci la tua e-mail per attivarla.
-authentication:
-  landing:
-    loginSpid: Login with SPID
-    loginCie: Login with CIE
-    loginSpidCie: Login with SPID or CIE
-    loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
-    nospid: Don't have SPID? Find out more
-    nospid-nocie: Don't have SPID or CIE? Find out more
-    card1-title: All messages in one place
-    card1-content: Display all the incoming communications from Public Administrations
-    card2-title: Use your favourite payment methods
-    card2-content: You can pay a tax or a penalty by your bank account and your cards
-    card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical
-      notice
-    card4-title: You can use the app by SPID only
-    card4-content: The access is allowed only by SPID (Public Service of Digital Identity)
-      to guarantee your online safety
-    card5-title: Welcome to the beta version of IO!
-    card5-content: In this experimental version you can find in the upper-right corner
-      the icons to report bugs or start a chat with the development team.
-      We're waiting for your feedbacks!
-    expiredCardTitle: Card expired or no longer valid
-    expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
-    expiredCardHelp: How to renew your Electronic Identity Card?
-    cie:
-      noNfcConnectionTitle: Are you sure you put the card down?
-      noNfcConnectionContent: !include cie/noNfcConnection.md
-      cardRemovedEarlyTitle: You have removed the card too soon
-      cardRemovedEarlyContent: Hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
-      pinCardTitle: Enter the PIN of your card
-      pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
-      incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
-      incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
-      incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
-    ok: Ok
-    cieCardValid: Ok, your card is valid! Wait a few more seconds..
-    cieLoginWait: Wait a few seconds..
+      subtitle: This settings will be used by all services of the Public Amministration.
+      list:
+        biometric_recognition: Biometric recognition
+        biometric_recognition_status:
+          enabled: Enabled
+          disabled: Disabled
+        email: Email address
+        spid_email: SPID email
+        need_validate: To be validated
+        mobile_phone: Mobile number
+        language: Language
+        digitalDomicile: Digital domicile
+        preferred_calendar:
+          title: Default Calendar
+          not_selected: Not selected
+      empty:
+        default: No preference set
+      preferencesHelp: !include preferences_home_help.md
+      unavailable:
+        title: This setting is set up on your SPID profile
+        message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
+      language:
+        title: This setting is set up in system preferences
+        message: IO inherits language from the operating system of this device
+  userMetadata:
+    errors:
+      upsertVersion: Can't upsert user metadata with this version
+  navigation:
+    messages: Messages
+    profile: Profile
   cie:
     title: Touch the card
     layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
@@ -550,6 +454,11 @@ authentication:
     IUV: IUV
     recipientFiscalCode: Recipient fiscal code
   wallet:
+    alert:
+      msgErrorUpdateApp: "An error occurred while opening the app store"
+      titlePagoPaUpdateApp: Update required
+      messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
+      btnUpdateApp: Update the IO app 
     wallet: Wallet
     walletHelp: !include wallet_help.md
     creditcards: Credit Cards
@@ -940,11 +849,8 @@ authentication:
       modal2: "open your email client and click on the link."
       button1: Send another verification email
       button2: Change email address
-
+  
   openMaps:
     genericError: An error occurred while opening the map
   genericError: An error occurred
-  msgErrorUpdateApp: "An error occurred while opening the app store"
-  titlePagoPaUpdateApp: Update required
-  messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
-  btnUpdateApp: Update the IO app
+  

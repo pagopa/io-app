@@ -88,15 +88,19 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           />
           <View spacer={true} extralarge={true} />
         </React.Fragment>
-        <H2 style={styles.emailTitle}>{I18n.t("titlePagoPaUpdateApp")}</H2>
+        <H2 style={styles.emailTitle}>
+          {I18n.t("wallet.alert.titlePagoPaUpdateApp")}
+        </H2>
         <View spacer={true} />
 
-        <Text>{I18n.t("messagePagoPaUpdateApp")}</Text>
+        <Text>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</Text>
 
         {this.state.hasError && (
           <React.Fragment>
             <View spacer={true} />
-            <Text style={styles.textDanger}>{I18n.t("msgErrorUpdateApp")}</Text>
+            <Text style={styles.textDanger}>
+              {I18n.t("wallet.alert.msgErrorUpdateApp")}
+            </Text>
           </React.Fragment>
         )}
 
@@ -109,7 +113,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           disabled={false}
           onPress={this.openAppStore}
         >
-          <Text>{I18n.t("btnUpdateApp")}</Text>
+          <Text>{I18n.t("wallet.alert.btnUpdateApp")}</Text>
         </Button>
       </Content>
     );
