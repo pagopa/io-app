@@ -303,12 +303,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
    * To reproduce a sticky effect common to all the tabs, the animation is based on
    * the sum of the 3 scroll values.
    */
-  private sumOfPositions01 = Animated.add(
-    this.animatedTabScrollPositions[0],
-    this.animatedTabScrollPositions[1]
-  );
   private sumOfPositions = Animated.add(
-    this.sumOfPositions01,
+    Animated.add(
+      this.animatedTabScrollPositions[0],
+      this.animatedTabScrollPositions[1]
+    ),
     this.animatedTabScrollPositions[2]
   );
   private getHeaderHeight = (): Animated.AnimatedInterpolation =>
