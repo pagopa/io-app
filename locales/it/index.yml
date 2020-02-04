@@ -159,36 +159,137 @@
       debugMode: Modalità debug
     preferences:
       title: Preferenze
-      subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
-        Amministrazione.
-      list:
-        biometric_recognition: Riconoscimento biometrico
-        biometric_recognition_status:
-          enabled: Abilitato
-          disabled: Disabilitato
-        email: Indirizzo email
-        need_validate: Da validare
-        mobile_phone: Numero di telefono
-        language: Lingua
-        digitalDomicile: Domicilio digitale
-        preferred_calendar:
-          title: Calendario preferito
-          not_selected: Non Selezionato
-      empty:
-        default: Nessuna preferenza impostata
-      preferencesHelp: !include preferences_home_help.md
-      unavailable:
-        title: Questa preferenza è impostata nel tuo profilo SPID
-        message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
-      language:
-        title: Questa preferenza è impostata nelle preferenze di sistema
-        message: IO eredita la lingua dal sistema operativo del tuo dispositivo
-  userMetadata:
-    errors:
-      upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
-  navigation:
-    messages: Messaggi
-    profile: Profilo
+      description: Gestisci le preferenze dell'applicazione
+    privacy:
+      title: Privacy
+      description: Esporta dati, cancella account
+      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+      updated: E' necessario prendere visione della nuova versione dell'Informativa
+      text: !include privacy.md
+    termsAndConditions:
+      title: Termini e condizioni d'uso
+      description: Rivedi i termini e le condizioni d'uso dell'app
+    mainPrivacy:
+      screenTitle: Privacy
+      screenSubtitle: Qui trovi informazioni legate ai
+        tuoi dati personali.
+      privacyPolicy:
+        title: Privacy policy
+        description: Rivedi le regole sulla privacy che hai accettato
+      removeAccount:
+        title: Cancella il tuo account
+        description: Elimina sia dal telefono che da internet tutti i data ad esso
+          associati (richiede SPID)
+      exportData:
+        title: Esporta i tuoi dati
+        description: Ricevi nella tua mail tutti i dati associati al tuo account in
+          un formato aperto
+    developersSectionHeader: Sviluppatori
+    experimentalFeatures:
+      confirmTitle: Funzionalità sperimentali
+      confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
+      bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
+    pagoPaEnvironment:
+      pagoPaEnv: Ambiente pagoPA di Test
+      pagoPAEnvAlert: La modifica richiede il riavvio dell'app
+      alertConfirmTitle: Vuoi usare l'ambiente di test pagoPA?
+      alertConfirmMessage: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
+      alertMessage: È necessario il riavvio dell'applicazione affinchè le modifiche abbiano effetto.
+    accountSectionHeader: Account
+    appVersion:  Versione App
+    backendVersion: Versione Backend
+    debugMode: Modalità debug
+  preferences:
+    title: Preferenze
+    subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
+      Amministrazione.
+    list:
+      biometric_recognition: Riconoscimento biometrico
+      biometric_recognition_status:
+        enabled: Abilitato
+        disabled: Disabilitato
+      email: Indirizzo email
+      spid_email: SPID email
+      need_validate: Da validare
+      mobile_phone: Numero di telefono
+      language: Lingua
+      digitalDomicile: Domicilio digitale
+      preferred_calendar:
+        title: Calendario preferito
+        not_selected: Non Selezionato
+    empty:
+      default: Nessuna preferenza impostata
+    preferencesHelp: !include preferences_home_help.md
+    unavailable:
+      title: Questa preferenza è impostata nel tuo profilo SPID
+      message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
+    language:
+      title: Questa preferenza è impostata nelle preferenze di sistema
+      message: IO eredita la lingua dal sistema operativo del tuo dispositivo
+userMetadata:
+  errors:
+    upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
+navigation:
+  messages: Messaggi
+  profile: Profilo
+cie:
+  title: Appoggia la carta
+  layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
+  layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finchè non senti un suono.
+spid:
+  login: ACCEDI
+  loginButton: ENTRA CON
+  selectIdp: Per procedere all'accesso, seleziona il gestione della tua identità SPID
+  selectDemoIdp: Se non possiedi ancora una tua identità SPID, naviga l'app in modalità
+    demo
+  loginErrorAlert:
+    title: Errore login
+    message: Mi spiace, si è verificato un errore durante l'accesso, potresti riprovare?
+    okLabel: Ok
+  subscription:
+    line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
+      Amministrazione Italiana.
+    line2: Inserisci la tua e-mail per attivarla.
+authentication:
+  landing:
+    loginSpid: Entra con SPID
+    loginCie: Entra con CIE
+    loginSpidCie: Accedi con SPID o CIE
+    loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
+    nospid: Non hai SPID? Scopri di più
+    nospid-nocie: Non hai SPID o CIE? Scopri di più
+    card1-title: Tutti i messaggi in un solo posto
+    card1-content: Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni
+      Pubbliche
+    card2-title: Usa i tuoi metodi di pagamento preferiti
+    card2-content: Puoi pagare un tributo o una multa con il tuo conto corrente e
+      le tue carte
+    card3-title: Paga velocemente un avviso cartaceo
+    card3-content: Tramite la scansione del QR code puoi velocemente pagare anche
+      un avviso cartaceo
+    card4-title: Potrai utilizzare l'app solo tramite SPID
+    card4-content: L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
+      Digitale) per garantire la tua sicurezza online
+    card5-title: Benvenuto nella versione beta di IO!
+    card5-content: In questa versione sperimentale trovi in alto a destra
+      le icone per segnalare bug e aprire una chat con il team di IO.
+      Aspettiamo i tuoi feedback!.
+    expiredCardTitle: Carta scaduta o non più valida
+    expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
+    expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
+    cie:
+      noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
+      noNfcConnectionContent: !include cie/noNfcConnection.md
+      cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
+      cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+      pinCardTitle: Inserisci il PIN della tua carta
+      pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
+      incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
+      incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
+      incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
+    ok: Ok
+    cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
+    cieLoginWait: Attendi qualche secondo..
   cie:
     title: Appoggia la carta
     layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
@@ -861,4 +962,3 @@
   titlePagoPaUpdateApp: Aggiornamento richiesto
   messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
   btnUpdateApp: Aggiorna l'app IO
-  
