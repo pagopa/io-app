@@ -462,7 +462,7 @@
     recipientFiscalCode: Codice fiscale beneficiario
   wallet:
     alert:
-      msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
+      msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app."
       titlePagoPaUpdateApp: Aggiornamento richiesto
       messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
       btnUpdateApp: Aggiorna l'app IO

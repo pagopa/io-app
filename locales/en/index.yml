@@ -455,7 +455,7 @@
     recipientFiscalCode: Recipient fiscal code
   wallet:
     alert:
-      msgErrorUpdateApp: "An error occurred while opening the app store"
+      msgErrorUpdateApp: "An error occurred while opening the app store."
       titlePagoPaUpdateApp: Update required
       messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
       btnUpdateApp: Update the IO app 
