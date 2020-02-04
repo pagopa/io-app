@@ -18,6 +18,11 @@ type Props = ReturnType<typeof mapStateToProps> & OwnProp;
 type State = { hasError: boolean };
 
 const styles = StyleSheet.create({
+  container: {
+    alignSelf: "center",
+    marginTop: customVariables.contentPadding,
+    padding: customVariables.contentPadding
+  },
   imageChecked: {
     alignSelf: "center"
   },
@@ -80,7 +85,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
 
   public render() {
     return (
-      <Content style={{ flex: 1 }}>
+      <Content style={styles.container}>
         <React.Fragment>
           <Image
             style={styles.imageChecked}
@@ -92,9 +97,8 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           {I18n.t("wallet.alert.titlePagoPaUpdateApp")}
         </H2>
         <View spacer={true} />
-
         <Text>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</Text>
-
+        <View spacer={true} />
         {this.state.hasError && (
           <React.Fragment>
             <View spacer={true} />
@@ -108,8 +112,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
 
         <Button
           block={true}
-          light={true}
-          bordered={true}
+          primary={true}
           disabled={false}
           onPress={this.openAppStore}
         >
