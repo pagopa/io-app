@@ -3,7 +3,6 @@ package it.teamdigitale.app.italiaapp;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.WindowManager;
 import android.support.v7.app.AlertDialog;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
@@ -55,12 +54,6 @@ public class MainActivity extends ReactActivity {
         if (android.os.Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-
-        // Prevent the screen content being visible when the app is in background
-        getWindow().setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-        );
     }
 
     @Override
