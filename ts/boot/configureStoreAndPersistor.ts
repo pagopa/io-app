@@ -34,7 +34,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 8;
+const CURRENT_REDUX_STORE_VERSION = 9;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -161,6 +161,21 @@ const migrations: MigrationManifest = {
         servicesMetadata: {
           ...(state as PersistedGlobalState).content.servicesMetadata,
           byId: {}
+        }
+      }
+    };
+  },
+
+  // Version 9
+  // remove organizations.all unused state
+  "9": (state: PersistedState) => {
+    return {
+      ...state,
+      entities: {
+        ...(state as PersistedGlobalState).entities,
+        organizations: {
+          orgNameByFiscalCode: (state as PersistedGlobalState).entities
+            .organizations.nameByFiscalCode
         }
       }
     };

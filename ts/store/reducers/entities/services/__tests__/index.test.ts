@@ -92,20 +92,6 @@ const customServices: ServicesState = {
 };
 
 const customOrganizations: OrganizationsState = {
-  all: [
-    {
-      name: "organizzazion2",
-      fiscalCode: "2"
-    },
-    {
-      name: "organization3",
-      fiscalCode: "3"
-    },
-    {
-      name: "organization4",
-      fiscalCode: "4"
-    }
-  ],
   nameByFiscalCode: {
     ["2" as OrganizationFiscalCode]: "organizzazion2" as NonEmptyString,
     ["3" as OrganizationFiscalCode]: "organizzazion3" as NonEmptyString,
