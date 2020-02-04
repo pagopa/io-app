@@ -730,7 +730,7 @@ function* setWalletSessionEnabledSaga(
   yield call(enableSessionManager, action.payload, sessionManager);
 }
 /**
- * This saga track each time a new payment of the route from which it started is initiated
+ * This saga checks what is the route whence a new payment is started
  */
 export function* watchPaymentInitializeSaga(): Iterator<Effect> {
   yield takeEvery(getType(paymentInitializeState), function*() {
