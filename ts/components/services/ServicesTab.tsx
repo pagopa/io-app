@@ -13,7 +13,6 @@ import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import IconFont from "../../components/ui/IconFont";
 import { userMetadataUpsert } from "../../store/actions/userMetadata";
-import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
   localServicesSectionsSelector,
   organizationsOfInterestSelector,
@@ -66,6 +65,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: (24 - ICON_SIZE) / 2 // (io-right icon width) - (io-trash icon width)
   }
 });
+
+type Organization = {
+  name: string;
+  fiscalCode: string;
+};
 
 const OrganizationsList = createFactory(ChooserListContainer<Organization>());
 

@@ -119,7 +119,7 @@ const migrations: MigrationManifest = {
   // Version 6
   // we removed selectedFiscalCodes from organizations
   "6": (state: PersistedState) => {
-    const entitiesState = (state as PersistedGlobalState).entities;
+    const entitiesState = (state as any).entities;
     const organizations = entitiesState.organizations;
     return {
       ...state,
