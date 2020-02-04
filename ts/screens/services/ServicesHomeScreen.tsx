@@ -713,7 +713,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         >
           <ServicesTab
             sections={nationalTabSections}
-            isRefreshing={isLoadingServices || pot.isLoading(potUserMetadata)}
+            isRefreshing={
+              isLoadingServices ||
+              pot.isLoading(potUserMetadata) ||
+              pot.isUpdating(potUserMetadata)
+            }
             onRefresh={this.refreshScreenContent}
             onServiceSelect={this.onServiceSelect}
             handleOnLongPressItem={this.handleOnLongPressItem}
