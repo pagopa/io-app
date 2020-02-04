@@ -28,7 +28,7 @@ import {
   loadMessagesCancelled,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
-import { loadService } from "../../store/actions/services";
+import { loadServiceDetail } from "../../store/actions/services";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
 import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -135,9 +135,11 @@ export function* loadMessages(
           .filter(uniqueItem); // Get unique ids
 
         // Fetch the services detail in parallel
-        // We don't need to store the results because the SERVICE_LOAD_REQUEST is already dispatched by each `loadService` action called.
+        // We don't need to store the results because the LOAD_SERVICE_DETAIL_REQUEST is already dispatched by each `loadServiceDetail` action called.
         // We fetch services first because to show messages you need the related service info
-        yield all(pendingServicesIds.map(id => put(loadService.request(id))));
+        yield all(
+          pendingServicesIds.map(id => put(loadServiceDetail.request(id)))
+        );
 
         // Fetch the messages detail in parallel
         // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,
