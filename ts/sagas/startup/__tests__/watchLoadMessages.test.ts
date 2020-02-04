@@ -142,6 +142,9 @@ describe("watchLoadMessages", () => {
         .select(messagesStateByIdSelector)
         // Return an empty object as messagesByIdSelectors response (no message already stored)
         .next({})
+        .select(servicesByIdSelector)
+        // Return an empty object as servicesByIdSelector response (no service already stored)
+        .next({})
         .all([put(loadServiceDetail.request("5a563817fcc896087002ea46c49a"))])
         .next(right({ status: 200, value: testServicePublic }))
         .all([
