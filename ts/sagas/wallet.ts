@@ -82,6 +82,12 @@ import { SessionToken } from "../types/SessionToken";
 
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 
+import ROUTES from "../navigation/routes";
+import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
+import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
+import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
+import { SessionManager } from "../utils/SessionManager";
+import { paymentsDeleteUncompletedSaga } from "./payments";
 import {
   addWalletCreditCardRequestHandler,
   deleteWalletRequestHandler,
@@ -100,16 +106,6 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-
-import ROUTES from "../navigation/routes";
-import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
-import {
-  getCurrentRouteKey,
-  getCurrentRouteName
-} from "../store/middlewares/analytics";
-import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
-import { SessionManager } from "../utils/SessionManager";
-import { paymentsDeleteUncompletedSaga } from "./payments";
 
 /**
  * We will retry for as many times when polling for a payment ID.
