@@ -1,856 +1,855 @@
 ---
-  global:
-    localization:
-      decimalSeparator: "."
-    date:
-      today: "today"
-      tomorrow: "tomorrow"
-    dateFormats:
-      monthYear: "MMMM YYYY"
-      dayAndMonth: "dddd D MMMM"
-      dayMonth: "MM/DD"
-      dayMonthYear: "D MMMM YYYY"
-      weekdayDayMonthYear: "dddd D MMMM YYYY"
-    genericError: Ooops, something did not work as expected, please try again!
-    jserror:
-      title: Unexpected error occurred
-      message: We have reported this to our team! Please close the app and start again!
-    markdown:
-      reference: !include markdown_reference.md
-      decodeError: Message can't be decoded
-    buttons:
-      delete: Delete
-      cancel: Cancel
-      ok: OK
-      continue: Continue
-      retry: Retry
-      back: Back
-      confirm: Confirm
-      close: Close
-      exit: Exit
-      saveSelection: Save the selection
-    navigator:
-      messages: messages
-      wallet: wallet
-      documents: documents
-      profile: profile
-      services: services
-    actions:
-      retry: An error occurred, please retry
-      search: Text to search
-    remoteStates:
-      loading: Loading...
-      notAvailable: Not available
-    notImplemented: NOT IMPLEMENTED
-    search:
-      invalidSearchBarText: Enter at least {{minCharacter}} characters
-      noResultsFound: "There are no results for this search: try something else."
-      noResultsTitle: No results.
-    localNotifications:
-      spidLogin:
-        title: Remember to login to IO!
-        message: Login with your SPID identity on IO, the public services app
-  locales:
-    it: Italian
-    en: English
-  clipboard:
-    copyFeedback: Copied to clipboard
-    copyText: copy
-  connection:
-    status:
-      offline: Offline! Some features will not work.
-  exit:
-    pressAgain: press again to exit
+global:
+  localization:
+    decimalSeparator: "."
+  date:
+    today: "today"
+    tomorrow: "tomorrow"
+  dateFormats:
+    monthYear: "MMMM YYYY"
+    dayAndMonth: "dddd D MMMM"
+    dayMonth: "MM/DD"
+    dayMonthYear: "D MMMM YYYY"
+    weekdayDayMonthYear: "dddd D MMMM YYYY"
+  genericError: Ooops, something did not work as expected, please try again!
+  jserror:
+    title: Unexpected error occurred
+    message: We have reported this to our team! Please close the app and start again!
+  markdown:
+    reference: !include markdown_reference.md
+    decodeError: Message can't be decoded
+  buttons:
+    delete: Delete
+    cancel: Cancel
+    ok: OK
+    continue: Continue
+    retry: Retry
+    back: Back
+    confirm: Confirm
+    close: Close
+    exit: Exit
+    saveSelection: Save the selection
+  navigator:
+    messages: messages
+    wallet: wallet
+    documents: documents
+    profile: profile
+    services: services
+  actions:
+    retry: An error occurred, please retry
+    search: Text to search
+  remoteStates:
+    loading: Loading...
+    notAvailable: Not available
+  notImplemented: NOT IMPLEMENTED
+  search:
+    invalidSearchBarText: Enter at least {{minCharacter}} characters
+    noResultsFound: "There are no results for this search: try something else."
+    noResultsTitle: No results.
+  localNotifications:
+    spidLogin:
+      title: Remember to login to IO!
+      message: Login with your SPID identity on IO, the public services app
+locales:
+  it: Italian
+  en: English
+clipboard:
+  copyFeedback: Copied to clipboard
+  copyText: copy
+connection:
+  status:
+    offline: Offline! Some features will not work.
+exit:
+  pressAgain: press again to exit
+errors:
+  loginError: There was an error in the login, repeat the procedure.
+  profileUpdateError: An error occurred while updating your profile.
+startup:
+  title: Initialization
+  authentication: User authenticated
+  sessionInfo: SPID attributes loaded
+  profileInfo: User profile loaded
+  profileEnabled: User profile activated
+login:
+  welcome:
+    line1: welcome in your
+    line2: Digital Citizenship
+inbox:
+  enableButton: Enable Inbox
+  disableButton: Disable Inbox
+  enableCallToActionDescription: Enable the inbox to view messages
+profile:
+  fiscalCode:
+    title: Personal documents
+    fiscalCode: Fiscal code
+    help: !include fiscal_code.md
+    content: The fiscal code fac-simile does not substitute the physical document but it allows both data and barcode being read
+    facSimile: FAC-SIMILE
+  sections:
+    spid: SPID PROFILE
+  unknown: UNKNOWN
+  logout:
+    menulabel: Logout from this SPID identity
+    cta:
+      header: How do you want to quit the app?
+      keepData:
+        title: Quit keeping all data
+        description: In order to use IO, you will log in with you SPID identity again, but any data will be conserved by this app (reading status, etc.) and will be immediately available at next launch.
+      resetData:
+        title: Quit and reset this app
+        description: "IO app will be restored to its initial state, as if it would just be installed: if you want log in with a different identity, or if you are into not using IO app anymore, you should choose this option. All data saved by IO on this device will be deleted."
   errors:
-    loginError: There was an error in the login, repeat the procedure.
-    profileUpdateError: An error occurred while updating your profile.
-  startup:
-    title: Initialization
-    authentication: User authenticated
-    sessionInfo: SPID attributes loaded
-    profileInfo: User profile loaded
-    profileEnabled: User profile activated
-  login:
-    welcome:
-      line1: welcome in your
-      line2: Digital Citizenship
-  inbox:
-    enableButton: Enable Inbox
-    disableButton: Disable Inbox
-    enableCallToActionDescription: Enable the inbox to view messages
-  profile:
-    fiscalCode:
-      title: Personal documents
-      fiscalCode: Fiscal code
-      help: !include fiscal_code.md
-      content: The fiscal code fac-simile does not substitute the physical document but it allows both data and barcode being read
-      facSimile: FAC-SIMILE
-    sections:
-      spid: SPID PROFILE
-    unknown: UNKNOWN
-    logout:
-      menulabel: Logout from this SPID identity
-      cta:
-        header: How do you want to quit the app?
-        keepData:
-          title: Quit keeping all data
-          description: In order to use IO, you will log in with you SPID identity again, but any data will be conserved by this app (reading status, etc.) and will be immediately available at next launch.
-        resetData:
-          title: Quit and reset this app
-          description: "IO app will be restored to its initial state, as if it would just be installed: if you want log in with a different identity, or if you are into not using IO app anymore, you should choose this option. All data saved by IO on this device will be deleted."
-    errors:
-      load: Error loading the profile
-      upsert: Error creating or updating the profile
-    main:
-      screenTitle: Profile
-      screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
-      contextualHelp: Here you will find information and data related to security, identity, account and personal data.
-      logout: Logout/Exit
-      forgetCurrentSession: Forget current session
-      cache:
-        alert: Are you sure you want to clear the cache?
-        clear: Clear cache
-        cleared: The cache has been cleared.
-      resetPin:
-        confirmTitle: Are you sure you want to reset your PIN?
-        confirmMsg: You will be asked again to log in with SPID.
-      preferences:
-        title: Preferences
-        description: Manage app internal preferences
-      privacy:
-        title: Privacy
-        description: Export data, delete account
-        header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
-        updated: It is required to accept the new version of Terms and Conditions
-        text: !include privacy.md
-      termsAndConditions:
-        title: Terms and Conditions
-        description: Review Terms & Conditions of the app
-      mainPrivacy:
-        screenTitle: Privacy
-        screenSubtitle: Here you will find information related to your personal data.
-        privacyPolicy:
-          title: Privacy policy
-          description: Review accepted privacy terms
-        removeAccount:
-          title: Delete your account
-          description: Remove all data associated to your account from your phone and
-            our systems (SPID required)
-        exportData:
-          title: Export your data
-          description: Send to your email all your account’s data in an open format
-      developersSectionHeader: Developers
-      experimentalFeatures:
-        confirmTitle: Experimental features
-        confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
-        bannerMessage: You are using experimental features that may be incomplete or unstable.
-      pagoPaEnvironment:
-        pagoPaEnv: pagoPA Test Environment
-        pagoPAEnvAlert: This change requires app reboot
-        alertConfirmTitle: Do you want to use the pagoPA test environment?
-        alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
-        alertMessage: The application must be restarted for the changes to take effect.
-      accountSectionHeader: Account
-      appVersion: App Version
-      backendVersion: Backend Version
-      debugMode: Debug mode
+    load: Error loading the profile
+    upsert: Error creating or updating the profile
+  main:
+    screenTitle: Profile
+    screenSubtitle: Here you will find information and data related to security, identity, account and personal data.
+    contextualHelp: Here you will find information and data related to security, identity, account and personal data.
+    logout: Logout/Exit
+    forgetCurrentSession: Forget current session
+    cache:
+      alert: Are you sure you want to clear the cache?
+      clear: Clear cache
+      cleared: The cache has been cleared.
+    resetPin:
+      confirmTitle: Are you sure you want to reset your PIN?
+      confirmMsg: You will be asked again to log in with SPID.
     preferences:
       title: Preferences
-      subtitle: This settings will be used by all services of the Public Amministration.
-      list:
-        biometric_recognition: Biometric recognition
-        biometric_recognition_status:
-          enabled: Enabled
-          disabled: Disabled
-        email: Email address
-        spid_email: SPID email
-        need_validate: To be validated
-        mobile_phone: Mobile number
-        language: Language
-        digitalDomicile: Digital domicile
-        preferred_calendar:
-          title: Default Calendar
-          not_selected: Not selected
-      empty:
-        default: No preference set
-      preferencesHelp: !include preferences_home_help.md
-      unavailable:
-        title: This setting is set up on your SPID profile
-        message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
-      language:
-        title: This setting is set up in system preferences
-        message: IO inherits language from the operating system of this device
-  userMetadata:
-    errors:
-      upsertVersion: Can't upsert user metadata with this version
-  navigation:
-    messages: Messages
-    profile: Profile
-  cie:
-    title: Touch the card
-    layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
-    layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
-  spid:
-    login: LOGIN
-    loginButton: LOGIN WITH
-    selectIdp: To continue to login, select your SPID identity provider
-    selectDemoIdp: If you do not have your own SPID identity yet, browse the app in
-      demo mode
-    loginErrorAlert:
-      title: Login error
-      message: Sorry, there was an error while logging in, could you try again?
-      okLabel: Ok
-    subscription:
-      line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
-        Amministrazione Italiana.
-      line2: Inserisci la tua e-mail per attivarla.
-  authentication:
-    landing:
-      loginSpid: Login with SPID
-      loginCie: Login with CIE
-      loginSpidCie: Login with SPID or CIE
-      loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
-      nospid: Don't have SPID? Find out more
-      nospid-nocie: Don't have SPID or CIE? Find out more
-      card1-title: All messages in one place
-      card1-content: Display all the incoming communications from Public Administrations
-      card2-title: Use your favourite payment methods
-      card2-content: You can pay a tax or a penalty by your bank account and your cards
-      card3-title: Quickly pay a physical notice
-      card3-content: You can pay a notice also by scanning the QR code on the physical
-        notice
-      card4-title: You can use the app by SPID only
-      card4-content: The access is allowed only by SPID (Public Service of Digital Identity)
-        to guarantee your online safety
-      card5-title: Welcome to the beta version of IO!
-      card5-content: In this experimental version you can find in the upper-right corner
-        the icons to report bugs or start a chat with the development team.
-        We're waiting for your feedbacks!
-      expiredCardTitle: Card expired or no longer valid
-      expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
-      expiredCardHelp: How to renew your Electronic Identity Card?
-      cie:
-        noNfcConnectionTitle: Are you sure you put the card down?
-        noNfcConnectionContent: !include cie/noNfcConnection.md
-        cardRemovedEarlyTitle: You have removed the card too soon
-        cardRemovedEarlyContent: Hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
-        pinCardTitle: Enter the PIN of your card
-        pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
-        incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
-        incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
-        incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
-      ok: Ok
-      cieCardValid: Ok, your card is valid! Wait a few more seconds..
-      cieLoginWait: Wait a few seconds..
+      description: Manage app internal preferences
+    privacy:
+      title: Privacy
+      description: Export data, delete account
+      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+      updated: It is required to accept the new version of Terms and Conditions
+      text: !include privacy.md
+    termsAndConditions:
+      title: Terms and Conditions
+      description: Review Terms & Conditions of the app
+    mainPrivacy:
+      screenTitle: Privacy
+      screenSubtitle: Here you will find information related to your personal data.
+      privacyPolicy:
+        title: Privacy policy
+        description: Review accepted privacy terms
+      removeAccount:
+        title: Delete your account
+        description: Remove all data associated to your account from your phone and
+          our systems (SPID required)
+      exportData:
+        title: Export your data
+        description: Send to your email all your account’s data in an open format
+    developersSectionHeader: Developers
+    experimentalFeatures:
+      confirmTitle: Experimental features
+      confirmMessage: Experimental features may make the application unstable. Are you sure you want to enable them?
+      bannerMessage: You are using experimental features that may be incomplete or unstable.
+    pagoPaEnvironment:
+      pagoPaEnv: pagoPA Test Environment
+      pagoPAEnvAlert: This change requires app reboot
+      alertConfirmTitle: Do you want to use the pagoPA test environment?
+      alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
+      alertMessage: The application must be restarted for the changes to take effect.
+    accountSectionHeader: Account
+    appVersion: App Version
+    backendVersion: Backend Version
+    debugMode: Debug mode
+  preferences:
+    title: Preferences
+    subtitle: This settings will be used by all services of the Public Amministration.
+    list:
+      biometric_recognition: Biometric recognition
+      biometric_recognition_status:
+        enabled: Enabled
+        disabled: Disabled
+      email: Email address
+      spid_email: SPID email
+      need_validate: To be validated
+      mobile_phone: Mobile number
+      language: Language
+      digitalDomicile: Digital domicile
+      preferred_calendar:
+        title: Default Calendar
+        not_selected: Not selected
+    empty:
+      default: No preference set
+    preferencesHelp: !include preferences_home_help.md
+    unavailable:
+      title: This setting is set up on your SPID profile
+      message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
+    language:
+      title: This setting is set up in system preferences
+      message: IO inherits language from the operating system of this device
+userMetadata:
+  errors:
+    upsertVersion: Can't upsert user metadata with this version
+navigation:
+  messages: Messages
+  profile: Profile
+cie:
+  title: Touch the card
+  layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
+  layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
+spid:
+  login: LOGIN
+  loginButton: LOGIN WITH
+  selectIdp: To continue to login, select your SPID identity provider
+  selectDemoIdp: If you do not have your own SPID identity yet, browse the app in
+    demo mode
+  loginErrorAlert:
+    title: Login error
+    message: Sorry, there was an error while logging in, could you try again?
+    okLabel: Ok
+  subscription:
+    line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
+      Amministrazione Italiana.
+    line2: Inserisci la tua e-mail per attivarla.
+authentication:
+  landing:
+    loginSpid: Login with SPID
+    loginCie: Login with CIE
+    loginSpidCie: Login with SPID or CIE
+    loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
+    nospid: Don't have SPID? Find out more
+    nospid-nocie: Don't have SPID or CIE? Find out more
+    card1-title: All messages in one place
+    card1-content: Display all the incoming communications from Public Administrations
+    card2-title: Use your favourite payment methods
+    card2-content: You can pay a tax or a penalty by your bank account and your cards
+    card3-title: Quickly pay a physical notice
+    card3-content: You can pay a notice also by scanning the QR code on the physical
+      notice
+    card4-title: You can use the app by SPID only
+    card4-content: The access is allowed only by SPID (Public Service of Digital Identity)
+      to guarantee your online safety
+    card5-title: Welcome to the beta version of IO!
+    card5-content: In this experimental version you can find in the upper-right corner
+      the icons to report bugs or start a chat with the development team.
+      We're waiting for your feedbacks!
+    expiredCardTitle: Card expired or no longer valid
+    expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
+    expiredCardHelp: How to renew your Electronic Identity Card?
     cie:
-      enableNfcTitle: Enable NFC
-      enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
-      enableNfcHelp: Don't have an Electronic Identity Card?
-      nfcEnabledTitle: NFC Enabled
-      nfcEnabledContent: "Thank you for activating the NFC functionality on your device: you can proceed with authentication!"
-      unknownCardTitle: Unknown card
-      unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
-      unknownCardHelpLink: What is the Electronic Identity Card?
-      cie: Electronic Identity Card
-      temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-      temporarilyBlockedCieDoneButton: "Done, card unlocked!"
-      temporarilyBlockedCieOpenCieID: "Open CieID"
-      readerCardTitle: Hold the card for a few seconds
-      readerCardHeader: We are reading the data of your CIE and verifying its validity.
-      readerCardFooter: Hold the card in this position for a few more seconds
-      readerCardLostTitle: Hold the card again for a few seconds
-      readerCardLostHeader: We have not yet finished reading the card data.
-      noDataTitle: To use IO you must authorize the sending of data
-      authToSendData: !include cie/auth_to_send_data.md
-    cie_information_request: !include cie.md
-    spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
-    request_cie: Request CIE
-    request_spid: Request SPID
-    spid: SPID
-    spid_information_request:
-      headerTitle: Insert email address
-      contentTitle: Don't have SPID?
-      paragraph1: SPID, the Public System of Digital Identity, allows you to access
-        all the services of the Public Administration with a single Digital Identity
-        (username and password).
-      paragraph2: If you like, leave us your email address to receive reminders and
-        updates on this app
-      paragraph3: Continuing you declare to accept the
-      tosLinkText: rules on the processing of personal data
-      continue: Continue
-    spid_information:
-      spid: !include spid.md
-      headerTitle: What is SPID?
-      contentTitle: Don't have SPID?
-      contentTitleCie: Don't have SPID or CIE?
-      moreLinkText: Learn more
-      subtitle: SPID is safe
-      paragraph1: SPID, the Public System of Digital Identity, allows you to access
-        all the services of the Public Administration with a single Digital Identity
-        (username and password).
-      paragraph2-part1: 'SPID allows you to do online what was possible only in person:
-        so, to register at SPID you will '
-      paragraph2-bold: certify your identity
-      paragraph2-part2: 'completing your recognition through an Identity Provider. Here
-        what you shall do:'
-      point1-value: '1'
-      point1-content: "Choose your Identity Provider"
-      point2-value: '2'
-      point2-content: "Insert your personal data and your mobile phone"
-      point3-value: '3'
-      point3-content: "Upload a copy of your identity papers"
-      point4-value: '4'
-      point4-content: "Complete the recognition"
-      knowMore: Learn more on spid.gov.it
-    idp_selection:
-      headerTitle: Home
-      contentTitle: Select your Identity Provider
-    idp_login:
-      headerTitle: Login
-    errors:
-      notoken: The session is not ready or is invalid
-      logout: Error on logout
-      network:
-        title: Access problem
-        body: The selected identity provider is not available at this time, you can try again later.
-              If you have another SPID, choose an alternative provider.
-              You can report the problem with the bug icon at the top right of the screen.
-      login:
-        title: Login error
-        body: There was an error with the login, please retry!
-      spid:
-        unknown: Unknown error
-        error_19: "You have entered an incorrect username or password too many times: try again in a few minutes or contact your SPID identity provider to change your credentials."
-        error_20: "For security reasons IO requires a login with a second authentication factor: contact your SPID identity provider to understand how to use it."
-        error_21: "It's been too long since you started accessing: please start over again."
-        error_22: "To use IO you must allow access to some of your data: log in again and give your consent to the transfer of data."
-        error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
-        error_25: "You have canceled the login operation: you can try again whenever you want."
-    expiredSessionBanner:
-      title: Security notice
-      message: To keep your private information safe, please login again with your SPID credentials, thanks!
-  email:
-    read:
-      title: Your email address
-      info: This is the email address associated to your SPID account. You can
-        use in IO app a different email address, if you wish. To make operative the
-        new email address, you will need to validate it by clicking on the link you
-        will receive by email.
-      details: You can change this address, then you should validate it by clicking on
-        the link we will sent to your email address. In the meanwhile, those
-        functionalities of IO depending on the email (payments, messages forwarding,
-        etc.) will be disabled.
-      alert: "Warning: your pagoPa account is associated to your email.
-        So, if you change it, IO will no more list your registered payment methods
-        and transactions."
-      help: Your SPID profile communicates your email to IO app. If you find the address
-        wrong or you no longer use it, you can edit it directly from your SPID services
-        provider account.
-    insert:
-      header: Activation
-      title: Insert your email
-      subtitle: Some IO app functionalities need your email.
-      label: Personal email address
-      alert: You are already using this email
-      help:
-        title: Email
-        content: !include email_insert_help.md
-    edit:
-      title: Modify your email
-      subtitle: The email you inserted is
-      validated: The email you inserted and validated is
-      label: New personal email address
-      cta: Edit email
-      upsert_ok: The email update request was sent successfully
-      upsert_ko: Error in update email request, try again
-    validate:
-      title: Remember to validate your email address
-      header: Email Validation
-      content1: "We sent an email to <b>{{email}}</b> with a link to validate your email: click simply on that link.<br/>
-        Until you will not validate your email address, some app functionalities (payments, messages forwarding by email, etc.)
-        will not be available, but you will be able to use some other functions anyway (i.e. services, messages, etc.)"
-      content2: "Some functionalities of IO require you validate your email address. <br/> We sent an email to <b>{{email}}</b>:
-      open your email client and click on the link."
-      cta: Send a new validation email
-      sent: Email sent
-      send_validation_ok: Email Validation sent
-      send_validation_ko: Some errors occured while sending email validation. Try again.
-      help: Your SPID profile communicates your email to IO app. If you find the address
-        wrong or that you do not use it anymore, you can edit it directly from your SPID
-        services provider account.
-      validation_ok: Your email has been validated. You can use all the functionalities of IO.
-      validated: Email validated!
-      validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
-  onboarding:
-    tos:
-      headerTitle: Activation
-      continue: Continue
-    pin:
-      headerTitle: Activation
-      contentTitle: Choose a PIN code
-      contentTitleConfirm: Insert your PIN again
-      pinInfo: This code will be requested each time you open the app and when you need
-        to view sensitive data or make dispositive transactions. It must be composed
-        of 5 digits. Remember it carefully. You can change it at any time by entering
-        with SPID.
-      pinInfoSelected: This code will be requested each time you open the app and when
-        you need to view sensitive data or make dispositive transactions.
-      continue: Continue
-      reset: Change the code
-      confirmValid: thanks, you can continue
-      confirmInvalid: the two pins do not match
-    alert:
-      title: Do you really want to log out?
-      description: You will have to log in again to use the app
-    fingerprint:
-      headerTitle: Activation
-      title: Biometric authentication
-      body:
-        enrolledText: !include tos_fingerprint_enrolled.md
-        enrolledType:
-          fingerprint: your fingerprint
-          faceId: FaceID
-          touchId: TouchID
-        notEnrolledText: !include tos_fingerprint_not_enrolled.md
-  pin_login:
-    pin:
-      pinInfo: Enter the PIN
-      reset:
-        button: Did you forget the PIN?
-        button_short: Reset PIN
-        tip: To reset your PIN you will have to login again with your SPID account.
-        tip_short: You will have to login again.
-      confirmValid: Correct PIN
-      confirmInvalid: Invalid PIN
-    unlock_screen:
-      help:
-        title: Access with PIN
-        content: !include pin_unlock_help.md
-    forgetPin:
-      confirmTitle: Did you forget the PIN?
-      confirmMsg: To be able to choose a new PIN you will need to log in again with SPID.
-  forms:
-    validators:
-      required: Required value
-      email: Invalid email address
-    spidInformation:
-      fields:
-        email:
-          placeholder: email address
-  lipsum:
-    medium: Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui
-      id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus.
-      Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium
-      totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus.
-      Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis,
-      obscuris et malesuada fames.
-  datetimes:
-    yesterday: yesterday
-    todayAt: today, at
-  payment:
-    currentPsp: Your current PSP is
-    noPsp: You have yet to select a PSP
-    changePsp: Change PSP
-    IUV: IUV
-    recipientFiscalCode: Recipient fiscal code
-  wallet:
-    alert:
-      msgErrorUpdateApp: "An error occurred while opening the app store."
-      titlePagoPaUpdateApp: Update required
-      messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
-      btnUpdateApp: Update the IO app 
-    wallet: Wallet
-    walletHelp: !include wallet_help.md
-    creditcards: Credit Cards
-    paymentMethods: Payment methods
-    paymentMethod: Payment method
-    walletLoadMessage: Loading payment methods...
-    walletLoadFailure: Loading payment methods has failed, please retry.
-    transactionsLoadMessage: Loading transactions...
-    transactionsLoadFailure: Loading your transactions has failed, please retry.
-    pickPaymentMethod:
-      unavailable:
-        title: This payment method is not available at this time
-        message: This payment method will be available in a future release
-    add: add
-    delete:
-      successful: Card successfully deleted
-      failed: The card could not be deleted
-      alert: 'The payment method used for payment of the transaction has been removed from the wallet'
-    newPaymentMethod:
-      add: add
-      addButton: Add a new method
-      addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
-        so that you don't have to re-add them from scratch for every transaction.
-      walletAlert: "Your wallet includes payment methods but no one is supported by IO yet"
-      successful: The card was added successfully!
-      failed: The card could not be added
-      failedCardAlreadyExists: The card you are adding already exists
-    textMsg:
-      title: Text confirmation code
-      header: Confirmation code
-      newCode: Request a new code
-      info: Insert the code that was sent by text to your mobile phone
-    saveCard:
-      header: Save the card
-      title: Do you want to save this card?
-      infoTitle: Set the card as favourite payment method
-      info: This payment method will be automatically proposed for the next payment
-      save: Save the card
-      notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
-      temporaryError: There was a temporary problem while saving this card, please retry.
-    saveCardInPayment:
-      header: Pay with this card
-      title: Do you want to pay with this card?
-      save: Pay with this card
-    thanks: "✓ Thank you!"
-    endPayment: Your payment has been completed successfully
-    pickPsp:
-      title: Choose the manager
-      info: This card does not belong to the pagoPA payment network.
-      infoBold: Choose the economic operator
-      info2: which will have to manage yout payment.
-      link: Find out more
-      maxFee: Maximum fee
-      onUpdateWalletPspFailure: Operation failed, please retry
-      contextualHelpTitle: Select a provider
-      contextualHelpContent: !include pick_psp.md
-    ConfirmPayment:
-      header: Confirm transaction
-      cancelPayment: Cancel the transaction
-      goToPay: Confirm and pay
-      askConfirm: Want to proceed with the transaction?
-      partialAmount: Amount to pay
-      fee: Fee
-      why: Why?
-      totalAmount: Total amount
-      info: 'Warning: after this step it will not be possible to come back'
-      info2: You are using your favourite payment method.
-      changeMethod: Change the payment method
-      change: Change method
-      identificationMessage: Confirm the transaction with your PIN code
-      transactionSuccess: The payment has completed!
-      transactionFailure: There was an error with the payment, please retry!
-      transactionTimeout: I couldn't retrieve the result of the payment!
-      confirmCancelTitle: Do you want to cancel this payment?
-      confirmCancelPayment: Cancel this payment
-      confirmContinuePayment: Continue with the payment
-      cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
-    payWith:
-      noWallets:
-        title: No payment methods found
-        text: Add a new payment method to proceed with the payment
-      header: Choose payment method
-      title: Pay with
-      text: Choose one saved payment method or add a new one
-      fetchPspFailure: Temporary error, please retry
-      noPspsAvailable: This payment method cannot be used
-    firstTransactionSummary:
-      header: Transaction notice summary
-      title: Transaction notice
-      amount: Amount
-      expireDate: Expire date
-      tranche: Tranche
-      entity: 'Entity:'
-      info: 'More info at:'
-      tel: 'Tel:'
-      email: 'Email:'
-      PEC: 'PEC:'
-      recipient: 'Recipient:'
-      object: 'Transaction object:'
-      cbillCode: 'CBILL code:'
-      iuv: 'IUV:'
-      entityCode2: 'Entity/Company code:'
-      updatedAmount: Updated amount
-      updateInfo: 'The pagoPa system updates automatically the amount to ensure you
-        pay the exact amount and to avoid you arrears or additional interests '
-      moreInfo: More details
-      loadingMessage:
-        activation: I'm alerting the entity, wait a few seconds..
-        verification: I am checking the status and the amount of your notice..
-        generic: I am finishing the verification operations of your notice, wait a few seconds..
-    insertManually:
-      header: Insert notice data
-      title: Insert the notice data
-      info: which allow us to identify the transaction
-      link: Where are they?
-      noticeCode: Notice Code
-      entityCode: Entity Fiscal Code
-      amount: Amount (€)
-      proceed: Proceed with the transaction
-    errorTransaction:
-      submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
-    transactionDetails: Transaction details
-    total: Total
-    amount: Amount
-    payAmount: Amount to pay
-    transactionFee: Transaction fee
-    why: Why?
-    paymentReason: Reason
-    recipient: Recipient
-    date: Date
-    time: Time
-    psp: Payment provider
-    receipt: Receipt
-    seeReceipt: See Receipt
-    transactions: Transactions
-    transaction: Transaction
-    noTransactions: There are no transactions.
-    noNewTransactions: There are no new transactions.
-    noneTransactions: There are no transactions
-    noTransactionsInWalletHome: You haven't executed any operation yet.
-    noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
-    moreInfo: Learn more
-    payNotice: Pay notice
-    latestTransactions: Latest transactions
-    creditDebitCards: Credit/Debit Cards
-    addPaymentMethodTitle: Add payment method
+      noNfcConnectionTitle: Are you sure you put the card down?
+      noNfcConnectionContent: !include cie/noNfcConnection.md
+      cardRemovedEarlyTitle: You have removed the card too soon
+      cardRemovedEarlyContent: Hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
+      pinCardTitle: Enter the PIN of your card
+      pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
+      incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
+      incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
+      incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
+    ok: Ok
+    cieCardValid: Ok, your card is valid! Wait a few more seconds..
+    cieLoginWait: Wait a few seconds..
+  cie:
+    enableNfcTitle: Enable NFC
+    enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
+    enableNfcHelp: Don't have an Electronic Identity Card?
+    nfcEnabledTitle: NFC Enabled
+    nfcEnabledContent: "Thank you for activating the NFC functionality on your device: you can proceed with authentication!"
+    unknownCardTitle: Unknown card
+    unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
+    unknownCardHelpLink: What is the Electronic Identity Card?
+    cie: Electronic Identity Card
+    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
+    temporarilyBlockedCieOpenCieID: "Open CieID"
+    readerCardTitle: Hold the card for a few seconds
+    readerCardHeader: We are reading the data of your CIE and verifying its validity.
+    readerCardFooter: Hold the card in this position for a few more seconds
+    readerCardLostTitle: Hold the card again for a few seconds
+    readerCardLostHeader: We have not yet finished reading the card data.
+    noDataTitle: To use IO you must authorize the sending of data
+    authToSendData: !include cie/auth_to_send_data.md
+  cie_information_request: !include cie.md
+  spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
+  request_cie: Request CIE
+  request_spid: Request SPID
+  spid: SPID
+  spid_information_request:
+    headerTitle: Insert email address
+    contentTitle: Don't have SPID?
+    paragraph1: SPID, the Public System of Digital Identity, allows you to access
+      all the services of the Public Administration with a single Digital Identity
+      (username and password).
+    paragraph2: If you like, leave us your email address to receive reminders and
+      updates on this app
+    paragraph3: Continuing you declare to accept the
+    tosLinkText: rules on the processing of personal data
     continue: Continue
-    methods:
-      card:
-        name: Credit/debit card
-        maxFee: Maximum fee of 1.50€
-      bank:
-        name: Bancomat Pay
-        maxFee: Maximum fee of 0.50€
-      mobile:
-        name: Other payment methods
-        maxFee: Paypal, Satispay, etc.
-      notImplemented: Coming soon
-    addCardTitle: Card details
-    dummyCard:
-      labels:
-        holder: Card holder
-        pan: Card number
-        expirationDate: Expiration date
-        securityCode: Card security code
-      values:
-        holder: John Doe
-        pan: 0000 0000 0000 0000
-        expirationDate: mm/yy
-        securityCode: "•••"
-    acceptedCards: Accepted cards
-    chooseMethod: Select the desired method
-    QRtoPay:
-      chooser: Pick image from gallery
-      wrongQrCode: Not a pagoPA QR Code!
-      byCameraTitle: Notice QR Code
-      cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
-        manually insert the transaction-related data (IUV and the entity/company code).
-      setManually: Insert data manually
-      enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
-      cameraUsagePermissionInfobox:
-        title: "IO Camera usage permission"
-        message: "IO app needs Camera usage permission to shoot at the QR code"
-    whyAFee:
-      title: Why do I have to pay a fee?
-      text: !include why_a_fee.md
-    errors:
-      PAYMENT_DUPLICATED: This notice has been already paid! ;-)
-      INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
-      PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
-      PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
-      PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
-      PAYMENT_UNKNOWN: This notice is not being recognized by the administration that provided it, the payment cannot be started.
-      DOMAIN_UNKNOWN: This notice has been generated by an administration that is not part of the pagoPA network, the payment cannot be started.
-      GENERIC_ERROR: "Ooops, something did not work as expected! It's probably a temporary issue, please try again!"
-      MISSING_PAYMENT_ID: The administration that provided this notice is having issued handling it right now, please retry!
-      PAYMENT_ONGOING_NOCANCEL: Another payment for this notice is going on, retry after 30 minutes.
-      PAYMENT_ONGOING_NOCANCEL_TIMEOUT: If you have already waited 30 minutes and the payment is still blocked, use the button below to send us a report.
-      PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
-      PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
-      sendReport: Send report
+  spid_information:
+    spid: !include spid.md
+    headerTitle: What is SPID?
+    contentTitle: Don't have SPID?
+    contentTitleCie: Don't have SPID or CIE?
+    moreLinkText: Learn more
+    subtitle: SPID is safe
+    paragraph1: SPID, the Public System of Digital Identity, allows you to access
+      all the services of the Public Administration with a single Digital Identity
+      (username and password).
+    paragraph2-part1: 'SPID allows you to do online what was possible only in person:
+      so, to register at SPID you will '
+    paragraph2-bold: certify your identity
+    paragraph2-part2: 'completing your recognition through an Identity Provider. Here
+      what you shall do:'
+    point1-value: '1'
+    point1-content: "Choose your Identity Provider"
+    point2-value: '2'
+    point2-content: "Insert your personal data and your mobile phone"
+    point3-value: '3'
+    point3-content: "Upload a copy of your identity papers"
+    point4-value: '4'
+    point4-content: "Complete the recognition"
+    knowMore: Learn more on spid.gov.it
+  idp_selection:
+    headerTitle: Home
+    contentTitle: Select your Identity Provider
+  idp_login:
+    headerTitle: Login
+  errors:
+    notoken: The session is not ready or is invalid
+    logout: Error on logout
+    network:
+      title: Access problem
+      body: The selected identity provider is not available at this time, you can try again later.
+            If you have another SPID, choose an alternative provider.
+            You can report the problem with the bug icon at the top right of the screen.
+    login:
+      title: Login error
+      body: There was an error with the login, please retry!
+    spid:
+      unknown: Unknown error
+      error_19: "You have entered an incorrect username or password too many times: try again in a few minutes or contact your SPID identity provider to change your credentials."
+      error_20: "For security reasons IO requires a login with a second authentication factor: contact your SPID identity provider to understand how to use it."
+      error_21: "It's been too long since you started accessing: please start over again."
+      error_22: "To use IO you must allow access to some of your data: log in again and give your consent to the transfer of data."
+      error_23: "Your SPID identity is suspended or revoked. To reactivate your account, contact your SPID identity provider."
+      error_25: "You have canceled the login operation: you can try again whenever you want."
+  expiredSessionBanner:
+    title: Security notice
+    message: To keep your private information safe, please login again with your SPID credentials, thanks!
+email:
+  read:
+    title: Your email address
+    info: This is the email address associated to your SPID account. You can
+      use in IO app a different email address, if you wish. To make operative the
+      new email address, you will need to validate it by clicking on the link you
+      will receive by email.
+    details: You can change this address, then you should validate it by clicking on
+      the link we will sent to your email address. In the meanwhile, those
+      functionalities of IO depending on the email (payments, messages forwarding,
+      etc.) will be disabled.
+    alert: "Warning: your pagoPa account is associated to your email.
+      So, if you change it, IO will no more list your registered payment methods
+      and transactions."
+    help: Your SPID profile communicates your email to IO app. If you find the address
+      wrong or you no longer use it, you can edit it directly from your SPID services
+      provider account.
+  insert:
+    header: Activation
+    title: Insert your email
+    subtitle: Some IO app functionalities need your email.
+    label: Personal email address
+    alert: You are already using this email
+    help:
+      title: Email
+      content: !include email_insert_help.md
+  edit:
+    title: Modify your email
+    subtitle: The email you inserted is
+    validated: The email you inserted and validated is
+    label: New personal email address
+    cta: Edit email
+    upsert_ok: The email update request was sent successfully
+    upsert_ko: Error in update email request, try again
+  validate:
+    title: Remember to validate your email address
+    header: Email Validation
+    content1: "We sent an email to <b>{{email}}</b> with a link to validate your email: click simply on that link.<br/>
+      Until you will not validate your email address, some app functionalities (payments, messages forwarding by email, etc.)
+      will not be available, but you will be able to use some other functions anyway (i.e. services, messages, etc.)"
+    content2: "Some functionalities of IO require you validate your email address. <br/> We sent an email to <b>{{email}}</b>:
+    open your email client and click on the link."
+    cta: Send a new validation email
+    sent: Email sent
+    send_validation_ok: Email Validation sent
+    send_validation_ko: Some errors occured while sending email validation. Try again.
+    help: Your SPID profile communicates your email to IO app. If you find the address
+      wrong or that you do not use it anymore, you can edit it directly from your SPID
+      services provider account.
+    validation_ok: Your email has been validated. You can use all the functionalities of IO.
+    validated: Email validated!
+    validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
+onboarding:
+  tos:
+    headerTitle: Activation
+    continue: Continue
+  pin:
+    headerTitle: Activation
+    contentTitle: Choose a PIN code
+    contentTitleConfirm: Insert your PIN again
+    pinInfo: This code will be requested each time you open the app and when you need
+      to view sensitive data or make dispositive transactions. It must be composed
+      of 5 digits. Remember it carefully. You can change it at any time by entering
+      with SPID.
+    pinInfoSelected: This code will be requested each time you open the app and when
+      you need to view sensitive data or make dispositive transactions.
+    continue: Continue
+    reset: Change the code
+    confirmValid: thanks, you can continue
+    confirmInvalid: the two pins do not match
+  alert:
+    title: Do you really want to log out?
+    description: You will have to log in again to use the app
+  fingerprint:
+    headerTitle: Activation
+    title: Biometric authentication
+    body:
+      enrolledText: !include tos_fingerprint_enrolled.md
+      enrolledType:
+        fingerprint: your fingerprint
+        faceId: FaceID
+        touchId: TouchID
+      notEnrolledText: !include tos_fingerprint_not_enrolled.md
+pin_login:
+  pin:
+    pinInfo: Enter the PIN
+    reset:
+      button: Did you forget the PIN?
+      button_short: Reset PIN
+      tip: To reset your PIN you will have to login again with your SPID account.
+      tip_short: You will have to login again.
+    confirmValid: Correct PIN
+    confirmInvalid: Invalid PIN
+  unlock_screen:
+    help:
+      title: Access with PIN
+      content: !include pin_unlock_help.md
+  forgetPin:
+    confirmTitle: Did you forget the PIN?
+    confirmMsg: To be able to choose a new PIN you will need to log in again with SPID.
+forms:
+  validators:
+    required: Required value
+    email: Invalid email address
+  spidInformation:
+    fields:
+      email:
+        placeholder: email address
+lipsum:
+  medium: Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui
+    id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus.
+    Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium
+    totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus.
+    Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis,
+    obscuris et malesuada fames.
+datetimes:
+  yesterday: yesterday
+  todayAt: today, at
+payment:
+  currentPsp: Your current PSP is
+  noPsp: You have yet to select a PSP
+  changePsp: Change PSP
+  IUV: IUV
+  recipientFiscalCode: Recipient fiscal code
+wallet:
+  alert:
+    msgErrorUpdateApp: "An error occurred while opening the app store"
+    titlePagoPaUpdateApp: Update required
+    messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
+    btnUpdateApp: Update the IO app 
+  wallet: Wallet
+  walletHelp: !include wallet_help.md
+  creditcards: Credit Cards
+  paymentMethods: Payment methods
+  paymentMethod: Payment method
+  walletLoadMessage: Loading payment methods...
+  walletLoadFailure: Loading payment methods has failed, please retry.
+  transactionsLoadMessage: Loading transactions...
+  transactionsLoadFailure: Loading your transactions has failed, please retry.
+  pickPaymentMethod:
+    unavailable:
+      title: This payment method is not available at this time
+      message: This payment method will be available in a future release
+  add: add
+  delete:
+    successful: Card successfully deleted
+    failed: The card could not be deleted
+    alert: 'The payment method used for payment of the transaction has been removed from the wallet'
+  newPaymentMethod:
+    add: add
+    addButton: Add a new method
+    addDescription: You can add your payment methods (e.g. credit cards, bank accounts)
+      so that you don't have to re-add them from scratch for every transaction.
+    walletAlert: "Your wallet includes payment methods but no one is supported by IO yet"
+    successful: The card was added successfully!
+    failed: The card could not be added
+    failedCardAlreadyExists: The card you are adding already exists
+  textMsg:
+    title: Text confirmation code
+    header: Confirmation code
+    newCode: Request a new code
+    info: Insert the code that was sent by text to your mobile phone
   saveCard:
-    saveCard: Save the card
-    header: Do you whant to save this card?
-    favoriteTitle: Set the cart as favourite payment method
-    favoriteText: This payment method will be automatically proposed for the next payment
-  cardComponent:
-    validUntil: Valid until
-    expiredCard: CARD EXPIRED ON
-    actions: Actions
-    setFavourite: Set as favourite
-    unsetFavourite: Remove from favourites
-    deleteTitle: Do you want to proceed?
-    deleteMsg: This will delete the payment method
-    neverUsed: Never used
-    lastUsage: Last usage
-    detailsAndTransactions: Details and transactions
-    pick: Pay with this method
-  messages:
-    counting:
-      zero: No message
-      one: You have 1 message
-      other: You have {{count}} messages
-    tab:
-      inbox: Inbox
-      deadlines: Deadlines
-      archive: Archive
-    contentTitle: Messages
-    refresh: Pull down to refresh
-    loading: Loading Messages...
-    yesterday: yesterday
-    errorLoading:
-      details: Error loading message details
-      senderInfo:  Sender service unknown
-      serviceInfo: Service info unknown
-      departmentInfo: Department info unknown
-    loadingErrorTitle: Loading messages has failed
-    cta:
-      archive: Archive
-      unarchive: Unarchive
-      selectAll: All
-      deselectAll: None
-      payment:
-        expired: Payment expired
-        validAlert:
-          block1: You can pay this notice until
-          block2: "{{time}} of {{day}}."
-        expiringAlert:
-          block1: This notice
-          block2: expire {{todayOrTomorrow}}
-          block3: at
-        expiredAlert:
-          block1: The notice of
-          block2: € {{amount}}
-          block3: is
-          block4: expired
-          block5: at
-          block6: of
-      pay: Pay € {{amount}}
-      paid: Paid € {{amount}}
-      reminder: Reminder
-      reminderShort: Memo
-      reminderCalendarSelect: In which calendar you want to add the reminder?
-      reminderTitle: "Reminder for: {{title}}"
-      reminderAddSuccess: "Reminder added"
-      reminderAddFailure: "Error adding reminder, please retry"
-      reminderRemoveRequest:
-        title: Are you sure you want to remove this reminder?
-        ok: Remove reminder
-        cancel: Cancel the operation
-      reminderRemoveSuccess: "Reminder removed"
-      reminderRemoveFailure: "Error removing reminder, please retry"
-      preferenceCalendarSelect: "Select a default calendar"
-      calendarPermDenied:
-        title: "It seems calendar permissions has been denied"
-        ok: "Enable permissions"
-        cancel: "Cancel"
-      errors:
-        fetchCalendars: Error fetching calendars
-      helper: "IO will remember this choice, you can change it from the preference pane."
-    unknownSender: Unknown sender
-    noContent: Content not available
-    archive:
-      emptyMessage:
-        title: Your archive is empty.
-        subtitle: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
-    inbox:
-      emptyMessage:
-        title: Your message list is empty.
-        subtitle: Refresh to check for any new messages.
-    deadlines:
-      emptyMessage:
-        title: You haven't any scheduled deadline.
-        subtitle:  Use the button above to check out past deadlines.
-  messageDetails:
-    headerTitle: Message
-    emptyMessage: No content
-    loadingText: Loading message details in progress...
-    errorText: We were unable to load the details of your message
-    retryText: It's probably a temporary error... please try again!
-    submitBugText: If the problem is not resolved, report it with the ladybug icon at the top right, thank you!
-    rawInfoLink:
-      showLabel: Details of the message
-      hideLabel: Close details
-    rawInfoLabels:
-      createdAt: Date
-      organizationName: Sent by
-      departmentName: Department
-      serviceName: Service
-  notifications:
-    installation:
-      errorTitle: Push notifications
-      errorMessage: Registration with the push notifications service generated an error
-  biometric_recognition:
-    title: Biometric recognition
-    subTitle: Enable or disable biometric recognition
-    help: !include preferences_biometric_recognition_help.md
-    switchLabel: Enable biometric recognition
-    enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
-    enroll_btnLabel: Go to settings
-    needed_to_disable: Recognition required to disable
-  services:
-    title: Services
-    subTitle: Enable or disable the services that are allowed to send you messages
-    servicesHelp: !include preferences_services_help.md
-    serviceIsEnabled: The service is enabled
-    serviceNotEnabled: The service is not enabled
-    pushNotifications: Push Notifications
-    emailForwarding: Email forwarding
-    tosLink: Terms and conditions
-    privacyLink: Privacy information
-    otherAppsInfo: You can find this service also
-    otherAppWeb: Online on
-    otherAppIos: With the iOS app
-    otherAppAndroid: With the Android app
-    contactsAndInfo: Contacts and info
-    contactAddress: Address
-    contactPhone: Phone
-    areasOfInterest:
-      selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
-      addButton: Add your areas of interest
-      editButton: Change the areas of interest
-      searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
-    tab:
-      locals: Local
-      national: National
-      all: All
-    loading:
-      title: Loading the services list
-      subtitle: wait few seconds..
-    enableAll: Enable all
-    disableAll: Disable all
-    disableAllTitle: "Do you really want to disable all the services?"
-    disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
-    close: Close
-    emptyListMessage: There are no services available at this time, pull down to refresh
-  serviceDetail:
-    headerTitle: "Service details"
-    onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
-    disableTitle: "Do you really want to disable the service?"
-    disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
-  identification:
-    messageFingerPrint: "Use the fingerprint or enter the PIN"
-    messageFaceID: "Use FaceID or enter the PIN"
-    messageEnterPin: "Enter the PIN"
-    biometric:
-      failure: Identification failed
-      fingerprintType: Fingerprint
-      title: Biometric identification
-      popup:
-        reason: Identification
-        title: Identification required
-        sensorDescription: Touch sensor
-        fallbackLabel: Use the PIN
-  calendarEvents:
-    calendarSelect: In which calendar you want to add the event?
-    removeRequest:
-      title: Are you sure you want to remove this event?
-      ok: Remove event
+    header: Save the card
+    title: Do you want to save this card?
+    infoTitle: Set the card as favourite payment method
+    info: This payment method will be automatically proposed for the next payment
+    save: Save the card
+    notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
+    temporaryError: There was a temporary problem while saving this card, please retry.
+  saveCardInPayment:
+    header: Pay with this card
+    title: Do you want to pay with this card?
+    save: Pay with this card
+  thanks: "✓ Thank you!"
+  endPayment: Your payment has been completed successfully
+  pickPsp:
+    title: Choose the manager
+    info: This card does not belong to the pagoPA payment network.
+    infoBold: Choose the economic operator
+    info2: which will have to manage yout payment.
+    link: Find out more
+    maxFee: Maximum fee
+    onUpdateWalletPspFailure: Operation failed, please retry
+    contextualHelpTitle: Select a provider
+    contextualHelpContent: !include pick_psp.md
+  ConfirmPayment:
+    header: Confirm transaction
+    cancelPayment: Cancel the transaction
+    goToPay: Confirm and pay
+    askConfirm: Want to proceed with the transaction?
+    partialAmount: Amount to pay
+    fee: Fee
+    why: Why?
+    totalAmount: Total amount
+    info: 'Warning: after this step it will not be possible to come back'
+    info2: You are using your favourite payment method.
+    changeMethod: Change the payment method
+    change: Change method
+    identificationMessage: Confirm the transaction with your PIN code
+    transactionSuccess: The payment has completed!
+    transactionFailure: There was an error with the payment, please retry!
+    transactionTimeout: I couldn't retrieve the result of the payment!
+    confirmCancelTitle: Do you want to cancel this payment?
+    confirmCancelPayment: Cancel this payment
+    confirmContinuePayment: Continue with the payment
+    cancelPaymentSuccess: The payment for this notice has been canceled, you can try to pay it again in a few minutes
+  payWith:
+    noWallets:
+      title: No payment methods found
+      text: Add a new payment method to proceed with the payment
+    header: Choose payment method
+    title: Pay with
+    text: Choose one saved payment method or add a new one
+    fetchPspFailure: Temporary error, please retry
+    noPspsAvailable: This payment method cannot be used
+  firstTransactionSummary:
+    header: Transaction notice summary
+    title: Transaction notice
+    amount: Amount
+    expireDate: Expire date
+    tranche: Tranche
+    entity: 'Entity:'
+    info: 'More info at:'
+    tel: 'Tel:'
+    email: 'Email:'
+    PEC: 'PEC:'
+    recipient: 'Recipient:'
+    object: 'Transaction object:'
+    cbillCode: 'CBILL code:'
+    iuv: 'IUV:'
+    entityCode2: 'Entity/Company code:'
+    updatedAmount: Updated amount
+    updateInfo: 'The pagoPa system updates automatically the amount to ensure you
+      pay the exact amount and to avoid you arrears or additional interests '
+    moreInfo: More details
+    loadingMessage:
+      activation: I'm alerting the entity, wait a few seconds..
+      verification: I am checking the status and the amount of your notice..
+      generic: I am finishing the verification operations of your notice, wait a few seconds..
+  insertManually:
+    header: Insert notice data
+    title: Insert the notice data
+    info: which allow us to identify the transaction
+    link: Where are they?
+    noticeCode: Notice Code
+    entityCode: Entity Fiscal Code
+    amount: Amount (€)
+    proceed: Proceed with the transaction
+  errorTransaction:
+    submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
+  transactionDetails: Transaction details
+  total: Total
+  amount: Amount
+  payAmount: Amount to pay
+  transactionFee: Transaction fee
+  why: Why?
+  paymentReason: Reason
+  recipient: Recipient
+  date: Date
+  time: Time
+  psp: Payment provider
+  receipt: Receipt
+  seeReceipt: See Receipt
+  transactions: Transactions
+  transaction: Transaction
+  noTransactions: There are no transactions.
+  noNewTransactions: There are no new transactions.
+  noneTransactions: There are no transactions
+  noTransactionsInWalletHome: You haven't executed any operation yet.
+  noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
+  moreInfo: Learn more
+  payNotice: Pay notice
+  latestTransactions: Latest transactions
+  creditDebitCards: Credit/Debit Cards
+  addPaymentMethodTitle: Add payment method
+  continue: Continue
+  methods:
+    card:
+      name: Credit/debit card
+      maxFee: Maximum fee of 1.50€
+    bank:
+      name: Bancomat Pay
+      maxFee: Maximum fee of 0.50€
+    mobile:
+      name: Other payment methods
+      maxFee: Paypal, Satispay, etc.
+    notImplemented: Coming soon
+  addCardTitle: Card details
+  dummyCard:
+    labels:
+      holder: Card holder
+      pan: Card number
+      expirationDate: Expiration date
+      securityCode: Card security code
+    values:
+      holder: John Doe
+      pan: 0000 0000 0000 0000
+      expirationDate: mm/yy
+      securityCode: "•••"
+  acceptedCards: Accepted cards
+  chooseMethod: Select the desired method
+  QRtoPay:
+    chooser: Pick image from gallery
+    wrongQrCode: Not a pagoPA QR Code!
+    byCameraTitle: Notice QR Code
+    cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
+      manually insert the transaction-related data (IUV and the entity/company code).
+    setManually: Insert data manually
+    enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
+    cameraUsagePermissionInfobox:
+      title: "IO Camera usage permission"
+      message: "IO app needs Camera usage permission to shoot at the QR code"
+  whyAFee:
+    title: Why do I have to pay a fee?
+    text: !include why_a_fee.md
+  errors:
+    PAYMENT_DUPLICATED: This notice has been already paid! ;-)
+    INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
+    PAYMENT_ONGOING: Another payment for this notice is going on, a new payment can't be started at this time.
+    PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
+    PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
+    PAYMENT_UNKNOWN: This notice is not being recognized by the administration that provided it, the payment cannot be started.
+    DOMAIN_UNKNOWN: This notice has been generated by an administration that is not part of the pagoPA network, the payment cannot be started.
+    GENERIC_ERROR: "Ooops, something did not work as expected! It's probably a temporary issue, please try again!"
+    MISSING_PAYMENT_ID: The administration that provided this notice is having issued handling it right now, please retry!
+    PAYMENT_ONGOING_NOCANCEL: Another payment for this notice is going on, retry after 30 minutes.
+    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: If you have already waited 30 minutes and the payment is still blocked, use the button below to send us a report.
+    PAYMENT_ONGOING_CANCELLED: The previous attempt to pay this notice is being canceled, you can retry paying this notice after {{remainingMinutes}} minutes.
+    PAYMENT_ONGOING_CANCELLED_TIMEOUT: The cancellation of this payment has beed requested more than 15 minutes ago but it is still blocked. Use the button below to send us a report.
+    sendReport: Send report
+saveCard:
+  saveCard: Save the card
+  header: Do you whant to save this card?
+  favoriteTitle: Set the cart as favourite payment method
+  favoriteText: This payment method will be automatically proposed for the next payment
+cardComponent:
+  validUntil: Valid until
+  expiredCard: CARD EXPIRED ON
+  actions: Actions
+  setFavourite: Set as favourite
+  unsetFavourite: Remove from favourites
+  deleteTitle: Do you want to proceed?
+  deleteMsg: This will delete the payment method
+  neverUsed: Never used
+  lastUsage: Last usage
+  detailsAndTransactions: Details and transactions
+  pick: Pay with this method
+messages:
+  counting:
+    zero: No message
+    one: You have 1 message
+    other: You have {{count}} messages
+  tab:
+    inbox: Inbox
+    deadlines: Deadlines
+    archive: Archive
+  contentTitle: Messages
+  refresh: Pull down to refresh
+  loading: Loading Messages...
+  yesterday: yesterday
+  errorLoading:
+    details: Error loading message details
+    senderInfo:  Sender service unknown
+    serviceInfo: Service info unknown
+    departmentInfo: Department info unknown
+  loadingErrorTitle: Loading messages has failed
+  cta:
+    archive: Archive
+    unarchive: Unarchive
+    selectAll: All
+    deselectAll: None
+    payment:
+      expired: Payment expired
+      validAlert:
+        block1: You can pay this notice until
+        block2: "{{time}} of {{day}}."
+      expiringAlert:
+        block1: This notice
+        block2: expire {{todayOrTomorrow}}
+        block3: at
+      expiredAlert:
+        block1: The notice of
+        block2: € {{amount}}
+        block3: is
+        block4: expired
+        block5: at
+        block6: of
+    pay: Pay € {{amount}}
+    paid: Paid € {{amount}}
+    reminder: Reminder
+    reminderShort: Memo
+    reminderCalendarSelect: In which calendar you want to add the reminder?
+    reminderTitle: "Reminder for: {{title}}"
+    reminderAddSuccess: "Reminder added"
+    reminderAddFailure: "Error adding reminder, please retry"
+    reminderRemoveRequest:
+      title: Are you sure you want to remove this reminder?
+      ok: Remove reminder
       cancel: Cancel the operation
-  reminders:
-    emptyMonth: No reminders for this month
-    loadMoreData: previous deadlines
-    noOtherDeadlines: There are no more deadlines
-    email:
-      title: Remember to validate your email address
-      modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"
-      modal2: "open your email client and click on the link."
-      button1: Send another verification email
-      button2: Change email address
-  
-  openMaps:
-    genericError: An error occurred while opening the map
-  genericError: An error occurred
-  
+    reminderRemoveSuccess: "Reminder removed"
+    reminderRemoveFailure: "Error removing reminder, please retry"
+    preferenceCalendarSelect: "Select a default calendar"
+    calendarPermDenied:
+      title: "It seems calendar permissions has been denied"
+      ok: "Enable permissions"
+      cancel: "Cancel"
+    errors:
+      fetchCalendars: Error fetching calendars
+    helper: "IO will remember this choice, you can change it from the preference pane."
+  unknownSender: Unknown sender
+  noContent: Content not available
+  archive:
+    emptyMessage:
+      title: Your archive is empty.
+      subtitle: Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results.
+  inbox:
+    emptyMessage:
+      title: Your message list is empty.
+      subtitle: Refresh to check for any new messages.
+  deadlines:
+    emptyMessage:
+      title: You haven't any scheduled deadline.
+      subtitle:  Use the button above to check out past deadlines.
+messageDetails:
+  headerTitle: Message
+  emptyMessage: No content
+  loadingText: Loading message details in progress...
+  errorText: We were unable to load the details of your message
+  retryText: It's probably a temporary error... please try again!
+  submitBugText: If the problem is not resolved, report it with the ladybug icon at the top right, thank you!
+  rawInfoLink:
+    showLabel: Details of the message
+    hideLabel: Close details
+  rawInfoLabels:
+    createdAt: Date
+    organizationName: Sent by
+    departmentName: Department
+    serviceName: Service
+notifications:
+  installation:
+    errorTitle: Push notifications
+    errorMessage: Registration with the push notifications service generated an error
+biometric_recognition:
+  title: Biometric recognition
+  subTitle: Enable or disable biometric recognition
+  help: !include preferences_biometric_recognition_help.md
+  switchLabel: Enable biometric recognition
+  enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
+  enroll_btnLabel: Go to settings
+  needed_to_disable: Recognition required to disable
+services:
+  title: Services
+  subTitle: Enable or disable the services that are allowed to send you messages
+  servicesHelp: !include preferences_services_help.md
+  serviceIsEnabled: The service is enabled
+  serviceNotEnabled: The service is not enabled
+  pushNotifications: Push Notifications
+  emailForwarding: Email forwarding
+  tosLink: Terms and conditions
+  privacyLink: Privacy information
+  otherAppsInfo: You can find this service also
+  otherAppWeb: Online on
+  otherAppIos: With the iOS app
+  otherAppAndroid: With the Android app
+  contactsAndInfo: Contacts and info
+  contactAddress: Address
+  contactPhone: Phone
+  areasOfInterest:
+    selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
+    addButton: Add your areas of interest
+    editButton: Change the areas of interest
+    searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
+  tab:
+    locals: Local
+    national: National
+    all: All
+  loading:
+    title: Loading the services list
+    subtitle: wait few seconds..
+  enableAll: Enable all
+  disableAll: Disable all
+  disableAllTitle: "Do you really want to disable all the services?"
+  disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
+  close: Close
+  emptyListMessage: There are no services available at this time, pull down to refresh
+serviceDetail:
+  headerTitle: "Service details"
+  onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
+  disableTitle: "Do you really want to disable the service?"
+  disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
+identification:
+  messageFingerPrint: "Use the fingerprint or enter the PIN"
+  messageFaceID: "Use FaceID or enter the PIN"
+  messageEnterPin: "Enter the PIN"
+  biometric:
+    failure: Identification failed
+    fingerprintType: Fingerprint
+    title: Biometric identification
+    popup:
+      reason: Identification
+      title: Identification required
+      sensorDescription: Touch sensor
+      fallbackLabel: Use the PIN
+calendarEvents:
+  calendarSelect: In which calendar you want to add the event?
+  removeRequest:
+    title: Are you sure you want to remove this event?
+    ok: Remove event
+    cancel: Cancel the operation
+reminders:
+  emptyMonth: No reminders for this month
+  loadMoreData: previous deadlines
+  noOtherDeadlines: There are no more deadlines
+  email:
+    title: Remember to validate your email address
+    modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"
+    modal2: "open your email client and click on the link."
+    button1: Send another verification email
+    button2: Change email address
+
+openMaps:
+  genericError: An error occurred while opening the map
+genericError: An error occurred
