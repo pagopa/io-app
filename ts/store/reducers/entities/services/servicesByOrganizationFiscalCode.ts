@@ -3,6 +3,7 @@
  */
 
 import { fromNullable } from "fp-ts/lib/Option";
+import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { getType } from "typesafe-actions";
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -54,13 +55,15 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
       };
 
     case getType(removeServiceTuples): {
-      const serviceTuples = action.payload;
+      const serviceTuples: ReadonlyArray<ITuple2<string, string | undefined>> =
+        action.payload;
 
       // Remove service id from the array keyed by organizationFiscalCode
       return serviceTuples.reduce<ServiceIdsByOrganizationFiscalCodeState>(
         (accumulator, tuple) => {
           const serviceId = tuple.e1;
           const organizationFiscalCode = tuple.e2;
+          // Extract the services related to the same organization
           const ids = fromNullable(organizationFiscalCode)
             .map(
               _ => (accumulator[_] !== undefined ? accumulator[_] : state[_])
