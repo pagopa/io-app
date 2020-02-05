@@ -11,6 +11,7 @@ import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
@@ -38,7 +39,6 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT } from "../../utils/constants";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -164,7 +164,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
     return (
       <TopScreenComponent
-        contextualHelp={contextualHelpMarkdown}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         title={I18n.t("messages.contentTitle")}
         isSearchAvailable={true}
         searchType="Messages"

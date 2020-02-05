@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import H5 from "../../components/ui/H5";
-import Markdown from "../../components/ui/Markdown";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";

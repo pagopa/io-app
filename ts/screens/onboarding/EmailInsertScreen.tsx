@@ -23,7 +23,6 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
   abortOnboarding,
