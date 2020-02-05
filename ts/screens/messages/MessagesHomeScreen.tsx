@@ -15,7 +15,6 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
   loadMessages,
@@ -39,6 +38,7 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT } from "../../utils/constants";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -87,9 +87,9 @@ const styles = StyleSheet.create({
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
-const contextualHelp = {
-  title: I18n.t("messages.contextualHelpTitle"),
-  body: () => <Markdown>{I18n.t("messages.contextualHelpContent")}</Markdown>
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "messages.contextualHelpTitle",
+  body: "messages.contextualHelpContent"
 };
 /**
  * A screen that contains all the Tabs related to messages.
@@ -164,7 +164,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
 
     return (
       <TopScreenComponent
-        contextualHelp={contextualHelp}
+        contextualHelp={contextualHelpMarkdown}
         title={I18n.t("messages.contentTitle")}
         isSearchAvailable={true}
         searchType="Messages"

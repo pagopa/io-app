@@ -44,6 +44,7 @@ import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -52,7 +53,6 @@ import { SearchNoResultMessage } from "../../components/search/SearchNoResultMes
 import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesTab from "../../components/services/ServicesTab";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
   loadServiceMetadata,
@@ -210,9 +210,9 @@ const styles = StyleSheet.create({
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
-const contextualHelp = {
-  title: I18n.t("services.contextualHelpTitle"),
-  body: () => <Markdown>{I18n.t("services.contextualHelpContent")}</Markdown>
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "services.contextualHelpTitle",
+  body: "services.contextualHelpContent"
 };
 
 class ServicesHomeScreen extends React.Component<Props, State> {
@@ -544,7 +544,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <TopScreenComponent
             title={I18n.t("services.title")}
             appLogo={true}
-            contextualHelp={contextualHelp}
+            contextualHelpMarkdown={contextualHelpMarkdown}
             isSearchAvailable={userMetadata !== undefined}
             searchType={"Services"}
           >

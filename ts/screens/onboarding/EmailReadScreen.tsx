@@ -20,7 +20,6 @@ import FooterWithButtons, {
   TwoButtonsInlineHalf
 } from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -39,6 +38,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
@@ -70,13 +70,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const contextualHelp = {
-  title: I18n.t("profile.preferences.email.contextualHelpTitle"),
-  body: () => (
-    <Markdown>
-      {I18n.t("profile.preferences.email.contextualHelpContent")}
-    </Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.email.contextualHelpTitle",
+  body: "profile.preferences.email.contextualHelpContent"
 };
 
 export class EmailReadScreen extends React.PureComponent<Props> {
@@ -143,7 +139,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
       <TopScreenComponent
         goBack={this.handleGoBack}
         title={I18n.t("profile.preferences.list.email")}
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <ScreenContent
           title={I18n.t("email.read.title")}

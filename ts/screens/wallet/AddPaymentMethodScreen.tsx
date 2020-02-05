@@ -21,8 +21,9 @@ import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import Markdown from "../../components/ui/Markdown";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
@@ -54,13 +55,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const contextualHelp = {
-  title: I18n.t("wallet.newPaymentMethod.contextualHelpTitle"),
-  body: () => (
-    <Markdown>
-      {I18n.t("wallet.newPaymentMethod.contextualHelpContent")}
-    </Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.newPaymentMethod.contextualHelpTitle",
+  body: "wallet.newPaymentMethod.contextualHelpContent"
 };
 
 class AddPaymentMethodScreen extends React.PureComponent<Props> {
@@ -70,7 +67,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
     return (
       <BaseScreenComponent
         goBack={true}
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         headerTitle={
           inPayment.isSome()
             ? I18n.t("wallet.payWith.header")

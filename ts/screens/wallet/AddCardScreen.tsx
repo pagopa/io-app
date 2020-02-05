@@ -18,12 +18,13 @@ import {
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import Markdown from "../../components/ui/Markdown";
 import { isExpired } from "./../../utils/dates";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import MaskedInput from "../../components/ui/MaskedInput";
 import { cardIcons } from "../../components/wallet/card/Logo";
@@ -83,11 +84,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const contextualHelp = {
-  title: I18n.t("wallet.saveCard.contextualHelpTitle"),
-  body: () => (
-    <Markdown>{I18n.t("wallet.saveCard.contextualHelpContent")}</Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.saveCard.contextualHelpTitle",
+  body: "wallet.saveCard.contextualHelpContent"
 };
 
 const CARD_LOGOS_COLUMNS = 4;
@@ -225,7 +224,7 @@ class AddCardScreen extends React.Component<Props, State> {
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("wallet.addCardTitle")}
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <ScrollView
           bounces={false}

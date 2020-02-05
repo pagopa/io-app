@@ -1,5 +1,5 @@
 import { View } from "native-base";
-import * as React from "react";
+import React, * as React from "react";
 import {
   ImageSourcePropType,
   RefreshControlProps,
@@ -10,6 +10,10 @@ import {
 import { StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
 import AnimatedScreenContent from "./AnimatedScreenContent";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
 
@@ -27,7 +31,8 @@ type Props = Readonly<{
   dynamicSubHeader?: React.ReactNode;
   topContentHeight?: number;
   footerContent?: React.ReactNode;
-  contextualHelp?: { title: string; body: () => React.ReactNode };
+  contextualHelp?: ContextualHelpProps;
+  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   banner?: React.ReactNode;
   contentRefreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
@@ -62,6 +67,7 @@ export default class DarkLayout extends React.Component<Props> {
         headerBody={this.props.headerBody}
         appLogo={this.props.appLogo}
         contextualHelp={this.props.contextualHelp}
+        contextualHelpMarkdown={this.props.contextualHelpMarkdown}
       >
         <StatusBar
           backgroundColor={customVariables.brandDarkGray}

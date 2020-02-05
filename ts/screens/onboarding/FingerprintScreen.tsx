@@ -9,9 +9,9 @@ import { connect } from "react-redux";
 
 import { Alert } from "react-native";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
@@ -33,9 +33,9 @@ type OwnProps = NavigationScreenProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
-const contextualHelp = {
-  title: I18n.t("onboarding.contextualHelpTitle"),
-  body: () => <Markdown>{I18n.t("onboarding.contextualHelpContent")}</Markdown>
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.contextualHelpTitle",
+  body: "onboarding.contextualHelpContent"
 };
 
 export class FingerprintScreen extends React.PureComponent<Props> {
@@ -97,7 +97,7 @@ export class FingerprintScreen extends React.PureComponent<Props> {
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
         title={I18n.t("onboarding.fingerprint.title")}
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <ScreenContent
           title={I18n.t("onboarding.fingerprint.title")}

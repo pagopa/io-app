@@ -9,8 +9,9 @@ import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
 import ScreenHeader from "../../components/ScreenHeader";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import Markdown from "../../components/ui/Markdown";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
@@ -105,13 +106,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const contextualHelp = {
-  title: I18n.t("authentication.idp_selection.contextualHelpTitle"),
-  body: () => (
-    <Markdown>
-      {I18n.t("authentication.idp_selection.contextualHelpContent")}
-    </Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "authentication.idp_selection.contextualHelpTitle",
+  body: "authentication.idp_selection.contextualHelpContent"
 };
 
 /**
@@ -125,7 +122,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
 
   return (
     <BaseScreenComponent
-      contextualHelp={contextualHelp}
+      contextualHelpMarkdown={contextualHelpMarkdown}
       goBack={props.navigation.goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >

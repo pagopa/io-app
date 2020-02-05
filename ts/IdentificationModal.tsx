@@ -5,9 +5,10 @@ import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
-import BaseScreenComponent from "./components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "./components/screens/BaseScreenComponent";
 import IconFont from "./components/ui/IconFont";
-import Markdown from "./components/ui/Markdown";
 import TextWithIcon from "./components/ui/TextWithIcon";
 import { isDebugBiometricIdentificationEnabled } from "./config";
 import I18n from "./i18n";
@@ -45,11 +46,9 @@ type State = {
   canInsertPin: boolean;
 };
 
-const contextualHelp = {
-  title: I18n.t("onboarding.pin.contextualHelpTitle"),
-  body: () => (
-    <Markdown>{I18n.t("onboarding.pin.contextualHelpContent")}</Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.pin.contextualHelpTitle",
+  body: "onboarding.pin.contextualHelpContent"
 };
 
 const renderIdentificationByPinState = (
@@ -283,7 +282,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
           primary={true}
-          contextualHelp={contextualHelp}
+          contextualHelpMarkdown={contextualHelpMarkdown}
           appLogo={true}
         >
           <StatusBar

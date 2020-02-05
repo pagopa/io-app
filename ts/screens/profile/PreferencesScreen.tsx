@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import { ContextualHelp } from "../../components/ContextualHelp";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -53,11 +54,9 @@ const INITIAL_STATE: State = {
   isFingerprintAvailable: false
 };
 
-const contextualHelp = {
-  title: I18n.t("profile.preferences.contextualHelpTitle"),
-  body: () => (
-    <Markdown>{I18n.t("profile.preferences.contextualHelpContent")}</Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.contextualHelpTitle",
+  body: "profile.preferences.contextualHelpContent"
 };
 
 /**
@@ -162,7 +161,7 @@ class PreferencesScreen extends React.Component<Props, State> {
 
     return (
       <TopScreenComponent
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         title={I18n.t("profile.preferences.title")}
         goBack={() => this.props.navigation.goBack()}
       >

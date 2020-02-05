@@ -12,8 +12,9 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import Markdown from "../../components/ui/Markdown";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { loadServiceMetadata } from "../../store/actions/content";
 import {
@@ -111,11 +112,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const contextualHelp = {
-  title: I18n.t("messageDetails.contextualHelpTitle"),
-  body: () => (
-    <Markdown>{I18n.t("messageDetails.contextualHelpContent")}</Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "messageDetails.contextualHelpTitle",
+  body: "messageDetails.contextualHelpContent"
 };
 
 export class MessageDetailScreen extends React.PureComponent<Props, never> {
@@ -304,7 +303,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
       <BaseScreenComponent
         headerTitle={I18n.t("messageDetails.headerTitle")}
         goBack={this.goBack}
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         {this.renderCurrentState()}
       </BaseScreenComponent>

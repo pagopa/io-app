@@ -18,7 +18,9 @@ import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
@@ -77,11 +79,9 @@ type State = Readonly<{
 }>;
 
 // TODO: update content (https://www.pivotaltracker.com/n/projects/2048617/stories/169392558)
-const contextualHelp = {
-  title: I18n.t("onboarding.email.insert.help.title"),
-  body: () => (
-    <Markdown>{I18n.t("onboarding.email.insert.help.content")}</Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.email.insert.help.title",
+  body: "onboarding.email.insert.help.content"
 };
 
 /**
@@ -225,7 +225,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             ? I18n.t("profile.preferences.list.email")
             : I18n.t("email.insert.header")
         }
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <View style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>

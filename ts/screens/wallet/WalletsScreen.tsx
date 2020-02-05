@@ -16,6 +16,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import Markdown from "../../components/ui/Markdown";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardComponent from "../../components/wallet/card/CardComponent";
@@ -65,11 +66,9 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const contextualHelp = {
-  title: I18n.t("wallet.walletList.contextualHelpTitle"),
-  body: () => (
-    <Markdown>{I18n.t("wallet.walletList.contextualHelpContent")}</Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.walletList.contextualHelpTitle",
+  body: "wallet.walletList.contextualHelpContent"
 };
 
 class WalletsScreen extends React.Component<Props> {
@@ -134,7 +133,7 @@ class WalletsScreen extends React.Component<Props> {
         contentStyle={styles.brandDarkGrayBg}
         hasDynamicSubHeader={false}
         refreshControl={walletsRefreshControl}
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <View style={styles.padded}>
           <FlatList

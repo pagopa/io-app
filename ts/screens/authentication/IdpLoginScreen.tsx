@@ -12,8 +12,9 @@ import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import Markdown from "../../components/ui/Markdown";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import * as config from "../../config";
 import I18n from "../../i18n";
@@ -116,13 +117,9 @@ const onNavigationStateChange = (
   return false;
 };
 
-const contextualHelp = {
-  title: I18n.t("authentication.idp_login.contextualHelpTitle"),
-  body: () => (
-    <Markdown>
-      {I18n.t("authentication.idp_login.contextualHelpContent")}
-    </Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "authentication.idp_login.contextualHelpTitle",
+  body: "authentication.idp_login.contextualHelpContent"
 };
 
 class IdpLoginScreen extends React.Component<Props, State> {
@@ -255,7 +252,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent
         goBack={true}
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
           loggedOutWithIdpAuth.idp.name
         }`}

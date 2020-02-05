@@ -8,6 +8,7 @@ import { Dispatch } from "redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
@@ -15,7 +16,6 @@ import {
   BottomTopAnimation,
   LightModalContextInterface
 } from "../../components/ui/LightModal";
-import Markdown from "../../components/ui/Markdown";
 import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
@@ -59,9 +59,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const contextualHelp = {
-  title: I18n.t("profile.fiscalCode.title"),
-  body: () => <Markdown>{I18n.t("profile.fiscalCode.help")}</Markdown>
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.fiscalCode.title",
+  body: "profile.fiscalCode.help"
 };
 
 class FiscalCodeScreen extends React.PureComponent<Props> {
@@ -100,7 +100,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
             <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
           }
           contentStyle={styles.darkBg}
-          contextualHelp={contextualHelp}
+          contextualHelpMarkdown={contextualHelpMarkdown}
           hideHeader={true}
           topContent={
             <React.Fragment>
