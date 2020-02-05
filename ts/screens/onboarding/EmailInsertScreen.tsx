@@ -23,7 +23,11 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
+import {
+  abortOnboarding,
+  emailAcknowledged,
+  emailInsert
+} from "../../store/actions/onboarding";
 import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
@@ -93,7 +97,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     Keyboard.dismiss();
     if (this.isValidEmail()) {
       // The profile is reloaded to check if the user email
-      // has been updated wihtin another session
+      // has been updated within another session
       this.props.reloadProfile();
     }
   };
@@ -137,7 +141,27 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private handleGoBack = () => {
-    this.props.navigation.goBack();
+    if (this.props.isOnboardingCompleted) {
+      this.props.navigation.goBack();
+    } else {
+      // if the user is in onboarding phase, go back has to
+      // abort login (an user with no email can't access the home)
+      Alert.alert(
+        I18n.t("onboarding.alert.title"),
+        I18n.t("onboarding.alert.description"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.exit"),
+            style: "default",
+            onPress: this.props.abortOnboarding
+          }
+        ]
+      );
+    }
   };
 
   get isFromProfileSection() {
@@ -158,6 +182,12 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         // display a toast with error
         showToast(I18n.t("email.edit.upsert_ko"), "danger");
       } else if (pot.isSome(this.props.profile)) {
+        // user is inserting his email from onboarding phase
+        if (!this.props.isOnboardingCompleted) {
+          // send an ack that user checks his own email
+          this.props.acknowledgeEmail();
+          return;
+        }
         // go back (to the EmailReadScreen)
         this.props.navigation.goBack();
       }
@@ -279,6 +309,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     ),
   acknowledgeEmailInsert: () => dispatch(emailInsert()),
+  acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
   reloadProfile: () => dispatch(profileLoadRequest())
 });

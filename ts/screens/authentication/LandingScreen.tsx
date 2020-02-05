@@ -19,7 +19,8 @@ import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { ReduxProps } from "../../store/actions/types";
+import { resetAuthenticationState } from "../../store/actions/authentication";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -28,7 +29,9 @@ import { showToast } from "../../utils/showToast";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   NavigationScreenProps;
+
 const isCIEAuthenticationSupported = false; // TODO: waiting for sdk cie implementation https://www.pivotaltracker.com/story/show/169730204
 const isCIEAvailable =
   isCIEAuthenticationSupported && isCIEauthenticationEnabled;
@@ -110,6 +113,7 @@ class LandingScreen extends React.PureComponent<Props> {
         "warning",
         "top"
       );
+      this.props.resetState();
     }
   }
 
@@ -173,4 +177,11 @@ const mapStateToProps = (state: GlobalState) => ({
   isSessionExpired: isSessionExpiredSelector(state)
 });
 
-export default connect(mapStateToProps)(LandingScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  resetState: () => dispatch(resetAuthenticationState())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LandingScreen);
