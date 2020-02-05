@@ -13,6 +13,7 @@ import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons, {
@@ -38,7 +39,6 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
