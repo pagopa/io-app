@@ -35,13 +35,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import { getLocalePrimary } from "../../utils/locale";
-
-const languageAlert = () =>
-  Alert.alert(
-    I18n.t("profile.preferences.language.title"),
-    I18n.t("profile.preferences.language.message")
-  );
-
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -231,7 +224,12 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.language")}
               subTitle={languages}
               iconName={"io-languages"}
-              onPress={languageAlert}
+              onPress={() =>
+                showModal(
+                  "profile.preferences.language.contextualHelpTitle",
+                  "profile.preferences.language.contextualHelpContent"
+                )
+              }
             />
 
             <EdgeBorderComponent />
