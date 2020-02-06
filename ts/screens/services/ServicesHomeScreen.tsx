@@ -55,8 +55,8 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
-  contentServiceLoad,
-  contentServicesByScopeLoad
+  loadServiceMetadata,
+  loadVisibleServicesByScope
 } from "../../store/actions/content";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
@@ -640,6 +640,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       potUserMetadata,
       isLoadingServices
     } = this.props;
+    const isRefreshing =
+      isLoadingServices ||
+      pot.isLoading(potUserMetadata) ||
+      pot.isUpdating(potUserMetadata);
     return (
       <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
@@ -683,11 +687,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <ServicesTab
             isLocal={true}
             sections={localTabSections}
-            isRefreshing={
-              isLoadingServices ||
-              pot.isLoading(potUserMetadata) ||
-              pot.isUpdating(potUserMetadata)
-            }
+            isRefreshing={isRefreshing}
             onRefresh={this.refreshScreenContent}
             onServiceSelect={this.onServiceSelect}
             handleOnLongPressItem={this.handleOnLongPressItem}
@@ -713,7 +713,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         >
           <ServicesTab
             sections={nationalTabSections}
-            isRefreshing={isLoadingServices || pot.isLoading(potUserMetadata)}
+            isRefreshing={isRefreshing}
             onRefresh={this.refreshScreenContent}
             onServiceSelect={this.onServiceSelect}
             handleOnLongPressItem={this.handleOnLongPressItem}
@@ -730,11 +730,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         >
           <ServicesTab
             sections={allTabSections}
-            isRefreshing={
-              isLoadingServices ||
-              pot.isLoading(potUserMetadata) ||
-              pot.isUpdating(potUserMetadata)
-            }
+            isRefreshing={isRefreshing}
             onRefresh={this.refreshScreenContent}
             onServiceSelect={this.onServiceSelect}
             handleOnLongPressItem={this.handleOnLongPressItem}
@@ -837,7 +833,7 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshUserMetadata: () => dispatch(userMetadataLoad.request()),
   refreshVisibleServices: () => dispatch(loadVisibleServices.request()),
-  refreshServicesByScope: () => dispatch(contentServicesByScopeLoad.request()),
+  refreshServicesByScope: () => dispatch(loadVisibleServicesByScope.request()),
   getServicesChannels: (
     servicesId: ReadonlyArray<string>,
     profile: ProfileState
@@ -886,7 +882,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     params: InferNavigationParams<typeof ServiceDetailsScreen>
   ) => dispatch(navigateToServiceDetailsScreen(params)),
   serviceDetailsLoad: (service: ServicePublic) => {
-    dispatch(contentServiceLoad.request(service.service_id));
+    dispatch(loadServiceMetadata.request(service.service_id));
     dispatch(showServiceDetails(service));
   }
 });

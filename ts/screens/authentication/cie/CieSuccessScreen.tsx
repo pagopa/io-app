@@ -39,9 +39,7 @@ class CieSuccessScreen extends React.Component<Props> {
             name={"io-success"}
           />
           <View spacer={true} />
-          <Text style={styles.text}>
-            {I18n.t("global.genericWaiting")}
-          </Text>
+          <Text style={styles.text}>{I18n.t("global.genericWaiting")}</Text>
         </View>
       </BaseScreenComponent>
     );

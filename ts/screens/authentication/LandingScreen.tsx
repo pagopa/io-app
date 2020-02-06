@@ -16,7 +16,8 @@ import IconFont from "../../components/ui/IconFont";
 import { isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { ReduxProps } from "../../store/actions/types";
+import { resetAuthenticationState } from "../../store/actions/authentication";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -26,7 +27,8 @@ import { showToast } from "../../utils/showToast";
 
 type Props = ReduxProps &
   NavigationInjectedProps &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   isCIEAuthenticationSupported: boolean;
@@ -90,6 +92,15 @@ class LandingScreen extends React.PureComponent<Props, State> {
   }
 
   public async componentDidMount() {
+    if (this.props.isSessionExpired) {
+      showToast(
+        I18n.t("authentication.expiredSessionBanner.message"),
+        "warning",
+        "top"
+      );
+      this.props.resetState();
+    }
+
     // TODO
     const isCieSupported = await isCIEAuthenticationSupported();
     this.setState({
@@ -189,4 +200,11 @@ const mapStateToProps = (state: GlobalState) => ({
   isSessionExpired: isSessionExpiredSelector(state)
 });
 
-export default connect(mapStateToProps)(LandingScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  resetState: () => dispatch(resetAuthenticationState())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LandingScreen);

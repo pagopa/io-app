@@ -8,12 +8,10 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
 import { PaymentActivationsPostResponse } from "../../../../definitions/backend/PaymentActivationsPostResponse";
 import { DetailEnum as PaymentProblemErrorEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { CheckPaymentUsingGETT } from "../../../../definitions/pagopa/requestTypes";
-
 import { Psp, Transaction, Wallet } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { EntrypointRoute } from "../../reducers/wallet/payment";
@@ -27,7 +25,7 @@ export const paymentInitializeState = createStandardAction(
 )();
 
 /**
- * Track the route from which the payment is initiated
+ * Track the route whence the payment started
  */
 export const paymentInitializeEntrypointRoute = createStandardAction(
   "PAYMENT_ENTRYPOINT_ROUTE"

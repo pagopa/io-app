@@ -169,6 +169,7 @@ profile:
         enabled: Abilitato
         disabled: Disabilitato
       email: Indirizzo email
+      spid_email: SPID email
       need_validate: Da validare
       mobile_phone: Numero di telefono
       language: Lingua

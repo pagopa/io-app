@@ -95,7 +95,7 @@ const reducer = (
     // start a new payment from scratch
     case getType(paymentInitializeState):
       return PAYMENT_INITIAL_STATE;
-    // tracking of the route from which the payment started
+    // track the route whence the payment started
     case getType(paymentInitializeEntrypointRoute):
       return {
         ...state,

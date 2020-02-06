@@ -42,7 +42,7 @@ global:
     search: Text to search
   remoteStates:
     loading: Loading...
-    notAvailable: Non available
+    notAvailable: Not available
   notImplemented: NOT IMPLEMENTED
   search:
     invalidSearchBarText: Enter at least {{minCharacter}} characters
@@ -165,6 +165,7 @@ profile:
         enabled: Enabled
         disabled: Disabled
       email: Email address
+      spid_email: SPID email
       need_validate: To be validated
       mobile_phone: Mobile number
       language: Language

@@ -62,7 +62,11 @@ const CardSelectionScreen: React.SFC<Props> = props => {
     <BaseScreenComponent goBack={true}>
       <Content noPadded={true} bounces={false}>
         <ScreenHeader
-          heading={<H2 style={styles.titleHeader}>{I18n.t("authentication.cie.card.title")}</H2>}
+          heading={
+            <H2 style={styles.titleHeader}>
+              {I18n.t("authentication.cie.card.title")}
+            </H2>
+          }
         />
         <Text style={styles.messageHeader}>
           {I18n.t("authentication.cie.card.layCardMessageHeader")}

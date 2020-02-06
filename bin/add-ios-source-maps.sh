@@ -29,5 +29,5 @@ then
 else
   echo "Custom 'postinstall' script: 'bin/add-ios-source-maps.sh' did not run"
   echo "if this was the first time you ran 'install' on the project, please report this issue here:"
-  echo "https://github.com/teamdigitale/ItaliaApp/issues"
+  echo "https://github.com/pagopa/ItaliaApp/issues"
 fi
