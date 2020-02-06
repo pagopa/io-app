@@ -25,7 +25,7 @@ export const paymentInitializeState = createStandardAction(
 )();
 
 /**
- * Track the route from which the payment is initiated
+ * Track the route whence the payment started
  */
 export const paymentInitializeEntrypointRoute = createStandardAction(
   "PAYMENT_ENTRYPOINT_ROUTE"
