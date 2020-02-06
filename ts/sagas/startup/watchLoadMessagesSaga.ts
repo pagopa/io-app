@@ -122,7 +122,7 @@ export function* loadMessages(
 
         const shouldLoadService = (id: string) => {
           const cached = cachedServicesById[id];
-          return cached === undefined || pot.isError(cached);
+          return cached === undefined || !pot.isLoading(cached);
         };
 
         // Filter services already in the store
