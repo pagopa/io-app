@@ -634,6 +634,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       potUserMetadata,
       isLoadingServices
     } = this.props;
+    const isRefreshing =
+      isLoadingServices ||
+      pot.isLoading(potUserMetadata) ||
+      pot.isUpdating(potUserMetadata);
     return (
       <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
@@ -650,11 +654,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <ServicesTab
             isLocal={true}
             sections={localTabSections}
-            isRefreshing={
-              isLoadingServices ||
-              pot.isLoading(potUserMetadata) ||
-              pot.isUpdating(potUserMetadata)
-            }
+            isRefreshing={isRefreshing}
             onRefresh={this.refreshScreenContent}
             onServiceSelect={this.onServiceSelect}
             handleOnLongPressItem={this.handleOnLongPressItem}
@@ -680,7 +680,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         >
           <ServicesTab
             sections={nationalTabSections}
-            isRefreshing={isLoadingServices || pot.isLoading(potUserMetadata)}
+            isRefreshing={isRefreshing}
             onRefresh={this.refreshScreenContent}
             onServiceSelect={this.onServiceSelect}
             handleOnLongPressItem={this.handleOnLongPressItem}
@@ -697,11 +697,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         >
           <ServicesTab
             sections={allTabSections}
-            isRefreshing={
-              isLoadingServices ||
-              pot.isLoading(potUserMetadata) ||
-              pot.isUpdating(potUserMetadata)
-            }
+            isRefreshing={isRefreshing}
             onRefresh={this.refreshScreenContent}
             onServiceSelect={this.onServiceSelect}
             handleOnLongPressItem={this.handleOnLongPressItem}
