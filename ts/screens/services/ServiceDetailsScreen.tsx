@@ -55,9 +55,10 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReduxProps &
   NavigationInjectedProps<NavigationParams>;
 
-interface State {
+type State = {
   uiEnabledChannels: EnabledChannels;
-}
+  isMarkdownLoaded: boolean;
+};
 
 const styles = StyleSheet.create({
   infoHeader: {
@@ -154,7 +155,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       uiEnabledChannels: getEnabledChannelsForService(
         this.props.profile,
         this.serviceId
-      )
+      ),
+      isMarkdownLoaded: false
     };
   }
 
@@ -214,10 +216,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       const metadata = potServiceMetadata.value;
       return (
         <React.Fragment>
-          {metadata.description && (
-            <Markdown animated={true}>{metadata.description}</Markdown>
-          )}
-          {metadata.description && <View spacer={true} large={true} />}
           {metadata.tos_url &&
             renderInformationLinkRow(
               I18n.t("services.tosLink"),
@@ -480,24 +478,46 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           </Grid>
 
           <View spacer={true} large={true} />
-          {this.renderItems(potServiceMetadata)}
-          <H4 style={styles.infoHeader}>
-            {I18n.t("services.contactsAndInfo")}
-          </H4>
-          {renderInformationRow(
-            "C.F.",
-            service.organization_fiscal_code,
-            service.organization_fiscal_code,
-            "COPY"
-          )}
-          {this.renderContactItems(potServiceMetadata)}
-          {this.props.isDebugModeEnabled &&
-            renderInformationRow(
-              "ID",
-              service.service_id,
-              service.service_id,
-              "COPY"
+          {pot.isSome(potServiceMetadata) &&
+            potServiceMetadata.value &&
+            potServiceMetadata.value.description && (
+              <React.Fragment>
+                <Markdown
+                  animated={true}
+                  onLoadEnd={() =>
+                    this.setState({
+                      isMarkdownLoaded: true
+                    })
+                  }
+                >
+                  {potServiceMetadata.value.description}
+                </Markdown>
+                <View spacer={true} large={true} />
+              </React.Fragment>
             )}
+          {this.state.isMarkdownLoaded && (
+            <View>
+              {this.renderItems(potServiceMetadata)}
+              <H4 style={styles.infoHeader}>
+                {I18n.t("services.contactsAndInfo")}
+              </H4>
+              {renderInformationRow(
+                "C.F.",
+                service.organization_fiscal_code,
+                service.organization_fiscal_code,
+                "COPY"
+              )}
+              {this.renderContactItems(potServiceMetadata)}
+              {this.props.isDebugModeEnabled &&
+                renderInformationRow(
+                  "ID",
+                  service.service_id,
+                  service.service_id,
+                  "COPY"
+                )}
+            </View>
+          )}
+
           <View spacer={true} extralarge={true} />
         </Content>
       </BaseScreenComponent>
