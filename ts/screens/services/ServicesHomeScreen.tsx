@@ -593,27 +593,15 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   private refreshServices = () => {
-    if (
-      !this.props.isLoadingServices &&
-      pot.isSome(this.props.visibleServicesContentLoadState)
-    ) {
-      this.setState({
-        toastErrorMessage: I18n.t("global.genericError")
-      });
-      this.props.refreshVisibleServices();
-    }
+    this.setState({
+      toastErrorMessage: I18n.t("global.genericError")
+    });
+    this.props.refreshVisibleServices();
   };
 
   private refreshScreenContent = (hideToast: boolean = false) => {
-    if (
-      !this.props.isLoadingServices &&
-      pot.isSome(this.props.visibleServicesContentLoadState)
-    ) {
-      if (!hideToast) {
-        this.setState({ toastErrorMessage: I18n.t("global.genericError") });
-      }
-      this.props.refreshUserMetadata();
-      this.props.refreshVisibleServices();
+    if (!hideToast) {
+      this.setState({ toastErrorMessage: I18n.t("global.genericError") });
     }
     this.props.refreshUserMetadata();
     this.props.refreshVisibleServices();
