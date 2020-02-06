@@ -54,11 +54,6 @@ export function* loadMessages(
     > = yield select<GlobalState>(messagesAllIdsSelector);
     const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
 
-    // Load already cached services from the store
-    const cachedServicesById: ReturnType<
-      typeof servicesByIdSelector
-    > = yield select<GlobalState>(servicesByIdSelector);
-
     // Request the list of messages from the Backend
     const response: SagaCallReturnType<typeof getMessages> = yield call(
       getMessages,
@@ -120,8 +115,15 @@ export function* loadMessages(
         // Filter messages already in the store
         const pendingMessages = reversedItems.filter(shouldLoadMessage);
 
-        const shouldLoadService = (id: string) =>
-          cachedServicesById[id] === undefined;
+        // Load already cached services from the store
+        const cachedServicesById: ReturnType<
+          typeof servicesByIdSelector
+        > = yield select<GlobalState>(servicesByIdSelector);
+
+        const shouldLoadService = (id: string) => {
+          const cached = cachedServicesById[id];
+          return cached === undefined || !pot.isLoading(cached);
+        };
 
         // Filter services already in the store
         const pendingServicesIds = pendingMessages

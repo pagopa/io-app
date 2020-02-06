@@ -4,6 +4,7 @@ import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import { mixpanel } from "../../mixpanel";
+import { getCurrentRouteName } from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted,
@@ -90,6 +91,7 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
+
 // tslint:disable cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
@@ -327,53 +329,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
   }
   return next(action);
 };
-// gets the current screen from navigation state
-// TODO: Need to be fixed https://www.pivotaltracker.com/story/show/170819360
-export function getCurrentRouteName(navNode: any): string | undefined {
-  if (!navNode) {
-    return undefined;
-  }
-  if (
-    navNode.index === undefined &&
-    navNode.routeName &&
-    typeof navNode.routeName === "string"
-  ) {
-    // navNode is a NavigationLeafRoute
-    return navNode.routeName;
-  }
-  if (
-    navNode.routes &&
-    navNode.index !== undefined &&
-    navNode.routes[navNode.index]
-  ) {
-    const route = navNode.routes[navNode.index];
-    return getCurrentRouteName(route);
-  }
-  return undefined;
-}
 
-export function getCurrentRouteKey(navNode: any): string | undefined {
-  if (!navNode) {
-    return undefined;
-  }
-  if (
-    navNode.index === undefined &&
-    navNode.key &&
-    typeof navNode.key === "string"
-  ) {
-    // navNode is a NavigationLeafRoute
-    return navNode.key;
-  }
-  if (
-    navNode.routes &&
-    navNode.index !== undefined &&
-    navNode.routes[navNode.index]
-  ) {
-    const route = navNode.routes[navNode.index];
-    return getCurrentRouteKey(route);
-  }
-  return undefined;
-}
 /*
   The middleware acts as a general hook in order to track any meaningful navigation action
   https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux
