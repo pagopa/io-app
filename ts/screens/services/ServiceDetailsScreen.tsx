@@ -216,39 +216,58 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       const metadata = potServiceMetadata.value;
       return (
         <React.Fragment>
-          {metadata.tos_url &&
-            renderInformationLinkRow(
-              I18n.t("services.tosLink"),
-              metadata.tos_url
-            )}
-          {metadata.privacy_url &&
-            renderInformationLinkRow(
-              I18n.t("services.privacyLink"),
-              metadata.privacy_url
-            )}
-          {(metadata.app_android || metadata.app_ios || metadata.web_url) && (
-            <H4 style={styles.infoHeader}>
-              {I18n.t("services.otherAppsInfo")}
-            </H4>
+          {metadata.description && (
+            <Markdown
+              animated={true}
+              onLoadEnd={() =>
+                this.setState({
+                  isMarkdownLoaded: true
+                })
+              }
+            >
+              {metadata.description}
+            </Markdown>
           )}
-          {metadata.web_url &&
-            renderInformationRow(
-              I18n.t("services.otherAppWeb"),
-              metadata.web_url,
-              metadata.web_url
-            )}
-          {metadata.app_ios &&
-            renderInformationImageRow(
-              I18n.t("services.otherAppIos"),
-              metadata.app_ios,
-              require("../../../img/badges/app-store-badge.png")
-            )}
-          {metadata.app_android &&
-            renderInformationImageRow(
-              I18n.t("services.otherAppAndroid"),
-              metadata.app_android,
-              require("../../../img/badges/google-play-badge.png")
-            )}
+          {metadata.description && <View spacer={true} large={true} />}
+          {this.state.isMarkdownLoaded && (
+            <View>
+              {metadata.tos_url &&
+                renderInformationLinkRow(
+                  I18n.t("services.tosLink"),
+                  metadata.tos_url
+                )}
+              {metadata.privacy_url &&
+                renderInformationLinkRow(
+                  I18n.t("services.privacyLink"),
+                  metadata.privacy_url
+                )}
+              {(metadata.app_android ||
+                metadata.app_ios ||
+                metadata.web_url) && (
+                <H4 style={styles.infoHeader}>
+                  {I18n.t("services.otherAppsInfo")}
+                </H4>
+              )}
+              {metadata.web_url &&
+                renderInformationRow(
+                  I18n.t("services.otherAppWeb"),
+                  metadata.web_url,
+                  metadata.web_url
+                )}
+              {metadata.app_ios &&
+                renderInformationImageRow(
+                  I18n.t("services.otherAppIos"),
+                  metadata.app_ios,
+                  require("../../../img/badges/app-store-badge.png")
+                )}
+              {metadata.app_android &&
+                renderInformationImageRow(
+                  I18n.t("services.otherAppAndroid"),
+                  metadata.app_android,
+                  require("../../../img/badges/google-play-badge.png")
+                )}
+            </View>
+          )}
         </React.Fragment>
       );
     }
@@ -478,46 +497,24 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           </Grid>
 
           <View spacer={true} large={true} />
-          {pot.isSome(potServiceMetadata) &&
-            potServiceMetadata.value &&
-            potServiceMetadata.value.description && (
-              <React.Fragment>
-                <Markdown
-                  animated={true}
-                  onLoadEnd={() =>
-                    this.setState({
-                      isMarkdownLoaded: true
-                    })
-                  }
-                >
-                  {potServiceMetadata.value.description}
-                </Markdown>
-                <View spacer={true} large={true} />
-              </React.Fragment>
-            )}
-          {this.state.isMarkdownLoaded && (
-            <View>
-              {this.renderItems(potServiceMetadata)}
-              <H4 style={styles.infoHeader}>
-                {I18n.t("services.contactsAndInfo")}
-              </H4>
-              {renderInformationRow(
-                "C.F.",
-                service.organization_fiscal_code,
-                service.organization_fiscal_code,
-                "COPY"
-              )}
-              {this.renderContactItems(potServiceMetadata)}
-              {this.props.isDebugModeEnabled &&
-                renderInformationRow(
-                  "ID",
-                  service.service_id,
-                  service.service_id,
-                  "COPY"
-                )}
-            </View>
+          {this.renderItems(potServiceMetadata)}
+          <H4 style={styles.infoHeader}>
+            {I18n.t("services.contactsAndInfo")}
+          </H4>
+          {renderInformationRow(
+            "C.F.",
+            service.organization_fiscal_code,
+            service.organization_fiscal_code,
+            "COPY"
           )}
-
+          {this.renderContactItems(potServiceMetadata)}
+          {this.props.isDebugModeEnabled &&
+            renderInformationRow(
+              "ID",
+              service.service_id,
+              service.service_id,
+              "COPY"
+            )}
           <View spacer={true} extralarge={true} />
         </Content>
       </BaseScreenComponent>
