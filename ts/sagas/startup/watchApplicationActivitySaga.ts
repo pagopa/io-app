@@ -58,7 +58,6 @@ export function* watchRequiredIdentificationSaga(
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
   // tslint:disable-next-line:no-let
   let identificationBackgroundTimer: Task | undefined;
-
   if (lastState !== "background" && newState === "background") {
     if (isSecuredRoute) {
       /**
@@ -78,16 +77,13 @@ export function* watchRequiredIdentificationSaga(
         yield put(identificationRequest());
       });
     }
-  } else if (lastState !== "active" && newState === "active") {
-    if (identificationBackgroundTimer) {
-      // Cancel the background timer if running
-      yield cancel(identificationBackgroundTimer);
-      identificationBackgroundTimer = undefined;
-    }
-
-    // for iOS - if the app pass trought the states: active > inactive > active
-    if (lastState === "inactive" && isSecuredRoute) {
-      yield put(identificationRequest());
-    }
+  } else if (
+    identificationBackgroundTimer &&
+    lastState !== "active" &&
+    newState === "active"
+  ) {
+    // Cancel the background timer if running
+    yield cancel(identificationBackgroundTimer);
+    identificationBackgroundTimer = undefined;
   }
 }
