@@ -200,7 +200,7 @@ export default function content(
     case getType(loadVisibleServicesByScope.request):
       return {
         ...state,
-        servicesByScope: pot.noneLoading
+        servicesByScope: pot.toLoading(state.servicesByScope)
       };
 
     case getType(loadVisibleServicesByScope.success):
