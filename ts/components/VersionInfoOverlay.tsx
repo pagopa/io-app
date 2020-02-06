@@ -5,8 +5,8 @@ import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
 
 import { ReduxProps } from "../store/actions/types";
-import { getCurrentRouteName } from "../store/middlewares/analytics";
 import { GlobalState } from "../store/reducers/types";
+import { getCurrentRouteName } from "../utils/navigation";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
