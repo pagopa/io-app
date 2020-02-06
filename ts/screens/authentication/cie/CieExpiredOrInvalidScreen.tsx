@@ -52,7 +52,7 @@ class CieExpiredOrInvalidScreen extends React.Component<Props> {
           </View>
         </BaseScreenComponent>
         <FooterWithButtons
-          type="SingleButton"
+          type={"SingleButton"}
           leftButton={{
             cancel: true,
             onPress: (): boolean => this.props.navigation.goBack(),

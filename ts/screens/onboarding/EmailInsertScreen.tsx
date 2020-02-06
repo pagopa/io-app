@@ -105,7 +105,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     };
 
     return (
-      <FooterWithButtons type="SingleButton" leftButton={continueButtonProps} />
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={continueButtonProps}
+      />
     );
   };
 

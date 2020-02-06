@@ -62,10 +62,10 @@ const CardSelectionScreen: React.SFC<Props> = props => {
     <BaseScreenComponent goBack={true}>
       <Content noPadded={true} bounces={false}>
         <ScreenHeader
-          heading={<H2 style={styles.titleHeader}>{I18n.t("cie.title")}</H2>}
+          heading={<H2 style={styles.titleHeader}>{I18n.t("authentication.cie.card.title")}</H2>}
         />
         <Text style={styles.messageHeader}>
-          {I18n.t("cie.layCardMessageHeader")}
+          {I18n.t("authentication.cie.card.layCardMessageHeader")}
         </Text>
         <View style={{ alignItems: "center", height: boxDimension }}>
           <AnimatedRing
@@ -93,7 +93,7 @@ const CardSelectionScreen: React.SFC<Props> = props => {
           />
         </View>
         <Text style={styles.messageFooter}>
-          {I18n.t("cie.layCardMessageFooter")}
+          {I18n.t("authentication.cie.card.layCardMessageFooter")}
         </Text>
       </Content>
       <View footer={true}>

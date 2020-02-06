@@ -66,16 +66,16 @@ class CieWrongCiePinScreen extends React.Component<Props> {
         <BaseScreenComponent goBack={false}>
           <View style={styles.contentContainerStyle}>
             <H1>
-              {I18n.t("authentication.landing.cie.incorrectCiePinTitle", {
+              {I18n.t("authentication.cie.pin.incorrectCiePinTitle", {
                 remainingCount
               })}
             </H1>
             <Text>
-              {I18n.t("authentication.landing.cie.incorrectCiePinContent1")}
+              {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
             </Text>
             <View spacer={true} />
             <Text>
-              {I18n.t("authentication.landing.cie.incorrectCiePinContent2")}
+              {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
             </Text>
             <View spacer={true} />
           </View>

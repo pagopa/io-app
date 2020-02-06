@@ -85,7 +85,7 @@ class SpidCIEInformationScreen extends React.Component<Props, never> {
             <H2>{I18n.t("authentication.spid_information.contentTitleCie")}</H2>
 
             <View spacer={true} large={true} />
-            <Text>{I18n.t("authentication.spid_or_cie")}</Text>
+            <Text>{I18n.t("authentication.landing.spid_or_cie")}</Text>
           </View>
           <Tabs
             tabBarUnderlineStyle={styles.tabBarUnderline}
@@ -125,7 +125,7 @@ class SpidCIEInformationScreen extends React.Component<Props, never> {
                   primary={true}
                   onPress={() => this.browseToLink("https://www.spid.gov.it")}
                 >
-                  <Text>{I18n.t("authentication.request_spid")}</Text>
+                  <Text>{I18n.t("authentication.landing.request_spid")}</Text>
                 </Button>
               </View>
             </Tab>
@@ -135,7 +135,7 @@ class SpidCIEInformationScreen extends React.Component<Props, never> {
             >
               <Content>
                 <Markdown>
-                  {I18n.t("authentication.cie_information_request")}
+                  {I18n.t("authentication.landing.cie_information_request")}
                 </Markdown>
                 <View spacer={true} extralarge={true} />
               </Content>
@@ -149,7 +149,7 @@ class SpidCIEInformationScreen extends React.Component<Props, never> {
                     )
                   }
                 >
-                  <Text>{I18n.t("authentication.request_cie")}</Text>
+                  <Text>{I18n.t("authentication.landing.request_cie")}</Text>
                 </Button>
               </View>
             </Tab>

@@ -60,11 +60,11 @@ class InterruptedReadingCardScreen extends React.Component<Props> {
         <BaseScreenComponent goBack={true}>
           <View style={styles.contentContainerStyle}>
             <H2>
-              {I18n.t("authentication.landing.cie.cardRemovedEarlyTitle")}
+              {I18n.t("authentication.cie.card.error.cardRemovedEarlyTitle")}
             </H2>
             <View spacer={true} />
             <Text style={styles.text}>
-              {I18n.t("authentication.landing.cie.cardRemovedEarlyContent")}
+              {I18n.t("authentication.cie.card.error.cardRemovedEarlyContent")}
             </Text>
           </View>
         </BaseScreenComponent>

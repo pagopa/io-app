@@ -78,9 +78,9 @@ class CieValidScreen extends React.Component<Props> {
     return (
       <BaseScreenComponent goBack={true}>
         <View style={styles.contentContainerStyle}>
-          <H1>{I18n.t("authentication.landing.ok")}</H1>
+          <H1>{I18n.t("global.buttons.ok2")}</H1>
           <Text style={styles.text}>
-            {I18n.t("authentication.landing.cieCardValid")}
+            {I18n.t("authentication.cie.card.cieCardValid")}
           </Text>
         </View>
         <View spacer={true} extralarge={true} />
@@ -89,7 +89,7 @@ class CieValidScreen extends React.Component<Props> {
             <Image source={cieImage} style={styles.image} />
             <IconFont
               style={styles.success}
-              name="io-success"
+              name={"io-success"}
               color={variables.textLinkColor}
               size={50}
             />

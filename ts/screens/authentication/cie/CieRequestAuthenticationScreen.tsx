@@ -1,93 +1,59 @@
-import { Button, Text, View } from "native-base";
+/**
+ * A screen to manage the request of authentication once the pin of the user's CIE has been inserted
+ */
+import { View } from "native-base";
 import * as React from "react";
-import { Image, NavState, StyleSheet } from "react-native";
+import { Alert, NavState } from "react-native";
 import WebView from "react-native-webview";
-import {
-  NavigationScreenProp,
-  NavigationScreenProps,
-  NavigationState
-} from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
+import TopScreenComponent from "../../../components/screens/TopScreenComponent";
+import { cieAuthenticationUri } from "../../../config";
 import I18n from "../../../i18n";
 import { navigateToCieCardReaderScreen } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import variables from "../../../theme/variables";
-
-const cieAuthenticationUri =
-  "https://app-backend.k8s.test.cd.teamdigitale.it/login?entityID=xx_servizicie_test&authLevel=SpidL2";
 
 type NavigationParams = {
   ciePin: string;
 };
 
-type OwnProps = {
-  isLoading: boolean;
-  ciePin: string;
-};
-
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}> &
-  OwnProps &
-  NavigationScreenProps<NavigationParams> &
+type Props = NavigationScreenProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   hasError: boolean;
   isLoading: boolean;
   findOpenApp: boolean;
+  webViewKey: number;
 };
-
-const styles = StyleSheet.create({
-  contentContainerStyle: {
-    padding: variables.contentPadding
-  },
-  text: {
-    fontSize: variables.fontSizeBase
-  },
-  errorContainer: {
-    padding: 20,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-
-  errorTitle: {
-    fontSize: 20,
-    marginTop: 10
-  },
-
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
-  },
-  errorButtonsContainer: {
-    position: "absolute",
-    bottom: 30,
-    flex: 1,
-    flexDirection: "row"
-  },
-  cancelButtonStyle: {
-    flex: 1,
-    marginEnd: 10
-  }
-});
-
-const brokenLinkImage = require("../../../../img/broken-link.png");
 
 class CieRequestAuthenticationScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { hasError: false, isLoading: true, findOpenApp: false };
+    this.state = {
+      hasError: false,
+      isLoading: true,
+      findOpenApp: false,
+      webViewKey: 1
+    };
   }
 
   private handleNavigationStateChange = (event: NavState): void => {
+    // TODO: check if we can distinguish among different type of errors
+    //      some errors could suggest ro redirect the user to the landing screen , not back
+    if (event.url && event.url.indexOf("errore") !== -1) {
+      this.setState({
+        isLoading: false,
+        hasError: true
+      });
+    }
+
     if (this.state.findOpenApp) {
       return;
     }
+    // Once the returned url conteins the "OpenApp" string, then the authorization has been given
     if (event.url && event.url.indexOf("OpenApp") !== -1) {
       this.setState({ findOpenApp: true });
       const authorizationUri = event.url;
@@ -102,40 +68,52 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
     return this.props.navigation.getParam("ciePin");
   }
 
-  private goBack = this.props.navigation.goBack;
-
   private handleWebViewError = () => {
     this.setState({ hasError: true });
   };
+
   private renderError = () => {
     return (
-      <View style={styles.errorContainer}>
-        <Image source={brokenLinkImage} resizeMode="contain" />
-        <Text style={styles.errorTitle} bold={true}>
-          {I18n.t("authentication.errors.network.title")}
-        </Text>
-        )}
-        <View style={styles.errorButtonsContainer}>
-          <Button
-            onPress={this.goBack}
-            style={styles.cancelButtonStyle}
-            block={true}
-            light={true}
-            bordered={true}
-          >
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-          <Button
-            onPress={undefined}
-            style={{ flex: 2 }}
-            block={true}
-            primary={true}
-          >
-            <Text>{I18n.t("global.buttons.retry")}</Text>
-          </Button>
-        </View>
-      </View>
+      <GenericErrorComponent
+        onRetry={this.handleOnRetry}
+        onCancel={this.handleGoBack}
+        image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
+        text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
+      />
     );
+  };
+
+  // Updating the webView key its content is refreshed
+  private handleOnRetry = () => {
+    const webViewKey = this.state.webViewKey + 1;
+    this.setState({
+      webViewKey,
+      hasError: false,
+      isLoading: true
+    });
+  };
+
+  // Going back the user should insert the pin again
+  private handleGoBack = () => {
+    if (!this.state.isLoading) {
+      this.props.navigation.goBack();
+    } else {
+      Alert.alert(
+        "Sicuro di voler annullare l'operazione in corso?",
+        undefined,
+        [
+          {
+            text: I18n.t("global.buttons.cancel"), // TODO: validate button name - the action is a cancel, it could be confusing
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.confirm"),
+            style: "default",
+            onPress: this.props.navigation.goBack
+          }
+        ]
+      );
+    }
   };
 
   private renderWebView() {
@@ -151,20 +129,24 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
           source={{
             uri: cieAuthenticationUri
           }}
+          key={this.state.webViewKey}
         />
       </View>
     );
   }
+
   public render(): React.ReactNode {
     const ContainerComponent = withLoadingSpinner(() => (
-      <BaseScreenComponent goBack={true}>
+      <TopScreenComponent goBack={this.handleGoBack}>
         {this.renderWebView()}
-      </BaseScreenComponent>
+      </TopScreenComponent>
     ));
     return (
       <ContainerComponent
         isLoading={this.state.isLoading}
         loadingOpacity={1.0}
+        loadingCaption={I18n.t("global.genericWaiting")}
+        onCancel={this.handleGoBack}
       />
     );
   }

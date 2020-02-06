@@ -12,6 +12,7 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
+  genericWaiting: Attendi qualche secondo..
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
@@ -23,6 +24,7 @@ global:
     delete: Elimina
     cancel: Annulla
     ok: OK
+    ok2: Ok
     continue: Continua
     retry: Riprova
     back: Indietro
@@ -189,10 +191,6 @@ userMetadata:
 navigation:
   messages: Messaggi
   profile: Profilo
-cie:
-  title: Appoggia la carta
-  layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
-  layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finchè non senti un suono.
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
@@ -202,13 +200,16 @@ spid:
   loginErrorAlert:
     title: Errore login
     message: Mi spiace, si è verificato un errore durante l'accesso, potresti riprovare?
-    okLabel: Ok
   subscription:
     line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
       Amministrazione Italiana.
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
+    cie_information_request: !include cie.md
+    spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
+    request_cie: Richiedi CIE
+    request_spid: Ottieni SPID
     loginSpid: Entra con SPID
     loginCie: Entra con CIE
     loginSpidCie: Accedi con SPID o CIE
@@ -234,43 +235,45 @@ authentication:
     expiredCardTitle: Carta scaduta o non più valida
     expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
-    cie:
+  cie:
+    cie: Carta di Identità Elettronica
+    noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
+    authToSendData: !include cie/auth_to_send_data.md
+    nfc:
       noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
-      cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
-      cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+      enableNfcTitle: Attiva NFC
+      enableNfcHeader: Verifica NFC
+      enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
+      nfcEnabledTitle: NFC Attivo
+      nfcEnabledContent: "Grazie per aver attivato la funzione NFC sul tuo dispositivo: puoi proseguire con l'autenticazione!"
+    pin:
       pinCardTitle: Inserisci il PIN della tua carta
+      pinCardHeader: Inserisci il PIN
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
       incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
-    ok: Ok
-    cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
-    cieLoginWait: Attendi qualche secondo..
-  cie:
-    enableNfcTitle: Attiva NFC
-    enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
-    enableNfcHelp: Non hai la Carta di Identità Elettronica?
-    nfcEnabledTitle: NFC Attivo
-    nfcEnabledContent: "Grazie per aver attivato la funzione NFC sul tuo dispositivo: puoi proseguire con l'autenticazione!"
-    unknownCardTitle: Carta sconosciuta
-    unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
-    unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
-    cie: Carta di Identità Elettronica
-    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
-    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
-    readerCardTitle: Tieni ferma la carta per qualche secondo
-    readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
-    readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
-    readerCardLostTitle: Avvicina nuovamente la carta
-    readerCardLostHeader: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta.
-    noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
-    authToSendData: !include cie/auth_to_send_data.md
-  cie_information_request: !include cie.md
-  spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
-  request_cie: Richiedi CIE
-  request_spid: Ottieni SPID
+      alert: Sei sicuro di voler tornare indietro?
+    card:
+      title: Appoggia la carta
+      layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
+      layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finchè non senti un suono.
+      cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
+      readerCardTitle: Tieni ferma la carta per qualche secondo
+      readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
+      readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
+      readerCardLostTitle: Avvicina nuovamente la carta
+      readerCardLostHeader: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta.
+      error:
+        unknownCardTitle: Carta sconosciuta
+        unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+        unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
+        cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
+        cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+        temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
+        temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
+        temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?

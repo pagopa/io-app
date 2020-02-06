@@ -1,4 +1,4 @@
-import { Button, Container, H1, Text, View } from "native-base";
+import { Button, Container, Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
 import WebView from "react-native-webview";

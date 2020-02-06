@@ -1,5 +1,5 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Content, H2, Text, View } from "native-base";
+import { Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, Easing, Image, StyleSheet, Vibration } from "react-native";
 import cieManager, { Event as CEvent } from "react-native-cie";
@@ -9,10 +9,10 @@ import {
   NavigationScreenProps,
   NavigationState
 } from "react-navigation";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
 import AnimatedRing from "../../../components/animations/AnimatedRing";
 import ScreenHeader from "../../../components/ScreenHeader";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import {
   navigateToCieValid,
@@ -251,19 +251,19 @@ class CieCardReaderScreen extends React.Component<Props, State> {
             heading={
               <H2 style={styles.titleHeader}>
                 {this.state.readingState === "error"
-                  ? I18n.t("authentication.cie.readerCardLostTitle")
+                  ? I18n.t("authentication.cie.card.readerCardLostTitle")
                   : this.state.readingState === "reading"
-                    ? I18n.t("authentication.cie.readerCardTitle")
-                    : I18n.t("cie.title")}
+                    ? I18n.t("authentication.cie.card.readerCardTitle")
+                    : I18n.t("authentication.cie.card.title")}
               </H2>
             }
           />
           <Text style={styles.messageHeader}>
             {this.state.readingState === "error"
-              ? I18n.t("authentication.cie.readerCardLostHeader")
+              ? I18n.t("authentication.cie.card.readerCardLostHeader")
               : this.state.readingState === "reading"
-                ? I18n.t("authentication.cie.readerCardHeader")
-                : I18n.t("cie.layCardMessageHeader")}
+                ? I18n.t("authentication.cie.card.readerCardHeader")
+                : I18n.t("authentication.cie.card.layCardMessageHeader")}
           </Text>
           <View style={styles.imgContainer}>
             <View style={styles.rings}>
@@ -314,19 +314,18 @@ class CieCardReaderScreen extends React.Component<Props, State> {
             {this.state.readingState === "error"
               ? this.state.errorMessage
               : this.state.readingState === "reading"
-                ? I18n.t("authentication.cie.readerCardFooter")
-                : I18n.t("cie.layCardMessageFooter")}
+                ? I18n.t("authentication.cie.card.readerCardFooter")
+                : I18n.t("authentication.cie.card.layCardMessageFooter")}
           </Text>
         </Content>
-        <View footer={true}>
-          <Button
-            onPress={this.props.navigation.goBack}
-            cancel={true}
-            block={true}
-          >
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-        </View>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={{
+            onPress: this.props.navigation.goBack,
+            cancel: true,
+            title: I18n.t("global.buttons.cancel")
+          }}
+        />
       </BaseScreenComponent>
     );
   }

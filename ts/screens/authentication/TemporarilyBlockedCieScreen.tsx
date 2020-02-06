@@ -51,8 +51,10 @@ class TemporarilyBlockedCieScreen extends React.Component<Props, State> {
     const retryButtonProps = {
       block: true,
       primary: true,
-      onPress: (): void => Alert.alert(I18n.t("global.notImplemented")),
-      title: I18n.t("authentication.cie.temporarilyBlockedCieDoneButton")
+      onPress: (): void => Alert.alert(I18n.t("global.notImplemented")), // TODO
+      title: I18n.t(
+        "authentication.cie.card.error.temporarilyBlockedCieDoneButton"
+      )
     };
 
     // replace with a computed value
@@ -63,7 +65,7 @@ class TemporarilyBlockedCieScreen extends React.Component<Props, State> {
         <BaseScreenComponent goBack={true}>
           <View style={styles.contentContainerStyle}>
             <Markdown onLoadEnd={this.handleMarkdownLoadingCompleted}>
-              {I18n.t("authentication.cie.temporarilyBlockedCie")}
+              {I18n.t("authentication.cie.card.error.temporarilyBlockedCie")}
             </Markdown>
             <View spacer={true} />
             {this.state.isLoadingCompleted &&
@@ -84,7 +86,7 @@ class TemporarilyBlockedCieScreen extends React.Component<Props, State> {
                   />
                   <Text>
                     {I18n.t(
-                      "authentication.cie.temporarilyBlockedCieOpenCieID"
+                      "authentication.cie.card.error.temporarilyBlockedCieOpenCieID"
                     )}
                   </Text>
                 </Button>

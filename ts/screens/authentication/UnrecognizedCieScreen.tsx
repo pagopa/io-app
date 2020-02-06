@@ -42,10 +42,10 @@ class UnrecognizedCieScreen extends React.Component<Props> {
       <Container>
         <BaseScreenComponent goBack={true}>
           <View style={styles.contentContainerStyle}>
-            <H1>{I18n.t("authentication.cie.unknownCardTitle")}</H1>
+            <H1>{I18n.t("authentication.cie.card.error.unknownCardTitle")}</H1>
             <View spacer={true} />
             <Text style={styles.text}>
-              {I18n.t("authentication.cie.unknownCardContent")}
+              {I18n.t("authentication.cie.card.error.unknownCardContent")}
             </Text>
             <View spacer={true} />
             {
@@ -53,12 +53,12 @@ class UnrecognizedCieScreen extends React.Component<Props> {
               // TODO: https://www.pivotaltracker.com/story/show/169167508
             }
             <Text link={true} onPress={undefined}>
-              {I18n.t("authentication.cie.unknownCardHelpLink")}
+              {I18n.t("authentication.cie.card.error.unknownCardHelpLink")}
             </Text>
           </View>
         </BaseScreenComponent>
         <FooterWithButtons
-          type="TwoButtonsInlineHalf"
+          type={"TwoButtonsInlineHalf"}
           rightButton={retryButtonProps}
           leftButton={cancelButtonProps}
         />

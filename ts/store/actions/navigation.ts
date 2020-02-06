@@ -7,6 +7,11 @@ import {
 } from "react-navigation";
 import { ActionType, createStandardAction } from "typesafe-actions";
 import ROUTES from "../../navigation/routes";
+import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
+import CieConfirmDataUsage from "../../screens/authentication/cie/CieConsentDataUsageScreen";
+import CieRequestAuthenticationScreen from "../../screens/authentication/cie/CieRequestAuthenticationScreen";
+import CieValidScreen from "../../screens/authentication/cie/CieValidScreen";
+import CieWrongCiePinScreen from "../../screens/authentication/cie/CieWrongCiePinScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
@@ -22,12 +27,6 @@ import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSu
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import { InferNavigationParams } from "../../types/react";
-import CieRequestAuthenticationScreen from "../../screens/authentication/cie/CieRequestAuthenticationScreen";
-import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
-import CieConfirmDataUsage from "../../screens/authentication/cie/CieConsentDataUsageScreen";
-import CieValidScreen from "../../screens/authentication/cie/CieValidScreen";
-import CieIncorrectCiePinScreen from "../../screens/authentication/cie/CieWrongCiePinScreen";
-import CieWrongCiePinScreen from "../../screens/authentication/cie/CieWrongCiePinScreen";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState

@@ -36,11 +36,11 @@ class CieSuccessScreen extends React.Component<Props> {
           <IconFont
             size={ICON_SIZE}
             color={variables.brandPrimary}
-            name="io-success"
+            name={"io-success"}
           />
           <View spacer={true} />
           <Text style={styles.text}>
-            {I18n.t("authentication.landing.cieLoginWait")}
+            {I18n.t("global.genericWaiting")}
           </Text>
         </View>
       </BaseScreenComponent>

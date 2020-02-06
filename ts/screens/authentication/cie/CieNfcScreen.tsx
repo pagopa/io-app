@@ -1,18 +1,20 @@
-import { Container, H1, Text, View } from "native-base";
+/**
+ * A screen to check if the NFC in enabled on the device.
+ * If not, alert/guide the user to activate it from device settings
+ */
+import { Container, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import ScreenHeader from "../../../components/ScreenHeader";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { NavigationInjectedProps } from "react-navigation";
+import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
+import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import variables from "../../../theme/variables";
 import { isNfcEnabled, openNFCSettings } from "../../../utils/cie";
 
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type Props = NavigationInjectedProps;
 
 type State = {
   isNfcEnabled: boolean;
@@ -36,9 +38,7 @@ export default class CieNfcScreen extends React.Component<Props, State> {
 
   private updateNfcState = async () => {
     const isNfcOn = await isNfcEnabled();
-    if (this.state.isNfcEnabled !== isNfcOn) {
-      this.setState({ isNfcEnabled: isNfcOn });
-    }
+    this.setState({ isNfcEnabled: isNfcOn });
   };
 
   private checkNfcState = async () => {
@@ -81,7 +81,6 @@ export default class CieNfcScreen extends React.Component<Props, State> {
             block: true
           }}
           rightButton={{
-            cancel: false,
             onPress: this.handleOnPressContinue,
             title: I18n.t("global.buttons.continue"),
             block: true
@@ -99,9 +98,8 @@ export default class CieNfcScreen extends React.Component<Props, State> {
             block: true
           }}
           rightButton={{
-            cancel: false,
             onPress: this.handleOnPressActivateNFC,
-            title: I18n.t("authentication.cie.enableNfcTitle"),
+            title: I18n.t("authentication.cie.nfc.enableNfcTitle"),
             block: true
           }}
         />
@@ -111,24 +109,27 @@ export default class CieNfcScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const heading = this.state.isNfcEnabled
-      ? I18n.t("authentication.cie.nfcEnabledTitle")
-      : I18n.t("authentication.cie.enableNfcTitle");
+      ? I18n.t("authentication.cie.nfc.nfcEnabledTitle")
+      : I18n.t("authentication.cie.nfc.enableNfcTitle");
 
     const content = this.state.isNfcEnabled
-      ? I18n.t("authentication.cie.nfcEnabledContent")
-      : I18n.t("authentication.cie.enableNfcContent");
+      ? I18n.t("authentication.cie.nfc.nfcEnabledContent")
+      : I18n.t("authentication.cie.nfc.enableNfcContent");
 
     return (
       <Container>
-        <BaseScreenComponent goBack={true}>
-          <ScreenHeader
-            heading={<H1>{heading}</H1>}
+        <TopScreenComponent
+          goBack={true}
+          title={I18n.t("authentication.cie.nfc.enableNfcHeader")}
+        >
+          <ScreenContentHeader
+            title={heading}
             icon={require("../../../../img/icons/nfc-icon.png")}
           />
           <View style={styles.contentContainerStyle}>
             <Text style={styles.text}>{content}</Text>
           </View>
-        </BaseScreenComponent>
+        </TopScreenComponent>
         {this.renderFooter()}
       </Container>
     );

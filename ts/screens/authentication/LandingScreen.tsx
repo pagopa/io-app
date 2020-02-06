@@ -2,11 +2,10 @@
  * A screen where the user can choose to login with SPID or get more informations.
  * It includes a carousel with highlights on the app functionalities
  */
-
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { DevScreenButton } from "../../components/DevScreenButton";
@@ -22,17 +21,13 @@ import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
+import { isCIEAuthenticationSupported, isNfcEnabled } from "../../utils/cie";
 import { showToast } from "../../utils/showToast";
 
-
-import { isCIEAuthenticationSupported, isNfcEnabled } from "../../utils/cie";
-
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
-
-type Props = ReduxProps & OwnProps &
+type Props = ReduxProps &
+  NavigationInjectedProps &
   ReturnType<typeof mapStateToProps>;
+
 type State = {
   isCIEAuthenticationSupported: boolean;
 };
@@ -82,6 +77,9 @@ const styles = StyleSheet.create({
   noPadded: {
     paddingLeft: 0,
     paddingRight: 0
+  },
+  flex: {
+    flex: 1
   }
 });
 
@@ -92,10 +90,12 @@ class LandingScreen extends React.PureComponent<Props, State> {
   }
 
   public async componentDidMount() {
+    // TODO
     const isCieSupported = await isCIEAuthenticationSupported();
     this.setState({
       isCIEAuthenticationSupported: isCieSupported
     });
+
     if (this.props.isSessionExpired) {
       showToast(
         I18n.t("authentication.expiredSessionBanner.message"),
@@ -138,10 +138,8 @@ class LandingScreen extends React.PureComponent<Props, State> {
           <DevScreenButton onPress={this.navigateToMarkdown} />
         )}
 
-        <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
-          <View spacer={true} large={true} />
+        <Content contentContainerStyle={styles.flex} noPadded={true}>
           <HorizontalScroll cards={this.renderCardComponents()} />
-          <View spacer={true} />
         </Content>
 
         <View footer={true}>
@@ -181,7 +179,6 @@ class LandingScreen extends React.PureComponent<Props, State> {
                 : I18n.t("authentication.landing.nospid")}
             </Text>
           </ButtonDefaultOpacity>
-          <View spacer={true} extralarge={true} />
         </View>
       </BaseScreenComponent>
     );
