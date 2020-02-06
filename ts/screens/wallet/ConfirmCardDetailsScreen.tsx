@@ -11,16 +11,15 @@ import { Modal } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import Switch from "../../components/ui/Switch";
-
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
+import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import Checkout3DsComponent from "../../components/Checkout3DsComponent";
 import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import NoticeBox from "../../components/NoticeBox";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import Switch from "../../components/ui/Switch";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import I18n from "../../i18n";
 import {
