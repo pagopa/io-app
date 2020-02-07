@@ -1,3 +1,7 @@
+/**
+ * A component that show a Grid with every Identity Provider passed in the idps
+ * array property. When an Identity Provider is selected a callback function is called.
+ */
 import * as React from "react";
 import {
   Dimensions,
@@ -68,12 +72,9 @@ const renderItem = (props: Props) => (
   );
 };
 
-/**
- * A component that show a Grid with every Identity Provider passed in the idps
- * array property. When an Identity Provider is selected a callback function is called.
- */
 const IdpsGrid: React.SFC<Props> = props => (
   <FlatList
+    bounces={false}
     data={props.idps}
     numColumns={2}
     keyExtractor={keyExtractor}

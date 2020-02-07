@@ -119,7 +119,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
         <ScreenContentHeader
           title={I18n.t("authentication.idp_selection.contentTitle")}
         />
-        <View style={styles.gridContainer} testID="idps-view">
+        <View style={styles.gridContainer} testID={"idps-view"}>
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
           <ButtonDefaultOpacity
