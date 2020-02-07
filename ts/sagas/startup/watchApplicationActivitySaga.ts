@@ -37,6 +37,9 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   });
 }
 
+// tslint:disable-next-line:no-let
+let identificationBackgroundTimer: Task | undefined;
+
 /**
  * When the app goes in background and return active, the identification is asked if:
  * - the current route requires the identification be be shown again
@@ -56,8 +59,6 @@ export function* watchRequiredIdentificationSaga(
   const isSecuredRoute = currentRoute && whiteList.indexOf(currentRoute) !== -1;
 
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
-  // tslint:disable-next-line:no-let
-  let identificationBackgroundTimer: Task | undefined;
   if (lastState !== "background" && newState === "background") {
     if (isSecuredRoute) {
       /**
