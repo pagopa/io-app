@@ -1,3 +1,6 @@
+/**
+ * A component to display a brandDarkGray background color on the screen using it
+ */
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -28,7 +31,6 @@ type Props = Readonly<{
   topContentHeight?: number;
   footerContent?: React.ReactNode;
   contextualHelp?: { title: string; body: () => React.ReactNode };
-  banner?: React.ReactNode;
   contentRefreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
 
@@ -41,14 +43,12 @@ const styles = StyleSheet.create({
 
 export default class DarkLayout extends React.Component<Props> {
   private screenContent() {
-    const { banner } = this.props;
     return (
       <React.Fragment>
         <View style={styles.headerContents}>
           <View spacer={true} />
           {this.props.topContent}
         </View>
-        {banner}
         {this.props.children}
       </React.Fragment>
     );
