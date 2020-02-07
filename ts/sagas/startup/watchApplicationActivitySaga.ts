@@ -21,6 +21,7 @@ import { watchNotificationSaga } from "./watchNotificationSaga";
 export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
   // tslint:disable-next-line:no-let
   let lastState: ApplicationState = "active";
+  // tslint:disable-next-line:no-let
   let identificationBackgroundTimer: Task | undefined;
   yield takeEvery(getType(applicationChangeState), function*(
     action: ActionType<typeof applicationChangeState>
