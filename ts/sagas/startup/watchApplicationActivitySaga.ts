@@ -30,7 +30,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
     const newApplicationState: ApplicationState = action.payload;
     // tslint:disable-next-line:no-let
 
-    const backgroundActivityTimeoutMillis = 5 * 1000;
+    const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
     if (lastState !== "background" && newApplicationState === "background") {
       // Screens requiring identification when the app pass from background/inactive to active state
       const whiteList: ReadonlyArray<string> = [ROUTES.WALLET_ADD_CARD];
