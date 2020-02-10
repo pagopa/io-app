@@ -5,8 +5,9 @@
  * of choice (although only credit cards will be allowed
  * initially).
  *
- * This screen allows also to add a new payment method after a transaction is identified
- * the header banner provide a summary on the transaction to perform.
+ * This screen allows also to add a new payment method after a transaction is identified.
+ *
+ * The header banner provides a summary on the transaction to perform.
  *
  * Keep in mind that the rest of the "add credit card" process
  * is handled @https://www.pivotaltracker.com/story/show/157838293

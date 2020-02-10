@@ -1,3 +1,6 @@
+/**
+ * A screen that contains all the Tabs related to messages.
+ */
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
@@ -46,11 +49,7 @@ type Props = NavigationScreenProps &
 
 type State = {
   currentTab: number;
-  hasRefreshedOnceUp: boolean;
 };
-
-// Scroll range is directly influenced by floating header height
-const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   tabBarContainer: {
@@ -85,6 +84,10 @@ const styles = StyleSheet.create({
   }
 });
 
+const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
+  ScreenContentHeader
+);
+
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -94,24 +97,40 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * A screen that contains all the Tabs related to messages.
  */
-class MessagesHomeScreen extends React.Component<Props, State> {
+class MessagesHomeScreen extends React.PureComponent<Props, State> {
   private navListener?: NavigationEventSubscription;
   constructor(props: Props) {
     super(props);
     this.state = {
-      currentTab: 0,
-      hasRefreshedOnceUp: false
+      currentTab: 0
     };
   }
 
-  private animatedScrollPositions: ReadonlyArray<Animated.Value> = [
+  private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
     new Animated.Value(0),
     new Animated.Value(0),
     new Animated.Value(0)
   ];
 
-  // tslint:disable-next-line: readonly-array
-  private scollPositions: number[] = [0, 0, 0];
+  /**
+   * The screen header is animated: for each tab, once the y content offset of the
+   * list changes, then the related animatedTabScrollPositions value is updated.
+   * To reproduce a sticky effect common to all the tabs, the animation is based on
+   * the sum of the 3 scroll values.
+   */
+  private sumOfPositions = Animated.add(
+    Animated.add(
+      this.animatedTabScrollPositions[0],
+      this.animatedTabScrollPositions[1]
+    ),
+    this.animatedTabScrollPositions[2]
+  );
+  private getHeaderHeight = (): Animated.AnimatedInterpolation =>
+    this.sumOfPositions.interpolate({
+      inputRange: [0, HEADER_HEIGHT * 3], // The multiplier works as workaround to solve the glitch on Android OS (https://github.com/facebook/react-native/issues/21801)
+      outputRange: [HEADER_HEIGHT, 0],
+      extrapolate: "clamp"
+    });
 
   private onRefreshMessages = () => {
     this.props.refreshMessages(
@@ -136,29 +155,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     }
   }
 
-  public componentDidUpdate(prevprops: Props, prevstate: State) {
-    // saving current list scroll position to enable header animation
-    // when shifting between tabs
-    if (prevstate.currentTab !== this.state.currentTab) {
-      this.animatedScrollPositions.map((_, i) => {
-        // when current tab changes, listeners are not kept, so it is needed to
-        // assign them again.
-        this.animatedScrollPositions[i].removeAllListeners();
-        this.animatedScrollPositions[i].addListener(animatedValue => {
-          // tslint:disable-next-line: no-object-mutation
-          this.scollPositions[i] = animatedValue.value;
-        });
-      });
-    }
-    if (
-      pot.isLoading(prevprops.lexicallyOrderedMessagesState) &&
-      !pot.isLoading(this.props.lexicallyOrderedMessagesState) &&
-      !prevstate.hasRefreshedOnceUp
-    ) {
-      this.setState({ hasRefreshedOnceUp: true });
-    }
-  }
-
   public render() {
     const { isSearchEnabled } = this.props;
 
@@ -167,15 +163,15 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         title={I18n.t("messages.contentTitle")}
         isSearchAvailable={true}
-        searchType="Messages"
+        searchType={"Messages"}
         appLogo={true}
       >
         {!isSearchEnabled && (
           <React.Fragment>
-            <ScreenContentHeader
+            <AnimatedScreenContentHeader
               title={I18n.t("messages.contentTitle")}
               icon={require("../../../img/icons/message-icon.png")}
-              fixed={true}
+              dynamicHeight={this.getHeaderHeight()}
             />
             {this.renderTabs()}
           </React.Fragment>
@@ -185,6 +181,8 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     );
   }
 
+  // Disable longPress options the horizontal scroll
+  // overcome the 50% of the tab width
   private handleOnTabsScroll = (value: number) => {
     const { currentTab } = this.state;
     if (Math.abs(value - currentTab) > 0.5) {
@@ -195,6 +193,7 @@ class MessagesHomeScreen extends React.Component<Props, State> {
     }
   };
 
+  // Update cuttentTab state when horizontal scroll is completed
   private handleOnChangeTab = (evt: any) => {
     const nextTab: number = evt.i;
     this.setState({
@@ -221,27 +220,6 @@ class MessagesHomeScreen extends React.Component<Props, State> {
         onScroll={this.handleOnTabsScroll}
         onChangeTab={this.handleOnChangeTab}
         initialPage={0}
-        style={{
-          transform: [
-            {
-              // hasRefreshedOnceUp is used to avoid unwanted refresh of
-              // animation after a new set of messages is received from
-              // backend at first load
-              translateY: this.state.hasRefreshedOnceUp
-                ? this.animatedScrollPositions[
-                    this.state.currentTab
-                  ].interpolate({
-                    inputRange:
-                      Platform.OS === "ios"
-                        ? [0, SCROLL_RANGE_FOR_ANIMATION]
-                        : [0, SCROLL_RANGE_FOR_ANIMATION * 3],
-                    outputRange: [SCROLL_RANGE_FOR_ANIMATION, 0],
-                    extrapolate: "clamp"
-                  })
-                : SCROLL_RANGE_FOR_ANIMATION
-            }
-          ]
-        }}
       >
         <Tab
           activeTextStyle={styles.activeTextStyle}
@@ -257,38 +235,14 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
             animated={{
-              onScroll: Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        y: this.animatedScrollPositions[0]
-                      }
-                    }
+              onScroll: Animated.event([
+                {
+                  nativeEvent: {
+                    contentOffset: { y: this.animatedTabScrollPositions[0] }
                   }
-                ],
-                {
-                  useNativeDriver: true
                 }
-              ),
-              scrollEventThrottle: 8 // target is 120fps
-            }}
-            paddingForAnimation={true}
-            AnimatedCTAStyle={{
-              transform: [
-                {
-                  translateY: this.animatedScrollPositions[
-                    this.state.currentTab
-                  ].interpolate({
-                    inputRange:
-                      Platform.OS === "ios"
-                        ? [0, SCROLL_RANGE_FOR_ANIMATION]
-                        : [0, SCROLL_RANGE_FOR_ANIMATION * 3],
-                    outputRange: [0, SCROLL_RANGE_FOR_ANIMATION],
-                    extrapolate: "clamp"
-                  })
-                }
-              ]
+              ]),
+              scrollEventThrottle: 8
             }}
           />
         </Tab>
@@ -321,36 +275,14 @@ class MessagesHomeScreen extends React.Component<Props, State> {
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
             animated={{
-              onScroll: Animated.event(
-                [
-                  {
-                    nativeEvent: {
-                      contentOffset: {
-                        y: this.animatedScrollPositions[2]
-                      }
-                    }
-                  }
-                ],
-                { useNativeDriver: true }
-              ),
-              scrollEventThrottle: 8 // target is 120fps
-            }}
-            paddingForAnimation={true}
-            AnimatedCTAStyle={{
-              transform: [
+              onScroll: Animated.event([
                 {
-                  translateY: this.animatedScrollPositions[
-                    this.state.currentTab
-                  ].interpolate({
-                    inputRange:
-                      Platform.OS === "ios"
-                        ? [0, SCROLL_RANGE_FOR_ANIMATION]
-                        : [0, SCROLL_RANGE_FOR_ANIMATION * 3],
-                    outputRange: [0, SCROLL_RANGE_FOR_ANIMATION],
-                    extrapolate: "clamp"
-                  })
+                  nativeEvent: {
+                    contentOffset: { y: this.animatedTabScrollPositions[2] }
+                  }
                 }
-              ]
+              ]),
+              scrollEventThrottle: 8
             }}
           />
         </Tab>
