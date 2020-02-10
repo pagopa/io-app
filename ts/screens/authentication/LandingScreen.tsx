@@ -12,7 +12,9 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
 import * as config from "../../config";
@@ -74,6 +76,11 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   }
 ];
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "authentication.landing.contextualHelpTitle",
+  body: "authentication.landing.contextualHelpContent"
+};
+
 const styles = StyleSheet.create({
   noPadded: {
     paddingLeft: 0,
@@ -110,7 +117,7 @@ class LandingScreen extends React.PureComponent<Props> {
 
   public render() {
     return (
-      <BaseScreenComponent>
+      <BaseScreenComponent contextualHelpMarkdown={contextualHelpMarkdown}>
         {isDevEnvironment() && (
           <DevScreenButton onPress={this.navigateToMarkdown} />
         )}
