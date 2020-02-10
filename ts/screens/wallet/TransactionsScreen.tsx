@@ -92,7 +92,7 @@ class TransactionsScreen extends React.Component<Props> {
         </View>
 
         <CardComponent
-          type="Header"
+          type={"Header"}
           wallet={selectedWallet}
           hideFavoriteIcon={false}
           hideMenu={false}

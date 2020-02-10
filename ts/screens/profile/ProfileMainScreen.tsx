@@ -478,7 +478,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             <Markdown>{I18n.t("profile.main.contextualHelp")}</Markdown>
           )
         }}
-        banner={undefined}
       >
         {screenContent()}
       </DarkLayout>
