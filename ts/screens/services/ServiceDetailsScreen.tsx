@@ -23,7 +23,6 @@ import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
-import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
@@ -35,6 +34,7 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { servicesSelector } from "../../store/reducers/entities/services";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
+import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
@@ -140,6 +140,7 @@ function renderInformationImageRow(
   );
 }
 
+// TODO: test
 class ServiceDetailsScreen extends React.Component<Props, State> {
   get serviceId() {
     return this.props.navigation.getParam("service").service_id;
@@ -459,12 +460,12 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   disabled={
                     !this.state.uiEnabledChannels.inbox ||
                     pot.isUpdating(this.props.profile) ||
-                    !this.props.isValidEmail
+                    !this.props.isEmailValidated
                   }
                   value={
                     this.state.uiEnabledChannels.inbox &&
                     this.state.uiEnabledChannels.email &&
-                    this.props.isValidEmail
+                    this.props.isEmailValidated
                   }
                   onValueChange={(value: boolean) => {
                     // compute the updated map of enabled channels
@@ -506,7 +507,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isValidEmail: !isEmailEditingAndValidationEnabled && !!state, // TODO: get the proper isValidEmail from store
+  isEmailValidated: isProfileEmailValidatedSelector(state),
+  content: state.content,
   services: servicesSelector(state),
   servicesMetadataById: servicesMetadataByIdSelector(state),
   profile: profileSelector(state),

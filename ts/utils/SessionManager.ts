@@ -13,6 +13,7 @@ import { delay } from "redux-saga";
  */
 export class SessionManager<T> {
   private token?: T;
+  private isSessionEnabled: boolean = true;
   private mutex = new Mutex();
 
   /**
@@ -46,6 +47,29 @@ export class SessionManager<T> {
     return this.token;
   };
 
+  /**
+   * if enabled is false it invalidates the session token
+   * and sets a block to avoid to perform any token refreshing and
+   * requests that need token
+   *
+   * if enable is true the block will be removed and token requesting
+   * will be performed
+   */
+  private setEnabledSession = async (enabled: boolean) => {
+    await this.mutex.runExclusive(() => {
+      this.isSessionEnabled = enabled;
+      if (this.isSessionEnabled === false) {
+        this.token = undefined;
+      }
+    });
+  };
+
+  /**
+   * enable/disable to perform action that need token and token refreshing too
+   */
+  public setSessionEnabled = async (enabled: boolean) =>
+    await this.setEnabledSession(enabled);
+
   constructor(
     private refreshSession: () => Promise<Option<T>>,
     private maxRetries: number = 3
@@ -66,13 +90,18 @@ export class SessionManager<T> {
     return async () => {
       let count = 0;
       while (count <= this.maxRetries) {
+        if (this.isSessionEnabled === false) {
+          throw new Error(
+            "cant perform any requests cause the session is not enabled"
+          );
+        }
         count += 1;
         await this.exclusiveTokenUpdate();
         if (this.token === undefined) {
           // if the token is still undefined, the refresh failed, try again
           // with a random delay to prevent the dogpile effect
           await delay(Math.ceil(Math.random() * 100) + 50);
-          // TODO: add customizable retry/backoff policy
+          // TODO: add customizable retry/backoff policy (https://www.pivotaltracker.com/story/show/170819459)
           continue;
         }
         const response = await f(this.token);

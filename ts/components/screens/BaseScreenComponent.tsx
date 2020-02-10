@@ -30,7 +30,8 @@ type BaseHeaderProps =
   | "body"
   | "isSearchAvailable"
   | "searchType"
-  | "customRightIcon";
+  | "customRightIcon"
+  | "customGoBack";
 
 type Props = OwnProps &
   Pick<React.ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
@@ -66,7 +67,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       primary,
       isSearchAvailable,
       searchType,
-      customRightIcon
+      customRightIcon,
+      customGoBack
     } = this.props;
 
     return (
@@ -82,6 +84,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           body={headerBody}
           appLogo={appLogo}
           customRightIcon={customRightIcon}
+          customGoBack={customGoBack}
         />
         {this.props.children}
         {contextualHelp && (

@@ -9,11 +9,13 @@ import {
   loginSuccess,
   logoutFailure,
   logoutSuccess,
+  resetAuthenticationState,
   sessionExpired,
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
 import { Action } from "../actions/types";
+import { logoutRequest } from "./../actions/authentication";
 import { GlobalState } from "./types";
 
 // Types
@@ -49,14 +51,22 @@ export type LoggedInWithSessionInfo = Readonly<{
   sessionInfo: PublicSession;
 }>;
 
+export type LogoutRequested = Readonly<{
+  kind: "LogoutRequested";
+  idp: IdentityProvider;
+  reason: LoggedOutReason;
+}>;
+
 export type AuthenticationState =
   | LoggedOutWithoutIdp
   | LoggedOutWithIdp
+  | LogoutRequested
   | LoggedInWithoutSessionInfo
   | LoggedInWithSessionInfo;
 
 type AuthenticationStateWithIdp =
   | LoggedOutWithIdp
+  | LogoutRequested
   | LoggedInWithoutSessionInfo
   | LoggedInWithSessionInfo;
 
@@ -104,6 +114,9 @@ export function isSessionExpired(
 }
 
 // Selectors
+
+export const isLogoutRequested = (state: GlobalState) =>
+  state.authentication.kind === "LogoutRequested";
 
 export const isSessionExpiredSelector = (state: GlobalState) =>
   !isLoggedIn(state.authentication) && isSessionExpired(state.authentication);
@@ -176,6 +189,16 @@ const reducer = (
     };
   }
 
+  if (isActionOf(logoutRequest, action) && isLoggedIn(state)) {
+    return {
+      ...state,
+      ...{
+        kind: "LogoutRequested",
+        reason: "NOT_LOGGED_IN"
+      }
+    };
+  }
+
   if (
     (isActionOf(sessionExpired, action) ||
       isActionOf(sessionInvalid, action) ||
@@ -190,6 +213,10 @@ const reducer = (
         ? "SESSION_EXPIRED"
         : "NOT_LOGGED_IN"
     };
+  }
+
+  if (isActionOf(resetAuthenticationState, action) && isSessionExpired(state)) {
+    return INITIAL_STATE;
   }
 
   return state;

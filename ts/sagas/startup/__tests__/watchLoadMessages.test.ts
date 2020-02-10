@@ -9,7 +9,7 @@ import {
   loadMessages as loadMessagesAction,
   removeMessages as removeMessagesAction
 } from "../../../store/actions/messages";
-import { loadService } from "../../../store/actions/services";
+import { loadServiceDetail } from "../../../store/actions/services";
 import { messagesAllIdsSelector } from "../../../store/reducers/entities/messages/messagesAllIds";
 import {
   messagesStateByIdSelector,
@@ -115,13 +115,11 @@ describe("watchLoadMessages", () => {
         .select(messagesAllIdsSelector)
         // Return an empty pot array as messagesAllIdsSelector response
         .next(pot.some([]))
-        .select(servicesByIdSelector)
-        // Return an empty object as servicesByIdSelector response
-        .next({})
         .call(getMessages, {})
         // Return an error message as getMessages response
         .next(right({ status: 500, value: { title: "Backend error" } }))
         .put(loadMessagesAction.failure(Error("Backend error")))
+        .next()
         .next()
         .next()
         .isDone();
@@ -136,9 +134,6 @@ describe("watchLoadMessages", () => {
         .select(messagesAllIdsSelector)
         // Return an empty pot array as messagesAllIdsSelector response
         .next(pot.some([]))
-        .select(servicesByIdSelector)
-        // Return an empty object as servicesByIdSelector response (no service already stored)
-        .next({})
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next(right({ status: 200, value: testMessages }))
@@ -147,7 +142,10 @@ describe("watchLoadMessages", () => {
         .select(messagesStateByIdSelector)
         // Return an empty object as messagesByIdSelectors response (no message already stored)
         .next({})
-        .all([put(loadService.request("5a563817fcc896087002ea46c49a"))])
+        .select(servicesByIdSelector)
+        // Return an empty object as servicesByIdSelector response (no service already stored)
+        .next({})
+        .all([put(loadServiceDetail.request("5a563817fcc896087002ea46c49a"))])
         .next(right({ status: 200, value: testServicePublic }))
         .all([
           put(loadMessageAction.request(testMessages.items[1] as any)),
@@ -164,11 +162,6 @@ describe("watchLoadMessages", () => {
         .select(messagesAllIdsSelector)
         // Return an empty pot array as messagesAllIdsSelector response
         .next(pot.some([]))
-        .select(servicesByIdSelector)
-        // Return an object as servicesByIdSelector response
-        .next({
-          [testServiceId1]: pot.some(testServicePublic)
-        } as ReturnType<typeof servicesByIdSelector>)
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next(right({ status: 200, value: testMessages }))
@@ -180,6 +173,9 @@ describe("watchLoadMessages", () => {
           [testMessageId1]: testMessageMeta1,
           [testMessageId2]: testMessageMeta2
         } as ReturnType<typeof messagesStateByIdSelector>)
+        .select(servicesByIdSelector)
+        // Return an empty object as servicesByIdSelector response (no service already stored)
+        .next({})
         // Do not load any new services
         .all([])
         .next();
@@ -194,11 +190,6 @@ describe("watchLoadMessages", () => {
         .select(messagesAllIdsSelector)
         // Return an empty pot array as messagesAllIdsSelector response
         .next(pot.some(cachedMessagesAllIds))
-        .select(servicesByIdSelector)
-        // Return an object as servicesByIdSelector response
-        .next({
-          [testServiceId1]: pot.some(testServicePublic)
-        } as ReturnType<typeof servicesByIdSelector>)
         .call(getMessages, {})
         // Return 200 with a list of 2 messages as getMessages response
         .next(right({ status: 200, value: testOneMessage }))
@@ -211,6 +202,9 @@ describe("watchLoadMessages", () => {
         .next({
           [testMessageId1]: testMessageMeta1
         } as ReturnType<typeof messagesStateByIdSelector>)
+        .select(servicesByIdSelector)
+        // Return an empty object as servicesByIdSelector response (no service already stored)
+        .next({})
         // Do not load any new services
         .all([])
         .next();

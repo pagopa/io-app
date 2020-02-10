@@ -11,7 +11,7 @@ import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditC
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
 import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
 import { Psp as PspPagoPA } from "../../definitions/pagopa/Psp";
-import { PspListResponse as PspListResponsePagoPA } from "../../definitions/pagopa/PspListResponse";
+import { PspListResponseCD as PspListResponsePagoPA } from "../../definitions/pagopa/PspListResponseCD";
 import { PspResponse as PspResponsePagoPA } from "../../definitions/pagopa/PspResponse";
 import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
 import { SessionResponse as SessionResponsePagoPA } from "../../definitions/pagopa/SessionResponse";

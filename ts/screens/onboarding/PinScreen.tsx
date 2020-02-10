@@ -333,7 +333,7 @@ class PinScreen extends React.Component<Props, State> {
         this.props.dispatch(createPinSuccess(pin));
       },
       _ =>
-        // TODO: show toast
+        // TODO: show toast if error (https://www.pivotaltracker.com/story/show/170819508)
         this.setState({
           pinState: {
             state: "PinSaved",
