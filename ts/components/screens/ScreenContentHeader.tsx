@@ -1,14 +1,18 @@
+/**
+ * A component to render the screen content header. It can include:
+ * - an image, displayed on the right of the title
+ * - a subtitle, displayed below the title
+ */
 import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
-
 import variables from "../../theme/variables";
 import ScreenHeader from "../ScreenHeader";
+
 type Props = Readonly<{
   title?: string;
   icon?: ImageSourcePropType;
   subtitle?: string;
-  banner?: React.ReactNode;
   dark?: boolean;
   dynamicHeight?: Animated.AnimatedInterpolation;
 }>;
@@ -34,11 +38,10 @@ const styles = StyleSheet.create({
 
 export class ScreenContentHeader extends React.PureComponent<Props> {
   public render() {
-    const { banner, subtitle, dark, icon, dynamicHeight } = this.props;
+    const { subtitle, dark, icon, dynamicHeight } = this.props;
 
     return (
       <View style={dark && styles.darkGrayBg}>
-        {banner && <React.Fragment>{banner}</React.Fragment>}
         <Animated.View
           style={
             dynamicHeight !== undefined && { height: dynamicHeight } // if the condition "!== undefined" is not specified, once dynamicHeight.value = 0, dynamicHeight is assumend as false
