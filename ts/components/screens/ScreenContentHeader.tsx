@@ -1,15 +1,19 @@
+/**
+ * A component to render the screen content header. It can include:
+ * - an image, displayed on the right
+ * - a subtitle, displayed below the title
+ */
 import { H1, Text, View } from "native-base";
 import * as React from "react";
 import { ImageSourcePropType, Platform, StyleSheet } from "react-native";
 import { isIphoneX } from "react-native-iphone-x-helper";
-
 import variables from "../../theme/variables";
 import ScreenHeader from "../ScreenHeader";
+
 type Props = Readonly<{
   title?: string;
   icon?: ImageSourcePropType;
   subtitle?: string;
-  banner?: React.ReactNode;
   fixed?: boolean;
   dark?: boolean;
 }>;
@@ -46,11 +50,10 @@ const styles = StyleSheet.create({
 
 export class ScreenContentHeader extends React.PureComponent<Props> {
   public render() {
-    const { banner, subtitle, fixed, dark, icon } = this.props;
+    const { subtitle, fixed, dark, icon } = this.props;
 
     return (
       <View style={[fixed && styles.fixedPosition, dark && styles.darkGrayBg]}>
-        {banner && <React.Fragment>{banner}</React.Fragment>}
         <View>
           <View spacer={true} />
           <ScreenHeader
