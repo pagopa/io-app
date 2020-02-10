@@ -132,6 +132,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
         this.props.onRetry
       );
     } else if (
+      // Case start a new payment after finishing another
       pot.isNone(this.props.potVerifica) &&
       this.props.navigation.getParam("rptId").paymentNoticeNumber !==
         prevProps.navigation.getParam("rptId").paymentNoticeNumber
