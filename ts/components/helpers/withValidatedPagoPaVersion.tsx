@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
 import { connect } from "react-redux";
 import { GlobalState } from "../../store/reducers/types";
@@ -10,7 +11,7 @@ import { withLightModalContext } from "./withLightModalContext";
 export type ModalProps = LightModalContextInterface &
   ReturnType<typeof mapStateToProps>;
 
-class ModalControlMinPagoPaAppVersioOverlay extends React.Component<
+class ModalControlMinPagoPaAppVersionOverlay extends React.Component<
   ModalProps
 > {
   public componentWillUnmount() {
@@ -26,18 +27,17 @@ class ModalControlMinPagoPaAppVersioOverlay extends React.Component<
 }
 
 const ConditionalView = withLightModalContext(
-  ModalControlMinPagoPaAppVersioOverlay
+  ModalControlMinPagoPaAppVersionOverlay
 );
 
 export type Props = ReturnType<typeof mapStateToProps>;
 
 const mapStateToProps = (state: GlobalState) => {
-  const minPagoPaAppVersionValidated =
-    state.backendInfo.serverInfo === undefined
-      ? true
-      : !isUpdatedNeededPagoPa(state.backendInfo.serverInfo);
+  const isPagoPaVersionSupported = fromNullable(state.backendInfo.serverInfo)
+    .map(si => !isUpdatedNeededPagoPa(si))
+    .getOrElse(true);
   return {
-    isMinPagoPaAppVersionValidated: minPagoPaAppVersionValidated
+    isPagoPaVersionSupported
   };
 };
 
@@ -50,7 +50,7 @@ export function withValidatedPagoPaVersion<P>(
   )(
     withConditionalView(
       WrappedComponent,
-      (props: Props) => props.isMinPagoPaAppVersionValidated,
+      (props: Props) => props.isPagoPaVersionSupported,
       ConditionalView
     )
   );
