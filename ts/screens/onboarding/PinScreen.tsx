@@ -11,7 +11,9 @@ import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 import Pinpad from "../../components/Pinpad";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
@@ -69,6 +71,11 @@ type State = {
 const styles = StyleSheet.create({
   header: { lineHeight: 40 }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.pin.contextualHelpTitle",
+  body: "onboarding.pin.contextualHelpContent"
+};
 
 class PinScreen extends React.Component<Props, State> {
   private pinConfirmComponent: Pinpad | null = null;
@@ -305,6 +312,7 @@ class PinScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
         {this.renderContent(pinState)}

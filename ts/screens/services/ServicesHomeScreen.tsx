@@ -41,6 +41,7 @@ import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -49,7 +50,6 @@ import { SearchNoResultMessage } from "../../components/search/SearchNoResultMes
 import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesTab from "../../components/services/ServicesTab";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
   loadServiceMetadata,
@@ -205,6 +205,11 @@ const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
   ScreenContentHeader
 );
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "services.contextualHelpTitle",
+  body: "services.contextualHelpContent"
+};
+
 class ServicesHomeScreen extends React.Component<Props, State> {
   private navListener?: NavigationEventSubscription;
 
@@ -524,7 +529,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   public render() {
     const { userMetadata } = this.props;
-
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -535,10 +539,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <TopScreenComponent
             title={I18n.t("services.title")}
             appLogo={true}
-            contextualHelp={{
-              title: I18n.t("services.title"),
-              body: () => <Markdown>{I18n.t("services.servicesHelp")}</Markdown>
-            }}
+            contextualHelpMarkdown={contextualHelpMarkdown}
             isSearchAvailable={userMetadata !== undefined}
             searchType={"Services"}
           >

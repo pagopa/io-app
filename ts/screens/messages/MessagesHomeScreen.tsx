@@ -14,6 +14,7 @@ import MessagesArchive from "../../components/messages/MessagesArchive";
 import MessagesDeadlines from "../../components/messages/MessagesDeadlines";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import MessagesSearch from "../../components/messages/MessagesSearch";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
@@ -89,6 +90,13 @@ const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
 
 const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "messages.contextualHelpTitle",
+  body: "messages.contextualHelpContent"
+};
+/**
+ * A screen that contains all the Tabs related to messages.
+ */
 class MessagesHomeScreen extends React.PureComponent<Props, State> {
   private navListener?: NavigationEventSubscription;
   constructor(props: Props) {
@@ -152,6 +160,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
     return (
       <TopScreenComponent
+        contextualHelpMarkdown={contextualHelpMarkdown}
         title={I18n.t("messages.contentTitle")}
         isSearchAvailable={true}
         searchType={"Messages"}
