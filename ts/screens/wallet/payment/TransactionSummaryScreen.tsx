@@ -131,6 +131,12 @@ class TransactionSummaryScreen extends React.Component<Props> {
         some(potVerifica.error),
         this.props.onRetry
       );
+    } else if (
+      pot.isNone(this.props.potVerifica) &&
+      this.props.navigation.getParam("rptId").paymentNoticeNumber !==
+        prevProps.navigation.getParam("rptId").paymentNoticeNumber
+    ) {
+      this.props.dispatchPaymentVerificaRequest();
     }
   }
 
