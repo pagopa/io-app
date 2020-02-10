@@ -140,6 +140,7 @@ function renderInformationImageRow(
   );
 }
 
+// TODO: test
 class ServiceDetailsScreen extends React.Component<Props, State> {
   get serviceId() {
     return this.props.navigation.getParam("service").service_id;
