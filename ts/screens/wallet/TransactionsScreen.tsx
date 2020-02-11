@@ -9,6 +9,7 @@ import { RefreshControl, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import H5 from "../../components/ui/H5";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
@@ -64,6 +65,11 @@ const styles = StyleSheet.create({
     color: variables.brandDarkGray
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.walletCardTransaction.contextualHelpTitle",
+  body: "wallet.walletCardTransaction.contextualHelpContent"
+};
 
 const ListEmptyComponent = (
   <Content
@@ -137,6 +143,7 @@ class TransactionsScreen extends React.Component<Props> {
         hideHeader={true}
         hasDynamicSubHeader={true}
         refreshControl={transactionsRefreshControl}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}

@@ -20,6 +20,7 @@ type BaseScreenComponentProps =
   | "appLogo"
   | "goBack"
   | "contextualHelp"
+  | "contextualHelpMarkdown"
   | "headerBody"
   | "customGoBack";
 
@@ -41,6 +42,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
       title,
       headerTitle,
       contextualHelp,
+      contextualHelpMarkdown,
       headerBody,
       isSearchAvailable,
       searchType,
@@ -55,6 +57,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         goBack={goBack}
         headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         headerBody={headerBody}
         isSearchAvailable={isSearchAvailable}
         searchType={searchType}
