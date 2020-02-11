@@ -148,7 +148,36 @@ function renderInformationImageRow(
   );
 }
 
-// TODO: test
+/**
+ * return true if markdown is loaded (description is rendered inside a markodown component)
+ * return true if description not exists but values are present
+ * return false in others cases
+ *
+ * this behavior is due to markdown loading: it could happen some items overlapped while the
+ * markdown content is loading. To avoid this, we wait the loading ends and then the items will
+ * be displayed
+ */
+export const canRenderItems = (
+  isMarkdownLoaded: boolean,
+  potServiceMetadata: ServiceMetadataState
+): boolean => {
+  if (
+    pot.isSome(potServiceMetadata) &&
+    potServiceMetadata.value &&
+    potServiceMetadata.value.description !== undefined
+  ) {
+    return isMarkdownLoaded;
+  } else if (
+    pot.isSome(potServiceMetadata) &&
+    potServiceMetadata.value !== undefined
+  ) {
+    return (
+      pot.isSome(potServiceMetadata) && potServiceMetadata.value !== undefined
+    );
+  }
+  return false;
+};
+
 class ServiceDetailsScreen extends React.Component<Props, State> {
   get serviceId() {
     return this.props.navigation.getParam("service").service_id;
@@ -219,6 +248,10 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
   }
 
+  private onMarkdownEnd = () => {
+    this.setState({ isMarkdownLoaded: true });
+  };
+
   private renderItems = (potServiceMetadata: ServiceMetadataState) => {
     if (pot.isSome(potServiceMetadata) && potServiceMetadata.value) {
       const metadata = potServiceMetadata.value;
@@ -227,17 +260,14 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           {metadata.description && (
             <Markdown
               animated={true}
-              onLoadEnd={() =>
-                this.setState({
-                  isMarkdownLoaded: true
-                })
-              }
+              onLoadEnd={this.onMarkdownEnd}
+              onError={this.onMarkdownEnd}
             >
               {metadata.description}
             </Markdown>
           )}
           {metadata.description && <View spacer={true} large={true} />}
-          {this.state.isMarkdownLoaded && (
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) && (
             <View>
               {metadata.tos_url &&
                 renderInformationLinkRow(
@@ -510,14 +540,17 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           <H4 style={styles.infoHeader}>
             {I18n.t("services.contactsAndInfo")}
           </H4>
-          {renderInformationRow(
-            "C.F.",
-            service.organization_fiscal_code,
-            service.organization_fiscal_code,
-            "COPY"
-          )}
-          {this.renderContactItems(potServiceMetadata)}
-          {this.props.isDebugModeEnabled &&
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) &&
+            renderInformationRow(
+              "C.F.",
+              service.organization_fiscal_code,
+              service.organization_fiscal_code,
+              "COPY"
+            )}
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) &&
+            this.renderContactItems(potServiceMetadata)}
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) &&
+            this.props.isDebugModeEnabled &&
             renderInformationRow(
               "ID",
               service.service_id,
