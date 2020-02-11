@@ -20,6 +20,7 @@ import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
@@ -119,6 +120,11 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.contextualHelpTitle",
+  body: "wallet.contextualHelpContent"
+};
 
 /**
  * Wallet Home Screen
@@ -377,6 +383,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         topContent={headerContent}
         footerContent={footerContent}
         refreshControl={walletRefreshControl}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         {transactionContent}
       </WalletLayout>
