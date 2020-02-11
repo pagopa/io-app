@@ -82,6 +82,12 @@ import { SessionToken } from "../types/SessionToken";
 
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 
+import ROUTES from "../navigation/routes";
+import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
+import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
+import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
+import { SessionManager } from "../utils/SessionManager";
+import { paymentsDeleteUncompletedSaga } from "./payments";
 import {
   addWalletCreditCardRequestHandler,
   deleteWalletRequestHandler,
@@ -100,16 +106,6 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-
-import ROUTES from "../navigation/routes";
-import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
-import {
-  getCurrentRouteKey,
-  getCurrentRouteName
-} from "../store/middlewares/analytics";
-import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
-import { SessionManager } from "../utils/SessionManager";
-import { paymentsDeleteUncompletedSaga } from "./payments";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -730,7 +726,7 @@ function* setWalletSessionEnabledSaga(
   yield call(enableSessionManager, action.payload, sessionManager);
 }
 /**
- * This saga track each time a new payment of the route from which it started is initiated
+ * This saga checks what is the route whence a new payment is started
  */
 export function* watchPaymentInitializeSaga(): Iterator<Effect> {
   yield takeEvery(getType(paymentInitializeState), function*() {
