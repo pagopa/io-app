@@ -71,7 +71,7 @@ const IncludeYamlType = (includeRoot: string) =>
  *
  * TODO: support including files (e.g. markdown docs)
  */
-async function readLocaleDoc(
+export async function readLocaleDoc(
   rootPath: string,
   locale: string
 ): Promise<LocaleDoc> {
@@ -93,7 +93,10 @@ async function readLocaleDoc(
 /**
  * Extracts all the translation keys from a parsed yaml
  */
-function extractKeys(subDoc: any, base: string = ""): ReadonlyArray<string> {
+export function extractKeys(
+  subDoc: any,
+  base: string = ""
+): ReadonlyArray<string> {
   const baseWithDelimiter = base.length > 0 ? `${base}.` : "";
   const keys = Object.keys(subDoc);
   const terminalKeys = keys
@@ -218,7 +221,6 @@ async function run(rootPath: string): Promise<void> {
     ...d,
     keys: extractKeys(d.doc)
   }));
-
   // the master locale is the first one
   const masterKeys = localeKeys[0];
   console.log(

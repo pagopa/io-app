@@ -3,6 +3,7 @@ import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -18,12 +19,18 @@ type OwnProps = Readonly<{
 
 type Props = OwnProps;
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.main.privacy.contextualHelpTitle",
+  body: "profile.main.privacy.contextualHelpContent"
+};
+
 /**
  * A component to show the main screen of the Privacy section
  */
 export const PrivacyMainScreen: React.SFC<Props> = props => (
   <TopScreenComponent
     goBack={() => props.navigation.goBack()}
+    contextualHelpMarkdown={contextualHelpMarkdown}
     title={I18n.t("profile.main.screenTitle")}
   >
     <ScreenContent
