@@ -17,7 +17,9 @@ import Checkout3DsComponent from "../../components/Checkout3DsComponent";
 import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import NoticeBox from "../../components/NoticeBox";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Switch from "../../components/ui/Switch";
 import CardComponent from "../../components/wallet/card/CardComponent";
@@ -62,6 +64,11 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 type State = Readonly<{
   setAsFavourite: boolean;
 }>;
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.saveCard.contextualHelpTitle",
+  body: "wallet.saveCard.contextualHelpContent"
+};
 
 class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   public componentDidMount() {
@@ -126,6 +133,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             ? I18n.t("wallet.saveCardInPayment.header")
             : I18n.t("wallet.saveCard.header")
         }
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <Content>
           <H1>

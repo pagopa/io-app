@@ -13,7 +13,9 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import MaskedInput from "../../components/ui/MaskedInput";
 import { cardIcons } from "../../components/wallet/card/Logo";
@@ -73,6 +75,11 @@ const styles = StyleSheet.create({
     backgroundColor: variables.colorWhite
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.saveCard.contextualHelpTitle",
+  body: "wallet.saveCard.contextualHelpContent"
+};
 
 const CARD_LOGOS_COLUMNS = 4;
 const EMPTY_CARD_HOLDER = "";
@@ -193,6 +200,7 @@ class AddCardScreen extends React.Component<Props, State> {
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("wallet.addCardTitle")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <ScrollView
           bounces={false}

@@ -17,7 +17,9 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
@@ -81,6 +83,11 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "serviceDetail.headerTitle",
+  body: "serviceDetail.contextualHelpContent"
+};
+
 // Renders a row in the service information panel as a primary block button
 function renderInformationRow(
   label: string,
@@ -141,6 +148,7 @@ function renderInformationImageRow(
   );
 }
 
+// TODO: test
 class ServiceDetailsScreen extends React.Component<Props, State> {
   get serviceId() {
     return this.props.navigation.getParam("service").service_id;
@@ -367,6 +375,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       <BaseScreenComponent
         goBack={this.props.navigation.goBack}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <Content>
           <Grid>
