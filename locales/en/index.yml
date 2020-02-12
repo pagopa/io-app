@@ -788,7 +788,7 @@ send_email_messages:
       info: You will not receive email messages anymore
     enable_all:
       label: Enable for all services
-      info: Every message will be farwarded to your email, if the service allows it
+      info: Every message will be forwarded to your email, if the service allows it
     by_service:
       label: Select service by service
       info: You will be able to select from each service settings screen to receive its messages by email as well
