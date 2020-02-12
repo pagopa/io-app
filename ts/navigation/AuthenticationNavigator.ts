@@ -2,22 +2,18 @@ import {
   createStackNavigator,
   NavigationRouteConfigMap
 } from "react-navigation";
-
 import { environment } from "../config";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
 import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
-import CIENfcScreen from "../screens/authentication/cie/CieNfcScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
-import CieRequestAuthenticationScreen from "../screens/authentication/cie/CieRequestAuthenticationScreen";
 import CieSuccessScreen from "../screens/authentication/cie/CieSuccessScreen";
 import CieValidScreen from "../screens/authentication/cie/CieValidScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
-import InterruptedReadingCardScreen from "../screens/authentication/InterruptedReadingCardScreen";
 import LandingScreen from "../screens/authentication/LandingScreen";
 import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformationScreen";
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
@@ -59,20 +55,11 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   [ROUTES.CIE_SUCCESS_SCREEN]: {
     screen: CieSuccessScreen
   },
-  [ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN]: {
-    screen: InterruptedReadingCardScreen
-  },
   [ROUTES.CIE_PIN_SCREEN]: {
     screen: CiePinScreen
   },
   [ROUTES.CIE_AUTHORIZE_USAGE_SCREEN]: {
     screen: CieAuthorizeDataUsageScreen
-  },
-  [ROUTES.CIE_NFC_SCREEN]: {
-    screen: CIENfcScreen
-  },
-  [ROUTES.CIE_REQUEST_AUTHENTICATION_SCREEN]: {
-    screen: CieRequestAuthenticationScreen
   },
   [ROUTES.CIE_CARD_READER_SCREEN]: {
     screen: CieCardReaderScreen

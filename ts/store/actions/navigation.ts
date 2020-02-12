@@ -9,7 +9,6 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import ROUTES from "../../navigation/routes";
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
 import CieConfirmDataUsage from "../../screens/authentication/cie/CieConsentDataUsageScreen";
-import CieRequestAuthenticationScreen from "../../screens/authentication/cie/CieRequestAuthenticationScreen";
 import CieValidScreen from "../../screens/authentication/cie/CieValidScreen";
 import CieWrongCiePinScreen from "../../screens/authentication/cie/CieWrongCiePinScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
@@ -58,6 +57,12 @@ export const navigateToMainNavigatorAction = StackActions.reset({
   ]
 });
 
+export const navigateBack = NavigationActions.back;
+
+/**
+ * Authentication
+ */
+
 export const navigateToIdpSelectionScreenAction = NavigationActions.navigate({
   routeName: ROUTES.AUTHENTICATION,
   action: NavigationActions.navigate({
@@ -83,17 +88,23 @@ export const navigateToTosScreen = NavigationActions.navigate({
   action: NavigationActions.navigate({ routeName: ROUTES.ONBOARDING_TOS })
 });
 
+/**
+ * Email
+ */
+
 export const navigateToEmailReadScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.READ_EMAIL_SCREEN
   });
 
-export const navigateBack = NavigationActions.back;
-
 export const navigateToEmailInsertScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.INSERT_EMAIL_SCREEN
   });
+
+/**
+ * Message
+ */
 
 export const navigateToMessageDetailScreenAction = (
   params: InferNavigationParams<typeof MessageDetailScreen>
@@ -103,6 +114,10 @@ export const navigateToMessageDetailScreenAction = (
     params
   });
 
+/**
+ * Service
+ */
+
 export const navigateToServiceDetailsScreen = (
   params: InferNavigationParams<typeof ServiceDetailsScreen>
 ) =>
@@ -110,6 +125,10 @@ export const navigateToServiceDetailsScreen = (
     routeName: ROUTES.SERVICE_DETAIL,
     params
   });
+
+/**
+ * Profile
+ */
 
 export const navigateToFingerprintPreferenceScreen = () =>
   NavigationActions.navigate({
@@ -120,6 +139,10 @@ export const navigateToCalendarPreferenceScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.PROFILE_PREFERENCES_CALENDAR
   });
+
+/**
+ * Wallet & Payments
+ */
 
 export const navigateToPaymentTransactionSummaryScreen = (
   params: InferNavigationParams<typeof TransactionSummaryScreen>
@@ -230,6 +253,10 @@ export const navigateToPaymentManualDataInsertion = (
     params
   });
 
+/**
+ * CIE
+ */
+
 export const navigateToCieInvalidScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_EXPIRED_SCREEN
@@ -240,22 +267,9 @@ export const navigateToCieSuccessScreen = () =>
     routeName: ROUTES.CIE_SUCCESS_SCREEN
   });
 
-export const navigateToInterruptedReadingCie = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_INTERRUPTED_READING_CARD_SCREEN
-  });
-
 export const navigateToCiePinScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_PIN_SCREEN
-  });
-
-export const navigateToCieRequestAuthenticationScreen = (
-  params?: InferNavigationParams<typeof CieRequestAuthenticationScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_REQUEST_AUTHENTICATION_SCREEN,
-    params
   });
 
 export const navigateToCieCardReaderScreen = (

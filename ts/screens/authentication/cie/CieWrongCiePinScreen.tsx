@@ -1,91 +1,76 @@
-import { Container, H1, Text, View } from "native-base";
+/**
+ * A screen to alert the user about the number of attempts remains
+ */
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import {
-  NavigationScreenProp,
-  NavigationScreenProps,
-  NavigationState
-} from "react-navigation";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { NavigationScreenProps } from "react-navigation";
+import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
+import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import customVariables from "../../../theme/variables";
-import { isNfcEnabled } from "../../../utils/cie";
 
-interface OwnProps {
-  navigation: NavigationScreenProp<NavigationState>;
-}
 type NavigationParams = {
   remainingCount: number;
 };
 
-type Props = OwnProps &
-  Readonly<{
-    navigation: NavigationScreenProp<NavigationState>;
-  }> &
-  NavigationScreenProps<NavigationParams>;
-
-const styles = StyleSheet.create({
-  contentContainerStyle: {
-    padding: customVariables.contentPadding
-  },
-  text: {
-    fontSize: customVariables.fontSizeBase
-  }
-});
+type Props = NavigationScreenProps<NavigationParams>;
 
 class CieWrongCiePinScreen extends React.Component<Props> {
+  // TODO: usare redux per gestire il controllo?
   private navigateToCiePinScreen = async () => {
-    const isNfcOn = await isNfcEnabled();
-    this.props.navigation.navigate(
-      isNfcOn ? ROUTES.CIE_PIN_SCREEN : ROUTES.CIE_NFC_SCREEN
-    );
+    this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
   };
 
-  get ciePinRemainingCount(): string {
+  get ciePinRemainingCount() {
     return this.props.navigation.getParam("remainingCount");
   }
 
-  public render(): React.ReactNode {
+  private renderFooterButtons = () => {
     const cancelButtonProps = {
-      block: true,
       cancel: true,
       onPress: this.props.navigation.goBack,
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {
-      block: true,
       primary: true,
       onPress: this.navigateToCiePinScreen,
       title: I18n.t("global.buttons.retry")
     };
+    return (
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        rightButton={retryButtonProps}
+        leftButton={cancelButtonProps}
+      />
+    );
+  };
+
+  public render(): React.ReactNode {
     const remainingCount = this.ciePinRemainingCount;
     return (
-      <Container>
-        <BaseScreenComponent goBack={false}>
-          <View style={styles.contentContainerStyle}>
-            <H1>
-              {I18n.t("authentication.cie.pin.incorrectCiePinTitle", {
-                remainingCount
-              })}
-            </H1>
-            <Text>
-              {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
-            </Text>
-            <View spacer={true} />
-            <Text>
-              {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
-            </Text>
-            <View spacer={true} />
-          </View>
-        </BaseScreenComponent>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          rightButton={retryButtonProps}
-          leftButton={cancelButtonProps}
+      <TopScreenComponent
+        goBack={false}
+        title={"Check attempts"} // TODO: validate
+      >
+        <ScreenContentHeader
+          title={I18n.t("authentication.cie.pin.incorrectCiePinTitle", {
+            remainingCount
+          })}
         />
-      </Container>
+        <Content>
+          <Text>
+            {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
+          </Text>
+          <View spacer={true} />
+          <Text>
+            {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
+          </Text>
+          <View spacer={true} />
+        </Content>
+
+        {this.renderFooterButtons()}
+      </TopScreenComponent>
     );
   }
 }

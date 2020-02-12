@@ -1,7 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Dimensions, StyleSheet, TextInput } from "react-native";
-
 import variables from "../../theme/variables";
 import { Baseline } from "../Pinpad/Placeholders";
 

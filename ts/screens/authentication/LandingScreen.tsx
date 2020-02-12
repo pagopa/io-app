@@ -2,6 +2,7 @@
  * A screen where the user can choose to login with SPID or get more informations.
  * It includes a carousel with highlights on the app functionalities
  */
+import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -17,22 +18,17 @@ import { isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { resetAuthenticationState } from "../../store/actions/authentication";
-import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { Dispatch } from "../../store/actions/types";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
+import { isCieSupportedSelector } from "../../store/reducers/cie";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
-import { isCIEAuthenticationSupported, isNfcEnabled } from "../../utils/cie";
 import { showToast } from "../../utils/showToast";
 
-type Props = ReduxProps &
-  NavigationInjectedProps &
+type Props = NavigationInjectedProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
-type State = {
-  isCIEAuthenticationSupported: boolean;
-};
 
 const getCards = (
   isCIEAvailable: boolean
@@ -85,13 +81,8 @@ const styles = StyleSheet.create({
   }
 });
 
-class LandingScreen extends React.PureComponent<Props, State> {
-  public constructor(props: Props) {
-    super(props);
-    this.state = { isCIEAuthenticationSupported: false };
-  }
-
-  public async componentDidMount() {
+class LandingScreen extends React.PureComponent<Props> {
+  public componentDidMount() {
     if (this.props.isSessionExpired) {
       showToast(
         I18n.t("authentication.expiredSessionBanner.message"),
@@ -100,12 +91,6 @@ class LandingScreen extends React.PureComponent<Props, State> {
       );
       this.props.resetState();
     }
-
-    // TODO
-    const isCieSupported = await isCIEAuthenticationSupported();
-    this.setState({
-      isCIEAuthenticationSupported: isCieSupported
-    });
 
     if (this.props.isSessionExpired) {
       showToast(
@@ -118,25 +103,22 @@ class LandingScreen extends React.PureComponent<Props, State> {
 
   private navigateToMarkdown = () =>
     this.props.navigation.navigate(ROUTES.MARKDOWN);
+
   private navigateToIdpSelection = () =>
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
-  private navigateToCiePinScreen = async () => {
-    const isNfcOn = await isNfcEnabled();
-    this.props.navigation.navigate(
-      isNfcOn ? ROUTES.CIE_PIN_SCREEN : ROUTES.CIE_NFC_SCREEN
-    );
-  };
+  private navigateToCiePinScreen = () =>
+    this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
 
   private navigateToSpidCieInformationRequest = () =>
-    this.state.isCIEAuthenticationSupported
-      ? this.props.navigation.navigate(
-          ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION
-        )
-      : this.props.navigation.navigate(ROUTES.AUTHENTICATION_SPID_INFORMATION);
+    this.props.navigation.navigate(
+      this.props.isCIEAuthenticationSupported
+        ? ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION
+        : ROUTES.AUTHENTICATION_SPID_INFORMATION
+    );
 
   private renderCardComponents = () => {
-    const cardProps = getCards(this.state.isCIEAuthenticationSupported);
+    const cardProps = getCards(this.props.isCIEAuthenticationSupported);
     return cardProps.map(p => (
       <LandingCardComponent key={`card-${p.id}`} {...p} />
     ));
@@ -154,7 +136,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
         </Content>
 
         <View footer={true}>
-          {this.state.isCIEAuthenticationSupported && (
+          {this.props.isCIEAuthenticationSupported && (
             <ButtonDefaultOpacity
               block={true}
               primary={true}
@@ -185,7 +167,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
             onPress={this.navigateToSpidCieInformationRequest}
           >
             <Text style={styles.noPadded}>
-              {this.state.isCIEAuthenticationSupported
+              {this.props.isCIEAuthenticationSupported
                 ? I18n.t("authentication.landing.nospid-nocie")
                 : I18n.t("authentication.landing.nospid")}
             </Text>
@@ -196,9 +178,15 @@ class LandingScreen extends React.PureComponent<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  isSessionExpired: isSessionExpiredSelector(state)
-});
+const mapStateToProps = (state: GlobalState) => {
+  const isCIEAuthenticationSupported = isCieSupportedSelector(state);
+  return {
+    isSessionExpired: isSessionExpiredSelector(state),
+    isCIEAuthenticationSupported:
+      pot.isSome(isCIEAuthenticationSupported) &&
+      isCIEAuthenticationSupported.value === true
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetState: () => dispatch(resetAuthenticationState())

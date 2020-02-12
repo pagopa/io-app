@@ -5,25 +5,29 @@
 import { View } from "native-base";
 import * as React from "react";
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
-import { connect } from "react-redux";
+import CieRequestAuthenticationOverlay from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
+import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import {
+  BottomTopAnimation,
+  LightModalContextInterface
+} from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
-import { navigateToCieRequestAuthenticationScreen } from "../../../store/actions/navigation";
-import { Dispatch, ReduxProps } from "../../../store/actions/types";
+import ROUTES from "../../../navigation/routes";
+import { ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 
-type Props = ReduxProps &
-  NavigationInjectedProps &
-  ReturnType<typeof mapDispatchToProps>;
+type Props = ReduxProps & NavigationInjectedProps & LightModalContextInterface;
 
 type State = {
   pin: string;
@@ -44,15 +48,32 @@ class CiePinScreen extends React.Component<Props, State> {
     this.state = { pin: "" };
   }
 
+  private handleOnContitnue = (ciePin: string, authorizationUri: string) => {
+    this.props.navigation.navigate({
+      routeName: ROUTES.CIE_CARD_READER_SCREEN,
+      params: { ciePin, authorizationUri }
+    });
+    this.props.hideModal();
+  };
+
+  private showModal = () => {
+    Keyboard.dismiss();
+
+    const component = (
+      <CieRequestAuthenticationOverlay
+        ciePin={this.state.pin}
+        onClose={this.props.hideModal}
+        onSuccess={this.handleOnContitnue}
+      />
+    );
+    this.props.showAnimatedModal(component, BottomTopAnimation);
+  };
+
   // Method called when the PIN changes
   public handelOnPinChanged = (pin: string) => {
     this.setState({
       pin
     });
-  };
-
-  private handleOnContinuePressButton = () => {
-    this.props.dispatchNavigationToRequestAutenticationScreen(this.state.pin);
   };
 
   public render() {
@@ -72,7 +93,7 @@ class CiePinScreen extends React.Component<Props, State> {
               pinLength={CIE_PIN_LENGTH}
               description={I18n.t("authentication.cie.pin.pinCardContent")}
               onPinChanged={this.handelOnPinChanged}
-              onSubmit={this.handleOnContinuePressButton}
+              onSubmit={this.showModal}
             />
           </View>
         </ScrollView>
@@ -81,7 +102,7 @@ class CiePinScreen extends React.Component<Props, State> {
             type={"SingleButton"}
             leftButton={{
               primary: true,
-              onPress: this.handleOnContinuePressButton,
+              onPress: this.showModal,
               title: I18n.t("onboarding.pin.continue")
             }}
           />
@@ -98,12 +119,5 @@ class CiePinScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchNavigationToRequestAutenticationScreen: (ciePin: string) =>
-    dispatch(navigateToCieRequestAuthenticationScreen({ ciePin }))
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(CiePinScreen);
+// TODO: sole bug: for a while the pinpad is displayed again when it succeeded
+export default withLightModalContext(CiePinScreen);

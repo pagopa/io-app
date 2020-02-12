@@ -1,26 +1,26 @@
 /**
- * A screen to manage the request of authentication once the pin of the user's CIE has been inserted
+ * A screen to manage the request of authentication once the pin of the user's CIE has been inserted+
+ * TODO: deve essere un overlay sullo screen di richiesta pin, per evitare che si possa navigare a questo screen
+ * TODO: quando si ritorna al pin, cosa fare? si potrebbe pulire l'input o metter eun tasto 'pulisci'
+ * es: si potrebbe pulire solo quando ci si arriva cliccando "riprova" e il pin era sicurametne errato
+ *
+ * //TODO: quando fa il controllo, controllare che sia ancora attivo l'NFC, altrimenti ritornare indietro alla schermata di lettura dell'NFC
  */
 import { View } from "native-base";
 import * as React from "react";
-import { Alert, NavState } from "react-native";
+import { Alert, NavState, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
-import { NavigationScreenProps } from "react-navigation";
-import { connect } from "react-redux";
-import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
-import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import { cieAuthenticationUri } from "../../../config";
-import I18n from "../../../i18n";
-import { navigateToCieCardReaderScreen } from "../../../store/actions/navigation";
-import { Dispatch } from "../../../store/actions/types";
+import { cieAuthenticationUri } from "../../config";
+import I18n from "../../i18n";
+import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
+import GenericErrorComponent from "../screens/GenericErrorComponent";
+import TopScreenComponent from "../screens/TopScreenComponent";
 
-type NavigationParams = {
+type Props = {
   ciePin: string;
+  onClose: () => void;
+  onSuccess: (ciePin: string, authorizationUri: string) => void;
 };
-
-type Props = NavigationScreenProps<NavigationParams> &
-  ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   hasError: boolean;
@@ -29,7 +29,13 @@ type State = {
   webViewKey: number;
 };
 
-class CieRequestAuthenticationScreen extends React.Component<Props, State> {
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1
+  }
+});
+
+class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -57,16 +63,9 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
     if (event.url && event.url.indexOf("OpenApp") !== -1) {
       this.setState({ findOpenApp: true });
       const authorizationUri = event.url;
-      this.props.dispatchNavigationToCieCardReaderScreen(
-        this.ciePin,
-        authorizationUri
-      );
+      this.props.onSuccess(this.props.ciePin, authorizationUri);
     }
   };
-
-  get ciePin(): string {
-    return this.props.navigation.getParam("ciePin");
-  }
 
   private handleWebViewError = () => {
     this.setState({ hasError: true });
@@ -77,7 +76,7 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
       <GenericErrorComponent
         onRetry={this.handleOnRetry}
         onCancel={this.handleGoBack}
-        image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
+        image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?
         text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
       />
     );
@@ -96,23 +95,19 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
   // Going back the user should insert the pin again
   private handleGoBack = () => {
     if (!this.state.isLoading) {
-      this.props.navigation.goBack();
+      this.props.onClose();
     } else {
-      Alert.alert(
-        "Sicuro di voler annullare l'operazione in corso?",
-        undefined,
-        [
-          {
-            text: I18n.t("global.buttons.cancel"), // TODO: validate button name - the action is a cancel, it could be confusing
-            style: "cancel"
-          },
-          {
-            text: I18n.t("global.buttons.confirm"),
-            style: "default",
-            onPress: this.props.navigation.goBack
-          }
-        ]
-      );
+      Alert.alert(I18n.t("authentication.cie.pin.alert"), undefined, [
+        {
+          text: I18n.t("global.buttons.cancel"), // TODO: validate button name - the action is a cancel, it could be confusing
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.confirm"),
+          style: "default",
+          onPress: this.props.onClose
+        }
+      ]);
     }
   };
 
@@ -121,7 +116,7 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
       return this.renderError();
     }
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.flex}>
         <WebView
           javaScriptEnabled={true}
           onError={this.handleWebViewError}
@@ -137,9 +132,7 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const ContainerComponent = withLoadingSpinner(() => (
-      <TopScreenComponent goBack={this.handleGoBack}>
-        {this.renderWebView()}
-      </TopScreenComponent>
+      <TopScreenComponent>{this.renderWebView()}</TopScreenComponent>
     ));
     return (
       <ContainerComponent
@@ -152,14 +145,4 @@ class CieRequestAuthenticationScreen extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchNavigationToCieCardReaderScreen: (
-    ciePin: string,
-    authorizationUri: string
-  ) => dispatch(navigateToCieCardReaderScreen({ ciePin, authorizationUri }))
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(CieRequestAuthenticationScreen);
+export default CieRequestAuthenticationOverlay;

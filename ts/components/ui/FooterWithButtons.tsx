@@ -1,10 +1,10 @@
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-
 import { ComponentProps } from "../../types/react";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
+// TODO: instead of customize alignment, apply it on button theme
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row"
@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   },
   buttonTwoThirds: {
     alignContent: "center",
+    justifyContent: "center",
     flex: 2
   }
 });
