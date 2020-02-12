@@ -6,7 +6,7 @@
 import color from "color";
 import { Badge, Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, Platform, StyleSheet } from "react-native";
+import { Image, FlatList, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -17,7 +17,6 @@ import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 import Markdown from "../ui/Markdown";
 import { makeFontStyleObject } from "../../theme/fonts";
-import customVariables from "../../theme/variables";
 
 type OwnProps = Readonly<{
   navigateToAddCreditCard: () => void;
@@ -28,7 +27,8 @@ type Props = OwnProps & LightModalContextInterface;
 type IPaymentMethod = Readonly<{
   name: string;
   maxFee: string;
-  icon: any;
+  icon?: any;
+  image?: any;
   implemented: boolean;
   onPress?: () => void;
   showMaxFee: boolean;
@@ -93,28 +93,28 @@ class PaymentMethodsList extends React.Component<Props, never> {
       {
         name: I18n.t("wallet.methods.mobile.name"),
         maxFee: I18n.t("wallet.methods.mobile.maxFee"),
-        icon: "io-48-phone",
+        image: require("../../../img/wallet/payment-methods/satispay-logoi.png"),
         implemented: false,
         showMaxFee: false
       },
       {
         name: "Postepay",
         maxFee: I18n.t("wallet.methods.bank.maxFee"),
-        icon: "io-48-phone",
+        image: require("../../../img/wallet/payment-methods/postepay-logo.png"),
         implemented: false,
         showMaxFee: false
       },
       {
         name: "Paypal",
         maxFee: I18n.t("wallet.methods.bank.maxFee"),
-        icon: "io-48-phone",
+        image: require("../../../img/wallet/payment-methods/paypal-logo.png"),
         implemented: false,
         showMaxFee: false
       },
       {
         name: I18n.t("wallet.methods.bank.name"),
         maxFee: I18n.t("wallet.methods.bank.maxFee"),
-        icon: "io-48-phone",
+        image: require("../../../img/wallet/payment-methods/bancomatpay-logo.png"),
         implemented: false,
         showMaxFee: false
       }
@@ -139,8 +139,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
                     <Row>
                       <View
                         style={{
-                          flexDirection: "row",
-                          justifyContent: "center"
+                          flexDirection: "column"
                         }}
                       >
                         <Text
@@ -154,7 +153,6 @@ class PaymentMethodsList extends React.Component<Props, never> {
                             style={[
                               AddMethodStyle.notImplementedBadge,
                               {
-                                marginLeft: 4,
                                 marginTop: 2,
                                 backgroundColor: "#909DA8"
                               }
@@ -182,15 +180,24 @@ class PaymentMethodsList extends React.Component<Props, never> {
                   </Grid>
                 </Left>
                 <Right style={AddMethodStyle.centeredContents}>
-                  <IconFont
-                    name={itemInfo.item.icon}
-                    color={
-                      isItemDisabled
-                        ? variables.brandLightGray
-                        : variables.brandPrimary
-                    }
-                    size={variables.iconSize6}
-                  />
+                  {itemInfo.item.icon && (
+                    <IconFont
+                      name={itemInfo.item.icon}
+                      color={
+                        isItemDisabled
+                          ? variables.brandLightGray
+                          : variables.brandPrimary
+                      }
+                      size={variables.iconSize6}
+                    />
+                  )}
+                  {itemInfo.item.image && (
+                    <Image
+                      source={itemInfo.item.image}
+                      style={{ width: 70 }}
+                      resizeMode={"contain"}
+                    />
+                  )}
                 </Right>
               </ListItem>
             );

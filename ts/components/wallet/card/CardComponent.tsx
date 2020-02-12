@@ -25,6 +25,7 @@ import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 // TODO: the "*" character renders differently (i.e. a larger circle) on
 // some devices @https://www.pivotaltracker.com/story/show/159231780
@@ -39,6 +40,7 @@ interface FullCommonProps extends BaseProps {
   isFavorite?: pot.Pot<boolean, string>;
   onSetFavorite?: (willBeFavorite: boolean) => void;
   hideMenu?: boolean;
+  extraSpace?: boolean;
   hideFavoriteIcon?: boolean;
   onDelete?: () => void;
 }
@@ -198,7 +200,7 @@ export default class CardComponent extends React.Component<Props> {
 
     const expirationDate = buildExpirationDate(creditCard);
     const isExpired = isExpiredCard(creditCard);
-
+    const extraMargin = this.props.type === "Full" && this.props.extraSpace;
     return (
       <View
         style={[styles.columns, styles.paddedTop, styles.body]}
@@ -218,12 +220,18 @@ export default class CardComponent extends React.Component<Props> {
               : `${I18n.t("cardComponent.expiredCard")} ${expirationDate}`}
           </Text>
 
-          <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
+          <Text
+            style={[
+              CreditCardStyles.textStyle,
+              styles.marginTop,
+              { marginTop: extraMargin ? 50 : 0 }
+            ]}
+          >
             {creditCard.holder.toUpperCase()}
           </Text>
         </View>
 
-        <View style={styles.cardLogo}>
+        <View style={[styles.cardLogo, { marginTop: extraMargin ? 50 : 0 }]}>
           <Logo item={creditCard} />
         </View>
       </View>

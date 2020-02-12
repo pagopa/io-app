@@ -136,14 +136,10 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <Content>
-          <H1>
-            {isInPayment
-              ? I18n.t("wallet.saveCardInPayment.title")
-              : I18n.t("wallet.saveCard.title")}
-          </H1>
           <CardComponent
             wallet={wallet}
             type={"Full"}
+            extraSpace={true}
             hideMenu={true}
             hideFavoriteIcon={true}
           />
@@ -152,7 +148,8 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             backgroundColor={customVariables.toastColor}
             iconProps={{
               name: "io-notice",
-              size: 32
+              color: "#5c6f82",
+              size: 24
             }}
           >
             <Text>{I18n.t("wallet.saveCard.notice")}</Text>
