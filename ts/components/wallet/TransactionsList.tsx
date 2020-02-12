@@ -86,6 +86,7 @@ export default class TransactionsList extends React.Component<Props> {
       true,
       true
     )} - ${item.created.toLocaleTimeString()}`;
+    const amount = formatNumberAmount(centsToAmount(item.amount.amount));
     return (
       <Row>
         <Left>
@@ -102,6 +103,9 @@ export default class TransactionsList extends React.Component<Props> {
             </View>
           </View>
         </Left>
+        <Right>
+          <Text>{amount}</Text>
+        </Right>
       </Row>
     );
   }
@@ -109,7 +113,6 @@ export default class TransactionsList extends React.Component<Props> {
   private renderTransaction = (info: ListRenderItemInfo<Transaction>) => {
     const item = info.item;
     const paymentReason = cleanTransactionDescription(item.description);
-    const amount = formatNumberAmount(centsToAmount(item.amount.amount));
     const recipient = item.merchant;
     return (
       <TouchableDefaultOpacity
@@ -121,9 +124,6 @@ export default class TransactionsList extends React.Component<Props> {
             <Left>
               <Text>{paymentReason}</Text>
             </Left>
-            <Right>
-              <Text>{amount}</Text>
-            </Right>
           </Row>
           <Row>
             <Left>

@@ -87,10 +87,6 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  selectCalendaModalHeader: {
-    lineHeight: 40
-  },
-
   topContainer: {
     display: "flex",
     flexDirection: "row",
@@ -101,6 +97,11 @@ const styles = StyleSheet.create({
     paddingVertical: variables.contentPadding / 2,
     paddingHorizontal: variables.contentPadding,
     backgroundColor: "#F5F6F7"
+  },
+
+  topContainerPaid: {
+    paddingVertical: 0,
+    paddingHorizontal: 0
   },
 
   bottomContainer: {
@@ -251,7 +252,11 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   ) => {
     const { message, small } = this.props;
     const { due_date } = message.content;
+    const paid = message.id === "00000000000000000000000006";
 
+    if (paid) {
+      return null;
+    }
     if (!due_date) {
       return null;
     }
@@ -302,6 +307,12 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const { due_date } = message.content;
     const { isEventInDeviceCalendar } = this.state;
 
+    const paid = message.id === "00000000000000000000000006";
+    // if the message is relative to a payment and it is paid
+    // reminder will be never shown
+    if (paid) {
+      return null;
+    }
     if (due_date === undefined) {
       return null;
     }
@@ -412,7 +423,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       maybeMessagePaymentExpirationInfo.value;
 
     const expired = isExpired(messagePaymentExpirationInfo);
-    const paid = payment !== undefined;
+    const paid = message.id === "00000000000000000000000006";
     const rptId = fromNullable(service).chain(_ =>
       getRptIdFromNoticeNumber(
         _.organization_fiscal_code,
@@ -486,7 +497,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   private renderTopContainer = (
     maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
   ) => {
-    const { small } = this.props;
+    const { message, small } = this.props;
 
     const calendarIcon = this.renderCalendarIcon(
       maybeMessagePaymentExpirationInfo
@@ -497,14 +508,20 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const paymentButton = this.renderPaymentButton(
       maybeMessagePaymentExpirationInfo
     );
-
+    const paid = message.id === "00000000000000000000000006";
     if (
       calendarIcon !== null ||
       calendarEventButton !== null ||
       paymentButton !== null
     ) {
       return (
-        <View style={[styles.topContainer, !small && styles.topContainerLarge]}>
+        <View
+          style={[
+            styles.topContainer,
+            paid ? styles.topContainerPaid : undefined,
+            !small && styles.topContainerLarge
+          ]}
+        >
           {calendarIcon !== null && (
             <React.Fragment>
               {calendarIcon}

@@ -3,7 +3,7 @@
  * pired with a message.
  *
  */
-import { Text } from "native-base";
+import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 
@@ -185,6 +185,41 @@ class PaymentButton extends React.PureComponent<Props> {
       messagePaymentExpirationInfo.kind === "EXPIRABLE" &&
       messagePaymentExpirationInfo.expireStatus === "EXPIRED";
     const hideIcon = isUnexpirable || isExpired || !small;
+
+    if (paid) {
+      return (
+        <View
+          style={{
+            flexDirection: "row",
+            flex: 1,
+            justifyContent: "flex-start"
+          }}
+        >
+          <IconFont
+            name={"io-tick-big"}
+            style={[
+              { marginRight: 4 },
+              appliedStyles.icon,
+              small && smallStyles.icon,
+              disabled && disabledStyles.icon
+            ]}
+            color={
+              paid && !disabled ? customVariables.brandHighlight : undefined
+            }
+          />
+          <Text
+            bold={false}
+            style={[
+              appliedStyles.text,
+              small && smallStyles.text,
+              paidStyles.text
+            ]}
+          >
+            {getButtonText(messagePaymentExpirationInfo, paid)}
+          </Text>
+        </View>
+      );
+    }
 
     return (
       <ButtonDefaultOpacity
