@@ -4,7 +4,12 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Grid, Left, Right, Row, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  Platform
+} from "react-native";
 
 import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
@@ -18,6 +23,9 @@ import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
+import IconFont from "../ui/IconFont";
+import customVariables from "../../theme/variables";
+import { makeFontStyleObject } from "../../theme/fonts";
 
 type Props = Readonly<{
   title: string;
@@ -67,8 +75,31 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     paddingRight: 4
   },
+  badgeContainer: {
+    flex: 0,
+    paddingRight: 4,
+    alignSelf: "flex-start",
+    marginRight: 4,
+    paddingTop: 6
+  },
   viewStyle: {
     flexDirection: "row"
+  },
+  merchant: {
+    fontSize: 14,
+    lineHeight: 18,
+    color: customVariables.brandDarkestGray
+  },
+  transactionDescription: {
+    ...makeFontStyleObject(Platform.select, "600"),
+    fontSize: 18,
+    lineHeight: 21,
+    color: customVariables.brandDarkestGray
+  },
+  amount: {
+    ...makeFontStyleObject(Platform.select, "700"),
+    fontSize: 16,
+    color: customVariables.brandDarkGray
   }
 });
 
@@ -78,9 +109,6 @@ const styles = StyleSheet.create({
 
 export default class TransactionsList extends React.Component<Props> {
   private renderDate(item: Transaction) {
-    // Check if the current transaction is stored among the read transactions.
-    const isNew = this.props.readTransactions[item.id.toString()] === undefined;
-
     const datetime: string = `${formatDateAsLocal(
       item.created,
       true,
@@ -91,20 +119,13 @@ export default class TransactionsList extends React.Component<Props> {
       <Row>
         <Left>
           <View style={styles.viewStyle}>
-            {isNew && (
-              <View style={styles.badgeStyle}>
-                <BadgeComponent />
-              </View>
-            )}
-            <View>
-              <Text note={true} style={styles.dateStyle}>
-                {datetime}
-              </Text>
-            </View>
+            <Text note={true} style={styles.dateStyle}>
+              {datetime}
+            </Text>
           </View>
         </Left>
         <Right>
-          <Text>{amount}</Text>
+          <Text style={styles.amount}>{amount}</Text>
         </Right>
       </Row>
     );
@@ -114,21 +135,47 @@ export default class TransactionsList extends React.Component<Props> {
     const item = info.item;
     const paymentReason = cleanTransactionDescription(item.description);
     const recipient = item.merchant;
+    // Check if the current transaction is stored among the read transactions.
+    const isNew = this.props.readTransactions[item.id.toString()] === undefined;
     return (
       <TouchableDefaultOpacity
         onPress={() => this.props.navigateToTransactionDetails(item)}
       >
         <Grid style={styles.transaction}>
-          {this.renderDate(item)}
           <Row>
             <Left>
-              <Text>{paymentReason}</Text>
+              <Text style={styles.merchant}>{recipient}</Text>
             </Left>
           </Row>
+          {this.renderDate(item)}
           <Row>
-            <Left>
-              <Text note={true}>{recipient}</Text>
-            </Left>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <View style={{ flex: 1 }}>
+                <View style={{ flexDirection: "row" }}>
+                  {isNew && (
+                    <View style={styles.badgeContainer}>
+                      <BadgeComponent />
+                    </View>
+                  )}
+                  <Text style={styles.transactionDescription}>
+                    {paymentReason}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={{
+                  width: 64,
+                  alignItems: "flex-end",
+                  justifyContent: "center"
+                }}
+              >
+                <IconFont
+                  name="io-right"
+                  size={24}
+                  color={customVariables.contentPrimaryBackground}
+                />
+              </View>
+            </View>
           </Row>
         </Grid>
       </TouchableDefaultOpacity>

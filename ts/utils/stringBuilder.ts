@@ -17,8 +17,8 @@ export const formatNumberAmount = (amount: number): string =>
   I18n.toCurrency(amount, {
     precision: DISPLAYED_DIGITS,
     separator: I18n.t("global.localization.decimalSeparator"),
-    unit: "€",
-    format: "%n %u"
+    unit: "",
+    format: "%u %n"
   });
 
 export const buildExpirationDate = (creditCard: CreditCard): string =>

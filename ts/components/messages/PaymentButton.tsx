@@ -115,9 +115,8 @@ const disabledStyles = StyleSheet.create({
 
 const paidStyles = StyleSheet.create({
   button: {
-    backgroundColor: customVariables.colorWhite,
-    borderColor: customVariables.brandHighlight,
-    borderWidth: 1
+    backgroundColor: "#F5F6F7",
+    borderWidth: 0
   },
 
   text: {
@@ -188,36 +187,21 @@ class PaymentButton extends React.PureComponent<Props> {
 
     if (paid) {
       return (
-        <View
-          style={{
-            flexDirection: "row",
-            flex: 1,
-            justifyContent: "flex-start"
-          }}
+        <ButtonDefaultOpacity
+          disabled={true}
+          light={true}
+          onPress={undefined}
+          style={[baseStyles.button, paidStyles.button]}
         >
           <IconFont
             name={"io-tick-big"}
-            style={[
-              { marginRight: 4 },
-              appliedStyles.icon,
-              small && smallStyles.icon,
-              disabled && disabledStyles.icon
-            ]}
-            color={
-              paid && !disabled ? customVariables.brandHighlight : undefined
-            }
+            style={appliedStyles.icon}
+            color={customVariables.brandHighlight}
           />
-          <Text
-            bold={false}
-            style={[
-              appliedStyles.text,
-              small && smallStyles.text,
-              paidStyles.text
-            ]}
-          >
+          <Text bold={false} style={paidStyles.text}>
             {getButtonText(messagePaymentExpirationInfo, paid)}
           </Text>
-        </View>
+        </ButtonDefaultOpacity>
       );
     }
 
@@ -241,7 +225,6 @@ class PaymentButton extends React.PureComponent<Props> {
               style={[
                 baseStyles.icon,
                 appliedStyles.icon,
-                small && smallStyles.icon,
                 disabled && disabledStyles.icon
               ]}
               color={

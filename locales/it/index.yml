@@ -641,7 +641,7 @@ wallet:
     amount: Importo (€)
     proceed: Procedi con il pagamento
   total: Totale
-  amount: Importo
+  amount: Importo €
   payAmount: Importo dovuto
   transactionFee: Costo operazione
   why: Perché?

@@ -632,7 +632,7 @@ wallet:
     contextualHelpTitle: Transaction details
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   total: Total
-  amount: Amount
+  amount: Amount €
   payAmount: Amount to pay
   transactionFee: Transaction fee
   why: Why?
