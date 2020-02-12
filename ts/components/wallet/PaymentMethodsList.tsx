@@ -16,6 +16,8 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 import Markdown from "../ui/Markdown";
+import { makeFontStyleObject } from "../../theme/fonts";
+import customVariables from "../../theme/variables";
 
 type OwnProps = Readonly<{
   navigateToAddCreditCard: () => void;
@@ -29,10 +31,10 @@ type IPaymentMethod = Readonly<{
   icon: any;
   implemented: boolean;
   onPress?: () => void;
+  showMaxFee: boolean;
 }>;
 
 const underlayColor = "transparent";
-
 const styles = StyleSheet.create({
   listItem: {
     marginLeft: 0,
@@ -40,6 +42,10 @@ const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.75
+  },
+  methodTitle: {
+    ...makeFontStyleObject(Platform.select, "600"),
+    fontSize: 18
   }
 });
 
@@ -81,25 +87,40 @@ class PaymentMethodsList extends React.Component<Props, never> {
         name: I18n.t("wallet.methods.card.name"),
         maxFee: I18n.t("wallet.methods.card.maxFee"),
         icon: "io-48-card",
-        implemented: true
-      },
-      {
-        name: I18n.t("wallet.methods.bank.name"),
-        maxFee: I18n.t("wallet.methods.bank.maxFee"),
-        icon: "io-48-bank",
-        implemented: false
+        implemented: true,
+        showMaxFee: true
       },
       {
         name: I18n.t("wallet.methods.mobile.name"),
         maxFee: I18n.t("wallet.methods.mobile.maxFee"),
         icon: "io-48-phone",
-        implemented: false
+        implemented: false,
+        showMaxFee: false
+      },
+      {
+        name: "Postepay",
+        maxFee: I18n.t("wallet.methods.bank.maxFee"),
+        icon: "io-48-phone",
+        implemented: false,
+        showMaxFee: false
+      },
+      {
+        name: "Paypal",
+        maxFee: I18n.t("wallet.methods.bank.maxFee"),
+        icon: "io-48-phone",
+        implemented: false,
+        showMaxFee: false
+      },
+      {
+        name: I18n.t("wallet.methods.bank.name"),
+        maxFee: I18n.t("wallet.methods.bank.maxFee"),
+        icon: "io-48-phone",
+        implemented: false,
+        showMaxFee: false
       }
     ];
     return (
       <View>
-        <Text>{I18n.t("wallet.chooseMethod")}</Text>
-        <View spacer={true} />
         <FlatList
           removeClippedSubviews={false}
           data={paymentMethods}
@@ -116,27 +137,46 @@ class PaymentMethodsList extends React.Component<Props, never> {
                 <Left>
                   <Grid>
                     <Row>
-                      <Text bold={true} style={disabledStyle}>
-                        {itemInfo.item.name}
-                      </Text>
-                    </Row>
-                    <Row>
-                      <Text
-                        style={[AddMethodStyle.transactionText, disabledStyle]}
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "center"
+                        }}
                       >
-                        {itemInfo.item.maxFee}
-                      </Text>
-                    </Row>
-                    {isItemDisabled && (
-                      <Row>
-                        <Badge
-                          primary={true}
-                          style={AddMethodStyle.notImplementedBadge}
+                        <Text
+                          bold={true}
+                          style={[disabledStyle, styles.methodTitle]}
                         >
-                          <Text style={AddMethodStyle.notImplementedText}>
-                            {I18n.t("wallet.methods.notImplemented")}
-                          </Text>
-                        </Badge>
+                          {itemInfo.item.name}
+                        </Text>
+                        {isItemDisabled && (
+                          <Badge
+                            style={[
+                              AddMethodStyle.notImplementedBadge,
+                              {
+                                marginLeft: 4,
+                                marginTop: 2,
+                                backgroundColor: "#909DA8"
+                              }
+                            ]}
+                          >
+                            <Text style={AddMethodStyle.notImplementedText}>
+                              {"in arrivo"}
+                            </Text>
+                          </Badge>
+                        )}
+                      </View>
+                    </Row>
+                    {itemInfo.item.showMaxFee && (
+                      <Row>
+                        <Text
+                          style={[
+                            AddMethodStyle.transactionText,
+                            disabledStyle
+                          ]}
+                        >
+                          {itemInfo.item.maxFee}
+                        </Text>
                       </Row>
                     )}
                   </Grid>

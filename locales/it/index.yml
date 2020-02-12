@@ -673,7 +673,7 @@ wallet:
       name: Bancomat Pay
       maxFee: Commissione massima 0.50€
     mobile:
-      name: Altri metodi di pagamento
+      name: Satispay
       maxFee: Paypal, Satispay, etc.
     notImplemented: Prossimamente
   addCardTitle: Dati carta
