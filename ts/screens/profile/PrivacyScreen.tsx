@@ -4,6 +4,7 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 
 import { MarkdownScreenComponent } from "../../components/screens/MarkdownScreenComponent";
 
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import H4 from "../../components/ui/H4";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -20,6 +21,11 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.main.privacy.contextualHelpTitlePolicy",
+  body: "profile.main.privacy.contextualHelpContentPolicy"
+};
+
 /**
  * A screen to show the Privacy policy to the user.
  */
@@ -32,6 +38,7 @@ export const PrivacyScreen: React.SFC<Props> = props => (
       headerContent={
         <H4 style={styles.bolded}>{I18n.t("profile.main.privacy.header")}</H4>
       }
+      contextualHelpMarkdown={contextualHelpMarkdown}
     />
   </React.Fragment>
 );
