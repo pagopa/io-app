@@ -23,7 +23,7 @@ import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persis
 import { profileSelector, ProfileState } from "../../store/reducers/profile";
 
 /**
- * A saga to match at the first starup if the user has customized settings related to the
+ * A saga to match at the first startup if the user has customized settings related to the
  * forwarding of notifications on the verified email within previous installations
  */
 export function* watchEmailNotificationPreferencesSaga(): IterableIterator<
