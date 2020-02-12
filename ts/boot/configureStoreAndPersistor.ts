@@ -174,7 +174,7 @@ const migrations: MigrationManifest = {
       entities: {
         ...(state as PersistedGlobalState).entities,
         organizations: {
-          orgNameByFiscalCode: (state as PersistedGlobalState).entities
+          nameByFiscalCode: (state as PersistedGlobalState).entities
             .organizations.nameByFiscalCode
         }
       }
