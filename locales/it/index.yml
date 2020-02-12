@@ -32,7 +32,7 @@ global:
     saveSelection: Salva la selezione
   navigator:
     messages: messaggi
-    wallet: portafoglio
+    wallet: pagamenti
     documents: documenti
     profile: profilo
     services: servizi

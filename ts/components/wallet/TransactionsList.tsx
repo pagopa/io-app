@@ -90,8 +90,13 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: customVariables.brandDarkestGray
   },
+  transcationUndread: {
+    ...makeFontStyleObject(Platform.select, "700")
+  },
+  transactionRead: {
+    ...makeFontStyleObject(Platform.select, "400")
+  },
   transactionDescription: {
-    ...makeFontStyleObject(Platform.select, "600"),
     fontSize: 18,
     lineHeight: 21,
     color: customVariables.brandDarkestGray
@@ -157,7 +162,12 @@ export default class TransactionsList extends React.Component<Props> {
                       <BadgeComponent />
                     </View>
                   )}
-                  <Text style={styles.transactionDescription}>
+                  <Text
+                    style={[
+                      styles.transactionDescription,
+                      isNew ? styles.transcationUndread : styles.transactionRead
+                    ]}
+                  >
                     {paymentReason}
                   </Text>
                 </View>
