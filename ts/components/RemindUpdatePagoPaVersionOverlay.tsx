@@ -4,16 +4,7 @@ import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Linking, Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { navigateBack } from "../store/actions/navigation";
-import { Dispatch } from "../store/actions/types";
-import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
-import { getPagoPaMinAppVersion } from "../utils/appVersion";
-
-type OwnProp = {
-  onClose?: () => void;
-};
-type Props = ReturnType<typeof mapStateToProps> & OwnProp;
 
 type State = { hasError: boolean };
 
@@ -45,10 +36,10 @@ const storeUrl = Platform.select({
 });
 
 class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
-  Props,
+  never,
   State
 > {
-  constructor(props: Props) {
+  constructor(props: never) {
     super(props);
     this.state = {
       hasError: false
@@ -99,16 +90,6 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
         <View spacer={true} />
         <Text>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</Text>
         <View spacer={true} />
-        {this.state.hasError && (
-          <React.Fragment>
-            <View spacer={true} />
-            <Text style={styles.textDanger}>
-              {I18n.t("wallet.alert.msgErrorUpdateApp")}
-            </Text>
-          </React.Fragment>
-        )}
-
-        <View spacer={true} />
 
         <Button
           block={true}
@@ -118,23 +99,19 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
         >
           <Text>{I18n.t("wallet.alert.btnUpdateApp")}</Text>
         </Button>
+
+        <View spacer={true} />
+        {this.state.hasError && (
+          <React.Fragment>
+            <View spacer={true} />
+            <Text style={styles.textDanger}>
+              {I18n.t("wallet.alert.msgErrorUpdateApp")}
+            </Text>
+          </React.Fragment>
+        )}
       </Content>
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
-  const minPagoPaVersion = getPagoPaMinAppVersion(state);
-  return {
-    minPagoPaVersion
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateBack: () => dispatch(navigateBack())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RemindUpdatePagoPaVersionOverlay);
+export default connect()(RemindUpdatePagoPaVersionOverlay);
