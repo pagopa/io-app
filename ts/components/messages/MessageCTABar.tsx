@@ -41,6 +41,7 @@ import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { openAppSettings } from "../../utils/appSettings";
+import { isUpdatedNeededPagoPa } from "../../utils/appVersion";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import {
   format,
@@ -429,7 +430,10 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         ? () => {
             this.props.refreshService(message.sender_service_id);
             // TODO: optimize the managment of the payment initialization https://www.pivotaltracker.com/story/show/169702534
-            if (this.props.isEmailValidated) {
+            if (
+              this.props.isEmailValidated &&
+              !this.props.isUpdatedNeededPagoPa
+            ) {
               this.props.paymentInitializeState();
               this.props.navigateToPaymentTransactionSummaryScreen({
                 rptId: rptId.value,
@@ -694,7 +698,11 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   calendarEvent: calendarEventByMessageIdSelector(ownProps.message.id)(state),
   preferredCalendar: state.persistedPreferences.preferredCalendar,
-  isEmailValidated: isProfileEmailValidatedSelector(state)
+  isEmailValidated: isProfileEmailValidatedSelector(state),
+  isUpdatedNeededPagoPa:
+    state.backendInfo.serverInfo !== undefined
+      ? isUpdatedNeededPagoPa(state.backendInfo.serverInfo)
+      : false
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

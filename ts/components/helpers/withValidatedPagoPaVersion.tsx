@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { GlobalState } from "../../store/reducers/types";
 import { isUpdatedNeededPagoPa } from "../../utils/appVersion";
 import RemindUpdatePagoPaVersionOverlay from "../RemindUpdatePagoPaVersionOverlay";
+import BaseScreenComponent from "../screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../ui/LightModal";
 import { withConditionalView } from "./withConditionalView";
 import { withLightModalContext } from "./withLightModalContext";
@@ -22,7 +23,11 @@ class ModalControlMinPagoPaAppVersionOverlay extends React.Component<
     this.props.hideModal();
   };
   public render() {
-    return <RemindUpdatePagoPaVersionOverlay />;
+    return (
+      <BaseScreenComponent appLogo={true}>
+        <RemindUpdatePagoPaVersionOverlay />
+      </BaseScreenComponent>
+    );
   }
 }
 
