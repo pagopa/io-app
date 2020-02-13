@@ -693,6 +693,12 @@ wallet:
     cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
       message: "IO app needs Camera usage permission to shoot at the QR code"
+    settingsAlert:
+      title: It seems access to Photos has been denied
+      message: IO needs access to the Photos to scan QR codes
+      buttonText:
+        settings: Enable permissions
+        cancel: Cancel
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include wallet/why_a_fee.md
