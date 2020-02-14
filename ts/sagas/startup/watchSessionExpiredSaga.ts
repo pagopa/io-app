@@ -7,7 +7,7 @@ import {
 } from "../../store/actions/authentication";
 
 /**
- * Handles the expiration of session while the user is using the app.
+ * Handles the expiration of the session while the user is using the app.
  */
 export function* watchSessionExpiredSaga(): IterableIterator<Effect> {
   yield takeLatest(getType(sessionExpired), function*() {

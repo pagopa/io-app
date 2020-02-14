@@ -1,43 +1,28 @@
+/**
+ * A component to render a list of visible (not yet archived) messages.
+ * It acts like a wrapper for the MessageList component, filtering the messages
+ * and adding the messages selection and archiving management.
+ */
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import React, { ComponentProps } from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
-import customVariables from "../../theme/variables";
-import { HEADER_HEIGHT } from "../../utils/constants";
 import {
   InjectedWithItemsSelectionProps,
   withItemsSelection
 } from "../helpers/withItemsSelection";
 import { ListSelectionBar } from "../ListSelectionBar";
+import { EmptyListComponent } from "./EmptyListComponent";
+import { ErrorLoadingComponent } from "./ErrorLoadingComponent";
 import MessageList from "./MessageList";
-
-const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
-  },
-  animatedStartPosition: {
-    bottom: SCROLL_RANGE_FOR_ANIMATION
-  },
-  emptyListWrapper: {
-    padding: customVariables.contentPadding,
-    alignItems: "center"
-  },
-  emptyListContentTitle: {
-    paddingTop: customVariables.contentPadding
-  },
-  emptyListContentSubtitle: {
-    textAlign: "center",
-    paddingTop: customVariables.contentPadding,
-    fontSize: customVariables.fontSizeSmall
-  },
-  paddingForAnimation: {
-    height: 55
   },
   listContainer: {
     flex: 1
@@ -54,14 +39,6 @@ type OwnProps = {
   ) => void;
 };
 
-type AnimationProps = {
-  // paddingForAnimation flag is set to true when this component is animated.
-  // It is used to make empty list component and command bar correctly visible
-  // when scroll is below animation threshold.
-  paddingForAnimation: boolean;
-  AnimatedCTAStyle?: any;
-};
-
 type MessageListProps =
   | "servicesById"
   | "paymentsByRptId"
@@ -70,7 +47,6 @@ type MessageListProps =
 
 type Props = Pick<ComponentProps<typeof MessageList>, MessageListProps> &
   OwnProps &
-  AnimationProps &
   InjectedWithItemsSelectionProps;
 
 type State = {
@@ -94,27 +70,14 @@ const generateMessagesStateNotArchivedArray = (
     []
   );
 
-const ListEmptyComponent = (paddingForAnimation: boolean) => (
-  <View style={styles.emptyListWrapper}>
-    <View spacer={true} />
-    <Image
-      source={require("../../../img/messages/empty-message-list-icon.png")}
-    />
-    <Text style={styles.emptyListContentTitle}>
-      {I18n.t("messages.inbox.emptyMessage.title")}
-    </Text>
-    <Text style={styles.emptyListContentSubtitle}>
-      {I18n.t("messages.inbox.emptyMessage.subtitle")}
-    </Text>
-    {paddingForAnimation && <View style={styles.paddingForAnimation} />}
-  </View>
+const ListEmptyComponent = (
+  <EmptyListComponent
+    image={require("../../../img/messages/empty-message-list-icon.png")}
+    title={I18n.t("messages.inbox.emptyMessage.title")}
+    subtitle={I18n.t("messages.inbox.emptyMessage.subtitle")}
+  />
 );
 
-/**
- * A component to render a list of visible (not yet archived) messages.
- * It acts like a wrapper for the MessageList component, filtering the messages
- * and adding the messages selection and archiving management.
- */
 class MessagesInbox extends React.PureComponent<Props, State> {
   /**
    * Updates the filteredMessageStates only when necessary.
@@ -160,29 +123,9 @@ class MessagesInbox extends React.PureComponent<Props, State> {
 
   public render() {
     const isLoading = pot.isLoading(this.props.messagesState);
-    const {
-      animated,
-      AnimatedCTAStyle,
-      paddingForAnimation,
-      selectedItemIds,
-      resetSelection
-    } = this.props;
+    const { animated, selectedItemIds, resetSelection } = this.props;
     const { allMessageIdsState } = this.state;
     const isErrorLoading = pot.isError(this.props.messagesState);
-
-    // If have error in pot and the list is empty
-    const ErrorLoadingComponent = () => (
-      <View style={styles.emptyListWrapper}>
-        <View spacer={true} />
-        <Image
-          source={require("../../../img/messages/empty-message-list-icon.png")}
-        />
-        <Text style={styles.emptyListContentTitle}>
-          {I18n.t("messages.loadingErrorTitle")}
-        </Text>
-        {paddingForAnimation && <View style={styles.paddingForAnimation} />}
-      </View>
-    );
 
     return (
       <View style={styles.listWrapper}>
@@ -195,7 +138,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
             refreshing={isLoading}
             selectedMessageIds={selectedItemIds}
             ListEmptyComponent={
-              isErrorLoading ? ErrorLoadingComponent : ListEmptyComponent
+              isErrorLoading ? <ErrorLoadingComponent /> : ListEmptyComponent
             }
             animated={animated}
           />
@@ -207,10 +150,6 @@ class MessagesInbox extends React.PureComponent<Props, State> {
           onToggleAllSelection={this.toggleAllMessagesSelection}
           onResetSelection={resetSelection}
           primaryButtonText={I18n.t("messages.cta.archive")}
-          containerStyle={[
-            AnimatedCTAStyle,
-            paddingForAnimation && styles.animatedStartPosition
-          ]}
         />
       </View>
     );

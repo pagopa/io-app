@@ -5,40 +5,37 @@ import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
+import { TranslationKeys } from "../../../locales/locales";
+import { ContextualHelp } from "../../components/ContextualHelp";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
+  navigateToEmailInsertScreen,
   navigateToEmailReadScreen,
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import {
+  hasProfileEmailSelector,
   isProfileEmailValidatedSelector,
   profileEmailSelector,
-  profileSelector
+  profileSelector,
+  profileSpidEmailSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import { getLocalePrimary } from "../../utils/locale";
-
-const unavailableAlert = () =>
-  Alert.alert(
-    I18n.t("profile.preferences.unavailable.title"),
-    I18n.t("profile.preferences.unavailable.message")
-  );
-
-const languageAlert = () =>
-  Alert.alert(
-    I18n.t("profile.preferences.language.title"),
-    I18n.t("profile.preferences.language.message")
-  );
-
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -46,7 +43,8 @@ type OwnProps = Readonly<{
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  ReduxProps;
+  ReduxProps &
+  LightModalContextInterface;
 
 type State = {
   isFingerprintAvailable: boolean;
@@ -54,6 +52,11 @@ type State = {
 
 const INITIAL_STATE: State = {
   isFingerprintAvailable: false
+};
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.contextualHelpTitle",
+  body: "profile.preferences.contextualHelpContent"
 };
 
 /**
@@ -81,7 +84,11 @@ class PreferencesScreen extends React.Component<Props, State> {
   }
 
   private handleEmailOnPress() {
-    this.props.navigateToEmailReadScreen();
+    if (this.props.hasProfileEmail) {
+      this.props.navigateToEmailReadScreen();
+      return;
+    }
+    this.props.navigateToEmailInsertScreen();
   }
 
   public componentWillMount() {
@@ -131,22 +138,30 @@ class PreferencesScreen extends React.Component<Props, State> {
   };
 
   public render() {
-    const { potProfile } = this.props;
     const { isFingerprintAvailable } = this.state;
 
-    const email = this.props.optionEmail.getOrElse("");
-    const phoneNumber = potProfile.fold(
-      I18n.t("global.remoteStates.notAvailable"),
-      _ => _.spid_mobile_phone
-    );
+    const notAvailable = I18n.t("global.remoteStates.notAvailable");
+    const maybeEmail = this.props.optionEmail;
+    const maybeSpidEmail = this.props.optionSpidEmail;
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
       .map(_ => translateLocale(_[0]))
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 
+    const showModal = (title: TranslationKeys, body: TranslationKeys) => {
+      this.props.showModal(
+        <ContextualHelp
+          onClose={this.props.hideModal}
+          title={I18n.t(title)}
+          body={() => <Markdown>{I18n.t(body)}</Markdown>}
+        />
+      );
+    };
+
     return (
       <TopScreenComponent
+        contextualHelpMarkdown={contextualHelpMarkdown}
         title={I18n.t("profile.preferences.title")}
         goBack={() => this.props.navigation.goBack()}
       >
@@ -187,27 +202,33 @@ class PreferencesScreen extends React.Component<Props, State> {
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.email")}
-              subTitle={email}
-              onPress={this.handleEmailOnPress}
+              subTitle={maybeEmail.getOrElse(notAvailable)}
               titleBadge={
                 this.props.isEmailValidated === false
                   ? I18n.t("profile.preferences.list.need_validate")
                   : undefined
               }
+              onPress={this.handleEmailOnPress}
             />
 
-            <ListItemComponent
-              title={I18n.t("profile.preferences.list.mobile_phone")}
-              subTitle={phoneNumber}
-              iconName={"io-phone-number"}
-              onPress={unavailableAlert}
-            />
+            {// Check if spid email exists
+            maybeSpidEmail.isSome() && (
+              <ListItemComponent
+                title={I18n.t("profile.preferences.list.spid_email")}
+                subTitle={maybeSpidEmail.value}
+              />
+            )}
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
               subTitle={languages}
               iconName={"io-languages"}
-              onPress={languageAlert}
+              onPress={() =>
+                showModal(
+                  "profile.preferences.language.contextualHelpTitle",
+                  "profile.preferences.language.contextualHelpContent"
+                )
+              }
             />
 
             <EdgeBorderComponent />
@@ -223,9 +244,11 @@ function mapStateToProps(state: GlobalState) {
     languages: fromNullable(state.preferences.languages),
     potProfile: pot.toOption(profileSelector(state)),
     optionEmail: profileEmailSelector(state),
+    optionSpidEmail: profileSpidEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-    preferredCalendar: state.persistedPreferences.preferredCalendar
+    preferredCalendar: state.persistedPreferences.preferredCalendar,
+    hasProfileEmail: hasProfileEmailSelector(state)
   };
 }
 
@@ -234,10 +257,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToFingerprintPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
     dispatch(navigateToCalendarPreferenceScreen()),
-  navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen())
+  navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen()),
+  navigateToEmailInsertScreen: () => dispatch(navigateToEmailInsertScreen())
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PreferencesScreen);
+)(withLightModalContext(PreferencesScreen));

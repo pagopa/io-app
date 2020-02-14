@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
-
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
