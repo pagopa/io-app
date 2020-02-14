@@ -15,10 +15,10 @@ import {
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
 
-// load backend info every 5 seconds
-const BACKEND_INFO_LOAD_INTERVAL = 5 * 1000;
+// load backend info every 10 seconds
+const BACKEND_INFO_LOAD_INTERVAL = 10 * 1000;
 
-// retry loading backend info every 10 hours on error
+// retry loading backend info every 10 seconds on error
 const BACKEND_INFO_RETRY_INTERVAL = 60 * 60 * 10 * 1000;
 
 function* backendInfoWatcher(): IterableIterator<Effect> {
