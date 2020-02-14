@@ -701,6 +701,12 @@ wallet:
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
       message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
+    settingsAlert:
+      title: Sembra che l'accesso alle foto sia stato negato
+      message: IO ha bisogno di accedere alle foto per scansionare i codici QR
+      buttonText:
+        settings: Abilita permessi
+        cancel: Annulla
   whyAFee:
     title: Perché devo pagare le commissioni?
     text: !include wallet/why_a_fee.md
