@@ -3,8 +3,6 @@
  * It only manages SUCCESS actions because all UI state properties (like loading/error)
  * are managed by different global reducers.
  */
-
-import { none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import {
@@ -16,12 +14,12 @@ import { GlobalState } from "./types";
 
 export type EmailValidationState = {
   sendEmailValidationRequest: pot.Pot<void, Error>;
-  acknowledgeOnEmailValidated: Option<boolean>;
+  acknowledgeOnEmailValidated: boolean;
 };
 
 const INITIAL_STATE: EmailValidationState = {
   sendEmailValidationRequest: pot.none,
-  acknowledgeOnEmailValidated: none
+  acknowledgeOnEmailValidated: false
 };
 
 // return the pot of email validation
@@ -55,3 +53,9 @@ const reducer = (
 };
 
 export default reducer;
+
+// Selectors
+export const sendEmailValidationRequestSelector = (state: GlobalState) =>
+  state.emailValidation.sendEmailValidationRequest;
+export const acknowledgeOnEmailValidatedSelector = (state: GlobalState) =>
+  state.emailValidation.acknowledgeOnEmailValidated;

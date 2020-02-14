@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
 import { createLogger } from "redux-logger";
 import {
@@ -30,11 +30,10 @@ import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 import { configureReactotron } from "./configureRectotron";
-
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 8;
+const CURRENT_REDUX_STORE_VERSION = 9;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -162,6 +161,18 @@ const migrations: MigrationManifest = {
           ...(state as PersistedGlobalState).content.servicesMetadata,
           byId: {}
         }
+      }
+    };
+  },
+
+  // Version 9
+  // we convert the acknowledgeOnEmailValidated state type from Option<boolean> to boolean
+  "9": (state: PersistedState) => {
+    return {
+      ...state,
+      emailValidation: {
+        sendEmailValidationRequest: pot.none,
+        acknowledgeOnEmailValidated: false
       }
     };
   }

@@ -1,7 +1,6 @@
 /**
  * A component to remind the user to validate his email
  */
-import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
@@ -23,7 +22,10 @@ import {
   startEmailValidation
 } from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
-import { emailValidationSelector } from "../store/reducers/emailValidation";
+import {
+  acknowledgeOnEmailValidatedSelector,
+  sendEmailValidationRequestSelector
+} from "../store/reducers/emailValidation";
 import { isOnboardingCompletedSelector } from "../store/reducers/navigationHistory";
 import {
   isProfileEmailValidatedSelector,
@@ -89,7 +91,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
     this.props.reloadProfile();
     // since we are here, set the user doesn't acknowledge about the email validation
-    this.props.dispatchAcknowledgeOnEmailValidation(some(false));
+    this.props.dispatchAcknowledgeOnEmailValidation(true);
   }
 
   public componentWillUnmount() {
@@ -120,7 +122,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     if (this.state.isLoading) {
       return;
     }
-    this.props.dispatchAcknowledgeOnEmailValidation(none);
+    this.props.dispatchAcknowledgeOnEmailValidation(false);
     this.props.reloadProfile();
     if (!this.props.isOnboardingCompleted) {
       this.props.acknowledgeEmailInsert();
@@ -159,14 +161,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       }
     }
 
-    // if the email becomes validated
-    if (!prevProps.isEmailValidated && this.props.isEmailValidated) {
-      // and the user doesn't acknowledgeknow about validation
-      this.props.acknowledgeOnEmailValidated.map(v => {
-        if (v === false && this.state.emailHasBeenValidate === false) {
-          this.setState({ emailHasBeenValidate: true });
-        }
-      });
+    // if the email becomes validated and the user doesn't acknowledgeknow about validation
+    if (
+      !prevProps.isEmailValidated &&
+      this.props.isEmailValidated &&
+      this.props.acknowledgeOnEmailValidated &&
+      this.state.emailHasBeenValidate === false
+    ) {
+      this.setState({ emailHasBeenValidate: true });
     }
   }
 
@@ -313,19 +315,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => {
-  const isEmailValidated = isProfileEmailValidatedSelector(state);
-  const emailValidation = emailValidationSelector(state);
-  const potProfile = profileSelector(state);
-  return {
-    emailValidationRequest: emailValidation.sendEmailValidationRequest,
-    acknowledgeOnEmailValidated: emailValidation.acknowledgeOnEmailValidated,
-    optionEmail: profileEmailSelector(state),
-    isEmailValidated,
-    potProfile,
-    isOnboardingCompleted: isOnboardingCompletedSelector(state)
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  emailValidationRequest: sendEmailValidationRequestSelector(state),
+  acknowledgeOnEmailValidated: acknowledgeOnEmailValidatedSelector(state),
+  optionEmail: profileEmailSelector(state),
+  isEmailValidated: isProfileEmailValidatedSelector(state),
+  potProfile: profileSelector(state),
+  isOnboardingCompleted: isOnboardingCompletedSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   sendEmailValidation: () => dispatch(startEmailValidation.request()),
@@ -338,7 +335,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToEmailInsertScreen());
   },
   acknowledgeEmailInsert: () => dispatch(emailAcknowledged()),
-  dispatchAcknowledgeOnEmailValidation: (maybeAcknowledged: Option<boolean>) =>
+  dispatchAcknowledgeOnEmailValidation: (maybeAcknowledged: boolean) =>
     dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
   abortOnboarding: () => dispatch(abortOnboarding())
 });

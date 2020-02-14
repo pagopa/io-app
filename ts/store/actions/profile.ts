@@ -1,8 +1,6 @@
 /**
  * Action types and action creator related to the Profile.
  */
-
-import { Option } from "fp-ts/lib/Option";
 import { Omit } from "italia-ts-commons/lib/types";
 import {
   ActionType,
@@ -43,7 +41,7 @@ export const startEmailValidation = createAsyncAction(
 
 export const acknowledgeOnEmailValidation = createStandardAction(
   "ACKNOWLEDGE_ON_EMAIL_VALIDATION"
-)<Option<boolean>>();
+)<boolean>();
 
 type ProfileFirstLoginPayload = {
   fiscal_code: InitializedProfile["fiscal_code"];

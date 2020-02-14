@@ -1,8 +1,6 @@
 /**
  * A HOC to display the WrappedComponent when the email is validated, otherwise the RemindEmailValidationOverlay will be displayed
  */
-
-import { none } from "fp-ts/lib/Option";
 import React from "react";
 import { View } from "react-native";
 import { NavigationEvents } from "react-navigation";
@@ -12,7 +10,6 @@ import RemindEmailValidationOverlay from "../../components/RemindEmailValidation
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { acknowledgeOnEmailValidation } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
-import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { withConditionalView } from "./withConditionalView";
@@ -63,21 +60,16 @@ const ConditionalView = withLightModalContext(
 export type Props = ReturnType<typeof mapStateToProps>;
 
 const mapStateToProps = (state: GlobalState) => {
-  const isEmailValidated = isProfileEmailValidatedSelector(state);
-  const acknowledgeOnEmailValidated = emailValidationSelector(state)
-    .acknowledgeOnEmailValidated;
   // we consider the email validated (-> hide the reminder screen) when
-  // the profile has the email validated flag on ON AND (if it is some) when the user
-  // knows about the validation completed
+  // the profile has the email validated flag on ON
   return {
-    isEmailValidated:
-      isEmailValidated && acknowledgeOnEmailValidated.getOrElse(true)
+    isEmailValidated: isProfileEmailValidatedSelector(state)
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchAcknowledgeOnEmailValidation: () =>
-    dispatch(acknowledgeOnEmailValidation(none))
+    dispatch(acknowledgeOnEmailValidation(false))
 });
 
 export function withValidatedEmail<P>(
