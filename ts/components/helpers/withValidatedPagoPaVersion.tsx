@@ -51,7 +51,6 @@ export function withValidatedPagoPaVersion<P>(
 ) {
   return connect(
     mapStateToProps,
-    undefined
   )(
     withConditionalView(
       WrappedComponent,
