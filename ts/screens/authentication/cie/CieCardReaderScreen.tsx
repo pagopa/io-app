@@ -82,7 +82,7 @@ type State = {
 /**
  *  This screen shown while reading the card
  */
-class CieCardReaderScreen extends React.Component<Props, State> {
+class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private progressAnimation: Animated.CompositeAnimation;
   private progressAnimatedValue: Animated.Value;
 

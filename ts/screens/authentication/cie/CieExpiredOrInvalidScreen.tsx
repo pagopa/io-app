@@ -14,7 +14,7 @@ const browseToLink = () =>
     "https://www.cartaidentita.interno.gov.it/prenotazione-della-richiesta/"
   );
 
-class CieExpiredOrInvalidScreen extends React.Component<Props> {
+class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
   }

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class CieAuthorizeDataUsageScreen extends React.Component<Props, State> {
+class CieAuthorizeDataUsageScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { isLoadingCompleted: false };

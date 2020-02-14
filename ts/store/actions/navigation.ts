@@ -262,11 +262,6 @@ export const navigateToCieInvalidScreen = () =>
     routeName: ROUTES.CIE_EXPIRED_SCREEN
   });
 
-export const navigateToCieSuccessScreen = () =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_SUCCESS_SCREEN
-  });
-
 export const navigateToCiePinScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_PIN_SCREEN

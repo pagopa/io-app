@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class CieValidScreen extends React.Component<Props> {
+class CieValidScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     setTimeout(() => {
       this.props.navigation.navigate(

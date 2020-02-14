@@ -9,7 +9,6 @@ import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScre
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
-import CieSuccessScreen from "../screens/authentication/cie/CieSuccessScreen";
 import CieValidScreen from "../screens/authentication/cie/CieValidScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
@@ -50,10 +49,6 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   // For valid cie screen
   [ROUTES.CIE_VALID_SCREEN]: {
     screen: CieValidScreen
-  },
-  // For CIE success screen
-  [ROUTES.CIE_SUCCESS_SCREEN]: {
-    screen: CieSuccessScreen
   },
   [ROUTES.CIE_PIN_SCREEN]: {
     screen: CiePinScreen

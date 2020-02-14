@@ -16,7 +16,7 @@ type NavigationParams = {
 
 type Props = NavigationScreenProps<NavigationParams>;
 
-class CieWrongCiePinScreen extends React.Component<Props> {
+class CieWrongCiePinScreen extends React.PureComponent<Props> {
   // TODO: usare redux per gestire il controllo?
   private navigateToCiePinScreen = async () => {
     this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);

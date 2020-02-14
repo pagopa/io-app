@@ -24,9 +24,7 @@ type OwnProps = {
   ciePin: string;
 };
 
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}> &
+type Props =  NavigationScreenProp<NavigationState> &
   OwnProps &
   NavigationScreenProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
 
 const brokenLinkImage = require("../../../../img/broken-link.png");
 
-class CieConsentDataUsageScreen extends React.Component<Props, State> {
+class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false, isLoading: true, findOpenApp: false };

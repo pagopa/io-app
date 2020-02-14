@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
 const CIE_PIN_LENGTH = 8;
 
-class CiePinScreen extends React.Component<Props, State> {
+class CiePinScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { pin: "" };
