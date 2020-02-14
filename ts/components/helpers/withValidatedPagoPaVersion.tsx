@@ -49,9 +49,7 @@ const mapStateToProps = (state: GlobalState) => {
 export function withValidatedPagoPaVersion<P>(
   WrappedComponent: React.ComponentType<P>
 ) {
-  return connect(
-    mapStateToProps,
-  )(
+  return connect(mapStateToProps)(
     withConditionalView(
       WrappedComponent,
       (props: Props) => props.isPagoPaVersionSupported,
