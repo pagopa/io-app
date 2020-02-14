@@ -1,17 +1,15 @@
 import { Button, Container, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { NavigationInjectedProps } from 'react-navigation';
 
-type Props = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type Props = NavigationInjectedProps;
 
 type State = {
   isLoadingCompleted: boolean;
