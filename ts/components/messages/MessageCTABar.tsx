@@ -137,6 +137,10 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     navigateToMessageDetail(message.id);
   };
 
+  get paid(): boolean {
+    return this.props.payment !== undefined;
+  }
+
   /**
    * A function to check if the eventId of the CalendarEvent stored in redux
    * is really/still in the device calendar.
@@ -252,9 +256,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   ) => {
     const { message, small } = this.props;
     const { due_date } = message.content;
-    const paid = message.id === "00000000000000000000000006";
 
-    if (paid) {
+    if (this.paid) {
       return null;
     }
     if (!due_date) {
@@ -299,7 +302,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       message,
       small,
       disabled,
-      payment,
       calendarEvent,
       preferredCalendar,
       hideModal,
@@ -307,11 +309,10 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     } = this.props;
     const { due_date } = message.content;
     const { isEventInDeviceCalendar } = this.state;
-    const paid = payment !== undefined;
 
     // if the message is relative to a payment and it is paid
     // reminder will be never shown
-    if (paid || due_date === undefined) {
+    if (this.paid || due_date === undefined) {
       return null;
     }
 
@@ -408,7 +409,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   private renderPaymentButton(
     maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
   ) {
-    const { message, payment, service, small, disabled } = this.props;
+    const { message, service, small, disabled } = this.props;
 
     if (
       maybeMessagePaymentExpirationInfo.isNone() ||
@@ -421,7 +422,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       maybeMessagePaymentExpirationInfo.value;
 
     const expired = isExpired(messagePaymentExpirationInfo);
-    const paid = payment !== undefined;
     const rptId = fromNullable(service).chain(_ =>
       getRptIdFromNoticeNumber(
         _.organization_fiscal_code,
@@ -434,7 +434,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
     const onPressHandler = expired
       ? this.navigateToMessageDetail
-      : !disabled && !paid && amount.isSome() && rptId.isSome()
+      : !disabled && !this.paid && amount.isSome() && rptId.isSome()
         ? () => {
             this.props.refreshService(message.sender_service_id);
             // TODO: optimize the managment of the payment initialization https://www.pivotaltracker.com/story/show/169702534
@@ -454,7 +454,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
     return (
       <PaymentButton
-        paid={paid}
+        paid={this.paid}
         messagePaymentExpirationInfo={messagePaymentExpirationInfo}
         small={small}
         disabled={disabled}
