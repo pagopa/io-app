@@ -115,7 +115,9 @@ export const cleanTransactionDescription = (description: string): string => {
     !description.startsWith("RFB/")
   ) {
     // not a description in the pagoPA format, return the description unmodified
-    return `${description.substr(0, maxLength)}...`;
+    return `${description.substr(0, maxLength)}${
+      description.length > maxLength ? "..." : ""
+    }`;
   }
 
   const descriptionParts = description.split("/TXT/");
@@ -124,5 +126,7 @@ export const cleanTransactionDescription = (description: string): string => {
     descriptionParts.length > 1
       ? descriptionParts[descriptionParts.length - 1].trim()
       : "";
-  return `${splitted.substr(0, maxLength)}...`;
+  return `${splitted.substr(0, maxLength)}${
+    description.length > maxLength ? "..." : ""
+  }`;
 };
