@@ -1,6 +1,5 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
 import { IconProps } from "react-native-vector-icons/Icon";
 
 import IconFont from "./ui/IconFont";
