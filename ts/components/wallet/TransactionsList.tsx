@@ -7,13 +7,15 @@ import * as React from "react";
 import {
   FlatList,
   ListRenderItemInfo,
-  StyleSheet,
-  Platform
+  Platform,
+  StyleSheet
 } from "react-native";
 
 import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
+import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
@@ -24,8 +26,6 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
 import IconFont from "../ui/IconFont";
-import customVariables from "../../theme/variables";
-import { makeFontStyleObject } from "../../theme/fonts";
 
 type Props = Readonly<{
   title: string;
@@ -105,9 +105,14 @@ const styles = StyleSheet.create({
     ...makeFontStyleObject(Platform.select, "700"),
     fontSize: 16,
     color: customVariables.brandDarkGray
+  },
+  transactionArrow: {
+    width: 64,
+    alignItems: "flex-end",
+    justifyContent: "center"
   }
 });
-
+const ARROW_WIDTH = 24;
 /**
  * Transactions List component
  */
@@ -172,16 +177,10 @@ export default class TransactionsList extends React.Component<Props> {
                   </Text>
                 </View>
               </View>
-              <View
-                style={{
-                  width: 64,
-                  alignItems: "flex-end",
-                  justifyContent: "center"
-                }}
-              >
+              <View style={styles.transactionArrow}>
                 <IconFont
                   name="io-right"
-                  size={24}
+                  size={ARROW_WIDTH}
                   color={customVariables.contentPrimaryBackground}
                 />
               </View>
