@@ -110,6 +110,14 @@ const styles = StyleSheet.create({
     width: 64,
     alignItems: "flex-end",
     justifyContent: "center"
+  },
+  transactionContentContainer: {
+    flex: 1,
+    flexDirection: "row"
+  },
+  transactionBadgeDescriptionContainer: {
+    flex: 1,
+    flexDirection: "row"
   }
 });
 const ARROW_WIDTH = 24;
@@ -159,23 +167,21 @@ export default class TransactionsList extends React.Component<Props> {
           </Row>
           {this.renderDate(item)}
           <Row>
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View style={{ flex: 1 }}>
-                <View style={{ flexDirection: "row" }}>
-                  {isNew && (
-                    <View style={styles.badgeContainer}>
-                      <BadgeComponent />
-                    </View>
-                  )}
-                  <Text
-                    style={[
-                      styles.transactionDescription,
-                      isNew ? styles.transcationUndread : styles.transactionRead
-                    ]}
-                  >
-                    {paymentReason}
-                  </Text>
-                </View>
+            <View style={styles.transactionContentContainer}>
+              <View style={styles.transactionBadgeDescriptionContainer}>
+                {isNew && (
+                  <View style={styles.badgeContainer}>
+                    <BadgeComponent />
+                  </View>
+                )}
+                <Text
+                  style={[
+                    styles.transactionDescription,
+                    isNew ? styles.transcationUndread : styles.transactionRead
+                  ]}
+                >
+                  {paymentReason}
+                </Text>
               </View>
               <View style={styles.transactionArrow}>
                 <IconFont
