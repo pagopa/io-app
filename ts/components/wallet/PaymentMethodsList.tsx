@@ -42,6 +42,9 @@ const styles = StyleSheet.create({
   disabled: {
     opacity: 0.75
   },
+  methodItem: {
+    flexDirection: "column"
+  },
   methodTitle: {
     ...makeFontStyleObject(Platform.select, "600"),
     fontSize: 18
@@ -132,11 +135,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
                 <Left>
                   <Grid>
                     <Row>
-                      <View
-                        style={{
-                          flexDirection: "column"
-                        }}
-                      >
+                      <View style={styles.methodItem}>
                         <Text
                           bold={true}
                           style={[disabledStyle, styles.methodTitle]}
