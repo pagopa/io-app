@@ -657,6 +657,7 @@ wallet:
   addPaymentMethodTitle: Add payment method
   continue: Continue
   methods:
+    comingSoon: incoming
     card:
       name: Credit/debit card
       maxFee: Maximum fee of 1.50€

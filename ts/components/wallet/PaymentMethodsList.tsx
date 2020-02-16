@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
   methodTitle: {
     ...makeFontStyleObject(Platform.select, "600"),
     fontSize: 18
+  },
+  methodImage: {
+    width: 70
   }
 });
 
@@ -56,7 +59,9 @@ const AddMethodStyle = StyleSheet.create({
       .string()
   },
   notImplementedBadge: {
-    height: 18
+    height: 18,
+    marginTop: 2,
+    backgroundColor: variables.disabledService
   },
   notImplementedText: {
     fontSize: 10,
@@ -139,17 +144,9 @@ class PaymentMethodsList extends React.Component<Props, never> {
                           {itemInfo.item.name}
                         </Text>
                         {isItemDisabled && (
-                          <Badge
-                            style={[
-                              AddMethodStyle.notImplementedBadge,
-                              {
-                                marginTop: 2,
-                                backgroundColor: "#909DA8"
-                              }
-                            ]}
-                          >
+                          <Badge style={AddMethodStyle.notImplementedBadge}>
                             <Text style={AddMethodStyle.notImplementedText}>
-                              {"in arrivo"}
+                              {I18n.t("wallet.methods.comingSoon")}
                             </Text>
                           </Badge>
                         )}
@@ -184,7 +181,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
                   {itemInfo.item.image && (
                     <Image
                       source={itemInfo.item.image}
-                      style={{ width: 70 }}
+                      style={styles.methodImage}
                       resizeMode={"contain"}
                     />
                   )}

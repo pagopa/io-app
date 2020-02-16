@@ -666,6 +666,7 @@ wallet:
   addPaymentMethodTitle: Aggiungi metodo di pagamento
   continue: Continua
   methods:
+    comingSoon: in arrivo
     card:
       name: Carta di credito/debito
       maxFee: Commissione massima 1.50€
