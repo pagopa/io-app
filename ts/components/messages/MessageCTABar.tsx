@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   topContainerLarge: {
     paddingVertical: variables.contentPadding / 2,
     paddingHorizontal: variables.contentPadding,
-    backgroundColor: "#F5F6F7"
+    backgroundColor: variables.brandGray
   },
 
   topContainerPaid: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
 
   bottomContainerValid: {
-    backgroundColor: "#F5F6F7"
+    backgroundColor: variables.brandGray
   },
 
   bottomContainerExpiring: {

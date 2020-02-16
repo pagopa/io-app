@@ -115,7 +115,7 @@ const disabledStyles = StyleSheet.create({
 
 const paidStyles = StyleSheet.create({
   button: {
-    backgroundColor: "#F5F6F7",
+    backgroundColor: customVariables.brandGray,
     borderWidth: 0
   },
 
