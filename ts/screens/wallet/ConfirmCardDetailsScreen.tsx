@@ -5,7 +5,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Modal } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
