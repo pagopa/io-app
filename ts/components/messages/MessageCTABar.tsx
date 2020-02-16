@@ -299,6 +299,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       message,
       small,
       disabled,
+      payment,
       calendarEvent,
       preferredCalendar,
       hideModal,
@@ -306,14 +307,11 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     } = this.props;
     const { due_date } = message.content;
     const { isEventInDeviceCalendar } = this.state;
+    const paid = payment !== undefined;
 
-    const paid = message.id === "00000000000000000000000006";
     // if the message is relative to a payment and it is paid
     // reminder will be never shown
-    if (paid) {
-      return null;
-    }
-    if (due_date === undefined) {
+    if (paid || due_date === undefined) {
       return null;
     }
 
@@ -423,7 +421,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       maybeMessagePaymentExpirationInfo.value;
 
     const expired = isExpired(messagePaymentExpirationInfo);
-    const paid = message.id === "00000000000000000000000006";
+    const paid = payment !== undefined;
     const rptId = fromNullable(service).chain(_ =>
       getRptIdFromNoticeNumber(
         _.organization_fiscal_code,
@@ -497,7 +495,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   private renderTopContainer = (
     maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
   ) => {
-    const { message, small } = this.props;
+    const { payment, small } = this.props;
 
     const calendarIcon = this.renderCalendarIcon(
       maybeMessagePaymentExpirationInfo
@@ -508,7 +506,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const paymentButton = this.renderPaymentButton(
       maybeMessagePaymentExpirationInfo
     );
-    const paid = message.id === "00000000000000000000000006";
+    const paid = payment !== undefined;
     if (
       calendarIcon !== null ||
       calendarEventButton !== null ||
