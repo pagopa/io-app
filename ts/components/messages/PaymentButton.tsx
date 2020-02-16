@@ -3,7 +3,7 @@
  * pired with a message.
  *
  */
-import { Text, View } from "native-base";
+import { Text } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 
@@ -199,7 +199,7 @@ class PaymentButton extends React.PureComponent<Props> {
             color={customVariables.brandHighlight}
           />
           <Text bold={false} style={paidStyles.text}>
-            {getButtonText(messagePaymentExpirationInfo, paid)}
+            {getButtonText(messagePaymentExpirationInfo, true)}
           </Text>
         </ButtonDefaultOpacity>
       );
@@ -207,29 +207,26 @@ class PaymentButton extends React.PureComponent<Props> {
 
     return (
       <ButtonDefaultOpacity
-        disabled={disabled || paid}
+        disabled={disabled}
         light={true}
-        onPress={paid ? undefined : onPress}
+        onPress={onPress}
         style={[
           baseStyles.button,
           appliedStyles.button,
           small && smallStyles.button,
-          paid && paidStyles.button,
           disabled && disabledStyles.button
         ]}
       >
         {!hideIcon ||
           (paid && (
             <IconFont
-              name={paid ? "io-tick-big" : "io-timer"}
+              name={"io-timer"}
               style={[
                 baseStyles.icon,
                 appliedStyles.icon,
                 disabled && disabledStyles.icon
               ]}
-              color={
-                paid && !disabled ? customVariables.brandHighlight : undefined
-              }
+              color={!disabled ? customVariables.brandHighlight : undefined}
             />
           ))}
         <Text
@@ -238,11 +235,10 @@ class PaymentButton extends React.PureComponent<Props> {
             baseStyles.text,
             appliedStyles.text,
             small && smallStyles.text,
-            paid && paidStyles.text,
             disabled && disabledStyles.text
           ]}
         >
-          {getButtonText(messagePaymentExpirationInfo, paid)}
+          {getButtonText(messagePaymentExpirationInfo, false)}
         </Text>
       </ButtonDefaultOpacity>
     );

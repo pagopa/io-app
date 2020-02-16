@@ -257,6 +257,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const { message, small } = this.props;
     const { due_date } = message.content;
 
+    // if the message is relative to a payment and it is paid
+    // calendar icon will be never shown
     if (this.paid) {
       return null;
     }
@@ -495,7 +497,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   private renderTopContainer = (
     maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
   ) => {
-    const { payment, small } = this.props;
+    const { small } = this.props;
 
     const calendarIcon = this.renderCalendarIcon(
       maybeMessagePaymentExpirationInfo
@@ -506,7 +508,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const paymentButton = this.renderPaymentButton(
       maybeMessagePaymentExpirationInfo
     );
-    const paid = payment !== undefined;
     if (
       calendarIcon !== null ||
       calendarEventButton !== null ||
@@ -516,7 +517,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         <View
           style={[
             styles.topContainer,
-            paid ? styles.topContainerPaid : undefined,
+            this.paid ? styles.topContainerPaid : undefined,
             !small && styles.topContainerLarge
           ]}
         >
