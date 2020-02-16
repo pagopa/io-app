@@ -148,7 +148,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             backgroundColor={customVariables.toastColor}
             iconProps={{
               name: "io-notice",
-              color: "#5c6f82",
+              color: customVariables.brandDarkGray,
               size: 24
             }}
           >

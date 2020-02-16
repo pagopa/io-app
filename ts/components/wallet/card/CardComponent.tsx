@@ -25,7 +25,6 @@ import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 // TODO: the "*" character renders differently (i.e. a larger circle) on
 // some devices @https://www.pivotaltracker.com/story/show/159231780
@@ -224,14 +223,14 @@ export default class CardComponent extends React.Component<Props> {
             style={[
               CreditCardStyles.textStyle,
               styles.marginTop,
-              { marginTop: extraMargin ? 50 : 0 }
+              extraMargin && styles.extraMarginTop
             ]}
           >
             {creditCard.holder.toUpperCase()}
           </Text>
         </View>
 
-        <View style={[styles.cardLogo, { marginTop: extraMargin ? 50 : 0 }]}>
+        <View style={[styles.cardLogo, extraMargin && styles.extraMarginTop]}>
           <Logo item={creditCard} />
         </View>
       </View>
