@@ -91,8 +91,8 @@ class PaymentMethodsList extends React.Component<Props, never> {
         showMaxFee: true
       },
       {
-        name: I18n.t("wallet.methods.mobile.name"),
-        maxFee: I18n.t("wallet.methods.mobile.maxFee"),
+        name: I18n.t("wallet.methods.satispay.name"),
+        maxFee: I18n.t("wallet.methods.satispay.maxFee"),
         image: require("../../../img/wallet/payment-methods/satispay-logoi.png"),
         implemented: false,
         showMaxFee: false
