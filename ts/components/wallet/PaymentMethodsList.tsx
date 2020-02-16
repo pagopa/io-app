@@ -6,9 +6,10 @@
 import color from "color";
 import { Badge, Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
-import { Image, FlatList, Platform, StyleSheet } from "react-native";
+import { FlatList, Image, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import I18n from "../../i18n";
+import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
 import { ContextualHelp } from "../ContextualHelp";
 import { withLightModalContext } from "../helpers/withLightModalContext";
@@ -16,7 +17,6 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
 import Markdown from "../ui/Markdown";
-import { makeFontStyleObject } from "../../theme/fonts";
 
 type OwnProps = Readonly<{
   navigateToAddCreditCard: () => void;
@@ -26,12 +26,11 @@ type Props = OwnProps & LightModalContextInterface;
 
 type IPaymentMethod = Readonly<{
   name: string;
-  maxFee: string;
+  maxFee?: string;
   icon?: any;
   image?: any;
   implemented: boolean;
   onPress?: () => void;
-  showMaxFee: boolean;
 }>;
 
 const underlayColor = "transparent";
@@ -87,36 +86,27 @@ class PaymentMethodsList extends React.Component<Props, never> {
         name: I18n.t("wallet.methods.card.name"),
         maxFee: I18n.t("wallet.methods.card.maxFee"),
         icon: "io-48-card",
-        implemented: true,
-        showMaxFee: true
+        implemented: true
       },
       {
         name: I18n.t("wallet.methods.satispay.name"),
-        maxFee: I18n.t("wallet.methods.satispay.maxFee"),
         image: require("../../../img/wallet/payment-methods/satispay-logoi.png"),
-        implemented: false,
-        showMaxFee: false
+        implemented: false
       },
       {
-        name: "Postepay",
-        maxFee: I18n.t("wallet.methods.bank.maxFee"),
+        name: I18n.t("wallet.methods.postepay.name"),
         image: require("../../../img/wallet/payment-methods/postepay-logo.png"),
-        implemented: false,
-        showMaxFee: false
+        implemented: false
       },
       {
-        name: "Paypal",
-        maxFee: I18n.t("wallet.methods.bank.maxFee"),
+        name: I18n.t("wallet.methods.paypal.name"),
         image: require("../../../img/wallet/payment-methods/paypal-logo.png"),
-        implemented: false,
-        showMaxFee: false
+        implemented: false
       },
       {
         name: I18n.t("wallet.methods.bank.name"),
-        maxFee: I18n.t("wallet.methods.bank.maxFee"),
         image: require("../../../img/wallet/payment-methods/bancomatpay-logo.png"),
-        implemented: false,
-        showMaxFee: false
+        implemented: false
       }
     ];
     return (
@@ -165,7 +155,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
                         )}
                       </View>
                     </Row>
-                    {itemInfo.item.showMaxFee && (
+                    {itemInfo.item.maxFee && (
                       <Row>
                         <Text
                           style={[

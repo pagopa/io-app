@@ -674,7 +674,10 @@ wallet:
       maxFee: Commissione massima 0.50€
     satispay: 
       name: Satispay
-      maxFee: Paypal, Satispay, etc.
+    postepay: 
+      name: Postepay
+    paypal: 
+      name: Paypal
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
