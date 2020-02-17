@@ -25,6 +25,7 @@ import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 // TODO: the "*" character renders differently (i.e. a larger circle) on
 // some devices @https://www.pivotaltracker.com/story/show/159231780
@@ -90,6 +91,7 @@ export default class CardComponent extends React.Component<Props> {
     );
 
   private handleFavoritePress = () => {
+    RTron.log(this.props);
     if (
       (this.props.type === "Full" || this.props.type === "Header") &&
       this.props.onSetFavorite !== undefined &&
