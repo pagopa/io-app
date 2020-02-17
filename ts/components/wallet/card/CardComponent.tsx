@@ -90,7 +90,6 @@ export default class CardComponent extends React.Component<Props> {
     );
 
   private handleFavoritePress = () => {
-    RTron.log(this.props);
     if (
       (this.props.type === "Full" || this.props.type === "Header") &&
       this.props.onSetFavorite !== undefined &&
