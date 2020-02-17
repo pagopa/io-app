@@ -201,10 +201,7 @@ export default class CardComponent extends React.Component<Props> {
     const isExpired = isExpiredCard(creditCard);
     const extraMargin = this.props.type === "Full" && this.props.extraSpace;
     return (
-      <View
-        style={[styles.columns, styles.paddedTop, styles.body]}
-        onTouchEnd={this.handleOnCardPress}
-      >
+      <View style={[styles.columns, styles.paddedTop, styles.body]}>
         <View>
           <Text
             style={[
@@ -285,10 +282,7 @@ export default class CardComponent extends React.Component<Props> {
       >
         <View style={[styles.cardInner]}>
           <View style={[styles.row]}>
-            <View
-              style={[styles.row, styles.numberArea]}
-              onTouchEnd={this.handleOnCardPress}
-            >
+            <View style={[styles.row, styles.numberArea]}>
               <Text style={[CreditCardStyles.smallTextStyle]}>
                 {`${HIDDEN_CREDITCARD_NUMBERS}`}
               </Text>
