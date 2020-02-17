@@ -1,6 +1,6 @@
-[![CircleCI](https://circleci.com/gh/teamdigitale/io-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/io-app)
+[![CircleCI](https://circleci.com/gh/pagopa/io-app.svg?style=svg)](https://circleci.com/gh/pagopa/io-app)
 
-[![codecov](https://codecov.io/gh/teamdigitale/io-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/io-app)
+[![codecov](https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg)](https://codecov.io/gh/pagopa/io-app)
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code-of-conduct.md)
 
@@ -71,9 +71,9 @@ When the app will achieve the appropriate level of quality and usefulness, it wi
 
 ### How can I help you?
 
-[Reporting bugs](https://github.com/teamdigitale/italia-app/issues), bug fixes, [translations](https://github.com/teamdigitale/italia-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/teamdigitale/italia-app/pulls)!
+[Reporting bugs](https://github.com/pagopa/io-app/issues), bug fixes, [translations](https://github.com/pagopa/io-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/pagopa/io-app/pulls)!
 
-If you have some time to spare and wish to get involved on a regular basis, [contact us](mailto:federico@teamdigitale.governo.it).
+If you have some time to spare and wish to get involved on a regular basis, [contact us](mailto:federico.feroldi@pagopa.it).
 
 ## Main technologies used
 
@@ -87,7 +87,7 @@ If you have some time to spare and wish to get involved on a regular basis, [con
 
 ### SPID Authentication
 
-The application relies on a [backend](https://github.com/teamdigitale/ItaliaApp-backend) for the authentication through SPID (the Public System for Digital Identity) and for interacting with the other components and APIs that are part of the [digital citizenship project](https://github.com/teamdigitale/digital-citizenship).
+The application relies on a [backend](https://github.com/pagopa/io-backend) for the authentication through SPID (the Public System for Digital Identity) and for interacting with the other components and APIs that are part of the [digital citizenship project](https://github.com/teamdigitale/digital-citizenship).
 
 The backend implements a SAML2 Service Provider that deals with user authentication with the SPID Identity Providers (IdP).
 
@@ -395,7 +395,7 @@ To release a new alpha:
 $ bundle exec fastlane alpha
 ```
 
-_Note: the alpha releases on Android are automatically carried by the `alpha-release-android` job on [circleci](https://circleci.com/gh/teamdigitale/italia-app) on each by merge to the master branch._
+_Note: the alpha releases on Android are automatically carried by the `alpha-release-android` job on [circleci](https://circleci.com/gh/pagopa/io-app) on each by merge to the master branch._
 
 ### Installation on physical devices (development)
 
@@ -422,7 +422,7 @@ To develop the application on your machine using the Backend App and an IDP test
 
 #### App Backend and test IDP installation
 
-Follow the documentation of the repository [italia-backend](https://github.com/teamdigitale/italia-backend).
+Follow the documentation of the repository [italia-backend](https://github.com/pagopa/io-backend).
 
 #### WebView, HTTPS and self-signed certificates
 

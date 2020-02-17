@@ -12,13 +12,16 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
-import { ReduxProps } from "../../store/actions/types";
+import { resetAuthenticationState } from "../../store/actions/authentication";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -27,7 +30,9 @@ import { showToast } from "../../utils/showToast";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> &
   NavigationScreenProps;
+
 const isCIEAuthenticationSupported = false; // TODO: waiting for sdk cie implementation https://www.pivotaltracker.com/story/show/169730204
 const isCIEAvailable =
   isCIEAuthenticationSupported && isCIEauthenticationEnabled;
@@ -71,6 +76,11 @@ const cardProps: ReadonlyArray<ComponentProps<typeof LandingCardComponent>> = [
   }
 ];
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "authentication.landing.contextualHelpTitle",
+  body: "authentication.landing.contextualHelpContent"
+};
+
 const styles = StyleSheet.create({
   noPadded: {
     paddingLeft: 0,
@@ -101,12 +111,13 @@ class LandingScreen extends React.PureComponent<Props> {
         "warning",
         "top"
       );
+      this.props.resetState();
     }
   }
 
   public render() {
     return (
-      <BaseScreenComponent>
+      <BaseScreenComponent contextualHelpMarkdown={contextualHelpMarkdown}>
         {isDevEnvironment() && (
           <DevScreenButton onPress={this.navigateToMarkdown} />
         )}
@@ -164,4 +175,11 @@ const mapStateToProps = (state: GlobalState) => ({
   isSessionExpired: isSessionExpiredSelector(state)
 });
 
-export default connect(mapStateToProps)(LandingScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  resetState: () => dispatch(resetAuthenticationState())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LandingScreen);
