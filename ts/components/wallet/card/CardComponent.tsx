@@ -25,7 +25,6 @@ import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo from "./Logo";
 import { CreditCardStyles } from "./style";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 // TODO: the "*" character renders differently (i.e. a larger circle) on
 // some devices @https://www.pivotaltracker.com/story/show/159231780

@@ -32,7 +32,6 @@ import {
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
-import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -118,7 +117,6 @@ const reducer = (
     case getType(fetchWalletsRequest):
     case getType(paymentUpdateWalletPsp.request):
     case getType(deleteWalletRequest):
-      RTron.log(action);
       return {
         ...state,
         favoriteWalletId: pot.toLoading(state.favoriteWalletId),
@@ -128,7 +126,6 @@ const reducer = (
     case getType(fetchWalletsSuccess):
     case getType(paymentUpdateWalletPsp.success):
     case getType(deleteWalletSuccess):
-      RTron.log(action);
       const wallets = isOfType(getType(paymentUpdateWalletPsp.success), action)
         ? action.payload.wallets
         : action.payload;
