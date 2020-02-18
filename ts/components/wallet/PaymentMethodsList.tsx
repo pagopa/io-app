@@ -6,9 +6,10 @@
 import color from "color";
 import { Badge, Left, ListItem, Right, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, Platform, StyleSheet } from "react-native";
+import { FlatList, Image, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import I18n from "../../i18n";
+import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
 import { ContextualHelp } from "../ContextualHelp";
 import { withLightModalContext } from "../helpers/withLightModalContext";
@@ -25,14 +26,14 @@ type Props = OwnProps & LightModalContextInterface;
 
 type IPaymentMethod = Readonly<{
   name: string;
-  maxFee: string;
-  icon: any;
+  maxFee?: string;
+  icon?: any;
+  image?: any;
   implemented: boolean;
   onPress?: () => void;
 }>;
 
 const underlayColor = "transparent";
-
 const styles = StyleSheet.create({
   listItem: {
     marginLeft: 0,
@@ -40,6 +41,16 @@ const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.75
+  },
+  methodItem: {
+    flexDirection: "column"
+  },
+  methodTitle: {
+    ...makeFontStyleObject(Platform.select, "600"),
+    fontSize: 18
+  },
+  methodImage: {
+    width: 70
   }
 });
 
@@ -51,7 +62,9 @@ const AddMethodStyle = StyleSheet.create({
       .string()
   },
   notImplementedBadge: {
-    height: 18
+    height: 18,
+    marginTop: 2,
+    backgroundColor: variables.disabledService
   },
   notImplementedText: {
     fontSize: 10,
@@ -84,22 +97,28 @@ class PaymentMethodsList extends React.Component<Props, never> {
         implemented: true
       },
       {
-        name: I18n.t("wallet.methods.bank.name"),
-        maxFee: I18n.t("wallet.methods.bank.maxFee"),
-        icon: "io-48-bank",
+        name: I18n.t("wallet.methods.satispay.name"),
+        image: require("../../../img/wallet/payment-methods/satispay-logoi.png"),
         implemented: false
       },
       {
-        name: I18n.t("wallet.methods.mobile.name"),
-        maxFee: I18n.t("wallet.methods.mobile.maxFee"),
-        icon: "io-48-phone",
+        name: I18n.t("wallet.methods.postepay.name"),
+        image: require("../../../img/wallet/payment-methods/postepay-logo.png"),
+        implemented: false
+      },
+      {
+        name: I18n.t("wallet.methods.paypal.name"),
+        image: require("../../../img/wallet/payment-methods/paypal-logo.png"),
+        implemented: false
+      },
+      {
+        name: I18n.t("wallet.methods.bank.name"),
+        image: require("../../../img/wallet/payment-methods/bancomatpay-logo.png"),
         implemented: false
       }
     ];
     return (
       <View>
-        <Text>{I18n.t("wallet.chooseMethod")}</Text>
-        <View spacer={true} />
         <FlatList
           removeClippedSubviews={false}
           data={paymentMethods}
@@ -116,41 +135,55 @@ class PaymentMethodsList extends React.Component<Props, never> {
                 <Left>
                   <Grid>
                     <Row>
-                      <Text bold={true} style={disabledStyle}>
-                        {itemInfo.item.name}
-                      </Text>
-                    </Row>
-                    <Row>
-                      <Text
-                        style={[AddMethodStyle.transactionText, disabledStyle]}
-                      >
-                        {itemInfo.item.maxFee}
-                      </Text>
-                    </Row>
-                    {isItemDisabled && (
-                      <Row>
-                        <Badge
-                          primary={true}
-                          style={AddMethodStyle.notImplementedBadge}
+                      <View style={styles.methodItem}>
+                        <Text
+                          bold={true}
+                          style={[disabledStyle, styles.methodTitle]}
                         >
-                          <Text style={AddMethodStyle.notImplementedText}>
-                            {I18n.t("wallet.methods.notImplemented")}
-                          </Text>
-                        </Badge>
+                          {itemInfo.item.name}
+                        </Text>
+                        {isItemDisabled && (
+                          <Badge style={AddMethodStyle.notImplementedBadge}>
+                            <Text style={AddMethodStyle.notImplementedText}>
+                              {I18n.t("wallet.methods.comingSoon")}
+                            </Text>
+                          </Badge>
+                        )}
+                      </View>
+                    </Row>
+                    {itemInfo.item.maxFee && (
+                      <Row>
+                        <Text
+                          style={[
+                            AddMethodStyle.transactionText,
+                            disabledStyle
+                          ]}
+                        >
+                          {itemInfo.item.maxFee}
+                        </Text>
                       </Row>
                     )}
                   </Grid>
                 </Left>
                 <Right style={AddMethodStyle.centeredContents}>
-                  <IconFont
-                    name={itemInfo.item.icon}
-                    color={
-                      isItemDisabled
-                        ? variables.brandLightGray
-                        : variables.brandPrimary
-                    }
-                    size={variables.iconSize6}
-                  />
+                  {itemInfo.item.icon && (
+                    <IconFont
+                      name={itemInfo.item.icon}
+                      color={
+                        isItemDisabled
+                          ? variables.brandLightGray
+                          : variables.brandPrimary
+                      }
+                      size={variables.iconSize6}
+                    />
+                  )}
+                  {itemInfo.item.image && (
+                    <Image
+                      source={itemInfo.item.image}
+                      style={styles.methodImage}
+                      resizeMode={"contain"}
+                    />
+                  )}
                 </Right>
               </ListItem>
             );

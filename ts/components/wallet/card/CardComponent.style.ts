@@ -81,6 +81,9 @@ export default StyleSheet.create({
     textAlign: "center",
     ...makeFontStyleObject(Platform.select)
   },
+  extraMarginTop: {
+    marginTop: 50
+  },
   paddedIcon: {
     paddingLeft: 10
   },
