@@ -132,7 +132,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
         this.props.onRetry
       );
     } else if (
-      // Case start a new payment after finishing another
+      // this is the case when the component is already mounted (eg. process more payments)
+      // we check if the rptId is different from the previous one, in that case fire the dispatchPaymentVerificaRequest
       pot.isNone(this.props.potVerifica) &&
       this.props.navigation.getParam("rptId").paymentNoticeNumber !==
         prevProps.navigation.getParam("rptId").paymentNoticeNumber
