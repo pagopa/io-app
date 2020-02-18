@@ -97,8 +97,14 @@ const styles = StyleSheet.create({
     paddingRight: 36
   },
 
+  messageTitleUnread: {
+    ...makeFontStyleObject(Platform.select, "700")
+  },
+  messageTitleRead: {
+    ...makeFontStyleObject(Platform.select, "400")
+  },
+
   messageTitle: {
-    ...makeFontStyleObject(Platform.select, "600"),
     fontSize: 18,
     lineHeight: 21,
     color: customVariables.brandDarkestGray
@@ -192,7 +198,13 @@ class MessageListItem extends React.PureComponent<Props> {
                   <BadgeComponent />
                 </View>
               )}
-              <Text numberOfLines={2} style={styles.messageTitle}>
+              <Text
+                numberOfLines={2}
+                style={[
+                  styles.messageTitle,
+                  isRead ? styles.messageTitleRead : styles.messageTitleUnread
+                ]}
+              >
                 {message.content.subject}
               </Text>
             </View>
