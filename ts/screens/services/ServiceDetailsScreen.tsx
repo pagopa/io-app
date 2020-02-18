@@ -150,7 +150,7 @@ function renderInformationImageRow(
 
 /**
  * return true if markdown is loaded (description is rendered inside a markodown component)
- * return true if description not exists but values are present
+ * return true if description doesn't exists but values are present
  * return false in others cases
  *
  * this behavior is due to markdown loading: it could happen some items overlapped while the
@@ -161,19 +161,17 @@ export const canRenderItems = (
   isMarkdownLoaded: boolean,
   potServiceMetadata: ServiceMetadataState
 ): boolean => {
-  if (
-    pot.isSome(potServiceMetadata) &&
-    potServiceMetadata.value &&
-    potServiceMetadata.value.description !== undefined
-  ) {
-    return isMarkdownLoaded;
-  } else if (
-    pot.isSome(potServiceMetadata) &&
-    potServiceMetadata.value !== undefined
-  ) {
-    return (
-      pot.isSome(potServiceMetadata) && potServiceMetadata.value !== undefined
-    );
+  const isServiceMetadataLoaded =
+    pot.isSome(potServiceMetadata) && potServiceMetadata.value;
+  const hasServiceMetadataDescription =
+    pot.isSome(potServiceMetadata) && potServiceMetadata.value
+      ? potServiceMetadata.value.description !== undefined
+      : false;
+  // if service metadata is loaded
+  // return isMarkdownLoaded if it has a defined description field
+  // return true otherwise
+  if (isServiceMetadataLoaded) {
+    return hasServiceMetadataDescription ? isMarkdownLoaded : true;
   }
   return false;
 };
