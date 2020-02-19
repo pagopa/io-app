@@ -16,7 +16,10 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import { isCIEauthenticationEnabled, isDevEnvironment } from "../../config";
+import {
+  isCIEauthenticationEnabled,
+  isPagoPaDevEnvironment
+} from "../../config";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -118,7 +121,7 @@ class LandingScreen extends React.PureComponent<Props> {
   public render() {
     return (
       <BaseScreenComponent contextualHelpMarkdown={contextualHelpMarkdown}>
-        {isDevEnvironment() && (
+        {isPagoPaDevEnvironment() && (
           <DevScreenButton onPress={this.navigateToMarkdown} />
         )}
 

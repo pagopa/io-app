@@ -14,7 +14,7 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
-import { isDevEnvironment } from "../config";
+import { isPagoPaDevEnvironment } from "../config";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -30,6 +30,7 @@ import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
 import { configureReactotron } from "./configureRectotron";
+import { isDevEnv } from '../utils/environment';
 
 /**
  * Redux persist will migrate the store to the current version
@@ -180,13 +181,13 @@ const migrations: MigrationManifest = {
   }
 };
 
-const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
+const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
 
 const rootPersistConfig: PersistConfig = {
   key: "root",
   storage: AsyncStorage,
   version: CURRENT_REDUX_STORE_VERSION,
-  migrate: createMigrate(migrations, { debug: isDevEnvironment() }),
+  migrate: createMigrate(migrations, { debug: isPagoPaDevEnvironment() }),
 
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
