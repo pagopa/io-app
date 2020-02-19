@@ -290,6 +290,7 @@ class AddCardScreen extends React.Component<Props, State> {
                     maxLength: 4,
                     secureTextEntry: true,
                     mask: "[0009]",
+                    baseNumericKeyboard: true,
                     onChangeText: (_, value) =>
                       this.updateSecurityCodeState(value)
                   }}
