@@ -5,6 +5,7 @@ import { networkSaga } from "react-native-offline";
 import { all, call, Effect } from "redux-saga/effects";
 
 import backendInfoSaga from "./backendInfo";
+import backendServiceStatusSaga from "./backendStatus";
 import {
   watchContentMunicipalityLoadSaga,
   watchContentServicesByScopeLoad,
@@ -36,6 +37,7 @@ export default function* root(): Iterator<Effect> {
   yield all([
     call(startupSaga),
     call(backendInfoSaga),
+    call(backendServiceStatusSaga),
     call(networkSaga, connectionMonitorParameters),
     call(watchNavigateToDeepLinkSaga),
     call(loadSystemPreferencesSaga),

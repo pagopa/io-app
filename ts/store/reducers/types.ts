@@ -23,6 +23,7 @@ import { ProfileState } from "./profile";
 import { SearchState } from "./search";
 import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
+import { BackendServicesState } from "./backendServiceStatus";
 
 type NetworkState = Readonly<{
   isConnected: boolean;
@@ -33,6 +34,7 @@ export type GlobalState = Readonly<{
   appState: AppState;
   authentication: PersistedAuthenticationState;
   backendInfo: BackendInfoState;
+  backendServicesStatus: BackendServicesState;
   deepLink: DeepLinkState;
   entities: EntitiesState;
   instabug: InstabugUnreadMessagesState;

@@ -35,12 +35,14 @@ import { SearchActions } from "./search";
 import { ServicesActions } from "./services";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
+import { BackendServicesStatusActions } from './backendServicesStatus';
 
 export type Action =
   | AnalyticsActions
   | ApplicationActions
   | AuthenticationActions
   | BackendInfoActions
+  | BackendServicesStatusActions
   | DeepLinkActions
   | MessagesActions
   | NavigationActions

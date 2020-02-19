@@ -1,18 +1,31 @@
+import * as t from "io-ts";
 import {
   basicResponseDecoder,
   BasicResponseType,
   createFetchRequestForApi,
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
-
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { defaultRetryingFetch } from "../utils/fetch";
+import { RTron } from "../boot/configureStoreAndPersistor";
 
 type GetServerInfoT = IGetApiRequestType<
   {},
   never,
   never,
   BasicResponseType<ServerInfo>
+>;
+
+const ServicesStatus = t.interface({
+  status: t.string
+});
+export type ServicesStatus = t.TypeOf<typeof ServicesStatus>;
+
+type GetServicesStatusT = IGetApiRequestType<
+  {},
+  never,
+  never,
+  BasicResponseType<ServicesStatus>
 >;
 
 //
@@ -36,7 +49,16 @@ export function BackendPublicClient(
     response_decoder: basicResponseDecoder(ServerInfo)
   };
 
+  const getServiceStatusT: GetServicesStatusT = {
+    method: "get",
+    url: () => "/ping",
+    query: _ => ({}),
+    headers: () => ({}),
+    response_decoder: basicResponseDecoder(ServicesStatus)
+  };
+
   return {
-    getServerInfo: createFetchRequestForApi(getServerInfoT, options)
+    getServerInfo: createFetchRequestForApi(getServerInfoT, options),
+    getServicesStatus: createFetchRequestForApi(getServiceStatusT, options)
   };
 }
