@@ -38,7 +38,6 @@ export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
-export const enableTestIdp = Config.ENABLE_TEST_IDP === "YES";
 export const gcmSenderId: string = Config.GCM_SENDER_ID;
 export const isCIEauthenticationEnabled: boolean =
   Config.CIE_AUTHENTICATION_ENABLED === "YES";

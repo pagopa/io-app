@@ -12,13 +12,13 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
-import * as config from "../../config";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
+import { isDevEnv } from "../../utils/environment";
 
 type Props = ReduxProps & NavigationScreenProps;
 
@@ -96,7 +96,7 @@ const testIdp = {
   profileUrl: "https://italia-backend/profile.html"
 };
 
-const enabledIdps = config.enableTestIdp ? [...idps, testIdp] : idps;
+const enabledIdps = isDevEnv ? [...idps, testIdp] : idps;
 
 const styles = StyleSheet.create({
   gridContainer: {
