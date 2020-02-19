@@ -1,3 +1,6 @@
+/**
+ * A component to display a brandDarkGray background color on the screen using it
+ */
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -10,6 +13,10 @@ import {
 import { StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
 import AnimatedScreenContent from "./AnimatedScreenContent";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
 
@@ -27,8 +34,8 @@ type Props = Readonly<{
   dynamicSubHeader?: React.ReactNode;
   topContentHeight?: number;
   footerContent?: React.ReactNode;
-  contextualHelp?: { title: string; body: () => React.ReactNode };
-  banner?: React.ReactNode;
+  contextualHelp?: ContextualHelpProps;
+  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   contentRefreshControl?: React.ReactElement<RefreshControlProps>;
 }>;
 
@@ -41,14 +48,12 @@ const styles = StyleSheet.create({
 
 export default class DarkLayout extends React.Component<Props> {
   private screenContent() {
-    const { banner } = this.props;
     return (
       <React.Fragment>
         <View style={styles.headerContents}>
           <View spacer={true} />
           {this.props.topContent}
         </View>
-        {banner}
         {this.props.children}
       </React.Fragment>
     );
@@ -62,6 +67,7 @@ export default class DarkLayout extends React.Component<Props> {
         headerBody={this.props.headerBody}
         appLogo={this.props.appLogo}
         contextualHelp={this.props.contextualHelp}
+        contextualHelpMarkdown={this.props.contextualHelpMarkdown}
       >
         <StatusBar
           backgroundColor={customVariables.brandDarkGray}

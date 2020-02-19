@@ -107,6 +107,7 @@ export const cleanTransactionDescription = (description: string): string => {
   // detect description in pagoPA format - note that we also check for cases
   // without the leading slash since some services don't add it (mistake on
   // their side)
+  const maxLength = 60;
   if (
     !description.startsWith("/RFA/") &&
     !description.startsWith("/RFB/") &&
@@ -114,11 +115,18 @@ export const cleanTransactionDescription = (description: string): string => {
     !description.startsWith("RFB/")
   ) {
     // not a description in the pagoPA format, return the description unmodified
-    return description;
+    return `${description.substr(0, maxLength)}${
+      description.length > maxLength ? "..." : ""
+    }`;
   }
+
   const descriptionParts = description.split("/TXT/");
 
-  return descriptionParts.length > 1
-    ? descriptionParts[descriptionParts.length - 1].trim()
-    : "";
+  const splitted =
+    descriptionParts.length > 1
+      ? descriptionParts[descriptionParts.length - 1].trim()
+      : "";
+  return `${splitted.substr(0, maxLength)}${
+    description.length > maxLength ? "..." : ""
+  }`;
 };
