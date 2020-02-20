@@ -33,7 +33,7 @@ function retryingFetch(
   const timeoutFetch = toFetch(setFetchTimeout(timeout, abortableFetch));
 
   // configure retry logic with default exponential backoff
-  // @see https://github.com/teamdigitale/italia-ts-commons/blob/master/src/backoff.ts
+  // @see https://github.com/pagopa/io-ts-commons/blob/master/src/backoff.ts
   const exponentialBackoff = calculateExponentialBackoffInterval();
   const retryLogic = withRetries<Error, Response>(
     maxRetries,
@@ -43,7 +43,7 @@ function retryingFetch(
     _ => _.status === 429,
     retryLogic
   );
-  // TODO: remove the cast once we upgrade to tsc >= 3.1
+  // TODO: remove the cast once we upgrade to tsc >= 3.1 (https://www.pivotaltracker.com/story/show/170819445)
   return retriableFetch(retryWithTransient429s)(timeoutFetch as typeof fetch);
 }
 
@@ -112,12 +112,12 @@ export const constantPollingFetch = (
   const retryLogic = withRetries<Error, Response>(retries, constantBackoff);
   // makes the retry logic map 404s to transient errors (by default only
   // timeouts are transient)
-  // see also https://github.com/teamdigitale/italia-ts-commons/blob/master/src/fetch.ts#L103
+  // see also https://github.com/pagopa/io-ts-commons/blob/master/src/fetch.ts#L103
   const retryWithTransient404s = retryLogicForTransientResponseError(
     _ => _.status === 404,
     retryLogic
   );
 
-  // TODO: remove the cast once we upgrade to tsc >= 3.1
+  // TODO: remove the cast once we upgrade to tsc >= 3.1 (https://www.pivotaltracker.com/story/show/170819445)
   return retriableFetch(retryWithTransient404s)(timeoutFetch as typeof fetch);
 };

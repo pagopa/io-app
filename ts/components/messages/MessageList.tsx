@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
-
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
@@ -225,10 +224,10 @@ class MessageList extends React.Component<Props, State> {
     const { paymentsByRptId, onPressItem } = this.props;
 
     const potService = this.props.servicesById[meta.sender_service_id];
-    if (
-      potService &&
-      (pot.isLoading(potService) || pot.isLoading(potMessage))
-    ) {
+    const isServiceLoading = potService
+      ? pot.isNone(potService) && pot.isLoading(potService) // is none loading
+      : false;
+    if (isServiceLoading || pot.isLoading(potMessage)) {
       return MessageListItemPlaceholder;
     }
 

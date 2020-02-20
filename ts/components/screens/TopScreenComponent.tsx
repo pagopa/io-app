@@ -20,11 +20,15 @@ type BaseScreenComponentProps =
   | "appLogo"
   | "goBack"
   | "contextualHelp"
-  | "headerBody";
+  | "contextualHelpMarkdown"
+  | "headerBody"
+  | "customGoBack";
 
 type Props = OwnProps &
   Pick<ComponentProps<typeof ScreenContentHeader>, "title"> &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
+
+export type TopScreenComponentProps = Props;
 
 /**
  * Wraps a BaseScreenComponent with a title and a subtitle
@@ -38,10 +42,12 @@ class TopScreenComponent extends React.PureComponent<Props> {
       title,
       headerTitle,
       contextualHelp,
+      contextualHelpMarkdown,
       headerBody,
       isSearchAvailable,
       searchType,
-      customRightIcon
+      customRightIcon,
+      customGoBack
     } = this.props;
 
     return (
@@ -51,10 +57,12 @@ class TopScreenComponent extends React.PureComponent<Props> {
         goBack={goBack}
         headerTitle={goBack ? headerTitle || title : undefined}
         contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         headerBody={headerBody}
         isSearchAvailable={isSearchAvailable}
         searchType={searchType}
         customRightIcon={customRightIcon}
+        customGoBack={customGoBack}
       >
         {this.props.children}
       </BaseScreenComponent>

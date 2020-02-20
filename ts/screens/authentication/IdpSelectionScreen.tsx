@@ -1,15 +1,17 @@
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-import { Content, H3, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
-import ScreenHeader from "../../components/ScreenHeader";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
@@ -104,6 +106,14 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "authentication.idp_selection.contextualHelpTitle",
+  body: "authentication.idp_selection.contextualHelpContent"
+};
+
+/**
+ * A screen where the user choose the SPID IPD to login with.
+ */
 const IdpSelectionScreen: React.SFC<Props> = props => {
   const onIdpSelected = (idp: IdentityProvider) => {
     props.dispatch(idpSelected(idp));
@@ -112,16 +122,15 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
 
   return (
     <BaseScreenComponent
+      contextualHelpMarkdown={contextualHelpMarkdown}
       goBack={props.navigation.goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
-      <Content noPadded={true} overScrollMode="never" bounces={false}>
-        <ScreenHeader
-          heading={
-            <H3>{I18n.t("authentication.idp_selection.contentTitle")}</H3>
-          }
+      <Content noPadded={true} overScrollMode={"never"} bounces={false}>
+        <ScreenContentHeader
+          title={I18n.t("authentication.idp_selection.contentTitle")}
         />
-        <View style={styles.gridContainer} testID="idps-view">
+        <View style={styles.gridContainer} testID={"idps-view"}>
           <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
           <ButtonDefaultOpacity

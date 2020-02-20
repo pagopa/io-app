@@ -1,12 +1,11 @@
 /**
  * The screen allows to identify a transaction by the QR code on the analogic notice
- * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Container, Text, View } from "native-base";
 import * as React from "react";
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import { Alert, Dimensions, ScrollView, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
     marginTop: -cameraTextOverlapping,
     width: screenWidth - variables.contentPadding * 2,
     backgroundColor: variables.colorWhite,
-    zIndex: 2
+    zIndex: 999
   },
 
   camera: {
@@ -159,6 +158,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       storageOptions: {
         skipBackup: true,
         path: "images"
+      },
+      // PermissionDenied message only for Android
+      permissionDenied: {
+        title: I18n.t("wallet.QRtoPay.settingsAlert.title"),
+        text: I18n.t("wallet.QRtoPay.settingsAlert.message"),
+        okTitle: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
+        reTryTitle: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings")
       }
     };
     // Open Image Library
@@ -172,7 +178,24 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           .catch(() => {
             this.onInvalidQrCode();
           });
-      }
+      } else if (response.error !== undefined) {
+        // Alert to invite user to enable the permissions
+        Alert.alert(
+          I18n.t("wallet.QRtoPay.settingsAlert.title"),
+          I18n.t("wallet.QRtoPay.settingsAlert.message"),
+          [
+            {
+              text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.cancel"),
+              style: "cancel"
+            },
+            {
+              text: I18n.t("wallet.QRtoPay.settingsAlert.buttonText.settings"),
+              onPress: openAppSettings
+            }
+          ],
+          { cancelable: false }
+        );
+      } // else if the user has not selected a file, do nothing
     });
   };
 

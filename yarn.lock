@@ -2531,19 +2531,14 @@ comma-separated-tokens@^1.0.1:
   dependencies:
     trim "0.0.1"
 
-commander@^2.12.1, commander@^2.13.0, commander@^2.19.0, commander@^2.7.1, commander@^2.9.0:
-  version "2.19.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-2.19.0.tgz#f6198aa84e5b83c46054b94ddedbfed5ee9ff12a"
-  integrity sha512-6tvAOO+D6OENvRAh524Dh9jcfKTYDQAqvqezbCW82xj5X0pSrcpxtvRKHLG0yBY6SD7PSDrJaj+0AiOcKVd1Xg==
+commander@^2.12.1, commander@^2.13.0, commander@^2.19.0, commander@^2.7.1, commander@^2.9.0, commander@~2.20.3:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
 commander@~2.13.0:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.13.0.tgz#6964bca67685df7c1f1430c584f07d7597885b9c"
-
-commander@~2.20.3:
-  version "2.20.3"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
-  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
 commondir@^1.0.1:
   version "1.0.1"
@@ -6912,21 +6907,13 @@ qs@~6.5.1:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
 
-query-string@6.8.1:
+query-string@6.8.1, query-string@^6.2.0:
   version "6.8.1"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.8.1.tgz#62c54a7ef37d01b538c8fd56f95740c81d438a26"
   integrity sha512-g6y0Lbq10a5pPQpjlFuojfMfV1Pd2Jw9h75ypiYPPia3Gcq2rgkKiIwbkS6JxH7c5f5u/B/sB+d13PU+g1eu4Q==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"
-    strict-uri-encode "^2.0.0"
-
-query-string@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.2.0.tgz#468edeb542b7e0538f9f9b1aeb26f034f19c86e1"
-  integrity sha512-5wupExkIt8RYL4h/FE+WTg3JHk62e6fFPWtAZA9J5IWK1PfTfKkMS93HBUHcFpeYi9KsY5pFbh+ldvEyaz5MyA==
-  dependencies:
-    decode-uri-component "^0.2.0"
     strict-uri-encode "^2.0.0"
 
 raf@^3.1.0:
@@ -7069,9 +7056,9 @@ react-native-exception-handler@2.10.0:
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.10.0.tgz#0d828a4f2c7c4469a2929fa46d20535def726903"
   integrity sha512-MJLE1NxGFlsdoOk3jBXUMzceZyVuLLXGWjK406ABH5+mfFjbIjmxAAEm/pkvzD8E5QXNo1chUSzpwtq2wCjygA==
 
-"react-native-flag-secure-android@git://github.com/teamdigitale/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795":
+"react-native-flag-secure-android@git://github.com/pagopa/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795":
   version "1.0.0"
-  resolved "git://github.com/teamdigitale/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795"
+  resolved "git://github.com/pagopa/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795"
 
 react-native-fs@^2.14.1:
   version "2.14.1"
@@ -7164,11 +7151,6 @@ react-native-progress-circle@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-native-progress-circle/-/react-native-progress-circle-2.1.0.tgz#62bdf31c76962d10c5c14446b61ff7d05cf0d0ec"
   integrity sha512-VP0s92bgbTMQy4hQzPU4LlGyFj3z5u7i1HYFG8/yzXXfGkX1cxKS4xOlE+OTaObWC99w7Bodi3h8R7En2nQPYw==
-
-react-native-pull@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-pull/-/react-native-pull-2.0.2.tgz#15264a737bcf56debd4bacaa2705254d9ef1b345"
-  integrity sha1-FSZKc3vPVt69S6yqJwUlTZ7xs0U=
 
 react-native-push-notification@3.1.3:
   version "3.1.3"

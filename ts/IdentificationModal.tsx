@@ -5,9 +5,10 @@ import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
-import BaseScreenComponent from "./components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "./components/screens/BaseScreenComponent";
 import IconFont from "./components/ui/IconFont";
-import Markdown from "./components/ui/Markdown";
 import TextWithIcon from "./components/ui/TextWithIcon";
 import { isDebugBiometricIdentificationEnabled } from "./config";
 import I18n from "./i18n";
@@ -42,13 +43,12 @@ type State = {
   identificationByPinState: IdentificationByPinState;
   identificationByBiometryState: IdentificationByBiometryState;
   biometryType?: BiometryPrintableSimpleType;
+  canInsertPin: boolean;
 };
 
-const contextualHelp = {
-  title: I18n.t("pin_login.unlock_screen.help.title"),
-  body: () => (
-    <Markdown>{I18n.t("pin_login.unlock_screen.help.content")}</Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.pin.contextualHelpTitle",
+  body: "onboarding.pin.contextualHelpContent"
 };
 
 const renderIdentificationByPinState = (
@@ -120,13 +120,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     this.state = {
       identificationByPinState: "unstarted",
-      identificationByBiometryState: "unstarted"
+      identificationByBiometryState: "unstarted",
+      canInsertPin: false
     };
   }
 
   public componentWillMount() {
     const { isFingerprintEnabled } = this.props;
-
     if (isFingerprintEnabled) {
       getFingerprintSettings().then(
         biometryType =>
@@ -138,6 +138,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           }),
         _ => 0
       );
+    } else {
+      // if the biometric is not available unlock the pin insertion
+      this.setState({ canInsertPin: true });
     }
   }
 
@@ -175,7 +178,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   biometryType !== "NOT_ENROLLED" &&
                   biometryType !== "UNAVAILABLE"
                     ? biometryType
-                    : undefined
+                    : undefined,
+                canInsertPin:
+                  biometryType === "NOT_ENROLLED" ||
+                  biometryType === "UNAVAILABLE"
               });
             }
           },
@@ -276,7 +282,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
           primary={true}
-          contextualHelp={contextualHelp}
+          contextualHelpMarkdown={contextualHelpMarkdown}
           appLogo={true}
         >
           <StatusBar
@@ -301,6 +307,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   this.onIdentificationFailureHandler
                 )
               }
+              disabled={!this.state.canInsertPin}
               compareWithCode={pin as string}
               activeColor={"white"}
               inactiveColor={"white"}
@@ -392,6 +399,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         ) {
           this.setState({
             identificationByBiometryState: "failure"
+          });
+        } else {
+          // if the user dismissed the biometric dialog, unlock the pin insertion
+          this.setState({
+            canInsertPin: true
           });
         }
         onIdentificationFailureHandler();

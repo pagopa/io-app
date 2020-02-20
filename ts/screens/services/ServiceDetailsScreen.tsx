@@ -17,13 +17,14 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H4 from "../../components/ui/H4";
 import Markdown from "../../components/ui/Markdown";
 import { MultiImage } from "../../components/ui/MultiImage";
 import Switch from "../../components/ui/Switch";
-import { isEmailEditingAndValidationEnabled } from "../../config";
 import I18n from "../../i18n";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
@@ -35,6 +36,7 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { servicesSelector } from "../../store/reducers/entities/services";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
+import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
@@ -79,6 +81,11 @@ const styles = StyleSheet.create({
     width: 60
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "serviceDetail.headerTitle",
+  body: "serviceDetail.contextualHelpContent"
+};
 
 // Renders a row in the service information panel as a primary block button
 function renderInformationRow(
@@ -140,6 +147,7 @@ function renderInformationImageRow(
   );
 }
 
+// TODO: test
 class ServiceDetailsScreen extends React.Component<Props, State> {
   get serviceId() {
     return this.props.navigation.getParam("service").service_id;
@@ -350,6 +358,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       <BaseScreenComponent
         goBack={this.props.navigation.goBack}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <Content>
           <Grid>
@@ -459,12 +468,12 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
                   disabled={
                     !this.state.uiEnabledChannels.inbox ||
                     pot.isUpdating(this.props.profile) ||
-                    !this.props.isValidEmail
+                    !this.props.isEmailValidated
                   }
                   value={
                     this.state.uiEnabledChannels.inbox &&
                     this.state.uiEnabledChannels.email &&
-                    this.props.isValidEmail
+                    this.props.isEmailValidated
                   }
                   onValueChange={(value: boolean) => {
                     // compute the updated map of enabled channels
@@ -506,7 +515,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  isValidEmail: !isEmailEditingAndValidationEnabled && !!state, // TODO: get the proper isValidEmail from store
+  isEmailValidated: isProfileEmailValidatedSelector(state),
+  content: state.content,
   services: servicesSelector(state),
   servicesMetadataById: servicesMetadataByIdSelector(state),
   profile: profileSelector(state),

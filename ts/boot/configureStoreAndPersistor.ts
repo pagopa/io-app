@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
 import { createLogger } from "redux-logger";
 import {
@@ -34,7 +34,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 7;
+const CURRENT_REDUX_STORE_VERSION = 9;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -148,6 +148,35 @@ const migrations: MigrationManifest = {
         }
       }
     };
+  },
+
+  // Version 8
+  // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
+  // they will be stored only when a service details screen is displayed
+  "8": (state: PersistedState) => {
+    return {
+      ...state,
+      content: {
+        ...(state as PersistedGlobalState).content,
+        servicesMetadata: {
+          ...(state as PersistedGlobalState).content.servicesMetadata,
+          byId: {}
+        }
+      }
+    };
+  },
+
+  // Version 9
+  // we fix a bug on the version 8 of the migration implying a no proper creation of the content segment of store
+  // (the servicesByScope state was not properly initialized)
+  "9": (state: PersistedState) => {
+    return {
+      ...state,
+      content: {
+        ...(state as PersistedGlobalState).content,
+        servicesByScope: pot.none
+      }
+    };
   }
 };
 
@@ -191,7 +220,7 @@ const logger = createLogger({
 });
 
 // configure Reactotron if the app is running in dev mode
-const RTron = __DEV__ ? configureReactotron() : {};
+export const RTron = __DEV__ ? configureReactotron() : {};
 const sagaMiddleware = createSagaMiddleware(
   __DEV__ ? { sagaMonitor: RTron.createSagaMonitor() } : {}
 );

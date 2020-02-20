@@ -48,11 +48,7 @@ const styles = StyleSheet.create({
     ios: {
       lineHeight: 0
     },
-    android: {
-      // do nothing for android -- lineHeight
-      // does not work as expected
-      // TODO: figure why this is not working on android @https://www.pivotaltracker.com/story/show/159229134
-    }
+    android: {}
   }),
 
   amountTitleLabel: {

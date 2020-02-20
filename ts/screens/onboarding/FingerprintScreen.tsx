@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 
 import { Alert } from "react-native";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
@@ -31,6 +32,11 @@ export type BiometryPrintableSimpleType =
 type OwnProps = NavigationScreenProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.contextualHelpTitle",
+  body: "onboarding.contextualHelpContent"
+};
 
 export class FingerprintScreen extends React.PureComponent<Props> {
   /**
@@ -78,7 +84,7 @@ export class FingerprintScreen extends React.PureComponent<Props> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => this.props.abortOnboarding()
+          onPress: this.props.abortOnboarding
         }
       ]
     );
@@ -91,6 +97,7 @@ export class FingerprintScreen extends React.PureComponent<Props> {
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
         title={I18n.t("onboarding.fingerprint.title")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <ScreenContent
           title={I18n.t("onboarding.fingerprint.title")}
