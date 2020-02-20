@@ -32,7 +32,7 @@ global:
     saveSelection: Salva la selezione
   navigator:
     messages: messaggi
-    wallet: portafoglio
+    wallet: pagamenti
     documents: documenti
     profile: profilo
     services: servizi
@@ -80,10 +80,12 @@ inbox:
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
+  contextualHelpTitle: Cosa puoi fare nel tuo Profilo
+  contextualHelpContent: !include profile/profile_account_main.md
   fiscalCode:
-    title: Documenti personali
+    title: I tuoi documenti personali
     fiscalCode: Codice fiscale
-    help: !include fiscal_code.md
+    help: !include profile/profile_fiscal_code.md
     content: Il fac-simile del codice fiscale non sostituisce il documento fisico ma ne permette la lettura dei dati o del codice a barre sul retro
     facSimile: FAC-SIMILE
   sections:
@@ -104,8 +106,6 @@ profile:
     upsert: Errore nella creazione o nell'aggiornamento del profilo
   main:
     screenTitle: Profilo
-    screenSubtitle: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
-    contextualHelp: "Qui trovi informazioni e dati legati al tuo account: identità, sicurezza, tuoi dati personali, etc."
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
     cache:
@@ -123,7 +123,11 @@ profile:
       description: Esporta dati, cancella account
       header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
       updated: E' necessario prendere visione della nuova versione dell'Informativa
-      text: !include privacy.md
+      text: !include profile/privacy.md
+      contextualHelpTitlePolicy: Cos'è l'informativa sul trattamento dei dati personali
+      contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
+      contextualHelpTitle: Le tue impostazioni di privacy
+      contextualHelpContent: !include profile/profile_privacy_main.md
     termsAndConditions:
       title: Termini e condizioni d'uso
       description: Rivedi i termini e le condizioni d'uso dell'app
@@ -161,6 +165,8 @@ profile:
     title: Preferenze
     subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
       Amministrazione.
+    contextualHelpTitle: Le tue preferenze
+    contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       biometric_recognition: Riconoscimento biometrico
       biometric_recognition_status:
@@ -177,13 +183,21 @@ profile:
         not_selected: Non Selezionato
     empty:
       default: Nessuna preferenza impostata
-    preferencesHelp: !include preferences_home_help.md
     unavailable:
       title: Questa preferenza è impostata nel tuo profilo SPID
       message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
     language:
-      title: Questa preferenza è impostata nelle preferenze di sistema
-      message: IO eredita la lingua dal sistema operativo del tuo dispositivo
+      contextualHelpTitle: Come gestire la lingua su IO
+      contextualHelpContent: !include profile/profile_preferences_language.md
+    email:
+      contextualHelpTitle: Come gestire la tua mail
+      contextualHelpContent: !include profile/profile_preferences_email_address.md
+      forward:
+        contextualHelpTitle: Come gestire l'inoltro dei messaggi
+        contextualHelpContent: !include profile/profile_preferences_email_forward.md
+    calendar:
+      contextualHelpTitle: Cos'è il tuo calendario preferito
+      contextualHelpContent: !include profile/profile_preferences_calendar.md
 userMetadata:
   errors:
     upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
@@ -210,6 +224,8 @@ spid:
     line2: Inserisci la tua e-mail per attivarla.
 authentication:
   landing:
+    contextualHelpTitle: Come accedere all'app IO
+    contextualHelpContent: !include authentication/authentication_landing.md
     loginSpid: Entra con SPID
     loginCie: Entra con CIE
     loginSpidCie: Accedi con SPID o CIE
@@ -311,8 +327,12 @@ authentication:
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
+    contextualHelpTitle: Chi è il tuo Identity Provider
+    contextualHelpContent: !include authentication/authentication_idp_selection.md
   idp_login:
     headerTitle: Accedi
+    contextualHelpTitle: Qual è la tua password
+    contextualHelpContent: !include authentication/authentication_idp_login.md
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
@@ -388,6 +408,8 @@ email:
     validated: Email validata!
     validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
 onboarding:
+  contextualHelpTitle: Come funziona il riconoscimento biometrico
+  contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Attivazione
     continue: Continua
@@ -405,6 +427,8 @@ onboarding:
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
     confirmInvalid: i due pin non coincidono
+    contextualHelpTitle: Qual è il tuo PIN
+    contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
     title: Vuoi davvero uscire da IO?
     description: Dovrai fare nuovamente il login per continuare ad usare l'app
@@ -412,12 +436,35 @@ onboarding:
     headerTitle: Attivazione
     title: Autenticazione biometrica
     body:
-      enrolledText: !include tos_fingerprint_enrolled.md
+      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
         fingerprint: la tua impronta digitale
         faceId: FaceID
         touchId: TouchID
-      notEnrolledText: !include tos_fingerprint_not_enrolled.md
+      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
+  email:
+    validation:
+      title: Ricorda di validare il tuo indirizzo email
+      headerTitle: Validazione email
+      info: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
+        clicca semplicemente su quel link.<br/>
+        Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
+        inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
+        usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
+      ctaValidate: Invia una nuova email di validazione
+      emailSentFeedback: Invia una nuova email di validazione
+      help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
+        indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
+        tuo provider di servizi SPID.
+    insert:
+      headerTitle: Attivazione
+      title: Inserisci la tua email
+      help:
+        title: Email
+        content: !include email_insert_help.md
+    ctaEdit: Modifica email
+    subtitle: Alcune funzioni di IO hanno bisogno della tua email.
+    emailInputLabel: Indirizzo email personale
 pin_login:
   pin:
     pinInfo: Inserisci il PIN
@@ -432,7 +479,7 @@ pin_login:
   unlock_screen:
     help:
       title: Accesso con PIN
-      content: !include pin_unlock_help.md
+      content: !include onboarding/onboarding_pin.md
   forgetPin:
     confirmTitle: Hai dimenticato il PIN?
     confirmMsg: Per poter scegliere un nuovo PIN dovrai fare di nuovo accesso con SPID.
@@ -462,7 +509,8 @@ payment:
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
   wallet: Portafoglio
-  walletHelp: !include wallet_help.md
+  contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
+  contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Carte di Credito
   paymentMethods: Metodi di pagamento
   paymentMethod: Metodo di pagamento
@@ -488,19 +536,26 @@ wallet:
     successful: Carta aggiunta con successo
     failed: Impossibile aggiungere la carta
     failedCardAlreadyExists: La carta che stai inserendo è già presente
+    contextualHelpTitle: Come aggiungere un metodo di pagamento
+    contextualHelpContent: !include wallet/wallet_add_payment_method.md
   textMsg:
     title: Codice di conferma
     header: Codice di Conferma SMS
     newCode: Richiedi nuovo codice
     info: Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono
   transactionDetails: Dettagli della transazione
+  detailsTransaction:
+    contextualHelpTitle: Dettagli della transazione
+    contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
+    contextualHelpTitle: Salvare una carta su IO
+    contextualHelpContent: !include wallet/wallet_card.md
     header: Salva la carta
     title: Vuoi salvare questa carta?
     infoTitle: Imposta la carta come metodo di pagamento preferito
     info: Al prossimo pagamento ti verrà automaticamente proposto questo metodo di
       pagamento
-    save: Salva la carta
+    save: Salva
     notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
     temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
   saveCardInPayment:
@@ -586,7 +641,7 @@ wallet:
     amount: Importo (€)
     proceed: Procedi con il pagamento
   total: Totale
-  amount: Importo
+  amount: Importo €
   payAmount: Importo dovuto
   transactionFee: Costo operazione
   why: Perché?
@@ -606,20 +661,24 @@ wallet:
   noTransactionsInTransactionsScreen: Non hai ancora utilizzato questo metodo di pagamento per pagare tramite IO o pagoPA. In questa lista vedrai solo le operazioni eseguite con questo metodo.
   moreInfo: Per saperne di più
   payNotice: Paga un avviso
-  latestTransactions: Ultime operazioni
+  latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
   addPaymentMethodTitle: Aggiungi metodo di pagamento
   continue: Continua
   methods:
+    comingSoon: in arrivo
     card:
       name: Carta di credito/debito
       maxFee: Commissione massima 1.50€
     bank:
       name: Bancomat Pay
       maxFee: Commissione massima 0.50€
-    mobile:
-      name: Altri metodi di pagamento
-      maxFee: Paypal, Satispay, etc.
+    satispay: 
+      name: Satispay
+    postepay: 
+      name: Postepay
+    paypal: 
+      name: Paypal
     notImplemented: Prossimamente
   addCardTitle: Dati carta
   dummyCard:
@@ -646,9 +705,15 @@ wallet:
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
       message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
+    settingsAlert:
+      title: Sembra che l'accesso alle foto sia stato negato
+      message: IO ha bisogno di accedere alle foto per scansionare i codici QR
+      buttonText:
+        settings: Abilita permessi
+        cancel: Annulla
   whyAFee:
     title: Perché devo pagare le commissioni?
-    text: !include why_a_fee.md
+    text: !include wallet/why_a_fee.md
   errors:
     PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
@@ -664,6 +729,12 @@ wallet:
     PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
     sendReport: Invia segnalazione
+  walletList:
+    contextualHelpTitle: I tuoi metodi di pagamento
+    contextualHelpContent: !include wallet/wallet_list.md
+  walletCardTransaction:
+    contextualHelpTitle: Transazioni effettuate con questo metodo
+    contextualHelpContent: !include wallet/wallet_card_transaction.md
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -683,14 +754,16 @@ cardComponent:
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
 messages:
+  contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
+  contextualHelpContent: !include messages/messages_home.md
   counting:
     zero: Nessun messaggio
     one: Hai 1 messaggio
     other: Hai {{count}} messaggi
   tab:
     inbox: Ricevuti
-    deadlines: Scadenze
-    archive: Archivio
+    deadlines: In scadenza
+    archive: Archiviati
   contentTitle: Messaggi
   refresh: Trascina in basso per aggiornare
   loading: Caricamento dei messaggi...
@@ -723,7 +796,7 @@ messages:
         block5: alle
         block6: del
     pay: Paga € {{amount}}
-    paid: Pagati € {{amount}}
+    paid: Hai pagato € {{amount}}
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
@@ -759,6 +832,8 @@ messages:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
 messageDetails:
+  contextualHelpTitle: Dettagli del messaggio
+  contextualHelpContent: !include messages/message_detail.md
   headerTitle: Messaggio
   emptyMessage: Nessun contenuto
   loadingText: Caricamento dei dettagli del messaggio in corso...
@@ -781,7 +856,8 @@ notifications:
 biometric_recognition:
   title: Riconoscimento biometrico
   subTitle: Attiva o disattiva il riconoscimento biometrico
-  help: !include preferences_biometric_recognition_help.md
+  contextualHelpTitle: Come funziona il riconoscimento biometrico
+  contextualHelpContent: !include profile/profile_preferences_biometric_recognition.md
   switchLabel: Attiva il riconoscimento biometrico
   enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
   enroll_btnLabel: Vai alle impostazioni
@@ -789,7 +865,8 @@ biometric_recognition:
 services:
   title: Servizi
   subTitle: Attiva o disattiva i servizi da cui puoi ricevere messaggi
-  servicesHelp: !include preferences_services_help.md
+  contextualHelpTitle: Cosa puoi fare nei tuoi Servizi
+  contextualHelpContent: !include services/services_home.md
   serviceIsEnabled: Il servizio è attivo
   serviceNotEnabled: Il servizio non è attivo
   pushNotifications: Notifiche push
@@ -823,6 +900,7 @@ services:
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
   headerTitle: "Dettagli del Servizio"
+  contextualHelpContent: !include services/service_detail.md
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
   disableTitle: "Vuoi davvero disattivare il servizio?"
   disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
