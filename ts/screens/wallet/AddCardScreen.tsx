@@ -285,12 +285,10 @@ class AddCardScreen extends React.Component<Props, State> {
                       EMPTY_CARD_SECURITY_CODE
                     ),
                     placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
-                    keyboardType: "numeric",
                     returnKeyType: "done",
                     maxLength: 4,
-                    secureTextEntry: true,
                     mask: "[0009]",
-                    baseNumericKeyboard: true,
+                    isNumericSecureKeyboard: true,
                     onChangeText: (_, value) =>
                       this.updateSecurityCodeState(value)
                   }}

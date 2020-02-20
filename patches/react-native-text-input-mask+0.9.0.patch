@@ -1,4 +1,6 @@
 patch-package
+diff --git a/node_modules/react-native-text-input-mask/android/src/main/java/com/RNTextInputMask/RNTextInputMaskModule.java b/node_modules/react-native-text-input-mask/android/src/main/java/com/RNTextInputMask/RNTextInputMaskModule.java
+index 877ab4e..b47c056 100644
 --- a/node_modules/react-native-text-input-mask/android/src/main/java/com/RNTextInputMask/RNTextInputMaskModule.java
 +++ b/node_modules/react-native-text-input-mask/android/src/main/java/com/RNTextInputMask/RNTextInputMaskModule.java
 @@ -1,6 +1,9 @@
@@ -16,7 +18,7 @@ patch-package
  
      @ReactMethod
 -    public void setMask(final int tag, final String mask) {
-+    public void setMask(final int tag, final String mask, final boolean isBaseKeyboard) {
++    public void setMask(final int tag, final String mask, final boolean isNumericSecureKeyboard) {
          // We need to use prependUIBlock instead of addUIBlock since subsequent UI operations in
          // the queue might be removing the view we're looking to update.
          reactContext.getNativeModule(UIManagerModule.class).prependUIBlock(new UIBlock() {
@@ -24,7 +26,7 @@ patch-package
                              editText.removeTextChangedListener((TextWatcher) editText.getTag());
                          }
  
-+                        if (isBaseKeyboard && android.os.Build.VERSION.SDK_INT >= 3) {
++                        if (isNumericSecureKeyboard) {
 +                            editText.setTransformationMethod(null);
 +                            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 +                            editText.setTransformationMethod(new PasswordTransformationMethod());
@@ -39,6 +41,8 @@ patch-package
      }
 +
  }
+diff --git a/node_modules/react-native-text-input-mask/index.js b/node_modules/react-native-text-input-mask/index.js
+index 408edad..6f57caa 100644
 --- a/node_modules/react-native-text-input-mask/index.js
 +++ b/node_modules/react-native-text-input-mask/index.js
 @@ -10,6 +10,7 @@ import {
@@ -55,7 +59,7 @@ patch-package
        this.masked = true
 -      setMask(findNodeHandle(this.input), this.props.mask)
 +      if(Platform.OS === "android") {
-+        setMask(findNodeHandle(this.input), this.props.mask, this.props.baseNumericKeyboard === true)
++        setMask(findNodeHandle(this.input), this.props.mask, this.props.isNumericSecureKeyboard === true)
 +      } else {
 +        setMask(findNodeHandle(this.input), this.props.mask)
 +      }
@@ -68,7 +72,7 @@ patch-package
      if (this.props.mask !== nextProps.mask) {
 -      setMask(findNodeHandle(this.input), nextProps.mask)
 +      if(Platform.OS === "android") {
-+        setMask(findNodeHandle(this.input), this.props.mask, this.props.baseNumericKeyboard === true)
++        setMask(findNodeHandle(this.input), this.props.mask, this.props.isNumericSecureKeyboard === true)
 +      } else {
 +        setMask(findNodeHandle(this.input), this.props.mask)
 +      }
@@ -89,9 +93,11 @@ patch-package
 +    this.props.onChangeText('');
 +  }
  }
+diff --git a/node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask/RNTextInputMask.m b/node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask/RNTextInputMask.m
+index b978272..ed9c93e 100644
 --- a/node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask/RNTextInputMask.m
 +++ b/node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask/RNTextInputMask.m
-@@ -59,6 +59,16 @@ RCT_EXPORT_METHOD(setMask:(nonnull NSNumber *)reactNode mask:(NSString *)mask) {
+@@ -59,6 +59,16 @@ - (dispatch_queue_t)methodQueue {
      }];
  }
  
