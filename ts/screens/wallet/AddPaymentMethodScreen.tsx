@@ -5,8 +5,9 @@
  * of choice (although only credit cards will be allowed
  * initially).
  *
- * This screen allows also to add a new payment method after a transaction is identified
- * the header banner provide a summary on the transaction to perform.
+ * This screen allows also to add a new payment method after a transaction is identified.
+ *
+ * The header banner provides a summary on the transaction to perform.
  *
  * Keep in mind that the rest of the "add credit card" process
  * is handled @https://www.pivotaltracker.com/story/show/157838293
@@ -21,7 +22,9 @@ import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList from "../../components/wallet/PaymentMethodsList";
 import I18n from "../../i18n";
@@ -52,12 +55,19 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.newPaymentMethod.contextualHelpTitle",
+  body: "wallet.newPaymentMethod.contextualHelpContent"
+};
+
 class AddPaymentMethodScreen extends React.PureComponent<Props> {
   public render(): React.ReactNode {
     const inPayment = this.props.navigation.getParam("inPayment");
+
     return (
       <BaseScreenComponent
         goBack={true}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         headerTitle={
           inPayment.isSome()
             ? I18n.t("wallet.payWith.header")

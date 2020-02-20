@@ -1,3 +1,6 @@
+/**
+ * An ingress screen to choose the real first screen the user must navigate to.
+ */
 import * as pot from "italia-ts-commons/lib/pot";
 import {
   Body,
@@ -12,9 +15,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import ConnectionBar from "../components/ConnectionBar";
-
 import I18n from "../i18n";
-
 import { startApplicationInitialization } from "../store/actions/application";
 import { ReduxProps } from "../store/actions/types";
 import {
@@ -23,7 +24,6 @@ import {
 } from "../store/reducers/authentication";
 import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-
 import variables from "../theme/variables";
 
 type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
@@ -35,10 +35,6 @@ const styles = StyleSheet.create({
     backgroundColor: variables.brandPrimary
   }
 });
-
-/**
- * An ingress screen to choose the real first screen the user must navigate to.
- */
 class IngressScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     // Dispatch START_APPLICATION_INITIALIZATION to initialize the app
@@ -84,8 +80,6 @@ class IngressScreen extends React.PureComponent<Props> {
     );
   }
 }
-
-// <ActivityIndicator color={variables.brandPrimaryInverted} />
 
 function mapStateToProps(state: GlobalState) {
   const maybeSessionToken = sessionTokenSelector(state);
