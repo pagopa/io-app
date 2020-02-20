@@ -11,7 +11,6 @@ import {
 } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { BlockedInboxOrChannels } from "../../../definitions/backend/BlockedInboxOrChannels";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { customEmailChannelSetEnabled } from "../../store/actions/persistedPreferences";
 import { profileLoadSuccess } from "../../store/actions/profile";
 import { loadVisibleServices } from "../../store/actions/services";
@@ -43,7 +42,6 @@ export function* watchEmailNotificationPreferencesSaga(): IterableIterator<
 }
 
 export function* checkEmailNotificationPreferencesSaga(): SagaIterator {
-  // tslint:disable-next-line:restrict-plus-operands
   yield takeEvery(
     [getType(profileLoadSuccess), getType(loadVisibleServices.success)],
     function*() {
@@ -51,33 +49,28 @@ export function* checkEmailNotificationPreferencesSaga(): SagaIterator {
       const potVisibleServices: VisibleServicesState = yield select(
         visibleServicesSelector
       );
-      if (
-        pot.isSome(potVisibleServices) &&
-        pot.isSome(potProfile) &&
-        InitializedProfile.is(potProfile.value)
-      ) {
-        const blockedChannels: BlockedInboxOrChannels = pot
-          .toOption(potProfile)
-          .mapNullable(
-            userProfile =>
-              InitializedProfile.is(userProfile)
-                ? userProfile.blocked_inbox_or_channels
-                : null
-          )
-          .getOrElse({});
+      if (pot.isSome(potVisibleServices) && pot.isSome(potProfile)) {
+        // tslint:disable-next-line:no-inferred-empty-object-type
+        const blockedChannels: BlockedInboxOrChannels = pot.getOrElse(
+          pot.mapNullable(
+            potProfile,
+            userProfile => userProfile.blocked_inbox_or_channels || {}
+          ),
+          {}
+        );
 
-        const someCustomEmailPreferenceEnabled: boolean =
-          pot.toUndefined(
-            pot.map(potVisibleServices, services =>
-              services
-                .map(
-                  service =>
-                    blockedChannels[service.service_id] &&
-                    blockedChannels[service.service_id].indexOf("EMAIL") !== -1
-                )
-                .find(item => item)
-            )
-          ) || false;
+        const someCustomEmailPreferenceEnabled: boolean = pot.getOrElse(
+          pot.mapNullable(potVisibleServices, services =>
+            services
+              .map(
+                service =>
+                  blockedChannels[service.service_id] &&
+                  blockedChannels[service.service_id].indexOf("EMAIL") !== -1
+              )
+              .find(item => item)
+          ),
+          false
+        );
 
         // If the email notification for visible services are partially disabled
         // (only for some services), the customization is enabled

@@ -23,8 +23,11 @@ import {
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
 import {
   hasProfileEmailSelector,
+  isEmailEnabledSelector,
+  isInboxEnabledSelector,
   isProfileEmailValidatedSelector,
   profileEmailSelector,
   profileSelector,
@@ -132,6 +135,17 @@ class PreferencesScreen extends React.Component<Props, State> {
       .catch();
   };
 
+  private getEmailForwardPreferencesSubtitle = (): string => {
+    return this.props.isInboxEnabled
+      ? this.props.isEmailEnabled
+        ? pot.isSome(this.props.isCustomEmailChannelEnabled) &&
+          this.props.isCustomEmailChannelEnabled.value
+          ? I18n.t("send_email_messages.options.by_service.label")
+          : I18n.t("send_email_messages.options.enable_all.label")
+        : I18n.t("send_email_messages.options.disable_all.label")
+      : I18n.t("send_email_messages.options.disable_all.label");
+  };
+
   public render() {
     const { isFingerprintAvailable } = this.state;
 
@@ -196,12 +210,8 @@ class PreferencesScreen extends React.Component<Props, State> {
             />
 
             <ListItemComponent
-              title={I18n.t(
-                "profile.preferences.list.send_email_messages.title"
-              )}
-              subTitle={I18n.t(
-                "profile.preferences.list.send_email_messages.subtitle"
-              )}
+              title={I18n.t("send_email_messages.title")}
+              subTitle={this.getEmailForwardPreferencesSubtitle()}
               onPress={this.props.navigateToEmailForwardingPreferenceScreen}
             />
 
@@ -235,6 +245,9 @@ function mapStateToProps(state: GlobalState) {
     optionEmail: profileEmailSelector(state),
     optionSpidEmail: profileSpidEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
+    isEmailEnabled: isEmailEnabledSelector(state),
+    isInboxEnabled: isInboxEnabledSelector(state),
+    isCustomEmailChannelEnabled: isCustomEmailChannelEnabledSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar,
     hasProfileEmail: hasProfileEmailSelector(state)

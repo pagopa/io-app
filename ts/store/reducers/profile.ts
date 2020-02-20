@@ -3,11 +3,8 @@
  * It only manages SUCCESS actions because all UI state properties (like loading/error)
  * are managed by different global reducers.
  */
-
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { EmailAddress } from "../../../definitions/backend/EmailAddress";
@@ -30,13 +27,6 @@ const INITIAL_STATE: ProfileState = pot.none;
 
 export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
-
-export const spidEmailSelector = (state: GlobalState) => {
-  const optionProfile = pot.toOption(state.profile);
-  return optionProfile
-    .map(_ => untag(_.spid_email))
-    .getOrElse(I18n.t("global.remoteStates.notAvailable"));
-};
 
 export const isEmailEnabledSelector = createSelector(
   profileSelector,
