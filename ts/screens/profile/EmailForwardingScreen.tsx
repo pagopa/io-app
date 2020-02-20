@@ -32,6 +32,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
+import { withValidatedEmail } from '../../components/helpers/withValidatedEmail';
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -197,7 +198,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export default connect(
+export default withValidatedEmail(connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLoadingSpinner(EmailForwardingScreen));
+)(withLoadingSpinner(EmailForwardingScreen)));

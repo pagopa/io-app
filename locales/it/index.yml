@@ -920,9 +920,11 @@ serviceDetail:
   disableTitle: "Vuoi davvero disattivare il servizio?"
   disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
   lockedMailAlert: "L'inoltro dei messaggi via email è {{enabled}} globalmente:"
-  updatePreferences: modifica le preferenze
+  updatePreferences: Modifica le preferenze
+  goTo: Vai alle preferenze
   enabled: abilitato
   disabled: disabilitato
+  notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
   messageFingerPrint: "Appoggia l'impronta o inserisci il codice PIN"
   messageFaceID: "Usa FaceID o inserisci il codice PIN"

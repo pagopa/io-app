@@ -567,6 +567,12 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
     const potServiceMetadata =
       this.props.content.servicesMetadata.byId[serviceId] || pot.none;
 
+    const emailForwardingDescription = this.props.isEmailValidated ? I18n.t("serviceDetail.lockedMailAlert", {
+      enabled: messageForwardingState
+    }) : I18n.t('serviceDetail.notValidated');
+
+    const emailForwardingLink = this.props.isEmailValidated ? I18n.t("serviceDetail.updatePreferences") : I18n.t("serviceDetail.goTo")
+
     return (
       <BaseScreenComponent
         goBack={this.props.navigation.goBack}
@@ -584,11 +590,9 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
             {!this.props.isCustomEmailChannelEnabled && (
               <Row style={styles.info}>
                 <Text>
-                  {I18n.t("serviceDetail.lockedMailAlert", {
-                    enabled: messageForwardingState
-                  })}
+                  {emailForwardingDescription}
                   <Text link={true} onPress={this.navigateToEmailPreferences}>
-                    {` ${I18n.t("serviceDetail.updatePreferences")}`}
+                    {` ${emailForwardingLink}`}
                   </Text>
                 </Text>
               </Row>

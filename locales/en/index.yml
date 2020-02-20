@@ -908,9 +908,11 @@ serviceDetail:
   disableTitle: "Do you really want to disable the service?"
   disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
   lockedMailAlert: "The email forwarding of messages is globally {{enabled}}:"
-  updatePreferences: update your preferences
+  updatePreferences: Update your preferences
+  goTo: Go to preferences
   enabled: enabled
   disabled: disabled
+  notValidated: To enable the email forwarding you must validate your email address.
 identification:
   messageFingerPrint: "Use the fingerprint or enter the PIN"
   messageFaceID: "Use FaceID or enter the PIN"
