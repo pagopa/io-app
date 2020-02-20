@@ -112,10 +112,7 @@ export function getChannelsforServicesList(
   profile: ProfileState
 ): BlockedInboxOrChannels {
   const profileBlockedChannels = pot.getOrElse(
-    pot.mapNullable(
-      profile,
-      up => (InitializedProfile.is(up) ? up.blocked_inbox_or_channels : {})
-    ),
+    pot.mapNullable(profile, up => up.blocked_inbox_or_channels),
     {} as BlockedInboxOrChannels
   );
 
@@ -143,15 +140,13 @@ export function getProfileChannelsforServicesList(
   enableListedServices: boolean,
   channelOfInterest: string = INBOX_CHANNEL
 ): BlockedInboxOrChannels {
-  const profileBlockedChannels = pot
-    .toOption(profile)
-    .mapNullable(
-      userProfile =>
-        InitializedProfile.is(userProfile)
-          ? { ...userProfile.blocked_inbox_or_channels }
-          : null
-    )
-    .getOrElse({});
+  const profileBlockedChannels = pot.getOrElse(
+    pot.mapNullable(
+      profile,
+      userProfile => userProfile.blocked_inbox_or_channels
+    ),
+    {} as BlockedInboxOrChannels
+  );
 
   servicesId.forEach(id => {
     const channels =
@@ -217,15 +212,13 @@ export const getBlockedChannels = (
   serviceId: ServiceId
 ) => (enabled: EnabledChannels): BlockedInboxOrChannels => {
   // get the current blocked channels from the profile
-  const profileBlockedChannels = pot
-    .toOption(potProfile)
-    .mapNullable(
-      profile =>
-        InitializedProfile.is(profile)
-          ? { ...profile.blocked_inbox_or_channels }
-          : null
-    )
-    .getOrElse({});
+  const profileBlockedChannels = pot.getOrElse(
+    pot.mapNullable(
+      potProfile,
+      userProfile => userProfile.blocked_inbox_or_channels
+    ),
+    {} as BlockedInboxOrChannels
+  );
 
   // compute the blocked channels array for this service
   const blockedChannelsForService = [

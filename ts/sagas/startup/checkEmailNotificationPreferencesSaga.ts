@@ -50,13 +50,9 @@ export function* checkEmailNotificationPreferencesSaga(): SagaIterator {
         visibleServicesSelector
       );
       if (pot.isSome(potVisibleServices) && pot.isSome(potProfile)) {
-        // tslint:disable-next-line:no-inferred-empty-object-type
         const blockedChannels: BlockedInboxOrChannels = pot.getOrElse(
-          pot.mapNullable(
-            potProfile,
-            userProfile => userProfile.blocked_inbox_or_channels || {}
-          ),
-          {}
+          pot.mapNullable(potProfile, up => up.blocked_inbox_or_channels),
+          {} as BlockedInboxOrChannels
         );
 
         const someCustomEmailPreferenceEnabled: boolean = pot.getOrElse(
