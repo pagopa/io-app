@@ -216,6 +216,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.spid_email")}
                 subTitle={maybeSpidEmail.value}
+                hideIcon={true}
               />
             )}
 

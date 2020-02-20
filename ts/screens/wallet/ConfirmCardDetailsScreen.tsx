@@ -5,7 +5,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Modal } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -136,14 +136,10 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <Content>
-          <H1>
-            {isInPayment
-              ? I18n.t("wallet.saveCardInPayment.title")
-              : I18n.t("wallet.saveCard.title")}
-          </H1>
           <CardComponent
             wallet={wallet}
             type={"Full"}
+            extraSpace={true}
             hideMenu={true}
             hideFavoriteIcon={true}
           />
@@ -152,7 +148,8 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             backgroundColor={customVariables.toastColor}
             iconProps={{
               name: "io-notice",
-              size: 32
+              color: customVariables.brandDarkGray,
+              size: 24
             }}
           >
             <Text>{I18n.t("wallet.saveCard.notice")}</Text>
