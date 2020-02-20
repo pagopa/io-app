@@ -12,7 +12,9 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import MessageDetailComponent from "../../components/messages/MessageDetailComponent";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { loadServiceMetadata } from "../../store/actions/content";
 import {
@@ -109,6 +111,11 @@ const styles = StyleSheet.create({
     marginLeft: 10
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "messageDetails.contextualHelpTitle",
+  body: "messageDetails.contextualHelpContent"
+};
 
 export class MessageDetailScreen extends React.PureComponent<Props, never> {
   private goBack = () => this.props.navigation.goBack();
@@ -296,6 +303,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
       <BaseScreenComponent
         headerTitle={I18n.t("messageDetails.headerTitle")}
         goBack={this.goBack}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         {this.renderCurrentState()}
       </BaseScreenComponent>

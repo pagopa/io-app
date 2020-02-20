@@ -39,6 +39,7 @@ interface FullCommonProps extends BaseProps {
   isFavorite?: pot.Pot<boolean, string>;
   onSetFavorite?: (willBeFavorite: boolean) => void;
   hideMenu?: boolean;
+  extraSpace?: boolean;
   hideFavoriteIcon?: boolean;
   onDelete?: () => void;
 }
@@ -198,12 +199,9 @@ export default class CardComponent extends React.Component<Props> {
 
     const expirationDate = buildExpirationDate(creditCard);
     const isExpired = isExpiredCard(creditCard);
-
+    const extraMargin = this.props.type === "Full" && this.props.extraSpace;
     return (
-      <View
-        style={[styles.columns, styles.paddedTop, styles.body]}
-        onTouchEnd={this.handleOnCardPress}
-      >
+      <View style={[styles.columns, styles.paddedTop, styles.body]}>
         <View>
           <Text
             style={[
@@ -218,12 +216,18 @@ export default class CardComponent extends React.Component<Props> {
               : `${I18n.t("cardComponent.expiredCard")} ${expirationDate}`}
           </Text>
 
-          <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
+          <Text
+            style={[
+              CreditCardStyles.textStyle,
+              styles.marginTop,
+              extraMargin && styles.extraMarginTop
+            ]}
+          >
             {creditCard.holder.toUpperCase()}
           </Text>
         </View>
 
-        <View style={styles.cardLogo}>
+        <View style={[styles.cardLogo, extraMargin && styles.extraMarginTop]}>
           <Logo item={creditCard} />
         </View>
       </View>
@@ -278,10 +282,7 @@ export default class CardComponent extends React.Component<Props> {
       >
         <View style={[styles.cardInner]}>
           <View style={[styles.row]}>
-            <View
-              style={[styles.row, styles.numberArea]}
-              onTouchEnd={this.handleOnCardPress}
-            >
+            <View style={[styles.row, styles.numberArea]}>
               <Text style={[CreditCardStyles.smallTextStyle]}>
                 {`${HIDDEN_CREDITCARD_NUMBERS}`}
               </Text>
