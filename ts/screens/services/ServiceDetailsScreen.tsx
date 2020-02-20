@@ -567,11 +567,15 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
     const potServiceMetadata =
       this.props.content.servicesMetadata.byId[serviceId] || pot.none;
 
-    const emailForwardingDescription = this.props.isEmailValidated ? I18n.t("serviceDetail.lockedMailAlert", {
-      enabled: messageForwardingState
-    }) : I18n.t('serviceDetail.notValidated');
+    const emailForwardingDescription = this.props.isEmailValidated
+      ? I18n.t("serviceDetail.lockedMailAlert", {
+          enabled: messageForwardingState
+        })
+      : I18n.t("serviceDetail.notValidated");
 
-    const emailForwardingLink = this.props.isEmailValidated ? I18n.t("serviceDetail.updatePreferences") : I18n.t("serviceDetail.goTo")
+    const emailForwardingLink = this.props.isEmailValidated
+      ? I18n.t("serviceDetail.updatePreferences")
+      : I18n.t("serviceDetail.goTo");
 
     return (
       <BaseScreenComponent
