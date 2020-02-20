@@ -16,10 +16,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import {
-  isCIEauthenticationEnabled,
-  isPagoPaDevEnvironment
-} from "../../config";
+import { isCIEauthenticationEnabled } from "../../config";
 import * as config from "../../config";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -29,6 +26,7 @@ import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
+import { isDevEnv } from "../../utils/environment";
 import { showToast } from "../../utils/showToast";
 
 type Props = ReduxProps &
@@ -121,9 +119,7 @@ class LandingScreen extends React.PureComponent<Props> {
   public render() {
     return (
       <BaseScreenComponent contextualHelpMarkdown={contextualHelpMarkdown}>
-        {isPagoPaDevEnvironment() && (
-          <DevScreenButton onPress={this.navigateToMarkdown} />
-        )}
+        {isDevEnv && <DevScreenButton onPress={this.navigateToMarkdown} />}
 
         <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
           <View spacer={true} large={true} />

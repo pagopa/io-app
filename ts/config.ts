@@ -80,7 +80,3 @@ export const totMessageFetchWorkers = t.Integer.decode(
 
 export const shouldDisplayVersionInfoOverlay =
   Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
-
-export function isPagoPaDevEnvironment() {
-  return environment === "DEV";
-}
