@@ -9,10 +9,17 @@ import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
+
+import { TranslationKeys } from "../../../locales/locales";
+import { ContextualHelp } from "../../components/ContextualHelp";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
+import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
@@ -37,13 +44,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import { getLocalePrimary } from "../../utils/locale";
-
-const languageAlert = () =>
-  Alert.alert(
-    I18n.t("profile.preferences.language.title"),
-    I18n.t("profile.preferences.language.message")
-  );
-
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
 }>;
@@ -51,7 +51,8 @@ type OwnProps = Readonly<{
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  ReduxProps;
+  ReduxProps &
+  LightModalContextInterface;
 
 type State = {
   isFingerprintAvailable: boolean;
@@ -59,6 +60,11 @@ type State = {
 
 const INITIAL_STATE: State = {
   isFingerprintAvailable: false
+};
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.contextualHelpTitle",
+  body: "profile.preferences.contextualHelpContent"
 };
 
 /**
@@ -158,8 +164,19 @@ class PreferencesScreen extends React.Component<Props, State> {
       .map(_ => translateLocale(_[0]))
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 
+    const showModal = (title: TranslationKeys, body: TranslationKeys) => {
+      this.props.showModal(
+        <ContextualHelp
+          onClose={this.props.hideModal}
+          title={I18n.t(title)}
+          body={() => <Markdown>{I18n.t(body)}</Markdown>}
+        />
+      );
+    };
+
     return (
       <TopScreenComponent
+        contextualHelpMarkdown={contextualHelpMarkdown}
         title={I18n.t("profile.preferences.title")}
         goBack={() => this.props.navigation.goBack()}
       >
@@ -227,7 +244,12 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.language")}
               subTitle={languages}
               iconName={"io-languages"}
-              onPress={languageAlert}
+              onPress={() =>
+                showModal(
+                  "profile.preferences.language.contextualHelpTitle",
+                  "profile.preferences.language.contextualHelpContent"
+                )
+              }
             />
 
             <EdgeBorderComponent />
@@ -268,4 +290,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PreferencesScreen);
+)(withLightModalContext(PreferencesScreen));

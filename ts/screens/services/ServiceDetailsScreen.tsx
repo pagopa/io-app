@@ -17,7 +17,9 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H4 from "../../components/ui/H4";
 import IconFont from "../../components/ui/IconFont";
@@ -107,6 +109,11 @@ const styles = StyleSheet.create({
     width: 60
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "serviceDetail.headerTitle",
+  body: "serviceDetail.contextualHelpContent"
+};
 
 // Renders a row in the service information panel as a primary block button
 function renderInformationRow(
@@ -564,6 +571,7 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
       <BaseScreenComponent
         goBack={this.props.navigation.goBack}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <Content>
           <Grid>

@@ -1,12 +1,12 @@
 import { isSome, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import startCase from "lodash/startCase";
 import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
   ActivityIndicator,
   Dimensions,
-  Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
@@ -16,19 +16,18 @@ import {
   SectionListScrollParams,
   StyleSheet
 } from "react-native";
-import variables from "../../theme/variables";
-
-import startCase from "lodash/startCase";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { makeFontStyleObject } from "../../theme/fonts";
+import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { format } from "../../utils/dates";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
+import { EmptyListComponent } from "./EmptyListComponent";
 import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
@@ -45,13 +44,6 @@ const styles = StyleSheet.create({
   emptyListWrapper: {
     padding: customVariables.contentPadding,
     alignItems: "center"
-  },
-  emptyListContentTitle: {
-    paddingTop: customVariables.contentPadding
-  },
-  emptyListContentSubtitle: {
-    textAlign: "center",
-    fontSize: customVariables.fontSizeSmall
   },
 
   // ListHeader
@@ -479,42 +471,36 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     } = this.props;
     const { isLoadingProgress } = this.state;
 
+    // Show this component when deadlines exists but not for the displayed interval
     const ListEmptyComponent = (
-      <View style={styles.emptyListWrapper}>
-        <ButtonDefaultOpacity
-          block={true}
-          primary={true}
-          small={true}
-          bordered={true}
-          style={styles.button}
-          onPress={this.loadMoreData}
-        >
-          <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
-        </ButtonDefaultOpacity>
+      <View>
+        <View style={styles.emptyListWrapper}>
+          <ButtonDefaultOpacity
+            block={true}
+            primary={true}
+            small={true}
+            bordered={true}
+            style={styles.button}
+            onPress={this.loadMoreData}
+          >
+            <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
+          </ButtonDefaultOpacity>
+        </View>
         <View spacer={true} />
-        <Image
-          source={require("../../../img/messages/empty-due-date-list-icon.png")}
+        <EmptyListComponent
+          image={require("../../../img/messages/empty-due-date-list-icon.png")}
+          title={I18n.t("messages.deadlines.emptyMessage.title")}
+          subtitle={I18n.t("messages.deadlines.emptyMessage.subtitle")}
         />
-        <Text style={styles.emptyListContentTitle}>
-          {I18n.t("messages.deadlines.emptyMessage.title")}
-        </Text>
-        <Text style={styles.emptyListContentSubtitle}>
-          {I18n.t("messages.deadlines.emptyMessage.subtitle")}
-        </Text>
       </View>
     );
 
-    // Show this component when the user has not deadlines
+    // Show this component when the user has not deadlines at all
     const ListEmptySectionsComponent = (
-      <View style={styles.emptyListWrapper}>
-        <View spacer={true} large={true} />
-        <Image
-          source={require("../../../img/messages/empty-due-date-list-icon.png")}
-        />
-        <Text style={styles.emptyListContentTitle}>
-          {I18n.t("messages.deadlines.emptyMessage.title")}
-        </Text>
-      </View>
+      <EmptyListComponent
+        image={require("../../../img/messages/empty-due-date-list-icon.png")}
+        title={I18n.t("messages.deadlines.emptyMessage.title")}
+      />
     );
 
     return (

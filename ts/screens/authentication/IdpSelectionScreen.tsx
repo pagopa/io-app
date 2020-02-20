@@ -8,7 +8,9 @@ import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IdpsGrid from "../../components/IdpsGrid";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import * as config from "../../config";
 import I18n from "../../i18n";
@@ -104,6 +106,14 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "authentication.idp_selection.contextualHelpTitle",
+  body: "authentication.idp_selection.contextualHelpContent"
+};
+
+/**
+ * A screen where the user choose the SPID IPD to login with.
+ */
 const IdpSelectionScreen: React.SFC<Props> = props => {
   const onIdpSelected = (idp: IdentityProvider) => {
     props.dispatch(idpSelected(idp));
@@ -112,6 +122,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
 
   return (
     <BaseScreenComponent
+      contextualHelpMarkdown={contextualHelpMarkdown}
       goBack={props.navigation.goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
