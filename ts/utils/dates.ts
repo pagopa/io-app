@@ -24,9 +24,7 @@ export function formatDateAsReminder(
   return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 }
 
-export function formatDateAsDeadlines(
-  date: Date
-): ReturnType<typeof dateFnsFormat> {
+export function toLocalDate(date: Date): ReturnType<typeof dateFnsFormat> {
   return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 }
 

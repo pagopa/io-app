@@ -45,9 +45,9 @@ import { checkAndRequestPermission } from "../../utils/calendar";
 import {
   format,
   formatDateAsDay,
-  formatDateAsDeadlines,
   formatDateAsMonth,
-  formatDateAsReminder
+  formatDateAsReminder,
+  toLocalDate
 } from "../../utils/dates";
 import {
   getMessagePaymentExpirationInfo,
@@ -282,7 +282,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       maybeMessagePaymentExpirationInfo.value.kind === "EXPIRABLE" &&
       maybeMessagePaymentExpirationInfo.value.expireStatus === "EXPIRING";
 
-    const formattedData = new Date(formatDateAsDeadlines(due_date));
+    const formattedData = new Date(toLocalDate(due_date));
     return (
       <CalendarIconComponent
         height={calendarIconComponentSize}
