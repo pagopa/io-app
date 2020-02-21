@@ -134,12 +134,13 @@ const reducer = (
         ...state,
         walletById: pot.some(toIndexed(wallets, _ => _.idWallet))
       };
-      return favouriteWallet !== undefined
-        ? {
-            ...newState,
-            favoriteWalletId: pot.some(favouriteWallet.idWallet)
-          }
-        : newState;
+      return {
+        ...newState,
+        favoriteWalletId:
+          favouriteWallet !== undefined
+            ? pot.some(favouriteWallet.idWallet)
+            : pot.none
+      };
 
     case getType(fetchWalletsFailure):
     case getType(deleteWalletFailure):
