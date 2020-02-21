@@ -288,6 +288,9 @@ class AddCardScreen extends React.Component<Props, State> {
                     returnKeyType: "done",
                     maxLength: 4,
                     mask: "[0009]",
+                    keyboardType: "numeric",
+                    secureTextEntry: true,
+                    // Android only
                     isNumericSecureKeyboard: true,
                     onChangeText: (_, value) =>
                       this.updateSecurityCodeState(value)
