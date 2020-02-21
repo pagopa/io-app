@@ -19,7 +19,7 @@
     "generate:locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/make-locales.ts",
     "generate:content-definitions": "rimraf definitions/content && mkdir -p definitions/content && gen-api-models --api-spec https://raw.githubusercontent.com/pagopa/io-services-metadata/master/definitions.yml --out-dir ./definitions/content",
     "generate:all": "npm-run-all generate:mock-google-services-json generate:api-definitions generate:pagopa-api-definitions generate:content-definitions generate:locales",
-    "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts" 
+    "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.5.0",
@@ -73,8 +73,8 @@
     "react-navigation-redux-helpers": "^3.0.0",
     "react-redux": "6.0.0",
     "reactotron-react-native": "^4.0.2",
-    "reactotron-redux-saga": "2.1.4",
     "reactotron-redux": "^3.1.2",
+    "reactotron-redux-saga": "2.1.4",
     "redux": "4.0.1",
     "redux-logger": "3.0.6",
     "redux-persist": "5.10.0",
@@ -152,7 +152,9 @@
   },
   "resolutions": {
     "@types/react": "16.7.18",
-    "@types/prop-types": "15.5.5"
+    "@types/prop-types": "15.5.5",
+    "fp-ts": "1.12.0",
+    "io-ts": "1.8.5"
   },
   "rnpm": {
     "assets": [

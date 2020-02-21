@@ -31,7 +31,7 @@ global:
     saveSelection: Save the selection
   navigator:
     messages: messages
-    wallet: wallet
+    wallet: payments
     documents: documents
     profile: profile
     services: services
@@ -548,7 +548,7 @@ wallet:
     title: Do you want to save this card?
     infoTitle: Set the card as favourite payment method
     info: This payment method will be automatically proposed for the next payment
-    save: Save the card
+    save: Save
     notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
     temporaryError: There was a temporary problem while saving this card, please retry.
   saveCardInPayment:
@@ -637,7 +637,7 @@ wallet:
     contextualHelpTitle: Transaction details
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   total: Total
-  amount: Amount
+  amount: Amount €
   payAmount: Amount to pay
   transactionFee: Transaction fee
   why: Why?
@@ -657,20 +657,24 @@ wallet:
   noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
   moreInfo: Learn more
   payNotice: Pay notice
-  latestTransactions: Latest transactions
+  latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add payment method
   continue: Continue
   methods:
+    comingSoon: incoming
     card:
       name: Credit/debit card
       maxFee: Maximum fee of 1.50€
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
-    mobile:
-      name: Other payment methods
-      maxFee: Paypal, Satispay, etc.
+    satispay: 
+      name: Satispay
+    postepay: 
+      name: Postepay
+    paypal: 
+      name: Paypal
     notImplemented: Coming soon
   addCardTitle: Card details
   dummyCard:
@@ -753,8 +757,8 @@ messages:
     other: You have {{count}} messages
   tab:
     inbox: Inbox
-    deadlines: Deadlines
-    archive: Archive
+    deadlines: Expiring
+    archive: Archived
   contentTitle: Messages
   refresh: Pull down to refresh
   loading: Loading Messages...

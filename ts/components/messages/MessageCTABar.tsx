@@ -88,10 +88,6 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  selectCalendaModalHeader: {
-    lineHeight: 40
-  },
-
   topContainer: {
     display: "flex",
     flexDirection: "row",
@@ -101,7 +97,12 @@ const styles = StyleSheet.create({
   topContainerLarge: {
     paddingVertical: variables.contentPadding / 2,
     paddingHorizontal: variables.contentPadding,
-    backgroundColor: "#F5F6F7"
+    backgroundColor: variables.brandGray
+  },
+
+  topContainerPaid: {
+    paddingVertical: 0,
+    paddingHorizontal: 0
   },
 
   bottomContainer: {
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   },
 
   bottomContainerValid: {
-    backgroundColor: "#F5F6F7"
+    backgroundColor: variables.brandGray
   },
 
   bottomContainerExpiring: {
@@ -136,6 +137,10 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const { message, navigateToMessageDetail } = this.props;
     navigateToMessageDetail(message.id);
   };
+
+  get paid(): boolean {
+    return this.props.payment !== undefined;
+  }
 
   /**
    * A function to check if the eventId of the CalendarEvent stored in redux
@@ -253,6 +258,11 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const { message, small } = this.props;
     const { due_date } = message.content;
 
+    // if the message is relative to a payment and it is paid
+    // calendar icon will be never shown
+    if (this.paid) {
+      return null;
+    }
     if (!due_date) {
       return null;
     }
@@ -303,7 +313,9 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const { due_date } = message.content;
     const { isEventInDeviceCalendar } = this.state;
 
-    if (due_date === undefined) {
+    // if the message is relative to a payment and it is paid
+    // reminder will be never shown
+    if (this.paid || due_date === undefined) {
       return null;
     }
 
@@ -400,7 +412,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   private renderPaymentButton(
     maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
   ) {
-    const { message, payment, service, small, disabled } = this.props;
+    const { message, service, small, disabled } = this.props;
 
     if (
       maybeMessagePaymentExpirationInfo.isNone() ||
@@ -413,7 +425,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       maybeMessagePaymentExpirationInfo.value;
 
     const expired = isExpired(messagePaymentExpirationInfo);
-    const paid = payment !== undefined;
     const rptId = fromNullable(service).chain(_ =>
       getRptIdFromNoticeNumber(
         _.organization_fiscal_code,
@@ -426,7 +437,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
     const onPressHandler = expired
       ? this.navigateToMessageDetail
-      : !disabled && !paid && amount.isSome() && rptId.isSome()
+      : !disabled && !this.paid && amount.isSome() && rptId.isSome()
         ? () => {
             this.props.refreshService(message.sender_service_id);
             // TODO: optimize the managment of the payment initialization https://www.pivotaltracker.com/story/show/169702534
@@ -449,7 +460,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
     return (
       <PaymentButton
-        paid={paid}
+        paid={this.paid}
         messagePaymentExpirationInfo={messagePaymentExpirationInfo}
         small={small}
         disabled={disabled}
@@ -501,14 +512,19 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const paymentButton = this.renderPaymentButton(
       maybeMessagePaymentExpirationInfo
     );
-
     if (
       calendarIcon !== null ||
       calendarEventButton !== null ||
       paymentButton !== null
     ) {
       return (
-        <View style={[styles.topContainer, !small && styles.topContainerLarge]}>
+        <View
+          style={[
+            styles.topContainer,
+            this.paid ? styles.topContainerPaid : undefined,
+            !small && styles.topContainerLarge
+          ]}
+        >
           {calendarIcon !== null && (
             <React.Fragment>
               {calendarIcon}
