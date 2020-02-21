@@ -1,6 +1,4 @@
 patch-package
-diff --git a/node_modules/react-native-text-input-mask/android/src/main/java/com/RNTextInputMask/RNTextInputMaskModule.java b/node_modules/react-native-text-input-mask/android/src/main/java/com/RNTextInputMask/RNTextInputMaskModule.java
-index 877ab4e..b47c056 100644
 --- a/node_modules/react-native-text-input-mask/android/src/main/java/com/RNTextInputMask/RNTextInputMaskModule.java
 +++ b/node_modules/react-native-text-input-mask/android/src/main/java/com/RNTextInputMask/RNTextInputMaskModule.java
 @@ -1,6 +1,9 @@
@@ -22,11 +20,13 @@ index 877ab4e..b47c056 100644
          // We need to use prependUIBlock instead of addUIBlock since subsequent UI operations in
          // the queue might be removing the view we're looking to update.
          reactContext.getNativeModule(UIManagerModule.class).prependUIBlock(new UIBlock() {
-@@ -92,6 +95,12 @@ public class RNTextInputMaskModule extends ReactContextBaseJavaModule {
+@@ -92,6 +95,14 @@ public class RNTextInputMaskModule extends ReactContextBaseJavaModule {
                              editText.removeTextChangedListener((TextWatcher) editText.getTag());
                          }
  
 +                        if (isNumericSecureKeyboard) {
++                            // On Android set a secure EditText (password field) and numeric keyboard when required.
++                            // Without this change, an alphanumeric keyboard is always set
 +                            editText.setTransformationMethod(null);
 +                            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 +                            editText.setTransformationMethod(new PasswordTransformationMethod());
@@ -35,14 +35,12 @@ index 877ab4e..b47c056 100644
                          editText.setTag(listener);
                          editText.addTextChangedListener(listener);
                      }
-@@ -99,4 +108,5 @@ public class RNTextInputMaskModule extends ReactContextBaseJavaModule {
+@@ -99,4 +110,5 @@ public class RNTextInputMaskModule extends ReactContextBaseJavaModule {
              }
          });
      }
 +
  }
-diff --git a/node_modules/react-native-text-input-mask/index.js b/node_modules/react-native-text-input-mask/index.js
-index 408edad..6f57caa 100644
 --- a/node_modules/react-native-text-input-mask/index.js
 +++ b/node_modules/react-native-text-input-mask/index.js
 @@ -10,6 +10,7 @@ import {
@@ -93,8 +91,6 @@ index 408edad..6f57caa 100644
 +    this.props.onChangeText('');
 +  }
  }
-diff --git a/node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask/RNTextInputMask.m b/node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask/RNTextInputMask.m
-index b978272..ed9c93e 100644
 --- a/node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask/RNTextInputMask.m
 +++ b/node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask/RNTextInputMask.m
 @@ -59,6 +59,16 @@ - (dispatch_queue_t)methodQueue {
