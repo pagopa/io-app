@@ -1,14 +1,11 @@
 import { isSome, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import startCase from "lodash/startCase";
 import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
-  ActivityIndicator,
   Dimensions,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
+  Image,
   Platform,
   SectionList,
   SectionListData,
@@ -16,18 +13,19 @@ import {
   SectionListScrollParams,
   StyleSheet
 } from "react-native";
+import variables from "../../theme/variables";
+
+import startCase from "lodash/startCase";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { makeFontStyleObject } from "../../theme/fonts";
-import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { format } from "../../utils/dates";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
-import { EmptyListComponent } from "./EmptyListComponent";
 import MessageListItem from "./MessageListItem";
 
 // Used to calculate the cell item layouts.
@@ -44,6 +42,13 @@ const styles = StyleSheet.create({
   emptyListWrapper: {
     padding: customVariables.contentPadding,
     alignItems: "center"
+  },
+  emptyListContentTitle: {
+    paddingTop: customVariables.contentPadding
+  },
+  emptyListContentSubtitle: {
+    textAlign: "center",
+    fontSize: customVariables.fontSizeSmall
   },
 
   // ListHeader
@@ -182,9 +187,6 @@ export const isFakeItem = (item: any): item is FakeItem => {
   return item.fake;
 };
 
-// Min number of items to activate continuos scroll
-const minItemsToScroll = 4;
-
 const keyExtractor = (_: MessageAgendaItem | FakeItem, index: number) =>
   isFakeItem(_) ? `item-${index}` : _.e1.id;
 
@@ -252,20 +254,13 @@ const generateItemLayouts = (sections: Sections) => {
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
-const FakeItemComponent = (
-  <View style={styles.itemEmptyWrapper}>
-    <Text style={styles.itemEmptyText}>{I18n.t("reminders.emptyMonth")}</Text>
-  </View>
-);
-
 /**
  * A component to render messages with due_date in a agenda like form.
  */
 class MessageAgenda extends React.PureComponent<Props, State> {
   // Ref to section list
-  private sectionListRef = React.createRef<any>();
   private idTimeoutProgress?: number;
-
+  private sectionListRef = React.createRef<any>();
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -279,52 +274,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   public componentWillUnmount() {
     if (this.idTimeoutProgress !== undefined) {
       clearTimeout(this.idTimeoutProgress);
-    }
-  }
-
-  // tslint:disable-next-line: cognitive-complexity
-  public componentDidUpdate(prevProps: Props) {
-    // Change status loading to show progress
-    if (
-      prevProps.refreshing !== this.props.refreshing &&
-      this.props.refreshing === false
-    ) {
-      // On first loading doesn't move list
-      if (
-        this.state.isFirstLoading &&
-        this.props.sections !== undefined &&
-        this.props.sections.length > 0
-      ) {
-        this.loadMoreData();
-        this.setState({ isFirstLoading: false });
-      } else {
-        // We leave half a second longer to show the progress even for faster requests
-        // tslint:disable-next-line: no-object-mutation
-        this.idTimeoutProgress = setTimeout(() => {
-          this.setState({
-            isLoadingProgress: false
-          });
-          // Set scroll position when the new elements have been loaded
-          if (
-            (this.sectionListRef !== undefined &&
-              this.props.sections !== undefined &&
-              this.props.sections.length >= minItemsToScroll &&
-              this.props.isContinuosScrollEnabled) ||
-            // Check if we made one last load before blocking the scroll
-            (prevProps.sections.length !== this.props.sections.length &&
-              !this.props.isContinuosScrollEnabled)
-          ) {
-            this.scrollToLocation({
-              animated: false,
-              itemIndex: 0,
-              sectionIndex:
-                Platform.OS === "ios"
-                  ? minItemsToScroll - 1
-                  : minItemsToScroll - 2
-            });
-          }
-        }, 300);
-      }
     }
   }
 
@@ -365,7 +314,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     const item = info.section.data[0];
     const sectionId = !isFakeItem(item) ? item.e1.id : undefined;
 
-    return (
+    return !isFake ? (
       <View style={styles.sectionHeaderWrapper}>
         <View style={styles.sectionHeaderContent}>
           <Text
@@ -378,16 +327,14 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             {startCase(
               format(
                 info.section.title,
-                I18n.t(
-                  isFake
-                    ? "global.dateFormats.monthYear"
-                    : "global.dateFormats.weekdayDayMonthYear"
-                )
+                I18n.t("global.dateFormats.weekdayDayMonthYear")
               )
             )}
           </Text>
         </View>
       </View>
+    ) : (
+      <View />
     );
   };
 
@@ -395,7 +342,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     MessageAgendaItem | FakeItem
   > = info => {
     if (isFakeItem(info.item)) {
-      return FakeItemComponent;
+      return;
     }
 
     const message = info.item.e1;
@@ -448,59 +395,50 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return this.state.itemLayouts[index];
   };
 
-  // On scroll download more data
-  private onScrollHandler = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const scrollPosition = e.nativeEvent.contentOffset.y;
-    if (
-      scrollPosition < 50 &&
-      !this.state.isLoadingProgress &&
-      this.props.isContinuosScrollEnabled
-    ) {
-      // Before call other items check if the last section is showed
-      this.loadMoreData();
-    }
-  };
-
   public render() {
     const {
       sections,
       servicesById,
       paymentsByRptId,
-      isContinuosScrollEnabled,
       lastDeadlineId
     } = this.props;
-    const { isLoadingProgress } = this.state;
 
-    // Show this component when deadlines exists but not for the displayed interval
     const ListEmptyComponent = (
-      <View>
-        <View style={styles.emptyListWrapper}>
-          <ButtonDefaultOpacity
-            block={true}
-            primary={true}
-            small={true}
-            bordered={true}
-            style={styles.button}
-            onPress={this.loadMoreData}
-          >
-            <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
-          </ButtonDefaultOpacity>
-        </View>
+      <View style={styles.emptyListWrapper}>
+        <ButtonDefaultOpacity
+          block={true}
+          primary={true}
+          small={true}
+          bordered={true}
+          style={styles.button}
+          onPress={this.loadMoreData}
+        >
+          <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
+        </ButtonDefaultOpacity>
         <View spacer={true} />
-        <EmptyListComponent
-          image={require("../../../img/messages/empty-due-date-list-icon.png")}
-          title={I18n.t("messages.deadlines.emptyMessage.title")}
-          subtitle={I18n.t("messages.deadlines.emptyMessage.subtitle")}
+        <Image
+          source={require("../../../img/messages/empty-due-date-list-icon.png")}
         />
+        <Text style={styles.emptyListContentTitle}>
+          {I18n.t("messages.deadlines.emptyMessage.title")}
+        </Text>
+        <Text style={styles.emptyListContentSubtitle}>
+          {I18n.t("messages.deadlines.emptyMessage.subtitle")}
+        </Text>
       </View>
     );
 
-    // Show this component when the user has not deadlines at all
+    // Show this component when the user has not deadlines
     const ListEmptySectionsComponent = (
-      <EmptyListComponent
-        image={require("../../../img/messages/empty-due-date-list-icon.png")}
-        title={I18n.t("messages.deadlines.emptyMessage.title")}
-      />
+      <View style={styles.emptyListWrapper}>
+        <View spacer={true} large={true} />
+        <Image
+          source={require("../../../img/messages/empty-due-date-list-icon.png")}
+        />
+        <Text style={styles.emptyListContentTitle}>
+          {I18n.t("messages.deadlines.emptyMessage.title")}
+        </Text>
+      </View>
     );
 
     return (
@@ -518,16 +456,11 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           bounces={false}
           keyExtractor={keyExtractor}
           ref={this.sectionListRef}
-          onScroll={this.onScrollHandler}
           renderItem={this.renderItem}
           renderSectionHeader={this.renderSectionHeader}
           ItemSeparatorComponent={ItemSeparatorComponent}
           getItemLayout={this.getItemLayout}
-          ListHeaderComponent={
-            !isContinuosScrollEnabled &&
-            this.props.sections.length > minItemsToScroll &&
-            this.noOtherDeadlines
-          }
+          ListHeaderComponent={false}
           ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
           ListEmptyComponent={
             sections.length === 0 && lastDeadlineId.isNone()
@@ -535,16 +468,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
               : ListEmptyComponent
           }
         />
-        {isLoadingProgress &&
-          isContinuosScrollEnabled && (
-            <View style={styles.contentProgress}>
-              <ActivityIndicator
-                style={styles.progress}
-                size="small"
-                color={variables.brandDarkGray}
-              />
-            </View>
-          )}
       </View>
     );
   }
