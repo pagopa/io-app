@@ -1,5 +1,5 @@
+import cieSdk from "@pagopa/react-native-cie";
 import { Platform } from "react-native";
-import cieSdk from "react-native-cie";
 
 const realIsCIEAuthenticationSupported = cieSdk.isCIEAuthenticationSupported;
 const mockIsCIEAuthenticationSupported = () => Promise.resolve(true);

@@ -2,12 +2,12 @@
  * A screen to guide the user to proper read the CIE
  * TODO: isolate cie event listener as saga
  */
+import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, Easing, Image, StyleSheet, Vibration } from "react-native";
-import cieManager, { Event as CEvent } from "react-native-cie";
 import ProgressCircle from "react-native-progress-circle";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
