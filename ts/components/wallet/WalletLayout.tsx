@@ -18,9 +18,12 @@ import {
   ViewStyle
 } from "react-native";
 import customVariables from "../../theme/variables";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "../screens/BaseScreenComponent";
 import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
-import Markdown from "../ui/Markdown";
 import PagoPALogo from "./PagoPALogo";
 
 type Props = Readonly<{
@@ -32,6 +35,8 @@ type Props = Readonly<{
   footerContent?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
   refreshControl?: React.ReactElement<RefreshControlProps>;
+  contextualHelp?: ContextualHelpProps;
+  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
 }>;
 
 const styles = StyleSheet.create({
@@ -112,10 +117,8 @@ export default class WalletLayout extends React.Component<Props> {
         topContent={this.props.topContent}
         hideHeader={hideHeader}
         footerContent={footerContent}
-        contextualHelp={{
-          title: I18n.t("wallet.wallet"),
-          body: () => <Markdown>{I18n.t("wallet.walletHelp")}</Markdown>
-        }}
+        contextualHelp={this.props.contextualHelp}
+        contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         contentRefreshControl={this.props.refreshControl}
       >
         {this.props.children}

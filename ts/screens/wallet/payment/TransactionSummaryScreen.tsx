@@ -125,6 +125,14 @@ class TransactionSummaryScreen extends React.Component<Props> {
         some(potVerifica.error),
         this.props.onRetry
       );
+    } else if (
+      // this is the case when the component is already mounted (eg. process more payments)
+      // we check if the rptId is different from the previous one, in that case fire the dispatchPaymentVerificaRequest
+      pot.isNone(this.props.potVerifica) &&
+      this.props.navigation.getParam("rptId").paymentNoticeNumber !==
+        prevProps.navigation.getParam("rptId").paymentNoticeNumber
+    ) {
+      this.props.dispatchPaymentVerificaRequest();
     }
   }
 

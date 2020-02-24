@@ -4,7 +4,7 @@
  * TODO: simplify the "goBack" managemnt
  *  https://www.pivotaltracker.com/story/show/170929164
  */
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";

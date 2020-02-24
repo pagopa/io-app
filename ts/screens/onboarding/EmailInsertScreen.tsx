@@ -18,10 +18,11 @@ import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
   abortOnboarding,
@@ -72,14 +73,15 @@ const styles = StyleSheet.create({
 
 const EMPTY_EMAIL = "";
 
-const contextualHelp = {
-  title: I18n.t("email.insert.help.title"),
-  body: () => <Markdown>{I18n.t("email.insert.help.content")}</Markdown>
-};
-
 type State = Readonly<{
   email: Option<string>;
 }>;
+
+// TODO: update content (https://www.pivotaltracker.com/n/projects/2048617/stories/169392558)
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.email.insert.help.title",
+  body: "onboarding.email.insert.help.content"
+};
 
 /**
  * A screen to allow user to insert an email address.
@@ -222,7 +224,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             ? I18n.t("profile.preferences.list.email")
             : I18n.t("email.insert.header")
         }
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <View style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>

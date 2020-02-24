@@ -6,12 +6,13 @@ import { FlatList, Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
@@ -79,12 +80,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const contextualHelp = {
-  title: I18n.t("wallet.confirmPayment.contextualHelpTitle"),
-  body: () => (
-    <Markdown>{I18n.t("wallet.confirmPayment.contextualHelpContent")}</Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.pickPsp.contextualHelpTitle",
+  body: "wallet.pickPsp.contextualHelpContent"
 };
+
 /**
  * Select a PSP to be used for a the current selected wallet
  */
@@ -111,7 +111,7 @@ class PickPspScreen extends React.Component<Props> {
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("saveCard.saveCard")}
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <Content
           contentContainerStyle={styles.contentContainerStyle}

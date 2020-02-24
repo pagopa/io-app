@@ -1,18 +1,27 @@
+import I18n from "i18n-js";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
+import { TranslationKeys } from "../../../locales/locales";
 import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
+import Markdown from "../ui/Markdown";
 import { BaseHeader } from "./BaseHeader";
 
-interface ContextualHelpProps {
+export interface ContextualHelpProps {
   title: string;
   body: () => React.ReactNode;
 }
 
+export interface ContextualHelpPropsMarkdown {
+  title: TranslationKeys;
+  body: TranslationKeys;
+}
+
 interface OwnProps {
   contextualHelp?: ContextualHelpProps;
+  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
   appLogo?: boolean;
   isSearchAvailable?: boolean;
@@ -60,6 +69,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       dark,
       appLogo,
       contextualHelp,
+      contextualHelpMarkdown,
       goBack,
       headerBody,
       headerTitle,
@@ -70,6 +80,17 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       customGoBack
     } = this.props;
 
+    const ch = contextualHelp
+      ? { body: contextualHelp.body, title: contextualHelp.title }
+      : contextualHelpMarkdown
+        ? {
+            body: () => (
+              <Markdown>{I18n.t(contextualHelpMarkdown.body)}</Markdown>
+            ),
+            title: I18n.t(contextualHelpMarkdown.title)
+          }
+        : undefined;
+
     return (
       <Container>
         <BaseHeader
@@ -77,7 +98,9 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           dark={dark}
           goBack={goBack}
           headerTitle={headerTitle}
-          onShowHelp={contextualHelp ? this.showHelp : undefined}
+          onShowHelp={
+            contextualHelp || contextualHelpMarkdown ? this.showHelp : undefined
+          }
           isSearchAvailable={isSearchAvailable}
           searchType={searchType}
           body={headerBody}
@@ -86,10 +109,10 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           customGoBack={customGoBack}
         />
         {this.props.children}
-        {contextualHelp && (
+        {ch && (
           <ContextualHelpModal
-            title={contextualHelp.title}
-            body={contextualHelp.body}
+            title={ch.title}
+            body={ch.body}
             isVisible={this.state.isHelpVisible}
             close={this.hideHelp}
           />
