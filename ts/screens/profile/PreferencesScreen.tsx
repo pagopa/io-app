@@ -212,20 +212,20 @@ class PreferencesScreen extends React.Component<Props, State> {
               }
               onPress={this.handleEmailOnPress}
             />
-            {// Check if spid phone number exists
-            maybePhoneNumber.isSome() && (
-              <ListItemComponent
-                title={I18n.t("profile.preferences.list.mobile_phone")}
-                subTitle={maybePhoneNumber.value}
-                iconName={"io-phone-number"}
-              />
-            )}
             {// Check if spid email exists
             maybeSpidEmail.isSome() && (
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.spid_email")}
                 subTitle={maybeSpidEmail.value}
                 hideIcon={true}
+              />
+            )}
+            {// Check if spid phone number exists
+            maybePhoneNumber.isSome() && (
+              <ListItemComponent
+                title={I18n.t("profile.preferences.list.mobile_phone")}
+                subTitle={maybePhoneNumber.value}
+                iconName={"io-phone-number"}
               />
             )}
 
