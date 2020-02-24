@@ -24,7 +24,7 @@ type OwnProps = {
   ciePin: string;
 };
 
-type Props =  NavigationScreenProp<NavigationState> &
+type Props = NavigationScreenProp<NavigationState> &
   OwnProps &
   NavigationScreenProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
