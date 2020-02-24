@@ -30,7 +30,8 @@ import {
   isProfileEmailValidatedSelector,
   profileEmailSelector,
   profileSelector,
-  profileSpidEmailSelector
+  profileSpidEmailSelector,
+  profileSpidPhoneSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
@@ -143,6 +144,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     const notAvailable = I18n.t("global.remoteStates.notAvailable");
     const maybeEmail = this.props.optionEmail;
     const maybeSpidEmail = this.props.optionSpidEmail;
+    const maybePhoneNumber = this.props.optionMobilePhone;
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
@@ -210,7 +212,11 @@ class PreferencesScreen extends React.Component<Props, State> {
               }
               onPress={this.handleEmailOnPress}
             />
-
+            <ListItemComponent
+              title={I18n.t("profile.preferences.list.mobile_phone")}
+              subTitle={maybePhoneNumber.getOrElse(notAvailable)}
+              iconName={"io-phone-number"}
+            />
             {// Check if spid email exists
             maybeSpidEmail.isSome() && (
               <ListItemComponent
@@ -249,7 +255,8 @@ function mapStateToProps(state: GlobalState) {
     isEmailValidated: isProfileEmailValidatedSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar,
-    hasProfileEmail: hasProfileEmailSelector(state)
+    hasProfileEmail: hasProfileEmailSelector(state),
+    optionMobilePhone: profileSpidPhoneSelector(state)
   };
 }
 
