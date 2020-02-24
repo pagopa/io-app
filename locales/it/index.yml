@@ -544,7 +544,7 @@ wallet:
     cancelPaymentSuccess: Il pagamento di questo avviso è stato annullato, potrai pagarlo nuovamente tra qualche minuto
     securityVerification: Verifica di sicurezza
     insertCode: Inserisci il codice di sicurezza della carta
-    insertCVC: Inserisci nuovamente il codice di tre lettere (CVC, CVV) che trovi sul retro della tua carta
+    insertCVC: Inserisci nuovamente il codice di tre cifre (CVC, CVV) che trovi sul retro della tua carta
   payWith:
     noWallets:
       title: Nessun metodo di pagamento salvato
