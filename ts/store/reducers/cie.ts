@@ -66,8 +66,7 @@ export default function cieReducer(
 }
 
 // Selectors
-export const isCieSupportedSelector = (state: GlobalState) =>
-  state.cie.isCieSupported;
+export const isCieSupportedSelector = (_: GlobalState) => false;
 
 export const isNfcEnabledSelector = (state: GlobalState) =>
   state.cie.isNfcEnabled;
