@@ -5,7 +5,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Modal } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -17,7 +17,9 @@ import Checkout3DsComponent from "../../components/Checkout3DsComponent";
 import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import NoticeBox from "../../components/NoticeBox";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Switch from "../../components/ui/Switch";
 import CardComponent from "../../components/wallet/card/CardComponent";
@@ -62,6 +64,11 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 type State = Readonly<{
   setAsFavourite: boolean;
 }>;
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.saveCard.contextualHelpTitle",
+  body: "wallet.saveCard.contextualHelpContent"
+};
 
 class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   public componentDidMount() {
@@ -126,16 +133,13 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             ? I18n.t("wallet.saveCardInPayment.header")
             : I18n.t("wallet.saveCard.header")
         }
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <Content>
-          <H1>
-            {isInPayment
-              ? I18n.t("wallet.saveCardInPayment.title")
-              : I18n.t("wallet.saveCard.title")}
-          </H1>
           <CardComponent
             wallet={wallet}
             type={"Full"}
+            extraSpace={true}
             hideMenu={true}
             hideFavoriteIcon={true}
           />
@@ -144,7 +148,8 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             backgroundColor={customVariables.toastColor}
             iconProps={{
               name: "io-notice",
-              size: 32
+              color: customVariables.brandDarkGray,
+              size: 24
             }}
           >
             <Text>{I18n.t("wallet.saveCard.notice")}</Text>
