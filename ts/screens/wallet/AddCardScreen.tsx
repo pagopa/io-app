@@ -2,7 +2,7 @@
  * Screen for entering the credit card details
  * (holder, pan, cvc, expiration date)
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { entries, range, size } from "lodash";
 import { Content, Item, Text, View } from "native-base";
@@ -369,9 +369,11 @@ class AddCardScreen extends React.Component<Props, State> {
   }
 
   private updateSecurityCodeState(value: string) {
+    const securityCode = fromNullable(value).filter(
+      v => v !== EMPTY_CARD_SECURITY_CODE
+    );
     this.setState({
-      securityCode:
-        value && value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
+      securityCode
     });
   }
 }

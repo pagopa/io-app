@@ -4,7 +4,7 @@
  * TODO: simplify the "goBack" managemnt
  *  https://www.pivotaltracker.com/story/show/170929164
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -15,6 +15,7 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
+import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import { AmountToImporto } from "../utils/amounts";
@@ -30,7 +31,7 @@ import PaymentBannerComponent from "./wallet/PaymentBannerComponent";
 type Props = Readonly<{
   onCancel: () => void;
   onContinue: (cvv?: string) => void;
-  verifica: any;
+  verifica: PaymentRequestsGetResponse;
 }>;
 
 type State = Readonly<{
@@ -85,17 +86,12 @@ export default class PaymentSecureCodeOverlay extends React.Component<
   }
 
   private updateSecurityCodeState(value: string) {
+    const securityCode = fromNullable(value).filter(
+      v => v !== EMPTY_CARD_SECURITY_CODE
+    );
     this.setState({
-      securityCode:
-        value && value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
+      securityCode
     });
-  }
-  private isValidSecurityCode() {
-    return this.state.securityCode
-      .map(securityCode => {
-        return CreditCardCVC.is(securityCode);
-      })
-      .toUndefined();
   }
 
   // TODO: update GoBackButton to be compatible with light modals
@@ -135,7 +131,9 @@ export default class PaymentSecureCodeOverlay extends React.Component<
             <Content scrollEnabled={false}>
               <LabelledItem
                 type={"masked"}
-                isValid={this.isValidSecurityCode()}
+                isValid={this.state.securityCode.fold(undefined, v =>
+                  CreditCardCVC.is(v)
+                )}
                 inputMaskProps={{
                   ref: this.securityCodeRef,
                   value: this.state.securityCode.getOrElse(
@@ -162,12 +160,7 @@ export default class PaymentSecureCodeOverlay extends React.Component<
             android: variables.contentPadding
           })}
         >
-          {this.renderFooterButtons(
-            !(
-              this.state.securityCode.isSome() &&
-              this.state.securityCode.value.length >= 3
-            )
-          )}
+          {this.renderFooterButtons()}
         </KeyboardAvoidingView>
       </TopScreenComponent>
     );
@@ -176,11 +169,9 @@ export default class PaymentSecureCodeOverlay extends React.Component<
   /**
    * Footer
    */
-  private renderFooterButtons(isValidCode: boolean) {
+  private renderFooterButtons() {
     const handleOnContinue = () => {
-      if (this.state.securityCode.isSome()) {
-        this.props.onContinue(this.state.securityCode.value);
-      }
+      this.state.securityCode.map(this.props.onContinue);
     };
 
     const secondaryButtonProps = {
@@ -194,7 +185,7 @@ export default class PaymentSecureCodeOverlay extends React.Component<
     const primaryButtonProps = {
       block: true,
       primary: true,
-      disabled: isValidCode,
+      disabled: this.state.securityCode.fold(true, v => !CreditCardCVC.is(v)),
       onPress: handleOnContinue,
       title: I18n.t("global.buttons.continue")
     };
