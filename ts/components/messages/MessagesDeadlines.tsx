@@ -329,7 +329,24 @@ const selectMoreSectionsToRenderAsync = async (
  * A component to show the messages with a due_date.
  */
 class MessagesDeadlines extends React.PureComponent<Props, State> {
+  private scrollToLocation: Option<SectionListScrollParams> = none;
   private messageAgendaRef = React.createRef<MessageAgenda>();
+
+  /**
+   * Used to maintain the same ScrollView position when loading
+   * "previous" data.
+   */
+  private onContentSizeChange = () => {
+    if (this.messageAgendaRef.current && this.scrollToLocation.isSome()) {
+      // Scroll to the sectionIndex we was before the content size change.
+      this.messageAgendaRef.current.scrollToLocation(
+        this.scrollToLocation.value
+      );
+      // Reset the value to none.
+      // tslint:disable-next-line: no-object-mutation
+      this.scrollToLocation = none;
+    }
+  };
 
   private handleOnPressItem = (id: string) => {
     if (this.props.selectedItemIds.isSome()) {
@@ -376,6 +393,32 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     selectMoreSectionsToRenderAsync(sections, maybeLastLoadedStartOfMonthTime)
       .then(moreSectionsToRender => {
         this.setState((prevState: State) => {
+          // Save the sectionIndex we want to scroll-to onContentSizeChange.
+          if (prevState.sectionsToRender.length === 0) {
+            // If not sections are redered we need to move to the bottom after rendering more sections
+            const sectionIndex = moreSectionsToRender.length - 1;
+            const itemIndex =
+              moreSectionsToRender[moreSectionsToRender.length - 1].data
+                .length - 1;
+            // tslint:disable-next-line: no-object-mutation
+            this.scrollToLocation = some({
+              sectionIndex,
+              itemIndex,
+              viewOffset: 0,
+              viewPosition: 1,
+              animated: true
+            });
+          } else {
+            // tslint:disable-next-line: no-object-mutation
+            this.scrollToLocation = some({
+              sectionIndex: moreSectionsToRender.length,
+              itemIndex: -1,
+              viewOffset: 0,
+              viewPosition: 1,
+              animated: true
+            });
+          }
+
           const lastLoadedStartOfMonthTime = maybeLastLoadedStartOfMonthTime.getOrElse(
             startOfMonth(new Date()).getTime()
           );
@@ -527,6 +570,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             onPressItem={this.handleOnPressItem}
             onLongPressItem={this.handleOnLongPressItem}
             onMoreDataRequest={this.onLoadMoreDataRequest}
+            onContentSizeChange={this.onContentSizeChange}
             isContinuosScrollEnabled={isContinuosScrollEnabled}
             lastDeadlineId={lastDeadlineId}
             nextDeadlineId={nextDeadlineId}

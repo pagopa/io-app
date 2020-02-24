@@ -277,6 +277,36 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     }
   }
 
+  // tslint:disable-next-line: cognitive-complexity
+  public componentDidUpdate() {
+    if (
+      this.sectionListRef.current !== null &&
+      this.state.isFirstLoading &&
+      this.props.sections !== undefined &&
+      this.props.sections.length > 0
+    ) {
+      this.props.sections.forEach((s, i) => {
+        const isFake = s.fake;
+        const nextDeadlineId = isSome(this.props.nextDeadlineId)
+          ? this.props.nextDeadlineId.value
+          : undefined;
+        const item = s.data[0];
+        const sectionId = !isFakeItem(item) ? item.e1.id : undefined;
+        if (!isFake && sectionId === nextDeadlineId) {
+          // tslint:disable-next-line: no-object-mutation
+          this.idTimeoutProgress = setTimeout(() => {
+            this.scrollToLocation({
+              animated: false,
+              itemIndex: 0,
+              sectionIndex: i
+            });
+            this.setState({ isFirstLoading: false });
+          }, 100);
+        }
+      });
+    }
+  }
+
   public static getDerivedStateFromProps(
     nextProps: Props,
     prevState: State
