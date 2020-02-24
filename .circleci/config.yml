@@ -69,7 +69,7 @@ install_node_modules: &install_node_modules
   run: 
     name: install npm packages
     command: |
-      npm set //npm.pkg.github.com/:_authToken=${GITHUB_PACKAGE_APP_TOKEN}
+      echo "//npm.pkg.github.com/:_authToken=$GITHUB_PACKAGE_APP_TOKEN" > ~/repo/.npmrc
       yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
 
 #
