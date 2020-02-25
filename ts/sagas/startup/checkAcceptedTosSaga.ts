@@ -20,8 +20,10 @@ export function* checkAcceptedTosSaga(
   }
 
   if (
-    !userProfile.has_profile ||
-    (userProfile.has_profile && "accepted_tos_version" in userProfile)
+    userProfile.version === 0 || // first onboarding
+    !userProfile.has_profile || // profile is false
+    (userProfile.accepted_tos_version &&
+      userProfile.accepted_tos_version < tosVersion) // accepted an older version of TOS
   ) {
     // Navigate to the TosScreen
     yield put(navigateToTosScreen);
