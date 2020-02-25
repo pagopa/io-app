@@ -22,7 +22,7 @@
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts"
   },
   "dependencies": {
-    "@pagopa/react-native-cie": "0.1.4",
+    "@pagopa/react-native-cie": "0.1.5",
     "@react-native-community/async-storage": "^1.5.0",
     "abort-controller": "^1.0.2",
     "async-mutex": "^0.1.3",
