@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
 class TosScreen extends React.PureComponent<Props> {
   public render() {
     const { navigation, dispatch } = this.props;
-
     const isProfile = navigation.getParam("isProfile", false);
 
     return (
@@ -80,6 +79,7 @@ class TosScreen extends React.PureComponent<Props> {
             <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
           </View>
         </Content>
+
         {isProfile === false && (
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}
@@ -125,8 +125,7 @@ function mapStateToProps(state: GlobalState) {
   return {
     hasAcceptedOldTosVersion:
       pot.isSome(potProfile) &&
-      "accepted_tos_version" in potProfile.value &&
-      potProfile.value.accepted_tos_version &&
+      potProfile.value.accepted_tos_version !== undefined &&
       potProfile.value.accepted_tos_version < tosVersion
   };
 }

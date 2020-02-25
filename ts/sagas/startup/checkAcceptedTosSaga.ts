@@ -13,8 +13,7 @@ export function* checkAcceptedTosSaga(
   // - this is the first access
   // - the user profile stores the user accepted an old version of ToS
   if (
-    "accepted_tos_version" in userProfile &&
-    userProfile.accepted_tos_version &&
+    userProfile.accepted_tos_version !== undefined &&
     userProfile.accepted_tos_version >= tosVersion
   ) {
     return;
