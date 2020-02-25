@@ -13,7 +13,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { BackHandler, Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -123,7 +123,20 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.detailsTransaction.contextualHelpContent"
 };
 
-class TransactionDetailsScreen extends React.Component<Props> {
+type State = {
+  isHelpVisible: boolean;
+};
+
+const INITIAL_STATE: State = {
+  isHelpVisible: false
+};
+
+class TransactionDetailsScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = INITIAL_STATE;
+  }
+
   private displayedWallet(transactionWallet: Wallet | undefined) {
     return transactionWallet ? (
       <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
@@ -131,6 +144,25 @@ class TransactionDetailsScreen extends React.Component<Props> {
       <RotatedCards cardType="Preview" />
     );
   }
+
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  private handleBackPress = () => {
+    // If the modal is visible close it
+    if (this.state.isHelpVisible) {
+      this.props.hideModal();
+      this.setState({ isHelpVisible: false });
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   /**
    * It provides the proper header to the screen. If isTransactionStarted
@@ -217,9 +249,13 @@ class TransactionDetailsScreen extends React.Component<Props> {
   };
 
   private showHelp = () => {
+    this.setState({ isHelpVisible: true });
     this.props.showModal(
       <ContextualHelp
-        onClose={this.props.hideModal}
+        onClose={() => {
+          this.props.hideModal();
+          this.setState({ isHelpVisible: false });
+        }}
         title={I18n.t("wallet.whyAFee.title")}
         body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
       />
