@@ -1,5 +1,8 @@
 /**
  * A HOC to display the WrappedComponent when the email is validated, otherwise the RemindEmailValidationOverlay will be displayed
+ *
+ * TODO: fix workaround introduced to solve bug on navigation during the onboarding (https://github.com/react-navigation/react-navigation/issues/4867)
+ *       If the didFocus and the blur related events are not fired, at forward navigation the hideModal is dispatched manually
  */
 
 import { none } from "fp-ts/lib/Option";
@@ -20,6 +23,10 @@ import { withConditionalView } from "./withConditionalView";
 export type ModalProps = LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps>;
 
+export type ModalState = Readonly<{
+  forceNavigationEvents: boolean;
+}>;
+
 /*
   ModalRemindEmailValidationOverlay is the component that allows viewing the email reminder via light modal.
   The light modal is activated via the onWillFocus listener of the NavigationEvents component.
@@ -27,7 +34,16 @@ export type ModalProps = LightModalContextInterface &
     - ModalRemindEmailValidationOverlay is unmounted
     - A navigation request is made (eg navigationBack) and the onWillBlur listener is activated
       */
-class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
+class ModalRemindEmailValidationOverlay extends React.Component<
+  ModalProps,
+  ModalState
+> {
+  constructor(props: ModalProps) {
+    super(props);
+    this.state = {
+      forceNavigationEvents: true
+    };
+  }
   public componentWillUnmount() {
     this.hideModal();
   }
@@ -42,14 +58,25 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
     this.props.dispatchAcknowledgeOnEmailValidation();
   };
 
+  private handleForcedClose = () => {
+    if (this.state.forceNavigationEvents) {
+      this.hideModal();
+    }
+  };
+
   public render() {
     return (
       <View>
         <NavigationEvents
           onWillBlur={this.hideModal}
           onWillFocus={() => {
-            this.props.showModal(<RemindEmailValidationOverlay />);
+            this.props.showModal(
+              <RemindEmailValidationOverlay
+                onForcedClose={this.handleForcedClose}
+              />
+            );
           }}
+          onDidFocus={() => this.setState({ forceNavigationEvents: false })}
         />
       </View>
     );
