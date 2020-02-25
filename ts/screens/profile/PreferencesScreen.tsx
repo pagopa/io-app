@@ -174,7 +174,10 @@ class PreferencesScreen extends React.Component<Props, State> {
       this.setState({ isModalVisible: true });
       this.props.showModal(
         <ContextualHelp
-          onClose={this.props.hideModal}
+          onClose={() => {
+            this.props.hideModal();
+            this.setState({ isModalVisible: false });
+          }}
           title={I18n.t(title)}
           body={() => <Markdown>{I18n.t(body)}</Markdown>}
         />
