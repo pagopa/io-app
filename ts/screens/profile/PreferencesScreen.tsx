@@ -2,7 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+import { Alert, BackHandler } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
@@ -48,10 +48,12 @@ type Props = OwnProps &
 
 type State = {
   isFingerprintAvailable: boolean;
+  isModalVisible: boolean;
 };
 
 const INITIAL_STATE: State = {
-  isFingerprintAvailable: false
+  isFingerprintAvailable: false,
+  isModalVisible: false
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -82,6 +84,25 @@ class PreferencesScreen extends React.Component<Props, State> {
     this.state = INITIAL_STATE;
     this.handleEmailOnPress = this.handleEmailOnPress.bind(this);
   }
+
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  private handleBackPress = () => {
+    // If the modal is visible close it
+    if (this.state.isModalVisible) {
+      this.props.hideModal();
+      this.setState({ isModalVisible: false });
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   private handleEmailOnPress() {
     if (this.props.hasProfileEmail) {
@@ -150,6 +171,7 @@ class PreferencesScreen extends React.Component<Props, State> {
       .getOrElse(I18n.t("global.remoteStates.notAvailable"));
 
     const showModal = (title: TranslationKeys, body: TranslationKeys) => {
+      this.setState({ isModalVisible: true });
       this.props.showModal(
         <ContextualHelp
           onClose={this.props.hideModal}
