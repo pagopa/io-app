@@ -2,7 +2,7 @@ import { isSome, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Text, View } from "native-base";
-import React, { ComponentProps } from "react";
+import React from "react";
 import {
   Dimensions,
   Image,
@@ -156,31 +156,22 @@ export type ItemLayout = {
   index: number;
 };
 
-type SelectedSectionListProps = Pick<
-  ComponentProps<SectionList<MessageAgendaSection>>,
-  "refreshing" | "onContentSizeChange"
->;
-
-type OwnProps = {
+type Props = {
   sections: Sections;
   servicesById: ServicesByIdState;
   paymentsByRptId: PaymentByRptIdState;
   onPressItem: (id: string) => void;
   onLongPressItem: (id: string) => void;
-  onMoreDataRequest: () => void;
   selectedMessageIds: Option<Set<string>>;
-  isContinuosScrollEnabled: boolean;
-  lastDeadlineId: Option<string>;
   nextDeadlineId: Option<string>;
 };
-
-type Props = OwnProps & SelectedSectionListProps;
 
 type State = {
   itemLayouts: ReadonlyArray<ItemLayout>;
   prevSections?: Sections;
   isLoadingProgress: boolean;
   isFirstLoading: boolean;
+  isDeadlinesLoaded: boolean;
 };
 
 export const isFakeItem = (item: any): item is FakeItem => {
@@ -260,52 +251,65 @@ const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 class MessageAgenda extends React.PureComponent<Props, State> {
   // Ref to section list
   private idTimeoutProgress?: number;
+  private idIntervalProgress?: number;
   private sectionListRef = React.createRef<any>();
   constructor(props: Props) {
     super(props);
     this.state = {
       itemLayouts: [],
       isLoadingProgress: false,
-      isFirstLoading: true
+      isFirstLoading: true,
+      isDeadlinesLoaded: false
     };
-    this.loadMoreData = this.loadMoreData.bind(this);
+  }
+
+  public componentDidMount() {
+    this.isDeadlinesLoadingComplete();
   }
 
   public componentWillUnmount() {
     if (this.idTimeoutProgress !== undefined) {
       clearTimeout(this.idTimeoutProgress);
     }
+    if (this.idIntervalProgress !== undefined) {
+      clearInterval(this.idIntervalProgress);
+    }
   }
 
-  // tslint:disable-next-line: cognitive-complexity
   public componentDidUpdate() {
     if (
+      this.state.isDeadlinesLoaded &&
       this.sectionListRef.current !== null &&
       this.state.isFirstLoading &&
       this.props.sections !== undefined &&
-      this.props.sections.length > 0
+      this.props.sections.length > 0 &&
+      isSome(this.props.nextDeadlineId)
     ) {
-      this.props.sections.forEach((s, i) => {
-        const isFake = s.fake;
-        const nextDeadlineId = isSome(this.props.nextDeadlineId)
-          ? this.props.nextDeadlineId.value
-          : undefined;
-        const item = s.data[0];
-        const sectionId = !isFakeItem(item) ? item.e1.id : undefined;
-        if (!isFake && sectionId === nextDeadlineId) {
-          // tslint:disable-next-line: no-object-mutation
-          this.idTimeoutProgress = setTimeout(() => {
-            this.scrollToLocation({
-              animated: false,
-              itemIndex: 0,
-              sectionIndex: i
-            });
-            this.setState({ isFirstLoading: false });
-          }, 100);
-        }
-      });
+      const sectionIndex = this.props.sections.findIndex(this.checkSection);
+      if (sectionIndex !== -1) {
+        this.setState({ isFirstLoading: false });
+        // tslint:disable-next-line: no-object-mutation
+        this.idTimeoutProgress = setTimeout(() => {
+          this.scrollToLocation({
+            animated: false,
+            itemIndex: 0,
+            sectionIndex
+          });
+        }, 500);
+      }
     }
   }
+
+  private checkSection = (s: MessageAgendaSection) => {
+    const isFake = s.fake;
+    const nextDeadlineId = isSome(this.props.nextDeadlineId)
+      ? this.props.nextDeadlineId.value
+      : undefined;
+    const item = s.data[0];
+    const sectionId = !isFakeItem(item) ? item.e1.id : undefined;
+
+    return !isFake && sectionId === nextDeadlineId;
+  };
 
   public static getDerivedStateFromProps(
     nextProps: Props,
@@ -323,16 +327,21 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return null;
   }
 
-  private loadMoreData() {
-    // This state trigger progress bar
-    this.setState({
-      isLoadingProgress: true
-    });
-    // Check if necessary show other data
-    if (this.props.isContinuosScrollEnabled) {
-      this.props.onMoreDataRequest();
-    }
-  }
+  private isDeadlinesLoadingComplete = () => {
+    // tslint:disable-next-line: no-var-keyword
+    var nextDeadlineId = this.props.nextDeadlineId;
+    // tslint:disable-next-line: no-object-mutation
+    this.idIntervalProgress = setInterval(() => {
+      if (nextDeadlineId === this.props.nextDeadlineId) {
+        this.setState({
+          isDeadlinesLoaded: true
+        });
+        clearInterval(this.idIntervalProgress);
+      } else {
+        nextDeadlineId = this.props.nextDeadlineId;
+      }
+    }, 400);
+  };
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
     const isFake = info.section.fake;
@@ -425,52 +434,45 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return this.state.itemLayouts[index];
   };
 
+  private ListEmptyComponent = (
+    <View style={styles.emptyListWrapper}>
+      <ButtonDefaultOpacity
+        block={true}
+        primary={true}
+        small={true}
+        bordered={true}
+        style={styles.button}
+      >
+        <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
+      </ButtonDefaultOpacity>
+      <View spacer={true} />
+      <Image
+        source={require("../../../img/messages/empty-due-date-list-icon.png")}
+      />
+      <Text style={styles.emptyListContentTitle}>
+        {I18n.t("messages.deadlines.emptyMessage.title")}
+      </Text>
+      <Text style={styles.emptyListContentSubtitle}>
+        {I18n.t("messages.deadlines.emptyMessage.subtitle")}
+      </Text>
+    </View>
+  );
+
+  // Show this component when the user has not deadlines
+  private ListEmptySectionsComponent = (
+    <View style={styles.emptyListWrapper}>
+      <View spacer={true} large={true} />
+      <Image
+        source={require("../../../img/messages/empty-due-date-list-icon.png")}
+      />
+      <Text style={styles.emptyListContentTitle}>
+        {I18n.t("messages.deadlines.emptyMessage.title")}
+      </Text>
+    </View>
+  );
+
   public render() {
-    const {
-      sections,
-      servicesById,
-      paymentsByRptId,
-      lastDeadlineId
-    } = this.props;
-
-    const ListEmptyComponent = (
-      <View style={styles.emptyListWrapper}>
-        <ButtonDefaultOpacity
-          block={true}
-          primary={true}
-          small={true}
-          bordered={true}
-          style={styles.button}
-          onPress={this.loadMoreData}
-        >
-          <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
-        </ButtonDefaultOpacity>
-        <View spacer={true} />
-        <Image
-          source={require("../../../img/messages/empty-due-date-list-icon.png")}
-        />
-        <Text style={styles.emptyListContentTitle}>
-          {I18n.t("messages.deadlines.emptyMessage.title")}
-        </Text>
-        <Text style={styles.emptyListContentSubtitle}>
-          {I18n.t("messages.deadlines.emptyMessage.subtitle")}
-        </Text>
-      </View>
-    );
-
-    // Show this component when the user has not deadlines
-    const ListEmptySectionsComponent = (
-      <View style={styles.emptyListWrapper}>
-        <View spacer={true} large={true} />
-        <Image
-          source={require("../../../img/messages/empty-due-date-list-icon.png")}
-        />
-        <Text style={styles.emptyListContentTitle}>
-          {I18n.t("messages.deadlines.emptyMessage.title")}
-        </Text>
-      </View>
-    );
-
+    const { sections, servicesById, paymentsByRptId } = this.props;
     return (
       <View
         style={{
@@ -478,37 +480,31 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           width: screenWidth
         }}
       >
-        <SectionList
-          // If we not have a final deadline then we not have deadlines
-          sections={sections}
-          extraData={{ servicesById, paymentsByRptId }}
-          inverted={false}
-          bounces={false}
-          keyExtractor={keyExtractor}
-          ref={this.sectionListRef}
-          renderItem={this.renderItem}
-          renderSectionHeader={this.renderSectionHeader}
-          ItemSeparatorComponent={ItemSeparatorComponent}
-          getItemLayout={this.getItemLayout}
-          ListHeaderComponent={false}
-          ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
-          ListEmptyComponent={
-            sections.length === 0 && lastDeadlineId.isNone()
-              ? ListEmptySectionsComponent
-              : ListEmptyComponent
-          }
-        />
+        {this.state.isDeadlinesLoaded === true && (
+          <SectionList
+            // If we not have a final deadline then we not have deadlines
+            sections={sections}
+            extraData={{ servicesById, paymentsByRptId }}
+            inverted={false}
+            bounces={false}
+            keyExtractor={keyExtractor}
+            ref={this.sectionListRef}
+            renderItem={this.renderItem}
+            renderSectionHeader={this.renderSectionHeader}
+            ItemSeparatorComponent={ItemSeparatorComponent}
+            getItemLayout={this.getItemLayout}
+            ListHeaderComponent={false}
+            ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
+            ListEmptyComponent={
+              sections.length === 0
+                ? this.ListEmptySectionsComponent
+                : this.ListEmptyComponent
+            }
+          />
+        )}
       </View>
     );
   }
-
-  public noOtherDeadlines = () => {
-    return (
-      <View style={styles.messageNoOthers}>
-        <Text bold={true}>{I18n.t("reminders.noOtherDeadlines")}</Text>
-      </View>
-    );
-  };
 
   public scrollToLocation = (params: SectionListScrollParams) => {
     if (this.sectionListRef.current !== null) {
