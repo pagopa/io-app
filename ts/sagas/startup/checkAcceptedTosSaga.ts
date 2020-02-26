@@ -5,6 +5,7 @@ import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccepted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
+import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
 
 export function* checkAcceptedTosSaga(
   userProfile: InitializedProfile
@@ -20,7 +21,7 @@ export function* checkAcceptedTosSaga(
   }
 
   if (
-    userProfile.version === 0 || // first onboarding
+    isProfileFirstOnBoarding(userProfile) || // first onboarding
     !userProfile.has_profile || // profile is false
     (userProfile.accepted_tos_version &&
       userProfile.accepted_tos_version < tosVersion) // accepted an older version of TOS
