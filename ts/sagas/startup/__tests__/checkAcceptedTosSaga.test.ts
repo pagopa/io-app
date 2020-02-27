@@ -13,8 +13,8 @@ import { InitializedProfile } from "../../../../definitions/backend/InitializedP
 import { tosVersion } from "../../../config";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
-import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
+import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
 
 describe("checkAcceptedTosSaga", () => {
   const firstOnboardingProfile: InitializedProfile = {
