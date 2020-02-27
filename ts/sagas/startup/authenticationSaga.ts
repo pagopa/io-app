@@ -9,7 +9,7 @@ import {
 import { loginSuccess } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SessionToken } from "../../types/SessionToken";
-import { checkCieAvailabilitySaga, checkNfcEnablementSaga } from "../cie";
+import { watchCieAuthenticationSaga } from "../cie";
 
 /**
  * A saga that makes the user go through the authentication process until
@@ -18,9 +18,8 @@ import { checkCieAvailabilitySaga, checkNfcEnablementSaga } from "../cie";
 export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   yield put(analyticsAuthenticationStarted());
 
-  // Watch for checks on login by CIE on the used device and NFC sensor enablement
-  const checkNfcEnablement = yield fork(checkNfcEnablementSaga);
-  yield call(checkCieAvailabilitySaga);
+  // Watch for login by CIE
+  const watchCieAuthentication = yield fork(watchCieAuthenticationSaga);
 
   // Reset the navigation stack and navigate to the authentication screen
   yield put(resetToAuthenticationRoute);
@@ -31,8 +30,7 @@ export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
     getType(loginSuccess)
   );
 
-  // Once the login is completed, stop watching for the NFC sensor enablement
-  yield cancel(checkNfcEnablement);
+  yield cancel(watchCieAuthentication);
 
   // User logged in successfully, remove all the scheduled local notifications
   // to remind the user to authenticate with spid

@@ -19,7 +19,7 @@ import TopScreenComponent from "../screens/TopScreenComponent";
 type Props = {
   ciePin: string;
   onClose: () => void;
-  onSuccess: (ciePin: string, authorizationUri: string) => void;
+  onSuccess: (authorizationUri: string) => void;
 };
 
 type State = {
@@ -63,7 +63,7 @@ class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
     if (event.url && event.url.indexOf("OpenApp") !== -1) {
       this.setState({ findOpenApp: true });
       const authorizationUri = event.url;
-      this.props.onSuccess(this.props.ciePin, authorizationUri);
+      this.props.onSuccess(authorizationUri);
     }
   };
 

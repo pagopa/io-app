@@ -119,13 +119,13 @@ class LandingScreen extends React.PureComponent<Props> {
 
   private navigateToSpidCieInformationRequest = () =>
     this.props.navigation.navigate(
-      this.props.isCIEAuthenticationSupported
+      this.props.isCieSupported
         ? ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION
         : ROUTES.AUTHENTICATION_SPID_INFORMATION
     );
 
   private renderCardComponents = () => {
-    const cardProps = getCards(this.props.isCIEAuthenticationSupported);
+    const cardProps = getCards(this.props.isCieSupported);
     return cardProps.map(p => (
       <LandingCardComponent key={`card-${p.id}`} {...p} />
     ));
@@ -143,7 +143,7 @@ class LandingScreen extends React.PureComponent<Props> {
         </Content>
 
         <View footer={true}>
-          {this.props.isCIEAuthenticationSupported && (
+          {this.props.isCieSupported && (
             <ButtonDefaultOpacity
               block={true}
               primary={true}
@@ -174,7 +174,7 @@ class LandingScreen extends React.PureComponent<Props> {
             onPress={this.navigateToSpidCieInformationRequest}
           >
             <Text style={styles.noPadded}>
-              {this.props.isCIEAuthenticationSupported
+              {this.props.isCieSupported
                 ? I18n.t("authentication.landing.nospid-nocie")
                 : I18n.t("authentication.landing.nospid")}
             </Text>
@@ -189,10 +189,7 @@ const mapStateToProps = (state: GlobalState) => {
   const isCIEAuthenticationSupported = isCieSupportedSelector(state);
   return {
     isSessionExpired: isSessionExpiredSelector(state),
-    isCIEAuthenticationSupported: pot.getOrElse(
-      isCIEAuthenticationSupported,
-      false
-    )
+    isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false)
   };
 };
 

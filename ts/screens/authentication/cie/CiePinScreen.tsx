@@ -1,7 +1,6 @@
 /**
  * A screen that allow the user to insert the Cie PIN.
  */
-
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -12,6 +11,7 @@ import {
   StyleSheet
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
 import CieRequestAuthenticationOverlay from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
@@ -24,6 +24,7 @@ import {
 } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
+import { setCieAuthenticationUrl, setCiePin } from "../../../store/actions/cie";
 import { ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 
@@ -48,12 +49,13 @@ class CiePinScreen extends React.PureComponent<Props, State> {
     this.state = { pin: "" };
   }
 
-  private handleOnContitnue = (ciePin: string, authorizationUri: string) => {
+  private onProceedToCardReaderScreen = (url: string) => {
+    this.props.dispatch(setCieAuthenticationUrl(url));
+    this.props.hideModal();
     this.props.navigation.navigate({
       routeName: ROUTES.CIE_CARD_READER_SCREEN,
-      params: { ciePin, authorizationUri }
+      params: { ciePin: this.state.pin, authorizationUri: url }
     });
-    this.props.hideModal();
   };
 
   private showModal = () => {
@@ -63,7 +65,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
       <CieRequestAuthenticationOverlay
         ciePin={this.state.pin}
         onClose={this.props.hideModal}
-        onSuccess={this.handleOnContitnue}
+        onSuccess={this.onProceedToCardReaderScreen}
       />
     );
     this.props.showAnimatedModal(component, BottomTopAnimation);
@@ -74,6 +76,11 @@ class CiePinScreen extends React.PureComponent<Props, State> {
     this.setState({
       pin
     });
+  };
+
+  private handleOnContinue = () => {
+    this.props.dispatch(setCiePin(this.state.pin));
+    this.showModal();
   };
 
   public render() {
@@ -93,7 +100,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
               pinLength={CIE_PIN_LENGTH}
               description={I18n.t("authentication.cie.pin.pinCardContent")}
               onPinChanged={this.handelOnPinChanged}
-              onSubmit={this.showModal}
+              onSubmit={this.handleOnContinue}
             />
           </View>
         </ScrollView>
@@ -102,7 +109,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
             type={"SingleButton"}
             leftButton={{
               primary: true,
-              onPress: this.showModal,
+              onPress: this.handleOnContinue,
               title: I18n.t("onboarding.pin.continue")
             }}
           />
@@ -119,5 +126,5 @@ class CiePinScreen extends React.PureComponent<Props, State> {
   }
 }
 
-// TODO: sole bug: for a while the pinpad is displayed again when it succeeded
-export default withLightModalContext(CiePinScreen);
+// TODO: solve bug: for a while the pinpad is displayed again when it succeeded - it occurs also during payments after a loading
+export default connect()(withLightModalContext(CiePinScreen));
