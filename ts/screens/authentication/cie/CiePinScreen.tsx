@@ -24,7 +24,6 @@ import {
 } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import { setCieAuthenticationUrl, setCiePin } from "../../../store/actions/cie";
 import { ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 
@@ -50,7 +49,6 @@ class CiePinScreen extends React.PureComponent<Props, State> {
   }
 
   private onProceedToCardReaderScreen = (url: string) => {
-    this.props.dispatch(setCieAuthenticationUrl(url));
     this.props.hideModal();
     this.props.navigation.navigate({
       routeName: ROUTES.CIE_CARD_READER_SCREEN,
@@ -79,7 +77,6 @@ class CiePinScreen extends React.PureComponent<Props, State> {
   };
 
   private handleOnContinue = () => {
-    this.props.dispatch(setCiePin(this.state.pin));
     this.showModal();
   };
 

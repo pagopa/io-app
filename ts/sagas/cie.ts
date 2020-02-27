@@ -14,25 +14,9 @@ import {
 import { SagaCallReturnType } from "../types/utils";
 
 export function* watchCieAuthenticationSaga(): SagaIterator {
-  // yield call(cieManager.start);
-
   // Watch for checks on login by CIE on the used device and NFC sensor enablement
   yield fork(checkNfcEnablementSaga, cieManager.isNFCEnabled);
   yield call(checkCieAvailabilitySaga, cieManager.isCIEAuthenticationSupported);
-
-  // Watch for updates on pin insterted before authentication and CIE reading
-  /*takeLatest(getType(setCiePin), function*(
-    action: ActionType<typeof setCiePin>
-  ): SagaIterator {
-    yield call(cieManager.setPin, action.payload)
-  });
-
-  // Watch for updates on authentication url provided before CIE reading
-  takeLatest(getType(setCieAuthenticationUrl), function*(
-    action: ActionType<typeof setCieAuthenticationUrl>
-  ) {
-    //yield call(cieManager.setAuthenticationUrl, action.payload)
-  });*/
 }
 
 export function* checkCieAvailabilitySaga(
