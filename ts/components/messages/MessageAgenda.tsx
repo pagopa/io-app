@@ -15,7 +15,9 @@ import {
 } from "react-native";
 import variables from "../../theme/variables";
 
+import { Millisecond } from "italia-ts-commons/lib/units";
 import startCase from "lodash/startCase";
+import Placeholder from "rn-placeholder";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -34,6 +36,8 @@ const SECTION_HEADER_HEIGHT = 48;
 const ITEM_HEIGHT = 158;
 const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
+const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
+const ITEM_LOADING_HEIGHT = ITEM_WITHOUT_CTABAR_HEIGHT;
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -127,6 +131,29 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     alignSelf: "center"
+  },
+  itemLoadingContainer: {
+    height: ITEM_LOADING_HEIGHT,
+    paddingVertical: 16,
+    paddingHorizontal: customVariables.contentPadding,
+    flex: 1
+  },
+  itemLoadingHeaderWrapper: {
+    flexDirection: "row",
+    marginBottom: 4
+  },
+  itemLoadingHeaderCenter: {
+    flex: 1,
+    paddingRight: 55 // Includes right header space
+  },
+  itemLoadingContentWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 42
+  },
+  itemLoadingContentCenter: {
+    flex: 1,
+    paddingRight: 32
   }
 });
 
@@ -172,6 +199,7 @@ type State = {
   isLoadingProgress: boolean;
   isFirstLoading: boolean;
   isDeadlinesLoaded: boolean;
+  isLoadingComplete: boolean;
 };
 
 export const isFakeItem = (item: any): item is FakeItem => {
@@ -245,13 +273,60 @@ const generateItemLayouts = (sections: Sections) => {
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
+const MessageItemPlaceholder = (
+  <View style={[styles.itemLoadingContainer]}>
+    <View style={styles.itemLoadingHeaderWrapper}>
+      <View style={styles.itemLoadingHeaderCenter}>
+        <Placeholder.Paragraph
+          textSize={customVariables.fontSizeBase}
+          color={customVariables.shineColor}
+          lineNumber={2}
+          lineSpacing={5}
+          width="100%"
+          firstLineWidth="100%"
+          lastLineWidth="55%"
+          animate="shine"
+          onReady={false}
+        />
+      </View>
+    </View>
+
+    <View style={styles.itemLoadingContentWrapper}>
+      <View style={styles.itemLoadingContentCenter}>
+        <Placeholder.Line
+          textSize={customVariables.fontSizeBase}
+          color={customVariables.shineColor}
+          width="75%"
+          animate="shine"
+        />
+      </View>
+    </View>
+  </View>
+);
+
+const SectionHeaderPlaceholder = (
+  <View style={styles.sectionHeaderWrapper}>
+    <View style={styles.sectionHeaderContent}>
+      <Placeholder.Line
+        textSize={customVariables.fontSizeBase}
+        color={customVariables.shineColor}
+        width="75%"
+        animate="shine"
+      />
+    </View>
+  </View>
+);
+
+async function mDelay(ms: Millisecond) {
+  // return await for better async stack trace support in case of errors.
+  return await new Promise(resolve => setTimeout(resolve, ms));
+}
+
 /**
  * A component to render messages with due_date in a agenda like form.
  */
 class MessageAgenda extends React.PureComponent<Props, State> {
   // Ref to section list
-  private idTimeoutProgress?: number;
-  private idIntervalProgress?: number;
   private sectionListRef = React.createRef<any>();
   constructor(props: Props) {
     super(props);
@@ -259,24 +334,17 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       itemLayouts: [],
       isLoadingProgress: false,
       isFirstLoading: true,
-      isDeadlinesLoaded: false
+      isDeadlinesLoaded: false,
+      isLoadingComplete: false
     };
   }
 
   public componentDidMount() {
+    // tslint:disable-next-line: no-floating-promises
     this.isDeadlinesLoadingComplete();
   }
 
-  public componentWillUnmount() {
-    if (this.idTimeoutProgress !== undefined) {
-      clearTimeout(this.idTimeoutProgress);
-    }
-    if (this.idIntervalProgress !== undefined) {
-      clearInterval(this.idIntervalProgress);
-    }
-  }
-
-  public componentDidUpdate() {
+  public async componentDidUpdate(prevProps: Props) {
     if (
       this.state.isDeadlinesLoaded &&
       this.sectionListRef.current !== null &&
@@ -288,14 +356,21 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       const sectionIndex = this.props.sections.findIndex(this.checkSection);
       if (sectionIndex !== -1) {
         this.setState({ isFirstLoading: false });
-        // tslint:disable-next-line: no-object-mutation
-        this.idTimeoutProgress = setTimeout(() => {
-          this.scrollToLocation({
-            animated: false,
-            itemIndex: 0,
-            sectionIndex
+        await mDelay(300 as Millisecond);
+        // tslint:disable-next-line: no-floating-promises
+        this.scrollToLocation({
+          animated: false,
+          itemIndex: 0,
+          sectionIndex: Platform.select({
+            ios: sectionIndex,
+            android: sectionIndex - 1
+          })
+        }).then(async () => {
+          await mDelay(300 as Millisecond);
+          this.setState({
+            isLoadingComplete: true
           });
-        }, 500);
+        });
       }
     }
   }
@@ -327,20 +402,16 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return null;
   }
 
-  private isDeadlinesLoadingComplete = () => {
-    // tslint:disable-next-line: no-var-keyword
-    var nextDeadlineId = this.props.nextDeadlineId;
-    // tslint:disable-next-line: no-object-mutation
-    this.idIntervalProgress = setInterval(() => {
-      if (nextDeadlineId === this.props.nextDeadlineId) {
+  private isDeadlinesLoadingComplete = async () => {
+    while (!this.state.isDeadlinesLoaded) {
+      const prevSectionsNumber = this.props.sections.length;
+      await mDelay(500 as Millisecond);
+      if (prevSectionsNumber === this.props.sections.length) {
         this.setState({
           isDeadlinesLoaded: true
         });
-        clearInterval(this.idIntervalProgress);
-      } else {
-        nextDeadlineId = this.props.nextDeadlineId;
       }
-    }, 400);
+    }
   };
 
   private renderSectionHeader = (info: { section: MessageAgendaSection }) => {
@@ -352,6 +423,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
     const item = info.section.data[0];
     const sectionId = !isFakeItem(item) ? item.e1.id : undefined;
+
+    if (!this.state.isLoadingComplete) {
+      return SectionHeaderPlaceholder;
+    }
 
     return !isFake ? (
       <View style={styles.sectionHeaderWrapper}>
@@ -394,6 +469,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     } = this.props;
 
     const potService = this.props.servicesById[message.sender_service_id];
+
+    if (!this.state.isLoadingComplete) {
+      return MessageItemPlaceholder;
+    }
 
     const service =
       potService !== undefined
@@ -506,9 +585,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     );
   }
 
-  public scrollToLocation = (params: SectionListScrollParams) => {
+  public scrollToLocation = async (params: SectionListScrollParams) => {
     if (this.sectionListRef.current !== null) {
-      this.sectionListRef.current.scrollToLocation(params);
+      await this.sectionListRef.current.scrollToLocation(params);
     }
   };
 }
