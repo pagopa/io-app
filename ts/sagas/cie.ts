@@ -14,6 +14,7 @@ import {
 import { SagaCallReturnType } from "../types/utils";
 
 export function* watchCieAuthenticationSaga(): SagaIterator {
+  // tslint:disable-next-line: no-commented-code
   // yield call(cieManager.start);
 
   // Watch for checks on login by CIE on the used device and NFC sensor enablement
