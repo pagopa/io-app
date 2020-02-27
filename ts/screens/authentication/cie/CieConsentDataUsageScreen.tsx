@@ -1,6 +1,6 @@
-import { Button, Container, Text, View } from "native-base";
+import { Container, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, Image, StyleSheet } from "react-native";
+import { BackHandler, Image, NavState, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   NavigationScreenProp,
@@ -8,12 +8,19 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import I18n from "../../../i18n";
+import {
+  loginFailure,
+  loginSuccess
+} from "../../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
+import { SessionToken } from "../../../types/SessionToken";
+import { onLoginUriChanged } from "../../../utils/login";
 
 type NavigationParams = {
   cieConsentUri: string;
@@ -111,6 +118,29 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
   private handleWebViewError = () => {
     this.setState({ hasError: true });
   };
+
+  private handleShouldStartLoading = (event: NavState): boolean => {
+    const isLoginUrlWithToken = onLoginUriChanged(
+      this.handleLoginFailure,
+      this.props.dispatchLoginSuccess
+    )(event);
+    // URL can be loaded if it's not the login URL containing the session token - this avoids
+    // making a (useless) GET request with the session in the URL
+    return !isLoginUrlWithToken;
+  };
+
+  private handleLoginFailure = (errorCode?: string) => {
+    this.props.dispatchLoginFailure(
+      new Error(`login CIE failure with code ${errorCode || "n/a"}`)
+    );
+    this.handleWebViewError();
+
+    // to simulate a succesfully authentication you could uncomment this line below and you have to
+    // - use the io-dev-api-server configured to communicate with the app (it should return a CIE profile (no email, spid_email_ mobile_phone))
+    // - put the cieidpuri hardcoded (line CieRequestAuthenticationOverlay.tsx L127 put this value "https://app-backend.dev.io.italia.it/login?entityID=xx_servizicie_test&authLevel=SpidL2"
+    // this.props.dispatchLoginSuccess("1234567" as SessionToken);
+  };
+
   private renderError = () => {
     return (
       <View style={styles.errorContainer}>
@@ -118,9 +148,8 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
         <Text style={styles.errorTitle} bold={true}>
           {I18n.t("authentication.errors.network.title")}
         </Text>
-        )}
         <View style={styles.errorButtonsContainer}>
-          <Button
+          <ButtonDefaultOpacity
             onPress={this.goBack}
             style={styles.cancelButtonStyle}
             block={true}
@@ -128,15 +157,15 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
             bordered={true}
           >
             <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </Button>
-          <Button
+          </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity
             onPress={undefined}
             style={{ flex: 2 }}
             block={true}
             primary={true}
           >
             <Text>{I18n.t("global.buttons.retry")}</Text>
-          </Button>
+          </ButtonDefaultOpacity>
         </View>
       </View>
     );
@@ -155,6 +184,7 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
           textZoom={100}
           source={{ uri: this.cieAuthorizationUri }}
           javaScriptEnabled={true}
+          onShouldStartLoadWithRequest={this.handleShouldStartLoading}
           onLoadStart={() => this.updateLoadingState(true)}
           onError={this.handleWebViewError}
           onLoadEnd={() => this.updateLoadingState(false)}
@@ -177,7 +207,9 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchResetNavigation: () => dispatch(resetToAuthenticationRoute)
+  dispatchResetNavigation: () => dispatch(resetToAuthenticationRoute),
+  dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
+  dispatchLoginFailure: (error: Error) => dispatch(loginFailure(error))
 });
 
 export default connect(

@@ -18,8 +18,12 @@ import BaseScreenComponent, {
 import IconFont from "../../components/ui/IconFont";
 import { isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
+import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
-import { resetAuthenticationState } from "../../store/actions/authentication";
+import {
+  idpSelected,
+  resetAuthenticationState
+} from "../../store/actions/authentication";
 import { Dispatch } from "../../store/actions/types";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { isCieSupportedSelector } from "../../store/reducers/cie";
@@ -88,6 +92,14 @@ const styles = StyleSheet.create({
   }
 });
 
+const IdpCIE: IdentityProvider = {
+  id: "cie",
+  name: "CIE",
+  logo: "",
+  entityID: "cieid",
+  profileUrl: ""
+};
+
 class LandingScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     if (this.props.isSessionExpired) {
@@ -114,8 +126,10 @@ class LandingScreen extends React.PureComponent<Props> {
   private navigateToIdpSelection = () =>
     this.props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_SELECTION);
 
-  private navigateToCiePinScreen = () =>
+  private navigateToCiePinScreen = () => {
+    this.props.dispatchIdpCieSelected();
     this.props.navigation.navigate(ROUTES.CIE_PIN_SCREEN);
+  };
 
   private navigateToSpidCieInformationRequest = () =>
     this.props.navigation.navigate(
@@ -194,7 +208,8 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  resetState: () => dispatch(resetAuthenticationState())
+  resetState: () => dispatch(resetAuthenticationState()),
+  dispatchIdpCieSelected: () => dispatch(idpSelected(IdpCIE))
 });
 
 export default connect(
