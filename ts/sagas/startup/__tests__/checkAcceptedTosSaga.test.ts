@@ -14,14 +14,15 @@ import { tosVersion } from "../../../config";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
+import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
 
 describe("checkAcceptedTosSaga", () => {
-  const onboardingProfile: InitializedProfile = {
+  const firstOnboardingProfile: InitializedProfile = {
     has_profile: false,
     is_email_enabled: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
-    version: 1 as NonNegativeInteger,
+    version: 0 as NonNegativeInteger,
     spid_email: "test@example.com" as EmailString,
     family_name: "Connor",
     name: "John",
@@ -53,6 +54,16 @@ describe("checkAcceptedTosSaga", () => {
     accepted_tos_version: tosVersion
   };
 
+  describe("when a profile is first time onboarded", () => {
+    it("should be true", () => {
+      expect(isProfileFirstOnBoarding(firstOnboardingProfile)).toBeTruthy();
+    });
+
+    it("should be false", () => {
+      expect(isProfileFirstOnBoarding(oldOnboardedProfile)).toBeFalsy();
+    });
+  });
+
   describe("when user has already accepted the last version of ToS", () => {
     it("should do nothing", () => {
       return expectSaga(checkAcceptedTosSaga, updatedProfile)
@@ -80,7 +91,7 @@ describe("checkAcceptedTosSaga", () => {
 
   describe("when user has never accepted an ToS because he is accessing the app for the first time", () => {
     it("should navigate to the terms of service screen and succeed when ToS get accepted", () => {
-      return expectSaga(checkAcceptedTosSaga, onboardingProfile)
+      return expectSaga(checkAcceptedTosSaga, firstOnboardingProfile)
         .put(navigateToTosScreen)
         .take(tosAccepted)
         .run();

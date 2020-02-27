@@ -19,11 +19,10 @@ export function* checkAcceptedTosSaga(
   ) {
     return;
   }
-
   if (
     isProfileFirstOnBoarding(userProfile) || // first onboarding
     !userProfile.has_profile || // profile is false
-    (userProfile.accepted_tos_version &&
+    (userProfile.accepted_tos_version !== undefined &&
       userProfile.accepted_tos_version < tosVersion) // accepted an older version of TOS
   ) {
     // Navigate to the TosScreen
