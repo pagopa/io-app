@@ -10,8 +10,8 @@ import { View } from "native-base";
 import * as React from "react";
 import { Alert, NavState, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
-import { cieAuthenticationUri } from "../../config";
 import I18n from "../../i18n";
+import { getIdpLoginUri } from "../../utils/idp";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 import TopScreenComponent from "../screens/TopScreenComponent";
@@ -34,6 +34,8 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
+const CIE_IDP_ID = "xx_servizicie_test";
 
 class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -122,7 +124,7 @@ class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
           onError={this.handleWebViewError}
           onNavigationStateChange={this.handleNavigationStateChange}
           source={{
-            uri: cieAuthenticationUri
+            uri: getIdpLoginUri(CIE_IDP_ID)
           }}
           key={this.state.webViewKey}
         />
