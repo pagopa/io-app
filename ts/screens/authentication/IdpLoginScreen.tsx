@@ -16,7 +16,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
-import * as config from "../../config";
 import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
@@ -27,6 +26,7 @@ import {
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
+import { getIdpLoginUri } from "../../utils/idp";
 import { extractLoginResult } from "../../utils/login";
 
 type Props = NavigationScreenProps &
@@ -43,10 +43,6 @@ type State = {
   errorCode?: string;
   loginTrace?: string;
 };
-
-const LOGIN_BASE_URL = `${
-  config.apiUrlPrefix
-}/login?authLevel=SpidL2&entityID=`;
 
 const brokenLinkImage = require("../../../img/broken-link.png");
 
@@ -247,7 +243,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       // before the redux state is updated succesfully)
       return <LoadingSpinnerOverlay isLoading={true} />;
     }
-    const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
+    const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.entityID);
 
     return (
       <BaseScreenComponent
