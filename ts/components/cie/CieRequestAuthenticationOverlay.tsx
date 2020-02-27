@@ -10,6 +10,10 @@ import { View } from "native-base";
 import * as React from "react";
 import { Alert, NavState, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
+import {
+  WebViewErrorEvent,
+  WebViewNavigationEvent
+} from "react-native-webview/lib/WebViewTypes";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/idp";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
@@ -48,14 +52,18 @@ class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
     };
   }
 
+  private handleOnError = () => {
+    this.setState({
+      isLoading: false,
+      hasError: true
+    });
+  };
+
   private handleNavigationStateChange = (event: NavState): void => {
     // TODO: check if we can distinguish among different type of errors
     //      some errors could suggest ro redirect the user to the landing screen , not back
     if (event.url && event.url.indexOf("errore") !== -1) {
-      this.setState({
-        isLoading: false,
-        hasError: true
-      });
+      this.handleOnError();
     }
 
     if (this.state.findOpenApp) {
@@ -67,10 +75,6 @@ class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
       const authorizationUri = event.url;
       this.props.onSuccess(authorizationUri);
     }
-  };
-
-  private handleWebViewError = () => {
-    this.setState({ hasError: true });
   };
 
   private renderError = () => {
@@ -113,6 +117,12 @@ class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
     }
   };
 
+  private handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
+    if (e.nativeEvent.title === "Pagina web non disponibile") {
+      this.handleOnError();
+    }
+  };
+
   private renderWebView() {
     if (this.state.hasError) {
       return this.renderError();
@@ -121,7 +131,8 @@ class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
       <View style={styles.flex}>
         <WebView
           javaScriptEnabled={true}
-          onError={this.handleWebViewError}
+          onLoadEnd={this.handleOnLoadEnd}
+          onError={this.handleOnError}
           onNavigationStateChange={this.handleNavigationStateChange}
           source={{
             uri: getIdpLoginUri(CIE_IDP_ID)
