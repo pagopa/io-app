@@ -129,16 +129,24 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     return this.props.navigation.getParam("authorizationUri");
   }
 
+  private startAnimation = () => {
+    this.progressAnimation.stop();
+    this.setState({ progressBarValue: 0 });
+    this.progressAnimatedValue.setValue(0);
+    this.progressAnimation.start(() => {
+      if (this.state.readingState === ReadingState.reading) {
+        this.startAnimation();
+      }
+    }); // looping
+  };
+
   public componentDidUpdate(_: Props, prevState: State) {
     // If we start reading the card, start the animation
     if (
       prevState.readingState !== ReadingState.reading &&
       this.state.readingState === ReadingState.reading
     ) {
-      this.progressAnimation.stop();
-      this.setState({ progressBarValue: 0 });
-      this.progressAnimatedValue.setValue(0);
-      this.progressAnimation.start();
+      this.startAnimation();
     }
     // If we are not reading the card, stop the animation
     if (

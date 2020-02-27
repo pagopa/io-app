@@ -11,7 +11,7 @@ import * as React from "react";
 import { Alert, NavState, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import I18n from "../../i18n";
-import { getIdpLoginUri } from "../../utils/idp";
+import { getIdpLoginUri } from "../../utils/login";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 import TopScreenComponent from "../screens/TopScreenComponent";
