@@ -34,7 +34,7 @@ export const getProfileEmail = (
   user: InitializedProfile
 ): Option<EmailAddress> => fromNullable(user.email);
 
-export const getProfileSpidPhone = (
+export const getProfileMobilePhone = (
   user: InitializedProfile
 ): Option<NonEmptyString> => fromNullable(user.spid_mobile_phone);
 
@@ -56,11 +56,11 @@ export const profileSpidEmailSelector = createSelector(
     pot.getOrElse(pot.map(profile, p => getProfileSpidEmail(p)), none)
 );
 
-// return the spid phone number(as a string)
-export const profileSpidPhoneSelector = createSelector(
+// return the mobile phone number (as a string)
+export const profileMobilePhoneSelector = createSelector(
   profileSelector,
   (profile: ProfileState): Option<string> =>
-    pot.getOrElse(pot.map(profile, p => getProfileSpidPhone(p)), none)
+    pot.getOrElse(pot.map(profile, p => getProfileMobilePhone(p)), none)
 );
 
 // return true if the profile has an email

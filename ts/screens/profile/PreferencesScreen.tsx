@@ -31,7 +31,7 @@ import {
   profileEmailSelector,
   profileSelector,
   profileSpidEmailSelector,
-  profileSpidPhoneSelector
+  profileMobilePhoneSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
@@ -220,7 +220,7 @@ class PreferencesScreen extends React.Component<Props, State> {
                 hideIcon={true}
               />
             )}
-            {// Check if spid phone number exists
+            {// Check if mobile phone exists
             maybePhoneNumber.isSome() && (
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.mobile_phone")}
@@ -259,7 +259,7 @@ function mapStateToProps(state: GlobalState) {
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar,
     hasProfileEmail: hasProfileEmailSelector(state),
-    optionMobilePhone: profileSpidPhoneSelector(state)
+    optionMobilePhone: profileMobilePhoneSelector(state)
   };
 }
 
