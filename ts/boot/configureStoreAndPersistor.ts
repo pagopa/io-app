@@ -190,6 +190,10 @@ const migrations: MigrationManifest = {
           ...(state as PersistedGlobalState).entities.services,
           visible: pot.none
         }
+      },
+      persistedPreferences: {
+        ...(state as PersistedGlobalState).persistedPreferences,
+        isCustomEmailChannelEnabled: pot.none
       }
     };
   }
