@@ -7,7 +7,7 @@ import {
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -73,10 +73,6 @@ type Props = ReturnType<typeof mapStateToProps> &
   LightModalContextInterface &
   OwnProps;
 
-type State = {
-  isHelpVisible: boolean;
-};
-
 const styles = StyleSheet.create({
   child: {
     flex: 1,
@@ -118,45 +114,11 @@ const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
     psp => ("0".repeat(10) + `${psp.fixedCost.amount}`) as AmountInEuroCents
   );
 
-class ConfirmPaymentMethodScreen extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isHelpVisible: false
-    };
-  }
-
-  public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-  }
-
-  public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
-  }
-
-  private handleBackPress = () => {
-    if (this.state.isHelpVisible) {
-      this.setState({
-        isHelpVisible: false
-      });
-      this.props.hideModal();
-      return true;
-    }
-    return false;
-  };
-
+class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   private showHelp = () => {
-    this.setState({
-      isHelpVisible: true
-    });
     this.props.showModal(
       <ContextualHelp
-        onClose={() => {
-          this.setState({
-            isHelpVisible: false
-          });
-          this.props.hideModal();
-        }}
+        onClose={this.props.hideModal}
         title={I18n.t("wallet.whyAFee.title")}
         body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
       />
