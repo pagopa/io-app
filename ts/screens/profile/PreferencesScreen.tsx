@@ -29,9 +29,9 @@ import {
   hasProfileEmailSelector,
   isProfileEmailValidatedSelector,
   profileEmailSelector,
+  profileMobilePhoneSelector,
   profileSelector,
-  profileSpidEmailSelector,
-  profileMobilePhoneSelector
+  profileSpidEmailSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
