@@ -2,6 +2,7 @@
  * Screen displaying the details of a selected service. The user
  * can enable/disable the service and customize the notification settings.
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Col, Content, Grid, H2, Row, Text, View } from "native-base";
@@ -15,6 +16,7 @@ import {
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { NotificationChannelEnum } from "../../../definitions/backend/NotificationChannel";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent, {
@@ -55,8 +57,6 @@ import {
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
-import { fromNullable } from "fp-ts/lib/Option";
-import { NotificationChannelEnum } from "../../../definitions/backend/NotificationChannel";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;

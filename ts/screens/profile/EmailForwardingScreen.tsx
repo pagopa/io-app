@@ -31,8 +31,8 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { showToast } from "../../utils/showToast";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
+import { showToast } from "../../utils/showToast";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
