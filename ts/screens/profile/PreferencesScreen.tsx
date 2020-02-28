@@ -227,6 +227,13 @@ class PreferencesScreen extends React.Component<Props, State> {
               }
               onPress={this.handleEmailOnPress}
             />
+
+            <ListItemComponent
+              title={I18n.t("send_email_messages.title")}
+              subTitle={this.getEmailForwardPreferencesSubtitle()}
+              onPress={this.props.navigateToEmailForwardingPreferenceScreen}
+            />
+
             {// Check if spid email exists
             maybeSpidEmail.isSome() && (
               <ListItemComponent
