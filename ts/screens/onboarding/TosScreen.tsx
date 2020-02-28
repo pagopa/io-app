@@ -18,7 +18,10 @@ import { tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
-import { profileSelector } from "../../store/reducers/profile";
+import {
+  isProfileFirstOnBoarding,
+  profileSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 
@@ -55,7 +58,6 @@ const styles = StyleSheet.create({
 class TosScreen extends React.PureComponent<Props> {
   public render() {
     const { navigation, dispatch } = this.props;
-
     const isProfile = navigation.getParam("isProfile", false);
 
     return (
@@ -80,6 +82,7 @@ class TosScreen extends React.PureComponent<Props> {
             <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
           </View>
         </Content>
+
         {isProfile === false && (
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}
@@ -123,11 +126,16 @@ class TosScreen extends React.PureComponent<Props> {
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
-    hasAcceptedOldTosVersion:
-      pot.isSome(potProfile) &&
-      "accepted_tos_version" in potProfile.value &&
-      potProfile.value.accepted_tos_version &&
-      potProfile.value.accepted_tos_version < tosVersion
+    hasAcceptedOldTosVersion: pot.getOrElse(
+      pot.map(
+        potProfile,
+        p =>
+          !isProfileFirstOnBoarding(p) && // it's not the first onboarding
+          p.accepted_tos_version !== undefined &&
+          p.accepted_tos_version < tosVersion
+      ),
+      false
+    )
   };
 }
 
