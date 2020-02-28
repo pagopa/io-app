@@ -37,6 +37,7 @@ import {
   isInboxEnabledSelector,
   isProfileEmailValidatedSelector,
   profileEmailSelector,
+  profileMobilePhoneSelector,
   profileSelector,
   profileSpidEmailSelector
 } from "../../store/reducers/profile";
@@ -158,6 +159,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     const notAvailable = I18n.t("global.remoteStates.notAvailable");
     const maybeEmail = this.props.optionEmail;
     const maybeSpidEmail = this.props.optionSpidEmail;
+    const maybePhoneNumber = this.props.optionMobilePhone;
 
     const languages = this.props.languages
       .filter(_ => _.length > 0)
@@ -225,19 +227,20 @@ class PreferencesScreen extends React.Component<Props, State> {
               }
               onPress={this.handleEmailOnPress}
             />
-
-            <ListItemComponent
-              title={I18n.t("send_email_messages.title")}
-              subTitle={this.getEmailForwardPreferencesSubtitle()}
-              onPress={this.props.navigateToEmailForwardingPreferenceScreen}
-            />
-
             {// Check if spid email exists
             maybeSpidEmail.isSome() && (
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.spid_email")}
                 subTitle={maybeSpidEmail.value}
                 hideIcon={true}
+              />
+            )}
+            {// Check if mobile phone exists
+            maybePhoneNumber.isSome() && (
+              <ListItemComponent
+                title={I18n.t("profile.preferences.list.mobile_phone")}
+                subTitle={maybePhoneNumber.value}
+                iconName={"io-phone-number"}
               />
             )}
 
@@ -273,7 +276,8 @@ function mapStateToProps(state: GlobalState) {
     isCustomEmailChannelEnabled: isCustomEmailChannelEnabledSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar,
-    hasProfileEmail: hasProfileEmailSelector(state)
+    hasProfileEmail: hasProfileEmailSelector(state),
+    optionMobilePhone: profileMobilePhoneSelector(state)
   };
 }
 

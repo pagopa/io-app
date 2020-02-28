@@ -5,6 +5,7 @@
  */
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { EmailAddress } from "../../../definitions/backend/EmailAddress";
@@ -48,6 +49,10 @@ export const getProfileEmail = (
   user: InitializedProfile
 ): Option<EmailAddress> => fromNullable(user.email);
 
+export const getProfileMobilePhone = (
+  user: InitializedProfile
+): Option<NonEmptyString> => fromNullable(user.spid_mobile_phone);
+
 export const getProfileSpidEmail = (
   user: InitializedProfile
 ): Option<EmailAddress> => fromNullable(user.spid_email);
@@ -64,6 +69,13 @@ export const profileSpidEmailSelector = createSelector(
   profileSelector,
   (profile: ProfileState): Option<string> =>
     pot.getOrElse(pot.map(profile, p => getProfileSpidEmail(p)), none)
+);
+
+// return the mobile phone number (as a string)
+export const profileMobilePhoneSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): Option<string> =>
+    pot.getOrElse(pot.map(profile, p => getProfileMobilePhone(p)), none)
 );
 
 // return true if the profile has an email
