@@ -31,8 +31,8 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-import { getProfileChannelsforServicesList } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
+import { getProfileChannelsforServicesList } from "../../utils/profile";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -93,7 +93,7 @@ class EmailForwardingScreen extends React.Component<Props> {
                 // Disable custom email notification and disable email notifications from all visible service
                 // The upsert of blocked_inbox_or_channels is avoided: the backend will block any email notification
                 // when is_email_enabled is false
-                this.props.setCustomEmailChannel(false);
+                this.props.setEmailChannel(false, false);
               }
             )}
 
@@ -108,8 +108,7 @@ class EmailForwardingScreen extends React.Component<Props> {
                 // from the service detail
                 this.props.disableOrEnableAllEmailNotifications(
                   this.props.visibleServicesId,
-                  this.props.potProfile,
-                  true
+                  this.props.potProfile
                 );
               }
             )}
@@ -120,7 +119,7 @@ class EmailForwardingScreen extends React.Component<Props> {
               this.props.isEmailEnabled &&
                 this.props.isCustomEmailChannelEnabled,
               // Enable custom set of the email notification for each visible service
-              () => this.props.setCustomEmailChannel(true)
+              () => this.props.setEmailChannel(true, true)
             )}
 
             <EdgeBorderComponent />
@@ -168,31 +167,29 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // TODO: add managment of errors
   disableOrEnableAllEmailNotifications: (
     servicesId: ReadonlyArray<string>,
-    profile: ProfileState,
-    enable: boolean
+    profile: ProfileState
   ) => {
     const newBlockedChannels = getProfileChannelsforServicesList(
       servicesId,
       profile,
-      enable,
+      true,
       "EMAIL"
     );
     dispatch(
       profileUpsert.request({
         blocked_inbox_or_channels: newBlockedChannels,
-        is_email_enabled: enable
+        is_email_enabled: true
       })
     );
     dispatch(customEmailChannelSetEnabled(false));
   },
-  setCustomEmailChannel: (enable: boolean) => {
-    dispatch(customEmailChannelSetEnabled(enable));
+  setEmailChannel: (customEmailChannelEnabled: boolean, global: boolean) => {
+    dispatch(customEmailChannelSetEnabled(customEmailChannelEnabled));
     dispatch(
       profileUpsert.request({
-        is_email_enabled: enable
+        is_email_enabled: global
       })
     );
   }

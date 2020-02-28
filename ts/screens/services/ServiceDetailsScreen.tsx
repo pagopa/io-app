@@ -55,6 +55,8 @@ import {
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
+import { fromNullable } from "fp-ts/lib/Option";
+import { NotificationChannelEnum } from "../../../definitions/backend/NotificationChannel";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -445,7 +447,18 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
     );
   };
 
+  private hasChannel = (channel: NotificationChannelEnum) => {
+    return fromNullable(this.service.available_notification_channels)
+      .map(anc => {
+        return anc.indexOf(channel) !== -1;
+      })
+      .getOrElse(true);
+  };
+
   private getPushSwitchRow = () => {
+    if (!this.hasChannel(NotificationChannelEnum.WEBHOOK)) {
+      return undefined;
+    }
     const isDisabled =
       // The preference can be updated
       // natifications are globally or locally disabled or
@@ -493,30 +506,35 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
    * It displays a lock icon if the email notifications are globally enabled/disabled (from preferences)
    */
   private getEmailSwitchRow = () => {
+    if (!this.hasChannel(NotificationChannelEnum.EMAIL)) {
+      return undefined;
+    }
+    // determine if the switch interaction should be disabled
     const isDisabled =
-      // The preference can be updated if
-      // notifications are not disabled globally nor locally (for the given service),
+      // notifications (all channels) are disabled globally
       !this.props.isInboxEnabled ||
-      !this.state.uiEnabledChannels.inbox ||
-      // the email is not yet validated,
+      // the email is not yet validated
       !this.props.isEmailValidated ||
+      // the email channel is disabled
+      !this.props.isEmailEnabled ||
+      // the user wants all services ON or OFF (no custom choices)
+      !this.props.isCustomEmailChannelEnabled ||
       // the profile is loading
-      pot.isUpdating(this.props.profile) ||
-      // the email notifications is globally enabled/disabled
-      !this.props.isCustomEmailChannelEnabled;
+      pot.isUpdating(this.props.profile);
 
     const isSwitchedOn =
       // the email notifications are enabled if
       // notifications are enabled globally
       this.props.isInboxEnabled &&
       this.state.uiEnabledChannels.inbox &&
+      (!this.props.isCustomEmailChannelEnabled ||
+        // if the user has done custom choices check if the current channel is enabled or not
+        (this.props.isCustomEmailChannelEnabled &&
+          this.state.uiEnabledChannels.email)) &&
       // email is validated
       this.props.isEmailValidated &&
-      // email notifications are enabled globally or locally (for the given service)
-      this.props.isEmailEnabled &&
-      (!this.props.isCustomEmailChannelEnabled ||
-        (this.props.isCustomEmailChannelEnabled &&
-          this.state.uiEnabledChannels.email));
+      // the email channel is enabled
+      this.props.isEmailEnabled;
 
     const onValueChange = (value: boolean) => {
       // Compute the updated map of enabled channels
@@ -531,18 +549,19 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
       <React.Fragment>
         <Row style={[styles.switchRow, styles.otherSwitchRow]}>
           <View style={styles.flexRow}>
-            {!this.props.isCustomEmailChannelEnabled && (
-              <IconFont
-                name={"io-lucchetto"}
-                color={customVariables.brandDarkGray}
-              />
-            )}
             <Text
               bold={true}
               style={isSwitchedOn ? styles.enabledColor : styles.disabledColor}
             >
               {I18n.t("services.emailForwarding")}
             </Text>
+            {!this.props.isEmailEnabled && (
+              <IconFont
+                style={{ marginLeft: 4 }}
+                name={"io-lucchetto"}
+                color={customVariables.brandDarkGray}
+              />
+            )}
           </View>
           <Switch
             key={`switch-email-${this.profileVersion}`}
@@ -558,10 +577,9 @@ class ServiceDetailsScreen extends React.PureComponent<Props, State> {
   public render() {
     const { service, serviceId } = this;
 
-    const messageForwardingState =
-      this.state.uiEnabledChannels.inbox && this.state.uiEnabledChannels.email
-        ? I18n.t("serviceDetail.enabled")
-        : I18n.t("serviceDetail.disabled");
+    const messageForwardingState = this.props.isEmailEnabled
+      ? I18n.t("serviceDetail.enabled")
+      : I18n.t("serviceDetail.disabled");
 
     // collect the service metadata
     const potServiceMetadata =
@@ -637,6 +655,7 @@ const mapStateToProps = (state: GlobalState) => {
     potIsCustomEmailChannelEnabled,
     false
   );
+
   return {
     isInboxEnabled: isInboxEnabledSelector(state),
     isEmailEnabled: isEmailEnabledSelector(state),

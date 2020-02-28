@@ -29,12 +29,8 @@ const INITIAL_STATE: ProfileState = pot.none;
 export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
 
-export const isEmailEnabledSelector = createSelector(
-  profileSelector,
-  profile =>
-    pot.isSome(profile) && InitializedProfile.is(profile.value)
-      ? profile.value.is_email_enabled
-      : false
+export const isEmailEnabledSelector = createSelector(profileSelector, profile =>
+  pot.getOrElse(pot.map(profile, p => p.is_email_enabled), false)
 );
 
 export const isInboxEnabledSelector = createSelector(
