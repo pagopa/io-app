@@ -23,9 +23,6 @@ import MessageAgenda, {
   Sections
 } from "./MessageAgenda";
 
-// How many past months to load in batch
-// const PAST_DATA_MONTHS = 3;
-
 const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
 
 const styles = StyleSheet.create({
@@ -52,7 +49,7 @@ type OwnProps = {
 
 type Props = Pick<
   ComponentProps<typeof MessageAgenda>,
-  "servicesById" | "paymentsByRptId"
+  "servicesById" | "paymentsByRptId" | "onMoreDataRequest"
 > &
   OwnProps &
   InjectedWithItemsSelectionProps;
@@ -292,14 +289,46 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     return messagesIds.length > 0 ? new Set(messagesIds) : new Set();
   }
 
+  private sectionToLoad = (
+    // tslint:disable-next-line: readonly-array
+    messagesState: pot.Pot<MessageState[], string>
+  ): number | undefined => {
+    if (pot.isSome(messagesState)) {
+      const value = messagesState.value;
+      // controllo se qualche messaggio sta caricando
+      // PotNoneLoading
+      const isSomeLoading = value.filter(m => {
+        const message = m.message;
+        return pot.isLoading(message);
+      });
+      if (isSomeLoading.length > 0) {
+        return undefined;
+      }
+      const tot = value.filter(m => {
+        const message = m.message;
+        return (
+          pot.isSome(message) && message.value.content.due_date !== undefined
+        );
+      });
+      return tot.length;
+    }
+    return undefined;
+  };
+
   public render() {
     const {
       servicesById,
       paymentsByRptId,
       selectedItemIds,
-      resetSelection
+      resetSelection,
+      onMoreDataRequest
     } = this.props;
     const { sections, allMessageIdsState, nextDeadlineId } = this.state;
+
+    const isLoading = pot.isLoading(this.props.messagesState);
+    const sectionToLoad = pot.isSome(this.props.messagesState)
+      ? this.sectionToLoad(this.props.messagesState)
+      : undefined;
 
     return (
       <View style={styles.listWrapper}>
@@ -307,11 +336,14 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           <MessageAgenda
             ref={this.messageAgendaRef}
             sections={sections}
+            sectionToLoad={sectionToLoad}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
             selectedMessageIds={selectedItemIds}
             onPressItem={this.handleOnPressItem}
             onLongPressItem={this.handleOnLongPressItem}
+            onMoreDataRequest={onMoreDataRequest}
+            refreshing={isLoading}
             nextDeadlineId={nextDeadlineId}
           />
         </View>

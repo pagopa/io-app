@@ -256,6 +256,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
+            onMoreDataRequest={this.onRefreshMessages}
             setMessagesArchivedState={updateMessagesArchivedState}
             navigateToMessageDetail={navigateToMessageDetail}
           />

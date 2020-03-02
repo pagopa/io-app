@@ -16,7 +16,7 @@ import {
   MessageAgendaSection,
   Sections
 } from "../MessageAgenda";
-import { getLastDeadlineId, getNextDeadlineId } from "../MessagesDeadlines";
+import { getNextDeadlineId } from "../MessagesDeadlines";
 
 /**
  * Filter only the messages with a due date and group them by due_date day.
@@ -237,21 +237,6 @@ const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
 };
 
 const sections = generateSections(messagesState);
-describe("last id check", () => {
-  it("should retrieve the last section loaded", () => {
-    const lastDeadlineId = getLastDeadlineId(sections);
-    expect(lastDeadlineId.isSome()).toBeTruthy();
-    if (lastDeadlineId.isSome()) {
-      expect(lastDeadlineId.value).toEqual("01DTH3SAA23QJ436BDHDXJ4H5Y");
-    }
-  });
-
-  it("should return none", () => {
-    const lastDeadlineId = getLastDeadlineId([]);
-    expect(lastDeadlineId.isNone()).toBeTruthy();
-  });
-});
-
 describe("next section check", () => {
   it("should return the next (in time) section", () => {
     const nextDeadlineId = getNextDeadlineId(sections);
