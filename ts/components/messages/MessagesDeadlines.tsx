@@ -295,8 +295,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   ): number | undefined => {
     if (pot.isSome(messagesState)) {
       const value = messagesState.value;
-      // controllo se qualche messaggio sta caricando
-      // PotNoneLoading
+      // check loading messages
       const isSomeLoading = value.filter(m => {
         const message = m.message;
         return pot.isLoading(message);
