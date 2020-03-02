@@ -18,6 +18,7 @@ import { ScreenContentHeader } from "../../../components/screens/ScreenContentHe
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
+import ROUTES from "../../../navigation/routes";
 import {
   navigateToCieValid,
   navigateToCieWrongPin
@@ -160,7 +161,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private handleCieEvent = async (event: CEvent) => {
     // TODO: WHAT is it returned if CIE is EXPIRED? we should redirect to CieExpiredOrInvalidScreen
     // -- it should be CERTIFICATE_EXPIRED
-    // TODO: WHAT EVENT for request pin -> app cieid?
     switch (event.event) {
       case "ON_TAG_DISCOVERED":
         if (this.state.readingState !== ReadingState.reading) {
@@ -180,6 +180,12 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           }
         );
         break;
+
+      case "ON_CARD_PIN_LOCKED":
+        await this.stopCieManager();
+        this.props.navigation.navigate(ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN);
+        break;
+
       case "AUTHENTICATION_ERROR":
       case "CERTIFICATE_EXPIRED":
         this.setState(
@@ -236,6 +242,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   private stopCieManager = async () => {
     this.progressAnimation.stop();
+    this.progressAnimatedValue.removeAllListeners();
     cieManager.removeAllListeners();
     await cieManager.stopListeningNFC();
   };

@@ -8,6 +8,7 @@ import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthor
 import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
+import CiePinLockedTemporarilyScreen from "../screens/authentication/cie/CiePinLockedTemporarilyScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieValidScreen from "../screens/authentication/cie/CieValidScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
@@ -64,6 +65,9 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.CIE_WRONG_PIN_SCREEN]: {
     screen: CieWrongCiePinScreen
+  },
+  [ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN]: {
+    screen: CiePinLockedTemporarilyScreen
   }
 };
 

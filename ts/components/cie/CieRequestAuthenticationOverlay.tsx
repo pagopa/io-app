@@ -8,7 +8,7 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { Alert, NavState, StyleSheet } from "react-native";
+import { Alert, BackHandler, NavState, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -52,6 +52,19 @@ class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
     };
   }
 
+  private handleBackEvent = () => {
+    this.props.onClose();
+    return true;
+  };
+
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackEvent);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackEvent);
+  }
+
   private handleOnError = () => {
     this.setState({
       isLoading: false,
@@ -81,7 +94,7 @@ class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
     return (
       <GenericErrorComponent
         onRetry={this.handleOnRetry}
-        onCancel={this.handleGoBack}
+        onCancel={this.props.onClose}
         image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?
         text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
       />
@@ -96,25 +109,6 @@ class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
       hasError: false,
       isLoading: true
     });
-  };
-
-  // Going back the user should insert the pin again
-  private handleGoBack = () => {
-    if (!this.state.isLoading) {
-      this.props.onClose();
-    } else {
-      Alert.alert(I18n.t("authentication.cie.pin.alert"), undefined, [
-        {
-          text: I18n.t("global.buttons.cancel"), // TODO: validate button name - the action is a cancel, it could be confusing
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.confirm"),
-          style: "default",
-          onPress: this.props.onClose
-        }
-      ]);
-    }
   };
 
   private handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
@@ -152,7 +146,7 @@ class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
         isLoading={this.state.isLoading}
         loadingOpacity={1.0}
         loadingCaption={I18n.t("global.genericWaiting")}
-        onCancel={this.handleGoBack}
+        onCancel={this.props.onClose}
       />
     );
   }

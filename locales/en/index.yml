@@ -265,6 +265,11 @@ authentication:
       incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
       incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
       alert: Are you sure you want to go back?
+    pinTempLocked:
+      header: Pin locked
+      title: Card temporarily locked
+      content: !include cie/temporary_blocked_cie.md
+      button: "Load/open CieID"
     card:
       headerTitle: Read CIE
       title: Touch the card
@@ -283,10 +288,6 @@ authentication:
         unknownCardTitle: Unknown card
         unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
         unknownCardHelpLink: What is the Electronic Identity Card?
-        temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-        temporarilyBlockedCieDoneButton: "Done, card unlocked!"
-        temporarilyBlockedCieOpenCieID: "Open CieID"
-    
   spid: SPID
   spid_information_request:
     headerTitle: Insert email address

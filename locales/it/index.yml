@@ -271,6 +271,11 @@ authentication:
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
       alert: Sei sicuro di voler tornare indietro?
+    pinTempLocked: 
+      header: Pin bloccato
+      title: Carta temporaneamente bloccata
+      content: !include cie/temporary_blocked_cie.md
+      button: "Scarica / Apri CieID"
     card:
       title: Appoggia la carta
       headerTitle: Lettura della CIE
@@ -289,9 +294,6 @@ authentication:
         unknownCardTitle: Carta sconosciuta
         unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
         unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
-        temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-        temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
-        temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
   spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?
