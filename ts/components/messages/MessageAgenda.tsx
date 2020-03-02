@@ -203,6 +203,7 @@ type State = {
   isFirstLoading: boolean;
   isDeadlinesLoaded: boolean;
   isLoadingComplete: boolean;
+  numMessagesToRender: number;
 };
 
 export const isFakeItem = (item: any): item is FakeItem => {
@@ -333,7 +334,8 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       isLoadingProgress: false,
       isFirstLoading: true,
       isDeadlinesLoaded: false,
-      isLoadingComplete: false
+      isLoadingComplete: false,
+      numMessagesToRender: 0
     };
   }
 
@@ -454,6 +456,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       const messageInside = s.data.length;
       // tslint:disable-next-line: no-object-mutation
       this.messageToLoadFromSections += messageInside;
+    });
+    this.setState({
+      numMessagesToRender:
+        this.messageToLoadFromSections + this.state.numMessagesToRender
     });
     return this.messageToLoadFromSections;
   };
@@ -632,7 +638,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             // If we not have a final deadline then we not have deadlines
             sections={sections}
             extraData={{ servicesById, paymentsByRptId }}
-            initialNumToRender={this.props.sections.length * 6}
+            initialNumToRender={this.state.numMessagesToRender}
             bounces={true}
             scrollEnabled={true}
             refreshControl={refreshControl}
