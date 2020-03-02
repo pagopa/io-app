@@ -1,6 +1,7 @@
 /**
  * A screen to guide the user to proper read the CIE
  * TODO: isolate cie event listener as saga
+ * TODO: when 100% is reached, the animation end
  */
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -134,11 +135,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     this.progressAnimation.stop();
     this.setState({ progressBarValue: 0 });
     this.progressAnimatedValue.setValue(0);
-    this.progressAnimation.start(() => {
-      if (this.state.readingState === ReadingState.reading) {
-        this.startAnimation();
-      }
-    }); // looping
+    this.progressAnimation.start();
   };
 
   public componentDidUpdate(_: Props, prevState: State) {
