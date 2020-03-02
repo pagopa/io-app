@@ -368,7 +368,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       this.props.sections !== undefined &&
       this.props.sections.length > 0
     ) {
-      if (this.props.sections.length > 4) {
+      if (
+        this.props.sections.length > 1 &&
+        this.state.numMessagesToRender > 5
+      ) {
         if (isSome(this.props.nextDeadlineId)) {
           const sectionIndex = this.props.sections.findIndex(this.checkSection);
           if (sectionIndex !== -1) {
@@ -403,11 +406,13 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         animated: false,
         itemIndex: 0,
         sectionIndex: Platform.select({
-          ios: sectionIndex,
-          android: sectionIndex - 1
+          ios:
+            sectionIndex === sectionsLength ? sectionIndex : sectionIndex + 1,
+          android:
+            sectionIndex === sectionsLength ? sectionIndex - 1 : sectionIndex
         })
       });
-    }, 300);
+    }, 400);
   };
 
   private checkSection = (s: MessageAgendaSection) => {
