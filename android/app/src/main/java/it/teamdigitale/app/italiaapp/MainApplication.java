@@ -16,7 +16,6 @@ import com.rnfs.RNFSPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.calendarevents.CalendarEventsPackage;
-import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.rnfingerprint.FingerprintAuthPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.horcrux.svg.SvgPackage;
@@ -31,6 +30,12 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.instabug.reactlibrary.RNInstabugReactnativePackage;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
+
+import android.util.Log;
+import com.facebook.react.PackageList;
+import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
+import com.facebook.react.bridge.JavaScriptExecutorFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +46,27 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
+    }
+    /*
+     * @Override protected List<ReactPackage> getPackages() { return
+     * Arrays.<ReactPackage>asList(new MainReactPackage(), new
+     * AsyncStoragePackage(), new QRScanReaderPackage(), new ImagePickerPackage(),
+     * new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
+     * new RNGestureHandlerPackage(), new CalendarEventsPackage(), new
+     * RNCWebViewPackage(), new FingerprintAuthPackage(), new
+     * BackgroundTimerPackage(), new SvgPackage(), new RNTextInputMaskPackage(), new
+     * SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new
+     * RNCameraPackage(), new ReactNativePushNotificationPackage(), new
+     * KeychainPackage(), new RNI18nPackage(), new Sha256Package(), new
+     * RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(), new
+     * RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN,
+     * MainApplication.this)
+     * .setInvocationEvent("none").setPrimaryColor("#0073E6").build()); }
+     */
+
+    @Override
+    protected String getJSMainModuleName() {
+      return "index";
     }
 
     @Override
@@ -56,10 +82,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
               .setInvocationEvent("none").setPrimaryColor("#0073E6").build());
     }
 
-    @Override
-    protected String getJSMainModuleName() {
-      return "index";
-    }
   };
 
   @Override
@@ -73,4 +95,5 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
   }
+
 }

@@ -35,7 +35,7 @@ const connectionMonitorParameters = {
 export default function* root(): Iterator<Effect> {
   yield all([
     call(startupSaga),
-    call(networkSaga, connectionMonitorParameters), // ERROR ON ANDROID
+    //call(networkSaga, connectionMonitorParameters), // ERROR ON ANDROID
     call(backendInfoSaga),
     call(unreadInstabugMessagesSaga),
     call(watchNavigateToDeepLinkSaga),
