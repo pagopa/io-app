@@ -60,7 +60,11 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
             {body
               ? body
               : headerTitle && (
-                  <TouchableWithoutFeedback onPress={goBack}>
+                  <TouchableWithoutFeedback
+                    onPress={
+                      typeof goBack === "boolean" ? () => goBack : goBack
+                    }
+                  >
                     <Text white={this.props.primary} numberOfLines={1}>
                       {headerTitle}
                     </Text>
