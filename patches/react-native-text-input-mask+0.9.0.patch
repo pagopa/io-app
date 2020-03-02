@@ -1,4 +1,46 @@
 patch-package
+--- a/node_modules/react-native-text-input-mask/android/src/main/java/com/RNTextInputMask/RNTextInputMaskModule.java
++++ b/node_modules/react-native-text-input-mask/android/src/main/java/com/RNTextInputMask/RNTextInputMaskModule.java
+@@ -1,6 +1,9 @@
+ package com.RNTextInputMask;
+ 
+ import android.app.Activity;
++import android.os.Build;
++import android.text.InputType;
++import android.text.method.PasswordTransformationMethod;
+ import android.widget.EditText;
+ import android.text.TextWatcher;
+ import com.facebook.react.uimanager.UIManagerModule;
+@@ -67,7 +70,7 @@ public class RNTextInputMaskModule extends ReactContextBaseJavaModule {
+     }
+ 
+     @ReactMethod
+-    public void setMask(final int tag, final String mask) {
++    public void setMask(final int tag, final String mask, final boolean isNumericSecureKeyboard) {
+         // We need to use prependUIBlock instead of addUIBlock since subsequent UI operations in
+         // the queue might be removing the view we're looking to update.
+         reactContext.getNativeModule(UIManagerModule.class).prependUIBlock(new UIBlock() {
+@@ -92,6 +95,14 @@ public class RNTextInputMaskModule extends ReactContextBaseJavaModule {
+                             editText.removeTextChangedListener((TextWatcher) editText.getTag());
+                         }
+ 
++                        if (isNumericSecureKeyboard) {
++                            // On Android set a secure EditText (password field) and numeric keyboard when required.
++                            // Without this change, an alphanumeric keyboard is always set
++                            editText.setTransformationMethod(null);
++                            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
++                            editText.setTransformationMethod(new PasswordTransformationMethod());
++                        }
++
+                         editText.setTag(listener);
+                         editText.addTextChangedListener(listener);
+                     }
+@@ -99,4 +110,5 @@ public class RNTextInputMaskModule extends ReactContextBaseJavaModule {
+             }
+         });
+     }
++
+ }
 --- a/node_modules/react-native-text-input-mask/index.js
 +++ b/node_modules/react-native-text-input-mask/index.js
 @@ -10,6 +10,7 @@ import {
@@ -9,7 +51,33 @@ patch-package
  export { mask, unmask, setMask }
  
  export default class TextInputMask extends Component {
-@@ -68,4 +69,13 @@ export default class TextInputMask extends Component {
+@@ -30,7 +31,11 @@ export default class TextInputMask extends Component {
+ 
+     if (this.props.mask && !this.masked) {
+       this.masked = true
+-      setMask(findNodeHandle(this.input), this.props.mask)
++      if(Platform.OS === "android") {
++        setMask(findNodeHandle(this.input), this.props.mask, this.props.isNumericSecureKeyboard === true)
++      } else {
++        setMask(findNodeHandle(this.input), this.props.mask)
++      }
+     }
+   }
+ 
+@@ -42,7 +47,11 @@ export default class TextInputMask extends Component {
+     }
+ 
+     if (this.props.mask !== nextProps.mask) {
+-      setMask(findNodeHandle(this.input), nextProps.mask)
++      if(Platform.OS === "android") {
++        setMask(findNodeHandle(this.input), this.props.mask, this.props.isNumericSecureKeyboard === true)
++      } else {
++        setMask(findNodeHandle(this.input), this.props.mask)
++      }
+     }
+   }
+ 
+@@ -68,4 +77,13 @@ export default class TextInputMask extends Component {
        }}
      />);
    }
