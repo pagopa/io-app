@@ -1,6 +1,6 @@
 import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -59,9 +59,11 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
             {body
               ? body
               : headerTitle && (
-                  <Text white={this.props.primary} numberOfLines={1}>
-                    {headerTitle}
-                  </Text>
+                  <TouchableWithoutFeedback onPress={goBack}>
+                    <Text white={this.props.primary} numberOfLines={1}>
+                      {headerTitle}
+                    </Text>
+                  </TouchableWithoutFeedback>
                 )}
           </Body>
         )}
