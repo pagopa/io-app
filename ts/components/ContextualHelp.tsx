@@ -7,7 +7,7 @@
 
 import { Body, Container, Content, H1, Right } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { BackHandler, StyleSheet } from "react-native";
 
 import IconFont from "../components/ui/IconFont";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
@@ -28,6 +28,22 @@ const styles = StyleSheet.create({
 });
 
 export class ContextualHelp extends React.Component<Props> {
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPressed);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.handleBackPressed
+    );
+  }
+
+  private handleBackPressed = () => {
+    this.props.onClose();
+    return true;
+  };
+
   public render(): React.ReactNode {
     return (
       <Container>
