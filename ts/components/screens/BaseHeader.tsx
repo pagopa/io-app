@@ -1,8 +1,9 @@
 import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
+import { NavigationInjectedProps, withNavigation } from "react-navigation";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
@@ -12,6 +13,7 @@ import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
 import SearchButton, { SearchType } from "../search/SearchButton";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
 
 const styles = StyleSheet.create({
@@ -42,9 +44,50 @@ interface OwnProps {
   customGoBack?: React.ReactNode;
 }
 
-type Props = OwnProps & ReturnType<typeof mapStateToProps>;
+type Props = OwnProps &
+  NavigationInjectedProps &
+  ReturnType<typeof mapStateToProps>;
 
 class BaseHeaderComponent extends React.PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.getGoBackHandler = this.getGoBackHandler.bind(this);
+    this.handleOnPressDefault = this.handleOnPressDefault.bind(this);
+  }
+
+  private handleOnPressDefault = () => this.props.navigation.goBack(null);
+
+  /**
+   * if go back is a function it will be returned
+   * otherwise the default goback navigation will be returned
+   */
+  private getGoBackHandler() {
+    return typeof this.props.goBack === "function"
+      ? this.props.goBack()
+      : this.handleOnPressDefault();
+  }
+
+  private renderHeader = () => {
+    const { customGoBack, headerTitle } = this.props;
+    // if customGoBack is provided only the header text will be rendered
+    if (customGoBack) {
+      return (
+        <Text white={this.props.primary} numberOfLines={1}>
+          {headerTitle}
+        </Text>
+      );
+    }
+    // if no customGoBack is provided also the header text could be press to execute goBack
+    // note goBack could a boolean or a function (check this.getGoBackHandler)
+    return (
+      <TouchableDefaultOpacity onPress={this.getGoBackHandler}>
+        <Text white={this.props.primary} numberOfLines={1}>
+          {headerTitle}
+        </Text>
+      </TouchableDefaultOpacity>
+    );
+  };
+
   public render() {
     const { goBack, headerTitle, body, isSearchEnabled, dark } = this.props;
     return (
@@ -57,19 +100,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
         {!isSearchEnabled && (
           <Body style={goBack ? {} : styles.noLeft}>
-            {body
-              ? body
-              : headerTitle && (
-                  <TouchableWithoutFeedback
-                    onPress={
-                      typeof goBack === "boolean" ? () => goBack : goBack
-                    }
-                  >
-                    <Text white={this.props.primary} numberOfLines={1}>
-                      {headerTitle}
-                    </Text>
-                  </TouchableWithoutFeedback>
-                )}
+            {body ? body : headerTitle && this.renderHeader()}
           </Body>
         )}
 
@@ -159,4 +190,6 @@ const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state)
 });
 
-export const BaseHeader = connect(mapStateToProps)(BaseHeaderComponent);
+export const BaseHeader = withNavigation(
+  connect(mapStateToProps)(BaseHeaderComponent)
+);
