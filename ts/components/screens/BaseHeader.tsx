@@ -3,9 +3,10 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
-import { NavigationInjectedProps, withNavigation } from "react-navigation";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
+import { navigateBack } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -45,17 +46,14 @@ interface OwnProps {
 }
 
 type Props = OwnProps &
-  NavigationInjectedProps &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 class BaseHeaderComponent extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
     this.getGoBackHandler = this.getGoBackHandler.bind(this);
-    this.handleOnPressDefault = this.handleOnPressDefault.bind(this);
   }
-
-  private handleOnPressDefault = () => this.props.navigation.goBack(null);
 
   /**
    * if go back is a function it will be returned
@@ -64,7 +62,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   private getGoBackHandler() {
     return typeof this.props.goBack === "function"
       ? this.props.goBack()
-      : this.handleOnPressDefault();
+      : this.props.navigateBack();
   }
 
   private renderHeader = () => {
@@ -190,6 +188,13 @@ const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state)
 });
 
-export const BaseHeader = withNavigation(
-  connect(mapStateToProps)(BaseHeaderComponent)
-);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateBack: () => {
+    dispatch(navigateBack());
+  }
+});
+
+export const BaseHeader = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BaseHeaderComponent);
