@@ -8,7 +8,7 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { Alert, BackHandler, NavState, StyleSheet } from "react-native";
+import { BackHandler, NavState, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
