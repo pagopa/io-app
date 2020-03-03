@@ -143,14 +143,17 @@ class PreferencesScreen extends React.Component<Props, State> {
   };
 
   private getEmailForwardPreferencesSubtitle = (): string => {
-    return this.props.isInboxEnabled
-      ? this.props.isEmailEnabled
-        ? pot.isSome(this.props.isCustomEmailChannelEnabled) &&
-          this.props.isCustomEmailChannelEnabled.value
+    if (!this.props.isInboxEnabled || !this.props.isEmailEnabled) {
+      return I18n.t("send_email_messages.options.disable_all.label");
+    }
+    return pot.getOrElse(
+      pot.map(this.props.isCustomEmailChannelEnabled, enabled => {
+        return enabled
           ? I18n.t("send_email_messages.options.by_service.label")
-          : I18n.t("send_email_messages.options.enable_all.label")
-        : I18n.t("send_email_messages.options.disable_all.label")
-      : I18n.t("send_email_messages.options.disable_all.label");
+          : I18n.t("send_email_messages.options.enable_all.label");
+      }),
+      I18n.t("send_email_messages.options.enable_all.label")
+    );
   };
 
   public render() {
