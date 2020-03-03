@@ -92,7 +92,7 @@ const CardSelectionScreen: React.SFC<Props> = props => {
           />
 
           <Image
-            source={require("../../../img/landing/place-card-illustration.png")}
+            source={require("../../../img/cie/place-card-illustration.png")}
             style={styles.img}
           />
         </View>

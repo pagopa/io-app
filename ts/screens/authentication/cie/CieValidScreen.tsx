@@ -16,7 +16,7 @@ type NavigationParams = {
 type Props = NavigationScreenProps<NavigationParams>;
 
 const boxDimension = 180;
-const cieImage = require("../../../../img/landing/place-card-illustration.png");
+const cieImage = require("../../../../img/cie/place-card-illustration.png");
 
 const styles = StyleSheet.create({
   image: {

@@ -66,7 +66,7 @@ const getCards = (
   {
     id: 4,
     image: isCIEAvailable
-      ? require("../../../img/landing/CIE-onboarding-illustration.png")
+      ? require("../../../img/cie/CIE-onboarding-illustration.png")
       : require("../../../img/landing/04.png"),
     title: isCIEAvailable
       ? I18n.t("authentication.landing.loginSpidCie")
