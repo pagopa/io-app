@@ -1,6 +1,9 @@
-import { Container, Text, View } from "native-base";
+/**
+ * A screen to display, by a webview, the consent to send user sensitive data
+ * to backend and proceed with the onbording process
+ */
 import * as React from "react";
-import { BackHandler, Image, NavState, StyleSheet } from "react-native";
+import { Alert, BackHandler, NavState } from "react-native";
 import WebView from "react-native-webview";
 import {
   NavigationScreenProp,
@@ -8,9 +11,9 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
+import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import I18n from "../../../i18n";
 import {
   loginFailure,
@@ -18,7 +21,6 @@ import {
 } from "../../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import variables from "../../../theme/variables";
 import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
 
@@ -28,7 +30,6 @@ type NavigationParams = {
 
 type OwnProps = {
   isLoading: boolean;
-  ciePin: string;
 };
 
 type Props = NavigationScreenProp<NavigationState> &
@@ -40,64 +41,36 @@ type State = {
   hasError: boolean;
   isLoading: boolean;
   findOpenApp: boolean;
+  webViewKey: number;
 };
-
-const styles = StyleSheet.create({
-  contentContainerStyle: {
-    padding: variables.contentPadding
-  },
-  text: {
-    fontSize: variables.fontSizeBase
-  },
-  errorContainer: {
-    padding: 20,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-
-  errorTitle: {
-    fontSize: 20,
-    marginTop: 10
-  },
-
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
-  },
-  errorButtonsContainer: {
-    position: "absolute",
-    bottom: 30,
-    flex: 1,
-    flexDirection: "row"
-  },
-  cancelButtonStyle: {
-    flex: 1,
-    marginEnd: 10
-  },
-  refreshIndicatorContainer: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000
-  }
-});
-
-const brokenLinkImage = require("../../../../img/broken-link.png");
 
 class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { hasError: false, isLoading: true, findOpenApp: false };
+    this.state = {
+      hasError: false,
+      isLoading: true,
+      findOpenApp: false,
+      webViewKey: 1
+    };
   }
 
   private handleBackPress = () => {
-    // only for tests purpose
+    Alert.alert(
+      I18n.t("onboarding.alert.title"),
+      I18n.t("onboarding.alert.description"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "default",
+          onPress: this.props.resetNavigation
+        }
+      ]
+    );
     return true;
   };
 
@@ -113,8 +86,6 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
     return this.props.navigation.getParam("cieConsentUri");
   }
 
-  private goBack = this.props.navigation.goBack;
-
   private handleWebViewError = () => {
     this.setState({ hasError: true });
   };
@@ -122,7 +93,7 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
   private handleShouldStartLoading = (event: NavState): boolean => {
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
-      this.props.dispatchLoginSuccess
+      this.props.loginSuccess
     )(event);
     // URL can be loaded if it's not the login URL containing the session token - this avoids
     // making a (useless) GET request with the session in the URL
@@ -130,10 +101,10 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
   };
 
   private handleLoginFailure = (errorCode?: string) => {
-    this.props.dispatchLoginFailure(
+    this.props.loginFailure(
       new Error(`login CIE failure with code ${errorCode || "n/a"}`)
     );
-    this.handleWebViewError();
+    this.props.resetNavigation();
 
     // to simulate a succesfully authentication you could uncomment this line below and you have to
     // - use the io-dev-api-server configured to communicate with the app (it should return a CIE profile (no email, spid_email_ mobile_phone))
@@ -141,75 +112,45 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
     // this.props.dispatchLoginSuccess("1234567" as SessionToken);
   };
 
-  private renderError = () => {
-    return (
-      <View style={styles.errorContainer}>
-        <Image source={brokenLinkImage} resizeMode="contain" />
-        <Text style={styles.errorTitle} bold={true}>
-          {I18n.t("authentication.errors.network.title")}
-        </Text>
-        <View style={styles.errorButtonsContainer}>
-          <ButtonDefaultOpacity
-            onPress={this.goBack}
-            style={styles.cancelButtonStyle}
-            block={true}
-            light={true}
-            bordered={true}
-          >
-            <Text>{I18n.t("global.buttons.cancel")}</Text>
-          </ButtonDefaultOpacity>
-          <ButtonDefaultOpacity
-            onPress={undefined}
-            style={{ flex: 2 }}
-            block={true}
-            primary={true}
-          >
-            <Text>{I18n.t("global.buttons.retry")}</Text>
-          </ButtonDefaultOpacity>
-        </View>
-      </View>
-    );
-  };
-
-  private updateLoadingState = (isLoading: boolean) =>
-    this.setState({ isLoading });
-
-  private renderWebView() {
+  private getContent = () => {
     if (this.state.hasError) {
-      return this.renderError();
-    }
-    return (
-      <Container>
+      return (
+        <GenericErrorComponent
+          onRetry={this.props.resetNavigation}
+          onCancel={undefined}
+          image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
+          text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
+        />
+      );
+    } else {
+      return (
         <WebView
           textZoom={100}
+          key={this.state.webViewKey}
           source={{ uri: this.cieAuthorizationUri }}
           javaScriptEnabled={true}
           onShouldStartLoadWithRequest={this.handleShouldStartLoading}
-          onLoadStart={() => this.updateLoadingState(true)}
+          onLoad={() => this.setState({ isLoading: false })}
+          onLoadProgress={() => this.setState({ isLoading: true })}
           onError={this.handleWebViewError}
-          onLoadEnd={() => this.updateLoadingState(false)}
         />
-        {this.state.isLoading && (
-          <View style={styles.refreshIndicatorContainer}>
-            <RefreshIndicator />
-          </View>
-        )}
-      </Container>
-    );
-  }
+      );
+    }
+  };
+
   public render(): React.ReactNode {
     return (
-      <BaseScreenComponent goBack={false}>
-        {this.renderWebView()}
-      </BaseScreenComponent>
+      <LoadingSpinnerOverlay isLoading={this.state.isLoading}>
+        <TopScreenComponent>{this.getContent()}</TopScreenComponent>
+      </LoadingSpinnerOverlay>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchResetNavigation: () => dispatch(resetToAuthenticationRoute),
-  dispatchLoginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
-  dispatchLoginFailure: (error: Error) => dispatch(loginFailure(error))
+  resetNavigation: () => dispatch(resetToAuthenticationRoute),
+  loginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
+  loginFailure: (error: Error) => dispatch(loginFailure(error))
 });
 
 export default connect(

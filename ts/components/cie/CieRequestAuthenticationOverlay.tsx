@@ -41,7 +41,10 @@ const styles = StyleSheet.create({
 
 const CIE_IDP_ID = "xx_servizicie_test";
 
-class CieRequestAuthenticationOverlay extends React.Component<Props, State> {
+class CieRequestAuthenticationOverlay extends React.PureComponent<
+  Props,
+  State
+> {
   constructor(props: Props) {
     super(props);
     this.state = {
