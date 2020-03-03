@@ -75,7 +75,8 @@ class EmailForwardingScreen extends React.Component<Props, State> {
         showToast(I18n.t("global.genericError"));
         return;
       }
-      // if the profile update is successfully then apply isCustomChannelEnabledChoice
+      // TODO move this login into a dedicated saga https://www.pivotaltracker.com/story/show/171600688
+      // if the profile updating is successfully then apply isCustomChannelEnabledChoice
       if (
         pot.isSome(this.props.potProfile) &&
         this.state.isCustomChannelEnabledChoice !== undefined
