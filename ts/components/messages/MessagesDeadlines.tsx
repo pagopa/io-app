@@ -260,9 +260,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
     if (messagesState !== prevMessagesState) {
       const sections = await Promise.resolve(generateSections(messagesState));
-
       const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
-
       this.setState({
         sections,
         allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(

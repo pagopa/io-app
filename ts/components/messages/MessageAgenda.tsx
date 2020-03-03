@@ -449,14 +449,12 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   };
 
   private completeLoadingState = () => {
+    this.setState({
+      isLoadingComplete: true
+    });
     if (this.state.isFirstLoading) {
       this.setState({
-        isFirstLoading: false,
-        isLoadingComplete: true
-      });
-    } else {
-      this.setState({
-        isLoadingComplete: true
+        isFirstLoading: false
       });
     }
   };
