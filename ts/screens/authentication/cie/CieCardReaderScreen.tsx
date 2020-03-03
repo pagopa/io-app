@@ -143,12 +143,14 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     });
   };
 
-  private handleCieSuccess = (consentUri: string) => {
+  private handleCieSuccess = (cieConsentUri: string) => {
     this.setState({ readingState: ReadingState.completed }, async () => {
       await this.stopCieManager();
-      this.props.navigation.navigate(ROUTES.CIE_VALID_SCREEN, {
-        cieConsentUri: consentUri
-      });
+      setTimeout(() => {
+        this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
+          cieConsentUri
+        });
+      }, 1500);
     });
   };
 
@@ -185,46 +187,74 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       });
   }
 
+  private getTitle = () => {
+    switch (this.state.readingState) {
+      case ReadingState.reading:
+        return I18n.t("authentication.cie.card.readerCardTitle");
+      case ReadingState.error:
+        return I18n.t("authentication.cie.card.error.readerCardLostTitle");
+      case ReadingState.completed:
+        return I18n.t("global.buttons.ok2");
+      default:
+        return I18n.t("authentication.cie.card.title");
+    }
+  };
+
+  // tslint:disable-next-line: no-identical-functions
+  private getSubtitle = () => {
+    switch (this.state.readingState) {
+      case ReadingState.reading:
+        return I18n.t("authentication.cie.card.readerCardHeader");
+      case ReadingState.error:
+        return I18n.t("authentication.cie.card.error.readerCardLostHeader");
+      case ReadingState.completed:
+        return I18n.t("authentication.cie.card.cieCardValid");
+
+      default:
+        return I18n.t("authentication.cie.card.layCardMessageHeader");
+    }
+  };
+
+  private getContent = () => {
+    switch (this.state.readingState) {
+      case ReadingState.reading:
+        return I18n.t("authentication.cie.card.readerCardFooter");
+      case ReadingState.error:
+        return this.state.errorMessage;
+      case ReadingState.completed:
+        return undefined;
+
+      default:
+        return I18n.t("authentication.cie.card.layCardMessageFooter");
+    }
+  };
+
   public render(): React.ReactNode {
     return (
       <TopScreenComponent
         goBack={true}
         title={I18n.t("authentication.cie.card.headerTitle")}
       >
-        <ScreenContentHeader
-          title={
-            this.state.readingState === ReadingState.error
-              ? I18n.t("authentication.cie.card.error.readerCardLostTitle")
-              : this.state.readingState === ReadingState.reading
-                ? I18n.t("authentication.cie.card.readerCardTitle")
-                : I18n.t("authentication.cie.card.title")
-          }
-        />
+        <ScreenContentHeader title={this.getTitle()} />
         <Content bounces={false} noPadded={true}>
-          <Text style={styles.padded}>
-            {this.state.readingState === ReadingState.error
-              ? I18n.t("authentication.cie.card.error.readerCardLostHeader")
-              : this.state.readingState === ReadingState.reading
-                ? I18n.t("authentication.cie.card.readerCardHeader")
-                : I18n.t("authentication.cie.card.layCardMessageHeader")}
-          </Text>
+          <Text style={styles.padded}>{this.getSubtitle()}</Text>
           <CieReadingCardAnimation readingState={this.state.readingState} />
-          <Text style={styles.padded} selectable={true}>
-            {this.state.readingState === ReadingState.error
-              ? this.state.errorMessage
-              : this.state.readingState === ReadingState.reading
-                ? I18n.t("authentication.cie.card.readerCardFooter")
-                : I18n.t("authentication.cie.card.layCardMessageFooter")}
-          </Text>
+          {this.getContent() && (
+            <Text style={styles.padded} selectable={true}>
+              {this.getContent()}
+            </Text>
+          )}
         </Content>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            onPress: this.props.navigation.goBack, // TODO: evaluate if return to landing screen or CiePinScreen (double or triple back)
-            cancel: true,
-            title: I18n.t("global.buttons.cancel")
-          }}
-        />
+        {this.state.readingState !== ReadingState.completed && ( // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
+          <FooterWithButtons
+            type={"SingleButton"}
+            leftButton={{
+              onPress: this.props.navigation.goBack,
+              cancel: true,
+              title: I18n.t("global.buttons.cancel")
+            }}
+          />
+        )}
       </TopScreenComponent>
     );
   }

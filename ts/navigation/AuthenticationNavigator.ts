@@ -10,7 +10,6 @@ import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentD
 import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredOrInvalidScreen";
 import CiePinLockedTemporarilyScreen from "../screens/authentication/cie/CiePinLockedTemporarilyScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
-import CieValidScreen from "../screens/authentication/cie/CieValidScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
@@ -46,10 +45,6 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   // For expired cie screen
   [ROUTES.CIE_EXPIRED_SCREEN]: {
     screen: CieExpiredOrInvalidScreen
-  },
-  // For valid cie screen
-  [ROUTES.CIE_VALID_SCREEN]: {
-    screen: CieValidScreen
   },
   [ROUTES.CIE_PIN_SCREEN]: {
     screen: CiePinScreen

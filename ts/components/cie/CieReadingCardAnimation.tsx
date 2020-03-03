@@ -7,6 +7,7 @@ import { NavigationEvents } from "react-navigation";
 import { ReadingState } from "../../screens/authentication/cie/CieCardReaderScreen";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";
+import IconFont from "../ui/IconFont";
 
 type Props = Readonly<{
   readingState: ReadingState;
@@ -31,9 +32,6 @@ const ringSettings = {
 };
 
 const styles = StyleSheet.create({
-  padded: {
-    paddingHorizontal: customVariables.contentPadding
-  },
   imgContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -53,6 +51,13 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     justifyContent: "center",
     alignItems: "center"
+  },
+  successIcon: {
+    position: "absolute",
+    alignSelf: "flex-start"
+  },
+  flexStart: {
+    justifyContent: "flex-start"
   }
 });
 
@@ -157,23 +162,38 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             />
           </View>
         )}
-        <ProgressCircle
-          percent={this.state.progressBarValue}
-          radius={imgDimension / 2}
-          borderWidth={3}
-          color={
-            this.props.readingState === ReadingState.error
-              ? customVariables.brandDanger
-              : customVariables.brandPrimary
-          }
-          shadowColor={customVariables.brandLightGray}
-          bgColor={customVariables.brandLightGray}
-        >
-          <Image
-            source={require("../../../img/cie/place-card-illustration.png")}
-            style={styles.img}
-          />
-        </ProgressCircle>
+
+        <View style={styles.flexStart}>
+          <ProgressCircle
+            percent={
+              this.props.readingState === ReadingState.completed
+                ? 0
+                : this.state.progressBarValue
+            }
+            radius={imgDimension / 2}
+            borderWidth={3}
+            color={
+              this.props.readingState === ReadingState.error
+                ? customVariables.brandDanger
+                : customVariables.brandPrimary
+            }
+            shadowColor={customVariables.brandLightGray}
+            bgColor={customVariables.brandLightGray}
+          >
+            <Image
+              source={require("../../../img/cie/place-card-illustration.png")}
+              style={styles.img}
+            />
+          </ProgressCircle>
+          {this.props.readingState === ReadingState.completed && (
+            <IconFont
+              name={"io-success"}
+              color={customVariables.textLinkColor}
+              size={50}
+              style={styles.successIcon}
+            />
+          )}
+        </View>
       </View>
     );
   }
