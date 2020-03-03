@@ -412,7 +412,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             sectionIndex === sectionsLength ? sectionIndex - 1 : sectionIndex
         })
       });
-    }, 400);
+    }, 300);
   };
 
   private checkSection = (s: MessageAgendaSection) => {
@@ -628,7 +628,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     } = this.props;
 
     const refreshControl = (
-      <RefreshControl refreshing={refreshing} onRefresh={onMoreDataRequest} />
+      <RefreshControl
+        refreshing={refreshing || !this.state.isDeadlinesLoaded}
+        onRefresh={onMoreDataRequest}
+      />
     );
 
     return (
@@ -638,35 +641,34 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           width: screenWidth
         }}
       >
-        {this.state.isDeadlinesLoaded === true && (
-          <SectionList
-            // If we not have a final deadline then we not have deadlines
-            sections={sections}
-            extraData={{ servicesById, paymentsByRptId }}
-            initialNumToRender={this.state.numMessagesToRender}
-            bounces={true}
-            scrollEnabled={true}
-            refreshControl={refreshControl}
-            keyExtractor={keyExtractor}
-            ref={this.sectionListRef}
-            onScroll={() => {
-              if (!this.state.isLoadingComplete && !this.state.isFirstLoading) {
-                this.completeLoadingState();
-              }
-            }}
-            renderItem={this.renderItem}
-            renderSectionHeader={this.renderSectionHeader}
-            ItemSeparatorComponent={ItemSeparatorComponent}
-            getItemLayout={this.getItemLayout}
-            ListHeaderComponent={false}
-            ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
-            ListEmptyComponent={
-              sections.length === 0
-                ? this.ListEmptySectionsComponent
-                : this.ListEmptyComponent
+        <SectionList
+          // If we not have a final deadline then we not have deadlines
+          sections={sections}
+          extraData={{ servicesById, paymentsByRptId }}
+          initialNumToRender={this.state.numMessagesToRender}
+          bounces={true}
+          scrollEnabled={true}
+          refreshControl={refreshControl}
+          keyExtractor={keyExtractor}
+          ref={this.sectionListRef}
+          onScroll={() => {
+            if (!this.state.isLoadingComplete && !this.state.isFirstLoading) {
+              this.completeLoadingState();
             }
-          />
-        )}
+          }}
+          scrollEventThrottle={8}
+          renderItem={this.renderItem}
+          renderSectionHeader={this.renderSectionHeader}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+          getItemLayout={this.getItemLayout}
+          ListHeaderComponent={false}
+          ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
+          ListEmptyComponent={
+            sections.length === 0
+              ? this.ListEmptySectionsComponent
+              : this.ListEmptyComponent
+          }
+        />
       </View>
     );
   }
