@@ -46,7 +46,10 @@ export enum ReadingState {
 type State = {
   // Get the current status of the card reading
   readingState: ReadingState;
-  errorMessage: string;
+  title: string;
+  subtitle: string;
+  content?: string;
+  errorMessage?: string;
 };
 
 /**
@@ -64,7 +67,9 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       - completed (the reading has been completed)
       */
       readingState: ReadingState.waiting_card,
-      errorMessage: ""
+      title: I18n.t("authentication.cie.card.title"),
+      subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
+      content: I18n.t("authentication.cie.card.layCardMessageFooter")
     };
   }
 
@@ -87,6 +92,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           });
         }
         break;
+
       case "ON_TAG_LOST":
         this.setState(
           {
@@ -128,11 +134,46 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           }
         );
         break;
+
       case "ON_PIN_ERROR":
         await this.handleWrongPin(event.attemptsLeft);
         break;
+
       default:
         break;
+    }
+    this.updateContent();
+  };
+
+  private updateContent = () => {
+    switch (this.state.readingState) {
+      case ReadingState.reading:
+        this.setState({
+          title: I18n.t("authentication.cie.card.readerCardTitle"),
+          subtitle: I18n.t("authentication.cie.card.readerCardHeader"),
+          content: I18n.t("authentication.cie.card.readerCardFooter")
+        });
+      case ReadingState.error:
+        this.setState({
+          title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
+          subtitle: I18n.t(
+            "authentication.cie.card.error.readerCardLostHeader"
+          ),
+          content: this.state.errorMessage
+        });
+      case ReadingState.completed:
+        this.setState({
+          title: I18n.t("global.buttons.ok2"),
+          subtitle: I18n.t("authentication.cie.card.cieCardValid"),
+          content: undefined
+        });
+      // waiting_card state
+      default:
+        this.setState({
+          title: I18n.t("authentication.cie.card.title"),
+          subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
+          content: I18n.t("authentication.cie.card.layCardMessageFooter")
+        });
     }
   };
 
@@ -187,62 +228,18 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       });
   }
 
-  private getTitle = () => {
-    switch (this.state.readingState) {
-      case ReadingState.reading:
-        return I18n.t("authentication.cie.card.readerCardTitle");
-      case ReadingState.error:
-        return I18n.t("authentication.cie.card.error.readerCardLostTitle");
-      case ReadingState.completed:
-        return I18n.t("global.buttons.ok2");
-      default:
-        return I18n.t("authentication.cie.card.title");
-    }
-  };
-
-  // tslint:disable-next-line: no-identical-functions
-  private getSubtitle = () => {
-    switch (this.state.readingState) {
-      case ReadingState.reading:
-        return I18n.t("authentication.cie.card.readerCardHeader");
-      case ReadingState.error:
-        return I18n.t("authentication.cie.card.error.readerCardLostHeader");
-      case ReadingState.completed:
-        return I18n.t("authentication.cie.card.cieCardValid");
-
-      default:
-        return I18n.t("authentication.cie.card.layCardMessageHeader");
-    }
-  };
-
-  private getContent = () => {
-    switch (this.state.readingState) {
-      case ReadingState.reading:
-        return I18n.t("authentication.cie.card.readerCardFooter");
-      case ReadingState.error:
-        return this.state.errorMessage;
-      case ReadingState.completed:
-        return undefined;
-
-      default:
-        return I18n.t("authentication.cie.card.layCardMessageFooter");
-    }
-  };
-
   public render(): React.ReactNode {
     return (
       <TopScreenComponent
         goBack={true}
         title={I18n.t("authentication.cie.card.headerTitle")}
       >
-        <ScreenContentHeader title={this.getTitle()} />
+        <ScreenContentHeader title={this.state.title} />
         <Content bounces={false} noPadded={true}>
-          <Text style={styles.padded}>{this.getSubtitle()}</Text>
+          <Text style={styles.padded}>{this.state.subtitle}</Text>
           <CieReadingCardAnimation readingState={this.state.readingState} />
-          {this.getContent() && (
-            <Text style={styles.padded} selectable={true}>
-              {this.getContent()}
-            </Text>
+          {this.state.content && (
+            <Text style={styles.padded}>{this.state.content}</Text>
           )}
         </Content>
         {this.state.readingState !== ReadingState.completed && ( // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
