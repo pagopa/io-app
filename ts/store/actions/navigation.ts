@@ -8,9 +8,6 @@ import {
 import { ActionType, createStandardAction } from "typesafe-actions";
 import ROUTES from "../../navigation/routes";
 import CieCardReaderScreen from "../../screens/authentication/cie/CieCardReaderScreen";
-import CieConfirmDataUsage from "../../screens/authentication/cie/CieConsentDataUsageScreen";
-import CieValidScreen from "../../screens/authentication/cie/CieValidScreen";
-import CieWrongCiePinScreen from "../../screens/authentication/cie/CieWrongCiePinScreen";
 import { MessageDetailScreen } from "../../screens/messages/MessageDetailScreen";
 import { FingerprintScreen } from "../../screens/onboarding/FingerprintScreen";
 import ServiceDetailsScreen from "../../screens/services/ServiceDetailsScreen";
@@ -272,29 +269,5 @@ export const navigateToCieCardReaderScreen = (
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_CARD_READER_SCREEN,
-    params
-  });
-
-export const navigateToCieConfirmDataUsage = (
-  params?: InferNavigationParams<typeof CieConfirmDataUsage>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_CONSENT_DATA_USAGE,
-    params
-  });
-
-export const navigateToCieValid = (
-  params?: InferNavigationParams<typeof CieValidScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_VALID_SCREEN,
-    params
-  });
-
-export const navigateToCieWrongPin = (
-  params?: InferNavigationParams<typeof CieWrongCiePinScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_WRONG_PIN_SCREEN,
     params
   });

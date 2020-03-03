@@ -18,10 +18,6 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import {
-  navigateToCieValid,
-  navigateToCieWrongPin
-} from "../../../store/actions/navigation";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
@@ -150,17 +146,17 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private handleCieSuccess = (consentUri: string) => {
     this.setState({ readingState: ReadingState.completed }, async () => {
       await this.stopCieManager();
-      this.props.navigation.navigate(
-        navigateToCieValid({ cieConsentUri: consentUri })
-      );
+      this.props.navigation.navigate(ROUTES.CIE_VALID_SCREEN, {
+        cieConsentUri: consentUri
+      });
     });
   };
 
   private handleWrongPin = async (attemptsLeft: number) => {
     await this.stopCieManager();
-    this.props.navigation.navigate(
-      navigateToCieWrongPin({ remainingCount: attemptsLeft })
-    );
+    this.props.navigation.navigate(ROUTES.CIE_WRONG_PIN_SCREEN, {
+      remainingCount: attemptsLeft
+    });
   };
 
   private stopCieManager = async () => {

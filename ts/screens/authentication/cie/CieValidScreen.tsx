@@ -6,7 +6,7 @@ import { ScreenContentHeader } from "../../../components/screens/ScreenContentHe
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
-import { navigateToCieConfirmDataUsage } from "../../../store/actions/navigation";
+import ROUTES from "../../../navigation/routes";
 import variables from "../../../theme/variables";
 
 type NavigationParams = {
@@ -38,11 +38,9 @@ const styles = StyleSheet.create({
 class CieValidScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     setTimeout(() => {
-      this.props.navigation.navigate(
-        navigateToCieConfirmDataUsage({
-          cieConsentUri: this.cieAuthorizationUri
-        })
-      );
+      this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
+        cieConsentUri: this.cieAuthorizationUri
+      });
     }, 1500);
   }
 
