@@ -111,27 +111,6 @@ const styles = StyleSheet.create({
     marginTop: variables.contentPadding,
     width: screenWidth - variables.contentPadding * 2
   },
-
-  // Animation progress
-  contentProgress: {
-    display: "flex",
-    position: "absolute",
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 0,
-    paddingRight: 0,
-    height: 50,
-    width: screenWidth,
-    zIndex: 999,
-    backgroundColor: customVariables.colorWhite
-  },
-  progress: { alignSelf: "center" },
-  messageNoOthers: {
-    padding: 12,
-    alignContent: "center",
-    justifyContent: "center",
-    alignSelf: "center"
-  },
   itemLoadingContainer: {
     height: ITEM_LOADING_HEIGHT,
     paddingVertical: 16,
