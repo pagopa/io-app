@@ -215,6 +215,7 @@ jobs:
 
       # Install Android SDK
       - run:
+          command: yarn jetify
           command: ./scripts/circleci-android-setup.sh
 
       # Restore jars cache
