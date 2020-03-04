@@ -87,6 +87,7 @@ jobs:
 
       # Build app
       - run: yarn generate:all
+      # Needed to make compliant old Android code to AndroidX
       - run: yarn jetify
       - run: yarn tsc:noemit
 
