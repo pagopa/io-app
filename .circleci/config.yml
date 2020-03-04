@@ -247,8 +247,8 @@ jobs:
 
       # Build the js bundle in release mode	
       - run:
-        command: yarn jetify
-        command: yarn bundle:android-release
+          command: yarn jetify
+          command: yarn bundle:android-release
 
       # Run alpha lane
       - run:
@@ -487,8 +487,10 @@ workflows:
 
       # Build Android alpha release only on master branch
       - alpha-release-android:
-          requires:
-            - compile-typescript
+          #requires:
+          #  - compile-typescript
+          #  - run-tests
+          #  - lint-typescript
           filters:
             branches:
               only: 168247652-upgrade-react-native
