@@ -7,7 +7,7 @@ import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createFactory } from "react";
 import * as React from "react";
-import { Animated, StyleSheet, TouchableOpacity } from "react-native";
+import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -62,8 +62,11 @@ const styles = StyleSheet.create({
   organizationLogo: {
     marginBottom: 0
   },
-  icon: {
-    paddingHorizontal: (24 - ICON_SIZE) / 2 // (io-right icon width) - (io-trash icon width)
+  iconContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: (24 - ICON_SIZE) / 2 // (io-right icon width) - (io-trash icon width),
   }
 });
 
@@ -140,12 +143,13 @@ class ServicesTab extends React.PureComponent<Props> {
   private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => {
     return (
       <TouchableOpacity onPress={() => this.onPressItem(section)}>
-        <IconFont
-          name={"io-trash"}
-          color={customVariables.brandMildGray}
-          size={ICON_SIZE}
-          style={styles.icon}
-        />
+        <View style={styles.iconContainer}>
+          <IconFont
+            name={"io-trash"}
+            color={customVariables.brandMildGray}
+            size={ICON_SIZE}
+          />
+        </View>
       </TouchableOpacity>
     );
   };
