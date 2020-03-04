@@ -115,7 +115,7 @@ PODS:
     - React
   - RNCAsyncStorage (1.6.1):
     - React
-  - RNDeviceInfo (2.1.2):
+  - RNDeviceInfo (5.5.3):
     - React
   - RNFS (2.14.1):
     - React
@@ -313,7 +313,7 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: 040b33d72849a0aa862d1dcb54008ccef77a935e
   ReactNativePermissions: b64e084dff6a5cad51587d38c306f09246246384
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
-  RNDeviceInfo: 75dac2d7cd6b638b512cc9266ce48a39661fed0e
+  RNDeviceInfo: 310c1f43d418d950a193c7650de2f9559c906048
   RNFS: a8fbe7060fa49157d819466404794ad9c58e58cf
   RNGestureHandler: aea90f0ad8e35fec23438db6fc3ad79be58bb734
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
