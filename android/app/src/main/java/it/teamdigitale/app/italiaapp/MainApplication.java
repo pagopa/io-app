@@ -47,22 +47,6 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
     }
-    /*
-     * @Override protected List<ReactPackage> getPackages() { return
-     * Arrays.<ReactPackage>asList(new MainReactPackage(), new
-     * AsyncStoragePackage(), new QRScanReaderPackage(), new ImagePickerPackage(),
-     * new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
-     * new RNGestureHandlerPackage(), new CalendarEventsPackage(), new
-     * RNCWebViewPackage(), new FingerprintAuthPackage(), new
-     * BackgroundTimerPackage(), new SvgPackage(), new RNTextInputMaskPackage(), new
-     * SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new
-     * RNCameraPackage(), new ReactNativePushNotificationPackage(), new
-     * KeychainPackage(), new RNI18nPackage(), new Sha256Package(), new
-     * RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(), new
-     * RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN,
-     * MainApplication.this)
-     * .setInvocationEvent("none").setPrimaryColor("#0073E6").build()); }
-     */
 
     @Override
     protected String getJSMainModuleName() {
