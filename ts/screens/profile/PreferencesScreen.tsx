@@ -243,6 +243,12 @@ class PreferencesScreen extends React.Component<Props, State> {
                 title={I18n.t("profile.preferences.list.spid_email")}
                 subTitle={maybeSpidEmail.value}
                 hideIcon={true}
+                onPress={() =>
+                  showModal(
+                    "profile.preferences.spid_email.contextualHelpTitle",
+                    "profile.preferences.spid_email.contextualHelpContent"
+                  )
+                }
               />
             )}
             {// Check if mobile phone exists

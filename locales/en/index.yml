@@ -187,6 +187,9 @@ profile:
     language:
       contextualHelpTitle: How to manage your language setting
       contextualHelpContent: !include profile/profile_preferences_language.md
+    spid_email:
+      contextualHelpTitle: This setting is set up on your SPID profile
+      contextualHelpContent: !include profile/profile_preferences_spid_email.md
     email:
       contextualHelpTitle: How to manage your email
       contextualHelpContent: !include profile/profile_preferences_email_address.md
