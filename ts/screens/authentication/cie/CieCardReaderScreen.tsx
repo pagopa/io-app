@@ -85,6 +85,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     // TODO: WHAT is it returned if CIE is EXPIRED? we should redirect to CieExpiredOrInvalidScreen
     // -- it should be CERTIFICATE_EXPIRED
     switch (event.event) {
+      // Reading starts
       case "ON_TAG_DISCOVERED":
         if (this.state.readingState !== ReadingState.reading) {
           this.setState({ readingState: ReadingState.reading }, () => {
@@ -93,6 +94,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         }
         break;
 
+      // Reading interrupted before the sdk complete the reading
       case "ON_TAG_LOST":
         this.setState(
           {
@@ -105,6 +107,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         );
         break;
 
+      // The card is temporarily locked. Unlock is available by CieID app
       case "ON_CARD_PIN_LOCKED":
         await this.stopCieManager();
         this.props.navigation.navigate(ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN);
@@ -121,6 +124,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             Vibration.vibrate(100);
           }
         );
+        // TODO: go to dedicated screen and exit
         break;
 
       case "ON_NO_INTERNET_CONNECTION":
@@ -135,8 +139,12 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         );
         break;
 
+      // The inserted pin is incorrect
       case "ON_PIN_ERROR":
-        await this.handleWrongPin(event.attemptsLeft);
+        await this.stopCieManager();
+        this.props.navigation.navigate(ROUTES.CIE_WRONG_PIN_SCREEN, {
+          remainingCount: event.attemptsLeft
+        });
         break;
 
       default:
@@ -177,6 +185,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     }
   };
 
+  // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
     this.setState({
       readingState: ReadingState.error,
@@ -192,13 +201,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           cieConsentUri
         });
       }, 1500);
-    });
-  };
-
-  private handleWrongPin = async (attemptsLeft: number) => {
-    await this.stopCieManager();
-    this.props.navigation.navigate(ROUTES.CIE_WRONG_PIN_SCREEN, {
-      remainingCount: attemptsLeft
     });
   };
 
