@@ -189,6 +189,9 @@ profile:
     language:
       contextualHelpTitle: Come gestire la lingua su IO
       contextualHelpContent: !include profile/profile_preferences_language.md
+    spid_email:
+      contextualHelpTitle: Questa preferenza è impostata nel tuo profilo SPID
+      contextualHelpContent: !include profile/profile_preferences_spid_email.md
     email:
       contextualHelpTitle: Come gestire la tua mail
       contextualHelpContent: !include profile/profile_preferences_email_address.md
