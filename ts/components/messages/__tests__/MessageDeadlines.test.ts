@@ -11,12 +11,11 @@ import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { MessageState } from "../../../store/reducers/entities/messages/messagesById";
 import { isCreatedMessageWithContentAndDueDate } from "../../../types/CreatedMessageWithContentAndDueDate";
 import {
-  isFakeItem,
   MessageAgendaItem,
   MessageAgendaSection,
   Sections
 } from "../MessageAgenda";
-import { getNextDeadlineId } from "../MessagesDeadlines";
+import { getNextDeadlineId, isFakeItem } from "../MessagesDeadlines";
 
 /**
  * Filter only the messages with a due date and group them by due_date day.

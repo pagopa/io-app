@@ -17,7 +17,6 @@ import {
 } from "../helpers/withItemsSelection";
 import { ListSelectionBar } from "../ListSelectionBar";
 import MessageAgenda, {
-  isFakeItem,
   MessageAgendaItem,
   MessageAgendaSection,
   Sections
@@ -63,6 +62,14 @@ type State = {
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
   allMessageIdsState: Set<string>;
   nextDeadlineId: Option<string>;
+};
+
+export type FakeItem = {
+  fake: true;
+};
+
+export const isFakeItem = (item: any): item is FakeItem => {
+  return item.fake;
 };
 
 /**

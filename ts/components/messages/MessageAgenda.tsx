@@ -136,10 +136,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export type FakeItem = {
-  fake: true;
-};
-
 export type MessageAgendaItemMetadata = {
   isRead: boolean;
 };
@@ -149,9 +145,7 @@ export type MessageAgendaItem = ITuple2<
   MessageAgendaItemMetadata
 >;
 
-export type MessageAgendaSection = SectionListData<
-  MessageAgendaItem | FakeItem
->;
+export type MessageAgendaSection = SectionListData<MessageAgendaItem>;
 
 // tslint:disable-next-line: readonly-array
 export type Sections = MessageAgendaSection[];
@@ -185,12 +179,7 @@ type State = {
   numMessagesToRender: number;
 };
 
-export const isFakeItem = (item: any): item is FakeItem => {
-  return item.fake;
-};
-
-const keyExtractor = (_: MessageAgendaItem | FakeItem, index: number) =>
-  isFakeItem(_) ? `item-${index}` : _.e1.id;
+const keyExtractor = (_: MessageAgendaItem) => _.e1.id;
 
 /**
  * Generate item layouts from sections.
@@ -391,7 +380,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       ? this.props.nextDeadlineId.value
       : undefined;
     const item = s.data[0];
-    const sectionId = !isFakeItem(item) ? item.e1.id : undefined;
+    const sectionId = item.e1.id;
 
     return !isFake && sectionId === nextDeadlineId;
   };
@@ -456,11 +445,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       : undefined;
 
     const item = info.section.data[0];
-    const sectionId = !isFakeItem(item) ? item.e1.id : undefined;
-
-    if (isFakeItem(item)) {
-      return;
-    }
+    const sectionId = item.e1.id;
 
     if (!this.state.isLoadingComplete) {
       return SectionHeaderPlaceholder;
@@ -488,13 +473,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     );
   };
 
-  private renderItem: SectionListRenderItem<
-    MessageAgendaItem | FakeItem
-  > = info => {
-    if (isFakeItem(info.item)) {
-      return;
-    }
-
+  private renderItem: SectionListRenderItem<MessageAgendaItem> = info => {
     const message = info.item.e1;
     const { isRead } = info.item.e2;
     const {
