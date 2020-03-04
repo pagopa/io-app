@@ -487,10 +487,6 @@ workflows:
 
       # Build Android alpha release only on master branch
       - alpha-release-android:
-          #requires:
-          #  - compile-typescript
-          #  - run-tests
-          #  - lint-typescript
           filters:
             branches:
               only: 168247652-upgrade-react-native
