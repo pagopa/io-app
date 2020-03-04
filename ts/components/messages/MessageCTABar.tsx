@@ -147,45 +147,112 @@ class MessageCTABar extends React.PureComponent<Props, State> {
    * It is important to make this check because the event can be removed outside
    * the App.
    */
-  private checkIfEventInCalendar = (calendarEvent: CalendarEvent) => {
-    checkAndRequestPermission()
-      .then(
-        hasPermission => {
-          if (hasPermission) {
-            RNCalendarEvents.findEventById(calendarEvent.eventId)
-              .then(
-                event => {
-                  if (event) {
-                    // The event is in the store and also in the device calendar
-                    // Update the state to display and handle the reminder button correctly
+  private checkIfEventInCalendar = (
+    calendarEvent: CalendarEvent | undefined
+  ) => {
+    if (calendarEvent) {
+      checkAndRequestPermission()
+        .then(
+          hasPermission => {
+            if (hasPermission) {
+              RNCalendarEvents.findEventById(calendarEvent.eventId)
+                .then(
+                  event => {
+                    if (event) {
+                      // The event is in the store and also in the device calendar
+                      // Update the state to display and handle the reminder button correctly
+                      this.setState({
+                        isEventInDeviceCalendar: true
+                      });
+                    } else {
+                      // The event is in the store but not in the device calendar.
+                      // Remove it from store too
+                      this.props.removeCalendarEvent(calendarEvent);
+                    }
+                  },
+                  // handle promise rejection
+                  () => {
                     this.setState({
-                      isEventInDeviceCalendar: true
+                      isEventInDeviceCalendar: false
                     });
-                  } else {
-                    // The event is in the store but not in the device calendar.
-                    // Remove it from store too
-                    this.props.removeCalendarEvent(calendarEvent);
                   }
-                },
-                // handle promise rejection
-                () => {
-                  this.setState({
-                    isEventInDeviceCalendar: false
-                  });
-                }
-              )
-              .catch();
+                )
+                .catch();
+            }
+          },
+          // handle promise rejection
+          // tslint:disable-next-line: no-identical-functions
+          () => {
+            this.setState({
+              isEventInDeviceCalendar: false
+            });
           }
-        },
-        // handle promise rejection
-        // tslint:disable-next-line: no-identical-functions
-        () => {
-          this.setState({
-            isEventInDeviceCalendar: false
-          });
-        }
-      )
-      .catch();
+        )
+        .catch();
+    } else {
+      checkAndRequestPermission()
+        .then(
+          hasPermission => {
+            if (hasPermission) {
+              const endDate =
+                this.props.message.content.due_date !== undefined
+                  ? this.props.message.content.due_date
+                  : undefined;
+              const title = I18n.t("messages.cta.reminderTitle", {
+                title: this.props.message.content.subject
+              });
+              if (endDate !== undefined) {
+                const startDate = new Date(endDate.getTime());
+                RNCalendarEvents.fetchAllEvents(
+                  formatDateAsReminder(
+                    new Date(startDate.setDate(endDate.getDate() - 1))
+                  ),
+                  formatDateAsReminder(endDate)
+                )
+                  .then(
+                    events => {
+                      if (events) {
+                        const event = events.find(e => {
+                          return (
+                            e.title === title &&
+                            new Date(e.endDate).getDay() === endDate.getDay()
+                          );
+                        });
+                        if (event) {
+                          // The event is in the store and also in the device calendar
+                          // Update the state to display and handle the reminder button correctly
+                          this.setState({
+                            isEventInDeviceCalendar: true
+                          });
+                        } else if (calendarEvent !== undefined) {
+                          // The event is in the store but not in the device calendar.
+                          // Remove it from store too
+                          this.props.removeCalendarEvent(calendarEvent);
+                        }
+                      }
+                    },
+                    // handle promise rejection
+                    // tslint:disable-next-line: no-identical-functions
+                    () => {
+                      this.setState({
+                        isEventInDeviceCalendar: false
+                      });
+                    }
+                  )
+                  .catch();
+              }
+            }
+          },
+          // handle promise rejection
+          // tslint:disable-next-line: no-identical-functions
+          () => {
+            this.setState({
+              isEventInDeviceCalendar: false
+            });
+          }
+        )
+        .catch();
+    }
   };
 
   private addCalendarEventToDeviceCalendar = (
@@ -234,21 +301,83 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   };
 
   private removeCalendarEventFromDeviceCalendar = (
-    calendarEvent: CalendarEvent
+    calendarEvent: CalendarEvent | undefined
   ) => {
-    RNCalendarEvents.removeEvent(calendarEvent.eventId)
-      .then(_ => {
-        showToast(I18n.t("messages.cta.reminderRemoveSuccess"), "success");
-        this.props.removeCalendarEvent({
-          messageId: calendarEvent.messageId
-        });
-        this.setState({
-          isEventInDeviceCalendar: false
-        });
-      })
-      .catch(_ =>
-        showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger")
-      );
+    if (calendarEvent) {
+      RNCalendarEvents.removeEvent(calendarEvent.eventId)
+        .then(_ => {
+          showToast(I18n.t("messages.cta.reminderRemoveSuccess"), "success");
+          this.props.removeCalendarEvent({
+            messageId: calendarEvent.messageId
+          });
+          this.setState({
+            isEventInDeviceCalendar: false
+          });
+        })
+        .catch(_ =>
+          showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger")
+        );
+    } else {
+      const endDate =
+        this.props.message.content.due_date !== undefined
+          ? this.props.message.content.due_date
+          : undefined;
+      const title = I18n.t("messages.cta.reminderTitle", {
+        title: this.props.message.content.subject
+      });
+      if (endDate !== undefined) {
+        const startDate = new Date(endDate.getTime());
+        RNCalendarEvents.fetchAllEvents(
+          formatDateAsReminder(
+            new Date(startDate.setDate(endDate.getDate() - 1))
+          ),
+          formatDateAsReminder(endDate)
+        )
+          .then(
+            events => {
+              if (events) {
+                // tslint:disable-next-line: no-identical-functions
+                const event = events.find(e => {
+                  return (
+                    e.title === title &&
+                    new Date(e.endDate).getDay() === endDate.getDay()
+                  );
+                });
+                if (event) {
+                  showToast(
+                    I18n.t("messages.cta.reminderRemoveSuccess"),
+                    "success"
+                  );
+                  RNCalendarEvents.removeEvent(event.id)
+                    .then(_ => {
+                      showToast(
+                        I18n.t("messages.cta.reminderRemoveSuccess"),
+                        "success"
+                      );
+                      this.props.removeCalendarEvent({
+                        messageId: this.props.message.id
+                      });
+                      this.setState({
+                        isEventInDeviceCalendar: false
+                      });
+                    })
+                    .catch(_ =>
+                      showToast(
+                        I18n.t("messages.cta.reminderRemoveFailure"),
+                        "danger"
+                      )
+                    );
+                }
+              }
+            },
+            // handle promise rejection
+            () => {
+              showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger");
+            }
+          )
+          .catch();
+      }
+    }
   };
 
   private renderCalendarIcon = (
@@ -331,7 +460,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       checkAndRequestPermission()
         .then(calendarPermission => {
           if (calendarPermission.authorized) {
-            if (calendarEvent && isEventInDeviceCalendar) {
+            if (isEventInDeviceCalendar) {
               // If the event is in the calendar prompt an alert and ask for confirmation
               Alert.alert(
                 I18n.t("messages.cta.reminderRemoveRequest.title"),
@@ -670,10 +799,8 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const { calendarEvent } = this.props;
 
     // If we have a calendar event in the store associated to this message
-    if (calendarEvent) {
-      // Check if the event is still in the device calendar
-      this.checkIfEventInCalendar(calendarEvent);
-    }
+    // Check if the event is still in the device calendar
+    this.checkIfEventInCalendar(calendarEvent);
   }
 
   public componentDidUpdate(prevProps: Props) {
@@ -681,12 +808,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     if (prevProps.calendarEvent !== this.props.calendarEvent) {
       // if a calendarEvent exists we have to check if it really exists as calendar event
       // the event can be removed outside the App.
-      if (this.props.calendarEvent) {
-        this.checkIfEventInCalendar(this.props.calendarEvent);
-      } else {
-        // this means the calendar event has been removed from the app
-        this.setState({ isEventInDeviceCalendar: false });
-      }
+      this.checkIfEventInCalendar(this.props.calendarEvent);
     }
   }
 
