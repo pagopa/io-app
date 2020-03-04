@@ -347,25 +347,19 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       this.props.sections !== undefined &&
       this.props.sections.length > 0
     ) {
+      this.completeLoadingState();
       if (
         this.props.sections.length > 1 &&
-        this.state.numMessagesToRender > 5
+        this.state.numMessagesToRender > 5 &&
+        isSome(this.props.nextDeadlineId)
       ) {
-        if (isSome(this.props.nextDeadlineId)) {
-          const sectionIndex = this.props.sections.findIndex(this.checkSection);
-          if (sectionIndex !== -1) {
-            this.scrollToNextDeadline(
-              sectionIndex,
-              this.props.sections.length - 1
-            );
-          } else {
-            this.completeLoadingState();
-          }
-        } else {
-          this.completeLoadingState();
+        const sectionIndex = this.props.sections.findIndex(this.checkSection);
+        if (sectionIndex !== -1) {
+          this.scrollToNextDeadline(
+            sectionIndex,
+            this.props.sections.length - 1
+          );
         }
-      } else {
-        this.completeLoadingState();
       }
     }
   }
@@ -374,10 +368,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     sectionIndex: number,
     sectionsLength: number
   ) => {
-    this.setState({ isFirstLoading: false });
-    if (sectionIndex === sectionsLength) {
-      this.completeLoadingState();
-    }
     this.idTimeout = setTimeout(() => {
       // tslint:disable-next-line: no-object-mutation
       this.idTimeout = undefined;
@@ -385,11 +375,12 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         animated: false,
         itemIndex: 0,
         sectionIndex: Platform.select({
-          ios:
-            sectionIndex === sectionsLength ? sectionIndex : sectionIndex + 1,
-          android:
-            sectionIndex === sectionsLength ? sectionIndex - 1 : sectionIndex
-        })
+          ios: sectionIndex,
+          android: sectionIndex
+        }),
+        viewPosition: 0,
+        viewOffset:
+          sectionIndex === sectionsLength ? 0 : ITEM_WITHOUT_CTABAR_HEIGHT + 20
       });
     }, 300);
   };
@@ -605,10 +596,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     } = this.props;
 
     const refreshControl = (
-      <RefreshControl
-        refreshing={refreshing || !this.state.isDeadlinesLoaded}
-        onRefresh={onMoreDataRequest}
-      />
+      <RefreshControl refreshing={refreshing} onRefresh={onMoreDataRequest} />
     );
 
     return (
@@ -618,34 +606,42 @@ class MessageAgenda extends React.PureComponent<Props, State> {
           width: screenWidth
         }}
       >
-        <SectionList
-          // If we not have a final deadline then we not have deadlines
-          sections={sections}
-          extraData={{ servicesById, paymentsByRptId }}
-          initialNumToRender={this.state.numMessagesToRender}
-          bounces={true}
-          scrollEnabled={true}
-          refreshControl={refreshControl}
-          keyExtractor={keyExtractor}
-          ref={this.sectionListRef}
-          onScroll={() => {
-            if (!this.state.isLoadingComplete && !this.state.isFirstLoading) {
-              this.completeLoadingState();
+        {this.state.isDeadlinesLoaded ? (
+          <SectionList
+            // If we not have a final deadline then we not have deadlines
+            sections={sections}
+            extraData={{ servicesById, paymentsByRptId }}
+            initialNumToRender={this.state.numMessagesToRender}
+            maxToRenderPerBatch={this.state.numMessagesToRender}
+            bounces={true}
+            scrollEnabled={true}
+            refreshControl={refreshControl}
+            keyExtractor={keyExtractor}
+            ref={this.sectionListRef}
+            renderItem={this.renderItem}
+            renderSectionHeader={this.renderSectionHeader}
+            ItemSeparatorComponent={ItemSeparatorComponent}
+            getItemLayout={this.getItemLayout}
+            ListHeaderComponent={false}
+            ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
+            ListEmptyComponent={
+              sections.length === 0
+                ? this.ListEmptySectionsComponent
+                : this.ListEmptyComponent
             }
-          }}
-          scrollEventThrottle={8}
-          renderItem={this.renderItem}
-          renderSectionHeader={this.renderSectionHeader}
-          ItemSeparatorComponent={ItemSeparatorComponent}
-          getItemLayout={this.getItemLayout}
-          ListHeaderComponent={false}
-          ListFooterComponent={sections.length > 0 && <EdgeBorderComponent />}
-          ListEmptyComponent={
-            sections.length === 0
-              ? this.ListEmptySectionsComponent
-              : this.ListEmptyComponent
-          }
-        />
+          />
+        ) : (
+          <SectionList
+            sections={sections}
+            extraData={{ servicesById, paymentsByRptId }}
+            scrollEnabled={false}
+            bounces={false}
+            keyExtractor={keyExtractor}
+            renderItem={this.renderItem}
+            renderSectionHeader={this.renderSectionHeader}
+            ItemSeparatorComponent={ItemSeparatorComponent}
+          />
+        )}
       </View>
     );
   }

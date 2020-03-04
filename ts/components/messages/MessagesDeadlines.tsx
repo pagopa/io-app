@@ -238,7 +238,15 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
   public async componentDidMount() {
     const { messagesState } = this.props;
-    const sections = await Promise.resolve(generateSections(messagesState));
+    const sectionsWithFakeItem = await Promise.resolve(
+      generateSections(messagesState)
+    );
+
+    const sections: Sections = sectionsWithFakeItem.filter(section => {
+      const item = section.data[0];
+      return !isFakeItem(item);
+    });
+
     const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
 
     this.setState({
@@ -259,7 +267,13 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     }
 
     if (messagesState !== prevMessagesState) {
-      const sections = await Promise.resolve(generateSections(messagesState));
+      const sectionsWithFakeItem = await Promise.resolve(
+        generateSections(messagesState)
+      );
+      const sections: Sections = sectionsWithFakeItem.filter(section => {
+        const item = section.data[0];
+        return !isFakeItem(item);
+      });
       const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
       this.setState({
         sections,
@@ -287,6 +301,9 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     return messagesIds.length > 0 ? new Set(messagesIds) : new Set();
   }
 
+  /**
+   * Return number pof sections to load
+   */
   private sectionToLoad = (
     // tslint:disable-next-line: readonly-array
     messagesState: pot.Pot<MessageState[], string>
