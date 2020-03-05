@@ -492,6 +492,8 @@ workflows:
 
       # Build Android alpha release only on master branch
       - alpha-release-android:
+          requires:
+            - compile-typescript
           filters:
             branches:
               only: 170046248-add-cie-authentication
