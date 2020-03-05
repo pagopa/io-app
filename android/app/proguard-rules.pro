@@ -104,3 +104,6 @@
 -keep class com.facebook.crypto.** {
    *;
 }
+
+# Hermes
+-keep class com.facebook.hermes.unicode.** { *; }
