@@ -492,13 +492,9 @@ workflows:
 
       # Build Android alpha release only on master branch
       - alpha-release-android:
-          requires:
-            - compile-typescript
-            - run-tests
-            - lint-typescript
           filters:
             branches:
-              only: master
+              only: 170046248-add-cie-authentication
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status
