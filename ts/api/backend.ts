@@ -29,6 +29,8 @@ import {
   GetServiceT,
   getSessionStateDefaultDecoder,
   GetSessionStateT,
+  getUserDataProcessingDefaultDecoder,
+  GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
   getUserMessagesDefaultDecoder,
   GetUserMessagesT,
@@ -241,6 +243,15 @@ export function BackendClient(
     response_decoder: upsertUserMetadataDefaultDecoder()
   };
 
+  const getUserDataProcessingT: GetUserDataProcessingT = {
+    method: "get",
+    url: ({ userDataProcessingChoiceParam }) =>
+      `/api/v1/user-data-processing/${userDataProcessingChoiceParam}`,
+    query: _ => ({}),
+    headers: tokenHeaderProducer,
+    response_decoder: getUserDataProcessingDefaultDecoder()
+  };
+
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
     method: "put",
     url: params => `/api/v1/installations/${params.installationID}`,
@@ -330,6 +341,9 @@ export function BackendClient(
     ),
     startEmailValidationProcess: withBearerToken(
       createFetchRequestForApi(postStartEmailValidationProcessT, options)
+    ),
+    getUserDataProcessing: withBearerToken(
+      createFetchRequestForApi(getUserDataProcessingT, options)
     )
   };
 }

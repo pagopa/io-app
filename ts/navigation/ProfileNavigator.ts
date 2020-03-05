@@ -5,7 +5,7 @@ import BiometricRecognitionScreen from "../screens/profile/BiometricRecognitionS
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
-import { PrivacyMainScreen } from "../screens/profile/PrivacyMainScreen";
+import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
 import { PrivacyScreen } from "../screens/profile/PrivacyScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ROUTES from "./routes";
