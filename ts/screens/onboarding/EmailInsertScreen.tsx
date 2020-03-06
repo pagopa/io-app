@@ -44,8 +44,7 @@ import { showToast } from "../../utils/showToast";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  NavigationScreenProps;
+  ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   flex: {
@@ -163,12 +162,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  get isFromProfileSection() {
-    return this.props.isOnboardingCompleted;
-  }
-
   public componentDidMount() {
-    if (this.isFromProfileSection) {
+    if (this.props.isOnboardingCompleted) {
       this.setState({ email: some(EMPTY_EMAIL) });
     }
   }
@@ -183,8 +178,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       } else if (pot.isSome(this.props.profile)) {
         // user is inserting his email from onboarding phase
         if (!this.props.isOnboardingCompleted) {
-          // send an ack that user checks his own email
-          this.props.acknowledgeEmail();
+          this.props.acknowledgeEmailInsert();
           return;
         }
         // go back (to the EmailReadScreen)
@@ -204,9 +198,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         this.state.email,
         true
       );
-      if (isTheSameEmail) {
-        Alert.alert(I18n.t("email.insert.alert"));
-      } else {
+      if (!isTheSameEmail) {
         this.state.email.map(e => {
           this.props.updateEmail(e as EmailString);
         });
@@ -215,7 +207,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const { isFromProfileSection } = this;
+    const isFromProfileSection = this.props.isOnboardingCompleted;
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
