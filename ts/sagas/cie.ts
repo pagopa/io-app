@@ -1,75 +1,54 @@
 import cieManager from "@pagopa/react-native-cie";
-import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
-import { call, fork, put, select, take } from "redux-saga/effects";
-import {
-  cieIsSupported,
-  nfcIsEnabled,
-  startWatchingNfcEnablement
-} from "../store/actions/cie";
-import {
-  isCieSupportedSelector,
-  isNfcEnabledSelector
-} from "../store/reducers/cie";
+import { call, put, takeLatest } from "redux-saga/effects";
+import { RTron } from "../boot/configureStoreAndPersistor";
+import { cieIsSupported, nfcIsEnabled } from "../store/actions/cie";
 import { SagaCallReturnType } from "../types/utils";
+import { startTimer } from "../utils/timer";
 
 export function* watchCieAuthenticationSaga(): SagaIterator {
-  // Watch for checks on login by CIE on the used device and NFC sensor enablement
-  yield fork(checkNfcEnablementSaga, cieManager.isNFCEnabled);
+  // Trigger a saga on nfcIsEnabled to check if NFC is enabled or not
+  yield takeLatest(nfcIsEnabled.request, checkNfcEnablementSaga);
+  // check if the device is compliant with CIE authentication
   yield call(checkCieAvailabilitySaga, cieManager.isCIEAuthenticationSupported);
 }
 
+/**
+ * check if the device is compatible with CIE authentication
+ * see https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L125
+ */
 export function* checkCieAvailabilitySaga(
   isCIEAuthenticationSupported: typeof cieManager["isCIEAuthenticationSupported"]
 ): SagaIterator {
   try {
-    yield put(cieIsSupported.request());
     const response: SagaCallReturnType<
       typeof isCIEAuthenticationSupported
     > = yield call(isCIEAuthenticationSupported);
-
-    const currentState: ReturnType<
-      typeof isCieSupportedSelector
-    > = yield select(isCieSupportedSelector);
-
-    if (
-      pot.isNone(currentState) ||
-      (pot.isSome(currentState) && response !== currentState.value)
-    ) {
-      yield put(cieIsSupported.success(response));
-      if (response === true) {
-        yield put(startWatchingNfcEnablement());
-      } else {
-        yield put(nfcIsEnabled.success(false));
-      }
-    }
+    yield put(cieIsSupported.success(response));
   } catch (e) {
     yield put(cieIsSupported.failure(new Error(e)));
   }
 }
-
-export function* checkNfcEnablementSaga(
-  isNFCEnabled: typeof cieManager["isNFCEnabled"]
-): SagaIterator {
-  yield take(startWatchingNfcEnablement);
-  while (true) {
-    try {
-      // yield put(nfcIsEnabled.request())
-      const response: SagaCallReturnType<typeof isNFCEnabled> = yield call(
-        isNFCEnabled
-      );
-      const currentState: ReturnType<
-        typeof isNfcEnabledSelector
-      > = yield select(isNfcEnabledSelector);
-
-      if (
-        pot.isNone(currentState) ||
-        (pot.isSome(currentState) && response !== currentState.value)
-      ) {
-        yield put(nfcIsEnabled.success(response));
+const CIE_NFC_STATUS_INTERVAL = 1500 as Millisecond;
+/**
+ * checks if the nfc is enabled. If it is NOT enbled it checks again with a delay
+ */
+export function* checkNfcEnablementSaga(): SagaIterator {
+  try {
+    while (true) {
+      RTron.log("checkNfcEnablementSaga");
+      const isNfcEnabled: SagaCallReturnType<
+        typeof cieManager.isNFCEnabled
+      > = yield call(cieManager.isNFCEnabled);
+      yield put(nfcIsEnabled.success(isNfcEnabled));
+      if (isNfcEnabled) {
+        return;
       }
-    } catch (e) {
-      yield put(nfcIsEnabled.failure(new Error(e))); // TODO: check e type
+      // wait and check again
+      yield call(startTimer, CIE_NFC_STATUS_INTERVAL);
     }
+  } catch (e) {
+    yield put(nfcIsEnabled.failure(new Error(e))); // TODO: check e type
   }
 }

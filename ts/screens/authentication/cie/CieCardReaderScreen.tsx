@@ -262,7 +262,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 const mapStateToProps = (state: GlobalState) => {
   const isEnabled = isNfcEnabledSelector(state);
   return {
-    isNfcEnabled: pot.isSome(isEnabled) && isEnabled.value === true
+    isNfcEnabled: pot.getOrElse(isEnabled, false)
   };
 };
 

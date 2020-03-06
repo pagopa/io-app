@@ -24,10 +24,14 @@ import {
 } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
-import { ReduxProps } from "../../../store/actions/types";
+import { nfcIsEnabled } from "../../../store/actions/cie";
+import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 
-type Props = ReduxProps & NavigationInjectedProps & LightModalContextInterface;
+type Props = ReduxProps &
+  ReturnType<typeof mapDispatchToProps> &
+  NavigationInjectedProps &
+  LightModalContextInterface;
 
 type State = {
   pin: string;
@@ -50,6 +54,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
 
   private onProceedToCardReaderScreen = (url: string) => {
     this.props.hideModal();
+
     this.props.navigation.navigate({
       routeName: ROUTES.CIE_CARD_READER_SCREEN,
       params: { ciePin: this.state.pin, authorizationUri: url }
@@ -57,6 +62,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
   };
 
   private showModal = () => {
+    this.props.requestNfcEnabledCheck();
     Keyboard.dismiss();
 
     const component = (
@@ -123,5 +129,12 @@ class CiePinScreen extends React.PureComponent<Props, State> {
   }
 }
 
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
+});
+
 // TODO: solve bug: for a while the pinpad is displayed again when it succeeded - it occurs also during payments after a loading
-export default connect()(withLightModalContext(CiePinScreen));
+export default connect(
+  null,
+  mapDispatchToProps
+)(withLightModalContext(CiePinScreen));
