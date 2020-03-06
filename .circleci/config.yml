@@ -87,6 +87,8 @@ jobs:
 
       # Build app
       - run: yarn generate:all
+      # Needed to make compliant old Android code to AndroidX
+      - run: yarn jetify
       - run: yarn tsc:noemit
 
       # Save workspace for next jobs in the workflow
@@ -246,7 +248,8 @@ jobs:
           command: ./scripts/keystore-setup.sh
 
       # Build the js bundle in release mode	
-      - run: yarn bundle:android-release
+      - run:
+          command: yarn bundle:android-release
 
       # Run alpha lane
       - run:
