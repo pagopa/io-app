@@ -12,7 +12,6 @@ import unreadInstabugMessagesSaga from "./instabug";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
 
-import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 import {
   watchBackToEntrypointPaymentSaga,
   watchPaymentInitializeSaga
