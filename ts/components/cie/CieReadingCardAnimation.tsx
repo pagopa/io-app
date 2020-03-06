@@ -65,7 +65,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
   Props,
   State
 > {
-  private progressAnimation: Animated.CompositeAnimation;
+  private progressAnimation?: Animated.CompositeAnimation;
   private progressAnimatedValue: Animated.Value;
 
   constructor(props: Props) {
@@ -73,8 +73,12 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     this.state = {
       progressBarValue: 0
     };
+    // tslint:disable-next-line: no-object-mutation
     this.progressAnimatedValue = new Animated.Value(0);
+    this.createAnimation();
+  }
 
+  private createAnimation() {
     // Two animation: the first fills the progress with the primary
     // color up to progressThreshold, the second up to 100
     // from 0 to 60 in 8 secs
@@ -89,23 +93,45 @@ export default class CieReadingCardAnimation extends React.PureComponent<
       easing: Easing.linear,
       duration: 10000
     });
+    // tslint:disable-next-line: no-object-mutation
     this.progressAnimation = Animated.sequence([firstAnim, secondAnim]);
   }
 
   private startAnimation = () => {
+    if (
+      this.progressAnimation === undefined ||
+      this.progressAnimatedValue === undefined
+    ) {
+      return;
+    }
     this.progressAnimation.stop();
     this.setState({ progressBarValue: 0 });
     this.progressAnimatedValue.setValue(0);
-    this.progressAnimation.start();
+    this.progressAnimation.start(({ finished }) => {
+      if (finished) {
+        // loop
+        this.createAnimation();
+        this.startAnimation();
+      }
+    });
   };
 
   private addAnimationListener = () => {
+    if (this.progressAnimatedValue === undefined) {
+      return;
+    }
     this.progressAnimatedValue.addListener(anim => {
       this.setState({ progressBarValue: anim.value });
     });
   };
 
   private stopAnimation = () => {
+    if (
+      this.progressAnimation === undefined ||
+      this.progressAnimatedValue === undefined
+    ) {
+      return;
+    }
     this.progressAnimation.stop();
     this.progressAnimatedValue.removeAllListeners();
   };
@@ -120,6 +146,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     }
     // If we are not reading the card, stop the animation
     if (
+      this.progressAnimation !== undefined &&
       prevProps.readingState === ReadingState.reading &&
       this.props.readingState !== ReadingState.reading
     ) {
