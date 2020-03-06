@@ -108,7 +108,7 @@ Headers.prototype.append = function(name, value) {
   this.map[name] = oldValue ? oldValue + ", " + value : value;
 };
 
-Headers.prototype["delete"] = function(name) {
+Headers.prototype.delete = function(name) {
   delete this.map[normalizeName(name)];
 };
 
