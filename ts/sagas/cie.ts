@@ -37,7 +37,6 @@ const CIE_NFC_STATUS_INTERVAL = 1500 as Millisecond;
 export function* checkNfcEnablementSaga(): SagaIterator {
   try {
     while (true) {
-      RTron.log("checkNfcEnablementSaga");
       const isNfcEnabled: SagaCallReturnType<
         typeof cieManager.isNFCEnabled
       > = yield call(cieManager.isNFCEnabled);
@@ -45,6 +44,8 @@ export function* checkNfcEnablementSaga(): SagaIterator {
       if (isNfcEnabled) {
         return;
       }
+      // TODO find a way to break this loop: if the user leave the CIE authentication this loop
+      // will continue, instead it has to be stopped
       // wait and check again
       yield call(startTimer, CIE_NFC_STATUS_INTERVAL);
     }
