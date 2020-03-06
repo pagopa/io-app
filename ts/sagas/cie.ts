@@ -2,7 +2,6 @@ import cieManager from "@pagopa/react-native-cie";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "redux-saga/effects";
-import { RTron } from "../boot/configureStoreAndPersistor";
 import { cieIsSupported, nfcIsEnabled } from "../store/actions/cie";
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
