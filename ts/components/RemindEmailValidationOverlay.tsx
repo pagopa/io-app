@@ -304,6 +304,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                 <Text>{this.state.ctaSendEmailValidationText}</Text>
               </Button>
             )}
+          <View spacer={true} large={true} />
         </Content>
         {(this.state.emailHasBeenValidate ||
           this.state.isContentLoadCompleted) &&
