@@ -14,7 +14,7 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationScreenProps, StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -24,6 +24,7 @@ import BaseScreenComponent, {
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
 import I18n from "../../i18n";
+import { navigateToEmailReadScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,
   emailAcknowledged,
@@ -44,7 +45,8 @@ import { showToast } from "../../utils/showToast";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  NavigationScreenProps;
 
 const styles = StyleSheet.create({
   flex: {
@@ -74,6 +76,7 @@ const EMPTY_EMAIL = "";
 
 type State = Readonly<{
   email: Option<string>;
+  isMounted: boolean;
 }>;
 
 // TODO: update content (https://www.pivotaltracker.com/n/projects/2048617/stories/169392558)
@@ -88,7 +91,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class EmailInsertScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { email: this.props.optionEmail };
+    this.state = { email: this.props.optionEmail, isMounted: true };
   }
 
   private continueOnPress = () => {
@@ -139,7 +142,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private handleGoBack = () => {
-    if (this.props.isOnboardingCompleted) {
+    if (this.props.isOnboardingCompleted || this.props.optionEmail.isSome()) {
       this.props.navigation.goBack();
     } else {
       // if the user is in onboarding phase, go back has to
@@ -169,6 +172,9 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props) {
+    if (!this.state.isMounted) {
+      return;
+    }
     // if we were updating the profile
     if (pot.isUpdating(prevProps.profile)) {
       // and we got an error
@@ -177,8 +183,20 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         showToast(I18n.t("email.edit.upsert_ko"), "danger");
       } else if (pot.isSome(this.props.profile)) {
         // user is inserting his email from onboarding phase
-        if (!this.props.isOnboardingCompleted) {
-          this.props.acknowledgeEmailInsert();
+        if (
+          !this.props.isOnboardingCompleted &&
+          prevProps.optionEmail.isNone()
+        ) {
+          // since this screen is mounted from saga it won't be unmounted
+          // so we have to force a reset and navigate to emailReadScreen
+          this.setState({ isMounted: false }, () => {
+            this.props.acknowledgeEmailInsert();
+            const resetAction = StackActions.reset({
+              index: 0,
+              actions: [navigateToEmailReadScreen()]
+            });
+            this.props.navigation.dispatch(resetAction);
+          });
           return;
         }
         // go back (to the EmailReadScreen)
@@ -202,6 +220,8 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         this.state.email.map(e => {
           this.props.updateEmail(e as EmailString);
         });
+      } else {
+        Alert.alert(I18n.t("email.insert.alert"));
       }
     }
   }
@@ -299,6 +319,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         email
       })
     ),
+  navigateToEmailReadScreen: () => {
+    dispatch(navigateToEmailReadScreen());
+  },
   acknowledgeEmailInsert: () => dispatch(emailInsert()),
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
