@@ -828,9 +828,9 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						/* pagopa */
-						/* DevelopmentTeam = M2X5YQ4BJ7; */
+						DevelopmentTeam = M2X5YQ4BJ7;
 						/* team digitale  */
-						DevelopmentTeam = BC8NKY5TF7;
+						/* DevelopmentTeam = BC8NKY5TF7; */
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -1673,12 +1673,12 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				DEAD_CODE_STRIPPING = NO;
 				/* pagopa */
-				/* DEVELOPMENT_TEAM = M2X5YQ4BJ7; */
+				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				/* team digitale */
-				DEVELOPMENT_TEAM = BC8NKY5TF7;
+				/* DEVELOPMENT_TEAM = BC8NKY5TF7; */
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../node_modules/instabug-reactnative/ios",
@@ -1721,11 +1721,11 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 39;
 				/* pagopa */
-				/* DEVELOPMENT_TEAM = M2X5YQ4BJ7; */
+				DEVELOPMENT_TEAM = M2X5YQ4BJ7; 
 				/* team digitale */
-				DEVELOPMENT_TEAM = BC8NKY5TF7;
+				/* DEVELOPMENT_TEAM = BC8NKY5TF7; */
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../node_modules/instabug-reactnative/ios",
