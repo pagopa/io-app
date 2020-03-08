@@ -1699,15 +1699,15 @@
 					"-lc++",
 				);
 				/* pagopa */
-				/* PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io; */
+				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				/* team digitale */
-				PRODUCT_BUNDLE_IDENTIFIER = it.teamdigitale.app.IO;
+				/* PRODUCT_BUNDLE_IDENTIFIER = it.teamdigitale.app.IO; */
 				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
 				/* pagopa */
-				/* PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io"; */
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io";
 				/* team digitale */
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.teamdigitale.app.IO";
+				/* PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.teamdigitale.app.IO"; */
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
