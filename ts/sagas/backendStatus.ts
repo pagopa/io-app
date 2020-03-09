@@ -7,9 +7,9 @@ import { BasicResponseType } from "italia-ts-commons/lib/requests";
 import { call, Effect, fork, put } from "redux-saga/effects";
 import { BackendPublicClient, ServicesStatus } from "../api/backendPublic";
 import { apiUrlPrefix } from "../config";
+import { backendServicesStatus } from "../store/actions/backendServicesStatus";
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
-import { backendServicesStatus } from "../store/actions/backendServicesStatus";
 
 const BACKEND_SERVICES_STATUS_LOAD_INTERVAL = 5 * 1000;
 

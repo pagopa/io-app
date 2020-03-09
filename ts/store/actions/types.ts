@@ -13,6 +13,7 @@ import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
+import { BackendServicesStatusActions } from "./backendServicesStatus";
 import { CalendarEventsActions } from "./calendarEvents";
 import { ContentActions } from "./content";
 import { DebugActions } from "./debug";
@@ -35,7 +36,6 @@ import { SearchActions } from "./search";
 import { ServicesActions } from "./services";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
-import { BackendServicesStatusActions } from './backendServicesStatus';
 
 export type Action =
   | AnalyticsActions

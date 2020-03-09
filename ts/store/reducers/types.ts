@@ -5,6 +5,7 @@ import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
+import { BackendServicesState } from "./backendServiceStatus";
 import { ContentState } from "./content";
 import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
@@ -23,7 +24,6 @@ import { ProfileState } from "./profile";
 import { SearchState } from "./search";
 import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
-import { BackendServicesState } from "./backendServiceStatus";
 
 type NetworkState = Readonly<{
   isConnected: boolean;

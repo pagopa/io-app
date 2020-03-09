@@ -7,7 +7,6 @@ import {
 } from "italia-ts-commons/lib/requests";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { defaultRetryingFetch } from "../utils/fetch";
-import { RTron } from "../boot/configureStoreAndPersistor";
 
 type GetServerInfoT = IGetApiRequestType<
   {},
