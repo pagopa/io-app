@@ -26,7 +26,6 @@ import {
 import { paymentsLastDeletedStateSelector } from "../../../store/reducers/payments/lastDeleted";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
-import variables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 
 type NavigationParams = {
@@ -65,8 +64,8 @@ const styles = StyleSheet.create({
   },
 
   paddedLR: {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
+    paddingLeft: customVariables.contentPadding,
+    paddingRight: customVariables.contentPadding
   }
 });
 
