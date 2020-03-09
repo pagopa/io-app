@@ -5,7 +5,7 @@ import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen
 } from "../../store/actions/navigation";
-import { emailAcknowledged, emailInsert } from "../../store/actions/onboarding";
+import { emailAcknowledged } from "../../store/actions/onboarding";
 import {
   hasProfileEmail,
   isProfileEmailValidated,
@@ -39,11 +39,11 @@ export function* checkAcknowledgedEmailSaga(
       return;
     }
   } else {
-    // No email is provided, user must insert the email address .
+    // the profile has no email address, user must insert it
+    // EmailInsertScreen knows if the user comes from onboarding or not
+    // if he comes from onboarding, on email inserted the navigation will focus EmailReadScreen to remember the user
+    // to validate it
     yield put(navigateToEmailInsertScreen());
-    // wait until insertion is completed
-    yield take(emailInsert);
-    yield put(navigateToEmailReadScreen());
   }
 
   // Wait for the user to press "Continue" button after having checked out

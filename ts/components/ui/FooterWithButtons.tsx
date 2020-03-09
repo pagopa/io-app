@@ -1,12 +1,10 @@
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import customVariables from "../../theme/variables";
+
 import { ComponentProps } from "../../types/react";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import IconFont from "./IconFont";
 
-// TODO: instead of customize alignment, apply it on button theme
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row"
@@ -18,7 +16,6 @@ const styles = StyleSheet.create({
   },
   buttonTwoThirds: {
     alignContent: "center",
-    justifyContent: "center",
     flex: 2
   }
 });
@@ -26,7 +23,6 @@ const styles = StyleSheet.create({
 type OwnButtonProps = {
   title: string;
   buttonFontSize?: number;
-  iconName?: string;
 };
 
 type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
@@ -74,7 +70,6 @@ export default class FooterWithButtons extends React.Component<Props, never> {
       rightButton: {
         title: rightButtonTitle,
         buttonFontSize: fontSize,
-        iconName: rightButtonIconName,
         ...otherPropsRightButton
       }
     } = this.props;
@@ -90,13 +85,10 @@ export default class FooterWithButtons extends React.Component<Props, never> {
               : styles.button
           }
         >
-          {rightButtonIconName && (
-            <IconFont
-              name={rightButtonIconName}
-              color={customVariables.colorWhite}
-            />
-          )}
-          <Text numberOfLines={1} style={{ fontSize }}>
+          <Text
+            numberOfLines={1}
+            style={fontSize !== undefined ? { fontSize } : {}}
+          >
             {rightButtonTitle}
           </Text>
         </ButtonDefaultOpacity>
@@ -121,7 +113,9 @@ export default class FooterWithButtons extends React.Component<Props, never> {
           }
           {...otherPropsLeftButton}
         >
-          <Text style={{ fontSize }}>{leftButtonTitle}</Text>
+          <Text style={fontSize !== undefined ? { fontSize } : {}}>
+            {leftButtonTitle}
+          </Text>
         </ButtonDefaultOpacity>
         {this.renderRightButton()}
       </View>
