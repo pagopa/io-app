@@ -4,7 +4,7 @@
  */
 
 import color from "color";
-import { Badge, Left, ListItem, Right, Text, View } from "native-base";
+import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
@@ -37,7 +37,8 @@ const underlayColor = "transparent";
 const styles = StyleSheet.create({
   listItem: {
     marginLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
+    flexDirection: "row"
   },
   disabled: {
     opacity: 0.75
@@ -51,6 +52,9 @@ const styles = StyleSheet.create({
   },
   methodImage: {
     width: 70
+  },
+  column: {
+    flex: 1
   }
 });
 
@@ -128,11 +132,11 @@ class PaymentMethodsList extends React.Component<Props, never> {
             const disabledStyle = isItemDisabled ? styles.disabled : {};
             return (
               <ListItem
-                style={[styles.listItem]}
+                style={styles.listItem}
                 onPress={itemInfo.item.onPress}
                 underlayColor={underlayColor}
               >
-                <Left>
+                <View style={styles.column}>
                   <Grid>
                     <Row>
                       <View style={styles.methodItem}>
@@ -164,8 +168,8 @@ class PaymentMethodsList extends React.Component<Props, never> {
                       </Row>
                     )}
                   </Grid>
-                </Left>
-                <Right style={AddMethodStyle.centeredContents}>
+                </View>
+                <View style={[AddMethodStyle.centeredContents, styles.column]}>
                   {itemInfo.item.icon && (
                     <IconFont
                       name={itemInfo.item.icon}
@@ -184,7 +188,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
                       resizeMode={"contain"}
                     />
                   )}
-                </Right>
+                </View>
               </ListItem>
             );
           }}

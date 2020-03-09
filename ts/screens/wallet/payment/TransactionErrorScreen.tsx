@@ -26,6 +26,7 @@ import {
 import { paymentsLastDeletedStateSelector } from "../../../store/reducers/payments/lastDeleted";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
+import variables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 
 type NavigationParams = {
@@ -61,6 +62,11 @@ const styles = StyleSheet.create({
   errorMessageSubtitle: {
     textAlign: "center",
     fontSize: customVariables.fontSizeSmall
+  },
+
+  paddedLR: {
+    paddingLeft: variables.contentPadding,
+    paddingRight: variables.contentPadding
   }
 });
 
@@ -218,7 +224,7 @@ class TransactionErrorScreen extends React.Component<Props> {
         goBack={this.onPressCancel}
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
       >
-        <Content>
+        <Content noPadded={true} style={styles.paddedLR}>
           <View style={styles.contentWrapper}>
             <View spacer={true} extralarge={true} />
 
