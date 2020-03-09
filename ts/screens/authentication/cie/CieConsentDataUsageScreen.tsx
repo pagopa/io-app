@@ -105,11 +105,6 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
       new Error(`login CIE failure with code ${errorCode || "n/a"}`)
     );
     this.props.resetNavigation();
-
-    // to simulate a succesfully authentication you could uncomment this line below and you have to
-    // - use the io-dev-api-server configured to communicate with the app (it should return a CIE profile (no email, spid_email_ mobile_phone))
-    // - put the cieidpuri hardcoded (line CieRequestAuthenticationOverlay.tsx L127 put this value "https://app-backend.dev.io.italia.it/login?entityID=xx_servizicie_test&authLevel=SpidL2"
-    // this.props.dispatchLoginSuccess("1234567" as SessionToken);
   };
 
   private getContent = () => {
