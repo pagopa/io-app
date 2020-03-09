@@ -149,7 +149,7 @@ function renderInformationImageRow(
 }
 
 /**
- * return true if markdown is loaded (description is rendered inside a markodown component)
+ * return true if markdown is loaded (description is rendered inside a markdown component)
  * return true if description doesn't exists but values are present
  * return false in others cases
  *
@@ -161,12 +161,17 @@ export const canRenderItems = (
   isMarkdownLoaded: boolean,
   potServiceMetadata: ServiceMetadataState
 ): boolean => {
-  const isServiceMetadataLoaded =
-    pot.isSome(potServiceMetadata) && potServiceMetadata.value;
-  const hasServiceMetadataDescription =
-    pot.isSome(potServiceMetadata) && potServiceMetadata.value
-      ? potServiceMetadata.value.description !== undefined
-      : false;
+  const isServiceMetadataLoaded = pot.getOrElse(
+    pot.map(potServiceMetadata, sm => sm !== undefined),
+    false
+  );
+  const hasServiceMetadataDescription = pot.getOrElse(
+    pot.map(
+      potServiceMetadata,
+      sm => sm !== undefined && sm.description !== undefined
+    ),
+    false
+  );
   // if service metadata is loaded
   // return isMarkdownLoaded if it has a defined description field
   // return true otherwise
