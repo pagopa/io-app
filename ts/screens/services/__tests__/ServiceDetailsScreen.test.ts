@@ -1,7 +1,7 @@
+import { none, noneError, some } from "italia-ts-commons/lib/pot";
 import { ScopeEnum } from "../../../../definitions/content/Service";
 import { ServiceMetadataState } from "../../../store/reducers/content";
 import { canRenderItems } from "../ServiceDetailsScreen";
-import { some, none, noneError } from "italia-ts-commons/lib/pot";
 
 const serviceA: ServiceMetadataState = {
   kind: "PotSome",
