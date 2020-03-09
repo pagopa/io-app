@@ -141,6 +141,40 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     return this.props.payment !== undefined;
   }
 
+  private searchEventInCalendar = async (
+    endDate: Date,
+    title: string
+  ): Promise<string | undefined> => {
+    const startDate = new Date(endDate.getTime());
+    const isEventInCalendar = RNCalendarEvents.fetchAllEvents(
+      formatDateAsReminder(new Date(startDate.setDate(endDate.getDate() - 1))),
+      formatDateAsReminder(endDate)
+    )
+      .then(
+        events => {
+          if (events) {
+            const event = events.find(e => {
+              return (
+                e.title === title &&
+                new Date(e.endDate).getDay() === endDate.getDay()
+              );
+            });
+            if (event) {
+              return event.id;
+            }
+          }
+          return undefined;
+        },
+        // handle promise rejection
+        () => {
+          return undefined;
+        }
+      )
+      .catch();
+
+    return await isEventInCalendar;
+  };
+
   /**
    * A function to check if the eventId of the CalendarEvent stored in redux
    * is really/still in the device calendar.
@@ -190,86 +224,18 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         )
         .catch();
     } else {
-      checkAndRequestPermission()
-        .then(
-          hasPermission => {
-            if (hasPermission) {
-              const endDate =
-                this.props.message.content.due_date !== undefined
-                  ? this.props.message.content.due_date
-                  : undefined;
-              const title = I18n.t("messages.cta.reminderTitle", {
-                title: this.props.message.content.subject
-              });
-              if (endDate !== undefined) {
-                const startDate = new Date(endDate.getTime());
-                RNCalendarEvents.fetchAllEvents(
-                  formatDateAsReminder(
-                    new Date(startDate.setDate(endDate.getDate() - 1))
-                  ),
-                  formatDateAsReminder(endDate)
-                )
-                  .then(
-                    events => {
-                      if (events) {
-                        const event = events.find(e => {
-                          return (
-                            e.title === title &&
-                            new Date(e.endDate).getDay() === endDate.getDay()
-                          );
-                        });
-                        if (event) {
-                          // The event is in the store and also in the device calendar
-                          // Update the state to display and handle the reminder button correctly
-                          this.setState({
-                            isEventInDeviceCalendar: true
-                          });
-                        } else if (calendarEvent !== undefined) {
-                          // The event is in the store but not in the device calendar.
-                          // Remove it from store too
-                          this.props.removeCalendarEvent(calendarEvent);
-                        }
-                      }
-                    },
-                    // handle promise rejection
-                    // tslint:disable-next-line: no-identical-functions
-                    () => {
-                      this.setState({
-                        isEventInDeviceCalendar: false
-                      });
-                    }
-                  )
-                  .catch();
-              }
-            }
-          },
-          // handle promise rejection
-          // tslint:disable-next-line: no-identical-functions
-          () => {
-            this.setState({
-              isEventInDeviceCalendar: false
-            });
-          }
-        )
-        .catch();
+      this.setState({
+        isEventInDeviceCalendar: false
+      });
     }
   };
 
-  private addCalendarEventToDeviceCalendar = (
+  private saveCalendarEvent = (
+    calendar: Calendar,
     message: CreatedMessageWithContent,
-    dueDate: Date
-  ) => (calendar: Calendar) => {
-    const title = I18n.t("messages.cta.reminderTitle", {
-      title: message.content.subject
-    });
-    const { preferredCalendar } = this.props;
-
-    this.props.hideModal();
-
-    if (preferredCalendar === undefined) {
-      this.props.preferredCalendarSaveSuccess(calendar);
-    }
-
+    dueDate: Date,
+    title: string
+  ) =>
     RNCalendarEvents.saveEvent(title, {
       calendarId: calendar.id,
       startDate: formatDateAsReminder(dueDate),
@@ -298,6 +264,80 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       .catch(_ =>
         showToast(I18n.t("messages.cta.reminderAddFailure"), "danger")
       );
+
+  private confirmSaveCalendarEventAlert = (
+    calendar: Calendar,
+    message: CreatedMessageWithContent,
+    dueDate: Date,
+    title: string,
+    eventId: string
+  ) =>
+    Alert.alert(
+      I18n.t("messages.cta.reminderAlertTitle"),
+      I18n.t("messages.cta.reminderAlertDescription"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("messages.cta.reminderAlertKeep"),
+          style: "default",
+          onPress: () =>
+            this.setState(
+              {
+                isEventInDeviceCalendar: true
+              },
+              () => {
+                // Add the calendar event to the store
+                this.props.addCalendarEvent({
+                  messageId: message.id,
+                  eventId
+                });
+              }
+            )
+        },
+        {
+          text: I18n.t("messages.cta.reminderAlertAdd"),
+          style: "default",
+          onPress: () =>
+            this.saveCalendarEvent(calendar, message, dueDate, title)
+        }
+      ],
+      { cancelable: false }
+    );
+
+  private addCalendarEventToDeviceCalendar = (
+    message: CreatedMessageWithContent,
+    dueDate: Date
+  ) => (calendar: Calendar) => {
+    const title = I18n.t("messages.cta.reminderTitle", {
+      title: message.content.subject
+    });
+    // tslint:disable-next-line: no-commented-code
+    const { preferredCalendar } = this.props;
+
+    this.props.hideModal();
+
+    if (preferredCalendar === undefined) {
+      this.props.preferredCalendarSaveSuccess(calendar);
+    }
+
+    // tslint:disable-next-line: no-floating-promises
+    this.searchEventInCalendar(dueDate, title)
+      .then(
+        eventId =>
+          eventId
+            ? this.confirmSaveCalendarEventAlert(
+                calendar,
+                message,
+                dueDate,
+                title,
+                eventId
+              )
+            : this.saveCalendarEvent(calendar, message, dueDate, title)
+      )
+      .catch(() => this.saveCalendarEvent(calendar, message, dueDate, title));
   };
 
   private removeCalendarEventFromDeviceCalendar = (
@@ -318,65 +358,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
           showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger")
         );
     } else {
-      const endDate =
-        this.props.message.content.due_date !== undefined
-          ? this.props.message.content.due_date
-          : undefined;
-      const title = I18n.t("messages.cta.reminderTitle", {
-        title: this.props.message.content.subject
-      });
-      if (endDate !== undefined) {
-        const startDate = new Date(endDate.getTime());
-        RNCalendarEvents.fetchAllEvents(
-          formatDateAsReminder(
-            new Date(startDate.setDate(endDate.getDate() - 1))
-          ),
-          formatDateAsReminder(endDate)
-        )
-          .then(
-            events => {
-              if (events) {
-                // tslint:disable-next-line: no-identical-functions
-                const event = events.find(e => {
-                  return (
-                    e.title === title &&
-                    new Date(e.endDate).getDay() === endDate.getDay()
-                  );
-                });
-                if (event) {
-                  showToast(
-                    I18n.t("messages.cta.reminderRemoveSuccess"),
-                    "success"
-                  );
-                  RNCalendarEvents.removeEvent(event.id)
-                    .then(_ => {
-                      showToast(
-                        I18n.t("messages.cta.reminderRemoveSuccess"),
-                        "success"
-                      );
-                      this.props.removeCalendarEvent({
-                        messageId: this.props.message.id
-                      });
-                      this.setState({
-                        isEventInDeviceCalendar: false
-                      });
-                    })
-                    .catch(_ =>
-                      showToast(
-                        I18n.t("messages.cta.reminderRemoveFailure"),
-                        "danger"
-                      )
-                    );
-                }
-              }
-            },
-            // handle promise rejection
-            () => {
-              showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger");
-            }
-          )
-          .catch();
-      }
+      showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger");
     }
   };
 
