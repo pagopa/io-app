@@ -183,7 +183,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   );
 
   if (isNone(maybeUserProfile)) {
-    // Start again if we can't load the profile but wait a wail
+    // Start again if we can't load the profile but wait a while
     yield call(startTimer, WAIT_INITIALIZE_SAGA);
     yield put(startApplicationInitialization());
     return;
