@@ -40,7 +40,7 @@ export function* checkAcknowledgedEmailSaga(
     }
   } else {
     // the profile has no email address, user must insert it
-    // insert screen knows if the user comes from onboarding or not
+    // EmailInsertScreen knows if the user comes from onboarding or not
     // if he comes from onboarding on email inserted the navigation will focus EmailReadScreen
     yield put(navigateToEmailInsertScreen());
   }

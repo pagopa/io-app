@@ -142,6 +142,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private handleGoBack = () => {
+    // goback if the onboarding is completed or the email is set (user could edit his email and go back without saving)
     if (this.props.isOnboardingCompleted || this.props.optionEmail.isSome()) {
       this.props.navigation.goBack();
     } else {
@@ -183,12 +184,16 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         showToast(I18n.t("email.edit.upsert_ko"), "danger");
       } else if (pot.isSome(this.props.profile)) {
         // user is inserting his email from onboarding phase
+        // he comes from checkAcknowledgedEmailSaga if onboarding is not finished yet
+        // and he has not an email
         if (
           !this.props.isOnboardingCompleted &&
           prevProps.optionEmail.isNone()
         ) {
-          // since this screen is mounted from saga it won't be unmounted
-          // so we have to force a reset and navigate to emailReadScreen
+          // since this screen is mounted from saga it won't be unmounted because on saga
+          // we have a direct navigation instead of back
+          // so we have to force a reset (to get this screen unmounted) and navigate to emailReadScreen
+          // isMounted is used as a guard to prevent update while the screen is unmounting
           this.setState({ isMounted: false }, () => {
             this.props.acknowledgeEmailInsert();
             const resetAction = StackActions.reset({
