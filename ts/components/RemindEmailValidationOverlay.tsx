@@ -39,7 +39,7 @@ import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
 
 type OwnProp = {
-  onForcedClose: () => void;
+  closeModalAndNavigateToEmailInsertScreen: () => void;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -243,7 +243,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           disabled: this.state.isLoading,
           onPress: () => {
             if (!isOnboardingCompleted) {
-              this.props.onForcedClose();
+              this.props.closeModalAndNavigateToEmailInsertScreen();
             }
             this.props.navigateToEmailInsertScreen();
           },

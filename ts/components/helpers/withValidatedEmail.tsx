@@ -55,8 +55,9 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
   };
 
   private handleForcedClose = () => {
-    // this.state.forceNavigationEvents should be true only when onDidFocus isn't triggered
     // due a known bug (see https://github.com/react-navigation/react-navigation/issues/4867)
+    // when the user is in onboarding phase and he asks to go to insert email screen
+    // the navigation is forced reset
     const resetAction = StackActions.reset({
       index: 0,
       actions: [navigateToEmailInsertScreen()]
@@ -74,7 +75,9 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
           onWillFocus={() => {
             this.props.showModal(
               <RemindEmailValidationOverlay
-                onForcedClose={this.handleForcedClose}
+                closeModalAndNavigateToEmailInsertScreen={
+                  this.handleForcedClose
+                }
               />
             );
           }}
