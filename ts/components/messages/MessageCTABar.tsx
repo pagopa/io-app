@@ -184,50 +184,50 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   private checkIfEventInCalendar = (
     calendarEvent: CalendarEvent | undefined
   ) => {
-    if (calendarEvent) {
-      checkAndRequestPermission()
-        .then(
-          hasPermission => {
-            if (hasPermission) {
-              RNCalendarEvents.findEventById(calendarEvent.eventId)
-                .then(
-                  event => {
-                    if (event) {
-                      // The event is in the store and also in the device calendar
-                      // Update the state to display and handle the reminder button correctly
-                      this.setState({
-                        isEventInDeviceCalendar: true
-                      });
-                    } else {
-                      // The event is in the store but not in the device calendar.
-                      // Remove it from store too
-                      this.props.removeCalendarEvent(calendarEvent);
-                    }
-                  },
-                  // handle promise rejection
-                  () => {
-                    this.setState({
-                      isEventInDeviceCalendar: false
-                    });
-                  }
-                )
-                .catch();
-            }
-          },
-          // handle promise rejection
-          // tslint:disable-next-line: no-identical-functions
-          () => {
-            this.setState({
-              isEventInDeviceCalendar: false
-            });
-          }
-        )
-        .catch();
-    } else {
+    if (calendarEvent === undefined) {
       this.setState({
         isEventInDeviceCalendar: false
       });
+      return;
     }
+    checkAndRequestPermission()
+      .then(
+        hasPermission => {
+          if (hasPermission) {
+            RNCalendarEvents.findEventById(calendarEvent.eventId)
+              .then(
+                event => {
+                  if (event) {
+                    // The event is in the store and also in the device calendar
+                    // Update the state to display and handle the reminder button correctly
+                    this.setState({
+                      isEventInDeviceCalendar: true
+                    });
+                  } else {
+                    // The event is in the store but not in the device calendar.
+                    // Remove it from store too
+                    this.props.removeCalendarEvent(calendarEvent);
+                  }
+                },
+                // handle promise rejection
+                () => {
+                  this.setState({
+                    isEventInDeviceCalendar: false
+                  });
+                }
+              )
+              .catch();
+          }
+        },
+        // handle promise rejection
+        // tslint:disable-next-line: no-identical-functions
+        () => {
+          this.setState({
+            isEventInDeviceCalendar: false
+          });
+        }
+      )
+      .catch();
   };
 
   private saveCalendarEvent = (
