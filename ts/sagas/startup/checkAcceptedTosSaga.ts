@@ -1,28 +1,29 @@
 import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
-import { UserProfileUnion } from "../../api/backend";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccepted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
+import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
 
 export function* checkAcceptedTosSaga(
-  userProfile: UserProfileUnion
+  userProfile: InitializedProfile
 ): IterableIterator<Effect> {
   // The user has to explicitly accept the new version of ToS if:
   // - this is the first access
   // - the user profile stores the user accepted an old version of ToS
   if (
-    "accepted_tos_version" in userProfile &&
-    userProfile.accepted_tos_version &&
+    userProfile.accepted_tos_version !== undefined &&
     userProfile.accepted_tos_version >= tosVersion
   ) {
     return;
   }
-
   if (
-    !userProfile.has_profile ||
-    (userProfile.has_profile && "accepted_tos_version" in userProfile)
+    isProfileFirstOnBoarding(userProfile) || // first onboarding
+    !userProfile.has_profile || // profile is false
+    (userProfile.accepted_tos_version !== undefined &&
+      userProfile.accepted_tos_version < tosVersion) // accepted an older version of TOS
   ) {
     // Navigate to the TosScreen
     yield put(navigateToTosScreen);

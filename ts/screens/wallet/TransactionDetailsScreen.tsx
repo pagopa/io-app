@@ -21,6 +21,7 @@ import { connect } from "react-redux";
 import { ContextualHelp } from "../../components/ContextualHelp";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
@@ -116,6 +117,11 @@ const styles = StyleSheet.create({
     resizeMode: "contain"
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.detailsTransaction.contextualHelpTitle",
+  body: "wallet.detailsTransaction.contextualHelpContent"
+};
 
 class TransactionDetailsScreen extends React.Component<Props> {
   private displayedWallet(transactionWallet: Wallet | undefined) {
@@ -260,6 +266,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         )}
         hideHeader={true}
         hasDynamicSubHeader={false}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <NavigationEvents onWillFocus={this.handleWillFocus} />
         <Content

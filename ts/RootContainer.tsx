@@ -1,3 +1,6 @@
+/**
+ * The main container of the application with the IdentificationModal and the Navigator
+ */
 import { Root } from "native-base";
 import * as React from "react";
 import {
@@ -9,7 +12,6 @@ import {
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
-
 import { initialiseInstabug } from "./boot/configureInstabug";
 import configurePushNotifications from "./boot/configurePushNotification";
 import FlagSecureComponent from "./components/FlagSecure";
@@ -30,9 +32,6 @@ import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 // tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-/**
- * The main container of the application with the ConnectionBar and the Navigator
- */
 class RootContainer extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
@@ -90,10 +89,6 @@ class RootContainer extends React.PureComponent<Props> {
 
     AppState.removeEventListener("change", this.handleApplicationActivity);
   }
-
-  // public shouldComponentUpdate(_: Props): boolean {
-  //   return false;
-  // }
 
   public componentDidUpdate() {
     // FIXME: the logic here is a bit weird: there is an event handler

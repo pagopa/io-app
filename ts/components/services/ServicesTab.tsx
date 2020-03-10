@@ -5,9 +5,9 @@ import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
-import * as React from "react";
 import { createFactory } from "react";
-import { Animated, StyleSheet, TouchableOpacity } from "react-native";
+import * as React from "react";
+import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -48,7 +48,7 @@ type OwnProps = Readonly<{
     selectedItemIds: Option<Set<string>>
   ) => void;
   onItemSwitchValueChanged: (service: ServicePublic, value: boolean) => void;
-  tabOffset: Animated.Value;
+  tabScrollOffset: Animated.Value;
 }>;
 
 type Props = OwnProps &
@@ -62,8 +62,11 @@ const styles = StyleSheet.create({
   organizationLogo: {
     marginBottom: 0
   },
-  icon: {
-    paddingHorizontal: (24 - ICON_SIZE) / 2 // (io-right icon width) - (io-trash icon width)
+  iconContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: (24 - ICON_SIZE) / 2 // (io-right icon width) - (io-trash icon width),
   }
 });
 
@@ -140,31 +143,27 @@ class ServicesTab extends React.PureComponent<Props> {
   private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => {
     return (
       <TouchableOpacity onPress={() => this.onPressItem(section)}>
-        <IconFont
-          name={"io-trash"}
-          color={customVariables.brandMildGray}
-          size={ICON_SIZE}
-          style={styles.icon}
-        />
+        <View style={styles.iconContainer}>
+          <IconFont
+            name={"io-trash"}
+            color={customVariables.brandMildGray}
+            size={ICON_SIZE}
+          />
+        </View>
       </TouchableOpacity>
     );
   };
 
-  private onTabScroll = (tabOffset: Animated.Value) => {
+  private onTabScroll = () => {
     return {
-      onScroll: Animated.event(
-        [
-          {
-            nativeEvent: {
-              contentOffset: {
-                y: tabOffset
-              }
-            }
+      onScroll: Animated.event([
+        {
+          nativeEvent: {
+            contentOffset: { y: this.props.tabScrollOffset }
           }
-        ],
-        { useNativeDriver: true }
-      ),
-      scrollEventThrottle: 8 // target is 120fps
+        }
+      ]),
+      scrollEventThrottle: 8
     };
   };
 
@@ -189,7 +188,7 @@ class ServicesTab extends React.PureComponent<Props> {
         onLongPressItem={this.props.handleOnLongPressItem}
         isLongPressEnabled={this.props.isLongPressEnabled}
         onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
-        animated={this.onTabScroll(this.props.tabOffset)}
+        animated={this.onTabScroll()}
         renderRightIcon={
           this.props.isLocal ? this.renderLocalQuickSectionDeletion : undefined
         }

@@ -11,7 +11,7 @@ import Config from "react-native-config";
 export const DEFAULT_APPLICATION_NAME = "io.italia.it";
 
 // default repository for fetching app content (e.g. services metadata)
-const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/teamdigitale/io-services-metadata/master" as NonEmptyString;
+const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/pagopa/io-services-metadata/master" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 5000;
@@ -44,8 +44,6 @@ export const isCIEauthenticationEnabled: boolean =
   Config.CIE_AUTHENTICATION_ENABLED === "YES";
 export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
-export const isEmailEditingAndValidationEnabled: boolean =
-  Config.EMAIL_EDITING_AND_VALIDATION_ENABLED === "YES";
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 export const instabugToken: string = Config.INSTABUG_TOKEN;

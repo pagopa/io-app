@@ -1,165 +1,353 @@
 /**
- * A component to remind the user to validate his/her email
+ * A component to remind the user to validate his email
  */
+import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, BackHandler, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { isEmailEditingAndValidationEnabled } from "../config";
 import {
   navigateBack,
   navigateToEmailInsertScreen
 } from "../store/actions/navigation";
+import {
+  abortOnboarding,
+  emailAcknowledged
+} from "../store/actions/onboarding";
+import {
+  acknowledgeOnEmailValidation,
+  profileLoadRequest,
+  startEmailValidation
+} from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
+import { emailValidationSelector } from "../store/reducers/emailValidation";
+import { isOnboardingCompletedSelector } from "../store/reducers/navigationHistory";
+import {
+  isProfileEmailValidatedSelector,
+  profileEmailSelector,
+  profileSelector
+} from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-import TopScreenComponent from "./screens/TopScreenComponent";
+import TopScreenComponent, {
+  TopScreenComponentProps
+} from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
+import IconFont from "./ui/IconFont";
+import Markdown from "./ui/Markdown";
+
+type OwnProp = {
+  closeModalAndNavigateToEmailInsertScreen: () => void;
+};
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  OwnProp;
 
 type State = {
-  dispatched: boolean;
+  ctaSendEmailValidationText: string;
+  isLoading: boolean;
+  isCtaSentEmailValidationDisabled: boolean;
+  isContentLoadCompleted: boolean;
+  emailHasBeenValidate: boolean;
 };
 
 const styles = StyleSheet.create({
-  imageChecked: { alignSelf: "center" },
-  emailTitle: { textAlign: "center" }
+  imageChecked: {
+    alignSelf: "center"
+  },
+  emailTitle: {
+    textAlign: "center"
+  }
 });
 
+const emailSentTimeout = 10000 as Millisecond; // 10 seconds
+const profilePolling = 5000 as Millisecond; // 5 seconds
+
+const EMPTY_EMAIL = "";
+
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
+  private idTimeout?: number;
+  private idPolling?: number;
+
   constructor(props: Props) {
     super(props);
     this.state = {
-      dispatched: false
+      ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+      isLoading: false,
+      isContentLoadCompleted: false,
+      isCtaSentEmailValidationDisabled: false,
+      emailHasBeenValidate: false
     };
   }
 
-  private handleOkPress = () => {
-    this.setState(
-      {
-        dispatched: true
-      },
-      this.props.validateEmail
-    );
-  };
-
-  private handleBackPress = () => {
-    this.props.navigateBack();
-    return true;
-  };
-
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    BackHandler.addEventListener("hardwareBackPress", this.props.navigateBack);
+    // Periodically check if the user validate his own email address
+    // tslint:disable-next-line: no-object-mutation
+    this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
+    this.props.reloadProfile();
+    // since we are here, set the user doesn't acknowledge about the email validation
+    this.props.dispatchAcknowledgeOnEmailValidation(some(false));
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.props.navigateBack
+    );
+    // if a timeout is running we have to stop it
+    if (this.idTimeout !== undefined) {
+      clearTimeout(this.idTimeout);
+    }
+    clearInterval(this.idPolling);
   }
 
-  public componentDidUpdate(prevprops: Props, prevstate: State) {
-    const { isValidEmail } = this.props;
-    const { dispatched } = this.state;
-    // The dispatched property is used to store the information that the user
-    // has pressed on the OK button, a new email validation is requested.
-    // In the case where the request has been made and the user's email is still invalid,
-    // the navigateBack is called, otherwise the component will be automatically
-    // unmounted from the withValidatedEmail HOC
-    if (
-      !prevprops.isValidEmail &&
-      !isValidEmail &&
-      prevstate.dispatched &&
-      dispatched
-    ) {
-      this.setState(
-        {
-          dispatched: false
-        },
-        this.props.navigateBack
-      );
+  private handleSendEmailValidationButton = () => {
+    // send email validation only if it exists
+    this.props.optionEmail.map(_ => {
+      this.props.sendEmailValidation();
+    });
+    this.setState({
+      isLoading: true,
+      isCtaSentEmailValidationDisabled: true
+    });
+  };
+
+  private handleOnClose = () => {
+    // do nothing if it is loading
+    if (this.state.isLoading) {
+      return;
+    }
+    this.props.dispatchAcknowledgeOnEmailValidation(none);
+    this.props.reloadProfile();
+    if (!this.props.isOnboardingCompleted) {
+      this.props.acknowledgeEmailInsert();
+    } else {
+      this.props.navigateBack();
+    }
+  };
+
+  public componentDidUpdate(prevProps: Props) {
+    // if we were sending again the validation email
+    if (pot.isLoading(prevProps.emailValidationRequest)) {
+      // and we got an error
+      if (pot.isError(this.props.emailValidationRequest)) {
+        this.setState({
+          ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+          isLoading: false,
+          isCtaSentEmailValidationDisabled: false
+        });
+      } else if (pot.isSome(this.props.emailValidationRequest)) {
+        // schedule a timeout to make the cta button disabled and showing inside
+        // the string that email has been sent.
+        // after timeout we restore the default state
+        // tslint:disable-next-line: no-object-mutation
+        this.idTimeout = setTimeout(() => {
+          // tslint:disable-next-line: no-object-mutation
+          this.idTimeout = undefined;
+          this.setState({
+            ctaSendEmailValidationText: I18n.t("email.validate.cta"),
+            isCtaSentEmailValidationDisabled: false
+          });
+        }, emailSentTimeout);
+        this.setState({
+          ctaSendEmailValidationText: I18n.t("email.validate.sent"),
+          isLoading: false
+        });
+      }
+    }
+
+    // if the email becomes validated
+    if (!prevProps.isEmailValidated && this.props.isEmailValidated) {
+      // and the user doesn't acknowledgeknow about validation
+      this.props.acknowledgeOnEmailValidated.map(v => {
+        if (v === false && this.state.emailHasBeenValidate === false) {
+          this.setState({ emailHasBeenValidate: true });
+        }
+      });
     }
   }
 
-  public render() {
-    const { optionProfile } = this.props;
-    const profileEmail = optionProfile
-      .map(_ => untag(_.spid_email))
-      .getOrElse("");
-    return (
-      <TopScreenComponent
-        customRightIcon={{
-          iconName: "io-close",
-          onPress: this.props.navigateBack
-        }}
-      >
-        <Content>
-          <Image
-            style={styles.imageChecked}
-            source={require("../../img/email-checked-icon.png")}
-          />
-          <View spacer={true} extralarge={true} />
-          <H2 style={styles.emailTitle}>{I18n.t("reminders.email.title")}</H2>
-          <View spacer={true} />
-          <Text>
-            {I18n.t("reminders.email.modal1")}
-            <Text bold={true}>{` ${profileEmail}: `}</Text>
-            {I18n.t("reminders.email.modal2")}
-          </Text>
-          <View spacer={true} />
-          <Button
-            block={true}
-            light={true}
-            bordered={true}
-            onPress={() => {
-              // https://www.pivotaltracker.com/story/show/168247365
-              Alert.alert(I18n.t("global.notImplemented"));
-            }}
-          >
-            <Text>{I18n.t("reminders.email.button1")}</Text>
-          </Button>
-        </Content>
+  private contextualHelp = {
+    title: I18n.t("email.validate.title"),
+    body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
+  };
 
+  private handleOnboardingGoBack = () =>
+    Alert.alert(
+      I18n.t("onboarding.alert.title"),
+      I18n.t("onboarding.alert.description"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "default",
+          onPress: () => this.props.abortOnboarding()
+        }
+      ]
+    );
+
+  private customOnboardingGoBack = (
+    <IconFont name={"io-back"} onPress={this.handleOnboardingGoBack} />
+  );
+
+  private onMainProps: TopScreenComponentProps = {
+    customRightIcon: {
+      iconName: "io-close",
+      onPress: this.props.navigateBack
+    }
+  };
+
+  private onBoardingProps: TopScreenComponentProps = {
+    headerTitle: I18n.t("email.validate.header"),
+    title: I18n.t("email.validate.title"),
+    customGoBack: this.customOnboardingGoBack
+  };
+
+  private handleOnContentLoadEnd = () => {
+    this.setState({ isContentLoadCompleted: true });
+  };
+
+  private renderFooter = () => {
+    const { isOnboardingCompleted } = this.props;
+    // if the email has been validated
+    // show only a button to continuer
+    if (this.state.emailHasBeenValidate) {
+      return (
         <FooterWithButtons
-          type={"TwoButtonsInlineThirdInverted"}
+          type={"SingleButton"}
           leftButton={{
             block: true,
-            bordered: true,
-            onPress: () => {
-              this.setState(
-                {
-                  dispatched: false
-                },
-                this.props.navigateToEmailInsertScreen
-              );
-            },
-            title: I18n.t("reminders.email.button2")
-          }}
-          rightButton={{
-            block: true,
             primary: true,
-            onPress: this.handleOkPress,
-            title: I18n.t("global.buttons.ok")
+            onPress: this.handleOnClose,
+            disabled: this.state.isLoading,
+            title: I18n.t("global.buttons.continue")
           }}
         />
+      );
+    }
+    // show two buttons where the left one is a CTA
+    // to edit again the email
+    return (
+      <FooterWithButtons
+        type={"TwoButtonsInlineThirdInverted"}
+        leftButton={{
+          block: true,
+          bordered: true,
+          disabled: this.state.isLoading,
+          onPress: () => {
+            if (!isOnboardingCompleted) {
+              this.props.closeModalAndNavigateToEmailInsertScreen();
+            }
+            this.props.navigateToEmailInsertScreen();
+          },
+          title: I18n.t("email.edit.title")
+        }}
+        rightButton={{
+          block: true,
+          primary: true,
+          onPress: this.handleOnClose,
+          disabled: this.state.isLoading,
+          title: isOnboardingCompleted
+            ? I18n.t("global.buttons.ok")
+            : I18n.t("global.buttons.continue")
+        }}
+      />
+    );
+  };
+
+  public render() {
+    const email = this.props.optionEmail.getOrElse(EMPTY_EMAIL);
+    const { isOnboardingCompleted } = this.props;
+    const image = this.state.emailHasBeenValidate
+      ? require("../../img/email-checked-icon_ok.png")
+      : require("../../img/email-checked-icon.png");
+    const title = this.state.emailHasBeenValidate
+      ? I18n.t("email.validate.validated")
+      : I18n.t("email.validate.title");
+    return (
+      <TopScreenComponent
+        {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
+        contextualHelp={this.contextualHelp}
+      >
+        <Content>
+          <React.Fragment>
+            <Image style={styles.imageChecked} source={image} />
+            <View spacer={true} extralarge={true} />
+          </React.Fragment>
+          <H2 style={isOnboardingCompleted ? styles.emailTitle : undefined}>
+            {title}
+          </H2>
+          <View spacer={true} />
+          {!this.state.emailHasBeenValidate ? (
+            <Markdown onLoadEnd={this.handleOnContentLoadEnd}>
+              {isOnboardingCompleted
+                ? I18n.t("email.validate.content2", { email })
+                : I18n.t("email.validate.content1", { email })}
+            </Markdown>
+          ) : (
+            <Text>{I18n.t("email.validate.validated_ok")}</Text>
+          )}
+          <View spacer={true} />
+          {this.state.isContentLoadCompleted &&
+            !this.state.emailHasBeenValidate && (
+              <Button
+                block={true}
+                light={true}
+                bordered={true}
+                disabled={
+                  this.state.isLoading ||
+                  this.state.isCtaSentEmailValidationDisabled
+                }
+                onPress={this.handleSendEmailValidationButton}
+              >
+                <Text>{this.state.ctaSendEmailValidationText}</Text>
+              </Button>
+            )}
+          <View spacer={true} large={true} />
+        </Content>
+        {(this.state.emailHasBeenValidate ||
+          this.state.isContentLoadCompleted) &&
+          this.renderFooter()}
       </TopScreenComponent>
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(state.profile),
-  isValidEmail: !isEmailEditingAndValidationEnabled && !!state // TODO: get the proper isValidEmail from store
-});
+const mapStateToProps = (state: GlobalState) => {
+  const isEmailValidated = isProfileEmailValidatedSelector(state);
+  const emailValidation = emailValidationSelector(state);
+  const potProfile = profileSelector(state);
+  return {
+    emailValidationRequest: emailValidation.sendEmailValidationRequest,
+    acknowledgeOnEmailValidated: emailValidation.acknowledgeOnEmailValidated,
+    optionEmail: profileEmailSelector(state),
+    isEmailValidated,
+    potProfile,
+    isOnboardingCompleted: isOnboardingCompletedSelector(state)
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  sendEmailValidation: () => dispatch(startEmailValidation.request()),
   navigateBack: () => dispatch(navigateBack()),
-  validateEmail: () => undefined, // TODO: add onPress of email verification https://www.pivotaltracker.com/story/show/168662501
+  reloadProfile: () => {
+    // Refresh profile to check if the email address has been validated
+    dispatch(profileLoadRequest());
+  },
   navigateToEmailInsertScreen: () => {
-    dispatch(navigateToEmailInsertScreen({ isFromProfileSection: true }));
-  }
+    dispatch(navigateToEmailInsertScreen());
+  },
+  acknowledgeEmailInsert: () => dispatch(emailAcknowledged()),
+  dispatchAcknowledgeOnEmailValidation: (maybeAcknowledged: Option<boolean>) =>
+    dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
+  abortOnboarding: () => dispatch(abortOnboarding())
 });
 
 export default connect(

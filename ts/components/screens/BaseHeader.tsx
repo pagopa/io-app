@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
+import { navigateBack } from "../../store/actions/navigation";
+import { Dispatch } from "../../store/actions/types";
 import { isSearchEnabledSelector } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
@@ -12,6 +14,7 @@ import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
 import { InstabugButtons } from "../InstabugButtons";
 import SearchButton, { SearchType } from "../search/SearchButton";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
 
 const styles = StyleSheet.create({
@@ -39,11 +42,50 @@ interface OwnProps {
     iconName: string;
     onPress: () => void;
   };
+  customGoBack?: React.ReactNode;
 }
 
-type Props = OwnProps & ReturnType<typeof mapStateToProps>;
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 class BaseHeaderComponent extends React.PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.getGoBackHandler = this.getGoBackHandler.bind(this);
+  }
+
+  /**
+   * if go back is a function it will be returned
+   * otherwise the default goback navigation will be returned
+   */
+  private getGoBackHandler() {
+    return typeof this.props.goBack === "function"
+      ? this.props.goBack()
+      : this.props.navigateBack();
+  }
+
+  private renderHeader = () => {
+    const { customGoBack, headerTitle } = this.props;
+    // if customGoBack is provided only the header text will be rendered
+    if (customGoBack) {
+      return (
+        <Text white={this.props.primary} numberOfLines={1}>
+          {headerTitle}
+        </Text>
+      );
+    }
+    // if no customGoBack is provided also the header text could be press to execute goBack
+    // note goBack could a boolean or a function (check this.getGoBackHandler)
+    return (
+      <TouchableDefaultOpacity onPress={this.getGoBackHandler}>
+        <Text white={this.props.primary} numberOfLines={1}>
+          {headerTitle}
+        </Text>
+      </TouchableDefaultOpacity>
+    );
+  };
+
   public render() {
     const { goBack, headerTitle, body, isSearchEnabled, dark } = this.props;
     return (
@@ -56,13 +98,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
         {!isSearchEnabled && (
           <Body style={goBack ? {} : styles.noLeft}>
-            {body
-              ? body
-              : headerTitle && (
-                  <Text white={this.props.primary} numberOfLines={1}>
-                    {headerTitle}
-                  </Text>
-                )}
+            {body ? body : headerTitle && this.renderHeader()}
           </Body>
         )}
 
@@ -109,9 +145,27 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     );
   };
 
-  private renderLeft = () => {
-    const { isSearchEnabled, appLogo, goBack, primary, dark } = this.props;
+  private renderGoBack = () => {
+    const { goBack, dark, customGoBack } = this.props;
+    return customGoBack ? (
+      <Left>{customGoBack}</Left>
+    ) : (
+      goBack && (
+        <Left>
+          <GoBackButton
+            testID={"back-button"}
+            onPress={goBack}
+            accessible={true}
+            accessibilityLabel={I18n.t("global.buttons.back")}
+            white={dark}
+          />
+        </Left>
+      )
+    );
+  };
 
+  private renderLeft = () => {
+    const { isSearchEnabled, appLogo, primary } = this.props;
     return (
       !isSearchEnabled &&
       (appLogo ? (
@@ -124,17 +178,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
           </View>
         </Left>
       ) : (
-        goBack && (
-          <Left>
-            <GoBackButton
-              testID="back-button"
-              onPress={goBack}
-              accessible={true}
-              accessibilityLabel={I18n.t("global.buttons.back")}
-              white={dark}
-            />
-          </Left>
-        )
+        this.renderGoBack()
       ))
     );
   };
@@ -144,4 +188,13 @@ const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state)
 });
 
-export const BaseHeader = connect(mapStateToProps)(BaseHeaderComponent);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateBack: () => {
+    dispatch(navigateBack());
+  }
+});
+
+export const BaseHeader = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BaseHeaderComponent);
