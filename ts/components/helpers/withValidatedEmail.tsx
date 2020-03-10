@@ -8,11 +8,16 @@
 import { none } from "fp-ts/lib/Option";
 import React from "react";
 import { View } from "react-native";
-import { NavigationEvents } from "react-navigation";
+import {
+  NavigationEvents,
+  NavigationScreenProps,
+  StackActions
+} from "react-navigation";
 import { connect } from "react-redux";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import { acknowledgeOnEmailValidation } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
@@ -21,11 +26,8 @@ import { GlobalState } from "../../store/reducers/types";
 import { withConditionalView } from "./withConditionalView";
 
 export type ModalProps = LightModalContextInterface &
-  ReturnType<typeof mapDispatchToProps>;
-
-export type ModalState = Readonly<{
-  forceNavigationEvents: boolean;
-}>;
+  ReturnType<typeof mapDispatchToProps> &
+  NavigationScreenProps;
 
 /*
   ModalRemindEmailValidationOverlay is the component that allows viewing the email reminder via light modal.
@@ -34,15 +36,9 @@ export type ModalState = Readonly<{
     - ModalRemindEmailValidationOverlay is unmounted
     - A navigation request is made (eg navigationBack) and the onWillBlur listener is activated
       */
-class ModalRemindEmailValidationOverlay extends React.Component<
-  ModalProps,
-  ModalState
-> {
+class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
   constructor(props: ModalProps) {
     super(props);
-    this.state = {
-      forceNavigationEvents: true
-    };
   }
   public componentWillUnmount() {
     this.hideModal();
@@ -59,16 +55,22 @@ class ModalRemindEmailValidationOverlay extends React.Component<
   };
 
   private handleForcedClose = () => {
-    if (this.state.forceNavigationEvents) {
-      this.hideModal();
-    }
+    // this.state.forceNavigationEvents should be true only when onDidFocus isn't triggered
+    // due a known bug (see https://github.com/react-navigation/react-navigation/issues/4867)
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [navigateToEmailInsertScreen()]
+    });
+    this.props.navigation.dispatch(resetAction);
   };
 
   public render() {
     return (
       <View>
         <NavigationEvents
-          onWillBlur={this.hideModal}
+          onWillBlur={() => {
+            this.hideModal();
+          }}
           onWillFocus={() => {
             this.props.showModal(
               <RemindEmailValidationOverlay
@@ -76,7 +78,9 @@ class ModalRemindEmailValidationOverlay extends React.Component<
               />
             );
           }}
-          onDidFocus={() => this.setState({ forceNavigationEvents: false })}
+          onDidFocus={() => {
+            this.setState({ forceNavigationEvents: false });
+          }}
         />
       </View>
     );
