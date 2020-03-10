@@ -57,9 +57,10 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReduxProps &
   NavigationInjectedProps<NavigationParams>;
 
-interface State {
+type State = {
   uiEnabledChannels: EnabledChannels;
-}
+  isMarkdownLoaded: boolean;
+};
 
 const styles = StyleSheet.create({
   infoHeader: {
@@ -147,7 +148,39 @@ function renderInformationImageRow(
   );
 }
 
-// TODO: test
+/**
+ * return true if markdown is loaded (description is rendered inside a markdown component)
+ * return true if description doesn't exists but values are present
+ * return false in others cases
+ *
+ * this behavior is due to markdown loading: it could happen some items overlapped while the
+ * markdown content is loading. To avoid this, we wait the loading ends and then the items will
+ * be displayed
+ */
+export const canRenderItems = (
+  isMarkdownLoaded: boolean,
+  potServiceMetadata: ServiceMetadataState
+): boolean => {
+  const isServiceMetadataLoaded = pot.getOrElse(
+    pot.map(potServiceMetadata, sm => sm !== undefined),
+    false
+  );
+  const hasServiceMetadataDescription = pot.getOrElse(
+    pot.map(
+      potServiceMetadata,
+      sm => sm !== undefined && sm.description !== undefined
+    ),
+    false
+  );
+  // if service metadata is loaded
+  // return isMarkdownLoaded if it has a defined description field
+  // return true otherwise
+  if (isServiceMetadataLoaded) {
+    return hasServiceMetadataDescription ? isMarkdownLoaded : true;
+  }
+  return false;
+};
+
 class ServiceDetailsScreen extends React.Component<Props, State> {
   get serviceId() {
     return this.props.navigation.getParam("service").service_id;
@@ -162,7 +195,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       uiEnabledChannels: getEnabledChannelsForService(
         this.props.profile,
         this.serviceId
-      )
+      ),
+      isMarkdownLoaded: false
     };
   }
 
@@ -217,48 +251,64 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     );
   }
 
+  private onMarkdownEnd = () => {
+    this.setState({ isMarkdownLoaded: true });
+  };
+
   private renderItems = (potServiceMetadata: ServiceMetadataState) => {
     if (pot.isSome(potServiceMetadata) && potServiceMetadata.value) {
       const metadata = potServiceMetadata.value;
       return (
         <React.Fragment>
           {metadata.description && (
-            <Markdown animated={true}>{metadata.description}</Markdown>
+            <Markdown
+              animated={true}
+              onLoadEnd={this.onMarkdownEnd}
+              onError={this.onMarkdownEnd}
+            >
+              {metadata.description}
+            </Markdown>
           )}
           {metadata.description && <View spacer={true} large={true} />}
-          {metadata.tos_url &&
-            renderInformationLinkRow(
-              I18n.t("services.tosLink"),
-              metadata.tos_url
-            )}
-          {metadata.privacy_url &&
-            renderInformationLinkRow(
-              I18n.t("services.privacyLink"),
-              metadata.privacy_url
-            )}
-          {(metadata.app_android || metadata.app_ios || metadata.web_url) && (
-            <H4 style={styles.infoHeader}>
-              {I18n.t("services.otherAppsInfo")}
-            </H4>
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) && (
+            <View>
+              {metadata.tos_url &&
+                renderInformationLinkRow(
+                  I18n.t("services.tosLink"),
+                  metadata.tos_url
+                )}
+              {metadata.privacy_url &&
+                renderInformationLinkRow(
+                  I18n.t("services.privacyLink"),
+                  metadata.privacy_url
+                )}
+              {(metadata.app_android ||
+                metadata.app_ios ||
+                metadata.web_url) && (
+                <H4 style={styles.infoHeader}>
+                  {I18n.t("services.otherAppsInfo")}
+                </H4>
+              )}
+              {metadata.web_url &&
+                renderInformationRow(
+                  I18n.t("services.otherAppWeb"),
+                  metadata.web_url,
+                  metadata.web_url
+                )}
+              {metadata.app_ios &&
+                renderInformationImageRow(
+                  I18n.t("services.otherAppIos"),
+                  metadata.app_ios,
+                  require("../../../img/badges/app-store-badge.png")
+                )}
+              {metadata.app_android &&
+                renderInformationImageRow(
+                  I18n.t("services.otherAppAndroid"),
+                  metadata.app_android,
+                  require("../../../img/badges/google-play-badge.png")
+                )}
+            </View>
           )}
-          {metadata.web_url &&
-            renderInformationRow(
-              I18n.t("services.otherAppWeb"),
-              metadata.web_url,
-              metadata.web_url
-            )}
-          {metadata.app_ios &&
-            renderInformationImageRow(
-              I18n.t("services.otherAppIos"),
-              metadata.app_ios,
-              require("../../../img/badges/app-store-badge.png")
-            )}
-          {metadata.app_android &&
-            renderInformationImageRow(
-              I18n.t("services.otherAppAndroid"),
-              metadata.app_android,
-              require("../../../img/badges/google-play-badge.png")
-            )}
         </React.Fragment>
       );
     }
@@ -493,14 +543,17 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           <H4 style={styles.infoHeader}>
             {I18n.t("services.contactsAndInfo")}
           </H4>
-          {renderInformationRow(
-            "C.F.",
-            service.organization_fiscal_code,
-            service.organization_fiscal_code,
-            "COPY"
-          )}
-          {this.renderContactItems(potServiceMetadata)}
-          {this.props.isDebugModeEnabled &&
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) &&
+            renderInformationRow(
+              "C.F.",
+              service.organization_fiscal_code,
+              service.organization_fiscal_code,
+              "COPY"
+            )}
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) &&
+            this.renderContactItems(potServiceMetadata)}
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) &&
+            this.props.isDebugModeEnabled &&
             renderInformationRow(
               "ID",
               service.service_id,
