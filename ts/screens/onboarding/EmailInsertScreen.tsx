@@ -142,9 +142,16 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private handleGoBack = () => {
-    // goback if the onboarding is completed or the email is set (user could edit his email and go back without saving)
-    if (this.props.isOnboardingCompleted || this.props.optionEmail.isSome()) {
+    // goback if the onboarding is completed
+    if (this.props.isOnboardingCompleted) {
       this.props.navigation.goBack();
+    }
+    // if the onboarding is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
+    // see https://www.pivotaltracker.com/story/show/171424350
+    else if (this.props.optionEmail.isSome()) {
+      this.setState({ isMounted: false }, () => {
+        this.navigateToEmailInsertScreen();
+      });
     } else {
       // if the user is in onboarding phase, go back has to
       // abort login (an user with no email can't access the home)
@@ -164,6 +171,14 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         ]
       );
     }
+  };
+
+  private navigateToEmailInsertScreen = () => {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [navigateToEmailReadScreen()]
+    });
+    this.props.navigation.dispatch(resetAction);
   };
 
   public componentDidMount() {
@@ -196,16 +211,12 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           // isMounted is used as a guard to prevent update while the screen is unmounting
           this.setState({ isMounted: false }, () => {
             this.props.acknowledgeEmailInsert();
-            const resetAction = StackActions.reset({
-              index: 0,
-              actions: [navigateToEmailReadScreen()]
-            });
-            this.props.navigation.dispatch(resetAction);
+            this.navigateToEmailInsertScreen();
           });
           return;
         }
         // go back (to the EmailReadScreen)
-        this.props.navigation.goBack();
+        this.handleGoBack();
       }
     }
 
