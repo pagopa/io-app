@@ -44,6 +44,8 @@ import {
   StartEmailValidationProcessT,
   updateProfileDefaultDecoder,
   UpdateProfileT,
+  upsertUserDataProcessingDefaultDecoder,
+  UpsertUserDataProcessingT,
   upsertUserMetadataDefaultDecoder,
   UpsertUserMetadataT
 } from "../../definitions/backend/requestTypes";
@@ -252,6 +254,15 @@ export function BackendClient(
     response_decoder: getUserDataProcessingDefaultDecoder()
   };
 
+  const createOrUpdateUserDataProcessingT: UpsertUserDataProcessingT = {
+    method: "post",
+    url: () => `/api/v1/user-data-processing`,
+    query: _ => ({}),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    body: _ => JSON.stringify(_.userDataProcessingChoiceRequest),
+    response_decoder: upsertUserDataProcessingDefaultDecoder()
+  };
+
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
     method: "put",
     url: params => `/api/v1/installations/${params.installationID}`,
@@ -344,6 +355,9 @@ export function BackendClient(
     ),
     getUserDataProcessing: withBearerToken(
       createFetchRequestForApi(getUserDataProcessingT, options)
+    ),
+    createOrUpdateUserDataProcessing: withBearerToken(
+      createFetchRequestForApi(createOrUpdateUserDataProcessingT, options)
     )
   };
 }

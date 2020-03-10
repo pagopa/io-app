@@ -76,7 +76,7 @@ import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
-import { watchLoadUserDataProcessing } from "./user/userDataProcessing";
+import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import {
   loadUserMetadata,
   watchLoadUserMetadata,
@@ -307,7 +307,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
   yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
-  yield fork(watchLoadUserDataProcessing, backendClient.getUserDataProcessing);
+  yield fork(
+    watchUserDataProcessingSaga,
+    backendClient.getUserDataProcessing,
+    backendClient.createOrUpdateUserDataProcessing
+  );
 
   // Load visible services and service details from backend when requested
   yield fork(watchLoadServicesSaga, backendClient);

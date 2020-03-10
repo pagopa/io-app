@@ -80,8 +80,6 @@ inbox:
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
-  contextualHelpTitle: Cosa puoi fare nel tuo Profilo
-  contextualHelpContent: !include profile/profile_account_main.md
   fiscalCode:
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
@@ -108,6 +106,8 @@ profile:
     screenTitle: Profilo
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
+    contextualHelpTitle: Cosa puoi fare nel tuo Profilo
+    contextualHelpContent: !include profile/profile_account_main.md
     cache:
       alert: Sei sicuro di voler eliminare la cache?
       clear: Elimina cache
@@ -121,31 +121,27 @@ profile:
     privacy:
       title: Privacy
       description: Esporta dati, cancella account
-      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
-      updated: E' necessario prendere visione della nuova versione dell'Informativa
-      text: !include profile/privacy.md
-      contextualHelpTitlePolicy: Cos'è l'informativa sul trattamento dei dati personali
-      contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
-      contextualHelpTitle: Le tue impostazioni di privacy
-      contextualHelpContent: !include profile/profile_privacy_main.md
-    termsAndConditions:
-      title: Termini e condizioni d'uso
-      description: Rivedi i termini e le condizioni d'uso dell'app
-    mainPrivacy:
-      screenTitle: Privacy
-      screenSubtitle: Qui trovi informazioni legate ai
-        tuoi dati personali.
-      privacyPolicy:
-        title: Privacy policy
-        description: Rivedi le regole sulla privacy che hai accettato
+      subtitle: Qui trovi informazioni legate ai tuoi dati personali.
       removeAccount:
         title: Cancella il tuo account
         description: Elimina sia dal telefono che da internet tutti i data ad esso
           associati (richiede SPID)
+        alert: Sei sicuro di voler cancellare il tuo account?
       exportData:
         title: Esporta i tuoi dati
         description: Ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
+        alert: sei sicuro di voler esportare tutti i tuoi dati?
+      privacyPolicy:
+        title: Privacy policy
+        description: Rivedi le regole sulla privacy che hai accettato
+        header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+        updated: E' necessario prendere visione della nuova versione dell'Informativa
+        text: !include profile/privacy.md
+        contextualHelpTitlePolicy: Cos'è l'informativa sul trattamento dei dati personali
+        contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
+        contextualHelpTitle: Le tue impostazioni di privacy
+        contextualHelpContent: !include profile/profile_privacy_main.md    
     developersSectionHeader: Sviluppatori
     experimentalFeatures:
       confirmTitle: Funzionalità sperimentali
@@ -175,6 +171,7 @@ profile:
       email: Indirizzo email
       spid_email: SPID email
       need_validate: Da validare
+      wip: In elaborazione
       mobile_phone: Numero di telefono
       language: Lingua
       digitalDomicile: Domicilio digitale

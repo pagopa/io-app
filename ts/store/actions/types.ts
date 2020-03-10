@@ -52,7 +52,6 @@ export type Action =
   | PersistedPreferencesActions
   | ProfileActions
   | UserMetadataActions
-  | UserDataProcessingActions
   | ServicesActions
   | WalletActions
   | ContentActions
@@ -64,7 +63,8 @@ export type Action =
   | SearchActions
   | PaymentsActions
   | OrganizationsActions
-  | InstabugInfoActions;
+  | InstabugInfoActions
+  | UserDataProcessingActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

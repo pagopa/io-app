@@ -71,15 +71,19 @@ class TosScreen extends React.PureComponent<Props> {
       >
         <Content noPadded={true}>
           <H4 style={[styles.boldH4, styles.horizontalPadding]}>
-            {I18n.t("profile.main.privacy.header")}
+            {I18n.t("profile.main.privacy.privacyPolicy.header")}
           </H4>
           {this.props.hasAcceptedOldTosVersion && (
             <View style={styles.alert}>
-              <Text>{I18n.t("profile.main.privacy.updated")}</Text>
+              <Text>
+                {I18n.t("profile.main.privacy.privacyPolicy.updated")}
+              </Text>
             </View>
           )}
           <View style={styles.horizontalPadding}>
-            <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
+            <Markdown>
+              {I18n.t("profile.main.privacy.privacyPolicy.text")}
+            </Markdown>
           </View>
         </Content>
 

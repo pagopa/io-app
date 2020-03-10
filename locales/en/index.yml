@@ -79,8 +79,6 @@ inbox:
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
-  contextualHelpTitle: What you can do in your Profile
-  contextualHelpContent: !include profile/profile_account_main.md
   fiscalCode:
     title: Your personal documents
     fiscalCode: Fiscal code
@@ -107,6 +105,8 @@ profile:
     screenTitle: Profile
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    contextualHelpTitle: What you can do in your Profile
+    contextualHelpContent: !include profile/profile_account_main.md
     cache:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
@@ -120,29 +120,26 @@ profile:
     privacy:
       title: Privacy
       description: Export data, delete account
-      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
-      updated: It is required to accept the new version of Terms and Conditions
-      text: !include profile/privacy.md
-      contextualHelpTitlePolicy: What is the information on the processing of personal data
-      contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
-      contextualHelpTitle: Your privacy settings
-      contextualHelpContent: !include profile/profile_privacy_main.md
-    termsAndConditions:
-      title: Terms and Conditions
-      description: Review Terms & Conditions of the app
-    mainPrivacy:
-      screenTitle: Privacy
-      screenSubtitle: Here you will find information related to your personal data.
-      privacyPolicy:
-        title: Privacy policy
-        description: Review accepted privacy terms
+      subtitle: Here you find information related to your personal data.        
       removeAccount:
         title: Delete your account
         description: Remove all data associated to your account from your phone and
           our systems (SPID required)
+        alert: Are you sure you want to delete your account?
       exportData:
         title: Export your data
         description: Send to your email all your account’s data in an open format
+        alert: Are you sure you want to export all your data?
+      privacyPolicy:
+        title: Privacy policy
+        description: Review the accepted privacy terms
+        header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+        updated: It is required to accept the new version of Terms and Conditions
+        text: !include profile/privacy.md
+        contextualHelpTitlePolicy: What is the information on the processing of personal data
+        contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
+        contextualHelpTitle: Your privacy settings
+        contextualHelpContent: !include profile/profile_privacy_main.md
     developersSectionHeader: Developers
     experimentalFeatures:
       confirmTitle: Experimental features
@@ -171,6 +168,7 @@ profile:
       email: Email address
       spid_email: SPID email
       need_validate: To be validated
+      wip: In progress
       mobile_phone: Mobile number
       language: Language
       digitalDomicile: Digital domicile

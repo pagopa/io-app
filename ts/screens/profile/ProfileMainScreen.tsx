@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.contextualHelpTitle",
-  body: "profile.contextualHelpContent"
+  title: "profile.main.contextualHelpTitle",
+  body: "profile.main.contextualHelpContent"
 };
 
 const getAppLongVersion = () => {
