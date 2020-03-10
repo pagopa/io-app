@@ -197,6 +197,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
         <TouchableDefaultOpacity onPress={this.showHelp}>
           <Text link={true}>{I18n.t("wallet.whyAFee.title")}</Text>
         </TouchableDefaultOpacity>
+        <View spacer={true} large={true} />
       </View>
     );
   }
