@@ -85,7 +85,10 @@ export default class FooterWithButtons extends React.Component<Props, never> {
               : styles.button
           }
         >
-          <Text numberOfLines={1} style={{ fontSize }}>
+          <Text
+            numberOfLines={1}
+            style={fontSize !== undefined ? { fontSize } : {}}
+          >
             {rightButtonTitle}
           </Text>
         </ButtonDefaultOpacity>
@@ -110,7 +113,9 @@ export default class FooterWithButtons extends React.Component<Props, never> {
           }
           {...otherPropsLeftButton}
         >
-          <Text style={{ fontSize }}>{leftButtonTitle}</Text>
+          <Text style={fontSize !== undefined ? { fontSize } : {}}>
+            {leftButtonTitle}
+          </Text>
         </ButtonDefaultOpacity>
         {this.renderRightButton()}
       </View>
