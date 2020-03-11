@@ -11,6 +11,10 @@ import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen
 } from "../../../store/actions/navigation";
+import {
+  emailAcknowledged,
+  emailInsert
+} from "../../../store/actions/onboarding";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
 
 const userProfileWithEmailAndValidated: InitializedProfile = {
@@ -66,6 +70,7 @@ describe("checkAcceptedTosSaga", () => {
           // read screen is wrapped in a HOC where if email is validate show ReadScreen
           // otherwise a screen that remembers to validate it
           .put(navigateToEmailReadScreen())
+          .dispatch(emailAcknowledged())
           .run()
       );
     });
@@ -79,7 +84,10 @@ describe("checkAcceptedTosSaga", () => {
     };
     it("should prompt the screen to insert it", () => {
       return expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
-        .put(navigateToEmailInsertScreen())
+        .put(navigateToEmailInsertScreen()) // go to email insert screen
+        .dispatch(emailInsert()) // dispatch email insert
+        .dispatch(navigateToEmailReadScreen()) // navigate to email read screen to remember the user to validate id
+        .dispatch(emailAcknowledged()) // press continue
         .run();
     });
   });
