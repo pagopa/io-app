@@ -1,5 +1,5 @@
 # team digitale
-# app_identifier "it.teamdigitale.app.IO" # The bundle identifier of your app
+app_identifier "it.teamdigitale.app.IO" # The bundle identifier of your app
 # pago pa
 #app_identifier "it.pagopa.app.io" # The bundle identifier of your app
 
