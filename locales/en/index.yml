@@ -371,7 +371,7 @@ email:
       provider account.
   insert:
     header: Activation
-    title: Insert your email
+    title: Insert email
     subtitle: Some IO app functionalities need your email.
     label: Personal email address
     alert: You are already using this email
@@ -379,7 +379,7 @@ email:
       title: Email
       content: !include email_insert_help.md
   edit:
-    title: Modify your email
+    title: Edit email
     subtitle: The email you inserted is
     validated: The email you inserted and validated is
     label: New personal email address
