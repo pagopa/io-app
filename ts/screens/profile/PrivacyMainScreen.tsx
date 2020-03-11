@@ -115,9 +115,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
         (pot.isLoading(prevProps.userDataDeletionProcessing) &&
           !pot.isLoading(this.props.userDataDeletionProcessing)))
     ) {
-      showToast(
-        I18n.t("profile.main.privacy.removeAccount.error")
-      );
+      showToast(I18n.t("profile.main.privacy.removeAccount.error"));
       this.setState({ isWaitingDeletion: false });
     }
 
@@ -128,9 +126,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
         (pot.isLoading(prevProps.userDataDownloadingProcessing) &&
           !pot.isLoading(this.props.userDataDownloadingProcessing)))
     ) {
-      showToast(
-        I18n.t("profile.main.privacy.exportData.error")
-      );
+      showToast(I18n.t("profile.main.privacy.exportData.error"));
       this.setState({ isWaitingDownloading: false });
     }
   }

@@ -65,7 +65,7 @@ class TosScreen extends React.PureComponent<Props> {
         goBack={this.handleGoBack}
         headerTitle={
           isProfile
-            ? I18n.t("profile.main.screenTitle")
+            ? I18n.t("profile.main.title")
             : I18n.t("onboarding.tos.headerTitle")
         }
       >
