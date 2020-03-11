@@ -12,7 +12,6 @@ import {
 
 import { BackendClient } from "../../api/backend";
 import { SagaCallReturnType } from "../../types/utils";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 /**
  * Load session info from the Backend
