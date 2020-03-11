@@ -6,9 +6,13 @@ import {
 import { UserDataProcessing } from "../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 
-export const manageUserDataProcessing = createStandardAction(
-  "MANAGE_USER_DATA_PROCESSESING"
-)<UserDataProcessingChoiceEnum>();
+export const manageUserDataDownloading = createStandardAction(
+  "MANAGE_USER_DATA_DOWNLOADING"
+)();
+
+export const manageUserDataDeletion = createStandardAction(
+  "MANAGE_USER_DATA_DELETION"
+)();
 
 export const loadUserDataProcessing = createAsyncAction(
   "USER_DATA_PROCESSING_LOAD_REQUEST",
@@ -36,4 +40,5 @@ export const upsertUserDataProcessing = createAsyncAction(
 export type UserDataProcessingActions =
   | ActionType<typeof loadUserDataProcessing>
   | ActionType<typeof upsertUserDataProcessing>
-  | ActionType<typeof manageUserDataProcessing>;
+  | ActionType<typeof manageUserDataDownloading>
+  | ActionType<typeof manageUserDataDeletion>;

@@ -2,6 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { UserDataProcessing } from "../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
+import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 import {
   loadUserDataProcessing,
@@ -65,6 +66,9 @@ const userDataProcessingReducer = (
         [action.payload.choice]: pot.some(action.payload)
       };
     }
+
+    case getType(clearCache):
+      return INITIAL_STATE;
 
     default:
       return state;

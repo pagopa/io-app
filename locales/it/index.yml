@@ -103,7 +103,7 @@ profile:
     load: Errore nel caricamento del profilo
     upsert: Errore nella creazione o nell'aggiornamento del profilo
   main:
-    screenTitle: Profilo
+    title: Profilo
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
     contextualHelpTitle: Cosa puoi fare nel tuo Profilo
@@ -125,13 +125,15 @@ profile:
       removeAccount:
         title: Cancella il tuo account
         description: Elimina sia dal telefono che da internet tutti i data ad esso
-          associati (richiede SPID)
+          associati
         alert: Sei sicuro di voler cancellare il tuo account?
+        error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
       exportData:
         title: Esporta i tuoi dati
         description: Ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
         alert: sei sicuro di voler esportare tutti i tuoi dati?
+        error: Si è verificato un errore nella richiesta di exportazione dei dati, riprova.
       privacyPolicy:
         title: Privacy policy
         description: Rivedi le regole sulla privacy che hai accettato
