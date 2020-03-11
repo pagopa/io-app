@@ -19,7 +19,7 @@ import { SagaCallReturnType } from "../../types/utils";
  * - checks if there are updates on the processing of a previous request
  * - sumbits a new request if the state is ClOSED or if this is the first request
  */
-function* manageUserDataProcessingSaga(
+export function* manageUserDataProcessingSaga(
   getUserDataProcessing: ReturnType<
     typeof BackendClient
   >["getUserDataProcessing"],
@@ -71,9 +71,7 @@ function* manageUserDataProcessingSaga(
         }
       }
     } else {
-      throw new Error(
-        "An error occurs while fetching data on user data processisng status"
-      );
+      throw "An error occurs while fetching data on user data processisng status"
     }
   } catch (e) {
     yield put(
@@ -85,7 +83,7 @@ function* manageUserDataProcessingSaga(
   }
 }
 
-function* upsertUserDataProcessingSaga(
+export function* upsertUserDataProcessingSaga(
   postUserDataProcessing: ReturnType<
     typeof BackendClient
   >["createOrUpdateUserDataProcessing"],
