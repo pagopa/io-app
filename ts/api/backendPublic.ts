@@ -15,16 +15,16 @@ type GetServerInfoT = IGetApiRequestType<
   BasicResponseType<ServerInfo>
 >;
 
-const ServicesStatus = t.interface({
+export const BackendServicesStatus = t.interface({
   status: t.string
 });
-export type ServicesStatus = t.TypeOf<typeof ServicesStatus>;
+export type BackendServicesStatus = t.TypeOf<typeof BackendServicesStatus>;
 
 type GetServicesStatusT = IGetApiRequestType<
   {},
   never,
   never,
-  BasicResponseType<ServicesStatus>
+  BasicResponseType<BackendServicesStatus>
 >;
 
 //
@@ -50,10 +50,10 @@ export function BackendPublicClient(
 
   const getServiceStatusT: GetServicesStatusT = {
     method: "get",
-    url: () => "/ping",
+    url: () => "/status",
     query: _ => ({}),
     headers: () => ({}),
-    response_decoder: basicResponseDecoder(ServicesStatus)
+    response_decoder: basicResponseDecoder(BackendServicesStatus)
   };
 
   return {

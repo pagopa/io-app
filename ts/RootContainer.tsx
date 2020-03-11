@@ -74,7 +74,8 @@ class RootContainer extends React.PureComponent<Props> {
     } else {
       Linking.addEventListener("url", this.handleOpenUrlEvent);
     }
-
+    // boot: send the status of the application
+    this.handleApplicationActivity(AppState.currentState);
     AppState.addEventListener("change", this.handleApplicationActivity);
     // Hide splash screen
     SplashScreen.hide();
