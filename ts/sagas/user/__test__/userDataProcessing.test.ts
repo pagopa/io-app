@@ -1,114 +1,130 @@
-import { testSaga } from "redux-saga-test-plan"
-import { manageUserDataProcessingSaga, upsertUserDataProcessingSaga } from '../userDataProcessing'
-import { UserDataProcessingChoiceEnum } from '../../../../definitions/backend/UserDataProcessingChoice';
-import { loadUserDataProcessing } from '../../../store/actions/userDataProcessing';
-import { right, left } from 'fp-ts/lib/Either';
-import { UserDataProcessing } from '../../../../definitions/backend/UserDataProcessing';
-import { UserDataProcessingStatusEnum } from '../../../../definitions/backend/UserDataProcessingStatus';
+import { right } from "fp-ts/lib/Either";
+import { testSaga } from "redux-saga-test-plan";
+import { UserDataProcessing } from "../../../../definitions/backend/UserDataProcessing";
+import { UserDataProcessingChoiceEnum } from "../../../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../../definitions/backend/UserDataProcessingStatus";
+import {
+  loadUserDataProcessing,
+  upsertUserDataProcessing
+} from "../../../store/actions/userDataProcessing";
+import {
+  manageUserDataProcessingSaga,
+  upsertUserDataProcessingSaga
+} from "../userDataProcessing";
 
-describe('manageUserDataProcessingSaga', () => {
-    const getUserDataProcessing = jest.fn();
-    const createOrUpdateUserDataProcessing = jest.fn();
-    const choice = UserDataProcessingChoiceEnum.DOWNLOAD;
-    
-    it('while managing the first request of data export, check if previous request are WIP and, otherwise, submit a new request', () => {
-        
-        const nextData: UserDataProcessing = {
-            choice,
-            status: UserDataProcessingStatusEnum.PENDING,
-            version: 1
-        }
-        const get404Response = right({status: 404});
+describe("manageUserDataProcessingSaga", () => {
+  const getUserDataProcessing = jest.fn();
+  const createOrUpdateUserDataProcessing = jest.fn();
+  const choice = UserDataProcessingChoiceEnum.DOWNLOAD;
 
-        testSaga(
-            manageUserDataProcessingSaga, 
-            getUserDataProcessing, 
-            createOrUpdateUserDataProcessing, 
-            choice)
-        .next()
-        .put(loadUserDataProcessing.request(choice))
-        .next()
-        .call(getUserDataProcessing, { userDataProcessingChoiceParam: choice})
-        .next(get404Response)
-        .put(loadUserDataProcessing.success({choice, value: undefined}))
-        .next()
-        .call(upsertUserDataProcessingSaga, createOrUpdateUserDataProcessing, nextData)
-        .next()
-    });
+  it("while managing the first request of data export, check if previous request are WIP and, otherwise, submit a new request", () => {
+    const nextData: UserDataProcessing = {
+      choice,
+      status: UserDataProcessingStatusEnum.PENDING,
+      version: 1
+    };
+    const get404Response = right({ status: 404 });
 
-    it('while managing a new request of data export, if the previous request elaboration has been completed submit a new request', () => {
-       
-        const currentData: UserDataProcessing = {
-            choice,
-            status: UserDataProcessingStatusEnum.CLOSED,
-            version: 1
-        }
-        const get200Response = right({status: 200, value: currentData})
+    testSaga(
+      manageUserDataProcessingSaga,
+      getUserDataProcessing,
+      createOrUpdateUserDataProcessing,
+      choice
+    )
+      .next()
+      .put(loadUserDataProcessing.request(choice))
+      .next()
+      .call(getUserDataProcessing, { userDataProcessingChoiceParam: choice })
+      .next(get404Response)
+      .put(loadUserDataProcessing.success({ choice, value: undefined }))
+      .next()
+      .call(
+        upsertUserDataProcessingSaga,
+        createOrUpdateUserDataProcessing,
+        nextData
+      )
+      .next();
+  });
 
-        const nextData: UserDataProcessing = {
-            choice,
-            status: UserDataProcessingStatusEnum.PENDING,
-            version: 2
-        }
+  it("while managing a new request of data export, if the previous request elaboration has been completed submit a new request", () => {
+    const currentData: UserDataProcessing = {
+      choice,
+      status: UserDataProcessingStatusEnum.CLOSED,
+      version: 1
+    };
+    const get200Response = right({ status: 200, value: currentData });
 
-        testSaga(
-            manageUserDataProcessingSaga, 
-            getUserDataProcessing, 
-            createOrUpdateUserDataProcessing, 
-            choice)
-        .next()
-        .put(loadUserDataProcessing.request(choice))
-        .next()
-        .call(getUserDataProcessing, { userDataProcessingChoiceParam: choice})
-        .next(get200Response)
-        .put(loadUserDataProcessing.success({choice, value: currentData}))
-        .next()
-        .call(upsertUserDataProcessingSaga, createOrUpdateUserDataProcessing, nextData)
-        .next()
-    });
+    const nextData: UserDataProcessing = {
+      choice,
+      status: UserDataProcessingStatusEnum.PENDING,
+      version: 2
+    };
 
-    it('while managing a new request of data export, if the previous request elaboration has not been completed does nothing', () => {
-       
-        const choice = UserDataProcessingChoiceEnum.DOWNLOAD;
-        const currentData: UserDataProcessing = {
-            choice,
-            status: UserDataProcessingStatusEnum.PENDING,
-            version: 2
-        }
-        const get200Response = right({status: 200, value: currentData})
+    testSaga(
+      manageUserDataProcessingSaga,
+      getUserDataProcessing,
+      createOrUpdateUserDataProcessing,
+      choice
+    )
+      .next()
+      .put(loadUserDataProcessing.request(choice))
+      .next()
+      .call(getUserDataProcessing, { userDataProcessingChoiceParam: choice })
+      .next(get200Response)
+      .put(loadUserDataProcessing.success({ choice, value: currentData }))
+      .next()
+      .call(
+        upsertUserDataProcessingSaga,
+        createOrUpdateUserDataProcessing,
+        nextData
+      )
+      .next();
+  });
 
-        testSaga(
-            manageUserDataProcessingSaga, 
-            getUserDataProcessing, 
-            createOrUpdateUserDataProcessing, 
-            choice)
-        .next()
-        .put(loadUserDataProcessing.request(choice))
-        .next()
-        .call(getUserDataProcessing, { userDataProcessingChoiceParam: choice})
-        .next(get200Response)
-        .put(loadUserDataProcessing.success({choice, value: currentData}))
-        .next()
-    });
+  it("while managing a new request of data export, if the previous request elaboration has not been completed does nothing", () => {
+    const currentData: UserDataProcessing = {
+      choice: UserDataProcessingChoiceEnum.DOWNLOAD,
+      status: UserDataProcessingStatusEnum.PENDING,
+      version: 2
+    };
+    const get200Response = right({ status: 200, value: currentData });
 
-    it('while managing a new request of data export, if the previous request elaboration has not been completed does nothing', () => {
-        const choice = UserDataProcessingChoiceEnum.DOWNLOAD;
-        const mokedError = new Error('An error occurs while fetching data on user data processisng status')
-        const getError = left({value: 'Generic Error'})
+    testSaga(
+      manageUserDataProcessingSaga,
+      getUserDataProcessing,
+      createOrUpdateUserDataProcessing,
+      choice
+    )
+      .next()
+      .put(loadUserDataProcessing.request(choice))
+      .next()
+      .call(getUserDataProcessing, { userDataProcessingChoiceParam: choice })
+      .next(get200Response)
+      .put(loadUserDataProcessing.success({ choice, value: currentData }))
+      .next();
+  });
 
-        testSaga(
-            manageUserDataProcessingSaga, 
-            getUserDataProcessing, 
-            createOrUpdateUserDataProcessing, 
-            choice)
-        .next()
-        .put(loadUserDataProcessing.request(choice))
-        .next()
-        .call(getUserDataProcessing, { userDataProcessingChoiceParam: choice})
-        .next(getError)
-        .put(loadUserDataProcessing.failure({choice, error: mokedError}))
-        .next()
-    });
+});
 
+describe("upsertUserDataProcessingSaga", () => {
+  const postUserDataProcessing = jest.fn();
+  it("dispatch a success action if the submission of a new request succeded", () => {
+    const request: UserDataProcessing = {
+      choice: UserDataProcessingChoiceEnum.DOWNLOAD,
+      status: UserDataProcessingStatusEnum.PENDING,
+      version: 1
+    };
+    const response200 = right({ status: 200, value: request });
 
-})
+    testSaga(upsertUserDataProcessingSaga, postUserDataProcessing, request)
+      .next()
+      .put(upsertUserDataProcessing.request(request))
+      .next()
+      .call(postUserDataProcessing, {
+        userDataProcessingChoiceRequest: { choice: request.choice }
+      })
+      .next(response200)
+      .put(upsertUserDataProcessing.success(request));
+  });
+
+});

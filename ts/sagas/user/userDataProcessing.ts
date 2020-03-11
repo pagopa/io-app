@@ -62,7 +62,6 @@ export function* manageUserDataProcessingSaga(
                 ? response.value.value.version + 1
                 : 1
           };
-
           yield call(
             upsertUserDataProcessingSaga,
             createOrUpdateUserDataProcessing,
@@ -71,7 +70,9 @@ export function* manageUserDataProcessingSaga(
         }
       }
     } else {
-      throw "An error occurs while fetching data on user data processisng status"
+      throw new Error(
+        "An error occurs while fetching data on user data processisng status"
+      );
     }
   } catch (e) {
     yield put(
