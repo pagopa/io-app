@@ -1,11 +1,11 @@
 import { NavigationState } from "react-navigation";
 import { PersistPartial } from "redux-persist";
 
-import { BackendServicesStatus } from "../../api/backendPublic";
 import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
+import { BackendServicesStatusState } from "./backendServiceStatus";
 import { ContentState } from "./content";
 import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
@@ -34,7 +34,7 @@ export type GlobalState = Readonly<{
   appState: AppState;
   authentication: PersistedAuthenticationState;
   backendInfo: BackendInfoState;
-  backendServicesStatus: BackendServicesStatus;
+  backendServicesStatus: BackendServicesStatusState;
   deepLink: DeepLinkState;
   entities: EntitiesState;
   instabug: InstabugUnreadMessagesState;

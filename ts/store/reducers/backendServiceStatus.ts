@@ -14,16 +14,17 @@ import { GlobalState } from "./types";
  * if you want to persist an option take care of persinsting/rehydrating
  * see https://www.pivotaltracker.com/story/show/170998374
  */
-const initialBackendInfoState: Option<BackendServicesStatus> = none;
+export type BackendServicesStatusState = Option<BackendServicesStatus>;
+const initialBackendInfoState: BackendServicesStatusState = none;
 
 export const backendInfoSelector = (
   state: GlobalState
-): Option<BackendServicesStatus> => state.backendServicesStatus;
+): BackendServicesStatusState => state.backendServicesStatus;
 
 export default function backendInfo(
-  state: Option<BackendServicesStatus> = initialBackendInfoState,
+  state: BackendServicesStatusState = initialBackendInfoState,
   action: Action
-): Option<BackendServicesStatus> {
+): BackendServicesStatusState {
   switch (action.type) {
     case getType(backendServicesStatusLoadSuccess):
       return some(action.payload);
