@@ -7,7 +7,7 @@ import { Action } from "../actions/types";
 import { none, Option, some } from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { BackendServicesStatus } from "../../api/backendPublic";
-import { backendServicesStatus } from "../actions/backendServicesStatus";
+import { backendServicesStatusLoadSuccess } from "../actions/backendServicesStatus";
 import { GlobalState } from "./types";
 
 /** note that this state is not persisted so Option type is accepted
@@ -25,7 +25,7 @@ export default function backendInfo(
   action: Action
 ): Option<BackendServicesStatus> {
   switch (action.type) {
-    case getType(backendServicesStatus):
+    case getType(backendServicesStatusLoadSuccess):
       return some(action.payload);
 
     default:
