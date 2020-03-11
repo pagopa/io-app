@@ -53,8 +53,13 @@ const styles = StyleSheet.create({
   methodImage: {
     width: 70
   },
-  column: {
+  columnLeft: {
     flex: 1
+  },
+  columnRight: {
+    flex: 1,
+    alignItems: "flex-end",
+    alignContent: "flex-end"
   }
 });
 
@@ -136,7 +141,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
                 onPress={itemInfo.item.onPress}
                 underlayColor={underlayColor}
               >
-                <View style={styles.column}>
+                <View style={styles.columnLeft}>
                   <Grid>
                     <Row>
                       <View style={styles.methodItem}>
@@ -169,7 +174,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
                     )}
                   </Grid>
                 </View>
-                <View style={[AddMethodStyle.centeredContents, styles.column]}>
+                <View style={styles.columnRight}>
                   {itemInfo.item.icon && (
                     <IconFont
                       name={itemInfo.item.icon}
