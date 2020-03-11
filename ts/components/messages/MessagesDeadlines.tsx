@@ -309,7 +309,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   }
 
   /**
-   * Return number pof sections to load
+   * Returns the number of sections to load
    */
   private sectionToLoad = (
     // tslint:disable-next-line: readonly-array

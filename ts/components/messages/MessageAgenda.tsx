@@ -243,6 +243,15 @@ const generateItemLayouts = (sections: Sections) => {
 
 const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
+const PlaceholderLine = () => (
+  <Placeholder.Line
+    textSize={customVariables.fontSizeBase}
+    color={customVariables.shineColor}
+    width={"75%"}
+    animate={"shine"}
+  />
+);
+
 const MessageItemPlaceholder = (
   <View style={[styles.itemLoadingContainer]}>
     <View style={styles.itemLoadingHeaderWrapper}>
@@ -252,10 +261,10 @@ const MessageItemPlaceholder = (
           color={customVariables.shineColor}
           lineNumber={2}
           lineSpacing={5}
-          width="100%"
-          firstLineWidth="100%"
-          lastLineWidth="55%"
-          animate="shine"
+          width={"100%"}
+          firstLineWidth={"100%"}
+          lastLineWidth={"55%"}
+          animate={"shine"}
           onReady={false}
         />
       </View>
@@ -263,12 +272,7 @@ const MessageItemPlaceholder = (
 
     <View style={styles.itemLoadingContentWrapper}>
       <View style={styles.itemLoadingContentCenter}>
-        <Placeholder.Line
-          textSize={customVariables.fontSizeBase}
-          color={customVariables.shineColor}
-          width="75%"
-          animate="shine"
-        />
+        <PlaceholderLine />
       </View>
     </View>
   </View>
@@ -277,12 +281,7 @@ const MessageItemPlaceholder = (
 const SectionHeaderPlaceholder = (
   <View style={styles.sectionHeaderWrapper}>
     <View style={styles.sectionHeaderContent}>
-      <Placeholder.Line
-        textSize={customVariables.fontSizeBase}
-        color={customVariables.shineColor}
-        width="75%"
-        animate="shine"
-      />
+      <PlaceholderLine />
     </View>
   </View>
 );
@@ -331,9 +330,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   public async componentDidUpdate() {
     if (
       this.state.isDeadlinesLoaded &&
-      this.sectionListRef.current !== null &&
+      this.sectionListRef.current &&
       this.state.isFirstLoading &&
-      this.props.sections !== undefined &&
+      this.props.sections &&
       this.props.sections.length > 0
     ) {
       this.completeLoadingState();
