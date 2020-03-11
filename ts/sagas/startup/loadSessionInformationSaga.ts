@@ -52,7 +52,6 @@ export function* loadSessionInformationSaga(
     yield put(sessionInformationLoadFailure(Error(error)));
     return none;
   } catch (e) {
-    RTron.log("EXCEPTION");
     yield put(sessionInformationLoadFailure(Error(e)));
   }
 }
