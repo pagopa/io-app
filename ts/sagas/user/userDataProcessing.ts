@@ -59,9 +59,8 @@ export function* manageUserDataProcessingSaga(
             choice,
             status: UserDataProcessingStatusEnum.PENDING,
             version:
-              // tslint:disable-next-line:restrict-plus-operands
               response.value.status === 200
-                ? response.value.value.version + 1
+                ? response.value.value.version + 1 // tslint:disable-line:restrict-plus-operands
                 : 1
           };
           yield call(
