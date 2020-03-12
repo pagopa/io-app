@@ -223,11 +223,8 @@ export default function content(
       };
 
     case getType(removeServiceTuples): {
-      // removeServiceTuples is dispatched to remove from the store
-      // the service detail (and, here, metadata) related to services that are
-      // no more visible and that are not related to messages list
-
-      // references of the services to be removed from the store
+      // Remove the service metadata of the services listed in the payload
+      // (being the services no more visible nor related to any message)
       const serviceTuples: ReadonlyArray<ITuple2<string, string | undefined>> =
         action.payload;
 

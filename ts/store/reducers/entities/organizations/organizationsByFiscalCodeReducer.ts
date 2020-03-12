@@ -4,9 +4,8 @@
 
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
-
 import {
-  deleteUselessOrganizations,
+  refreshOrganizations,
   updateOrganizations
 } from "../../../actions/organizations";
 import { Action } from "../../../actions/types";
@@ -21,25 +20,30 @@ export type OrganizationNamesByFiscalCodeState = Readonly<{
 
 const INITIAL_STATE: OrganizationNamesByFiscalCodeState = {};
 
-const reducer = (
+export default function reducer(
   state: OrganizationNamesByFiscalCodeState = INITIAL_STATE,
   action: Action
-): OrganizationNamesByFiscalCodeState => {
+): OrganizationNamesByFiscalCodeState {
   switch (action.type) {
-    // when this action is performed, all the keys (fiscal code of the organization)
-    // that are not present in the payload are removed from the state.
-    case getType(deleteUselessOrganizations):
-      return Object.keys(state)
-        .filter(key => action.payload.indexOf(key) !== -1)
-        .reduce<OrganizationNamesByFiscalCodeState>(
-          (acc: OrganizationNamesByFiscalCodeState, key) => {
-            return {
-              ...acc,
-              [key]: state[key]
-            };
-          },
-          {}
-        );
+    // Remove all items whose fiscal code is not present in the payload
+    case getType(refreshOrganizations): {
+      const updatedOrgsFiscalCode = action.payload;
+      const prevState = { ...state };
+
+      return Object.keys(prevState).reduce<OrganizationNamesByFiscalCodeState>(
+        (acc: OrganizationNamesByFiscalCodeState, key) => {
+          const newAcc = { ...acc };
+          if (updatedOrgsFiscalCode.indexOf(key) === -1) {
+            // tslint:disable-next-line:no-object-mutation
+            delete newAcc[key];
+          }
+          return newAcc;
+        },
+        prevState
+      );
+    }
+
+    // Add a new item or update the organization name
     case getType(updateOrganizations):
       return {
         ...state,
@@ -50,7 +54,7 @@ const reducer = (
     default:
       return state;
   }
-};
+}
 
 // Selectors
 export const organizationNamesByFiscalCodeSelector = (
@@ -58,5 +62,3 @@ export const organizationNamesByFiscalCodeSelector = (
 ): OrganizationNamesByFiscalCodeState => {
   return state.entities.organizations.nameByFiscalCode;
 };
-
-export default reducer;

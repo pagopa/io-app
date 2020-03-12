@@ -96,7 +96,5 @@ export function serviceIdsByOrganizationFiscalCodeReducer(
 }
 
 // Selectors
-export const servicesOrganizationsFiscalCode = (
-  state: GlobalState
-): ReadonlyArray<string> =>
-  Object.keys(state.entities.services.byOrgFiscalCode);
+export const servicesOrganizationsByFiscalCodeSelector = (state: GlobalState) =>
+  state.entities.services.byOrgFiscalCode;
