@@ -10,11 +10,14 @@ import {
 } from "../actions/userDataProcessing";
 import { GlobalState } from "./types";
 
-// TODO: integrate with profile while it will be a profile attribute
-export type UserDataProcessingState = {
-  [UserDataProcessingChoiceEnum.DOWNLOAD]: pot.Pot<UserDataProcessing, Error>;
-  [UserDataProcessingChoiceEnum.DELETE]: pot.Pot<UserDataProcessing, Error>;
+type UserDataProcessingState = {
+  [key in keyof typeof UserDataProcessingChoiceEnum]: pot.Pot<
+    UserDataProcessing,
+    Error
+  >
 };
+
+// TODO: integrate with profile while it will be a profile attribute
 
 export const INITIAL_STATE: UserDataProcessingState = {
   [UserDataProcessingChoiceEnum.DOWNLOAD]: pot.none,
