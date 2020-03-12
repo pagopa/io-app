@@ -28,6 +28,7 @@ import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
+import ServicesStatusModal from "./ServicesStatusModal";
 
 // tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -124,7 +125,9 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
+        <ServicesStatusModal />
         <IdentificationModal />
+
         <LightModalRoot />
       </Root>
     );

@@ -50,6 +50,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
+import backendServiceStatusSaga from "./backendServicesStatus";
 import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
@@ -101,6 +102,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   //           every new installation.
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
+
+  yield fork(backendServiceStatusSaga);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<

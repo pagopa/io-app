@@ -17,19 +17,16 @@ import { GlobalState } from "./types";
 export type BackendServicesStatusState = Option<BackendServicesStatus>;
 const initialBackendInfoState: BackendServicesStatusState = none;
 
-export const backendInfoSelector = (
+export const backendServicesStatusSelector = (
   state: GlobalState
 ): BackendServicesStatusState => state.backendServicesStatus;
 
-export default function backendInfo(
+export default function backendServicesStatusReducer(
   state: BackendServicesStatusState = initialBackendInfoState,
   action: Action
 ): BackendServicesStatusState {
-  switch (action.type) {
-    case getType(backendServicesStatusLoadSuccess):
-      return some(action.payload);
-
-    default:
-      return state;
+  if (action.type === getType(backendServicesStatusLoadSuccess)) {
+    return some(action.payload);
   }
+  return state;
 }

@@ -51,5 +51,8 @@ export function* backendServicesStatusWatcherLoop(
 
 export default function* root(): IterableIterator<Effect> {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
-  yield fork(backendServicesStatusSaga, backendPublicClient.getServicesStatus);
+  yield call(
+    backendServicesStatusWatcherLoop,
+    backendPublicClient.getServicesStatus
+  );
 }
