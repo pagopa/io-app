@@ -540,9 +540,11 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
 
           <View spacer={true} large={true} />
           {this.renderItems(potServiceMetadata)}
-          <H4 style={styles.infoHeader}>
-            {I18n.t("services.contactsAndInfo")}
-          </H4>
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) && (
+            <H4 style={styles.infoHeader}>
+              {I18n.t("services.contactsAndInfo")}
+            </H4>
+          )}
           {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) &&
             renderInformationRow(
               "C.F.",
