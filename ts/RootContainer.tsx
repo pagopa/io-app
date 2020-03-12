@@ -29,6 +29,7 @@ import { navigateBack } from "./store/actions/navigation";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 import ServicesStatusModal from "./ServicesStatusModal";
+import { backendServicesStatusSelector } from "./store/reducers/backendServiceStatus";
 
 // tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -112,6 +113,9 @@ class RootContainer extends React.PureComponent<Props> {
   }
 
   public render() {
+    const isServicesStatusModalVisible = this.props.maybeServicesStatus
+      .map(ss => ss.status !== "ok")
+      .getOrElse(false);
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
     //        the redux state (i.e. background)
@@ -125,8 +129,11 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
-        <ServicesStatusModal />
-        <IdentificationModal />
+        {isServicesStatusModalVisible ? (
+          <ServicesStatusModal />
+        ) : (
+          <IdentificationModal />
+        )}
 
         <LightModalRoot />
       </Root>
@@ -136,7 +143,8 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   deepLinkState: state.deepLink,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  maybeServicesStatus: backendServicesStatusSelector(state)
 });
 
 const mapDispatchToProps = {
