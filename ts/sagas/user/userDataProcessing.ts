@@ -60,8 +60,8 @@ export function* manageUserDataProcessingSaga(
             status: UserDataProcessingStatusEnum.PENDING,
             version:
               response.value.status === 200
-                ? response.value.value.version + 1 // tslint:disable:restrict-plus-operands
-                : 1
+                ? response.value.value.version + 1
+                : 1 // tslint:disable-line:restrict-plus-operands
           };
           yield call(
             upsertUserDataProcessingSaga,
