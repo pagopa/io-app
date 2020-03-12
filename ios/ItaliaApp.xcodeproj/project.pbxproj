@@ -828,9 +828,9 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						/* pagopa */
-						DevelopmentTeam = M2X5YQ4BJ7;
+						/* DevelopmentTeam = M2X5YQ4BJ7; */
 						/* team digitale  */
-						/* DevelopmentTeam = BC8NKY5TF7; */
+						DevelopmentTeam = BC8NKY5TF7;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -1673,12 +1673,12 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 41;
 				DEAD_CODE_STRIPPING = NO;
 				/* pagopa */
-				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
+				/* DEVELOPMENT_TEAM = M2X5YQ4BJ7; */
 				/* team digitale */
-				/* DEVELOPMENT_TEAM = BC8NKY5TF7; */
+				DEVELOPMENT_TEAM = BC8NKY5TF7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../node_modules/instabug-reactnative/ios",
@@ -1699,15 +1699,15 @@
 					"-lc++",
 				);
 				/* pagopa */
-				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
+				/* PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io; */
 				/* team digitale */
-				/* PRODUCT_BUNDLE_IDENTIFIER = it.teamdigitale.app.IO; */
+				PRODUCT_BUNDLE_IDENTIFIER = it.teamdigitale.app.IO;
 				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
 				/* pagopa */
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io";
+				/* PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io"; */
 				/* team digitale */
-				/* PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.teamdigitale.app.IO"; */
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.teamdigitale.app.IO";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1721,11 +1721,11 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 41;
 				/* pagopa */
-				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
+				/* DEVELOPMENT_TEAM = M2X5YQ4BJ7; */
 				/* team digitale */
-				/* DEVELOPMENT_TEAM = BC8NKY5TF7; */
+				DEVELOPMENT_TEAM = BC8NKY5TF7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"../node_modules/instabug-reactnative/ios",
@@ -1746,12 +1746,13 @@
 					"-lc++",
 				);
 				/* pagopa */
-				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io; 
+				/* PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io; /*
 				/* team digitale */
-				/* PRODUCT_BUNDLE_IDENTIFIER = it.teamdigitale.app.IO; */
+				PRODUCT_BUNDLE_IDENTIFIER = it.teamdigitale.app.IO;
 				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io";
+				/* PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io"; */
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.teamdigitale.app.IO";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
