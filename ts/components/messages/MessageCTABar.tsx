@@ -5,7 +5,7 @@
  * - start the message-related payment
  */
 import { isToday } from "date-fns";
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
@@ -141,38 +141,39 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     return this.props.payment !== undefined;
   }
 
+  /**
+   * Check if an event for endDate with that title already exists in the calendar.
+   * Return the event id if it is found
+   */
   private searchEventInCalendar = async (
     endDate: Date,
     title: string
-  ): Promise<string | undefined> => {
+  ): Promise<Option<string>> => {
     const startDate = new Date(endDate.getTime());
-    const isEventInCalendar = RNCalendarEvents.fetchAllEvents(
+    return RNCalendarEvents.fetchAllEvents(
       formatDateAsReminder(new Date(startDate.setDate(endDate.getDate() - 1))),
       formatDateAsReminder(endDate)
     )
       .then(
         events => {
-          if (events) {
-            const event = events.find(e => {
-              return (
-                e.title === title &&
-                new Date(e.endDate).getDay() === endDate.getDay()
-              );
-            });
-            if (event) {
-              return event.id;
-            }
-          }
-          return undefined;
+          return fromNullable(events)
+            .mapNullable(evs =>
+              evs.find(e => {
+                return (
+                  e.title === title &&
+                  new Date(e.endDate).getDay() === endDate.getDay()
+                );
+              })
+            )
+            .map(ev => some(ev.id))
+            .getOrElse(none);
         },
         // handle promise rejection
         () => {
-          return undefined;
+          return none;
         }
       )
-      .catch();
-
-    return await isEventInCalendar;
+      .catch(() => none);
   };
 
   /**
@@ -327,13 +328,13 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     this.searchEventInCalendar(dueDate, title)
       .then(
         eventId =>
-          eventId
+          eventId.isSome()
             ? this.confirmSaveCalendarEventAlert(
                 calendar,
                 message,
                 dueDate,
                 title,
-                eventId
+                eventId.value
               )
             : this.saveCalendarEvent(calendar, message, dueDate, title)
       )
