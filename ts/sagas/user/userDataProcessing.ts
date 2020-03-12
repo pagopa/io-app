@@ -2,7 +2,6 @@ import { left, right } from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
-import { UserDataProcessing } from "../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../../api/backend";
@@ -55,18 +54,10 @@ export function* manageUserDataProcessingSaga(
           (response.value.status === 200 &&
             response.value.value.status === UserDataProcessingStatusEnum.CLOSED)
         ) {
-          const newRequest: UserDataProcessing = {
-            choice,
-            status: UserDataProcessingStatusEnum.PENDING,
-            version:
-              response.value.status === 200
-                ? response.value.value.version + 1
-                : 1 // tslint:disable-line:restrict-plus-operands
-          };
           yield call(
             upsertUserDataProcessingSaga,
             createOrUpdateUserDataProcessing,
-            newRequest
+            choice
           );
         }
       }
@@ -89,14 +80,14 @@ export function* upsertUserDataProcessingSaga(
   postUserDataProcessing: ReturnType<
     typeof BackendClient
   >["createOrUpdateUserDataProcessing"],
-  userDataProcessing: UserDataProcessing
+  choice: UserDataProcessingChoiceEnum
 ): SagaIterator {
-  yield put(upsertUserDataProcessing.request(userDataProcessing));
+  yield put(upsertUserDataProcessing.request(choice));
   try {
     const response: SagaCallReturnType<
       typeof postUserDataProcessing
     > = yield call(postUserDataProcessing, {
-      userDataProcessingChoiceRequest: { choice: userDataProcessing.choice }
+      userDataProcessingChoiceRequest: { choice }
     });
 
     if (response.isRight() && response.value.status === 200) {
@@ -104,17 +95,12 @@ export function* upsertUserDataProcessingSaga(
       return right(response.value.value);
     } else {
       throw new Error(
-        `An error occurred while submitting a request to ${
-          userDataProcessing.choice
-        } the profile`
+        `An error occurred while submitting a request to ${choice} the profile`
       );
     }
   } catch (e) {
     yield put(
-      upsertUserDataProcessing.failure({
-        choice: userDataProcessing.choice,
-        error: new Error(e)
-      })
+      upsertUserDataProcessing.failure({ choice, error: new Error(e) })
     );
     return left(e);
   }

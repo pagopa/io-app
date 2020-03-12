@@ -32,7 +32,7 @@ export const upsertUserDataProcessing = createAsyncAction(
   "USER_DATA_PROCESSING_UPSERT_SUCCESS",
   "USER_DATA_PROCESSING_UPSERT_FAILURE"
 )<
-  UserDataProcessing,
+  UserDataProcessingChoiceEnum,
   UserDataProcessing,
   { choice: UserDataProcessingChoiceEnum; error: Error }
 >();
