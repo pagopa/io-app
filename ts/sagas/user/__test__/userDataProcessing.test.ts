@@ -103,7 +103,6 @@ describe("manageUserDataProcessingSaga", () => {
       .put(loadUserDataProcessing.success({ choice, value: currentData }))
       .next();
   });
-
 });
 
 describe("upsertUserDataProcessingSaga", () => {
@@ -126,5 +125,4 @@ describe("upsertUserDataProcessingSaga", () => {
       .next(response200)
       .put(upsertUserDataProcessing.success(request));
   });
-
 });

@@ -19,6 +19,7 @@ import { SagaCallReturnType } from "../../types/utils";
  * - checks if there are updates on the processing of a previous request
  * - sumbits a new request if the state is ClOSED or if this is the first request
  */
+// tslint:disable-next-line:cognitive-complexity
 export function* manageUserDataProcessingSaga(
   getUserDataProcessing: ReturnType<
     typeof BackendClient
