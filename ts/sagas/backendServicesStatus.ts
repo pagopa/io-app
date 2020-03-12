@@ -9,6 +9,7 @@ import { backendServicesStatusLoadSuccess } from "../store/actions/backendServic
 import { appStateSelector } from "../store/reducers/appState";
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
+import { RTron } from "../boot/configureStoreAndPersistor";
 
 const BACKEND_SERVICES_STATUS_LOAD_INTERVAL = 5000 as Millisecond;
 
@@ -38,20 +39,28 @@ export function* backendServicesStatusWatcherLoop(
 ): IterableIterator<Effect> {
   // check backend status periodically
   while (true) {
-    const appCurrentState: ReturnType<typeof appStateSelector> = yield select(
-      appStateSelector
-    );
-    // do it only when the app is foreground
-    if (appCurrentState.appState === "active") {
-      yield call(backendServicesStatusSaga, getServicesStatus);
+    try {
+      const start = new Date();
+      const appCurrentState: ReturnType<typeof appStateSelector> = yield select(
+        appStateSelector
+      );
+      const end = new Date();
+      console.warn(end.getTime() - start.getTime());
+      // do it only when the app is foreground
+      if (appCurrentState.appState === "active") {
+        yield call(backendServicesStatusSaga, getServicesStatus);
+      }
+      yield call(startTimer, BACKEND_SERVICES_STATUS_LOAD_INTERVAL);
+    } catch (_) {
+      continue;
     }
-    yield call(startTimer, BACKEND_SERVICES_STATUS_LOAD_INTERVAL);
   }
 }
 
 export default function* root(): IterableIterator<Effect> {
+  console.warn("EXEC");
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
-  yield call(
+  yield fork(
     backendServicesStatusWatcherLoop,
     backendPublicClient.getServicesStatus
   );
