@@ -20,16 +20,16 @@ import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { shouldDisplayVersionInfoOverlay } from "./config";
 import IdentificationModal from "./IdentificationModal";
 import Navigation from "./navigation";
+import ServicesStatusModal from "./ServicesStatusModal";
 import {
   applicationChangeState,
   ApplicationState
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
+import { backendServicesStatusSelector } from "./store/reducers/backendServiceStatus";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
-import ServicesStatusModal from "./ServicesStatusModal";
-import { backendServicesStatusSelector } from "./store/reducers/backendServiceStatus";
 
 // tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
