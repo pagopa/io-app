@@ -200,7 +200,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     };
   }
 
-  public componentWillReceiveProps(nextProps: Props) {
+  public componentWillUpdate(nextProps: Props) {
     if (pot.isError(nextProps.profile) && !pot.isError(this.props.profile)) {
       // in case of new or resolved errors while updating the profile, we show a toast and
       // reset the UI to match the state of the profile preferences
