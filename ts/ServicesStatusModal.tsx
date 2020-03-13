@@ -1,27 +1,26 @@
-import I18n from "i18n-js";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, H2, Text, View, Content } from "native-base";
+/**
+ * this modal shows a warning to the user that some IO systems (backend side) could
+ * not work properly. This is due to avoid user tries to access features or services potentially can't work
+ * as expected
+ */
+import { Button, H2, Text, View } from "native-base";
 import * as React from "react";
-import { Image, Modal, StyleSheet } from "react-native";
+import { BackHandler, Image, Modal, StyleSheet } from "react-native";
 import customVariables from "./theme/variables";
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignSelf: "center",
+    justifyContent: "center",
     marginTop: customVariables.contentPadding,
     padding: customVariables.contentPadding
   },
   imageChecked: {
     alignSelf: "center"
   },
-  emailTitle: {
+  subTitle: {
     textAlign: "center"
-  },
-  textDanger: {
-    marginTop: customVariables.contentPadding,
-    fontSize: 18,
-    textAlign: "center",
-    color: customVariables.brandDanger
   }
 });
 
@@ -29,7 +28,7 @@ export default class ServicesStatusModal extends React.PureComponent {
   public render() {
     return (
       <Modal>
-        <Content style={styles.container}>
+        <View style={styles.container}>
           <React.Fragment>
             <Image
               style={styles.imageChecked}
@@ -37,22 +36,20 @@ export default class ServicesStatusModal extends React.PureComponent {
             />
             <View spacer={true} extralarge={true} />
           </React.Fragment>
-          <H2 style={styles.emailTitle}>
-            {I18n.t("wallet.alert.titlePagoPaUpdateApp")}
-          </H2>
+          <H2 style={styles.subTitle}>{"Title"}</H2>
           <View spacer={true} />
-          <Text>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</Text>
+          <Text>{"Subtitle"}</Text>
           <View spacer={true} />
 
           <Button
             block={true}
             primary={true}
             disabled={false}
-            onPress={undefined}
+            onPress={BackHandler.exitApp}
           >
-            <Text>{I18n.t("wallet.alert.btnUpdateApp")}</Text>
+            <Text>{"press me"}</Text>
           </Button>
-        </Content>
+        </View>
       </Modal>
     );
   }

@@ -112,6 +112,14 @@ class RootContainer extends React.PureComponent<Props> {
     }
   }
 
+  private get getModal() {
+    return this.props.isBackendServicesStatusOff ? (
+      <ServicesStatusModal />
+    ) : (
+      <IdentificationModal />
+    );
+  }
+
   public render() {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
@@ -126,12 +134,7 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
-        {this.props.isBackendServicesStatusOff ? (
-          <ServicesStatusModal />
-        ) : (
-          <IdentificationModal />
-        )}
-
+        {this.getModal}
         <LightModalRoot />
       </Root>
     );
