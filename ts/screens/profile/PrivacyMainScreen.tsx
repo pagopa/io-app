@@ -11,7 +11,9 @@ import * as React from "react";
 import { Alert } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
@@ -21,14 +23,12 @@ import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import {
-  manageUserDataDeletion,
-  manageUserDataDownloading
+  loadUserDataProcessing,
+  requestUserDataProcessing,
+  resetUserDataProcessingRequest
 } from "../../store/actions/userDataProcessing";
 import { GlobalState } from "../../store/reducers/types";
-import {
-  userDataDeletionProcessingSelector,
-  userDataDownloadingProcessingSelector
-} from "../../store/reducers/userDataProcessing";
+import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { showToast } from "../../utils/showToast";
 
 type Props = NavigationScreenProps &
@@ -36,8 +36,7 @@ type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps>;
 
 type State = Readonly<{
-  isWaitingDeletion: boolean;
-  isWaitingDownloading: boolean;
+  isAlertShown: boolean;
 }>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -48,91 +47,106 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class PrivacyMainScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      isWaitingDeletion: false,
-      isWaitingDownloading: false
+    this.state = { isAlertShown: false };
+  }
+  private handleUserDataRequestAlert = (
+    choice: UserDataProcessingChoiceEnum
+  ) => {
+    const requestState = this.props.userDataProcessing[choice];
+    if (
+      pot.isSome(requestState) &&
+      (requestState.value === undefined ||
+        requestState.value.status === UserDataProcessingStatusEnum.CLOSED)
+    ) {
+      const title = {
+        DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.requestTitle"),
+        DELETE: I18n.t("profile.main.privacy.removeAccount.alert.requestTitle")
+      };
+      const subtitle = {
+        DOWNLOAD: undefined,
+        DELETE: I18n.t(
+          "profile.main.privacy.removeAccount.alert.requestSubtitle"
+        )
+      };
+
+      Alert.alert(title[choice], subtitle[choice], [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel",
+          onPress: () => this.props.resetRequest(choice)
+        },
+        {
+          text: I18n.t("global.buttons.continue"),
+          style: "default",
+          onPress: () => {
+            this.handleConfirmAlert(choice);
+            this.props.requestUserDataProcessing(choice);
+          }
+        }
+      ]);
+    } else {
+      this.handleConfirmAlert(choice, true);
+    }
+  };
+
+  private handleConfirmAlert = (
+    choice: UserDataProcessingChoiceEnum,
+    hasExistingRequest: boolean = false
+  ) => {
+    const title = hasExistingRequest
+      ? {
+          DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.oldRequest"),
+          DELETE: I18n.t("profile.main.privacy.removeAccount.alert.oldRequest")
+        }
+      : {
+          DOWNLOAD: I18n.t(`profile.main.privacy.exportData.alert.newRequest`),
+          DELETE: I18n.t("profile.main.privacy.removeAccount.alert.newRequest")
+        };
+
+    const subtitle = {
+      DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.confirmSubtitle"),
+      DELETE: I18n.t("profile.main.privacy.removeAccount.alert.confirmSubtitle")
     };
-  }
-
-  private handleDeleteUserData = () => {
-    Alert.alert(I18n.t("profile.main.privacy.removeAccount.alert"), undefined, [
-      {
-        text: I18n.t("global.buttons.cancel"),
-        style: "cancel"
-      },
-      {
-        text: I18n.t("global.buttons.continue"),
-        style: "default",
-        onPress: () => {
-          this.setState({ isWaitingDeletion: true });
-          this.props.deleteUserData();
-        }
-      }
-    ]);
+    Alert.alert(title[choice], subtitle[choice]);
+    this.setState({ isAlertShown: true });
   };
-
-  private handleDownloadUserData = () => {
-    Alert.alert(I18n.t("profile.main.privacy.exportData.alert"), undefined, [
-      {
-        text: I18n.t("global.buttons.cancel"),
-        style: "cancel"
-      },
-      {
-        text: I18n.t("global.buttons.continue"),
-        style: "default",
-        onPress: () => {
-          this.setState({ isWaitingDownloading: true });
-          this.props.downloadUserData();
-        }
-      }
-    ]);
-  };
-
-  public compomentWillMount() {
-    if (
-      pot.isSome(this.props.userDataDeletionProcessing) &&
-      this.props.userDataDeletionProcessing.value.status !==
-        UserDataProcessingStatusEnum.CLOSED
-    ) {
-      this.setState({ isWaitingDeletion: true });
-    }
-
-    if (
-      pot.isSome(this.props.userDataDownloadingProcessing) &&
-      this.props.userDataDownloadingProcessing.value.status !==
-        UserDataProcessingStatusEnum.CLOSED
-    ) {
-      this.setState({ isWaitingDownloading: true });
-    }
-  }
 
   public componentDidUpdate(prevProps: Props) {
-    // If the request submission fails, show an alert and remove the 'in prorgess' badge
-    if (
-      pot.isError(this.props.userDataDeletionProcessing) &&
-      ((pot.isUpdating(prevProps.userDataDeletionProcessing) &&
-        !pot.isUpdating(this.props.userDataDeletionProcessing)) ||
-        (pot.isLoading(prevProps.userDataDeletionProcessing) &&
-          !pot.isLoading(this.props.userDataDeletionProcessing)))
-    ) {
-      showToast(I18n.t("profile.main.privacy.removeAccount.error"));
-      this.setState({ isWaitingDeletion: false });
-    }
+    // If the new request submission fails, show an alert and hide the 'in prorgess' badge
+    // if it is the get request (prev prop is pot.none), check if show the alert to submit the request
+    const checkUpdate = (
+      errorMessage: string,
+      choice: UserDataProcessingChoiceEnum
+    ) => {
+      const currentState = this.props.userDataProcessing[choice];
+      if (
+        pot.isLoading(prevProps.userDataProcessing[choice]) &&
+        !pot.isLoading(currentState)
+      ) {
+        if (pot.isError(currentState)) {
+          showToast(errorMessage);
+        } else if (pot.isNone(prevProps.userDataProcessing[choice])) {
+          this.handleUserDataRequestAlert(choice);
+        } else if (!this.state.isAlertShown) {
+          // The request has been sent
+          this.handleConfirmAlert(choice);
+        }
+      }
+    };
 
-    if (
-      pot.isError(this.props.userDataDownloadingProcessing) &&
-      ((pot.isUpdating(prevProps.userDataDownloadingProcessing) &&
-        !pot.isUpdating(this.props.userDataDownloadingProcessing)) ||
-        (pot.isLoading(prevProps.userDataDownloadingProcessing) &&
-          !pot.isLoading(this.props.userDataDownloadingProcessing)))
-    ) {
-      showToast(I18n.t("profile.main.privacy.exportData.error"));
-      this.setState({ isWaitingDownloading: false });
-    }
+    checkUpdate(
+      I18n.t("profile.main.privacy.exportData.error"),
+      UserDataProcessingChoiceEnum.DOWNLOAD
+    );
+
+    checkUpdate(
+      I18n.t("profile.main.privacy.removeAccount.error"),
+      UserDataProcessingChoiceEnum.DELETE
+    );
   }
 
   public render() {
-    return (
+    const ContentComponent = withLoadingSpinner(() => (
       <TopScreenComponent
         goBack={() => this.props.navigation.goBack()}
         contextualHelpMarkdown={contextualHelpMarkdown}
@@ -162,10 +176,15 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
               subTitle={I18n.t(
                 "profile.main.privacy.removeAccount.description"
               )}
-              onPress={this.handleDeleteUserData}
+              onPress={() =>
+                this.props.loadUserDataRequest(
+                  UserDataProcessingChoiceEnum.DELETE
+                )
+              }
               useExtendedSubTitle={true}
               titleBadge={
-                this.state.isWaitingDeletion
+                pot.isSome(this.props.userDataProcessing.DELETE) &&
+                !pot.isError(this.props.userDataProcessing.DELETE)
                   ? I18n.t("profile.preferences.list.wip")
                   : undefined
               }
@@ -175,32 +194,58 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
             <ListItemComponent
               title={I18n.t("profile.main.privacy.exportData.title")}
               subTitle={I18n.t("profile.main.privacy.exportData.description")}
-              onPress={this.handleDownloadUserData}
+              onPress={() =>
+                this.props.loadUserDataRequest(
+                  UserDataProcessingChoiceEnum.DOWNLOAD
+                )
+              }
               useExtendedSubTitle={true}
               titleBadge={
-                this.state.isWaitingDownloading
+                pot.isSome(this.props.userDataProcessing.DOWNLOAD) &&
+                !pot.isError(this.props.userDataProcessing.DOWNLOAD)
                   ? I18n.t("profile.preferences.list.wip")
                   : undefined
               }
             />
-
             <EdgeBorderComponent />
           </List>
         </ScreenContent>
       </TopScreenComponent>
+    ));
+    return (
+      <ContentComponent
+        loadingCaption={I18n.t("profile.main.privacy.loading")}
+        loadingOpacity={0.9}
+        isLoading={this.props.isLoading}
+      />
     );
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  deleteUserData: () => dispatch(manageUserDataDeletion()),
-  downloadUserData: () => dispatch(manageUserDataDownloading())
+  loadUserDataRequest: (choice: UserDataProcessingChoiceEnum) =>
+    dispatch(loadUserDataProcessing.request(choice)),
+  requestUserDataProcessing: (choice: UserDataProcessingChoiceEnum) =>
+    dispatch(requestUserDataProcessing.request(choice)),
+  resetRequest: (choice: UserDataProcessingChoiceEnum) =>
+    dispatch(resetUserDataProcessingRequest(choice))
 });
 
-const mapStateToProps = (state: GlobalState) => ({
-  userDataDeletionProcessing: userDataDeletionProcessingSelector(state),
-  userDataDownloadingProcessing: userDataDownloadingProcessingSelector(state)
-});
+const mapStateToProps = (state: GlobalState) => {
+  const userDataProcessing = userDataProcessingSelector(state);
+
+  // the state returns to pot.none to every get - we want to see the loader only during the load of the requests,
+  // not when the request is confirmed by the user
+  const isLoading =
+    (pot.isNone(userDataProcessing.DELETE) &&
+      pot.isLoading(userDataProcessing.DELETE)) ||
+    (pot.isNone(userDataProcessing.DOWNLOAD) &&
+      pot.isLoading(userDataProcessing.DOWNLOAD));
+  return {
+    userDataProcessing,
+    isLoading
+  };
+};
 
 export default connect(
   mapStateToProps,

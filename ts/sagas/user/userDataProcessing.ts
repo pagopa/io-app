@@ -1,15 +1,11 @@
 import { left, right } from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
-import { call, put, takeLatest } from "redux-saga/effects";
-import { getType } from "typesafe-actions";
-import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
+import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
   loadUserDataProcessing,
-  manageUserDataDeletion,
-  manageUserDataDownloading,
-  upsertUserDataProcessing
+  requestUserDataProcessing
 } from "../../store/actions/userDataProcessing";
 import { SagaCallReturnType } from "../../types/utils";
 
@@ -19,48 +15,30 @@ import { SagaCallReturnType } from "../../types/utils";
  * - sumbits a new request if the state is ClOSED or if this is the first request
  */
 // tslint:disable-next-line:cognitive-complexity
-export function* manageUserDataProcessingSaga(
-  getUserDataProcessing: ReturnType<
+export function* loadUserDataProcessingSaga(
+  getUserDataProcessingRequest: ReturnType<
     typeof BackendClient
-  >["getUserDataProcessing"],
-  createOrUpdateUserDataProcessing: ReturnType<
-    typeof BackendClient
-  >["createOrUpdateUserDataProcessing"],
-  choice: UserDataProcessingChoiceEnum
+  >["getUserDataProcessingRequest"],
+  action: ActionType<typeof loadUserDataProcessing["request"]>
 ): SagaIterator {
-  yield put(loadUserDataProcessing.request(choice));
+  const choice = action.payload;
   try {
     const response: SagaCallReturnType<
-      typeof getUserDataProcessing
-    > = yield call(getUserDataProcessing, {
+      typeof getUserDataProcessingRequest
+    > = yield call(getUserDataProcessingRequest, {
       userDataProcessingChoiceParam: choice
     });
-    if (response.isRight()) {
-      if (response.value.status === 404 || response.value.status === 200) {
-        yield put(
-          loadUserDataProcessing.success({
-            choice,
-            value:
-              response.value.status === 200 ? response.value.value : undefined
-          })
-        );
-        /**
-         * A new request is submitted if:
-         * - it is the first request being submitted
-         * - the previous request has been processed
-         */
-        if (
-          response.value.status === 404 ||
-          (response.value.status === 200 &&
-            response.value.value.status === UserDataProcessingStatusEnum.CLOSED)
-        ) {
-          yield call(
-            upsertUserDataProcessingSaga,
-            createOrUpdateUserDataProcessing,
-            choice
-          );
-        }
-      }
+    if (
+      response.isRight() &&
+      (response.value.status === 404 || response.value.status === 200)
+    ) {
+      yield put(
+        loadUserDataProcessing.success({
+          choice,
+          value:
+            response.value.status === 200 ? response.value.value : undefined
+        })
+      );
     } else {
       throw new Error(
         "An error occurs while fetching data on user data processisng status"
@@ -76,22 +54,22 @@ export function* manageUserDataProcessingSaga(
   }
 }
 
-export function* upsertUserDataProcessingSaga(
-  postUserDataProcessing: ReturnType<
+export function* requestUserDataProcessingSaga(
+  postUserDataProcessingRequest: ReturnType<
     typeof BackendClient
-  >["createOrUpdateUserDataProcessing"],
-  choice: UserDataProcessingChoiceEnum
+  >["postUserDataProcessingRequest"],
+  action: ActionType<typeof requestUserDataProcessing["request"]>
 ): SagaIterator {
-  yield put(upsertUserDataProcessing.request(choice));
+  const choice = action.payload;
   try {
     const response: SagaCallReturnType<
-      typeof postUserDataProcessing
-    > = yield call(postUserDataProcessing, {
+      typeof postUserDataProcessingRequest
+    > = yield call(postUserDataProcessingRequest, {
       userDataProcessingChoiceRequest: { choice }
     });
 
     if (response.isRight() && response.value.status === 200) {
-      yield put(upsertUserDataProcessing.success(response.value.value));
+      yield put(requestUserDataProcessing.success(response.value.value));
       return right(response.value.value);
     } else {
       throw new Error(
@@ -100,7 +78,7 @@ export function* upsertUserDataProcessingSaga(
     }
   } catch (e) {
     yield put(
-      upsertUserDataProcessing.failure({ choice, error: new Error(e) })
+      requestUserDataProcessing.failure({ choice, error: new Error(e) })
     );
     return left(e);
   }
@@ -110,26 +88,22 @@ export function* upsertUserDataProcessingSaga(
  * Listen for requests related to the user data processing (profile deletion or profile-related data downloading)
  */
 export function* watchUserDataProcessingSaga(
-  getUserDataProcessing: ReturnType<
+  getUserDataProcessingRequest: ReturnType<
     typeof BackendClient
-  >["getUserDataProcessing"],
-  createOrUpdateUserDataProcessing: ReturnType<
+  >["getUserDataProcessingRequest"],
+  postUserDataProcessingRequest: ReturnType<
     typeof BackendClient
-  >["createOrUpdateUserDataProcessing"]
+  >["postUserDataProcessingRequest"]
 ): SagaIterator {
   yield takeLatest(
-    getType(manageUserDataDownloading),
-    manageUserDataProcessingSaga,
-    getUserDataProcessing,
-    createOrUpdateUserDataProcessing,
-    UserDataProcessingChoiceEnum.DOWNLOAD
+    loadUserDataProcessing.request,
+    loadUserDataProcessingSaga,
+    getUserDataProcessingRequest
   );
 
-  yield takeLatest(
-    getType(manageUserDataDeletion),
-    manageUserDataProcessingSaga,
-    getUserDataProcessing,
-    createOrUpdateUserDataProcessing,
-    UserDataProcessingChoiceEnum.DELETE
+  yield takeEvery(
+    requestUserDataProcessing.request,
+    requestUserDataProcessingSaga,
+    postUserDataProcessingRequest
   );
 }

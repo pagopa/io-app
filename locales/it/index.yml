@@ -14,8 +14,7 @@ global:
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
   jserror:
     title: Si è verificato un errore imprevisto
-    message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
-      ricominciare!
+    message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!
   markdown:
     reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
@@ -122,17 +121,27 @@ profile:
       title: Privacy
       description: Esporta dati, cancella account
       subtitle: Qui trovi informazioni legate ai tuoi dati personali.
+      loading: Attendi qualche secondo, stiamo verificando il tuo profilo..
       removeAccount:
         title: Cancella il tuo account
         description: Elimina sia dal telefono che da internet tutti i data ad esso
           associati
-        alert: Sei sicuro di voler cancellare il tuo account?
+        alert: 
+          requestTitle: Sei sicuro di voler cancellare il tuo account?
+          requestSubtitle: Tutti i tuoi messaggi e le tue preferenze saranno eliminati definitivamente.
+          oldRequest: Abbiamo già preso in carico una richiesta di eliminazioned el tuo profilo.
+          newRequest: Abbiamo inoltrato la La tua richiesta di eliminazione del profilo. 
+          confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell\'avvenuta eliminazione.
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
       exportData:
         title: Esporta i tuoi dati
         description: Ricevi nella tua mail tutti i dati associati al tuo account in
           un formato aperto
-        alert: sei sicuro di voler esportare tutti i tuoi dati?
+        alert: 
+          requestTitle: Sei sicuro di voler esportare tutti i tuoi dati?
+          oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
+          newRequest: Abbiamo inoltrato la tua richiesta di esportazione dei dati.
+          confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo. 
         error: Si è verificato un errore nella richiesta di exportazione dei dati, riprova.
       privacyPolicy:
         title: Privacy policy
@@ -203,9 +212,6 @@ profile:
 userMetadata:
   errors:
     upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
-navigation:
-  messages: Messaggi
-  profile: Profilo
 cie:
   title: Appoggia la carta
   layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.

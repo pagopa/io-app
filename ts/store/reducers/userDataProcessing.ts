@@ -6,11 +6,12 @@ import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 import {
   loadUserDataProcessing,
-  upsertUserDataProcessing
+  requestUserDataProcessing,
+  resetUserDataProcessingRequest
 } from "../actions/userDataProcessing";
 import { GlobalState } from "./types";
 
-type UserDataProcessingState = {
+export type UserDataProcessingState = {
   [key in keyof typeof UserDataProcessingChoiceEnum]: pot.Pot<
     UserDataProcessing,
     Error
@@ -32,7 +33,7 @@ const userDataProcessingReducer = (
     case getType(loadUserDataProcessing.request): {
       return {
         ...state,
-        [action.payload]: pot.toLoading(state[action.payload])
+        [action.payload]: pot.toLoading(pot.none)
       };
     }
     case getType(loadUserDataProcessing.success): {
@@ -40,33 +41,37 @@ const userDataProcessingReducer = (
         ...state,
         [action.payload.choice]: action.payload.value
           ? pot.some(action.payload.value)
-          : pot.none
+          : pot.some(undefined)
       };
     }
 
-    case getType(upsertUserDataProcessing.failure):
+    case getType(requestUserDataProcessing.failure):
     case getType(loadUserDataProcessing.failure):
       return {
         ...state,
         [action.payload.choice]: pot.toError(
-          state[action.payload.choice],
-          action.payload.error
+          pot.some(action.payload.error),
+          pot.none
         )
       };
 
-    case getType(upsertUserDataProcessing.request): {
+    case getType(requestUserDataProcessing.request): {
       return {
         ...state,
-        [action.payload.choice]: pot.toUpdating(
-          state[action.payload.choice],
-          action.payload
-        )
+        [action.payload]: pot.toLoading(state[action.payload])
       };
     }
-    case getType(upsertUserDataProcessing.success): {
+    case getType(requestUserDataProcessing.success): {
       return {
         ...state,
         [action.payload.choice]: pot.some(action.payload)
+      };
+    }
+
+    case getType(resetUserDataProcessingRequest): {
+      return {
+        ...state,
+        [action.payload]: pot.none
       };
     }
 
@@ -81,8 +86,5 @@ const userDataProcessingReducer = (
 export default userDataProcessingReducer;
 
 // Selectors
-export const userDataDeletionProcessingSelector = (state: GlobalState) =>
-  state.userDataProcessing[UserDataProcessingChoiceEnum.DELETE];
-
-export const userDataDownloadingProcessingSelector = (state: GlobalState) =>
-  state.userDataProcessing[UserDataProcessingChoiceEnum.DOWNLOAD];
+export const userDataProcessingSelector = (state: GlobalState) =>
+  state.userDataProcessing;

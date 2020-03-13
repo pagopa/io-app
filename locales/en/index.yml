@@ -121,16 +121,26 @@ profile:
       title: Privacy
       description: Export data, delete account
       subtitle: Here you find information related to your personal data.  
+      loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
         description: Remove all data associated to your account from your phone and
           our systems
-        alert: Are you sure you want to delete your account?
+        alert: 
+          requestTitle: Are you sure you want to delete your account?
+          requestSubtitle: All your message and persona settings will be lost.
+          oldRequest: We are already proceeding to delete your account
+          newRequest: We submitted your request to delete your account
+          confirmSubtitle: After processing, you will receive an email confirming the deletion.
         error: An error occurred while sumbit your deletion request, please retry! 
       exportData:
         title: Export your data
         description: Send to your email all your account’s data in an open format
-        alert: Are you sure you want to export all your data?
+        alert: 
+          requestTitle: Are you sure you want to export all your data?
+          oldRequest: We are already proceeding to export all your data
+          newRequest: We submitted your request to export all your data
+          confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
         title: Privacy policy
@@ -200,9 +210,6 @@ profile:
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version
-navigation:
-  messages: Messages
-  profile: Profile
 cie:
   title: Touch the card
   layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.

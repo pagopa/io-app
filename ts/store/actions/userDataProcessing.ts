@@ -6,18 +6,10 @@ import {
 import { UserDataProcessing } from "../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 
-export const manageUserDataDownloading = createStandardAction(
-  "MANAGE_USER_DATA_DOWNLOADING"
-)();
-
-export const manageUserDataDeletion = createStandardAction(
-  "MANAGE_USER_DATA_DELETION"
-)();
-
 export const loadUserDataProcessing = createAsyncAction(
-  "USER_DATA_PROCESSING_LOAD_REQUEST",
-  "USER_DATA_PROCESSING_LOAD_SUCCESS",
-  "USER_DATA_PROCESSING_LOAD_FAILURE"
+  "LOAD_USER_DATA_PROCESSING_REQUEST",
+  "LOAD_USER_DATA_PROCESSING_SUCCESS",
+  "LOAD_USER_DATA_PROCESSING_FAILURE"
 )<
   UserDataProcessingChoiceEnum,
   {
@@ -27,18 +19,21 @@ export const loadUserDataProcessing = createAsyncAction(
   { choice: UserDataProcessingChoiceEnum; error: Error }
 >();
 
-export const upsertUserDataProcessing = createAsyncAction(
-  "USER_DATA_PROCESSING_UPSERT_REQUEST",
-  "USER_DATA_PROCESSING_UPSERT_SUCCESS",
-  "USER_DATA_PROCESSING_UPSERT_FAILURE"
+export const requestUserDataProcessing = createAsyncAction(
+  "REQUEST_USER_DATA_PROCESSING_REQUEST",
+  "REQUEST_USER_DATA_PROCESSING_SUCCESS",
+  "REQUEST_USER_DATA_PROCESSING_FAILURE"
 )<
   UserDataProcessingChoiceEnum,
   UserDataProcessing,
   { choice: UserDataProcessingChoiceEnum; error: Error }
 >();
 
+export const resetUserDataProcessingRequest = createStandardAction(
+  "RESET_USER_DATA_PROCESSING_REQUEST"
+)<UserDataProcessingChoiceEnum>();
+
 export type UserDataProcessingActions =
   | ActionType<typeof loadUserDataProcessing>
-  | ActionType<typeof upsertUserDataProcessing>
-  | ActionType<typeof manageUserDataDownloading>
-  | ActionType<typeof manageUserDataDeletion>;
+  | ActionType<typeof requestUserDataProcessing>
+  | ActionType<typeof resetUserDataProcessingRequest>;

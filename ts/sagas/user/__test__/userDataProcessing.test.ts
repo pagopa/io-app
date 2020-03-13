@@ -5,124 +5,150 @@ import { UserDataProcessingChoiceEnum } from "../../../../definitions/backend/Us
 import { UserDataProcessingStatusEnum } from "../../../../definitions/backend/UserDataProcessingStatus";
 import {
   loadUserDataProcessing,
-  upsertUserDataProcessing
+  requestUserDataProcessing
 } from "../../../store/actions/userDataProcessing";
 import {
-  manageUserDataProcessingSaga,
-  upsertUserDataProcessingSaga
+  loadUserDataProcessingSaga,
+  requestUserDataProcessingSaga
 } from "../userDataProcessing";
 
-describe("manageUserDataProcessingSaga", () => {
-  const getUserDataProcessing = jest.fn();
-  const createOrUpdateUserDataProcessing = jest.fn();
-  const choice = UserDataProcessingChoiceEnum.DOWNLOAD;
+describe("loadUserDataProcessingSaga", () => {
+  const getUserDataProcessingRequest = jest.fn();
+  const loadAction = {
+    type: loadUserDataProcessing.request,
+    payload: UserDataProcessingChoiceEnum.DOWNLOAD
+  };
 
-  it("while managing the first request of data export, check if previous request are WIP and, otherwise, submit a new request", () => {
-    const nextData: UserDataProcessing = {
-      choice,
-      status: UserDataProcessingStatusEnum.PENDING,
-      version: 1
-    };
+  it("if response is 404, the user never submit the kind of request specified as the payload choice", () => {
     const get404Response = right({ status: 404 });
-
     testSaga(
-      manageUserDataProcessingSaga,
-      getUserDataProcessing,
-      createOrUpdateUserDataProcessing,
-      choice
+      loadUserDataProcessingSaga,
+      getUserDataProcessingRequest,
+      loadAction
     )
       .next()
-      .put(loadUserDataProcessing.request(choice))
-      .next()
-      .call(getUserDataProcessing, { userDataProcessingChoiceParam: choice })
+      .call(getUserDataProcessingRequest, {
+        userDataProcessingChoiceParam: loadAction.payload
+      })
       .next(get404Response)
-      .put(loadUserDataProcessing.success({ choice, value: undefined }))
-      .next()
-      .call(
-        upsertUserDataProcessingSaga,
-        createOrUpdateUserDataProcessing,
-        nextData
+      .put(
+        loadUserDataProcessing.success({
+          choice: loadAction.payload,
+          value: undefined
+        })
       )
-      .next();
+      .next()
+      .isDone();
   });
 
-  it("while managing a new request of data export, if the previous request elaboration has been completed submit a new request", () => {
-    const currentData: UserDataProcessing = {
-      choice,
-      status: UserDataProcessingStatusEnum.CLOSED,
-      version: 1
-    };
-    const get200Response = right({ status: 200, value: currentData });
-
-    const nextData: UserDataProcessing = {
-      choice,
-      status: UserDataProcessingStatusEnum.PENDING,
-      version: 2
-    };
-
-    testSaga(
-      manageUserDataProcessingSaga,
-      getUserDataProcessing,
-      createOrUpdateUserDataProcessing,
-      choice
-    )
-      .next()
-      .put(loadUserDataProcessing.request(choice))
-      .next()
-      .call(getUserDataProcessing, { userDataProcessingChoiceParam: choice })
-      .next(get200Response)
-      .put(loadUserDataProcessing.success({ choice, value: currentData }))
-      .next()
-      .call(
-        upsertUserDataProcessingSaga,
-        createOrUpdateUserDataProcessing,
-        nextData
-      )
-      .next();
-  });
-
-  it("while managing a new request of data export, if the previous request elaboration has not been completed does nothing", () => {
-    const currentData: UserDataProcessing = {
+  it("if response is 200, the user previously submitted the kind of request specified as the payload choice ", () => {
+    const mokedStatus: UserDataProcessing = {
       choice: UserDataProcessingChoiceEnum.DOWNLOAD,
       status: UserDataProcessingStatusEnum.PENDING,
       version: 2
     };
-    const get200Response = right({ status: 200, value: currentData });
+    const get200Response = right({ status: 200, value: mokedStatus });
 
     testSaga(
-      manageUserDataProcessingSaga,
-      getUserDataProcessing,
-      createOrUpdateUserDataProcessing,
-      choice
+      loadUserDataProcessingSaga,
+      getUserDataProcessingRequest,
+      loadAction
     )
       .next()
-      .put(loadUserDataProcessing.request(choice))
-      .next()
-      .call(getUserDataProcessing, { userDataProcessingChoiceParam: choice })
+      .call(getUserDataProcessingRequest, {
+        userDataProcessingChoiceParam: loadAction.payload
+      })
       .next(get200Response)
-      .put(loadUserDataProcessing.success({ choice, value: currentData }))
-      .next();
+      .put(
+        loadUserDataProcessing.success({
+          choice: loadAction.payload,
+          value: mokedStatus
+        })
+      )
+      .next()
+      .isDone();
+  });
+
+  it("return a generic error if the backend returns 500", () => {
+    const mokedError = new Error(
+      "Error: An error occurs while fetching data on user data processisng status"
+    );
+    const get500Response = right({ status: 500, value: mokedError });
+    testSaga(
+      loadUserDataProcessingSaga,
+      getUserDataProcessingRequest,
+      loadAction
+    )
+      .next()
+      .call(getUserDataProcessingRequest, {
+        userDataProcessingChoiceParam: loadAction.payload
+      })
+      .next(get500Response)
+      .put(
+        loadUserDataProcessing.failure({
+          choice: loadAction.payload,
+          error: mokedError
+        })
+      )
+      .next()
+      .isDone();
   });
 });
 
-describe("upsertUserDataProcessingSaga", () => {
-  const postUserDataProcessing = jest.fn();
-  it("dispatch a success action if the submission of a new request succeded", () => {
-    const request: UserDataProcessing = {
-      choice: UserDataProcessingChoiceEnum.DOWNLOAD,
-      status: UserDataProcessingStatusEnum.PENDING,
-      version: 1
-    };
-    const response200 = right({ status: 200, value: request });
+describe("requestUserDataProcessingSaga", () => {
+  const postUserDataProcessingRequest = jest.fn();
+  const requestAction = {
+    type: loadUserDataProcessing.request,
+    payload: UserDataProcessingChoiceEnum.DOWNLOAD
+  };
 
-    testSaga(upsertUserDataProcessingSaga, postUserDataProcessing, request)
+  const mokedNewStatus: UserDataProcessing = {
+    choice: UserDataProcessingChoiceEnum.DOWNLOAD,
+    status: UserDataProcessingStatusEnum.PENDING,
+    version: 2
+  };
+
+  it("if response is 200, the requrest has been submitted", () => {
+    const post200Response = right({ status: 200, value: mokedNewStatus });
+    testSaga(
+      requestUserDataProcessingSaga,
+      postUserDataProcessingRequest,
+      requestAction
+    )
       .next()
-      .put(upsertUserDataProcessing.request(request))
-      .next()
-      .call(postUserDataProcessing, {
-        userDataProcessingChoiceRequest: { choice: request.choice }
+      .call(postUserDataProcessingRequest, {
+        userDataProcessingChoiceRequest: { choice: requestAction.payload }
       })
-      .next(response200)
-      .put(upsertUserDataProcessing.success(request));
+      .next(post200Response)
+      .put(requestUserDataProcessing.success(mokedNewStatus))
+      .next()
+      .isDone();
+  });
+
+  it("return a generic error if the backend returns 500", () => {
+    const choice = UserDataProcessingChoiceEnum.DOWNLOAD;
+    const mokedError = new Error(
+      `Error: An error occurred while submitting a request to ${choice} the profile`
+    );
+    const get500Response = right({ status: 500 });
+
+    testSaga(
+      requestUserDataProcessingSaga,
+      postUserDataProcessingRequest,
+      requestAction
+    )
+      .next()
+      .call(postUserDataProcessingRequest, {
+        userDataProcessingChoiceRequest: { choice: requestAction.payload }
+      })
+      .next(get500Response)
+      .put(
+        requestUserDataProcessing.failure({
+          choice: requestAction.payload,
+          error: mokedError
+        })
+      )
+      .next()
+      .isDone();
   });
 });

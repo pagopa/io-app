@@ -313,8 +313,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   yield fork(
     watchUserDataProcessingSaga,
-    backendClient.getUserDataProcessing,
-    backendClient.createOrUpdateUserDataProcessing
+    backendClient.getUserDataProcessingRequest,
+    backendClient.postUserDataProcessingRequest
   );
 
   // Load visible services and service details from backend when requested

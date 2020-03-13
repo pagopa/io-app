@@ -254,7 +254,7 @@ export function BackendClient(
     response_decoder: getUserDataProcessingDefaultDecoder()
   };
 
-  const createOrUpdateUserDataProcessingT: UpsertUserDataProcessingT = {
+  const postUserDataProcessingT: UpsertUserDataProcessingT = {
     method: "post",
     url: () => `/api/v1/user-data-processing`,
     query: _ => ({}),
@@ -353,11 +353,11 @@ export function BackendClient(
     startEmailValidationProcess: withBearerToken(
       createFetchRequestForApi(postStartEmailValidationProcessT, options)
     ),
-    getUserDataProcessing: withBearerToken(
+    getUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(getUserDataProcessingT, options)
     ),
-    createOrUpdateUserDataProcessing: withBearerToken(
-      createFetchRequestForApi(createOrUpdateUserDataProcessingT, options)
+    postUserDataProcessingRequest: withBearerToken(
+      createFetchRequestForApi(postUserDataProcessingT, options)
     )
   };
 }
