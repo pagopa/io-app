@@ -81,7 +81,6 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
           text: I18n.t("global.buttons.continue"),
           style: "default",
           onPress: () => {
-            this.handleConfirmAlert(choice);
             this.props.requestUserDataProcessing(choice);
           }
         }
@@ -130,9 +129,6 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
           showToast(errorMessage);
         } else if (pot.isNone(prevProps.userDataProcessing[choice])) {
           this.handleUserDataRequestAlert(choice);
-        } else if (!this.state.isAlertShown) {
-          // The request has been sent
-          this.handleConfirmAlert(choice);
         }
       }
     };
