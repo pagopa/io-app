@@ -315,7 +315,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     const title = I18n.t("messages.cta.reminderTitle", {
       title: message.content.subject
     });
-    // tslint:disable-next-line: no-commented-code
+
     const { preferredCalendar } = this.props;
 
     this.props.hideModal();
@@ -324,19 +324,22 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       this.props.preferredCalendarSaveSuccess(calendar);
     }
 
-    // tslint:disable-next-line: no-floating-promises
     this.searchEventInCalendar(dueDate, title)
-      .then(
-        eventId =>
-          eventId.isSome()
-            ? this.confirmSaveCalendarEventAlert(
-                calendar,
-                message,
-                dueDate,
-                title,
-                eventId.value
-              )
-            : this.saveCalendarEvent(calendar, message, dueDate, title)
+      .then(mayBeEventId =>
+        mayBeEventId.foldL(
+          async () => {
+            await this.saveCalendarEvent(calendar, message, dueDate, title);
+          },
+          async eventId => {
+            this.confirmSaveCalendarEventAlert(
+              calendar,
+              message,
+              dueDate,
+              title,
+              eventId
+            );
+          }
+        )
       )
       .catch(() => this.saveCalendarEvent(calendar, message, dueDate, title));
   };
