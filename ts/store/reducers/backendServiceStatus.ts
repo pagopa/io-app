@@ -2,12 +2,12 @@
  * Implements the reducers for BackendServicesState.
  */
 
-import { Action } from "../actions/types";
-import { createSelector } from "reselect";
 import { none, Option, some } from "fp-ts/lib/Option";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { BackendServicesStatus } from "../../api/backendPublic";
 import { backendServicesStatusLoadSuccess } from "../actions/backendServicesStatus";
+import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 /** note that this state is not persisted so Option type is accepted
