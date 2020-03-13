@@ -805,6 +805,10 @@ messages:
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
     reminderTitle: "Promemoria per: {{title}}"
+    reminderAlertTitle: "Esiste già un evento"
+    reminderAlertDescription: "Esiste già un evento corrispondente al messaggio selezionato nel calendario. Vuoi mantenere quello precedente o aggiungerne uno nuovo?"
+    reminderAlertKeep: "Mantieni l'evento precedente"
+    reminderAlertAdd: "Aggiungi un nuovo evento"
     reminderAddSuccess: "Promemoria aggiunto"
     reminderAddFailure: "Errore durante l'aggiunta del promemoria, riprova per piacere"
     reminderRemoveRequest:
