@@ -49,6 +49,8 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
     super(props);
     this.state = { isAlertShown: false };
   }
+
+  // Show an alert reporting the request has been submittd
   private handleUserDataRequestAlert = (
     choice: UserDataProcessingChoiceEnum
   ) => {
@@ -89,6 +91,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
     }
   };
 
+  // show an alert to confirm the request sumbission
   private handleConfirmAlert = (
     choice: UserDataProcessingChoiceEnum,
     hasExistingRequest: boolean = false
