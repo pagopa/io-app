@@ -84,8 +84,13 @@ const minScreenWidth = 320;
 class CalendarEventButton extends React.PureComponent<Props> {
   public render() {
     const { isEventInDeviceCalendar, small, disabled, onPress } = this.props;
-
     const iconName = isEventInDeviceCalendar ? "io-tick-big" : "io-plus";
+    // On small devices use short label
+    const reminderText = I18n.t(
+      screenWidth <= minScreenWidth
+        ? "messages.cta.reminderShort"
+        : "messages.cta.reminder"
+    );
 
     return (
       <ButtonDefaultOpacity
@@ -116,12 +121,7 @@ class CalendarEventButton extends React.PureComponent<Props> {
             disabled && disabledStyles.text
           ]}
         >
-          {// On small devices use short label
-          I18n.t(
-            screenWidth <= minScreenWidth
-              ? "messages.cta.reminderShort"
-              : "messages.cta.reminder"
-          )}
+          {reminderText}
         </Text>
       </ButtonDefaultOpacity>
     );
