@@ -619,6 +619,7 @@ wallet:
       activation: I'm alerting the entity, wait a few seconds..
       verification: I am checking the status and the amount of your notice..
       generic: I am finishing the verification operations of your notice, wait a few seconds..
+      wallet: I am checking for payment method..
   insertManually:
     header: Insert notice data
     title: Insert the notice data
