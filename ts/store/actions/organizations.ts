@@ -4,8 +4,8 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 
-export const refreshOrganizations = createStandardAction(
-  "REFRESH_ORGANIZATIONS"
+export const setSelectedOrganizations = createStandardAction(
+  "SET_SELECTED_ORGANIZATIONS"
 )<ReadonlyArray<string>>();
 
 export const updateOrganizations = createStandardAction("UPDATE_ORGANIZATIONS")<
@@ -13,5 +13,5 @@ export const updateOrganizations = createStandardAction("UPDATE_ORGANIZATIONS")<
 >();
 
 export type OrganizationsActions =
-  | ActionType<typeof refreshOrganizations>
+  | ActionType<typeof setSelectedOrganizations>
   | ActionType<typeof updateOrganizations>;
