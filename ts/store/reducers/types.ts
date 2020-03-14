@@ -5,7 +5,7 @@ import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
-import { BackendServicesStatusState } from "./backendServiceStatus";
+import { BackendServicesStatusState } from "./backendServicesStatus";
 import { ContentState } from "./content";
 import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";

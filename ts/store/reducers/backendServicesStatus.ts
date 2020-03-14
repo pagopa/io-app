@@ -54,7 +54,9 @@ export const areSystemsDeadReducer = (
   const areSystemsDead =
     new Date().getTime() - backendServicesStatus.last_update.getTime() >
     refreshTimeout;
-  const deadsCounter = areSystemsDead ? currentState.deadsCounter + 1 : 0;
+  const deadsCounter = areSystemsDead
+    ? Math.min(currentState.deadsCounter + 1, DEAD_COUNTER_THRESHOLD)
+    : 0;
   return {
     ...currentState,
     status: some(backendServicesStatus),
