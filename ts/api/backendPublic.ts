@@ -1,4 +1,5 @@
 import * as t from "io-ts";
+import { NonNegativeNumber } from "italia-ts-commons/lib/numbers";
 import {
   basicResponseDecoder,
   BasicResponseType,
@@ -6,6 +7,7 @@ import {
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
+import { Timestamp } from "../../definitions/backend/Timestamp";
 import { defaultRetryingFetch } from "../utils/fetch";
 
 type GetServerInfoT = IGetApiRequestType<
@@ -16,7 +18,8 @@ type GetServerInfoT = IGetApiRequestType<
 >;
 
 export const BackendServicesStatus = t.interface({
-  status: t.string
+  last_update: Timestamp,
+  refresh_timeout: NonNegativeNumber
 });
 export type BackendServicesStatus = t.TypeOf<typeof BackendServicesStatus>;
 

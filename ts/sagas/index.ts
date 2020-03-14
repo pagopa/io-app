@@ -5,7 +5,7 @@ import { all, call, Effect } from "redux-saga/effects";
 
 import backendInfoSaga from "./backendInfo";
 
-import backendServiceStatusSaga from "./backendServicesStatus";
+import backendServicesStatusSaga from "./backendServicesStatus";
 import {
   watchContentMunicipalityLoadSaga,
   watchContentServicesByScopeLoad,
@@ -41,7 +41,7 @@ export default function* root(): Iterator<Effect> {
     // this saga is temporary removed since it seems to not work properly
     // TODO https://www.pivotaltracker.com/story/show/171597422
     // call(networkSaga, connectionMonitorParameters),
-    call(backendServiceStatusSaga),
+    call(backendServicesStatusSaga),
     call(backendInfoSaga),
     call(unreadInstabugMessagesSaga),
     call(watchNavigateToDeepLinkSaga),

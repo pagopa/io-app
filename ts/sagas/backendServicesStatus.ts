@@ -3,14 +3,16 @@
  */
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { AppState } from "react-native";
-import { call, Effect, fork, put } from "redux-saga/effects";
+import { call, Effect, fork, put, select } from "redux-saga/effects";
 import { BackendPublicClient } from "../api/backendPublic";
 import { apiUrlPrefix } from "../config";
 import { backendServicesStatusLoadSuccess } from "../store/actions/backendServicesStatus";
+import { backendServicesStatusSelector } from "../store/reducers/backendServicesStatus";
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
 
-const BACKEND_SERVICES_STATUS_LOAD_INTERVAL = 5000 as Millisecond;
+const BACKEND_SERVICES_STATUS_LOAD_INTERVAL = (10 * 1000) as Millisecond;
+const BACKEND_SERVICES_STATUS_FAILURE_INTERVAL = (2 * 1000) as Millisecond;
 
 export function* backendServicesStatusSaga(
   getServicesStatus: ReturnType<typeof BackendPublicClient>["getServicesStatus"]
@@ -42,7 +44,15 @@ export function* backendServicesStatusWatcherLoop(
     if (AppState.currentState === "active") {
       yield call(backendServicesStatusSaga, getServicesStatus);
     }
-    yield call(startTimer, BACKEND_SERVICES_STATUS_LOAD_INTERVAL);
+    const currentState: ReturnType<
+      typeof backendServicesStatusSelector
+    > = yield select(backendServicesStatusSelector);
+    // if counter of dead > 0 we change the sleep timeout (more frequent when dead is detected)
+    const sleepTime =
+      currentState.deadsCounter > 0 && currentState.areSystemsDead === false
+        ? BACKEND_SERVICES_STATUS_FAILURE_INTERVAL
+        : BACKEND_SERVICES_STATUS_LOAD_INTERVAL;
+    yield call(startTimer, sleepTime);
   }
 }
 

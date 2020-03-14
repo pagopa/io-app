@@ -12,7 +12,7 @@ import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
-import backendServiceStatusReducer from "./backendServiceStatus";
+import backendServicesStatusReducer from "./backendServicesStatus";
 import contentReducer from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
@@ -64,7 +64,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   deepLink: deepLinkReducer,
   wallet: walletReducer,
   backendInfo: backendInfoReducer,
-  backendServicesStatus: backendServiceStatusReducer,
+  backendServicesStatus: backendServicesStatusReducer,
   preferences: preferencesReducer,
   identification: identificationReducer,
   navigationHistory: navigationHistoryReducer,

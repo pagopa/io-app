@@ -27,7 +27,7 @@ import {
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
-import { isBackendServicesStatusOffSelector } from "./store/reducers/backendServiceStatus";
+import { isBackendServicesStatusOffSelector } from "./store/reducers/backendServicesStatus";
 import { GlobalState } from "./store/reducers/types";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
