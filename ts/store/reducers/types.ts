@@ -9,7 +9,7 @@ import { ContentState } from "./content";
 import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
 import { EmailValidationState } from "./emailValidation";
-import { EntitiesState, PersistedEntitiesState } from "./entities";
+import { PersistedEntitiesState } from "./entities";
 import { IdentificationState } from "./identification";
 import { InstabugUnreadMessagesState } from "./instabug/instabugUnreadMessages";
 import { InstallationState } from "./installation";

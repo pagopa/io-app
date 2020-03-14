@@ -177,6 +177,16 @@ const migrations: MigrationManifest = {
         servicesByScope: pot.none
       }
     };
+  },
+  // since entities.messages are not persisted anymore, empty the store
+  "10": (state: PersistedState) => {
+    return {
+      ...state,
+      entities: {
+        ...(state as PersistedGlobalState).entities,
+        messages: {}
+      }
+    };
   }
 };
 
