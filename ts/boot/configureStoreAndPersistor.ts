@@ -187,7 +187,8 @@ const rootPersistConfig: PersistConfig = {
   storage: AsyncStorage,
   version: CURRENT_REDUX_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnvironment() }),
-  blacklist: ["entities"], // entities implement a persist reduce that avoids to persist messsages
+  // entities implement a persist reduce that avoids to persist messages. Other entities section will be persisted
+  blacklist: ["entities"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
