@@ -1,12 +1,36 @@
-patch-package
+diff --git a/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m b/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m
+index 9905036..b264cea 100644
+--- a/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m
++++ b/node_modules/react-native-mixpanel/RNMixpanel/RNMixpanel.m
+@@ -37,6 +37,9 @@ -(Mixpanel*) getInstance: (NSString *)name {
+             return;
+         }
+         Mixpanel *instance = [Mixpanel sharedInstanceWithToken:apiToken];
++        // need to change mixpanel endpoint due to saving data in EU zone
++        // see https://www.pivotaltracker.com/story/show/171600487
++        instance.serverURL = @"https://api-eu.mixpanel.com";
+         // copy instances and add the new instance.  then reassign instances
+         NSMutableDictionary *newInstances = [NSMutableDictionary dictionaryWithDictionary:instances];
+         [newInstances setObject:instance forKey:apiToken];
+diff --git a/node_modules/react-native-mixpanel/android/src/main/java/com/kevinejohn/RNMixpanel/RNMixpanelModule.java b/node_modules/react-native-mixpanel/android/src/main/java/com/kevinejohn/RNMixpanel/RNMixpanelModule.java
+index acf9127..9d7626b 100644
 --- a/node_modules/react-native-mixpanel/android/src/main/java/com/kevinejohn/RNMixpanel/RNMixpanelModule.java
 +++ b/node_modules/react-native-mixpanel/android/src/main/java/com/kevinejohn/RNMixpanel/RNMixpanelModule.java
-@@ -199,6 +199,8 @@ public class RNMixpanelModule extends ReactContextBaseJavaModule implements Life
-         synchronized(instance) {
-             instance.identify(user_id);
-             instance.getPeople().identify(user_id);
-+            // A tmp fix to register all user properties on Android
-+            instance.getPeople().set("Fix bug", "True");
-         }
-         promise.resolve(null);
+@@ -10,6 +10,7 @@ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.bridge.ReadableMapKeySetIterator;
+ import com.facebook.react.bridge.ReadableType;
+ import com.mixpanel.android.mpmetrics.MixpanelAPI;
++import com.mixpanel.android.mpmetrics.MPConfig;
+ 
+ import org.json.JSONArray;
+ import org.json.JSONException;
+@@ -30,6 +31,9 @@ public class RNMixpanelModule extends ReactContextBaseJavaModule implements Life
+     public RNMixpanelModule(ReactApplicationContext reactContext) {
+         super(reactContext);
+ 
++        // need to change mixpanel endpoint due to saving data in EU zone
++        // see https://www.pivotaltracker.com/story/show/171600487
++        MPConfig.getInstance(reactContext).setEventsEndpoint("https://api-eu.mixpanel.com");
+         // Get lifecycle notifications to flush mixpanel on pause or destroy
+         reactContext.addLifecycleEventListener(this);
      }
