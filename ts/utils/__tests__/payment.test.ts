@@ -81,7 +81,7 @@ import { hasCardBrand } from "../payment";
 
 describe("hasCardBrand", () => {
   it("control if it is Maestro card", () => {
-    const card1: { [key: string]: any } = {
+    const card1 = {
       id: 1464,
       holder: "Mario Rossi",
       pan: "************0111",
@@ -89,7 +89,7 @@ describe("hasCardBrand", () => {
       expireYear: "22",
       brand: "MAESTRO"
     };
-    const card2: { [key: string]: any } = {
+    const card2 = {
       id: 1464,
       holder: "Mario Rossi",
       pan: "************0112",
@@ -97,7 +97,7 @@ describe("hasCardBrand", () => {
       expireYear: "22",
       brand: "MASTERCARD"
     };
-    const card3: { [key: string]: any } = {
+    const card3 = {
       id: 1464,
       holder: "Mario Rossi",
       pan: "************0113",
@@ -106,13 +106,10 @@ describe("hasCardBrand", () => {
       brand: "VISA"
     };
 
-    const cards: ReadonlyArray<any> = [card1, card2, card3];
-    for (const card of cards) {
-      if (card.brand === "MAESTRO") {
-        expect(hasCardBrand(card, "MAESTRO")).toEqual(true);
-      } else {
-        expect(hasCardBrand(card, "MAESTRO")).toEqual(false);
-      }
-    }
+    [card1, card2, card3].forEach(card => {
+      expect(hasCardBrand(card as any, "MAESTRO")).toEqual(
+        card.brand === "MAESTRO"
+      );
+    });
   });
 });
