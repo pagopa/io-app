@@ -54,12 +54,12 @@ const styles = StyleSheet.create({
     width: 70
   },
   columnLeft: {
-    flex: 1
+    flex: 0.7
   },
   columnRight: {
-    flex: 1,
-    alignItems: "flex-end",
-    alignContent: "flex-end"
+    flex: 0.3,
+    alignItems: "center",
+    alignContent: "center"
   }
 });
 
@@ -128,6 +128,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
     ];
     return (
       <View>
+        <View spacer={true} large={true} />
         <FlatList
           removeClippedSubviews={false}
           data={paymentMethods}
