@@ -247,21 +247,19 @@ class Pinpad extends React.PureComponent<Props, State> {
 
     const width = 36;
     const sideMargin = 16;
+    const margin = 12;
 
-    const totalMargins = sideMargin * 2 * pinLength + 4;
+    const totalMargins = margin * 2 * (pinLength - 1) + sideMargin * 2;
     const widthNeeded = width * pinLength + totalMargins;
 
-    const placeholderWidth = screenWidth / pinLength / 10;
+    const placeholderWidth = (screenWidth - totalMargins) / pinLength;
 
     const scalableDimension: ViewStyle | undefined =
       widthNeeded > screenWidth
         ? {
-            marginLeft: placeholderWidth * 1,
-            marginRight: placeholderWidth * 1,
-            marginTop: 18,
-            width: placeholderWidth * 7
+            width: placeholderWidth
           }
-        : undefined;
+        : { width };
 
     return isPlaceholderPopulated ? (
       <Bullet
