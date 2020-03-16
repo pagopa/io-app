@@ -36,6 +36,7 @@ interface State {
   isDisabled: boolean;
   pinLength: number;
   pinPadValue: ReadonlyArray<string>;
+  scalableDimension?: ViewStyle;
 }
 
 const styles = StyleSheet.create({
@@ -51,6 +52,10 @@ const styles = StyleSheet.create({
 });
 
 const screenWidth = Dimensions.get("window").width;
+// Placeholders values
+const width = 36;
+const sideMargin = 32;
+const margin = 12;
 
 /**
  * A customized CodeInput component.
@@ -157,12 +162,13 @@ class Pinpad extends React.PureComponent<Props, State> {
       value: "",
       isDisabled: false,
       pinLength: PIN_LENGTH,
-      pinPadValue: new Array("1", "2", "3", "4", "5", "6", "7", "8", "9")
+      pinPadValue: new Array("1", "2", "3", "4", "5", "6", "7", "8", "9"),
+      scalableDimension: undefined
     };
   }
 
   public componentWillMount() {
-    const { pinPadValue } = this.state;
+    const { pinPadValue, pinLength } = this.state;
 
     // tslint:disable-next-line: readonly-array
     const newPinPadValue = (pinPadValue as string[]).sort(() => {
@@ -185,6 +191,22 @@ class Pinpad extends React.PureComponent<Props, State> {
         pinPadValue: newPinPadValue
       });
     }
+    // Set width placeholder
+    const totalMargins = margin * 2 * (pinLength - 1) + sideMargin * 2;
+    const widthNeeded = width * pinLength + totalMargins;
+
+    const placeholderWidth = (screenWidth - totalMargins) / pinLength;
+
+    const scalableDimension: ViewStyle | undefined =
+      widthNeeded > screenWidth
+        ? {
+            width: placeholderWidth
+          }
+        : { width };
+
+    this.setState({
+      scalableDimension
+    });
   }
 
   public componentWillUnmount() {
@@ -243,23 +265,7 @@ class Pinpad extends React.PureComponent<Props, State> {
   private renderPlaceholder = (_: undefined, i: number) => {
     const isPlaceholderPopulated = i <= this.state.value.length - 1;
     const { activeColor, inactiveColor } = this.props;
-    const { pinLength } = this.state;
-
-    const width = 36;
-    const sideMargin = 16;
-    const margin = 12;
-
-    const totalMargins = margin * 2 * (pinLength - 1) + sideMargin * 2;
-    const widthNeeded = width * pinLength + totalMargins;
-
-    const placeholderWidth = (screenWidth - totalMargins) / pinLength;
-
-    const scalableDimension: ViewStyle | undefined =
-      widthNeeded > screenWidth
-        ? {
-            width: placeholderWidth
-          }
-        : { width };
+    const { scalableDimension } = this.state;
 
     return isPlaceholderPopulated ? (
       <Bullet
