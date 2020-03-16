@@ -660,7 +660,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             {this.getPushSwitchRow()}
             {this.getEmailSwitchRow()}
             {/* TODO: it could be implmented to advise on is_inbox_enabled setting too */}
-            {!this.props.isCustomEmailChannelEnabled && (
+            {(!this.props.isCustomEmailChannelEnabled || !this.props.isEmailValidated)&& (
               <Row style={styles.info}>
                 <Text>
                   {emailForwardingDescription}
