@@ -1,7 +1,7 @@
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, Dimensions, StyleSheet, ViewStyle } from "react-native";
 
 import { debounce } from "lodash";
 import I18n from "../../i18n";
@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
     color: variables.colorWhite
   }
 });
+
+const screenWidth = Dimensions.get("window").width;
 
 /**
  * A customized CodeInput component.
@@ -168,7 +170,8 @@ class Pinpad extends React.PureComponent<Props, State> {
     });
 
     if (
-      (this.props.compareWithCode && this.props.compareWithCode.length > 5) ||
+      (this.props.compareWithCode &&
+        this.props.compareWithCode.length !== PIN_LENGTH) ||
       this.props.compareWithCode === undefined
     ) {
       // tslint:disable-next-line: no-object-mutation
@@ -240,11 +243,38 @@ class Pinpad extends React.PureComponent<Props, State> {
   private renderPlaceholder = (_: undefined, i: number) => {
     const isPlaceholderPopulated = i <= this.state.value.length - 1;
     const { activeColor, inactiveColor } = this.props;
+    const { pinLength } = this.state;
+
+    const width = 36;
+    const sideMargin = 16;
+
+    const totalMargins = sideMargin * 2 * pinLength + 4;
+    const widthNeeded = width * pinLength + totalMargins;
+
+    const placeholderWidth = screenWidth / pinLength / 10;
+
+    const scalableDimension: ViewStyle | undefined =
+      widthNeeded > screenWidth
+        ? {
+            marginLeft: placeholderWidth * 1,
+            marginRight: placeholderWidth * 1,
+            marginTop: 18,
+            width: placeholderWidth * 7
+          }
+        : undefined;
 
     return isPlaceholderPopulated ? (
-      <Bullet color={activeColor} key={`baseline-${i}`} />
+      <Bullet
+        color={activeColor}
+        scalableDimension={scalableDimension}
+        key={`baseline-${i}`}
+      />
     ) : (
-      <Baseline color={inactiveColor} key={`baseline-${i}`} />
+      <Baseline
+        color={inactiveColor}
+        scalableDimension={scalableDimension}
+        key={`baseline-${i}`}
+      />
     );
   };
 
