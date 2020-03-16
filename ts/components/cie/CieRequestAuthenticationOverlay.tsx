@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const CIE_IDP_ID = "xx_servizicie_test";
+const CIE_IDP_ID = "xx_servizicie";
 
 class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
@@ -61,6 +61,7 @@ class CieRequestAuthenticationOverlay extends React.PureComponent<
   };
 
   public componentDidMount() {
+    console.warn(getIdpLoginUri(CIE_IDP_ID));
     BackHandler.addEventListener("hardwareBackPress", this.handleBackEvent);
   }
 
