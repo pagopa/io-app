@@ -40,8 +40,8 @@ const INITIAL_STATE: State = {
 };
 
 const styles = StyleSheet.create({
-  padding: { 
-    paddingHorizontal: customVariables.contentPadding 
+  padding: {
+    paddingHorizontal: customVariables.contentPadding
   },
   text: {
     paddingLeft: 8,
@@ -134,7 +134,7 @@ export default class PaymentSecureCodeOverlay extends React.Component<
                 onChangeText: (_, value) => this.updateSecurityCodeState(value)
               }}
             />
-            <View spacer={true}/>
+            <View spacer={true} />
             <Text>{I18n.t("wallet.confirmPayment.insertCVC")}</Text>
           </View>
         </Content>
