@@ -9,7 +9,7 @@ import { BiometryPrintableSimpleType } from "../../screens/onboarding/Fingerprin
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
-import { PIN_LENGTH } from "../../utils/constants";
+import { NEW_PIN_LENGTH, PIN_LENGTH } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
 import { KeyPad } from "./KeyPad";
 import { Baseline, Bullet } from "./Placeholders";
@@ -34,6 +34,8 @@ interface Props {
 interface State {
   value: string;
   isDisabled: boolean;
+  pinLength: number;
+  pinPadValue: ReadonlyArray<string>;
 }
 
 const styles = StyleSheet.create({
@@ -88,41 +90,45 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   };
 
-  private pinPadDigits: ComponentProps<typeof KeyPad>["digits"] = [
-    [
-      Tuple2("1", () => this.handlePinDigit("1")),
-      Tuple2("2", () => this.handlePinDigit("2")),
-      Tuple2("3", () => this.handlePinDigit("3"))
-    ],
-    [
-      Tuple2("4", () => this.handlePinDigit("4")),
-      Tuple2("5", () => this.handlePinDigit("5")),
-      Tuple2("6", () => this.handlePinDigit("6"))
-    ],
-    [
-      Tuple2("7", () => this.handlePinDigit("7")),
-      Tuple2("8", () => this.handlePinDigit("8")),
-      Tuple2("9", () => this.handlePinDigit("9"))
-    ],
-    [
-      this.props.onCancel
-        ? Tuple2(
-            I18n.t("global.buttons.cancel").toUpperCase(),
-            this.props.onCancel
-          )
-        : this.props.isFingerprintEnabled &&
-          this.props.biometryType &&
-          this.props.onFingerPrintReq
+  private pinPadDigits = (): ComponentProps<typeof KeyPad>["digits"] => {
+    const { pinPadValue } = this.state;
+
+    return [
+      [
+        Tuple2(pinPadValue[0], () => this.handlePinDigit(pinPadValue[0])),
+        Tuple2(pinPadValue[1], () => this.handlePinDigit(pinPadValue[1])),
+        Tuple2(pinPadValue[2], () => this.handlePinDigit(pinPadValue[2]))
+      ],
+      [
+        Tuple2(pinPadValue[3], () => this.handlePinDigit(pinPadValue[3])),
+        Tuple2(pinPadValue[4], () => this.handlePinDigit(pinPadValue[4])),
+        Tuple2(pinPadValue[5], () => this.handlePinDigit(pinPadValue[5]))
+      ],
+      [
+        Tuple2(pinPadValue[6], () => this.handlePinDigit(pinPadValue[6])),
+        Tuple2(pinPadValue[7], () => this.handlePinDigit(pinPadValue[7])),
+        Tuple2(pinPadValue[8], () => this.handlePinDigit(pinPadValue[8]))
+      ],
+      [
+        this.props.onCancel
           ? Tuple2(
-              // set the image name
-              this.renderBiometryType(this.props.biometryType),
-              this.props.onFingerPrintReq
+              I18n.t("global.buttons.cancel").toUpperCase(),
+              this.props.onCancel
             )
-          : undefined,
-      Tuple2("0", () => this.handlePinDigit("0")),
-      Tuple2("<", this.deleteLastDigit)
-    ]
-  ];
+          : this.props.isFingerprintEnabled &&
+            this.props.biometryType &&
+            this.props.onFingerPrintReq
+            ? Tuple2(
+                // set the image name
+                this.renderBiometryType(this.props.biometryType),
+                this.props.onFingerPrintReq
+              )
+            : undefined,
+        Tuple2("0", () => this.handlePinDigit("0")),
+        Tuple2("<", this.deleteLastDigit)
+      ]
+    ];
+  };
 
   private confirmResetAlert = () =>
     Alert.alert(
@@ -144,13 +150,38 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-
+    this.placeholderPositions = [...new Array(PIN_LENGTH)];
     this.state = {
       value: "",
-      isDisabled: false
+      isDisabled: false,
+      pinLength: PIN_LENGTH,
+      pinPadValue: new Array("1", "2", "3", "4", "5", "6", "7", "8", "9")
     };
+  }
 
-    this.placeholderPositions = [...new Array(PIN_LENGTH)];
+  public componentWillMount() {
+    const { pinPadValue } = this.state;
+
+    // tslint:disable-next-line: readonly-array
+    const newPinPadValue = (pinPadValue as string[]).sort(() => {
+      return Math.random() - 0.5;
+    });
+
+    if (
+      (this.props.compareWithCode && this.props.compareWithCode.length > 5) ||
+      this.props.compareWithCode === undefined
+    ) {
+      // tslint:disable-next-line: no-object-mutation
+      this.placeholderPositions = [...new Array(NEW_PIN_LENGTH)];
+      this.setState({
+        pinLength: NEW_PIN_LENGTH,
+        pinPadValue: newPinPadValue
+      });
+    } else {
+      this.setState({
+        pinPadValue: newPinPadValue
+      });
+    }
   }
 
   public componentWillUnmount() {
@@ -169,7 +200,7 @@ class Pinpad extends React.PureComponent<Props, State> {
     this.setState({ value: inputValue });
 
     // Pin is fulfilled
-    if (inputValue.length === PIN_LENGTH) {
+    if (inputValue.length === this.state.pinLength) {
       const isValid = inputValue === this.props.compareWithCode;
 
       if (!isValid && this.props.clearOnInvalid) {
@@ -243,7 +274,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         <View spacer={true} />
         <ShakeAnimation duration={600} ref={this.shakeAnimationRef}>
           <KeyPad
-            digits={this.pinPadDigits}
+            digits={this.pinPadDigits()}
             buttonType={this.props.buttonType}
             isDisabled={this.state.isDisabled}
           />
