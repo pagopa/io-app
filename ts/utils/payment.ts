@@ -132,12 +132,14 @@ export const cleanTransactionDescription = (description: string): string => {
 };
 
 /**
- * This function control if card brand is MAESTRO.
+ * This function controls if card owns the specified brand.
  */
-export const isBrandMaestro = (card: CreditCard): boolean => {
-  const MaestroCardType: CreditCardType = "MAESTRO";
+export const hasCardBrand = (
+  card: CreditCard,
+  brand: CreditCardType
+): boolean => {
   return (
     card.brand !== undefined &&
-    card.brand.toLocaleLowerCase() === MaestroCardType.toLocaleLowerCase()
+    card.brand.toLocaleLowerCase() === brand.toLocaleLowerCase()
   );
 };

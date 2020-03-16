@@ -4,20 +4,15 @@
  * TODO: simplify the "goBack" managemnt
  *  https://www.pivotaltracker.com/story/show/170929164
  */
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import { fromPredicate, none, Option } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import {
-  BackHandler,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet
-} from "react-native";
+import { BackHandler, Platform, StyleSheet } from "react-native";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
+import customVariables from "../theme/variables";
 import { AmountToImporto } from "../utils/amounts";
 import { CreditCardCVC } from "../utils/input";
 import { LabelledItem } from "./LabelledItem";
@@ -45,11 +40,8 @@ const INITIAL_STATE: State = {
 };
 
 const styles = StyleSheet.create({
-  whiteBg: {
-    backgroundColor: variables.colorWhite
-  },
-  noLeftMargin: {
-    marginLeft: 0
+  padding: { 
+    paddingHorizontal: customVariables.contentPadding 
   },
   text: {
     paddingLeft: 8,
@@ -86,9 +78,9 @@ export default class PaymentSecureCodeOverlay extends React.Component<
   }
 
   private updateSecurityCodeState(value: string) {
-    const securityCode = fromNullable(value).filter(
-      v => v !== EMPTY_CARD_SECURITY_CODE
-    );
+    const securityCode = fromPredicate(
+      (v: string) => v !== EMPTY_CARD_SECURITY_CODE
+    )(value);
     this.setState({
       securityCode
     });
@@ -120,48 +112,34 @@ export default class PaymentSecureCodeOverlay extends React.Component<
             recipient={verifica.enteBeneficiario}
             onCancel={this.props.onCancel}
           />
-          <ScrollView
-            style={styles.whiteBg}
-            keyboardShouldPersistTaps={"handled"}
-          >
-            <ScreenContentHeader
-              title={I18n.t("wallet.confirmPayment.insertCode")}
-              icon={require("./../../img/wallet/cvc-icon.png")}
+          <View spacer={true} />
+          <ScreenContentHeader
+            title={I18n.t("wallet.confirmPayment.insertCode")}
+            icon={require("./../../img/wallet/cvc-icon.png")}
+          />
+          <View style={styles.padding}>
+            <LabelledItem
+              type={"masked"}
+              inputMaskProps={{
+                ref: this.securityCodeRef,
+                value: this.state.securityCode.getOrElse(
+                  EMPTY_CARD_SECURITY_CODE
+                ),
+                placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
+                keyboardType: "numeric",
+                returnKeyType: "done",
+                maxLength: 4,
+                secureTextEntry: true,
+                mask: "[0009]",
+                onChangeText: (_, value) => this.updateSecurityCodeState(value)
+              }}
             />
-            <Content scrollEnabled={false}>
-              <LabelledItem
-                type={"masked"}
-                isValid={this.state.securityCode.fold(undefined, v =>
-                  CreditCardCVC.is(v)
-                )}
-                inputMaskProps={{
-                  ref: this.securityCodeRef,
-                  value: this.state.securityCode.getOrElse(
-                    EMPTY_CARD_SECURITY_CODE
-                  ),
-                  placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
-                  keyboardType: "numeric",
-                  returnKeyType: "done",
-                  maxLength: 4,
-                  secureTextEntry: true,
-                  mask: "[0009]",
-                  onChangeText: (_, value) =>
-                    this.updateSecurityCodeState(value)
-                }}
-              />
-              <Text>{I18n.t("wallet.confirmPayment.insertCVC")}</Text>
-            </Content>
-          </ScrollView>
+            <View spacer={true}/>
+            <Text>{I18n.t("wallet.confirmPayment.insertCVC")}</Text>
+          </View>
         </Content>
-        <KeyboardAvoidingView
-          behavior={"padding"}
-          keyboardVerticalOffset={Platform.select({
-            ios: 0,
-            android: variables.contentPadding
-          })}
-        >
-          {this.renderFooterButtons()}
-        </KeyboardAvoidingView>
+
+        {this.renderFooterButtons()}
       </TopScreenComponent>
     );
   }

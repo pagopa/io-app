@@ -77,9 +77,9 @@ describe("cleanTransactionDescription", () => {
   });
 });
 
-import { isBrandMaestro } from "../payment";
+import { hasCardBrand } from "../payment";
 
-describe("isBrandMaestro", () => {
+describe("hasCardBrand", () => {
   it("control if it is Maestro card", () => {
     const card1: { [key: string]: any } = {
       id: 1464,
@@ -109,9 +109,9 @@ describe("isBrandMaestro", () => {
     const cards: ReadonlyArray<any> = [card1, card2, card3];
     for (const card of cards) {
       if (card.brand === "MAESTRO") {
-        expect(isBrandMaestro(card)).toEqual(true);
+        expect(hasCardBrand(card, "MAESTRO")).toEqual(true);
       } else {
-        expect(isBrandMaestro(card)).toEqual(false);
+        expect(hasCardBrand(card, "MAESTRO")).toEqual(false);
       }
     }
   });
