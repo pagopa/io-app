@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
   }
 });
 
+// INFA PROD -> xx_servizicie
+// INFRA DEV -> xx_servizicie_cie
 const CIE_IDP_ID = "xx_servizicie";
 
 class CieRequestAuthenticationOverlay extends React.PureComponent<
@@ -61,7 +63,6 @@ class CieRequestAuthenticationOverlay extends React.PureComponent<
   };
 
   public componentDidMount() {
-    console.warn(getIdpLoginUri(CIE_IDP_ID));
     BackHandler.addEventListener("hardwareBackPress", this.handleBackEvent);
   }
 
@@ -76,22 +77,26 @@ class CieRequestAuthenticationOverlay extends React.PureComponent<
     });
   };
 
-  private handleNavigationStateChange = (event: NavState): void => {
+  private handleOnShouldStartLoadWithRequest = (event: NavState): boolean => {
+    if (this.state.findOpenApp) {
+      return false;
+    }
     // TODO: check if we can distinguish among different type of errors
     //      some errors could suggest ro redirect the user to the landing screen , not back
     if (event.url && event.url.indexOf("errore") !== -1) {
       this.handleOnError();
-    }
-
-    if (this.state.findOpenApp) {
-      return;
+      return true;
     }
     // Once the returned url conteins the "OpenApp" string, then the authorization has been given
     if (event.url && event.url.indexOf("OpenApp") !== -1) {
-      this.setState({ findOpenApp: true });
-      const authorizationUri = event.url;
-      this.props.onSuccess(authorizationUri);
+      this.setState({ findOpenApp: true }, () => {
+        const authorizationUri = event.url;
+        if (authorizationUri !== undefined) {
+          this.props.onSuccess(authorizationUri);
+        }
+      });
     }
+    return true;
   };
 
   private renderError = () => {
@@ -127,16 +132,20 @@ class CieRequestAuthenticationOverlay extends React.PureComponent<
     }
     return (
       <View style={styles.flex}>
-        <WebView
-          javaScriptEnabled={true}
-          onLoadEnd={this.handleOnLoadEnd}
-          onError={this.handleOnError}
-          onNavigationStateChange={this.handleNavigationStateChange}
-          source={{
-            uri: getIdpLoginUri(CIE_IDP_ID)
-          }}
-          key={this.state.webViewKey}
-        />
+        {this.state.findOpenApp === false && (
+          <WebView
+            javaScriptEnabled={true}
+            onLoadEnd={this.handleOnLoadEnd}
+            onError={this.handleOnError}
+            onShouldStartLoadWithRequest={
+              this.handleOnShouldStartLoadWithRequest
+            }
+            source={{
+              uri: getIdpLoginUri(CIE_IDP_ID)
+            }}
+            key={this.state.webViewKey}
+          />
+        )}
       </View>
     );
   }
