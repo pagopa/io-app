@@ -132,7 +132,7 @@ profile:
           oldRequest: We are already proceeding to delete your account
           newRequest: We submitted your request to delete your account
           confirmSubtitle: After processing, you will receive an email confirming the deletion.
-        error: An error occurred while sumbit your deletion request, please retry! 
+        error: An error occurred while submit your deletion request, please retry! 
       exportData:
         title: Export your data
         description: Send to your email all your account’s data in an open format
