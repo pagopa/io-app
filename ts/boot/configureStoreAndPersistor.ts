@@ -197,7 +197,7 @@ const migrations: MigrationManifest = {
     return {
       ...state,
       entities: {
-        ...(state as PersistedGlobalState).entities,      
+        ...(state as PersistedGlobalState).entities,
         services: {
           ...(state as PersistedGlobalState).entities.services,
           visible: pot.none
