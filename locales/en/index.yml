@@ -145,7 +145,7 @@ profile:
       privacyPolicy:
         title: Privacy policy
         description: Review the accepted privacy terms
-        header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+        header: Information note on the processing of the IO app Beta Testers' personal data
         updated: It is required to accept the new version of Terms and Conditions
         text: !include profile/privacy.md
         contextualHelpTitlePolicy: What is the information on the processing of personal data
