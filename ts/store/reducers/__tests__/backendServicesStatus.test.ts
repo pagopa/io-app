@@ -1,19 +1,27 @@
 import { none } from "fp-ts/lib/Option";
-import { NonNegativeNumber } from "italia-ts-commons/lib/numbers";
-import { BackendServicesStatus } from "../../../api/backendPublic";
+import { BackendStatus } from "../../../api/backendPublic";
 import {
   areSystemsDeadReducer,
-  BackendServicesStatusState
+  BackendStatusState
 } from "../backendServicesStatus";
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid
-  const validResponse: BackendServicesStatus = {
+  const validResponse: BackendStatus = {
+    min_app_version: {
+      ios: "0.0.0",
+      android: "0.0.0"
+    },
+    min_app_version_pagopa: {
+      ios: "0.0.0",
+      android: "0.0.0"
+    },
+    version: "4.7.0",
     last_update: new Date(),
-    refresh_timeout: (10 * 1000) as NonNegativeNumber
+    refresh_interval: "300000"
   };
 
-  const currentState: BackendServicesStatusState = {
+  const currentState: BackendStatusState = {
     status: none,
     areSystemsDead: false,
     deadsCounter: 0
@@ -28,8 +36,8 @@ describe("backend service status reducer", () => {
       expect(newState.status.value.last_update).toEqual(
         validResponse.last_update
       );
-      expect(newState.status.value.refresh_timeout).toEqual(
-        validResponse.refresh_timeout
+      expect(newState.status.value.refresh_interval).toEqual(
+        validResponse.refresh_interval
       );
     }
   });
