@@ -6,6 +6,7 @@ import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 
+import AsyncStorage from "@react-native-community/async-storage";
 import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
@@ -16,7 +17,7 @@ import contentReducer from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import emailValidationReducer from "./emailValidation";
-import entitiesReducer from "./entities";
+import entitiesReducer, { EntitiesState } from "./entities";
 import identificationReducer from "./identification";
 import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
 import installationReducer from "./installation";
@@ -39,6 +40,13 @@ export const authenticationPersistConfig: PersistConfig = {
   key: "authentication",
   storage: createSecureStorage(),
   blacklist: ["deepLink"]
+};
+
+// A custom configuration to avoid to persist messages section
+export const entitiesPersistConfig: PersistConfig = {
+  key: "entities",
+  storage: AsyncStorage,
+  blacklist: ["messages"]
 };
 
 /**
@@ -86,7 +94,10 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   profile: profileReducer,
   userDataProcessing: userDataProcessingReducer,
   userMetadata: userMetadataReducer,
-  entities: entitiesReducer,
+  entities: persistReducer<EntitiesState, Action>(
+    entitiesPersistConfig,
+    entitiesReducer
+  ),
   debug: debugReducer,
   persistedPreferences: persistedPreferencesReducer,
   installation: installationReducer,
