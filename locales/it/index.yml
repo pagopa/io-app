@@ -142,7 +142,7 @@ profile:
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
           newRequest: Abbiamo inoltrato la tua richiesta di esportazione dei dati.
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo. 
-        error: Si è verificato un errore nella richiesta di exportazione dei dati, riprova.
+        error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
         title: Privacy policy
         description: Rivedi le regole sulla privacy che hai accettato
