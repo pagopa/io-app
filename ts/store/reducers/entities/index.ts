@@ -3,6 +3,7 @@
  */
 import { combineReducers } from "redux";
 
+import { PersistPartial } from "redux-persist";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
@@ -23,6 +24,8 @@ export type EntitiesState = Readonly<{
   calendarEvents: CalendarEventsState;
   transactionsRead: ReadTransactionsState;
 }>;
+
+export type PersistedEntitiesState = EntitiesState & PersistPartial;
 
 const reducer = combineReducers<EntitiesState, Action>({
   messages: messagesReducer,
