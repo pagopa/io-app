@@ -18,7 +18,7 @@ describe("backend service status reducer", () => {
     },
     version: "4.7.0",
     last_update: new Date(),
-    refresh_interval: "300000"
+    refresh_interval: "30000"
   };
 
   const currentState: BackendStatusState = {
