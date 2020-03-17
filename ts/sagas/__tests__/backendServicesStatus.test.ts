@@ -2,7 +2,6 @@ import { right } from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
-import { NonNegativeNumber } from "italia-ts-commons/lib/numbers";
 import { BackendStatus } from "../../api/backendPublic";
 import { backendServicesStatusLoadSuccess } from "../../store/actions/backendStatus";
 import { backendStatusSaga } from "../backendStatus";
@@ -24,7 +23,7 @@ const validResponse: BackendStatus = {
   },
   version: "4.7.0",
   last_update: new Date(),
-  refresh_timeout: (10 * 1000) as NonNegativeNumber
+  refresh_interval: (10 * 1000).toString()
 };
 
 describe("backendServicesStatusSaga", () => {
