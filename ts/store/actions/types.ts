@@ -12,8 +12,7 @@ import { GlobalState } from "../reducers/types";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
-import { BackendInfoActions } from "./backendInfo";
-import { BackendServicesStatusActions } from "./backendServicesStatus";
+import { BackendServicesStatusActions } from "./backendStatus";
 import { CalendarEventsActions } from "./calendarEvents";
 import { ContentActions } from "./content";
 import { DebugActions } from "./debug";
@@ -41,7 +40,6 @@ export type Action =
   | AnalyticsActions
   | ApplicationActions
   | AuthenticationActions
-  | BackendInfoActions
   | BackendServicesStatusActions
   | DeepLinkActions
   | MessagesActions

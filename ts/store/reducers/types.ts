@@ -4,8 +4,7 @@ import { PersistPartial } from "redux-persist";
 import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
-import { BackendInfoState } from "./backendInfo";
-import { BackendServicesStatusState } from "./backendServicesStatus";
+import { BackendStatusState } from "./backendServicesStatus";
 import { ContentState } from "./content";
 import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
@@ -33,8 +32,7 @@ type NetworkState = Readonly<{
 export type GlobalState = Readonly<{
   appState: AppState;
   authentication: PersistedAuthenticationState;
-  backendInfo: BackendInfoState;
-  backendServicesStatus: BackendServicesStatusState;
+  backendStatus: BackendStatusState;
   deepLink: DeepLinkState;
   entities: PersistedEntitiesState;
   instabug: InstabugUnreadMessagesState;

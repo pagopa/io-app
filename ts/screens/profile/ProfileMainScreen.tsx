@@ -405,12 +405,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   false
                 )}
 
-                {backendInfo &&
+                {backendInfo.isSome() &&
                   this.debugListItem(
                     `${I18n.t("profile.main.backendVersion")} ${
-                      backendInfo.version
+                      backendInfo.value.version
                     }`,
-                    () => clipboardSetStringWithFeedback(backendInfo.version),
+                    () =>
+                      clipboardSetStringWithFeedback(backendInfo.value.version),
                     false
                   )}
                 {sessionToken &&
@@ -486,7 +487,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  backendInfo: state.backendInfo.serverInfo,
+  backendInfo: state.backendStatus.status,
   sessionToken: isLoggedIn(state.authentication)
     ? state.authentication.sessionToken
     : undefined,

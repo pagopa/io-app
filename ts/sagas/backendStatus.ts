@@ -6,7 +6,7 @@ import { AppState } from "react-native";
 import { call, Effect, fork, put, select } from "redux-saga/effects";
 import { BackendPublicClient } from "../api/backendPublic";
 import { apiUrlPrefix } from "../config";
-import { backendServicesStatusLoadSuccess } from "../store/actions/backendServicesStatus";
+import { backendServicesStatusLoadSuccess } from "../store/actions/backendStatus";
 import { backendServicesStatusSelector } from "../store/reducers/backendServicesStatus";
 import { SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
@@ -14,8 +14,8 @@ import { startTimer } from "../utils/timer";
 const BACKEND_SERVICES_STATUS_LOAD_INTERVAL = (10 * 1000) as Millisecond;
 const BACKEND_SERVICES_STATUS_FAILURE_INTERVAL = (2 * 1000) as Millisecond;
 
-export function* backendServicesStatusSaga(
-  getServicesStatus: ReturnType<typeof BackendPublicClient>["getServicesStatus"]
+export function* backendStatusSaga(
+  getServicesStatus: ReturnType<typeof BackendPublicClient>["getStatus"]
 ): IterableIterator<Effect> {
   try {
     const response: SagaCallReturnType<typeof getServicesStatus> = yield call(
@@ -35,14 +35,14 @@ export function* backendServicesStatusSaga(
  * if some of them is critical app could show a warning message or avoid
  * the whole usage
  */
-export function* backendServicesStatusWatcherLoop(
-  getServicesStatus: ReturnType<typeof BackendPublicClient>["getServicesStatus"]
+export function* backendStatusWatcherLoop(
+  getStatus: ReturnType<typeof BackendPublicClient>["getStatus"]
 ): IterableIterator<Effect> {
   // check backend status periodically
   // do it only when the app is foreground
   while (true) {
     if (AppState.currentState === "active") {
-      yield call(backendServicesStatusSaga, getServicesStatus);
+      yield call(backendStatusSaga, getStatus);
     }
     const currentState: ReturnType<
       typeof backendServicesStatusSelector
@@ -58,8 +58,5 @@ export function* backendServicesStatusWatcherLoop(
 
 export default function* root(): IterableIterator<Effect> {
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
-  yield fork(
-    backendServicesStatusWatcherLoop,
-    backendPublicClient.getServicesStatus
-  );
+  yield fork(backendStatusWatcherLoop, backendPublicClient.getStatus);
 }

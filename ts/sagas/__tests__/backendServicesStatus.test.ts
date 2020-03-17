@@ -3,9 +3,9 @@ import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
 import { NonNegativeNumber } from "italia-ts-commons/lib/numbers";
-import { BackendServicesStatus } from "../../api/backendPublic";
-import { backendServicesStatusLoadSuccess } from "../../store/actions/backendServicesStatus";
-import { backendServicesStatusSaga } from "../backendServicesStatus";
+import { BackendStatus } from "../../api/backendPublic";
+import { backendServicesStatusLoadSuccess } from "../../store/actions/backendStatus";
+import { backendStatusSaga } from "../backendStatus";
 
 jest.mock("react-native-background-timer", () => {
   return {
@@ -13,7 +13,16 @@ jest.mock("react-native-background-timer", () => {
   };
 });
 
-const validResponse: BackendServicesStatus = {
+const validResponse: BackendStatus = {
+  min_app_version: {
+    ios: "0.0.0",
+    android: "0.0.0"
+  },
+  min_app_version_pagopa: {
+    ios: "0.0.0",
+    android: "0.0.0"
+  },
+  version: "4.7.0",
   last_update: new Date(),
   refresh_timeout: (10 * 1000) as NonNegativeNumber
 };
@@ -21,7 +30,7 @@ const validResponse: BackendServicesStatus = {
 describe("backendServicesStatusSaga", () => {
   it("should emit the services status on backend response", () => {
     const getBackendServicesStatus = jest.fn();
-    return expectSaga(backendServicesStatusSaga, getBackendServicesStatus)
+    return expectSaga(backendStatusSaga, getBackendServicesStatus)
       .provide([
         [
           matchers.call.fn(getBackendServicesStatus),
@@ -34,7 +43,7 @@ describe("backendServicesStatusSaga", () => {
 
   it("shouldn't emit the services status on backend response status !== 200", () => {
     const getBackendServicesStatus = jest.fn();
-    return expectSaga(backendServicesStatusSaga, getBackendServicesStatus)
+    return expectSaga(backendStatusSaga, getBackendServicesStatus)
       .provide([
         [
           matchers.call.fn(getBackendServicesStatus),
@@ -49,7 +58,7 @@ describe("backendServicesStatusSaga", () => {
     const getBackendServicesStatus = jest.fn(() => {
       throw new Error("network error");
     });
-    return expectSaga(backendServicesStatusSaga, getBackendServicesStatus)
+    return expectSaga(backendStatusSaga, getBackendServicesStatus)
       .not.put(backendServicesStatusLoadSuccess(validResponse))
       .run();
   });

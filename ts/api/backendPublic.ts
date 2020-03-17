@@ -1,5 +1,4 @@
 import * as t from "io-ts";
-import { NonNegativeNumber } from "italia-ts-commons/lib/numbers";
 import {
   basicResponseDecoder,
   BasicResponseType,
@@ -10,24 +9,23 @@ import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { Timestamp } from "../../definitions/backend/Timestamp";
 import { defaultRetryingFetch } from "../utils/fetch";
 
-type GetServerInfoT = IGetApiRequestType<
+export const BackendStatus = t.intersection(
+  [
+    t.interface({
+      last_update: Timestamp,
+      refresh_interval: t.string
+    }),
+    ServerInfo
+  ],
+  "BackendStatus"
+);
+export type BackendStatus = t.TypeOf<typeof BackendStatus>;
+
+type GetStatusT = IGetApiRequestType<
   {},
   never,
   never,
-  BasicResponseType<ServerInfo>
->;
-
-export const BackendServicesStatus = t.interface({
-  last_update: Timestamp,
-  refresh_timeout: NonNegativeNumber
-});
-export type BackendServicesStatus = t.TypeOf<typeof BackendServicesStatus>;
-
-type GetServicesStatusT = IGetApiRequestType<
-  {},
-  never,
-  never,
-  BasicResponseType<BackendServicesStatus>
+  BasicResponseType<BackendStatus>
 >;
 
 //
@@ -43,24 +41,15 @@ export function BackendPublicClient(
     fetchApi
   };
 
-  const getServerInfoT: GetServerInfoT = {
-    method: "get",
-    url: () => "/info",
-    query: _ => ({}),
-    headers: () => ({}),
-    response_decoder: basicResponseDecoder(ServerInfo)
-  };
-
-  const getServiceStatusT: GetServicesStatusT = {
+  const getStatusT: GetStatusT = {
     method: "get",
     url: () => "/status",
     query: _ => ({}),
     headers: () => ({}),
-    response_decoder: basicResponseDecoder(BackendServicesStatus)
+    response_decoder: basicResponseDecoder(BackendStatus)
   };
 
   return {
-    getServerInfo: createFetchRequestForApi(getServerInfoT, options),
-    getServicesStatus: createFetchRequestForApi(getServiceStatusT, options)
+    getStatus: createFetchRequestForApi(getStatusT, options)
   };
 }

@@ -6,8 +6,8 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { BackendServicesStatus } from "../../api/backendPublic";
-import { backendServicesStatusLoadSuccess } from "../actions/backendServicesStatus";
+import { BackendStatus } from "../../api/backendPublic";
+import { backendServicesStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -15,12 +15,12 @@ import { GlobalState } from "./types";
  * if you want to persist an option take care of persinsting/rehydrating
  * see https://www.pivotaltracker.com/story/show/170998374
  */
-export type BackendServicesStatusState = {
-  status: Option<BackendServicesStatus>;
+export type BackendStatusState = {
+  status: Option<BackendStatus>;
   areSystemsDead: boolean;
   deadsCounter: number;
 };
-const initialBackendInfoState: BackendServicesStatusState = {
+const initialBackendInfoState: BackendStatusState = {
   status: none,
   areSystemsDead: false,
   deadsCounter: 0
@@ -28,7 +28,7 @@ const initialBackendInfoState: BackendServicesStatusState = {
 
 export const backendServicesStatusSelector = (
   state: GlobalState
-): BackendServicesStatusState => state.backendServicesStatus;
+): BackendStatusState => state.backendStatus;
 
 // this is a constant applied to know if systeam are dead or know
 // since we receive the date some time could be elpased due to network delay
@@ -44,31 +44,30 @@ export const isBackendServicesStatusOffSelector = createSelector(
 );
 
 export const areSystemsDeadReducer = (
-  currentState: BackendServicesStatusState,
-  backendServicesStatus: BackendServicesStatus
-): BackendServicesStatusState => {
+  currentState: BackendStatusState,
+  backendStatus: BackendStatus
+): BackendStatusState => {
   // we considering refresh timeout + a constant to evaluate the time
   // must be exceeded to say backend system are dead or not
-  const refreshTimeout =
-    (backendServicesStatus.refresh_timeout as number) + (C_TOLERANCE as number);
+  const refreshInterval = parseInt(backendStatus.refresh_interval, 10);
+  const refreshTimeout = refreshInterval + (C_TOLERANCE as number);
   const areSystemsDead =
-    new Date().getTime() - backendServicesStatus.last_update.getTime() >
-    refreshTimeout;
+    new Date().getTime() - backendStatus.last_update.getTime() > refreshTimeout;
   const deadsCounter = areSystemsDead
     ? Math.min(currentState.deadsCounter + 1, DEAD_COUNTER_THRESHOLD)
     : 0;
   return {
     ...currentState,
-    status: some(backendServicesStatus),
+    status: some(backendStatus),
     areSystemsDead: deadsCounter >= DEAD_COUNTER_THRESHOLD,
     deadsCounter
   };
 };
 
 export default function backendServicesStatusReducer(
-  state: BackendServicesStatusState = initialBackendInfoState,
+  state: BackendStatusState = initialBackendInfoState,
   action: Action
-): BackendServicesStatusState {
+): BackendStatusState {
   if (action.type === getType(backendServicesStatusLoadSuccess)) {
     return areSystemsDeadReducer(state, action.payload);
   }
