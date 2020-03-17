@@ -58,7 +58,6 @@ class CieRequestAuthenticationOverlay extends React.PureComponent<
   };
 
   public componentDidMount() {
-    console.log(getIdpLoginUri(CIE_IDP_ID))
     BackHandler.addEventListener("hardwareBackPress", this.handleBackEvent);
   }
 
@@ -130,7 +129,6 @@ class CieRequestAuthenticationOverlay extends React.PureComponent<
       <View style={styles.flex}>
         {this.state.findOpenApp === false && (
           <WebView
-            onLoad={(e: any) => console.log(e)}
             javaScriptEnabled={true}
             onLoadEnd={this.handleOnLoadEnd}
             onError={this.handleOnError}
