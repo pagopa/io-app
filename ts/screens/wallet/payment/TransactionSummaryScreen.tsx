@@ -316,6 +316,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
 const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, psps } = state.wallet.payment;
+  const walletById = state.wallet.wallets.walletById;
 
   const maybeFavoriteWallet = pot.toOption(getFavoriteWallet(state));
 
@@ -340,7 +341,9 @@ const mapStateToProps = (state: GlobalState) => {
   // starting the next step's loading request
   const isLoadingVerifica = pot.isLoading(verifica);
   const isLoadingAttiva = pot.isLoading(attiva);
+  const isLoadingWalletById = pot.isLoading(walletById);
   const isLoading =
+    isLoadingWalletById ||
     isLoadingVerifica ||
     isLoadingAttiva ||
     (error.isNone() && pot.isSome(attiva) && pot.isNone(paymentId)) ||
@@ -357,7 +360,9 @@ const mapStateToProps = (state: GlobalState) => {
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.verification")
     : isLoadingAttiva
       ? I18n.t("wallet.firstTransactionSummary.loadingMessage.activation")
-      : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
+      : isLoadingWalletById
+        ? I18n.t("wallet.firstTransactionSummary.loadingMessage.wallet")
+        : I18n.t("wallet.firstTransactionSummary.loadingMessage.generic");
 
   const hasWallets = pot.getOrElse(walletsSelector(state), []).length !== 0;
 
