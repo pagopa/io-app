@@ -257,6 +257,7 @@ authentication:
     expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
   cie:
+    genericTitle: Accedi - CIE
     cie: Carta di Identità Elettronica
     noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
     authToSendData: !include cie/auth_to_send_data.md

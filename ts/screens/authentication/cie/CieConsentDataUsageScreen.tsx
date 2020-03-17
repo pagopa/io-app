@@ -107,6 +107,23 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
     this.props.resetNavigation();
   };
 
+  private handleGoBack = () =>
+    Alert.alert(
+      I18n.t("onboarding.alert.title"),
+      I18n.t("onboarding.alert.description"),
+      [
+        {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
+          text: I18n.t("global.buttons.exit"),
+          style: "default",
+          onPress: this.handleLoginFailure
+        }
+      ]
+    );
+
   private getContent = () => {
     if (this.state.hasError) {
       return (
@@ -136,7 +153,12 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
   public render(): React.ReactNode {
     return (
       <LoadingSpinnerOverlay isLoading={this.state.isLoading}>
-        <TopScreenComponent>{this.getContent()}</TopScreenComponent>
+        <TopScreenComponent
+          goBack={this.handleGoBack}
+          title={I18n.t("authentication.cie.genericTitle")}
+        >
+          {this.getContent()}
+        </TopScreenComponent>
       </LoadingSpinnerOverlay>
     );
   }

@@ -1,10 +1,5 @@
 /**
  * A screen to manage the request of authentication once the pin of the user's CIE has been inserted+
- * TODO: deve essere un overlay sullo screen di richiesta pin, per evitare che si possa navigare a questo screen
- * TODO: quando si ritorna al pin, cosa fare? si potrebbe pulire l'input o metter eun tasto 'pulisci'
- * es: si potrebbe pulire solo quando ci si arriva cliccando "riprova" e il pin era sicurametne errato
- *
- * //TODO: quando fa il controllo, controllare che sia ancora attivo l'NFC, altrimenti ritornare indietro alla schermata di lettura dell'NFC
  */
 import { View } from "native-base";
 import * as React from "react";
@@ -40,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 // INFA PROD -> xx_servizicie
-// INFRA DEV -> xx_servizicie_cie
+// INFRA DEV -> xx_servizicie_test
 const CIE_IDP_ID = "xx_servizicie";
 
 class CieRequestAuthenticationOverlay extends React.PureComponent<
@@ -63,6 +58,7 @@ class CieRequestAuthenticationOverlay extends React.PureComponent<
   };
 
   public componentDidMount() {
+    console.log(getIdpLoginUri(CIE_IDP_ID))
     BackHandler.addEventListener("hardwareBackPress", this.handleBackEvent);
   }
 
@@ -134,6 +130,7 @@ class CieRequestAuthenticationOverlay extends React.PureComponent<
       <View style={styles.flex}>
         {this.state.findOpenApp === false && (
           <WebView
+            onLoad={(e: any) => console.log(e)}
             javaScriptEnabled={true}
             onLoadEnd={this.handleOnLoadEnd}
             onError={this.handleOnError}

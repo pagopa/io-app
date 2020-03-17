@@ -251,6 +251,7 @@ authentication:
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
     expiredCardHelp: How to renew your Electronic Identity Card?
   cie:
+    genericTitle: Login - CIE
     cie: Electronic Identity Card
     noDataTitle: To use IO you must authorize the sending of data
     authToSendData: !include cie/auth_to_send_data.md
