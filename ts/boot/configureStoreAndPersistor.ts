@@ -34,7 +34,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 11;
+const CURRENT_REDUX_STORE_VERSION = 10;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -188,15 +188,6 @@ const migrations: MigrationManifest = {
         ...(state as PersistedGlobalState).entities,
         messages: {}
       }
-    };
-  },
-
-  // Version 11
-  // Introduce new userDataProcessing persisted state
-  "11": (state: PersistedState) => {
-    return {
-      ...state,
-      userDataProcessing: pot.none
     };
   }
 };

@@ -39,9 +39,7 @@ const userDataProcessingReducer = (
     case getType(loadUserDataProcessing.success): {
       return {
         ...state,
-        [action.payload.choice]: action.payload.value
-          ? pot.some(action.payload.value)
-          : pot.some(undefined)
+        [action.payload.choice]: pot.some(action.payload.value)
       };
     }
 
@@ -50,15 +48,15 @@ const userDataProcessingReducer = (
       return {
         ...state,
         [action.payload.choice]: pot.toError(
-          pot.some(action.payload.error),
-          pot.none
+          { ...state[action.payload.choice] },
+          action.payload.error
         )
       };
 
     case getType(requestUserDataProcessing.request): {
       return {
         ...state,
-        [action.payload]: pot.toLoading(state[action.payload])
+        [action.payload]: pot.toLoading({ ...state[action.payload] })
       };
     }
     case getType(requestUserDataProcessing.success): {
