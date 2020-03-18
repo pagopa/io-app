@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 // INFRA DEV -> xx_servizicie_test
 const CIE_IDP_ID = "xx_servizicie";
 
-class CieRequestAuthenticationOverlay extends React.PureComponent<
+export default class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
   State
 > {
@@ -147,7 +147,9 @@ class CieRequestAuthenticationOverlay extends React.PureComponent<
 
   public render(): React.ReactNode {
     const ContainerComponent = withLoadingSpinner(() => (
-      <TopScreenComponent>{this.renderWebView()}</TopScreenComponent>
+      <TopScreenComponent goBack={this.props.onClose}>
+        {this.renderWebView()}
+      </TopScreenComponent>
     ));
     return (
       <ContainerComponent
@@ -159,5 +161,3 @@ class CieRequestAuthenticationOverlay extends React.PureComponent<
     );
   }
 }
-
-export default CieRequestAuthenticationOverlay;
