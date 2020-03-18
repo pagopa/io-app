@@ -102,19 +102,19 @@ class Pinpad extends React.PureComponent<Props, State> {
 
     return [
       [
-        Tuple2(pinPadValues[0], () => this.handlePinDigit(pinPadValues[0])),
         Tuple2(pinPadValues[1], () => this.handlePinDigit(pinPadValues[1])),
-        Tuple2(pinPadValues[2], () => this.handlePinDigit(pinPadValues[2]))
+        Tuple2(pinPadValues[2], () => this.handlePinDigit(pinPadValues[2])),
+        Tuple2(pinPadValues[3], () => this.handlePinDigit(pinPadValues[3]))
       ],
       [
-        Tuple2(pinPadValues[3], () => this.handlePinDigit(pinPadValues[3])),
         Tuple2(pinPadValues[4], () => this.handlePinDigit(pinPadValues[4])),
-        Tuple2(pinPadValues[5], () => this.handlePinDigit(pinPadValues[5]))
+        Tuple2(pinPadValues[5], () => this.handlePinDigit(pinPadValues[5])),
+        Tuple2(pinPadValues[6], () => this.handlePinDigit(pinPadValues[6]))
       ],
       [
-        Tuple2(pinPadValues[6], () => this.handlePinDigit(pinPadValues[6])),
         Tuple2(pinPadValues[7], () => this.handlePinDigit(pinPadValues[7])),
-        Tuple2(pinPadValues[8], () => this.handlePinDigit(pinPadValues[8]))
+        Tuple2(pinPadValues[8], () => this.handlePinDigit(pinPadValues[8])),
+        Tuple2(pinPadValues[9], () => this.handlePinDigit(pinPadValues[9]))
       ],
       [
         this.props.onCancel
@@ -131,7 +131,7 @@ class Pinpad extends React.PureComponent<Props, State> {
                 this.props.onFingerPrintReq
               )
             : undefined,
-        Tuple2("0", () => this.handlePinDigit("0")),
+        Tuple2(pinPadValues[0], () => this.handlePinDigit(pinPadValues[0])),
         Tuple2("<", this.deleteLastDigit)
       ]
     ];
@@ -161,7 +161,7 @@ class Pinpad extends React.PureComponent<Props, State> {
       value: "",
       isDisabled: false,
       pinLength: PIN_LENGTH,
-      pinPadValues: range(1, 9).map(s => s.toString()),
+      pinPadValues: range(0, 9).map(s => s.toString()),
       scalableDimension: undefined
     };
   }
@@ -174,7 +174,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         ? this.props.compareWithCode.length
         : PIN_LENGTH_SIX;
 
-    // In DEV env don't shuffle the pin pan
+    // in dev env don't shuffle the pin pan
     const newPinPadValue =
       this.props.shufflePad === true || isDevEnvironment()
         ? pinPadValues
