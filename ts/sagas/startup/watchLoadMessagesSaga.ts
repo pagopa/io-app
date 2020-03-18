@@ -35,6 +35,7 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { GlobalState } from "../../store/reducers/types";
 import { SagaCallReturnType } from "../../types/utils";
 import { uniqueItem } from "../../utils/enumerables";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 /**
  * A generator to load messages from the Backend.
@@ -122,7 +123,14 @@ export function* loadMessages(
 
         const shouldLoadService = (id: string) => {
           const cached = cachedServicesById[id];
-          return cached === undefined || !pot.isLoading(cached);
+          // we need to load a service if (one of these is true)
+          // - service is not cached
+          // - service is not loading AND service is none OR service is error
+          return (
+            cached === undefined ||
+            (!pot.isLoading(cached) &&
+              (pot.isNone(cached) || pot.isError(cached)))
+          );
         };
 
         // Filter services already in the store
@@ -130,7 +138,7 @@ export function* loadMessages(
           .map(_ => _.sender_service_id)
           .filter(shouldLoadService)
           .filter(uniqueItem); // Get unique ids
-
+        RTron.log(pendingServicesIds);
         // Fetch the services detail in parallel
         // We don't need to store the results because the LOAD_SERVICE_DETAIL_REQUEST is already dispatched by each `loadServiceDetail` action called.
         // We fetch services first because to show messages you need the related service info
