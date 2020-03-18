@@ -511,7 +511,7 @@ payment:
   IUV: IUV
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
-  wallet: Portafoglio
+  wallet: Pagamenti
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Carte di Credito

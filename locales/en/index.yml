@@ -504,7 +504,7 @@ payment:
   IUV: IUV
   recipientFiscalCode: Recipient fiscal code
 wallet:
-  wallet: Wallet
+  wallet: Payments
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
