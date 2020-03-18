@@ -176,7 +176,7 @@ class Pinpad extends React.PureComponent<Props, State> {
 
     // in dev env don't shuffle the pin pan
     const newPinPadValue =
-      this.props.shufflePad === true || isDevEnvironment()
+      this.props.shufflePad !== true || isDevEnvironment()
         ? pinPadValues
         : shuffle(pinPadValues);
 
