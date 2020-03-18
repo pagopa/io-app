@@ -174,24 +174,21 @@ class Pinpad extends React.PureComponent<Props, State> {
         ? this.props.compareWithCode.length
         : PIN_LENGTH_SIX;
 
-    // in dev env don't shuffle the pin pan
+    // we avoid to shuffle pin pad in dev env
     const newPinPadValue =
       this.props.shufflePad !== true || isDevEnvironment()
         ? pinPadValues
         : shuffle(pinPadValues);
 
-    // Set width placeholder
+    // compute width placeholder
     const totalMargins = margin * 2 * (pinLength - 1) + sideMargin * 2;
     const widthNeeded = width * pinLength + totalMargins;
 
     const placeholderWidth = (screenWidth - totalMargins) / pinLength;
 
-    const scalableDimension: ViewStyle | undefined =
-      widthNeeded > screenWidth
-        ? {
-            width: placeholderWidth
-          }
-        : { width };
+    const scalableDimension: ViewStyle = {
+      width: widthNeeded > screenWidth ? placeholderWidth : width
+    };
 
     this.setState({
       pinLength,
