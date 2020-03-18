@@ -90,10 +90,15 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
     this.setState({ hasError: true });
   };
 
+  private handleLoginSuccess = (token: SessionToken) => {
+    this.setState({ isLoading: true });
+    this.props.loginSuccess(token);
+  };
+
   private handleShouldStartLoading = (event: NavState): boolean => {
     const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
-      this.props.loginSuccess
+      this.handleLoginSuccess
     )(event);
     // URL can be loaded if it's not the login URL containing the session token - this avoids
     // making a (useless) GET request with the session in the URL
