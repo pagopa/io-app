@@ -312,28 +312,24 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
    * Returns the number of sections to load
    */
   private sectionToLoad = (
-    // tslint:disable-next-line: readonly-array
-    messagesState: pot.Pot<MessageState[], string>
-  ): number | undefined => {
-    if (pot.isSome(messagesState)) {
-      const value = messagesState.value;
-      // check loading messages
-      const isSomeLoading = value.filter(m => {
-        const message = m.message;
-        return pot.isLoading(message);
-      });
-      if (isSomeLoading.length > 0) {
-        return undefined;
-      }
-      const tot = value.filter(m => {
-        const message = m.message;
-        return (
-          pot.isSome(message) && message.value.content.due_date !== undefined
-        );
-      });
-      return tot.length;
-    }
-    return undefined;
+    messagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+  ): number => {
+    return pot.getOrElse(
+      pot.map(messagesState, value => {
+        // check loading messages
+        const isSomeLoading = value.find(m => pot.isLoading(m.message));
+        if (isSomeLoading !== undefined) {
+          return 0;
+        }
+        return value.filter(m => {
+          const message = m.message;
+          return (
+            pot.isSome(message) && message.value.content.due_date !== undefined
+          );
+        }).length;
+      }),
+      0
+    );
   };
 
   public render() {

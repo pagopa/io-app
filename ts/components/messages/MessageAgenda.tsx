@@ -36,8 +36,7 @@ const SECTION_HEADER_HEIGHT = 48;
 const ITEM_HEIGHT = 158;
 const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
-const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
-const ITEM_LOADING_HEIGHT = ITEM_WITHOUT_CTABAR_HEIGHT;
+const ITEM_WITHOUT_CTABAR_AND_LOADING_HEIGHT = 114;
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -112,7 +111,7 @@ const styles = StyleSheet.create({
     width: screenWidth - variables.contentPadding * 2
   },
   itemLoadingContainer: {
-    height: ITEM_LOADING_HEIGHT,
+    height: ITEM_WITHOUT_CTABAR_AND_LOADING_HEIGHT,
     paddingVertical: 16,
     paddingHorizontal: customVariables.contentPadding,
     flex: 1
@@ -291,7 +290,6 @@ const SectionHeaderPlaceholder = (
 class MessageAgenda extends React.PureComponent<Props, State> {
   private idTimeout?: number;
   private idInterval?: number;
-  private messageToLoadFromSections: number = 0;
   // Ref to section list
   private sectionListRef = React.createRef<any>();
   constructor(props: Props) {
@@ -368,7 +366,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         }),
         viewPosition: 0,
         viewOffset:
-          sectionIndex === sectionsLength ? 0 : ITEM_WITHOUT_CTABAR_HEIGHT + 20
+          sectionIndex === sectionsLength
+            ? 0
+            : ITEM_WITHOUT_CTABAR_AND_LOADING_HEIGHT + 20
       });
     }, 300);
   };
@@ -413,18 +413,16 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   };
 
   private getMessageToLoadFromSections = (sections: Sections) => {
-    // tslint:disable-next-line: no-object-mutation
-    this.messageToLoadFromSections = 0;
-    sections.forEach(s => {
-      const messageInside = s.data.length;
-      // tslint:disable-next-line: no-object-mutation
-      this.messageToLoadFromSections += messageInside;
-    });
+    const messageToLoadFromSections = sections.reduce(
+      (acc, curr) => acc + curr.data.length,
+      0
+    );
+    const numMessagesToRender =
+      messageToLoadFromSections + this.state.numMessagesToRender;
     this.setState({
-      numMessagesToRender:
-        this.messageToLoadFromSections + this.state.numMessagesToRender
+      numMessagesToRender
     });
-    return this.messageToLoadFromSections;
+    return messageToLoadFromSections;
   };
 
   private completeLoadingState = () => {
