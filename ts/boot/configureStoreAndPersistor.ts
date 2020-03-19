@@ -34,7 +34,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 9;
+const CURRENT_REDUX_STORE_VERSION = 10;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -178,6 +178,7 @@ const migrations: MigrationManifest = {
       }
     };
   },
+  // Version 10
   // since entities.messages are not persisted anymore, empty the store
   "10": (state: PersistedState) => {
     return {
