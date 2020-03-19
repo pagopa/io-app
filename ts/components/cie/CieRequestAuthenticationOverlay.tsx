@@ -14,6 +14,7 @@ import { getIdpLoginUri } from "../../utils/login";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 import TopScreenComponent from "../screens/TopScreenComponent";
+import FooterWithButtons from "../ui/FooterWithButtons";
 
 type Props = {
   ciePin: string;
@@ -147,8 +148,16 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
 
   public render(): React.ReactNode {
     const ContainerComponent = withLoadingSpinner(() => (
-      <TopScreenComponent goBack={this.props.onClose}>
+      <TopScreenComponent>
         {this.renderWebView()}
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={{
+            bordered: true,
+            onPress: this.props.onClose,
+            title: I18n.t("global.buttons.cancel")
+          }}
+        />
       </TopScreenComponent>
     ));
     return (
