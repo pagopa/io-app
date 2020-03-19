@@ -61,6 +61,11 @@ const styles = StyleSheet.create({
   errorMessageSubtitle: {
     textAlign: "center",
     fontSize: customVariables.fontSizeSmall
+  },
+
+  paddedLR: {
+    paddingLeft: customVariables.contentPadding,
+    paddingRight: customVariables.contentPadding
   }
 });
 
@@ -218,7 +223,7 @@ class TransactionErrorScreen extends React.Component<Props> {
         goBack={this.onPressCancel}
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
       >
-        <Content>
+        <Content noPadded={true} style={styles.paddedLR}>
           <View style={styles.contentWrapper}>
             <View spacer={true} extralarge={true} />
 
