@@ -6,7 +6,6 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import {
-  acknowledgeOnEmailValidation,
   startEmailValidation
 } from "../actions/profile";
 import { Action } from "../actions/types";
@@ -14,12 +13,10 @@ import { GlobalState } from "./types";
 
 export type EmailValidationState = {
   sendEmailValidationRequest: pot.Pot<void, Error>;
-  acknowledgeOnEmailValidated: boolean;
 };
 
 const INITIAL_STATE: EmailValidationState = {
-  sendEmailValidationRequest: pot.none,
-  acknowledgeOnEmailValidated: false
+  sendEmailValidationRequest: pot.none
 };
 
 // return the pot of email validation
@@ -45,8 +42,6 @@ const reducer = (
       };
     case getType(startEmailValidation.success):
       return { ...state, sendEmailValidationRequest: pot.some(undefined) };
-    case getType(acknowledgeOnEmailValidation):
-      return { ...state, acknowledgeOnEmailValidated: action.payload };
     default:
       return state;
   }
@@ -57,5 +52,3 @@ export default reducer;
 // Selectors
 export const sendEmailValidationRequestSelector = (state: GlobalState) =>
   state.emailValidation.sendEmailValidationRequest;
-export const acknowledgeOnEmailValidatedSelector = (state: GlobalState) =>
-  state.emailValidation.acknowledgeOnEmailValidated;

@@ -33,7 +33,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 10;
+const CURRENT_REDUX_STORE_VERSION = 9;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -174,18 +174,6 @@ const migrations: MigrationManifest = {
       content: {
         ...(state as PersistedGlobalState).content,
         servicesByScope: pot.none
-      }
-    };
-  },
-
-  // Version 10
-  // we convert the acknowledgeOnEmailValidated state type from Option<boolean> to boolean
-  "10": (state: PersistedState) => {
-    return {
-      ...state,
-      emailValidation: {
-        sendEmailValidationRequest: pot.none,
-        acknowledgeOnEmailValidated: false
       }
     };
   }

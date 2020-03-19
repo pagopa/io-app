@@ -16,14 +16,11 @@ import { withLightModalContext } from "../../components/helpers/withLightModalCo
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
-import { acknowledgeOnEmailValidation } from "../../store/actions/profile";
-import { Dispatch } from "../../store/actions/types";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { withConditionalView } from "./withConditionalView";
 
 export type ModalProps = LightModalContextInterface &
-  ReturnType<typeof mapDispatchToProps> &
   NavigationScreenProps;
 
 /*
@@ -43,12 +40,6 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
 
   private hideModal = () => {
     this.props.hideModal();
-    // when the reminder modal will be closed
-    // we set acknowledgeOnEmailValidation to none because we don't want
-    // any feedback about the email validation
-    // remember that only RemindEmailValidationOverlay sets it to some, because there
-    // we want the user feedback
-    this.props.dispatchAcknowledgeOnEmailValidation();
   };
 
   private handleForcedClose = () => {
@@ -101,17 +92,11 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchAcknowledgeOnEmailValidation: () =>
-    dispatch(acknowledgeOnEmailValidation(false))
-});
-
 export function withValidatedEmail<P>(
   WrappedComponent: React.ComponentType<P>
 ) {
   return connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
   )(
     withConditionalView(
       WrappedComponent,

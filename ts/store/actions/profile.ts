@@ -39,10 +39,6 @@ export const startEmailValidation = createAsyncAction(
   "START_EMAIL_VALIDATION_FAILURE"
 )<void, void, Error>();
 
-export const acknowledgeOnEmailValidation = createStandardAction(
-  "ACKNOWLEDGE_ON_EMAIL_VALIDATION"
-)<boolean>();
-
 type ProfileFirstLoginPayload = {
   fiscal_code: InitializedProfile["fiscal_code"];
   spid_email: InitializedProfile["spid_email"];
@@ -60,6 +56,5 @@ export type ProfileActions =
   | ActionType<typeof profileLoadFailure>
   | ActionType<typeof profileUpsert>
   | ActionType<typeof startEmailValidation>
-  | ActionType<typeof acknowledgeOnEmailValidation>
   | ActionType<typeof profileFirstLogin>
   | ActionType<typeof clearCache>;

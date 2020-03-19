@@ -1,7 +1,7 @@
 /**
  * A saga that manages the Profile.
  */
-import { none, Option, some } from "fp-ts/lib/Option";
+import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
@@ -22,11 +22,12 @@ import {
 import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import { SagaCallReturnType } from "../types/utils";
+import { SagaIterator } from 'redux-saga';
 
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
-): Iterator<Effect | Option<InitializedProfile>> {
+): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
@@ -64,7 +65,7 @@ function* createOrUpdateProfileSaga(
     typeof BackendClient
   >["createOrUpdateProfile"],
   action: ActionType<typeof profileUpsert["request"]>
-): Iterator<Effect> {
+): SagaIterator {
   // Get the current Profile from the state
   const profileState: ReturnType<typeof profileSelector> = yield select<
     GlobalState
@@ -159,7 +160,7 @@ export function* startEmailValidationProcessSaga(
   startEmailValidationProcess: ReturnType<
     typeof BackendClient
   >["startEmailValidationProcess"]
-): Iterator<Effect | Option<InitializedProfile>> {
+): SagaIterator {
   try {
     const response: SagaCallReturnType<
       typeof startEmailValidationProcess

@@ -17,13 +17,11 @@ import {
   emailAcknowledged
 } from "../store/actions/onboarding";
 import {
-  acknowledgeOnEmailValidation,
   profileLoadRequest,
   startEmailValidation
 } from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
 import {
-  acknowledgeOnEmailValidatedSelector,
   sendEmailValidationRequestSelector
 } from "../store/reducers/emailValidation";
 import { isOnboardingCompletedSelector } from "../store/reducers/navigationHistory";
@@ -91,8 +89,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     // tslint:disable-next-line: no-object-mutation
     this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
     this.props.reloadProfile();
-    // since we are here, set the user doesn't acknowledge about the email validation
-    this.props.dispatchAcknowledgeOnEmailValidation(true);
   }
 
   public componentWillUnmount() {
@@ -123,7 +119,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     if (this.state.isLoading) {
       return;
     }
-    this.props.dispatchAcknowledgeOnEmailValidation(false);
     this.props.reloadProfile();
     if (!this.props.isOnboardingCompleted) {
       this.props.acknowledgeEmailInsert();
@@ -166,7 +161,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     if (
       !prevProps.isEmailValidated &&
       this.props.isEmailValidated &&
-      this.props.acknowledgeOnEmailValidated &&
       this.state.emailHasBeenValidate === false
     ) {
       this.setState({ emailHasBeenValidate: true });
@@ -324,7 +318,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   emailValidationRequest: sendEmailValidationRequestSelector(state),
-  acknowledgeOnEmailValidated: acknowledgeOnEmailValidatedSelector(state),
   optionEmail: profileEmailSelector(state),
   isEmailValidated: isProfileEmailValidatedSelector(state),
   potProfile: profileSelector(state),
@@ -342,8 +335,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToEmailInsertScreen());
   },
   acknowledgeEmailInsert: () => dispatch(emailAcknowledged()),
-  dispatchAcknowledgeOnEmailValidation: (maybeAcknowledged: boolean) =>
-    dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 
