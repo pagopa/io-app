@@ -33,7 +33,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 9;
+const CURRENT_REDUX_STORE_VERSION = 10;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -176,6 +176,17 @@ const migrations: MigrationManifest = {
         servicesByScope: pot.none
       }
     };
+  },
+  // Version 10
+  // since entities.messages are not persisted anymore, empty the related store section
+  "10": (state: PersistedState) => {
+    return {
+      ...state,
+      entities: {
+        ...(state as PersistedGlobalState).entities,
+        messages: {}
+      }
+    };
   }
 };
 
@@ -186,13 +197,13 @@ const rootPersistConfig: PersistConfig = {
   storage: AsyncStorage,
   version: CURRENT_REDUX_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnvironment() }),
-
+  // entities implement a persist reduce that avoids to persist messages. Other entities section will be persisted
+  blacklist: ["entities"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
     "notifications",
     "profile",
-    "entities",
     "debug",
     "persistedPreferences",
     "installation",
