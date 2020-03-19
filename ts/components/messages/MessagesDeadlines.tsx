@@ -324,7 +324,9 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         return value.filter(m => {
           const message = m.message;
           return (
-            pot.isSome(message) && message.value.content.due_date !== undefined
+            pot.isSome(message) &&
+            message.value.content.due_date !== undefined &&
+            !m.isArchived
           );
         }).length;
       }),
