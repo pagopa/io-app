@@ -13,7 +13,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { BackHandler, Image, StyleSheet } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -124,6 +124,16 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 class TransactionDetailsScreen extends React.Component<Props> {
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+  // On back button navigate to wallet home (android)
+  private handleBackPress = () => this.props.navigateToWalletHome();
+
   private displayedWallet(transactionWallet: Wallet | undefined) {
     return transactionWallet ? (
       <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
