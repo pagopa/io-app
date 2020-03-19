@@ -178,9 +178,8 @@ const migrations: MigrationManifest = {
       }
     };
   },
-
-  // Verison 10
-  // since entities.messages are not persisted anymore, empty the store
+  // Version 10
+  // since entities.messages are not persisted anymore, empty the related store section
   "10": (state: PersistedState) => {
     return {
       ...state,
