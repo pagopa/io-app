@@ -82,6 +82,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     marginTop: -3
+  },
+  center: {
+    alignSelf: "center"
   }
 });
 
@@ -131,7 +134,7 @@ export default class ListItemComponent extends React.Component<Props> {
                 />
               ) : (
                 <IconFont
-                  name="io-right"
+                  name={"io-right"}
                   size={iconSize}
                   color={customVariables.contentPrimaryBackground}
                 />
@@ -157,7 +160,7 @@ export default class ListItemComponent extends React.Component<Props> {
             <IconFont
               name={this.props.iconName}
               size={iconSize * 2}
-              style={{ alignSelf: "center" }}
+              style={styles.center}
               color={customVariables.contentPrimaryBackground}
             />
           )}
