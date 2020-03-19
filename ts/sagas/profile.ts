@@ -4,6 +4,7 @@
 import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { SagaIterator } from "redux-saga";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
@@ -22,7 +23,6 @@ import {
 import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import { SagaCallReturnType } from "../types/utils";
-import { SagaIterator } from 'redux-saga';
 
 // A saga to load the Profile.
 export function* loadProfile(

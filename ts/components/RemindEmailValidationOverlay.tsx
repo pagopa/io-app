@@ -21,9 +21,7 @@ import {
   startEmailValidation
 } from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
-import {
-  sendEmailValidationRequestSelector
-} from "../store/reducers/emailValidation";
+import { sendEmailValidationRequestSelector } from "../store/reducers/emailValidation";
 import { isOnboardingCompletedSelector } from "../store/reducers/navigationHistory";
 import {
   isProfileEmailValidatedSelector,
@@ -52,6 +50,7 @@ type State = {
   isCtaSentEmailValidationDisabled: boolean;
   isContentLoadCompleted: boolean;
   emailHasBeenValidate: boolean;
+  displayError: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -79,7 +78,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       isLoading: false,
       isContentLoadCompleted: false,
       isCtaSentEmailValidationDisabled: false,
-      emailHasBeenValidate: false
+      emailHasBeenValidate: false,
+      displayError: false
     };
   }
 
@@ -110,7 +110,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     });
     this.setState({
       isLoading: true,
-      isCtaSentEmailValidationDisabled: true
+      isCtaSentEmailValidationDisabled: true,
+      displayError: false
     });
   };
 
@@ -137,6 +138,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           isLoading: false,
           isCtaSentEmailValidationDisabled: false
         });
+        if (!this.state.displayError) {
+          this.setState({ displayError: true });
+        }
       } else if (pot.isSome(this.props.emailValidationRequest)) {
         // schedule a timeout to make the cta button disabled and showing inside
         // the string that email has been sent.
@@ -152,7 +156,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         }, emailSentTimeout);
         this.setState({
           ctaSendEmailValidationText: I18n.t("email.validate.sent"),
-          isLoading: false
+          isLoading: false,
+          displayError: false
         });
       }
     }
@@ -306,6 +311,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                 <Text>{this.state.ctaSendEmailValidationText}</Text>
               </Button>
             )}
+          {this.state.displayError && (
+            <Text note={true}>{I18n.t("global.actions.retry")}</Text>
+          )}
           <View spacer={true} large={true} />
         </Content>
         {(this.state.emailHasBeenValidate ||

@@ -20,8 +20,7 @@ import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { withConditionalView } from "./withConditionalView";
 
-export type ModalProps = LightModalContextInterface &
-  NavigationScreenProps;
+export type ModalProps = LightModalContextInterface & NavigationScreenProps;
 
 /*
   ModalRemindEmailValidationOverlay is the component that allows viewing the email reminder via light modal.
@@ -95,9 +94,7 @@ const mapStateToProps = (state: GlobalState) => {
 export function withValidatedEmail<P>(
   WrappedComponent: React.ComponentType<P>
 ) {
-  return connect(
-    mapStateToProps
-  )(
+  return connect(mapStateToProps)(
     withConditionalView(
       WrappedComponent,
       (props: Props) => props.isEmailValidated,
