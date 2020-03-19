@@ -37,6 +37,10 @@ type Props = NavigationScreenProps &
 
 type State = Readonly<{
   isAlertShown: boolean;
+  hasNewRequest: {
+    DOWNLOAD: boolean;
+    DELETE: boolean;
+  };
 }>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -47,7 +51,13 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class PrivacyMainScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { isAlertShown: false };
+    this.state = {
+      isAlertShown: false,
+      hasNewRequest: {
+        DELETE: false,
+        DOWNLOAD: false
+      }
+    };
   }
 
   // Show an alert reporting the request has been submittd
@@ -71,6 +81,11 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
         )
       };
 
+      const hasNewRequest = {
+        ...this.state.hasNewRequest,
+        [choice]: true
+      };
+
       Alert.alert(title[choice], subtitle[choice], [
         {
           text: I18n.t("global.buttons.cancel"),
@@ -81,6 +96,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
           text: I18n.t("global.buttons.continue"),
           style: "default",
           onPress: () => {
+            this.setState({ hasNewRequest });
             this.props.requestUserDataProcessing(choice);
           }
         }
@@ -182,6 +198,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
               }
               useExtendedSubTitle={true}
               titleBadge={
+                this.state.hasNewRequest.DELETE &&
                 pot.isSome(this.props.userDataProcessing.DELETE) &&
                 !pot.isError(this.props.userDataProcessing.DELETE)
                   ? I18n.t("profile.preferences.list.wip")
@@ -200,6 +217,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
               }
               useExtendedSubTitle={true}
               titleBadge={
+                this.state.hasNewRequest.DOWNLOAD &&
                 pot.isSome(this.props.userDataProcessing.DOWNLOAD) &&
                 !pot.isError(this.props.userDataProcessing.DOWNLOAD)
                   ? I18n.t("profile.preferences.list.wip")
