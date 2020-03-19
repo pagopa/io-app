@@ -1,7 +1,7 @@
 /**
  * A saga that manages the Profile.
  */
-import { none, some } from "fp-ts/lib/Option";
+import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
@@ -27,7 +27,7 @@ import { SagaCallReturnType } from "../types/utils";
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
-): SagaIterator {
+): Iterator<Effect | Option<InitializedProfile>> {
   try {
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
