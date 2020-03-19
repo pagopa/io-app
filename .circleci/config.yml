@@ -490,9 +490,11 @@ workflows:
       - alpha-release-android:
           requires:
             - compile-typescript
+            - run-tests
+            - lint-typescript
           filters:
             branches:
-              only: 171875582-change-android-package-id
+              only: master
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status
