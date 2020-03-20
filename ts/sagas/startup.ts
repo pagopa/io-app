@@ -211,7 +211,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     idpSelector
   );
 
-  setInstabugProfileAttributes(userProfile, maybeIdp);
+  setInstabugProfileAttributes(maybeIdp);
 
   // Retrieve the configured PIN from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
