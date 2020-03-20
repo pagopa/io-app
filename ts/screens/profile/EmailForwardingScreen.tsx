@@ -40,6 +40,7 @@ type OwnProps = Readonly<{
 
 type State = {
   isCustomChannelEnabledChoice?: boolean;
+  isLoading: boolean;
 };
 
 type Props = OwnProps &
@@ -67,12 +68,18 @@ function renderListItem(
 }
 
 class EmailForwardingScreen extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { isLoading: false, isCustomChannelEnabledChoice: undefined };
+  }
+
   public componentDidUpdate(prevProps: Props) {
     if (pot.isUpdating(prevProps.potProfile)) {
       // if we got an error while updating the preference
       // show a toast
       if (pot.isError(this.props.potProfile)) {
         showToast(I18n.t("global.genericError"));
+        this.setState({ isLoading: false });
         return;
       }
       // TODO move this login into a dedicated saga https://www.pivotaltracker.com/story/show/171600688
@@ -81,9 +88,10 @@ class EmailForwardingScreen extends React.Component<Props, State> {
         pot.isSome(this.props.potProfile) &&
         this.state.isCustomChannelEnabledChoice !== undefined
       ) {
-        this.props.setCutomEmailChannelEnabled(
+        this.props.setCustomEmailChannelEnabled(
           this.state.isCustomChannelEnabledChoice
         );
+        this.setState({ isLoading: false });
       }
     }
   }
@@ -107,12 +115,18 @@ class EmailForwardingScreen extends React.Component<Props, State> {
               I18n.t("send_email_messages.options.disable_all.info"),
               !this.props.isEmailEnabled,
               () => {
+                if (this.state.isLoading) {
+                  return;
+                }
                 // Disable custom email notification and disable email notifications from all visible service
                 // The upsert of blocked_inbox_or_channels is avoided: the backend will block any email notification
                 // when is_email_enabled is false
-                this.setState({ isCustomChannelEnabledChoice: false }, () => {
-                  this.props.setEmailChannel(false);
-                });
+                this.setState(
+                  { isCustomChannelEnabledChoice: false, isLoading: true },
+                  () => {
+                    this.props.setEmailChannel(false);
+                  }
+                );
               }
             )}
             {/* ALL ACTIVE */}
@@ -122,15 +136,21 @@ class EmailForwardingScreen extends React.Component<Props, State> {
               this.props.isEmailEnabled &&
                 !this.props.isCustomEmailChannelEnabled,
               () => {
+                if (this.state.isLoading) {
+                  return;
+                }
                 // Disable custom email notification and enable email notifications from all visible services.
                 // The upsert of blocked_inbox_or_channels is required to enable those channel that was disabled
                 // from the service detail
-                this.setState({ isCustomChannelEnabledChoice: false }, () => {
-                  this.props.disableOrEnableAllEmailNotifications(
-                    this.props.visibleServicesId,
-                    this.props.potProfile
-                  );
-                });
+                this.setState(
+                  { isCustomChannelEnabledChoice: false, isLoading: true },
+                  () => {
+                    this.props.disableOrEnableAllEmailNotifications(
+                      this.props.visibleServicesId,
+                      this.props.potProfile
+                    );
+                  }
+                );
               }
             )}
             {/* CASE BY CASE */}
@@ -141,9 +161,15 @@ class EmailForwardingScreen extends React.Component<Props, State> {
                 this.props.isCustomEmailChannelEnabled,
               // Enable custom set of the email notification for each visible service
               () => {
-                this.setState({ isCustomChannelEnabledChoice: true }, () => {
-                  this.props.setEmailChannel(true);
-                });
+                if (this.state.isLoading) {
+                  return;
+                }
+                this.setState(
+                  { isCustomChannelEnabledChoice: true, isLoading: true },
+                  () => {
+                    this.props.setEmailChannel(true);
+                  }
+                );
               }
             )}
 
@@ -209,7 +235,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  setCutomEmailChannelEnabled: (customEmailChannelEnabled: boolean) => {
+  setCustomEmailChannelEnabled: (customEmailChannelEnabled: boolean) => {
     dispatch(customEmailChannelSetEnabled(customEmailChannelEnabled));
   },
   setEmailChannel: (isEmailEnabled: boolean) => {

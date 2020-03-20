@@ -55,7 +55,7 @@ export function* checkEmailNotificationPreferencesSaga(): SagaIterator {
 
       /**
        * if we have a visible services and a profile (with a defined blocked_inbox_or_channels)
-       * check if there is at least a servicea with EMAIL channel blocked. This means user has done
+       * check if there is at least a service with EMAIL channel blocked. This means user has done
        * a custom choice
        */
       const potCustomEmailChannelEnabled = pot.map(
