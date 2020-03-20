@@ -60,7 +60,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
     };
   }
 
-  // Show an alert reporting the request has been submittd
+  // Show an alert reporting the request has been submitted
   private handleUserDataRequestAlert = (
     choice: UserDataProcessingChoiceEnum
   ) => {
