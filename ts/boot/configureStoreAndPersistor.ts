@@ -191,17 +191,10 @@ const migrations: MigrationManifest = {
   },
 
   // Version 11
-  // we empty the visible services list to grant the preferences about the email forwarding are loaded
+  // add the default state for isCustomEmailChannelEnabled
   "11": (state: PersistedState) => {
     return {
       ...state,
-      entities: {
-        ...(state as PersistedGlobalState).entities,
-        services: {
-          ...(state as PersistedGlobalState).entities.services,
-          visible: pot.none
-        }
-      },
       persistedPreferences: {
         ...(state as PersistedGlobalState).persistedPreferences,
         isCustomEmailChannelEnabled: pot.none
