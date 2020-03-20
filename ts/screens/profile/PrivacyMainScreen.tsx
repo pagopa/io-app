@@ -36,7 +36,6 @@ type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps>;
 
 type State = Readonly<{
-  isAlertShown: boolean;
   hasNewRequest: {
     DOWNLOAD: boolean;
     DELETE: boolean;
@@ -52,13 +51,24 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isAlertShown: false,
       hasNewRequest: {
         DELETE: false,
         DOWNLOAD: false
       }
     };
   }
+
+  /**
+   * When the hasNewRequesta is true the badge can be displayed. It helps to check
+   * display the badge only when the state of the request has been refreshed
+   */
+  private handleRequest = (choice: UserDataProcessingChoiceEnum) => {
+    const hasNewRequest = {
+      ...this.state.hasNewRequest,
+      [choice]: true
+    };
+    this.setState({ hasNewRequest });
+  };
 
   // Show an alert reporting the request has been submitted
   private handleUserDataRequestAlert = (
@@ -80,12 +90,6 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
           "profile.main.privacy.removeAccount.alert.requestSubtitle"
         )
       };
-
-      const hasNewRequest = {
-        ...this.state.hasNewRequest,
-        [choice]: true
-      };
-
       Alert.alert(title[choice], subtitle[choice], [
         {
           text: I18n.t("global.buttons.cancel"),
@@ -96,7 +100,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
           text: I18n.t("global.buttons.continue"),
           style: "default",
           onPress: () => {
-            this.setState({ hasNewRequest });
+            this.handleRequest(choice);
             this.props.requestUserDataProcessing(choice);
           }
         }
@@ -126,7 +130,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
       DELETE: I18n.t("profile.main.privacy.removeAccount.alert.confirmSubtitle")
     };
     Alert.alert(title[choice], subtitle[choice]);
-    this.setState({ isAlertShown: true });
+    this.handleRequest(choice);
   };
 
   public componentDidUpdate(prevProps: Props) {
