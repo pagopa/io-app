@@ -37,14 +37,33 @@ type Props = NavigationScreenProps &
 
 type State = Readonly<{
   hasNewRequest: {
-    DOWNLOAD: boolean;
-    DELETE: boolean;
+    [key in keyof typeof UserDataProcessingChoiceEnum]: boolean
   };
 }>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitle",
   body: "profile.main.privacy.privacyPolicy.contextualHelpContent"
+};
+
+const requestAlertTitle = {
+  DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.requestTitle"),
+  DELETE: I18n.t("profile.main.privacy.removeAccount.alert.requestTitle")
+};
+
+const requestAlertSubtitle = {
+  DOWNLOAD: undefined,
+  DELETE: I18n.t("profile.main.privacy.removeAccount.alert.requestSubtitle")
+};
+
+const confirmAlertTitle = {
+  DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.oldRequest"),
+  DELETE: I18n.t("profile.main.privacy.removeAccount.alert.oldRequest")
+};
+
+const confirmAlertSubtitle = {
+  DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.confirmSubtitle"),
+  DELETE: I18n.t("profile.main.privacy.removeAccount.alert.confirmSubtitle")
 };
 
 class PrivacyMainScreen extends React.PureComponent<Props, State> {
@@ -80,17 +99,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
       (requestState.value === undefined ||
         requestState.value.status === UserDataProcessingStatusEnum.CLOSED)
     ) {
-      const title = {
-        DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.requestTitle"),
-        DELETE: I18n.t("profile.main.privacy.removeAccount.alert.requestTitle")
-      };
-      const subtitle = {
-        DOWNLOAD: undefined,
-        DELETE: I18n.t(
-          "profile.main.privacy.removeAccount.alert.requestSubtitle"
-        )
-      };
-      Alert.alert(title[choice], subtitle[choice], [
+      Alert.alert(requestAlertTitle[choice], requestAlertSubtitle[choice], [
         {
           text: I18n.t("global.buttons.cancel"),
           style: "cancel",
@@ -106,30 +115,13 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
         }
       ]);
     } else {
-      this.handleConfirmAlert(choice, true);
+      this.handleConfirmAlert(choice);
     }
   };
 
   // show an alert to confirm the request sumbission
-  private handleConfirmAlert = (
-    choice: UserDataProcessingChoiceEnum,
-    hasExistingRequest: boolean = false
-  ) => {
-    const title = hasExistingRequest
-      ? {
-          DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.oldRequest"),
-          DELETE: I18n.t("profile.main.privacy.removeAccount.alert.oldRequest")
-        }
-      : {
-          DOWNLOAD: I18n.t(`profile.main.privacy.exportData.alert.newRequest`),
-          DELETE: I18n.t("profile.main.privacy.removeAccount.alert.newRequest")
-        };
-
-    const subtitle = {
-      DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.confirmSubtitle"),
-      DELETE: I18n.t("profile.main.privacy.removeAccount.alert.confirmSubtitle")
-    };
-    Alert.alert(title[choice], subtitle[choice]);
+  private handleConfirmAlert = (choice: UserDataProcessingChoiceEnum) => {
+    Alert.alert(confirmAlertTitle[choice], confirmAlertSubtitle[choice]);
     this.handleRequest(choice);
   };
 

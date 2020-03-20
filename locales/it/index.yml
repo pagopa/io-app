@@ -130,7 +130,6 @@ profile:
           requestTitle: Sei sicuro di voler cancellare il tuo account?
           requestSubtitle: Tutti i tuoi messaggi e le tue preferenze saranno eliminati definitivamente.
           oldRequest: Abbiamo già preso in carico una richiesta di eliminazione del tuo profilo.
-          newRequest: Abbiamo inoltrato la tua richiesta di eliminazione del profilo. 
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell\'avvenuta eliminazione.
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
       exportData:
@@ -140,7 +139,6 @@ profile:
         alert: 
           requestTitle: Sei sicuro di voler esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
-          newRequest: Abbiamo inoltrato la tua richiesta di esportazione dei dati.
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo. 
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:

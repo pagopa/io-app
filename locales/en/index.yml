@@ -130,7 +130,6 @@ profile:
           requestTitle: Are you sure you want to delete your account?
           requestSubtitle: All your messages and personal settings will be lost.
           oldRequest: We are already proceeding to delete your account
-          newRequest: We submitted your request to delete your account
           confirmSubtitle: After processing, you will receive an email confirming the deletion.
         error: An error occurred while submit your deletion request, please retry! 
       exportData:
@@ -139,7 +138,6 @@ profile:
         alert: 
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
-          newRequest: We submitted your request to export all your data
           confirmSubtitle: After processing, you will receive an email containing all your data.
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
