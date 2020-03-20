@@ -416,7 +416,7 @@ onboarding:
     contentTitleConfirm: Insert your PIN again
     pinInfo: This code will be requested each time you open the app and when you need
       to view sensitive data or make dispositive transactions. It must be composed
-      of 5 digits. Remember it carefully. You can change it at any time by entering
+      of 6 digits. Remember it carefully. You can change it at any time by entering
       with SPID.
     pinInfoSelected: This code will be requested each time you open the app and when
       you need to view sensitive data or make dispositive transactions.
@@ -624,6 +624,7 @@ wallet:
       activation: I'm alerting the entity, wait a few seconds..
       verification: I am checking the status and the amount of your notice..
       generic: I am finishing the verification operations of your notice, wait a few seconds..
+      wallet: I am checking for payment method..
   insertManually:
     header: Insert notice data
     title: Insert the notice data
@@ -799,6 +800,10 @@ messages:
     reminderShort: Memo
     reminderCalendarSelect: In which calendar you want to add the reminder?
     reminderTitle: "Reminder for: {{title}}"
+    reminderAlertTitle: "An event already exists"
+    reminderAlertDescription: "There is already an event corresponding to the message selected in the calendar. Do you want to keep the previous one or add a new one?"
+    reminderAlertKeep: "Keep the previous event"
+    reminderAlertAdd: "Add a new event"
     reminderAddSuccess: "Reminder added"
     reminderAddFailure: "Error adding reminder, please retry"
     reminderRemoveRequest:
