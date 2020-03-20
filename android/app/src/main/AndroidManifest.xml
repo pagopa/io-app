@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="it.teamdigitale.app.italiaapp"
+          xmlns:tools="http://schemas.android.com/tools"
           android:installLocation="auto">
 
   <supports-screens android:smallScreens="true"
@@ -11,6 +12,8 @@
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+  <!-- Force removal of READ_PHONE_STATE due to react-native-device-info library see https://github.com/react-native-community/react-native-device-info/issues/955 -->
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove" />
 
   <!-- Required by react-native-calendar-events -->
   <uses-permission android:name="android.permission.READ_CALENDAR" />
