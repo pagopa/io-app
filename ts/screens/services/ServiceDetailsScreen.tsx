@@ -200,8 +200,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     };
   }
 
-  public componentWillReceiveProps(nextProps: Props) {
-    if (pot.isError(nextProps.profile) && !pot.isError(this.props.profile)) {
+  public componentDidUpdate(prevProps: Props) {
+    if (pot.isError(this.props.profile) && !pot.isError(prevProps.profile)) {
       // in case of new or resolved errors while updating the profile, we show a toast and
       // reset the UI to match the state of the profile preferences
       showToast(
@@ -210,8 +210,8 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
       );
 
       const uiEnabledChannels = getEnabledChannelsForService(
-        nextProps.profile,
-        nextProps.navigation.getParam("service").service_id
+        this.props.profile,
+        this.props.navigation.getParam("service").service_id
       );
       this.setState({
         uiEnabledChannels
