@@ -61,8 +61,6 @@ export const setInstabugProfileAttributes = (
     );
   });
 
-  setInstabugUserAttribute("fiscalcode", profile.fiscal_code);
-
   maybeIdp.fold(undefined, (idp: IdentityProvider) =>
     setInstabugUserAttribute("identityProvider", idp.entityID)
   );
