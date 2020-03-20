@@ -47,44 +47,48 @@ export function* watchEmailNotificationPreferencesSaga(): IterableIterator<
 export function* checkEmailNotificationPreferencesSaga(): SagaIterator {
   yield takeEvery(
     [getType(profileLoadSuccess), getType(loadVisibleServices.success)],
-    function*() {
-      const potProfile: ProfileState = yield select(profileSelector);
-      const potVisibleServices: VisibleServicesState = yield select(
-        visibleServicesSelector
-      );
+    emailNotificationPreferencesSaga
+  );
+}
 
-      /**
-       * if we have a visible services and a profile (with a defined blocked_inbox_or_channels)
-       * check if there is at least a service with EMAIL channel blocked. This means user has done
-       * a custom choice
-       */
-      const potCustomEmailChannelEnabled = pot.map(
-        potVisibleServices,
-        visibleService => {
-          return pot.getOrElse(
-            pot.map(potProfile, profile => {
-              const blockedChannels: BlockedInboxOrChannels = fromNullable(
-                profile.blocked_inbox_or_channels
-              ).getOrElse({});
-              return (
-                visibleService.findIndex(
-                  service =>
-                    blockedChannels[service.service_id] &&
-                    blockedChannels[service.service_id].indexOf("EMAIL") !== -1
-                ) !== -1
-              );
-            }),
-            false
-          );
+export function* emailNotificationPreferencesSaga(): SagaIterator {
+  const potProfile: ProfileState = yield select(profileSelector);
+  const potVisibleServices: VisibleServicesState = yield select(
+    visibleServicesSelector
+  );
+  /**
+   * if we have a visible services and a profile (with a defined blocked_inbox_or_channels)
+   * check if there is at least a service with EMAIL channel blocked. This means user has done
+   * a custom choice
+   */
+  const potCustomEmailChannelEnabled = pot.map(
+    potVisibleServices,
+    visibleService => {
+      const maybeSomeEmailBlocked = pot.map(potProfile, profile => {
+        // custom email could be true only if profile.is_email_enabled === true
+        // and the user made some optin on email channels
+        if (profile.is_email_enabled === false) {
+          return false;
         }
-      );
-      // If the email notification for visible services are partially disabled
-      // (only for some services), the customization is enabled
-      yield put(
-        customEmailChannelSetEnabled(
-          pot.getOrElse(potCustomEmailChannelEnabled, false)
-        )
-      );
+        const blockedChannels: BlockedInboxOrChannels = fromNullable(
+          profile.blocked_inbox_or_channels
+        ).getOrElse({});
+        return (
+          visibleService.findIndex(
+            service =>
+              blockedChannels[service.service_id] &&
+              blockedChannels[service.service_id].indexOf("EMAIL") !== -1
+          ) !== -1
+        );
+      });
+      return pot.getOrElse(maybeSomeEmailBlocked, false);
     }
+  );
+  // If the email notification for visible services are partially disabled
+  // (only for some services), the customization is enabled
+  yield put(
+    customEmailChannelSetEnabled(
+      pot.getOrElse(potCustomEmailChannelEnabled, false)
+    )
   );
 }
