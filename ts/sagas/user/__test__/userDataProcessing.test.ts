@@ -71,7 +71,7 @@ describe("loadUserDataProcessingSaga", () => {
 
   it("return a generic error if the backend returns 500", () => {
     const mokedError = new Error(
-      "Error: An error occurs while fetching data on user data processisng status"
+      "loadUserDataProcessingSaga response status 500"
     );
     const get500Response = right({ status: 500, value: mokedError });
     testSaga(
