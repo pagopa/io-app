@@ -49,18 +49,8 @@ export const setInstabugUserAttribute = (
 };
 
 export const setInstabugProfileAttributes = (
-  profile: InitializedProfile,
   maybeIdp: Option<IdentityProvider>
 ) => {
-  // it could happen that user has not a valid email (e.g. login with CIE)
-  // TO DO update identifyUserWithEmail when user has an email validated https://www.pivotaltracker.com/story/show/169761487
-  getProfileEmail(profile).map(email => {
-    Instabug.identifyUserWithEmail(
-      email,
-      `${profile.name} ${profile.family_name}`
-    );
-  });
-
   maybeIdp.fold(undefined, (idp: IdentityProvider) =>
     setInstabugUserAttribute("identityProvider", idp.entityID)
   );
