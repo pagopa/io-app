@@ -24,8 +24,8 @@ import ROUTES from "../../navigation/routes";
 import { Dispatch } from "../../store/actions/types";
 import {
   loadUserDataProcessing,
-  requestUserDataProcessing,
-  resetUserDataProcessingRequest
+  resetUserDataProcessingRequest,
+  upsertUserDataProcessing
 } from "../../store/actions/userDataProcessing";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
@@ -78,7 +78,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
   }
 
   /**
-   * When the hasNewRequesta is true the badge can be displayed. It helps to check
+   * When the hasNewRequest is true the badge can be displayed. It helps to check
    * display the badge only when the state of the request has been refreshed
    */
   private handleRequest = (choice: UserDataProcessingChoiceEnum) => {
@@ -110,7 +110,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
           style: "default",
           onPress: () => {
             this.handleRequest(choice);
-            this.props.requestUserDataProcessing(choice);
+            this.props.upsertUserDataProcessing(choice);
           }
         }
       ]);
@@ -126,7 +126,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidUpdate(prevProps: Props) {
-    // If the new request submission fails, show an alert and hide the 'in prorgess' badge
+    // If the new request submission fails, show an alert and hide the 'in progress' badge
     // if it is the get request (prev prop is pot.none), check if show the alert to submit the request
     const checkUpdate = (
       errorMessage: string,
@@ -155,6 +155,11 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
       UserDataProcessingChoiceEnum.DELETE
     );
   }
+
+  private canBeBadgeRendered = (choice: UserDataProcessingChoiceEnum) =>
+    this.state.hasNewRequest[choice] &&
+    pot.isSome(this.props.userDataProcessing[choice]) &&
+    !pot.isError(this.props.userDataProcessing[choice]);
 
   public render() {
     const ContentComponent = withLoadingSpinner(() => (
@@ -194,9 +199,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
               }
               useExtendedSubTitle={true}
               titleBadge={
-                this.state.hasNewRequest.DELETE &&
-                pot.isSome(this.props.userDataProcessing.DELETE) &&
-                !pot.isError(this.props.userDataProcessing.DELETE)
+                this.canBeBadgeRendered(UserDataProcessingChoiceEnum.DELETE)
                   ? I18n.t("profile.preferences.list.wip")
                   : undefined
               }
@@ -213,9 +216,7 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
               }
               useExtendedSubTitle={true}
               titleBadge={
-                this.state.hasNewRequest.DOWNLOAD &&
-                pot.isSome(this.props.userDataProcessing.DOWNLOAD) &&
-                !pot.isError(this.props.userDataProcessing.DOWNLOAD)
+                this.canBeBadgeRendered(UserDataProcessingChoiceEnum.DOWNLOAD)
                   ? I18n.t("profile.preferences.list.wip")
                   : undefined
               }
@@ -238,8 +239,8 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadUserDataRequest: (choice: UserDataProcessingChoiceEnum) =>
     dispatch(loadUserDataProcessing.request(choice)),
-  requestUserDataProcessing: (choice: UserDataProcessingChoiceEnum) =>
-    dispatch(requestUserDataProcessing.request(choice)),
+  upsertUserDataProcessing: (choice: UserDataProcessingChoiceEnum) =>
+    dispatch(upsertUserDataProcessing.request(choice)),
   resetRequest: (choice: UserDataProcessingChoiceEnum) =>
     dispatch(resetUserDataProcessingRequest(choice))
 });

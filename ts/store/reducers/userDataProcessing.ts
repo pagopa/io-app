@@ -6,8 +6,8 @@ import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
 import {
   loadUserDataProcessing,
-  requestUserDataProcessing,
-  resetUserDataProcessingRequest
+  resetUserDataProcessingRequest,
+  upsertUserDataProcessing
 } from "../actions/userDataProcessing";
 import { GlobalState } from "./types";
 
@@ -43,7 +43,7 @@ const userDataProcessingReducer = (
       };
     }
 
-    case getType(requestUserDataProcessing.failure):
+    case getType(upsertUserDataProcessing.failure):
     case getType(loadUserDataProcessing.failure):
       return {
         ...state,
@@ -53,13 +53,13 @@ const userDataProcessingReducer = (
         )
       };
 
-    case getType(requestUserDataProcessing.request): {
+    case getType(upsertUserDataProcessing.request): {
       return {
         ...state,
         [action.payload]: pot.toLoading({ ...state[action.payload] })
       };
     }
-    case getType(requestUserDataProcessing.success): {
+    case getType(upsertUserDataProcessing.success): {
       return {
         ...state,
         [action.payload.choice]: pot.some(action.payload)

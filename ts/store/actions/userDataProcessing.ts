@@ -19,10 +19,10 @@ export const loadUserDataProcessing = createAsyncAction(
   { choice: UserDataProcessingChoiceEnum; error: Error }
 >();
 
-export const requestUserDataProcessing = createAsyncAction(
-  "REQUEST_USER_DATA_PROCESSING_REQUEST",
-  "REQUEST_USER_DATA_PROCESSING_SUCCESS",
-  "REQUEST_USER_DATA_PROCESSING_FAILURE"
+export const upsertUserDataProcessing = createAsyncAction(
+  "UPSERT_USER_DATA_PROCESSING_REQUEST",
+  "UPSERT_USER_DATA_PROCESSING_SUCCESS",
+  "UPSERT_USER_DATA_PROCESSING_FAILURE"
 )<
   UserDataProcessingChoiceEnum,
   UserDataProcessing,
@@ -35,5 +35,5 @@ export const resetUserDataProcessingRequest = createStandardAction(
 
 export type UserDataProcessingActions =
   | ActionType<typeof loadUserDataProcessing>
-  | ActionType<typeof requestUserDataProcessing>
+  | ActionType<typeof upsertUserDataProcessing>
   | ActionType<typeof resetUserDataProcessingRequest>;

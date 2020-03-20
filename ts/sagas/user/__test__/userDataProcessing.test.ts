@@ -5,11 +5,11 @@ import { UserDataProcessingChoiceEnum } from "../../../../definitions/backend/Us
 import { UserDataProcessingStatusEnum } from "../../../../definitions/backend/UserDataProcessingStatus";
 import {
   loadUserDataProcessing,
-  requestUserDataProcessing
+  upsertUserDataProcessing
 } from "../../../store/actions/userDataProcessing";
 import {
   loadUserDataProcessingSaga,
-  requestUserDataProcessingSaga
+  upsertUserDataProcessingSaga
 } from "../userDataProcessing";
 
 describe("loadUserDataProcessingSaga", () => {
@@ -95,7 +95,7 @@ describe("loadUserDataProcessingSaga", () => {
   });
 });
 
-describe("requestUserDataProcessingSaga", () => {
+describe("upsertUserDataProcessingSaga", () => {
   const postUserDataProcessingRequest = jest.fn();
   const requestAction = {
     type: loadUserDataProcessing.request,
@@ -111,7 +111,7 @@ describe("requestUserDataProcessingSaga", () => {
   it("if response is 200, the requrest has been submitted", () => {
     const post200Response = right({ status: 200, value: mokedNewStatus });
     testSaga(
-      requestUserDataProcessingSaga,
+      upsertUserDataProcessingSaga,
       postUserDataProcessingRequest,
       requestAction
     )
@@ -120,7 +120,7 @@ describe("requestUserDataProcessingSaga", () => {
         userDataProcessingChoiceRequest: { choice: requestAction.payload }
       })
       .next(post200Response)
-      .put(requestUserDataProcessing.success(mokedNewStatus))
+      .put(upsertUserDataProcessing.success(mokedNewStatus))
       .next()
       .isDone();
   });
@@ -133,7 +133,7 @@ describe("requestUserDataProcessingSaga", () => {
     const get500Response = right({ status: 500 });
 
     testSaga(
-      requestUserDataProcessingSaga,
+      upsertUserDataProcessingSaga,
       postUserDataProcessingRequest,
       requestAction
     )
@@ -143,7 +143,7 @@ describe("requestUserDataProcessingSaga", () => {
       })
       .next(get500Response)
       .put(
-        requestUserDataProcessing.failure({
+        upsertUserDataProcessing.failure({
           choice: requestAction.payload,
           error: mokedError
         })

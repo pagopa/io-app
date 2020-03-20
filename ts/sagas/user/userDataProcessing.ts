@@ -1,11 +1,12 @@
 import { left, right } from "fp-ts/lib/Either";
+import { readableReport } from "italia-ts-commons/lib/reporters";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
   loadUserDataProcessing,
-  requestUserDataProcessing
+  upsertUserDataProcessing
 } from "../../store/actions/userDataProcessing";
 import { SagaCallReturnType } from "../../types/utils";
 
@@ -14,7 +15,6 @@ import { SagaCallReturnType } from "../../types/utils";
  * - checks if there are updates on the processing of a previous request
  * - sumbits a new request if the state is ClOSED or if this is the first request
  */
-// tslint:disable-next-line:cognitive-complexity
 export function* loadUserDataProcessingSaga(
   getUserDataProcessingRequest: ReturnType<
     typeof BackendClient
@@ -28,37 +28,38 @@ export function* loadUserDataProcessingSaga(
     > = yield call(getUserDataProcessingRequest, {
       userDataProcessingChoiceParam: choice
     });
-    if (
-      response.isRight() &&
-      (response.value.status === 404 || response.value.status === 200)
-    ) {
-      yield put(
-        loadUserDataProcessing.success({
-          choice,
-          value:
-            response.value.status === 200 ? response.value.value : undefined
-        })
-      );
+    if (response.isRight()) {
+      if (response.value.status === 404 || response.value.status === 200) {
+        yield put(
+          loadUserDataProcessing.success({
+            choice,
+            value:
+              response.value.status === 200 ? response.value.value : undefined
+          })
+        );
+      } else {
+        throw new Error(
+          `loadUserDataProcessingSaga response status ${response.value.status}`
+        );
+      }
     } else {
-      throw new Error(
-        "An error occurs while fetching data on user data processisng status"
-      );
+      throw new Error(readableReport(response.value));
     }
   } catch (e) {
     yield put(
       loadUserDataProcessing.failure({
         choice,
-        error: new Error(e)
+        error: e
       })
     );
   }
 }
 
-export function* requestUserDataProcessingSaga(
+export function* upsertUserDataProcessingSaga(
   postUserDataProcessingRequest: ReturnType<
     typeof BackendClient
   >["postUserDataProcessingRequest"],
-  action: ActionType<typeof requestUserDataProcessing["request"]>
+  action: ActionType<typeof upsertUserDataProcessing["request"]>
 ): SagaIterator {
   const choice = action.payload;
   try {
@@ -69,7 +70,7 @@ export function* requestUserDataProcessingSaga(
     });
 
     if (response.isRight() && response.value.status === 200) {
-      yield put(requestUserDataProcessing.success(response.value.value));
+      yield put(upsertUserDataProcessing.success(response.value.value));
       return right(response.value.value);
     } else {
       throw new Error(
@@ -78,7 +79,7 @@ export function* requestUserDataProcessingSaga(
     }
   } catch (e) {
     yield put(
-      requestUserDataProcessing.failure({ choice, error: new Error(e) })
+      upsertUserDataProcessing.failure({ choice, error: new Error(e) })
     );
     return left(e);
   }
@@ -102,8 +103,8 @@ export function* watchUserDataProcessingSaga(
   );
 
   yield takeEvery(
-    requestUserDataProcessing.request,
-    requestUserDataProcessingSaga,
+    upsertUserDataProcessing.request,
+    upsertUserDataProcessingSaga,
     postUserDataProcessingRequest
   );
 }
