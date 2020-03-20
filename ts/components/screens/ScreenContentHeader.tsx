@@ -7,6 +7,7 @@ import { H3, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
 import variables from "../../theme/variables";
+import { HEADER_HEIGHT } from "../../utils/constants";
 import ScreenHeader from "../ScreenHeader";
 
 type Props = Readonly<{
@@ -14,7 +15,7 @@ type Props = Readonly<{
   icon?: ImageSourcePropType;
   subtitle?: string;
   dark?: boolean;
-  dynamicHeight?: Animated.AnimatedInterpolation;
+  dynamicHeight: Animated.AnimatedInterpolation;
 }>;
 
 const styles = StyleSheet.create({
@@ -30,16 +31,55 @@ const styles = StyleSheet.create({
   }
 });
 
+const collapseTh = (0 as unknown) as Animated.AnimatedInterpolation;
+const elapseTh = (HEADER_HEIGHT as unknown) as Animated.AnimatedInterpolation;
+
 export class ScreenContentHeader extends React.PureComponent<Props> {
+  private heightAnimation: Animated.Value;
+  private elapse: Animated.CompositeAnimation;
+  private collapse: Animated.CompositeAnimation;
+
+  constructor(props: Props) {
+    super(props);
+
+    // Initialize animated value
+    this.heightAnimation = new Animated.Value(HEADER_HEIGHT);
+
+    // Animation to elapse the header height from 0 to HEADER_HEIGHT
+    this.elapse = Animated.timing(this.heightAnimation, {
+      toValue: HEADER_HEIGHT,
+      duration: 200
+    });
+
+    // Animation to collapse the header height from HEADER_HEIGHT to 0
+    this.collapse = Animated.timing(this.heightAnimation, {
+      toValue: 0,
+      duration: 200
+    });
+  }
+
+  public componentDidUpdate(prevProps: Props) {
+    if (this.props.dynamicHeight !== prevProps.dynamicHeight) {
+      if (this.props.dynamicHeight === collapseTh) {
+        this.elapse.stop();
+        this.collapse.start();
+      }
+      if (this.props.dynamicHeight === elapseTh) {
+        this.collapse.stop();
+        this.elapse.start();
+      }
+    }
+  }
+
   public render() {
-    const { subtitle, dark, icon, dynamicHeight } = this.props;
+    const { subtitle, dark, icon } = this.props;
 
     return (
       <View style={dark && styles.darkGrayBg}>
         <Animated.View
-          style={
-            dynamicHeight !== undefined && { height: dynamicHeight } // if the condition "!== undefined" is not specified, once dynamicHeight.value = 0, dynamicHeight is assumend as false
-          }
+          style={{
+            height: this.heightAnimation
+          }}
         >
           <View spacer={true} />
           <ScreenHeader
