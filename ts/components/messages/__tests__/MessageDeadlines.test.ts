@@ -30,7 +30,9 @@ const generateSections = (
       _ =>
         // tslint:disable-next-line:readonly-array
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
-          const { isRead, isArchived, message } = messageState;
+          const { message } = messageState;
+          const isRead = false;
+          const isArchived = false;
           if (
             !isArchived &&
             pot.isSome(message) &&
@@ -132,8 +134,6 @@ const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
         time_to_live: (3600 as unknown) as number &
           WithinRangeInteger<3600, 604800>
       },
-      isRead: true,
-      isArchived: false,
       message: {
         kind: "PotSome",
         value: {
@@ -166,8 +166,6 @@ const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
         time_to_live: (3600 as unknown) as number &
           WithinRangeInteger<3600, 604800>
       },
-      isRead: false,
-      isArchived: false,
       message: {
         kind: "PotSome",
         value: {
@@ -204,8 +202,6 @@ const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
         time_to_live: (3600 as unknown) as number &
           WithinRangeInteger<3600, 604800>
       },
-      isRead: false,
-      isArchived: false,
       message: {
         kind: "PotSome",
         value: {
