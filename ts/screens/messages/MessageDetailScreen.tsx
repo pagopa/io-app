@@ -24,6 +24,7 @@ import {
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { messagesReadSelector } from "../../store/reducers/entities/messages/messageItemState";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
@@ -267,9 +268,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   private setMessageReadState = () => {
-    const { potMessage, maybeRead } = this.props;
+    const { potMessage, isRead } = this.props;
 
-    if (pot.isSome(potMessage) && !maybeRead.getOrElse(true)) {
+    if (pot.isSome(potMessage) && !isRead) {
       // Set the message read state to TRUE
       this.props.setMessageReadState(true);
     }
@@ -295,7 +296,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     ) {
       refreshService(potMessage.value.sender_service_id);
     }
-    this.setMessageReadState();
   }
 
   public render() {
@@ -319,7 +319,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   const maybeMeta = maybeMessageState.map(_ => _.meta);
 
-  const maybeRead = maybeMessageState.map(_ => _.isRead);
+  const isRead = messagesReadSelector(state).indexOf(messageId) !== -1;
 
   // In case maybePotMessage is undefined we fallback to an empty message.
   // This mens we navigated to the message screen with a non-existing message
@@ -333,7 +333,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   return {
     maybeMeta,
-    maybeRead,
+    isRead,
     potMessage,
     potService,
     paymentsByRptId: state.entities.paymentByRptId,

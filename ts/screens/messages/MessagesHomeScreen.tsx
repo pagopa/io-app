@@ -28,6 +28,11 @@ import { navigateToMessageDetailScreenAction } from "../../store/actions/navigat
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
+import {
+  messagesArchivedSelector,
+  messagesReadSelector,
+  messagesUnarchivedSelector
+} from "../../store/reducers/entities/messages/messageItemState";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import {
   servicesByIdSelector,
@@ -210,9 +215,11 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       servicesById,
       paymentsByRptId,
       navigateToMessageDetail,
-      updateMessagesArchivedState
+      updateMessagesArchivedState,
+      messagesArchived,
+      messagesUnarchived,
+      messagesRead
     } = this.props;
-
     return (
       <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
@@ -229,6 +236,8 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <MessagesInbox
             currentTab={this.state.currentTab}
             messagesState={lexicallyOrderedMessagesState}
+            messagesUnarchived={messagesUnarchived}
+            messagesRead={messagesRead}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
             onRefresh={this.onRefreshMessages}
@@ -269,6 +278,8 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <MessagesArchive
             currentTab={this.state.currentTab}
             messagesState={lexicallyOrderedMessagesState}
+            messagesArchived={messagesArchived}
+            messagesRead={messagesRead}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
             onRefresh={this.onRefreshMessages}
@@ -323,6 +334,9 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
+  messagesArchived: messagesArchivedSelector(state),
+  messagesUnarchived: messagesUnarchivedSelector(state),
+  messagesRead: messagesReadSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state),
   searchText: searchTextSelector(state),

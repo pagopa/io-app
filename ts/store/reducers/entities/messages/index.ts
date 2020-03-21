@@ -13,6 +13,7 @@ import messagesAllIdsReducer, {
   MessagesAllIdsState
 } from "./messagesAllIds";
 
+import { messagesUnreadAndUnarchivedSelector } from "./messageItemState";
 import messagesByIdReducer, {
   messagesStateByIdSelector,
   MessageStateById
@@ -62,11 +63,13 @@ export const lexicallyOrderedMessagesStateSelector = createSelector(
 
 export const messagesUnreadedAndUnarchivedSelector = createSelector(
   lexicallyOrderedMessagesStateSelector,
-  potMessagesState =>
+  messagesUnreadAndUnarchivedSelector,
+  (potMessagesState, messagesUnreadAndUnarchived) =>
     pot.getOrElse(
       pot.map(potMessagesState, _ =>
         _.filter(
-          messageState => !messageState.isRead && !messageState.isArchived
+          messageState =>
+            messagesUnreadAndUnarchived.indexOf(messageState.meta.id) !== -1
         )
       ),
       []
