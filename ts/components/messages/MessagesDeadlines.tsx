@@ -17,6 +17,10 @@ import React from "react";
 import { SectionListScrollParams, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
+import {
+  messagesArchivedSelector,
+  messagesReadSelector
+} from "../../store/reducers/entities/messages/messageItemState";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
@@ -48,6 +52,8 @@ const styles = StyleSheet.create({
 type OwnProps = {
   currentTab: number;
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
+  messagesRead: ReturnType<typeof messagesReadSelector>;
+  messagesArchived: ReturnType<typeof messagesArchivedSelector>;
   navigateToMessageDetail: (id: string) => void;
   setMessagesArchivedState: (
     ids: ReadonlyArray<string>,
@@ -124,7 +130,9 @@ export const getNextDeadlineId = (sections: Sections): Option<string> => {
  * Filter only the messages with a due date and group them by due_date day.
  */
 const generateSections = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>,
+  messagesRead: ReadonlyArray<string>,
+  messagesArchived: ReadonlyArray<string>
 ): Sections =>
   pot.getOrElse(
     pot.map(
@@ -132,7 +140,15 @@ const generateSections = (
       _ =>
         // tslint:disable-next-line:readonly-array
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
-          const { isRead, isArchived, message } = messageState;
+          const { message } = messageState;
+          const isRead = pot.getOrElse(
+            pot.map(message, m => messagesRead.indexOf(m.id) !== -1),
+            false
+          );
+          const isArchived = pot.getOrElse(
+            pot.map(message, m => messagesArchived.indexOf(m.id) !== -1),
+            false
+          );
           if (
             !isArchived &&
             pot.isSome(message) &&
@@ -500,7 +516,13 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const { messagesState } = this.props;
     const { maybeLastLoadedStartOfMonthTime } = this.state;
 
-    const sections = await Promise.resolve(generateSections(messagesState));
+    const sections = await Promise.resolve(
+      generateSections(
+        messagesState,
+        this.props.messagesRead,
+        this.props.messagesArchived
+      )
+    );
     const lastDeadlineId = await Promise.resolve(getLastDeadlineId(sections));
     const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
 
@@ -539,7 +561,13 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         isWorking: true
       });
 
-      const sections = await Promise.resolve(generateSections(messagesState));
+      const sections = await Promise.resolve(
+        generateSections(
+          messagesState,
+          this.props.messagesRead,
+          this.props.messagesArchived
+        )
+      );
       const lastDeadlineId = await Promise.resolve(getLastDeadlineId(sections));
       const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
 

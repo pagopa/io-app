@@ -262,6 +262,8 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
         >
           <MessagesDeadlines
             currentTab={this.state.currentTab}
+            messagesRead={messagesRead}
+            messagesArchived={messagesArchived}
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
