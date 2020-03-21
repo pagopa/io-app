@@ -5,6 +5,7 @@ import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
+import { messagesReadSelector } from "../../store/reducers/entities/messages/messageItemState";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import { messageContainsText } from "../../utils/messages";
@@ -20,6 +21,7 @@ const styles = StyleSheet.create({
 
 type OwnProps = {
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
+  messagesRead: ReturnType<typeof messagesReadSelector>;
   searchText: string;
   navigateToMessageDetail: (id: string) => void;
 };

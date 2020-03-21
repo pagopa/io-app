@@ -311,7 +311,8 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
-      navigateToMessageDetail
+      navigateToMessageDetail,
+      messagesRead
     } = this.props;
 
     return this.props.searchText
@@ -321,6 +322,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
             <SearchNoResultMessage errorType="InvalidSearchBarText" />
           ) : (
             <MessagesSearch
+              messagesRead={messagesRead}
               messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
               paymentsByRptId={paymentsByRptId}
