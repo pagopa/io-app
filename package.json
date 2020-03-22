@@ -33,7 +33,7 @@
     "hoist-non-react-statics": "^3.0.1",
     "instabug-reactnative": "8.7.0",
     "io-ts": "1.8.5",
-    "italia-pagopa-commons": "^1.0.0",
+    "italia-pagopa-commons": "^1.2.0",
     "italia-ts-commons": "5.1.11",
     "lodash": "^4.17.15",
     "native-base": "2.13.8",

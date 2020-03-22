@@ -1,12 +1,10 @@
 import { Option } from "fp-ts/lib/Option";
 import Instabug from "instabug-reactnative";
 
-import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Locales } from "../../locales/locales";
 import { instabugToken } from "../config";
 import I18n from "../i18n";
 import { IdentityProvider } from "../models/IdentityProvider";
-import { getProfileEmail } from "../store/reducers/profile";
 import variables from "../theme/variables";
 
 type InstabugLocales = { [k in Locales]: Instabug.locale };
@@ -49,20 +47,8 @@ export const setInstabugUserAttribute = (
 };
 
 export const setInstabugProfileAttributes = (
-  profile: InitializedProfile,
   maybeIdp: Option<IdentityProvider>
 ) => {
-  // it could happen that user has not a valid email (e.g. login with CIE)
-  // TO DO update identifyUserWithEmail when user has an email validated https://www.pivotaltracker.com/story/show/169761487
-  getProfileEmail(profile).map(email => {
-    Instabug.identifyUserWithEmail(
-      email,
-      `${profile.name} ${profile.family_name}`
-    );
-  });
-
-  setInstabugUserAttribute("fiscalcode", profile.fiscal_code);
-
   maybeIdp.fold(undefined, (idp: IdentityProvider) =>
     setInstabugUserAttribute("identityProvider", idp.entityID)
   );
