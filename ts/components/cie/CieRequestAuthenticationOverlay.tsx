@@ -39,6 +39,11 @@ const styles = StyleSheet.create({
 // INFRA DEV -> xx_servizicie_test
 const CIE_IDP_ID = "xx_servizicie";
 
+// this value assignment tries to decrease the sleeping time of a script
+// sleeping is due to allow user to read page content until the content changes to an
+// automatic redirect
+const injectJs = "seconds = 0;";
+
 export default class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
   State
@@ -130,6 +135,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
       <View style={styles.flex}>
         {this.state.findOpenApp === false && (
           <WebView
+            injectedJavaScript={injectJs}
             javaScriptEnabled={true}
             onLoadEnd={this.handleOnLoadEnd}
             onError={this.handleOnError}
