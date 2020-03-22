@@ -115,7 +115,7 @@ class RootContainer extends React.PureComponent<Props> {
     //        the redux state (i.e. background)
     return (
       <Root>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle={"dark-content"} />
         {Platform.OS === "android" && (
           <FlagSecureComponent
             isFlagSecureEnabled={!this.props.isDebugModeEnabled}

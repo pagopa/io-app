@@ -3,7 +3,6 @@
  */
 import { Calendar } from "react-native-calendar-events";
 import { isActionOf } from "typesafe-actions";
-
 import {
   preferenceFingerprintIsEnabledSaveSuccess,
   preferencesExperimentalFeaturesSetEnabled,

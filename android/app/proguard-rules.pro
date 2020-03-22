@@ -56,8 +56,14 @@
 # okhttp
 -keepattributes Signature
 -keepattributes *Annotation*
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+# This is also needed by Picasso
+-dontwarn com.squareup.okhttp.**
+
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
+# This is also needed by Picasso
 -dontwarn okhttp3.**
 
 # okio
@@ -82,6 +88,11 @@
 # React-native svg
 -keep public class com.horcrux.svg.** {*;}
 -dontwarn com.horcrux.svg.**
+
+
+# React-native cie
+-keep public class it.ipzs.** {*;}
+-dontwarn it.ipzs.**
 
 -keep class com.google.android.gms.** { *; }
 -dontwarn com.google.android.gms.**
