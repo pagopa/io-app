@@ -1,3 +1,7 @@
+/**
+ * Implements the preferences screen where the user can see and update his
+ * email, mobile number, preferred language, biometric recognition usage and digital address.
+ */
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { List } from "native-base";
@@ -20,13 +24,17 @@ import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
+  navigateToEmailForwardingPreferenceScreen,
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen,
   navigateToFingerprintPreferenceScreen
 } from "../../store/actions/navigation";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { isCustomEmailChannelEnabledSelector } from "../../store/reducers/persistedPreferences";
 import {
   hasProfileEmailSelector,
+  isEmailEnabledSelector,
+  isInboxEnabledSelector,
   isProfileEmailValidatedSelector,
   profileEmailSelector,
   profileMobilePhoneSelector,
@@ -73,10 +81,6 @@ function translateLocale(locale: string): string {
     .getOrElse(locale);
 }
 
-/**
- * Implements the preferences screen where the user can see and update his
- * email, mobile number, preferred language, biometric recognition usage and digital address.
- */
 class PreferencesScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -136,6 +140,20 @@ class PreferencesScreen extends React.Component<Props, State> {
         }
       })
       .catch();
+  };
+
+  private getEmailForwardPreferencesSubtitle = (): string => {
+    if (!this.props.isInboxEnabled || !this.props.isEmailEnabled) {
+      return I18n.t("send_email_messages.options.disable_all.label");
+    }
+    return pot.getOrElse(
+      pot.map(this.props.isCustomEmailChannelEnabled, enabled => {
+        return enabled
+          ? I18n.t("send_email_messages.options.by_service.label")
+          : I18n.t("send_email_messages.options.enable_all.label");
+      }),
+      I18n.t("send_email_messages.options.enable_all.label")
+    );
   };
 
   public render() {
@@ -213,6 +231,13 @@ class PreferencesScreen extends React.Component<Props, State> {
               }
               onPress={this.handleEmailOnPress}
             />
+
+            <ListItemComponent
+              title={I18n.t("send_email_messages.title")}
+              subTitle={this.getEmailForwardPreferencesSubtitle()}
+              onPress={this.props.navigateToEmailForwardingPreferenceScreen}
+            />
+
             {// Check if spid email exists
             maybeSpidEmail.isSome() && (
               <ListItemComponent
@@ -263,6 +288,9 @@ function mapStateToProps(state: GlobalState) {
     optionEmail: profileEmailSelector(state),
     optionSpidEmail: profileSpidEmailSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),
+    isEmailEnabled: isEmailEnabledSelector(state),
+    isInboxEnabled: isInboxEnabledSelector(state),
+    isCustomEmailChannelEnabled: isCustomEmailChannelEnabledSelector(state),
     isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
     preferredCalendar: state.persistedPreferences.preferredCalendar,
     hasProfileEmail: hasProfileEmailSelector(state),
@@ -273,6 +301,8 @@ function mapStateToProps(state: GlobalState) {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToFingerprintPreferenceScreen: () =>
     dispatch(navigateToFingerprintPreferenceScreen()),
+  navigateToEmailForwardingPreferenceScreen: () =>
+    dispatch(navigateToEmailForwardingPreferenceScreen()),
   navigateToCalendarPreferenceScreen: () =>
     dispatch(navigateToCalendarPreferenceScreen()),
   navigateToEmailReadScreen: () => dispatch(navigateToEmailReadScreen()),
