@@ -15,7 +15,7 @@ type Props = Readonly<{
   icon?: ImageSourcePropType;
   subtitle?: string;
   dark?: boolean;
-  dynamicHeight: Animated.AnimatedInterpolation;
+  dynamicHeight?: Animated.AnimatedInterpolation;
 }>;
 
 const styles = StyleSheet.create({
@@ -78,7 +78,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
       <View style={dark && styles.darkGrayBg}>
         <Animated.View
           style={{
-            height: this.heightAnimation
+            height: this.props.dynamicHeight ? this.heightAnimation : undefined
           }}
         >
           <View spacer={true} />
@@ -87,13 +87,11 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
             icon={icon}
             dark={dark}
           />
-          {subtitle ? (
+          {subtitle && (
             <View style={styles.subheaderContainer}>
               <Text>{subtitle}</Text>
               <View spacer={true} large={true} />
             </View>
-          ) : (
-            <View spacer={true} />
           )}
         </Animated.View>
       </View>
