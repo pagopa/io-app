@@ -5213,10 +5213,10 @@ istanbul-reports@^2.1.1:
   dependencies:
     handlebars "^4.1.0"
 
-italia-pagopa-commons@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/italia-pagopa-commons/-/italia-pagopa-commons-1.0.0.tgz#43097269f99c8a405b8046f1430037351f99c0e4"
-  integrity sha512-V950c9MaLbUKqH0e1lo0l77D+ZYVvXPLdnuNs3bmnHEwlewno7f7Pk5hasNtKYdIyws73h2diE7Q4nLfVV6L/A==
+italia-pagopa-commons@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/italia-pagopa-commons/-/italia-pagopa-commons-1.2.0.tgz#ee8b12ed380556f724941dacd17dcb9297b27d8a"
+  integrity sha512-Li5hs+TaCxxefMBuNVO1hxnj7ByFvRZf3GKOvBHsSgwjxgVVqo6JYHRVrcOS7nV3mJmWbY67Msq7Q0QWw7wRSQ==
   dependencies:
     io-ts "1.8.5"
     italia-ts-commons "5.1.1"
