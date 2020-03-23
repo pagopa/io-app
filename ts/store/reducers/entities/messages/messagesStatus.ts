@@ -143,7 +143,8 @@ export const messagesUnreadAndUnarchivedSelector = createSelector(
     )
 );
 
-// some utils function
+// some util functions
+// return true if message is archived
 export const isMessageArchived = (
   messagesStatus: MessagesStatus,
   messageId: string
@@ -152,6 +153,7 @@ export const isMessageArchived = (
     .map(ms => ms.isArchived)
     .getOrElse(false);
 
+// return true if message is read
 export const isMessageRead = (
   messagesStatus: MessagesStatus,
   messageId: string
