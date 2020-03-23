@@ -265,26 +265,18 @@ class MessageList extends React.Component<Props, State> {
         : undefined;
 
     return (
-      <View
-        style={
-          messageNeedsCTABar(message)
-            ? styles.itemWithCTABarContainer
-            : styles.itemWithoutCTABarContainer
-        }
-      >
-        <MessageListItem
-          isRead={isRead}
-          message={message}
-          service={service}
-          payment={payment}
-          onPress={onPressItem}
-          onLongPress={this.onLongPress}
-          isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
-          isSelected={this.props.selectedMessageIds
-            .map(_ => _.has(info.item.meta.id))
-            .getOrElse(false)}
-        />
-      </View>
+      <MessageListItem
+        isRead={isRead}
+        message={message}
+        service={service}
+        payment={payment}
+        onPress={onPressItem}
+        onLongPress={this.onLongPress}
+        isSelectionModeEnabled={this.props.selectedMessageIds.isSome()}
+        isSelected={this.props.selectedMessageIds
+          .map(_ => _.has(info.item.meta.id))
+          .getOrElse(false)}
+      />
     );
   };
 

@@ -31,97 +31,68 @@ type Props = {
   isSelected: boolean;
 };
 
+const TITLE_LINE_HEIGHT = 21;
+
 const styles = StyleSheet.create({
-  highlight: {
-    flex: 1
-  },
-
-  mainWrapper: {
-    flex: 1,
-    paddingVertical: 16,
-    paddingHorizontal: customVariables.contentPadding
-  },
-
   mainWrapperSelected: {
     backgroundColor: "#E7F3FF"
-  },
-
-  headerWrapper: {
-    flexDirection: "row",
-    marginBottom: 4
-  },
-
-  badgeContainer: {
-    flex: 0,
-    paddingRight: 4,
-    alignSelf: "flex-start",
-    marginRight: 4,
-    paddingTop: 4
-  },
-
-  headerCenter: {
-    flex: 1,
-    paddingRight: 32
   },
   serviceOrganizationName: {
     fontSize: 14,
     lineHeight: 18,
     color: customVariables.brandDarkestGray
   },
-
   serviceDepartmentName: {
     fontSize: 14,
     lineHeight: 18,
     color: customVariables.brandDarkGray
   },
-
-  headerRight: {
-    flex: 0
-  },
-
-  messageDate: {
+  date: {
     ...makeFontStyleObject(Platform.select, "700"),
     fontSize: 14,
     lineHeight: 18,
     color: customVariables.brandDarkGray
   },
-  contentWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 42
-  },
-
-  contentCenter: {
-    flexDirection: "row",
-    flex: 1,
-    paddingRight: 36
-  },
-
-  messageTitleUnread: {
+  titleUnread: {
     ...makeFontStyleObject(Platform.select, "700")
   },
-  messageTitleRead: {
+  titleRead: {
     ...makeFontStyleObject(Platform.select, "400")
   },
-
-  messageTitle: {
+  title: {
     fontSize: 18,
-    lineHeight: 21,
-    color: customVariables.brandDarkestGray
+    lineHeight: TITLE_LINE_HEIGHT,
+    color: customVariables.brandDarkestGray,
+    flex: 1,
+    height: TITLE_LINE_HEIGHT * 2,
+    paddingRight: 24
   },
-
-  contentRight: {
-    flex: 0
+  container: {
+    paddingVertical: 16,
+    paddingHorizontal: customVariables.contentPadding
   },
-
-  selectionCheckbox: {
-    left: 0,
-    paddingBottom: 1
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
-
-  footerWrapper: {
-    height: 32,
-    marginTop: 10
+  smallSeparator: {
+    width: "100%",
+    height: 4
+  },
+  content: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  titleWithBadge: {
+    flexDirection: "row",
+    flex: 1,
+    flexGrow: 1
+  },
+  badge: {
+    alignSelf: "flex-start",
+    paddingTop: 4,
+    paddingRight: 8
   }
 });
 
@@ -137,6 +108,32 @@ class MessageListItem extends React.PureComponent<Props> {
 
   private handleLongPress = () => {
     this.props.onLongPress(this.props.message.id);
+  };
+
+  private getItemIcon = () => {
+    const iconName = this.props.isSelected
+      ? "io-checkbox-on"
+      : "io-checkbox-off";
+
+    const iconColor = this.props.isSelected
+      ? variables.selectedColor
+      : variables.unselectedColor;
+
+    return this.props.isSelectionModeEnabled ? (
+      <ButtonDefaultOpacity
+        onPress={this.handleLongPress}
+        transparent={true}
+        style={{ flex: 1 }}
+      >
+        <IconFont name={iconName} color={iconColor} />
+      </ButtonDefaultOpacity>
+    ) : (
+      <IconFont
+        name={"io-right"}
+        size={24}
+        color={customVariables.contentPrimaryBackground}
+      />
+    );
   };
 
   public render() {
@@ -159,85 +156,58 @@ class MessageListItem extends React.PureComponent<Props> {
       I18n.t("messages.yesterday")
     );
 
-    const iconName = isSelected ? "io-checkbox-on" : "io-checkbox-off";
-
-    const iconColor = isSelected
-      ? variables.selectedColor
-      : variables.unselectedColor;
-
     return (
       <TouchableDefaultOpacity
-        style={styles.highlight}
+        style={[
+          styles.container,
+          isSelected ? styles.mainWrapperSelected : undefined
+        ]}
         onPress={this.handlePress}
         onLongPress={this.handleLongPress}
       >
-        <View
-          style={[
-            styles.mainWrapper,
-            isSelected ? styles.mainWrapperSelected : undefined
-          ]}
-        >
-          <View style={styles.headerWrapper}>
-            <View style={styles.headerCenter}>
-              <Text numberOfLines={1} style={styles.serviceOrganizationName}>
-                {uiService.organizationName}
-              </Text>
-              <Text numberOfLines={1} style={styles.serviceDepartmentName}>
-                {uiService.serviceName}
-              </Text>
-            </View>
-            <View style={styles.headerRight}>
-              <Text style={styles.messageDate}>{uiDate}</Text>
-            </View>
+        <View style={styles.header}>
+          <View>
+            <Text numberOfLines={1} style={styles.serviceOrganizationName}>
+              {uiService.organizationName}
+            </Text>
+            <Text numberOfLines={1} style={styles.serviceDepartmentName}>
+              {uiService.serviceName}
+            </Text>
           </View>
-
-          <View style={styles.contentWrapper}>
-            <View style={styles.contentCenter}>
-              {!isRead && (
-                <View style={styles.badgeContainer}>
-                  <BadgeComponent />
-                </View>
-              )}
-              <Text
-                numberOfLines={2}
-                style={[
-                  styles.messageTitle,
-                  isRead ? styles.messageTitleRead : styles.messageTitleUnread
-                ]}
-              >
-                {message.content.subject}
-              </Text>
-            </View>
-            <View style={styles.contentRight}>
-              {isSelectionModeEnabled ? (
-                <ButtonDefaultOpacity
-                  onPress={this.handleLongPress}
-                  transparent={true}
-                >
-                  <IconFont name={iconName} color={iconColor} />
-                </ButtonDefaultOpacity>
-              ) : (
-                <IconFont
-                  name="io-right"
-                  size={24}
-                  color={customVariables.contentPrimaryBackground}
-                />
-              )}
-            </View>
-          </View>
-
-          {messageNeedsCTABar(message) && (
-            <View style={styles.footerWrapper}>
-              <MessageCTABar
-                message={message}
-                service={service}
-                payment={payment}
-                small={true}
-                disabled={isSelectionModeEnabled}
-              />
-            </View>
-          )}
+          <Text style={styles.date}>{uiDate}</Text>
         </View>
+        <View style={styles.smallSeparator} />
+        <View style={styles.content}>
+          <View style={styles.titleWithBadge}>
+            {!isRead && (
+              <View style={styles.badge}>
+                <BadgeComponent />
+              </View>
+            )}
+            <Text
+              numberOfLines={2}
+              style={[
+                styles.title,
+                isRead ? styles.titleRead : styles.titleUnread
+              ]}
+            >
+              {message.content.subject}
+            </Text>
+          </View>
+          {this.getItemIcon()}
+        </View>
+        {messageNeedsCTABar(message) && (
+          <React.Fragment>
+            <View spacer={true} large={true} />
+            <MessageCTABar
+              message={message}
+              service={service}
+              payment={payment}
+              small={true}
+              disabled={isSelectionModeEnabled}
+            />
+          </React.Fragment>
+        )}
       </TouchableDefaultOpacity>
     );
   }

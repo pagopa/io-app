@@ -31,7 +31,7 @@ export const PrivacyMainScreen: React.SFC<Props> = props => (
   <TopScreenComponent
     goBack={() => props.navigation.goBack()}
     contextualHelpMarkdown={contextualHelpMarkdown}
-    title={I18n.t("profile.main.screenTitle")}
+    headerTitle={I18n.t("profile.main.screenTitle")}
   >
     <ScreenContent
       title={I18n.t("profile.main.mainPrivacy.screenTitle")}

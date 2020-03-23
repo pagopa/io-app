@@ -13,8 +13,8 @@ export class BadgeComponent extends React.PureComponent<{}> {
     return (
       <Svg width={badgeWidth} height={badgeWidth}>
         <Circle
-          cx="50%"
-          cy="50%"
+          cx={"50%"}
+          cy={"50%"}
           r={badgeWidth / 2}
           fill={customVariables.contentPrimaryBackground}
         />
