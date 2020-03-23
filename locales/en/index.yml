@@ -1,5 +1,7 @@
 ---
 global:
+  symbols:
+    question: "?"
   localization:
     decimalSeparator: "."
   date:
@@ -218,9 +220,8 @@ spid:
     message: Sorry, there was an error while logging in, could you try again?
     okLabel: Ok
   subscription:
-    line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
-      Amministrazione Italiana.
-    line2: Inserisci la tua e-mail per attivarla.
+    line1: SPID is the digital identity to access online services of the Public Administration.
+    line2: Insert your email address to enable it.
 authentication:
   landing:
     contextualHelpTitle: How to register in the IO app
@@ -859,6 +860,19 @@ biometric_recognition:
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
   needed_to_disable: Recognition required to disable
+send_email_messages: 
+  title: Forward messages by email
+  subtitle: Do you want IO to forward messages contents by email to
+  options:
+    disable_all:
+      label: Disable for all services
+      info: You will not receive email messages anymore
+    enable_all:
+      label: Enable for all services
+      info: Every message will be forwarded to your email, if the service allows it
+    by_service:
+      label: Select service by service
+      info: You will be able to select from each service settings screen to receive its messages by email as well
 services:
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
@@ -901,6 +915,12 @@ serviceDetail:
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
   disableTitle: "Do you really want to disable the service?"
   disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
+  lockedMailAlert: "The email forwarding of messages is globally {{enabled}}:"
+  updatePreferences: Update your preferences
+  goTo: Go to preferences
+  enabled: enabled
+  disabled: disabled
+  notValidated: To enable the email forwarding you must validate your email address.
 identification:
   messageFingerPrint: "Use the fingerprint or enter the PIN"
   messageFaceID: "Use FaceID or enter the PIN"
