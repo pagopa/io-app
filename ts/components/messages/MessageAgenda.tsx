@@ -289,7 +289,6 @@ const SectionHeaderPlaceholder = (
  */
 class MessageAgenda extends React.PureComponent<Props, State> {
   private idTimeout?: number;
-  private idInterval?: number;
   // Ref to section list
   private sectionListRef = React.createRef<any>();
   constructor(props: Props) {
@@ -304,39 +303,39 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     };
   }
 
-  public componentDidMount() {
-    // tslint:disable-next-line: no-object-mutation
-    this.idInterval = setInterval(() => {
-      if (!this.state.isDeadlinesLoaded) {
-        this.isDeadlinesLoadingComplete();
-      } else {
-        clearInterval(this.idInterval);
-      }
-    }, 300);
-  }
-
   public componentWillUnmount() {
     // if a timeout is running we have to stop it
     if (this.idTimeout !== undefined) {
       clearTimeout(this.idTimeout);
     }
-    if (this.idInterval !== undefined) {
-      clearInterval(this.idInterval);
-    }
   }
 
-  public async componentDidUpdate() {
+  public componentDidUpdate() {
+    if (!this.state.isDeadlinesLoaded) {
+      this.isDeadlinesLoadingCompleted();
+    }
     if (
+      // check that the deadline messages have been loaded
       this.state.isDeadlinesLoaded &&
+      // check that the SectionList ref is defined
       this.sectionListRef.current &&
+      // check that it is the first loading of the SectionList
       this.state.isFirstLoading &&
-      this.props.sections &&
-      this.props.sections.length > 0
+      // check that the Sections are defined and that there are messages
+      (this.props.sections && this.props.sections.length > 0)
     ) {
       this.completeLoadingState();
       if (
+        /**
+         * To scroll to the next deadline we need these 2 conditions to occur:
+         * - two or more sections: with one section we have one deadline in evidence
+         * - five or more messages: to enable scrollbar
+         */
+        // check that Sections has more than one message
         this.props.sections.length > 1 &&
+        // check that there are more than 5 messages to show in the SectionsList to enable the scroll effect
         this.state.numMessagesToRender > 5 &&
+        // check that the id of next deadline is defined
         isSome(this.props.nextDeadlineId)
       ) {
         const sectionIndex = this.props.sections.findIndex(this.checkSection);
@@ -400,19 +399,21 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return null;
   }
 
-  private isDeadlinesLoadingComplete = () => {
+  private isDeadlinesLoadingCompleted = () => {
     if (
+      this.props.sectionToLoad &&
+      this.props.sectionToLoad > -1 &&
       this.getMessageToLoadFromSections(this.props.sections) ===
-        this.props.sectionToLoad &&
-      !this.state.isDeadlinesLoaded
+        this.props.sectionToLoad
     ) {
+      this.setNumMessagesToRender(this.props.sections);
       this.setState({
         isDeadlinesLoaded: true
       });
     }
   };
 
-  private getMessageToLoadFromSections = (sections: Sections) => {
+  private setNumMessagesToRender = (sections: Sections) => {
     const messageToLoadFromSections = sections.reduce(
       (acc, curr) => acc + curr.data.length,
       0
@@ -422,7 +423,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     this.setState({
       numMessagesToRender
     });
-    return messageToLoadFromSections;
+  };
+
+  private getMessageToLoadFromSections = (sections: Sections) => {
+    return sections.reduce((acc, curr) => acc + curr.data.length, 0);
   };
 
   private completeLoadingState = () => {

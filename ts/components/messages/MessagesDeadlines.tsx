@@ -319,7 +319,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         // check loading messages
         const isSomeLoading = value.find(m => pot.isLoading(m.message));
         if (isSomeLoading !== undefined) {
-          return 0;
+          return -1;
         }
         return value.filter(m => {
           const message = m.message;
