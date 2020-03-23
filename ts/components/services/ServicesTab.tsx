@@ -217,7 +217,7 @@ class ServicesTab extends React.PureComponent<Props> {
   public render() {
     // the right icon in the organization section could be
     // - if long press is enabled: a switch to enable/disable all related services
-    // - if the organization is local an icon to remove it
+    // - if the organization is local a button to remove it
     // - none
     const renderRightIcon = this.props.isLongPressEnabled
       ? this.renderSwitchAllOrganizationServices
