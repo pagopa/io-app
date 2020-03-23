@@ -319,7 +319,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       this.state.isDeadlinesLoaded &&
       // check that the SectionList ref is defined
       this.sectionListRef.current &&
-      // check that it is the first loading of the SectionList
+      // check that it is the first loading of the SectionList (the first loading of the screen)
       this.state.isFirstLoading &&
       // check that the Sections are defined and that there are messages
       (this.props.sections && this.props.sections.length > 0)
@@ -402,7 +402,6 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   private isDeadlinesLoadingCompleted = () => {
     if (
       this.props.sectionToLoad &&
-      this.props.sectionToLoad > -1 &&
       this.getMessageToLoadFromSections(this.props.sections) ===
         this.props.sectionToLoad
     ) {

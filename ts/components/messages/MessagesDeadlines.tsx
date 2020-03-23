@@ -315,7 +315,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
    * Returns the number of sections to load
    */
   private sectionToLoad = (
-    messagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+    messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
   ): number => {
     return pot.getOrElse(
       pot.map(messagesState, value => {
