@@ -2,7 +2,6 @@
  * The root saga that forks and includes all the other sagas.
  */
 import { all, call, Effect } from "redux-saga/effects";
-
 import backendInfoSaga from "./backendInfo";
 import {
   watchContentMunicipalityLoadSaga,
@@ -12,12 +11,12 @@ import {
 import unreadInstabugMessagesSaga from "./instabug";
 import { loadSystemPreferencesSaga } from "./preferences";
 import { startupSaga } from "./startup";
-import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 import {
   watchBackToEntrypointPaymentSaga,
   watchPaymentInitializeSaga
 } from "./wallet";
+import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 // Parameters used by the withNetworkConnectivity HOC of react-native-offline.
 // We use `withRedux: true` to store the network status in the redux store.
