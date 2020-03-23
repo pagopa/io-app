@@ -162,6 +162,7 @@ class ServicesTab extends React.PureComponent<Props> {
   private renderSwitchAllOrganizationServices = (
     section: ServicesSectionState
   ) => {
+    // retrieve all services
     const services = section.data.reduce(
       (
         acc: ReadonlyArray<ServicePublic>,
@@ -192,7 +193,10 @@ class ServicesTab extends React.PureComponent<Props> {
             this.props.onItemSwitchValueChanged(services, value);
           }
         }}
-        disabled={pot.isLoading(this.props.profile)}
+        disabled={
+          pot.isLoading(this.props.profile) ||
+          pot.isUpdating(this.props.profile)
+        }
       />
     );
   };
@@ -211,6 +215,15 @@ class ServicesTab extends React.PureComponent<Props> {
   };
 
   public render() {
+    // the right icon in the organization section could be
+    // - if long press is enabled: a switch to enable/disable all related services
+    // - if the organization is local an icon to remove it
+    // - none
+    const renderRightIcon = this.props.isLongPressEnabled
+      ? this.renderSwitchAllOrganizationServices
+      : this.props.isLocal
+        ? this.renderLocalQuickSectionDeletion
+        : undefined;
     return (
       <ServicesSectionsList
         isLocal={this.props.isLocal}
@@ -232,13 +245,7 @@ class ServicesTab extends React.PureComponent<Props> {
         isLongPressEnabled={this.props.isLongPressEnabled}
         onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
         animated={this.onTabScroll()}
-        renderRightIcon={
-          this.props.isLongPressEnabled
-            ? this.renderSwitchAllOrganizationServices
-            : this.props.isLocal
-              ? this.renderLocalQuickSectionDeletion
-              : undefined
-        }
+        renderRightIcon={renderRightIcon}
       />
     );
   }
