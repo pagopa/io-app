@@ -3,6 +3,7 @@ import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import BiometricRecognitionScreen from "../screens/profile/BiometricRecognitionScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
+import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
@@ -29,6 +30,9 @@ const ProfileNavigator = createStackNavigator(
     },
     [ROUTES.PROFILE_PREFERENCES_BIOMETRIC_RECOGNITION]: {
       screen: BiometricRecognitionScreen
+    },
+    [ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING]: {
+      screen: EmailForwardingScreen
     },
     [ROUTES.PROFILE_PREFERENCES_CALENDAR]: {
       screen: CalendarsPreferencesScreen
