@@ -36,31 +36,36 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
   }
 
   while (true) {
-    const backendInfoResponse: SagaCallReturnType<
+    try {
+      const backendInfoResponse: SagaCallReturnType<
       typeof getServerInfo
-    > = yield call(getServerInfo, {});
-    if (
-      backendInfoResponse.isRight() &&
-      backendInfoResponse.value.status === 200
-    ) {
-      yield put(backendInfoLoadSuccess(backendInfoResponse.value.value));
-      setInstabugUserAttribute(
-        "backendVersion",
-        backendInfoResponse.value.value.version
-      );
-      // tslint:disable-next-line:saga-yield-return-type
-      yield call(startTimer, BACKEND_INFO_LOAD_INTERVAL);
-    } else {
-      const errorDescription = backendInfoResponse.fold(
-        readableReport,
-        ({ status }) => `response status ${status}`
-      );
+      > = yield call(getServerInfo, {});
+      if (
+        backendInfoResponse.isRight() &&
+        backendInfoResponse.value.status === 200
+      ) {
+        yield put(backendInfoLoadSuccess(backendInfoResponse.value.value));
+        setInstabugUserAttribute(
+          "backendVersion",
+          backendInfoResponse.value.value.version
+        );
+        // tslint:disable-next-line:saga-yield-return-type
+        yield call(startTimer, BACKEND_INFO_LOAD_INTERVAL);
+      } else {
+        const errorDescription = backendInfoResponse.fold(
+          readableReport,
+          ({ status }) => `response status ${status}`
+        );
 
-      yield put(backendInfoLoadFailure(new Error(errorDescription)));
+        yield put(backendInfoLoadFailure(new Error(errorDescription)));
 
-      // tslint:disable-next-line:saga-yield-return-type
-      yield call(startTimer, BACKEND_INFO_RETRY_INTERVAL);
+        // tslint:disable-next-line:saga-yield-return-type
+        yield call(startTimer, BACKEND_INFO_RETRY_INTERVAL);
+      }
+    } catch(e){
+      yield put(backendInfoLoadFailure(new Error(e)));
     }
+    
   }
 }
 
