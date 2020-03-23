@@ -28,11 +28,6 @@ import { navigateToMessageDetailScreenAction } from "../../store/actions/navigat
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
-import {
-  messagesArchivedSelector,
-  messagesReadSelector,
-  messagesUnarchivedSelector
-} from "../../store/reducers/entities/messages/messageItemState";
 import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import {
   servicesByIdSelector,
@@ -215,10 +210,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       servicesById,
       paymentsByRptId,
       navigateToMessageDetail,
-      updateMessagesArchivedState,
-      messagesArchived,
-      messagesUnarchived,
-      messagesRead
+      updateMessagesArchivedState
     } = this.props;
     return (
       <AnimatedTabs
@@ -236,8 +228,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <MessagesInbox
             currentTab={this.state.currentTab}
             messagesState={lexicallyOrderedMessagesState}
-            messagesUnarchived={messagesUnarchived}
-            messagesRead={messagesRead}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
             onRefresh={this.onRefreshMessages}
@@ -262,8 +252,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
         >
           <MessagesDeadlines
             currentTab={this.state.currentTab}
-            messagesRead={messagesRead}
-            messagesArchived={messagesArchived}
             messagesState={lexicallyOrderedMessagesState}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
@@ -280,8 +268,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <MessagesArchive
             currentTab={this.state.currentTab}
             messagesState={lexicallyOrderedMessagesState}
-            messagesArchived={messagesArchived}
-            messagesRead={messagesRead}
             servicesById={servicesById}
             paymentsByRptId={paymentsByRptId}
             onRefresh={this.onRefreshMessages}
@@ -311,8 +297,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       lexicallyOrderedMessagesState,
       servicesById,
       paymentsByRptId,
-      navigateToMessageDetail,
-      messagesRead
+      navigateToMessageDetail
     } = this.props;
 
     return this.props.searchText
@@ -322,7 +307,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
             <SearchNoResultMessage errorType="InvalidSearchBarText" />
           ) : (
             <MessagesSearch
-              messagesRead={messagesRead}
               messagesState={lexicallyOrderedMessagesState}
               servicesById={servicesById}
               paymentsByRptId={paymentsByRptId}
@@ -338,9 +322,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   lexicallyOrderedMessagesState: lexicallyOrderedMessagesStateSelector(state),
-  messagesArchived: messagesArchivedSelector(state),
-  messagesUnarchived: messagesUnarchivedSelector(state),
-  messagesRead: messagesReadSelector(state),
   servicesById: servicesByIdSelector(state),
   paymentsByRptId: paymentsByRptIdSelector(state),
   searchText: searchTextSelector(state),

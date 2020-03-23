@@ -6,21 +6,21 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 
-import { isDefined } from "../../../../utils/guards";
 import { Action } from "../../../actions/types";
 import messagesAllIdsReducer, {
   messagesAllIdsSelector,
   MessagesAllIdsState
 } from "./messagesAllIds";
 
-import { messagesUnreadAndUnarchivedSelector } from "./messageItemState";
 import messagesByIdReducer, {
   messagesStateByIdSelector,
+  MessageState,
   MessageStateById
 } from "./messagesById";
 import messagesIdsByServiceIdReducer, {
   MessagesIdsByServiceId
 } from "./messagesIdsByServiceId";
+import { messagesStatusSelector, MessageStatus } from "./messagesStatus";
 
 export type MessagesState = Readonly<{
   byId: MessageStateById;
@@ -47,6 +47,7 @@ export const lexicallyOrderedMessagesIds = createSelector(
     )
 );
 
+export type MessagesStateAndStatus = MessageState & MessageStatus;
 /**
  * A selector that using the inversely lexically ordered messages IDs
  * returned by lexicallyOrderedMessagesIds returns an array of the
@@ -55,21 +56,41 @@ export const lexicallyOrderedMessagesIds = createSelector(
 export const lexicallyOrderedMessagesStateSelector = createSelector(
   lexicallyOrderedMessagesIds,
   messagesStateByIdSelector,
-  (potIds, messageStateById) =>
+  messagesStatusSelector,
+  (potIds, messageStateById, messagesStatus) =>
     pot.map(potIds, ids =>
-      ids.map(messageId => messageStateById[messageId]).filter(isDefined)
+      ids.reduce(
+        (acc: ReadonlyArray<MessagesStateAndStatus>, messageId: string) => {
+          const message = messageStateById[messageId];
+          if (message === undefined) {
+            return acc;
+          }
+          const messageStatus =
+            messagesStatus[messageId] ||
+            ({
+              isRead: false,
+              isArchived: false
+            } as MessageStatus);
+          return [
+            ...acc,
+            {
+              ...message,
+              ...messageStatus
+            }
+          ];
+        },
+        []
+      )
     )
 );
 
 export const messagesUnreadedAndUnarchivedSelector = createSelector(
   lexicallyOrderedMessagesStateSelector,
-  messagesUnreadAndUnarchivedSelector,
-  (potMessagesState, messagesUnreadAndUnarchived) =>
+  potMessagesState =>
     pot.getOrElse(
       pot.map(potMessagesState, _ =>
         _.filter(
-          messageState =>
-            messagesUnreadAndUnarchived.indexOf(messageState.meta.id) !== -1
+          messageState => !messageState.isRead && !messageState.isArchived
         )
       ),
       []

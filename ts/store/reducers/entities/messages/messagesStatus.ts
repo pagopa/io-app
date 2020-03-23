@@ -10,22 +10,22 @@ import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
-type ItemState = {
+export type MessageStatus = {
   isRead: boolean;
   isArchived: boolean;
 };
 
-export type MessageItemsState = Readonly<{
-  [key: string]: ItemState;
+export type MessagesStatus = Readonly<{
+  [key: string]: MessageStatus | undefined;
 }>;
 
-const INITIAL_ITEM_STATE: ItemState = { isRead: false, isArchived: false };
-const INITIAL_STATE: MessageItemsState = {};
+const INITIAL_ITEM_STATE: MessageStatus = { isRead: false, isArchived: false };
+const INITIAL_STATE: MessagesStatus = {};
 
 const reducer = (
-  state: MessageItemsState = INITIAL_STATE,
+  state: MessagesStatus = INITIAL_STATE,
   action: Action
-): MessageItemsState => {
+): MessagesStatus => {
   switch (action.type) {
     case getType(loadMessage.success): {
       const { id } = action.payload;
@@ -40,7 +40,7 @@ const reducer = (
 
     case getType(setMessageReadState): {
       const { id, read } = action.payload;
-      const prevState = state[id];
+      const prevState = state[id] || INITIAL_ITEM_STATE;
       return {
         ...state,
         [id]: {
@@ -52,7 +52,7 @@ const reducer = (
     case getType(setMessagesArchivedState): {
       const { ids, archived } = action.payload;
       const updatedMessageStates = ids.reduce<{
-        [key: string]: ItemState;
+        [key: string]: MessageStatus;
       }>((accumulator, id) => {
         const prevState = state[id];
         if (prevState !== undefined) {
@@ -76,34 +76,44 @@ const reducer = (
   }
 };
 
-export const messageItems = (state: GlobalState) => state.entities.messageItems;
+export const messagesStatusSelector = (state: GlobalState) =>
+  state.entities.messagesStatus;
 
-export const messagesUnreadSelector = createSelector(messageItems, items => {
-  return Object.keys(items).filter(messageId =>
-    fromNullable(items[messageId])
-      .map(item => item.isRead === false)
-      .getOrElse(true)
-  );
-});
+export const messagesUnreadSelector = createSelector(
+  messagesStatusSelector,
+  items => {
+    return Object.keys(items).filter(messageId =>
+      fromNullable(items[messageId])
+        .map(item => item.isRead === false)
+        .getOrElse(true)
+    );
+  }
+);
 
-export const messagesReadSelector = createSelector(messageItems, items => {
-  return Object.keys(items).filter(messageId =>
-    fromNullable(items[messageId])
-      .map(item => item.isRead === true)
-      .getOrElse(false)
-  );
-});
+export const messagesReadSelector = createSelector(
+  messagesStatusSelector,
+  items => {
+    return Object.keys(items).filter(messageId =>
+      fromNullable(items[messageId])
+        .map(item => item.isRead === true)
+        .getOrElse(false)
+    );
+  }
+);
 
-export const messagesArchivedSelector = createSelector(messageItems, items => {
-  return Object.keys(items).filter(messageId =>
-    fromNullable(items[messageId])
-      .map(item => item.isArchived === true)
-      .getOrElse(false)
-  );
-});
+export const messagesArchivedSelector = createSelector(
+  messagesStatusSelector,
+  items => {
+    return Object.keys(items).filter(messageId =>
+      fromNullable(items[messageId])
+        .map(item => item.isArchived === true)
+        .getOrElse(false)
+    );
+  }
+);
 
 export const messagesUnarchivedSelector = createSelector(
-  messageItems,
+  messagesStatusSelector,
   items => {
     return Object.keys(items).filter(messageId =>
       fromNullable(items[messageId])
@@ -112,6 +122,22 @@ export const messagesUnarchivedSelector = createSelector(
     );
   }
 );
+
+export const isMessageArchived = (
+  messagesStatus: MessagesStatus,
+  messageId: string
+) =>
+  fromNullable(messagesStatus[messageId])
+    .map(ms => ms.isArchived)
+    .getOrElse(false);
+
+export const isMessageRead = (
+  messagesStatus: MessagesStatus,
+  messageId: string
+) =>
+  fromNullable(messagesStatus[messageId])
+    .map(ms => ms.isRead)
+    .getOrElse(false);
 
 export const messagesUnreadAndUnarchivedSelector = createSelector(
   messagesUnreadSelector,

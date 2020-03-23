@@ -24,8 +24,8 @@ import {
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { messagesReadSelector } from "../../store/reducers/entities/messages/messageItemState";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
+import { messagesReadSelector } from "../../store/reducers/entities/messages/messagesStatus";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";

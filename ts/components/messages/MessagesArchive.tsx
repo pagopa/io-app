@@ -4,11 +4,10 @@ import { View } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
 import {
-  messagesArchivedSelector,
-  messagesReadSelector
-} from "../../store/reducers/entities/messages/messageItemState";
+  lexicallyOrderedMessagesStateSelector,
+  MessagesStateAndStatus
+} from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
   InjectedWithItemsSelectionProps,
@@ -30,8 +29,6 @@ const styles = StyleSheet.create({
 
 type OwnProps = {
   currentTab: number;
-  messagesArchived: ReturnType<typeof messagesArchivedSelector>;
-  messagesRead: ReturnType<typeof messagesReadSelector>;
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   navigateToMessageDetail: (id: string) => void;
   setMessagesArchivedState: (
@@ -52,7 +49,6 @@ type Props = Pick<ComponentProps<typeof MessageList>, MessageListProps> &
 
 type State = {
   lastMessagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
-  lastMessagesArchivedState: ReturnType<typeof messagesArchivedSelector>;
   filteredMessageStates: ReturnType<typeof generateMessagesStateArchivedArray>;
   allMessageIdsState: Option<Set<string>>;
 };
@@ -61,14 +57,11 @@ type State = {
  * Filter only the messages that are archived.
  */
 const generateMessagesStateArchivedArray = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>,
-  messagesArchived: ReadonlyArray<string>
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
 ): ReadonlyArray<MessageState> =>
   pot.getOrElse(
     pot.map(potMessagesState, _ =>
-      _.filter(
-        messageState => messagesArchived.indexOf(messageState.meta.id) !== -1
-      )
+      _.filter(messageState => messageState.isArchived)
     ),
     []
   );
@@ -86,23 +79,18 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     nextProps: Props,
     prevState: State
   ): Partial<State> | null {
-    const { lastMessagesState, lastMessagesArchivedState } = prevState;
+    const { lastMessagesState } = prevState;
 
-    if (
-      lastMessagesState !== nextProps.messagesState ||
-      lastMessagesArchivedState !== nextProps.messagesArchived
-    ) {
+    if (lastMessagesState !== nextProps.messagesState) {
       // The list was updated, we need to re-apply the filter and
       // save the result in the state.
       const messagesStateArchived = generateMessagesStateArchivedArray(
-        nextProps.messagesState,
-        nextProps.messagesArchived
+        nextProps.messagesState
       );
       const allMessagesIdsArray = messagesStateArchived.map(_ => _.meta.id);
       return {
         filteredMessageStates: messagesStateArchived,
         lastMessagesState: nextProps.messagesState,
-        lastMessagesArchivedState: nextProps.messagesArchived,
         allMessageIdsState: some(new Set(allMessagesIdsArray))
       };
     }
@@ -122,7 +110,6 @@ class MessagesArchive extends React.PureComponent<Props, State> {
     this.state = {
       lastMessagesState: pot.none,
       filteredMessageStates: [],
-      lastMessagesArchivedState: [],
       allMessageIdsState: none
     };
   }
@@ -147,7 +134,6 @@ class MessagesArchive extends React.PureComponent<Props, State> {
           <MessageList
             {...this.props}
             messageStates={this.state.filteredMessageStates}
-            messagesRead={this.props.messagesRead}
             onPressItem={this.handleOnPressItem}
             onLongPressItem={this.handleOnLongPressItem}
             refreshing={isLoading}

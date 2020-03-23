@@ -16,7 +16,7 @@ import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { messagesReadSelector } from "../../store/reducers/entities/messages/messageItemState";
+import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
@@ -40,7 +40,6 @@ type AnimatedProps = {
 
 type OwnProps = {
   messageStates: ReadonlyArray<MessageState>;
-  messagesRead: ReturnType<typeof messagesReadSelector>;
   servicesById: ServicesByIdState;
   paymentsByRptId: PaymentByRptIdState;
   refreshing: boolean;
@@ -221,10 +220,9 @@ class MessageList extends React.Component<Props, State> {
     return null;
   }
 
-  private renderItem = (info: ListRenderItemInfo<MessageState>) => {
-    const { meta, message: potMessage } = info.item;
+  private renderItem = (info: ListRenderItemInfo<MessagesStateAndStatus>) => {
+    const { meta, message: potMessage, isRead } = info.item;
     const { paymentsByRptId, onPressItem } = this.props;
-    const isRead = this.props.messagesRead.indexOf(meta.id) !== -1;
     const potService = this.props.servicesById[meta.sender_service_id];
     const isServiceLoading = potService
       ? pot.isNone(potService) && pot.isLoading(potService) // is none loading
