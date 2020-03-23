@@ -8,7 +8,7 @@ import {
   WithinRangeString
 } from "italia-ts-commons/lib/strings";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { MessageState } from "../../../store/reducers/entities/messages/messagesById";
+import { MessagesStateAndStatus } from "../../../store/reducers/entities/messages";
 import { isCreatedMessageWithContentAndDueDate } from "../../../types/CreatedMessageWithContentAndDueDate";
 import {
   isFakeItem,
@@ -22,7 +22,7 @@ import { getLastDeadlineId, getNextDeadlineId } from "../MessagesDeadlines";
  * Filter only the messages with a due date and group them by due_date day.
  */
 const generateSections = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
 ): Sections =>
   pot.getOrElse(
     pot.map(
@@ -30,9 +30,7 @@ const generateSections = (
       _ =>
         // tslint:disable-next-line:readonly-array
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
-          const { message } = messageState;
-          const isRead = false;
-          const isArchived = false;
+          const { message, isArchived, isRead } = messageState;
           if (
             !isArchived &&
             pot.isSome(message) &&
@@ -122,7 +120,7 @@ const setDate = (year: number, hour: number): Date => {
   );
 };
 const fiscalCode = "ISPXNB32R82Y766A" as FiscalCode;
-const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
+const messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string> = {
   kind: "PotSome",
   value: [
     {
@@ -134,6 +132,8 @@ const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
         time_to_live: (3600 as unknown) as number &
           WithinRangeInteger<3600, 604800>
       },
+      isRead: true,
+      isArchived: false,
       message: {
         kind: "PotSome",
         value: {
@@ -166,6 +166,8 @@ const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
         time_to_live: (3600 as unknown) as number &
           WithinRangeInteger<3600, 604800>
       },
+      isRead: false,
+      isArchived: false,
       message: {
         kind: "PotSome",
         value: {
@@ -202,6 +204,8 @@ const messagesState: pot.Pot<ReadonlyArray<MessageState>, string> = {
         time_to_live: (3600 as unknown) as number &
           WithinRangeInteger<3600, 604800>
       },
+      isRead: false,
+      isArchived: false,
       message: {
         kind: "PotSome",
         value: {
