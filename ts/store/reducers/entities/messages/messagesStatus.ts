@@ -19,7 +19,10 @@ export type MessagesStatus = Readonly<{
   [key: string]: MessageStatus | undefined;
 }>;
 
-const INITIAL_ITEM_STATE: MessageStatus = { isRead: false, isArchived: false };
+export const EMPTY_MESSAGE_STATUS: MessageStatus = {
+  isRead: false,
+  isArchived: false
+};
 const INITIAL_STATE: MessagesStatus = {};
 
 const reducer = (
@@ -29,18 +32,20 @@ const reducer = (
   switch (action.type) {
     case getType(loadMessage.success): {
       const { id } = action.payload;
+      // if hits, skip it!
       if (state[id] !== undefined) {
         return state;
       }
       return {
         ...state,
-        [id]: INITIAL_ITEM_STATE
+        [id]: EMPTY_MESSAGE_STATUS
       };
     }
 
     case getType(setMessageReadState): {
       const { id, read } = action.payload;
-      const prevState = state[id] || INITIAL_ITEM_STATE;
+      // if misses, set the default values for given message
+      const prevState = state[id] || EMPTY_MESSAGE_STATUS;
       return {
         ...state,
         [id]: {
@@ -76,9 +81,11 @@ const reducer = (
   }
 };
 
+// return messagesStatus
 export const messagesStatusSelector = (state: GlobalState) =>
   state.entities.messagesStatus;
 
+// return all unread messages id
 export const messagesUnreadSelector = createSelector(
   messagesStatusSelector,
   items => {
@@ -90,6 +97,7 @@ export const messagesUnreadSelector = createSelector(
   }
 );
 
+// return all read messages id
 export const messagesReadSelector = createSelector(
   messagesStatusSelector,
   items => {
@@ -101,6 +109,7 @@ export const messagesReadSelector = createSelector(
   }
 );
 
+// return all archived messages id
 export const messagesArchivedSelector = createSelector(
   messagesStatusSelector,
   items => {
@@ -112,6 +121,7 @@ export const messagesArchivedSelector = createSelector(
   }
 );
 
+// return all unarchived messages id
 export const messagesUnarchivedSelector = createSelector(
   messagesStatusSelector,
   items => {
@@ -123,6 +133,17 @@ export const messagesUnarchivedSelector = createSelector(
   }
 );
 
+// return all unarchived and unread messages id
+export const messagesUnreadAndUnarchivedSelector = createSelector(
+  messagesUnreadSelector,
+  messagesUnarchivedSelector,
+  (messagesUnread, messageUnarchived) =>
+    messagesUnread.filter(
+      messageId => messageUnarchived.indexOf(messageId) !== -1
+    )
+);
+
+// some utils function
 export const isMessageArchived = (
   messagesStatus: MessagesStatus,
   messageId: string
@@ -138,14 +159,5 @@ export const isMessageRead = (
   fromNullable(messagesStatus[messageId])
     .map(ms => ms.isRead)
     .getOrElse(false);
-
-export const messagesUnreadAndUnarchivedSelector = createSelector(
-  messagesUnreadSelector,
-  messagesUnarchivedSelector,
-  (messagesUnread, messageUnarchived) =>
-    messagesUnread.filter(
-      messageId => messageUnarchived.indexOf(messageId) !== -1
-    )
-);
 
 export default reducer;

@@ -20,7 +20,11 @@ import messagesByIdReducer, {
 import messagesIdsByServiceIdReducer, {
   MessagesIdsByServiceId
 } from "./messagesIdsByServiceId";
-import { messagesStatusSelector, MessageStatus } from "./messagesStatus";
+import {
+  EMPTY_MESSAGE_STATUS,
+  messagesStatusSelector,
+  MessageStatus
+} from "./messagesStatus";
 
 export type MessagesState = Readonly<{
   byId: MessageStateById;
@@ -47,6 +51,8 @@ export const lexicallyOrderedMessagesIds = createSelector(
     )
 );
 
+// this type is need to combine message data to message status. Note
+// that message status is a data holded only by the app (isRead / isArchived)
 export type MessagesStateAndStatus = MessageState & MessageStatus;
 /**
  * A selector that using the inversely lexically ordered messages IDs
@@ -66,11 +72,7 @@ export const lexicallyOrderedMessagesStateSelector = createSelector(
             return acc;
           }
           const messageStatus =
-            messagesStatus[messageId] ||
-            ({
-              isRead: false,
-              isArchived: false
-            } as MessageStatus);
+            messagesStatus[messageId] || EMPTY_MESSAGE_STATUS;
           return [
             ...acc,
             {

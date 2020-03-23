@@ -25,7 +25,10 @@ import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
-import { messagesReadSelector } from "../../store/reducers/entities/messages/messagesStatus";
+import {
+  messagesStatusSelector,
+  isMessageRead
+} from "../../store/reducers/entities/messages/messagesStatus";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
@@ -319,7 +322,10 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   const maybeMeta = maybeMessageState.map(_ => _.meta);
 
-  const isRead = messagesReadSelector(state).indexOf(messageId) !== -1;
+  const messagesStatus = messagesStatusSelector(state);
+  const isRead = maybeMessageState
+    .map(_ => isMessageRead(messagesStatus, _.meta.id))
+    .getOrElse(true);
 
   // In case maybePotMessage is undefined we fallback to an empty message.
   // This mens we navigated to the message screen with a non-existing message
