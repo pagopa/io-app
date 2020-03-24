@@ -206,6 +206,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // Delete all onboarding data
     yield put(clearOnboarding());
     yield put(clearCache());
+  } else if (pot.isNone(lastLoggedInProfileState)) {
+    yield put(clearCache());
   }
 
   const maybeIdp: Option<IdentityProvider> = yield select<GlobalState>(
