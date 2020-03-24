@@ -21,6 +21,7 @@ import ROUTES from "../../../navigation/routes";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
+import { Millisecond } from "italia-ts-commons/lib/units";
 
 type NavigationParams = {
   ciePin: string;
@@ -51,6 +52,9 @@ type State = {
   content?: string;
   errorMessage?: string;
 };
+
+// the timeout we sleep until move to consent form screen when authentication goes well
+const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 
 /**
  *  This screen shown while reading the card
@@ -161,6 +165,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           subtitle: I18n.t("authentication.cie.card.readerCardHeader"),
           content: I18n.t("authentication.cie.card.readerCardFooter")
         });
+        break;
       case ReadingState.error:
         this.setState({
           title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
@@ -169,12 +174,14 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           ),
           content: this.state.errorMessage
         });
+        break;
       case ReadingState.completed:
         this.setState({
           title: I18n.t("global.buttons.ok2"),
           subtitle: I18n.t("authentication.cie.card.cieCardValid"),
           content: undefined
         });
+        break;
       // waiting_card state
       default:
         this.setState({
@@ -194,13 +201,14 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private handleCieSuccess = (cieConsentUri: string) => {
-    this.setState({ readingState: ReadingState.completed }, async () => {
-      await this.stopCieManager();
-      setTimeout(() => {
+    this.setState({ readingState: ReadingState.completed }, () => {
+      this.updateContent();
+      setTimeout(async () => {
+        await this.stopCieManager();
         this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
           cieConsentUri
         });
-      }, 1500);
+      }, WAIT_TIMEOUT_NAVIGATION);
     });
   };
 
