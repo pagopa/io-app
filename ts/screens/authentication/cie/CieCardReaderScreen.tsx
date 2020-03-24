@@ -5,6 +5,7 @@
  */
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet, Vibration } from "react-native";
@@ -21,7 +22,6 @@ import ROUTES from "../../../navigation/routes";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
-import { Millisecond } from "italia-ts-commons/lib/units";
 
 type NavigationParams = {
   ciePin: string;
