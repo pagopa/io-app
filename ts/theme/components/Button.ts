@@ -29,7 +29,7 @@ export default (): Theme => {
         },
         "NativeBase.Text": { flex: 1, textAlign: "center" },
         padding: 0,
-        display: "flex",
+        display: "flex"
       }
     },
 
@@ -96,7 +96,7 @@ export default (): Theme => {
       fontSize: variables.btnFontSize
     },
 
-    justifyContent: 'center',
+    justifyContent: "center",
 
     borderRadius: variables.borderRadiusBase,
     height: variables.btnHeight,
