@@ -3,17 +3,30 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 
+type Props = Readonly<{
+  noPadded?: boolean;
+}>;
+
 const styles = StyleSheet.create({
   itemSeparator: {
     backgroundColor: customVariables.itemSeparator,
-    height: 1 / 3,
+    height: 1 / 3
+  },
+  horizontalPad: {
     marginLeft: customVariables.contentPadding,
     marginRight: customVariables.contentPadding
   }
 });
 
-export default class ItemSeparatorComponent extends React.PureComponent<{}> {
+export default class ItemSeparatorComponent extends React.PureComponent<Props> {
   public render() {
-    return <View style={styles.itemSeparator} />;
+    return (
+      <View
+        style={[
+          styles.itemSeparator,
+          !this.props.noPadded && styles.horizontalPad
+        ]}
+      />
+    );
   }
 }

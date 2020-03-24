@@ -72,43 +72,39 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding,
     flex: 1
   },
-
   itemWithoutCTABarContainer: {
     display: "flex",
     flex: 1,
     height: ITEM_WITHOUT_CTABAR_HEIGHT
   },
-
   itemWithCTABarContainer: {
     display: "flex",
     flex: 1,
     height: ITEM_WITH_CTABAR_HEIGHT
   },
-
   itemSeparator: {
     height: 1,
     backgroundColor: customVariables.brandLightGray
   },
-
   itemLoadingHeaderWrapper: {
     flexDirection: "row",
     marginBottom: 4
   },
-
   itemLoadingHeaderCenter: {
     flex: 1,
     paddingRight: 55 // Includes right header space
   },
-
   itemLoadingContentWrapper: {
     flexDirection: "row",
     alignItems: "center",
     height: 42
   },
-
   itemLoadingContentCenter: {
     flex: 1,
     paddingRight: 32
+  },
+  padded: {
+    paddingHorizontal: customVariables.contentPadding
   }
 });
 
@@ -328,6 +324,7 @@ class MessageList extends React.Component<Props, State> {
         <NavigationEvents onWillFocus={() => this.scrollTo(0)} />
         <AnimatedFlatList
           ref={this.flatListRef}
+          style={styles.padded}
           scrollEnabled={true}
           data={messageStates}
           extraData={{ servicesById, paymentsByRptId }}
