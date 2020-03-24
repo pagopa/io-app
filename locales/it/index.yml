@@ -550,7 +550,6 @@ wallet:
     info: Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono
   transactionDetails: Dettagli della transazione
   detailsTransaction:
-    contextualHelpTitle: Dettagli della transazione
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
     contextualHelpTitle: Salvare una carta su IO

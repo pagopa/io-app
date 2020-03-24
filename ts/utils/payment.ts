@@ -120,6 +120,6 @@ export const cleanTransactionDescription = (description: string): string => {
   const descriptionParts = description.split("/TXT/");
 
   return descriptionParts.length > 1
-      ? descriptionParts[descriptionParts.length - 1].trim()
-      : "";
+    ? descriptionParts[descriptionParts.length - 1].trim()
+    : "";
 };

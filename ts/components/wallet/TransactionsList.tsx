@@ -4,11 +4,7 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import {
-  FlatList,
-  ListRenderItemInfo,
-  StyleSheet
-} from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import variables from "../../theme/variables";

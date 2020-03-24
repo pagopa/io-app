@@ -154,7 +154,7 @@ class PaymentSummaryComponent extends React.Component<Props> {
           </View>,
           <H3 style={styles.white}>
             {amountIsUpdated && updatedAmount
-              ? formatNumberAmount(updatedAmount)
+              ? formatNumberAmount(updatedAmount, true)
               : fromNullable(amount).fold("...", formatNumberAmount)}
           </H3>
         )}
