@@ -40,6 +40,7 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import { messagesAllIdsSelector } from "../store/reducers/entities/messages/messagesAllIds";
 import { IdentificationResult } from "../store/reducers/identification";
 import { navigationStateSelector } from "../store/reducers/navigation";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -192,6 +193,10 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   const userProfile = maybeUserProfile.value;
 
+  const messagesAllIds: ReturnType<
+    typeof messagesAllIdsSelector
+  > = yield select<GlobalState>(messagesAllIdsSelector);
+
   // If user logged in with different credentials, but this device still has
   // user data loaded, then delete data keeping current session (user already
   // logged in)
@@ -206,7 +211,11 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // Delete all onboarding data
     yield put(clearOnboarding());
     yield put(clearCache());
-  } else if (pot.isNone(lastLoggedInProfileState)) {
+  } else if (
+    // Clear cache if there are messages but the last logged in user does not exist
+    pot.isNone(lastLoggedInProfileState) &&
+    pot.isSome(messagesAllIds)
+  ) {
     yield put(clearCache());
   }
 
