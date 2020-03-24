@@ -21,7 +21,7 @@ import {
   startEmailValidation
 } from "../store/actions/profile";
 import { Dispatch } from "../store/actions/types";
-import { sendEmailValidationRequestSelector } from "../store/reducers/emailValidation";
+import { emailValidationSelector } from "../store/reducers/emailValidation";
 import { isOnboardingCompletedSelector } from "../store/reducers/navigationHistory";
 import {
   isProfileEmailValidatedSelector,
@@ -38,6 +38,8 @@ import Markdown from "./ui/Markdown";
 
 type OwnProp = {
   closeModalAndNavigateToEmailInsertScreen: () => void;
+  akcnowledgeValidation: () => void;
+  closeModal: () => void;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -49,7 +51,6 @@ type State = {
   isLoading: boolean;
   isCtaSentEmailValidationDisabled: boolean;
   isContentLoadCompleted: boolean;
-  emailHasBeenValidate: boolean;
   displayError: boolean;
 };
 
@@ -78,7 +79,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       isLoading: false,
       isContentLoadCompleted: false,
       isCtaSentEmailValidationDisabled: false,
-      emailHasBeenValidate: false,
       displayError: false
     };
   }
@@ -122,6 +122,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
     this.props.reloadProfile();
     if (!this.props.isOnboardingCompleted) {
+      this.props.akcnowledgeValidation();
       this.props.acknowledgeEmailInsert();
     } else {
       this.props.navigateBack();
@@ -161,15 +162,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         });
       }
     }
-
-    // if the email becomes validated and the user doesn't acknowledgeknow about validation
-    if (
-      !prevProps.isEmailValidated &&
-      this.props.isEmailValidated &&
-      this.state.emailHasBeenValidate === false
-    ) {
-      this.setState({ emailHasBeenValidate: true });
-    }
   }
 
   private contextualHelp = {
@@ -189,7 +181,10 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => this.props.abortOnboarding()
+          onPress: () => {
+            this.props.akcnowledgeValidation();
+            this.props.abortOnboarding();
+          }
         }
       ]
     );
@@ -201,7 +196,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   private onMainProps: TopScreenComponentProps = {
     customRightIcon: {
       iconName: "io-close",
-      onPress: this.props.navigateBack
+      onPress: this.props.isEmailValidated
+        ? this.props.closeModal
+        : this.props.navigateBack
     }
   };
 
@@ -219,14 +216,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     const { isOnboardingCompleted } = this.props;
     // if the email has been validated
     // show only a button to continuer
-    if (this.state.emailHasBeenValidate) {
+    if (this.props.isEmailValidated) {
       return (
         <FooterWithButtons
           type={"SingleButton"}
           leftButton={{
             block: true,
             primary: true,
-            onPress: this.handleOnClose,
+            onPress: this.props.closeModal,
             disabled: this.state.isLoading,
             title: I18n.t("global.buttons.continue")
           }}
@@ -235,41 +232,44 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
     // show two buttons where the left one is a CTA
     // to edit again the email
-    return (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThirdInverted"}
-        leftButton={{
-          block: true,
-          bordered: true,
-          disabled: this.state.isLoading,
-          onPress: () => {
-            if (!isOnboardingCompleted) {
-              this.props.closeModalAndNavigateToEmailInsertScreen();
-            }
-            this.props.navigateToEmailInsertScreen();
-          },
-          title: I18n.t("email.edit.title")
-        }}
-        rightButton={{
-          block: true,
-          primary: true,
-          onPress: this.handleOnClose,
-          disabled: this.state.isLoading,
-          title: isOnboardingCompleted
-            ? I18n.t("global.buttons.ok")
-            : I18n.t("global.buttons.continue")
-        }}
-      />
-    );
+    if (this.state.isContentLoadCompleted) {
+      return (
+        <FooterWithButtons
+          type={"TwoButtonsInlineThirdInverted"}
+          leftButton={{
+            block: true,
+            bordered: true,
+            disabled: this.state.isLoading,
+            onPress: () => {
+              if (!isOnboardingCompleted) {
+                this.props.closeModalAndNavigateToEmailInsertScreen();
+              }
+              this.props.navigateToEmailInsertScreen();
+            },
+            title: I18n.t("email.edit.title")
+          }}
+          rightButton={{
+            block: true,
+            primary: true,
+            onPress: this.handleOnClose,
+            disabled: this.state.isLoading,
+            title: isOnboardingCompleted
+              ? I18n.t("global.buttons.ok")
+              : I18n.t("global.buttons.continue")
+          }}
+        />
+      );
+    }
+    return undefined;
   };
 
   public render() {
     const email = this.props.optionEmail.getOrElse(EMPTY_EMAIL);
     const { isOnboardingCompleted } = this.props;
-    const image = this.state.emailHasBeenValidate
+    const image = this.props.isEmailValidated
       ? require("../../img/email-checked-icon_ok.png")
       : require("../../img/email-checked-icon.png");
-    const title = this.state.emailHasBeenValidate
+    const title = this.props.isEmailValidated
       ? I18n.t("email.validate.validated")
       : I18n.t("email.validate.title");
     return (
@@ -278,15 +278,13 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         contextualHelp={this.contextualHelp}
       >
         <Content>
-          <React.Fragment>
-            <Image style={styles.imageChecked} source={image} />
-            <View spacer={true} extralarge={true} />
-          </React.Fragment>
+          <Image style={styles.imageChecked} source={image} />
+          <View spacer={true} extralarge={true} />
           <H2 style={isOnboardingCompleted ? styles.emailTitle : undefined}>
             {title}
           </H2>
           <View spacer={true} />
-          {!this.state.emailHasBeenValidate ? (
+          {!this.props.isEmailValidated ? (
             <Markdown onLoadEnd={this.handleOnContentLoadEnd}>
               {isOnboardingCompleted
                 ? I18n.t("email.validate.content2", { email })
@@ -297,7 +295,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           )}
           <View spacer={true} />
           {this.state.isContentLoadCompleted &&
-            !this.state.emailHasBeenValidate && (
+            !this.props.isEmailValidated && (
               <Button
                 block={true}
                 light={true}
@@ -316,21 +314,22 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           )}
           <View spacer={true} large={true} />
         </Content>
-        {(this.state.emailHasBeenValidate ||
-          this.state.isContentLoadCompleted) &&
-          this.renderFooter()}
+        {this.renderFooter()}
       </TopScreenComponent>
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  emailValidationRequest: sendEmailValidationRequestSelector(state),
-  optionEmail: profileEmailSelector(state),
-  isEmailValidated: isProfileEmailValidatedSelector(state),
-  potProfile: profileSelector(state),
-  isOnboardingCompleted: isOnboardingCompletedSelector(state)
-});
+const mapStateToProps = (state: GlobalState) => {
+  const emailValidation = emailValidationSelector(state);
+  return {
+    emailValidationRequest: emailValidation.sendEmailValidationRequest,
+    optionEmail: profileEmailSelector(state),
+    isEmailValidated: isProfileEmailValidatedSelector(state),
+    potProfile: profileSelector(state),
+    isOnboardingCompleted: isOnboardingCompletedSelector(state)
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   sendEmailValidation: () => dispatch(startEmailValidation.request()),

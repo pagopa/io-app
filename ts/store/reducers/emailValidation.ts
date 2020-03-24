@@ -17,12 +17,6 @@ const INITIAL_STATE: EmailValidationState = {
   sendEmailValidationRequest: pot.none
 };
 
-// return the pot of email validation
-export const emailValidationSelector = (
-  state: GlobalState
-): EmailValidationState => state.emailValidation;
-// Selectors
-
 const reducer = (
   state: EmailValidationState = INITIAL_STATE,
   action: Action
@@ -48,5 +42,8 @@ const reducer = (
 export default reducer;
 
 // Selectors
-export const sendEmailValidationRequestSelector = (state: GlobalState) =>
-  state.emailValidation.sendEmailValidationRequest;
+
+// return the pot of email validation
+export const emailValidationSelector = (
+  state: GlobalState
+): EmailValidationState => state.emailValidation;
