@@ -30,7 +30,6 @@ export default (): Theme => {
         "NativeBase.Text": { flex: 1, textAlign: "center" },
         padding: 0,
         display: "flex",
-        justifyContent: "flex-start"
       }
     },
 
@@ -96,6 +95,8 @@ export default (): Theme => {
       ...makeFontStyleObject(Platform.select, variables.btnTextFontWeight),
       fontSize: variables.btnFontSize
     },
+
+    justifyContent: 'center',
 
     borderRadius: variables.borderRadiusBase,
     height: variables.btnHeight,

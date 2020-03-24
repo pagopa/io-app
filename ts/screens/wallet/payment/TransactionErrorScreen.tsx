@@ -260,14 +260,11 @@ class TransactionErrorScreen extends React.Component<Props> {
    */
   private renderButtons = (canRetry: boolean) => {
     const cancelButtonProps = {
-      block: true,
-      light: true,
       cancel: true,
       onPress: this.onPressCancel,
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {
-      block: true,
       primary: true,
       onPress: this.onPressRetry,
       title: I18n.t("global.buttons.retry")
@@ -281,7 +278,7 @@ class TransactionErrorScreen extends React.Component<Props> {
     };
     return canRetry ? (
       <FooterWithButtons
-        type="TwoButtonsInlineThird"
+        type={"TwoButtonsInlineThird"}
         leftButton={cancelButtonProps}
         rightButton={retryButtonProps}
       />
