@@ -415,7 +415,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   private onItemSwitchValueChanged = (
-    service: ServicePublic,
+    services: ReadonlyArray<ServicePublic>,
     value: boolean
   ) => {
     // check if the alert of disable service has not been shown already and if the service is active
@@ -425,7 +425,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         I18n.t("serviceDetail.disableMsg"),
         () => {
           this.props.disableOrEnableServices(
-            [service.service_id],
+            services.map(s => s.service_id),
             this.props.profile,
             false
           );
@@ -433,7 +433,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       );
     } else {
       this.props.disableOrEnableServices(
-        [service.service_id],
+        services.map(s => s.service_id),
         this.props.profile,
         value
       );

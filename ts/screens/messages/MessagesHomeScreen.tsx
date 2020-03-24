@@ -201,7 +201,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       navigateToMessageDetail,
       updateMessagesArchivedState
     } = this.props;
-
     return (
       <AnimatedTabs
         tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
