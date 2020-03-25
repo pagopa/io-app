@@ -26,7 +26,6 @@ import { authenticateConfig } from "./utils/biometric";
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
-import { RTron } from "./boot/configureStoreAndPersistor";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
