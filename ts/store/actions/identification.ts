@@ -9,7 +9,7 @@ import {
 
 /**
  * An action dispatched by the screen.
- * The identification saga will intercept it and enrich with the current pin.
+ * The identification saga will intercept it and enrich with the current unlock code.
  */
 export const identificationRequest = createAction(
   "IDENTIFICATION_REQUEST",

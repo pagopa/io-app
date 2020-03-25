@@ -1,5 +1,5 @@
 /**
- * A screen that allow the user to set the PIN.
+ * A screen that allow the user to set the unlock code.
  */
 
 import * as pot from "italia-ts-commons/lib/pot";
@@ -36,13 +36,13 @@ type PinUnselected = {
 
 type PinSelected = {
   state: "PinSelected";
-  // User selected PIN
+  // User selected unlock code
   pin: PinString;
 };
 
 type PinConfirmError = {
   state: "PinConfirmError";
-  // User confirmed a wrong PIN
+  // User confirmed a wrong unlock code
   pin: PinString;
 };
 
@@ -115,7 +115,7 @@ class PinScreen extends React.Component<Props, State> {
 
   // Method called when the confirmation CodeInput is filled
   public onPinConfirmFulfill = (code: PinString, isValid: boolean) => {
-    // If the inserted PIN do not match we clear the component to let the user retry
+    // If the inserted unlock code do not match we clear the component to let the user retry
     if (!isValid && this.pinConfirmComponent) {
       this.pinConfirmComponent.debounceClear();
       if (
@@ -148,7 +148,7 @@ class PinScreen extends React.Component<Props, State> {
     });
   }
 
-  // Render a different header when the user need to confirm the PIN
+  // Render a different header when the user need to confirm the unlock code
   public renderContentHeader(pinState: PinState) {
     if (pinState.state === "PinUnselected") {
       return (
@@ -163,7 +163,7 @@ class PinScreen extends React.Component<Props, State> {
     }
   }
 
-  // Render the PIN match/doesn't match feedback message
+  // Render the unlock code match/doesn't match feedback message
   public renderCodeInputConfirmValidation() {
     const state = this.state.pinState.state;
     if (state !== "PinConfirmed" && state !== "PinConfirmError") {
@@ -193,7 +193,7 @@ class PinScreen extends React.Component<Props, State> {
   public renderCodeInput(pinState: PinState) {
     if (pinState.state === "PinUnselected") {
       /**
-       * The component that allows the user to SELECT the PIN.
+       * The component that allows the user to SELECT the unlock code.
        */
       return (
         <Pinpad
@@ -205,7 +205,7 @@ class PinScreen extends React.Component<Props, State> {
       );
     } else {
       /**
-       * The component that allows the user to CONFIRM the PIN.
+       * The component that allows the user to CONFIRM the unlock code.
        */
       return (
         <React.Fragment>

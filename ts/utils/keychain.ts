@@ -35,23 +35,23 @@ export async function setGenericPasswordWithDefaultAccessibleOption(
 }
 
 /**
- * Saves the provided PIN in the Keychain
+ * Saves the provided unlock code in the Keychain
  */
 export async function setPin(pin: PinString): Promise<boolean> {
   return await setGenericPasswordWithDefaultAccessibleOption(PIN_KEY, pin);
 }
 
 /**
- * Removes the PIN from the Keychain
+ * Removes the unlock code from the Keychain
  */
 export async function deletePin(): Promise<boolean> {
   return await Keychain.resetGenericPassword();
 }
 
 /**
- * Returns the PIN from the Keychain.
+ * Returns the unlock code from the Keychain.
  *
- * The promise fails when there is no valid PIN stored.
+ * The promise fails when there is no valid unlock code stored.
  */
 export async function getPin(): Promise<Option<PinString>> {
   const credentials = await Keychain.getGenericPassword();

@@ -58,7 +58,7 @@ function configurePushNotifications() {
           // on the push notification.
           // Save the message id of the notification in the store so the App can
           // navigate to the message detail screen as soon as possible (if
-          // needed after the user login/insert the unlock PIN)
+          // needed after the user login/insert the unlock code)
           store.dispatch(
             updateNotificationsPendingMessage(
               messageId,

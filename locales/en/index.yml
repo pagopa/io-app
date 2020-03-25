@@ -115,7 +115,7 @@ profile:
       clear: Clear cache
       cleared: The cache has been cleared.
     resetPin:
-      confirmTitle: Are you sure you want to reset your PIN?
+      confirmTitle: Are you sure you want to reset your unlock code?
       confirmMsg: You will be asked again to log in with SPID.
     preferences:
       title: Preferences
@@ -414,8 +414,8 @@ onboarding:
     continue: Continue
   pin:
     headerTitle: Activation
-    contentTitle: Choose a PIN code
-    contentTitleConfirm: Insert your PIN again
+    contentTitle: Choose an unlock code
+    contentTitleConfirm: Insert your code again
     pinInfo: This code will be requested each time you open the app and when you need
       to view sensitive data or make dispositive transactions. It must be composed
       of 6 digits. Remember it carefully. You can change it at any time by entering
@@ -426,7 +426,7 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
-    contextualHelpTitle: What is your PIN
+    contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
     title: Do you really want to log out?
@@ -466,21 +466,21 @@ onboarding:
     emailInputLabel: Personal email address
 pin_login:
   pin:
-    pinInfo: Enter the PIN
+    pinInfo: Enter the unlock code
     reset:
-      button: Did you forget the PIN?
-      button_short: Reset PIN
-      tip: To reset your PIN you will have to login again with your SPID account.
+      button: Did you forget the unlock code?
+      button_short: Reset unlock code
+      tip: To reset your unlock code you will have to login again with your SPID account.
       tip_short: You will have to login again.
-    confirmValid: Correct PIN
-    confirmInvalid: Invalid PIN
+    confirmValid: Correct unlock code
+    confirmInvalid: Invalid unlock code
   unlock_screen:
     help:
-      title: Access with PIN
+      title: Access with unlock code
       content: !include onboarding/onboarding_pin.md
   forgetPin:
-    confirmTitle: Did you forget the PIN?
-    confirmMsg: To be able to choose a new PIN you will need to log in again with SPID.
+    confirmTitle: Did you forget the unlock code?
+    confirmMsg: To be able to choose a new unlock code you will need to log in again with SPID.
 forms:
   validators:
     required: Required value
@@ -581,7 +581,7 @@ wallet:
     info2: You are using your favourite payment method.
     changeMethod: Change the payment method
     change: Change method
-    identificationMessage: Confirm the transaction with your PIN code
+    identificationMessage: Confirm the transaction with your unlock code
     transactionSuccess: The payment has completed!
     transactionFailure: There was an error with the payment, please retry!
     transactionTimeout: I couldn't retrieve the result of the payment!
@@ -923,9 +923,9 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  messageFingerPrint: "Use the fingerprint or enter the PIN"
-  messageFaceID: "Use FaceID or enter the PIN"
-  messageEnterPin: "Enter the PIN"
+  messageFingerPrint: "Use the fingerprint or enter the unlock code"
+  messageFaceID: "Use FaceID or enter the unlock code"
+  messageEnterPin: "Enter the unlock code"
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint
@@ -934,7 +934,7 @@ identification:
       reason: Identification
       title: Identification required
       sensorDescription: Touch sensor
-      fallbackLabel: Use the PIN
+      fallbackLabel: Use the unlock code
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
   removeRequest:
