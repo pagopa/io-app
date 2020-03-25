@@ -17,13 +17,15 @@ export const identificationRequest = createAction(
     canResetPin: boolean = true,
     identificationGenericData?: IdentificationGenericData,
     identificationCancelData?: IdentificationCancelData,
-    identificationSuccessData?: IdentificationSuccessData
+    identificationSuccessData?: IdentificationSuccessData,
+    shufflePad: boolean = false
   ) =>
     resolve({
       canResetPin,
       identificationGenericData,
       identificationCancelData,
-      identificationSuccessData
+      identificationSuccessData,
+      shufflePad
     })
 );
 
@@ -37,14 +39,16 @@ export const identificationStart = createAction(
     canResetPin: boolean = true,
     identificationGenericData?: IdentificationGenericData,
     identificationCancelData?: IdentificationCancelData,
-    identificationSuccessData?: IdentificationSuccessData
+    identificationSuccessData?: IdentificationSuccessData,
+    shufflePad: boolean = false
   ) =>
     resolve({
       pin,
       canResetPin,
       identificationGenericData,
       identificationCancelData,
-      identificationSuccessData
+      identificationSuccessData,
+      shufflePad
     })
 );
 

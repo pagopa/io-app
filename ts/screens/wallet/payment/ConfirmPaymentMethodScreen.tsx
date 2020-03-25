@@ -375,7 +375,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         },
         {
           onSuccess: onIdentificationSuccess
-        }
+        },
+        true
       )
     );
   return {
