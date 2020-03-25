@@ -34,7 +34,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 9;
+const CURRENT_REDUX_STORE_VERSION = 11;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -178,13 +178,26 @@ const migrations: MigrationManifest = {
       }
     };
   },
-  // since entities.messages are not persisted anymore, empty the store
+  // Version 10
+  // since entities.messages are not persisted anymore, empty the related store section
   "10": (state: PersistedState) => {
     return {
       ...state,
       entities: {
         ...(state as PersistedGlobalState).entities,
         messages: {}
+      }
+    };
+  },
+
+  // Version 11
+  // add the default state for isCustomEmailChannelEnabled
+  "11": (state: PersistedState) => {
+    return {
+      ...state,
+      persistedPreferences: {
+        ...(state as PersistedGlobalState).persistedPreferences,
+        isCustomEmailChannelEnabled: pot.none
       }
     };
   }
@@ -212,6 +225,7 @@ const rootPersistConfig: PersistConfig = {
     "userMetadata"
   ],
   // Transform functions used to manipulate state on store/rehydrate
+  // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374
   transforms: [DateISO8601Transform, PotTransform]
 };
 
