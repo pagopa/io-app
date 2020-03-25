@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { NavigationScreenProps, StackActions } from "react-navigation";
 import { connect } from "react-redux";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent, {
@@ -141,16 +142,30 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     });
   };
 
-  private handleGoBack = () => {
+  private handleGoBack = (
+    previousProfile?: pot.Pot<InitializedProfile, Error>
+  ) => {
     // goback if the onboarding is completed
     if (this.props.isOnboardingCompleted) {
+      this.props.navigation.goBack();
+    }
+    // user comes from onboarding (onboarding is not completed) and changed his email (now it is not validated) so go back
+    else if (
+      previousProfile !== undefined &&
+      pot.getOrElse(
+        pot.map(previousProfile, p => p.email !== undefined),
+        false
+      ) &&
+      this.props.optionEmail.isSome() &&
+      !this.props.isEmailValidated
+    ) {
       this.props.navigation.goBack();
     }
     // if the onboarding is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
     // see https://www.pivotaltracker.com/story/show/171424350
     else if (this.props.optionEmail.isSome()) {
       this.setState({ isMounted: false }, () => {
-        this.navigateToEmailInsertScreen();
+        this.navigateToEmailReadScreen();
       });
     } else {
       // if the user is in onboarding phase, go back has to
@@ -173,7 +188,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  private navigateToEmailInsertScreen = () => {
+  private navigateToEmailReadScreen = () => {
     const resetAction = StackActions.reset({
       index: 0,
       actions: [navigateToEmailReadScreen()]
@@ -211,12 +226,13 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           // isMounted is used as a guard to prevent update while the screen is unmounting
           this.setState({ isMounted: false }, () => {
             this.props.acknowledgeEmailInsert();
-            this.navigateToEmailInsertScreen();
+            this.navigateToEmailReadScreen();
           });
           return;
         }
         // go back (to the EmailReadScreen)
-        this.handleGoBack();
+        this.handleGoBack(prevProps.profile);
+        return;
       }
     }
 
