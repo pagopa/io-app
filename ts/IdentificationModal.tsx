@@ -26,6 +26,7 @@ import { authenticateConfig } from "./utils/biometric";
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
+import { RTron } from "./boot/configureStoreAndPersistor";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -390,20 +391,20 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         onIdentificationSuccessHandler();
       })
       .catch((error: AuthenticationError) => {
+        // some error occured enable pin insertion
+        this.setState({
+          canInsertPin: true
+        });
         if (isDebugBiometricIdentificationEnabled) {
           Alert.alert("identification.biometric.title", `KO: ${error.code}`);
         }
+        RTron.log("onFingerprintRequest", error);
         if (
           error.code !== "USER_CANCELED" &&
           error.code !== "SYSTEM_CANCELED"
         ) {
           this.setState({
             identificationByBiometryState: "failure"
-          });
-        } else {
-          // if the user dismissed the biometric dialog, unlock the pin insertion
-          this.setState({
-            canInsertPin: true
           });
         }
         onIdentificationFailureHandler();
