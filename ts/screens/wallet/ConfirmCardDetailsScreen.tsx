@@ -236,7 +236,8 @@ const mapStateToProps = (state: GlobalState) => {
     checkout3dsUrl: pot.isLoading(creditCardCheckout3ds)
       ? pot.toOption(creditCardCheckout3ds)
       : none,
-    loadingOpacity: 0.98
+    loadingOpacity: 0.98,
+    loadingCaption: I18n.t("wallet.saveCard.loadingAlert")
   };
 };
 

@@ -43,6 +43,7 @@ global:
     search: Testo da cercare
   remoteStates:
     loading: In caricamento...
+    wait: Attendi qualche secondo..
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
   search:
@@ -562,6 +563,7 @@ wallet:
     save: Salva
     notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
     temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
+    loadingAlert: Sto verificando le informazioni della tua carta..
   saveCardInPayment:
     header: Paga con questa carta
     title: Vuoi pagare con questa carta?
