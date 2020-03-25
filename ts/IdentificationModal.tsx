@@ -397,7 +397,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         if (isDebugBiometricIdentificationEnabled) {
           Alert.alert("identification.biometric.title", `KO: ${error.code}`);
         }
-        RTron.log("onFingerprintRequest", error);
         if (
           error.code !== "USER_CANCELED" &&
           error.code !== "SYSTEM_CANCELED"
