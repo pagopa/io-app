@@ -390,7 +390,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         onIdentificationSuccessHandler();
       })
       .catch((error: AuthenticationError) => {
-        // some error occured enable pin insertion
+        // some error occured, enable pin insertion
         this.setState({
           canInsertPin: true
         });
