@@ -99,7 +99,7 @@ class EmailForwardingScreen extends React.Component<Props, State> {
   public render() {
     return (
       <TopScreenComponent
-        title={I18n.t("send_email_messages.title")}
+        headerTitle={I18n.t("send_email_messages.title")}
         goBack={this.props.navigation.goBack}
       >
         <ScreenContent title={I18n.t("send_email_messages.title")}>
