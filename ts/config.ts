@@ -34,7 +34,7 @@ const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
 export const environment: string = Config.ENVIRONMENT;
-export const apiUrlPrefix: string = "http://192.168.1.69:3000";
+export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;

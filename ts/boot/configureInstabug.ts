@@ -27,7 +27,6 @@ const instabugLocales: InstabugLocales = {
 export const initialiseInstabug = () => {
   // Initialise Instabug for iOS. The Android initialisation is inside MainApplication.java
   Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.none]);
-  Chats.setEnabled(true);
   // Set primary color for iOS. The Android's counterpart is inside MainApplication.java
   Instabug.setPrimaryColor(variables.contentPrimaryBackground);
 
@@ -49,17 +48,8 @@ export const setInstabugUserAttribute = (
 };
 
 export const setInstabugProfileAttributes = (
-  profile: InitializedProfile,
   maybeIdp: Option<IdentityProvider>
 ) => {
-  getProfileEmail(profile).map(email => {
-    Instabug.identifyUserWithEmail(
-      email,
-      `${profile.name} ${profile.family_name}`
-    );
-  });
-
-  setInstabugUserAttribute("fiscalcode", profile.fiscal_code);
   maybeIdp.fold(undefined, (idp: IdentityProvider) =>
     setInstabugUserAttribute("identityProvider", idp.entityID)
   );
