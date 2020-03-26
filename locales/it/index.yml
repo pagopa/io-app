@@ -115,7 +115,7 @@ profile:
       cleared: La cache è stata eliminata.
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
-      confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
+      confirmMsg: Ti verrà richiesto nuovamente di accedere.
     preferences:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
@@ -481,7 +481,7 @@ pin_login:
       button_short: Reimposta PIN
       tip: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità
         SPID.
-      tip_short: Dovrai accedere nuovamente con SPID.
+      tip_short: Dovrai effettuare di nuovo l'accesso.
     confirmValid: PIN corretto
     confirmInvalid: PIN non valido
   unlock_screen:
@@ -516,6 +516,11 @@ payment:
   IUV: IUV
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
+  alert:
+    msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
+    titlePagoPaUpdateApp: Aggiornamento richiesto
+    messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
+    btnUpdateApp: Aggiorna l'app IO
   wallet: Portafoglio
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
@@ -577,7 +582,7 @@ wallet:
     info: Questa carta non è stata emessa da nessun istituto che fa parte del circuito
       pagoPA.
     infoBold: Scegli il soggetto economico
-    info2: che dovrà gestire la tua transazione.
+    info2: (PSP) che dovrà gestire la tua transazione.
     link: Per saperne di più
     maxFee: Commissione massima
     onUpdateWalletPspFailure: Operazione fallita, riprova
@@ -968,3 +973,7 @@ reminders:
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
 genericError: Si è verificato un errore
+titleUpdateApp: Aggiorna IO!
+msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
+messageUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare l'app è necessario aggiornarla all'ultima versione."
+btnUpdateApp: Aggiorna l'app IO
