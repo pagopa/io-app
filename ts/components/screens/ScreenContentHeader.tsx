@@ -77,9 +77,11 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
     return (
       <View style={dark && styles.darkGrayBg}>
         <Animated.View
-          style={{
-            height: this.props.dynamicHeight ? this.heightAnimation : undefined
-          }}
+          style={
+            this.props.dynamicHeight !== undefined && {
+              height: this.heightAnimation
+            }
+          } // if the condition "!== undefined" is not specified, once dynamicHeight.value = 0, dynamicHeight is assumend as false
         >
           <View spacer={true} />
           <ScreenHeader
