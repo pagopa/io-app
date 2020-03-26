@@ -965,3 +965,7 @@ reminders:
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
 genericError: Si è verificato un errore
+titleUpdateApp: Aggiorna IO!
+msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
+messageUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare l'app è necessario aggiornarla all'ultima versione."
+btnUpdateApp: Aggiorna l'app IO
