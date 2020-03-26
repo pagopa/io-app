@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   imageChecked: {
     alignSelf: "center"
   },
-  emailTitle: {
+  title: {
     textAlign: "center"
   },
   textDanger: {
@@ -79,7 +79,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           />
           <View spacer={true} extralarge={true} />
         </React.Fragment>
-        <H2 style={styles.emailTitle}>
+        <H2 style={styles.title}>
           {I18n.t("wallet.alert.titlePagoPaUpdateApp")}
         </H2>
         <View spacer={true} />
