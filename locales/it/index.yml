@@ -116,7 +116,7 @@ profile:
       cleared: La cache è stata eliminata.
     resetPin:
       confirmTitle: Sei sicuro di voler reimpostare il PIN?
-      confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
+      confirmMsg: Ti verrà richiesto nuovamente di accedere.
     preferences:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
@@ -477,7 +477,7 @@ pin_login:
       button_short: Reimposta PIN
       tip: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità
         SPID.
-      tip_short: Dovrai accedere nuovamente con SPID.
+      tip_short: Dovrai effettuare di nuovo l'accesso.
     confirmValid: PIN corretto
     confirmInvalid: PIN non valido
   unlock_screen:
