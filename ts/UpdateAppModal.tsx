@@ -19,13 +19,9 @@ import BaseScreenComponent from "./components/screens/BaseScreenComponent";
 import FooterWithButtons from "./components/ui/FooterWithButtons";
 import I18n from "./i18n";
 import customVariables from "./theme/variables";
+import { storeUrl } from "./utils/appVersion";
 
 const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
-
-const storeUrl = Platform.select({
-  ios: "itms-apps://itunes.apple.com/it/app/testflight/id899247664?mt=8",
-  android: "market://details?id=it.pagopa.io.app"
-});
 
 const styles = StyleSheet.create({
   text: {
