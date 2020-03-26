@@ -224,7 +224,7 @@ class PreferencesScreen extends React.Component<Props, State> {
               title={I18n.t("profile.preferences.list.email")}
               subTitle={maybeEmail.getOrElse(notAvailable)}
               titleBadge={
-                this.props.isEmailValidated === false
+                !this.props.isEmailValidated
                   ? I18n.t("profile.preferences.list.need_validate")
                   : undefined
               }
