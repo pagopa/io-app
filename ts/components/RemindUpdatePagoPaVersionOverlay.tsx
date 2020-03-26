@@ -3,7 +3,6 @@ import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet } from "react-native";
-import { connect } from "react-redux";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
 
@@ -110,4 +109,4 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
   }
 }
 
-export default connect()(RemindUpdatePagoPaVersionOverlay);
+export default RemindUpdatePagoPaVersionOverlay;
