@@ -115,7 +115,7 @@ profile:
       cleared: The cache has been cleared.
     resetPin:
       confirmTitle: Are you sure you want to reset your PIN?
-      confirmMsg: You will be asked again to log in with SPID.
+      confirmMsg: You will be asked again to log in.
     preferences:
       title: Preferences
       description: Manage app internal preferences
