@@ -410,6 +410,8 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A83F0572152B12C000C6389 /* ItaliaApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ItaliaApp.entitlements; path = ItaliaApp/ItaliaApp.entitlements; sourceTree = "<group>"; };
 		7E03A5F522C6155200629442 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
+		7E398E10242CB42000803C02 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		7E398E12242CB42100803C02 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		81D7E65EFEF9BBBCDB1CA4AC /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		94E88E2FB156B189552F42E9 /* Pods-ItaliaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.release.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -827,9 +829,6 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						/* pagopa */
-						/* DevelopmentTeam = M2X5YQ4BJ7; */
-						/* team digitale  */
 						DevelopmentTeam = M2X5YQ4BJ7;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -1594,6 +1593,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				13B07FB21A68108700A75B9A /* Base */,
+				7E398E10242CB42000803C02 /* it */,
+				7E398E12242CB42100803C02 /* en */,
 			);
 			name = LaunchScreen.xib;
 			path = ItaliaApp;
@@ -1675,9 +1676,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 44;
 				DEAD_CODE_STRIPPING = NO;
-				/* pagopa */
-				/* DEVELOPMENT_TEAM = M2X5YQ4BJ7; */
-				/* team digitale */
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1698,15 +1696,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				/* pagopa */
-				/* PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io; */
-				/* team digitale */
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
-				/* pagopa */
-				/* PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io"; */
-				/* team digitale */
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1722,9 +1714,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CURRENT_PROJECT_VERSION = 44;
-				/* pagopa */
-				/* DEVELOPMENT_TEAM = M2X5YQ4BJ7; */
-				/* team digitale */
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1745,13 +1734,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				/* pagopa */
-				/* PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io; /*
-				/* team digitale */
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
-				/* PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io"; */
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
