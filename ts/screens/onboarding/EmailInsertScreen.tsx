@@ -150,7 +150,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     // see https://www.pivotaltracker.com/story/show/171424350
     else if (this.props.optionEmail.isSome()) {
       this.setState({ isMounted: false }, () => {
-        this.navigateToEmailInsertScreen();
+        this.navigateToEmailReadScreen();
       });
     } else {
       // if the user is in onboarding phase, go back has to
@@ -173,7 +173,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  private navigateToEmailInsertScreen = () => {
+  private navigateToEmailReadScreen = () => {
     const resetAction = StackActions.reset({
       index: 0,
       actions: [navigateToEmailReadScreen()]
@@ -211,12 +211,13 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           // isMounted is used as a guard to prevent update while the screen is unmounting
           this.setState({ isMounted: false }, () => {
             this.props.acknowledgeEmailInsert();
-            this.navigateToEmailInsertScreen();
+            this.navigateToEmailReadScreen();
           });
           return;
         }
         // go back (to the EmailReadScreen)
         this.handleGoBack();
+        return;
       }
     }
 

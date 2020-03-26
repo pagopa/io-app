@@ -2,9 +2,10 @@ import I18n from "i18n-js";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { Image, Linking, Platform, StyleSheet } from "react-native";
+import { Image, Linking, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import customVariables from "../theme/variables";
+import { storeUrl } from "../utils/appVersion";
 
 type State = { hasError: boolean };
 
@@ -29,11 +30,6 @@ const styles = StyleSheet.create({
 });
 
 const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
-
-const storeUrl = Platform.select({
-  ios: "itms-apps://itunes.apple.com/it/app/testflight/id899247664?mt=8",
-  android: "market://details?id=it.teamdigitale.app.italiaapp"
-});
 
 class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
   never,

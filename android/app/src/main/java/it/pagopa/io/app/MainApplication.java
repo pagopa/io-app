@@ -1,4 +1,4 @@
-package it.teamdigitale.app.italiaapp;
+package it.pagopa.io.app;
 
 import androidx.multidex.MultiDexApplication;
 

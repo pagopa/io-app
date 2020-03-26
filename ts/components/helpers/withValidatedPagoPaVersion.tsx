@@ -2,7 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import React from "react";
 import { connect } from "react-redux";
 import { GlobalState } from "../../store/reducers/types";
-import { isUpdatedNeededPagoPa } from "../../utils/appVersion";
+import { isUpdateNeeded } from "../../utils/appVersion";
 import RemindUpdatePagoPaVersionOverlay from "../RemindUpdatePagoPaVersionOverlay";
 import BaseScreenComponent from "../screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../ui/LightModal";
@@ -39,7 +39,7 @@ export type Props = ReturnType<typeof mapStateToProps>;
 
 const mapStateToProps = (state: GlobalState) => {
   const isPagoPaVersionSupported = fromNullable(state.backendInfo.serverInfo)
-    .map(si => !isUpdatedNeededPagoPa(si))
+    .map(si => !isUpdateNeeded(si, "min_app_version_pagopa"))
     .getOrElse(true);
   return {
     isPagoPaVersionSupported

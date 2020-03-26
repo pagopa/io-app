@@ -32,6 +32,7 @@ import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPrefe
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { paymentInitializeState } from "../../store/actions/wallet/payment";
+import { serverInfoDataSelector } from "../../store/reducers/backendInfo";
 import {
   CalendarEvent,
   calendarEventByMessageIdSelector
@@ -41,7 +42,7 @@ import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { openAppSettings } from "../../utils/appSettings";
-import { isUpdatedNeededPagoPa } from "../../utils/appVersion";
+import { isUpdateNeeded } from "../../utils/appVersion";
 import { checkAndRequestPermission } from "../../utils/calendar";
 import {
   format,
@@ -823,10 +824,10 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   calendarEvent: calendarEventByMessageIdSelector(ownProps.message.id)(state),
   preferredCalendar: state.persistedPreferences.preferredCalendar,
   isEmailValidated: isProfileEmailValidatedSelector(state),
-  isUpdatedNeededPagoPa:
-    state.backendInfo.serverInfo !== undefined
-      ? isUpdatedNeededPagoPa(state.backendInfo.serverInfo)
-      : false
+  isUpdatedNeededPagoPa: isUpdateNeeded(
+    serverInfoDataSelector(state),
+    "min_app_version_pagopa"
+  )
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

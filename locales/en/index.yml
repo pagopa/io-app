@@ -115,7 +115,7 @@ profile:
       cleared: The cache has been cleared.
     resetPin:
       confirmTitle: Are you sure you want to reset your PIN?
-      confirmMsg: You will be asked again to log in with SPID.
+      confirmMsg: You will be asked again to log in.
     preferences:
       title: Preferences
       description: Manage app internal preferences
@@ -565,7 +565,7 @@ wallet:
     title: Choose the manager
     info: This card does not belong to the pagoPA payment network.
     infoBold: Choose the economic operator
-    info2: which will have to manage yout payment.
+    info2: (PSP) which will have to manage yout payment.
     link: Find out more
     maxFee: Maximum fee
     onUpdateWalletPspFailure: Operation failed, please retry
@@ -959,3 +959,7 @@ reminders:
 openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred
+titleUpdateApp: Update IO!
+msgErrorUpdateApp: "An error occurred while opening the app store"
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
+btnUpdateApp: Update the IO app
