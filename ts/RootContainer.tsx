@@ -33,7 +33,7 @@ import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 // Check min version app supported
 import { fromNullable } from "fp-ts/lib/Option";
 import { serverInfoDataSelector } from "./store/reducers/backendInfo";
-import { isUpdatedNeeded } from "./utils/appVersion";
+import { isUpdateNeeded } from "./utils/appVersion";
 
 // tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -122,7 +122,7 @@ class RootContainer extends React.PureComponent<Props> {
 
     // if we have no information about the backend, don't force the update
     const isAppOutOfDate = fromNullable(this.props.backendInfo)
-      .map(bi => isUpdatedNeeded(bi))
+      .map(bi => isUpdateNeeded(bi, "min_app_version"))
       .getOrElse(false);
     return (
       <Root>

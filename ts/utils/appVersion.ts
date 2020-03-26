@@ -4,6 +4,11 @@ import DeviceInfo from "react-native-device-info";
 import semver from "semver";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 
+export const storeUrl = Platform.select({
+  ios: "itms-apps://itunes.apple.com/it/app/testflight/id899247664?mt=8",
+  android: "market://details?id=it.teamdigitale.app.italiaapp"
+});
+
 /**
  * return true if appVersion >= minAppVersion
  * @param minAppVersion the min version supported
@@ -35,12 +40,15 @@ export const getAppVersion = () => {
  * return true if the app must be updated
  * @param serverInfo the backend info
  */
-export const isUpdatedNeeded = (serverInfo: ServerInfo) =>
+export const isUpdateNeeded = (
+  serverInfo: ServerInfo | undefined,
+  section: "min_app_version_pagopa" | "min_app_version"
+) =>
   fromNullable(serverInfo)
     .map(si => {
       const minAppVersion = Platform.select({
-        ios: si.min_app_version.ios,
-        android: si.min_app_version.android
+        ios: si[section].ios,
+        android: si[section].android
       });
 
       return !isVersionAppSupported(minAppVersion, getAppVersion());
