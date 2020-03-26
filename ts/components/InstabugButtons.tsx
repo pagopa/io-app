@@ -1,4 +1,9 @@
-import { BugReporting, Chats, Replies } from "instabug-reactnative";
+import {
+  BugReporting,
+  Chats,
+  dismissType,
+  Replies
+} from "instabug-reactnative";
 
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as React from "react";
@@ -86,13 +91,13 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
     // Register to the instabug dismiss event. (https://docs.instabug.com/docs/react-native-bug-reporting-event-handlers#section-after-dismissing-instabug)
     // This event is fired when chat or bug screen is dismissed
     BugReporting.onSDKDismissedHandler(
-      (dismiss: string, _: string): void => {
+      (dismiss: dismissType, _: BugReporting.reportType): void => {
         // Due an Instabug library bug, we can't use the report parameter because it always has "bug" as value.
         // We need to differentiate the type of report then use instabugReportType
         if (this.state.instabugReportType.isSome()) {
           this.props.dispatchIBReportClosed(
             this.state.instabugReportType.value,
-            dismiss
+            dismiss.toString()
           );
           // when user dismisses instabug report (chat or bug) we update the unread messages counter.
           // This is because user could have read or reply to some messages

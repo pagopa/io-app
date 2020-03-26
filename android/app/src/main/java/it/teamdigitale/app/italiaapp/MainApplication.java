@@ -8,6 +8,7 @@ import com.kevinejohn.RNMixpanel.RNMixpanel;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.facebook.react.ReactApplication;
+import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.lewin.qrcode.QRScanReaderPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -55,15 +56,14 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new RNInstabugReactnativePackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
           new ImagePickerPackage(), new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
           new RNGestureHandlerPackage(), new CalendarEventsPackage(), new RNCWebViewPackage(),
           new FingerprintAuthPackage(), new BackgroundTimerPackage(), new SvgPackage(), new RNTextInputMaskPackage(),
           new SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new RNCameraPackage(),
           new ReactNativePushNotificationPackage(), new KeychainPackage(), new RNI18nPackage(), new Sha256Package(),
-          new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(),
-          new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
-              .setInvocationEvent("none").setPrimaryColor("#0073E6").build());
+          new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage());
     }
 
   };
@@ -75,9 +75,10 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
 
   @Override
   public void onCreate() {
-
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+    new RNInstabugReactnativePackage.Builder(BuildConfig.INSTABUG_TOKEN, MainApplication.this)
+        .setInvocationEvent("none").setPrimaryColor("#0073E6").build();
   }
 
 }

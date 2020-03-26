@@ -6,8 +6,8 @@ buildscript {
 
         buildToolsVersion = "28.0.3"
         minSdkVersion = 16
-        compileSdkVersion = 28
-        targetSdkVersion = 28
+        compileSdkVersion = 29
+        targetSdkVersion = 29
         supportLibVersion = "28.0.0"
     }
     repositories {
@@ -38,7 +38,16 @@ allprojects {
             url "https://sdks.instabug.com/nexus/repository/instabug-cp"
         }
         google()
-        jcenter() 
+        jcenter()  
+      	maven {
+      	    url "https://sdks.instabug.com/nexus/repository/instabug-cp"
+       	}  
+      	maven {
+      	    url "https://sdks.instabug.com/nexus/repository/instabug-cp"
+       	}  
+      	maven {
+      	    url "https://sdks.instabug.com/nexus/repository/instabug-cp"
+       	}  
       }
     configurations.all {
         resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"

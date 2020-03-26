@@ -11,7 +11,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - instabug-reactnative (8.7.0):
+  - instabug-reactnative (9.1.0):
     - React
   - Mixpanel (3.6.0)
   - QrCode (1.0.2):
@@ -281,7 +281,7 @@ SPEC CHECKSUMS:
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
-  instabug-reactnative: 6a4b20152fee125f9b884371ef10ccbf721dff1e
+  instabug-reactnative: 2b4f69a91968cf90b68116c44d3899010149291c
   Mixpanel: 446b6e7713aa34a9a3516ff7648d56551384fc94
   QrCode: d288f3c041248649031e1d7ef6b14319242cf76a
   React: 53c53c4d99097af47cf60594b8706b4e3321e722

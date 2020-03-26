@@ -203,6 +203,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false)
 
 dependencies {
+    implementation project(':instabug-reactnative')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"
     if (enableHermes) {
