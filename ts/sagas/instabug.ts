@@ -35,7 +35,6 @@ function* updateInstabugBadgeSaga(): IterableIterator<Effect> {
   const repliesCount: SagaCallReturnType<
     typeof loadInstabugUnreadMessages
   > = yield call(loadInstabugUnreadMessages);
-  RTron.log("updateInstabugBadgeSaga", repliesCount);
   yield put(instabugUnreadMessagesLoaded(repliesCount));
 }
 
