@@ -31,6 +31,7 @@ import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
 // Check min version app supported
+import { fromNullable } from "fp-ts/lib/Option";
 import { serverInfoDataSelector } from "./store/reducers/backendInfo";
 import { isUpdatedNeeded } from "./utils/appVersion";
 
@@ -120,10 +121,9 @@ class RootContainer extends React.PureComponent<Props> {
     //        the redux state (i.e. background)
 
     // if we have no information about the backend, don't force the update
-    const isAppOutOfDate = this.props.backendInfo
-      ? isUpdatedNeeded(this.props.backendInfo)
-      : false;
-
+    const isAppOutOfDate = fromNullable(this.props.backendInfo)
+      .map(bi => isUpdatedNeeded(bi))
+      .getOrElse(false);
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
