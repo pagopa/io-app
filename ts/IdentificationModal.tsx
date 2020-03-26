@@ -390,6 +390,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         onIdentificationSuccessHandler();
       })
       .catch((error: AuthenticationError) => {
+        // some error occured, enable pin insertion
+        this.setState({
+          canInsertPin: true
+        });
         if (isDebugBiometricIdentificationEnabled) {
           Alert.alert("identification.biometric.title", `KO: ${error.code}`);
         }
@@ -399,11 +403,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         ) {
           this.setState({
             identificationByBiometryState: "failure"
-          });
-        } else {
-          // if the user dismissed the biometric dialog, unlock the pin insertion
-          this.setState({
-            canInsertPin: true
           });
         }
         onIdentificationFailureHandler();

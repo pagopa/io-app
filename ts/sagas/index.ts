@@ -46,7 +46,6 @@ export default function* root(): Iterator<Effect> {
     call(watchContentMunicipalityLoadSaga),
     call(watchContentServicesByScopeLoad),
     call(watchPaymentInitializeSaga),
-    call(watchBackToEntrypointPaymentSaga),
-    call(unreadInstabugMessagesSaga)
+    call(watchBackToEntrypointPaymentSaga)
   ]);
 }
