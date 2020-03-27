@@ -14,6 +14,7 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, something did not work as expected, please try again!
+  genericAlert: Warning!
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -574,8 +575,7 @@ wallet:
     partialAmount: Amount to pay
     fee: Fee
     why: Why?
-    totalAmount: Total amount
-    info: 'Warning: after this step it will not be possible to come back'
+    info: 'After this step it will not be possible to come back.'
     info2: You are using your favourite payment method.
     changeMethod: Change the payment method
     change: Change method
@@ -634,7 +634,6 @@ wallet:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
   detailsTransaction:
-    contextualHelpTitle: Transaction details
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   total: Total
   amount: Amount €

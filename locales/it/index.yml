@@ -14,6 +14,7 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
+  genericAlert: Attenzione!
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
@@ -550,7 +551,6 @@ wallet:
     info: Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono
   transactionDetails: Dettagli della transazione
   detailsTransaction:
-    contextualHelpTitle: Dettagli della transazione
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
     contextualHelpTitle: Salvare una carta su IO
@@ -586,10 +586,9 @@ wallet:
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
-    fee: Costi di commissione
+    fee: Costi di transizione
     why: Perché?
-    totalAmount: Totale
-    info: 'Attenzione: dopo questo passaggio non sarà più possibile annullare'
+    info: 'Dopo questo passaggio non sarà più possibile annullare.'
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
