@@ -95,6 +95,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     });
     // tslint:disable-next-line: no-object-mutation
     this.progressAnimation = Animated.sequence([firstAnim, secondAnim]);
+    this.addAnimationListener();
   }
 
   private startAnimation = () => {
@@ -161,12 +162,6 @@ export default class CieReadingCardAnimation extends React.PureComponent<
   public render() {
     return (
       <View style={styles.imgContainer}>
-        {
-          <NavigationEvents
-            onDidFocus={this.addAnimationListener}
-            onDidBlur={this.stopAnimation}
-          />
-        }
         {this.props.readingState === ReadingState.waiting_card && (
           <View style={styles.rings}>
             <AnimatedRing
