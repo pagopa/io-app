@@ -10,7 +10,7 @@ import {
 import { loginSuccess } from "../../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { SessionToken } from "../../../types/SessionToken";
-import { watchCieAuthenticationSaga } from "../../cie";
+import { stopCieManager, watchCieAuthenticationSaga } from "../../cie";
 import { authenticationSaga } from "../authenticationSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
@@ -36,6 +36,8 @@ describe("authenticationSaga", () => {
       .take(getType(loginSuccess))
       .next(loginSuccess(aSessionToken))
       .cancel(watchCieAuthentication)
+      .next()
+      .call(stopCieManager)
       .next()
       .call(removeScheduledNotificationAccessSpid)
       .next()
