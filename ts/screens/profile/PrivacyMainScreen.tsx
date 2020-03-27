@@ -12,10 +12,7 @@ import { Alert } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
-import {
-  UserDataProcessingStatusEnum,
-  UserDataProcessingStatus
-} from "../../../definitions/backend/UserDataProcessingStatus";
+import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";

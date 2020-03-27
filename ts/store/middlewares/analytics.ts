@@ -92,7 +92,6 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 // tslint:disable cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
