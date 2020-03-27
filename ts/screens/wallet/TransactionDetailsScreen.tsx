@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "wallet.detailsTransaction.contextualHelpTitle",
+  title: "wallet.transactionDetails",
   body: "wallet.detailsTransaction.contextualHelpContent"
 };
 

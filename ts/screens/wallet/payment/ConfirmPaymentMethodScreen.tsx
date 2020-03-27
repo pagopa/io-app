@@ -1,27 +1,21 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import {
-  AmountInEuroCents,
-  AmountInEuroCentsFromNumber,
-  RptId
-} from "italia-pagopa-commons/lib/pagopa";
+import { fromNullable, none, some } from "fp-ts/lib/Option";
+import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { ActionSheet, Content, H1, Text, View } from "native-base";
+import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
+import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
+import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
-import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import I18n from "../../../i18n";
@@ -46,6 +40,7 @@ import {
 } from "../../../store/actions/wallet/transactions";
 import { GlobalState } from "../../../store/reducers/types";
 import variables from "../../../theme/variables";
+import customVariables from "../../../theme/variables";
 import {
   isCompletedTransaction,
   isSuccessTransaction,
@@ -53,9 +48,7 @@ import {
   Transaction,
   Wallet
 } from "../../../types/pagopa";
-import { AmountToImporto } from "../../../utils/amounts";
 import { showToast } from "../../../utils/showToast";
-import { formatNumberAmount } from "../../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
@@ -80,7 +73,8 @@ const styles = StyleSheet.create({
   },
 
   childTwice: {
-    flex: 2
+    flex: 2,
+    alignContent: "center"
   },
 
   parent: {
@@ -106,155 +100,79 @@ const styles = StyleSheet.create({
   }
 });
 
-/**
- * Returns the fee for a wallet that has a preferred psp
- */
-const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
-  fromNullable(w.psp).map(
-    psp => ("0".repeat(10) + `${psp.fixedCost.amount}`) as AmountInEuroCents
-  );
-
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
-  private showHelp = () => {
-    this.props.showModal(
-      <ContextualHelp
-        onClose={this.props.hideModal}
-        title={I18n.t("wallet.whyAFee.title")}
-        body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
-      />
-    );
-  };
-
   public render(): React.ReactNode {
-    const verifica = this.props.navigation.getParam("verifica");
-    const wallet = this.props.navigation.getParam("wallet");
-
-    const currentAmount = AmountToImporto.encode(
-      verifica.importoSingoloVersamento
+    const verifica: PaymentRequestsGetResponse = this.props.navigation.getParam(
+      "verifica"
     );
 
-    // FIXME: it seems like we're converting a number to a string and vice versa
-    // https://www.pivotaltracker.com/story/show/170819000
-    const maybeWalletFee = feeForWallet(wallet).map(
-      AmountInEuroCentsFromNumber.encode
-    );
-
-    const currentAmountDecoded = AmountInEuroCentsFromNumber.encode(
-      currentAmount
-    );
-    const totalAmount = maybeWalletFee
-      // tslint:disable-next-line:restrict-plus-operands
-      .map(walletFee => currentAmountDecoded + walletFee)
-      .getOrElse(currentAmountDecoded);
+    const wallet: Wallet = this.props.navigation.getParam("wallet");
 
     const paymentReason = verifica.causaleVersamento;
 
-    const recipient = verifica.enteBeneficiario;
+    const fee = fromNullable(wallet.psp).fold(
+      undefined,
+      psp => psp.fixedCost.amount
+    );
 
     return (
       <BaseScreenComponent
         goBack={this.props.onCancel}
         headerTitle={I18n.t("wallet.ConfirmPayment.header")}
       >
-        <Content noPadded={true}>
+        <Content noPadded={true} bounces={false}>
           <PaymentBannerComponent
-            currentAmount={currentAmount}
+            currentAmount={verifica.importoSingoloVersamento}
             paymentReason={paymentReason}
-            recipient={recipient}
-            onCancel={this.props.onCancel}
+            fee={fee as ImportoEuroCents}
           />
-          <View style={styles.paddedLR}>
-            <View spacer={true} extralarge={true} />
-            <H1>{I18n.t("wallet.ConfirmPayment.askConfirm")}</H1>
+          <View style={{ paddingHorizontal: customVariables.contentPadding }}>
+            <CardComponent
+              type={"Full"}
+              wallet={wallet}
+              hideMenu={true}
+              hideFavoriteIcon={true}
+              showPsp={true}
+            />
             <View spacer={true} />
-            <Grid>
-              <Row>
-                <Col>
-                  <Text>{I18n.t("wallet.ConfirmPayment.partialAmount")}</Text>
-                </Col>
-                <Col>
-                  <Text bold={true} style={styles.textRight}>
-                    {formatNumberAmount(
-                      AmountInEuroCentsFromNumber.encode(currentAmount)
-                    )}
-                  </Text>
-                </Col>
-              </Row>
-              {maybeWalletFee.isSome() && (
-                <Row>
-                  <Col size={4}>
-                    <Text>{`${I18n.t("wallet.ConfirmPayment.fee")} `}</Text>
-                    <TouchableDefaultOpacity onPress={this.showHelp}>
-                      <Text link={true}>
-                        {I18n.t("wallet.ConfirmPayment.why")}
-                      </Text>
-                    </TouchableDefaultOpacity>
-                  </Col>
-
-                  <Col size={1}>
-                    <Text bold={true} style={styles.textRight}>
-                      {formatNumberAmount(maybeWalletFee.value)}
-                    </Text>
-                  </Col>
-                </Row>
-              )}
-              <View spacer={true} large={true} />
-              <Row style={styles.divider}>
-                <Col>
-                  <View spacer={true} large={true} />
-                  <H1>{I18n.t("wallet.ConfirmPayment.totalAmount")}</H1>
-                </Col>
-                <Col>
-                  <View spacer={true} large={true} />
-                  <H1 style={styles.textRight}>
-                    {formatNumberAmount(totalAmount)}
-                  </H1>
-                </Col>
-              </Row>
-              <View spacer={true} />
-              <Row>
-                <Col>
-                  <CardComponent
-                    type="Full"
-                    wallet={wallet}
-                    hideMenu={true}
-                    hideFavoriteIcon={true}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col size={1} />
-                <Col size={9}>
-                  <View spacer={true} large={true} />
-                  <Text style={styles.textCenter}>
-                    {wallet.psp !== undefined
-                      ? `${I18n.t("payment.currentPsp")} ${
-                          wallet.psp.businessName
-                        } `
-                      : I18n.t("payment.noPsp")}
-                  </Text>
-                  <TouchableDefaultOpacity onPress={this.props.pickPsp}>
-                    <Text link={true}>{I18n.t("payment.changePsp")}</Text>
-                  </TouchableDefaultOpacity>
-                  <View spacer={true} />
-                </Col>
-                <Col size={1} />
-              </Row>
-              <Row style={styles.divider}>
-                <Col size={1} />
-                <Col size={9}>
-                  <View spacer={true} />
-
-                  <Text style={styles.textCenter}>
-                    {I18n.t("wallet.ConfirmPayment.info")}
-                  </Text>
-                  <View spacer={true} extralarge={true} />
-                </Col>
-                <Col size={1} />
-              </Row>
-            </Grid>
+            {wallet.psp === undefined ? (
+              <Text>{I18n.t("payment.noPsp")}</Text>
+            ) : (
+              <Text>
+                {I18n.t("payment.currentPsp")}
+                <Text bold={true}>{` ${wallet.psp.businessName}`}</Text>
+              </Text>
+            )}
+            <TouchableDefaultOpacity onPress={this.props.pickPsp}>
+              <Text link={true} bold={true}>
+                {I18n.t("payment.changePsp")}
+              </Text>
+            </TouchableDefaultOpacity>
           </View>
+          <View spacer={true} large={true} />
         </Content>
+
+        <View
+          style={{
+            backgroundColor: customVariables.alertColor,
+            paddingHorizontal: customVariables.contentPadding,
+            paddingVertical: 11,
+            flexDirection: "row"
+          }}
+        >
+          <IconFont
+            style={{ alignSelf: "center", paddingRight: 18 }}
+            name={"io-notice"}
+            size={24}
+            color={customVariables.colorWhite}
+          />
+          <Text white={true} style={{ flex: 1 }}>
+            <Text bold={true} white={true}>
+              {I18n.t("global.genericAlert")}
+            </Text>
+            {` ${I18n.t("wallet.ConfirmPayment.info")}`}
+          </Text>
+        </View>
 
         <View footer={true}>
           <ButtonDefaultOpacity
@@ -276,9 +194,8 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             </ButtonDefaultOpacity>
             <View hspacer={true} />
             <ButtonDefaultOpacity
-              style={[styles.child, styles.childTwice]}
+              style={styles.childTwice}
               block={true}
-              light={true}
               bordered={true}
               onPress={() => this.props.pickPaymentMethod()}
             >

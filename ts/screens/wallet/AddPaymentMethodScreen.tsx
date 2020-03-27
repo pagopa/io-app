@@ -19,7 +19,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent, {
@@ -34,7 +33,6 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
-import { AmountToImporto } from "../../utils/amounts";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -79,11 +77,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
           <Content noPadded={true}>
             <PaymentBannerComponent
               paymentReason={inPayment.value.verifica.causaleVersamento}
-              currentAmount={AmountToImporto.encode(
-                inPayment.value.verifica.importoSingoloVersamento
-              )}
-              recipient={inPayment.value.verifica.enteBeneficiario}
-              onCancel={this.props.navigateToTransactionSummary}
+              currentAmount={inPayment.value.verifica.importoSingoloVersamento}
             />
             <View style={styles.paddedLR}>
               <View spacer={true} large={true} />
