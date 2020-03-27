@@ -54,6 +54,7 @@ import {
 } from "../actions/profile";
 import { loadServiceDetail, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
+import { upsertUserDataProcessing } from "../actions/userDataProcessing";
 import {
   paymentAttiva,
   paymentCheck,
@@ -91,6 +92,7 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 // tslint:disable cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -208,6 +210,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, action.payload);
 
     // logout / load message / failure
+    case getType(upsertUserDataProcessing.failure):
     case getType(loadMessage.failure):
     case getType(logoutFailure):
     case getType(loadServiceDetail.failure):
@@ -235,6 +238,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload.message
       });
+
+    // download / delete profile
+    case getType(upsertUserDataProcessing.success):
+      return mp.track(action.type, action.payload);
 
     //
     // Actions (without properties)

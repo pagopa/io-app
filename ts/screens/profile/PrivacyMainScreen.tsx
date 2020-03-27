@@ -12,7 +12,10 @@ import { Alert } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
+import {
+  UserDataProcessingStatusEnum,
+  UserDataProcessingStatus
+} from "../../../definitions/backend/UserDataProcessingStatus";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
@@ -34,12 +37,6 @@ import { showToast } from "../../utils/showToast";
 type Props = NavigationScreenProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-
-type State = Readonly<{
-  hasNewRequest: {
-    [key in keyof typeof UserDataProcessingChoiceEnum]: boolean
-  };
-}>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitle",
@@ -66,28 +63,10 @@ const confirmAlertSubtitle = {
   DELETE: I18n.t("profile.main.privacy.removeAccount.alert.confirmSubtitle")
 };
 
-class PrivacyMainScreen extends React.PureComponent<Props, State> {
+class PrivacyMainScreen extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      hasNewRequest: {
-        DELETE: false,
-        DOWNLOAD: false
-      }
-    };
   }
-
-  /**
-   * When the hasNewRequest is true the badge can be displayed. It helps to check
-   * display the badge only when the state of the request has been refreshed
-   */
-  private handleRequest = (choice: UserDataProcessingChoiceEnum) => {
-    const hasNewRequest = {
-      ...this.state.hasNewRequest,
-      [choice]: true
-    };
-    this.setState({ hasNewRequest });
-  };
 
   // Show an alert reporting the request has been submitted
   private handleUserDataRequestAlert = (
@@ -109,7 +88,6 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
           text: I18n.t("global.buttons.continue"),
           style: "default",
           onPress: () => {
-            this.handleRequest(choice);
             this.props.upsertUserDataProcessing(choice);
           }
         }
@@ -122,7 +100,6 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
   // show an alert to confirm the request sumbission
   private handleConfirmAlert = (choice: UserDataProcessingChoiceEnum) => {
     Alert.alert(confirmAlertTitle[choice], confirmAlertSubtitle[choice]);
-    this.handleRequest(choice);
   };
 
   public componentDidUpdate(prevProps: Props) {
@@ -156,10 +133,21 @@ class PrivacyMainScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  private canBeBadgeRendered = (choice: UserDataProcessingChoiceEnum) =>
-    this.state.hasNewRequest[choice] &&
-    pot.isSome(this.props.userDataProcessing[choice]) &&
-    !pot.isError(this.props.userDataProcessing[choice]);
+  private canBeBadgeRendered = (
+    choice: UserDataProcessingChoiceEnum
+  ): boolean => {
+    return (
+      !pot.isError(this.props.userDataProcessing[choice]) &&
+      pot.getOrElse(
+        pot.map(
+          this.props.userDataProcessing[choice],
+          v =>
+            v !== undefined && v.status !== UserDataProcessingStatusEnum.CLOSED
+        ),
+        false
+      )
+    );
+  };
 
   public render() {
     const ContentComponent = withLoadingSpinner(() => (
