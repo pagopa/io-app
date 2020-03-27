@@ -244,6 +244,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           onPress: () => {
             if (!isOnboardingCompleted) {
               this.props.closeModalAndNavigateToEmailInsertScreen();
+              return;
             }
             this.props.navigateToEmailInsertScreen();
           },

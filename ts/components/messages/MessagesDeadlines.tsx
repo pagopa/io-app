@@ -16,7 +16,10 @@ import { View } from "native-base";
 import React from "react";
 import { SectionListScrollParams, StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
+import {
+  lexicallyOrderedMessagesStateSelector,
+  MessagesStateAndStatus
+} from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
@@ -124,7 +127,7 @@ export const getNextDeadlineId = (sections: Sections): Option<string> => {
  * Filter only the messages with a due date and group them by due_date day.
  */
 const generateSections = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
 ): Sections =>
   pot.getOrElse(
     pot.map(
@@ -132,7 +135,7 @@ const generateSections = (
       _ =>
         // tslint:disable-next-line:readonly-array
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
-          const { isRead, isArchived, message } = messageState;
+          const { message, isArchived, isRead } = messageState;
           if (
             !isArchived &&
             pot.isSome(message) &&

@@ -192,6 +192,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <Label>{I18n.t("wallet.insertManually.noticeCode")}</Label>
                 <Input
                   keyboardType={"numeric"}
+                  returnKeyType={"done"}
                   maxLength={18}
                   onChangeText={value => {
                     this.setState({
@@ -215,6 +216,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <Label>{I18n.t("wallet.insertManually.entityCode")}</Label>
                 <Input
                   keyboardType={"numeric"}
+                  returnKeyType={"done"}
                   maxLength={11}
                   onChangeText={value => {
                     this.setState({
@@ -238,6 +240,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <Label>{I18n.t("wallet.insertManually.amount")}</Label>
                 <Input
                   keyboardType={"numeric"}
+                  returnKeyType={"done"}
                   maxLength={10}
                   value={this.state.inputAmountValue}
                   onChangeText={value =>
