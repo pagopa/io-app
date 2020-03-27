@@ -1,5 +1,6 @@
 import { isNone, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { NavigationActions, NavigationState } from "react-navigation";
 import { Effect } from "redux-saga";
 import {
@@ -48,6 +49,7 @@ import { GlobalState } from "../store/reducers/types";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
+import { startTimer } from "../utils/timer";
 import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
@@ -66,6 +68,7 @@ import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
+import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotificationPreferencesSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
@@ -76,6 +79,7 @@ import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
+import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import {
   loadUserMetadata,
   watchLoadUserMetadata,
@@ -83,6 +87,7 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 
+const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
 /**
  * Handles the application startup and the main application logic loop
  */
@@ -180,7 +185,8 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   );
 
   if (isNone(maybeUserProfile)) {
-    // Start again if we can't load the profile
+    // Start again if we can't load the profile but wait a while
+    yield call(startTimer, WAIT_INITIALIZE_SAGA);
     yield put(startApplicationInitialization());
     return;
   }
@@ -207,7 +213,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     idpSelector
   );
 
-  setInstabugProfileAttributes(userProfile, maybeIdp);
+  setInstabugProfileAttributes(maybeIdp);
 
   // Retrieve the configured PIN from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
@@ -306,6 +312,12 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
   yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
+  yield fork(
+    watchUserDataProcessingSaga,
+    backendClient.getUserDataProcessingRequest,
+    backendClient.postUserDataProcessingRequest
+  );
+
   // Load visible services and service details from backend when requested
   yield fork(watchLoadServicesSaga, backendClient);
 
@@ -332,6 +344,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchPinResetSaga);
   // Watch for identification request
   yield fork(watchIdentificationRequest, storedPin);
+
+  // Watch for checking the user email notifications preferences
+  yield fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
   const pendingMessageState: ReturnType<

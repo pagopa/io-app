@@ -29,7 +29,13 @@ import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
 import { networkStateUpdate } from "./store/actions/network";
 import { GlobalState } from "./store/reducers/types";
+import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
+
+// Check min version app supported
+import { fromNullable } from "fp-ts/lib/Option";
+import { serverInfoDataSelector } from "./store/reducers/backendInfo";
+import { isUpdateNeeded } from "./utils/appVersion";
 
 // tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
@@ -125,6 +131,11 @@ class RootContainer extends React.PureComponent<Props> {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
     //        the redux state (i.e. background)
+
+    // if we have no information about the backend, don't force the update
+    const isAppOutOfDate = fromNullable(this.props.backendInfo)
+      .map(bi => isUpdateNeeded(bi, "min_app_version"))
+      .getOrElse(false);
     return (
       <Root>
         <StatusBar barStyle="dark-content" />
@@ -135,7 +146,7 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
-        <IdentificationModal />
+        {isAppOutOfDate ? <UpdateAppModal /> : <IdentificationModal />}
         <LightModalRoot />
       </Root>
     );
@@ -144,7 +155,8 @@ class RootContainer extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState) => ({
   deepLinkState: state.deepLink,
-  isDebugModeEnabled: state.debug.isDebugModeEnabled
+  isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  backendInfo: serverInfoDataSelector(state)
 });
 
 const mapDispatchToProps = {

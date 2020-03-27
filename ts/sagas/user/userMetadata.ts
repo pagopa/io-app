@@ -116,7 +116,7 @@ export function* watchLoadUserMetadata(
 /**
  * Call loadUserMetadata saga.
  */
-export function* loadUserMetadataManager(
+function* loadUserMetadataManager(
   getUserMetadata: ReturnType<typeof BackendClient>["getUserMetadata"]
 ) {
   yield fork(loadUserMetadata, getUserMetadata);
