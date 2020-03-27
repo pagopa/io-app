@@ -32,6 +32,7 @@ export const idpSelected = createStandardAction("IDP_SELECTED")<
 export const idpLoginUrlChanged = createStandardAction(
   "AUTHENTICATION_WEBVIEW_URL_CHANGED"
 )<{ url: string }>();
+
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<
   SessionToken
 >();

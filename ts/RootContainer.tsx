@@ -126,7 +126,7 @@ class RootContainer extends React.PureComponent<Props> {
       .getOrElse(false);
     return (
       <Root>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle={"dark-content"} />
         {Platform.OS === "android" && (
           <FlagSecureComponent
             isFlagSecureEnabled={!this.props.isDebugModeEnabled}
