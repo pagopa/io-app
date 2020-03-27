@@ -22,6 +22,7 @@ import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import { SearchState } from "./search";
+import { UserDataProcessingState } from "./userDataProcessing";
 import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
 
@@ -42,6 +43,7 @@ export type GlobalState = Readonly<{
   notifications: NotificationsState;
   onboarding: OnboardingState;
   profile: ProfileState;
+  userDataProcessing: UserDataProcessingState;
   wallet: WalletState;
   preferences: PreferencesState;
   persistedPreferences: PersistedPreferencesState;

@@ -34,6 +34,7 @@ import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
 import { SearchActions } from "./search";
 import { ServicesActions } from "./services";
+import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 
@@ -64,7 +65,8 @@ export type Action =
   | SearchActions
   | PaymentsActions
   | OrganizationsActions
-  | InstabugInfoActions;
+  | InstabugInfoActions
+  | UserDataProcessingActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

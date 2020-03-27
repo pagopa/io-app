@@ -113,7 +113,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "it.teamdigitale.app.italiaapp"
+        applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode System.getenv('CIRCLE_BUILD_NUM') ? ("100" + System.getenv('CIRCLE_BUILD_NUM')).toInteger() : 1

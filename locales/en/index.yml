@@ -83,8 +83,6 @@ inbox:
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
-  contextualHelpTitle: What you can do in your Profile
-  contextualHelpContent: !include profile/profile_account_main.md
   fiscalCode:
     title: Your personal documents
     fiscalCode: Fiscal code
@@ -108,45 +106,54 @@ profile:
     load: Error loading the profile
     upsert: Error creating or updating the profile
   main:
-    screenTitle: Profile
+    title: Profile
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    contextualHelpTitle: What you can do in your Profile
+    contextualHelpContent: !include profile/profile_account_main.md
     cache:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
       cleared: The cache has been cleared.
     resetPin:
       confirmTitle: Are you sure you want to reset your PIN?
-      confirmMsg: You will be asked again to log in with SPID.
+      confirmMsg: You will be asked again to log in.
     preferences:
       title: Preferences
       description: Manage app internal preferences
     privacy:
       title: Privacy
       description: Export data, delete account
-      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
-      updated: It is required to accept the new version of Terms and Conditions
-      text: !include profile/privacy.md
-      contextualHelpTitlePolicy: What is the information on the processing of personal data
-      contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
-      contextualHelpTitle: Your privacy settings
-      contextualHelpContent: !include profile/profile_privacy_main.md
-    termsAndConditions:
-      title: Terms and Conditions
-      description: Review Terms & Conditions of the app
-    mainPrivacy:
-      screenTitle: Privacy
-      screenSubtitle: Here you will find information related to your personal data.
-      privacyPolicy:
-        title: Privacy policy
-        description: Review accepted privacy terms
+      subtitle: Here you find information related to your personal data.  
+      loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
         description: Remove all data associated to your account from your phone and
-          our systems (SPID required)
+          our systems
+        alert: 
+          requestTitle: Are you sure you want to delete your account?
+          requestSubtitle: All your messages and personal settings will be lost.
+          oldRequest: We are already proceeding to delete your account
+          confirmSubtitle: After processing, you will receive an email confirming the deletion.
+        error: An error occurred while submit your deletion request, please retry! 
       exportData:
         title: Export your data
         description: Send to your email all your account’s data in an open format
+        alert: 
+          requestTitle: Are you sure you want to export all your data?
+          oldRequest: We are already proceeding to export all your data
+          confirmSubtitle: After processing, you will receive an email containing all your data.
+        error: An error occurred while submit your exporting request, please retry!
+      privacyPolicy:
+        title: Privacy policy
+        description: Review the accepted privacy terms
+        header: Information note on the processing of the IO app Beta Testers' personal data
+        updated: It is required to accept the new version of Terms and Conditions
+        text: !include profile/privacy.md
+        contextualHelpTitlePolicy: What is the information on the processing of personal data
+        contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
+        contextualHelpTitle: Your privacy settings
+        contextualHelpContent: !include profile/profile_privacy_main.md
     developersSectionHeader: Developers
     experimentalFeatures:
       confirmTitle: Experimental features
@@ -175,6 +182,7 @@ profile:
       email: Email address
       spid_email: SPID email
       need_validate: To be validated
+      wip: In progress
       mobile_phone: Mobile number
       language: Language
       digitalDomicile: Digital domicile
@@ -207,6 +215,10 @@ userMetadata:
 navigation:
   messages: Messages
   profile: Profile
+cie:
+  title: Touch the card
+  layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
+  layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you hear a sound.
 spid:
   login: LOGIN
   loginButton: LOGIN WITH
@@ -511,6 +523,11 @@ payment:
   IUV: IUV
   recipientFiscalCode: Recipient fiscal code
 wallet:
+  alert:
+    msgErrorUpdateApp: "An error occurred while opening the app store"
+    titlePagoPaUpdateApp: Update required
+    messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
+    btnUpdateApp: Update the IO app 
   wallet: Wallet
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
@@ -566,7 +583,7 @@ wallet:
     title: Choose the manager
     info: This card does not belong to the pagoPA payment network.
     infoBold: Choose the economic operator
-    info2: which will have to manage yout payment.
+    info2: (PSP) which will have to manage yout payment.
     link: Find out more
     maxFee: Maximum fee
     onUpdateWalletPspFailure: Operation failed, please retry
@@ -959,3 +976,7 @@ reminders:
 openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred
+titleUpdateApp: Update IO!
+msgErrorUpdateApp: "An error occurred while opening the app store"
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
+btnUpdateApp: Update the IO app

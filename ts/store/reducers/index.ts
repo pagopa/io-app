@@ -32,6 +32,7 @@ import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import searchReducer from "./search";
 import { GlobalState } from "./types";
+import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
 
@@ -93,6 +94,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
+  userDataProcessing: userDataProcessingReducer,
   userMetadata: userMetadataReducer,
   entities: persistReducer<EntitiesState, Action>(
     entitiesPersistConfig,
