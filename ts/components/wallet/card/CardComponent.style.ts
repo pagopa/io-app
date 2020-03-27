@@ -45,9 +45,14 @@ export default StyleSheet.create({
   },
 
   cardLogo: {
-    alignSelf: "flex-end",
     height: 30,
     width: 48
+  },
+
+  cardPsp: {
+    alignSelf: "flex-end",
+    width: 70,
+    height: 30
   },
 
   footerButton: {
@@ -89,14 +94,5 @@ export default StyleSheet.create({
   },
   paddedTop: {
     paddingTop: 10
-  },
-  numberArea: {
-    borderWidth: 1,
-    borderColor: "transparent",
-    width: "82%"
-  },
-  body: {
-    borderWidth: 1,
-    borderColor: "transparent"
   }
 });

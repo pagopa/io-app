@@ -37,8 +37,7 @@ const styles = StyleSheet.create({
     height: imgDimension,
     borderRadius: imgDimension / 2,
     position: "absolute",
-    bottom: boxDimension / 2 - imgDimension / 2,
-    overflow: "hidden"
+    bottom: boxDimension / 2 - imgDimension / 2
   },
   titleHeader: {
     marginTop: 35
