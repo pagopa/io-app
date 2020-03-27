@@ -9,7 +9,7 @@ import {
 import { loginSuccess } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SessionToken } from "../../types/SessionToken";
-import { watchCieAuthenticationSaga } from "../cie";
+import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 
 /**
  * A saga that makes the user go through the authentication process until
@@ -31,6 +31,8 @@ export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   );
 
   yield cancel(watchCieAuthentication);
+  // stop cie manager from listening nfc
+  yield call(stopCieManager);
 
   // User logged in successfully, remove all the scheduled local notifications
   // to remind the user to authenticate with spid

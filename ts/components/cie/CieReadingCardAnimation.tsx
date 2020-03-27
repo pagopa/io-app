@@ -3,7 +3,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { Animated, Easing, Image, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
-import { NavigationEvents } from "react-navigation";
 import { ReadingState } from "../../screens/authentication/cie/CieCardReaderScreen";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";

@@ -204,7 +204,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
       setTimeout(async () => {
-        await this.stopCieManager();
         this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
           cieConsentUri
         });
@@ -216,10 +215,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     cieManager.removeAllListeners();
     await cieManager.stopListeningNFC();
   };
-
-  public async componentWillUnmount() {
-    await this.stopCieManager();
-  }
 
   public componentDidMount() {
     cieManager
