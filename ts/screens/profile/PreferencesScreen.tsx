@@ -96,7 +96,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     this.props.navigateToEmailInsertScreen();
   }
 
-  public componentWillMount() {
+  public componentDidMount() {
     getFingerprintSettings().then(
       biometryTypeOrUnsupportedReason => {
         this.setState({

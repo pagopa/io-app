@@ -125,7 +125,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
   }
 
-  public componentWillMount() {
+  public componentDidMount() {
     const { isFingerprintEnabled } = this.props;
     if (isFingerprintEnabled) {
       getFingerprintSettings().then(

@@ -66,11 +66,8 @@ class RootContainer extends React.PureComponent<Props> {
     this.props.setDeepLink(action, true);
   };
 
-  public componentWillMount() {
-    initialiseInstabug();
-  }
-
   public componentDidMount() {
+    initialiseInstabug();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
     if (Platform.OS === "android") {
