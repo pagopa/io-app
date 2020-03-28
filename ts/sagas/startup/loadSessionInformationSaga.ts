@@ -23,7 +23,7 @@ import { SagaCallReturnType } from "../../types/utils";
 export function* loadSessionInformationSaga(
   getSession: ReturnType<typeof BackendClient>["getSession"]
 ): IterableIterator<Effect | Option<PublicSession>> {
-  try{
+  try {
     // Call the Backend service
     const response: SagaCallReturnType<typeof getSession> = yield call(
       getSession,
@@ -31,7 +31,7 @@ export function* loadSessionInformationSaga(
     );
     // Ko we got an error
     if (response.isLeft()) {
-      throw (Error(readableReport(response.value)))
+      throw readableReport(response.value);
     }
 
     if (response.value.status === 200) {
@@ -42,14 +42,12 @@ export function* loadSessionInformationSaga(
 
     // we got a valid response but its status code is describing an error
     const errorMsgDefault = "Invalid server response";
-    const error =
-      response.value.status === 400
-        ? response.value.value.title || errorMsgDefault
-        : errorMsgDefault;
-    throw (error);
 
-  } catch(e){
+    throw response.value.status === 400
+      ? response.value.value.title || errorMsgDefault
+      : errorMsgDefault;
+  } catch (e) {
     yield put(sessionInformationLoadFailure(Error(e)));
-    return none
+    return none;
   }
 }

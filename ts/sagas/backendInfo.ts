@@ -38,7 +38,7 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
   while (true) {
     try {
       const backendInfoResponse: SagaCallReturnType<
-      typeof getServerInfo
+        typeof getServerInfo
       > = yield call(getServerInfo, {});
       if (
         backendInfoResponse.isRight() &&
@@ -62,10 +62,9 @@ function* backendInfoWatcher(): IterableIterator<Effect> {
         // tslint:disable-next-line:saga-yield-return-type
         yield call(startTimer, BACKEND_INFO_RETRY_INTERVAL);
       }
-    } catch(e){
+    } catch (e) {
       yield put(backendInfoLoadFailure(new Error(e)));
     }
-    
   }
 }
 
