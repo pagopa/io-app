@@ -160,20 +160,15 @@ class TransactionSummaryScreen extends React.Component<Props> {
   };
 
   private secondaryButtonProps = {
-    bordered: pot.isNone(this.props.paymentId),
-    cancel: pot.isSome(this.props.paymentId),
+    cancel: true,
     onPress: this.handleBackPress,
-    title: I18n.t(
-      pot.isSome(this.props.paymentId)
-        ? "global.buttons.cancel"
-        : "global.buttons.back"
-    )
+    title: I18n.t("global.buttons.cancel")
   };
 
   private renderFooterSingleButton() {
     return (
       <FooterWithButtons
-        type="SingleButton"
+        type={"SingleButton"}
         leftButton={this.secondaryButtonProps}
       />
     );
@@ -239,6 +234,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
       <BaseScreenComponent
         goBack={this.handleBackPress}
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
+        dark={true}
       >
         <Content noPadded={true}>
           {pot.isSome(potVerifica) ? (
