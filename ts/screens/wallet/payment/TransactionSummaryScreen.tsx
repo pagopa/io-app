@@ -1,11 +1,3 @@
-/**
- * This screen shows the transaction details.
- * It should occur after the transaction identification by qr scanner or manual procedure.
- * TODO:
- * - integrate contextual help
- *    https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
- */
-
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
@@ -17,13 +9,10 @@ import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
-
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
-
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -37,9 +26,7 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   navigateToPaymentManualDataInsertion,
@@ -56,12 +43,6 @@ import { AmountToImporto } from "../../../utils/amounts";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./common";
-
-const basePrimaryButtonProps = {
-  block: true,
-  primary: true,
-  title: I18n.t("wallet.continue")
-};
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -103,6 +84,12 @@ ${address}${civicNumber}\n
 ${cap}${city}${province}`;
 };
 
+/**
+ * This screen shows the transaction details.
+ * It should occur after the transaction identification by qr scanner or manual procedure.
+ * 
+ * TODO: integrate contextual help https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
+ */
 class TransactionSummaryScreen extends React.Component<Props> {
   public componentDidMount() {
     if (pot.isNone(this.props.potVerifica)) {
@@ -172,8 +159,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
     }
   };
 
-  private getSecondaryButtonProps = () => ({
-    block: true,
+  private secondaryButtonProps = {
     bordered: pot.isNone(this.props.paymentId),
     cancel: pot.isSome(this.props.paymentId),
     onPress: this.handleBackPress,
@@ -182,19 +168,23 @@ class TransactionSummaryScreen extends React.Component<Props> {
         ? "global.buttons.cancel"
         : "global.buttons.back"
     )
-  });
+  };
 
   private renderFooterSingleButton() {
     return (
       <FooterWithButtons
         type="SingleButton"
-        leftButton={this.getSecondaryButtonProps()}
+        leftButton={this.secondaryButtonProps}
       />
     );
   }
 
   private renderFooterButtons() {
     const { potVerifica, maybeFavoriteWallet, hasWallets } = this.props;
+    const basePrimaryButtonProps = {
+      primary: true,
+      title: I18n.t("wallet.continue")
+    };
 
     const primaryButtonProps =
       pot.isSome(potVerifica) &&
@@ -216,11 +206,23 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
     return (
       <FooterWithButtons
-        type="TwoButtonsInlineThird"
-        leftButton={this.getSecondaryButtonProps()}
+        type={"TwoButtonsInlineThird"}
+        leftButton={this.secondaryButtonProps}
         rightButton={primaryButtonProps}
       />
     );
+  }
+
+  private getFooterButtons = () => {
+    return (
+      this.props.error.fold(
+        this.renderFooterButtons(),
+        error =>
+          error === "PAYMENT_DUPLICATED"
+            ? this.renderFooterSingleButton()
+            : this.renderFooterButtons()
+      )
+    )
   }
 
   public render(): React.ReactNode {
@@ -302,13 +304,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
           </View>
         </Content>
 
-        {this.props.error.fold(
-          this.renderFooterButtons(),
-          error =>
-            error === "PAYMENT_DUPLICATED"
-              ? this.renderFooterSingleButton()
-              : this.renderFooterButtons()
-        )}
+        {this.getFooterButtons()}
       </BaseScreenComponent>
     );
   }
