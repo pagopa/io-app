@@ -55,7 +55,7 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        title={I18n.t("authentication.cie.pinTempLocked.header")} // TODO: validate
+        headerTitle={I18n.t("authentication.cie.pinTempLocked.header")} // TODO: validate
       >
         <ScreenContentHeader
           title={I18n.t("authentication.cie.pinTempLocked.title")}

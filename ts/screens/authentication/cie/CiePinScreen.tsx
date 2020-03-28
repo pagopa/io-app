@@ -90,7 +90,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
     return (
       <TopScreenComponent
         goBack={true}
-        title={I18n.t("authentication.cie.pin.pinCardHeader")}
+        headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
       >
         <ScrollView>
           <ScreenContentHeader

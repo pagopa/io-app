@@ -51,7 +51,7 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={false}
-        title={"Check attempts"} // TODO: validate
+        headerTitle={"Check attempts"} // TODO: validate
       >
         <ScreenContentHeader
           title={I18n.t("authentication.cie.pin.incorrectCiePinTitle", {

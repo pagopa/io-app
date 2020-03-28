@@ -160,7 +160,7 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
       <LoadingSpinnerOverlay isLoading={this.state.isLoading}>
         <TopScreenComponent
           goBack={this.handleGoBack}
-          title={I18n.t("authentication.cie.genericTitle")}
+          headerTitle={I18n.t("authentication.cie.genericTitle")}
         >
           {this.getContent()}
         </TopScreenComponent>
