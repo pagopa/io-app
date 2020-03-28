@@ -10,10 +10,17 @@ import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
 import I18n from "../../../i18n";
+import {
+  navigateToPaymentManualDataInsertion,
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentTransactionErrorScreen
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   backToEntrypointPayment,
@@ -26,13 +33,6 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  navigateToPaymentManualDataInsertion,
-  navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen
-} from "../../../store/actions/navigation";
 import {
   getFavoriteWallet,
   walletsSelector
@@ -87,7 +87,7 @@ ${cap}${city}${province}`;
 /**
  * This screen shows the transaction details.
  * It should occur after the transaction identification by qr scanner or manual procedure.
- * 
+ *
  * TODO: integrate contextual help https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
 class TransactionSummaryScreen extends React.Component<Props> {
@@ -214,16 +214,14 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 
   private getFooterButtons = () => {
-    return (
-      this.props.error.fold(
-        this.renderFooterButtons(),
-        error =>
-          error === "PAYMENT_DUPLICATED"
-            ? this.renderFooterSingleButton()
-            : this.renderFooterButtons()
-      )
-    )
-  }
+    return this.props.error.fold(
+      this.renderFooterButtons(),
+      error =>
+        error === "PAYMENT_DUPLICATED"
+          ? this.renderFooterSingleButton()
+          : this.renderFooterButtons()
+    );
+  };
 
   public render(): React.ReactNode {
     const rptId = this.props.navigation.getParam("rptId");
