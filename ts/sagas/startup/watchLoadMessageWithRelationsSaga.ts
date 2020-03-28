@@ -22,26 +22,26 @@ export function* loadMessageWithRelationsSaga(
   // Extract the message id from the action payload
   const messageId = messageWithRelationsLoadRequest.payload;
 
-  try{
+  try {
     const messageOrError: SagaCallReturnType<typeof loadMessage> = yield call(
       loadMessage,
       getMessage,
       messageId
     );
-  
+
     if (messageOrError.isLeft()) {
-      throw  new Error(messageOrError.value.message)
+      throw new Error(messageOrError.value.message);
     }
-  
+
     const message = messageOrError.value;
     yield put(loadMessageWithRelations.success());
-  
+
     const serviceById = serviceByIdSelector(message.sender_service_id);
-  
-    const potService: ReturnType<typeof serviceById> = yield select<GlobalState>(
-      serviceById
-    );
-  
+
+    const potService: ReturnType<typeof serviceById> = yield select<
+      GlobalState
+    >(serviceById);
+
     // We have the message try to load also the sender service only if there's
     // no such service or if we are already loading it
     if (
@@ -50,8 +50,7 @@ export function* loadMessageWithRelationsSaga(
     ) {
       yield put(loadServiceDetail.request(message.sender_service_id));
     }
-
-  }catch(e){
+  } catch (e) {
     yield put(loadMessageWithRelations.failure(e));
   }
 }
