@@ -373,14 +373,13 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   };
 
   private checkSection = (s: MessageAgendaSection) => {
-    const isFake = s.fake;
     const nextDeadlineId = isSome(this.props.nextDeadlineId)
       ? this.props.nextDeadlineId.value
       : undefined;
     const item = s.data[0];
     const sectionId = item.e1.id;
 
-    return !isFake && sectionId === nextDeadlineId;
+    return sectionId === nextDeadlineId;
   };
 
   public static getDerivedStateFromProps(

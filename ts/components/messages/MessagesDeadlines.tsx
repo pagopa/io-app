@@ -67,14 +67,6 @@ type State = {
   nextDeadlineId: Option<string>;
 };
 
-export type FakeItem = {
-  fake: true;
-};
-
-export const isFakeItem = (item: any): item is FakeItem => {
-  return item.fake;
-};
-
 /**
  * Get the next deadline id
  */
@@ -83,10 +75,6 @@ export const getNextDeadlineId = (sections: Sections): Option<string> => {
   return sections
     .reduce<Option<MessageAgendaItem>>((acc, curr) => {
       const item = curr.data[0];
-      // if item is fake, return the accumulator
-      if (isFakeItem(item)) {
-        return acc;
-      }
       const newDate = new Date(item.e1.content.due_date).getTime();
       const diff = newDate - now;
       // if the acc is none, we don't need to make comparison with previous value
@@ -248,14 +236,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
 
   public async componentDidMount() {
     const { messagesState } = this.props;
-    const sectionsWithFakeItem = await Promise.resolve(
-      generateSections(messagesState)
-    );
-
-    const sections: Sections = sectionsWithFakeItem.filter(section => {
-      const item = section.data[0];
-      return !isFakeItem(item);
-    });
+    const sections = await Promise.resolve(generateSections(messagesState));
 
     const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
 
@@ -277,13 +258,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     }
 
     if (messagesState !== prevMessagesState) {
-      const sectionsWithFakeItem = await Promise.resolve(
-        generateSections(messagesState)
-      );
-      const sections: Sections = sectionsWithFakeItem.filter(section => {
-        const item = section.data[0];
-        return !isFakeItem(item);
-      });
+      const sections = await Promise.resolve(generateSections(messagesState));
       const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
       this.setState({
         sections,
@@ -302,7 +277,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const messagesIds: string[] = [];
     sections.forEach(messageAgendaSection =>
       messageAgendaSection.data.forEach(item => {
-        const idMessage = !isFakeItem(item) ? item.e1.id : undefined;
+        const idMessage = item.e1.id;
         if (idMessage !== undefined) {
           messagesIds.push(idMessage);
         }
