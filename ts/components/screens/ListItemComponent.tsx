@@ -18,6 +18,8 @@ type Props = Readonly<{
   isLastItem?: boolean;
   hasBadge?: boolean;
   iconName?: string;
+  smallIconSize?: boolean;
+  iconOnTop?: boolean;
   iconSize?: number;
   hideIcon?: boolean;
   paddingRightDescription?: number;
@@ -31,8 +33,7 @@ type Props = Readonly<{
   keySwitch?: string;
   isLongPressEnabled?: boolean;
 }>;
-
-const ICON_SIZE = 24;
+const DEFAULT_ICON_SIZE = 24;
 const PADDING_R_DESCRIPTION = 24;
 
 const styles = StyleSheet.create({
@@ -73,6 +74,12 @@ const styles = StyleSheet.create({
     paddingRight: PADDING_R_DESCRIPTION,
     alignSelf: "flex-start"
   },
+  center: {
+    alignSelf: "center"
+  },
+  alignToStart: {
+    alignSelf: "flex-start"
+  },
   badgeStyle: {
     backgroundColor: customVariables.brandPrimary,
     borderColor: "white",
@@ -87,7 +94,7 @@ const styles = StyleSheet.create({
 
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
-    const { iconSize = ICON_SIZE } = this.props;
+    const ICON_SIZE = this.props.iconSize || DEFAULT_ICON_SIZE;
     const showDefaultIcon =
       this.props.iconName === undefined && this.props.hideIcon !== true;
     return (
@@ -131,8 +138,8 @@ export default class ListItemComponent extends React.Component<Props> {
                 />
               ) : (
                 <IconFont
-                  name="io-right"
-                  size={iconSize}
+                  name={"io-right"}
+                  size={ICON_SIZE}
                   color={customVariables.contentPrimaryBackground}
                 />
               ))}
@@ -154,12 +161,14 @@ export default class ListItemComponent extends React.Component<Props> {
         </View>
         {this.props.iconName !== undefined &&
           this.props.hideIcon !== true && (
-            <IconFont
-              name={this.props.iconName}
-              size={iconSize * 2}
-              style={{ alignSelf: "center" }}
-              color={customVariables.contentPrimaryBackground}
-            />
+            <View style={this.props.iconOnTop && styles.alignToStart}>
+              <IconFont
+                name={this.props.iconName}
+                size={this.props.smallIconSize ? ICON_SIZE : ICON_SIZE * 2}
+                style={styles.center}
+                color={customVariables.contentPrimaryBackground}
+              />
+            </View>
           )}
       </ListItem>
     );
