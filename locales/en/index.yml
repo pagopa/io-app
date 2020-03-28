@@ -622,18 +622,19 @@ wallet:
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
-    amount: Amount
+    amount: Transaction amount
     expireDate: Expire date
     tranche: Tranche
-    entity: 'Entity:'
     info: 'More info at:'
     tel: 'Tel:'
     email: 'Email:'
     PEC: 'PEC:'
     recipient: Recipient
     object: Reason
+    date: Date and Time
     iuv: IUV code
     entityCode: Entity fiscal code
+    fee: Fee
     updatedAmount: Updated amount
     updateInfo: 'The pagoPa system updates automatically the amount to ensure you
       pay the exact amount and to avoid you arrears or additional interests '

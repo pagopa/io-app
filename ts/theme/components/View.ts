@@ -2,12 +2,14 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 import * as ReactNative from "react-native";
+import customVariables from '../variables';
 
 declare module "native-base" {
   namespace NativeBase {
     interface View extends ReactNative.ViewProperties {
       spacer?: boolean;
       hspacer?: boolean;
+      xsmall?: boolean;
       large?: boolean;
       extralarge?: boolean;
       modal?: boolean;
@@ -34,6 +36,9 @@ declare module "native-base" {
 export default (): Theme => {
   return {
     ".spacer": {
+      "xsmall": {
+        height: customVariables.spacerExtrasmallHeight
+      },
       ".large": {
         height: variables.spacerLargeHeight
       },

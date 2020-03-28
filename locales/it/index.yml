@@ -634,19 +634,20 @@ wallet:
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento
-    amount: Importo
+    amount: Importo pagamento
     expireDate: Scadenza
     tranche: Rata
-    entity: 'Ente creditore:'
     info: 'Per informazioni:'
     tel: 'Tel:'
     email: 'Email:'
     PEC: 'PEC:'
     recipient: Ente creditore
     object: Causale
+    date: Data e ora
     iuv: Codice IUV
     entityCode: Codice fiscale creditore
     updatedAmount: Importo aggiornato
+    fee: Costi di transazione 
     updateInfo: Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     loadingMessage:
