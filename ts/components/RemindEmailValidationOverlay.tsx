@@ -4,7 +4,7 @@
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Content, H2, Text, View } from "native-base";
+import { Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, BackHandler, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -29,13 +29,13 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import customVariables from "../theme/variables";
 import TopScreenComponent, {
   TopScreenComponentProps
 } from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
-import customVariables from '../theme/variables';
 
 type OwnProp = {
   closeModalAndNavigateToEmailInsertScreen: () => void;
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   error: {
-    backgroundColor: customVariables.brandDanger, 
-    paddingLeft: customVariables.contentPadding, 
+    backgroundColor: customVariables.brandDanger,
+    paddingLeft: customVariables.contentPadding,
     paddingVertical: 11
   }
 });
@@ -242,6 +242,15 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       return (
         <FooterWithButtons
           type={"TwoButtonsInlineThirdInverted"}
+          upperButton={{
+            title: this.state.ctaSendEmailValidationText,
+            onPress: this.handleSendEmailValidationButton,
+            light: true,
+            bordered: true,
+            disabled:
+              this.state.isLoading ||
+              this.state.isCtaSentEmailValidationDisabled
+          }}
           leftButton={{
             bordered: true,
             disabled: this.state.isLoading,
@@ -298,30 +307,15 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           ) : (
             <Text>{I18n.t("email.validate.validated_ok")}</Text>
           )}
-          <View spacer={true} />
-          {this.state.isContentLoadCompleted &&
-            !this.props.isEmailValidated && (
-              <Button
-                block={true}
-                light={true}
-                bordered={true}
-                disabled={
-                  this.state.isLoading ||
-                  this.state.isCtaSentEmailValidationDisabled
-                }
-                onPress={this.handleSendEmailValidationButton}
-              >
-                <Text>{this.state.ctaSendEmailValidationText}</Text>
-              </Button>
-            )}
           <View spacer={true} large={true} />
-          
         </Content>
+        {this.state.displayError && (
           <View style={styles.error}>
-            <Text note={true} white={true}>{I18n.t("global.actions.retry")}</Text>
+            <Text note={true} white={true}>
+              {I18n.t("global.actions.retry")}
+            </Text>
           </View>
-            
-          )}
+        )}
         {this.renderFooter()}
       </TopScreenComponent>
     );
