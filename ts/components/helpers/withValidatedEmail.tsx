@@ -82,7 +82,7 @@ class ModalRemindEmailValidationOverlay extends React.Component<
                   this.setState({ acknowledgeValidation: true });
                   this.handleForcedClose();
                 }}
-                akcnowledgeValidation={() => {
+                acknowledgeValidation={() => {
                   this.setState({ acknowledgeValidation: true });
                 }}
                 closeModal={() => {

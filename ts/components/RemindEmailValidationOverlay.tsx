@@ -39,7 +39,7 @@ import Markdown from "./ui/Markdown";
 
 type OwnProp = {
   closeModalAndNavigateToEmailInsertScreen: () => void;
-  akcnowledgeValidation: () => void;
+  acknowledgeValidation: () => void;
   closeModal: () => void;
 };
 
@@ -130,7 +130,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
     this.props.reloadProfile();
     if (!this.props.isOnboardingCompleted) {
-      this.props.akcnowledgeValidation();
+      this.props.acknowledgeValidation();
       this.props.acknowledgeEmailInsert();
     } else {
       this.props.navigateBack();
@@ -190,7 +190,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           text: I18n.t("global.buttons.exit"),
           style: "default",
           onPress: () => {
-            this.props.akcnowledgeValidation();
+            this.props.acknowledgeValidation();
             this.props.abortOnboarding();
           }
         }
