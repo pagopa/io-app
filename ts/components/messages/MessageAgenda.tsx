@@ -37,6 +37,7 @@ const ITEM_HEIGHT = 158;
 const FAKE_ITEM_HEIGHT = 75;
 const ITEM_SEPARATOR_HEIGHT = 1;
 const ITEM_WITHOUT_CTABAR_AND_LOADING_HEIGHT = 114;
+const MESSAGE_TO_SHOW = 5;
 
 const screenWidth = Dimensions.get("screen").width;
 
@@ -211,10 +212,9 @@ const generateItemLayouts = (sections: Sections) => {
     section.data.forEach((_, dataIndex, data) => {
       const isLastItem = dataIndex === data.length - 1;
 
-      const itemHeight = ITEM_HEIGHT;
       const cellHeight = isLastItem
-        ? itemHeight
-        : itemHeight + ITEM_SEPARATOR_HEIGHT;
+        ? ITEM_HEIGHT
+        : ITEM_HEIGHT + ITEM_SEPARATOR_HEIGHT;
       itemLayouts.push({
         length: cellHeight,
         offset,
@@ -334,7 +334,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         // check that Sections has more than one message
         this.props.sections.length > 1 &&
         // check that there are more than 5 messages to show in the SectionsList to enable the scroll effect
-        this.state.numMessagesToRender > 5 &&
+        this.state.numMessagesToRender > MESSAGE_TO_SHOW &&
         // check that the id of next deadline is defined
         isSome(this.props.nextDeadlineId)
       ) {

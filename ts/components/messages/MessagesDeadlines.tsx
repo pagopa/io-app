@@ -315,26 +315,21 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
    * Returns the number of sections to load
    */
   private sectionToLoad = (
-    messagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
+    messagesState: ReadonlyArray<MessagesStateAndStatus>
   ): number => {
-    return pot.getOrElse(
-      pot.map(messagesState, value => {
-        // check loading messages
-        const isSomeLoading = value.find(m => pot.isLoading(m.message));
-        if (isSomeLoading !== undefined) {
-          return -1;
-        }
-        return value.filter(m => {
-          const message = m.message;
-          return (
-            pot.isSome(message) &&
-            message.value.content.due_date !== undefined &&
-            !m.isArchived
-          );
-        }).length;
-      }),
-      0
-    );
+    // check loading messages
+    const isSomeLoading = messagesState.find(m => pot.isLoading(m.message));
+    if (isSomeLoading !== undefined) {
+      return -1;
+    }
+    return messagesState.filter(m => {
+      const message = m.message;
+      return (
+        pot.isSome(message) &&
+        message.value.content.due_date !== undefined &&
+        !m.isArchived
+      );
+    }).length;
   };
 
   public render() {
@@ -348,9 +343,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const { sections, allMessageIdsState, nextDeadlineId } = this.state;
 
     const isLoading = pot.isLoading(this.props.messagesState);
-    const sectionToLoad = pot.isSome(this.props.messagesState)
-      ? this.sectionToLoad(this.props.messagesState)
-      : undefined;
+    const sectionToLoad = pot.getOrElse(
+      pot.map(this.props.messagesState, ms => this.sectionToLoad(ms)),
+      undefined
+    );
 
     return (
       <View style={styles.listWrapper}>
