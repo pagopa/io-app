@@ -64,8 +64,10 @@ const styles = StyleSheet.create({
   },
   error: {
     backgroundColor: customVariables.brandDanger,
-    paddingLeft: customVariables.contentPadding,
-    paddingVertical: 11
+    paddingHorizontal: customVariables.contentPadding,
+    paddingVertical: 11,
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 });
 
@@ -218,6 +220,28 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     this.setState({ isContentLoadCompleted: true });
   };
 
+  private getErrorBanner = () => {
+    if (!this.state.displayError) {
+      return undefined;
+    }
+    return (
+      <View style={styles.error}>
+        <Text white={true}>{I18n.t("global.actions.retry")}</Text>
+        <View>
+          <IconFont
+            name={"io-close"}
+            onPress={() => {
+              this.setState({ displayError: false });
+            }}
+            color={customVariables.colorWhite}
+            accessible={true}
+            accessibilityLabel={I18n.t("global.buttons.close")}
+          />
+        </View>
+      </View>
+    );
+  };
+
   private renderFooter = () => {
     const { isOnboardingCompleted } = this.props;
     // if the email has been validated
@@ -309,13 +333,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           )}
           <View spacer={true} large={true} />
         </Content>
-        {this.state.displayError && (
-          <View style={styles.error}>
-            <Text note={true} white={true}>
-              {I18n.t("global.actions.retry")}
-            </Text>
-          </View>
-        )}
+        {this.getErrorBanner()}
         {this.renderFooter()}
       </TopScreenComponent>
     );
