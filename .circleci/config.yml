@@ -66,7 +66,11 @@ save_node_cache: &save_node_cache
     key: *node_cache_key
 
 install_node_modules: &install_node_modules
-  run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
+  run: 
+    name: install npm packages
+    command: |
+      echo "//npm.pkg.github.com/:_authToken=$GITHUB_PACKAGE_APP_TOKEN" > ~/.npmrc
+      yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
 
 #
 # Build pipeline

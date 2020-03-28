@@ -56,8 +56,14 @@
 # okhttp
 -keepattributes Signature
 -keepattributes *Annotation*
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+# This is also needed by Picasso
+-dontwarn com.squareup.okhttp.**
+
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
+# This is also needed by Picasso
 -dontwarn okhttp3.**
 
 # okio
@@ -77,11 +83,16 @@
 -dontwarn com.kevinejohn.RNMixpanel.**
 
 # React Native Config must referencing to BuildConfig
--keep class it.teamdigitale.app.italiaapp.BuildConfig { *; }
+-keep class it.pagopa.io.app.BuildConfig { *; }
 
 # React-native svg
 -keep public class com.horcrux.svg.** {*;}
 -dontwarn com.horcrux.svg.**
+
+
+# React-native cie
+-keep public class it.ipzs.** {*;}
+-dontwarn it.ipzs.**
 
 -keep class com.google.android.gms.** { *; }
 -dontwarn com.google.android.gms.**
