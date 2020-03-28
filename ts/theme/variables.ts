@@ -256,6 +256,7 @@ const customVariables = Object.assign(materialVariables, {
 
   // Spacer
   spacerExtrasmallHeight: 4,
+  spacerSmallHeight: 8,
   spacerHeight: 16,
   spacerLargeHeight: 24,
   spacerExtralargeHeight: 40,

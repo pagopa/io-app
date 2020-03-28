@@ -10,6 +10,7 @@ declare module "native-base" {
       spacer?: boolean;
       hspacer?: boolean;
       xsmall?: boolean;
+      small?: boolean;
       large?: boolean;
       extralarge?: boolean;
       modal?: boolean;
@@ -38,6 +39,9 @@ export default (): Theme => {
     ".spacer": {
       "xsmall": {
         height: customVariables.spacerExtrasmallHeight
+      },
+      "small": {
+        height: customVariables.spacerSmallHeight
       },
       ".large": {
         height: variables.spacerLargeHeight
