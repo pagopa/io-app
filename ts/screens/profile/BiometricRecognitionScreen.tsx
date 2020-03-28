@@ -59,7 +59,7 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
 
   private goBack = () => this.props.navigation.goBack();
 
-  public componentWillMount() {
+  public componentDidMount() {
     getFingerprintSettings().then(
       biometryTypeOrUnsupportedReason => {
         this.setState({

@@ -60,11 +60,9 @@ class InvalidNfcConnectionScreen extends React.Component<Props, never> {
         <BaseScreenComponent goBack={true}>
           <Container>
             <View style={styles.container}>
-              <H2>
-                {I18n.t("authentication.landing.cie.noNfcConnectionTitle")}
-              </H2>
+              <H2>{I18n.t("authentication.cie.nfc.noNfcConnectionTitle")}</H2>
               <Text style={styles.textStyle}>
-                {I18n.t("authentication.landing.cie.noNfcConnectionContent")}
+                {I18n.t("authentication.cie.nfc.noNfcConnectionContent")}
               </Text>
             </View>
           </Container>
