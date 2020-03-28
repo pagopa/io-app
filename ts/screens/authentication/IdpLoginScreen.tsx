@@ -16,7 +16,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
-import * as config from "../../config";
 import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
@@ -27,7 +26,7 @@ import {
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
-import { extractLoginResult } from "../../utils/login";
+import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -43,10 +42,6 @@ type State = {
   errorCode?: string;
   loginTrace?: string;
 };
-
-const LOGIN_BASE_URL = `${
-  config.apiUrlPrefix
-}/login?authLevel=SpidL2&entityID=`;
 
 const brokenLinkImage = require("../../../img/broken-link.png");
 
@@ -91,31 +86,6 @@ const styles = StyleSheet.create({
     marginEnd: 10
   }
 });
-
-/**
- * Extract the login result from the given url.
- * Return true if the url contains login pattern & token
- */
-const onNavigationStateChange = (
-  onFailure: (errorCode: string | undefined) => void,
-  onSuccess: (_: SessionToken) => void
-) => (navState: NavState): boolean => {
-  if (navState.url) {
-    // If the url is not related to login this will be `null`
-    const loginResult = extractLoginResult(navState.url);
-    if (loginResult) {
-      if (loginResult.success) {
-        // In case of successful login
-        onSuccess(loginResult.token);
-        return true;
-      } else {
-        // In case of login failure
-        onFailure(loginResult.errorCode);
-      }
-    }
-  }
-  return false;
-};
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_login.contextualHelpTitle",
@@ -167,7 +137,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private handleShouldStartLoading = (event: NavState): boolean => {
-    const isLoginUrlWithToken = onNavigationStateChange(
+    const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
       this.props.dispatchLoginSuccess
     )(event);
@@ -247,7 +217,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       // before the redux state is updated succesfully)
       return <LoadingSpinnerOverlay isLoading={true} />;
     }
-    const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
+    const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.entityID);
 
     return (
       <BaseScreenComponent

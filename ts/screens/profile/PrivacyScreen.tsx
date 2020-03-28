@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.main.privacy.contextualHelpTitlePolicy",
-  body: "profile.main.privacy.contextualHelpContentPolicy"
+  title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
+  body: "profile.main.privacy.privacyPolicy.contextualHelpContentPolicy"
 };
 
 /**
@@ -33,10 +33,12 @@ export const PrivacyScreen: React.SFC<Props> = props => (
   <React.Fragment>
     <MarkdownScreenComponent
       goBack={() => props.navigation.goBack()}
-      markdown={I18n.t("profile.main.privacy.text")}
-      headerTitle={I18n.t("profile.main.mainPrivacy.screenTitle")}
+      markdown={I18n.t("profile.main.privacy.privacyPolicy.text")}
+      headerTitle={I18n.t("profile.main.privacy.privacyPolicy.title")}
       headerContent={
-        <H4 style={styles.bolded}>{I18n.t("profile.main.privacy.header")}</H4>
+        <H4 style={styles.bolded}>
+          {I18n.t("profile.main.privacy.privacyPolicy.header")}
+        </H4>
       }
       contextualHelpMarkdown={contextualHelpMarkdown}
     />

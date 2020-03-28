@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="it.teamdigitale.app.italiaapp"
+          package="it.pagopa.io.app"
           xmlns:tools="http://schemas.android.com/tools"
           android:installLocation="auto">
 

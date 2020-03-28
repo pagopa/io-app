@@ -3,21 +3,16 @@
  */
 import { Col, Content, Grid, H1, H2, Row, Text, View } from "native-base";
 import * as React from "react";
-import { Linking } from "react-native";
 import { StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { openLink } from "../../components/ui/Markdown/handlers/link";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
-
-type Props = OwnProps;
+type Props = NavigationInjectedProps;
 
 const styles = StyleSheet.create({
   value: {
@@ -30,6 +25,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
+
+const browseToLink = () => openLink("https://www.spid.gov.it");
 
 class SpidInformationScreen extends React.Component<Props, never> {
   private getValueContent(value: string, content: string) {
@@ -44,12 +41,6 @@ class SpidInformationScreen extends React.Component<Props, never> {
         <Col size={2} />
       </Row>
     );
-  }
-
-  private browseToLink() {
-    const url = "https://www.spid.gov.it";
-    // tslint:disable no-floating-promises
-    Linking.openURL(url);
   }
 
   public render() {
@@ -104,7 +95,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
           <ButtonDefaultOpacity
             block={true}
             primary={true}
-            onPress={this.browseToLink}
+            onPress={browseToLink}
           >
             <Text>{I18n.t("authentication.spid_information.knowMore")}</Text>
           </ButtonDefaultOpacity>
