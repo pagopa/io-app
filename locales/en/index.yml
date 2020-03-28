@@ -623,6 +623,7 @@ wallet:
     header: Transaction notice summary
     title: Transaction notice
     amount: Transaction amount
+    total: Total paid
     expireDate: Expire date
     tranche: Tranche
     info: 'More info at:'
@@ -635,6 +636,7 @@ wallet:
     iuv: IUV code
     entityCode: Entity fiscal code
     fee: Fee
+    idTransaction: Transaction identification code
     updatedAmount: Updated amount
     updateInfo: 'The pagoPa system updates automatically the amount to ensure you
       pay the exact amount and to avoid you arrears or additional interests '

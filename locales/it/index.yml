@@ -635,6 +635,7 @@ wallet:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento
     amount: Importo pagamento
+    total: Totale pagato
     expireDate: Scadenza
     tranche: Rata
     info: 'Per informazioni:'
@@ -648,6 +649,7 @@ wallet:
     entityCode: Codice fiscale creditore
     updatedAmount: Importo aggiornato
     fee: Costi di transazione 
+    idTransaction: Codice identificativo della transazione
     updateInfo: Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     loadingMessage:
