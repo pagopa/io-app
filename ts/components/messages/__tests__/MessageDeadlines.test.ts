@@ -15,7 +15,7 @@ import {
   MessageAgendaSection,
   Sections
 } from "../MessageAgenda";
-import { getNextDeadlineId, isFakeItem } from "../MessagesDeadlines";
+import { getNextDeadlineId } from "../MessagesDeadlines";
 
 /**
  * Filter only the messages with a due date and group them by due_date day.
@@ -249,9 +249,6 @@ describe("next section check", () => {
     const sectionsWithNoNext = sections.filter(s => {
       // remove any sections with due_date greater than today (no future)
       const item = s.data[0];
-      if (isFakeItem(item)) {
-        return true;
-      }
       return (
         item.e1.content.due_date.getTime() < startOfDay(new Date()).getTime()
       );
