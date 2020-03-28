@@ -44,7 +44,10 @@ type OwnProps = {
   >["ListEmptyComponent"];
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
-  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
+  onItemSwitchValueChanged?: (
+    services: ReadonlyArray<ServicePublic>,
+    value: boolean
+  ) => void;
   renderRightIcon?: (selectedOrgId: ServicesSectionState) => React.ReactNode;
 };
 

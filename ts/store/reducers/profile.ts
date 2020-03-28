@@ -3,9 +3,9 @@
  * It only manages SUCCESS actions because all UI state properties (like loading/error)
  * are managed by different global reducers.
  */
-
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { EmailAddress } from "../../../definitions/backend/EmailAddress";
@@ -29,9 +29,25 @@ const INITIAL_STATE: ProfileState = pot.none;
 export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
 
+export const isEmailEnabledSelector = createSelector(profileSelector, profile =>
+  pot.getOrElse(pot.map(profile, p => p.is_email_enabled), false)
+);
+
+export const isInboxEnabledSelector = createSelector(
+  profileSelector,
+  profile =>
+    pot.isSome(profile) && InitializedProfile.is(profile.value)
+      ? profile.value.is_inbox_enabled
+      : false
+);
+
 export const getProfileEmail = (
   user: InitializedProfile
 ): Option<EmailAddress> => fromNullable(user.email);
+
+export const getProfileMobilePhone = (
+  user: InitializedProfile
+): Option<NonEmptyString> => fromNullable(user.spid_mobile_phone);
 
 export const getProfileSpidEmail = (
   user: InitializedProfile
@@ -49,6 +65,13 @@ export const profileSpidEmailSelector = createSelector(
   profileSelector,
   (profile: ProfileState): Option<string> =>
     pot.getOrElse(pot.map(profile, p => getProfileSpidEmail(p)), none)
+);
+
+// return the mobile phone number (as a string)
+export const profileMobilePhoneSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): Option<string> =>
+    pot.getOrElse(pot.map(profile, p => getProfileMobilePhone(p)), none)
 );
 
 // return true if the profile has an email
@@ -121,7 +144,7 @@ const reducer = (
             ...currentProfile,
             has_profile: true,
             email: newProfile.email,
-            is_email_enabled: newProfile.is_email_enabled,
+            is_email_enabled: newProfile.is_email_enabled === true,
             is_inbox_enabled: newProfile.is_inbox_enabled === true,
             is_email_validated: newProfile.is_email_validated === true,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
@@ -142,6 +165,7 @@ const reducer = (
             ...currentProfile,
             email: newProfile.email,
             is_inbox_enabled: newProfile.is_inbox_enabled === true,
+            is_email_enabled: newProfile.is_email_enabled === true,
             is_email_validated: newProfile.is_email_validated === true,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
             preferred_languages: newProfile.preferred_languages,

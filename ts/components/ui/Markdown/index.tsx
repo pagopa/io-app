@@ -19,6 +19,7 @@ import * as RNFS from "react-native-fs";
 import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
+import { filterXSS } from "xss";
 
 import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
@@ -287,7 +288,6 @@ class Markdown extends React.PureComponent<Props, State> {
 
     const isLoading =
       html === undefined || (html !== "" && htmlBodyHeight === 0);
-
     return (
       <React.Fragment>
         {isLoading && (
@@ -375,7 +375,10 @@ class Markdown extends React.PureComponent<Props, State> {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       }
       remarkProcessor.process(
-        convertOldDemoMarkdownTag(markdown),
+        convertOldDemoMarkdownTag(
+          // sanitize html to prevent xss attacks
+          filterXSS(markdown, { stripIgnoreTagBody: ["script"] })
+        ),
         (error: any, file: any) => {
           error
             ? fromNullable(onError).map(_ => _(error))

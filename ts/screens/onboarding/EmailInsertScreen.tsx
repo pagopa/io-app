@@ -14,7 +14,7 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationScreenProps, StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -24,6 +24,7 @@ import BaseScreenComponent, {
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
 import I18n from "../../i18n";
+import { navigateToEmailReadScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,
   emailAcknowledged,
@@ -75,6 +76,7 @@ const EMPTY_EMAIL = "";
 
 type State = Readonly<{
   email: Option<string>;
+  isMounted: boolean;
 }>;
 
 // TODO: update content (https://www.pivotaltracker.com/n/projects/2048617/stories/169392558)
@@ -89,7 +91,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class EmailInsertScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { email: this.props.optionEmail };
+    this.state = { email: this.props.optionEmail, isMounted: true };
   }
 
   private continueOnPress = () => {
@@ -111,7 +113,10 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     };
 
     return (
-      <FooterWithButtons type="SingleButton" leftButton={continueButtonProps} />
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={continueButtonProps}
+      />
     );
   };
 
@@ -140,8 +145,16 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   };
 
   private handleGoBack = () => {
+    // goback if the onboarding is completed
     if (this.props.isOnboardingCompleted) {
       this.props.navigation.goBack();
+    }
+    // if the onboarding is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
+    // see https://www.pivotaltracker.com/story/show/171424350
+    else if (this.props.optionEmail.isSome()) {
+      this.setState({ isMounted: false }, () => {
+        this.navigateToEmailReadScreen();
+      });
     } else {
       // if the user is in onboarding phase, go back has to
       // abort login (an user with no email can't access the home)
@@ -163,17 +176,24 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
     }
   };
 
-  get isFromProfileSection() {
-    return this.props.isOnboardingCompleted;
-  }
+  private navigateToEmailReadScreen = () => {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [navigateToEmailReadScreen()]
+    });
+    this.props.navigation.dispatch(resetAction);
+  };
 
   public componentDidMount() {
-    if (this.isFromProfileSection) {
+    if (this.props.isOnboardingCompleted) {
       this.setState({ email: some(EMPTY_EMAIL) });
     }
   }
 
   public componentDidUpdate(prevProps: Props) {
+    if (!this.state.isMounted) {
+      return;
+    }
     // if we were updating the profile
     if (pot.isUpdating(prevProps.profile)) {
       // and we got an error
@@ -182,13 +202,25 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         showToast(I18n.t("email.edit.upsert_ko"), "danger");
       } else if (pot.isSome(this.props.profile)) {
         // user is inserting his email from onboarding phase
-        if (!this.props.isOnboardingCompleted) {
-          // send an ack that user checks his own email
-          this.props.acknowledgeEmail();
+        // he comes from checkAcknowledgedEmailSaga if onboarding is not finished yet
+        // and he has not an email
+        if (
+          !this.props.isOnboardingCompleted &&
+          prevProps.optionEmail.isNone()
+        ) {
+          // since this screen is mounted from saga it won't be unmounted because on saga
+          // we have a direct navigation instead of back
+          // so we have to force a reset (to get this screen unmounted) and navigate to emailReadScreen
+          // isMounted is used as a guard to prevent update while the screen is unmounting
+          this.setState({ isMounted: false }, () => {
+            this.props.acknowledgeEmailInsert();
+            this.navigateToEmailReadScreen();
+          });
           return;
         }
         // go back (to the EmailReadScreen)
-        this.props.navigation.goBack();
+        this.handleGoBack();
+        return;
       }
     }
 
@@ -204,18 +236,18 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         this.state.email,
         true
       );
-      if (isTheSameEmail) {
-        Alert.alert(I18n.t("email.insert.alert"));
-      } else {
+      if (!isTheSameEmail) {
         this.state.email.map(e => {
           this.props.updateEmail(e as EmailString);
         });
+      } else {
+        Alert.alert(I18n.t("email.insert.alert"));
       }
     }
   }
 
   public render() {
-    const { isFromProfileSection } = this;
+    const isFromProfileSection = this.props.isOnboardingCompleted;
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
@@ -307,6 +339,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         email
       })
     ),
+  navigateToEmailReadScreen: () => {
+    dispatch(navigateToEmailReadScreen());
+  },
   acknowledgeEmailInsert: () => dispatch(emailInsert()),
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
