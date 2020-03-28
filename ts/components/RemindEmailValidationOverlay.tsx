@@ -35,6 +35,7 @@ import TopScreenComponent, {
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
+import customVariables from '../theme/variables';
 
 type OwnProp = {
   closeModalAndNavigateToEmailInsertScreen: () => void;
@@ -60,6 +61,11 @@ const styles = StyleSheet.create({
   },
   emailTitle: {
     textAlign: "center"
+  },
+  error: {
+    backgroundColor: customVariables.brandDanger, 
+    paddingLeft: customVariables.contentPadding, 
+    paddingVertical: 11
   }
 });
 
@@ -308,11 +314,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                 <Text>{this.state.ctaSendEmailValidationText}</Text>
               </Button>
             )}
-          {this.state.displayError && (
-            <Text note={true}>{I18n.t("global.actions.retry")}</Text>
-          )}
           <View spacer={true} large={true} />
+          
         </Content>
+          <View style={styles.error}>
+            <Text note={true} white={true}>{I18n.t("global.actions.retry")}</Text>
+          </View>
+            
+          )}
         {this.renderFooter()}
       </TopScreenComponent>
     );
