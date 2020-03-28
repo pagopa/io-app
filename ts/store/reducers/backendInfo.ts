@@ -10,6 +10,7 @@ import {
   backendInfoLoadFailure,
   backendInfoLoadSuccess
 } from "../actions/backendInfo";
+import { GlobalState } from "./types";
 
 export type BackendInfoState = Readonly<{
   serverInfo?: ServerInfo;
@@ -40,3 +41,7 @@ export default function backendInfo(
       return state;
   }
 }
+
+// Selectors
+export const serverInfoDataSelector = (state: GlobalState) =>
+  state.backendInfo.serverInfo;
