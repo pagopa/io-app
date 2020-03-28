@@ -237,19 +237,18 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         <FooterWithButtons
           type={"TwoButtonsInlineThirdInverted"}
           leftButton={{
-            block: true,
             bordered: true,
             disabled: this.state.isLoading,
             onPress: () => {
               if (!isOnboardingCompleted) {
                 this.props.closeModalAndNavigateToEmailInsertScreen();
+                return;
               }
               this.props.navigateToEmailInsertScreen();
             },
             title: I18n.t("email.edit.title")
           }}
           rightButton={{
-            block: true,
             primary: true,
             onPress: this.handleOnClose,
             disabled: this.state.isLoading,
