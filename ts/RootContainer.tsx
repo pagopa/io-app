@@ -32,12 +32,11 @@ import { GlobalState } from "./store/reducers/types";
 import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
-// Check min version app supported
 import { fromNullable } from "fp-ts/lib/Option";
 import { serverInfoDataSelector } from "./store/reducers/backendInfo";
+// Check min version app supported
 import { isUpdateNeeded } from "./utils/appVersion";
 
-// tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 class RootContainer extends React.PureComponent<Props> {
@@ -140,8 +139,9 @@ class RootContainer extends React.PureComponent<Props> {
             isFlagSecureEnabled={!this.props.isDebugModeEnabled}
           />
         )}
-        {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
+        {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
+
         {isAppOutOfDate ? <UpdateAppModal /> : <IdentificationModal />}
         {this.getModal}
         <LightModalRoot />
