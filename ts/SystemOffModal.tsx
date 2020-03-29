@@ -12,7 +12,6 @@ import BaseScreenComponent from "./components/screens/BaseScreenComponent";
 import { backendServicesStatusSelector } from "./store/reducers/backendStatus";
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
-import { RTron } from "./boot/configureStoreAndPersistor";
 
 type Props = ReturnType<typeof mapStateToProps>;
 const styles = StyleSheet.create({
