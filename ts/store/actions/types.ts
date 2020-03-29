@@ -12,6 +12,7 @@ import { GlobalState } from "../reducers/types";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
+import { BackendInfoActions } from "./backendInfo";
 import { BackendServicesStatusActions } from "./backendStatus";
 import { CalendarEventsActions } from "./calendarEvents";
 import { CieAuthenticationActions } from "./cie";
