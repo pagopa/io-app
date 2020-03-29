@@ -20,7 +20,7 @@ import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { shouldDisplayVersionInfoOverlay } from "./config";
 import IdentificationModal from "./IdentificationModal";
 import Navigation from "./navigation";
-import ServicesStatusModal from "./ServicesStatusModal";
+import SystemOffModal from "./SystemOffModal";
 import {
   applicationChangeState,
   ApplicationState
@@ -117,7 +117,7 @@ class RootContainer extends React.PureComponent<Props> {
   private get getModal() {
     // avoid app usage if backend systems are OFF
     if (this.props.isBackendServicesStatusOff) {
-      return <ServicesStatusModal />;
+      return <SystemOffModal />;
     }
     const isAppOutOfDate = fromNullable(this.props.backendInfo)
       .map(bi => isUpdateNeeded(bi, "min_app_version"))
