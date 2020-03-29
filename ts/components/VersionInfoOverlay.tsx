@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 const VersionInfoOverlay: React.SFC<Props> = props => {
   const appVersion = DeviceInfo.getVersion();
   const serverInfo = props.serverInfo;
-  const serverVersion = serverInfo.fold("?", v => v.version);
+  const serverVersion = serverInfo ? serverInfo.version : "?";
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
       <Text style={styles.versionText}>
@@ -54,7 +54,7 @@ const VersionInfoOverlay: React.SFC<Props> = props => {
 
 const mapStateToProps = (state: GlobalState) => ({
   nav: state.nav,
-  serverInfo: state.backendStatus.status
+  serverInfo: state.backendInfo.serverInfo
 });
 
 export default connect(mapStateToProps)(VersionInfoOverlay);

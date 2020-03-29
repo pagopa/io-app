@@ -3,7 +3,7 @@ import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
 import { BackendStatus } from "../../api/backendPublic";
-import { backendServicesStatusLoadSuccess } from "../../store/actions/backendStatus";
+import { backendStatusLoadSuccess } from "../../store/actions/backendStatus";
 import { backendStatusSaga } from "../backendStatus";
 
 jest.mock("react-native-background-timer", () => {
@@ -30,7 +30,7 @@ describe("backendServicesStatusSaga", () => {
           right({ status: 200, value: responseOn })
         ]
       ])
-      .put(backendServicesStatusLoadSuccess(responseOn))
+      .put(backendStatusLoadSuccess(responseOn))
       .run();
   });
 
@@ -43,7 +43,7 @@ describe("backendServicesStatusSaga", () => {
           right({ status: 404, value: responseOn })
         ]
       ])
-      .not.put(backendServicesStatusLoadSuccess(responseOn))
+      .not.put(backendStatusLoadSuccess(responseOn))
       .run();
   });
 
@@ -52,7 +52,7 @@ describe("backendServicesStatusSaga", () => {
       throw new Error("network error");
     });
     return expectSaga(backendStatusSaga, getBackendServicesStatus)
-      .not.put(backendServicesStatusLoadSuccess(responseOn))
+      .not.put(backendStatusLoadSuccess(responseOn))
       .run();
   });
 });
