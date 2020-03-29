@@ -9,6 +9,13 @@ import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { Timestamp } from "../../definitions/backend/Timestamp";
 import { defaultRetryingFetch } from "../utils/fetch";
 
+type GetServerInfoT = IGetApiRequestType<
+  {},
+  never,
+  never,
+  BasicResponseType<ServerInfo>
+>;
+
 export const BackendStatus = t.intersection(
   [
     t.interface({
@@ -49,7 +56,16 @@ export function BackendPublicClient(
     response_decoder: basicResponseDecoder(BackendStatus)
   };
 
+  const getServerInfoT: GetServerInfoT = {
+    method: "get",
+    url: () => "/info",
+    query: _ => ({}),
+    headers: () => ({}),
+    response_decoder: basicResponseDecoder(ServerInfo)
+  };
+
   return {
+    getServerInfo: createFetchRequestForApi(getServerInfoT, options),
     getStatus: createFetchRequestForApi(getStatusT, options)
   };
 }
