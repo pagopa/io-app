@@ -13,7 +13,7 @@ import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
-import { BackendServicesStatusActions } from "./backendStatus";
+import { BackendStatusActions } from "./backendStatus";
 import { CalendarEventsActions } from "./calendarEvents";
 import { CieAuthenticationActions } from "./cie";
 import { ContentActions } from "./content";
@@ -43,7 +43,7 @@ export type Action =
   | AnalyticsActions
   | ApplicationActions
   | AuthenticationActions
-  | BackendServicesStatusActions
+  | BackendStatusActions
   | CieAuthenticationActions
   | BackendInfoActions
   | DeepLinkActions

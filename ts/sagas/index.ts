@@ -3,8 +3,8 @@
  */
 import { all, call, Effect } from "redux-saga/effects";
 
-import backendStatusSaga from "./backendStatus";
 import backendInfoSaga from "./backendInfo";
+import backendStatusSaga from "./backendStatus";
 import {
   watchContentMunicipalityLoadSaga,
   watchContentServicesByScopeLoad,

@@ -12,18 +12,12 @@ jest.mock("react-native-background-timer", () => {
   };
 });
 
-const validResponse: BackendStatus = {
-  min_app_version: {
-    ios: "0.0.0",
-    android: "0.0.0"
-  },
-  min_app_version_pagopa: {
-    ios: "0.0.0",
-    android: "0.0.0"
-  },
-  version: "4.7.0",
-  last_update: new Date(),
-  refresh_interval: (10 * 1000).toString()
+const responseOn: BackendStatus = {
+  is_alive: true,
+  message: {
+    "it-IT": "messaggio in italiano",
+    "en-EN": "english message"
+  }
 };
 
 describe("backendServicesStatusSaga", () => {
@@ -33,10 +27,10 @@ describe("backendServicesStatusSaga", () => {
       .provide([
         [
           matchers.call.fn(getBackendServicesStatus),
-          right({ status: 200, value: validResponse })
+          right({ status: 200, value: responseOn })
         ]
       ])
-      .put(backendServicesStatusLoadSuccess(validResponse))
+      .put(backendServicesStatusLoadSuccess(responseOn))
       .run();
   });
 
@@ -46,10 +40,10 @@ describe("backendServicesStatusSaga", () => {
       .provide([
         [
           matchers.call.fn(getBackendServicesStatus),
-          right({ status: 404, value: validResponse })
+          right({ status: 404, value: responseOn })
         ]
       ])
-      .not.put(backendServicesStatusLoadSuccess(validResponse))
+      .not.put(backendServicesStatusLoadSuccess(responseOn))
       .run();
   });
 
@@ -58,7 +52,7 @@ describe("backendServicesStatusSaga", () => {
       throw new Error("network error");
     });
     return expectSaga(backendStatusSaga, getBackendServicesStatus)
-      .not.put(backendServicesStatusLoadSuccess(validResponse))
+      .not.put(backendServicesStatusLoadSuccess(responseOn))
       .run();
   });
 });

@@ -27,7 +27,7 @@ import {
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
-import { isBackendServicesStatusOffSelector } from "./store/reducers/backendServicesStatus";
+import { isBackendServicesStatusOffSelector } from "./store/reducers/backendStatus";
 import { GlobalState } from "./store/reducers/types";
 import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
@@ -115,11 +115,18 @@ class RootContainer extends React.PureComponent<Props> {
   }
 
   private get getModal() {
-    return this.props.isBackendServicesStatusOff ? (
-      <ServicesStatusModal />
-    ) : (
-      <IdentificationModal />
-    );
+    // avoid app usage if backend systems are OFF
+    if (this.props.isBackendServicesStatusOff) {
+      return <ServicesStatusModal />;
+    }
+    const isAppOutOfDate = fromNullable(this.props.backendInfo)
+      .map(bi => isUpdateNeeded(bi, "min_app_version"))
+      .getOrElse(false);
+    // if the app is out of date, force a screen to update it
+    if (isAppOutOfDate) {
+      return <UpdateAppModal />;
+    }
+    return <IdentificationModal />;
   }
 
   public render() {
@@ -128,9 +135,7 @@ class RootContainer extends React.PureComponent<Props> {
     //        the redux state (i.e. background)
 
     // if we have no information about the backend, don't force the update
-    const isAppOutOfDate = fromNullable(this.props.backendInfo)
-      .map(bi => isUpdateNeeded(bi, "min_app_version"))
-      .getOrElse(false);
+
     return (
       <Root>
         <StatusBar barStyle={"dark-content"} />
@@ -141,8 +146,6 @@ class RootContainer extends React.PureComponent<Props> {
         )}
         <Navigation />
         {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
-
-        {isAppOutOfDate ? <UpdateAppModal /> : <IdentificationModal />}
         {this.getModal}
         <LightModalRoot />
       </Root>

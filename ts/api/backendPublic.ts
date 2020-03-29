@@ -6,7 +6,6 @@ import {
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
-import { Timestamp } from "../../definitions/backend/Timestamp";
 import { defaultRetryingFetch } from "../utils/fetch";
 
 type GetServerInfoT = IGetApiRequestType<
@@ -16,16 +15,17 @@ type GetServerInfoT = IGetApiRequestType<
   BasicResponseType<ServerInfo>
 >;
 
-export const BackendStatus = t.intersection(
-  [
-    t.interface({
-      last_update: Timestamp,
-      refresh_interval: t.string
-    }),
-    ServerInfo
-  ],
-  "BackendStatus"
-);
+const BackendStatusMessage = t.interface({
+  "it-IT": t.string,
+  "en-EN": t.string
+});
+
+const BackendStatusR = t.interface({
+  is_alive: t.boolean,
+  message: BackendStatusMessage
+});
+
+export const BackendStatus = t.exact(BackendStatusR, "ServerInfo");
 export type BackendStatus = t.TypeOf<typeof BackendStatus>;
 
 type GetStatusT = IGetApiRequestType<
@@ -35,6 +35,26 @@ type GetStatusT = IGetApiRequestType<
   BasicResponseType<BackendStatus>
 >;
 
+export function CdnBackendStatusClient(
+  baseUrl: string,
+  fetchApi: typeof fetch = defaultRetryingFetch()
+) {
+  const options = {
+    baseUrl,
+    fetchApi
+  };
+
+  const getStatusT: GetStatusT = {
+    method: "get",
+    url: () => "backend.json",
+    query: _ => ({}),
+    headers: () => ({}),
+    response_decoder: basicResponseDecoder(BackendStatus)
+  };
+  return {
+    getStatus: createFetchRequestForApi(getStatusT, options)
+  };
+}
 //
 // Create client
 //
@@ -48,14 +68,6 @@ export function BackendPublicClient(
     fetchApi
   };
 
-  const getStatusT: GetStatusT = {
-    method: "get",
-    url: () => "/status",
-    query: _ => ({}),
-    headers: () => ({}),
-    response_decoder: basicResponseDecoder(BackendStatus)
-  };
-
   const getServerInfoT: GetServerInfoT = {
     method: "get",
     url: () => "/info",
@@ -65,7 +77,6 @@ export function BackendPublicClient(
   };
 
   return {
-    getServerInfo: createFetchRequestForApi(getServerInfoT, options),
-    getStatus: createFetchRequestForApi(getStatusT, options)
+    getServerInfo: createFetchRequestForApi(getServerInfoT, options)
   };
 }

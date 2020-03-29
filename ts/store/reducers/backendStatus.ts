@@ -3,11 +3,10 @@
  */
 
 import { none, Option, some } from "fp-ts/lib/Option";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { BackendStatus } from "../../api/backendPublic";
-import { backendServicesStatusLoadSuccess } from "../actions/backendStatus";
+import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
@@ -30,10 +29,6 @@ export const backendServicesStatusSelector = (
   state: GlobalState
 ): BackendStatusState => state.backendStatus;
 
-// this is a constant applied to know if systeam are dead or know
-// since we receive the date some time could be elpased due to network delay
-const C_TOLERANCE = (20 * 1000) as Millisecond;
-
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
 
@@ -47,15 +42,10 @@ export const areSystemsDeadReducer = (
   currentState: BackendStatusState,
   backendStatus: BackendStatus
 ): BackendStatusState => {
-  // we considering refresh timeout + a constant to evaluate the time
-  // must be exceeded to say backend system are dead or not
-  const refreshInterval = parseInt(backendStatus.refresh_interval, 10);
-  const refreshTimeout = refreshInterval + (C_TOLERANCE as number);
-  const areSystemsDead =
-    new Date().getTime() - backendStatus.last_update.getTime() > refreshTimeout;
-  const deadsCounter = areSystemsDead
-    ? Math.min(currentState.deadsCounter + 1, DEAD_COUNTER_THRESHOLD)
-    : 0;
+  const deadsCounter =
+    backendStatus.is_alive === false
+      ? Math.min(currentState.deadsCounter + 1, DEAD_COUNTER_THRESHOLD)
+      : 0;
   return {
     ...currentState,
     status: some(backendStatus),
@@ -68,7 +58,7 @@ export default function backendServicesStatusReducer(
   state: BackendStatusState = initialBackendInfoState,
   action: Action
 ): BackendStatusState {
-  if (action.type === getType(backendServicesStatusLoadSuccess)) {
+  if (action.type === getType(backendStatusLoadSuccess)) {
     return areSystemsDeadReducer(state, action.payload);
   }
   return state;
