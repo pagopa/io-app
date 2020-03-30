@@ -1,5 +1,5 @@
 import { Effect } from "redux-saga";
-import { call, put, take } from "redux-saga/effects";
+import { call, cancel, fork, put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import {
@@ -9,6 +9,7 @@ import {
 import { loginSuccess } from "../../store/actions/authentication";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SessionToken } from "../../types/SessionToken";
+import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 
 /**
  * A saga that makes the user go through the authentication process until
@@ -16,6 +17,9 @@ import { SessionToken } from "../../types/SessionToken";
  */
 export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   yield put(analyticsAuthenticationStarted());
+
+  // Watch for login by CIE
+  const watchCieAuthentication = yield fork(watchCieAuthenticationSaga);
 
   // Reset the navigation stack and navigate to the authentication screen
   yield put(resetToAuthenticationRoute);
@@ -25,6 +29,10 @@ export function* authenticationSaga(): IterableIterator<Effect | SessionToken> {
   const action: ActionType<typeof loginSuccess> = yield take(
     getType(loginSuccess)
   );
+
+  yield cancel(watchCieAuthentication);
+  // stop cie manager from listening nfc
+  yield call(stopCieManager);
 
   // User logged in successfully, remove all the scheduled local notifications
   // to remind the user to authenticate with spid

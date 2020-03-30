@@ -1,7 +1,6 @@
 // Main config file. Mostly read the configuration from .env files
 
 import * as t from "io-ts";
-
 import { NonNegativeNumber } from "italia-ts-commons/lib/numbers";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Millisecond, Second } from "italia-ts-commons/lib/units";
@@ -37,10 +36,9 @@ export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
+export const backendStatusUrl: string = Config.BACKEND_STATUS_URL;
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
 export const gcmSenderId: string = Config.GCM_SENDER_ID;
-export const isCIEauthenticationEnabled: boolean =
-  Config.CIE_AUTHENTICATION_ENABLED === "YES";
 export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
 export const isDebugBiometricIdentificationEnabled =

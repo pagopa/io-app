@@ -9,6 +9,7 @@ import {
 } from "react-navigation";
 import { Middleware } from "redux";
 import I18n from "../../i18n";
+import { identificationRequest } from "../actions/identification";
 import { navigationRestore } from "../actions/navigation";
 import {
   navigationHistoryPop,
@@ -99,6 +100,8 @@ export function createNavigationHistoryMiddleware(): Middleware<
           ) {
             lastExitRequestTime = none;
             exitApp();
+            // if the user wants exit the app the identification must be requested
+            store.dispatch(identificationRequest());
           } else {
             Toast.show({ text: I18n.t("exit.pressAgain") });
           }

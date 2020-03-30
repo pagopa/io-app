@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="it.teamdigitale.app.italiaapp"
+          package="it.pagopa.io.app"
+          xmlns:tools="http://schemas.android.com/tools"
           android:installLocation="auto">
 
   <supports-screens android:smallScreens="true"
@@ -11,6 +12,10 @@
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+  <!-- Force removal of READ_PHONE_STATE due to react-native-device-info library see https://github.com/react-native-community/react-native-device-info/issues/955 -->
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove" />
+  <!-- Force removal of RECORD_AUDIO since the app doesn't need it see https://www.pivotaltracker.com/story/show/171897210 -->
+  <uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />
 
   <!-- Required by react-native-calendar-events -->
   <uses-permission android:name="android.permission.READ_CALENDAR" />
