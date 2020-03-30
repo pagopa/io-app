@@ -15,11 +15,32 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="vertical">
-            
-            <ImageView
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:src="@mipmap/logo_io_beta" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:src="@mipmap/logo_IO"
+                    android:foregroundGravity="center_horizontal"
+                    android:id="@+id/ioLogo"
+                    android:layout_centerHorizontal="true"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignBaseline="@id/ioLogo"
+                    android:layout_marginLeft="3dp"
+                    android:layout_toRightOf="@id/ioLogo"
+                    android:layout_alignBottom="@id/ioLogo"
+                    android:src="@mipmap/logo_BETA" />
+
+            </RelativeLayout>
+
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -30,6 +51,7 @@
                 android:gravity="center_horizontal"
                 android:textColor="#FFFFFF"
                 />
+
         </LinearLayout>
     </LinearLayout>
 
