@@ -206,6 +206,7 @@ dependencies {
     implementation project(':@react-native-community_netinfo')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"
+    compile project(':react-native-cie')
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermesvm/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")

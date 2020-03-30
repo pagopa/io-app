@@ -339,6 +339,12 @@ _Note: The sample configuration sets the app to interface with our test environm
 
 #### Dependencies
 
+**module for CIE authentication**
+IO uses a [react native module](https://github.com/pagopa/io-cie-android-sdk) to allow authentication through CIE (Carta di Indentità Elettronica)
+This package is hosted on [Github Packages](https://github.com/features/packages). In order to install this package you need to be able to access the github registry.
+The configuration is pretty simple and fast, you can follow [these instructions](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages)
+**If you don't do this step you can't download and install the cie module.**
+
 Now you can install the libraries used by the project:
 
 ```

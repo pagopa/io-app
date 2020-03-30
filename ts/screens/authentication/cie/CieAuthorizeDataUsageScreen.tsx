@@ -1,18 +1,17 @@
+/**
+ * A screen displayed while the backend manage the opening of the session for the CIE authentication
+ */
 import { Content, H2, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import Markdown from "../../components/ui/Markdown";
-import I18n from "../../i18n";
-import variables from "../../theme/variables";
+import { NavigationInjectedProps } from "react-navigation";
+import TopScreenComponent from "../../../components/screens/TopScreenComponent";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import Markdown from "../../../components/ui/Markdown";
+import I18n from "../../../i18n";
+import variables from "../../../theme/variables";
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
-type Props = OwnProps;
+type Props = NavigationInjectedProps;
 
 type State = {
   isLoadingCompleted: boolean;
@@ -24,10 +23,13 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: variables.fontSizeBase
+  },
+  flex: {
+    flex: 1
   }
 });
 
-class CieAuthorizeDataUsageScreen extends React.Component<Props, State> {
+class CieAuthorizeDataUsageScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { isLoadingCompleted: false };
@@ -50,12 +52,12 @@ class CieAuthorizeDataUsageScreen extends React.Component<Props, State> {
     const retryButtonProps = {
       block: true,
       primary: true,
-      onPress: (): void => Alert.alert(I18n.t("global.notImplemented")),
+      onPress: () => Alert.alert(I18n.t("global.notImplemented")),
       title: I18n.t("global.buttons.retry")
     };
     return (
-      <BaseScreenComponent goBack={true}>
-        <Content contentContainerStyle={{ flex: 1 }} noPadded={true}>
+      <TopScreenComponent goBack={true}>
+        <Content contentContainerStyle={styles.flex} noPadded={true}>
           <View style={styles.contentContainerStyle}>
             <H2>{I18n.t("authentication.cie.noDataTitle")}</H2>
             <View spacer={true} />
@@ -71,7 +73,7 @@ class CieAuthorizeDataUsageScreen extends React.Component<Props, State> {
             leftButton={cancelButtonProps}
           />
         )}
-      </BaseScreenComponent>
+      </TopScreenComponent>
     );
   }
 }
