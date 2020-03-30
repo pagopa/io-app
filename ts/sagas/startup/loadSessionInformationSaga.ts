@@ -31,10 +31,7 @@ export function* loadSessionInformationSaga(
     );
     // Ko we got an error
     if (response.isLeft()) {
-      yield put(
-        sessionInformationLoadFailure(Error(readableReport(response.value)))
-      );
-      return none;
+      throw readableReport(response.value);
     }
 
     if (response.value.status === 200) {
@@ -45,13 +42,12 @@ export function* loadSessionInformationSaga(
 
     // we got a valid response but its status code is describing an error
     const errorMsgDefault = "Invalid server response";
-    const error =
-      response.value.status === 400
-        ? response.value.value.title || errorMsgDefault
-        : errorMsgDefault;
-    yield put(sessionInformationLoadFailure(Error(error)));
-    return none;
+
+    throw response.value.status === 400
+      ? response.value.value.title || errorMsgDefault
+      : errorMsgDefault;
   } catch (e) {
     yield put(sessionInformationLoadFailure(Error(e)));
+    return none;
   }
 }
