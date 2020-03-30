@@ -22,6 +22,7 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
 import customVariables from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import MessageListItem from "./MessageListItem";
 
@@ -71,20 +72,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: customVariables.contentPadding,
     flex: 1
-  },
-  itemWithoutCTABarContainer: {
-    display: "flex",
-    flex: 1,
-    height: ITEM_WITHOUT_CTABAR_HEIGHT
-  },
-  itemWithCTABarContainer: {
-    display: "flex",
-    flex: 1,
-    height: ITEM_WITH_CTABAR_HEIGHT
-  },
-  itemSeparator: {
-    height: 1,
-    backgroundColor: customVariables.brandLightGray
   },
   itemLoadingHeaderWrapper: {
     flexDirection: "row",
@@ -179,7 +166,8 @@ const MessageListItemPlaceholder = (
   </View>
 );
 
-const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
+const ItemSeparator = () => <ItemSeparatorComponent noPadded={true} />;
+
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 class MessageList extends React.Component<Props, State> {
@@ -334,7 +322,7 @@ class MessageList extends React.Component<Props, State> {
           scrollEventThrottle={
             animated ? animated.scrollEventThrottle : undefined
           }
-          ItemSeparatorComponent={ItemSeparatorComponent}
+          ItemSeparatorComponent={ItemSeparator}
           ListEmptyComponent={ListEmptyComponent}
           renderItem={this.renderItem}
           getItemLayout={this.getItemLayout}
