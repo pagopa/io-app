@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const collapseTh = (0 as unknown) as Animated.AnimatedInterpolation;
-const elapseTh = (HEADER_HEIGHT as unknown) as Animated.AnimatedInterpolation;
+const shouldCollapse = (1 as unknown) as Animated.AnimatedInterpolation;
+const shouldExpand = (0 as unknown) as Animated.AnimatedInterpolation;
 
 export class ScreenContentHeader extends React.PureComponent<Props> {
   private heightAnimation: Animated.Value;
@@ -63,11 +63,11 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
 
   public componentDidUpdate(prevProps: Props) {
     if (this.props.dynamicHeight !== prevProps.dynamicHeight) {
-      if (this.props.dynamicHeight === collapseTh) {
+      if (this.props.dynamicHeight === shouldCollapse) {
         this.elapse.stop();
         this.collapse.start();
       }
-      if (this.props.dynamicHeight === elapseTh) {
+      if (this.props.dynamicHeight === shouldExpand) {
         this.collapse.stop();
         this.elapse.start();
       }

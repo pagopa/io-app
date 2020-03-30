@@ -304,9 +304,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
 
   private getHeaderHeight = (): Animated.AnimatedInterpolation =>
     this.animatedTabScrollPositions[this.state.currentTab].interpolate({
-      inputRange: [0, HEADER_HEIGHT, HEADER_HEIGHT + 1, 3000],
-      outputRange: [HEADER_HEIGHT, HEADER_HEIGHT, 0, 0],
-      extrapolate: "extend"
+      inputRange: [0, HEADER_HEIGHT],
+      outputRange: [0, 1],
+      extrapolate: "clamp"
     });
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
