@@ -174,7 +174,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         ? this.props.compareWithCode.length
         : PIN_LENGTH_SIX;
 
-    // we avoid to shuffle pin pad in dev env
+    // we avoid to shuffle pin/code pad in dev env
     const newPinPadValue =
       this.props.shufflePad !== true || isDevEnv
         ? pinPadValues
@@ -212,7 +212,7 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
     this.setState({ value: inputValue });
 
-    // Pin is fulfilled
+    // Pin/code is fulfilled
     if (inputValue.length === this.state.pinLength) {
       const isValid = inputValue === this.props.compareWithCode;
 

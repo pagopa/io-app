@@ -52,7 +52,7 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        title={I18n.t("authentication.cie.nfc.enableNfcHeader")}
+        headerTitle={I18n.t("authentication.cie.nfc.enableNfcHeader")}
       >
         <ScreenContentHeader
           title={I18n.t("authentication.cie.nfc.enableNfcTitle")}

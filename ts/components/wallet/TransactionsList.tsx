@@ -2,30 +2,21 @@
  * This component displays a list of transactions
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Grid, Left, Right, Row, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import {
-  FlatList,
-  ListRenderItemInfo,
-  Platform,
-  StyleSheet
-} from "react-native";
-
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
-import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
-import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
-import { BadgeComponent } from "../screens/BadgeComponent";
+import DetailedlistItemComponent from "../DetailedlistItemComponent";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
-import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
-import IconFont from "../ui/IconFont";
 
 type Props = Readonly<{
   title: string;
@@ -37,23 +28,6 @@ type Props = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
-  transaction: {
-    paddingVertical: variables.spacerHeight
-  },
-
-  itemSeparator: {
-    backgroundColor: "#C9C9C9",
-    height: 1 / 3
-  },
-
-  noBottomPadding: {
-    padding: variables.contentPadding,
-    paddingBottom: 0
-  },
-  listItem: {
-    marginLeft: 0,
-    paddingRight: 0
-  },
   whiteContent: {
     backgroundColor: variables.colorWhite,
     flex: 1
@@ -65,135 +39,36 @@ const styles = StyleSheet.create({
   },
   brandDarkGray: {
     color: variables.brandDarkGray
-  },
-  dateStyle: {
-    lineHeight: 18,
-    fontSize: 13
-  },
-  badgeStyle: {
-    flex: 0,
-    paddingTop: 4,
-    paddingRight: 4
-  },
-  badgeContainer: {
-    flex: 0,
-    paddingRight: 4,
-    alignSelf: "flex-start",
-    marginRight: 4,
-    paddingTop: 6
-  },
-  viewStyle: {
-    flexDirection: "row"
-  },
-  merchant: {
-    fontSize: 14,
-    lineHeight: 18,
-    color: customVariables.brandDarkestGray
-  },
-  transcationUndread: {
-    ...makeFontStyleObject(Platform.select, "700")
-  },
-  transactionRead: {
-    ...makeFontStyleObject(Platform.select, "400")
-  },
-  transactionDescription: {
-    fontSize: 18,
-    lineHeight: 21,
-    color: customVariables.brandDarkestGray
-  },
-  amount: {
-    ...makeFontStyleObject(Platform.select, "700"),
-    fontSize: 16,
-    color: customVariables.brandDarkGray
-  },
-  transactionArrow: {
-    width: 64,
-    alignItems: "flex-end",
-    justifyContent: "center"
-  },
-  transactionContentContainer: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  transactionBadgeDescriptionContainer: {
-    flex: 1,
-    flexDirection: "row"
   }
 });
-const ARROW_WIDTH = 24;
+
 /**
  * Transactions List component
  */
 
 export default class TransactionsList extends React.Component<Props> {
-  private renderDate(item: Transaction) {
-    const datetime: string = `${formatDateAsLocal(
-      item.created,
-      true,
-      true
-    )} - ${item.created.toLocaleTimeString()}`;
-    const amount = formatNumberAmount(centsToAmount(item.amount.amount));
-    return (
-      <Row>
-        <Left>
-          <View style={styles.viewStyle}>
-            <Text note={true} style={styles.dateStyle}>
-              {datetime}
-            </Text>
-          </View>
-        </Left>
-        <Right>
-          <Text style={styles.amount}>{amount}</Text>
-        </Right>
-      </Row>
-    );
-  }
-
   private renderTransaction = (info: ListRenderItemInfo<Transaction>) => {
     const item = info.item;
     const paymentReason = cleanTransactionDescription(item.description);
     const recipient = item.merchant;
     // Check if the current transaction is stored among the read transactions.
     const isNew = this.props.readTransactions[item.id.toString()] === undefined;
+
+    const amount = formatNumberAmount(centsToAmount(item.amount.amount));
+    const datetime: string = `${formatDateAsLocal(
+      item.created,
+      true,
+      true
+    )} - ${item.created.toLocaleTimeString()}`;
     return (
-      <TouchableDefaultOpacity
-        onPress={() => this.props.navigateToTransactionDetails(item)}
-      >
-        <Grid style={styles.transaction}>
-          <Row>
-            <Left>
-              <Text style={styles.merchant}>{recipient}</Text>
-            </Left>
-          </Row>
-          {this.renderDate(item)}
-          <Row>
-            <View style={styles.transactionContentContainer}>
-              <View style={styles.transactionBadgeDescriptionContainer}>
-                {isNew && (
-                  <View style={styles.badgeContainer}>
-                    <BadgeComponent />
-                  </View>
-                )}
-                <Text
-                  style={[
-                    styles.transactionDescription,
-                    isNew ? styles.transcationUndread : styles.transactionRead
-                  ]}
-                >
-                  {paymentReason}
-                </Text>
-              </View>
-              <View style={styles.transactionArrow}>
-                <IconFont
-                  name="io-right"
-                  size={ARROW_WIDTH}
-                  color={customVariables.contentPrimaryBackground}
-                />
-              </View>
-            </View>
-          </Row>
-        </Grid>
-      </TouchableDefaultOpacity>
+      <DetailedlistItemComponent
+        isNew={isNew}
+        text11={recipient}
+        text12={amount}
+        text2={datetime}
+        text3={paymentReason}
+        onPressItem={() => this.props.navigateToTransactionDetails(item)}
+      />
     );
   };
 
@@ -215,10 +90,7 @@ export default class TransactionsList extends React.Component<Props> {
     return transactions.length === 0 && ListEmptyComponent ? (
       ListEmptyComponent
     ) : (
-      <Content
-        scrollEnabled={false}
-        style={[styles.noBottomPadding, styles.whiteContent]}
-      >
+      <Content scrollEnabled={false} style={styles.whiteContent}>
         <View>
           <View style={styles.subHeaderContent}>
             <H5 style={styles.brandDarkGray}>
@@ -229,10 +101,11 @@ export default class TransactionsList extends React.Component<Props> {
         </View>
         <FlatList
           scrollEnabled={false}
-          removeClippedSubviews={false}
           data={transactions}
           renderItem={this.renderTransaction}
-          ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
+          ItemSeparatorComponent={() => (
+            <ItemSeparatorComponent noPadded={true} />
+          )}
           keyExtractor={item => item.id.toString()}
           ListFooterComponent={
             transactions.length > 0 && <EdgeBorderComponent />

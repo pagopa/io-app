@@ -26,7 +26,7 @@ const DEFAULT_FETCH_PAGOPA_TIMEOUT_MS = 60000;
 // operations)
 const DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS = 10000;
 
-// default seconds of background activity before asking the PIN login
+// default seconds of background activity before asking the unlock code login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
 // Default number of workers to fetch message.
