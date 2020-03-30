@@ -1,6 +1,5 @@
 /**
  * This screen allows the user to select the payment method for a selected transaction
- * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 import { some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
@@ -69,6 +68,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
       title: I18n.t("global.buttons.cancel")
     };
 
+    console.log(wallets)
     return (
       <BaseScreenComponent
         goBack={true}
@@ -90,6 +90,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
               )}
             </Text>
             <List
+              keyExtractor={item => `${item.idWallet}`}
               removeClippedSubviews={false}
               dataArray={wallets as any[]} // tslint:disable-line: readonly-array
               renderRow={(item): React.ReactElement<any> => (
