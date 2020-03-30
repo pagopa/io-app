@@ -13,6 +13,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="sfondo" translatesAutoresizingMaskIntoConstraints="NO" id="J5O-0q-Sg2">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                    <color key="backgroundColor" red="0.047058823529411764" green="0.0" blue="0.82745098039215681" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                </imageView>
                 <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CFy-E3-mQ3" userLabel="firstView">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="794.66666666666663"/>
                     <subviews>
@@ -71,22 +75,26 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.047058823529411764" green="0.0" blue="0.82745098039215681" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="J5O-0q-Sg2" secondAttribute="bottom" id="BWw-Fd-LPj"/>
+                <constraint firstAttribute="trailing" secondItem="J5O-0q-Sg2" secondAttribute="trailing" id="C17-WW-S1E"/>
                 <constraint firstItem="CFy-E3-mQ3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="G7t-t2-r9c"/>
                 <constraint firstItem="CFy-E3-mQ3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="NaQ-Qi-Cbl"/>
                 <constraint firstAttribute="trailing" secondItem="CFy-E3-mQ3" secondAttribute="trailing" id="gNc-wU-vJ9"/>
                 <constraint firstAttribute="bottom" secondItem="dgM-zD-vYW" secondAttribute="bottom" constant="120" id="gZv-Y9-JJC"/>
+                <constraint firstItem="J5O-0q-Sg2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="yrl-PH-gQC"/>
+                <constraint firstItem="J5O-0q-Sg2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="zkd-4R-kVA"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <modalPageSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="536.79999999999995" y="448.52216748768473"/>
+            <point key="canvasLocation" x="534.78260869565224" y="447.99107142857139"/>
         </view>
     </objects>
     <resources>
         <image name="logo_consiglio_ministri" width="78" height="87"/>
         <image name="logo_io_beta" width="123" height="52"/>
         <image name="logo_pagopa" width="119" height="33"/>
+        <image name="sfondo" width="414" height="736"/>
     </resources>
 </document>
