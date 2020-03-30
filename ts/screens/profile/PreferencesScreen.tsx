@@ -85,15 +85,6 @@ class PreferencesScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = INITIAL_STATE;
-    this.handleEmailOnPress = this.handleEmailOnPress.bind(this);
-  }
-
-  private handleEmailOnPress() {
-    if (this.props.hasProfileEmail) {
-      this.props.navigateToEmailReadScreen();
-      return;
-    }
-    this.props.navigateToEmailInsertScreen();
   }
 
   public componentDidMount() {
@@ -108,6 +99,14 @@ class PreferencesScreen extends React.Component<Props, State> {
       _ => undefined
     );
   }
+
+  private handleEmailOnPress = () => {
+    if (this.props.hasProfileEmail) {
+      this.props.navigateToEmailReadScreen();
+      return;
+    }
+    this.props.navigateToEmailInsertScreen();
+  };
 
   private checkPermissionThenGoCalendar = () => {
     checkAndRequestPermission()
@@ -183,7 +182,7 @@ class PreferencesScreen extends React.Component<Props, State> {
       <TopScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
         title={I18n.t("profile.preferences.title")}
-        goBack={() => this.props.navigation.goBack()}
+        goBack={true}
       >
         <ScreenContent
           title={I18n.t("profile.preferences.title")}
@@ -242,7 +241,6 @@ class PreferencesScreen extends React.Component<Props, State> {
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.spid_email")}
                 subTitle={maybeSpidEmail.value}
-                hideIcon={true}
                 onPress={() =>
                   showModal(
                     "profile.preferences.spid_email.contextualHelpTitle",
@@ -251,19 +249,24 @@ class PreferencesScreen extends React.Component<Props, State> {
                 }
               />
             )}
+
             {// Check if mobile phone exists
             maybePhoneNumber.isSome() && (
               <ListItemComponent
                 title={I18n.t("profile.preferences.list.mobile_phone")}
                 subTitle={maybePhoneNumber.value}
-                iconName={"io-phone-number"}
+                onPress={() =>
+                  showModal(
+                    "profile.preferences.spid_email.contextualHelpTitle",
+                    "profile.preferences.spid_email.contextualHelpContent"
+                  )
+                }
               />
             )}
 
             <ListItemComponent
               title={I18n.t("profile.preferences.list.language")}
               subTitle={languages}
-              iconName={"io-languages"}
               onPress={() =>
                 showModal(
                   "profile.preferences.language.contextualHelpTitle",
