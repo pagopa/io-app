@@ -3,10 +3,6 @@
  * Used for the screens from the identification of the transaction to the end of the procedure.
  */
 
-import {
-  AmountInEuroCents,
-  AmountInEuroCentsFromNumber
-} from "italia-pagopa-commons/lib/pagopa";
 import { Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -16,7 +12,7 @@ import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario"
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { UNKNOWN_RECIPIENT } from "../../types/unknown";
-import { formatNumberAmount } from "../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 const styles = StyleSheet.create({
@@ -40,15 +36,13 @@ const styles = StyleSheet.create({
 
 type Props = Readonly<{
   paymentReason: string;
-  currentAmount: AmountInEuroCents;
+  currentAmount: number;
   recipient?: EnteBeneficiario;
   onCancel: () => void;
 }>;
 
 const PaymentBannerComponent: React.SFC<Props> = props => {
-  const currentAmount = formatNumberAmount(
-    AmountInEuroCentsFromNumber.encode(props.currentAmount)
-  );
+  const currentAmount = formatNumberCentsToAmount(props.currentAmount);
 
   const recipient = props.recipient || UNKNOWN_RECIPIENT;
 
