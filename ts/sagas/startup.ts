@@ -50,6 +50,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
+
 import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest

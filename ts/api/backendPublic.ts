@@ -1,10 +1,10 @@
+import * as t from "io-ts";
 import {
   basicResponseDecoder,
   BasicResponseType,
   createFetchRequestForApi,
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
-
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 import { defaultRetryingFetch } from "../utils/fetch";
 
@@ -15,6 +15,46 @@ type GetServerInfoT = IGetApiRequestType<
   BasicResponseType<ServerInfo>
 >;
 
+const BackendStatusMessage = t.interface({
+  "it-IT": t.string,
+  "en-EN": t.string
+});
+
+const BackendStatusR = t.interface({
+  is_alive: t.boolean,
+  message: BackendStatusMessage
+});
+
+export const BackendStatus = t.exact(BackendStatusR, "ServerInfo");
+export type BackendStatus = t.TypeOf<typeof BackendStatus>;
+
+type GetStatusT = IGetApiRequestType<
+  {},
+  never,
+  never,
+  BasicResponseType<BackendStatus>
+>;
+
+export function CdnBackendStatusClient(
+  baseUrl: string,
+  fetchApi: typeof fetch = defaultRetryingFetch()
+) {
+  const options = {
+    baseUrl,
+    fetchApi
+  };
+
+  const getStatusT: GetStatusT = {
+    method: "get",
+    url: () => "backend.json",
+    query: _ => ({}),
+    headers: () => ({}),
+    response_decoder: basicResponseDecoder(BackendStatus)
+  };
+  return {
+    getStatus: createFetchRequestForApi(getStatusT, options)
+  };
+}
 //
 // Create client
 //
