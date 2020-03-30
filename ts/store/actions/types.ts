@@ -69,8 +69,8 @@ export type Action =
   | PaymentsActions
   | OrganizationsActions
   | InstabugInfoActions
-  | NetworkStateActions
-  | UserDataProcessingActions;
+  | UserDataProcessingActions
+  | NetworkStateActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

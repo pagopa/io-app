@@ -27,6 +27,7 @@ import {
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
+import { networkStateUpdate } from "./store/actions/network";
 import { isBackendServicesStatusOffSelector } from "./store/reducers/backendStatus";
 import { GlobalState } from "./store/reducers/types";
 import SystemOffModal from "./SystemOffModal";
@@ -41,7 +42,7 @@ import { isUpdateNeeded } from "./utils/appVersion";
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 class RootContainer extends React.PureComponent<Props> {
-  public unsubscribe?: NetInfoSubscription;
+  public netInfoSubscription?: NetInfoSubscription;
   constructor(props: Props) {
     super(props);
 
@@ -87,7 +88,7 @@ class RootContainer extends React.PureComponent<Props> {
     SplashScreen.hide();
 
     // tslint:disable-next-line: no-object-mutation
-    this.unsubscribe = NetInfo.addEventListener(state => {
+    this.netInfoSubscription = NetInfo.addEventListener(state => {
       this.props.networkStateUpdate(state.isConnected);
     });
   }
@@ -101,8 +102,8 @@ class RootContainer extends React.PureComponent<Props> {
 
     AppState.removeEventListener("change", this.handleApplicationActivity);
 
-    if (this.unsubscribe) {
-      this.unsubscribe();
+    if (this.netInfoSubscription) {
+      this.netInfoSubscription();
     }
   }
 

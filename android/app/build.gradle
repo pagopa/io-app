@@ -203,9 +203,9 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false)
 
 dependencies {
-    implementation project(':@react-native-community_netinfo')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"
+    implementation project(':react-native-community-netinfo')
     compile project(':react-native-cie')
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermesvm/android/";

@@ -6,7 +6,7 @@ import { Action } from "../actions/types";
 
 import { getType } from "typesafe-actions";
 import { networkStateUpdate } from "../actions/network";
-import { GlobalState, NetworkState } from "../reducers/types";
+import { GlobalState, NetworkState } from "./types";
 
 export default function networkState(
   state: NetworkState = {
