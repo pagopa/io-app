@@ -2,7 +2,6 @@
  * This component displays a summary on the transaction.
  * Used for the screens from the identification of the transaction to the end of the procedure.
  */
-
 import { Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -19,16 +18,13 @@ const styles = StyleSheet.create({
   rightButtonText: {
     paddingRight: 0
   },
-
   topContainer: {
     backgroundColor: variables.brandDarkGray
   },
-
   paddedLR: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
   },
-
   textRight: {
     textAlign: "right"
   }
@@ -58,7 +54,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
         <Col size={1}>
           <View spacer={true} />
           <Text bold={true} white={true} style={styles.textRight}>
-            {currentAmount}
+            {`€ ${currentAmount}`}
           </Text>
         </Col>
       </Row>
