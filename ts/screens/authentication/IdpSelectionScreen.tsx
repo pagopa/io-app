@@ -18,7 +18,6 @@ import ROUTES from "../../navigation/routes";
 import { idpSelected } from "../../store/actions/authentication";
 import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
-import { isDevEnv } from "../../utils/environment";
 
 type Props = ReduxProps & NavigationScreenProps;
 
@@ -88,16 +87,6 @@ const idps: ReadonlyArray<IdentityProvider> = [
   }
 ];
 
-const testIdp = {
-  id: "test",
-  name: "Test",
-  logo: require("../../../img/spid.png"),
-  entityID: "xx_testenv2",
-  profileUrl: "https://italia-backend/profile.html"
-};
-
-const enabledIdps = isDevEnv ? [...idps, testIdp] : idps;
-
 const styles = StyleSheet.create({
   gridContainer: {
     padding: variables.contentPadding,
@@ -131,7 +120,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
           title={I18n.t("authentication.idp_selection.contentTitle")}
         />
         <View style={styles.gridContainer} testID={"idps-view"}>
-          <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
+          <IdpsGrid idps={idps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
           <ButtonDefaultOpacity
             block={true}

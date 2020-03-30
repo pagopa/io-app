@@ -16,7 +16,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import { isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
@@ -30,6 +29,7 @@ import { isCieSupportedSelector } from "../../store/reducers/cie";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
+import { isDevEnv } from "../../utils/environment";
 import { showToast } from "../../utils/showToast";
 
 type Props = NavigationInjectedProps &
@@ -148,9 +148,7 @@ class LandingScreen extends React.PureComponent<Props> {
   public render() {
     return (
       <BaseScreenComponent contextualHelpMarkdown={contextualHelpMarkdown}>
-        {isDevEnvironment() && (
-          <DevScreenButton onPress={this.navigateToMarkdown} />
-        )}
+        {isDevEnv && <DevScreenButton onPress={this.navigateToMarkdown} />}
 
         <Content contentContainerStyle={styles.flex} noPadded={true}>
           <HorizontalScroll cards={this.renderCardComponents()} />
