@@ -4,11 +4,11 @@ import { StyleSheet } from "react-native";
 import { ImportoEuroCents } from "../../../definitions/backend/ImportoEuroCents";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
-import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
 type Props = Readonly<{
   paymentReason: string;
-  currentAmount: ImportoEuroCents; // from verifica
+  currentAmount: ImportoEuroCents;
   fee?: ImportoEuroCents;
 }>;
 
@@ -45,7 +45,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           {props.paymentReason}
         </Text>
         <Text white={true} bold={true} style={styles.smallText}>
-          {formatNumberAmount(centsToAmount(props.currentAmount))}
+          {formatNumberCentsToAmount(props.currentAmount)}
         </Text>
       </View>
       <View style={styles.row}>
@@ -53,7 +53,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           {I18n.t("wallet.ConfirmPayment.fee")}
         </Text>
         <Text white={true} style={styles.smallText}>
-          {props.fee ? formatNumberAmount(centsToAmount(props.fee)) : "-"}
+          {props.fee ? formatNumberCentsToAmount(props.fee) : "-"}
         </Text>
       </View>
       <View style={styles.row}>
@@ -61,7 +61,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           {I18n.t("wallet.total")}
         </Text>
         <Text white={true} bold={true}>
-          {formatNumberAmount(centsToAmount(totalAmount))}
+          {formatNumberCentsToAmount(totalAmount)}
         </Text>
       </View>
     </View>

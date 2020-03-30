@@ -4,6 +4,7 @@ import variables from "../../../theme/variables";
 
 export default StyleSheet.create({
   card: {
+    // iOS and Andorid card shadow
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -17,44 +18,39 @@ export default StyleSheet.create({
     marginRight: 0,
     marginTop: 20
   },
-
   cardInner: {
     paddingBottom: 16,
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 22
   },
-
   cardNumber: {
     flexDirection: "row",
     justifyContent: "flex-start"
   },
-
   row: {
     flexDirection: "row"
   },
-
+  spaced: { 
+    justifyContent: "space-between" 
+  },
   columns: {
     flexDirection: "row",
     justifyContent: "space-between"
   },
-
   topRightCornerContainer: {
     flexDirection: "row",
     justifyContent: "flex-end"
   },
-
   cardLogo: {
     height: 30,
     width: 48
   },
-
   cardPsp: {
     alignSelf: "flex-end",
     width: 70,
     height: 30
   },
-
   footerButton: {
     borderRadius: 6,
     paddingRight: variables.fontSizeBase,
@@ -73,7 +69,6 @@ export default StyleSheet.create({
   pickPaymentText: {
     color: variables.colorWhite
   },
-
   marginTop: {
     marginTop: variables.fontSizeBase
   },

@@ -71,33 +71,39 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center"
   },
-
   childTwice: {
     flex: 2,
     alignContent: "center"
   },
-
   parent: {
     flexDirection: "row"
   },
-
   paddedLR: {
     paddingLeft: variables.contentPadding,
     paddingRight: variables.contentPadding
   },
-
   textRight: {
     textAlign: "right"
   },
-
   divider: {
     borderTopWidth: 1,
     borderTopColor: variables.brandGray
   },
-
   textCenter: {
     textAlign: "center"
-  }
+  },
+  padded: { paddingHorizontal: customVariables.contentPadding },
+  alert: {
+    backgroundColor: customVariables.alertColor,
+    paddingHorizontal: customVariables.contentPadding,
+    paddingVertical: 11,
+    flexDirection: "row"
+  },
+  alertIcon: {
+    alignSelf: "center",
+    paddingRight: 18
+  },
+  flex: { flex: 1 }
 });
 
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
@@ -126,7 +132,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
             paymentReason={paymentReason}
             fee={fee as ImportoEuroCents}
           />
-          <View style={{ paddingHorizontal: customVariables.contentPadding }}>
+          <View style={styles.padded}>
             <CardComponent
               type={"Full"}
               wallet={wallet}
@@ -152,21 +158,14 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
           <View spacer={true} large={true} />
         </Content>
 
-        <View
-          style={{
-            backgroundColor: customVariables.alertColor,
-            paddingHorizontal: customVariables.contentPadding,
-            paddingVertical: 11,
-            flexDirection: "row"
-          }}
-        >
+        <View style={styles.alert}>
           <IconFont
-            style={{ alignSelf: "center", paddingRight: 18 }}
+            style={styles.alertIcon}
             name={"io-notice"}
             size={24}
             color={customVariables.colorWhite}
           />
-          <Text white={true} style={{ flex: 1 }}>
+          <Text white={true} style={styles.flex}>
             <Text bold={true} white={true}>
               {I18n.t("global.genericAlert")}
             </Text>
@@ -197,7 +196,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
               style={styles.childTwice}
               block={true}
               bordered={true}
-              onPress={() => this.props.pickPaymentMethod()}
+              onPress={this.props.pickPaymentMethod}
             >
               <Text>{I18n.t("wallet.ConfirmPayment.change")}</Text>
             </ButtonDefaultOpacity>

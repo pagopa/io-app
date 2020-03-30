@@ -296,7 +296,7 @@ export default class CardComponent extends React.Component<Props> {
         style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
       >
         <View style={[styles.cardInner]}>
-          <View style={[styles.row, { justifyContent: "space-between" }]}>
+          <View style={[styles.row, styles.spaced]}>
             <View style={styles.row}>
               <Text style={[CreditCardStyles.smallTextStyle]}>
                 {`${HIDDEN_CREDITCARD_NUMBERS}`}

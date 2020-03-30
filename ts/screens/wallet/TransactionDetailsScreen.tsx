@@ -41,7 +41,7 @@ import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
-import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -245,16 +245,14 @@ class TransactionDetailsScreen extends React.Component<Props> {
       "isPaymentCompletedTransaction",
       false
     );
-    const amount = formatNumberAmount(centsToAmount(transaction.amount.amount));
-    const fee = formatNumberAmount(
-      centsToAmount(
-        transaction.fee === undefined
-          ? transaction.grandTotal.amount - transaction.amount.amount
-          : transaction.fee.amount
-      )
+    const amount = formatNumberCentsToAmount(transaction.amount.amount);
+    const fee = formatNumberCentsToAmount(
+      transaction.fee === undefined
+        ? transaction.grandTotal.amount - transaction.amount.amount
+        : transaction.fee.amount
     );
-    const totalAmount = formatNumberAmount(
-      centsToAmount(transaction.grandTotal.amount)
+    const totalAmount = formatNumberCentsToAmount(
+      transaction.grandTotal.amount
     );
 
     const transactionWallet = this.props.wallets
