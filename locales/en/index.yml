@@ -193,7 +193,6 @@ profile:
       default: No preference set
     unavailable:
       title: This setting is set up on your SPID profile
-      message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
     language:
       contextualHelpTitle: How to manage your language setting
       contextualHelpContent: !include profile/profile_preferences_language.md
@@ -980,3 +979,6 @@ titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
 messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
 btnUpdateApp: Update the IO app
+systemsOff:
+  title: Unable to start IO
+  closeApp: close the application and try again

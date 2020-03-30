@@ -34,7 +34,6 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
-import { AmountToImporto } from "../../utils/amounts";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -79,9 +78,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
           <Content noPadded={true}>
             <PaymentBannerComponent
               paymentReason={inPayment.value.verifica.causaleVersamento}
-              currentAmount={AmountToImporto.encode(
-                inPayment.value.verifica.importoSingoloVersamento
-              )}
+              currentAmount={inPayment.value.verifica.importoSingoloVersamento}
               recipient={inPayment.value.verifica.enteBeneficiario}
               onCancel={this.props.navigateToTransactionSummary}
             />

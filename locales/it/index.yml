@@ -182,10 +182,10 @@ profile:
         enabled: Abilitato
         disabled: Disabilitato
       email: Indirizzo email
-      spid_email: SPID email
+      spid_email: Email SPID
       need_validate: Da validare
+      mobile_phone: Numero di telefono SPID
       wip: In elaborazione
-      mobile_phone: Numero di telefono
       language: Lingua
       digitalDomicile: Domicilio digitale
       preferred_calendar:
@@ -195,7 +195,6 @@ profile:
       default: Nessuna preferenza impostata
     unavailable:
       title: Questa preferenza è impostata nel tuo profilo SPID
-      message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
     language:
       contextualHelpTitle: Come gestire la lingua su IO
       contextualHelpContent: !include profile/profile_preferences_language.md
@@ -990,3 +989,6 @@ titleUpdateApp: Aggiorna IO!
 msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
 messageUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare l'app è necessario aggiornarla all'ultima versione."
 btnUpdateApp: Aggiorna l'app IO
+systemsOff:
+  title: Impossibile usare IO
+  closeApp: chiudi l'applicazione e riprova
