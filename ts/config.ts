@@ -38,7 +38,6 @@ export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
 export const backendStatusUrl: string = Config.BACKEND_STATUS_URL;
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
-export const enableTestIdp = Config.ENABLE_TEST_IDP === "YES";
 export const gcmSenderId: string = Config.GCM_SENDER_ID;
 export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
@@ -79,7 +78,3 @@ export const totMessageFetchWorkers = t.Integer.decode(
 
 export const shouldDisplayVersionInfoOverlay =
   Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
-
-export function isDevEnvironment() {
-  return environment === "DEV";
-}

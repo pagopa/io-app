@@ -5,13 +5,13 @@ import * as React from "react";
 import { Alert, Dimensions, StyleSheet, ViewStyle } from "react-native";
 
 import { debounce, shuffle } from "lodash";
-import { isDevEnvironment } from "../../config";
 import I18n from "../../i18n";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
+import { isDevEnv } from "../../utils/environment";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
 import { KeyPad } from "./KeyPad";
 import { Baseline, Bullet } from "./Placeholders";
@@ -176,7 +176,7 @@ class Pinpad extends React.PureComponent<Props, State> {
 
     // we avoid to shuffle pin/code pad in dev env
     const newPinPadValue =
-      this.props.shufflePad !== true || isDevEnvironment()
+      this.props.shufflePad !== true || isDevEnv
         ? pinPadValues
         : shuffle(pinPadValues);
 

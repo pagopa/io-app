@@ -12,7 +12,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
-import * as config from "../../config";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
@@ -88,16 +87,6 @@ const idps: ReadonlyArray<IdentityProvider> = [
   }
 ];
 
-const testIdp = {
-  id: "test",
-  name: "Test",
-  logo: require("../../../img/spid.png"),
-  entityID: "xx_testenv2",
-  profileUrl: "https://italia-backend/profile.html"
-};
-
-const enabledIdps = config.enableTestIdp ? [...idps, testIdp] : idps;
-
 const styles = StyleSheet.create({
   gridContainer: {
     padding: variables.contentPadding,
@@ -131,7 +120,7 @@ const IdpSelectionScreen: React.SFC<Props> = props => {
           title={I18n.t("authentication.idp_selection.contentTitle")}
         />
         <View style={styles.gridContainer} testID={"idps-view"}>
-          <IdpsGrid idps={enabledIdps} onIdpSelected={onIdpSelected} />
+          <IdpsGrid idps={idps} onIdpSelected={onIdpSelected} />
           <View spacer={true} />
           <ButtonDefaultOpacity
             block={true}
