@@ -7,7 +7,10 @@ import { H3, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
 import variables from "../../theme/variables";
-import { HEADER_HEIGHT } from "../../utils/constants";
+import {
+  HEADER_ANIMATION_DURATION,
+  HEADER_HEIGHT
+} from "../../utils/constants";
 import ScreenHeader from "../ScreenHeader";
 
 type Props = Readonly<{
@@ -48,13 +51,13 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
     // Animation to elapse the header height from 0 to HEADER_HEIGHT
     this.elapse = Animated.timing(this.heightAnimation, {
       toValue: HEADER_HEIGHT,
-      duration: 200
+      duration: HEADER_ANIMATION_DURATION
     });
 
     // Animation to collapse the header height from HEADER_HEIGHT to 0
     this.collapse = Animated.timing(this.heightAnimation, {
       toValue: 0,
-      duration: 200
+      duration: HEADER_ANIMATION_DURATION
     });
   }
 

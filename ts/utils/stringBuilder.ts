@@ -15,12 +15,12 @@ export const centsToAmount = (cents: number): number =>
 
 export const formatNumberAmount = (
   amount: number,
-  dispalyCurrency: boolean = false
+  displayCurrency: boolean = false
 ): string =>
   I18n.toCurrency(amount, {
     precision: DISPLAYED_DIGITS,
     separator: I18n.t("global.localization.decimalSeparator"),
-    format: dispalyCurrency ? "€ %n" : "%n"
+    format: displayCurrency ? "€ %n" : "%n"
   });
 
 export const buildExpirationDate = (creditCard: CreditCard): string =>
