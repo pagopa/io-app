@@ -1,9 +1,5 @@
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import {
-  AmountInEuroCents,
-  AmountInEuroCentsFromNumber,
-  RptId
-} from "italia-pagopa-commons/lib/pagopa";
+import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Content, H1, Text, View } from "native-base";
 import * as React from "react";
@@ -110,10 +106,8 @@ const styles = StyleSheet.create({
 /**
  * Returns the fee for a wallet that has a preferred psp
  */
-const feeForWallet = (w: Wallet): Option<AmountInEuroCents> =>
-  fromNullable(w.psp).map(
-    psp => ("0".repeat(10) + `${psp.fixedCost.amount}`) as AmountInEuroCents
-  );
+const feeForWallet = (w: Wallet): Option<number> =>
+  fromNullable(w.psp).map(psp => psp.fixedCost.amount);
 
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   private showHelp = () => {
@@ -130,23 +124,15 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
     const verifica = this.props.navigation.getParam("verifica");
     const wallet = this.props.navigation.getParam("wallet");
 
-    const currentAmount = AmountToImporto.encode(
-      verifica.importoSingoloVersamento
-    );
+    const currentAmount = verifica.importoSingoloVersamento;
 
     // FIXME: it seems like we're converting a number to a string and vice versa
-    // https://www.pivotaltracker.com/story/show/170819000
-    const maybeWalletFee = feeForWallet(wallet).map(
-      AmountInEuroCentsFromNumber.encode
-    );
+    const maybeWalletFee = feeForWallet(wallet);
 
-    const currentAmountDecoded = AmountInEuroCentsFromNumber.encode(
-      currentAmount
-    );
     const totalAmount = maybeWalletFee
       // tslint:disable-next-line:restrict-plus-operands
-      .map(walletFee => currentAmountDecoded + walletFee)
-      .getOrElse(currentAmountDecoded);
+      .map(walletFee => currentAmount + walletFee)
+      .getOrElse(currentAmount);
 
     const paymentReason = verifica.causaleVersamento;
 
@@ -175,9 +161,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 </Col>
                 <Col>
                   <Text bold={true} style={styles.textRight}>
-                    {formatNumberAmount(
-                      AmountInEuroCentsFromNumber.encode(currentAmount)
-                    )}
+                    {formatNumberCentsToAmount(currentAmount)}
                   </Text>
                 </Col>
               </Row>
@@ -192,7 +176,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
 
                   <Col size={1}>
                     <Text bold={true} style={styles.textRight}>
-                      {formatNumberAmount(maybeWalletFee.value)}
+                      {formatNumberCentsToAmount(maybeWalletFee.value)}
                     </Text>
                   </Col>
                 </Row>
@@ -206,7 +190,7 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
                 <Col>
                   <View spacer={true} large={true} />
                   <H1 style={styles.textRight}>
-                    {formatNumberAmount(totalAmount)}
+                    {formatNumberCentsToAmount(totalAmount)}
                   </H1>
                 </Col>
               </Row>

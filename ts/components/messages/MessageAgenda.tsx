@@ -26,6 +26,7 @@ import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { format } from "../../utils/dates";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageListItem from "./MessageListItem";
@@ -101,6 +102,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: variables.contentPadding,
     width: screenWidth - variables.contentPadding * 2
+  },
+  padded: {
+    paddingHorizontal: customVariables.contentPadding
   },
 
   // Animation progress
@@ -249,8 +253,6 @@ const generateItemLayouts = (sections: Sections) => {
 
   return itemLayouts;
 };
-
-const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 const FakeItemComponent = (
   <View style={styles.itemEmptyWrapper}>
@@ -429,18 +431,20 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         : undefined;
 
     return (
-      <MessageListItem
-        isRead={isRead}
-        message={message}
-        service={service}
-        payment={payment}
-        onPress={onPressItem}
-        onLongPress={onLongPressItem}
-        isSelectionModeEnabled={selectedMessageIds.isSome()}
-        isSelected={selectedMessageIds
-          .map(_ => _.has(message.id))
-          .getOrElse(false)}
-      />
+      <View style={styles.padded}>
+        <MessageListItem
+          isRead={isRead}
+          message={message}
+          service={service}
+          payment={payment}
+          onPress={onPressItem}
+          onLongPress={onLongPressItem}
+          isSelectionModeEnabled={selectedMessageIds.isSome()}
+          isSelected={selectedMessageIds
+            .map(_ => _.has(message.id))
+            .getOrElse(false)}
+        />
+      </View>
     );
   };
 
@@ -540,7 +544,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             <View style={styles.contentProgress}>
               <ActivityIndicator
                 style={styles.progress}
-                size="small"
+                size={"small"}
                 color={variables.brandDarkGray}
               />
             </View>

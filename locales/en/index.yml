@@ -44,6 +44,7 @@ global:
     search: Text to search
   remoteStates:
     loading: Loading...
+    wait: Wait a few seconds..
     notAvailable: Not available
   notImplemented: NOT IMPLEMENTED
   search:
@@ -116,7 +117,7 @@ profile:
       clear: Clear cache
       cleared: The cache has been cleared.
     resetPin:
-      confirmTitle: Are you sure you want to reset your PIN?
+      confirmTitle: Are you sure you want to reset your unlock code?
       confirmMsg: You will be asked again to log in.
     preferences:
       title: Preferences
@@ -193,7 +194,6 @@ profile:
       default: No preference set
     unavailable:
       title: This setting is set up on your SPID profile
-      message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
     language:
       contextualHelpTitle: How to manage your language setting
       contextualHelpContent: !include profile/profile_preferences_language.md
@@ -431,8 +431,8 @@ onboarding:
     continue: Continue
   pin:
     headerTitle: Activation
-    contentTitle: Choose a PIN code
-    contentTitleConfirm: Insert your PIN again
+    contentTitle: Choose an unlock code
+    contentTitleConfirm: Insert your code again
     pinInfo: This code will be requested each time you open the app and when you need
       to view sensitive data or make dispositive transactions. It must be composed
       of 6 digits. Remember it carefully. You can change it at any time by entering
@@ -443,7 +443,7 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
-    contextualHelpTitle: What is your PIN
+    contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
     title: Do you really want to log out?
@@ -483,21 +483,21 @@ onboarding:
     emailInputLabel: Personal email address
 pin_login:
   pin:
-    pinInfo: Enter the PIN
+    pinInfo: Enter the unlock code
     reset:
-      button: Did you forget the PIN?
-      button_short: Reset PIN
-      tip: To reset your PIN you will have to login again with your SPID account.
+      button: Did you forget the unlock code?
+      button_short: Reset unlock code
+      tip: To reset your unlock code you will have to login again with your SPID account.
       tip_short: You will have to login again.
-    confirmValid: Correct PIN
-    confirmInvalid: Invalid PIN
+    confirmValid: Correct unlock code
+    confirmInvalid: Invalid unlock code
   unlock_screen:
     help:
-      title: Access with PIN
+      title: Access with unlock code
       content: !include onboarding/onboarding_pin.md
   forgetPin:
-    confirmTitle: Did you forget the PIN?
-    confirmMsg: To be able to choose a new PIN you will need to log in again with SPID.
+    confirmTitle: Did you forget the unlock code?
+    confirmMsg: To be able to choose a new unlock code you will need to log in again with SPID.
 forms:
   validators:
     required: Required value
@@ -523,12 +523,12 @@ payment:
   IUV: IUV
   recipientFiscalCode: Recipient fiscal code
 wallet:
+  wallet: Payments
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
     btnUpdateApp: Update the IO app 
-  wallet: Wallet
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
@@ -573,6 +573,7 @@ wallet:
     save: Save
     notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
     temporaryError: There was a temporary problem while saving this card, please retry.
+    loadingAlert: I am checking your card data..
   saveCardInPayment:
     header: Pay with this card
     title: Do you want to pay with this card?
@@ -603,7 +604,7 @@ wallet:
     info2: You are using your favourite payment method.
     changeMethod: Change the payment method
     change: Change method
-    identificationMessage: Confirm the transaction with your PIN code
+    identificationMessage: Confirm the transaction with your unlock code
     transactionSuccess: The payment has completed!
     transactionFailure: There was an error with the payment, please retry!
     transactionTimeout: I couldn't retrieve the result of the payment!
@@ -661,7 +662,6 @@ wallet:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
   detailsTransaction:
-    contextualHelpTitle: Transaction details
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   total: Total
   amount: Amount €
@@ -949,9 +949,9 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  messageFingerPrint: "Use the fingerprint or enter the PIN"
-  messageFaceID: "Use FaceID or enter the PIN"
-  messageEnterPin: "Enter the PIN"
+  messageFingerPrint: "Use the fingerprint or enter the unlock code"
+  messageFaceID: "Use FaceID or enter the unlock code"
+  messageEnterPin: "Enter the unlock code"
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint
@@ -960,7 +960,7 @@ identification:
       reason: Identification
       title: Identification required
       sensorDescription: Touch sensor
-      fallbackLabel: Use the PIN
+      fallbackLabel: Use the unlock code
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
   removeRequest:
@@ -984,3 +984,6 @@ titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
 messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
 btnUpdateApp: Update the IO app
+systemsOff:
+  title: Unable to start IO
+  closeApp: close the application and try again

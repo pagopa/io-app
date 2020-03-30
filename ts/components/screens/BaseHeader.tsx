@@ -49,20 +49,15 @@ type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps>;
 
 class BaseHeaderComponent extends React.PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-    this.getGoBackHandler = this.getGoBackHandler.bind(this);
-  }
-
   /**
    * if go back is a function it will be returned
    * otherwise the default goback navigation will be returned
    */
-  private getGoBackHandler() {
+  private getGoBackHandler = () => {
     return typeof this.props.goBack === "function"
       ? this.props.goBack()
       : this.props.navigateBack();
-  }
+  };
 
   private renderHeader = () => {
     const { customGoBack, headerTitle } = this.props;
