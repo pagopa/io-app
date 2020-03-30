@@ -6,10 +6,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
-import { Alert, StyleSheet } from "react-native";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
@@ -23,6 +23,7 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
 
 type OwnProps = {
@@ -130,6 +131,7 @@ class TosScreen extends React.PureComponent<Props> {
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
+    isLoading: pot.isLoading(userMetadataSelector(state)),
     hasAcceptedOldTosVersion: pot.getOrElse(
       pot.map(
         potProfile,
@@ -143,4 +145,4 @@ function mapStateToProps(state: GlobalState) {
   };
 }
 
-export default connect(mapStateToProps)(TosScreen);
+export default connect(mapStateToProps)(withLoadingSpinner(TosScreen));

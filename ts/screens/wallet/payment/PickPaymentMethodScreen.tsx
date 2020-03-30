@@ -54,11 +54,8 @@ class PickPaymentMethodScreen extends React.Component<Props> {
     const verifica: PaymentRequestsGetResponse = this.props.navigation.getParam(
       "verifica"
     );
-
     const paymentReason = verifica.causaleVersamento; // this could be empty as per pagoPA definition
-
     const { wallets } = this.props;
-
     const primaryButtonProps = {
       block: true,
       onPress: this.props.navigateToAddPaymentMethod,

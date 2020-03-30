@@ -1,17 +1,3 @@
-/**
- * This is the screen presented to the user
- * when they request adding a new payment method.
- * From here, they can select their payment method
- * of choice (although only credit cards will be allowed
- * initially).
- *
- * This screen allows also to add a new payment method after a transaction is identified.
- *
- * The header banner provides a summary on the transaction to perform.
- *
- * Keep in mind that the rest of the "add credit card" process
- * is handled @https://www.pivotaltracker.com/story/show/157838293
- */
 import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, H1, Text, View } from "native-base";
@@ -59,6 +45,20 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.newPaymentMethod.contextualHelpContent"
 };
 
+/**
+ * This is the screen presented to the user
+ * when they request adding a new payment method.
+ * From here, they can select their payment method
+ * of choice (although only credit cards will be allowed
+ * initially).
+ *
+ * This screen allows also to add a new payment method after a transaction is identified.
+ *
+ * The header banner provides a summary on the transaction to perform.
+ *
+ * Keep in mind that the rest of the "add credit card" process
+ * is handled @https://www.pivotaltracker.com/story/show/157838293
+ */
 class AddPaymentMethodScreen extends React.PureComponent<Props> {
   public render(): React.ReactNode {
     const inPayment = this.props.navigation.getParam("inPayment");

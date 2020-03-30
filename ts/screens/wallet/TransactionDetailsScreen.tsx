@@ -298,9 +298,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
             <View spacer={true} large={true} />
             {this.labelValueRow(
               I18n.t("wallet.total"),
-              <H5 style={styles.value}>{totalAmount}</H5>
+              <H5 style={styles.value}>{`€ ${totalAmount}`}</H5>
             )}
-            {this.labelValueRow(I18n.t("wallet.payAmount"), amount)}
+            {this.labelValueRow(I18n.t("wallet.payAmount"), `€ ${amount}`)}
             <TouchableDefaultOpacity onPress={this.showHelp}>
               {this.labelValueRow(
                 <Text>
@@ -312,7 +312,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
                     {I18n.t("wallet.why")}
                   </Text>
                 </Text>,
-                fee
+                `€ ${fee}`
               )}
             </TouchableDefaultOpacity>
             {this.labelValueRow(

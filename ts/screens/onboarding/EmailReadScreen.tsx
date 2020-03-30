@@ -147,7 +147,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        title={I18n.t("profile.preferences.list.email")}
+        headerTitle={I18n.t("profile.preferences.list.email")}
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <ScreenContent

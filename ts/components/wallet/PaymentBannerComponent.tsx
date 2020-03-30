@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
  */
 const PaymentBannerComponent: React.SFC<Props> = props => {
   const totalAmount = props.fee
-    ? props.currentAmount + props.fee
+    ? (props.currentAmount as number) + (props.fee as number)
     : props.currentAmount;
 
   return (
