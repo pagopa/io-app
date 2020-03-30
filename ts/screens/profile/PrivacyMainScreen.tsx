@@ -61,10 +61,6 @@ const confirmAlertSubtitle = {
 };
 
 class PrivacyMainScreen extends React.PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   // Show an alert reporting the request has been submitted
   private handleUserDataRequestAlert = (
     choice: UserDataProcessingChoiceEnum
@@ -149,9 +145,9 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
   public render() {
     const ContentComponent = withLoadingSpinner(() => (
       <TopScreenComponent
-        goBack={() => this.props.navigation.goBack()}
+        goBack={this.props.navigation.goBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        title={I18n.t("profile.main.title")}
+        headerTitle={I18n.t("profile.main.title")}
       >
         <ScreenContent
           title={I18n.t("profile.main.privacy.title")}
