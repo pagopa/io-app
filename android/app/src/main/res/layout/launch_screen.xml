@@ -26,16 +26,17 @@
                     android:layout_height="62dp"
                     android:src="@mipmap/logo_io"
                     android:foregroundGravity="center_horizontal"
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/ioLogo"
                     android:layout_centerHorizontal="true"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignBaseline="@id/ioLogo"
-                    android:layout_marginLeft="3dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+
+                    android:layout_marginLeft="6dp"
                     android:layout_toRightOf="@id/ioLogo"
-                    android:layout_alignBottom="@id/ioLogo"
                     android:src="@mipmap/logo_beta" />
 
             </RelativeLayout>
