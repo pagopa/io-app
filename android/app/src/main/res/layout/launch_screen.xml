@@ -24,7 +24,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="62dp"
-                    android:src="@mipmap/logo_IO"
+                    android:src="@mipmap/logo_io"
                     android:foregroundGravity="center_horizontal"
                     android:id="@+id/ioLogo"
                     android:layout_centerHorizontal="true"/>
@@ -36,7 +36,7 @@
                     android:layout_marginLeft="3dp"
                     android:layout_toRightOf="@id/ioLogo"
                     android:layout_alignBottom="@id/ioLogo"
-                    android:src="@mipmap/logo_BETA" />
+                    android:src="@mipmap/logo_beta" />
 
             </RelativeLayout>
 
