@@ -23,7 +23,7 @@
                             <rect key="frame" x="168" y="540" width="78" height="87"/>
                         </imageView>
                         <view contentMode="scaleToFill" id="kB5-FB-v2M">
-                            <rect key="frame" x="114" y="657" width="181" height="2"/>
+                            <rect key="frame" x="116" y="657" width="181" height="2"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
