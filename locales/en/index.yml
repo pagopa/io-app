@@ -979,3 +979,6 @@ titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
 messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
 btnUpdateApp: Update the IO app
+systemsOff:
+  title: Unable to start IO
+  closeApp: close the application and try again
