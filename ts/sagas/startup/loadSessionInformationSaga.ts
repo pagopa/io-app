@@ -23,31 +23,35 @@ import { SagaCallReturnType } from "../../types/utils";
 export function* loadSessionInformationSaga(
   getSession: ReturnType<typeof BackendClient>["getSession"]
 ): IterableIterator<Effect | Option<PublicSession>> {
-  // Call the Backend service
-  const response: SagaCallReturnType<typeof getSession> = yield call(
-    getSession,
-    {}
-  );
-  // Ko we got an error
-  if (response.isLeft()) {
-    yield put(
-      sessionInformationLoadFailure(Error(readableReport(response.value)))
+  try {
+    // Call the Backend service
+    const response: SagaCallReturnType<typeof getSession> = yield call(
+      getSession,
+      {}
     );
+    // Ko we got an error
+    if (response.isLeft()) {
+      yield put(
+        sessionInformationLoadFailure(Error(readableReport(response.value)))
+      );
+      return none;
+    }
+
+    if (response.value.status === 200) {
+      // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
+      yield put(sessionInformationLoadSuccess(response.value.value));
+      return some(response.value.value);
+    }
+
+    // we got a valid response but its status code is describing an error
+    const errorMsgDefault = "Invalid server response";
+    const error =
+      response.value.status === 400
+        ? response.value.value.title || errorMsgDefault
+        : errorMsgDefault;
+    yield put(sessionInformationLoadFailure(Error(error)));
     return none;
+  } catch (e) {
+    yield put(sessionInformationLoadFailure(Error(e)));
   }
-
-  if (response.value.status === 200) {
-    // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
-    yield put(sessionInformationLoadSuccess(response.value.value));
-    return some(response.value.value);
-  }
-
-  // we got a valid response but its status code is describing an error
-  const errorMsgDefault = "Invalid server response";
-  const error =
-    response.value.status === 400
-      ? response.value.value.title || errorMsgDefault
-      : errorMsgDefault;
-  yield put(sessionInformationLoadFailure(Error(error)));
-  return none;
 }

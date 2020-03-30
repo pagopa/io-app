@@ -2,7 +2,9 @@
  * The root saga that forks and includes all the other sagas.
  */
 import { all, call, Effect } from "redux-saga/effects";
+
 import backendInfoSaga from "./backendInfo";
+import backendStatusSaga from "./backendStatus";
 import {
   watchContentMunicipalityLoadSaga,
   watchContentServicesByScopeLoad,
@@ -38,6 +40,7 @@ export default function* root(): Iterator<Effect> {
     // this saga is temporary removed since it seems to not work properly
     // TODO https://www.pivotaltracker.com/story/show/171597422
     // call(networkSaga, connectionMonitorParameters),
+    call(backendStatusSaga),
     call(backendInfoSaga),
     call(unreadInstabugMessagesSaga),
     call(watchNavigateToDeepLinkSaga),
