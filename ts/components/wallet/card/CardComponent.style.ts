@@ -89,5 +89,10 @@ export default StyleSheet.create({
   },
   paddedTop: {
     paddingTop: 10
-  }
+  },
+  numberArea: {
+    borderWidth: 1,
+    borderColor: "transparent",
+    width: "82%"
+  },
 });
