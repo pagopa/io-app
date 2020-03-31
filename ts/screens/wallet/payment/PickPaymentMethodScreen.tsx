@@ -68,7 +68,6 @@ class PickPaymentMethodScreen extends React.Component<Props> {
       title: I18n.t("global.buttons.cancel")
     };
 
-    console.log(wallets)
     return (
       <BaseScreenComponent
         goBack={true}

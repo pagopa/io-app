@@ -31,8 +31,8 @@ export default StyleSheet.create({
   row: {
     flexDirection: "row"
   },
-  spaced: { 
-    justifyContent: "space-between" 
+  spaced: {
+    justifyContent: "space-between"
   },
   columns: {
     flexDirection: "row",
@@ -94,5 +94,5 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: "transparent",
     width: "82%"
-  },
+  }
 });
