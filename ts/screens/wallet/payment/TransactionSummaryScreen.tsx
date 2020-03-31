@@ -149,17 +149,18 @@ class TransactionSummaryScreen extends React.Component<Props> {
     }
   };
 
-  private secondaryButtonProps = {
-    cancel: true,
+  private getSecondaryButtonProps = () => ({
+    bordered: pot.isNone(this.props.paymentId),
+    cancel: pot.isSome(this.props.paymentId),
     onPress: this.handleBackPress,
     title: I18n.t("global.buttons.cancel")
-  };
+  });
 
   private renderFooterSingleButton() {
     return (
       <FooterWithButtons
         type={"SingleButton"}
-        leftButton={this.secondaryButtonProps}
+        leftButton={this.getSecondaryButtonProps()}
       />
     );
   }
@@ -192,7 +193,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
     return (
       <FooterWithButtons
         type={"TwoButtonsInlineThird"}
-        leftButton={this.secondaryButtonProps}
+        leftButton={this.getSecondaryButtonProps()}
         rightButton={primaryButtonProps}
       />
     );

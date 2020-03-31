@@ -5,6 +5,7 @@ import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
+import { BackendStatusState } from "./backendStatus";
 import { CieState } from "./cie";
 import { ContentState } from "./content";
 import { DebugState } from "./debug";
@@ -34,6 +35,7 @@ type NetworkState = Readonly<{
 export type GlobalState = Readonly<{
   appState: AppState;
   authentication: PersistedAuthenticationState;
+  backendStatus: BackendStatusState;
   backendInfo: BackendInfoState;
   deepLink: DeepLinkState;
   entities: PersistedEntitiesState;

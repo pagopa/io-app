@@ -10,24 +10,23 @@ type Props = Readonly<{
 const styles = StyleSheet.create({
   itemSeparator: {
     backgroundColor: customVariables.itemSeparator,
-    height: 0.33
+    height: 1 / 3
   },
-  padded: {
-    paddingHorizontal: customVariables.contentPadding
+  horizontalPad: {
+    marginLeft: customVariables.contentPadding,
+    marginRight: customVariables.contentPadding
   }
 });
 
 export default class ItemSeparatorComponent extends React.PureComponent<Props> {
   public render() {
     return (
-      <React.Fragment>
-        <View
-          style={[styles.itemSeparator, !this.props.noPadded && styles.padded]}
-        />
-        <View
-          style={[styles.itemSeparator, !this.props.noPadded && styles.padded]}
-        />
-      </React.Fragment>
+      <View
+        style={[
+          styles.itemSeparator,
+          !this.props.noPadded && styles.horizontalPad
+        ]}
+      />
     );
   }
 }
