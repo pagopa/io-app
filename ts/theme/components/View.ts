@@ -2,7 +2,7 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 import * as ReactNative from "react-native";
-import customVariables from '../variables';
+import customVariables from "../variables";
 
 declare module "native-base" {
   namespace NativeBase {
@@ -37,10 +37,10 @@ declare module "native-base" {
 export default (): Theme => {
   return {
     ".spacer": {
-      "xsmall": {
+      xsmall: {
         height: customVariables.spacerExtrasmallHeight
       },
-      "small": {
+      small: {
         height: customVariables.spacerSmallHeight
       },
       ".large": {

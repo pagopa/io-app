@@ -677,7 +677,7 @@ wallet:
   recipient: Destinatario
   date: Data
   time: Ora
-  psp: Prestatore pagamento
+  psp: Gestore della transazione
   receipt: Ricevuta
   seeReceipt: Vedi la ricevuta
   transactions: Operazioni

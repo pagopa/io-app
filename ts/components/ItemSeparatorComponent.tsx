@@ -24,7 +24,9 @@ export default class ItemSeparatorComponent extends React.PureComponent<Props> {
         <View
           style={[styles.itemSeparator, !this.props.noPadded && styles.padded]}
         />
-        ;
+        <View
+          style={[styles.itemSeparator, !this.props.noPadded && styles.padded]}
+        />
       </React.Fragment>
     );
   }
