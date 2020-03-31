@@ -4,6 +4,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { TypeLogs, writeInstabugLogs } from "../boot/configureInstabug";
 import {
   instabugReportClosed,
   instabugReportOpened
@@ -70,6 +71,8 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   private handleIBBugPress = () => {
     const bug = "bug";
     this.setState({ instabugReportType: some(bug) });
+    // Print logs to instabug
+    writeInstabugLogs("open bug report", TypeLogs.VERBOSE);
     this.props.dispatchIBReportOpen(bug);
     BugReporting.showWithOptions(BugReporting.reportType.bug, [
       BugReporting.option.commentFieldRequired
