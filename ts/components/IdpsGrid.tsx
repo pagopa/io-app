@@ -11,10 +11,10 @@ import {
   StyleSheet
 } from "react-native";
 
+import { Button } from "native-base";
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { Button } from "native-base";
 
 type OwnProps = {
   // Array of Identity Provider to show in the grid.
