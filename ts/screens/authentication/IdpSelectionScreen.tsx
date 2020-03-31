@@ -21,6 +21,20 @@ import variables from "../../theme/variables";
 
 type Props = ReduxProps & NavigationScreenProps;
 
+// since this is a test SPID idp, we set isTestIdp flag to avoid rendering.
+// It is used has a placeholder to handle taps count on it and open when
+// taps count threadshold is reached (see https://www.pivotaltracker.com/story/show/172082895)
+const testIdp: IdentityProvider = {
+  id: "test",
+  name: "Test",
+  logo: require("../../../img/spid.png"),
+  entityID: "xx_testenv2",
+  profileUrl: "https://italia-backend/profile.html",
+  isTestIdp: true
+};
+
+const TAPS_TO_OPEN_TESTIDP = 5;
+
 const idps: ReadonlyArray<IdentityProvider> = [
   {
     id: "arubaid",
@@ -84,7 +98,8 @@ const idps: ReadonlyArray<IdentityProvider> = [
     logo: require("../../../img/spid-idp-timid.png"),
     entityID: "timid",
     profileUrl: "https://id.tim.it/identity/private/"
-  }
+  },
+  testIdp
 ];
 
 const styles = StyleSheet.create({
@@ -103,12 +118,23 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
-const IdpSelectionScreen: React.SFC<Props> = props => {
+const IdpSelectionScreen: React.FunctionComponent<Props> = props => {
+  // using hooks to handle tap count on spid test id
+  const [counter, setCounter] = React.useState(0);
   const onIdpSelected = (idp: IdentityProvider) => {
+    if (idp.isTestIdp === true && counter < 5) {
+      setCounter(count => count + 1);
+      return;
+    }
     props.dispatch(idpSelected(idp));
     props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
   };
-
+  React.useEffect(() => {
+    if (counter === TAPS_TO_OPEN_TESTIDP) {
+      props.dispatch(idpSelected(testIdp));
+      props.navigation.navigate(ROUTES.AUTHENTICATION_IDP_LOGIN);
+    }
+  });
   return (
     <BaseScreenComponent
       contextualHelpMarkdown={contextualHelpMarkdown}
