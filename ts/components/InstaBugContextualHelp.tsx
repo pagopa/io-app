@@ -211,7 +211,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
           I18n.t("instabug.contextualHelp.buttonBug"),
           I18n.t("instabug.contextualHelp.descriptionBug")
         )}
-
+        <View spacer={true} />
         <H3 style={styles.margin}>
           {I18n.t("instabug.contextualHelp.title2")}
         </H3>
