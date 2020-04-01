@@ -118,6 +118,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding,
     flex: 1
   },
+  padded: {
+    paddingHorizontal: customVariables.contentPadding
+  },
   itemLoadingHeaderWrapper: {
     flexDirection: "row",
     marginBottom: 4
@@ -240,8 +243,6 @@ const generateItemLayouts = (sections: Sections) => {
 
   return itemLayouts;
 };
-
-const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
 
 const PlaceholderLine = () => (
   <Placeholder.Line
