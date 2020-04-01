@@ -827,9 +827,6 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						/* pagopa */
-						/* DevelopmentTeam = M2X5YQ4BJ7; */
-						/* team digitale  */
 						DevelopmentTeam = M2X5YQ4BJ7;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -1448,8 +1445,6 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-resources.sh",
 				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft.png",
@@ -1486,8 +1481,6 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft@2x.png",
@@ -1532,15 +1525,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-frameworks.sh",
 				"${PODS_ROOT}/../../node_modules/instabug-reactnative/ios/Instabug.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Instabug.framework",
 			);
@@ -1673,11 +1662,8 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 46;
 				DEAD_CODE_STRIPPING = NO;
-				/* pagopa */
-				/* DEVELOPMENT_TEAM = M2X5YQ4BJ7; */
-				/* team digitale */
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1698,15 +1684,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				/* pagopa */
-				/* PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io; */
-				/* team digitale */
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
-				/* pagopa */
-				/* PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io"; */
-				/* team digitale */
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1721,7 +1701,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 46;
 				/* pagopa */
 				/* DEVELOPMENT_TEAM = M2X5YQ4BJ7; */
 				/* team digitale */
@@ -1745,13 +1725,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				/* pagopa */
-				/* PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io; /*
-				/* team digitale */
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
-				/* PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io"; */
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

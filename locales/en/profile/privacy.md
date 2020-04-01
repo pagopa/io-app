@@ -79,7 +79,7 @@ Non raccogliamo informazioni biometriche, ma riceviamo dal tuo smartphone unicam
 
 #### e) Dati trattati nella sezione "Profilo"
 
-Nella sezione Profilo potrai gestire le tue impostazioni privacy ed esercitare i tuoi diritti, reimpostare il PIN e effettuare il logout. 
+Nella sezione Profilo potrai gestire le tue impostazioni privacy ed esercitare i tuoi diritti, reimpostare il codice di sblocco e effettuare il logout. 
 
 Trattiamo questi dati personali per permetterti di usufruire di queste funzionalità.
 

@@ -11,6 +11,7 @@ import {
   StyleSheet
 } from "react-native";
 
+import { Button } from "native-base";
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
@@ -55,6 +56,12 @@ const renderItem = (props: Props) => (
   const { onIdpSelected } = props;
   const { item } = info;
   const onPress = () => onIdpSelected(item);
+  if (item.isTestIdp === true) {
+    return (
+      // render transparent button if idp is testIdp (see https://www.pivotaltracker.com/story/show/172082895)
+      <Button transparent={true} onPress={onPress} style={styles.gridItem} />
+    );
+  }
   return (
     <ButtonDefaultOpacity
       key={item.id}

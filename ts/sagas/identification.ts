@@ -46,7 +46,7 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
       // Invalidate the session
       yield put(sessionInvalid());
 
-      // Delete the PIN
+      // Delete the unlock code
       // tslint:disable-next-line:saga-yield-return-type
       yield call(deletePin);
 

@@ -66,7 +66,11 @@ save_node_cache: &save_node_cache
     key: *node_cache_key
 
 install_node_modules: &install_node_modules
-  run: yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
+  run: 
+    name: install npm packages
+    command: |
+      echo "//npm.pkg.github.com/:_authToken=$GITHUB_PACKAGE_APP_TOKEN" > ~/.npmrc
+      yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
 
 #
 # Build pipeline
@@ -487,14 +491,14 @@ workflows:
             - test-ios-e2e-build
 
       # Build Android alpha release only on master branch
-      - alpha-release-android:
-          requires:
-            - compile-typescript
-            - run-tests
-            - lint-typescript
-          filters:
-            branches:
-              only: master
+      #- alpha-release-android:
+      #    requires:
+      #      - compile-typescript
+      #      - run-tests
+      #      - lint-typescript
+      #    filters:
+      #      branches:
+      #        only: master
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status

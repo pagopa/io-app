@@ -14,10 +14,10 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
+  genericWaiting: Attendi qualche secondo..
   jserror:
     title: Si è verificato un errore imprevisto
-    message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e
-      ricominciare!
+    message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!
   markdown:
     reference: !include markdown_reference.md
     decodeError: Il messaggio non può essere decodificato
@@ -25,6 +25,7 @@ global:
     delete: Elimina
     cancel: Annulla
     ok: OK
+    ok2: Ok
     continue: Continua
     retry: Riprova
     back: Indietro
@@ -43,6 +44,7 @@ global:
     search: Testo da cercare
   remoteStates:
     loading: In caricamento...
+    wait: Attendi qualche secondo..
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
   search:
@@ -82,8 +84,6 @@ inbox:
   disableButton: Disabilita Inbox
   enableCallToActionDescription: Abilita l'inbox per visualizzare i messaggi
 profile:
-  contextualHelpTitle: Cosa puoi fare nel tuo Profilo
-  contextualHelpContent: !include profile/profile_account_main.md
   fiscalCode:
     title: I tuoi documenti personali
     fiscalCode: Codice fiscale
@@ -107,47 +107,55 @@ profile:
     load: Errore nel caricamento del profilo
     upsert: Errore nella creazione o nell'aggiornamento del profilo
   main:
-    screenTitle: Profilo
+    title: Profilo
     logout: Logout/Esci
     forgetCurrentSession: Dimentica sessione corrente
+    contextualHelpTitle: Cosa puoi fare nel tuo Profilo
+    contextualHelpContent: !include profile/profile_account_main.md
     cache:
       alert: Sei sicuro di voler eliminare la cache?
       clear: Elimina cache
       cleared: La cache è stata eliminata.
     resetPin:
-      confirmTitle: Sei sicuro di voler reimpostare il PIN?
-      confirmMsg: Ti verrà richiesto nuovamente di accedere con SPID.
+      confirmTitle: Sei sicuro di voler reimpostare il codice di sblocco?
+      confirmMsg: Ti verrà richiesto nuovamente di accedere.
     preferences:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
     privacy:
       title: Privacy
       description: Esporta dati, cancella account
-      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
-      updated: E' necessario prendere visione della nuova versione dell'Informativa
-      text: !include profile/privacy.md
-      contextualHelpTitlePolicy: Cos'è l'informativa sul trattamento dei dati personali
-      contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
-      contextualHelpTitle: Le tue impostazioni di privacy
-      contextualHelpContent: !include profile/profile_privacy_main.md
-    termsAndConditions:
-      title: Termini e condizioni d'uso
-      description: Rivedi i termini e le condizioni d'uso dell'app
-    mainPrivacy:
-      screenTitle: Privacy
-      screenSubtitle: Qui trovi informazioni legate ai
-        tuoi dati personali.
-      privacyPolicy:
-        title: Privacy policy
-        description: Rivedi le regole sulla privacy che hai accettato
+      subtitle: Qui trovi informazioni legate ai tuoi dati personali.
+      loading: Attendi qualche secondo, stiamo verificando il tuo profilo..
       removeAccount:
         title: Cancella il tuo account
         description: Elimina sia dal telefono che da internet tutti i data ad esso
-          associati (richiede SPID)
+          associati
+        alert: 
+          requestTitle: Sei sicuro di voler cancellare il tuo account?
+          requestSubtitle: Tutti i tuoi messaggi e le tue preferenze saranno eliminati definitivamente.
+          oldRequest: Abbiamo già preso in carico una richiesta di eliminazione del tuo profilo.
+          confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell\'avvenuta eliminazione.
+        error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
       exportData:
         title: Esporta i tuoi dati
         description: Ricevi nella tua email tutti i dati associati al tuo account in
           un formato aperto
+        alert: 
+          requestTitle: Sei sicuro di voler esportare tutti i tuoi dati?
+          oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
+          confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo. 
+        error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
+      privacyPolicy:
+        title: Privacy policy
+        description: Rivedi le regole sulla privacy che hai accettato
+        header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+        updated: E' necessario prendere visione della nuova versione dell'Informativa
+        text: !include profile/privacy.md
+        contextualHelpTitlePolicy: Cos'è l'informativa sul trattamento dei dati personali
+        contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
+        contextualHelpTitle: Le tue impostazioni di privacy
+        contextualHelpContent: !include profile/profile_privacy_main.md    
     developersSectionHeader: Sviluppatori
     experimentalFeatures:
       confirmTitle: Funzionalità sperimentali
@@ -175,9 +183,10 @@ profile:
         enabled: Abilitato
         disabled: Disabilitato
       email: Indirizzo email
-      spid_email: SPID email
+      spid_email: Email SPID
       need_validate: Da validare
-      mobile_phone: Numero di telefono
+      mobile_phone: Numero di telefono SPID
+      wip: In elaborazione
       language: Lingua
       digitalDomicile: Domicilio digitale
       preferred_calendar:
@@ -187,7 +196,6 @@ profile:
       default: Nessuna preferenza impostata
     unavailable:
       title: Questa preferenza è impostata nel tuo profilo SPID
-      message: Per ora IO eredita questo dato dai tuoi attributi SPID. Puoi modificarlo nel profilo SPID del tuo identity provider, e poi dovrai nuovamente fare login nell'app
     language:
       contextualHelpTitle: Come gestire la lingua su IO
       contextualHelpContent: !include profile/profile_preferences_language.md
@@ -222,13 +230,17 @@ spid:
   loginErrorAlert:
     title: Errore login
     message: Mi spiace, si è verificato un errore durante l'accesso, potresti riprovare?
-    okLabel: Ok
   subscription:
     line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
       Amministrazione Italiana.
     line2: Inserisci la tua email per attivarla.
 authentication:
   landing:
+    contentTitleCie: Non hai SPID o la CIE?
+    cie_information_request: !include cie.md
+    spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
+    request_cie: Richiedi CIE
+    request_spid: Ottieni SPID
     contextualHelpTitle: Come accedere all'app IO
     contextualHelpContent: !include authentication/authentication_landing.md
     loginSpid: Entra con SPID
@@ -256,43 +268,48 @@ authentication:
     expiredCardTitle: Carta scaduta o non più valida
     expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
-    cie:
+  cie:
+    genericTitle: Accedi - CIE
+    cie: Carta di Identità Elettronica
+    noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
+    authToSendData: !include cie/auth_to_send_data.md
+    nfc:
       noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
-      cardRemovedEarlyTitle: Hai rimosso la carta troppo presto
-      cardRemovedEarlyContent: Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
+      enableNfcTitle: Attiva NFC
+      enableNfcHeader: Verifica NFC
+      enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
+    pin:
       pinCardTitle: Inserisci il PIN della tua carta
+      pinCardHeader: Inserisci il PIN
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
       incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
-    ok: Ok
-    cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
-    cieLoginWait: Attendi qualche secondo..
-  cie:
-    enableNfcTitle: Attiva NFC
-    enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
-    enableNfcHelp: Non hai la Carta di Identità Elettronica?
-    nfcEnabledTitle: NFC Attivo
-    nfcEnabledContent: "Grazie per aver attivato la funzione NFC sul tuo dispositivo: puoi proseguire con l'autenticazione!"
-    unknownCardTitle: Carta sconosciuta
-    unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
-    unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
-    cie: Carta di Identità Elettronica
-    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-    temporarilyBlockedCieDoneButton: "Fatto, carta sbloccata!"
-    temporarilyBlockedCieOpenCieID: "Scarica / Apri CieID"
-    readerCardTitle: Tieni ferma la carta per qualche secondo
-    readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
-    readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
-    readerCardLostTitle: Avvicina nuovamente la carta
-    readerCardLostHeader: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta.
-    noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
-    authToSendData: !include cie/auth_to_send_data.md
-  cie_information_request: !include cie.md
-  spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
-  request_cie: Richiedi CIE
-  request_spid: Ottieni SPID
+      alert: Sei sicuro di voler tornare indietro?
+    pinTempLocked: 
+      header: Pin bloccato
+      title: Carta temporaneamente bloccata
+      content: !include cie/temporary_blocked_cie.md
+      button: "Scarica / Apri CieID"
+    card:
+      title: Appoggia la carta
+      headerTitle: Lettura della CIE
+      layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
+      layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finchè non senti una vibrazione.
+      cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
+      readerCardTitle: Tieni ferma la carta per qualche secondo
+      readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
+      readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
+      error:
+        readerCardLostTitle: Avvicina nuovamente la carta
+        readerCardLostHeader: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta.
+        onTagLost: Hai rimosso la carta troppo presto. Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo. 
+        tryAgain: Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!
+        generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
+        unknownCardTitle: Carta sconosciuta
+        unknownCardContent: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+        unknownCardHelpLink: Che cos'è la Carta di Identità Elettronica?
   spid: SPID
   spid_information_request:
     headerTitle: Non hai SPID?
@@ -309,7 +326,6 @@ authentication:
     spid: !include spid.md
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
-    contentTitleCie: Non hai SPID o la CIE?
     moreLinkText: Per saperne di più
     subtitle: SPID è sicuro
     paragraph1: SPID, il Sistema Pubblico di Identità Digitale, ti permette di accedere
@@ -420,8 +436,8 @@ onboarding:
     continue: Continua
   pin:
     headerTitle: Attivazione
-    contentTitle: Scegli un PIN
-    contentTitleConfirm: Digita ancora il PIN
+    contentTitle: Scegli un codice di sblocco
+    contentTitleConfirm: Digita ancora il codice di sblocco
     pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando
       dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere
       composto di 6 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento
@@ -431,8 +447,8 @@ onboarding:
     continue: Continua
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
-    confirmInvalid: i due pin non coincidono
-    contextualHelpTitle: Qual è il tuo PIN
+    confirmInvalid: i due codici non coincidono
+    contextualHelpTitle: Qual è il tuo codice di sblocco
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
     title: Vuoi davvero uscire da IO?
@@ -472,22 +488,22 @@ onboarding:
     emailInputLabel: Indirizzo email personale
 pin_login:
   pin:
-    pinInfo: Inserisci il PIN
+    pinInfo: Inserisci il codice di sblocco
     reset:
-      button: PIN dimenticato?
-      button_short: Reimposta PIN
-      tip: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità
+      button: Codice di sblocco dimenticato?
+      button_short: Reimposta il codice di sblocco
+      tip: Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente con la tua identità
         SPID.
-      tip_short: Dovrai accedere nuovamente con SPID.
-    confirmValid: PIN corretto
-    confirmInvalid: PIN non valido
+      tip_short: Dovrai effettuare di nuovo l'accesso.
+    confirmValid: Codice di sblocco corretto
+    confirmInvalid: codice di sblocco non valido
   unlock_screen:
     help:
-      title: Accesso con PIN
+      title: Accesso con codice di sblocco
       content: !include onboarding/onboarding_pin.md
   forgetPin:
-    confirmTitle: Hai dimenticato il PIN?
-    confirmMsg: Per poter scegliere un nuovo PIN dovrai fare di nuovo accesso con SPID.
+    confirmTitle: Hai dimenticato il codice di sblocco?
+    confirmMsg: Per poter scegliere un nuovo codice di sblocco dovrai fare di nuovo accesso con SPID.
 forms:
   validators:
     required: Valore richiesto
@@ -513,7 +529,12 @@ payment:
   IUV: IUV
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
-  wallet: Portafoglio
+  wallet: Pagamenti
+  alert:
+    msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
+    titlePagoPaUpdateApp: Aggiornamento richiesto
+    messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
+    btnUpdateApp: Aggiorna l'app IO
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Carte di Credito
@@ -550,7 +571,6 @@ wallet:
     info: Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono
   transactionDetails: Dettagli della transazione
   detailsTransaction:
-    contextualHelpTitle: Dettagli della transazione
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
     contextualHelpTitle: Salvare una carta su IO
@@ -563,6 +583,7 @@ wallet:
     save: Salva
     notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
     temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
+    loadingAlert: Sto verificando le informazioni della tua carta..
   saveCardInPayment:
     header: Paga con questa carta
     title: Vuoi pagare con questa carta?
@@ -574,7 +595,7 @@ wallet:
     info: Questa carta non è stata emessa da nessun istituto che fa parte del circuito
       pagoPA.
     infoBold: Scegli il soggetto economico
-    info2: che dovrà gestire la tua transazione.
+    info2: (PSP) che dovrà gestire la tua transazione.
     link: Per saperne di più
     maxFee: Commissione massima
     onUpdateWalletPspFailure: Operazione fallita, riprova
@@ -593,7 +614,7 @@ wallet:
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
-    identificationMessage: "Conferma l'operazione inserendo il tuo PIN"
+    identificationMessage: "Conferma l'operazione inserendo il tuo codice di sblocco"
     transactionSuccess: Il pagamento è stato completato!
     transactionFailure: Si è verificato un errore durante il pagamento, riprova!
     transactionTimeout: Non è stato possibile recuperare l'esito del pagamento!
@@ -934,9 +955,9 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  messageFingerPrint: "Appoggia l'impronta o inserisci il codice PIN"
-  messageFaceID: "Usa FaceID o inserisci il codice PIN"
-  messageEnterPin: "Inserisci il codice PIN"
+  messageFingerPrint: "Appoggia l'impronta o inserisci il codice di sblocco"
+  messageFaceID: "Usa FaceID o inserisci il codice di sblocco"
+  messageEnterPin: "Inserisci il codice di sblocco"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
@@ -945,7 +966,7 @@ identification:
       reason: Identificazione
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
-      fallbackLabel: Usa il PIN
+      fallbackLabel: Usa il codice di sblocco
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
   removeRequest:
@@ -965,3 +986,10 @@ reminders:
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
 genericError: Si è verificato un errore
+titleUpdateApp: Aggiorna IO!
+msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
+messageUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare l'app è necessario aggiornarla all'ultima versione."
+btnUpdateApp: Aggiorna l'app IO
+systemsOff:
+  title: Impossibile usare IO
+  closeApp: chiudi l'applicazione e riprova
