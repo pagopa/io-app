@@ -1,6 +1,8 @@
 import { Platform } from "react-native";
 import { NavigationNavigateActionPayload } from "react-navigation";
 
+export const ioItaliaLink = "https://io.italia.it/";
+
 export function getNavigateActionFromDeepLink(
   url: string,
   // on Android, the URI prefix contains a host in addition to scheme

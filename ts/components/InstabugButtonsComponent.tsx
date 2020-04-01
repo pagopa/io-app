@@ -15,66 +15,18 @@ import { Dispatch } from "../store/actions/types";
 import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import IconFont from "./ui/IconFont";
-
-interface OwnProps {
-  marginLR?: boolean;
-}
+import { ioItaliaLink } from "../utils/deepLink";
+import ButtonWithImage from "./ButtonWithImage";
 
 const styles = StyleSheet.create({
-  viewRL: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 0.25
-  },
-
-  viewCenter: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 0.5
-  },
-
   margin: {
     marginTop: 10,
     marginBottom: 10
   },
 
-  marginLR: {
-    marginLeft: 20,
-    marginRight: 20
-  },
-
   link: {
     color: customVariables.brandPrimary,
     textDecorationLine: "underline"
-  }
-});
-
-const baseStyles = StyleSheet.create({
-  button: {
-    justifyContent: "center",
-    alignSelf: "stretch",
-    alignItems: "center",
-    paddingTop: 0,
-    paddingBottom: 0,
-    marginTop: 10,
-    marginBottom: 10,
-    height: 40
-  },
-
-  icon: {
-    lineHeight: 24,
-    paddingRight: 12
-  },
-
-  text: {
-    paddingRight: 0,
-    paddingBottom: 0,
-    paddingLeft: 0,
-    fontSize: 14,
-    fontWeight: "bold",
-    lineHeight: 20
   },
 
   description: {
@@ -83,31 +35,12 @@ const baseStyles = StyleSheet.create({
   }
 });
 
-const validStyles = StyleSheet.create({
-  button: {
-    backgroundColor: customVariables.colorWhite,
-    borderWidth: 1,
-    borderColor: customVariables.brandPrimary
-  },
-
-  icon: {
-    color: customVariables.brandPrimary
-  },
-
-  text: {
-    color: customVariables.brandPrimary
-  }
-});
-
 type Props = ReturnType<typeof mapStateToProps> &
-  OwnProps &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   instabugReportType: Option<string>;
 };
-
-const supportedURL = "https://io.italia.it/";
 
 class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
@@ -134,10 +67,10 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   };
 
   private handleLinkClick = () =>
-    Linking.canOpenURL(supportedURL).then(supported => {
+    Linking.canOpenURL(ioItaliaLink).then(supported => {
       if (supported) {
         // tslint:disable-next-line: no-floating-promises
-        Linking.openURL(supportedURL);
+        Linking.openURL(ioItaliaLink);
       }
     });
 
@@ -174,32 +107,26 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
     description: string
   ) => (
     <React.Fragment>
-      <ButtonDefaultOpacity
+      <ButtonWithImage
+        icon={icon}
+        onClick={onClick}
+        text={text}
         disabled={false}
-        onPress={onClick}
-        style={[styles.margin, baseStyles.button, validStyles.button]}
-      >
-        <View style={styles.viewRL}>
-          <IconFont name={icon} style={[baseStyles.icon, validStyles.icon]} />
-        </View>
-        <View style={styles.viewCenter}>
-          <Text style={[baseStyles.text, validStyles.text]}>{text}</Text>
-        </View>
-        <View style={styles.viewRL} />
-      </ButtonDefaultOpacity>
-      <Text style={[styles.margin, baseStyles.description]}>{description}</Text>
+        light={true}
+      />
+      <Text style={[styles.margin, styles.description]}>{description}</Text>
     </React.Fragment>
   );
 
   public render() {
     return (
-      <View style={this.props.marginLR && styles.marginLR}>
+      <React.Fragment>
         <H3 style={styles.margin}>
           {I18n.t("instabug.contextualHelp.title1")}
         </H3>
 
         {this.buttonWithDescription(
-          "io-chat",
+          "io-messaggi",
           this.handleIBChatPress,
           I18n.t("instabug.contextualHelp.buttonChat"),
           I18n.t("instabug.contextualHelp.descriptionChat")
@@ -215,13 +142,13 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
         <H3 style={styles.margin}>
           {I18n.t("instabug.contextualHelp.title2")}
         </H3>
-        <Text style={[styles.margin, baseStyles.description]}>
+        <Text style={[styles.margin, styles.description]}>
           {I18n.t("instabug.contextualHelp.descriptionLink")}
           <TouchableWithoutFeedback onPress={this.handleLinkClick}>
             <Text style={styles.link}> io.italia.it</Text>
           </TouchableWithoutFeedback>
         </Text>
-      </View>
+      </React.Fragment>
     );
   }
 }
