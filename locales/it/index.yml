@@ -61,6 +61,9 @@ locales:
 clipboard:
   copyFeedback: Copiato negli appunti
   copyText: copia
+betaBanner:
+  title: 'L’app IO è in versione beta.'
+  description: Le tue segnalazioni ci aiutano a migliorare giorno dopo giorno.
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
