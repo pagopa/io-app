@@ -13,6 +13,8 @@ import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
+import backendStatusReducer from "./backendStatus";
+import cieReducer from "./cie";
 import contentReducer from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
@@ -72,11 +74,13 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   deepLink: deepLinkReducer,
   wallet: walletReducer,
   backendInfo: backendInfoReducer,
+  backendStatus: backendStatusReducer,
   preferences: preferencesReducer,
   identification: identificationReducer,
   navigationHistory: navigationHistoryReducer,
   instabug: instabugUnreadMessagesReducer,
   search: searchReducer,
+  cie: cieReducer,
 
   //
   // persisted state

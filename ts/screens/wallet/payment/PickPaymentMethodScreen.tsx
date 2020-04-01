@@ -27,7 +27,6 @@ import { GlobalState } from "../../../store/reducers/types";
 import { walletsSelector } from "../../../store/reducers/wallet/wallets";
 import variables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
-import { AmountToImporto } from "../../../utils/amounts";
 import { showToast } from "../../../utils/showToast";
 import { dispatchPickPspOrConfirm } from "./common";
 
@@ -56,9 +55,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
     const verifica = this.props.navigation.getParam("verifica");
 
     const paymentReason = verifica.causaleVersamento; // this could be empty as per pagoPA definition
-    const currentAmount = AmountToImporto.encode(
-      verifica.importoSingoloVersamento
-    );
+    const currentAmount = verifica.importoSingoloVersamento;
     const recipient = verifica.enteBeneficiario;
 
     const { wallets } = this.props;

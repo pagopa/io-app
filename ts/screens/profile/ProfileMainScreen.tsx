@@ -344,7 +344,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               sectionHeader={I18n.t("profile.main.accountSectionHeader")}
             />
 
-            {/* Reset PIN */}
+            {/* Reset unlock code */}
             <ListItemComponent
               title={I18n.t("pin_login.pin.reset.button_short")}
               subTitle={I18n.t("pin_login.pin.reset.tip_short")}

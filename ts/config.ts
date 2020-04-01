@@ -1,7 +1,6 @@
 // Main config file. Mostly read the configuration from .env files
 
 import * as t from "io-ts";
-
 import { NonNegativeNumber } from "italia-ts-commons/lib/numbers";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Millisecond, Second } from "italia-ts-commons/lib/units";
@@ -27,7 +26,7 @@ const DEFAULT_FETCH_PAGOPA_TIMEOUT_MS = 60000;
 // operations)
 const DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS = 10000;
 
-// default seconds of background activity before asking the PIN login
+// default seconds of background activity before asking the unlock code login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
 // Default number of workers to fetch message.
@@ -37,11 +36,9 @@ export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
+export const backendStatusUrl: string = Config.BACKEND_STATUS_URL;
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
-export const enableTestIdp = Config.ENABLE_TEST_IDP === "YES";
 export const gcmSenderId: string = Config.GCM_SENDER_ID;
-export const isCIEauthenticationEnabled: boolean =
-  Config.CIE_AUTHENTICATION_ENABLED === "YES";
 export const debugRemotePushNotification =
   Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
 export const isDebugBiometricIdentificationEnabled =
@@ -81,7 +78,3 @@ export const totMessageFetchWorkers = t.Integer.decode(
 
 export const shouldDisplayVersionInfoOverlay =
   Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
-
-export function isDevEnvironment() {
-  return environment === "DEV";
-}

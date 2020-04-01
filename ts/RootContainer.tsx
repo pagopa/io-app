@@ -26,16 +26,17 @@ import {
 } from "./store/actions/application";
 import { navigateToDeepLink, setDeepLink } from "./store/actions/deepLink";
 import { navigateBack } from "./store/actions/navigation";
+import { isBackendServicesStatusOffSelector } from "./store/reducers/backendStatus";
 import { GlobalState } from "./store/reducers/types";
+import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
-// Check min version app supported
 import { fromNullable } from "fp-ts/lib/Option";
 import { serverInfoDataSelector } from "./store/reducers/backendInfo";
+// Check min version app supported
 import { isUpdateNeeded } from "./utils/appVersion";
 
-// tslint:disable-next-line:no-use-before-declare
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 class RootContainer extends React.PureComponent<Props> {
@@ -66,11 +67,8 @@ class RootContainer extends React.PureComponent<Props> {
     this.props.setDeepLink(action, true);
   };
 
-  public componentWillMount() {
-    initialiseInstabug();
-  }
-
   public componentDidMount() {
+    initialiseInstabug();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
 
     if (Platform.OS === "android") {
@@ -80,7 +78,8 @@ class RootContainer extends React.PureComponent<Props> {
     } else {
       Linking.addEventListener("url", this.handleOpenUrlEvent);
     }
-
+    // boot: send the status of the application
+    this.handleApplicationActivity(AppState.currentState);
     AppState.addEventListener("change", this.handleApplicationActivity);
     // Hide splash screen
     SplashScreen.hide();
@@ -115,26 +114,39 @@ class RootContainer extends React.PureComponent<Props> {
     }
   }
 
+  private get getModal() {
+    // avoid app usage if backend systems are OFF
+    if (this.props.isBackendServicesStatusOff) {
+      return <SystemOffModal />;
+    }
+    const isAppOutOfDate = fromNullable(this.props.backendInfo)
+      .map(bi => isUpdateNeeded(bi, "min_app_version"))
+      .getOrElse(false);
+    // if the app is out of date, force a screen to update it
+    if (isAppOutOfDate) {
+      return <UpdateAppModal />;
+    }
+    return <IdentificationModal />;
+  }
+
   public render() {
     // FIXME: perhaps instead of navigating to a "background"
     //        screen, we can make this screen blue based on
     //        the redux state (i.e. background)
 
     // if we have no information about the backend, don't force the update
-    const isAppOutOfDate = fromNullable(this.props.backendInfo)
-      .map(bi => isUpdateNeeded(bi, "min_app_version"))
-      .getOrElse(false);
+
     return (
       <Root>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle={"dark-content"} />
         {Platform.OS === "android" && (
           <FlagSecureComponent
             isFlagSecureEnabled={!this.props.isDebugModeEnabled}
           />
         )}
-        {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
         <Navigation />
-        {isAppOutOfDate ? <UpdateAppModal /> : <IdentificationModal />}
+        {shouldDisplayVersionInfoOverlay && <VersionInfoOverlay />}
+        {this.getModal}
         <LightModalRoot />
       </Root>
     );
@@ -144,6 +156,7 @@ class RootContainer extends React.PureComponent<Props> {
 const mapStateToProps = (state: GlobalState) => ({
   deepLinkState: state.deepLink,
   isDebugModeEnabled: state.debug.isDebugModeEnabled,
+  isBackendServicesStatusOff: isBackendServicesStatusOffSelector(state),
   backendInfo: serverInfoDataSelector(state)
 });
 

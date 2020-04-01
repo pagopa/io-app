@@ -6,6 +6,8 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
+    "run-ios": "react-native run-ios",
+    "run-android": "react-native run-android",
     "postinstall": "patch-package && rn-nodeify --install path,buffer && chmod +x ./bin/add-ios-source-maps.sh && ./bin/add-ios-source-maps.sh && chmod +x ./bin/add-ios-env-config.sh && ./bin/add-ios-env-config.sh",
     "test": "jest",
     "prettify": "prettier --write \"ts/**/*.ts*\"",
@@ -24,6 +26,7 @@
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts"
   },
   "dependencies": {
+    "@pagopa/react-native-cie": "0.1.9",
     "@react-native-community/async-storage": "^1.6.1",
     "abort-controller": "^1.0.2",
     "async-mutex": "^0.1.3",
