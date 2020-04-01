@@ -123,7 +123,7 @@ profile:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
     privacy:
-      title: Privacy
+      title: Privacy e condizioni d'uso
       description: Esporta dati, cancella account
       subtitle: Qui trovi informazioni legate ai tuoi dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo..
@@ -147,7 +147,7 @@ profile:
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo. 
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
-        title: Privacy policy
+        title: Informativa e condizioni d'uso
         description: Rivedi le regole sulla privacy che hai accettato
         header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
         updated: E' necessario prendere visione della nuova versione dell'Informativa
@@ -434,6 +434,8 @@ onboarding:
   tos:
     headerTitle: Attivazione
     continue: Continua
+    accept: Accetta
+    error: Errore nel caricamento
   pin:
     headerTitle: Attivazione
     contentTitle: Scegli un codice di sblocco

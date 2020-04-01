@@ -123,7 +123,7 @@ profile:
       title: Preferences
       description: Manage app internal preferences
     privacy:
-      title: Privacy
+      title: Information and conditions of use
       description: Export data, delete account
       subtitle: Here you find information related to your personal data.  
       loading: Wait few seconds, we're checking your profile..
@@ -429,6 +429,8 @@ onboarding:
   tos:
     headerTitle: Activation
     continue: Continue
+    accept: Accept
+    error: Loading error
   pin:
     headerTitle: Activation
     contentTitle: Choose an unlock code
