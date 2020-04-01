@@ -59,8 +59,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding
   },
   webViewContainer: {
-    flex: 1,
-    backgroundColor: "red"
+    flex: 1
   },
   errorContainer: {
     padding: 20,
