@@ -212,7 +212,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private onBoardingProps: TopScreenComponentProps = {
     headerTitle: I18n.t("email.validate.header"),
-    title: I18n.t("email.validate.title"),
     customGoBack: this.customOnboardingGoBack
   };
 

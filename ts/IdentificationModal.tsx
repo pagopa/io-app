@@ -30,9 +30,9 @@ import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScr
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
 /**
- * Type used in the local state to save the result of Pinpad PIN matching.
- * State is "unstarted" if the user still need to insert the PIN.
- * State is "failure" when the PIN inserted by the user do not match the
+ * Type used in the local state to save the result of Pinpad code matching.
+ * State is "unstarted" if the user still need to insert the unlock code.
+ * State is "failure" when the unlock code inserted by the user do not match the
  * stored one.
  */
 type IdentificationByPinState = "unstarted" | "failure";
@@ -139,7 +139,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         _ => 0
       );
     } else {
-      // if the biometric is not available unlock the pin insertion
+      // if the biometric is not available unlock the unlock code insertion
       this.setState({ canInsertPin: true });
     }
   }

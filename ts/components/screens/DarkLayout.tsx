@@ -62,7 +62,7 @@ export default class DarkLayout extends React.Component<Props> {
     return (
       <TopScreenComponent
         goBack={this.props.allowGoBack}
-        title={this.props.title ? this.props.title : ""}
+        headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
         appLogo={this.props.appLogo}
