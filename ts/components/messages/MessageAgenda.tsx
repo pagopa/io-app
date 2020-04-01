@@ -27,6 +27,7 @@ import customVariables from "../../theme/variables";
 import { CreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { format } from "../../utils/dates";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import MessageListItem from "./MessageListItem";
 
@@ -508,18 +509,20 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         : undefined;
 
     return (
-      <MessageListItem
-        isRead={isRead}
-        message={message}
-        service={service}
-        payment={payment}
-        onPress={onPressItem}
-        onLongPress={onLongPressItem}
-        isSelectionModeEnabled={selectedMessageIds.isSome()}
-        isSelected={selectedMessageIds
-          .map(_ => _.has(message.id))
-          .getOrElse(false)}
-      />
+      <View style={styles.padded}>
+        <MessageListItem
+          isRead={isRead}
+          message={message}
+          service={service}
+          payment={payment}
+          onPress={onPressItem}
+          onLongPress={onLongPressItem}
+          isSelectionModeEnabled={selectedMessageIds.isSome()}
+          isSelected={selectedMessageIds
+            .map(_ => _.has(message.id))
+            .getOrElse(false)}
+        />
+      </View>
     );
   };
 

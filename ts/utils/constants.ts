@@ -15,3 +15,5 @@ export const HEADER_HEIGHT =
       ? 18
       : getStatusBarHeight(true)
     : customVariables.spacerHeight);
+
+export const HEADER_ANIMATION_DURATION = 200;
