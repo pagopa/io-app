@@ -993,3 +993,12 @@ btnUpdateApp: Aggiorna l'app IO
 systemsOff:
   title: Impossibile usare IO
   closeApp: chiudi l'applicazione e riprova
+instabug:
+  contextualHelp:
+    title1: Hai bisogno di aiuto?
+    buttonChat: Inviaci un messaggio
+    descriptionChat: Puoi usare il nostro strumento di chat per inviare un messaggio in caso di bisogno urgente di assistenza. Riceverai una risposta direttamente su IO
+    buttonBug: Segnala un bug
+    descriptionBug: Puoi segnalare un errore o qualcosa che non funziona ai nostri sviluppatori, si prenderanno carico del problema al più presto.
+    title2: Sei nuovo in IO?
+    descriptionLink: Scopri come funziona e quali sono le funzionalita speciali di IO, visitando il sito
