@@ -9,7 +9,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationScreenProps, StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -109,7 +109,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 
   public render() {
     const { isFromProfileSection } = this;
-
+    const { isOnboardingCompleted } = this.props;
     const footerProps1: SingleButton = {
       type: "SingleButton",
       leftButton: {
@@ -118,14 +118,23 @@ export class EmailReadScreen extends React.PureComponent<Props> {
         onPress: this.props.navigateToEmailInsertScreen
       }
     };
-
     const footerProps2: TwoButtonsInlineHalf = {
       type: "TwoButtonsInlineHalf",
       leftButton: {
         block: true,
         bordered: true,
         title: I18n.t("email.edit.cta"),
-        onPress: this.props.navigateToEmailInsertScreen
+        onPress: () => {
+          if (!isOnboardingCompleted) {
+            const resetAction = StackActions.reset({
+              index: 0,
+              actions: [navigateToEmailInsertScreen()]
+            });
+            this.props.navigation.dispatch(resetAction);
+            return;
+          }
+          this.props.navigateToEmailInsertScreen();
+        }
       },
       rightButton: {
         block: true,
@@ -138,7 +147,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        title={I18n.t("profile.preferences.list.email")}
+        headerTitle={I18n.t("profile.preferences.list.email")}
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <ScreenContent

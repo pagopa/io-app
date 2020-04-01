@@ -1,5 +1,6 @@
+import { NavState } from "react-native";
+import * as config from "../config";
 import { SessionToken } from "../types/SessionToken";
-
 /**
  * Helper functions for handling the SPID login flow through a webview.
  */
@@ -58,4 +59,33 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
   }
   // Url is not LOGIN related
   return undefined;
+};
+
+/** for a given idp id get the relative login uri */
+export const getIdpLoginUri = (idpId: string) =>
+  `${config.apiUrlPrefix}/login?authLevel=SpidL2&entityID=${idpId}`;
+
+/**
+ * Extract the login result from the given url.
+ * Return true if the url contains login pattern & token
+ */
+export const onLoginUriChanged = (
+  onFailure: (errorCode: string | undefined) => void,
+  onSuccess: (_: SessionToken) => void
+) => (navState: NavState): boolean => {
+  if (navState.url) {
+    // If the url is not related to login this will be `null`
+    const loginResult = extractLoginResult(navState.url);
+    if (loginResult) {
+      if (loginResult.success) {
+        // In case of successful login
+        onSuccess(loginResult.token);
+        return true;
+      } else {
+        // In case of login failure
+        onFailure(loginResult.errorCode);
+      }
+    }
+  }
+  return false;
 };

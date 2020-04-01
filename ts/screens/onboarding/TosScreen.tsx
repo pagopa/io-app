@@ -6,10 +6,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
-import { Alert, StyleSheet } from "react-native";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
@@ -23,6 +23,7 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
 
 type OwnProps = {
@@ -65,21 +66,25 @@ class TosScreen extends React.PureComponent<Props> {
         goBack={this.handleGoBack}
         headerTitle={
           isProfile
-            ? I18n.t("profile.main.screenTitle")
+            ? I18n.t("profile.main.title")
             : I18n.t("onboarding.tos.headerTitle")
         }
       >
         <Content noPadded={true}>
           <H4 style={[styles.boldH4, styles.horizontalPadding]}>
-            {I18n.t("profile.main.privacy.header")}
+            {I18n.t("profile.main.privacy.privacyPolicy.header")}
           </H4>
           {this.props.hasAcceptedOldTosVersion && (
             <View style={styles.alert}>
-              <Text>{I18n.t("profile.main.privacy.updated")}</Text>
+              <Text>
+                {I18n.t("profile.main.privacy.privacyPolicy.updated")}
+              </Text>
             </View>
           )}
           <View style={styles.horizontalPadding}>
-            <Markdown>{I18n.t("profile.main.privacy.text")}</Markdown>
+            <Markdown>
+              {I18n.t("profile.main.privacy.privacyPolicy.text")}
+            </Markdown>
           </View>
         </Content>
 
@@ -126,6 +131,7 @@ class TosScreen extends React.PureComponent<Props> {
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
+    isLoading: pot.isLoading(userMetadataSelector(state)),
     hasAcceptedOldTosVersion: pot.getOrElse(
       pot.map(
         potProfile,
@@ -139,4 +145,4 @@ function mapStateToProps(state: GlobalState) {
   };
 }
 
-export default connect(mapStateToProps)(TosScreen);
+export default connect(mapStateToProps)(withLoadingSpinner(TosScreen));

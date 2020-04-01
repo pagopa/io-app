@@ -78,7 +78,7 @@ class SelectLogoutOption extends React.PureComponent<Props> {
           <View style={styles.separator} />
         </Content>
         <FooterWithButtons
-          type="SingleButton"
+          type={"SingleButton"}
           leftButton={{
             bordered: true,
             onPress: this.props.onCancel,

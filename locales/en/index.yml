@@ -14,6 +14,7 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, something did not work as expected, please try again!
+  genericWaiting: Wait a few seconds..
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -24,6 +25,7 @@ global:
     delete: Delete
     cancel: Cancel
     ok: OK
+    ok2: Ok
     continue: Continue
     retry: Retry
     back: Back
@@ -42,6 +44,7 @@ global:
     search: Text to search
   remoteStates:
     loading: Loading...
+    wait: Wait a few seconds..
     notAvailable: Not available
   notImplemented: NOT IMPLEMENTED
   search:
@@ -81,8 +84,6 @@ inbox:
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
-  contextualHelpTitle: What you can do in your Profile
-  contextualHelpContent: !include profile/profile_account_main.md
   fiscalCode:
     title: Your personal documents
     fiscalCode: Fiscal code
@@ -106,45 +107,54 @@ profile:
     load: Error loading the profile
     upsert: Error creating or updating the profile
   main:
-    screenTitle: Profile
+    title: Profile
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    contextualHelpTitle: What you can do in your Profile
+    contextualHelpContent: !include profile/profile_account_main.md
     cache:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
       cleared: The cache has been cleared.
     resetPin:
-      confirmTitle: Are you sure you want to reset your PIN?
-      confirmMsg: You will be asked again to log in with SPID.
+      confirmTitle: Are you sure you want to reset your unlock code?
+      confirmMsg: You will be asked again to log in.
     preferences:
       title: Preferences
       description: Manage app internal preferences
     privacy:
       title: Privacy
       description: Export data, delete account
-      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
-      updated: It is required to accept the new version of Terms and Conditions
-      text: !include profile/privacy.md
-      contextualHelpTitlePolicy: What is the information on the processing of personal data
-      contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
-      contextualHelpTitle: Your privacy settings
-      contextualHelpContent: !include profile/profile_privacy_main.md
-    termsAndConditions:
-      title: Terms and Conditions
-      description: Review Terms & Conditions of the app
-    mainPrivacy:
-      screenTitle: Privacy
-      screenSubtitle: Here you will find information related to your personal data.
-      privacyPolicy:
-        title: Privacy policy
-        description: Review accepted privacy terms
+      subtitle: Here you find information related to your personal data.  
+      loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
         description: Remove all data associated to your account from your phone and
-          our systems (SPID required)
+          our systems
+        alert: 
+          requestTitle: Are you sure you want to delete your account?
+          requestSubtitle: All your messages and personal settings will be lost.
+          oldRequest: We are already proceeding to delete your account
+          confirmSubtitle: After processing, you will receive an email confirming the deletion.
+        error: An error occurred while submit your deletion request, please retry! 
       exportData:
         title: Export your data
         description: Send to your email all your account’s data in an open format
+        alert: 
+          requestTitle: Are you sure you want to export all your data?
+          oldRequest: We are already proceeding to export all your data
+          confirmSubtitle: After processing, you will receive an email containing all your data.
+        error: An error occurred while submit your exporting request, please retry!
+      privacyPolicy:
+        title: Privacy policy
+        description: Review the accepted privacy terms
+        header: Information note on the processing of the IO app Beta Testers' personal data
+        updated: It is required to accept the new version of Terms and Conditions
+        text: !include profile/privacy.md
+        contextualHelpTitlePolicy: What is the information on the processing of personal data
+        contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
+        contextualHelpTitle: Your privacy settings
+        contextualHelpContent: !include profile/profile_privacy_main.md
     developersSectionHeader: Developers
     experimentalFeatures:
       confirmTitle: Experimental features
@@ -173,6 +183,7 @@ profile:
       email: Email address
       spid_email: SPID email
       need_validate: To be validated
+      wip: In progress
       mobile_phone: Mobile number
       language: Language
       digitalDomicile: Digital domicile
@@ -183,7 +194,6 @@ profile:
       default: No preference set
     unavailable:
       title: This setting is set up on your SPID profile
-      message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
     language:
       contextualHelpTitle: How to manage your language setting
       contextualHelpContent: !include profile/profile_preferences_language.md
@@ -218,12 +228,16 @@ spid:
   loginErrorAlert:
     title: Login error
     message: Sorry, there was an error while logging in, could you try again?
-    okLabel: Ok
   subscription:
     line1: SPID is the digital identity to access online services of the Public Administration.
     line2: Insert your email address to enable it.
 authentication:
   landing:
+    contentTitleCie: Don't have SPID or CIE?
+    cie_information_request: !include cie.md
+    spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
+    request_cie: Request CIE
+    request_spid: Request SPID
     contextualHelpTitle: How to register in the IO app
     contextualHelpContent: !include authentication/authentication_landing.md
     loginSpid: Login with SPID
@@ -249,43 +263,48 @@ authentication:
     expiredCardTitle: Card expired or no longer valid
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
     expiredCardHelp: How to renew your Electronic Identity Card?
-    cie:
+  cie:
+    genericTitle: Login - CIE
+    cie: Electronic Identity Card
+    noDataTitle: To use IO you must authorize the sending of data
+    authToSendData: !include cie/auth_to_send_data.md
+    nfc:
       noNfcConnectionTitle: Are you sure you put the card down?
       noNfcConnectionContent: !include cie/noNfcConnection.md
-      cardRemovedEarlyTitle: You have removed the card too soon
-      cardRemovedEarlyContent: Hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
+      enableNfcTitle: Enable NFC
+      enableNfcHeader: Check NFC
+      enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
+    pin:
       pinCardTitle: Enter the PIN of your card
+      pinCardHeader: Enter the PIN
       pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
       incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
       incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
       incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
-    ok: Ok
-    cieCardValid: Ok, your card is valid! Wait a few more seconds..
-    cieLoginWait: Wait a few seconds..
-  cie:
-    enableNfcTitle: Enable NFC
-    enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
-    enableNfcHelp: Don't have an Electronic Identity Card?
-    nfcEnabledTitle: NFC Enabled
-    nfcEnabledContent: "Thank you for activating the NFC functionality on your device: you can proceed with authentication!"
-    unknownCardTitle: Unknown card
-    unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
-    unknownCardHelpLink: What is the Electronic Identity Card?
-    cie: Electronic Identity Card
-    temporarilyBlockedCie: !include cie/temporary_blocked_cie.md
-    temporarilyBlockedCieDoneButton: "Done, card unlocked!"
-    temporarilyBlockedCieOpenCieID: "Open CieID"
-    readerCardTitle: Hold the card for a few seconds
-    readerCardHeader: We are reading the data of your CIE and verifying its validity.
-    readerCardFooter: Hold the card in this position for a few more seconds
-    readerCardLostTitle: Hold the card again for a few seconds
-    readerCardLostHeader: We have not yet finished reading the card data.
-    noDataTitle: To use IO you must authorize the sending of data
-    authToSendData: !include cie/auth_to_send_data.md
-  cie_information_request: !include cie.md
-  spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
-  request_cie: Request CIE
-  request_spid: Request SPID
+      alert: Are you sure you want to go back?
+    pinTempLocked:
+      header: Pin locked
+      title: Card temporarily locked
+      content: !include cie/temporary_blocked_cie.md
+      button: "Load/open CieID"
+    card:
+      headerTitle: Read CIE
+      title: Touch the card
+      layCardMessageHeader: Touch your Electronic ID Card on the back of your phone for a few seconds.
+      layCardMessageFooter: If you don't know exactly where is the NFC sensor, move the card to different points and wait a few seconds until you feel a vibration.
+      cieCardValid: Ok, your card is valid! Wait a few more seconds..
+      readerCardTitle: Hold the card for a few seconds
+      readerCardHeader: We are reading the data of your CIE and verifying its validity.
+      readerCardFooter: Hold the card in this position for a few more seconds
+      error:
+        readerCardLostTitle: Hold the card again for a few seconds
+        readerCardLostHeader: We have not yet finished reading the card data.
+        onTagLost: You removed the card too soon. Hold the card as close as possible to the back of the device until a confirmation appears on the screen. It will take a few seconds.
+        tryAgain: Something did not work as expected while we read your CIE. It's probably a temporary issue, please try again!
+        generic: Something did not work as expected while we read your CIE.
+        unknownCardTitle: Unknown card
+        unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
+        unknownCardHelpLink: What is the Electronic Identity Card?
   spid: SPID
   spid_information_request:
     headerTitle: Insert email address
@@ -302,7 +321,6 @@ authentication:
     spid: !include spid.md
     headerTitle: What is SPID?
     contentTitle: Don't have SPID?
-    contentTitleCie: Don't have SPID or CIE?
     moreLinkText: Learn more
     subtitle: SPID is safe
     paragraph1: SPID, the Public System of Digital Identity, allows you to access
@@ -413,8 +431,8 @@ onboarding:
     continue: Continue
   pin:
     headerTitle: Activation
-    contentTitle: Choose a PIN code
-    contentTitleConfirm: Insert your PIN again
+    contentTitle: Choose an unlock code
+    contentTitleConfirm: Insert your code again
     pinInfo: This code will be requested each time you open the app and when you need
       to view sensitive data or make dispositive transactions. It must be composed
       of 6 digits. Remember it carefully. You can change it at any time by entering
@@ -425,7 +443,7 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
-    contextualHelpTitle: What is your PIN
+    contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
     title: Do you really want to log out?
@@ -465,21 +483,21 @@ onboarding:
     emailInputLabel: Personal email address
 pin_login:
   pin:
-    pinInfo: Enter the PIN
+    pinInfo: Enter the unlock code
     reset:
-      button: Did you forget the PIN?
-      button_short: Reset PIN
-      tip: To reset your PIN you will have to login again with your SPID account.
+      button: Did you forget the unlock code?
+      button_short: Reset unlock code
+      tip: To reset your unlock code you will have to login again with your SPID account.
       tip_short: You will have to login again.
-    confirmValid: Correct PIN
-    confirmInvalid: Invalid PIN
+    confirmValid: Correct unlock code
+    confirmInvalid: Invalid unlock code
   unlock_screen:
     help:
-      title: Access with PIN
+      title: Access with unlock code
       content: !include onboarding/onboarding_pin.md
   forgetPin:
-    confirmTitle: Did you forget the PIN?
-    confirmMsg: To be able to choose a new PIN you will need to log in again with SPID.
+    confirmTitle: Did you forget the unlock code?
+    confirmMsg: To be able to choose a new unlock code you will need to log in again with SPID.
 forms:
   validators:
     required: Required value
@@ -505,7 +523,12 @@ payment:
   IUV: IUV
   recipientFiscalCode: Recipient fiscal code
 wallet:
-  wallet: Wallet
+  wallet: Payments
+  alert:
+    msgErrorUpdateApp: "An error occurred while opening the app store"
+    titlePagoPaUpdateApp: Update required
+    messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
+    btnUpdateApp: Update the IO app 
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
@@ -550,6 +573,7 @@ wallet:
     save: Save
     notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
     temporaryError: There was a temporary problem while saving this card, please retry.
+    loadingAlert: I am checking your card data..
   saveCardInPayment:
     header: Pay with this card
     title: Do you want to pay with this card?
@@ -560,7 +584,7 @@ wallet:
     title: Choose the manager
     info: This card does not belong to the pagoPA payment network.
     infoBold: Choose the economic operator
-    info2: which will have to manage yout payment.
+    info2: (PSP) which will have to manage yout payment.
     link: Find out more
     maxFee: Maximum fee
     onUpdateWalletPspFailure: Operation failed, please retry
@@ -579,7 +603,7 @@ wallet:
     info2: You are using your favourite payment method.
     changeMethod: Change the payment method
     change: Change method
-    identificationMessage: Confirm the transaction with your PIN code
+    identificationMessage: Confirm the transaction with your unlock code
     transactionSuccess: The payment has completed!
     transactionFailure: There was an error with the payment, please retry!
     transactionTimeout: I couldn't retrieve the result of the payment!
@@ -634,7 +658,6 @@ wallet:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
   detailsTransaction:
-    contextualHelpTitle: Transaction details
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   total: Total
   amount: Amount €
@@ -922,9 +945,9 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  messageFingerPrint: "Use the fingerprint or enter the PIN"
-  messageFaceID: "Use FaceID or enter the PIN"
-  messageEnterPin: "Enter the PIN"
+  messageFingerPrint: "Use the fingerprint or enter the unlock code"
+  messageFaceID: "Use FaceID or enter the unlock code"
+  messageEnterPin: "Enter the unlock code"
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint
@@ -933,7 +956,7 @@ identification:
       reason: Identification
       title: Identification required
       sensorDescription: Touch sensor
-      fallbackLabel: Use the PIN
+      fallbackLabel: Use the unlock code
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
   removeRequest:
@@ -950,7 +973,13 @@ reminders:
     modal2: "open your email client and click on the link."
     button1: Send another verification email
     button2: Change email address
-
 openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred
+titleUpdateApp: Update IO!
+msgErrorUpdateApp: "An error occurred while opening the app store"
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
+btnUpdateApp: Update the IO app
+systemsOff:
+  title: Unable to start IO
+  closeApp: close the application and try again

@@ -30,7 +30,7 @@ export function* handleOrganizationNameUpdateSaga(
   if (organizations) {
     const fc = service.organization_fiscal_code;
 
-    // The organization in stored if the corresponding fiscal code has no maches among those stored
+    // The organization is stored if the corresponding fiscal code has no maches among those stored
     const organization = organizations[fc];
     if (!organization) {
       yield put(updateOrganizations(service));

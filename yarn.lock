@@ -1045,6 +1045,11 @@
     node-fetch "^2.1.1"
     url-template "^2.0.8"
 
+"@pagopa/react-native-cie@0.1.9":
+  version "0.1.9"
+  resolved "https://npm.pkg.github.com/download/@pagopa/react-native-cie/0.1.9/5d984e20a7666215e1f7a55c472ffa4bb32caed2cf2087b1feb709e62f4b04d9#610065bdc3a32dd030afe1ac488181f23d34b336"
+  integrity sha512-z44vGpOaESb/5rUw7yAwfh303T/yhpp+OwCngHpJjoxIJLlXfj39uLDpqdi3O2FuIO8eYa47+YBYeDFW6LScjw==
+
 "@react-native-community/async-storage@^1.6.1":
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.6.1.tgz#19be07fc1d65c77bdeb20f46108ba12076aad1c5"
@@ -1424,6 +1429,11 @@
   resolved "https://registry.yarnpkg.com/@types/redux-saga/-/redux-saga-0.10.5.tgz#80bf21078379ebc97387dbe56e44467b5677fa85"
   dependencies:
     redux-saga "*"
+
+"@types/semver@^6.2.0":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-6.2.1.tgz#a236185670a7860f1597cf73bea2e16d001461ba"
+  integrity sha512-+beqKQOh9PYxuHvijhVl+tIHvT6tuwOrE9m14zd+MT2A38KoKZhh7pYJ0SNleLtwDsiIxHDsIk9bv01oOxvSvA==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
@@ -8879,6 +8889,11 @@ semver@^5.6.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.0.tgz#790a7cf6fea5459bac96110b29b60412dc8ff96b"
   integrity sha512-Ya52jSX2u7QKghxeoFGpLwCtGlt7j0oY9DYb5apt9nPlJ42ID+ulTXESnt/qAQcoSERyZ5sl3LDIOw0nAn/5DA==
+
+semver@^5.7.0:
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
+  integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
 
 semver@^6.1.2:
   version "6.3.0"

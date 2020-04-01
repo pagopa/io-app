@@ -13,7 +13,7 @@ import { createPinSuccess } from "../../store/actions/pinset";
 export function* checkConfiguredPinSaga(): IterableIterator<
   Effect | PinString
 > {
-  // We check whether the user has already created a PIN by trying to retrieve
+  // We check whether the user has already created a unlock code by trying to retrieve
   // it from the Keychain
   const pinCode: Option<PinString> = yield call(getPin);
 
@@ -21,10 +21,10 @@ export function* checkConfiguredPinSaga(): IterableIterator<
     return pinCode.value;
   }
 
-  // Go through the PIN configuration screen
+  // Go through the unlock code configuration screen
   yield put(navigateToOnboardingPinScreenAction);
 
-  // and block until a PIN is set
+  // and block until a unlock code is set
   const resultAction: ActionType<typeof createPinSuccess> = yield take(
     getType(createPinSuccess)
   );

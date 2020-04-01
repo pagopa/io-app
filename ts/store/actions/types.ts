@@ -13,7 +13,9 @@ import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
 import { BackendInfoActions } from "./backendInfo";
+import { BackendStatusActions } from "./backendStatus";
 import { CalendarEventsActions } from "./calendarEvents";
+import { CieAuthenticationActions } from "./cie";
 import { ContentActions } from "./content";
 import { DebugActions } from "./debug";
 import { DeepLinkActions } from "./deepLink";
@@ -33,6 +35,7 @@ import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
 import { SearchActions } from "./search";
 import { ServicesActions } from "./services";
+import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 
@@ -40,6 +43,8 @@ export type Action =
   | AnalyticsActions
   | ApplicationActions
   | AuthenticationActions
+  | BackendStatusActions
+  | CieAuthenticationActions
   | BackendInfoActions
   | DeepLinkActions
   | MessagesActions
@@ -62,7 +67,8 @@ export type Action =
   | SearchActions
   | PaymentsActions
   | OrganizationsActions
-  | InstabugInfoActions;
+  | InstabugInfoActions
+  | UserDataProcessingActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
