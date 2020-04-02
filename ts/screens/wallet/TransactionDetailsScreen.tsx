@@ -135,9 +135,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
       ? this.props.wallets[transaction.idWallet]
       : undefined;
 
-    const transactionDateTime =
-      formatDateAsLocal(transaction.created, true).concat(" - ").concat(
-      transaction.created.toLocaleTimeString());
+    const transactionDateTime = formatDateAsLocal(transaction.created, true)
+      .concat(" - ")
+      .concat(transaction.created.toLocaleTimeString());
     const paymentMethodIcon =
       transactionWallet &&
       transactionWallet.creditCard &&
