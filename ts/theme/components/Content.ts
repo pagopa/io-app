@@ -1,5 +1,6 @@
 import { Theme } from "../types";
 import variables from "../variables";
+import { FOOTER_SAFE_AREA } from '../../utils/constants';
 
 declare module "native-base" {
   namespace NativeBase {
@@ -24,7 +25,12 @@ export default (): Theme => {
     ".primary": {
       backgroundColor: variables.contentPrimaryBackground
     },
-    padding: variables.contentPadding,
-    backgroundColor: variables.contentBackground
+    backgroundColor: variables.contentBackground,
+    
+    // It implies the content backgound color covers the bottom space in iPhone X
+    marginBottom: - FOOTER_SAFE_AREA,
+    paddingBottom: FOOTER_SAFE_AREA + variables.contentPadding,
+    paddingTop: variables.contentPadding,
+    paddingHorizontal: variables.contentPadding,
   };
 };
