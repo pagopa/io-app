@@ -45,9 +45,7 @@ const baseStyles = StyleSheet.create({
     paddingRight: 0,
     paddingBottom: 0,
     paddingLeft: 0,
-    fontSize: 14,
-    fontWeight: "bold",
-    lineHeight: 20
+    fontWeight: "bold"
   }
 });
 

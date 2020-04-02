@@ -1,21 +1,29 @@
-/**
- * This component shows a contextual help
- * using the Modal component
- * that provides additional information when
- * needed (e.g. ToS, explaining why fees are
- * needed)
- */
-
-import { Body, Container, Content, H1, Right, View } from "native-base";
+import I18n from "i18n-js";
+import {
+  Body,
+  Container,
+  Content,
+  H1,
+  H3,
+  Right,
+  Text,
+  View
+} from "native-base";
 import * as React from "react";
-import { InteractionManager, Modal, StyleSheet } from "react-native";
-
+import {
+  InteractionManager,
+  Modal,
+  StyleSheet,
+  TouchableWithoutFeedback
+} from "react-native";
 import IconFont from "../components/ui/IconFont";
+import themeVariables from "../theme/variables";
+import { ioItaliaLink } from "../utils/deepLink";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import InstabugButtonsComponent from "./InstabugButtonsComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
-
-import themeVariables from "../theme/variables";
+import { openLink } from "./ui/Markdown/handlers/link";
 
 type Props = Readonly<{
   title: string;
@@ -34,6 +42,13 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * This component shows a contextual help
+ * using the Modal component
+ * that provides additional information when
+ * needed (e.g. ToS, explaining why fees are
+ * needed)
+ */
 export class ContextualHelpModal extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -66,7 +81,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
       <Modal
         visible={this.props.isVisible}
         onShow={onModalShow}
-        animationType="slide"
+        animationType={"slide"}
         onRequestClose={onClose}
       >
         <Container>
@@ -74,7 +89,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
             <Body />
             <Right>
               <ButtonDefaultOpacity onPress={onClose} transparent={true}>
-                <IconFont name="io-close" />
+                <IconFont name={"io-close"} />
               </ButtonDefaultOpacity>
             </Right>
           </AppHeader>
@@ -90,7 +105,25 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               noPadded={true}
             >
               <H1>{this.props.title}</H1>
+              <View spacer={true}/>
               {this.state.content}
+              <View spacer={true} extralarge={true} />
+
+              <InstabugButtonsComponent hideComponent={this.props.close} />
+
+              <View spacer={true} extralarge={true} />
+              <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
+              <View spacer={true} />
+              <View spacer={true} extrasmall={true} />
+              <Text>
+                {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
+                <TouchableWithoutFeedback
+                  onPress={() => openLink(ioItaliaLink)}
+                >
+                  <Text link={true}>{I18n.t("global.ioURL")}</Text>
+                </TouchableWithoutFeedback>
+              </Text>
+              <View spacer={true}/>
             </Content>
           )}
         </Container>

@@ -1,5 +1,6 @@
 ---
 global:
+  ioURL: 'io.italia.it'
   symbols:
     question: "?"
   localization:

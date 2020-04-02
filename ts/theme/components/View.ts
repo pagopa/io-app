@@ -8,6 +8,7 @@ declare module "native-base" {
     interface View extends ReactNative.ViewProperties {
       spacer?: boolean;
       hspacer?: boolean;
+      extrasmall?: boolean;
       large?: boolean;
       extralarge?: boolean;
       modal?: boolean;
@@ -36,6 +37,9 @@ export default (): Theme => {
     ".spacer": {
       ".large": {
         height: variables.spacerLargeHeight
+      },
+      ".extrasmall": {
+        height: variables.spacerExtrasmallHeight
       },
 
       ".extralarge": {

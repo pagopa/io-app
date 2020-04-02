@@ -1,10 +1,8 @@
-import { BugReporting, Chats, Replies } from "instabug-reactnative";
-
 import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
+import { BugReporting, Chats, Replies } from "instabug-reactnative";
 import { H3, Text, View } from "native-base";
 import * as React from "react";
-import { Linking, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { connect } from "react-redux";
 import {
   instabugReportClosed,
@@ -14,65 +12,56 @@ import { updateInstabugUnreadMessages } from "../store/actions/instabug";
 import { Dispatch } from "../store/actions/types";
 import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
-import customVariables from "../theme/variables";
-import { ioItaliaLink } from "../utils/deepLink";
 import ButtonWithImage from "./ButtonWithImage";
+import { Platform } from 'react-native';
 
-const styles = StyleSheet.create({
-  margin: {
-    marginTop: 10,
-    marginBottom: 10
-  },
-
-  link: {
-    color: customVariables.brandPrimary,
-    textDecorationLine: "underline"
-  },
-
-  description: {
-    fontSize: customVariables.fontSizeBase,
-    textAlign: "left"
-  }
-});
+type OwnProps = Readonly<{
+  hideComponent: () => void;
+}>;
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  OwnProps;
 
 type State = {
   instabugReportType: Option<string>;
 };
 
+// estimated. Values below 250 makes modal being partially displayed on the screen shot
+const MODAL_SLIDE_ANIMATION_DURATION = Platform.select({
+  ios: 250,
+  android: 50
+}) 
+
 class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
     const chat = "chat";
     this.setState({ instabugReportType: some(chat) });
-    this.props.dispatchIBReportOpen(chat);
-    // Check if there are previous chat
-    Replies.hasChats(hasChats => {
-      if (hasChats) {
-        Replies.show();
-      } else {
-        Chats.show();
-      }
-    });
+    this.props.hideComponent();
+    setTimeout(() => {
+      this.props.dispatchIBReportOpen(chat);
+      // Check if there are previous chat
+      Replies.hasChats(hasChats => {
+        if (hasChats) {
+          Replies.show();
+        } else {
+          Chats.show();
+        }
+      });
+    }, MODAL_SLIDE_ANIMATION_DURATION);
   };
 
   private handleIBBugPress = () => {
     const bug = "bug";
     this.setState({ instabugReportType: some(bug) });
-    this.props.dispatchIBReportOpen(bug);
-    BugReporting.showWithOptions(BugReporting.reportType.bug, [
-      BugReporting.option.commentFieldRequired
-    ]);
+    this.props.hideComponent();
+    setTimeout(() => {
+      this.props.dispatchIBReportOpen(bug);
+      BugReporting.showWithOptions(BugReporting.reportType.bug, [
+        BugReporting.option.commentFieldRequired
+      ]);
+    }, MODAL_SLIDE_ANIMATION_DURATION);
   };
-
-  private handleLinkClick = () =>
-    Linking.canOpenURL(ioItaliaLink).then(supported => {
-      if (supported) {
-        // tslint:disable-next-line: no-floating-promises
-        Linking.openURL(ioItaliaLink);
-      }
-    });
 
   constructor(props: Props) {
     super(props);
@@ -100,54 +89,33 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
     );
   }
 
-  private buttonWithDescription = (
-    icon: string,
-    onClick: () => void,
-    text: string,
-    description: string
-  ) => (
-    <React.Fragment>
-      <ButtonWithImage
-        icon={icon}
-        onClick={onClick}
-        text={text}
-        disabled={false}
-        light={true}
-      />
-      <Text style={[styles.margin, styles.description]}>{description}</Text>
-    </React.Fragment>
-  );
-
   public render() {
     return (
       <React.Fragment>
-        <H3 style={styles.margin}>
-          {I18n.t("instabug.contextualHelp.title1")}
-        </H3>
-
-        {this.buttonWithDescription(
-          "io-messaggi",
-          this.handleIBChatPress,
-          I18n.t("instabug.contextualHelp.buttonChat"),
-          I18n.t("instabug.contextualHelp.descriptionChat")
-        )}
-
-        {this.buttonWithDescription(
-          "io-bug",
-          this.handleIBBugPress,
-          I18n.t("instabug.contextualHelp.buttonBug"),
-          I18n.t("instabug.contextualHelp.descriptionBug")
-        )}
+        <H3>{I18n.t("instabug.contextualHelp.title1")}</H3>
         <View spacer={true} />
-        <H3 style={styles.margin}>
-          {I18n.t("instabug.contextualHelp.title2")}
-        </H3>
-        <Text style={[styles.margin, styles.description]}>
-          {I18n.t("instabug.contextualHelp.descriptionLink")}
-          <TouchableWithoutFeedback onPress={this.handleLinkClick}>
-            <Text style={styles.link}> io.italia.it</Text>
-          </TouchableWithoutFeedback>
-        </Text>
+        <View spacer={true} extrasmall={true} />
+        {/** TODO: add new io-send-message icon */}
+        <ButtonWithImage
+          icon={"io-messaggi"}
+          onClick={this.handleIBChatPress}
+          text={I18n.t("instabug.contextualHelp.buttonChat")}
+          disabled={false}
+          light={true}
+        />
+        <View spacer={true} />
+        <Text>{I18n.t("instabug.contextualHelp.descriptionChat")}</Text>
+        <View spacer={true} />
+
+        <ButtonWithImage
+          icon={"io-bug"}
+          onClick={this.handleIBBugPress}
+          text={I18n.t("instabug.contextualHelp.buttonBug")}
+          disabled={false}
+          light={true}
+        />
+        <View spacer={true} />
+        <Text>{I18n.t("instabug.contextualHelp.descriptionBug")}</Text>
       </React.Fragment>
     );
   }

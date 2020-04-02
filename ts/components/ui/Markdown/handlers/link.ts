@@ -20,7 +20,15 @@ export function handleLinkMessage(dispatch: Dispatch, href: string) {
 
 export function openLink(url: string, customError?: string) {
   const error = customError || I18n.t("global.genericError");
-  Linking.openURL(url).catch(() => {
-    showToast(error);
-  });
+  const getErrorToast = () => showToast(error);
+
+  Linking.canOpenURL(url)
+    .then(supported => {
+      if (supported) {
+        Linking.openURL(url).catch(getErrorToast);
+      } else {
+        showToast("il link non è suppotato dal tuo dispositivo");
+      }
+    })
+    .catch(getErrorToast);
 }
