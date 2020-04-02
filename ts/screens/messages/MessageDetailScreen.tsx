@@ -25,6 +25,10 @@ import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
+import {
+  isMessageRead,
+  messagesStatusSelector
+} from "../../store/reducers/entities/messages/messagesStatus";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
@@ -267,9 +271,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
   };
 
   private setMessageReadState = () => {
-    const { potMessage, maybeRead } = this.props;
+    const { potMessage, isRead } = this.props;
 
-    if (pot.isSome(potMessage) && !maybeRead.getOrElse(true)) {
+    if (pot.isSome(potMessage) && !isRead) {
       // Set the message read state to TRUE
       this.props.setMessageReadState(true);
     }
@@ -295,7 +299,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     ) {
       refreshService(potMessage.value.sender_service_id);
     }
-    this.setMessageReadState();
   }
 
   public render() {
@@ -319,7 +322,10 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   const maybeMeta = maybeMessageState.map(_ => _.meta);
 
-  const maybeRead = maybeMessageState.map(_ => _.isRead);
+  const messagesStatus = messagesStatusSelector(state);
+  const isRead = maybeMessageState
+    .map(_ => isMessageRead(messagesStatus, _.meta.id))
+    .getOrElse(true);
 
   // In case maybePotMessage is undefined we fallback to an empty message.
   // This mens we navigated to the message screen with a non-existing message
@@ -333,7 +339,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   return {
     maybeMeta,
-    maybeRead,
+    isRead,
     potMessage,
     potService,
     paymentsByRptId: state.entities.paymentByRptId,

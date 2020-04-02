@@ -30,7 +30,10 @@ type OwnProps = {
   isLocal?: boolean;
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
-  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
+  onItemSwitchValueChanged?: (
+    service: ReadonlyArray<ServicePublic>,
+    value: boolean
+  ) => void;
   renderRightIcon?: (section: ServicesSectionState) => React.ReactNode;
   isRefreshing: boolean;
   onRefresh: () => void;

@@ -13,6 +13,8 @@ import createSecureStorage from "../storages/keychain";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
+import backendStatusReducer from "./backendStatus";
+import cieReducer from "./cie";
 import contentReducer from "./content";
 import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
@@ -31,6 +33,7 @@ import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import searchReducer from "./search";
 import { GlobalState } from "./types";
+import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
 
@@ -71,11 +74,13 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   deepLink: deepLinkReducer,
   wallet: walletReducer,
   backendInfo: backendInfoReducer,
+  backendStatus: backendStatusReducer,
   preferences: preferencesReducer,
   identification: identificationReducer,
   navigationHistory: navigationHistoryReducer,
   instabug: instabugUnreadMessagesReducer,
   search: searchReducer,
+  cie: cieReducer,
 
   //
   // persisted state
@@ -91,6 +96,7 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
+  userDataProcessing: userDataProcessingReducer,
   userMetadata: userMetadataReducer,
   entities: persistReducer<EntitiesState, Action>(
     entitiesPersistConfig,

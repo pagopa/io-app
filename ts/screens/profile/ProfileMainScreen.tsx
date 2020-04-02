@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.contextualHelpTitle",
-  body: "profile.contextualHelpContent"
+  title: "profile.main.contextualHelpTitle",
+  body: "profile.main.contextualHelpContent"
 };
 
 const getAppLongVersion = () => {
@@ -344,7 +344,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               sectionHeader={I18n.t("profile.main.accountSectionHeader")}
             />
 
-            {/* Reset PIN */}
+            {/* Reset unlock code */}
             <ListItemComponent
               title={I18n.t("pin_login.pin.reset.button_short")}
               subTitle={I18n.t("pin_login.pin.reset.tip_short")}
@@ -466,7 +466,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         allowGoBack={false}
         bounces={false}
         headerBody={<IconFont name="io-logo" color={"white"} />}
-        title={I18n.t("profile.main.screenTitle")}
+        title={I18n.t("profile.main.title")}
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={
           <TouchableDefaultOpacity

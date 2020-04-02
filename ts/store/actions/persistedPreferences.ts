@@ -1,7 +1,6 @@
 /**
  * Action types and action creator related to persisted preferences
  */
-
 import { Calendar } from "react-native-calendar-events";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
@@ -25,6 +24,10 @@ export const preferencesExperimentalFeaturesSetEnabled = createStandardAction(
   "PREFERENCES_EXPERIMENTAL_FEATURES_SET_ENABLED"
 )<boolean>();
 
+export const customEmailChannelSetEnabled = createStandardAction(
+  "CUSTOM_EMAIL_CHANNEL_SET_ENABLED"
+)<boolean>();
+
 export type PersistedPreferencesActions = ActionType<
   // tslint:disable-next-line: max-union-size
   | typeof preferenceFingerprintIsEnabledSaveSuccess
@@ -32,4 +35,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof serviceAlertDisplayedOnceSuccess
   | typeof preferencesPagoPaTestEnvironmentSetEnabled
   | typeof preferencesExperimentalFeaturesSetEnabled
+  | typeof customEmailChannelSetEnabled
 >;

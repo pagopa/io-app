@@ -14,7 +14,6 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
-import { isDevEnvironment } from "../config";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -29,12 +28,13 @@ import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
+import { isDevEnv } from "../utils/environment";
 import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 11;
+const CURRENT_REDUX_STORE_VERSION = 12;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -179,7 +179,7 @@ const migrations: MigrationManifest = {
     };
   },
   // Version 10
-  // since entities.messages are not persisted anymore, empty the store
+  // since entities.messages are not persisted anymore, empty the related store section
   "10": (state: PersistedState) => {
     return {
       ...state,
@@ -202,17 +202,29 @@ const migrations: MigrationManifest = {
             .organizations.nameByFiscalCode
         }
       }
+    }
+  },
+
+  // Version 12
+  // add the default state for isCustomEmailChannelEnabled
+  "12": (state: PersistedState) => {
+    return {
+      ...state,
+      persistedPreferences: {
+        ...(state as PersistedGlobalState).persistedPreferences,
+        isCustomEmailChannelEnabled: pot.none
+      }
     };
   }
 };
 
-const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
+const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
 
 const rootPersistConfig: PersistConfig = {
   key: "root",
   storage: AsyncStorage,
   version: CURRENT_REDUX_STORE_VERSION,
-  migrate: createMigrate(migrations, { debug: isDevEnvironment() }),
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
   // entities implement a persist reduce that avoids to persist messages. Other entities section will be persisted
   blacklist: ["entities"],
   // Sections of the store that must be persisted and rehydrated with this storage.
@@ -228,6 +240,7 @@ const rootPersistConfig: PersistConfig = {
     "userMetadata"
   ],
   // Transform functions used to manipulate state on store/rehydrate
+  // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374
   transforms: [DateISO8601Transform, PotTransform]
 };
 
@@ -246,9 +259,9 @@ const logger = createLogger({
 });
 
 // configure Reactotron if the app is running in dev mode
-export const RTron = __DEV__ ? configureReactotron() : {};
+export const RTron = isDevEnv ? configureReactotron() : {};
 const sagaMiddleware = createSagaMiddleware(
-  __DEV__ ? { sagaMonitor: RTron.createSagaMonitor() } : {}
+  isDevEnv ? { sagaMonitor: RTron.createSagaMonitor() } : {}
 );
 
 /**
@@ -285,7 +298,7 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
     analytics.screenTracking // tracks screen navigation,
   );
   // add Reactotron enhancer if the app is running in dev mode
-  const enhancer: StoreEnhancer = __DEV__
+  const enhancer: StoreEnhancer = isDevEnv
     ? composeEnhancers(middlewares, RTron.createEnhancer())
     : composeEnhancers(middlewares);
 

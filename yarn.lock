@@ -1045,6 +1045,11 @@
     node-fetch "^2.1.1"
     url-template "^2.0.8"
 
+"@pagopa/react-native-cie@0.1.9":
+  version "0.1.9"
+  resolved "https://npm.pkg.github.com/download/@pagopa/react-native-cie/0.1.9/5d984e20a7666215e1f7a55c472ffa4bb32caed2cf2087b1feb709e62f4b04d9#610065bdc3a32dd030afe1ac488181f23d34b336"
+  integrity sha512-z44vGpOaESb/5rUw7yAwfh303T/yhpp+OwCngHpJjoxIJLlXfj39uLDpqdi3O2FuIO8eYa47+YBYeDFW6LScjw==
+
 "@react-native-community/async-storage@^1.6.1":
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.6.1.tgz#19be07fc1d65c77bdeb20f46108ba12076aad1c5"
@@ -1424,6 +1429,11 @@
   resolved "https://registry.yarnpkg.com/@types/redux-saga/-/redux-saga-0.10.5.tgz#80bf21078379ebc97387dbe56e44467b5677fa85"
   dependencies:
     redux-saga "*"
+
+"@types/semver@^6.2.0":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-6.2.1.tgz#a236185670a7860f1597cf73bea2e16d001461ba"
+  integrity sha512-+beqKQOh9PYxuHvijhVl+tIHvT6tuwOrE9m14zd+MT2A38KoKZhh7pYJ0SNleLtwDsiIxHDsIk9bv01oOxvSvA==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
@@ -5213,10 +5223,10 @@ istanbul-reports@^2.1.1:
   dependencies:
     handlebars "^4.1.0"
 
-italia-pagopa-commons@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/italia-pagopa-commons/-/italia-pagopa-commons-1.0.0.tgz#43097269f99c8a405b8046f1430037351f99c0e4"
-  integrity sha512-V950c9MaLbUKqH0e1lo0l77D+ZYVvXPLdnuNs3bmnHEwlewno7f7Pk5hasNtKYdIyws73h2diE7Q4nLfVV6L/A==
+italia-pagopa-commons@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/italia-pagopa-commons/-/italia-pagopa-commons-1.2.0.tgz#ee8b12ed380556f724941dacd17dcb9297b27d8a"
+  integrity sha512-Li5hs+TaCxxefMBuNVO1hxnj7ByFvRZf3GKOvBHsSgwjxgVVqo6JYHRVrcOS7nV3mJmWbY67Msq7Q0QWw7wRSQ==
   dependencies:
     io-ts "1.8.5"
     italia-ts-commons "5.1.1"
@@ -7950,10 +7960,10 @@ react-native-lewin-qrcode@^1.0.2:
   resolved "https://registry.yarnpkg.com/react-native-lewin-qrcode/-/react-native-lewin-qrcode-1.0.2.tgz#360e78a9ce6ed861a9711a5a35e3b1ecffe8d452"
   integrity sha512-kjF/hEfAPrlxTviW/mZjhsKCHQ7yUJAaoV8964J5XHZtBc0JxybHsqcA2qF3JU8XyqerzITaXyb1Zf2/Zh2+OQ==
 
-react-native-mixpanel@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.1.1.tgz#012580fb1b42b6c0ee35d0af0a24af68cfa79b89"
-  integrity sha512-jjCYGri9xQ+NO5lu9RCm+hH/u9dP++4VPhUe6O8smUiJtqhBVwQtDn+iJM/NBBQwBVq5SKaDipbYdgOHdJT2WQ==
+react-native-mixpanel@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.2.0.tgz#17c24151cf2039482cd20decc54ccf0e49ccebc5"
+  integrity sha512-Xy+KEIEVFidWuASBdexZquXTJBb3JCyFM7xSgnIOZt5PRzpARGFrYMDErTUZ1wSPK+KFaf1oylInOoC2DddI/Q==
 
 react-native-offline@5.2.0:
   version "5.2.0"
@@ -8879,6 +8889,11 @@ semver@^5.6.0:
   version "5.7.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.0.tgz#790a7cf6fea5459bac96110b29b60412dc8ff96b"
   integrity sha512-Ya52jSX2u7QKghxeoFGpLwCtGlt7j0oY9DYb5apt9nPlJ42ID+ulTXESnt/qAQcoSERyZ5sl3LDIOw0nAn/5DA==
+
+semver@^5.7.0:
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
+  integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
 
 semver@^6.1.2:
   version "6.3.0"

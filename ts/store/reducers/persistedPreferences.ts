@@ -1,10 +1,11 @@
 /**
  * A reducer for persisted preferences.
  */
+import * as pot from "italia-ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
 import { isActionOf } from "typesafe-actions";
-
 import {
+  customEmailChannelSetEnabled,
   preferenceFingerprintIsEnabledSaveSuccess,
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
@@ -20,6 +21,9 @@ export type PersistedPreferencesState = Readonly<{
   wasServiceAlertDisplayedOnce?: boolean;
   isPagoPATestEnabled: boolean;
   isExperimentalFeaturesEnabled: boolean;
+  // TODO: create transformer for Option objects and use Option instead of pot
+  //       https://www.pivotaltracker.com/story/show/170998374
+  isCustomEmailChannelEnabled: pot.Pot<boolean, undefined>;
 }>;
 
 const initialPreferencesState: PersistedPreferencesState = {
@@ -27,7 +31,8 @@ const initialPreferencesState: PersistedPreferencesState = {
   preferredCalendar: undefined,
   wasServiceAlertDisplayedOnce: false,
   isPagoPATestEnabled: false,
-  isExperimentalFeaturesEnabled: false
+  isExperimentalFeaturesEnabled: false,
+  isCustomEmailChannelEnabled: pot.none
 };
 
 export default function preferencesReducer(
@@ -66,6 +71,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(customEmailChannelSetEnabled, action)) {
+    return {
+      ...state,
+      isCustomEmailChannelEnabled: pot.some(action.payload)
+    };
+  }
+
   return state;
 }
 
@@ -75,3 +87,6 @@ export const isPagoPATestEnabledSelector = (state: GlobalState) =>
 
 export const wasServiceAlertDisplayedOnceSelector = (state: GlobalState) =>
   state.persistedPreferences.wasServiceAlertDisplayedOnce;
+
+export const isCustomEmailChannelEnabledSelector = (state: GlobalState) =>
+  state.persistedPreferences.isCustomEmailChannelEnabled;

@@ -11,19 +11,25 @@ type Props = {
   dark?: boolean;
 };
 
+const ICON_WIDTH = 48;
+
 const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    right: 0,
-    width: 48,
-    zIndex: -1
-  },
-  image: {
-    resizeMode: "contain",
-    width: "100%"
-  },
   darkGrayBg: {
     backgroundColor: customVariables.brandDarkGray
+  },
+  container: {
+    justifyContent: "space-between",
+    paddingHorizontal: customVariables.contentPadding
+  },
+  text: {
+    flex: 1,
+    flexGrow: 1
+  },
+  image: {
+    maxHeight: ICON_WIDTH,
+    maxWidth: ICON_WIDTH,
+    resizeMode: "contain",
+    flex: 1
   }
 });
 
@@ -36,13 +42,9 @@ class ScreenHeader extends React.Component<Props> {
     const { heading, icon, dark } = this.props;
 
     return (
-      <View style={dark && styles.darkGrayBg}>
-        {heading}
-        {icon && (
-          <View style={styles.container}>
-            <Image source={icon} style={styles.image} />
-          </View>
-        )}
+      <View style={[dark && styles.darkGrayBg, styles.container]}>
+        <View style={styles.text}>{heading}</View>
+        {icon && <Image source={icon} style={styles.image} />}
       </View>
     );
   }

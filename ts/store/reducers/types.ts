@@ -5,6 +5,8 @@ import { Action } from "../actions/types";
 import { AppState } from "./appState";
 import { PersistedAuthenticationState } from "./authentication";
 import { BackendInfoState } from "./backendInfo";
+import { BackendStatusState } from "./backendStatus";
+import { CieState } from "./cie";
 import { ContentState } from "./content";
 import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
@@ -21,6 +23,7 @@ import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { ProfileState } from "./profile";
 import { SearchState } from "./search";
+import { UserDataProcessingState } from "./userDataProcessing";
 import { UserMetadataState } from "./userMetadata";
 import { WalletState } from "./wallet";
 
@@ -32,6 +35,7 @@ type NetworkState = Readonly<{
 export type GlobalState = Readonly<{
   appState: AppState;
   authentication: PersistedAuthenticationState;
+  backendStatus: BackendStatusState;
   backendInfo: BackendInfoState;
   deepLink: DeepLinkState;
   entities: PersistedEntitiesState;
@@ -41,6 +45,7 @@ export type GlobalState = Readonly<{
   notifications: NotificationsState;
   onboarding: OnboardingState;
   profile: ProfileState;
+  userDataProcessing: UserDataProcessingState;
   wallet: WalletState;
   preferences: PreferencesState;
   persistedPreferences: PersistedPreferencesState;
@@ -53,6 +58,7 @@ export type GlobalState = Readonly<{
   payments: PaymentsState;
   userMetadata: UserMetadataState;
   emailValidation: EmailValidationState;
+  cie: CieState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

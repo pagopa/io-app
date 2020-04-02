@@ -24,11 +24,12 @@ const INITIAL_STATE: EmailValidationState = {
   acknowledgeOnEmailValidated: none
 };
 
+// Selector
+
 // return the pot of email validation
 export const emailValidationSelector = (
   state: GlobalState
 ): EmailValidationState => state.emailValidation;
-// Selectors
 
 const reducer = (
   state: EmailValidationState = INITIAL_STATE,
