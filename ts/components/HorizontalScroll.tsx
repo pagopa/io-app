@@ -89,7 +89,7 @@ export const HorizontalScroll: React.SFC<Props> = props => {
       </ScrollView>
 
       <View style={styles.barContainer}>{barArray}</View>
-      <View spacer={true}/>
+      <View spacer={true} />
     </View>
   );
 };
