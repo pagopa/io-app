@@ -105,7 +105,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               noPadded={true}
             >
               <H1>{this.props.title}</H1>
-              <View spacer={true}/>
+              <View spacer={true} />
               {this.state.content}
               <View spacer={true} extralarge={true} />
 
@@ -123,7 +123,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
                   <Text link={true}>{I18n.t("global.ioURL")}</Text>
                 </TouchableWithoutFeedback>
               </Text>
-              <View spacer={true}/>
+              <View spacer={true} />
             </Content>
           )}
         </Container>

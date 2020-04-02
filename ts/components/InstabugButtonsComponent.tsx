@@ -3,6 +3,7 @@ import I18n from "i18n-js";
 import { BugReporting, Chats, Replies } from "instabug-reactnative";
 import { H3, Text, View } from "native-base";
 import * as React from "react";
+import { Platform } from "react-native";
 import { connect } from "react-redux";
 import {
   instabugReportClosed,
@@ -13,7 +14,6 @@ import { Dispatch } from "../store/actions/types";
 import { instabugMessageStateSelector } from "../store/reducers/instabug/instabugUnreadMessages";
 import { GlobalState } from "../store/reducers/types";
 import ButtonWithImage from "./ButtonWithImage";
-import { Platform } from 'react-native';
 
 type OwnProps = Readonly<{
   hideComponent: () => void;
@@ -31,7 +31,7 @@ type State = {
 const MODAL_SLIDE_ANIMATION_DURATION = Platform.select({
   ios: 250,
   android: 50
-}) 
+});
 
 class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
