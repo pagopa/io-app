@@ -202,7 +202,7 @@ const migrations: MigrationManifest = {
             .organizations.nameByFiscalCode
         }
       }
-    }
+    };
   },
 
   // Version 12
