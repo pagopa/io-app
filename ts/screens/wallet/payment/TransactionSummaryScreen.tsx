@@ -10,7 +10,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { PaymentRequestsGetResponse } from "../../../../generated/definitions/backend/PaymentRequestsGetResponse";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -228,10 +228,12 @@ class TransactionSummaryScreen extends React.Component<Props> {
       "-"
     );
 
-    const transactionDescription =
-      pot.isSome(potVerifica) && potVerifica.value.causaleVersamento
-        ? cleanTransactionDescription(potVerifica.value.causaleVersamento)
-        : "-";
+    const transactionDescription = pot.getOrElse<string>(
+      pot.mapNullable(potVerifica, pv =>
+        cleanTransactionDescription(pv.causaleVersamento)
+      ),
+      "-"
+    );
 
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>

@@ -2,8 +2,8 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
+import customVariables from "../../theme/variables";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
-import customVariables from '../../theme/variables';
 
 type Props = Readonly<{
   title: string;
