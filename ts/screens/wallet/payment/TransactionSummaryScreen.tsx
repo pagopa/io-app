@@ -69,7 +69,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
-  lighterGray: { color: "#C1C9D2" },
+  lighterGray: { color: customVariables.lighterGray },
   row: { flexDirection: "row", justifyContent: "space-between" },
   title: { fontSize: 20 }
 });

@@ -3,6 +3,7 @@ import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import customVariables from '../../theme/variables';
 
 type Props = Readonly<{
   title: string;
@@ -14,8 +15,8 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   title: { fontSize: 18, lineHeight: 24 },
-  lightGray: { color: "#909DA8" },
-  lighterGray: { color: "#C1C9D2" },
+  lightGray: { color: customVariables.lightGray },
+  lighterGray: { color: customVariables.lighterGray },
   row: { flexDirection: "row", justifyContent: "space-between" },
   column: { flexDirection: "column" }
 });
