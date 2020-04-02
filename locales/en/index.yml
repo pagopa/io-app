@@ -126,7 +126,7 @@ profile:
       title: Preferences
       description: Manage app internal preferences
     privacy:
-      title: Privacy
+      title: Information and conditions of use
       description: Export data, delete account
       subtitle: Here you find information related to your personal data.  
       loading: Wait few seconds, we're checking your profile..
@@ -151,7 +151,7 @@ profile:
       privacyPolicy:
         title: Privacy policy
         description: Review the accepted privacy terms
-        header: Information note on the processing of the IO app Beta Testers' personal data
+        header: Information note on the processing of the IO app users's personal data
         updated: It is required to accept the new version of Terms and Conditions
         text: !include profile/privacy.md
         contextualHelpTitlePolicy: What is the information on the processing of personal data
@@ -259,8 +259,8 @@ authentication:
     card4-title: You can use the app by SPID only
     card4-content: The access is allowed only by SPID (Public Service of Digital Identity)
       to guarantee your online safety
-    card5-title: Welcome to the beta version of IO!
-    card5-content: In this experimental version you can find in the upper-right corner
+    card5-title: Welcome to the public version of IO!
+    card5-content: In this version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
       We're waiting for your feedbacks!
     expiredCardTitle: Card expired or no longer valid
@@ -432,6 +432,8 @@ onboarding:
   tos:
     headerTitle: Activation
     continue: Continue
+    accept: Accept
+    error: Loading error
   pin:
     headerTitle: Activation
     contentTitle: Choose an unlock code

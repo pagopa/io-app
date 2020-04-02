@@ -123,7 +123,7 @@ const IdpSelectionScreen: React.FunctionComponent<Props> = props => {
   const [counter, setCounter] = React.useState(0);
   const onIdpSelected = (idp: IdentityProvider) => {
     if (idp.isTestIdp === true && counter < 5) {
-      setCounter(count => count + 1);
+      setCounter(count => (count + 1) % (TAPS_TO_OPEN_TESTIDP + 1));
       return;
     }
     props.dispatch(idpSelected(idp));
