@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logo_IO_beta.png",
+      "filename" : "io-app-logo.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "logo_IO_beta@2x.png",
+      "filename" : "io-app-logo@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "logo_IO_beta@3x.png",
+      "filename" : "io-app-logo@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
