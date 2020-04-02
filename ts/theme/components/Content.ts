@@ -20,7 +20,9 @@ export default (): Theme => {
       backgroundColor: variables.contentAlternativeBackground
     },
     ".noPadded": {
-      padding: 0
+      paddingBottom: FOOTER_SAFE_AREA,
+      paddingTop: 0,
+      paddingHorizontal: 0
     },
     ".primary": {
       backgroundColor: variables.contentPrimaryBackground
