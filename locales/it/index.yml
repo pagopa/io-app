@@ -44,6 +44,7 @@ global:
     search: Testo da cercare
   remoteStates:
     loading: In caricamento...
+    wait: Attendi qualche secondo..
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
   search:
@@ -116,13 +117,13 @@ profile:
       clear: Elimina cache
       cleared: La cache è stata eliminata.
     resetPin:
-      confirmTitle: Sei sicuro di voler reimpostare il PIN?
+      confirmTitle: Sei sicuro di voler reimpostare il codice di sblocco?
       confirmMsg: Ti verrà richiesto nuovamente di accedere.
     preferences:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
     privacy:
-      title: Privacy
+      title: Privacy e condizioni d'uso
       description: Esporta dati, cancella account
       subtitle: Qui trovi informazioni legate ai tuoi dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo..
@@ -146,12 +147,12 @@ profile:
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo. 
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
-        title: Privacy policy
+        title: Informativa e condizioni d'uso
         description: Rivedi le regole sulla privacy che hai accettato
-        header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+        header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
         updated: E' necessario prendere visione della nuova versione dell'Informativa
         text: !include profile/privacy.md
-        contextualHelpTitlePolicy: Cos'è l'informativa sul trattamento dei dati personali
+        contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
         contextualHelpContent: !include profile/profile_privacy_main.md    
@@ -260,8 +261,8 @@ authentication:
     card4-title: Potrai utilizzare l'app solo tramite SPID
     card4-content: L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
       Digitale) per garantire la tua sicurezza online
-    card5-title: Benvenuto nella versione beta di IO!
-    card5-content: In questa versione sperimentale trovi in alto a destra
+    card5-title: Benvenuto nella prima versione pubblica di IO!
+    card5-content: In questa versione trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
     expiredCardTitle: Carta scaduta o non più valida
@@ -433,10 +434,12 @@ onboarding:
   tos:
     headerTitle: Attivazione
     continue: Continua
+    accept: Accetta
+    error: Errore nel caricamento
   pin:
     headerTitle: Attivazione
-    contentTitle: Scegli un PIN
-    contentTitleConfirm: Digita ancora il PIN
+    contentTitle: Scegli un codice di sblocco
+    contentTitleConfirm: Digita ancora il codice di sblocco
     pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando
       dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere
       composto di 6 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento
@@ -446,8 +449,8 @@ onboarding:
     continue: Continua
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
-    confirmInvalid: i due pin non coincidono
-    contextualHelpTitle: Qual è il tuo PIN
+    confirmInvalid: i due codici non coincidono
+    contextualHelpTitle: Qual è il tuo codice di sblocco
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
     title: Vuoi davvero uscire da IO?
@@ -487,22 +490,22 @@ onboarding:
     emailInputLabel: Indirizzo email personale
 pin_login:
   pin:
-    pinInfo: Inserisci il PIN
+    pinInfo: Inserisci il codice di sblocco
     reset:
-      button: PIN dimenticato?
-      button_short: Reimposta PIN
-      tip: Per reimpostare il tuo PIN dovrai accedere nuovamente con la tua identità
+      button: Codice di sblocco dimenticato?
+      button_short: Reimposta il codice di sblocco
+      tip: Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente con la tua identità
         SPID.
       tip_short: Dovrai effettuare di nuovo l'accesso.
-    confirmValid: PIN corretto
-    confirmInvalid: PIN non valido
+    confirmValid: Codice di sblocco corretto
+    confirmInvalid: codice di sblocco non valido
   unlock_screen:
     help:
-      title: Accesso con PIN
+      title: Accesso con codice di sblocco
       content: !include onboarding/onboarding_pin.md
   forgetPin:
-    confirmTitle: Hai dimenticato il PIN?
-    confirmMsg: Per poter scegliere un nuovo PIN dovrai fare di nuovo accesso con SPID.
+    confirmTitle: Hai dimenticato il codice di sblocco?
+    confirmMsg: Per poter scegliere un nuovo codice di sblocco dovrai fare di nuovo accesso con SPID.
 forms:
   validators:
     required: Valore richiesto
@@ -528,12 +531,12 @@ payment:
   IUV: IUV
   recipientFiscalCode: Codice fiscale beneficiario
 wallet:
+  wallet: Pagamenti
   alert:
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
     titlePagoPaUpdateApp: Aggiornamento richiesto
     messagePagoPaUpdateApp: "IO introduce spesso piccole migliorie e nuove funzioni: per continuare ad usare il portafoglio è necessario aggiornare l'applicazione all'ultima versione."
     btnUpdateApp: Aggiorna l'app IO
-  wallet: Portafoglio
   contextualHelpTitle: Cosa puoi fare nel tuo Portafoglio
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Carte di Credito
@@ -570,7 +573,6 @@ wallet:
     info: Inserici il codice che abbiamo inviato via SMS al tuo numero di telefono
   transactionDetails: Dettagli della transazione
   detailsTransaction:
-    contextualHelpTitle: Dettagli della transazione
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   saveCard:
     contextualHelpTitle: Salvare una carta su IO
@@ -583,6 +585,7 @@ wallet:
     save: Salva
     notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
     temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
+    loadingAlert: Sto verificando le informazioni della tua carta..
   saveCardInPayment:
     header: Paga con questa carta
     title: Vuoi pagare con questa carta?
@@ -613,7 +616,7 @@ wallet:
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
-    identificationMessage: "Conferma l'operazione inserendo il tuo PIN"
+    identificationMessage: "Conferma l'operazione inserendo il tuo codice di sblocco"
     transactionSuccess: Il pagamento è stato completato!
     transactionFailure: Si è verificato un errore durante il pagamento, riprova!
     transactionTimeout: Non è stato possibile recuperare l'esito del pagamento!
@@ -954,9 +957,9 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  messageFingerPrint: "Appoggia l'impronta o inserisci il codice PIN"
-  messageFaceID: "Usa FaceID o inserisci il codice PIN"
-  messageEnterPin: "Inserisci il codice PIN"
+  messageFingerPrint: "Appoggia l'impronta o inserisci il codice di sblocco"
+  messageFaceID: "Usa FaceID o inserisci il codice di sblocco"
+  messageEnterPin: "Inserisci il codice di sblocco"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
@@ -965,7 +968,7 @@ identification:
       reason: Identificazione
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
-      fallbackLabel: Usa il PIN
+      fallbackLabel: Usa il codice di sblocco
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
   removeRequest:

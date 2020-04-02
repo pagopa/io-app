@@ -7,7 +7,7 @@ import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
-import { PrivacyScreen } from "../screens/profile/PrivacyScreen";
+import PrivacyScreen from "../screens/profile/PrivacyScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ROUTES from "./routes";
 

@@ -1,16 +1,9 @@
 import { Option } from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React from "react";
-import {
-  FlatList,
-  ListRenderItemInfo,
-  RefreshControl,
-  StyleSheet
-} from "react-native";
-
-import customVariables from "../theme/variables";
+import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 import { ComponentProps } from "../types/react";
 import ChooserListItem from "./ChooserListItem";
+import ItemSeparatorComponent from "./ItemSeparatorComponent";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 
 type OwnProps<T> = {
@@ -27,17 +20,9 @@ type ChooserListItemProps = "itemIconComponent" | "onPressItem";
 type Props<T> = OwnProps<T> &
   Pick<ComponentProps<typeof ChooserListItem>, ChooserListItemProps>;
 
-const styles = StyleSheet.create({
-  itemSeparator: {
-    height: 1,
-    marginLeft: customVariables.contentPadding,
-    marginRight: customVariables.contentPadding,
-    backgroundColor: customVariables.brandLightGray
-  }
-});
-
-const ItemSeparatorComponent = () => <View style={styles.itemSeparator} />;
-
+/**
+ * A component to render a list with checkboxes to select one or more listed items
+ */
 class ChooserList<T> extends React.Component<Props<T>> {
   /**
    * Render item list

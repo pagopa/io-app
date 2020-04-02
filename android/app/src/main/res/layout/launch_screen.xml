@@ -3,35 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/splash_bg"
+    android:background="@drawable/splash_bg"
     android:paddingBottom="48px">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="4">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="4"
-            android:orientation="vertical">
-            
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:src="@mipmap/splash_logo" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="l'app dei servizi pubblici"
-                android:paddingTop="16dp"
-                android:textSize="16dp"
-                android:gravity="center_horizontal"
-                />
-        </LinearLayout>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,35 +14,74 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="4"
             android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:src="@mipmap/logo_io"
+                    android:foregroundGravity="center_horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/ioLogo"
+                    android:layout_centerHorizontal="true"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+
+                    android:layout_marginLeft="6dp"
+                    android:layout_toRightOf="@id/ioLogo"
+                    android:src="@mipmap/logo_beta" />
+
+            </RelativeLayout>
+
+
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="powered by"
+                android:text="@string/splash_io_name"
+                android:paddingTop="16dp"
+                android:textSize="16dp"
                 android:gravity="center_horizontal"
-                android:paddingBottom="8dp"
+                android:textColor="#FFFFFF"
                 />
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:src="@mipmap/splash_logo_ppa" />
+
         </LinearLayout>
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="vertical"
         android:layout_gravity="center">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/splash_logo_td"
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:src="@mipmap/logo_consiglio_ministri" />
+
+        <View
+            android:layout_marginVertical="26dp"
+            android:layout_width="200dp"
+            android:layout_height="1dp"
+            android:backgroundTint="#FFFFFF"
+            android:layout_gravity="center"
+            android:background="@android:color/darker_gray"/>
+
+        <ImageView
+            android:layout_marginBottom="44dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@mipmap/logo_pagopa" />
     </LinearLayout>
 </LinearLayout>
