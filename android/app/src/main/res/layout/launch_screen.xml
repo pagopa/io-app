@@ -30,15 +30,6 @@
                     android:id="@+id/ioLogo"
                     android:layout_centerHorizontal="true"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_centerVertical="true"
-
-                    android:layout_marginLeft="6dp"
-                    android:layout_toRightOf="@id/ioLogo"
-                    android:src="@mipmap/logo_beta" />
-
             </RelativeLayout>
 
 
