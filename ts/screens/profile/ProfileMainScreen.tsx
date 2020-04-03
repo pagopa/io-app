@@ -362,7 +362,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
             {/* Developers Section */}
             {isDevEnv && (
-              <>
+              <View>
                 <SectionHeaderComponent
                   sectionHeader={I18n.t("profile.main.developersSectionHeader")}
                 />
@@ -458,7 +458,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     )}
                   </React.Fragment>
                 )}
-              </>
+              </View>
             )}
 
             {/* end list */}
