@@ -53,6 +53,11 @@ const styles = StyleSheet.create({
     height: 20,
     resizeMode: "contain"
   },
+  cardLogo: {
+    alignSelf: "flex-end",
+    height: 30,
+    width: 48
+  },
   darkText: {
     color: customVariables.brandDarkestGray
   },
@@ -143,6 +148,12 @@ class TransactionDetailsScreen extends React.Component<Props> {
       transactionWallet &&
       transactionWallet.creditCard &&
       transactionWallet.creditCard.brandLogo;
+    
+    const paymentMethodBrand = 
+      transactionWallet &&
+      transactionWallet.creditCard && 
+      transactionWallet.creditCard.brand;
+
     const idTransaction = transaction.id;
 
     const standardRow = (label: string, value: string) => (
@@ -207,15 +218,21 @@ class TransactionDetailsScreen extends React.Component<Props> {
           )}
 
           {/** paymnet method icon */}
-          {paymentMethodIcon && (
-            <View style={styles.row}>
+          {/** to be implemented with the card logo when https://github.com/pagopa/io-app/pull/1622/ is merged */}
+
+          {paymentMethodIcon ? (
+            <View style={[styles.row, styles.centered]}>
               <Text>{I18n.t("wallet.paymentMethod")}</Text>
-              <View style={styles.cardIcon}>
-                <Logo />
-              </View>
-              <View spacer={true} small={true} />
+                <Logo imageStyle={styles.cardLogo} />
             </View>
+          ) : paymentMethodBrand && (
+            <Text bold={true}>{paymentMethodBrand}</Text>
           )}
+
+          {paymentMethodIcon || paymentMethodBrand && (
+            <View spacer={true}/>
+          )}
+
 
           {/** psp logo */}
           {psp && (
