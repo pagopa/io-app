@@ -14,11 +14,25 @@ type Props = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
-  title: { fontSize: 18, lineHeight: 24 },
-  lightGray: { color: customVariables.lightGray },
-  lighterGray: { color: customVariables.lighterGray },
-  row: { flexDirection: "row", justifyContent: "space-between" },
-  column: { flexDirection: "column" }
+  title: {
+    fontSize: 18,
+    lineHeight: 24
+  },
+  lightGray: {
+    color: customVariables.lightGray
+  },
+  lighterGray: {
+    color: customVariables.lighterGray
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  column: {
+    flexDirection: "column",
+    flex: 1,
+    paddingRight: 4
+  }
 });
 
 /**

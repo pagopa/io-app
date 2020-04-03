@@ -297,12 +297,12 @@ class TransactionSummaryScreen extends React.Component<Props> {
           <View spacer={true} large={true} />
 
           {standardRow(
-            I18n.t('wallet.firstTransactionSummary.entityCode'),
+            I18n.t("wallet.firstTransactionSummary.entityCode"),
             rptId.organizationFiscalCode
           )}
           <View spacer={true} small={true} />
           {standardRow(
-            I18n.t('wallet.firstTransactionSummary.iuv'),
+            I18n.t("wallet.firstTransactionSummary.iuv"),
             PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
           )}
           <View spacer={true} large={true} />

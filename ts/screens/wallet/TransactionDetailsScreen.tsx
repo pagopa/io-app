@@ -25,10 +25,10 @@ import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
-import { clipboardSetStringWithFeedback } from '../../utils/clipboard';
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -148,10 +148,10 @@ class TransactionDetailsScreen extends React.Component<Props> {
       transactionWallet &&
       transactionWallet.creditCard &&
       transactionWallet.creditCard.brandLogo;
-    
-    const paymentMethodBrand = 
+
+    const paymentMethodBrand =
       transactionWallet &&
-      transactionWallet.creditCard && 
+      transactionWallet.creditCard &&
       transactionWallet.creditCard.brand;
 
     const idTransaction = transaction.id;
@@ -223,16 +223,13 @@ class TransactionDetailsScreen extends React.Component<Props> {
           {paymentMethodIcon ? (
             <View style={[styles.row, styles.centered]}>
               <Text>{I18n.t("wallet.paymentMethod")}</Text>
-                <Logo imageStyle={styles.cardLogo} />
+              <Logo imageStyle={styles.cardLogo} />
             </View>
-          ) : paymentMethodBrand && (
-            <Text bold={true}>{paymentMethodBrand}</Text>
+          ) : (
+            paymentMethodBrand && <Text bold={true}>{paymentMethodBrand}</Text>
           )}
 
-          {paymentMethodIcon || paymentMethodBrand && (
-            <View spacer={true}/>
-          )}
-
+          {paymentMethodIcon || (paymentMethodBrand && <View spacer={true} />)}
 
           {/** psp logo */}
           {psp && (
@@ -260,7 +257,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
             <View style={styles.row}>
               <Text bold={true}>{idTransaction}</Text>
               <ButtonDefaultOpacity
-                onPress={() => clipboardSetStringWithFeedback(idTransaction.toString())}
+                onPress={() =>
+                  clipboardSetStringWithFeedback(idTransaction.toString())
+                }
                 style={styles.copyButton}
               >
                 <Text style={styles.copyText}>
