@@ -619,6 +619,11 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             renderItem={this.renderItem}
             renderSectionHeader={this.renderSectionHeader}
             ItemSeparatorComponent={ItemSeparatorComponent}
+            ListEmptyComponent={
+              sections.length === 0
+                ? this.ListEmptySectionsComponent
+                : this.ListEmptyComponent
+            }
           />
         )}
       </View>
