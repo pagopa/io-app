@@ -31,13 +31,13 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import customVariables from "../theme/variables";
 import TopScreenComponent, {
   TopScreenComponentProps
 } from "./screens/TopScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
-import customVariables from '../theme/variables';
 
 type OwnProp = {
   closeModalAndNavigateToEmailInsertScreen: () => void;
@@ -186,21 +186,21 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 
   private renderErrorBanner = (
-      <View style={styles.error}>
-        <Text white={true}>{I18n.t("global.actions.retry")}</Text>
-        <View>
-          <IconFont
-            name={"io-close"}
-            onPress={() => {
-              this.setState({ displayError: false });
-            }}
-            color={customVariables.colorWhite}
-            accessible={true}
-            accessibilityLabel={I18n.t("global.buttons.close")}
-          />
-        </View>
+    <View style={styles.error}>
+      <Text white={true}>{I18n.t("global.actions.retry")}</Text>
+      <View>
+        <IconFont
+          name={"io-close"}
+          onPress={() => {
+            this.setState({ displayError: false });
+          }}
+          color={customVariables.colorWhite}
+          accessible={true}
+          accessibilityLabel={I18n.t("global.buttons.close")}
+        />
       </View>
-    );
+    </View>
+  );
 
   private contextualHelp = {
     title: I18n.t("email.validate.title"),
@@ -343,12 +343,11 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             )}
           <View spacer={true} large={true} />
         </Content>
-        { this.state.displayError && this.renderErrorBanner}
+        {this.state.displayError && this.renderErrorBanner}
         {(this.state.emailHasBeenValidate ||
           this.state.isContentLoadCompleted) &&
           this.renderFooter()}
       </TopScreenComponent>
-
     );
   }
 }
