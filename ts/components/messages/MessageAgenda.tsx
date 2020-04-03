@@ -181,6 +181,7 @@ type State = {
   isDeadlinesLoaded: boolean;
   isLoadingComplete: boolean;
   numMessagesToRender: number;
+  isScrollToActivated: boolean;
 };
 
 const keyExtractor = (_: MessageAgendaItem) => _.e1.id;
@@ -290,9 +291,12 @@ const SectionHeaderPlaceholder = (
  * A component to render messages with due_date in a agenda like form.
  */
 class MessageAgenda extends React.PureComponent<Props, State> {
-  private idTimeout?: number;
   // Ref to section list
   private sectionListRef = React.createRef<any>();
+  // Scroll to this values when layout is available
+  private sectionIndexToScroll = 0;
+  private sectionsLengthToScroll = 0;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -301,15 +305,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       isFirstLoading: true,
       isDeadlinesLoaded: false,
       isLoadingComplete: false,
-      numMessagesToRender: 0
+      numMessagesToRender: 0,
+      isScrollToActivated: false
     };
-  }
-
-  public componentWillUnmount() {
-    // if a timeout is running we have to stop it
-    if (this.idTimeout !== undefined) {
-      clearTimeout(this.idTimeout);
-    }
   }
 
   public componentDidUpdate() {
@@ -342,36 +340,34 @@ class MessageAgenda extends React.PureComponent<Props, State> {
       ) {
         const sectionIndex = this.props.sections.findIndex(this.checkSection);
         if (sectionIndex !== -1) {
-          this.scrollToNextDeadline(
-            sectionIndex,
-            this.props.sections.length - 1
-          );
+          // tslint:disable-next-line: no-object-mutation
+          this.sectionIndexToScroll = sectionIndex;
+          // tslint:disable-next-line: no-object-mutation
+          this.sectionsLengthToScroll = this.props.sections.length - 1;
         }
       }
     }
   }
 
-  private scrollToNextDeadline = (
-    sectionIndex: number,
-    sectionsLength: number
-  ) => {
-    this.idTimeout = setTimeout(() => {
-      // tslint:disable-next-line: no-object-mutation
-      this.idTimeout = undefined;
+  private scrollToNextDeadline = () => {
+    if (!this.state.isScrollToActivated) {
+      this.setState({
+        isScrollToActivated: true
+      });
       this.scrollToLocation({
         animated: false,
         itemIndex: 0,
         sectionIndex: Platform.select({
-          ios: sectionIndex,
-          android: sectionIndex
+          ios: this.sectionIndexToScroll,
+          android: this.sectionIndexToScroll
         }),
         viewPosition: 0,
         viewOffset:
-          sectionIndex === sectionsLength
+          this.sectionIndexToScroll === this.sectionsLengthToScroll
             ? 0
             : ITEM_WITHOUT_CTABAR_AND_LOADING_HEIGHT + 20
       });
-    }, 300);
+    }
   };
 
   private checkSection = (s: MessageAgendaSection) => {
@@ -600,6 +596,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             refreshControl={refreshControl}
             keyExtractor={keyExtractor}
             ref={this.sectionListRef}
+            onLayout={() => this.scrollToNextDeadline()}
             renderItem={this.renderItem}
             renderSectionHeader={this.renderSectionHeader}
             ItemSeparatorComponent={ItemSeparatorComponent}
