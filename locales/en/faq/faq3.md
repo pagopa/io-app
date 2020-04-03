@@ -1,4 +1,4 @@
-"Don't worry, it's always possible to recover your credentials.
+Don't worry, it's always possible to recover your credentials.
 
 - If you have requested SPID in Aruba, follow the recovery procedure here: http://guide.pec.it/spid/recupero-dati/procedure-di-recupero-dati-smarriti.aspx
 
@@ -22,4 +22,4 @@
 (forgotten password) https://login.id.tim.it/mps/fp.php
 
 - If you requested SPID from Lepida follow the recovery procedure here:
-https://id.lepida.it/idm/app/recupero_credenziali.jsp"
+https://id.lepida.it/idm/app/recupero_credenziali.jsp

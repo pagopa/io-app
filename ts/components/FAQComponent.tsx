@@ -2,12 +2,17 @@ import { Accordion, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
+import {
+  FAQsCathegoriesType,
+  FAQType,
+  getFAQsFromCathegories
+} from "../utils/faq";
 import ItemSeparatorComponent from "./ItemSeparatorComponent";
 import IconFont from "./ui/IconFont";
-import { FAQType, getFAQFromCathegories, FAQsType } from '../utils/faq';
+import Markdown from "./ui/Markdown";
 
 type Props = Readonly<{
-  faqCathegories: ReadonlyArray<FAQsType>;
+  faqCathegories: ReadonlyArray<FAQsCathegoriesType>;
 }>;
 
 const styles = StyleSheet.create({
@@ -16,15 +21,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: customVariables.spacerHeight
   },
-  pad: { 
-    paddingVertical: customVariables.spacerHeight 
+  pad: {
+    paddingVertical: customVariables.spacerHeight
   },
-  headerIcon: { 
+  headerIcon: {
     paddingHorizontal: 10,
-    alignSelf: 'center'
+    alignSelf: "center"
   },
-  noBorder: { 
-    borderWidth: 0 
+  noBorder: {
+    borderWidth: 0
   },
   flex: {
     flex: 1
@@ -36,7 +41,9 @@ export default function FAQComponent(props: Props) {
     return (
       <React.Fragment>
         <View style={styles.header}>
-          <Text bold={true} style={styles.flex}>{item.title}</Text>
+          <Text bold={true} style={styles.flex}>
+            {item.title}
+          </Text>
           <IconFont
             name={"io-right"}
             color={customVariables.brandPrimary}
@@ -49,7 +56,7 @@ export default function FAQComponent(props: Props) {
                 ]
               }
             ]}
-          />          
+          />
         </View>
         <ItemSeparatorComponent noPadded={true} />
       </React.Fragment>
@@ -57,15 +64,17 @@ export default function FAQComponent(props: Props) {
   };
 
   const renderContent = (item: FAQType) => (
-    <Text style={styles.pad}>{item.content}</Text>
+    <View style={styles.pad}>
+      <Markdown>{item.content}</Markdown>
+    </View>
   );
 
   return (
     <Accordion
-      dataArray={getFAQFromCathegories(props.faqCathegories)}
+      dataArray={getFAQsFromCathegories(props.faqCathegories) as FAQType[]} // tslint:disable-line readonly-array
       renderHeader={renderHeader}
       renderContent={renderContent}
       style={styles.noBorder}
-    />    
+    />
   );
 }

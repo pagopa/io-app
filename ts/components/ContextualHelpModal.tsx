@@ -10,19 +10,19 @@ import { Body, Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
 import { InteractionManager, Modal, StyleSheet } from "react-native";
 import IconFont from "../components/ui/IconFont";
+import themeVariables from "../theme/variables";
+import { FAQsCathegoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import FAQComponent from "./FAQComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
-import themeVariables from "../theme/variables";
-import FAQComponent from "./FAQComponent";
-import { FAQsType } from '../utils/faq';
 
 type Props = Readonly<{
   title: string;
   body: () => React.ReactNode;
   isVisible: boolean;
   close: () => void;
-  faqCathegories?: ReadonlyArray<FAQsType>;
+  faqCathegories?: ReadonlyArray<FAQsCathegoriesType>;
 }>;
 
 type State = Readonly<{
@@ -89,11 +89,10 @@ export class ContextualHelpModal extends React.Component<Props, State> {
             <Content
               contentContainerStyle={styles.contentContainerStyle}
               noPadded={true}
-              bounces={false}
             >
               <H1>{this.props.title}</H1>
               {this.state.content}
-              {this.props.faqCathegories &&(
+              {this.props.faqCathegories && (
                 <FAQComponent faqCathegories={this.props.faqCathegories} />
               )}
             </Content>
