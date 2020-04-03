@@ -88,7 +88,7 @@ const cardLineHeightL = 26 * landscapeScaleFactor;
 const barCodeHeightL = 110 * landscapeScaleFactor;
 const barCodeWidthL = 520 * landscapeScaleFactor;
 const barCodeMarginLeftL = 168 * landscapeScaleFactor;
-const barCodeMarginTopL = 180 * landscapeScaleFactor;
+const barCodeMarginTopL = 181 * landscapeScaleFactor;
 
 const fiscalCodeHeightL =
   -94 * landscapeScaleFactor + // rotation correction factor
