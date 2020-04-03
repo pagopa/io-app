@@ -242,8 +242,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           light: true,
           bordered: true,
           disabled:
-            this.state.isLoading ||
-            this.state.isCtaSentEmailValidationDisabled
+            this.state.isLoading || this.state.isCtaSentEmailValidationDisabled
         }}
         leftButton={{
           block: true,
