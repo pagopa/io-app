@@ -361,7 +361,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             />
 
             {/* Developers Section */}
-            {!isDevEnv && (
+            {isDevEnv && (
               <>
                 <SectionHeaderComponent
                   sectionHeader={I18n.t("profile.main.developersSectionHeader")}
