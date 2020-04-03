@@ -157,7 +157,10 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
 
   public render(): React.ReactNode {
     return (
-      <LoadingSpinnerOverlay isLoading={this.state.isLoading}>
+      <LoadingSpinnerOverlay
+        loadingOpacity={1.0}
+        isLoading={this.state.isLoading}
+      >
         <TopScreenComponent
           goBack={this.handleGoBack}
           headerTitle={I18n.t("authentication.cie.genericTitle")}
