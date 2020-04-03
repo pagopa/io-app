@@ -45,7 +45,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           {props.paymentReason}
         </Text>
         <Text white={true} bold={true} style={styles.smallText}>
-          {formatNumberCentsToAmount(props.currentAmount)}
+          {formatNumberCentsToAmount(props.currentAmount, true)}
         </Text>
       </View>
       <View style={styles.row}>
@@ -53,7 +53,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           {I18n.t("wallet.ConfirmPayment.fee")}
         </Text>
         <Text white={true} style={styles.smallText}>
-          {props.fee ? formatNumberCentsToAmount(props.fee) : "-"}
+          {props.fee ? formatNumberCentsToAmount(props.fee, true) : "-"}
         </Text>
       </View>
       <View style={styles.row}>
@@ -61,7 +61,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           {I18n.t("wallet.total")}
         </Text>
         <Text white={true} bold={true}>
-          {formatNumberCentsToAmount(totalAmount)}
+          {props.fee ? formatNumberCentsToAmount(totalAmount, true) : "-"}
         </Text>
       </View>
     </View>
