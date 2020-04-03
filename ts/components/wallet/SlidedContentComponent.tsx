@@ -32,6 +32,12 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * A component to render the Screen Content as a slide on top of the Container background
+ * Props:
+ * - dark: the backgound is a dark gray
+ * - hasFlatBottom: the bottom is anchored to the container bottom
+ */
 export const SlidedContentComponent = (props: Props & React.Props<Content>) => {
   return (
     <Content noPadded={true} style={styles.container} bounces={false}>

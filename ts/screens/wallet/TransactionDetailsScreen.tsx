@@ -28,6 +28,7 @@ import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
+import { clipboardSetStringWithFeedback } from '../../utils/clipboard';
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -242,7 +243,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             <View style={styles.row}>
               <Text bold={true}>{idTransaction}</Text>
               <ButtonDefaultOpacity
-                onPress={() => Clipboard.setString(idTransaction.toString())}
+                onPress={() => clipboardSetStringWithFeedback(idTransaction.toString())}
                 style={styles.copyButton}
               >
                 <Text style={styles.copyText}>
