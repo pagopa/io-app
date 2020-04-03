@@ -47,8 +47,8 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { isDevEnv } from "../../utils/environment";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
