@@ -4,15 +4,11 @@ import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import ItemSeparatorComponent from "./ItemSeparatorComponent";
 import IconFont from "./ui/IconFont";
+import { FAQType, getFAQFromCathegories, FAQsType } from '../utils/faq';
 
 type Props = Readonly<{
-  data: FAQType[]; // tslint:disable-line readonly-array
+  faqCathegories: ReadonlyArray<FAQsType>;
 }>;
-
-type FAQType = {
-  title: string;
-  content: string;
-};
 
 const styles = StyleSheet.create({
   header: {
@@ -24,10 +20,14 @@ const styles = StyleSheet.create({
     paddingVertical: customVariables.spacerHeight 
   },
   headerIcon: { 
-    paddingHorizontal: 10 
+    paddingHorizontal: 10,
+    alignSelf: 'center'
   },
   noBorder: { 
     borderWidth: 0 
+  },
+  flex: {
+    flex: 1
   }
 });
 
@@ -36,7 +36,7 @@ export default function FAQComponent(props: Props) {
     return (
       <React.Fragment>
         <View style={styles.header}>
-          <Text bold={true}>{item.title}</Text>
+          <Text bold={true} style={styles.flex}>{item.title}</Text>
           <IconFont
             name={"io-right"}
             color={customVariables.brandPrimary}
@@ -49,7 +49,7 @@ export default function FAQComponent(props: Props) {
                 ]
               }
             ]}
-          />
+          />          
         </View>
         <ItemSeparatorComponent noPadded={true} />
       </React.Fragment>
@@ -62,10 +62,10 @@ export default function FAQComponent(props: Props) {
 
   return (
     <Accordion
-      dataArray={props.data}
+      dataArray={getFAQFromCathegories(props.faqCathegories)}
       renderHeader={renderHeader}
       renderContent={renderContent}
       style={styles.noBorder}
-    />
+    />    
   );
 }

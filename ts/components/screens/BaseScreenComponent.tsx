@@ -9,6 +9,7 @@ import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import { BaseHeader } from "./BaseHeader";
+import { FAQsType } from '../../utils/faq';
 
 export interface ContextualHelpProps {
   title: string;
@@ -27,6 +28,7 @@ interface OwnProps {
   appLogo?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
+  faqCathegories?: ReadonlyArray<FAQsType>;
 }
 
 type BaseHeaderProps =
@@ -116,6 +118,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             body={ch.body}
             isVisible={this.state.isHelpVisible}
             close={this.hideHelp}
+            faqCathegories={this.props.faqCathegories}
           />
         )}
       </Container>
