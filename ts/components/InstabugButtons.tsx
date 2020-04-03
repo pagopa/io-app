@@ -113,9 +113,11 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   }
 
   public render() {
+    // we render the chat icon if the user has previous or new chats with the support team
+    const canRenderChatsIcon = this.state.hasChats || this.props.badge > 0;
     return (
       <React.Fragment>
-        {this.state.hasChats && (
+        {canRenderChatsIcon && (
           <View>
             <ButtonDefaultOpacity
               onPress={this.handleIBChatPress}
