@@ -134,7 +134,7 @@ export default class CardComponent extends React.Component<Props> {
       } = this.props;
 
       return (
-        <View style={{ flexDirection: "row" }}>
+        <View style={styles.row}>
           {!hideFavoriteIcon &&
             isFavorite !== undefined && (
               <IconFont
