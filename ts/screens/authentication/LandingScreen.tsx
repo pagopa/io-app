@@ -147,7 +147,14 @@ class LandingScreen extends React.PureComponent<Props> {
 
   public render() {
     return (
-      <BaseScreenComponent contextualHelpMarkdown={contextualHelpMarkdown}>
+      <BaseScreenComponent
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCathegories={
+          this.props.isCieSupported
+            ? ["landing_SPID", "landing_CIE"]
+            : ["landing_SPID"]
+        }
+      >
         {isDevEnv && <DevScreenButton onPress={this.navigateToMarkdown} />}
 
         <Content contentContainerStyle={styles.flex} noPadded={true}>
