@@ -610,7 +610,7 @@ wallet:
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
-    fee: Costi di transizione
+    fee: Costi di transazione
     why: Perché?
     info: 'Dopo questo passaggio non sarà più possibile annullare.'
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
