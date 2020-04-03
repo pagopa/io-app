@@ -25,7 +25,7 @@ export const formatNumberAmount = (
 
 export const formatNumberCentsToAmount = (
   cents: number,
-  displayCurrency?: boolean
+  displayCurrency: boolean = false
 ): string => formatNumberAmount(centsToAmount(cents), displayCurrency);
 
 export const buildExpirationDate = (creditCard: CreditCard): string =>
