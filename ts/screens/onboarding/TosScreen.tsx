@@ -142,7 +142,7 @@ class TosScreen extends React.PureComponent<Props, State> {
 
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
-        goBack={isProfile ? true : this.handleGoBack}
+        goBack={isProfile || this.handleGoBack}
         headerTitle={
           isProfile
             ? I18n.t("profile.main.privacy.privacyPolicy.title")
