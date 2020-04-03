@@ -8,4 +8,5 @@ export type IdentityProvider = {
   name: string;
   entityID: string;
   profileUrl: string;
+  isTestIdp?: boolean;
 };
