@@ -5,7 +5,7 @@ import * as React from "react";
 
 import I18n from "i18n-js";
 import { TranslationKeys } from "../../../locales/locales";
-import { FAQsCathegoriesType } from "../../utils/faq";
+import { FAQsCategoriesType } from "../../utils/faq";
 import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
@@ -28,7 +28,7 @@ interface OwnProps {
   appLogo?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
-  faqCathegories?: ReadonlyArray<FAQsCathegoriesType>;
+  faqCathegories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
 type BaseHeaderProps =

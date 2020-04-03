@@ -1,7 +1,7 @@
 import I18n from "i18n-js";
 
-/** map, for eacth FAQ cathegory, the ids of the FAQs related to the cathegory */
-export const FAQs: { [key in FAQsCathegoriesType]: ReadonlyArray<number> } = {
+/** map, for eacth FAQ category, the ids of the FAQs related to the category */
+export const FAQs: { [key in FAQsCategoriesType]: ReadonlyArray<number> } = {
   landing_SPID: [1, 2, 3],
   landing_CIE: [4, 5],
   authentication_SPID: [8, 9, 11, 12, 13, 14],
@@ -21,7 +21,7 @@ export const FAQs: { [key in FAQsCathegoriesType]: ReadonlyArray<number> } = {
   services_detail: [50, 51, 52]
 };
 
-export type FAQsCathegoriesType =
+export type FAQsCategoriesType =
   | "landing_SPID"
   | "landing_CIE"
   | "authentication_SPID"
@@ -46,13 +46,13 @@ export type FAQType = {
 };
 
 /**
- * Recover the title and the content of the FAQs related to the cathegories presented as input
- * @param cathegory kind of FAQ to be returned as output
+ * Recover the title and the content of the FAQs related to the categories presented as input
+ * @param category kind of FAQ to be returned as output
  */
-export const getFAQsFromCathegories = (
-  cathegories: ReadonlyArray<FAQsCathegoriesType>
+export const getFAQsFromCategories = (
+  categories: ReadonlyArray<FAQsCategoriesType>
 ): ReadonlyArray<FAQType> => {
-  const faqIDs: ReadonlyArray<number> = cathegories.reduce((acc, val) => {
+  const faqIDs: ReadonlyArray<number> = categories.reduce((acc, val) => {
     const ids = FAQs[val];
     return acc.concat(ids);
   }, new Array<number>());

@@ -3,16 +3,16 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import {
-  FAQsCathegoriesType,
+  FAQsCategoriesType,
   FAQType,
-  getFAQsFromCathegories
+  getFAQsFromCategories
 } from "../utils/faq";
 import ItemSeparatorComponent from "./ItemSeparatorComponent";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
 
 type Props = Readonly<{
-  faqCathegories: ReadonlyArray<FAQsCathegoriesType>;
+  faqCathegories: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 const styles = StyleSheet.create({
@@ -71,7 +71,7 @@ export default function FAQComponent(props: Props) {
 
   return (
     <Accordion
-      dataArray={getFAQsFromCathegories(props.faqCathegories) as FAQType[]} // tslint:disable-line readonly-array
+      dataArray={getFAQsFromCategories(props.faqCathegories) as FAQType[]} // tslint:disable-line readonly-array
       renderHeader={renderHeader}
       renderContent={renderContent}
       style={styles.noBorder}

@@ -11,7 +11,7 @@ import * as React from "react";
 import { InteractionManager, Modal, StyleSheet } from "react-native";
 import IconFont from "../components/ui/IconFont";
 import themeVariables from "../theme/variables";
-import { FAQsCathegoriesType } from "../utils/faq";
+import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FAQComponent from "./FAQComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
@@ -22,7 +22,7 @@ type Props = Readonly<{
   body: () => React.ReactNode;
   isVisible: boolean;
   close: () => void;
-  faqCathegories?: ReadonlyArray<FAQsCathegoriesType>;
+  faqCathegories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 type State = Readonly<{
