@@ -154,7 +154,6 @@ profile:
         description: Rivedi le regole sulla privacy che hai accettato
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
         updated: E' necessario prendere visione della nuova versione dell'Informativa
-        text: !include profile/privacy.md
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
