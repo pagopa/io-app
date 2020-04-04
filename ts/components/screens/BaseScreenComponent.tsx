@@ -1,9 +1,8 @@
+import I18n from "i18n-js";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-
-import I18n from "i18n-js";
 import { TranslationKeys } from "../../../locales/locales";
 import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
