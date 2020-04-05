@@ -143,10 +143,10 @@ export const getPaymentHistoryDetails = (
     new Date(payment.started_at)
   )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
   const successDetails = fromNullable(
-    JSON.stringify(payment.verified_data, null, 4)
+    `- success verifica: ${JSON.stringify(payment.verified_data, null, 4)}`
   ).getOrElse("");
   const failureDetails = fromNullable(
-    JSON.stringify(payment.failure, null, 4)
+    `- failure verifica: ${payment.failure}`
   ).getOrElse("");
   return profileDetails
     .concat(separator)
