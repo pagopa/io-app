@@ -20,6 +20,7 @@ import {
   runPollTransactionSaga
 } from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 export type EntrypointRoute = Readonly<{
   name: string;
@@ -105,6 +106,7 @@ const reducer = (
     // verifica
     //
     case getType(paymentVerifica.request):
+      RTron.log("paymentVerifica.request", action.payload);
       return {
         // a verifica operation will generate a new codice contesto pagamento
         // effectively starting a new payment session, thus we also invalidate
@@ -114,11 +116,13 @@ const reducer = (
         verifica: pot.noneLoading
       };
     case getType(paymentVerifica.success):
+      RTron.log("paymentVerifica.success", action.payload);
       return {
         ...state,
         verifica: pot.some(action.payload)
       };
     case getType(paymentVerifica.failure):
+      RTron.log("paymentVerifica.failure", action.payload);
       return {
         ...state,
         verifica: pot.noneError(action.payload)
