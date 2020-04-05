@@ -12,12 +12,12 @@ let state: PaymentsHistoryState = [];
 
 describe("payments history", () => {
   const anRptId = RptId.decode({
-    organizationFiscalCode: "0000000000",
+    organizationFiscalCode: "00000000000",
     paymentNoticeNumber: {
       applicationCode: "02",
       auxDigit: "0",
       checkDigit: "78",
-      iuv13: "160000000000"
+      iuv13: "1600000000000"
     }
   }).value as RptId;
 
