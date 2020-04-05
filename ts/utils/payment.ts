@@ -142,12 +142,12 @@ export const getPaymentHistoryDetails = (
   const paymentDetails = `- payment start time: ${formatDateAsReminder(
     new Date(payment.started_at)
   )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
-  const successDetails = fromNullable(
-    `- success verifica: ${JSON.stringify(payment.verified_data, null, 4)}`
-  ).getOrElse("");
-  const failureDetails = fromNullable(
-    `- failure verifica: ${payment.failure}`
-  ).getOrElse("");
+  const successDetails = fromNullable(payment.verified_data)
+    .map(pv => `- success verifica: ${JSON.stringify(pv, null, 4)}`)
+    .getOrElse("");
+  const failureDetails = fromNullable(payment.failure)
+    .map(pf => `- failure verifica: ${pf}`)
+    .getOrElse("");
   return profileDetails
     .concat(separator)
     .concat(paymentDetails)

@@ -1,12 +1,12 @@
+import { range } from "fp-ts/lib/Array";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
+import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { paymentVerifica } from "../../actions/wallet/payment";
 import reducer, {
-  PaymentsHistoryState,
-  HISTORY_SIZE
+  HISTORY_SIZE,
+  PaymentsHistoryState
 } from "../payments/history";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
-import { range } from "fp-ts/lib/Array";
 // tslint:disable-next-line: no-let
 let state: PaymentsHistoryState = [];
 
