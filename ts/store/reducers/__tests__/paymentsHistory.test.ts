@@ -12,27 +12,27 @@ let state: PaymentsHistoryState = [];
 
 describe("payments history", () => {
   const anRptId = RptId.decode({
-    organizationFiscalCode: "00000123456",
+    organizationFiscalCode: "0000000000",
     paymentNoticeNumber: {
       applicationCode: "02",
       auxDigit: "0",
       checkDigit: "78",
-      iuv13: "1600203993985"
+      iuv13: "160000000000"
     }
   }).value as RptId;
 
   const successData = PaymentRequestsGetResponse.decode({
     importoSingoloVersamento: 1,
     codiceContestoPagamento: "54ea05a0773011ea9dc75dfcb08809dc",
-    ibanAccredito: "IT93I0503457280000000117101",
-    causaleVersamento: "99 TEST_PAGOPASPA_IO VAIANO CREMASCO",
+    ibanAccredito: "IT93I050345728000000000000",
+    causaleVersamento: "CAUSALE",
     enteBeneficiario: {
-      identificativoUnivocoBeneficiario: "00122230196",
-      denominazioneBeneficiario: "Comune di Vaiano Cremasco",
-      indirizzoBeneficiario: "Piazza Gloriosi Caduti, 2",
-      capBeneficiario: "26010",
-      localitaBeneficiario: "Vaiano Cremasco",
-      provinciaBeneficiario: "CR",
+      identificativoUnivocoBeneficiario: "0000000000",
+      denominazioneBeneficiario: "Comune Fake",
+      indirizzoBeneficiario: "Piazza Fake",
+      capBeneficiario: "00000",
+      localitaBeneficiario: "Fake",
+      provinciaBeneficiario: "XX",
       nazioneBeneficiario: "IT"
     }
   }).value as PaymentRequestsGetResponse;
