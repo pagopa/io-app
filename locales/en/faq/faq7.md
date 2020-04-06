@@ -5,4 +5,4 @@ Identity Providers provide different registration methods for free or for a fee 
 - If you are already a customer of one of the Identity Providers, you may have a simplified registration flow;
 - If you are an Italian citizen residing abroad, pay attention to who offers the service for abroad.
 
-For more information you can consult the [SPID] website (https://www.spid.gov.it/richiedi-spid).
+For more information you can consult the [SPID website](https://www.spid.gov.it/richiedi-spid).
