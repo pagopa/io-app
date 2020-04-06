@@ -88,7 +88,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               {this.props.faqCategories && (
                 <FAQComponent faqCategories={this.props.faqCategories} />
               )}
-              <View spacer={true} extralarge={true}/>
+              <View spacer={true} extralarge={true} />
             </Content>
           )}
           <BetaBannerComponent />
