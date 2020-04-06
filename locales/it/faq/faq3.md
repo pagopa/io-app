@@ -1,6 +1,6 @@
 Non ti preoccupare, è sempre possibile recuperare le tue credenziali.
 
-- Se hai richiesto SPID a Aruba segui la procedura di recupero qui: http://guide.pec.it/spid/recupero-dati/procedure-di-recupero-dati-smarriti.aspx
+- Se hai richiesto SPID a Aruba segui la procedura di recupero qui: [http://guide.pec.it/spid/recupero-dati/procedure-di-recupero-dati-smarriti.aspx](http://guide.pec.it/spid/recupero-dati/procedure-di-recupero-dati-smarriti.aspx)
 
 - Se hai richiesto SPID a Infocert segui la procedura di recupero qui: https://my.infocert.it/selfcare/#/recoveryPin
 
