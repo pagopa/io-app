@@ -162,7 +162,9 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
                 "profile.main.privacy.privacyPolicy.description"
               )}
               onPress={() =>
-                this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY)
+                this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY, {
+                  isProfile: true
+                })
               }
               useExtendedSubTitle={true}
             />
