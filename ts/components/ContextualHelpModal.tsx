@@ -3,7 +3,9 @@ import * as React from "react";
 import { InteractionManager, Modal, StyleSheet } from "react-native";
 import IconFont from "../components/ui/IconFont";
 import themeVariables from "../theme/variables";
+import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import FAQComponent from "./FAQComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
@@ -13,6 +15,7 @@ type Props = Readonly<{
   body: () => React.ReactNode;
   isVisible: boolean;
   close: () => void;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 type State = Readonly<{
@@ -82,6 +85,10 @@ export class ContextualHelpModal extends React.Component<Props, State> {
             >
               <H1>{this.props.title}</H1>
               {this.state.content}
+              {this.props.faqCategories && (
+                <FAQComponent faqCategories={this.props.faqCategories} />
+              )}
+              <View spacer={true} extralarge={true} />
             </Content>
           )}
           <BetaBannerComponent />
