@@ -57,17 +57,10 @@ export const getFAQsFromCategories = (
     return acc.concat(ids);
   }, new Array<number>());
 
-  return faqIDs
-    .filter((v, i) => faqIDs.indexOf(v) === i)
-    .reduce((aa, id: number) => {
-      const titleTranlationKey = "faq.".concat(id.toString()).concat(".title");
-      const contentTranlationKey = "faq."
-        .concat(id.toString())
-        .concat(".content");
-      const item: FAQType = {
-        title: I18n.t(titleTranlationKey),
-        content: I18n.t(contentTranlationKey)
-      };
-      return aa.concat(item);
-    }, new Array<FAQType>());
+  return faqIDs.filter((v, i) => faqIDs.indexOf(v) === i).map<FAQType>(id => {
+    return {
+      title: I18n.t(`faq.${id}.title`),
+      content: I18n.t(`faq.${id}.content`)
+    };
+  });
 };

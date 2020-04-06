@@ -28,7 +28,7 @@ interface OwnProps {
   appLogo?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
-  faqCathegories?: ReadonlyArray<FAQsCategoriesType>;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
 type BaseHeaderProps =
@@ -118,7 +118,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             body={ch.body}
             isVisible={this.state.isHelpVisible}
             close={this.hideHelp}
-            faqCathegories={this.props.faqCathegories}
+            faqCategories={this.props.faqCategories}
           />
         )}
       </Container>

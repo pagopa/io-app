@@ -22,7 +22,7 @@ type Props = Readonly<{
   body: () => React.ReactNode;
   isVisible: boolean;
   close: () => void;
-  faqCathegories?: ReadonlyArray<FAQsCategoriesType>;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 type State = Readonly<{
@@ -92,8 +92,8 @@ export class ContextualHelpModal extends React.Component<Props, State> {
             >
               <H1>{this.props.title}</H1>
               {this.state.content}
-              {this.props.faqCathegories && (
-                <FAQComponent faqCathegories={this.props.faqCathegories} />
+              {this.props.faqCategories && (
+                <FAQComponent faqCategories={this.props.faqCategories} />
               )}
             </Content>
           )}

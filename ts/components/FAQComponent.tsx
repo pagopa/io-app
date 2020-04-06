@@ -12,7 +12,7 @@ import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
 
 type Props = Readonly<{
-  faqCathegories: ReadonlyArray<FAQsCategoriesType>;
+  faqCategories: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 const styles = StyleSheet.create({
@@ -51,9 +51,7 @@ export default function FAQComponent(props: Props) {
             style={[
               styles.headerIcon,
               {
-                transform: [
-                  expanded ? { rotateZ: "-90deg" } : { rotateZ: "90deg" }
-                ]
+                transform: [{ rotateZ: expanded ? "-90deg" : "90deg" }]
               }
             ]}
           />
@@ -71,7 +69,7 @@ export default function FAQComponent(props: Props) {
 
   return (
     <Accordion
-      dataArray={getFAQsFromCategories(props.faqCathegories) as FAQType[]} // tslint:disable-line readonly-array
+      dataArray={[...getFAQsFromCategories(props.faqCategories)]}
       renderHeader={renderHeader}
       renderContent={renderContent}
       style={styles.noBorder}

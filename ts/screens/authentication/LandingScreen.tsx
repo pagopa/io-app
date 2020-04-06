@@ -149,7 +149,7 @@ class LandingScreen extends React.PureComponent<Props> {
     return (
       <BaseScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCathegories={
+        faqCategories={
           this.props.isCieSupported
             ? ["landing_SPID", "landing_CIE"]
             : ["landing_SPID"]
