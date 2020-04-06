@@ -690,6 +690,7 @@ wallet:
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add payment method
   continue: Continue
+  backToPayments: Back to payments
   methods:
     comingSoon: incoming
     card:

@@ -698,6 +698,7 @@ wallet:
   creditDebitCards: Carte di Credito/Debito
   addPaymentMethodTitle: Aggiungi metodo di pagamento
   continue: Continua
+  backToPayments: Torna ai pagamenti
   methods:
     comingSoon: in arrivo
     card:

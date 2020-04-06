@@ -19,11 +19,11 @@ import ManualDataInsertionScreen from "../../screens/wallet/payment/ManualDataIn
 import PickPaymentMethodScreen from "../../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
 import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErrorScreen";
+import TransactionSuccessScreen from "../../screens/wallet/payment/TransactionSuccessScreen";
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import { InferNavigationParams } from "../../types/react";
-import TransactionSuccessScreen from '../../screens/wallet/payment/TransactionSuccessScreen';
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -172,12 +172,12 @@ export const navigateToPaymentPickPaymentMethodScreen = (
   });
 
 export const navigateToTransactionSuccessScreen = (
-    params: InferNavigationParams<typeof TransactionSuccessScreen>
-  ) =>
-    NavigationActions.navigate({
-      routeName: ROUTES.PAYMENT_TRANSACTION_SUCCESS,
-      params
-    });
+  params: InferNavigationParams<typeof TransactionSuccessScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_TRANSACTION_SUCCESS,
+    params
+  });
 
 export const navigateToTransactionDetailsScreen = (
   params: InferNavigationParams<typeof TransactionDetailsScreen>
