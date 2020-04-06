@@ -54,7 +54,7 @@ global:
   localNotifications:
     spidLogin:
       title: Ricordati di accedere ad IO!
-      message: Accedi con la tua identità SPID su IO, l’app dei servizi pubblici
+      message: Accedi con il tuo profilo digitale su IO, l’app dei servizi pubblici
 locales:
   it: Italiano
   en: Inglese
