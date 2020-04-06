@@ -62,6 +62,9 @@ locales:
 clipboard:
   copyFeedback: Copied to clipboard
   copyText: copy
+betaBanner:
+  title: 'The IO app is in beta version.'
+  description: Your reports help us to improve day after day.
 connection:
   status:
     offline: Offline! Some features will not work.
@@ -151,7 +154,6 @@ profile:
         description: Review the accepted privacy terms
         header: Information note on the processing of the IO app users's personal data
         updated: It is required to accept the new version of Terms and Conditions
-        text: !include profile/privacy.md
         contextualHelpTitlePolicy: What is the information on the processing of personal data
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Your privacy settings
