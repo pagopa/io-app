@@ -52,12 +52,12 @@ export type FAQType = {
 export const getFAQsFromCategories = (
   categories: ReadonlyArray<FAQsCategoriesType>
 ): ReadonlyArray<FAQType> => {
-  const faqIDs: ReadonlyArray<number> = categories.reduce((acc, val) => {
+  const faqIDs: Set<number> = categories.reduce((acc, val) => {
     const ids = FAQs[val];
-    return acc.concat(ids);
-  }, new Array<number>());
+    return new Set<number>([...acc, ...ids]);
+  }, new Set<number>());
 
-  return faqIDs.filter((v, i) => faqIDs.indexOf(v) === i).map<FAQType>(id => {
+  return Array.from(faqIDs).map<FAQType>(id => {
     return {
       title: I18n.t(`faq.${id}.title`),
       content: I18n.t(`faq.${id}.content`)
