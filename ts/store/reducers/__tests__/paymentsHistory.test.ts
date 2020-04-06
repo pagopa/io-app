@@ -55,6 +55,12 @@ describe("payments history", () => {
     expect(state[0].verified_data).toEqual(successData);
   });
 
+  it("should update the existing payment history with failure value", () => {
+    state = reducer(state, paymentVerifica.failure("INVALID_AMOUNT"));
+    expect(state.length).toEqual(1);
+    expect(state[0].failure).toEqual("INVALID_AMOUNT");
+  });
+
   it("should add a payment in the history", () => {
     // change some attrs to make a new payment
     state = reducer(
