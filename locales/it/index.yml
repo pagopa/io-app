@@ -109,6 +109,10 @@ profile:
   errors:
     load: Errore nel caricamento del profilo
     upsert: Errore nella creazione o nell'aggiornamento del profilo
+  alerts:
+    emailNotValidated:
+      title: Email non verificata
+      subtitle: È necessario verificare la mail per poter procedere con l'operazione
   main:
     title: Profilo
     logout: Logout/Esci
