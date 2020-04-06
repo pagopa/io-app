@@ -62,7 +62,7 @@ export const setInstabugProfileAttributes = (
   );
 };
 
-export const writeInstabugLogs = (logs: string, typeLog: TypeLogs) => {
+export const instabugLog = (logs: string, typeLog: TypeLogs) => {
   switch (typeLog) {
     case TypeLogs.INFO:
       Instabug.logInfo(logs);
