@@ -23,6 +23,7 @@ import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSu
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import { InferNavigationParams } from "../../types/react";
+import TransactionSuccessScreen from '../../screens/wallet/payment/TransactionSuccessScreen';
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
   NavigationState
@@ -170,12 +171,14 @@ export const navigateToPaymentPickPaymentMethodScreen = (
     params
   });
 
-// TODO: this should use StackActions.reset
-// to reset the navigation. Right now, the
-// "back" option is not allowed -- so the user cannot
-// get back to previous screens, but the navigation
-// stack should be cleaned right here
-// @https://www.pivotaltracker.com/story/show/159300579
+export const navigateToTransactionSuccessScreen = (
+    params: InferNavigationParams<typeof TransactionSuccessScreen>
+  ) =>
+    NavigationActions.navigate({
+      routeName: ROUTES.PAYMENT_TRANSACTION_SUCCESS,
+      params
+    });
+
 export const navigateToTransactionDetailsScreen = (
   params: InferNavigationParams<typeof TransactionDetailsScreen>
 ) =>

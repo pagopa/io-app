@@ -14,6 +14,7 @@ import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import ROUTES from "./routes";
+import TransactionSuccessScreen from '../screens/wallet/payment/TransactionSuccessScreen';
 
 /**
  * TODO: migrate WALLET_TRANSACTION_SUMMARY on a new navigator for screens which does not visualize the footer menu.
@@ -50,6 +51,9 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.PAYMENT_TRANSACTION_SUMMARY]: {
       screen: TransactionSummaryScreen
+    },
+    [ROUTES.PAYMENT_TRANSACTION_SUCCESS]: {
+      screen: TransactionSuccessScreen
     },
     [ROUTES.PAYMENT_TRANSACTION_ERROR]: {
       screen: TransactionErrorScreen

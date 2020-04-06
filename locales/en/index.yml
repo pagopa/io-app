@@ -15,6 +15,7 @@ global:
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, something did not work as expected, please try again!
   genericWaiting: Wait a few seconds..
+  genericThanks: Thank you
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -608,7 +609,7 @@ wallet:
     changeMethod: Change the payment method
     change: Change method
     identificationMessage: Confirm the transaction with your unlock code
-    transactionSuccess: The payment has completed!
+    transactionSuccess: the payment has completed!
     transactionFailure: There was an error with the payment, please retry!
     transactionTimeout: I couldn't retrieve the result of the payment!
     confirmCancelTitle: Do you want to cancel this payment?
@@ -674,6 +675,7 @@ wallet:
   time: Time
   psp: Payment provider
   receipt: Receipt
+  receipt2: Transaction receipt
   seeReceipt: See Receipt
   transactions: Transactions
   transaction: Transaction
