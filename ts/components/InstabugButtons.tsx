@@ -1,8 +1,7 @@
-import { BugReporting, Chats, Replies } from "instabug-reactnative";
-
 import { none, Option, some } from "fp-ts/lib/Option";
+import { BugReporting, Chats, Replies } from "instabug-reactnative";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { TypeLogs, writeInstabugLogs } from "../boot/configureInstabug";
 import {
@@ -51,6 +50,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 type State = {
   instabugReportType: Option<string>;
+  hasChats: boolean;
 };
 
 class InstabugButtonsComponent extends React.PureComponent<Props, State> {
@@ -58,14 +58,11 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
     const chat = "chat";
     this.setState({ instabugReportType: some(chat) });
     this.props.dispatchIBReportOpen(chat);
-    // Check if there are previous chat
-    Replies.hasChats(hasChats => {
-      if (hasChats) {
-        Replies.show();
-      } else {
-        Chats.show();
-      }
-    });
+    if (this.state.hasChats) {
+      Replies.show();
+    } else {
+      Chats.show();
+    }
   };
 
   private handleIBBugPress = () => {
@@ -82,7 +79,8 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      instabugReportType: none
+      instabugReportType: none,
+      hasChats: false
     };
   }
   public componentDidMount() {
@@ -103,27 +101,46 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
         }
       }
     );
+    this.checkInstabugChats();
+  }
+
+  private checkInstabugChats = () => {
+    Replies.hasChats(hasChats => {
+      this.setState({ hasChats });
+    });
+  };
+
+  public componentDidUpdate(_: Props) {
+    // check if instabug has new chats
+    this.checkInstabugChats();
   }
 
   public render() {
+    // we render the chat icon if the user has previous or new chats with the support team
+    const canRenderChatsIcon = this.state.hasChats || this.props.badge > 0;
     return (
       <React.Fragment>
-        <ButtonDefaultOpacity
-          onPress={this.handleIBChatPress}
-          transparent={true}
-        >
-          <IconFont
-            name="io-chat"
-            color={this.props.color}
-            accessible={true}
-            accessibilityLabel="io-chat"
-          />
-        </ButtonDefaultOpacity>
-        <CustomBadge
-          badgeStyle={styles.badgeStyle}
-          textStyle={styles.textStyle}
-          badgeValue={this.props.badge}
-        />
+        {canRenderChatsIcon && (
+          <View>
+            <ButtonDefaultOpacity
+              onPress={this.handleIBChatPress}
+              transparent={true}
+            >
+              <IconFont
+                name="io-chat"
+                color={this.props.color}
+                accessible={true}
+                accessibilityLabel="io-chat"
+              />
+            </ButtonDefaultOpacity>
+            <CustomBadge
+              badgeStyle={styles.badgeStyle}
+              textStyle={styles.textStyle}
+              badgeValue={this.props.badge}
+            />
+          </View>
+        )}
+
         <ButtonDefaultOpacity
           onPress={this.handleIBBugPress}
           transparent={true}
