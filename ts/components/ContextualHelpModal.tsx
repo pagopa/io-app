@@ -1,21 +1,12 @@
-/**
- * This component shows a contextual help
- * using the Modal component
- * that provides additional information when
- * needed (e.g. ToS, explaining why fees are
- * needed)
- */
-
 import { Body, Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
 import { InteractionManager, Modal, StyleSheet } from "react-native";
-
 import IconFont from "../components/ui/IconFont";
+import themeVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
-
-import themeVariables from "../theme/variables";
 
 type Props = Readonly<{
   title: string;
@@ -93,6 +84,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               {this.state.content}
             </Content>
           )}
+          <BetaBannerComponent />
         </Container>
       </Modal>
     );

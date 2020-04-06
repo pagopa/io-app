@@ -5,7 +5,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Content, H2, Text, View } from "native-base";
+import { Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, BackHandler, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -236,6 +236,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     return (
       <FooterWithButtons
         type={"TwoButtonsInlineThirdInverted"}
+        upperButton={{
+          title: this.state.ctaSendEmailValidationText,
+          onPress: this.handleSendEmailValidationButton,
+          light: true,
+          bordered: true,
+          disabled:
+            this.state.isLoading || this.state.isCtaSentEmailValidationDisabled
+        }}
         leftButton={{
           block: true,
           bordered: true,
@@ -295,21 +303,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             <Text>{I18n.t("email.validate.validated_ok")}</Text>
           )}
           <View spacer={true} />
-          {this.state.isContentLoadCompleted &&
-            !this.state.emailHasBeenValidate && (
-              <Button
-                block={true}
-                light={true}
-                bordered={true}
-                disabled={
-                  this.state.isLoading ||
-                  this.state.isCtaSentEmailValidationDisabled
-                }
-                onPress={this.handleSendEmailValidationButton}
-              >
-                <Text>{this.state.ctaSendEmailValidationText}</Text>
-              </Button>
-            )}
           <View spacer={true} large={true} />
         </Content>
         {(this.state.emailHasBeenValidate ||
