@@ -22,6 +22,7 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H4 from "../../components/ui/H4";
 import IconFont from "../../components/ui/IconFont";
@@ -57,8 +58,6 @@ import {
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
-import { EmptyListComponent } from "../../components/messages/EmptyListComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
