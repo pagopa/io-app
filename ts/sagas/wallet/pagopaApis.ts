@@ -1,5 +1,4 @@
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import { Iterator as Effect } from "redux-saga";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
