@@ -9,6 +9,7 @@ import FAQComponent from "./FAQComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
+import reactNativeFs from '../__mocks__/react-native-fs';
 
 type Props = Readonly<{
   title: string;
@@ -88,6 +89,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               {this.props.faqCategories && (
                 <FAQComponent faqCategories={this.props.faqCategories} />
               )}
+              <View spacer={true} extralarge={true}/>
             </Content>
           )}
           <BetaBannerComponent />
