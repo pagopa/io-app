@@ -22,6 +22,7 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H4 from "../../components/ui/H4";
 import IconFont from "../../components/ui/IconFont";
@@ -697,6 +698,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               service.service_id,
               "COPY"
             )}
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) && (
+            <EdgeBorderComponent />
+          )}
           <View spacer={true} extralarge={true} />
         </Content>
       </BaseScreenComponent>
