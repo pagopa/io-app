@@ -13,7 +13,6 @@ import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentReq
 import { makeFontStyleObject } from "../theme/fonts";
 import variables from "../theme/variables";
 import customVariables from "../theme/variables";
-import { AmountToImporto } from "../utils/amounts";
 import { CreditCardCVC } from "../utils/input";
 import { LabelledItem } from "./LabelledItem";
 import { ScreenContentHeader } from "./screens/ScreenContentHeader";
@@ -99,15 +98,12 @@ export default class PaymentSecureCodeOverlay extends React.Component<
 
   public render(): React.ReactNode {
     const verifica = this.props.verifica;
-    const currentAmount = AmountToImporto.encode(
-      verifica.importoSingoloVersamento
-    );
 
     return (
       <TopScreenComponent headerBody={this.customHeaderBody}>
         <Content noPadded={true}>
           <PaymentBannerComponent
-            currentAmount={currentAmount}
+            currentAmount={verifica.importoSingoloVersamento}
             paymentReason={verifica.causaleVersamento}
             recipient={verifica.enteBeneficiario}
             onCancel={this.props.onCancel}

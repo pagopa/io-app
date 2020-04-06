@@ -33,7 +33,7 @@ type Props = Readonly<{
   paymentReason: string;
   currentAmount: number;
   recipient?: EnteBeneficiario;
-  onCancel?: () => void;
+  onCancel: () => void;
 }>;
 
 const PaymentBannerComponent: React.SFC<Props> = props => {
@@ -57,28 +57,24 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           </Text>
         </Col>
       </Row>
-      {props.onCancel && props.recipient ? (
-        <Row>
-          <Col size={2}>
-            <Text white={true}>{recipient.denominazioneBeneficiario}</Text>
-            <View spacer={true} />
-          </Col>
-          <Right>
-            <ButtonDefaultOpacity
-              small={true}
-              transparent={true}
-              onPress={props.onCancel}
-            >
-              <Text white={true} style={styles.rightButtonText}>
-                {I18n.t("global.buttons.cancel").toUpperCase()}
-              </Text>
-            </ButtonDefaultOpacity>
-            <View spacer={true} />
-          </Right>
-        </Row>
-      ) : (
-        <View spacer={true} />
-      )}
+      <Row>
+        <Col size={2}>
+          <Text white={true}>{recipient.denominazioneBeneficiario}</Text>
+          <View spacer={true} />
+        </Col>
+        <Right>
+          <ButtonDefaultOpacity
+            small={true}
+            transparent={true}
+            onPress={props.onCancel}
+          >
+            <Text white={true} style={styles.rightButtonText}>
+              {I18n.t("global.buttons.cancel").toUpperCase()}
+            </Text>
+          </ButtonDefaultOpacity>
+          <View spacer={true} />
+        </Right>
+      </Row>
     </Grid>
   );
 };

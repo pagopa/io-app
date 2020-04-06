@@ -49,10 +49,9 @@ import {
   Transaction,
   Wallet
 } from "../../../types/pagopa";
-import { AmountToImporto } from "../../../utils/amounts";
 import { hasCardBrand } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
-import { formatNumberAmount } from "../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
   rptId: RptId;
