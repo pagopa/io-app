@@ -1,14 +1,10 @@
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-
 import { ComponentProps } from "../../types/react";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row"
-  },
   button: {
     alignContent: "center",
     justifyContent: "center",
@@ -17,7 +13,9 @@ const styles = StyleSheet.create({
   buttonTwoThirds: {
     alignContent: "center",
     flex: 2
-  }
+  },
+  flexRow: { flexDirection: "row" },
+  padded: { paddingBottom: 14 }
 });
 
 type OwnButtonProps = {
@@ -25,28 +23,29 @@ type OwnButtonProps = {
   buttonFontSize?: number;
 };
 
+type CommonProps = Readonly<{
+  leftButton: FooterButtonProps;
+  upperButton?: FooterButtonProps;
+}>;
+
 type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
 
-export interface SingleButton {
+export interface SingleButton extends CommonProps {
   type: "SingleButton";
-  leftButton: FooterButtonProps;
 }
 
-export interface TwoButtonsInlineHalf {
+export interface TwoButtonsInlineHalf extends CommonProps {
   type: "TwoButtonsInlineHalf";
-  leftButton: FooterButtonProps;
   rightButton: FooterButtonProps;
 }
 
-interface TwoButtonsInlineThird {
+interface TwoButtonsInlineThird extends CommonProps {
   type: "TwoButtonsInlineThird";
-  leftButton: FooterButtonProps;
   rightButton: FooterButtonProps;
 }
 
-interface TwoButtonsInlineThirdInverted {
+interface TwoButtonsInlineThirdInverted extends CommonProps {
   type: "TwoButtonsInlineThirdInverted";
-  leftButton: FooterButtonProps;
   rightButton: FooterButtonProps;
 }
 
@@ -57,7 +56,9 @@ type Props =
   | TwoButtonsInlineThirdInverted;
 
 /**
- * Implements a component that show 2 buttons in footer with select style (inlineHalf | inlineOneThird)
+ * Implements a component that show buttons as sticky footer. It can displays 1 or 2 lines of buttons.
+ * the upper line can include one blocked button
+ * The bottom line can be include 1 or 2 buttons. If they are 2, they can have the inlineHalf  or the inlineOneThird style
  */
 export default class FooterWithButtons extends React.Component<Props, never> {
   private renderRightButton() {
@@ -96,15 +97,14 @@ export default class FooterWithButtons extends React.Component<Props, never> {
     );
   }
 
-  public render() {
+  private renderBottomButtonsLine = () => {
     const {
       title: leftButtonTitle,
       buttonFontSize: fontSize,
       ...otherPropsLeftButton
     } = this.props.leftButton;
-
     return (
-      <View footer={true} style={styles.container}>
+      <View style={styles.flexRow}>
         <ButtonDefaultOpacity
           style={
             this.props.type === "TwoButtonsInlineThirdInverted"
@@ -118,6 +118,44 @@ export default class FooterWithButtons extends React.Component<Props, never> {
           </Text>
         </ButtonDefaultOpacity>
         {this.renderRightButton()}
+      </View>
+    );
+  };
+
+  private renderUpperButton = () => {
+    if (this.props.upperButton === undefined) {
+      return;
+    }
+
+    const {
+      title: upperButtonTitle,
+      buttonFontSize: fontSize,
+      ...otherPropsUpperButton
+    } = this.props.upperButton;
+
+    return (
+      <View style={[styles.flexRow, styles.padded]}>
+        <ButtonDefaultOpacity
+          style={
+            this.props.type === "TwoButtonsInlineThirdInverted"
+              ? styles.buttonTwoThirds
+              : styles.button
+          }
+          {...otherPropsUpperButton}
+        >
+          <Text style={fontSize !== undefined ? { fontSize } : undefined}>
+            {upperButtonTitle}
+          </Text>
+        </ButtonDefaultOpacity>
+      </View>
+    );
+  };
+
+  public render() {
+    return (
+      <View footer={true}>
+        {this.props.upperButton && this.renderUpperButton()}
+        {this.renderBottomButtonsLine()}
       </View>
     );
   }
