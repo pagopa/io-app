@@ -57,6 +57,8 @@ import {
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
 import { handleItemOnPress } from "../../utils/url";
+import { EmptyListComponent } from "../../components/messages/EmptyListComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 
 type NavigationParams = Readonly<{
   service: ServicePublic;
@@ -697,6 +699,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               service.service_id,
               "COPY"
             )}
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) && (
+            <EdgeBorderComponent />
+          )}
           <View spacer={true} extralarge={true} />
         </Content>
       </BaseScreenComponent>
