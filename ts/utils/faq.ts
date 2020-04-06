@@ -1,6 +1,6 @@
 import I18n from "i18n-js";
 
-/** map, for eacth FAQ category, the ids of the FAQs related to the category */
+/** map, for each FAQ category, the ids of the FAQs related to the category */
 export const FAQs: { [key in FAQsCategoriesType]: ReadonlyArray<number> } = {
   landing_SPID: [1, 2, 3],
   landing_CIE: [4, 5],
