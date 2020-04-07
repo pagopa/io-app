@@ -112,7 +112,7 @@ profile:
   alerts:
     emailNotValidated:
       title: Unvalidated email
-      subtitle: You need to validate your email before proceeding with the operation
+      subtitle: You need to validate your email before proceeding with the operation. To do this, go to the profile section and choose preferences.
   main:
     title: Profile
     logout: Logout/Exit
