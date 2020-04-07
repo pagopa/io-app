@@ -412,7 +412,7 @@ email:
     upsert_ok: La richiesta di modifica email è stata inviata correttamente
     upsert_ko: Errore nella richiesta di modifica email, riprovare
   validate:
-    title: Ricorda di validare il tuo indirizzo email
+    title: Ricorda di validare il tuo indirizzo email!
     header: Validazione email
     content1: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
       clicca semplicemente su quel link.<br/>Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,

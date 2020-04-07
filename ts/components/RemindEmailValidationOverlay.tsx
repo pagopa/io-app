@@ -312,7 +312,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
     const icon = this.state.emailHasBeenValidate
       ? "io-email-validated"
-      : "io-email-to-validated";
+      : "io-email-to-validate";
 
     const title = this.state.emailHasBeenValidate
       ? I18n.t("email.validate.validated")
@@ -323,7 +323,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
         contextualHelp={this.contextualHelp}
       >
-        <Content>
+        <Content bounces={false}>
           <View spacer={true} extralarge={true} />
           <IconFont
             name={icon}
@@ -331,7 +331,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             color={customVariables.brandHighlight}
             style={styles.center}
           />
-          <View spacer={true} large={true} />
+          <View spacer={true} extralarge={true} />
           <Text alignCenter={true} bold={true}>
             {title}
           </Text>
