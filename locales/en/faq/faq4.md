@@ -1,0 +1,1 @@
+CIE - the Electronic Identity Card - is a highly secure electronic document, equipped with a radio frequency microprocessor that allows its use in various scenarios, including access to online services. It meets the security needs of our country and replaces the paper version.
