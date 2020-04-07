@@ -170,11 +170,7 @@ class LandingScreen extends React.PureComponent<Props> {
               onPress={this.navigateToCiePinScreen}
               testID={"landing-button-login-cie"}
             >
-              {
-                // disabled due a bug see https://www.pivotaltracker.com/story/show/172196031
-                // <IconFont name={"io-cie"} color={variables.colorWhite} />
-              }
-
+              <IconFont name={"io-cie"} color={variables.colorWhite} />
               <Text>{I18n.t("authentication.landing.loginCie")}</Text>
             </ButtonDefaultOpacity>
           )}
