@@ -10,8 +10,8 @@ import {
 import { fetchTransactionSuccess } from "../../actions/wallet/transactions";
 import reducer, {
   HISTORY_SIZE,
-  PaymentsHistoryState,
-  isPaymentDoneSuccessfully
+  isPaymentDoneSuccessfully,
+  PaymentsHistoryState
 } from "../payments/history";
 // tslint:disable-next-line: no-let
 let state: PaymentsHistoryState = [];
