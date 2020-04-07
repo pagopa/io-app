@@ -170,10 +170,7 @@ class LandingScreen extends React.PureComponent<Props> {
               onPress={this.navigateToCiePinScreen}
               testID={"landing-button-login-cie"}
             >
-              {
-                <IconFont name={"io-cie"} color={variables.colorWhite} />
-              }
-
+              <IconFont name={"io-cie"} color={variables.colorWhite} />
               <Text>{I18n.t("authentication.landing.loginCie")}</Text>
             </ButtonDefaultOpacity>
           )}
