@@ -112,7 +112,7 @@ profile:
   alerts:
     emailNotValidated:
       title: Email non verificata
-      subtitle: È necessario verificare la mail per poter procedere con l'operazione
+      subtitle: È necessario verificare la mail per poter procedere con l'operazione. Per farlo vai nella sezione profilo e scegli preferenze.
   main:
     title: Profilo
     logout: Logout/Esci
