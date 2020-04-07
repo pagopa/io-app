@@ -111,17 +111,20 @@ function* createOrUpdateProfileSaga(
     });
 
     if (response.isLeft()) {
+      yield put(profileUpsert.failure(Error(I18n.t("profile.errors.upsert"))));
       throw new Error(readableReport(response.value));
     }
 
     if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow
+      yield put(profileUpsert.failure(Error(I18n.t("profile.errors.upsert"))));
       yield put(sessionExpired());
       return;
     }
 
     if (response.value.status !== 200) {
       // We got a error, send a SESSION_UPSERT_FAILURE action
+      yield put(profileUpsert.failure(Error(I18n.t("profile.errors.upsert"))));
       throw new Error(response.value.value.title);
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
