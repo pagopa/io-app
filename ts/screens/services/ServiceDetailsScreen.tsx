@@ -32,7 +32,7 @@ import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { serviceAlertDisplayedOnceSuccess } from "../../store/actions/persistedPreferences";
-import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
+import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import {
   contentSelector,
@@ -239,8 +239,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
         "danger"
       );
-      // Reload profile
-      this.props.dispatch(profileLoadRequest());
       const uiEnabledChannels = getEnabledChannelsForService(
         this.props.profile,
         this.props.navigation.getParam("service").service_id

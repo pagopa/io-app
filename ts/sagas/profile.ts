@@ -114,6 +114,12 @@ function* createOrUpdateProfileSaga(
       throw new Error(readableReport(response.value));
     }
 
+    if (response.value.status === 500) {
+      // It could happen that profile update fails due to version number mismatch
+      yield put(profileLoadRequest());
+      throw new Error(response.value.value.title);
+    }
+
     if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());
