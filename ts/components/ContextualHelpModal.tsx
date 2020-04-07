@@ -110,11 +110,18 @@ export class ContextualHelpModal extends React.Component<Props, State> {
             >
               <H1>{this.props.title}</H1>
               <View spacer={true} />
+              
               {this.state.content}
+
+              <View spacer={true} extralarge={true} />
+              
+              {this.props.faqCategories && (
+                <FAQComponent faqCategories={this.props.faqCategories} />
+              )}
+              
               <View spacer={true} extralarge={true} />
 
               <InstabugButtonsComponent hideComponent={this.props.close} />
-
               <View spacer={true} extralarge={true} />
               <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
               <View spacer={true} />
@@ -127,10 +134,6 @@ export class ContextualHelpModal extends React.Component<Props, State> {
                   <Text link={true}>{I18n.t("global.ioURL")}</Text>
                 </TouchableWithoutFeedback>
               </Text>
-              <View spacer={true} />
-              {this.props.faqCategories && (
-                <FAQComponent faqCategories={this.props.faqCategories} />
-              )}
               <View spacer={true} extralarge={true} />
             </Content>
           )}
