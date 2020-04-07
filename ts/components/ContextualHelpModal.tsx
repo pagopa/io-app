@@ -22,7 +22,7 @@ import { ioItaliaLink } from "../utils/deepLink";
 import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FAQComponent from "./FAQComponent";
-import InstabugButtonsComponent from "./InstabugButtonsComponent";
+import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
@@ -47,11 +47,9 @@ const styles = StyleSheet.create({
 });
 
 /**
- * This component shows a contextual help
- * using the Modal component
- * that provides additional information when
- * needed (e.g. ToS, explaining why fees are
- * needed)
+ * This component shows a contextual help using the Modal component
+ * that provides additional information when needed (e.g. ToS, explaining
+ * why fees are needed)
  */
 export class ContextualHelpModal extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -110,18 +108,18 @@ export class ContextualHelpModal extends React.Component<Props, State> {
             >
               <H1>{this.props.title}</H1>
               <View spacer={true} />
-              
+
               {this.state.content}
 
               <View spacer={true} extralarge={true} />
-              
+
               {this.props.faqCategories && (
                 <FAQComponent faqCategories={this.props.faqCategories} />
               )}
-              
+
               <View spacer={true} extralarge={true} />
 
-              <InstabugButtonsComponent hideComponent={this.props.close} />
+              <InstabugAssistanceComponent hideComponent={this.props.close} />
               <View spacer={true} extralarge={true} />
               <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
               <View spacer={true} />

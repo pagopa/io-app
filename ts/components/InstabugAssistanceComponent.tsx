@@ -1,6 +1,6 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
-import { BugReporting, Chats, Replies } from "instabug-reactnative";
+import { BugReporting } from "instabug-reactnative";
 import { H3, Text, View } from "native-base";
 import * as React from "react";
 import { Platform } from "react-native";
@@ -33,24 +33,10 @@ const MODAL_SLIDE_ANIMATION_DURATION = Platform.select({
   android: 50
 });
 
-class InstabugButtonsComponent extends React.PureComponent<Props, State> {
-  private handleIBChatPress = () => {
-    const chat = "chat";
-    this.setState({ instabugReportType: some(chat) });
-    this.props.hideComponent();
-    setTimeout(() => {
-      this.props.dispatchIBReportOpen(chat);
-      // Check if there are previous chat
-      Replies.hasChats(hasChats => {
-        if (hasChats) {
-          Replies.show();
-        } else {
-          Chats.show();
-        }
-      });
-    }, MODAL_SLIDE_ANIMATION_DURATION);
-  };
-
+/**
+ * A component to send a request to the assistance by Instabug functionalities.
+ */
+class InstabugAssistanceComponent extends React.PureComponent<Props, State> {
   private handleIBBugPress = () => {
     const bug = "bug";
     this.setState({ instabugReportType: some(bug) });
@@ -98,7 +84,7 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
         {/** TODO: add new io-send-message icon */}
         <ButtonWithImage
           icon={"io-messaggi"}
-          onClick={this.handleIBChatPress}
+          onClick={this.handleIBBugPress}
           text={I18n.t("instabug.contextualHelp.buttonChat")}
           disabled={false}
           light={true}
@@ -137,4 +123,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InstabugButtonsComponent);
+)(InstabugAssistanceComponent);

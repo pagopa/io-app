@@ -52,7 +52,11 @@ type State = {
   hasChats: boolean;
 };
 
-class InstabugButtonsComponent extends React.PureComponent<Props, State> {
+/**
+ * A component to access the list of chats started with the assistance.
+ * The icon has a badge if there are unread messages from the assistance
+ */
+class InstabugChatsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
     const chat = "chat";
     this.setState({ instabugReportType: some(chat) });
@@ -167,7 +171,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(updateInstabugUnreadMessages())
 });
 
-export const InstabugButtons = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InstabugButtonsComponent);
+)(InstabugChatsComponent);

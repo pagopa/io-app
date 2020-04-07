@@ -11,7 +11,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
-import { InstabugButtons } from "../InstabugButtons";
+import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
@@ -113,7 +113,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
     return (
       <Right>
-        {!isSearchEnabled && <InstabugButtons />}
+        {!isSearchEnabled && <InstabugChatsComponent />}
         {onShowHelp &&
           !isSearchEnabled && (
             <ButtonDefaultOpacity
