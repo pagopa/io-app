@@ -239,6 +239,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         I18n.t("serviceDetail.onUpdateEnabledChannelsFailure"),
         "danger"
       );
+      
       const uiEnabledChannels = getEnabledChannelsForService(
         this.props.profile,
         this.props.navigation.getParam("service").service_id
