@@ -1,0 +1,1 @@
+Ogni istituto che gestisce i pagamenti con PagoPA (Prestatori di Servizi a Pagamento) può applicare autonomamente differenti costi, a seconda delle proprie politiche commerciali e delle condizioni contrattuali dell’utente.
