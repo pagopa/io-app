@@ -7,22 +7,32 @@
  * - started_at the time in ISO format when the payment started
  * - "data" coming from: a message, qr code, or manual insertion
  * - "verified_data" coming from the verification of the previous one (see paymentVerifica.request ACTION and related SAGA)
+ * - "paymentId" coming from payment activation
+ * - "transaction" coming from payment manager when we ask for info about latest transaction
  * - "failure" coming from the failure of a verification (paymentVerifica.failure)
  */
 
+import { fromNullable } from "fp-ts/lib/Option";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
 import { DetailEnum } from "../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
-import { paymentVerifica } from "../../actions/wallet/payment";
+import {
+  paymentIdPolling,
+  paymentVerifica
+} from "../../actions/wallet/payment";
+import { fetchTransactionSuccess } from "../../actions/wallet/transactions";
 import { GlobalState } from "../types";
 
 export type PaymentHistory = {
   started_at: string;
   data: RptId;
+  paymentId?: string;
+  transaction?: Transaction;
   verified_data?: PaymentRequestsGetResponse;
   failure?: keyof typeof DetailEnum;
 };
@@ -30,6 +40,17 @@ export type PaymentHistory = {
 export type PaymentsHistoryState = ReadonlyArray<PaymentHistory>;
 const INITIAL_STATE: ReadonlyArray<PaymentHistory> = [];
 export const HISTORY_SIZE = 10;
+
+// replace the last element of the state with the given one
+const replaceLastItem = (
+  state: PaymentsHistoryState,
+  newItem: PaymentHistory
+): PaymentsHistoryState => {
+  // tslint:disable-next-line: readonly-array
+  const cloneState = [...state];
+  cloneState.splice(state.length - 1, 1, newItem);
+  return cloneState;
+};
 
 const reducer = (
   state: PaymentsHistoryState = INITIAL_STATE,
@@ -52,6 +73,26 @@ const reducer = (
         ...updateState,
         { data: { ...action.payload }, started_at: new Date().toISOString() }
       ];
+    case getType(paymentIdPolling.success):
+      // it shouldn't happen since paymentIdPolling comes after request
+      if (state.length === 0) {
+        return state;
+      }
+      const paymentWithPaymentId: PaymentHistory = {
+        ...state[state.length - 1],
+        paymentId: action.payload
+      };
+      return replaceLastItem(state, paymentWithPaymentId);
+    case getType(fetchTransactionSuccess):
+      // it shouldn't happen since paymentIdPolling comes after request
+      if (state.length === 0) {
+        return state;
+      }
+      const paymentWithTransaction: PaymentHistory = {
+        ...state[state.length - 1],
+        transaction: { ...action.payload }
+      };
+      return replaceLastItem(state, paymentWithTransaction);
     case getType(paymentVerifica.success):
       // it shouldn't happen since success comes after request
       if (state.length === 0) {
@@ -62,11 +103,7 @@ const reducer = (
         ...state[state.length - 1],
         verified_data: successPayload
       };
-      // tslint:disable-next-line: readonly-array
-      const updateStateSuccess = [...state];
-      // replace the old vale with the new one
-      updateStateSuccess.splice(state.length - 1, 1, updateHistorySuccess);
-      return updateStateSuccess;
+      return replaceLastItem(state, updateHistorySuccess);
     case getType(paymentVerifica.failure):
       // it shouldn't happen since failure comes after request
       if (state.length === 0) {
@@ -77,11 +114,7 @@ const reducer = (
         ...state[state.length - 1],
         failure: failurePayload
       };
-      // tslint:disable-next-line: readonly-array
-      const updateStateFailure = [...state];
-      // replace the old value with the new one
-      updateStateFailure.splice(state.length - 1, 1, updateHistoryFailure);
-      return updateStateFailure;
+      return replaceLastItem(state, updateHistoryFailure);
     case getType(clearCache): {
       return INITIAL_STATE;
     }
@@ -91,5 +124,18 @@ const reducer = (
 
 export const paymentsHistorySelector = (state: GlobalState) =>
   state.payments.history;
+
+export const isPaymentDoneSuccessfully = (payment: PaymentHistory) => {
+  if (payment.failure) {
+    return false;
+  }
+  const maybeSuccess = fromNullable(payment.transaction).map(
+    t => t !== undefined && isSuccessTransaction(t)
+  );
+  if (maybeSuccess.isSome()) {
+    return maybeSuccess.value;
+  }
+  return undefined;
+};
 
 export default reducer;

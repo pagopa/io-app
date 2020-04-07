@@ -2,10 +2,16 @@ import { range } from "fp-ts/lib/Array";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { paymentVerifica } from "../../actions/wallet/payment";
+import { Transaction } from "../../../types/pagopa";
+import {
+  paymentIdPolling,
+  paymentVerifica
+} from "../../actions/wallet/payment";
+import { fetchTransactionSuccess } from "../../actions/wallet/transactions";
 import reducer, {
   HISTORY_SIZE,
-  PaymentsHistoryState
+  PaymentsHistoryState,
+  isPaymentDoneSuccessfully
 } from "../payments/history";
 // tslint:disable-next-line: no-let
 let state: PaymentsHistoryState = [];
@@ -42,6 +48,8 @@ describe("payments history", () => {
   it("should add a payment in the history", () => {
     state = reducer(state, paymentVerifica.request(anRptId));
     expect(state.length).toEqual(1);
+    // we know nothing about payment
+    expect(isPaymentDoneSuccessfully(state[0])).toBeUndefined();
   });
 
   it("should not add a payment in the history because it is the same", () => {
@@ -53,12 +61,81 @@ describe("payments history", () => {
     state = reducer(state, paymentVerifica.success(successData));
     expect(state.length).toEqual(1);
     expect(state[0].verified_data).toEqual(successData);
+    // we know nothing about payment
+    expect(isPaymentDoneSuccessfully(state[0])).toBeUndefined();
+  });
+
+  it("should update the existing payment history with the payment id", () => {
+    const paymentId = "123456ABCD";
+    state = reducer(state, paymentIdPolling.success(paymentId));
+    expect(state.length).toEqual(1);
+    expect(state[0].paymentId).toEqual(paymentId);
+  });
+
+  it("should update the existing payment history with the transaction", () => {
+    const validAmount: { [key: string]: any } = {
+      currency: "EUR",
+      amount: 1000,
+      decimalDigits: 2
+    };
+    const validPsp: { [key: string]: any } = {
+      id: 43188,
+      idPsp: "idPsp1",
+      businessName: "WHITE bank",
+      paymentType: "CP",
+      idIntermediary: "idIntermediario1",
+      idChannel: "idCanale14",
+      logoPSP:
+        "https://acardste.vaservices.eu:1443/pp-restapi/v1/resources/psp/43188",
+      serviceLogo:
+        "https://acardste.vaservices.eu:1443/pp-restapi/v1/resources/service/43188",
+      serviceName: "nomeServizio 10 white",
+      fixedCost: validAmount,
+      appChannel: false,
+      tags: ["MAESTRO"],
+      serviceDescription: "DESCRIZIONE servizio: CP mod1",
+      serviceAvailability: "DISPONIBILITA servizio 24/7",
+      paymentModel: 1,
+      flagStamp: true,
+      idCard: 91,
+      lingua: "IT"
+    };
+    const validTransaction: { [key: string]: any } = {
+      id: 2329,
+      created: "2018-08-08T20:16:41Z",
+      updated: "2018-08-08T20:16:41Z",
+      amount: validAmount,
+      grandTotal: validAmount,
+      description: "pagamento fotocopie pratica",
+      merchant: "Comune di Torino",
+      idStatus: 3,
+      statusMessage: "Confermato",
+      error: false,
+      success: true,
+      fee: validAmount,
+      token: "MjMyOQ==",
+      idWallet: 2345,
+      idPsp: validPsp.id,
+      idPayment: 4464,
+      accountingStatus: 1,
+      nodoIdPayment: "eced7084-6c8e-4f03-b3ed-d556692ce090"
+    };
+    state = reducer(
+      state,
+      fetchTransactionSuccess(validTransaction as Transaction)
+    );
+    expect(state.length).toEqual(1);
+    expect(state[0].transaction).toEqual(validTransaction);
+    // payment has been successfully
+    expect(isPaymentDoneSuccessfully(state[0])).toBeTruthy();
   });
 
   it("should update the existing payment history with failure value", () => {
     state = reducer(state, paymentVerifica.failure("INVALID_AMOUNT"));
     expect(state.length).toEqual(1);
     expect(state[0].failure).toEqual("INVALID_AMOUNT");
+    // payment has been failed
+    expect(isPaymentDoneSuccessfully(state[0])).toBeFalsy();
   });
 
   it("should add a payment in the history", () => {
