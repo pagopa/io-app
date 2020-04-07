@@ -5,9 +5,9 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Content, H2, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, BackHandler, Image, StyleSheet } from "react-native";
+import { Alert, BackHandler, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import {
   navigateBack,
@@ -57,7 +57,7 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  imageChecked: {
+  center: {
     alignSelf: "center"
   },
   emailTitle: {
@@ -69,6 +69,10 @@ const styles = StyleSheet.create({
     paddingVertical: 11,
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  validated: {
+    paddingTop: 8,
+    paddingHorizontal: 30
   }
 });
 
@@ -303,39 +307,53 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   public render() {
     const email = this.props.optionEmail.getOrElse(EMPTY_EMAIL);
+
     const { isOnboardingCompleted } = this.props;
-    const image = this.state.emailHasBeenValidate
-      ? require("../../img/email-checked-icon_ok.png")
-      : require("../../img/email-checked-icon.png");
+
+    const icon = this.state.emailHasBeenValidate
+      ? "io-email-validated"
+      : "io-email-to-validated";
+
     const title = this.state.emailHasBeenValidate
       ? I18n.t("email.validate.validated")
       : I18n.t("email.validate.title");
+
     return (
       <TopScreenComponent
         {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
         contextualHelp={this.contextualHelp}
       >
         <Content>
-          <React.Fragment>
-            <Image style={styles.imageChecked} source={image} />
-            <View spacer={true} extralarge={true} />
-          </React.Fragment>
-          <H2 style={isOnboardingCompleted ? styles.emailTitle : undefined}>
+          <View spacer={true} extralarge={true} />
+          <IconFont
+            name={icon}
+            size={84}
+            color={customVariables.brandHighlight}
+            style={styles.center}
+          />
+          <View spacer={true} large={true} />
+          <Text alignCenter={true} bold={true}>
             {title}
-          </H2>
-          <View spacer={true} />
+          </Text>
           {!this.state.emailHasBeenValidate ? (
-            <Markdown onLoadEnd={this.handleOnContentLoadEnd}>
+            <Markdown
+              onLoadEnd={this.handleOnContentLoadEnd}
+              cssStyle={"body { text-align: center;}"}
+            >
               {isOnboardingCompleted
                 ? I18n.t("email.validate.content2", { email })
                 : I18n.t("email.validate.content1", { email })}
             </Markdown>
           ) : (
-            <Text>{I18n.t("email.validate.validated_ok")}</Text>
+            <View style={styles.validated}>
+              <Text alignCenter={true}>
+                {I18n.t("email.validate.validated_ok")}
+              </Text>
+            </View>
           )}
-          <View spacer={true} />
           <View spacer={true} large={true} />
         </Content>
+
         {this.state.displayError && this.renderErrorBanner}
         {(this.state.emailHasBeenValidate ||
           this.state.isContentLoadCompleted) &&
