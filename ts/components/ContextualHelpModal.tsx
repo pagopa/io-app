@@ -19,8 +19,11 @@ import {
 import IconFont from "../components/ui/IconFont";
 import themeVariables from "../theme/variables";
 import { ioItaliaLink } from "../utils/deepLink";
+import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import FAQComponent from "./FAQComponent";
 import InstabugButtonsComponent from "./InstabugButtonsComponent";
+import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 import { openLink } from "./ui/Markdown/handlers/link";
@@ -30,6 +33,7 @@ type Props = Readonly<{
   body: () => React.ReactNode;
   isVisible: boolean;
   close: () => void;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 type State = Readonly<{
@@ -124,8 +128,13 @@ export class ContextualHelpModal extends React.Component<Props, State> {
                 </TouchableWithoutFeedback>
               </Text>
               <View spacer={true} />
+              {this.props.faqCategories && (
+                <FAQComponent faqCategories={this.props.faqCategories} />
+              )}
+              <View spacer={true} extralarge={true} />
             </Content>
           )}
+          <BetaBannerComponent />
         </Container>
       </Modal>
     );
