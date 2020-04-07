@@ -103,6 +103,16 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
     Alert.alert(confirmAlertTitle[choice], confirmAlertSubtitle[choice]);
   };
 
+  // Handle the tap on Download or Delete data.
+  // Check if the mail is validated before to send any backend request.
+  private handleDownloadOrDeletePress = (
+    choice: UserDataProcessingChoiceEnum
+  ): void => {
+    !this.props.isEmailValidated
+      ? Alert.alert(needValidatedEmailTitle, needValidatedEmailSubtitle)
+      : this.props.loadUserDataRequest(choice);
+  };
+
   public componentDidUpdate(prevProps: Props) {
     // If the new request submission fails, show an alert and hide the 'in progress' badge
     // if it is the get request (prev prop is pot.none), check if show the alert to submit the request
@@ -184,14 +194,9 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
                 "profile.main.privacy.removeAccount.description"
               )}
               onPress={() =>
-                !this.props.isEmailValidated
-                  ? Alert.alert(
-                      needValidatedEmailTitle,
-                      needValidatedEmailSubtitle
-                    )
-                  : this.props.loadUserDataRequest(
-                      UserDataProcessingChoiceEnum.DELETE
-                    )
+                this.handleDownloadOrDeletePress(
+                  UserDataProcessingChoiceEnum.DELETE
+                )
               }
               useExtendedSubTitle={true}
               titleBadge={
@@ -206,14 +211,9 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
               title={I18n.t("profile.main.privacy.exportData.title")}
               subTitle={I18n.t("profile.main.privacy.exportData.description")}
               onPress={() =>
-                !this.props.isEmailValidated
-                  ? Alert.alert(
-                      needValidatedEmailTitle,
-                      needValidatedEmailSubtitle
-                    )
-                  : this.props.loadUserDataRequest(
-                      UserDataProcessingChoiceEnum.DOWNLOAD
-                    )
+                this.handleDownloadOrDeletePress(
+                  UserDataProcessingChoiceEnum.DOWNLOAD
+                )
               }
               useExtendedSubTitle={true}
               titleBadge={
