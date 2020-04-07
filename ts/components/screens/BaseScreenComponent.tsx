@@ -4,6 +4,7 @@ import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { TranslationKeys } from "../../../locales/locales";
+import { FAQsCategoriesType } from "../../utils/faq";
 import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
@@ -26,6 +27,7 @@ interface OwnProps {
   appLogo?: boolean;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
 type BaseHeaderProps =
@@ -115,6 +117,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             body={ch.body}
             isVisible={this.state.isHelpVisible}
             close={this.hideHelp}
+            faqCategories={this.props.faqCategories}
           />
         )}
       </Container>
