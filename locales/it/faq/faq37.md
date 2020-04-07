@@ -1,0 +1,1 @@
+Al momento puoi aggiungere carte di debito e credito MasterCard o Visa. L'aggiunta di ulteriori metodi di pagamento quali Bancomat Pay, PayPal, Satispay e simili è in programma per i prossimi mesi.
