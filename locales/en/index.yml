@@ -55,7 +55,7 @@ global:
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
-      message: Login with your SPID identity on IO, the public services app
+      message: Login with your digital identity on IO, the public services app
 locales:
   it: Italian
   en: English
@@ -982,8 +982,175 @@ openMaps:
 genericError: An error occurred
 titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
-messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version."
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need 
+  to update it to the latest version."
 btnUpdateApp: Update the IO app
 systemsOff:
   title: Unable to start IO
   closeApp: close the application and try again
+faq:
+  1:
+    title: "What is SPID?"
+    content: !include faq/faq1.md
+  2:
+    title: "How can you get SPID?"
+    content: !include faq/faq2.md
+  3:
+    title: "Have you lost your SPID credentials?"
+    content: !include faq/faq3.md
+  4: 
+    title: "What is CIE?"
+    content: !include faq/faq4.md
+  5:
+    title: "How can you get CIE?"
+    content: !include faq/faq5.md
+  6:
+    title: "What is an Identity Provider?"
+    content: !include faq/faq6.md
+  7:
+    title: "How can you choose an Identity Provider?"
+    content: !include faq/faq7.md
+  8:
+    title: "Is it possible to have more than one digital identity (SPID)?"
+    content: !include faq/faq8.md
+  9:
+    title: "What is your password?"
+    content: !include faq/faq9.md
+  11:
+    title: "What happens if you pass the 5 authentication attempts?"
+    content: !include faq/faq11.md
+  12:
+    title: "Did you do everything correctly but still can't get in?"
+    content: !include faq/faq12.md
+  13:
+    title: "How is your data managed?"
+    content: !include faq/faq13.md
+  14:
+    title: "How can you read the information on the processing of personal data at a later time?"
+    content: !include faq/faq14.md
+  15:
+    title: "What is the PIN of the electronic identity card?"
+    content: !include faq/faq15.md
+  16:
+    title: "Does your phone have the NFC reader?"
+    content:  !include faq/faq16.md
+  17:
+    title: "What is the unlock code for?"
+    content: !include faq/faq17.md
+  18:
+    title: "Is it possible to reset the unlock code at a later time?"
+    content: !include faq/faq18.md
+  19:
+    title: "Is biometric recognition safe?"
+    content: !include faq/faq19.md
+  20: 
+    title: "When will you be asked for biometric recognition?"
+    content: !include faq/faq20.md
+  21:
+    title: "How to enable biometric recognition?"
+    content: !include faq/faq21.md
+  22:
+    title: "How to disable biometric recognition?"
+    content: !include faq/faq22.md
+  23:
+    title: "What kind of messages can you receive?"
+    content: !include faq/faq23.md
+  24:
+    title: "What happens if you archive messages?"
+    content: !include faq/faq24.md
+  25:
+    title: "Can messages be deleted?"
+    content: !include faq/faq25.md
+  26:
+    title: "Is it possible to reply to messages?"
+    content: !include faq/faq26.md
+  27:
+    title: "How do you connect a calendar?"
+    content: !include faq/faq27.md
+  28:
+    title: "Are you not interested in this message?"
+    content: !include faq/faq28.md
+  29:
+    title: "Is there an error in the communication you received?"
+    content: !include faq/faq29.md
+  30:
+    title: "Does this institution have permission to write to you?"
+    content: !include faq/faq30.md
+  31:
+    title: "Do you want to contact the institution?"
+    content: !include faq/faq31.md
+  32:
+    title: "What is the message identification code?"
+    content: !include faq/faq32.md
+  33:
+    title: "Is it possible to pay a notice that you have not received through the IO app?"
+    content: !include faq/faq33.md
+  34:
+    title: "What is a QR code?"
+    content: !include faq/faq34.md
+  35:
+    title: "What is pagoPA"
+    content: !include faq/faq35.md
+  36:
+    title: "Don't see your pagoPA receipts?"
+    content: !include faq/faq36.md
+  37:
+    title: "What payment methods can you add?"
+    content: !include faq/faq37.md
+  38: 
+    title: "Are transaction summary and payment receipt the same thing?"
+    content: !include faq/faq38.md
+  39:
+    title: "What is the transaction identification code?"
+    content: !include faq/faq39.md
+  40:
+    title: "Is it possible to archive or manage transaction receipts?"
+    content: !include faq/faq40.md
+  41:
+    title: "How can you remove a payment method?"
+    content: !include faq/faq41.md
+  42:
+    title: "Come puoi aggiungere un metodo di pagamento?"
+    content: !include faq/faq42.md
+  43:
+    title: "Cos'è il CVC/CVV?"
+    content: !include faq/faq43.md
+  44:
+    title: "Perchè devo pagare una commissione?"
+    content: !include faq/faq44.md
+  45:
+    title: "Perchè le commissioni cambiano da un gestore all'altro?"
+    content: !include faq/faq45.md
+  46:
+    title: "Puoi scegliere un gestore diverso a ogni pagamento?"
+    content: !include faq/faq46.md
+  47:
+    title: "Come gestire i servizi su IO?"
+    content: !include faq/faq7.md
+  48:
+    title: "Cosa sono le tue aree di interesse?"
+    content: !include faq/faq48.md
+  49:
+    title: "Puoi contattare gli enti tramite IO?"
+    content: !include faq/faq49.md
+  50:
+    title: "Cosa succede se disattivi un servizio?"
+    content: !include faq/faq50.md
+  51:
+    title: "Come funzionano le notifiche push?"
+    content: !include faq/faq51.md
+  52:
+    title: "Come funziona l'inoltro via email dei messaggi?"
+    content: !include faq/faq52.md
+  53:
+    title: "Come usare i documenti in versione digitale?"
+    content: !include faq/faq53.md
+  54:
+    title: "A cosa serve un fac-simile del Codice Fiscale?"
+    content: !include faq/faq54.md
+  55:
+    title: "Come sarà tutelata la tua privacy?"
+    content: !include faq/faq55.md
+  56:
+    title: "Come cancellare tutti i tuoi dati da IO?"
+    content: !include faq/faq56.md
