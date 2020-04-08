@@ -55,6 +55,7 @@ import {
 import { loadServiceDetail, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import { upsertUserDataProcessing } from "../actions/userDataProcessing";
+import { userMetadataUpsert } from "../actions/userMetadata";
 import {
   paymentAttiva,
   paymentCheck,
@@ -221,6 +222,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(sessionInformationLoadFailure):
     case getType(profileLoadFailure):
     case getType(profileUpsert.failure):
+    case getType(userMetadataUpsert.failure):
     case getType(loginFailure):
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
@@ -267,6 +269,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(createPinSuccess):
     // profile
     case getType(profileUpsert.success):
+    // userMetadata
+    case getType(userMetadataUpsert.success):
     // messages
     case getType(loadMessages.request):
 
