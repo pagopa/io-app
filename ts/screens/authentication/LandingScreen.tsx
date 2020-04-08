@@ -31,6 +31,7 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import { showToast } from "../../utils/showToast";
+import cieManager from "@pagopa/react-native-cie";
 
 type Props = NavigationInjectedProps &
   ReturnType<typeof mapStateToProps> &
@@ -118,6 +119,11 @@ class LandingScreen extends React.PureComponent<Props> {
         "top"
       );
     }
+    console.warn("android:" + cieManager.testAndroid());
+    console.warn("ios:" + cieManager.testiOS());
+    cieManager.isNFCEnabled().then(r => {
+      console.warn("isNFCEnabled:" + r);
+    });
   }
 
   private navigateToMarkdown = () =>

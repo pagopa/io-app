@@ -32,6 +32,8 @@
 		8C7948EB37334D2DADB1E7AE /* TitilliumWeb-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE4F83DB63254F5285C36A40 /* TitilliumWeb-ExtraLight.ttf */; };
 		8D109BF3B47F46FDA6B105CE /* TitilliumWeb-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E4EECD1122B401CAC190472 /* TitilliumWeb-BoldItalic.ttf */; };
 		8E7BB01F1A6D4D79B17B4210 /* RobotoMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */; };
+		95C6C65B243E3E2B0031DD75 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C6C65A243E3E2B0031DD75 /* File.swift */; };
+		95C6C65C243E3EDD0031DD75 /* libRNNativeCiesdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C6C656243E3B830031DD75 /* libRNNativeCiesdk.a */; };
 		9975E38DE95949D28D07A275 /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */; };
 		BE1A42156484487BABBC4DED /* TitilliumWeb-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */; };
 		C2CF038002D24FEEAB41B336 /* RobotoMono-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */; };
@@ -43,7 +45,6 @@
 		F0625E802326826400EDEF90 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13302F73209B350200C9B38F /* libRCTPushNotification.a */; };
 		F0625E8D2326831D00EDEF90 /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CC92FA21357FDE00206602 /* libReactNativeExceptionHandler.a */; };
 		F0625E8E2326832500EDEF90 /* libRNTextInputMask.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CC92F521357FDE00206602 /* libRNTextInputMask.a */; };
-		F0625E902326833000EDEF90 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0625E8F2326833000EDEF90 /* libPods-ItaliaApp.a */; };
 		F09FEB3C231818E3007071DB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F09FEB0D231818E3007071DB /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -328,6 +329,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		95C6C655243E3B830031DD75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95C6C650243E3B830031DD75 /* RNNativeCiesdk.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNNativeCiesdk;
+		};
 		ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -387,7 +395,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ItaliaApp/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		163BC670599B42509D4D138E /* TitilliumWeb-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Light.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Light.ttf"; sourceTree = "<group>"; };
-		194A5D2A1F027F5A0078620E /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		194A5D2A1F027F5A0078620E /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		1E4EECD1122B401CAC190472 /* TitilliumWeb-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-BoldItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-BoldItalic.ttf"; sourceTree = "<group>"; };
 		2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-BoldItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-BoldItalic.ttf"; sourceTree = "<group>"; };
 		2B251CF2E46840504D740643 /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
@@ -413,6 +421,10 @@
 		81D7E65EFEF9BBBCDB1CA4AC /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		94E88E2FB156B189552F42E9 /* Pods-ItaliaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.release.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.release.xcconfig"; sourceTree = "<group>"; };
+		95C6C64E243E3A9B0031DD75 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
+		95C6C650243E3B830031DD75 /* RNNativeCiesdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNNativeCiesdk.xcodeproj; path = "../node_modules/@pagopa/react-native-cie/ios/RNNativeCiesdk.xcodeproj"; sourceTree = "<group>"; };
+		95C6C659243E3E2B0031DD75 /* ItaliaApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ItaliaApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		95C6C65A243E3E2B0031DD75 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		A4827A715541433A928083C5 /* RNTextInputMask.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNTextInputMask.xcodeproj; path = "../node_modules/react-native-text-input-mask/ios/RNTextInputMask/RNTextInputMask.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		AFE8D23873DE458BB54EB46B /* RobotoMono-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Light.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Light.ttf"; sourceTree = "<group>"; };
@@ -451,12 +463,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95C6C65C243E3EDD0031DD75 /* libRNNativeCiesdk.a in Frameworks */,
 				F0625E7E2326824D00EDEF90 /* libART.a in Frameworks */,
 				F0625E7F2326825600EDEF90 /* JavaScriptCore.framework in Frameworks */,
 				F0625E802326826400EDEF90 /* libRCTPushNotification.a in Frameworks */,
 				F0625E8D2326831D00EDEF90 /* libReactNativeExceptionHandler.a in Frameworks */,
 				F0625E8E2326832500EDEF90 /* libRNTextInputMask.a in Frameworks */,
-				F0625E902326833000EDEF90 /* libPods-ItaliaApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,6 +687,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				95C6C650243E3B830031DD75 /* RNNativeCiesdk.xcodeproj */,
 				13302F61209B350200C9B38F /* RCTPushNotification.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				7E03A5F522C6155200629442 /* ART.xcodeproj */,
@@ -706,6 +719,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				95C6C65A243E3E2B0031DD75 /* File.swift */,
 				61CC930F2135818B00206602 /* InputMask.framework */,
 				61CC92FB2135800100206602 /* InputMaskTests.xctest */,
 				194A5D2A1F027F5A0078620E /* Podfile */,
@@ -717,6 +731,7 @@
 				132A5D6B2032B79F00AB7333 /* Recovered References */,
 				D4DC8E1B3B2C5EA1E4968752 /* Frameworks */,
 				591602A69619994F43D34A93 /* Pods */,
+				95C6C659243E3E2B0031DD75 /* ItaliaApp-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -728,6 +743,14 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* ItaliaApp.app */,
 				00E356EE1AD99517003FC87E /* ItaliaAppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		95C6C651243E3B830031DD75 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				95C6C656243E3B830031DD75 /* libRNNativeCiesdk.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -744,6 +767,7 @@
 		D4DC8E1B3B2C5EA1E4968752 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				95C6C64E243E3A9B0031DD75 /* libz.1.tbd */,
 				F0625E8F2326833000EDEF90 /* libPods-ItaliaApp.a */,
 				F0625E7B2326822400EDEF90 /* libReact-RCTImage.a */,
 				F0625E792326820B00EDEF90 /* libReact-RCTImage.a */,
@@ -828,6 +852,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = M2X5YQ4BJ7;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -906,6 +931,10 @@
 				{
 					ProductGroup = 61CC92F621357FDE00206602 /* Products */;
 					ProjectRef = 3087D2BB18D649C9ABA70F4E /* ReactNativeExceptionHandler.xcodeproj */;
+				},
+				{
+					ProductGroup = 95C6C651243E3B830031DD75 /* Products */;
+					ProjectRef = 95C6C650243E3B830031DD75 /* RNNativeCiesdk.xcodeproj */;
 				},
 				{
 					ProductGroup = 61CC92F121357FDE00206602 /* Products */;
@@ -1192,6 +1221,13 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		95C6C656243E3B830031DD75 /* libRNNativeCiesdk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNNativeCiesdk.a;
+			remoteRef = 95C6C655243E3B830031DD75 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */ = {
@@ -1562,6 +1598,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				95C6C65B243E3E2B0031DD75 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1612,6 +1649,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6B343CBB6FCFE52950730384 /* Pods-ItaliaAppTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1640,6 +1678,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F550CE82F08D1D51186476D1 /* Pods-ItaliaAppTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
@@ -1667,6 +1706,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1686,6 +1726,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1695,6 +1736,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ItaliaApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1705,6 +1749,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -1723,6 +1768,7 @@
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1732,6 +1778,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = ItaliaApp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ItaliaApp-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1786,6 +1834,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRIP_SWIFT_SYMBOLS = YES;
 			};
 			name = Debug;
 		};
@@ -1832,6 +1881,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				STRIP_SWIFT_SYMBOLS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
