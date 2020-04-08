@@ -1,4 +1,4 @@
-**SPID**, the Public Digital Identity System, allows you to access all Public Administration services with a single Digital Identity (username and password). [Read more](https://www.spid.interno.gov.it)
+**SPID**, the Public Digital Identity System, allows you to access all Public Administration services with a single Digital Identity (username and password). [Read more](https://www.spid.gov.it)
 
 ## SPID is secure
 
