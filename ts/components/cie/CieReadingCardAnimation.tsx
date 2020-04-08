@@ -3,7 +3,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { Animated, Easing, Image, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
-import { NavigationEvents } from "react-navigation";
 import { ReadingState } from "../../screens/authentication/cie/CieCardReaderScreen";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";
@@ -95,6 +94,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
     });
     // tslint:disable-next-line: no-object-mutation
     this.progressAnimation = Animated.sequence([firstAnim, secondAnim]);
+    this.addAnimationListener();
   }
 
   private startAnimation = () => {
@@ -161,12 +161,6 @@ export default class CieReadingCardAnimation extends React.PureComponent<
   public render() {
     return (
       <View style={styles.imgContainer}>
-        {
-          <NavigationEvents
-            onDidFocus={this.addAnimationListener}
-            onDidBlur={this.stopAnimation}
-          />
-        }
         {this.props.readingState === ReadingState.waiting_card && (
           <View style={styles.rings}>
             <AnimatedRing

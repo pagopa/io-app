@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 
   bar: {
     backgroundColor: variables.brandPrimary,
+    borderRadius: itemWidth / 2,
     width: itemWidth,
     height: itemWidth
   },
@@ -88,6 +89,7 @@ export const HorizontalScroll: React.SFC<Props> = props => {
       </ScrollView>
 
       <View style={styles.barContainer}>{barArray}</View>
+      <View spacer={true} />
     </View>
   );
 };

@@ -9,7 +9,10 @@ import { View } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
+import {
+  lexicallyOrderedMessagesStateSelector,
+  MessagesStateAndStatus
+} from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
   InjectedWithItemsSelectionProps,
@@ -61,11 +64,11 @@ type State = {
  * Filter only the messages that are not archived.
  */
 const generateMessagesStateNotArchivedArray = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
 ): ReadonlyArray<MessageState> =>
   pot.getOrElse(
     pot.map(potMessagesState, _ =>
-      _.filter(messageState => !messageState.isArchived)
+      _.filter(messageState => messageState.isArchived === false)
     ),
     []
   );
@@ -87,8 +90,7 @@ class MessagesInbox extends React.PureComponent<Props, State> {
     prevState: State
   ): Partial<State> | null {
     const { lastMessagesState } = prevState;
-
-    if (lastMessagesState !== nextProps.messagesState) {
+    if (nextProps.messagesState !== lastMessagesState) {
       // The list was updated, we need to re-apply the filter and
       // save the result in the state.
       const messagesStateNotArchived = generateMessagesStateNotArchivedArray(

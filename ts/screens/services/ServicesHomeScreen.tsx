@@ -302,23 +302,10 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     new Animated.Value(0)
   ];
 
-  /**
-   * The screen header is animated: for each tab, once the y content offset of the
-   * list changes, then the related animatedTabScrollPositions value is updated.
-   * To reproduce a sticky effect common to all the tabs, the animation is based on
-   * the sum of the 3 scroll values.
-   */
-  private sumOfPositions = Animated.add(
-    Animated.add(
-      this.animatedTabScrollPositions[0],
-      this.animatedTabScrollPositions[1]
-    ),
-    this.animatedTabScrollPositions[2]
-  );
   private getHeaderHeight = (): Animated.AnimatedInterpolation =>
-    this.sumOfPositions.interpolate({
-      inputRange: [0, HEADER_HEIGHT * 3], // The multiplier works as workaround to solve the glitch on Android OS (https://github.com/facebook/react-native/issues/21801)
-      outputRange: [HEADER_HEIGHT, 0],
+    this.animatedTabScrollPositions[this.state.currentTab].interpolate({
+      inputRange: [0, HEADER_HEIGHT],
+      outputRange: [0, 1],
       extrapolate: "clamp"
     });
 
@@ -415,7 +402,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
   };
 
   private onItemSwitchValueChanged = (
-    service: ServicePublic,
+    services: ReadonlyArray<ServicePublic>,
     value: boolean
   ) => {
     // check if the alert of disable service has not been shown already and if the service is active
@@ -425,7 +412,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         I18n.t("serviceDetail.disableMsg"),
         () => {
           this.props.disableOrEnableServices(
-            [service.service_id],
+            services.map(s => s.service_id),
             this.props.profile,
             false
           );
@@ -433,7 +420,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       );
     } else {
       this.props.disableOrEnableServices(
-        [service.service_id],
+        services.map(s => s.service_id),
         this.props.profile,
         value
       );
@@ -537,7 +524,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       >
         <View style={styles.topScreenContainer}>
           <TopScreenComponent
-            title={I18n.t("services.title")}
+            headerTitle={I18n.t("services.title")}
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
             isSearchAvailable={userMetadata !== undefined}

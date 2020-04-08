@@ -13,6 +13,15 @@ export function* watchCieAuthenticationSaga(): SagaIterator {
   yield call(checkCieAvailabilitySaga, cieManager.isCIEAuthenticationSupported);
 }
 
+// stop cie manager to listen nfc tags
+export function* stopCieManager(): SagaIterator {
+  try {
+    yield call(cieManager.stopListeningNFC);
+  } catch {
+    // just ignore
+  }
+}
+
 /**
  * check if the device is compatible with CIE authentication
  * see https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L125

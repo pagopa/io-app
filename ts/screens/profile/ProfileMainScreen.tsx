@@ -47,6 +47,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
@@ -96,8 +97,8 @@ const styles = StyleSheet.create({
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.contextualHelpTitle",
-  body: "profile.contextualHelpContent"
+  title: "profile.main.contextualHelpTitle",
+  body: "profile.main.contextualHelpContent"
 };
 
 const getAppLongVersion = () => {
@@ -344,7 +345,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               sectionHeader={I18n.t("profile.main.accountSectionHeader")}
             />
 
-            {/* Reset PIN */}
+            {/* Reset unlock code */}
             <ListItemComponent
               title={I18n.t("pin_login.pin.reset.button_short")}
               subTitle={I18n.t("pin_login.pin.reset.tip_short")}
@@ -359,99 +360,105 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               isLastItem={true}
             />
 
-            <SectionHeaderComponent
-              sectionHeader={I18n.t("profile.main.developersSectionHeader")}
-            />
-            {
-              // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
-              // It could be useful when new experimental features will be available
-              /*
-              this.developerListItem(
-              I18n.t("profile.main.experimentalFeatures.confirmTitle"),
-              this.props.isExperimentalFeaturesEnabled,
-              this.onExperimentalFeaturesToggle
-            )*/
-            }
+            {/* Developers Section */}
+            {isDevEnv && (
+              <View>
+                <SectionHeaderComponent
+                  sectionHeader={I18n.t("profile.main.developersSectionHeader")}
+                />
 
-            {(this.props.isPagoPATestEnabled ||
-              this.state.showPagoPAtestSwitch) &&
-              this.developerListItem(
-                I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
-                this.props.isPagoPATestEnabled,
-                this.onPagoPAEnvironmentToggle,
-                I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
-              )}
-
-            {this.developerListItem(
-              I18n.t("profile.main.debugMode"),
-              this.props.isDebugModeEnabled,
-              this.props.setDebugModeEnabled
-            )}
-
-            {this.props.isDebugModeEnabled && (
-              <React.Fragment>
-                {this.debugListItem(
-                  `${I18n.t("profile.main.appVersion")} ${getAppLongVersion()}`,
-                  () => {
-                    if (this.state.numberOfTaps === 4) {
-                      this.setState({ showPagoPAtestSwitch: true });
-                    } else {
-                      const numberOfTaps = this.state.numberOfTaps + 1;
-                      this.setState({
-                        numberOfTaps
-                      });
-                    }
-                  },
-                  false
-                )}
-
-                {backendInfo &&
-                  this.debugListItem(
-                    `${I18n.t("profile.main.backendVersion")} ${
-                      backendInfo.version
-                    }`,
-                    () => clipboardSetStringWithFeedback(backendInfo.version),
-                    false
+                {
+                  // since no experimental features are available we avoid to render this item (see https://www.pivotaltracker.com/story/show/168263994).
+                  // It could be useful when new experimental features will be available
+                  /*
+                  this.developerListItem(
+                  I18n.t("profile.main.experimentalFeatures.confirmTitle"),
+                  this.props.isExperimentalFeaturesEnabled,
+                  this.onExperimentalFeaturesToggle
+                )*/
+                }
+                {(this.props.isPagoPATestEnabled ||
+                  this.state.showPagoPAtestSwitch) &&
+                  this.developerListItem(
+                    I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
+                    this.props.isPagoPATestEnabled,
+                    this.onPagoPAEnvironmentToggle,
+                    I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
                   )}
-                {sessionToken &&
-                  this.debugListItem(
-                    `Session Token ${sessionToken}`,
-                    () => clipboardSetStringWithFeedback(sessionToken),
-                    false
-                  )}
-
-                {walletToken &&
-                  this.debugListItem(
-                    `Wallet token ${walletToken}`,
-                    () => clipboardSetStringWithFeedback(walletToken),
-                    false
-                  )}
-
-                {this.debugListItem(
-                  `Notification ID ${notificationId.slice(0, 6)}`,
-                  () => clipboardSetStringWithFeedback(notificationId),
-                  false
+                {this.developerListItem(
+                  I18n.t("profile.main.debugMode"),
+                  this.props.isDebugModeEnabled,
+                  this.props.setDebugModeEnabled
                 )}
+                {this.props.isDebugModeEnabled && (
+                  <React.Fragment>
+                    {this.debugListItem(
+                      `${I18n.t(
+                        "profile.main.appVersion"
+                      )} ${getAppLongVersion()}`,
+                      () => {
+                        if (this.state.numberOfTaps === 4) {
+                          this.setState({ showPagoPAtestSwitch: true });
+                        } else {
+                          const numberOfTaps = this.state.numberOfTaps + 1;
+                          this.setState({
+                            numberOfTaps
+                          });
+                        }
+                      },
+                      false
+                    )}
 
-                {notificationToken &&
-                  this.debugListItem(
-                    `Notification token ${notificationToken.slice(0, 6)}`,
-                    () => clipboardSetStringWithFeedback(notificationToken),
-                    false
-                  )}
+                    {backendInfo &&
+                      this.debugListItem(
+                        `${I18n.t("profile.main.backendVersion")} ${
+                          backendInfo.version
+                        }`,
+                        () =>
+                          clipboardSetStringWithFeedback(backendInfo.version),
+                        false
+                      )}
+                    {sessionToken &&
+                      this.debugListItem(
+                        `Session Token ${sessionToken}`,
+                        () => clipboardSetStringWithFeedback(sessionToken),
+                        false
+                      )}
 
-                {this.debugListItem(
-                  I18n.t("profile.main.cache.clear"),
-                  this.handleClearCachePress,
-                  true
+                    {walletToken &&
+                      this.debugListItem(
+                        `Wallet token ${walletToken}`,
+                        () => clipboardSetStringWithFeedback(walletToken),
+                        false
+                      )}
+
+                    {this.debugListItem(
+                      `Notification ID ${notificationId.slice(0, 6)}`,
+                      () => clipboardSetStringWithFeedback(notificationId),
+                      false
+                    )}
+
+                    {notificationToken &&
+                      this.debugListItem(
+                        `Notification token ${notificationToken.slice(0, 6)}`,
+                        () => clipboardSetStringWithFeedback(notificationToken),
+                        false
+                      )}
+
+                    {this.debugListItem(
+                      I18n.t("profile.main.cache.clear"),
+                      this.handleClearCachePress,
+                      true
+                    )}
+
+                    {this.debugListItem(
+                      I18n.t("profile.main.forgetCurrentSession"),
+                      this.props.dispatchSessionExpired,
+                      true
+                    )}
+                  </React.Fragment>
                 )}
-
-                {this.debugListItem(
-                  I18n.t("profile.main.forgetCurrentSession"),
-                  this.props.dispatchSessionExpired,
-                  true
-                )}
-              </React.Fragment>
+              </View>
             )}
 
             {/* end list */}
@@ -466,7 +473,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         allowGoBack={false}
         bounces={false}
         headerBody={<IconFont name="io-logo" color={"white"} />}
-        title={I18n.t("profile.main.screenTitle")}
+        title={I18n.t("profile.main.title")}
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={
           <TouchableDefaultOpacity

@@ -113,7 +113,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "it.teamdigitale.app.italiaapp"
+        applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode System.getenv('CIRCLE_BUILD_NUM') ? ("100" + System.getenv('CIRCLE_BUILD_NUM')).toInteger() : 1
@@ -206,6 +206,9 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"
     compile project(':react-native-cie')
+    compile "com.squareup.okhttp3:okhttp:4.2.1"
+    compile "com.squareup.okhttp3:logging-interceptor:4.2.1"
+    compile "com.squareup.okhttp3:okhttp-urlconnection:4.2.1"
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermesvm/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")

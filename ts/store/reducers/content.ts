@@ -63,6 +63,8 @@ const initialContentState: ContentState = {
 };
 
 // Selectors
+export const contentSelector = (state: GlobalState) => state.content;
+
 export const servicesMetadataSelector = (state: GlobalState) =>
   state.content.servicesMetadata;
 

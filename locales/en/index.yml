@@ -1,5 +1,7 @@
 ---
 global:
+  symbols:
+    question: "?"
   localization:
     decimalSeparator: "."
   date:
@@ -42,6 +44,7 @@ global:
     search: Text to search
   remoteStates:
     loading: Loading...
+    wait: Wait a few seconds..
     notAvailable: Not available
   notImplemented: NOT IMPLEMENTED
   search:
@@ -51,13 +54,16 @@ global:
   localNotifications:
     spidLogin:
       title: Remember to login to IO!
-      message: Login with your SPID identity on IO, the public services app
+      message: Login with your digital identity on IO, the public services app
 locales:
   it: Italian
   en: English
 clipboard:
   copyFeedback: Copied to clipboard
   copyText: copy
+betaBanner:
+  title: 'The IO app is in beta version.'
+  description: Your reports help us to improve day after day.
 connection:
   status:
     offline: Offline! Some features will not work.
@@ -81,8 +87,6 @@ inbox:
   disableButton: Disable Inbox
   enableCallToActionDescription: Enable the inbox to view messages
 profile:
-  contextualHelpTitle: What you can do in your Profile
-  contextualHelpContent: !include profile/profile_account_main.md
   fiscalCode:
     title: Your personal documents
     fiscalCode: Fiscal code
@@ -106,45 +110,53 @@ profile:
     load: Error loading the profile
     upsert: Error creating or updating the profile
   main:
-    screenTitle: Profile
+    title: Profile
     logout: Logout/Exit
     forgetCurrentSession: Forget current session
+    contextualHelpTitle: What you can do in your Profile
+    contextualHelpContent: !include profile/profile_account_main.md
     cache:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
       cleared: The cache has been cleared.
     resetPin:
-      confirmTitle: Are you sure you want to reset your PIN?
-      confirmMsg: You will be asked again to log in with SPID.
+      confirmTitle: Are you sure you want to reset your unlock code?
+      confirmMsg: You will be asked again to log in.
     preferences:
       title: Preferences
       description: Manage app internal preferences
     privacy:
-      title: Privacy
+      title: Information and conditions of use
       description: Export data, delete account
-      header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
-      updated: It is required to accept the new version of Terms and Conditions
-      text: !include profile/privacy.md
-      contextualHelpTitlePolicy: What is the information on the processing of personal data
-      contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
-      contextualHelpTitle: Your privacy settings
-      contextualHelpContent: !include profile/profile_privacy_main.md
-    termsAndConditions:
-      title: Terms and Conditions
-      description: Review Terms & Conditions of the app
-    mainPrivacy:
-      screenTitle: Privacy
-      screenSubtitle: Here you will find information related to your personal data.
-      privacyPolicy:
-        title: Privacy policy
-        description: Review accepted privacy terms
+      subtitle: Here you find information related to your personal data.  
+      loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
         description: Remove all data associated to your account from your phone and
-          our systems (SPID required)
+          our systems
+        alert: 
+          requestTitle: Are you sure you want to delete your account?
+          requestSubtitle: All your messages and personal settings will be lost.
+          oldRequest: We are already proceeding to delete your account
+          confirmSubtitle: After processing, you will receive an email confirming the deletion.
+        error: An error occurred while submit your deletion request, please retry! 
       exportData:
         title: Export your data
         description: Send to your email all your account’s data in an open format
+        alert: 
+          requestTitle: Are you sure you want to export all your data?
+          oldRequest: We are already proceeding to export all your data
+          confirmSubtitle: After processing, you will receive an email containing all your data.
+        error: An error occurred while submit your exporting request, please retry!
+      privacyPolicy:
+        title: Privacy policy
+        description: Review the accepted privacy terms
+        header: Information note on the processing of the IO app users's personal data
+        updated: It is required to accept the new version of Terms and Conditions
+        contextualHelpTitlePolicy: What is the information on the processing of personal data
+        contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
+        contextualHelpTitle: Your privacy settings
+        contextualHelpContent: !include profile/profile_privacy_main.md
     developersSectionHeader: Developers
     experimentalFeatures:
       confirmTitle: Experimental features
@@ -173,6 +185,7 @@ profile:
       email: Email address
       spid_email: SPID email
       need_validate: To be validated
+      wip: In progress
       mobile_phone: Mobile number
       language: Language
       digitalDomicile: Digital domicile
@@ -183,7 +196,6 @@ profile:
       default: No preference set
     unavailable:
       title: This setting is set up on your SPID profile
-      message: IO inherits temporarily this setting from your SPID profile. You can edit it from your SPID profile in your identity provider, then you will have to log in this app again
     language:
       contextualHelpTitle: How to manage your language setting
       contextualHelpContent: !include profile/profile_preferences_language.md
@@ -215,9 +227,8 @@ spid:
     title: Login error
     message: Sorry, there was an error while logging in, could you try again?
   subscription:
-    line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
-      Amministrazione Italiana.
-    line2: Inserisci la tua e-mail per attivarla.
+    line1: SPID is the digital identity to access online services of the Public Administration.
+    line2: Insert your email address to enable it.
 authentication:
   landing:
     contentTitleCie: Don't have SPID or CIE?
@@ -243,8 +254,8 @@ authentication:
     card4-title: You can use the app by SPID only
     card4-content: The access is allowed only by SPID (Public Service of Digital Identity)
       to guarantee your online safety
-    card5-title: Welcome to the beta version of IO!
-    card5-content: In this experimental version you can find in the upper-right corner
+    card5-title: Welcome to the public version of IO!
+    card5-content: In this version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
       We're waiting for your feedbacks!
     expiredCardTitle: Card expired or no longer valid
@@ -416,10 +427,12 @@ onboarding:
   tos:
     headerTitle: Activation
     continue: Continue
+    accept: Accept
+    error: Loading error
   pin:
     headerTitle: Activation
-    contentTitle: Choose a PIN code
-    contentTitleConfirm: Insert your PIN again
+    contentTitle: Choose an unlock code
+    contentTitleConfirm: Insert your code again
     pinInfo: This code will be requested each time you open the app and when you need
       to view sensitive data or make dispositive transactions. It must be composed
       of 6 digits. Remember it carefully. You can change it at any time by entering
@@ -430,7 +443,7 @@ onboarding:
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match
-    contextualHelpTitle: What is your PIN
+    contextualHelpTitle: What your unlock code is
     contextualHelpContent: !include onboarding/onboarding_pin.md
   alert:
     title: Do you really want to log out?
@@ -470,21 +483,21 @@ onboarding:
     emailInputLabel: Personal email address
 pin_login:
   pin:
-    pinInfo: Enter the PIN
+    pinInfo: Enter the unlock code
     reset:
-      button: Did you forget the PIN?
-      button_short: Reset PIN
-      tip: To reset your PIN you will have to login again with your SPID account.
+      button: Did you forget the unlock code?
+      button_short: Reset unlock code
+      tip: To reset your unlock code you will have to login again with your SPID account.
       tip_short: You will have to login again.
-    confirmValid: Correct PIN
-    confirmInvalid: Invalid PIN
+    confirmValid: Correct unlock code
+    confirmInvalid: Invalid unlock code
   unlock_screen:
     help:
-      title: Access with PIN
+      title: Access with unlock code
       content: !include onboarding/onboarding_pin.md
   forgetPin:
-    confirmTitle: Did you forget the PIN?
-    confirmMsg: To be able to choose a new PIN you will need to log in again with SPID.
+    confirmTitle: Did you forget the unlock code?
+    confirmMsg: To be able to choose a new unlock code you will need to log in again with SPID.
 forms:
   validators:
     required: Required value
@@ -510,7 +523,12 @@ payment:
   IUV: IUV
   recipientFiscalCode: Recipient fiscal code
 wallet:
-  wallet: Wallet
+  wallet: Payments
+  alert:
+    msgErrorUpdateApp: "An error occurred while opening the app store"
+    titlePagoPaUpdateApp: Update required
+    messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
+    btnUpdateApp: Update the IO app 
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
@@ -555,6 +573,7 @@ wallet:
     save: Save
     notice: To verify the card you will find a transaction of a few cents that will be reversed from your account.
     temporaryError: There was a temporary problem while saving this card, please retry.
+    loadingAlert: I am checking your card data..
   saveCardInPayment:
     header: Pay with this card
     title: Do you want to pay with this card?
@@ -565,7 +584,7 @@ wallet:
     title: Choose the manager
     info: This card does not belong to the pagoPA payment network.
     infoBold: Choose the economic operator
-    info2: which will have to manage yout payment.
+    info2: (PSP) which will have to manage yout payment.
     link: Find out more
     maxFee: Maximum fee
     onUpdateWalletPspFailure: Operation failed, please retry
@@ -584,7 +603,7 @@ wallet:
     info2: You are using your favourite payment method.
     changeMethod: Change the payment method
     change: Change method
-    identificationMessage: Confirm the transaction with your PIN code
+    identificationMessage: Confirm the transaction with your unlock code
     transactionSuccess: The payment has completed!
     transactionFailure: There was an error with the payment, please retry!
     transactionTimeout: I couldn't retrieve the result of the payment!
@@ -639,7 +658,6 @@ wallet:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
   detailsTransaction:
-    contextualHelpTitle: Transaction details
     contextualHelpContent: !include wallet/wallet_transaction_details.md
   total: Total
   amount: Amount €
@@ -865,6 +883,19 @@ biometric_recognition:
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
   needed_to_disable: Recognition required to disable
+send_email_messages: 
+  title: Forward messages by email
+  subtitle: Do you want IO to forward messages contents by email to
+  options:
+    disable_all:
+      label: Disable for all services
+      info: You will not receive email messages anymore
+    enable_all:
+      label: Enable for all services
+      info: Every message will be forwarded to your email, if the service allows it
+    by_service:
+      label: Select service by service
+      info: You will be able to select from each service settings screen to receive its messages by email as well
 services:
   title: Services
   subTitle: Enable or disable the services that are allowed to send you messages
@@ -907,10 +938,16 @@ serviceDetail:
   onUpdateEnabledChannelsFailure: "There was a temporary problem while saving preferences, please retry."
   disableTitle: "Do you really want to disable the service?"
   disableMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable the service, it can no longer contact you by IO (until you enable it again). You will be able to use the service by other channels (front office, website, etc.)"
+  lockedMailAlert: "The email forwarding of messages is globally {{enabled}}:"
+  updatePreferences: Update your preferences
+  goTo: Go to preferences
+  enabled: enabled
+  disabled: disabled
+  notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  messageFingerPrint: "Use the fingerprint or enter the PIN"
-  messageFaceID: "Use FaceID or enter the PIN"
-  messageEnterPin: "Enter the PIN"
+  messageFingerPrint: "Use the fingerprint or enter the unlock code"
+  messageFaceID: "Use FaceID or enter the unlock code"
+  messageEnterPin: "Enter the unlock code"
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint
@@ -919,7 +956,7 @@ identification:
       reason: Identification
       title: Identification required
       sensorDescription: Touch sensor
-      fallbackLabel: Use the PIN
+      fallbackLabel: Use the unlock code
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
   removeRequest:
@@ -939,3 +976,177 @@ reminders:
 openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred
+titleUpdateApp: Update IO!
+msgErrorUpdateApp: "An error occurred while opening the app store"
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need 
+  to update it to the latest version."
+btnUpdateApp: Update the IO app
+systemsOff:
+  title: Unable to start IO
+  closeApp: close the application and try again
+faq:
+  1:
+    title: "What is SPID?"
+    content: !include faq/faq1.md
+  2:
+    title: "How can you get SPID?"
+    content: !include faq/faq2.md
+  3:
+    title: "Have you lost your SPID credentials?"
+    content: !include faq/faq3.md
+  4: 
+    title: "What is CIE?"
+    content: !include faq/faq4.md
+  5:
+    title: "How can you get CIE?"
+    content: !include faq/faq5.md
+  6:
+    title: "What is an Identity Provider?"
+    content: !include faq/faq6.md
+  7:
+    title: "How can you choose an Identity Provider?"
+    content: !include faq/faq7.md
+  8:
+    title: "Is it possible to have more than one digital identity (SPID)?"
+    content: !include faq/faq8.md
+  9:
+    title: "What is your password?"
+    content: !include faq/faq9.md
+  11:
+    title: "What happens if you pass the 5 authentication attempts?"
+    content: !include faq/faq11.md
+  12:
+    title: "Did you do everything correctly but still can't get in?"
+    content: !include faq/faq12.md
+  13:
+    title: "How is your data managed?"
+    content: !include faq/faq13.md
+  14:
+    title: "How can you read the information on the processing of personal data at a later time?"
+    content: !include faq/faq14.md
+  15:
+    title: "What is the PIN of the electronic identity card?"
+    content: !include faq/faq15.md
+  16:
+    title: "Does your phone have the NFC reader?"
+    content:  !include faq/faq16.md
+  17:
+    title: "What is the unlock code for?"
+    content: !include faq/faq17.md
+  18:
+    title: "Is it possible to reset the unlock code at a later time?"
+    content: !include faq/faq18.md
+  19:
+    title: "Is biometric recognition safe?"
+    content: !include faq/faq19.md
+  20: 
+    title: "When will you be asked for biometric recognition?"
+    content: !include faq/faq20.md
+  21:
+    title: "How to enable biometric recognition?"
+    content: !include faq/faq21.md
+  22:
+    title: "How to disable biometric recognition?"
+    content: !include faq/faq22.md
+  23:
+    title: "What kind of messages can you receive?"
+    content: !include faq/faq23.md
+  24:
+    title: "What happens if you archive messages?"
+    content: !include faq/faq24.md
+  25:
+    title: "Can messages be deleted?"
+    content: !include faq/faq25.md
+  26:
+    title: "Is it possible to reply to messages?"
+    content: !include faq/faq26.md
+  27:
+    title: "How do you connect a calendar?"
+    content: !include faq/faq27.md
+  28:
+    title: "Are you not interested in this message?"
+    content: !include faq/faq28.md
+  29:
+    title: "Is there an error in the communication you received?"
+    content: !include faq/faq29.md
+  30:
+    title: "Does this institution have permission to write to you?"
+    content: !include faq/faq30.md
+  31:
+    title: "Do you want to contact the institution?"
+    content: !include faq/faq31.md
+  32:
+    title: "What is the message identification code?"
+    content: !include faq/faq32.md
+  33:
+    title: "Is it possible to pay a notice that you have not received through the IO app?"
+    content: !include faq/faq33.md
+  34:
+    title: "What is a QR code?"
+    content: !include faq/faq34.md
+  35:
+    title: "What is pagoPA"
+    content: !include faq/faq35.md
+  36:
+    title: "Don't see your pagoPA receipts?"
+    content: !include faq/faq36.md
+  37:
+    title: "What payment methods can you add?"
+    content: !include faq/faq37.md
+  38: 
+    title: "Are transaction summary and payment receipt the same thing?"
+    content: !include faq/faq38.md
+  39:
+    title: "What is the transaction identification code?"
+    content: !include faq/faq39.md
+  40:
+    title: "Is it possible to archive or manage transaction receipts?"
+    content: !include faq/faq40.md
+  41:
+    title: "How can you remove a payment method?"
+    content: !include faq/faq41.md
+  42:
+    title: "Come puoi aggiungere un metodo di pagamento?"
+    content: !include faq/faq42.md
+  43:
+    title: "Cos'è il CVC/CVV?"
+    content: !include faq/faq43.md
+  44:
+    title: "Perchè devo pagare una commissione?"
+    content: !include faq/faq44.md
+  45:
+    title: "Perchè le commissioni cambiano da un gestore all'altro?"
+    content: !include faq/faq45.md
+  46:
+    title: "Puoi scegliere un gestore diverso a ogni pagamento?"
+    content: !include faq/faq46.md
+  47:
+    title: "Come gestire i servizi su IO?"
+    content: !include faq/faq7.md
+  48:
+    title: "Cosa sono le tue aree di interesse?"
+    content: !include faq/faq48.md
+  49:
+    title: "Puoi contattare gli enti tramite IO?"
+    content: !include faq/faq49.md
+  50:
+    title: "Cosa succede se disattivi un servizio?"
+    content: !include faq/faq50.md
+  51:
+    title: "Come funzionano le notifiche push?"
+    content: !include faq/faq51.md
+  52:
+    title: "Come funziona l'inoltro via email dei messaggi?"
+    content: !include faq/faq52.md
+  53:
+    title: "Come usare i documenti in versione digitale?"
+    content: !include faq/faq53.md
+  54:
+    title: "A cosa serve un fac-simile del Codice Fiscale?"
+    content: !include faq/faq54.md
+  55:
+    title: "Come sarà tutelata la tua privacy?"
+    content: !include faq/faq55.md
+  56:
+    title: "Come cancellare tutti i tuoi dati da IO?"
+    content: !include faq/faq56.md

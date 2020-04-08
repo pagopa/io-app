@@ -5,6 +5,7 @@
  */
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet, Vibration } from "react-native";
@@ -51,6 +52,9 @@ type State = {
   content?: string;
   errorMessage?: string;
 };
+
+// the timeout we sleep until move to consent form screen when authentication goes well
+const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 
 /**
  *  This screen shown while reading the card
@@ -161,6 +165,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           subtitle: I18n.t("authentication.cie.card.readerCardHeader"),
           content: I18n.t("authentication.cie.card.readerCardFooter")
         });
+        break;
       case ReadingState.error:
         this.setState({
           title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
@@ -169,12 +174,14 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           ),
           content: this.state.errorMessage
         });
+        break;
       case ReadingState.completed:
         this.setState({
           title: I18n.t("global.buttons.ok2"),
           subtitle: I18n.t("authentication.cie.card.cieCardValid"),
           content: undefined
         });
+        break;
       // waiting_card state
       default:
         this.setState({
@@ -194,13 +201,13 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private handleCieSuccess = (cieConsentUri: string) => {
-    this.setState({ readingState: ReadingState.completed }, async () => {
-      await this.stopCieManager();
-      setTimeout(() => {
+    this.setState({ readingState: ReadingState.completed }, () => {
+      this.updateContent();
+      setTimeout(async () => {
         this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
           cieConsentUri
         });
-      }, 1500);
+      }, WAIT_TIMEOUT_NAVIGATION);
     });
   };
 
@@ -208,10 +215,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     cieManager.removeAllListeners();
     await cieManager.stopListeningNFC();
   };
-
-  public async componentWillUnmount() {
-    await this.stopCieManager();
-  }
 
   public componentDidMount() {
     cieManager
@@ -234,7 +237,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     return (
       <TopScreenComponent
         goBack={true}
-        title={I18n.t("authentication.cie.card.headerTitle")}
+        headerTitle={I18n.t("authentication.cie.card.headerTitle")}
       >
         <ScreenContentHeader title={this.state.title} />
         <Content bounces={false} noPadded={true}>

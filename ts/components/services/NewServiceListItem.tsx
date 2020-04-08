@@ -20,7 +20,10 @@ type Props = Readonly<{
   isRead: boolean;
   hideSeparator: boolean;
   onLongPress?: () => void;
-  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
+  onItemSwitchValueChanged?: (
+    services: ReadonlyArray<ServicePublic>,
+    value: boolean
+  ) => void;
   isLongPressEnabled: boolean;
 }>;
 
@@ -106,7 +109,7 @@ export default class NewServiceListItem extends React.PureComponent<
           this.setState({
             switchValue: value
           });
-          onItemSwitchValueChanged(service, value);
+          onItemSwitchValueChanged([service], value);
         }
       });
     }

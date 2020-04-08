@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import IconFont from "../../components/ui/IconFont";
+import Switch from "../../components/ui/Switch";
 import { userMetadataUpsert } from "../../store/actions/userMetadata";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
@@ -28,6 +29,7 @@ import {
 } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
+import { getEnabledChannelsForService } from "../../utils/profile";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 import ChooserListContainer from "../ChooserListContainer";
 import { withLightModalContext } from "../helpers/withLightModalContext";
@@ -47,7 +49,10 @@ type OwnProps = Readonly<{
   updateOrganizationsOfInterestMetadata?: (
     selectedItemIds: Option<Set<string>>
   ) => void;
-  onItemSwitchValueChanged: (service: ServicePublic, value: boolean) => void;
+  onItemSwitchValueChanged: (
+    services: ReadonlyArray<ServicePublic>,
+    value: boolean
+  ) => void;
   tabScrollOffset: Animated.Value;
 }>;
 
@@ -154,6 +159,48 @@ class ServicesTab extends React.PureComponent<Props> {
     );
   };
 
+  private renderSwitchAllOrganizationServices = (
+    section: ServicesSectionState
+  ) => {
+    // retrieve all services
+    const services = section.data.reduce(
+      (
+        acc: ReadonlyArray<ServicePublic>,
+        curr: pot.Pot<ServicePublic, Error>
+      ) => {
+        const service = pot.getOrElse(curr, undefined);
+        if (service) {
+          return [...acc, service];
+        }
+        return acc;
+      },
+      []
+    );
+    // if at least one is enabled
+    const isSwitchEnabled = services.some(service => {
+      const uiEnabledChannels = getEnabledChannelsForService(
+        this.props.profile,
+        service.service_id
+      );
+      return uiEnabledChannels.inbox;
+    });
+    return (
+      <Switch
+        key={section.organizationFiscalCode}
+        value={isSwitchEnabled}
+        onValueChange={value => {
+          if (services.length > 0) {
+            this.props.onItemSwitchValueChanged(services, value);
+          }
+        }}
+        disabled={
+          pot.isLoading(this.props.profile) ||
+          pot.isUpdating(this.props.profile)
+        }
+      />
+    );
+  };
+
   private onTabScroll = () => {
     return {
       onScroll: Animated.event([
@@ -168,6 +215,15 @@ class ServicesTab extends React.PureComponent<Props> {
   };
 
   public render() {
+    // the right icon in the organization section could be
+    // - if long press is enabled: a switch to enable/disable all related services
+    // - if the organization is local a button to remove it
+    // - none
+    const renderRightIcon = this.props.isLongPressEnabled
+      ? this.renderSwitchAllOrganizationServices
+      : this.props.isLocal
+        ? this.renderLocalQuickSectionDeletion
+        : undefined;
     return (
       <ServicesSectionsList
         isLocal={this.props.isLocal}
@@ -189,9 +245,7 @@ class ServicesTab extends React.PureComponent<Props> {
         isLongPressEnabled={this.props.isLongPressEnabled}
         onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
         animated={this.onTabScroll()}
-        renderRightIcon={
-          this.props.isLocal ? this.renderLocalQuickSectionDeletion : undefined
-        }
+        renderRightIcon={renderRightIcon}
       />
     );
   }

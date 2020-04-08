@@ -83,7 +83,7 @@
 -dontwarn com.kevinejohn.RNMixpanel.**
 
 # React Native Config must referencing to BuildConfig
--keep class it.teamdigitale.app.italiaapp.BuildConfig { *; }
+-keep class it.pagopa.io.app.BuildConfig { *; }
 
 # React-native svg
 -keep public class com.horcrux.svg.** {*;}

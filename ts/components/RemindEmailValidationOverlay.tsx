@@ -5,7 +5,7 @@ import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Content, H2, Text, View } from "native-base";
+import { Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, BackHandler, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -31,6 +31,7 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import customVariables from "../theme/variables";
 import TopScreenComponent, {
   TopScreenComponentProps
 } from "./screens/TopScreenComponent";
@@ -52,6 +53,7 @@ type State = {
   isCtaSentEmailValidationDisabled: boolean;
   isContentLoadCompleted: boolean;
   emailHasBeenValidate: boolean;
+  displayError: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -60,6 +62,13 @@ const styles = StyleSheet.create({
   },
   emailTitle: {
     textAlign: "center"
+  },
+  error: {
+    backgroundColor: customVariables.brandDanger,
+    paddingHorizontal: customVariables.contentPadding,
+    paddingVertical: 11,
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 });
 
@@ -79,7 +88,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       isLoading: false,
       isContentLoadCompleted: false,
       isCtaSentEmailValidationDisabled: false,
-      emailHasBeenValidate: false
+      emailHasBeenValidate: false,
+      displayError: false
     };
   }
 
@@ -140,6 +150,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           isLoading: false,
           isCtaSentEmailValidationDisabled: false
         });
+        if (!this.state.displayError) {
+          this.setState({ displayError: true });
+        }
       } else if (pot.isSome(this.props.emailValidationRequest)) {
         // schedule a timeout to make the cta button disabled and showing inside
         // the string that email has been sent.
@@ -155,7 +168,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         }, emailSentTimeout);
         this.setState({
           ctaSendEmailValidationText: I18n.t("email.validate.sent"),
-          isLoading: false
+          isLoading: false,
+          displayError: false
         });
       }
     }
@@ -170,6 +184,23 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       });
     }
   }
+
+  private renderErrorBanner = (
+    <View style={styles.error}>
+      <Text white={true}>{I18n.t("global.actions.retry")}</Text>
+      <View>
+        <IconFont
+          name={"io-close"}
+          onPress={() => {
+            this.setState({ displayError: false });
+          }}
+          color={customVariables.colorWhite}
+          accessible={true}
+          accessibilityLabel={I18n.t("global.buttons.close")}
+        />
+      </View>
+    </View>
+  );
 
   private contextualHelp = {
     title: I18n.t("email.validate.title"),
@@ -206,7 +237,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private onBoardingProps: TopScreenComponentProps = {
     headerTitle: I18n.t("email.validate.header"),
-    title: I18n.t("email.validate.title"),
     customGoBack: this.customOnboardingGoBack
   };
 
@@ -237,6 +267,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     return (
       <FooterWithButtons
         type={"TwoButtonsInlineThirdInverted"}
+        upperButton={{
+          title: this.state.ctaSendEmailValidationText,
+          onPress: this.handleSendEmailValidationButton,
+          light: true,
+          bordered: true,
+          disabled:
+            this.state.isLoading || this.state.isCtaSentEmailValidationDisabled
+        }}
         leftButton={{
           block: true,
           bordered: true,
@@ -244,6 +282,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           onPress: () => {
             if (!isOnboardingCompleted) {
               this.props.closeModalAndNavigateToEmailInsertScreen();
+              return;
             }
             this.props.navigateToEmailInsertScreen();
           },
@@ -295,23 +334,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             <Text>{I18n.t("email.validate.validated_ok")}</Text>
           )}
           <View spacer={true} />
-          {this.state.isContentLoadCompleted &&
-            !this.state.emailHasBeenValidate && (
-              <Button
-                block={true}
-                light={true}
-                bordered={true}
-                disabled={
-                  this.state.isLoading ||
-                  this.state.isCtaSentEmailValidationDisabled
-                }
-                onPress={this.handleSendEmailValidationButton}
-              >
-                <Text>{this.state.ctaSendEmailValidationText}</Text>
-              </Button>
-            )}
           <View spacer={true} large={true} />
         </Content>
+        {this.state.displayError && this.renderErrorBanner}
         {(this.state.emailHasBeenValidate ||
           this.state.isContentLoadCompleted) &&
           this.renderFooter()}
