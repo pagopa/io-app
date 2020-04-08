@@ -125,7 +125,7 @@ function* createOrUpdateProfileSaga(
     if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());
-      return;
+      throw new Error(I18n.t("profile.errors.upsert"));
     }
 
     if (response.value.status !== 200) {
