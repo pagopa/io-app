@@ -86,8 +86,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }
 
   private handleCieEvent = async (event: CEvent) => {
-    // TODO: WHAT is it returned if CIE is EXPIRED? we should redirect to CieExpiredOrInvalidScreen
-    // -- it should be CERTIFICATE_EXPIRED
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
@@ -118,7 +116,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
 
       case "AUTHENTICATION_ERROR":
-      case "CERTIFICATE_EXPIRED":
         this.setState(
           {
             readingState: ReadingState.error,
@@ -128,7 +125,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             Vibration.vibrate(100);
           }
         );
-        // TODO: go to dedicated screen and exit
         break;
 
       case "ON_NO_INTERNET_CONNECTION":
@@ -149,6 +145,21 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.props.navigation.navigate(ROUTES.CIE_WRONG_PIN_SCREEN, {
           remainingCount: event.attemptsLeft
         });
+        break;
+
+      // CIE is Expired or Revoked
+      case "CERTIFICATE_EXPIRED":
+      case "CERTIFICATE_REVOKED":
+        this.setState(
+          {
+            readingState: ReadingState.error,
+            errorMessage: I18n.t("authentication.cie.card.error.generic")
+          },
+          () => {
+            Vibration.vibrate(100);
+          }
+        );
+        this.props.navigation.navigate(ROUTES.CIE_EXPIRED_SCREEN);
         break;
 
       default:
