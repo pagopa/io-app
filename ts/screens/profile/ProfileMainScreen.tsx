@@ -319,7 +319,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       notificationId
     } = this.props;
 
-    const showModal = (title: TranslationKeys, body: TranslationKeys) => {
+    const showInformationModal = (
+      title: TranslationKeys,
+      body: TranslationKeys
+    ) => {
       this.props.showModal(
         <ContextualHelp
           onClose={this.props.hideModal}
@@ -359,7 +362,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               title={I18n.t("profile.main.appInfo.title")}
               subTitle={I18n.t("profile.main.appInfo.description")}
               onPress={() =>
-                showModal(
+                showInformationModal(
                   "profile.main.appInfo.title",
                   "profile.main.appInfo.contextualHelpContent"
                 )
