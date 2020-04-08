@@ -150,10 +150,24 @@ const generateCustomFontList = () => {
   </style>`;
 };
 
+const avoidTextSelectCSS = () => {
+  return `<style>
+    body {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>`;
+};
+
 const generateHtml = (
   content: string,
   cssStyle?: string,
-  useCustomSortedList: boolean = false
+  useCustomSortedList: boolean = false,
+  avoidTextSelect: boolean = false
 ) => {
   return `
   <!DOCTYPE html>
@@ -164,6 +178,7 @@ const generateHtml = (
   <body>
   ${GLOBAL_CSS}
   ${cssStyle ? generateInlineCss(cssStyle) : ""}
+  ${avoidTextSelect ? avoidTextSelectCSS() : ""}
   ${useCustomSortedList ? generateCustomFontList() : ""}
   ${content}
   </body>
@@ -191,7 +206,7 @@ type OwnProps = {
    * The code will be inserted in the html body between
    * <script> and </script> tags.
    */
-
+  avoidTextSelect?: boolean;
   cssStyle?: string;
   webViewStyle?: StyleProp<ViewStyle>;
 };
@@ -224,7 +239,8 @@ class Markdown extends React.PureComponent<Props, State> {
       animated,
       onError,
       cssStyle,
-      useCustomSortedList
+      useCustomSortedList,
+      avoidTextSelect
     } = this.props;
 
     this.compileMarkdownAsync(
@@ -232,7 +248,8 @@ class Markdown extends React.PureComponent<Props, State> {
       animated,
       onError,
       cssStyle,
-      useCustomSortedList
+      useCustomSortedList,
+      avoidTextSelect
     );
 
     AppState.addEventListener("change", this.handleAppStateChange);
@@ -363,7 +380,8 @@ class Markdown extends React.PureComponent<Props, State> {
     animated: boolean = false,
     onError?: (error: any) => void,
     cssStyle?: string,
-    useCustomSortedList: boolean = false
+    useCustomSortedList: boolean = false,
+    avoidTextSelect: boolean = false
   ) => {
     InteractionManager.runAfterInteractions(() => {
       if (animated) {
@@ -383,7 +401,12 @@ class Markdown extends React.PureComponent<Props, State> {
           error
             ? fromNullable(onError).map(_ => _(error))
             : this.setState({
-                html: generateHtml(String(file), cssStyle, useCustomSortedList)
+                html: generateHtml(
+                  String(file),
+                  cssStyle,
+                  useCustomSortedList,
+                  avoidTextSelect
+                )
               });
         }
       );
