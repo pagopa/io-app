@@ -34,7 +34,7 @@ IO è un progetto concepito come **patrimonio collettivo**: ha un’anima **inte
 
 **Autenticazione sicura**
 -------------------------
-IO è un canale grazie al quale puoi ricevere da tutti gli Enti pubblici messaggi che includono tue informazioni personali come, ad esempio, quelle legate al tuo lavoro, alla tua salute o ai pagamenti verso lo Stato. Per questo, **è fondamentale essere certi che chi sta usando l’app a tuo nome, sia davvero tu.** E che solo tu possa accedere alle informazioni a te destinate.<br/>
+IO è un canale grazie al quale puoi ricevere da tutti gli Enti pubblici messaggi che includono le tue informazioni personali come, ad esempio, quelle legate al tuo lavoro, alla tua salute o ai pagamenti verso lo Stato. Per questo, **è fondamentale essere certi che chi sta usando l’app a tuo nome, sia davvero tu.** E che solo tu possa accedere alle informazioni a te destinate.<br/>
 Per garantire la tua identità all’app in modo sicuro, puoi accedere con le tue **credenziali [SPID](https://innovazione.gov.it/it/progetti/spid/)** o, in alternativa, con la tua **Carta d’Identità Elettronica ([CIE](https://innovazione.gov.it/it/progetti/cie/)), abbinata al PIN** che hai ricevuto al momento del rilascio e che garantisce che tu possa essere l’unico ad utilizzarla (anche in caso di furto del documento). Dopo la prima registrazione, potrai accedere più facilmente digitando un codice di sblocco scelto da te oppure grazie al riconoscimento biometrico (impronta digitale o riconoscimento del volto). Il codice di sblocco e i dati biometrici vengono conservati criptati solo all’interno del tuo telefono, e non sono in nessun modo inviati o salvati in altri contesti. 
 
 Per maggiori informazioni sul progetto, visita il sito [io.italia.it](http://io.italia.it)
