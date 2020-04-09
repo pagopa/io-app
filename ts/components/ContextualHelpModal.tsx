@@ -1,6 +1,6 @@
 import { Body, Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
-import { InteractionManager, Modal, Platform, StyleSheet } from "react-native";
+import { InteractionManager, Modal, StyleSheet } from "react-native";
 import IconFont from "../components/ui/IconFont";
 import themeVariables from "../theme/variables";
 import { FAQsCategoriesType } from "../utils/faq";
