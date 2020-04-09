@@ -11,6 +11,7 @@ import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import { BaseHeader } from "./BaseHeader";
+import { fromPredicate, fromNullable } from "fp-ts/lib/Option";
 
 export interface ContextualHelpProps {
   title: string;
@@ -52,6 +53,10 @@ interface State {
   isHelpVisible: boolean;
 }
 
+const maybeDark = fromPredicate(
+  (isDark: boolean | undefined = undefined) => isDark === true
+);
+
 class BaseScreenComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -61,22 +66,24 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   }
 
   private showHelp = () => {
-    // tslint:disable-next-line:no-unused-expression
-    this.props.dark &&
+    maybeDark(this.props.dark).map(_ =>
       setStatusBarColorAndBackground(
-        "dark-content",
-        customVariables.colorWhite
-      );
+        "light-content",
+        customVariables.brandDarkGray
+      )
+    );
+
     this.setState({ isHelpVisible: true });
   };
 
   private hideHelp = () => {
-    // tslint:disable-next-line:no-unused-expression
-    this.props.dark &&
+    maybeDark(this.props.dark).map(_ =>
       setStatusBarColorAndBackground(
         "light-content",
         customVariables.brandDarkGray
-      );
+      )
+    );
+
     this.setState({ isHelpVisible: false });
   };
 
