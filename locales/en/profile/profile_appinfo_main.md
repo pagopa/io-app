@@ -4,7 +4,7 @@ Hello! On this page we have collected some useful informations to get **an overv
 -------------
 The IO project [io.italia.it](http://io.italia.it) is an important step in the vision of digital citizenship of the Italian Government. Conceived from [Digital Transformation Team](https://teamdigitale.governo.it/) and now developed from [PagoPA S.p.A.](https://www.pagopa.gov.it/it/pagopa-spa/), it aims to **simplify citizens' access to all the digital services of the Public Administration** and the rights that these guarantee. 
 
-The result of this project is [IO, the public services app](https://io.italia.it/): a single channel through which all local and national authorities (municipalities, regions, central agencies) offer their services to citizens, in a **smiple and personalized way, directly on smartphones.**
+The result of this project is [IO, the public services app](https://io.italia.it/): a single channel through which all local and national authorities (municipalities, regions, central agencies) offer their services to citizens, in a **simple and personalized way, directly on smartphones.**
 
 Through the app, IO makes concrete the [article 64bis](https://docs.italia.it/italia/piano-triennale-ict/codice-amministrazione-digitale-docs/it/v2017-12-13/_rst/capo5_sezione3_art64-bis.html) of the [Digital Administration Code](https://docs.italia.it/italia/piano-triennale-ict/codice-amministrazione-digitale-docs/it/v2017-12-13/index.html) that establishes **a single access point for all digital services** provided by the Presidency of the Council of Ministers.
 
