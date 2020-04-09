@@ -22,6 +22,7 @@ import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErro
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
+import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import { InferNavigationParams } from "../../types/react";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
@@ -208,9 +209,12 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
     params
   });
 
-export const navigateToWalletHome = () =>
+export const navigateToWalletHome = (
+  params?: InferNavigationParams<typeof WalletHomeScreen>
+) =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_HOME
+    routeName: ROUTES.WALLET_HOME,
+    params
   });
 
 export const navigateToWalletList = () =>
