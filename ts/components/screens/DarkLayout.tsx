@@ -6,12 +6,12 @@ import * as React from "react";
 import {
   ImageSourcePropType,
   RefreshControlProps,
+  StatusBar,
   StyleProp,
   ViewStyle
 } from "react-native";
 import { StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
@@ -73,6 +73,7 @@ export default class DarkLayout extends React.Component<Props> {
           backgroundColor={customVariables.brandDarkGray}
           barStyle={"light-content"}
         />
+
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
             hideHeader={this.props.hideHeader}
