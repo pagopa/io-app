@@ -360,9 +360,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               isLastItem={true}
             />
 
-            {/* Developers Section */}
+            {/* Developers Section, visible only in dev mode */}
             {isDevEnv && (
-              <View>
+              <React.Fragment>
                 <SectionHeaderComponent
                   sectionHeader={I18n.t("profile.main.developersSectionHeader")}
                 />
@@ -385,11 +385,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     this.onPagoPAEnvironmentToggle,
                     I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
                   )}
-                {this.developerListItem(
-                  I18n.t("profile.main.debugMode"),
-                  this.props.isDebugModeEnabled,
-                  this.props.setDebugModeEnabled
-                )}
                 {this.props.isDebugModeEnabled && (
                   <React.Fragment>
                     {this.debugListItem(
@@ -458,7 +453,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     )}
                   </React.Fragment>
                 )}
-              </View>
+              </React.Fragment>
             )}
 
             {/* end list */}
