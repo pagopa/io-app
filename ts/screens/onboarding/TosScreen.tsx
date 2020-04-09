@@ -139,6 +139,11 @@ class TosScreen extends React.PureComponent<Props, State> {
   public render() {
     const { navigation, dispatch } = this.props;
     const isProfile = navigation.getParam("isProfile", false);
+    const avoidZoomWebview = `
+      const meta = document.createElement('meta');
+      meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+      meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);
+      `;
 
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
@@ -163,6 +168,7 @@ class TosScreen extends React.PureComponent<Props, State> {
               onLoadEnd={this.handleLoadEnd}
               onError={this.handleError}
               source={{ uri: privacyUrl }}
+              injectedJavaScript={avoidZoomWebview}
             />
           </View>
         )}
