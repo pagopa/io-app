@@ -161,6 +161,10 @@ profile:
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Your privacy settings
         contextualHelpContent: !include profile/profile_privacy_main.md
+    appInfo:
+      title: About IO beta
+      description: Learn more about the IO app
+      contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Developers
     experimentalFeatures:
       confirmTitle: Experimental features
