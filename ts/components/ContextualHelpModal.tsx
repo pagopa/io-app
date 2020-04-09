@@ -1,6 +1,6 @@
 import { Body, Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
-import { InteractionManager, Modal, StyleSheet } from "react-native";
+import { InteractionManager, Modal, Platform, StyleSheet } from "react-native";
 import IconFont from "../components/ui/IconFont";
 import themeVariables from "../theme/variables";
 import { FAQsCategoriesType } from "../utils/faq";
@@ -61,6 +61,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         visible={this.props.isVisible}
         onShow={onModalShow}
         animationType="slide"
+        transparent={true}
         onRequestClose={onClose}
       >
         <Container>
