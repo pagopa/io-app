@@ -114,7 +114,7 @@ function* createOrUpdateProfileSaga(
       throw new Error(readableReport(response.value));
     }
 
-    if (response.value.status === 500) {
+    if (response.value.status === 409) {
       // It could happen that profile update fails due to version number mismatch
       // app has a different version of profile compared to that one owned by the backend
       // so we force profile reloading (see https://www.pivotaltracker.com/n/projects/2048617/stories/171994417)
