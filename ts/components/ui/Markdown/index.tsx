@@ -167,7 +167,7 @@ const generateHtml = (
   content: string,
   cssStyle?: string,
   useCustomSortedList: boolean = false,
-  avoidTextSelect: boolean = false
+  avoidTextSelection: boolean = false
 ) => {
   return `
   <!DOCTYPE html>
@@ -178,7 +178,7 @@ const generateHtml = (
   <body>
   ${GLOBAL_CSS}
   ${cssStyle ? generateInlineCss(cssStyle) : ""}
-  ${avoidTextSelect ? avoidTextSelectCSS() : ""}
+  ${avoidTextSelection ? avoidTextSelectionCSS() : ""}
   ${useCustomSortedList ? generateCustomFontList() : ""}
   ${content}
   </body>
@@ -206,7 +206,7 @@ type OwnProps = {
    * The code will be inserted in the html body between
    * <script> and </script> tags.
    */
-  avoidTextSelect?: boolean;
+  avoidTextSelection?: boolean;
   cssStyle?: string;
   webViewStyle?: StyleProp<ViewStyle>;
 };
@@ -240,7 +240,7 @@ class Markdown extends React.PureComponent<Props, State> {
       onError,
       cssStyle,
       useCustomSortedList,
-      avoidTextSelect
+      avoidTextSelection
     } = this.props;
 
     this.compileMarkdownAsync(
@@ -249,7 +249,7 @@ class Markdown extends React.PureComponent<Props, State> {
       onError,
       cssStyle,
       useCustomSortedList,
-      avoidTextSelect
+      avoidTextSelection
     );
 
     AppState.addEventListener("change", this.handleAppStateChange);
