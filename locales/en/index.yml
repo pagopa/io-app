@@ -109,6 +109,10 @@ profile:
   errors:
     load: Error loading the profile
     upsert: Error creating or updating the profile
+  alerts:
+    emailNotValidated:
+      title: Unvalidated email
+      subtitle: You need to validate your email before proceeding with the operation. To do this, go to the profile section and choose preferences.
   main:
     title: Profile
     logout: Logout/Exit
