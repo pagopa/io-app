@@ -110,6 +110,10 @@ profile:
   errors:
     load: Errore nel caricamento del profilo
     upsert: Errore nella creazione o nell'aggiornamento del profilo
+  alerts:
+    emailNotValidated:
+      title: Email non verificata
+      subtitle: È necessario verificare la mail per poter procedere con l'operazione. Per farlo, vai nella sezione profilo e scegli preferenze.
   main:
     title: Profilo
     logout: Logout/Esci
@@ -158,7 +162,11 @@ profile:
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
-        contextualHelpContent: !include profile/profile_privacy_main.md    
+        contextualHelpContent: !include profile/profile_privacy_main.md  
+    appInfo:
+      title: Informazioni su IO beta
+      description: Per saperne di più sull'app IO
+      contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Sviluppatori
     experimentalFeatures:
       confirmTitle: Funzionalità sperimentali
