@@ -127,8 +127,7 @@ const generateInlineCss = (cssStyle: string) => {
   </style>`;
 };
 
-const generateCustomFontList = () => {
-  return `<style>
+const generateCustomFontList = `<style>
     ol {
       list-style: none;
       counter-reset: li;
@@ -148,10 +147,8 @@ const generateCustomFontList = () => {
       line-height: 18px;
     }
   </style>`;
-};
 
-const avoidTextSelectCSS = () => {
-  return `<style>
+const avoidTextSelectionCSS = `<style>
     body {
       -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -161,7 +158,6 @@ const avoidTextSelectCSS = () => {
       user-select: none;
     }
   </style>`;
-};
 
 const generateHtml = (
   content: string,
@@ -178,8 +174,8 @@ const generateHtml = (
   <body>
   ${GLOBAL_CSS}
   ${cssStyle ? generateInlineCss(cssStyle) : ""}
-  ${avoidTextSelection ? avoidTextSelectionCSS() : ""}
-  ${useCustomSortedList ? generateCustomFontList() : ""}
+  ${avoidTextSelection ? avoidTextSelectionCSS : ""}
+  ${useCustomSortedList ? generateCustomFontList : ""}
   ${content}
   </body>
   </html>
@@ -381,7 +377,7 @@ class Markdown extends React.PureComponent<Props, State> {
     onError?: (error: any) => void,
     cssStyle?: string,
     useCustomSortedList: boolean = false,
-    avoidTextSelect: boolean = false
+    avoidTextSelection: boolean = false
   ) => {
     InteractionManager.runAfterInteractions(() => {
       if (animated) {
@@ -405,7 +401,7 @@ class Markdown extends React.PureComponent<Props, State> {
                   String(file),
                   cssStyle,
                   useCustomSortedList,
-                  avoidTextSelect
+                  avoidTextSelection
                 )
               });
         }
