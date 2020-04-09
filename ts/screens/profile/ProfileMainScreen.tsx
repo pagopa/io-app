@@ -32,7 +32,6 @@ import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
-import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled
@@ -535,8 +534,6 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
   clearCache: () => dispatch(clearCache()),
-  setDebugModeEnabled: (enabled: boolean) =>
-    dispatch(setDebugModeEnabled(enabled)),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
   setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
     dispatch(
