@@ -47,13 +47,6 @@ const styles = StyleSheet.create({
 });
 
 export default class DarkLayout extends React.Component<Props> {
-  public componentDidMount() {
-    setStatusBarColorAndBackground(
-      "light-content",
-      customVariables.brandDarkGray
-    );
-  }
-
   private screenContent() {
     return (
       <React.Fragment>
@@ -76,6 +69,10 @@ export default class DarkLayout extends React.Component<Props> {
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
       >
+        <StatusBar
+          backgroundColor={customVariables.brandDarkGray}
+          barStyle={"light-content"}
+        />
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
             hideHeader={this.props.hideHeader}
