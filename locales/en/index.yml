@@ -110,6 +110,10 @@ profile:
   errors:
     load: Error loading the profile
     upsert: Error creating or updating the profile
+  alerts:
+    emailNotValidated:
+      title: Unvalidated email
+      subtitle: You need to validate your email before proceeding with the operation. To do this, go to the profile section and choose preferences.
   main:
     title: Profile
     logout: Logout/Exit
@@ -158,6 +162,10 @@ profile:
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Your privacy settings
         contextualHelpContent: !include profile/profile_privacy_main.md
+    appInfo:
+      title: About IO beta
+      description: Learn more about the IO app
+      contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Developers
     experimentalFeatures:
       confirmTitle: Experimental features
