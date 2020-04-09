@@ -11,7 +11,7 @@ import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import { BaseHeader } from "./BaseHeader";
-import { fromPredicate, fromNullable } from "fp-ts/lib/Option";
+import { fromPredicate } from "fp-ts/lib/Option";
 
 export interface ContextualHelpProps {
   title: string;
