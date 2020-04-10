@@ -174,7 +174,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         <NavigationEvents onWillFocus={this.handleWillFocus} />
         <SlidedContentComponent hasFlatBottom={true}>
           <PaymentSummaryComponent
-            title={"Ricevuta operazione"}
+            title={I18n.t('wallet.receipt')}
             recipient={transaction.merchant}
             description={cleanTransactionDescription(transaction.description)}
           />
@@ -229,7 +229,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             paymentMethodBrand && <Text bold={true}>{paymentMethodBrand}</Text>
           )}
 
-          {paymentMethodIcon || (paymentMethodBrand && <View spacer={true} />)}
+          {(paymentMethodIcon || paymentMethodBrand) && <View spacer={true} />}
 
           {/** psp logo */}
           {psp && (

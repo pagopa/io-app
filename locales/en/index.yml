@@ -674,7 +674,7 @@ wallet:
   date: Date
   time: Time
   psp: Payment provider
-  receipt: Receipt
+  receipt: Transaction receipt
   seeReceipt: See Receipt
   transactions: Transactions
   transaction: Transaction

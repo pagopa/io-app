@@ -682,7 +682,7 @@ wallet:
   date: Data
   time: Ora
   psp: Gestore della transazione
-  receipt: Ricevuta
+  receipt: Ricevuta operazione
   seeReceipt: Vedi la ricevuta
   transactions: Operazioni
   transaction: Operazione
