@@ -30,6 +30,17 @@ export enum TypeLogs {
   "WARN" = "WARN"
 }
 
+type InstabugLoggerType = {
+  [key in keyof typeof TypeLogs]: (value: string) => void
+};
+const InstabugLogger: InstabugLoggerType = {
+  INFO: Instabug.logInfo,
+  VERBOSE: Instabug.logVerbose,
+  ERROR: Instabug.logError,
+  DEBUG: Instabug.logDebug,
+  WARN: Instabug.logWarn
+};
+
 export const initialiseInstabug = () => {
   // Initialise Instabug for iOS. The Android initialisation is inside MainApplication.java
   Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.none]);
@@ -62,17 +73,5 @@ export const setInstabugProfileAttributes = (
   );
 };
 
-export const instabugLog = (logs: string, typeLog: TypeLogs) => {
-  switch (typeLog) {
-    case TypeLogs.INFO:
-      Instabug.logInfo(logs);
-    case TypeLogs.ERROR:
-      Instabug.logError(logs);
-    case TypeLogs.WARN:
-      Instabug.logWarn(logs);
-    case TypeLogs.VERBOSE:
-      Instabug.logVerbose(logs);
-    case TypeLogs.DEBUG:
-      Instabug.logDebug(logs);
-  }
-};
+export const instabugLog = (log: string, typeLog: TypeLogs) =>
+  InstabugLogger[typeLog](log);
