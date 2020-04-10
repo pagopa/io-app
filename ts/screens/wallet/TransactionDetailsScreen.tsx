@@ -174,7 +174,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         <NavigationEvents onWillFocus={this.handleWillFocus} />
         <SlidedContentComponent hasFlatBottom={true}>
           <PaymentSummaryComponent
-            title={I18n.t('wallet.receipt')}
+            title={I18n.t("wallet.receipt")}
             recipient={transaction.merchant}
             description={cleanTransactionDescription(transaction.description)}
           />
