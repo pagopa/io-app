@@ -1,4 +1,4 @@
-import { Container, Content, H1, View } from "native-base";
+import { Container, Content, H3, View } from "native-base";
 import * as React from "react";
 import {
   InteractionManager,
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     height: customVariables.appHeaderHeight,
     flexDirection: "row",
     justifyContent: "flex-end",
+    alignContent: "center",
     paddingHorizontal: customVariables.contentPadding
   },
   iphoneXBottom: {
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   padded: {
-    padding: customVariables.contentPadding
+    paddingHorizontal: customVariables.contentPadding
   }
 });
 export class ContextualHelpModal extends React.Component<Props, State> {
@@ -94,17 +95,18 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         onRequestClose={onClose}
       >
         <SafeAreaView style={styles.flex}>
-          <Container style={isIphoneX() && styles.iphoneXBottom}>
+          <Container style={isIphoneX() ? styles.iphoneXBottom : undefined}>
             {simpleHeader}
             <Content
               contentContainerStyle={styles.contentContainerStyle}
               noPadded={true}
             >
               <View style={styles.padded}>
-                <H1>{this.props.title}</H1>
+                <View spacer={true} />
+                <H3>{this.props.title}</H3>
+                <View spacer={true} large={true} />
                 {!this.state.content && (
                   <View centerJustified={true}>
-                    <View spacer={true} large={true} />
                     <ActivityIndicator
                       color={themeVariables.brandPrimaryLight}
                     />
@@ -114,10 +116,16 @@ export class ContextualHelpModal extends React.Component<Props, State> {
                   <React.Fragment>
                     {this.state.content}
                     {this.props.faqCategories && (
-                      <FAQComponent faqCategories={this.props.faqCategories} />
+                      <React.Fragment>
+                        <View spacer={true} extralarge={true} />
+                        <FAQComponent
+                          faqCategories={this.props.faqCategories}
+                        />
+                      </React.Fragment>
                     )}
                   </React.Fragment>
                 )}
+                <View spacer={true} />
               </View>
               {this.state.content && <BetaBannerComponent />}
             </Content>
