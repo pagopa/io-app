@@ -80,6 +80,8 @@ const emailSentTimeout = 10000 as Millisecond; // 10 seconds
 const profilePolling = 5000 as Millisecond; // 5 seconds
 
 const EMPTY_EMAIL = "";
+const MARKDOWN_BODY_STYLE = "body { text-align: center;}";
+const VALIDATION_ICON_WIDTH = 84;
 
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   private idTimeout?: number;
@@ -327,7 +329,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           <View spacer={true} extralarge={true} />
           <IconFont
             name={icon}
-            size={84}
+            size={VALIDATION_ICON_WIDTH}
             color={customVariables.brandHighlight}
             style={styles.center}
           />
@@ -338,7 +340,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           {!this.state.emailHasBeenValidate ? (
             <Markdown
               onLoadEnd={this.handleOnContentLoadEnd}
-              cssStyle={"body { text-align: center;}"}
+              cssStyle={MARKDOWN_BODY_STYLE}
             >
               {isOnboardingCompleted
                 ? I18n.t("email.validate.content2", { email })
