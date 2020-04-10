@@ -10,7 +10,7 @@ type Props = Readonly<{
 const styles = StyleSheet.create({
   itemSeparator: {
     backgroundColor: customVariables.itemSeparator,
-    height: 1 / 3
+    height: StyleSheet.hairlineWidth
   },
   horizontalPad: {
     marginLeft: customVariables.contentPadding,
