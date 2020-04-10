@@ -11,7 +11,9 @@ const styles = StyleSheet.create({
   bordered: {
     borderTopColor: customVariables.contentPrimaryBackground,
     borderTopWidth: 2,
-    paddingHorizontal: customVariables.contentPadding
+    paddingHorizontal: customVariables.contentPadding,
+    paddingTop: 20,
+    paddingBottom: 16
   },
   separator: {
     width: 1,
@@ -40,14 +42,14 @@ const styles = StyleSheet.create({
 const BetaBedge = () => (
   <Badge style={styles.badgeContainer}>
     <Text bold={true} style={styles.badgeText}>
-      BETA
+      {I18n.t("global.beta")}
     </Text>
   </Badge>
 );
 
 export default function BetaBannerComponent() {
   return (
-    <View footer={true} style={styles.bordered}>
+    <View style={styles.bordered}>
       <View style={styles.row}>
         <IconFont
           name={"io-logo"}

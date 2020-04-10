@@ -1,14 +1,21 @@
-import { Body, Container, Content, H1, Right, View } from "native-base";
+import { Container, Content, H1, View } from "native-base";
 import * as React from "react";
-import { InteractionManager, Modal, StyleSheet } from "react-native";
+import {
+  InteractionManager,
+  Modal,
+  SafeAreaView,
+  StyleSheet
+} from "react-native";
+import { isIphoneX } from "react-native-iphone-x-helper";
 import IconFont from "../components/ui/IconFont";
 import themeVariables from "../theme/variables";
+import customVariables from "../theme/variables";
+import { FOOTER_SAFE_AREA } from "../utils/constants";
 import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FAQComponent from "./FAQComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
-import AppHeader from "./ui/AppHeader";
 
 type Props = Readonly<{
   title: string;
@@ -24,10 +31,25 @@ type State = Readonly<{
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
-    padding: themeVariables.contentPadding
+    flexGrow: 1,
+    justifyContent: "space-between"
+  },
+  header: {
+    height: customVariables.appHeaderHeight,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingHorizontal: customVariables.contentPadding
+  },
+  iphoneXBottom: {
+    marginBottom: FOOTER_SAFE_AREA
+  },
+  flex: {
+    flex: 1
+  },
+  padded: {
+    padding: customVariables.contentPadding
   }
 });
-
 export class ContextualHelpModal extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -56,43 +78,51 @@ export class ContextualHelpModal extends React.Component<Props, State> {
       this.props.close();
     };
 
+    const simpleHeader = (
+      <View style={styles.header}>
+        <ButtonDefaultOpacity onPress={onClose} transparent={true}>
+          <IconFont name={"io-close"} />
+        </ButtonDefaultOpacity>
+      </View>
+    );
+
     return (
       <Modal
         visible={this.props.isVisible}
         onShow={onModalShow}
-        animationType="slide"
+        animationType={"slide"}
         onRequestClose={onClose}
       >
-        <Container>
-          <AppHeader noLeft={true}>
-            <Body />
-            <Right>
-              <ButtonDefaultOpacity onPress={onClose} transparent={true}>
-                <IconFont name="io-close" />
-              </ButtonDefaultOpacity>
-            </Right>
-          </AppHeader>
-
-          {!this.state.content && (
-            <View centerJustified={true}>
-              <ActivityIndicator color={themeVariables.brandPrimaryLight} />
-            </View>
-          )}
-          {this.state.content && (
+        <SafeAreaView style={styles.flex}>
+          <Container style={isIphoneX() && styles.iphoneXBottom}>
+            {simpleHeader}
             <Content
               contentContainerStyle={styles.contentContainerStyle}
               noPadded={true}
             >
-              <H1>{this.props.title}</H1>
-              {this.state.content}
-              {this.props.faqCategories && (
-                <FAQComponent faqCategories={this.props.faqCategories} />
-              )}
-              <View spacer={true} extralarge={true} />
+              <View style={styles.padded}>
+                <H1>{this.props.title}</H1>
+                {!this.state.content && (
+                  <View centerJustified={true}>
+                    <View spacer={true} large={true} />
+                    <ActivityIndicator
+                      color={themeVariables.brandPrimaryLight}
+                    />
+                  </View>
+                )}
+                {this.state.content && (
+                  <React.Fragment>
+                    {this.state.content}
+                    {this.props.faqCategories && (
+                      <FAQComponent faqCategories={this.props.faqCategories} />
+                    )}
+                  </React.Fragment>
+                )}
+              </View>
+              {this.state.content && <BetaBannerComponent />}
             </Content>
-          )}
-          <BetaBannerComponent />
-        </Container>
+          </Container>
+        </SafeAreaView>
       </Modal>
     );
   }

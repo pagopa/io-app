@@ -13,6 +13,7 @@ global:
     dayMonth: "DD/MM"
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
+  beta: BETA
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
   genericWaiting: Attendi qualche secondo..
   jserror:
