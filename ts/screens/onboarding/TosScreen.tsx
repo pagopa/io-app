@@ -2,6 +2,7 @@
  * A screen to show the app Terms of Service. If the user accepted an old version
  * of ToS and a new version is available, an alert is displayed to highlight the user
  * has to accept the new version of ToS.
+ * This screen is used also as Privacy screen From Profile section.
  */
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
@@ -14,7 +15,6 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import H4 from "../../components/ui/H4";
 import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
@@ -139,19 +139,21 @@ class TosScreen extends React.PureComponent<Props, State> {
   public render() {
     const { navigation, dispatch } = this.props;
     const isProfile = navigation.getParam("isProfile", false);
+    const avoidZoomWebview = `
+      const meta = document.createElement('meta');
+      meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+      meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);
+      `;
 
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
-        goBack={this.handleGoBack}
+        goBack={isProfile || this.handleGoBack}
         headerTitle={
           isProfile
-            ? I18n.t("profile.main.title")
+            ? I18n.t("profile.main.privacy.privacyPolicy.title")
             : I18n.t("onboarding.tos.headerTitle")
         }
       >
-        <H4 style={[styles.boldH4, styles.horizontalPadding]}>
-          {I18n.t("profile.main.privacy.privacyPolicy.header")}
-        </H4>
         {this.props.hasAcceptedOldTosVersion && (
           <View style={styles.alert}>
             <Text>{I18n.t("profile.main.privacy.privacyPolicy.updated")}</Text>
@@ -166,6 +168,7 @@ class TosScreen extends React.PureComponent<Props, State> {
               onLoadEnd={this.handleLoadEnd}
               onError={this.handleError}
               source={{ uri: privacyUrl }}
+              injectedJavaScript={avoidZoomWebview}
             />
           </View>
         )}

@@ -22,6 +22,25 @@ const instabugLocales: InstabugLocales = {
   it: Instabug.locale.italian
 };
 
+export enum TypeLogs {
+  "INFO" = "INFO",
+  "VERBOSE" = "VERBOSE",
+  "ERROR" = "ERROR",
+  "DEBUG" = "DEBUG",
+  "WARN" = "WARN"
+}
+
+type InstabugLoggerType = {
+  [key in keyof typeof TypeLogs]: (value: string) => void
+};
+const InstabugLogger: InstabugLoggerType = {
+  INFO: Instabug.logInfo,
+  VERBOSE: Instabug.logVerbose,
+  ERROR: Instabug.logError,
+  DEBUG: Instabug.logDebug,
+  WARN: Instabug.logWarn
+};
+
 export const initialiseInstabug = () => {
   // Initialise Instabug for iOS. The Android initialisation is inside MainApplication.java
   Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.none]);
@@ -53,3 +72,6 @@ export const setInstabugProfileAttributes = (
     setInstabugUserAttribute("identityProvider", idp.entityID)
   );
 };
+
+export const instabugLog = (log: string, typeLog: TypeLogs) =>
+  InstabugLogger[typeLog](log);
