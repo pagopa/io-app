@@ -138,7 +138,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     // https://www.pivotaltracker.com/story/show/168836972
 
     this.props.loadWallets();
-    this.props.loadTransactions();
+    this.props.loadTransactions(0);
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "light-content",
@@ -281,7 +281,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           light={true}
           bordered={true}
           small={true}
-          onPress={this.props.loadTransactions}
+          onPress={() => this.props.loadTransactions(0)}
         >
           <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
         </ButtonDefaultOpacity>
@@ -367,7 +367,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     const walletRefreshControl = (
       <RefreshControl
         onRefresh={() => {
-          this.props.loadTransactions();
+          this.props.loadTransactions(0);
           this.props.loadWallets();
         }}
         refreshing={false}
@@ -412,7 +412,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  loadTransactions: () => dispatch(fetchTransactionsRequest()),
+  loadTransactions: (start: number) =>
+    dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest())
 });
 

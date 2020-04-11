@@ -1,10 +1,10 @@
 import { Function1, Lazy, Predicate } from "fp-ts/lib/function";
+import { Option } from "fp-ts/lib/Option";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
 import { Psp, Transaction } from "../../../types/pagopa";
 
 //
@@ -13,11 +13,11 @@ import { Psp, Transaction } from "../../../types/pagopa";
 
 export const fetchTransactionsRequest = createStandardAction(
   "FETCH_TRANSACTIONS_REQUEST"
-)();
+)<{ start: number }>();
 
 export const fetchTransactionsSuccess = createStandardAction(
   "FETCH_TRANSACTIONS_SUCCESS"
-)<ReadonlyArray<Transaction>>();
+)<{ data: ReadonlyArray<Transaction>; size: Option<number> }>();
 
 export const fetchTransactionsFailure = createStandardAction(
   "FETCH_TRANSACTIONS_FAILURE"

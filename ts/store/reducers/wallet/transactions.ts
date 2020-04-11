@@ -86,7 +86,7 @@ const reducer = (
     case getType(fetchTransactionsSuccess):
       return {
         ...state,
-        transactions: pot.some(toIndexed(action.payload, _ => _.id))
+        transactions: pot.some(toIndexed(action.payload.data, _ => _.id))
       };
 
     case getType(fetchTransactionsFailure):

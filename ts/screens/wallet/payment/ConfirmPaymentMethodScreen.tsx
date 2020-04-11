@@ -309,7 +309,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       // reset the payment state
       dispatch(paymentInitializeState());
       // update the transactions state
-      dispatch(fetchTransactionsRequest());
+      dispatch(fetchTransactionsRequest({ start: 0 }));
       // navigate to the resulting transaction details
       showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {

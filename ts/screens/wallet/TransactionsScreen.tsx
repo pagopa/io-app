@@ -125,7 +125,7 @@ class TransactionsScreen extends React.Component<Props> {
     const transactionsRefreshControl = (
       <RefreshControl
         onRefresh={() => {
-          this.props.loadTransactions();
+          this.props.loadTransactions(0);
         }}
         // The refresh control spinner is displayed only at pull-to-refresh
         // while, during the transactions reload, it is displayed the custom transaction
@@ -169,7 +169,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadTransactions: () => dispatch(fetchTransactionsRequest()),
+  loadTransactions: (start: number) =>
+    dispatch(fetchTransactionsRequest({ start })),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(

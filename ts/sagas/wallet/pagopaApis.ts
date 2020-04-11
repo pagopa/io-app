@@ -44,6 +44,7 @@ import { PaymentManagerToken } from "../../types/pagopa";
 import { SagaCallReturnType } from "../../types/utils";
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
+import { fromNullable } from "fp-ts/lib/Option";
 
 //
 // Payment Manager APIs
@@ -85,7 +86,12 @@ export function* fetchTransactionsRequestHandler(
     const response: SagaCallReturnType<typeof request> = yield call(request);
     if (response.isRight()) {
       if (response.value.status === 200) {
-        yield put(fetchTransactionsSuccess(response.value.value.data));
+        yield put(
+          fetchTransactionsSuccess({
+            data: response.value.value.data,
+            size: fromNullable(response.value.value.size)
+          })
+        );
       } else {
         throw Error(`response status ${response.value.status}`);
       }
