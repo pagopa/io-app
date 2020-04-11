@@ -13,7 +13,7 @@ export const DEFAULT_APPLICATION_NAME = "io.italia.it";
 const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/pagopa/io-services-metadata/master" as NonEmptyString;
 
 // default timeout of fetch (in ms)
-const DEFAULT_FETCH_TIMEOUT_MS = 5000;
+const DEFAULT_FETCH_TIMEOUT_MS = 8000;
 
 // default max retries for fetch
 const DEFAULT_FETCH_MAX_RETRIES = 3;
