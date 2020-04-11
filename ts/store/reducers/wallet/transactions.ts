@@ -23,10 +23,12 @@ const MAX_TRANSACTIONS_IN_LIST = 50;
 
 export type TransactionsState = Readonly<{
   transactions: pot.Pot<IndexedById<Transaction>, Error>;
+  size: pot.Pot<number, Error>;
 }>;
 
 const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
-  transactions: pot.none
+  transactions: pot.none,
+  size: pot.none
 };
 
 // selectors
@@ -71,6 +73,10 @@ export const latestTransactionsSelector = createSelector(
     )
 );
 
+export const transactionsSizeSelector = (
+  state: GlobalState
+): pot.Pot<number, Error> => state.wallet.transactions.size;
+
 // reducer
 const reducer = (
   state: TransactionsState = TRANSACTIONS_INITIAL_STATE,
@@ -80,19 +86,22 @@ const reducer = (
     case getType(fetchTransactionsRequest):
       return {
         ...state,
-        transactions: pot.toLoading(state.transactions)
+        transactions: pot.toLoading(state.transactions),
+        size: pot.toLoading(state.size)
       };
 
     case getType(fetchTransactionsSuccess):
       return {
         ...state,
-        transactions: pot.some(toIndexed(action.payload.data, _ => _.id))
+        transactions: pot.some(toIndexed(action.payload.data, _ => _.id)),
+        size: pot.some(action.payload.size.fold(0, s => s))
       };
 
     case getType(fetchTransactionsFailure):
       return {
         ...state,
-        transactions: pot.toError(state.transactions, action.payload)
+        transactions: pot.toError(state.transactions, action.payload),
+        size: pot.toError(state.size, action.payload)
       };
 
     default:

@@ -44,12 +44,16 @@ import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
+import {
+  latestTransactionsSelector,
+  transactionsSizeSelector
+} from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -394,6 +398,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
+  potTransactionsSize: transactionsSizeSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   readTransactions: transactionsReadSelector(state)
 });
