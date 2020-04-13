@@ -27,6 +27,7 @@
 		6B44A74498354CC19B90FE9C /* TitilliumWeb-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6754714BBEF54AA59833C0EB /* TitilliumWeb-ExtraLightItalic.ttf */; };
 		72E4B1EFF7D4414483079F91 /* TitilliumWeb-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CED8B1FF1E254583BB3F285F /* TitilliumWeb-SemiBoldItalic.ttf */; };
 		859781B477BB45579FB9A9F2 /* TitilliumWeb-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F709D4AE20E44EFAAB255A8E /* TitilliumWeb-Italic.ttf */; };
+		86263C3EEDF1EE16D2DD5A76 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0625E8F2326833000EDEF90 /* libPods-ItaliaApp.a */; };
 		862C0E693C864E76BADCDFCC /* TitilliumWeb-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A786CC45B2D4B77BDF55C1D /* TitilliumWeb-Black.ttf */; };
 		8788744508D34396942D3DB4 /* RobotoMono-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFE8D23873DE458BB54EB46B /* RobotoMono-Light.ttf */; };
 		8C7948EB37334D2DADB1E7AE /* TitilliumWeb-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE4F83DB63254F5285C36A40 /* TitilliumWeb-ExtraLight.ttf */; };
@@ -421,6 +422,8 @@
 		81D7E65EFEF9BBBCDB1CA4AC /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		94E88E2FB156B189552F42E9 /* Pods-ItaliaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.release.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.release.xcconfig"; sourceTree = "<group>"; };
+		950D9D7E24438DCB00817DAE /* ItaliaAppRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ItaliaAppRelease.entitlements; path = ItaliaApp/ItaliaAppRelease.entitlements; sourceTree = "<group>"; };
+		950D9DA824438F6C00817DAE /* ItaliaAppDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ItaliaAppDebug.entitlements; path = ItaliaApp/ItaliaAppDebug.entitlements; sourceTree = "<group>"; };
 		95C6C64E243E3A9B0031DD75 /* libz.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.tbd; path = usr/lib/libz.1.tbd; sourceTree = SDKROOT; };
 		95C6C650243E3B830031DD75 /* RNNativeCiesdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNNativeCiesdk.xcodeproj; path = "../node_modules/@pagopa/react-native-cie/ios/RNNativeCiesdk.xcodeproj"; sourceTree = "<group>"; };
 		95C6C659243E3E2B0031DD75 /* ItaliaApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ItaliaApp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -469,6 +472,7 @@
 				F0625E802326826400EDEF90 /* libRCTPushNotification.a in Frameworks */,
 				F0625E8D2326831D00EDEF90 /* libReactNativeExceptionHandler.a in Frameworks */,
 				F0625E8E2326832500EDEF90 /* libRNTextInputMask.a in Frameworks */,
+				86263C3EEDF1EE16D2DD5A76 /* libPods-ItaliaApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,6 +570,8 @@
 		13B07FAE1A68108700A75B9A /* ItaliaApp */ = {
 			isa = PBXGroup;
 			children = (
+				950D9DA824438F6C00817DAE /* ItaliaAppDebug.entitlements */,
+				950D9D7E24438DCB00817DAE /* ItaliaAppRelease.entitlements */,
 				7A83F0572152B12C000C6389 /* ItaliaApp.entitlements */,
 				133638FC213D788900B0C079 /* InfoPlist.strings */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -1481,8 +1487,6 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-resources.sh",
 				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft.png",
@@ -1519,8 +1523,6 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft@2x.png",
@@ -1565,15 +1567,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-frameworks.sh",
 				"${PODS_ROOT}/../../node_modules/instabug-reactnative/ios/Instabug.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Instabug.framework",
 			);
@@ -1707,7 +1705,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaAppDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 43;
@@ -1750,7 +1748,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaAppRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 43;

@@ -3,7 +3,13 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import { BackHandler, NavState, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  NavState,
+  StyleSheet,
+  Platform,
+  Text
+} from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -14,6 +20,7 @@ import { getIdpLoginUri } from "../../utils/login";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 import TopScreenComponent from "../screens/TopScreenComponent";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 type Props = {
   ciePin: string;
@@ -26,6 +33,7 @@ type State = {
   isLoading: boolean;
   findOpenApp: boolean;
   webViewKey: number;
+  injectJavascript?: string;
 };
 
 const styles = StyleSheet.create({
@@ -38,15 +46,31 @@ const styles = StyleSheet.create({
 // INFRA DEV -> xx_servizicie_test
 const CIE_IDP_ID = "xx_servizicie";
 
+const injectJsiOS: string = `
+is.androidTablet = () => true;
+is.androidPhone = () => true;
+is.not.ipad = () => true;
+is.chrome = () => true;
+is.not.edge = () => true;
+is.not.opera = () => true;
+  alert("finito");
+  true;
+`;
+
 // this value assignment tries to decrease the sleeping time of a script
 // sleeping is due to allow user to read page content until the content changes to an
 // automatic redirect
-const injectJs = "seconds = 0;";
+const injectJs = Platform.select({ ios: injectJsiOS, default: "" });
+
+const iOSUserAgent =
+  "Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36";
+const userAgent = Platform.select({ ios: iOSUserAgent, default: undefined });
 
 export default class CieRequestAuthenticationOverlay extends React.PureComponent<
   Props,
   State
 > {
+  private webView = React.createRef<WebView>();
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -79,6 +103,13 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
 
   private handleOnShouldStartLoadWithRequest = (event: NavState): boolean => {
     if (this.state.findOpenApp) {
+      return false;
+    }
+    if (event.url !== undefined && event.url.indexOf("errore.jsp") !== -1) {
+      // injectJavascript: `window.location.href = 'https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&OpenApp=1&value='+b+'&authnRequestString='+c;`
+      this.setState({
+        injectJavascript: `alert(c);window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`
+      });
       return false;
     }
     // TODO: check if we can distinguish among different type of errors
@@ -127,15 +158,17 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
   };
 
   private renderWebView() {
-    if (this.state.hasError) {
-      return this.renderError();
-    }
+    //if (this.state.hasError) {
+    //  return this.renderError();
+    //}
     return (
       <View style={styles.flex}>
         {this.state.findOpenApp === false && (
           <WebView
-            injectedJavaScript={injectJs}
+            ref={this.webView}
+            userAgent={userAgent}
             javaScriptEnabled={true}
+            injectedJavaScript={this.state.injectJavascript}
             onLoadEnd={this.handleOnLoadEnd}
             onError={this.handleOnError}
             onShouldStartLoadWithRequest={
@@ -147,6 +180,17 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
             key={this.state.webViewKey}
           />
         )}
+        <ButtonDefaultOpacity
+          style={{ width: 200, height: 50, marginBottom: 20 }}
+          onPress={() => {
+            if (this.webView !== null && this.webView.current != null) {
+              this.webView.current.goBack();
+              console.warn("sono qui");
+            }
+          }}
+        >
+          <Text>{"go back"}</Text>
+        </ButtonDefaultOpacity>
       </View>
     );
   }
@@ -157,7 +201,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     ));
     return (
       <ContainerComponent
-        isLoading={this.state.isLoading}
+        isLoading={false}
         loadingOpacity={1.0}
         loadingCaption={I18n.t("global.genericWaiting")}
         onCancel={this.props.onClose}

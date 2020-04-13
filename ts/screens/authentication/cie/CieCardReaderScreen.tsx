@@ -88,6 +88,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   private handleCieEvent = async (event: CEvent) => {
     // TODO: WHAT is it returned if CIE is EXPIRED? we should redirect to CieExpiredOrInvalidScreen
     // -- it should be CERTIFICATE_EXPIRED
+    console.warn(JSON.stringify(event));
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
@@ -216,15 +217,15 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     await cieManager.stopListeningNFC();
   };
 
-  public componentDidMount() {
+  public async componentDidMount() {
+    cieManager.onEvent(this.handleCieEvent);
+    cieManager.onError(this.handleCieError);
+    cieManager.onSuccess(this.handleCieSuccess);
+    await cieManager.setPin(this.ciePin);
+    cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
     cieManager
       .start()
       .then(async () => {
-        cieManager.onEvent(this.handleCieEvent);
-        cieManager.onError(this.handleCieError);
-        cieManager.onSuccess(this.handleCieSuccess);
-        await cieManager.setPin(this.ciePin);
-        cieManager.setAuthenticationUrl(this.cieAuthorizationUri);
         await cieManager.startListeningNFC();
         this.setState({ readingState: ReadingState.waiting_card });
       })

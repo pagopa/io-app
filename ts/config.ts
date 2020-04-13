@@ -33,7 +33,7 @@ const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
 
 export const environment: string = Config.ENVIRONMENT;
-export const apiUrlPrefix: string = Config.API_URL_PREFIX;
+export const apiUrlPrefix: string = "https://app-backend.io.italia.it";
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
 export const backendStatusUrl: string = Config.BACKEND_STATUS_URL;

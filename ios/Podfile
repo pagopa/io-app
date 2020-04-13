@@ -43,7 +43,6 @@ target 'ItaliaApp' do
 
   pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
 
-  pod 'RNNativeCiesdk', :path => '../node_modules/@pagopa/react-native-cie'
 
   target 'ItaliaAppTests' do
     inherit! :search_paths
