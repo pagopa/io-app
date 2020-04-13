@@ -17,8 +17,8 @@ export const fetchTransactionsRequest = createStandardAction(
   "FETCH_TRANSACTIONS_REQUEST"
 )<{ start: number }>();
 
-// transactions is a pagination API. Success payload includes 'total' to know if we can
-// load more data or not
+// transactions is a pagination API. Success payload includes 'total' to know how many
+// transactions are available
 export const fetchTransactionsSuccess = createStandardAction(
   "FETCH_TRANSACTIONS_SUCCESS"
 )<{ data: ReadonlyArray<Transaction>; total: Option<number> }>();
