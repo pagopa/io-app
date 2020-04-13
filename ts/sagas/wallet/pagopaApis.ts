@@ -5,7 +5,6 @@ import { ActionType } from "typesafe-actions";
 import { fromNullable } from "fp-ts/lib/Option";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 import {
   paymentAttiva,
   paymentCheck,
