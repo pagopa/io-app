@@ -91,7 +91,10 @@ const reducer = (
       };
 
     case getType(fetchTransactionsSuccess):
-      const prevTransactions = pot.getOrElse(state.transactions, {});
+      const prevTransactions = pot.getOrElse<IndexedById<Transaction>>(
+        state.transactions,
+        {}
+      );
       const total = {
         ...prevTransactions,
         ...toIndexed(action.payload.data, _ => _.id)
