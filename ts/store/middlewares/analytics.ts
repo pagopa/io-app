@@ -141,7 +141,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(fetchTransactionsSuccess):
       return mp.track(action.type, {
         count: action.payload.data.length,
-        size: action.payload.size.getOrElse(-1)
+        total: action.payload.total.getOrElse(-1)
       });
     //
     // Wallet actions (with properties)

@@ -11,13 +11,17 @@ import { Psp, Transaction } from "../../../types/pagopa";
 // fetch all transactions
 //
 
+// transactions is a pagination API. Request payload includes start to specify from which
+// item we want to load
 export const fetchTransactionsRequest = createStandardAction(
   "FETCH_TRANSACTIONS_REQUEST"
 )<{ start: number }>();
 
+// transactions is a pagination API. Success payload includes 'total' to know if we can
+// load more data or not
 export const fetchTransactionsSuccess = createStandardAction(
   "FETCH_TRANSACTIONS_SUCCESS"
-)<{ data: ReadonlyArray<Transaction>; size: Option<number> }>();
+)<{ data: ReadonlyArray<Transaction>; total: Option<number> }>();
 
 export const fetchTransactionsFailure = createStandardAction(
   "FETCH_TRANSACTIONS_FAILURE"
