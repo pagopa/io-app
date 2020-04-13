@@ -87,7 +87,7 @@ const getSession: MapResponseType<
 };
 
 // to support 'start' param in query string we re-define the type GetTransactionsUsingGETT
-// because the generated one doesn't support 'start' due to weak specs api definition
+// because the generated one doesn't support 'start' due to weak specs in api definition
 export type GetTransactionsUsingGETT = r.IGetApiRequestType<
   { readonly Bearer: string; readonly start: number },
   "Authorization",

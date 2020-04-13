@@ -308,7 +308,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       );
       // reset the payment state
       dispatch(paymentInitializeState());
-      // update the transactions state
+      // update the transactions state (the first transaction is the most recent)
       dispatch(fetchTransactionsRequest({ start: 0 }));
       // navigate to the resulting transaction details
       showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");

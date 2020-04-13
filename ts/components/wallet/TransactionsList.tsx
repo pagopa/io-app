@@ -24,7 +24,6 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
 import H5 from "../ui/H5";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type State = {
   loadingMore: boolean;
@@ -75,13 +74,12 @@ export default class TransactionsList extends React.Component<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
-    // loading more transaction is complete
+    // loading more transaction is complete, revert the state
     if (
       prevState.loadingMore &&
       pot.isLoading(prevProps.transactions) &&
       pot.isSome(this.props.transactions)
     ) {
-      RTron.log("scroll to end");
       this.setState({ loadingMore: false });
     }
   }
@@ -111,6 +109,11 @@ export default class TransactionsList extends React.Component<Props, State> {
     );
   };
 
+  /**
+   * 1 - if transactions lenght is less the total then show the loading more button
+   * 2 - if all transactions are loaded show end list component
+   * if we don't know about transaction total, apply case 2
+   */
   private footerListComponent = (
     transactions: ReadonlyArray<Transaction>,
     transactionTotal: Option<number>
@@ -132,6 +135,7 @@ export default class TransactionsList extends React.Component<Props, State> {
             >
               <Text>
                 {I18n.t(
+                  // change the button text if we are loading another slice of transactions
                   this.state.loadingMore
                     ? "wallet.transacionsLoadingMore"
                     : "wallet.transactionsLoadMore"

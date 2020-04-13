@@ -30,7 +30,10 @@ import {
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
-import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
+import {
+  getWalletTransactionsCreator,
+  transactionsTotalSelector
+} from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
@@ -114,6 +117,12 @@ class TransactionsScreen extends React.Component<Props> {
     );
   }
 
+  private handleLoadMoreTransactions = () => {
+    this.props.loadTransactions(
+      pot.getOrElse(pot.map(this.props.transactions, t => t.length), 0)
+    );
+  };
+
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
 
@@ -149,6 +158,8 @@ class TransactionsScreen extends React.Component<Props> {
           title={I18n.t("wallet.transactions")}
           amount={I18n.t("wallet.amount")}
           transactions={this.props.transactions}
+          transactionsTotal={this.props.potTransactionsTotal}
+          onLoadMoreTransactions={this.handleLoadMoreTransactions}
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
           }
@@ -165,7 +176,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state),
   favoriteWallet: getFavoriteWalletId(state),
-  readTransactions: state.entities.transactionsRead
+  readTransactions: state.entities.transactionsRead,
+  potTransactionsTotal: transactionsTotalSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
