@@ -60,7 +60,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
       <Modal
         visible={this.props.isVisible}
         onShow={onModalShow}
-        animationType="slide"
+        animationType={"slide"}
         transparent={true}
         onRequestClose={onClose}
       >
