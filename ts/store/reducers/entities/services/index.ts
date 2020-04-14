@@ -212,7 +212,7 @@ const getServices = (
       // NOTE: this is a workaround not a solution
       // since a service can change its organization fiscal code we could have
       // obsolete data in the store: byOrgFiscalCode could have services that don't belong to organization anymore
-      // this cleaning its a workround, this should be fixed on data loading and not when data are loaded
+      // this cleaning its a workaround, this should be fixed on data loading and not when data are loaded
       // see https://www.pivotaltracker.com/story/show/172316333
       const serviceIdsForOrgCleaned = serviceIdsForOrg.filter(s => {
         const service = services.byId[s];
