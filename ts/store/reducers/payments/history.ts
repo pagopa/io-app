@@ -125,6 +125,12 @@ const reducer = (
 export const paymentsHistorySelector = (state: GlobalState) =>
   state.payments.history;
 
+/**
+ * return true if payment ends successfully
+ * return false if payment ends with a failure
+ * return undefined if payements didn't end (no data to say failure or success)
+ * @param payment
+ */
 export const isPaymentDoneSuccessfully = (payment: PaymentHistory) => {
   if (payment.failure) {
     return false;

@@ -48,7 +48,9 @@ describe("payments history", () => {
   it("should add a payment in the history", () => {
     state = reducer(state, paymentVerifica.request(anRptId));
     expect(state.length).toEqual(1);
-    // we know nothing about payment
+  });
+
+  it("should not recognize a payment as failed or successfully", () => {
     expect(isPaymentDoneSuccessfully(state[0])).toBeUndefined();
   });
 
@@ -61,7 +63,9 @@ describe("payments history", () => {
     state = reducer(state, paymentVerifica.success(successData));
     expect(state.length).toEqual(1);
     expect(state[0].verified_data).toEqual(successData);
-    // we know nothing about payment
+  });
+
+  it("should not recognize a payment as failed or successfully", () => {
     expect(isPaymentDoneSuccessfully(state[0])).toBeUndefined();
   });
 
@@ -126,7 +130,9 @@ describe("payments history", () => {
     );
     expect(state.length).toEqual(1);
     expect(state[0].transaction).toEqual(validTransaction);
-    // payment has been successfully
+  });
+
+  it("should recognize a sucessfully payment", () => {
     expect(isPaymentDoneSuccessfully(state[0])).toBeTruthy();
   });
 
@@ -134,7 +140,9 @@ describe("payments history", () => {
     state = reducer(state, paymentVerifica.failure("INVALID_AMOUNT"));
     expect(state.length).toEqual(1);
     expect(state[0].failure).toEqual("INVALID_AMOUNT");
-    // payment has been failed
+  });
+
+  it("should recognize a failed payment", () => {
     expect(isPaymentDoneSuccessfully(state[0])).toBeFalsy();
   });
 
