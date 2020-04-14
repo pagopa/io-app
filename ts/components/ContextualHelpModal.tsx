@@ -22,19 +22,23 @@ import { ioItaliaLink } from "../utils/deepLink";
 import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FAQComponent from "./FAQComponent";
-import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
+import InstabugAssistanceComponent from './InstabugAssistanceComponent';
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 import { openLink } from "./ui/Markdown/handlers/link";
+import { IProps } from './helpers/withInstabugHelper';
+import { BugReporting } from 'instabug-reactnative';
 
-type Props = Readonly<{
+type OwnProps = Readonly<{
   title: string;
   body: () => React.ReactNode;
   isVisible: boolean;
   close: () => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
+
+type Props = OwnProps & IProps;
 
 type State = Readonly<{
   content: React.ReactNode | null;
@@ -57,6 +61,21 @@ export class ContextualHelpModal extends React.Component<Props, State> {
     this.state = {
       content: null
     };
+  }
+
+  private onDismiss = () => {
+    console.warn('modal dismissed')
+    if(this.props.openInstabugReport) {
+      console.warn('open chat')
+      this.props.openInstabugReport()
+    }
+  }
+
+  private handleSetReportType = (type: BugReporting.reportType) => {
+    if(this.props.setReportType){
+      this.props.setReportType(type);
+    }
+    this.props.close();
   }
 
   public render(): React.ReactNode {
@@ -85,6 +104,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         onShow={onModalShow}
         animationType={"slide"}
         onRequestClose={onClose}
+        onDismiss={this.onDismiss}
       >
         <Container>
           <AppHeader noLeft={true}>
@@ -119,7 +139,8 @@ export class ContextualHelpModal extends React.Component<Props, State> {
 
               <View spacer={true} extralarge={true} />
 
-              <InstabugAssistanceComponent hideComponent={this.props.close} />
+              <InstabugAssistanceComponent setReportType={this.handleSetReportType}/>
+
               <View spacer={true} extralarge={true} />
               <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
               <View spacer={true} />
