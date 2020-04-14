@@ -39,7 +39,7 @@ export type PaymentHistory = {
 
 export type PaymentsHistoryState = ReadonlyArray<PaymentHistory>;
 const INITIAL_STATE: ReadonlyArray<PaymentHistory> = [];
-export const HISTORY_SIZE = 10;
+export const HISTORY_SIZE = 15;
 
 // replace the last element of the state with the given one
 const replaceLastItem = (
