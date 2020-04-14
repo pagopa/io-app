@@ -31,8 +31,8 @@ import {
 } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  getWalletTransactionsCreator,
-  areMoreTransactionsAvailable
+  areMoreTransactionsAvailable,
+  getWalletTransactionsCreator
 } from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";

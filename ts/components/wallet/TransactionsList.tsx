@@ -1,7 +1,6 @@
 /**
  * This component displays a list of transactions
  */
-import { Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
