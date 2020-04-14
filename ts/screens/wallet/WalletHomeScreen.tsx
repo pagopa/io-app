@@ -384,6 +384,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         footerContent={footerContent}
         refreshControl={walletRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet", "wallet_methods"]}
       >
         {transactionContent}
       </WalletLayout>

@@ -165,6 +165,7 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
       <TopScreenComponent
         goBack={this.props.navigation.goBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["privacy"]}
         headerTitle={I18n.t("profile.main.title")}
       >
         <ScreenContent

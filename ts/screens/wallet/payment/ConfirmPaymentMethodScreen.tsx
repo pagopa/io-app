@@ -14,7 +14,9 @@ import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
@@ -107,6 +109,11 @@ const styles = StyleSheet.create({
 const feeForWallet = (w: Wallet): Option<number> =>
   fromNullable(w.psp).map(psp => psp.fixedCost.amount);
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.whyAFee.title",
+  body: "wallet.whyAFee.text"
+};
+
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   private showHelp = () => {
     this.props.showModal(
@@ -140,6 +147,8 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
       <BaseScreenComponent
         goBack={this.props.onCancel}
         headerTitle={I18n.t("wallet.ConfirmPayment.header")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["payment"]}
       >
         <Content noPadded={true}>
           <PaymentBannerComponent
