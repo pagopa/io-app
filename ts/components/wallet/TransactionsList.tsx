@@ -109,7 +109,7 @@ export default class TransactionsList extends React.Component<Props, State> {
   };
 
   /**
-   * 1 - if transactions length is less then the total, show the loading more button
+   * 1 - if more transaction are available to load, show the load more button
    * 2 - if all transactions are loaded, show end list component
    */
   private footerListComponent = (transactions: ReadonlyArray<Transaction>) => {
