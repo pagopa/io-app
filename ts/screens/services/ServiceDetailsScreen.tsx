@@ -22,6 +22,7 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H4 from "../../components/ui/H4";
 import IconFont from "../../components/ui/IconFont";
@@ -560,6 +561,20 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
     if (!this.hasChannel(NotificationChannelEnum.EMAIL)) {
       return undefined;
     }
+    const messageForwardingState = this.props.isEmailEnabled
+      ? I18n.t("serviceDetail.enabled")
+      : I18n.t("serviceDetail.disabled");
+
+    const emailForwardingDescription = this.props.isEmailValidated
+      ? I18n.t("serviceDetail.lockedMailAlert", {
+          enabled: messageForwardingState
+        })
+      : I18n.t("serviceDetail.notValidated");
+
+    const emailForwardingLink = this.props.isEmailValidated
+      ? I18n.t("serviceDetail.updatePreferences")
+      : I18n.t("serviceDetail.goTo");
+
     // determine if the switch interaction should be disabled
     const isDisabled =
       // notifications (all channels) are disabled globally
@@ -621,6 +636,18 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             onValueChange={onValueChange}
           />
         </Row>
+        {/* TODO: it could be implmented to advise on is_inbox_enabled setting too */}
+        {(!this.props.isCustomEmailChannelEnabled ||
+          !this.props.isEmailValidated) && (
+          <Row style={styles.info}>
+            <Text>
+              {emailForwardingDescription}
+              <Text link={true} onPress={this.navigateToEmailPreferences}>
+                {` ${emailForwardingLink}`}
+              </Text>
+            </Text>
+          </Row>
+        )}
       </React.Fragment>
     );
   };
@@ -628,23 +655,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
   public render() {
     const { service, serviceId } = this;
 
-    const messageForwardingState = this.props.isEmailEnabled
-      ? I18n.t("serviceDetail.enabled")
-      : I18n.t("serviceDetail.disabled");
-
     // collect the service metadata
     const potServiceMetadata =
       this.props.content.servicesMetadata.byId[serviceId] || pot.none;
-
-    const emailForwardingDescription = this.props.isEmailValidated
-      ? I18n.t("serviceDetail.lockedMailAlert", {
-          enabled: messageForwardingState
-        })
-      : I18n.t("serviceDetail.notValidated");
-
-    const emailForwardingLink = this.props.isEmailValidated
-      ? I18n.t("serviceDetail.updatePreferences")
-      : I18n.t("serviceDetail.goTo");
 
     return (
       <BaseScreenComponent
@@ -659,18 +672,6 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
             {this.getInboxSwitchRow()}
             {this.getPushSwitchRow()}
             {this.getEmailSwitchRow()}
-            {/* TODO: it could be implmented to advise on is_inbox_enabled setting too */}
-            {(!this.props.isCustomEmailChannelEnabled ||
-              !this.props.isEmailValidated) && (
-              <Row style={styles.info}>
-                <Text>
-                  {emailForwardingDescription}
-                  <Text link={true} onPress={this.navigateToEmailPreferences}>
-                    {` ${emailForwardingLink}`}
-                  </Text>
-                </Text>
-              </Row>
-            )}
           </Grid>
 
           <View spacer={true} large={true} />
@@ -697,6 +698,9 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
               service.service_id,
               "COPY"
             )}
+          {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) && (
+            <EdgeBorderComponent />
+          )}
           <View spacer={true} extralarge={true} />
         </Content>
       </BaseScreenComponent>

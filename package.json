@@ -1,8 +1,8 @@
 {
   "name": "italia-app",
   "version": "0.1.0",
-  "io_beckend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v5.3.1/api_backend.yaml",
-  "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v5.3.1/api_public.yaml",
+  "io_beckend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v5.13.3/api_backend.yaml",
+  "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v5.13.3/api_public.yaml",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -51,7 +51,7 @@
     "react-native-barcode-builder": "^1.0.5",
     "react-native-calendar-events": "1.7.1",
     "react-native-camera": "3.4.0",
-    "react-native-config": "0.11.7",
+    "react-native-config": "1.0.0",
     "react-native-device-info": "5.5.3",
     "react-native-exception-handler": "2.10.0",
     "react-native-flag-secure-android": "git://github.com/pagopa/react-native-flag-secure-android.git#7afcf2a418b945f976a4f0e7a72e89301253c795",

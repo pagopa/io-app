@@ -73,7 +73,7 @@ PODS:
     - React
   - react-native-camera/RN (3.4.0):
     - React
-  - react-native-config (0.11.7):
+  - react-native-config (1.0.0):
     - React
   - react-native-image-picker (0.28.1):
     - React
@@ -182,7 +182,7 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - boost-for-react-native
     - Mixpanel
 
@@ -294,7 +294,7 @@ SPEC CHECKSUMS:
   react-native-background-timer: 1b6e6b4e10f1b74c367a1fdc3c72b67c619b222b
   react-native-calendar-events: 667f4141959b3f90c44cd328396c1488f216922d
   react-native-camera: f4f2144140ae1e808cad97cc7caf013767c11f1b
-  react-native-config: 55548054279d92e0e4566ea15a8b9b81028ec342
+  react-native-config: 7db9b96479164dfd7b2be68eb9079e08279511c4
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-netinfo: 73303369946c2487c600418961bfdc87748b832f
@@ -326,4 +326,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 144d1674992015df629f48661e7b91bde53204e6
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.9.1

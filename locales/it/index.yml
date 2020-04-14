@@ -54,13 +54,16 @@ global:
   localNotifications:
     spidLogin:
       title: Ricordati di accedere ad IO!
-      message: Accedi con la tua identità SPID su IO, l’app dei servizi pubblici
+      message: Accedi con la tua identità digitale su IO, l’app dei servizi pubblici
 locales:
   it: Italiano
   en: Inglese
 clipboard:
   copyFeedback: Copiato negli appunti
   copyText: copia
+betaBanner:
+  title: 'L’app IO è in versione beta.'
+  description: Le tue segnalazioni ci aiutano a migliorare giorno dopo giorno.
 connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
@@ -106,6 +109,10 @@ profile:
   errors:
     load: Errore nel caricamento del profilo
     upsert: Errore nella creazione o nell'aggiornamento del profilo
+  alerts:
+    emailNotValidated:
+      title: Email non verificata
+      subtitle: È necessario verificare la mail per poter procedere con l'operazione. Per farlo, vai nella sezione profilo e scegli preferenze.
   main:
     title: Profilo
     logout: Logout/Esci
@@ -123,7 +130,7 @@ profile:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
     privacy:
-      title: Privacy
+      title: Privacy e condizioni d'uso
       description: Esporta dati, cancella account
       subtitle: Qui trovi informazioni legate ai tuoi dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo..
@@ -147,15 +154,18 @@ profile:
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo. 
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
-        title: Privacy policy
+        title: Informativa e condizioni d'uso
         description: Rivedi le regole sulla privacy che hai accettato
-        header: Informativa sul trattamento dei dati personali dei Beta Tester dell'app IO
+        header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
         updated: E' necessario prendere visione della nuova versione dell'Informativa
-        text: !include profile/privacy.md
-        contextualHelpTitlePolicy: Cos'è l'informativa sul trattamento dei dati personali
+        contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
-        contextualHelpContent: !include profile/profile_privacy_main.md    
+        contextualHelpContent: !include profile/profile_privacy_main.md  
+    appInfo:
+      title: Informazioni su IO beta
+      description: Per saperne di più sull'app IO
+      contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Sviluppatori
     experimentalFeatures:
       confirmTitle: Funzionalità sperimentali
@@ -261,8 +271,8 @@ authentication:
     card4-title: Potrai utilizzare l'app solo tramite SPID
     card4-content: L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
       Digitale) per garantire la tua sicurezza online
-    card5-title: Benvenuto nella versione beta di IO!
-    card5-content: In questa versione sperimentale trovi in alto a destra
+    card5-title: Benvenuto nella prima versione pubblica di IO!
+    card5-content: In questa versione trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
     expiredCardTitle: Carta scaduta o non più valida
@@ -434,6 +444,8 @@ onboarding:
   tos:
     headerTitle: Attivazione
     continue: Continua
+    accept: Accetta
+    error: Errore nel caricamento
   pin:
     headerTitle: Attivazione
     contentTitle: Scegli un codice di sblocco
@@ -993,3 +1005,170 @@ btnUpdateApp: Aggiorna l'app IO
 systemsOff:
   title: Impossibile usare IO
   closeApp: chiudi l'applicazione e riprova
+faq:
+  1:
+    title: "Cos'è SPID?"
+    content: !include faq/faq1.md
+  2:
+    title: "Come puoi ottenere SPID?"
+    content: !include faq/faq2.md
+  3:
+    title: "Hai perso le tue credenziali SPID?"
+    content: !include faq/faq3.md
+  4: 
+    title: "Cos'è la CIE?"
+    content: !include faq/faq4.md
+  5:
+    title: "Come puoi ottenere la CIE?"
+    content: !include faq/faq5.md
+  6:
+    title: "Che cos'è un Identity Provider?"
+    content: !include faq/faq6.md
+  7:
+    title: "Come scelgiere un Identity Provider?"
+    content: !include faq/faq7.md
+  8:
+    title: "E' possibile avere più di un'identità digitale?"
+    content: !include faq/faq8.md
+  9:
+    title: "Qual è la tua password?"
+    content: !include faq/faq9.md
+  11:
+    title: "Cosa succede se superi i 5 tentativi di autenticazione?"
+    content: !include faq/faq11.md
+  12:
+    title: "Hai fatto tutto correttamente ma comunque non riesci ad entrare?"
+    content: !include faq/faq12.md
+  13:
+    title: "Come vengono gestiti i tuoi dati?"
+    content: !include faq/faq13.md
+  14:
+    title: "Come puoi rileggere l'informativa sul trattamento dei dati personali in un secondo momento?"
+    content: !include faq/faq14.md
+  15:
+    title: "Qual è il PIN della carta d'identità elettronica?"
+    content: !include faq/faq15.md
+  16:
+    title: "Il tuo telefono ha il lettore NFC?"
+    content:  !include faq/faq16.md
+  17:
+    title: "A cosa serve il Codice di sblocco?"
+    content: !include faq/faq17.md
+  18:
+    title: "E' possibile reimpostare il Codice di sblocco in un secondo momento?"
+    content: !include faq/faq18.md
+  19:
+    title: "Il riconoscimento biometrico è sicuro?"
+    content: !include faq/faq19.md
+  
+  20: 
+    title: "Quando ti verrà chiesto il riconoscimento biometrico?"
+    content: !include faq/faq20.md
+  21:
+    title: "Come abilitare il riconoscimento biometrico?"
+    content: !include faq/faq21.md
+  22:
+    title: "Come disabilitare il riconoscimento biometrico?"
+    content: !include faq/faq22.md
+  23:
+    title: "Che tipo di messagi puoi ricevere?"
+    content: !include faq/faq23.md
+  24:
+    title: "Cosa succede se archivi i messaggi?"
+    content: !include faq/faq24.md
+  25:
+    title: "I messaggi possono essere cancellati?"
+    content: !include faq/faq25.md
+  26:
+    title: "E' possibile rispondere ai messaggi?"
+    content: !include faq/faq26.md
+  27:
+    title: "Come si collega un calendario?"
+    content: !include faq/faq27.md
+  28:
+    title: "Non sei interessato a questo messaggio?"
+    content: !include faq/faq28.md
+  29:
+    title: "C'è un errore nella comunicazione che hai ricevuto?"
+    content: !include faq/faq29.md
+  30:
+    title: "Questo ente ha il permesso di scriverti?"
+    content: !include faq/faq30.md
+  31:
+    title: "Vuoi contattare l'ente?"
+    content: !include faq/faq31.md
+  32:
+    title: "Cos'è il codice identificativo del messaggio?"
+    content: !include faq/faq32.md
+  33:
+    title: "E' possibile pagare un avviso che non hai ricevuto tramite l'app IO?"
+    content: !include faq/faq33.md
+  34:
+    title: "Che cos'è un QR code?"
+    content: !include faq/faq34.md
+  35:
+    title: "Che cos'è PagoPA?"
+    content: !include faq/faq35.md
+  36:
+    title: "Non vedi le tue ricevute PagoPA?"
+    content: !include faq/faq36.md
+  37:
+    title: "Quali metodi di pagamento puoi aggiungere?"
+    content: !include faq/faq37.md
+  38: 
+    title: "Riepilogo della transazione e ricevuta del pagamento sono la stessa cosa?"
+    content: !include faq/faq38.md
+  39:
+    title: "Cos'è il codice identificativo della transazione?"
+    content: !include faq/faq39.md
+  40:
+    title: "È possibile archiviare o gestire le ricevute delle transazioni?"
+    content: !include faq/faq40.md
+  41:
+    title: "Come puoi rimuovere un metodo di pagamento?"
+    content: !include faq/faq41.md
+  42:
+    title: "Come puoi aggiungere un metodo di pagamento?"
+    content: !include faq/faq42.md
+  43:
+    title: "Cos'è il CVC/CVV?"
+    content: !include faq/faq43.md
+  44:
+    title: "Perchè devo pagare una commissione?"
+    content: !include faq/faq44.md
+  45:
+    title: "Perchè le commissioni cambiano da un gestore all'altro?"
+    content: !include faq/faq45.md
+  46:
+    title: "Puoi scegliere un gestore diverso a ogni pagamento?"
+    content: !include faq/faq46.md
+  47:
+    title: "Come gestire i servizi su IO?"
+    content: !include faq/faq7.md
+  48:
+    title: "Cosa sono le tue aree di interesse?"
+    content: !include faq/faq48.md
+  49:
+    title: "Puoi contattare gli enti tramite IO?"
+    content: !include faq/faq49.md
+  50:
+    title: "Cosa succede se disattivi un servizio?"
+    content: !include faq/faq50.md
+  51:
+    title: "Come funzionano le notifiche push?"
+    content: !include faq/faq51.md
+  52:
+    title: "Come funziona l'inoltro via email dei messaggi?"
+    content: !include faq/faq52.md
+  53:
+    title: "Come usare i documenti in versione digitale?"
+    content: !include faq/faq53.md
+  54:
+    title: "A cosa serve un fac-simile del Codice Fiscale?"
+    content: !include faq/faq54.md
+  55:
+    title: "Come sarà tutelata la tua privacy?"
+    content: !include faq/faq55.md
+  56:
+    title: "Come cancellare tutti i tuoi dati da IO?"
+    content: !include faq/faq56.md

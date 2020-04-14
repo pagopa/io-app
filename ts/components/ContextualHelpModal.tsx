@@ -1,27 +1,21 @@
-/**
- * This component shows a contextual help
- * using the Modal component
- * that provides additional information when
- * needed (e.g. ToS, explaining why fees are
- * needed)
- */
-
 import { Body, Container, Content, H1, Right, View } from "native-base";
 import * as React from "react";
 import { InteractionManager, Modal, StyleSheet } from "react-native";
-
 import IconFont from "../components/ui/IconFont";
+import themeVariables from "../theme/variables";
+import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import FAQComponent from "./FAQComponent";
+import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
-
-import themeVariables from "../theme/variables";
 
 type Props = Readonly<{
   title: string;
   body: () => React.ReactNode;
   isVisible: boolean;
   close: () => void;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 type State = Readonly<{
@@ -67,6 +61,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         visible={this.props.isVisible}
         onShow={onModalShow}
         animationType="slide"
+        transparent={true}
         onRequestClose={onClose}
       >
         <Container>
@@ -91,8 +86,13 @@ export class ContextualHelpModal extends React.Component<Props, State> {
             >
               <H1>{this.props.title}</H1>
               {this.state.content}
+              {this.props.faqCategories && (
+                <FAQComponent faqCategories={this.props.faqCategories} />
+              )}
+              <View spacer={true} extralarge={true} />
             </Content>
           )}
+          <BetaBannerComponent />
         </Container>
       </Modal>
     );

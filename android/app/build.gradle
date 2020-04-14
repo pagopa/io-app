@@ -207,6 +207,9 @@ dependencies {
     implementation "com.facebook.react:react-native:+"
     compile project(':react-native-community-netinfo')
     compile project(':react-native-cie')
+    compile "com.squareup.okhttp3:okhttp:4.2.1"
+    compile "com.squareup.okhttp3:logging-interceptor:4.2.1"
+    compile "com.squareup.okhttp3:okhttp-urlconnection:4.2.1"
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermesvm/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
