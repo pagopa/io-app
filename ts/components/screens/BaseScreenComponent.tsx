@@ -1,4 +1,4 @@
-import { fromPredicate } from "fp-ts/lib/Option";
+import { fromPredicate, none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
@@ -51,6 +51,7 @@ type Props = OwnProps &
 
 interface State {
   isHelpVisible: boolean;
+  markdownContentLoaded: Option<boolean>;
 }
 
 const maybeDark = fromPredicate(
@@ -61,7 +62,11 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isHelpVisible: false
+      isHelpVisible: false,
+      // if the content is markdown we listen for load end event, otherwise the content is
+      // assumed always loaded
+      markdownContentLoaded:
+        this.props.contextualHelpMarkdown !== undefined ? some(false) : none
     };
   }
 
@@ -105,7 +110,13 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       : contextualHelpMarkdown
         ? {
             body: () => (
-              <Markdown>{I18n.t(contextualHelpMarkdown.body)}</Markdown>
+              <Markdown
+                onLoadEnd={() => {
+                  this.setState({ markdownContentLoaded: some(true) });
+                }}
+              >
+                {I18n.t(contextualHelpMarkdown.body)}
+              </Markdown>
             ),
             title: I18n.t(contextualHelpMarkdown.title)
           }
@@ -135,6 +146,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             body={ch.body}
             isVisible={this.state.isHelpVisible}
             close={this.hideHelp}
+            contentLoaded={this.state.markdownContentLoaded.fold(true, s => s)}
             faqCategories={this.props.faqCategories}
           />
         )}
