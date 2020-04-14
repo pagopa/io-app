@@ -74,7 +74,7 @@
 	<string>The app needs NSAppleMusicUsageDescription permission</string>
 	<key>NSMotionUsageDescription</key>
 	<string>The app needs NSMotionUsageDescription permission</string>
-	<key> NFCReaderUsageDescription</key>
+	<key>NFCReaderUsageDescription</key>
 	<string>The app needs NFCReaderUsageDescription permission</string>
 	<key>NSContactsUsageDescription</key>
 	<string>IO needs access to your contacts to let you add them in calendar events</string>
@@ -107,7 +107,15 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
+		<string>nfc</string>
 	</array>
+	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+  <array>
+    <string>A0000000308000000009816001</string>
+    <string>A00000000039</string>
+    <string>A0000002471001</string>
+    <string>00000000000000</string>
+  </array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

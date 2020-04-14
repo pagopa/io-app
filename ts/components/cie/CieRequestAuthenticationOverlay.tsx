@@ -108,7 +108,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     if (event.url !== undefined && event.url.indexOf("errore.jsp") !== -1) {
       // injectJavascript: `window.location.href = 'https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&OpenApp=1&value='+b+'&authnRequestString='+c;`
       this.setState({
-        injectJavascript: `alert(c);window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`
+        injectJavascript: `window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`
       });
       return false;
     }
