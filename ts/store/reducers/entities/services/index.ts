@@ -317,21 +317,22 @@ export const notSelectedServicesSectionsSelector = createSelector(
 
 export const servicesBadgeValueSelector = createSelector(
   [
-    nationalServicesSectionsSelector,
     selectedLocalServicesSectionsSelector,
+    // Included all national services
+    notSelectedServicesSectionsSelector,
     readServicesByIdSelector,
     isFirstVisibleServiceLoadCompletedSelector
   ],
   (
-    nationalService,
     localService,
+    notSelectedLocalService,
     readServicesById,
     isFirstVisibleServiceLoadCompleted
   ) => {
     if (isFirstVisibleServiceLoadCompleted) {
       const services: ReadonlyArray<ServicesSectionState> = [
-        ...nationalService,
-        ...localService
+        ...localService,
+        ...notSelectedLocalService
       ];
       return services.reduce((acc: number, service: ServicesSectionState) => {
         const servicesNotRead = service.data.filter(
