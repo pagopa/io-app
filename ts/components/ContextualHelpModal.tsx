@@ -12,7 +12,6 @@ import {
 import * as React from "react";
 import {
   InteractionManager,
-  Modal,
   StyleSheet,
   TouchableWithoutFeedback
 } from "react-native";
@@ -29,6 +28,7 @@ import AppHeader from "./ui/AppHeader";
 import { openLink } from "./ui/Markdown/handlers/link";
 import { IProps } from './helpers/withInstabugHelper';
 import { BugReporting } from 'instabug-reactnative';
+import Modal from 'react-native-modal';
 
 type OwnProps = Readonly<{
   title: string;
@@ -47,6 +47,9 @@ type State = Readonly<{
 const styles = StyleSheet.create({
   contentContainerStyle: {
     padding: themeVariables.contentPadding
+  },
+  noMargin: {
+    margin: 0
   }
 });
 
@@ -63,18 +66,8 @@ export class ContextualHelpModal extends React.Component<Props, State> {
     };
   }
 
-  private onDismiss = () => {
-    console.warn('modal dismissed')
-    if(this.props.openInstabugReport) {
-      console.warn('open chat')
-      this.props.openInstabugReport()
-    }
-  }
-
   private handleSetReportType = (type: BugReporting.reportType) => {
-    if(this.props.setReportType){
-      this.props.setReportType(type);
-    }
+    this.props.setReportType(type);
     this.props.close();
   }
 
@@ -100,11 +93,11 @@ export class ContextualHelpModal extends React.Component<Props, State> {
 
     return (
       <Modal
-        visible={this.props.isVisible}
-        onShow={onModalShow}
-        animationType={"slide"}
-        onRequestClose={onClose}
-        onDismiss={this.onDismiss}
+        isVisible={this.props.isVisible}
+        onModalShow={onModalShow}
+        onModalWillHide={onClose}
+        onModalHide={this.props.openInstabugReport}
+        style={styles.noMargin}
       >
         <Container>
           <AppHeader noLeft={true}>
