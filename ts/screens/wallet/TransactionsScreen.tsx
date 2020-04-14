@@ -32,7 +32,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import {
   getWalletTransactionsCreator,
-  transactionsTotalSelector
+  areMoreTransactionsAvailable
 } from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
@@ -158,7 +158,7 @@ class TransactionsScreen extends React.Component<Props> {
           title={I18n.t("wallet.transactions")}
           amount={I18n.t("wallet.amount")}
           transactions={this.props.transactions}
-          transactionsTotal={this.props.potTransactionsTotal}
+          areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
           onLoadMoreTransactions={this.handleLoadMoreTransactions}
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
@@ -177,7 +177,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   )(state),
   favoriteWallet: getFavoriteWalletId(state),
   readTransactions: state.entities.transactionsRead,
-  potTransactionsTotal: transactionsTotalSelector(state)
+  areMoreTransactionsAvailable: areMoreTransactionsAvailable(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

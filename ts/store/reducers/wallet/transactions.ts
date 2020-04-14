@@ -73,9 +73,21 @@ export const latestTransactionsSelector = createSelector(
     )
 );
 
-export const transactionsTotalSelector = (
-  state: GlobalState
-): pot.Pot<number, Error> => state.wallet.transactions.total;
+export const areMoreTransactionsAvailable = (state: GlobalState): boolean => {
+  return pot.getOrElse(
+    pot.map(state.wallet.transactions.transactions, transactions => {
+      return pot.getOrElse(
+        pot.map(
+          state.wallet.transactions.total,
+          t =>
+            Object.keys(transactions).length < t && t < MAX_TRANSACTIONS_IN_LIST
+        ),
+        false
+      );
+    }),
+    false
+  );
+};
 
 // reducer
 const reducer = (

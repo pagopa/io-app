@@ -46,7 +46,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import {
   latestTransactionsSelector,
-  transactionsTotalSelector
+  areMoreTransactionsAvailable
 } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
@@ -315,15 +315,14 @@ class WalletHomeScreen extends React.Component<Props, never> {
   };
 
   private transactionList(
-    potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>,
-    potTransactionsTotal: pot.Pot<number, Error>
+    potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
   ) {
     return (
       <TransactionsList
         title={I18n.t("wallet.latestTransactions")}
         amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
-        transactionsTotal={potTransactionsTotal}
+        areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
@@ -352,7 +351,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const { potWallets, potTransactions, potTransactionsTotal } = this.props;
+    const { potWallets, potTransactions } = this.props;
 
     const wallets = pot.getOrElse(potWallets, []);
 
@@ -371,7 +370,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()
-      : this.transactionList(potTransactions, potTransactionsTotal);
+      : this.transactionList(potTransactions);
 
     const footerContent =
       pot.isSome(potWallets) && this.footerButton(potWallets);
@@ -406,7 +405,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
-  potTransactionsTotal: transactionsTotalSelector(state),
+  areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   readTransactions: transactionsReadSelector(state)
 });

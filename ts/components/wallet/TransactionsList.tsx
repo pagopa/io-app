@@ -33,7 +33,7 @@ type Props = Readonly<{
   title: string;
   amount: string;
   transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
-  transactionsTotal: pot.Pot<number, Error>;
+  areMoreTransactionsAvailable: boolean;
   onLoadMoreTransactions: () => void;
   navigateToTransactionDetails: (transaction: Transaction) => void;
   ListEmptyComponent?: React.ReactNode;
@@ -114,38 +114,31 @@ export default class TransactionsList extends React.Component<Props, State> {
    * 2 - if all transactions are loaded show end list component
    * if we don't know about transaction total, apply case 2
    */
-  private footerListComponent = (
-    transactions: ReadonlyArray<Transaction>,
-    transactionTotal: Option<number>
-  ) => {
-    return transactionTotal.fold(
-      transactions.length > 0 && <EdgeBorderComponent />,
-      total => {
-        if (total > transactions.length) {
-          return (
-            <ButtonDefaultOpacity
-              style={styles.moreButton}
-              bordered={true}
-              disabled={this.state.loadingMore}
-              onPress={() => {
-                this.setState({ loadingMore: true }, () =>
-                  this.props.onLoadMoreTransactions()
-                );
-              }}
-            >
-              <Text>
-                {I18n.t(
-                  // change the button text if we are loading another slice of transactions
-                  this.state.loadingMore
-                    ? "wallet.transacionsLoadingMore"
-                    : "wallet.transactionsLoadMore"
-                )}
-              </Text>
-            </ButtonDefaultOpacity>
+  private footerListComponent = (transactions: ReadonlyArray<Transaction>) => {
+    if (!this.props.areMoreTransactionsAvailable) {
+      return transactions.length > 0 && <EdgeBorderComponent />;
+    }
+
+    return (
+      <ButtonDefaultOpacity
+        style={styles.moreButton}
+        bordered={true}
+        disabled={this.state.loadingMore}
+        onPress={() => {
+          this.setState({ loadingMore: true }, () =>
+            this.props.onLoadMoreTransactions()
           );
-        }
-        return <EdgeBorderComponent />;
-      }
+        }}
+      >
+        <Text>
+          {I18n.t(
+            // change the button text if we are loading another slice of transactions
+            this.state.loadingMore
+              ? "wallet.transacionsLoadingMore"
+              : "wallet.transactionsLoadMore"
+          )}
+        </Text>
+      </ButtonDefaultOpacity>
     );
   };
 
@@ -168,9 +161,6 @@ export default class TransactionsList extends React.Component<Props, State> {
       this.props.transactions,
       []
     );
-    const transactionsTotal: Option<number> = pot.toOption(
-      this.props.transactionsTotal
-    );
     return transactions.length === 0 && ListEmptyComponent ? (
       ListEmptyComponent
     ) : (
@@ -191,10 +181,7 @@ export default class TransactionsList extends React.Component<Props, State> {
             <ItemSeparatorComponent noPadded={true} />
           )}
           keyExtractor={item => item.id.toString()}
-          ListFooterComponent={this.footerListComponent(
-            transactions,
-            transactionsTotal
-          )}
+          ListFooterComponent={this.footerListComponent(transactions)}
         />
       </Content>
     );
