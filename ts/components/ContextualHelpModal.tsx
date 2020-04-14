@@ -1,4 +1,5 @@
 import I18n from "i18n-js";
+import { BugReporting } from "instabug-reactnative";
 import {
   Body,
   Container,
@@ -15,20 +16,19 @@ import {
   StyleSheet,
   TouchableWithoutFeedback
 } from "react-native";
+import Modal from "react-native-modal";
 import IconFont from "../components/ui/IconFont";
 import themeVariables from "../theme/variables";
 import { ioItaliaLink } from "../utils/deepLink";
 import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FAQComponent from "./FAQComponent";
-import InstabugAssistanceComponent from './InstabugAssistanceComponent';
+import { IProps } from "./helpers/withInstabugHelper";
+import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 import { openLink } from "./ui/Markdown/handlers/link";
-import { IProps } from './helpers/withInstabugHelper';
-import { BugReporting } from 'instabug-reactnative';
-import Modal from 'react-native-modal';
 
 type OwnProps = Readonly<{
   title: string;
@@ -69,7 +69,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
   private handleSetReportType = (type: BugReporting.reportType) => {
     this.props.setReportType(type);
     this.props.close();
-  }
+  };
 
   public render(): React.ReactNode {
     // after the modal is fully visible, render the content -
@@ -132,7 +132,9 @@ export class ContextualHelpModal extends React.Component<Props, State> {
 
               <View spacer={true} extralarge={true} />
 
-              <InstabugAssistanceComponent setReportType={this.handleSetReportType}/>
+              <InstabugAssistanceComponent
+                setReportType={this.handleSetReportType}
+              />
 
               <View spacer={true} extralarge={true} />
               <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>

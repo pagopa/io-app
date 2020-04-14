@@ -13,7 +13,6 @@ type Props = Readonly<{
  * The logic to manage the Instabug APIs is inerithed from the withInstabugHelper HOC.
  */
 class InstabugAssistanceComponent extends React.PureComponent<Props> {
-
   public render() {
     return (
       <React.Fragment>
@@ -22,7 +21,9 @@ class InstabugAssistanceComponent extends React.PureComponent<Props> {
         <View spacer={true} extrasmall={true} />
         <ButtonWithImage
           icon={"io-send-message"}
-          onClick={() => this.props.setReportType(BugReporting.reportType.question)}
+          onClick={() =>
+            this.props.setReportType(BugReporting.reportType.question)
+          }
           text={I18n.t("instabug.contextualHelp.buttonChat")}
           disabled={false}
           light={true}

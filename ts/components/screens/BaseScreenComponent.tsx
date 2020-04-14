@@ -5,11 +5,11 @@ import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { TranslationKeys } from "../../../locales/locales";
 import { FAQsCategoriesType } from "../../utils/faq";
+import { ContextualHelpModal } from "../ContextualHelpModal";
+import { IProps, withInstabugHelper } from "../helpers/withInstabugHelper";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
 import { BaseHeader } from "./BaseHeader";
-import { ContextualHelpModal } from '../ContextualHelpModal';
-import { withInstabugHelper, IProps } from '../helpers/withInstabugHelper';
 
 export interface ContextualHelpProps {
   title: string;
@@ -120,7 +120,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
             isVisible={this.state.isHelpVisible}
             close={this.hideHelp}
             faqCategories={this.props.faqCategories}
-            {...this.props as IProps} 
+            {...this.props as IProps}
           />
         )}
       </Container>
