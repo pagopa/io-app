@@ -16,7 +16,7 @@ import { GlobalState } from "../store/reducers/types";
 import ButtonWithImage from "./ButtonWithImage";
 
 type OwnProps = Readonly<{
-  hideComponent: () => void;
+  onInstabugReportOpening: () => void;
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -27,7 +27,7 @@ type State = {
   instabugReportType: Option<string>;
 };
 
-// estimated. Values below 250 makes modal being partially displayed on the screen shot
+// estimated. Values below 250 makes modal being partially displayed on the screenFshot
 const MODAL_SLIDE_ANIMATION_DURATION = Platform.select({
   ios: 250,
   android: 50
@@ -40,7 +40,7 @@ class InstabugAssistanceComponent extends React.PureComponent<Props, State> {
   private handleIBBugPress = () => {
     const bug = "bug";
     this.setState({ instabugReportType: some(bug) });
-    this.props.hideComponent();
+    this.props.onInstabugReportOpening();
     setTimeout(() => {
       this.props.dispatchIBReportOpen(bug);
       BugReporting.showWithOptions(BugReporting.reportType.bug, [

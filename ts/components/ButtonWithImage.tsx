@@ -95,7 +95,7 @@ class ButtonWithImage extends React.PureComponent<Props> {
     const { icon, onClick, text, disabled, light } = this.props;
     return (
       <ButtonDefaultOpacity
-        disabled={disabled !== undefined ? disabled : false}
+        disabled={disabled === true}
         onPress={onClick}
         style={[
           styles.margin,
