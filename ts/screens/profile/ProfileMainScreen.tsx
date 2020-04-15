@@ -353,7 +353,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               title={I18n.t("profile.main.privacy.title")}
               subTitle={I18n.t("profile.main.privacy.description")}
               onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
-              isLastItem={true}
             />
 
             {/* APP IO */}

@@ -69,7 +69,8 @@ class InstabugButtonsComponent extends React.PureComponent<Props, State> {
     this.setState({ instabugReportType: some(bug) });
     this.props.dispatchIBReportOpen(bug);
     BugReporting.showWithOptions(BugReporting.reportType.bug, [
-      BugReporting.option.commentFieldRequired
+      BugReporting.option.commentFieldRequired,
+      BugReporting.option.emailFieldHidden
     ]);
   };
 
