@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -33,7 +34,6 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
