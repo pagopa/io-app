@@ -12,7 +12,9 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { ContextualHelp } from "../../components/ContextualHelp";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -25,6 +27,7 @@ import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
@@ -316,6 +319,19 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       notificationId
     } = this.props;
 
+    const showInformationModal = (
+      title: TranslationKeys,
+      body: TranslationKeys
+    ) => {
+      this.props.showModal(
+        <ContextualHelp
+          onClose={this.props.hideModal}
+          title={I18n.t(title)}
+          body={() => <Markdown>{I18n.t(body)}</Markdown>}
+        />
+      );
+    };
+
     // tslint:disable no-big-function
     const screenContent = () => {
       return (
@@ -338,6 +354,18 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               title={I18n.t("profile.main.privacy.title")}
               subTitle={I18n.t("profile.main.privacy.description")}
               onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
+            />
+
+            {/* APP IO */}
+            <ListItemComponent
+              title={I18n.t("profile.main.appInfo.title")}
+              subTitle={I18n.t("profile.main.appInfo.description")}
+              onPress={() =>
+                showInformationModal(
+                  "profile.main.appInfo.title",
+                  "profile.main.appInfo.contextualHelpContent"
+                )
+              }
               isLastItem={true}
             />
 
