@@ -185,6 +185,28 @@ const isInScope = (
   return false;
 };
 
+// NOTE: this is a workaround not a solution
+// since a service can change its organization fiscal code we could have
+// obsolete data in the store: byOrgFiscalCode could have services that don't belong to organization anymore
+// this cleaning its a workaround, this should be fixed on data loading and not when data are loaded
+// see https://www.pivotaltracker.com/story/show/172316333
+/**
+ * return true if service belongs to the given organization fiscal code
+ * @param service
+ * @param organizationFiscalCode
+ */
+const belongsToOrganization = (
+  service: pot.Pot<ServicePublic, Error>,
+  organizationFiscalCode: string
+) =>
+  pot.getOrElse(
+    pot.map(
+      service,
+      s => s.organization_fiscal_code === organizationFiscalCode
+    ),
+    false
+  );
+
 /**
  * A generalized function to generate sections of organizations including the available services for each organization
  * optional input:
@@ -214,6 +236,7 @@ const getServices = (
         .filter(
           service =>
             isDefined(service) &&
+            belongsToOrganization(service, fiscalCode) && // workaround: see comments above this function definition
             isInScope(service, servicesByScope, scope) &&
             isVisibleService(services.visible, service)
         )

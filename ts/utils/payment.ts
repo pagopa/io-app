@@ -1,4 +1,4 @@
-import { fromEither, Option } from "fp-ts/lib/Option";
+import { fromEither, fromNullable, Option } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -12,9 +12,12 @@ import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 
 import I18n from "../i18n";
 
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
+import { PaymentHistory } from "../store/reducers/payments/history";
 import { Psp, Wallet } from "../types/pagopa";
+import { formatDateAsReminder } from "./dates";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -122,4 +125,34 @@ export const cleanTransactionDescription = (description: string): string => {
   return descriptionParts.length > 1
     ? descriptionParts[descriptionParts.length - 1].trim()
     : "";
+};
+
+export const getPaymentHistoryDetails = (
+  payment: PaymentHistory,
+  profile: InitializedProfile
+): string => {
+  const separator = " / ";
+  const profileDetails = `- name: ${profile.name}${separator}- surname: ${
+    profile.family_name
+  }${separator}- spid_email: ${fromNullable(
+    profile.spid_email as string
+  ).getOrElse("n/a")}${separator}- email: ${fromNullable(
+    profile.email as string
+  ).getOrElse("n/a")}${separator}- cf: ${profile.fiscal_code as string}`;
+  const paymentDetails = `- payment start time: ${formatDateAsReminder(
+    new Date(payment.started_at)
+  )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
+  const successDetails = fromNullable(payment.verified_data)
+    .map(pv => `- success verifica: ${JSON.stringify(pv, null, 4)}`)
+    .getOrElse("");
+  const failureDetails = fromNullable(payment.failure)
+    .map(pf => `- failure verifica: ${pf}`)
+    .getOrElse("");
+  return profileDetails
+    .concat(separator)
+    .concat(paymentDetails)
+    .concat(separator)
+    .concat(successDetails)
+    .concat(separator)
+    .concat(failureDetails);
 };
