@@ -39,7 +39,6 @@ import {
   visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 
 export type ServicesState = Readonly<{
   byId: ServicesByIdState;
