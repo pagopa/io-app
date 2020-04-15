@@ -19,6 +19,7 @@ import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
+import * as cfg from "../../config";
 import {
   idpSelected,
   resetAuthenticationState
@@ -31,6 +32,7 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import { showToast } from "../../utils/showToast";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = NavigationInjectedProps &
   ReturnType<typeof mapStateToProps> &
@@ -102,6 +104,7 @@ const IdpCIE: IdentityProvider = {
 
 class LandingScreen extends React.PureComponent<Props> {
   public componentDidMount() {
+    RTron.log("cfg", cfg);
     if (this.props.isSessionExpired) {
       showToast(
         I18n.t("authentication.expiredSessionBanner.message"),

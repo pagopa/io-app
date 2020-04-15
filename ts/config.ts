@@ -6,9 +6,6 @@ import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
 
-// default application name to show in the header of the topmost screens
-export const DEFAULT_APPLICATION_NAME = "io.italia.it";
-
 // default repository for fetching app content (e.g. services metadata)
 const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/pagopa/io-services-metadata/master" as NonEmptyString;
 
