@@ -1,10 +1,13 @@
+import { fromPredicate } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { TranslationKeys } from "../../../locales/locales";
+import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
@@ -50,6 +53,10 @@ interface State {
   isHelpVisible: boolean;
 }
 
+const maybeDark = fromPredicate(
+  (isDark: boolean | undefined = undefined) => isDark === true
+);
+
 class BaseScreenComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -59,10 +66,21 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   }
 
   private showHelp = () => {
+    maybeDark(this.props.dark).map(_ =>
+      setStatusBarColorAndBackground("dark-content", customVariables.colorWhite)
+    );
+
     this.setState({ isHelpVisible: true });
   };
 
   private hideHelp = () => {
+    maybeDark(this.props.dark).map(_ =>
+      setStatusBarColorAndBackground(
+        "light-content",
+        customVariables.brandDarkGray
+      )
+    );
+
     this.setState({ isHelpVisible: false });
   };
 
