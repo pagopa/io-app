@@ -24,7 +24,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 type State = {
-  instabugReportType: Option<string>;
+  instabugReportType: Option<BugReporting.reportType>;
 };
 
 // estimated. Values below 250 makes modal being partially displayed on the screenFshot
@@ -37,14 +37,14 @@ const MODAL_SLIDE_ANIMATION_DURATION = Platform.select({
  * A component to send a request to the assistance by Instabug functionalities.
  */
 class InstabugAssistanceComponent extends React.PureComponent<Props, State> {
-  private handleIBBugPress = () => {
-    const bug = "bug";
-    this.setState({ instabugReportType: some(bug) });
+  private handleIBPress = (type: BugReporting.reportType) => {
+    this.setState({ instabugReportType: some(type) });
     this.props.onInstabugReportOpening();
     setTimeout(() => {
-      this.props.dispatchIBReportOpen(bug);
-      BugReporting.showWithOptions(BugReporting.reportType.bug, [
-        BugReporting.option.commentFieldRequired
+      this.props.dispatchIBReportOpen(type);
+      BugReporting.showWithOptions(type, [
+        BugReporting.option.commentFieldRequired,
+        BugReporting.option.emailFieldHidden
       ]);
     }, MODAL_SLIDE_ANIMATION_DURATION);
   };
@@ -84,7 +84,7 @@ class InstabugAssistanceComponent extends React.PureComponent<Props, State> {
         {/** TODO: add new io-send-message icon */}
         <ButtonWithImage
           icon={"io-messaggi"}
-          onClick={this.handleIBBugPress}
+          onClick={() => this.handleIBPress(BugReporting.reportType.question)}
           text={I18n.t("instabug.contextualHelp.buttonChat")}
           disabled={false}
           light={true}
@@ -95,7 +95,7 @@ class InstabugAssistanceComponent extends React.PureComponent<Props, State> {
 
         <ButtonWithImage
           icon={"io-bug"}
-          onClick={this.handleIBBugPress}
+          onClick={() => this.handleIBPress(BugReporting.reportType.bug)}
           text={I18n.t("instabug.contextualHelp.buttonBug")}
           disabled={false}
           light={true}
@@ -112,9 +112,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchIBReportOpen: (type: string) =>
+  dispatchIBReportOpen: (type: BugReporting.reportType) =>
     dispatch(instabugReportOpened({ type })),
-  dispatchIBReportClosed: (type: string, how: string) =>
+  dispatchIBReportClosed: (type: BugReporting.reportType, how: string) =>
     dispatch(instabugReportClosed({ type, how })),
   dispatchUpdateInstabugUnreadMessagesCounter: () =>
     dispatch(updateInstabugUnreadMessages())

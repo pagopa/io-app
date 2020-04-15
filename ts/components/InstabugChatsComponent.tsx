@@ -48,7 +48,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  instabugReportType: Option<string>;
+  instabugReportType: Option<BugReporting.reportType>;
   hasChats: boolean;
 };
 
@@ -58,9 +58,10 @@ type State = {
  */
 class InstabugChatsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
-    const chat = "chat";
-    this.setState({ instabugReportType: some(chat) });
-    this.props.dispatchIBReportOpen(chat);
+    this.setState({
+      instabugReportType: some(BugReporting.reportType.question)
+    });
+    this.props.dispatchIBReportOpen(BugReporting.reportType.question);
     if (this.state.hasChats) {
       Replies.show();
     } else {
@@ -69,9 +70,8 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
   };
 
   private handleIBBugPress = () => {
-    const bug = "bug";
-    this.setState({ instabugReportType: some(bug) });
-    this.props.dispatchIBReportOpen(bug);
+    this.setState({ instabugReportType: some(BugReporting.reportType.bug) });
+    this.props.dispatchIBReportOpen(BugReporting.reportType.bug);
     BugReporting.showWithOptions(BugReporting.reportType.bug, [
       BugReporting.option.commentFieldRequired,
       BugReporting.option.emailFieldHidden
@@ -164,9 +164,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchIBReportOpen: (type: string) =>
+  dispatchIBReportOpen: (type: BugReporting.reportType) =>
     dispatch(instabugReportOpened({ type })),
-  dispatchIBReportClosed: (type: string, how: string) =>
+  dispatchIBReportClosed: (type: BugReporting.reportType, how: string) =>
     dispatch(instabugReportClosed({ type, how })),
   dispatchUpdateInstabugUnreadMessagesCounter: () =>
     dispatch(updateInstabugUnreadMessages())
