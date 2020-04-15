@@ -27,6 +27,7 @@ import {
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
 } from "../../store/actions/userDataProcessing";
+import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { showToast } from "../../utils/showToast";
@@ -59,6 +60,13 @@ const confirmAlertSubtitle = {
   DOWNLOAD: I18n.t("profile.main.privacy.exportData.alert.confirmSubtitle"),
   DELETE: I18n.t("profile.main.privacy.removeAccount.alert.confirmSubtitle")
 };
+
+const needValidatedEmailTitle = I18n.t(
+  "profile.alerts.emailNotValidated.title"
+);
+const needValidatedEmailSubtitle = I18n.t(
+  "profile.alerts.emailNotValidated.subtitle"
+);
 
 class PrivacyMainScreen extends React.PureComponent<Props> {
   // Show an alert reporting the request has been submitted
@@ -93,6 +101,16 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
   // show an alert to confirm the request sumbission
   private handleConfirmAlert = (choice: UserDataProcessingChoiceEnum) => {
     Alert.alert(confirmAlertTitle[choice], confirmAlertSubtitle[choice]);
+  };
+
+  // Handle the tap on Download or Delete data.
+  // Check if the mail is validated before to send any backend request.
+  private handleDownloadOrDeletePress = (
+    choice: UserDataProcessingChoiceEnum
+  ): void => {
+    !this.props.isEmailValidated
+      ? Alert.alert(needValidatedEmailTitle, needValidatedEmailSubtitle)
+      : this.props.loadUserDataRequest(choice);
   };
 
   public componentDidUpdate(prevProps: Props) {
@@ -176,7 +194,7 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
                 "profile.main.privacy.removeAccount.description"
               )}
               onPress={() =>
-                this.props.loadUserDataRequest(
+                this.handleDownloadOrDeletePress(
                   UserDataProcessingChoiceEnum.DELETE
                 )
               }
@@ -193,7 +211,7 @@ class PrivacyMainScreen extends React.PureComponent<Props> {
               title={I18n.t("profile.main.privacy.exportData.title")}
               subTitle={I18n.t("profile.main.privacy.exportData.description")}
               onPress={() =>
-                this.props.loadUserDataRequest(
+                this.handleDownloadOrDeletePress(
                   UserDataProcessingChoiceEnum.DOWNLOAD
                 )
               }
@@ -240,7 +258,8 @@ const mapStateToProps = (state: GlobalState) => {
       pot.isLoading(userDataProcessing.DOWNLOAD));
   return {
     userDataProcessing,
-    isLoading
+    isLoading,
+    isEmailValidated: isProfileEmailValidatedSelector(state)
   };
 };
 

@@ -97,3 +97,5 @@ shim.js
 
 # Google services definition
 android/app/google-services.json
+# React native config generated file
+GeneratedDotEnv.m
