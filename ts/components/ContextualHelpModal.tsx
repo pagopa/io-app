@@ -92,39 +92,29 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         visible={this.props.isVisible}
         onShow={onModalShow}
         animationType={"slide"}
+        transparent={true}
         onRequestClose={onClose}
       >
         <SafeAreaView style={styles.flex}>
           <Container style={isIphoneX() ? styles.iphoneXBottom : undefined}>
             {simpleHeader}
-            <Content
-              contentContainerStyle={styles.contentContainerStyle}
-              noPadded={true}
-            >
+            <Content noPadded={true}>
               <View style={styles.padded}>
                 <View spacer={true} />
                 <H3>{this.props.title}</H3>
                 <View spacer={true} large={true} />
-                {!this.state.content && (
-                  <View centerJustified={true}>
-                    <ActivityIndicator
-                      color={themeVariables.brandPrimaryLight}
-                    />
-                  </View>
+
+                {this.state.content || (
+                  <ActivityIndicator color={themeVariables.brandPrimaryLight} />
                 )}
-                {this.state.content && (
+
+                {this.props.faqCategories && (
                   <React.Fragment>
-                    {this.state.content}
-                    {this.props.faqCategories && (
-                      <React.Fragment>
-                        <View spacer={true} extralarge={true} />
-                        <FAQComponent
-                          faqCategories={this.props.faqCategories}
-                        />
-                      </React.Fragment>
-                    )}
+                    <View spacer={true} extralarge={true} />
+                    <FAQComponent faqCategories={this.props.faqCategories} />
                   </React.Fragment>
                 )}
+
                 <View spacer={true} />
               </View>
               {this.state.content && <BetaBannerComponent />}
