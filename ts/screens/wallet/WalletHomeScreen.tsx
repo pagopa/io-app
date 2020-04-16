@@ -30,6 +30,7 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
+  navigateToPaymentDetail,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
@@ -42,6 +43,10 @@ import {
 } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
+import {
+  paymentsHistorySelector,
+  PaymentsHistoryState
+} from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
@@ -306,16 +311,19 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   private transactionList(
-    potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
+    potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>,
+    potPayments: PaymentsHistoryState
   ) {
     return (
       <TransactionsList
         title={I18n.t("wallet.latestTransactions")}
         amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
+        paymentsHistory={potPayments}
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
+        navigateToPaymentDetail={() => this.props.navigateToPaymentDetail()}
         readTransactions={this.props.readTransactions}
         ListEmptyComponent={this.listEmptyComponent()}
       />
@@ -340,7 +348,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const { potWallets, potTransactions } = this.props;
+    const { potWallets, potTransactions, potPayments } = this.props;
 
     const wallets = pot.getOrElse(potWallets, []);
 
@@ -359,7 +367,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
     const transactionContent = pot.isError(potTransactions)
       ? this.transactionError()
-      : this.transactionList(potTransactions);
+      : this.transactionList(potTransactions, potPayments);
 
     const footerContent =
       pot.isSome(potWallets) && this.footerButton(potWallets);
@@ -393,6 +401,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
+  potPayments: paymentsHistorySelector(state),
   potTransactions: latestTransactionsSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   readTransactions: transactionsReadSelector(state)
@@ -413,7 +422,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     );
   },
   loadTransactions: () => dispatch(fetchTransactionsRequest()),
-  loadWallets: () => dispatch(fetchWalletsRequest())
+  loadWallets: () => dispatch(fetchWalletsRequest()),
+  navigateToPaymentDetail: () => dispatch(navigateToPaymentDetail())
 });
 
 export default withValidatedPagoPaVersion(

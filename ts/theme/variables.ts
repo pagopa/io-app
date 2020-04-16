@@ -57,6 +57,7 @@ const customVariables = Object.assign(materialVariables, {
   itemSeparator: "#C9C9C9",
 
   toastColor: "#C1f4f2",
+  badgeYellow: "#ffc824",
 
   // Font
   ...makeFontStyleObject(Platform.select),

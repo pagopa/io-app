@@ -534,6 +534,27 @@ payment:
   changePsp: Change PSP
   IUV: IUV
   recipientFiscalCode: Recipient fiscal code
+  details:
+    state:
+      successful: successful
+      incomplete: not finished
+      failed: failed
+    info:
+      buttons:
+        copy: copy
+        help: Contact support
+      title: Payment Detail
+      enteCreditore: Creditor
+      causaleVersamento: Causal
+      dateAndTime: Date and time
+      paymentAmount: Payment amount
+      transactionCosts: Transaction costs
+      totalPaid: Total paid
+      transactionCode: transaction identification code
+      help: If you have encountered a problem with this payment, write to us for more information and details
+    list:
+      title: Payment attempts
+      iuv: IUV payment {{iuv}}
 wallet:
   wallet: Payments
   alert:
@@ -550,6 +571,10 @@ wallet:
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
+  transactionHelpMessage:
+    text1: If you have had problems during a payment,
+    text2: consult the help
+    text3: at the top right of this page
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time

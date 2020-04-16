@@ -16,6 +16,7 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
+  navigateToPaymentDetail,
   navigateToTransactionDetailsScreen,
   navigateToWalletHome,
   navigateToWalletList
@@ -29,6 +30,7 @@ import {
   deleteWalletRequest,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
+import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
 import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
@@ -152,6 +154,8 @@ class TransactionsScreen extends React.Component<Props> {
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
           }
+          navigateToPaymentDetail={() => this.props.navigateToPaymentDetail()}
+          paymentsHistory={this.props.potPayments}
           readTransactions={this.props.readTransactions}
           ListEmptyComponent={ListEmptyComponent}
         />
@@ -164,6 +168,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   transactions: getWalletTransactionsCreator(
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state),
+  potPayments: paymentsHistorySelector(state),
   favoriteWallet: getFavoriteWalletId(state),
   readTransactions: state.entities.transactionsRead
 });
@@ -197,7 +202,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
           showToast(I18n.t("wallet.delete.failed"), "danger");
         }
       })
-    )
+    ),
+  navigateToPaymentDetail: () => dispatch(navigateToPaymentDetail())
 });
 
 export default connect(

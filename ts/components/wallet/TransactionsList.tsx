@@ -4,9 +4,15 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  TouchableWithoutFeedback
+} from "react-native";
 import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
+import { PaymentsHistoryState } from "../../store/reducers/payments/history";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
@@ -23,6 +29,8 @@ type Props = Readonly<{
   amount: string;
   transactions: pot.Pot<ReadonlyArray<Transaction>, Error>;
   navigateToTransactionDetails: (transaction: Transaction) => void;
+  navigateToPaymentDetail: () => void;
+  paymentsHistory: PaymentsHistoryState;
   ListEmptyComponent?: React.ReactNode;
   readTransactions: ReadTransactionsState;
 }>;
@@ -99,6 +107,25 @@ export default class TransactionsList extends React.Component<Props> {
             <Text>{I18n.t("wallet.amount")}</Text>
           </View>
         </View>
+        {this.props.paymentsHistory.length > 0 && (
+          <Text>
+            {I18n.t("wallet.transactionHelpMessage.text1")}{" "}
+            <TouchableWithoutFeedback
+              onPress={() => this.props.navigateToPaymentDetail()}
+            >
+              <Text
+                style={{
+                  color: variables.brandPrimary,
+                  textDecorationLine: "underline",
+                  fontWeight: "600"
+                }}
+              >
+                {I18n.t("wallet.transactionHelpMessage.text2")}
+              </Text>
+            </TouchableWithoutFeedback>{" "}
+            {I18n.t("wallet.transactionHelpMessage.text3")}
+          </Text>
+        )}
         <FlatList
           scrollEnabled={false}
           data={transactions}

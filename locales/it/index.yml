@@ -540,6 +540,27 @@ payment:
   changePsp: Cambia PSP
   IUV: IUV
   recipientFiscalCode: Codice fiscale beneficiario
+  details:
+    state:
+      successful: A buon fine
+      incomplete: non terminato
+      failed: fallito
+    info:
+      buttons:
+        copy: copia
+        help: Contatta l'assistenza
+      title: Dettaglio Pagamento
+      enteCreditore: Ente Creditore
+      causaleVersamento: Causale
+      dateAndTime: Data e Ora
+      paymentAmount: Importo Pagamento
+      transactionCosts: Costi di Transazione
+      totalPaid: Totale Pagato
+      transactionCode: codice identificativo della transazione
+      help: Se hai riscontrato un problema con questo pagamento, Scrivici per maggiorni informazioni e dettagli
+    list:
+      title: Tentativi di pagamento
+      iuv: Pagamento IUV {{iuv}}
 wallet:
   wallet: Pagamenti
   alert:
@@ -556,6 +577,10 @@ wallet:
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
   transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
+  transactionHelpMessage:
+    text1: Se hai avuto problemi durante un pagamento,
+    text2: consulta l'help
+    text3: in alto a destra su questa pagina
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile
