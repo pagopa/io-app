@@ -54,7 +54,6 @@ package-lock.json
 
 # App Config
 .env
-.env.local
 
 # BUCK
 buck-out/
