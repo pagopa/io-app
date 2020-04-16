@@ -25,6 +25,8 @@ import { authenticateConfig } from "./utils/biometric";
 
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
+import { fromNullable } from "fp-ts/lib/Option";
+import { RTron } from "./boot/configureStoreAndPersistor";
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
@@ -43,7 +45,8 @@ type State = {
   identificationByPinState: IdentificationByPinState;
   identificationByBiometryState: IdentificationByBiometryState;
   biometryType?: BiometryPrintableSimpleType;
-  canInsertPin: boolean;
+  canInsertPinBiometry: boolean;
+  canInsertPinTooManyAttempts: boolean;
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -121,9 +124,22 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     this.state = {
       identificationByPinState: "unstarted",
       identificationByBiometryState: "unstarted",
-      canInsertPin: false
+      canInsertPinBiometry: false,
+      canInsertPinTooManyAttempts: true
     };
   }
+
+  private idCheckCanInsertPin?: number;
+
+  private checkCanInsertPin = () => {
+    const identificationFailState = this.props.identificationFailState;
+    fromNullable(identificationFailState).map(errorData => {
+      RTron.log(`Tic Tac ${errorData.nextLegalAttempt <= new Date()}`);
+      this.setState({
+        canInsertPinTooManyAttempts: errorData.nextLegalAttempt <= new Date()
+      });
+    });
+  };
 
   public componentDidMount() {
     const { isFingerprintEnabled } = this.props;
@@ -140,8 +156,18 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       );
     } else {
       // if the biometric is not available unlock the unlock code insertion
-      this.setState({ canInsertPin: true });
+      this.setState({ canInsertPinBiometry: true });
     }
+
+    // tslint:disable-next-line: no-object-mutation
+    this.idCheckCanInsertPin = setInterval(this.checkCanInsertPin, 1000);
+  }
+
+  public componentWillUnmount() {
+    if (this.idCheckCanInsertPin !== undefined) {
+      clearTimeout(this.idCheckCanInsertPin);
+    }
+    clearInterval(this.idCheckCanInsertPin);
   }
 
   /**
@@ -161,9 +187,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     updateBiometrySupportProp: boolean;
   }) {
     // check if the state of identification process is correct
-    const { identificationState, isFingerprintEnabled } = this.props;
+    const { identificationProgressState, isFingerprintEnabled } = this.props;
 
-    if (identificationState.kind !== "started") {
+    if (identificationProgressState.kind !== "started") {
       return;
     }
 
@@ -179,7 +205,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   biometryType !== "UNAVAILABLE"
                     ? biometryType
                     : undefined,
-                canInsertPin:
+                canInsertPinBiometry:
                   biometryType === "NOT_ENROLLED" ||
                   biometryType === "UNAVAILABLE"
               });
@@ -207,8 +233,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     if (
       (prevProps.appState === "background" &&
         this.props.appState === "active") ||
-      (prevProps.identificationState.kind !== "started" &&
-        this.props.identificationState.kind === "started")
+      (prevProps.identificationProgressState.kind !== "started" &&
+        this.props.identificationProgressState.kind === "started")
     ) {
       this.maybeTriggerFingerprintRequest({
         updateBiometrySupportProp:
@@ -218,14 +244,14 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }
 
   private onIdentificationSuccessHandler = () => {
-    const { identificationState, dispatch } = this.props;
+    const { identificationProgressState, dispatch } = this.props;
 
-    if (identificationState.kind !== "started") {
+    if (identificationProgressState.kind !== "started") {
       return;
     }
 
     // The identification state is started we need to show the modal
-    const { identificationSuccessData } = identificationState;
+    const { identificationSuccessData } = identificationProgressState;
 
     if (identificationSuccessData) {
       identificationSuccessData.onSuccess();
@@ -239,9 +265,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const { identificationState, isFingerprintEnabled, dispatch } = this.props;
+    const {
+      identificationProgressState,
+      isFingerprintEnabled,
+      dispatch
+    } = this.props;
 
-    if (identificationState.kind !== "started") {
+    if (identificationProgressState.kind !== "started") {
       return null;
     }
 
@@ -251,7 +281,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       canResetPin,
       identificationGenericData,
       identificationCancelData
-    } = identificationState;
+    } = identificationProgressState;
 
     const {
       identificationByPinState,
@@ -262,6 +292,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const identificationMessage = identificationGenericData
       ? identificationGenericData.message
       : this.renderBiometryType();
+
+    const canInsertPin =
+      this.state.canInsertPinBiometry && this.state.canInsertPinTooManyAttempts;
 
     /**
      * Create handlers merging default internal actions (to manage the identification state)
@@ -307,7 +340,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   this.onIdentificationFailureHandler
                 )
               }
-              disabled={!this.state.canInsertPin}
+              disabled={!canInsertPin}
               compareWithCode={pin as string}
               activeColor={"white"}
               inactiveColor={"white"}
@@ -392,7 +425,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       .catch((error: AuthenticationError) => {
         // some error occured, enable pin insertion
         this.setState({
-          canInsertPin: true
+          canInsertPinBiometry: true
         });
         if (isDebugBiometricIdentificationEnabled) {
           Alert.alert("identification.biometric.title", `KO: ${error.code}`);
@@ -411,7 +444,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  identificationState: state.identification,
+  identificationProgressState: state.identification.progress,
+  identificationFailState: state.identification.fail,
   isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
   appState: state.appState.appState
 });

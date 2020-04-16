@@ -1,8 +1,10 @@
 import { getType } from "typesafe-actions";
 
+import { fromNullable } from "fp-ts/lib/Option";
 import { PinString } from "../../types/PinString";
 import {
   identificationCancel,
+  identificationFailure,
   identificationReset,
   identificationStart,
   identificationSuccess
@@ -23,6 +25,12 @@ export type IdentificationCancelData = { label: string; onCancel: () => void };
 
 export type IdentificationSuccessData = { onSuccess: () => void };
 
+export type IdentificationFailData = {
+  wrongAttempts: number;
+  nextLegalAttempt: Date;
+  timespanBetweenAttempts: number;
+};
+
 type IdentificationUnidentifiedState = {
   kind: "unidentified";
 };
@@ -40,13 +48,35 @@ type IdentificationIdentifiedState = {
   kind: "identified";
 };
 
-export type IdentificationState =
+export type IdentificationProgressState =
   | IdentificationUnidentifiedState
   | IdentificationStartedState
   | IdentificationIdentifiedState;
 
-const INITIAL_STATE: IdentificationUnidentifiedState = {
+export type IdentificationState = {
+  progress: IdentificationProgressState;
+  fail?: IdentificationFailData;
+};
+
+const INITIAL_PROGRESS_STATE: IdentificationUnidentifiedState = {
   kind: "unidentified"
+};
+
+const INITIAL_STATE: IdentificationState = {
+  progress: INITIAL_PROGRESS_STATE,
+  fail: undefined
+};
+
+const nextErrorData = (
+  errorData: IdentificationFailData
+): IdentificationFailData => {
+  return {
+    nextLegalAttempt: new Date(
+      Date.now() + errorData.timespanBetweenAttempts * 1000
+    ),
+    wrongAttempts: errorData.wrongAttempts + 1,
+    timespanBetweenAttempts: errorData.wrongAttempts > 3 ? 30 : 0
+  };
 };
 
 const reducer = (
@@ -56,22 +86,42 @@ const reducer = (
   switch (action.type) {
     case getType(identificationStart):
       return {
-        kind: "started",
-        ...action.payload
+        progress: {
+          kind: "started",
+          ...action.payload
+        }
       };
 
     case getType(identificationCancel):
       return {
-        kind: "unidentified"
+        progress: {
+          kind: "unidentified"
+        }
       };
 
     case getType(identificationSuccess):
       return {
-        kind: "identified"
+        progress: {
+          kind: "identified"
+        }
       };
 
     case getType(identificationReset):
       return INITIAL_STATE;
+
+    case getType(identificationFailure):
+      const newErrorData = fromNullable(state.fail).fold(
+        {
+          nextLegalAttempt: new Date(),
+          wrongAttempts: 1,
+          timespanBetweenAttempts: 0
+        },
+        errorData => nextErrorData(errorData)
+      );
+      return {
+        ...state,
+        fail: newErrorData
+      };
 
     default:
       return state;
