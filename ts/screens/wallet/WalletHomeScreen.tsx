@@ -1,8 +1,3 @@
-/**
- * Wallet home screen, with a list of recent transactions,
- * a "pay notice" button and payment methods info/button to
- * add new ones
- */
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
@@ -22,13 +17,15 @@ import { withValidatedEmail } from "../../components/helpers/withValidatedEmail"
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H5 from "../../components/ui/H5";
-import IconFont from "../../components/ui/IconFont";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
+import { shouldDisplayDonationsFeature } from "../../config";
 import I18n from "../../i18n";
+import ROUTES from "../../navigation/routes";
 import {
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
@@ -46,8 +43,8 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
-import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
@@ -63,58 +60,46 @@ const styles = StyleSheet.create({
   inLineSpace: {
     lineHeight: 20
   },
-
   white: {
     color: variables.colorWhite
   },
-
   container: {
     flex: 1,
     alignItems: "flex-start",
     justifyContent: "center",
     backgroundColor: "transparent"
   },
-
   flex1: {
     flex: 1
   },
-
   flexRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   },
-
   emptyListWrapper: {
     padding: variables.contentPadding,
     alignItems: "center"
   },
-
   emptyListContentTitle: {
     paddingBottom: variables.contentPadding / 2,
     fontSize: variables.fontSizeSmall
   },
-
   bordercColorBrandGray: {
     borderColor: variables.brandGray
   },
-
   colorBrandGray: {
     color: variables.brandGray
   },
-
   brandDarkGray: {
     color: variables.brandDarkGray
   },
-
   brandLightGray: {
     color: variables.brandLightGray
   },
-
   whiteBg: {
     backgroundColor: variables.colorWhite
   },
-
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
@@ -127,7 +112,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 /**
- * Wallet Home Screen
+ * Wallet home screen, with:
+ * - payment methods info/button to add new ones,
+ * - a list of recent transactions,
+ * - a "pay notice" button,
+ * - a "donate" button
  */
 class WalletHomeScreen extends React.Component<Props, never> {
   private navListener?: NavigationEventSubscription;
@@ -323,19 +312,36 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
-    return (
-      <ButtonDefaultOpacity
-        block={true}
-        onPress={
-          pot.isSome(potWallets)
+    return shouldDisplayDonationsFeature ? (
+      <FooterWithButtons
+        type={"TwoButtonsInlineHalf"}
+        leftButton={{
+          iconName: "io-qr",
+          block: true,
+          title: I18n.t("wallet.payNotice"),
+          onPress: pot.isSome(potWallets)
             ? this.props.navigateToPaymentScanQrCode
             : undefined
-        }
-        activeOpacity={1}
-      >
-        <IconFont name="io-qr" style={styles.white} />
-        <Text>{I18n.t("wallet.payNotice")}</Text>
-      </ButtonDefaultOpacity>
+        }}
+        rightButton={{
+          title: I18n.t("donations.button"),
+          iconName: "io-heart",
+          info: true,
+          onPress: () => this.props.navigation.navigate(ROUTES.DONATIONS_HOME)
+        }}
+      />
+    ) : (
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={{
+          iconName: "io-qr",
+          block: true,
+          title: I18n.t("wallet.payNotice"),
+          onPress: pot.isSome(potWallets)
+            ? this.props.navigateToPaymentScanQrCode
+            : undefined
+        }}
+      />
     );
   }
 

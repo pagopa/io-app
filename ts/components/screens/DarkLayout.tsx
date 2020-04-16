@@ -13,12 +13,11 @@ import { StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import AnimatedScreenContent from "./AnimatedScreenContent";
-import {
+import BaseScreenComponent, {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
-import TopScreenComponent from "./TopScreenComponent";
 
 type Props = Readonly<{
   allowGoBack?: boolean;
@@ -65,9 +64,10 @@ export default class DarkLayout extends React.Component<Props> {
       </React.Fragment>
     );
   }
+
   public render() {
     return (
-      <TopScreenComponent
+      <BaseScreenComponent
         goBack={this.props.allowGoBack}
         headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
@@ -108,10 +108,8 @@ export default class DarkLayout extends React.Component<Props> {
             {this.screenContent()}
           </ScreenContent>
         )}
-        {this.props.footerContent && (
-          <View footer={true}>{this.props.footerContent}</View>
-        )}
-      </TopScreenComponent>
+        {this.props.footerContent}
+      </BaseScreenComponent>
     );
   }
 }
