@@ -20,7 +20,7 @@ import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import emailValidationReducer from "./emailValidation";
 import entitiesReducer, { EntitiesState } from "./entities";
-import identificationReducer from "./identification";
+import identificationReducer, { IdentificationState } from "./identification";
 import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
 import installationReducer from "./installation";
 import navigationReducer from "./navigation";
@@ -36,6 +36,7 @@ import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
+import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -49,6 +50,14 @@ export const entitiesPersistConfig: PersistConfig = {
   key: "entities",
   storage: AsyncStorage,
   blacklist: ["messages"]
+};
+
+// A custom configuration to store the fail information of the identification section
+export const identificationPersistConfig: PersistConfig = {
+  key: "identification",
+  storage: AsyncStorage,
+  blacklist: ["progress"],
+  transforms: [DateISO8601Transform]
 };
 
 /**
@@ -76,7 +85,6 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   backendInfo: backendInfoReducer,
   backendStatus: backendStatusReducer,
   preferences: preferencesReducer,
-  identification: identificationReducer,
   navigationHistory: navigationHistoryReducer,
   instabug: instabugUnreadMessagesReducer,
   search: searchReducer,
@@ -93,6 +101,11 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   ),
 
   // standard persistor, see configureStoreAndPersistor.ts
+
+  identification: persistReducer<IdentificationState, Action>(
+    identificationPersistConfig,
+    identificationReducer
+  ),
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,

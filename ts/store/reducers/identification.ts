@@ -1,6 +1,7 @@
 import { getType } from "typesafe-actions";
 
 import { fromNullable } from "fp-ts/lib/Option";
+import { PersistPartial } from "redux-persist";
 import { PinString } from "../../types/PinString";
 import {
   identificationCancel,
@@ -25,12 +26,6 @@ export type IdentificationCancelData = { label: string; onCancel: () => void };
 
 export type IdentificationSuccessData = { onSuccess: () => void };
 
-export type IdentificationFailData = {
-  wrongAttempts: number;
-  nextLegalAttempt: Date;
-  timespanBetweenAttempts: number;
-};
-
 type IdentificationUnidentifiedState = {
   kind: "unidentified";
 };
@@ -53,10 +48,18 @@ export type IdentificationProgressState =
   | IdentificationStartedState
   | IdentificationIdentifiedState;
 
+export type IdentificationFailData = {
+  wrongAttempts: number;
+  nextLegalAttempt: Date;
+  timespanBetweenAttempts: number;
+};
+
 export type IdentificationState = {
   progress: IdentificationProgressState;
   fail?: IdentificationFailData;
 };
+
+export type PersistedIdentificationState = IdentificationState & PersistPartial;
 
 const INITIAL_PROGRESS_STATE: IdentificationUnidentifiedState = {
   kind: "unidentified"
@@ -86,6 +89,7 @@ const reducer = (
   switch (action.type) {
     case getType(identificationStart):
       return {
+        ...state,
         progress: {
           kind: "started",
           ...action.payload

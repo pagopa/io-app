@@ -1,5 +1,6 @@
 import { createTransform, TransformIn, TransformOut } from "redux-persist";
 import { DateFromISOString } from "../../utils/dates";
+import { fromNullable } from "fp-ts/lib/Option";
 
 /**
  * dateFieldsTransformable contains the name of the fields that are
@@ -18,7 +19,11 @@ import { DateFromISOString } from "../../utils/dates";
  *
  * https://www.pivotaltracker.com/story/show/167507349
  */
-const dateFieldsTransformable = new Set<string>(["created_at", "due_date"]);
+const dateFieldsTransformable = new Set<string>([
+  "created_at",
+  "due_date",
+  "nextLegalAttempt"
+]);
 
 /**
  *  if value is a Date object, a string in ISO8601 format is returned
@@ -42,14 +47,18 @@ const dateReviver = (key: any, value: any): any => {
 };
 
 const encoder: TransformIn<any, string> = (value: any, _: string): any =>
-  JSON.parse(JSON.stringify(value), dataReplacer);
+  value !== undefined
+    ? JSON.parse(JSON.stringify(value), dataReplacer)
+    : undefined;
 
 const decoder: TransformOut<string, any> = (value: any, _: string): any =>
-  JSON.parse(JSON.stringify(value), dateReviver);
+  value !== undefined
+    ? JSON.parse(JSON.stringify(value), dateReviver)
+    : undefined;
 
 /**
  * date tasformer will be applied only to entities (whitelist)
  */
 export const DateISO8601Transform = createTransform(encoder, decoder, {
-  whitelist: ["entities"]
+  whitelist: ["entities", "fail"]
 });
