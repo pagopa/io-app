@@ -46,8 +46,8 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import {
   areMoreTransactionsAvailable,
-  latestTransactionsSelector,
-  getTransactionsLoadedLength
+  getTransactionsLoadedLength,
+  latestTransactionsSelector
 } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
