@@ -284,7 +284,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
           light={true}
           bordered={true}
           small={true}
-          onPress={() => this.props.loadTransactions(0)}
+          onPress={() =>
+            this.props.loadTransactions(this.loadedTransactionLength)
+          }
         >
           <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
         </ButtonDefaultOpacity>
@@ -308,10 +310,12 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
+  get loadedTransactionLength(): number {
+    return pot.getOrElse(pot.map(this.props.potTransactions, t => t.length), 0);
+  }
+
   private handleLoadMoreTransactions = () => {
-    this.props.loadTransactions(
-      pot.getOrElse(pot.map(this.props.potTransactions, t => t.length), 0)
-    );
+    this.props.loadTransactions(this.loadedTransactionLength);
   };
 
   private transactionList(
