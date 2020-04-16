@@ -49,6 +49,7 @@ const customVariables = Object.assign(materialVariables, {
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
   colorWhite: "#FFFFFF",
+  colorBlack: "#000000",
   disabledService: "#909DA8",
   itemBorderDefaultColor: "#5F6F82",
 
@@ -57,6 +58,9 @@ const customVariables = Object.assign(materialVariables, {
   itemSeparator: "#C9C9C9",
 
   toastColor: "#C1f4f2",
+
+  headerIconDark: "#798593",
+  headerIconLight: "#E4E7EA",
 
   // Font
   ...makeFontStyleObject(Platform.select),
@@ -253,6 +257,7 @@ const customVariables = Object.assign(materialVariables, {
   inputNormalWeight: "400" as FontWeight,
 
   // Spacer
+  spacerSmallHeight: 8,
   spacerHeight: 16,
   spacerLargeHeight: 24,
   spacerExtralargeHeight: 40,
