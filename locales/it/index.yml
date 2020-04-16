@@ -792,6 +792,19 @@ cardComponent:
   lastUsage: Ultimo utilizzo
   detailsAndTransactions: Dettagli e transazioni
   pick: Paga con questo metodo
+donations:
+  button: Donazioni
+  home:
+    title: IO dono
+    header: Scegli una causa
+    subtitle: IO supporta le cause delle Pubbliche Amministrazioni impegnate nelle emergenze.
+    collaboration: In collaborazione con
+  detail:
+    header: Quanto vuoi donare?
+    donate: Dona € {{amount}}
+    choose: Scegli quanto donare
+  pay:
+    reducedTax: Massimo detraibile
 messages:
   contextualHelpTitle: Cosa puoi fare nei tuoi Messaggi
   contextualHelpContent: !include messages/messages_home.md

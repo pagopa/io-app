@@ -82,3 +82,5 @@ export const shouldDisplayVersionInfoOverlay =
 export const privacyUrl: string = t.string
   .decode(Config.PRIVACY_URL)
   .getOrElse("https://io.italia.it/app-content/tos_privacy.html");
+
+export const shouldDisplayDonationsFeature = Config.DISPLAY_DONATIONS === "YES";

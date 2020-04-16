@@ -783,6 +783,19 @@ cardComponent:
   lastUsage: Last usage
   detailsAndTransactions: Details and transactions
   pick: Pay with this method
+donations:
+  button: Donations
+  home:
+    title: IO donate
+    header: Choose a cause
+    subtitle: IO supports the causes of Public Administrations engaged in emergencies.
+    collaboration: In partnership with 
+  detail:
+    header: How much donate?
+    donate: donate € {{amount}}
+    choose: Choose how much to donate
+  pay:
+    reducedTax: Maximum tax return
 messages:
   contextualHelpTitle: About this section
   contextualHelpContent: !include messages/messages_home.md
