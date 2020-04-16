@@ -219,6 +219,7 @@ profile:
     calendar:
       contextualHelpTitle: What is your favorite calendar
       contextualHelpContent: !include profile/profile_preferences_calendar.md
+      local_calendar: Local calendar
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version

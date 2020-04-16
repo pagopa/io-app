@@ -1,4 +1,5 @@
 import RNCalendarEvents from "react-native-calendar-events";
+import I18n from "../i18n";
 
 /**
  * Utility functions to interact with the device calendars
@@ -49,4 +50,22 @@ export async function checkCalendarPermission() {
   } catch {
     return false;
   }
+}
+
+/**
+ * This Type has been introduced after this story https://www.pivotaltracker.com/story/show/172079415
+ * to solve the bug on some android devices (mostly the one running MIUI) naming their local calendar
+ * with camel case notation this is a common situation as figured on a related reddit post
+ * https://www.reddit.com/r/Xiaomi/comments/84jgdn/google_calendars_not_syncing_or_even_requesting/
+ * and can be seen on MIUI's github repository
+ * https://github.com/ChameleonOS/miui_framework/blob/master/java/miui/provider/ExtraCalendarContracts.java
+ */
+const localCalendarTitles: ReadonlyArray<string> = [
+  "calendar_displayname_local"
+];
+
+export function convertLocalCalendarName(calendarTitle: string) {
+  return localCalendarTitles.indexOf(calendarTitle) > -1
+    ? I18n.t("profile.preferences.calendar.local_calendar")
+    : calendarTitle;
 }
