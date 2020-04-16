@@ -118,12 +118,15 @@ export default class BlockButtons extends React.Component<Props, never> {
     } = this.props.midButton;
 
     return (
-      <ButtonDefaultOpacity style={styles.button} {...otherPropsMidProps}>
-        {icon && <IconFont name={icon} />}
-        <Text style={fontSize !== undefined ? { fontSize } : {}}>
-          {midButtonTitle}
-        </Text>
-      </ButtonDefaultOpacity>
+      <React.Fragment>
+        <View hspacer={true} />
+        <ButtonDefaultOpacity style={styles.button} {...otherPropsMidProps}>
+          {icon && <IconFont name={icon} />}
+          <Text style={fontSize !== undefined ? { fontSize } : {}}>
+            {midButtonTitle}
+          </Text>
+        </ButtonDefaultOpacity>
+      </React.Fragment>
     );
   }
 
