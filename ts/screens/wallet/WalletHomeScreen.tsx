@@ -379,7 +379,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     const walletRefreshControl = (
       <RefreshControl
         onRefresh={() => {
-          this.props.loadTransactions(0);
+          this.props.loadTransactions(this.props.transactionsLoadedLength);
           this.props.loadWallets();
         }}
         refreshing={false}
