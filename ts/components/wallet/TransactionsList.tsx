@@ -73,11 +73,12 @@ export default class TransactionsList extends React.Component<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
-    // loading more transaction is complete, revert the state
+    // loading more transaction is complete (or we got an error), revert the state
     if (
       prevState.loadingMore &&
       pot.isLoading(prevProps.transactions) &&
-      pot.isSome(this.props.transactions)
+      (pot.isSome(this.props.transactions) ||
+        pot.isError(this.props.transactions))
     ) {
       this.setState({ loadingMore: false });
     }
