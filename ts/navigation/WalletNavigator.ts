@@ -2,6 +2,8 @@ import { createStackNavigator } from "react-navigation";
 import AddCardScreen from "../screens/wallet/AddCardScreen";
 import AddPaymentMethodScreen from "../screens/wallet/AddPaymentMethodScreen";
 import ConfirmCardDetailsScreen from "../screens/wallet/ConfirmCardDetailsScreen";
+import DonationDetailScreen from "../screens/wallet/donation/DonationDetailScreen";
+import DonationsHomeScreen from "../screens/wallet/donation/DonationsHomeScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
@@ -15,10 +17,6 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import WalletsScreen from "../screens/wallet/WalletsScreen";
 import ROUTES from "./routes";
 
-/**
- * TODO: migrate WALLET_TRANSACTION_SUMMARY on a new navigator for screens which does not visualize the footer menu.
- *   @https://www.pivotaltracker.com/n/projects/2048617/stories/158221096
- */
 const WalletNavigator = createStackNavigator(
   {
     [ROUTES.WALLET_HOME]: {
@@ -62,6 +60,12 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.PAYMENT_PICK_PAYMENT_METHOD]: {
       screen: PickPaymentMethodScreen
+    },
+    [ROUTES.DONATIONS_HOME]: {
+      screen: DonationsHomeScreen
+    },
+    [ROUTES.DONATION_DETAIL]: {
+      screen: DonationDetailScreen
     }
   },
   {

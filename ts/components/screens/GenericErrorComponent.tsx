@@ -11,6 +11,7 @@ import FooterWithButtons, {
 type Props = Readonly<{
   onRetry: () => void;
   onCancel?: () => void;
+  onBack?: () => void;
   image?: ImageSourcePropType;
   text?: string;
 }>;
@@ -28,14 +29,19 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * A component to display a generic error message
+ */
 export default class GenericErrorComponent extends React.PureComponent<Props> {
   private renderFooterButtons = () => {
     const footerProps1: TwoButtonsInlineHalf = {
       type: "TwoButtonsInlineHalf",
       leftButton: {
         bordered: true,
-        title: I18n.t("global.buttons.cancel"),
-        onPress: this.props.onCancel
+        title: this.props.onCancel
+          ? I18n.t("global.buttons.cancel")
+          : I18n.t("global.buttons.back"),
+        onPress: this.props.onCancel || this.props.onBack
       },
       rightButton: {
         primary: true,
@@ -55,7 +61,9 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
 
     return (
       <FooterWithButtons
-        {...(this.props.onCancel ? footerProps1 : footerProps2)}
+        {...(this.props.onCancel || this.props.onBack
+          ? footerProps1
+          : footerProps2)}
       />
     );
   };

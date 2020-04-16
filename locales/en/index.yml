@@ -792,7 +792,7 @@ donations:
     collaboration: In partnership with 
   detail:
     header: How much donate?
-    donate: donate € {{amount}}
+    donate: € {{amount}}
     choose: Choose how much to donate
   pay:
     reducedTax: Maximum tax return

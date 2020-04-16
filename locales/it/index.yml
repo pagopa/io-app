@@ -801,7 +801,7 @@ donations:
     collaboration: In collaborazione con
   detail:
     header: Quanto vuoi donare?
-    donate: Dona € {{amount}}
+    donate: € {{amount}}
     choose: Scegli quanto donare
   pay:
     reducedTax: Massimo detraibile
