@@ -46,7 +46,7 @@ export function CdnBackendStatusClient(
 
   const getStatusT: GetStatusT = {
     method: "get",
-    // to avoid payload caching
+    // to avoid response caching
     url: () => `backend.json?ms=${new Date().getTime()}`,
     query: _ => ({}),
     headers: () => ({}),
@@ -71,7 +71,7 @@ export function BackendPublicClient(
 
   const getServerInfoT: GetServerInfoT = {
     method: "get",
-    // to avoid payload caching
+    // to avoid response caching
     url: () => `/info?ms=${new Date().getTime()}`,
     query: _ => ({}),
     headers: () => ({}),
