@@ -121,11 +121,11 @@ const ParamAuthorizationBearerHeaderProducer = <
 };
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
-const transactionsSize = 15;
+const transactionsSliceLength = 10;
 const getTransactions: GetTransactionsUsingGETTExtra = {
   method: "get",
   url: ({ start }) =>
-    `/v1/transactions?start=${start}&size=${transactionsSize}`,
+    `/v1/transactions?start=${start}&size=${transactionsSliceLength}`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getTransactionsUsingGETDecoder(TransactionListResponse)
