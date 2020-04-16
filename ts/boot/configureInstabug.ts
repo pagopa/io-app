@@ -1,5 +1,5 @@
 import { Option } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
+import Instabug, { NetworkLogger } from "instabug-reactnative";
 
 import { Locales } from "../../locales/locales";
 import { instabugToken } from "../config";
@@ -44,7 +44,8 @@ const InstabugLogger: InstabugLoggerType = {
 export const initialiseInstabug = () => {
   // Initialise Instabug for iOS. The Android initialisation is inside MainApplication.java
   Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.none]);
-
+  // avoid Instabug to log network requests
+  NetworkLogger.setEnabled(false);
   // Set primary color for iOS. The Android's counterpart is inside MainApplication.java
   Instabug.setPrimaryColor(variables.contentPrimaryBackground);
 
@@ -73,5 +74,6 @@ export const setInstabugProfileAttributes = (
   );
 };
 
-export const instabugLog = (log: string, typeLog: TypeLogs) =>
+export const instabugLog = (log: string, typeLog: TypeLogs) => {
   InstabugLogger[typeLog](log);
+};
