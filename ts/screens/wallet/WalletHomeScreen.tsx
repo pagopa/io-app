@@ -46,7 +46,8 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import {
   areMoreTransactionsAvailable,
-  latestTransactionsSelector
+  latestTransactionsSelector,
+  getTransactionsLoadedLength
 } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
@@ -141,7 +142,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     // https://www.pivotaltracker.com/story/show/168836972
 
     this.props.loadWallets();
-    this.props.loadTransactions(0);
+    this.props.loadTransactions(this.props.transactionsLoadedLength);
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "light-content",
@@ -285,7 +286,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           bordered={true}
           small={true}
           onPress={() =>
-            this.props.loadTransactions(this.loadedTransactionLength)
+            this.props.loadTransactions(this.props.transactionsLoadedLength)
           }
         >
           <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
@@ -310,12 +311,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  get loadedTransactionLength(): number {
-    return pot.getOrElse(pot.map(this.props.potTransactions, t => t.length), 0);
-  }
-
   private handleLoadMoreTransactions = () => {
-    this.props.loadTransactions(this.loadedTransactionLength);
+    this.props.loadTransactions(this.props.transactionsLoadedLength);
   };
 
   private transactionList(
@@ -409,6 +406,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
+  transactionsLoadedLength: getTransactionsLoadedLength(state),
   areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   readTransactions: transactionsReadSelector(state)
