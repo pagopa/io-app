@@ -45,24 +45,24 @@ export const instabugToken: string = Config.INSTABUG_TOKEN;
 // version of ToS
 export const tosVersion: NonNegativeNumber = 1 as NonNegativeNumber;
 
-export const fetchTimeout = t.Integer.decode(Config.FETCH_TIMEOUT_MS).getOrElse(
-  DEFAULT_FETCH_TIMEOUT_MS
-) as Millisecond;
+export const fetchTimeout = t.Integer.decode(
+  parseInt(Config.FETCH_TIMEOUT_MS, 10)
+).getOrElse(DEFAULT_FETCH_TIMEOUT_MS) as Millisecond;
 
 export const fetchMaxRetries = t.Integer.decode(
-  Config.FETCH_MAX_RETRIES
+  parseInt(Config.FETCH_MAX_RETRIES, 10)
 ).getOrElse(DEFAULT_FETCH_MAX_RETRIES);
 
 export const fetchPagoPaTimeout = t.Integer.decode(
-  Config.FETCH_PAGOPA_TIMEOUT_MS
+  parseInt(Config.FETCH_PAGOPA_TIMEOUT_MS, 10)
 ).getOrElse(DEFAULT_FETCH_PAGOPA_TIMEOUT_MS) as Millisecond;
 
 export const fetchPaymentManagerLongTimeout = t.Integer.decode(
-  Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS
+  parseInt(Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS, 10)
 ).getOrElse(DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS) as Millisecond;
 
 export const backgroundActivityTimeout = t.Integer.decode(
-  Config.BACKGROUND_ACTIVITY_TIMEOUT_S
+  parseInt(Config.BACKGROUND_ACTIVITY_TIMEOUT_S, 10)
 ).getOrElse(DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S) as Second;
 
 export const contentRepoUrl = NonEmptyString.decode(
@@ -70,7 +70,7 @@ export const contentRepoUrl = NonEmptyString.decode(
 ).getOrElse(DEFAULT_CONTENT_REPO_URL);
 
 export const totMessageFetchWorkers = t.Integer.decode(
-  Config.TOT_MESSAGE_FETCH_WORKERS
+  parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10)
 ).getOrElse(DEFAULT_TOT_MESSAGE_FETCH_WORKERS);
 
 export const shouldDisplayVersionInfoOverlay =
