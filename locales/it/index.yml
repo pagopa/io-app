@@ -97,7 +97,7 @@ profile:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
   logout:
-    menulabel: Esci da questa identità SPID
+    menulabel: Esci da IO
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
@@ -138,7 +138,7 @@ profile:
         title: Cancella il tuo account
         description: Elimina sia dal telefono che da internet tutti i data ad esso
           associati
-        alert: 
+        alert:
           requestTitle: Sei sicuro di voler cancellare il tuo account?
           requestSubtitle: Tutti i tuoi messaggi e le tue preferenze saranno eliminati definitivamente.
           oldRequest: Abbiamo già preso in carico una richiesta di eliminazione del tuo profilo.
@@ -148,10 +148,10 @@ profile:
         title: Esporta i tuoi dati
         description: Ricevi nella tua email tutti i dati associati al tuo account in
           un formato aperto
-        alert: 
+        alert:
           requestTitle: Sei sicuro di voler esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
-          confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo. 
+          confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo.
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
         title: Informativa e condizioni d'uso
@@ -161,7 +161,7 @@ profile:
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
-        contextualHelpContent: !include profile/profile_privacy_main.md  
+        contextualHelpContent: !include profile/profile_privacy_main.md
     appInfo:
       title: Informazioni su IO beta
       description: Per saperne di più sull'app IO
@@ -297,7 +297,7 @@ authentication:
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
       alert: Sei sicuro di voler tornare indietro?
-    pinTempLocked: 
+    pinTempLocked:
       header: Pin bloccato
       title: Carta temporaneamente bloccata
       content: !include cie/temporary_blocked_cie.md
@@ -314,7 +314,7 @@ authentication:
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
         readerCardLostHeader: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta.
-        onTagLost: Hai rimosso la carta troppo presto. Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo. 
+        onTagLost: Hai rimosso la carta troppo presto. Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
         tryAgain: Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!
         generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
         unknownCardTitle: Carta sconosciuta
@@ -581,6 +581,8 @@ wallet:
     text1: Se hai avuto problemi durante un pagamento,
     text2: consulta l'help
     text3: in alto a destra su questa pagina
+  transactionsLoadMore: Carica di più
+  transacionsLoadingMore: Carico altre transazioni...
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile
@@ -737,11 +739,11 @@ wallet:
     bank:
       name: Bancomat Pay
       maxFee: Commissione massima 0.50€
-    satispay: 
+    satispay:
       name: Satispay
-    postepay: 
+    postepay:
       name: Postepay
-    paypal: 
+    paypal:
       name: Paypal
     notImplemented: Prossimamente
   addCardTitle: Dati carta
@@ -930,7 +932,7 @@ biometric_recognition:
   enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
   enroll_btnLabel: Vai alle impostazioni
   needed_to_disable: Riconoscimento richiesto per disabilitare
-send_email_messages: 
+send_email_messages:
   title: Inoltro dei messaggi via email
   subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a
   options:
@@ -1040,7 +1042,7 @@ faq:
   3:
     title: "Hai perso le tue credenziali SPID?"
     content: !include faq/faq3.md
-  4: 
+  4:
     title: "Cos'è la CIE?"
     content: !include faq/faq4.md
   5:
@@ -1085,8 +1087,8 @@ faq:
   19:
     title: "Il riconoscimento biometrico è sicuro?"
     content: !include faq/faq19.md
-  
-  20: 
+
+  20:
     title: "Quando ti verrà chiesto il riconoscimento biometrico?"
     content: !include faq/faq20.md
   21:
@@ -1140,7 +1142,7 @@ faq:
   37:
     title: "Quali metodi di pagamento puoi aggiungere?"
     content: !include faq/faq37.md
-  38: 
+  38:
     title: "Riepilogo della transazione e ricevuta del pagamento sono la stessa cosa?"
     content: !include faq/faq38.md
   39:

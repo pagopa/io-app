@@ -97,7 +97,7 @@ profile:
     spid: SPID PROFILE
   unknown: UNKNOWN
   logout:
-    menulabel: Logout from this SPID identity
+    menulabel: Logout from IO
     cta:
       header: How do you want to quit the app?
       keepData:
@@ -132,22 +132,22 @@ profile:
     privacy:
       title: Information and conditions of use
       description: Export data, delete account
-      subtitle: Here you find information related to your personal data.  
+      subtitle: Here you find information related to your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
         description: Remove all data associated to your account from your phone and
           our systems
-        alert: 
+        alert:
           requestTitle: Are you sure you want to delete your account?
           requestSubtitle: All your messages and personal settings will be lost.
           oldRequest: We are already proceeding to delete your account
           confirmSubtitle: After processing, you will receive an email confirming the deletion.
-        error: An error occurred while submit your deletion request, please retry! 
+        error: An error occurred while submit your deletion request, please retry!
       exportData:
         title: Export your data
         description: Send to your email all your account’s data in an open format
-        alert: 
+        alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
           confirmSubtitle: After processing, you will receive an email containing all your data.
@@ -561,7 +561,7 @@ wallet:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
-    btnUpdateApp: Update the IO app 
+    btnUpdateApp: Update the IO app
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
@@ -575,6 +575,8 @@ wallet:
     text1: If you have had problems during a payment,
     text2: consult the help
     text3: at the top right of this page
+  transactionsLoadMore: Load more
+  transacionsLoadingMore: Loading more transactions...
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
@@ -729,11 +731,11 @@ wallet:
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
-    satispay: 
+    satispay:
       name: Satispay
-    postepay: 
+    postepay:
       name: Postepay
-    paypal: 
+    paypal:
       name: Paypal
     notImplemented: Coming soon
   addCardTitle: Card details
@@ -920,7 +922,7 @@ biometric_recognition:
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
   needed_to_disable: Recognition required to disable
-send_email_messages: 
+send_email_messages:
   title: Forward messages by email
   subtitle: Do you want IO to forward messages contents by email to
   options:
@@ -1015,7 +1017,7 @@ openMaps:
 genericError: An error occurred
 titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
-messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need 
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need
   to update it to the latest version."
 btnUpdateApp: Update the IO app
 systemsOff:
@@ -1031,7 +1033,7 @@ faq:
   3:
     title: "Have you lost your SPID credentials?"
     content: !include faq/faq3.md
-  4: 
+  4:
     title: "What is CIE?"
     content: !include faq/faq4.md
   5:
@@ -1076,7 +1078,7 @@ faq:
   19:
     title: "Is biometric recognition safe?"
     content: !include faq/faq19.md
-  20: 
+  20:
     title: "When will you be asked for biometric recognition?"
     content: !include faq/faq20.md
   21:
@@ -1130,7 +1132,7 @@ faq:
   37:
     title: "What payment methods can you add?"
     content: !include faq/faq37.md
-  38: 
+  38:
     title: "Are transaction summary and payment receipt the same thing?"
     content: !include faq/faq38.md
   39:
