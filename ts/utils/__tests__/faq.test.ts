@@ -46,6 +46,12 @@ describe("getFAQsFromCategories", () => {
     expect(getFAQsFromCategories(categories)).toStrictEqual(faqs);
   });
 
+  it("should return the FAQType array from an array of FAQsCategoriesType", () => {
+    expect(getFAQsFromCategories([...categories, ...categories])).toStrictEqual(
+      faqs
+    );
+  });
+
   it("Should return an empty array", () => {
     expect(getFAQsFromCategories([])).toStrictEqual([]);
   });
