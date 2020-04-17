@@ -6,14 +6,11 @@ import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
 
-// default application name to show in the header of the topmost screens
-export const DEFAULT_APPLICATION_NAME = "io.italia.it";
-
 // default repository for fetching app content (e.g. services metadata)
 const DEFAULT_CONTENT_REPO_URL = "https://raw.githubusercontent.com/pagopa/io-services-metadata/master" as NonEmptyString;
 
 // default timeout of fetch (in ms)
-const DEFAULT_FETCH_TIMEOUT_MS = 5000;
+const DEFAULT_FETCH_TIMEOUT_MS = 8000;
 
 // default max retries for fetch
 const DEFAULT_FETCH_MAX_RETRIES = 3;
@@ -48,24 +45,24 @@ export const instabugToken: string = Config.INSTABUG_TOKEN;
 // version of ToS
 export const tosVersion: NonNegativeNumber = 1 as NonNegativeNumber;
 
-export const fetchTimeout = t.Integer.decode(Config.FETCH_TIMEOUT_MS).getOrElse(
-  DEFAULT_FETCH_TIMEOUT_MS
-) as Millisecond;
+export const fetchTimeout = t.Integer.decode(
+  parseInt(Config.FETCH_TIMEOUT_MS, 10)
+).getOrElse(DEFAULT_FETCH_TIMEOUT_MS) as Millisecond;
 
 export const fetchMaxRetries = t.Integer.decode(
-  Config.FETCH_MAX_RETRIES
+  parseInt(Config.FETCH_MAX_RETRIES, 10)
 ).getOrElse(DEFAULT_FETCH_MAX_RETRIES);
 
 export const fetchPagoPaTimeout = t.Integer.decode(
-  Config.FETCH_PAGOPA_TIMEOUT_MS
+  parseInt(Config.FETCH_PAGOPA_TIMEOUT_MS, 10)
 ).getOrElse(DEFAULT_FETCH_PAGOPA_TIMEOUT_MS) as Millisecond;
 
 export const fetchPaymentManagerLongTimeout = t.Integer.decode(
-  Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS
+  parseInt(Config.FETCH_PAYMENT_MANAGER_TIMEOUT_MS, 10)
 ).getOrElse(DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS) as Millisecond;
 
 export const backgroundActivityTimeout = t.Integer.decode(
-  Config.BACKGROUND_ACTIVITY_TIMEOUT_S
+  parseInt(Config.BACKGROUND_ACTIVITY_TIMEOUT_S, 10)
 ).getOrElse(DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S) as Second;
 
 export const contentRepoUrl = NonEmptyString.decode(
@@ -73,7 +70,7 @@ export const contentRepoUrl = NonEmptyString.decode(
 ).getOrElse(DEFAULT_CONTENT_REPO_URL);
 
 export const totMessageFetchWorkers = t.Integer.decode(
-  Config.TOT_MESSAGE_FETCH_WORKERS
+  parseInt(Config.TOT_MESSAGE_FETCH_WORKERS, 10)
 ).getOrElse(DEFAULT_TOT_MESSAGE_FETCH_WORKERS);
 
 export const shouldDisplayVersionInfoOverlay =
