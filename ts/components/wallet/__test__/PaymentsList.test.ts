@@ -128,16 +128,24 @@ describe("test the returnData function", () => {
   });
 
   it("the last element in paymentHistoryState is a failed transaction so the test must return the paymentState as false", () => {
-    expect(paymentsData[2].paymentState).toEqual(false);
+    expect(paymentsData[2].esito).toEqual("Failed");
   });
 
-  const paymentState: boolean = paymentsData[1].paymentState;
-  const transactionState: boolean | undefined =
-    paymentsData[1].transactionState;
-
   it("the second element must show the payment status as Incomplete", () => {
-    expect(checkPaymentOutcome(paymentState, transactionState)).toEqual(
-      "Incomplete"
-    );
+    expect(paymentsData[1].esito).toEqual("Incomplete");
+  });
+});
+
+describe("test the checkPaymentOutcome function", () => {
+  it("the first test must show the payment status as Success, because paymentState and transactionState exist", () => {
+    expect(checkPaymentOutcome(true, true)).toEqual("Success");
+  });
+
+  it("the second test must show the payment status as Failed, because paymentState and transactionState do not exist", () => {
+    expect(checkPaymentOutcome(false)).toEqual("Failed");
+  });
+
+  it("the last test must show the payment status as Incomplete, because only paymentState is set and transactionState is undefined or set to false", () => {
+    expect(checkPaymentOutcome(true)).toEqual("Incomplete");
   });
 });

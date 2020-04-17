@@ -11,9 +11,7 @@ import { connect } from "react-redux";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import PaymentList, {
-  PaymentInformation
-} from "../../components/wallet/PaymentsList";
+import PaymentList, { PaymentInfo } from "../../components/wallet/PaymentsList";
 import I18n from "../../i18n";
 import {
   navigateToPaymentDetailInfo,
@@ -45,7 +43,7 @@ class PaymentScreen extends React.Component<Props, never> {
           title={I18n.t("wallet.latestTransactions")}
           payments={potPayments}
           ListEmptyComponent={<View />}
-          navigateToPaymentDetailInfo={(paymentInfo: PaymentInformation) =>
+          navigateToPaymentDetailInfo={(paymentInfo: PaymentInfo) =>
             this.props.navigateToPaymentDetailInfo(paymentInfo)
           }
         />
@@ -61,7 +59,7 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletAddPaymentMethod: () =>
     dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
-  navigateToPaymentDetailInfo: (param: PaymentInformation) =>
+  navigateToPaymentDetailInfo: (param: PaymentInfo) =>
     dispatch(navigateToPaymentDetailInfo(param))
 });
 

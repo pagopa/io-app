@@ -19,6 +19,7 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { formatPaymentAmount } from "../../utils/payment";
 
 type NavigationParams = Readonly<{
+  id: string;
   esito: EsitoPagamento;
   date: string;
   causaleVersamento?: string;
@@ -280,7 +281,15 @@ export default class PaymentDetails extends React.Component<Props, never> {
                 }
               ]}
             >
-              <Text style={[styles.text1, { textAlign: "center" }]}>
+              <Text
+                style={[
+                  styles.text1,
+                  {
+                    textAlign: "center",
+                    lineHeight: 17
+                  }
+                ]}
+              >
                 {I18n.t("payment.details.info.help")}
               </Text>
               <View spacer={true} />

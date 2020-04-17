@@ -1,6 +1,7 @@
 /**
  * This component displays a list of transactions
  */
+import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -11,7 +12,6 @@ import {
   StyleSheet,
   TouchableWithoutFeedback
 } from "react-native";
-import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import { PaymentsHistoryState } from "../../store/reducers/payments/history";
 import variables from "../../theme/variables";

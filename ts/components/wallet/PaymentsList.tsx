@@ -1,8 +1,8 @@
 /**
  * This component displays a list of payments
  */
+// tslint:disable-next-line: no-commented-code
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
-import { IWithinRangeStringTag } from "italia-ts-commons/lib/strings";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
@@ -17,7 +17,7 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 type Props = Readonly<{
   title: string;
   payments: PaymentsHistoryState;
-  navigateToPaymentDetailInfo: (paymentInfo: PaymentInformation) => void;
+  navigateToPaymentDetailInfo: (paymentInfo: PaymentInfo) => void;
   ListEmptyComponent?: React.ReactNode;
 }>;
 
@@ -36,23 +36,10 @@ const styles = StyleSheet.create({
   }
 });
 
-type PaymentsHistoryInformation = {
-  id: string;
-  paymentState: boolean;
-  started_at: string;
-  date: string;
-  iuv: string;
-  causaleVersamento: string & IWithinRangeStringTag<1, 141>;
-  transactionState: boolean;
-  creditore?: string;
-  amount?: number;
-  grandTotal?: number;
-  idTransaction?: number;
-};
-
 export type EsitoPagamento = "Success" | "Incomplete" | "Failed";
 
-export type PaymentInformation = {
+export type PaymentInfo = {
+  id: string;
   esito: EsitoPagamento;
   date: string;
   causaleVersamento?: string;
@@ -78,24 +65,25 @@ const getCorrectIuv = (data: RptId): string => {
 
 export const returnData = (
   payments: PaymentsHistoryState
-): ReadonlyArray<PaymentsHistoryInformation> => {
+): ReadonlyArray<PaymentInfo> => {
   return payments.map((value, index) => {
+    const paymentState =
+      value.verified_data !== undefined && value.failure === undefined;
+    const transactionState = value.transaction !== undefined;
+    const esito = checkPaymentOutcome(paymentState, transactionState);
     return {
       id: value.paymentId ? value.paymentId : `N-${index}`,
-      paymentState:
-        value.verified_data !== undefined && value.failure === undefined,
-      started_at: value.started_at,
-      date: formatDateAsLocal(new Date(value.started_at)),
-      iuv: getCorrectIuv(value.data),
+      esito,
+      date: value.started_at,
       causaleVersamento:
         value.verified_data !== undefined
           ? value.verified_data.causaleVersamento
-          : "",
-      transactionState: value.transaction !== undefined,
+          : undefined,
       creditore:
         value.transaction !== undefined
           ? value.transaction.merchant
           : undefined,
+      iuv: getCorrectIuv(value.data),
       amount:
         value.transaction !== undefined
           ? value.transaction.amount.amount
@@ -111,11 +99,11 @@ export const returnData = (
 };
 
 export const checkPaymentOutcome = (
-  paymentState: boolean,
-  transactionState: boolean | undefined = false
+  isSetPaymentState: boolean,
+  isSetTransactionState: boolean | undefined = false
 ): EsitoPagamento => {
-  return paymentState
-    ? transactionState
+  return isSetPaymentState
+    ? isSetTransactionState
       ? "Success"
       : "Incomplete"
     : "Failed";
@@ -126,41 +114,38 @@ export const checkPaymentOutcome = (
  */
 
 export default class PaymentList extends React.Component<Props> {
-  private renderPayments = (
-    info: ListRenderItemInfo<PaymentsHistoryInformation>
-  ) => {
-    const esito = checkPaymentOutcome(
-      info.item.paymentState,
-      info.item.transactionState
-    );
+  private renderPayments = (info: ListRenderItemInfo<PaymentInfo>) => {
     return (
       <DetailedlistItemPaymentComponent
         text11={
-          esito === "Success"
+          info.item.esito === "Success"
             ? I18n.t("payment.details.state.successful")
-            : esito === "Failed"
+            : info.item.esito === "Failed"
               ? I18n.t("payment.details.state.failed")
               : I18n.t("payment.details.state.incomplete")
         }
-        text2={info.item.date}
+        text2={formatDateAsLocal(new Date(info.item.date))}
         text3={
-          esito === "Success"
-            ? info.item.causaleVersamento
+          info.item.esito === "Success"
+            ? info.item.causaleVersamento === undefined
+              ? ""
+              : info.item.causaleVersamento
             : I18n.t("payment.details.list.iuv", {
                 iuv: info.item.iuv
               })
         }
         color={
-          esito === "Success"
+          info.item.esito === "Success"
             ? customVariables.brandHighlight
-            : esito === "Failed"
+            : info.item.esito === "Failed"
               ? customVariables.brandDanger
               : customVariables.badgeYellow
         }
         onPressItem={() =>
           this.props.navigateToPaymentDetailInfo({
-            esito,
-            date: info.item.started_at,
+            id: info.item.id,
+            esito: info.item.esito,
+            date: info.item.date,
             causaleVersamento: info.item.causaleVersamento,
             creditore: info.item.creditore,
             iuv: info.item.iuv,
