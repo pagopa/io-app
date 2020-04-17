@@ -498,7 +498,7 @@ workflows:
             - lint-typescript
           filters:
             branches:
-              only: master
+              only: release-04172020
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status
