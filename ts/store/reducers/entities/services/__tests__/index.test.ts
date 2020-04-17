@@ -212,7 +212,29 @@ describe("servicesBadgeValueSelector", () => {
         [...nationalServices],
         [...localServices],
         customServices.readState,
-        customServices.firstLoading.isFirstServicesLoadingCompleted
+        true
+      )
+    ).toBe(1);
+  });
+
+  it("should return 0 if the first load is not ye completed", () => {
+    expect(
+      servicesBadgeValueSelector.resultFunc(
+        [...nationalServices],
+        [...localServices],
+        customServices.readState,
+        false
+      )
+    ).toBe(0);
+  });
+
+  it("should return 1 even if we have few duplication in local services array", () => {
+    expect(
+      servicesBadgeValueSelector.resultFunc(
+        [...nationalServices],
+        [...localServices, ...localServices, ...localServices],
+        customServices.readState,
+        true
       )
     ).toBe(1);
   });
