@@ -12,7 +12,9 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { ContextualHelp } from "../../components/ContextualHelp";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -25,11 +27,11 @@ import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
-import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled
@@ -316,6 +318,19 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       notificationId
     } = this.props;
 
+    const showInformationModal = (
+      title: TranslationKeys,
+      body: TranslationKeys
+    ) => {
+      this.props.showModal(
+        <ContextualHelp
+          onClose={this.props.hideModal}
+          title={I18n.t(title)}
+          body={() => <Markdown>{I18n.t(body)}</Markdown>}
+        />
+      );
+    };
+
     // tslint:disable no-big-function
     const screenContent = () => {
       return (
@@ -338,6 +353,18 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               title={I18n.t("profile.main.privacy.title")}
               subTitle={I18n.t("profile.main.privacy.description")}
               onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
+            />
+
+            {/* APP IO */}
+            <ListItemComponent
+              title={I18n.t("profile.main.appInfo.title")}
+              subTitle={I18n.t("profile.main.appInfo.description")}
+              onPress={() =>
+                showInformationModal(
+                  "profile.main.appInfo.title",
+                  "profile.main.appInfo.contextualHelpContent"
+                )
+              }
               isLastItem={true}
             />
 
@@ -360,9 +387,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               isLastItem={true}
             />
 
-            {/* Developers Section */}
+            {/* Developers Section, visible only in dev mode */}
             {isDevEnv && (
-              <View>
+              <React.Fragment>
                 <SectionHeaderComponent
                   sectionHeader={I18n.t("profile.main.developersSectionHeader")}
                 />
@@ -385,11 +412,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     this.onPagoPAEnvironmentToggle,
                     I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
                   )}
-                {this.developerListItem(
-                  I18n.t("profile.main.debugMode"),
-                  this.props.isDebugModeEnabled,
-                  this.props.setDebugModeEnabled
-                )}
                 {this.props.isDebugModeEnabled && (
                   <React.Fragment>
                     {this.debugListItem(
@@ -458,7 +480,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     )}
                   </React.Fragment>
                 )}
-              </View>
+              </React.Fragment>
             )}
 
             {/* end list */}
@@ -511,8 +533,6 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
   clearCache: () => dispatch(clearCache()),
-  setDebugModeEnabled: (enabled: boolean) =>
-    dispatch(setDebugModeEnabled(enabled)),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
   setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
     dispatch(

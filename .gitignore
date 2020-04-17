@@ -54,7 +54,6 @@ package-lock.json
 
 # App Config
 .env
-.env.local
 
 # BUCK
 buck-out/
@@ -97,3 +96,5 @@ shim.js
 
 # Google services definition
 android/app/google-services.json
+# React native config generated file
+GeneratedDotEnv.m

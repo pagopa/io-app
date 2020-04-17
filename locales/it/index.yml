@@ -97,7 +97,7 @@ profile:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
   logout:
-    menulabel: Esci da questa identità SPID
+    menulabel: Esci da IO
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
@@ -109,6 +109,10 @@ profile:
   errors:
     load: Errore nel caricamento del profilo
     upsert: Errore nella creazione o nell'aggiornamento del profilo
+  alerts:
+    emailNotValidated:
+      title: Email non verificata
+      subtitle: È necessario verificare la mail per poter procedere con l'operazione. Per farlo, vai nella sezione profilo e scegli preferenze.
   main:
     title: Profilo
     logout: Logout/Esci
@@ -157,7 +161,11 @@ profile:
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
-        contextualHelpContent: !include profile/profile_privacy_main.md    
+        contextualHelpContent: !include profile/profile_privacy_main.md  
+    appInfo:
+      title: Informazioni su IO beta
+      description: Per saperne di più sull'app IO
+      contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Sviluppatori
     experimentalFeatures:
       confirmTitle: Funzionalità sperimentali
@@ -548,6 +556,8 @@ wallet:
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
   transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
+  transactionsLoadMore: Carica di più
+  transacionsLoadingMore: Carico altre transazioni...
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile

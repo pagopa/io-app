@@ -1,11 +1,12 @@
 import { Option } from "fp-ts/lib/Option";
-import Instabug from "instabug-reactnative";
+import Instabug, { NetworkLogger } from "instabug-reactnative";
 
 import { Locales } from "../../locales/locales";
 import { instabugToken } from "../config";
 import I18n from "../i18n";
 import { IdentityProvider } from "../models/IdentityProvider";
 import variables from "../theme/variables";
+import { isDevEnv } from "../utils/environment";
 
 type InstabugLocales = { [k in Locales]: Instabug.locale };
 
@@ -30,9 +31,26 @@ export enum TypeLogs {
   "WARN" = "WARN"
 }
 
+type InstabugLoggerType = {
+  [key in keyof typeof TypeLogs]: (value: string) => void
+};
+const InstabugLogger: InstabugLoggerType = {
+  INFO: Instabug.logInfo,
+  VERBOSE: Instabug.logVerbose,
+  ERROR: Instabug.logError,
+  DEBUG: Instabug.logDebug,
+  WARN: Instabug.logWarn
+};
+
 export const initialiseInstabug = () => {
   // Initialise Instabug for iOS. The Android initialisation is inside MainApplication.java
   Instabug.startWithToken(instabugToken, [Instabug.invocationEvent.none]);
+  // it seems NetworkLogger.setEnabled(false) turns off all network interceptions
+  // this may cause an empty timeline in Reactotron too
+  if (!isDevEnv) {
+    // avoid Instabug to log network requests
+    NetworkLogger.setEnabled(false);
+  }
 
   // Set primary color for iOS. The Android's counterpart is inside MainApplication.java
   Instabug.setPrimaryColor(variables.contentPrimaryBackground);
@@ -62,17 +80,6 @@ export const setInstabugProfileAttributes = (
   );
 };
 
-export const instabugLog = (logs: string, typeLog: TypeLogs) => {
-  switch (typeLog) {
-    case TypeLogs.INFO:
-      Instabug.logInfo(logs);
-    case TypeLogs.ERROR:
-      Instabug.logError(logs);
-    case TypeLogs.WARN:
-      Instabug.logWarn(logs);
-    case TypeLogs.VERBOSE:
-      Instabug.logVerbose(logs);
-    case TypeLogs.DEBUG:
-      Instabug.logDebug(logs);
-  }
+export const instabugLog = (log: string, typeLog: TypeLogs) => {
+  InstabugLogger[typeLog](log);
 };
