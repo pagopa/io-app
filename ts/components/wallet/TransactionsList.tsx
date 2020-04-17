@@ -5,11 +5,11 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import {
+  Dimensions,
   FlatList,
   ListRenderItemInfo,
   StyleSheet,
   TouchableWithoutFeedback
-  Dimensions,
 } from "react-native";
 import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
