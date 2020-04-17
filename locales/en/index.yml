@@ -2,6 +2,7 @@
 global:
   symbols:
     question: "?"
+    euro: €
   localization:
     decimalSeparator: "."
   date:
