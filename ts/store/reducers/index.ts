@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
+import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
@@ -36,7 +37,6 @@ import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
-import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
