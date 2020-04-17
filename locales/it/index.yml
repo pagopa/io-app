@@ -97,7 +97,7 @@ profile:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
   logout:
-    menulabel: Esci da questa identità SPID
+    menulabel: Esci da IO
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
