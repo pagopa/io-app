@@ -1,4 +1,6 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import RNCalendarEvents from "react-native-calendar-events";
+import { TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 
 /**
@@ -60,12 +62,17 @@ export async function checkCalendarPermission() {
  * and can be seen on MIUI's github repository
  * https://github.com/ChameleonOS/miui_framework/blob/master/java/miui/provider/ExtraCalendarContracts.java
  */
-const localCalendarTitles: ReadonlyArray<string> = [
-  "calendar_displayname_local"
-];
+
+type CalendarTitleTranslation = { [key: string]: TranslationKeys };
+
+const calendarTitleTranslations: CalendarTitleTranslation = {
+  calendar_displayname_local: "profile.preferences.calendar.local_calendar",
+  calendar_displayname_birthday:
+    "profile.preferences.calendar.birthday_calendar"
+};
 
 export function convertLocalCalendarName(calendarTitle: string) {
-  return localCalendarTitles.indexOf(calendarTitle) > -1
-    ? I18n.t("profile.preferences.calendar.local_calendar")
-    : calendarTitle;
+  return fromNullable(
+    calendarTitleTranslations[calendarTitle.trim().toLowerCase()]
+  ).fold(calendarTitle, s => I18n.t(s));
 }
