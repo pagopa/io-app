@@ -47,6 +47,10 @@ const styles = StyleSheet.create({
   },
   brandDarkGray: {
     color: variables.brandDarkGray
+  },
+  textStyleHelp: {
+    lineHeight: 18,
+    fontSize: 13
   }
 });
 
@@ -107,19 +111,14 @@ export default class TransactionsList extends React.Component<Props> {
             <Text>{I18n.t("wallet.amount")}</Text>
           </View>
         </View>
+        <View spacer={true} />
         {this.props.paymentsHistory.length > 0 && (
-          <Text>
+          <Text style={styles.textStyleHelp}>
             {I18n.t("wallet.transactionHelpMessage.text1")}{" "}
             <TouchableWithoutFeedback
               onPress={() => this.props.navigateToPaymentDetail()}
             >
-              <Text
-                style={{
-                  color: variables.brandPrimary,
-                  textDecorationLine: "underline",
-                  fontWeight: "600"
-                }}
-              >
+              <Text style={styles.textStyleHelp} link={true}>
                 {I18n.t("wallet.transactionHelpMessage.text2")}
               </Text>
             </TouchableWithoutFeedback>{" "}

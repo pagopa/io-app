@@ -536,9 +536,9 @@ payment:
   recipientFiscalCode: Recipient fiscal code
   details:
     state:
-      successful: successful
-      incomplete: not finished
-      failed: failed
+      successful: Successful
+      incomplete: Not finished
+      failed: Failed
     info:
       buttons:
         copy: copy
@@ -550,7 +550,7 @@ payment:
       paymentAmount: Payment amount
       transactionCosts: Transaction costs
       totalPaid: Total paid
-      transactionCode: transaction identification code
+      transactionCode: Transaction identification code
       help: If you have encountered a problem with this payment, write to us for more information and details
     list:
       title: Payment attempts

@@ -229,7 +229,7 @@ export default class PaymentDetails extends React.Component<Props, never> {
                         € {this.getAmount(grandTotal - amount)}
                       </Text>
                     </View>
-
+                    <View spacer={true} />
                     <View style={styles.row}>
                       <Text
                         style={[

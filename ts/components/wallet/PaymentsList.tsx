@@ -1,11 +1,11 @@
 /**
  * This component displays a list of payments
  */
-// tslint:disable-next-line: no-commented-code
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
+import { IWithinRangeStringTag } from "italia-ts-commons/lib/strings";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { PaymentsHistoryState } from "../../store/reducers/payments/history";
 import variables from "../../theme/variables";
@@ -36,6 +36,20 @@ const styles = StyleSheet.create({
   }
 });
 
+type PaymentsHistoryInformation = {
+  id: string;
+  paymentState: boolean;
+  started_at: string;
+  date: string;
+  iuv: string;
+  causaleVersamento: string & IWithinRangeStringTag<1, 141>;
+  transactionState: boolean;
+  creditore?: string;
+  amount?: number;
+  grandTotal?: number;
+  idTransaction?: number;
+};
+
 export type EsitoPagamento = "Success" | "Incomplete" | "Failed";
 
 export type PaymentInformation = {
@@ -49,18 +63,76 @@ export type PaymentInformation = {
   idTransaction?: number;
 };
 
+const getCorrectIuv = (data: RptId): string => {
+  switch (data.paymentNoticeNumber.auxDigit) {
+    case "0":
+      return data.paymentNoticeNumber.iuv13;
+    case "1":
+      return data.paymentNoticeNumber.iuv17;
+    case "2":
+      return data.paymentNoticeNumber.iuv15;
+    case "3":
+      return data.paymentNoticeNumber.iuv13;
+  }
+};
+
+export const returnData = (
+  payments: PaymentsHistoryState
+): ReadonlyArray<PaymentsHistoryInformation> => {
+  return payments.map((value, index) => {
+    return {
+      id: value.paymentId ? value.paymentId : `N-${index}`,
+      paymentState:
+        value.verified_data !== undefined && value.failure === undefined,
+      started_at: value.started_at,
+      date: formatDateAsLocal(new Date(value.started_at)),
+      iuv: getCorrectIuv(value.data),
+      causaleVersamento:
+        value.verified_data !== undefined
+          ? value.verified_data.causaleVersamento
+          : "",
+      transactionState: value.transaction !== undefined,
+      creditore:
+        value.transaction !== undefined
+          ? value.transaction.merchant
+          : undefined,
+      amount:
+        value.transaction !== undefined
+          ? value.transaction.amount.amount
+          : undefined,
+      grandTotal:
+        value.transaction !== undefined
+          ? value.transaction.grandTotal.amount
+          : undefined,
+      idTransaction:
+        value.transaction !== undefined ? value.transaction.id : undefined
+    };
+  });
+};
+
+export const checkPaymentOutcome = (
+  paymentState: boolean,
+  transactionState: boolean | undefined = false
+): EsitoPagamento => {
+  return paymentState
+    ? transactionState
+      ? "Success"
+      : "Incomplete"
+    : "Failed";
+};
+
 /**
  * Payments List component
  */
 
 export default class PaymentList extends React.Component<Props> {
-  private renderPayments = ({ item }: any) => {
-    const esito =
-      item.paymentState === true
-        ? item.transactionState === true
-          ? "Success"
-          : "Incomplete"
-        : "Failed";
+  private renderPayments = (
+    info: ListRenderItemInfo<PaymentsHistoryInformation>
+  ) => {
+    const esito = checkPaymentOutcome(
+      info.item.paymentState,
+      info.item.transactionState
+    );
     return (
       <DetailedlistItemPaymentComponent
         text11={
@@ -70,12 +142,12 @@ export default class PaymentList extends React.Component<Props> {
               ? I18n.t("payment.details.state.failed")
               : I18n.t("payment.details.state.incomplete")
         }
-        text2={item.date}
+        text2={info.item.date}
         text3={
           esito === "Success"
-            ? item.causaleVersamento
+            ? info.item.causaleVersamento
             : I18n.t("payment.details.list.iuv", {
-                iuv: item.iuv
+                iuv: info.item.iuv
               })
         }
         color={
@@ -88,68 +160,17 @@ export default class PaymentList extends React.Component<Props> {
         onPressItem={() =>
           this.props.navigateToPaymentDetailInfo({
             esito,
-            date: item.started_at,
-            causaleVersamento: item.causaleVersamento,
-            creditore: item.creditore,
-            iuv: item.iuv,
-            amount: item.amount,
-            grandTotal: item.grandTotal,
-            idTransaction: item.idTransaction
+            date: info.item.started_at,
+            causaleVersamento: info.item.causaleVersamento,
+            creditore: info.item.creditore,
+            iuv: info.item.iuv,
+            amount: info.item.amount,
+            grandTotal: info.item.grandTotal,
+            idTransaction: info.item.idTransaction
           })
         }
       />
     );
-  };
-
-  private getCorrectIuv = (data: RptId): string => {
-    switch (data.paymentNoticeNumber.auxDigit) {
-      case "0":
-        return data.paymentNoticeNumber.iuv13;
-      case "1":
-        return data.paymentNoticeNumber.iuv17;
-      case "2":
-        return data.paymentNoticeNumber.iuv15;
-      case "3":
-        return data.paymentNoticeNumber.iuv13;
-    }
-  };
-
-  // tslint:disable-next-line: readonly-array
-  private returnData = (payments: PaymentsHistoryState): any[] => {
-    // tslint:disable-next-line: readonly-array
-    const data: any[] = [];
-
-    payments.forEach((value, index) => {
-      data.push({
-        id: value.paymentId ? value.paymentId : `N-${index}`,
-        paymentState:
-          value.verified_data !== undefined && value.failure === undefined,
-        started_at: value.started_at,
-        date: formatDateAsLocal(new Date(value.started_at)),
-        iuv: this.getCorrectIuv(value.data),
-        causaleVersamento:
-          value.verified_data !== undefined
-            ? value.verified_data.causaleVersamento
-            : "",
-        transactionState: value.transaction !== undefined,
-        creditore:
-          value.transaction !== undefined
-            ? value.transaction.merchant
-            : undefined,
-        amount:
-          value.transaction !== undefined
-            ? value.transaction.amount.amount
-            : undefined,
-        grandTotal:
-          value.transaction !== undefined
-            ? value.transaction.grandTotal.amount
-            : undefined,
-        idTransaction:
-          value.transaction !== undefined ? value.transaction.id : undefined
-      });
-    });
-
-    return data;
   };
 
   public render(): React.ReactNode {
@@ -166,7 +187,7 @@ export default class PaymentList extends React.Component<Props> {
         </View>
         <FlatList
           scrollEnabled={false}
-          data={this.returnData(payments)}
+          data={returnData(payments)}
           renderItem={this.renderPayments}
           ItemSeparatorComponent={() => (
             <ItemSeparatorComponent noPadded={true} />

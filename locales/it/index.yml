@@ -543,8 +543,8 @@ payment:
   details:
     state:
       successful: A buon fine
-      incomplete: non terminato
-      failed: fallito
+      incomplete: Non terminato
+      failed: Fallito
     info:
       buttons:
         copy: copia
@@ -556,7 +556,7 @@ payment:
       paymentAmount: Importo Pagamento
       transactionCosts: Costi di Transazione
       totalPaid: Totale Pagato
-      transactionCode: codice identificativo della transazione
+      transactionCode: Codice identificativo della transazione
       help: Se hai riscontrato un problema con questo pagamento, Scrivici per maggiorni informazioni e dettagli
     list:
       title: Tentativi di pagamento
