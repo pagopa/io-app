@@ -217,7 +217,7 @@ describe("servicesBadgeValueSelector", () => {
     ).toBe(1);
   });
 
-  it("should return 0 if the first load is not ye completed", () => {
+  it("should return 0 if the first load is not yet completed", () => {
     expect(
       servicesBadgeValueSelector.resultFunc(
         [...nationalServices],
@@ -228,7 +228,7 @@ describe("servicesBadgeValueSelector", () => {
     ).toBe(0);
   });
 
-  it("should return 1 even if we have few duplication in local services array", () => {
+  it("should return 1 even if we have few duplication in services array", () => {
     expect(
       servicesBadgeValueSelector.resultFunc(
         [...nationalServices],
