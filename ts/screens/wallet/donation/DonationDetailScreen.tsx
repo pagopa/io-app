@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import DonationHeader from "../../../components/donations/DonationHeader";
 import DonationVideoWebView from "../../../components/donations/DonationVideoWebView";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -40,6 +41,44 @@ const styles = StyleSheet.create({
   cover: {
     width: "100%",
     height: 210
+  },
+  inputContainer: {
+    width: "100%",
+    paddingHorizontal: customVariables.contentPadding
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  c1: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    height: "100%"
+  },
+  input: {
+    borderRadius: 8,
+    flex: 1,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: customVariables.brandPrimary,
+    height: customVariables.btnHeight,
+    fontSize: 24,
+    lineHeight: 30,
+    textAlign: "right",
+    fontWeight: "700",
+    paddingHorizontal: customVariables.btnXSmallLineHeight
+  },
+  euro: {
+    lineHeight: customVariables.btnHeight,
+    fontSize: 24,
+    color: customVariables.colorBlack
+  },
+  flex: {
+    flex: 1
+  },
+  padded: {
+    paddingHorizontal: customVariables.contentPadding
   }
 });
 
@@ -55,29 +94,6 @@ class DonationDetailScreen extends React.PureComponent<Props, State> {
   get item(): mockedItem {
     return this.props.navigation.getParam("item");
   }
-
-  private renderHeader = () => (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between"
-      }}
-    >
-      <View style={{ flex: 1 }}>
-        <H5>{this.item.organization_name}</H5>
-        <Text>{this.item.department_name}</Text>
-      </View>
-      <Image
-        source={{ uri: this.item.service_icon }}
-        style={{
-          resizeMode: "contain",
-          height: 48,
-          width: 60,
-          alignSelf: "flex-start"
-        }}
-      />
-    </View>
-  );
 
   private showVideo = () => {
     Keyboard.dismiss();
@@ -102,22 +118,11 @@ class DonationDetailScreen extends React.PureComponent<Props, State> {
      * - mark the transaction as donation (if not provided by the payment manager)
      */
   };
+  // TODO: add control on value: it should be >= to 1000 euros
 
   private InputContent = (
-    // TODO: add control on value: it should be >= to 1000 euros
-    <View
-      footer={true}
-      style={{
-        width: "100%",
-        paddingHorizontal: customVariables.contentPadding
-      }}
-    >
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between"
-        }}
-      >
+    <View footer={true} style={styles.inputContainer}>
+      <View style={styles.row}>
         <H5>{I18n.t("donations.detail.choose")}</H5>
         <IconFont
           name={"io-close"}
@@ -128,59 +133,24 @@ class DonationDetailScreen extends React.PureComponent<Props, State> {
 
       <View spacer={true} />
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between"
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            height: "100%"
-          }}
-        >
+      <View style={styles.row}>
+        <View style={styles.c1}>
           <TextInput
             ref={this.inputRef}
             keyboardType={"number-pad"}
             maxLength={4}
-            style={{
-              borderRadius: 8,
-              flex: 1,
-              borderWidth: StyleSheet.hairlineWidth,
-              borderColor: customVariables.brandPrimary,
-              height: customVariables.btnHeight,
-              fontSize: 24,
-              lineHeight: 30,
-              textAlign: "right",
-              fontWeight: "700",
-              paddingHorizontal: customVariables.btnXSmallLineHeight
-            }}
+            style={styles.input}
           />
           <View hspacer={true} />
-          <Text
-            style={{
-              lineHeight: customVariables.btnHeight,
-              fontSize: 24,
-              color: customVariables.colorBlack
-            }}
-            bold={true}
-          >
+          <Text style={styles.euro} bold={true}>
             {I18n.t("global.symbols.euro")}
           </Text>
           <View hspacer={true} extralarge={true} />
         </View>
         <ButtonDefaultOpacity
-          style={{ flex: 1 }}
-          onPress={
-            () =>
-              this.startDonation(
-                "123" as AmountInEuroCents
-              ) /** take the input content and proceed */
-          }
+          style={styles.flex}
+          // TODO: pass the input content as value
+          onPress={() => this.startDonation("123" as AmountInEuroCents)}
         >
           <Text>{I18n.t("global.buttons.continue")}</Text>
         </ButtonDefaultOpacity>
@@ -273,9 +243,13 @@ class DonationDetailScreen extends React.PureComponent<Props, State> {
         headerTitle={I18n.t("donations.detail.header")}
       >
         <Content noPadded={true}>
-          <View style={{ paddingHorizontal: customVariables.contentPadding }}>
+          <View style={styles.padded}>
             <View spacer={true} extralarge={true} />
-            {this.renderHeader()}
+            <DonationHeader
+              departmentName={this.item.department_name}
+              organizationName={this.item.organization_name}
+              imageSource={this.item.service_icon}
+            />
             <View spacer={true} extralarge={true} />
 
             <H3>{this.item.service_name}</H3>
@@ -288,9 +262,7 @@ class DonationDetailScreen extends React.PureComponent<Props, State> {
             <Image source={{ uri: this.item.cover }} style={styles.cover} />
           </TouchableDefaultOpacity>
           <View spacer={true} />
-          <Text style={{ paddingHorizontal: customVariables.contentPadding }}>
-            {this.item.description}
-          </Text>
+          <Text style={styles.padded}>{this.item.description}</Text>
           <View spacer={true} />
         </Content>
 

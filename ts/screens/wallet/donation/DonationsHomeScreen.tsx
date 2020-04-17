@@ -102,6 +102,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center"
+  },
+  psp: {
+    width: 160,
+    height: "100%",
+    resizeMode: "contain"
   }
 });
 
@@ -199,7 +204,7 @@ class DonationsHomeScreen extends React.PureComponent<Props> {
               </Text>
               <Image
                 source={require("../../../../img/wallet/Intesa_Sanpaolo_logo.png")}
-                style={{ width: 160, height: "100%", resizeMode: "contain" }}
+                style={styles.psp}
               />
             </View>
             <View spacer={true} />
