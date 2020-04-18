@@ -13,7 +13,6 @@ import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
-import TopScreenComponent from "../screens/TopScreenComponent";
 
 type Props = {
   ciePin: string;
