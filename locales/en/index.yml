@@ -97,7 +97,7 @@ profile:
     spid: SPID PROFILE
   unknown: UNKNOWN
   logout:
-    menulabel: Logout from this SPID identity
+    menulabel: Logout from IO
     cta:
       header: How do you want to quit the app?
       keepData:
@@ -550,6 +550,8 @@ wallet:
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
+  transactionsLoadMore: Load more
+  transacionsLoadingMore: Loading more transactions...
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time

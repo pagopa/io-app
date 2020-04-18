@@ -47,7 +47,6 @@ import {
   getPspUsingGETDecoder,
   GetPspUsingGETT,
   getTransactionsUsingGETDecoder,
-  GetTransactionsUsingGETT,
   getTransactionUsingGETDecoder,
   GetTransactionUsingGETT,
   GetWalletsUsingGETT,
@@ -87,6 +86,19 @@ const getSession: MapResponseType<
   response_decoder: startSessionUsingGETDecoder(SessionResponse)
 };
 
+// to support 'start' param in query string we re-define the type GetTransactionsUsingGETT
+// because the generated one doesn't support 'start' due to weak specs in api definition
+export type GetTransactionsUsingGETT = r.IGetApiRequestType<
+  { readonly Bearer: string; readonly start: number },
+  "Authorization",
+  never,
+  // tslint:disable-next-line: max-union-size
+  | r.IResponseType<200, TransactionListResponse>
+  | r.IResponseType<401, undefined>
+  | r.IResponseType<403, undefined>
+  | r.IResponseType<404, undefined>
+>;
+
 type GetTransactionsUsingGETTExtra = MapResponseType<
   GetTransactionsUsingGETT,
   200,
@@ -109,10 +121,11 @@ const ParamAuthorizationBearerHeaderProducer = <
 };
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
-
+const transactionsSliceLength = 10;
 const getTransactions: GetTransactionsUsingGETTExtra = {
   method: "get",
-  url: () => "/v1/transactions",
+  url: ({ start }) =>
+    `/v1/transactions?start=${start}&size=${transactionsSliceLength}`,
   query: () => ({}),
   headers: ParamAuthorizationBearerHeader,
   response_decoder: getTransactionsUsingGETDecoder(TransactionListResponse)
@@ -357,11 +370,12 @@ export function PaymentManagerClient(
     getWallets: flip(
       withPaymentManagerToken(createFetchRequestForApi(getWallets, options))
     )({}),
-    getTransactions: flip(
-      withPaymentManagerToken(
-        createFetchRequestForApi(getTransactions, options)
-      )
-    )({}),
+    getTransactions: (start: number) =>
+      flip(
+        withPaymentManagerToken(
+          createFetchRequestForApi(getTransactions, options)
+        )
+      )({ start }),
     getTransaction: (id: TypeofApiParams<GetTransactionUsingGETT>["id"]) =>
       flip(
         withPaymentManagerToken(
