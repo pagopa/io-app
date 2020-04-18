@@ -55,7 +55,7 @@ type State = {
 
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
-
+const VIBRATION = 100 as Millisecond;
 /**
  *  This screen shown while reading the card
  */
@@ -85,81 +85,75 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     return this.props.navigation.getParam("authorizationUri");
   }
 
+  private setError = (
+    errorMessage: string,
+    navigationRoute?: string,
+    navigationParams: {} = {}
+  ) => {
+    this.setState(
+      {
+        readingState: ReadingState.error,
+        errorMessage
+      },
+      () => {
+        Vibration.vibrate(VIBRATION);
+        if (navigationRoute !== undefined) {
+          this.props.navigation.navigate(navigationRoute, navigationParams);
+        }
+      }
+    );
+  };
+
   private handleCieEvent = async (event: CEvent) => {
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
         if (this.state.readingState !== ReadingState.reading) {
           this.setState({ readingState: ReadingState.reading }, () => {
-            Vibration.vibrate(100);
+            Vibration.vibrate(VIBRATION);
           });
         }
         break;
 
       // Reading interrupted before the sdk complete the reading
       case "ON_TAG_LOST":
-        this.setState(
-          {
-            readingState: ReadingState.error,
-            errorMessage: I18n.t("authentication.cie.card.error.onTagLost")
-          },
-          () => {
-            Vibration.vibrate(100);
-          }
-        );
+        this.setError(I18n.t("authentication.cie.card.error.onTagLost"));
         break;
 
       // The card is temporarily locked. Unlock is available by CieID app
       case "ON_CARD_PIN_LOCKED":
-        await this.stopCieManager();
-        this.props.navigation.navigate(ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN);
+        this.setError(
+          I18n.t("authentication.cie.card.error.generic"),
+          ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
+        );
         break;
 
       case "AUTHENTICATION_ERROR":
-        this.setState(
-          {
-            readingState: ReadingState.error,
-            errorMessage: I18n.t("authentication.cie.card.error.generic")
-          },
-          () => {
-            Vibration.vibrate(100);
-          }
-        );
+        this.setError(I18n.t("authentication.cie.card.error.generic"));
         break;
 
       case "ON_NO_INTERNET_CONNECTION":
-        this.setState(
-          {
-            readingState: ReadingState.error,
-            errorMessage: I18n.t("authentication.cie.card.error.tryAgain")
-          },
-          () => {
-            Vibration.vibrate(100);
-          }
-        );
+        this.setError(I18n.t("authentication.cie.card.error.tryAgain"));
         break;
 
       // The inserted pin is incorrect
       case "ON_PIN_ERROR":
-        await this.stopCieManager();
-        this.props.navigation.navigate(ROUTES.CIE_WRONG_PIN_SCREEN, {
-          remainingCount: event.attemptsLeft
-        });
+        this.setError(
+          I18n.t("authentication.cie.card.error.tryAgain"),
+          ROUTES.CIE_WRONG_PIN_SCREEN,
+          {
+            remainingCount: event.attemptsLeft
+          }
+        );
         break;
 
       // CIE is Expired or Revoked
       case "CERTIFICATE_EXPIRED":
       case "CERTIFICATE_REVOKED":
-        this.setState(
-          {
-            readingState: ReadingState.error,
-            errorMessage: I18n.t("authentication.cie.card.error.generic")
-          },
-          () => {
-            Vibration.vibrate(100);
-          }
+        this.setError(
+          I18n.t("authentication.cie.card.error.generic"),
+          ROUTES.CIE_EXPIRED_SCREEN
         );
-        this.props.navigation.navigate(ROUTES.CIE_EXPIRED_SCREEN);
         break;
 
       default:
@@ -220,11 +214,6 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         });
       }, WAIT_TIMEOUT_NAVIGATION);
     });
-  };
-
-  private stopCieManager = async () => {
-    cieManager.removeAllListeners();
-    await cieManager.stopListeningNFC();
   };
 
   public componentDidMount() {

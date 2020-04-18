@@ -153,7 +153,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
 
   public render(): React.ReactNode {
     const ContainerComponent = withLoadingSpinner(() => (
-      <TopScreenComponent>{this.renderWebView()}</TopScreenComponent>
+      <View>{this.renderWebView()}</View>
     ));
     return (
       <ContainerComponent
