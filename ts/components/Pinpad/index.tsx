@@ -176,9 +176,7 @@ class Pinpad extends React.PureComponent<Props, State> {
 
     // we avoid to shuffle pin/code pad in dev env
     const newPinPadValue =
-      this.props.shufflePad !== true || isDevEnv
-        ? pinPadValues
-        : shuffle(pinPadValues);
+      this.props.shufflePad !== true ? pinPadValues : shuffle(pinPadValues);
 
     // compute width placeholder
     const totalMargins = margin * 2 * (pinLength - 1) + sideMargin * 2;

@@ -20,6 +20,7 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
+import { shufflePinPadOnPayment } from "../../../config";
 import I18n from "../../../i18n";
 import { identificationRequest } from "../../../store/actions/identification";
 import {
@@ -359,7 +360,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         {
           onSuccess: onIdentificationSuccess
         },
-        true
+        shufflePinPadOnPayment
       )
     );
   return {
