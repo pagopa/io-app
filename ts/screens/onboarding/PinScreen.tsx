@@ -313,6 +313,7 @@ class PinScreen extends React.Component<Props, State> {
       <BaseScreenComponent
         goBack={this.handleGoBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["onboarding_pin", "unlock"]}
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
         {this.renderContent(pinState)}

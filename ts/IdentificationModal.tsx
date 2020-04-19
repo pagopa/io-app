@@ -284,6 +284,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         <BaseScreenComponent
           primary={true}
           contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
           appLogo={true}
         >
           <StatusBar

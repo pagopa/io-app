@@ -1077,7 +1077,7 @@ faq:
     title: "Come disabilitare il riconoscimento biometrico?"
     content: !include faq/faq22.md
   23:
-    title: "Che tipo di messagi puoi ricevere?"
+    title: "Che tipo di messaggi puoi ricevere?"
     content: !include faq/faq23.md
   24:
     title: "Cosa succede se archivi i messaggi?"
