@@ -1,23 +1,27 @@
 import { Function1, Lazy, Predicate } from "fp-ts/lib/function";
+import { Option } from "fp-ts/lib/Option";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
 import { Psp, Transaction } from "../../../types/pagopa";
 
 //
 // fetch all transactions
 //
 
+// transactions is a pagination API. Request payload includes start to specify from which
+// item we want to load
 export const fetchTransactionsRequest = createStandardAction(
   "FETCH_TRANSACTIONS_REQUEST"
-)();
+)<{ start: number }>();
 
+// transactions is a pagination API. Success payload includes 'total' to know how many
+// transactions are available
 export const fetchTransactionsSuccess = createStandardAction(
   "FETCH_TRANSACTIONS_SUCCESS"
-)<ReadonlyArray<Transaction>>();
+)<{ data: ReadonlyArray<Transaction>; total: Option<number> }>();
 
 export const fetchTransactionsFailure = createStandardAction(
   "FETCH_TRANSACTIONS_FAILURE"

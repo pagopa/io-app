@@ -98,7 +98,7 @@ profile:
     spid: PROFILO SPID
   unknown: SCONOSCIUTO
   logout:
-    menulabel: Esci da questa identità SPID
+    menulabel: Esci da IO
     cta:
       header: Come vuoi uscire dall'app?
       keepData:
@@ -222,6 +222,8 @@ profile:
     calendar:
       contextualHelpTitle: Cos'è il tuo calendario preferito
       contextualHelpContent: !include profile/profile_preferences_calendar.md
+      local_calendar: Calendario locale
+      birthday_calendar: Compleanni
 userMetadata:
   errors:
     upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
@@ -277,6 +279,7 @@ authentication:
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
     expiredCardTitle: Carta scaduta o non più valida
+    expiredCardHeaderTitle: Card scaduta o revocata
     expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
   cie:
@@ -295,6 +298,7 @@ authentication:
       pinCardHeader: Inserisci il PIN
       pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
       incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
+      incorrectCiePinHeaderTitle: PIN errato
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
       alert: Sei sicuro di voler tornare indietro?
@@ -557,6 +561,8 @@ wallet:
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
   transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
+  transactionsLoadMore: Carica di più
+  transacionsLoadingMore: Carico altre transazioni...
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile
@@ -1074,7 +1080,7 @@ faq:
     title: "Come disabilitare il riconoscimento biometrico?"
     content: !include faq/faq22.md
   23:
-    title: "Che tipo di messagi puoi ricevere?"
+    title: "Che tipo di messaggi puoi ricevere?"
     content: !include faq/faq23.md
   24:
     title: "Cosa succede se archivi i messaggi?"

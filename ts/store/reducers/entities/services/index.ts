@@ -352,18 +352,22 @@ export const servicesBadgeValueSelector = createSelector(
     isFirstVisibleServiceLoadCompleted
   ) => {
     if (isFirstVisibleServiceLoadCompleted) {
-      const services: ReadonlyArray<ServicesSectionState> = [
+      const servicesSet: Set<ServicesSectionState> = new Set([
         ...nationalService,
         ...localService
-      ];
-      return services.reduce((acc: number, service: ServicesSectionState) => {
-        const servicesNotRead = service.data.filter(
-          data =>
-            pot.isSome(data) &&
-            readServicesById[data.value.service_id] === undefined
-        ).length;
-        return acc + servicesNotRead;
-      }, 0);
+      ]);
+
+      return [...servicesSet].reduce(
+        (acc: number, service: ServicesSectionState) => {
+          const servicesNotRead = service.data.filter(
+            data =>
+              pot.isSome(data) &&
+              readServicesById[data.value.service_id] === undefined
+          ).length;
+          return acc + servicesNotRead;
+        },
+        0
+      );
     }
     return 0;
   }
