@@ -32,6 +32,7 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
+import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
 } from "./screens/TopScreenComponent";
@@ -202,9 +203,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     </View>
   );
 
-  private contextualHelp = {
-    title: I18n.t("email.validate.title"),
-    body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
+  private contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+    title: "email.validate.title",
+    body: "email.validate.help"
   };
 
   private handleOnboardingGoBack = () =>
@@ -313,7 +314,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     return (
       <TopScreenComponent
         {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
-        contextualHelp={this.contextualHelp}
+        contextualHelpMarkdown={this.contextualHelpMarkdown}
       >
         <Content>
           <React.Fragment>
