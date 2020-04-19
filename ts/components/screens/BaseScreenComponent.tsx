@@ -1,4 +1,10 @@
-import { fromPredicate, none, Option, some } from "fp-ts/lib/Option";
+import {
+  fromNullable,
+  fromPredicate,
+  none,
+  Option,
+  some
+} from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
@@ -65,8 +71,9 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       isHelpVisible: false,
       // if the content is markdown we listen for load end event, otherwise the content is
       // assumed always loaded
-      markdownContentLoaded:
-        this.props.contextualHelpMarkdown !== undefined ? some(false) : none
+      markdownContentLoaded: fromNullable(
+        this.props.contextualHelpMarkdown
+      ).fold<Option<boolean>>(none, _ => some(false))
     };
   }
 
