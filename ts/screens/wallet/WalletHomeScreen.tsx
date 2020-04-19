@@ -44,7 +44,11 @@ import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { latestTransactionsSelector } from "../../store/reducers/wallet/transactions";
+import {
+  areMoreTransactionsAvailable,
+  getTransactionsLoadedLength,
+  latestTransactionsSelector
+} from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
@@ -138,7 +142,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     // https://www.pivotaltracker.com/story/show/168836972
 
     this.props.loadWallets();
-    this.props.loadTransactions();
+    this.props.loadTransactions(this.props.transactionsLoadedLength);
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
         "light-content",
@@ -281,7 +285,9 @@ class WalletHomeScreen extends React.Component<Props, never> {
           light={true}
           bordered={true}
           small={true}
-          onPress={this.props.loadTransactions}
+          onPress={() =>
+            this.props.loadTransactions(this.props.transactionsLoadedLength)
+          }
         >
           <Text primary={true}>{I18n.t("global.buttons.retry")}</Text>
         </ButtonDefaultOpacity>
@@ -305,6 +311,10 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
+  private handleLoadMoreTransactions = () => {
+    this.props.loadTransactions(this.props.transactionsLoadedLength);
+  };
+
   private transactionList(
     potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
   ) {
@@ -313,6 +323,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
         title={I18n.t("wallet.latestTransactions")}
         amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
+        areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
+        onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
@@ -367,7 +379,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     const walletRefreshControl = (
       <RefreshControl
         onRefresh={() => {
-          this.props.loadTransactions();
+          this.props.loadTransactions(this.props.transactionsLoadedLength);
           this.props.loadWallets();
         }}
         refreshing={false}
@@ -395,6 +407,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
   potTransactions: latestTransactionsSelector(state),
+  transactionsLoadedLength: getTransactionsLoadedLength(state),
+  areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   readTransactions: transactionsReadSelector(state)
 });
@@ -413,7 +427,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  loadTransactions: () => dispatch(fetchTransactionsRequest()),
+  loadTransactions: (start: number) =>
+    dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest())
 });
 

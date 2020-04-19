@@ -250,7 +250,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       pin,
       canResetPin,
       identificationGenericData,
-      identificationCancelData
+      identificationCancelData,
+      shufflePad
     } = identificationState;
 
     const {
@@ -308,6 +309,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   this.onIdentificationFailureHandler
                 )
               }
+              shufflePad={shufflePad}
               disabled={!this.state.canInsertPin}
               compareWithCode={pin as string}
               activeColor={"white"}

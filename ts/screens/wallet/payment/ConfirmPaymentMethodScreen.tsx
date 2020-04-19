@@ -22,6 +22,7 @@ import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
+import { shufflePinPadOnPayment } from "../../../config";
 import I18n from "../../../i18n";
 import { identificationRequest } from "../../../store/actions/identification";
 import {
@@ -317,8 +318,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       );
       // reset the payment state
       dispatch(paymentInitializeState());
-      // update the transactions state
-      dispatch(fetchTransactionsRequest());
+      // update the transactions state (the first transaction is the most recent)
+      dispatch(fetchTransactionsRequest({ start: 0 }));
       // navigate to the resulting transaction details
       showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {
@@ -367,7 +368,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         },
         {
           onSuccess: onIdentificationSuccess
-        }
+        },
+        shufflePinPadOnPayment
       )
     );
   return {
