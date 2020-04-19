@@ -120,6 +120,12 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError(I18n.t("authentication.cie.card.error.onTagLost"));
         break;
 
+      case "ON_TAG_DISCOVERED_NOT_CIE":
+        this.setError(
+          I18n.t("authentication.cie.card.error.unknownCardContent")
+        );
+        break;
+
       // The card is temporarily locked. Unlock is available by CieID app
       case "ON_CARD_PIN_LOCKED":
         this.setError(
