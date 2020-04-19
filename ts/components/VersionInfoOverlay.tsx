@@ -4,6 +4,7 @@ import { Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
 
+import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { ReduxProps } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
 import { getCurrentRouteName } from "../utils/navigation";
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
   versionContainer: {
     position: "absolute",
     top: Platform.select({
-      ios: 20,
+      ios: 20 + (isIphoneX() ? getStatusBarHeight() : 0),
       android: 0
     }),
     left: 0,
@@ -45,7 +46,7 @@ const VersionInfoOverlay: React.SFC<Props> = props => {
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
       <Text style={styles.versionText}>
-        {appVersion} - {serverVersion}
+        {`app: ${appVersion}`} - {`backend: ${serverVersion}`}
       </Text>
       <Text style={styles.routeText}>{getCurrentRouteName(props.nav)}</Text>
     </View>
