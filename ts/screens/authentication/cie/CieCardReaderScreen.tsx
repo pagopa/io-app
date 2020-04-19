@@ -22,6 +22,7 @@ import ROUTES from "../../../navigation/routes";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
+import { RTron } from "../../../boot/configureStoreAndPersistor";
 
 type NavigationParams = {
   ciePin: string;
@@ -105,6 +106,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private handleCieEvent = async (event: CEvent) => {
+    RTron.log("event", event);
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
@@ -118,6 +120,12 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       // Reading interrupted before the sdk complete the reading
       case "ON_TAG_LOST":
         this.setError(I18n.t("authentication.cie.card.error.onTagLost"));
+        break;
+
+      case "ON_TAG_DISCOVERED_NOT_CIE":
+        this.setError(
+          I18n.t("authentication.cie.card.error.unknownCardContent")
+        );
         break;
 
       // The card is temporarily locked. Unlock is available by CieID app
@@ -199,6 +207,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
+    RTron.log("error", error);
     this.setState({
       readingState: ReadingState.error,
       errorMessage: error.message
