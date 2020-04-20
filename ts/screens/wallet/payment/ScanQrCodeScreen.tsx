@@ -17,7 +17,6 @@ import { ComponentProps } from "../../../types/react";
 
 import ImagePicker from "react-native-image-picker";
 import * as ReaderQR from "react-native-lewin-qrcode";
-import { BaseHeader } from "../../../components/screens/BaseHeader";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
