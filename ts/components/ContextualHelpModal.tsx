@@ -82,7 +82,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
 
     const simpleHeader = (
       <View style={styles.header}>
-        <ButtonDefaultOpacity onPress={onClose}>
+        <ButtonDefaultOpacity onPress={onClose} transparent={true}>
           <IconFont name={"io-close"} />
         </ButtonDefaultOpacity>
       </View>
@@ -93,8 +93,8 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         visible={this.props.isVisible}
         onShow={onModalShow}
         animationType={"slide"}
-        transparent={true}
         onRequestClose={onClose}
+        transparent={true}
       >
         <SafeAreaView style={styles.flex}>
           <Container style={isIphoneX() ? styles.iphoneXBottom : undefined}>
