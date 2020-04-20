@@ -181,6 +181,7 @@ class PreferencesScreen extends React.Component<Props, State> {
     return (
       <TopScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["profile", "privacy", "authentication_SPID"]}
         headerTitle={I18n.t("profile.preferences.title")}
         goBack={true}
       >
