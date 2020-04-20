@@ -157,8 +157,8 @@ class LandingScreen extends React.PureComponent<Props> {
       >
         {isDevEnv && <DevScreenButton onPress={this.navigateToMarkdown} />}
 
-        <Content contentContainerStyle={styles.flex} noPadded={true}>
-          <HorizontalScroll cards={this.renderCardComponents()} />
+        <Content contentContainerStyle={styles.flex} >
+          <IconFont name={'io-complete'}/>
         </Content>
 
         <View footer={true}>
