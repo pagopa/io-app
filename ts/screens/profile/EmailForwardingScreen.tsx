@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -67,6 +68,11 @@ function renderListItem(
   );
 }
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.email.forward.contextualHelpTitle",
+  body: "profile.preferences.email.forward.contextualHelpContent"
+};
+
 class EmailForwardingScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -100,6 +106,7 @@ class EmailForwardingScreen extends React.Component<Props, State> {
     return (
       <TopScreenComponent
         headerTitle={I18n.t("send_email_messages.title")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         goBack={this.props.navigation.goBack}
       >
         <ScreenContent title={I18n.t("send_email_messages.title")}>
