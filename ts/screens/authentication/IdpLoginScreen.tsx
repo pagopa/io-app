@@ -223,6 +223,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
       <BaseScreenComponent
         goBack={true}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["authentication_SPID", "authentication_CIE"]}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
           loggedOutWithIdpAuth.idp.name
         }`}

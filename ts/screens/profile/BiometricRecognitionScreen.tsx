@@ -99,6 +99,7 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
         headerTitle={I18n.t("biometric_recognition.title")}
         goBack={this.goBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["onboarding_fingerprint"]}
       >
         <ScreenContentHeader
           title={I18n.t("biometric_recognition.title")}

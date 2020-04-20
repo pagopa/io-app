@@ -9,7 +9,8 @@ export const FAQs: { [key in FAQsCategoriesType]: ReadonlyArray<number> } = {
   authentication_IPD_selection: [6, 7, 8],
   profile: [13, 53, 54],
   privacy: [13, 55, 56],
-  onboarding: [17, 18, 19, 20, 21, 22],
+  onboarding_pin: [17, 18, 19],
+  onboarding_fingerprint: [20, 21, 22],
   unlock: [17, 18],
   messages: [23, 24, 25, 26, 27],
   messages_detail: [27, 28, 29, 30, 31, 32],
@@ -29,7 +30,8 @@ export type FAQsCategoriesType =
   | "authentication_IPD_selection"
   | "profile"
   | "privacy"
-  | "onboarding"
+  | "onboarding_pin"
+  | "onboarding_fingerprint"
   | "unlock"
   | "messages"
   | "messages_detail"
