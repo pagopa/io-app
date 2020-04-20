@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
@@ -18,6 +19,7 @@ import {
   fetchTransactionFailure,
   fetchTransactionRequest,
   fetchTransactionsFailure,
+  fetchTransactionsRequest,
   fetchTransactionsSuccess,
   fetchTransactionSuccess
 } from "../../store/actions/wallet/transactions";
@@ -51,6 +53,7 @@ import { SessionManager } from "../../utils/SessionManager";
 /**
  * Handles fetchWalletsRequest
  */
+
 export function* fetchWalletsRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
@@ -77,14 +80,22 @@ export function* fetchWalletsRequestHandler(
  */
 export function* fetchTransactionsRequestHandler(
   pagoPaClient: PaymentManagerClient,
-  pmSessionManager: SessionManager<PaymentManagerToken>
+  pmSessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof fetchTransactionsRequest>
 ): Iterator<Effect> {
-  const request = pmSessionManager.withRefresh(pagoPaClient.getTransactions);
+  const request = pmSessionManager.withRefresh(
+    pagoPaClient.getTransactions(action.payload.start)
+  );
   try {
     const response: SagaCallReturnType<typeof request> = yield call(request);
     if (response.isRight()) {
       if (response.value.status === 200) {
-        yield put(fetchTransactionsSuccess(response.value.value.data));
+        yield put(
+          fetchTransactionsSuccess({
+            data: response.value.value.data,
+            total: fromNullable(response.value.value.total)
+          })
+        );
       } else {
         throw Error(`response status ${response.value.status}`);
       }

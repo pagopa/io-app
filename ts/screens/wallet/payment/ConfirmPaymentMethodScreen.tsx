@@ -14,12 +14,15 @@ import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import PaymentSecureCodeOverlay from "../../../components/PaymentSecureCodeOverlay";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
+import { shufflePinPadOnPayment } from "../../../config";
 import I18n from "../../../i18n";
 import { identificationRequest } from "../../../store/actions/identification";
 import {
@@ -108,6 +111,11 @@ const styles = StyleSheet.create({
 const feeForWallet = (w: Wallet): Option<number> =>
   fromNullable(w.psp).map(psp => psp.fixedCost.amount);
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.whyAFee.title",
+  body: "wallet.whyAFee.text"
+};
+
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   private showHelp = () => {
     this.props.showModal(
@@ -141,6 +149,8 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
       <BaseScreenComponent
         goBack={this.props.onCancel}
         headerTitle={I18n.t("wallet.confirmPayment.header")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["payment"]}
       >
         <Content noPadded={true}>
           <PaymentBannerComponent
@@ -324,8 +334,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       );
       // reset the payment state
       dispatch(paymentInitializeState());
-      // update the transactions state
-      dispatch(fetchTransactionsRequest());
+      // update the transactions state (the first transaction is the most recent)
+      dispatch(fetchTransactionsRequest({ start: 0 }));
       // navigate to the resulting transaction details
       showToast(I18n.t("wallet.confirmPayment.transactionSuccess"), "success");
     } else {
@@ -375,7 +385,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         },
         {
           onSuccess: () => onIdentificationSuccess(cvv)
-        }
+        },
+        shufflePinPadOnPayment
       )
     );
   return {
