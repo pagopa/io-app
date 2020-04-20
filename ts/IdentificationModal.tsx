@@ -15,6 +15,7 @@ import I18n from "./i18n";
 import {
   identificationCancel,
   identificationFailure,
+  identificationForceLogout,
   identificationPinReset,
   identificationSuccess
 } from "./store/actions/identification";
@@ -53,6 +54,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.pin.contextualHelpTitle",
   body: "onboarding.pin.contextualHelpContent"
 };
+
+const maxAttempts = 3;
 
 const renderIdentificationByPinState = (
   identificationByPinState: IdentificationByPinState
@@ -261,8 +264,16 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   };
 
   private onIdentificationFailureHandler = () => {
-    const { dispatch } = this.props;
-    dispatch(identificationFailure());
+    const { dispatch, identificationFailState } = this.props;
+
+    const forceLogout = fromNullable(identificationFailState)
+      .map(failState => failState.wrongAttempts >= maxAttempts - 1)
+      .getOrElse(false);
+    if (forceLogout) {
+      dispatch(identificationForceLogout());
+    } else {
+      dispatch(identificationFailure());
+    }
   };
 
   public render() {

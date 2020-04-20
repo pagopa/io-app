@@ -61,6 +61,12 @@ export type IdentificationState = {
 
 export type PersistedIdentificationState = IdentificationState & PersistPartial;
 
+const freeAttempts = 4;
+// in seconds
+const deltaTimespanBetweenAttempts = 1;
+
+const maxAttempts = 8;
+
 const INITIAL_PROGRESS_STATE: IdentificationUnidentifiedState = {
   kind: "unidentified"
 };
@@ -73,12 +79,14 @@ const INITIAL_STATE: IdentificationState = {
 const nextErrorData = (
   errorData: IdentificationFailData
 ): IdentificationFailData => {
+  const newTimespan =
+    errorData.wrongAttempts + 1 > freeAttempts
+      ? errorData.timespanBetweenAttempts + deltaTimespanBetweenAttempts
+      : 0;
   return {
-    nextLegalAttempt: new Date(
-      Date.now() + errorData.timespanBetweenAttempts * 1000
-    ),
+    nextLegalAttempt: new Date(Date.now() + newTimespan * 1000),
     wrongAttempts: errorData.wrongAttempts + 1,
-    timespanBetweenAttempts: errorData.wrongAttempts > 3 ? 30 : 0
+    timespanBetweenAttempts: newTimespan
   };
 };
 

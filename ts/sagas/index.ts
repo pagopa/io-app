@@ -18,6 +18,7 @@ import {
   watchBackToEntrypointPaymentSaga,
   watchPaymentInitializeSaga
 } from "./wallet";
+import { watchForceLogout } from "./watchForceLogout";
 import { watchNavigateToDeepLinkSaga } from "./watchNavigateToDeepLinkSaga";
 
 // Parameters used by the withNetworkConnectivity HOC of react-native-offline.
@@ -49,6 +50,7 @@ export default function* root(): Iterator<Effect> {
     call(watchContentMunicipalityLoadSaga),
     call(watchContentServicesByScopeLoad),
     call(watchPaymentInitializeSaga),
-    call(watchBackToEntrypointPaymentSaga)
+    call(watchBackToEntrypointPaymentSaga),
+    call(watchForceLogout)
   ]);
 }
