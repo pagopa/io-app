@@ -66,6 +66,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start"
   },
+  boxHelp: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
   row: {
     flexDirection: "row",
     justifyContent: "space-between"
@@ -77,6 +81,12 @@ const styles = StyleSheet.create({
     color: customVariables.brandDarkestGray,
     fontWeight: "700"
   },
+  textHelp: {
+    textAlign: "center",
+    lineHeight: 17
+  },
+  textBig: { fontSize: 18 },
+  textBold: { fontWeight: "700" },
   copyButton: {
     justifyContent: "center",
     alignItems: "center",
@@ -233,14 +243,11 @@ export default class PaymentDetails extends React.Component<Props, never> {
                     <View spacer={true} />
                     <View style={styles.row}>
                       <Text
-                        style={[
-                          styles.text1,
-                          { fontSize: 18, fontWeight: "700" }
-                        ]}
+                        style={[styles.text1, styles.textBig, styles.textBold]}
                       >
                         {I18n.t("payment.details.info.totalPaid")}
                       </Text>
-                      <Text style={[styles.text2, { fontSize: 18 }]}>
+                      <Text style={[styles.text2, styles.textBig]}>
                         € {this.getAmount(grandTotal)}
                       </Text>
                     </View>
@@ -272,24 +279,8 @@ export default class PaymentDetails extends React.Component<Props, never> {
 
             {esito !== "Success" && <View spacer={true} extralarge={true} />}
 
-            <View
-              style={[
-                styles.box,
-                {
-                  justifyContent: "center",
-                  alignItems: "center"
-                }
-              ]}
-            >
-              <Text
-                style={[
-                  styles.text1,
-                  {
-                    textAlign: "center",
-                    lineHeight: 17
-                  }
-                ]}
-              >
+            <View style={[styles.box, styles.boxHelp]}>
+              <Text style={[styles.text1, styles.textHelp]}>
                 {I18n.t("payment.details.info.help")}
               </Text>
               <View spacer={true} />
