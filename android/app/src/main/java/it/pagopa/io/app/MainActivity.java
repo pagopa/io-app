@@ -42,15 +42,8 @@ public class MainActivity extends ReactActivity {
             super.onCreate(savedInstanceState);
             showAlertDialog(getString(R.string.dialog_attention), getString(R.string.tablet_not_supported));
         } else {
-            if (!isEmulator() && isDeviceRooted()) {
-                super.onCreate(savedInstanceState);
-                // on rooted device show message ant stop app
-                showAlertDialog(getString(R.string.alert_device_rooted_title),
-                        getString(R.string.alert_device_rooted_desc));
-            } else {
-                SplashScreen.show(this, R.style.SplashScreenTheme);
-                super.onCreate(savedInstanceState);
-            }
+            SplashScreen.show(this, R.style.SplashScreenTheme);
+            super.onCreate(savedInstanceState);         
         }
         // Fix the problem described here:
         // https://stackoverflow.com/questions/48072438/java-lang-illegalstateexception-only-fullscreen-opaque-activities-can-request-o
