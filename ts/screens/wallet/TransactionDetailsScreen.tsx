@@ -277,6 +277,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         hideHeader={true}
         hasDynamicSubHeader={false}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_transaction"]}
       >
         <NavigationEvents onWillFocus={this.handleWillFocus} />
         <Content
