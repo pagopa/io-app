@@ -19,6 +19,7 @@ import { CieAuthenticationActions } from "./cie";
 import { ContentActions } from "./content";
 import { DebugActions } from "./debug";
 import { DeepLinkActions } from "./deepLink";
+import { DonationsActions } from "./donations";
 import { IdentificationActions } from "./identification";
 import { InstabugInfoActions } from "./instabug";
 import { InstallationActions } from "./installation";
@@ -66,6 +67,7 @@ export type Action =
   | CalendarEventsActions
   | SearchActions
   | PaymentsActions
+  | DonationsActions
   | OrganizationsActions
   | InstabugInfoActions
   | UserDataProcessingActions;

@@ -3,9 +3,8 @@ import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
-import { TwoButtonsInlineHalf, SingleButton } from '../ui/BlockButtons';
-import FooterWithButtons from '../ui/FooterWithButtons';
-
+import { SingleButton, TwoButtonsInlineHalf } from "../ui/BlockButtons";
+import FooterWithButtons from "../ui/FooterWithButtons";
 
 type Props = Readonly<{
   onRetry: () => void;

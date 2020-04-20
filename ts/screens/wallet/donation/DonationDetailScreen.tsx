@@ -12,6 +12,7 @@ import {
   TextInput
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import DonationHeader from "../../../components/donations/DonationHeader";
 import DonationVideoWebView from "../../../components/donations/DonationVideoWebView";
@@ -22,6 +23,8 @@ import BlockButtons from "../../../components/ui/BlockButtons";
 import H5 from "../../../components/ui/H5";
 import IconFont from "../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
+import { paymentIdFofDonation } from "../../../store/actions/donations";
+import { ReduxProps } from "../../../store/actions/types";
 import customVariables from "../../../theme/variables";
 import { mockedItem } from "./DonationsHomeScreen";
 
@@ -30,7 +33,8 @@ type NavigationParams = Readonly<{
 }>;
 
 type Props = NavigationInjectedProps<NavigationParams> &
-  LightModalContextInterface;
+  LightModalContextInterface &
+  ReduxProps;
 
 type State = Readonly<{
   showCustomDonationInput: boolean;
@@ -111,12 +115,7 @@ class DonationDetailScreen extends React.PureComponent<Props, State> {
   };
 
   private startDonation = (amount: AmountInEuroCents) => {
-    /**
-     * TODO:
-     * - request payment identificator and
-     * - then proceed as a traditional payment
-     * - mark the transaction as donation (if not provided by the payment manager)
-     */
+    this.props.dispatch(paymentIdFofDonation.request(amount));
   };
   // TODO: add control on value: it should be >= to 1000 euros
 
@@ -282,4 +281,4 @@ class DonationDetailScreen extends React.PureComponent<Props, State> {
   }
 }
 
-export default withLightModalContext(DonationDetailScreen);
+export default connect()(withLightModalContext(DonationDetailScreen));
