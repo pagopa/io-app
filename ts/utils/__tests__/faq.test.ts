@@ -55,4 +55,10 @@ describe("getFAQsFromCategories", () => {
   it("Should return an empty array", () => {
     expect(getFAQsFromCategories([])).toStrictEqual([]);
   });
+
+  it("Should return an empty array", () => {
+    expect(
+      getFAQsFromCategories(["not mapped key" as FAQsCategoriesType])
+    ).toStrictEqual([]);
+  });
 });
