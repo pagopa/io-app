@@ -530,7 +530,7 @@ To update the icon-font to a new version, it is necessary to extract and correct
 Once the two files have been copied, it is necessary to update the link of the asset by installing globally and running react-native-asset (version 1.1.4):
 
 ```
-$ yarn global add react-native-asset@1.1.4
+$ yarn global add react-native-asset@2.0.0
 $ react-native-asset
 ```
 

@@ -68,6 +68,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
       <BaseScreenComponent
         goBack={true}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet", "wallet_methods"]}
         headerTitle={
           inPayment.isSome()
             ? I18n.t("wallet.payWith.header")

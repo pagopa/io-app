@@ -664,6 +664,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         goBack={this.props.navigation.goBack}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["services_detail"]}
       >
         <Content>
           <Grid>
