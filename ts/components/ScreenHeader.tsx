@@ -57,7 +57,11 @@ class ScreenHeader extends React.Component<Props> {
         <View style={styles.text}>{heading}</View>
         {icon && <Image source={icon} style={styles.image} />}
         {iconFont && (
-          <IconFont name={iconFont.name} size={iconFont.size || HEADER_HEIGHT} color={imageColor} />
+          <IconFont
+            name={iconFont.name}
+            size={iconFont.size || HEADER_HEIGHT}
+            color={imageColor}
+          />
         )}
       </View>
     );

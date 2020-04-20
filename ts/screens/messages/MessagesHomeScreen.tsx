@@ -160,7 +160,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <React.Fragment>
             <AnimatedScreenContentHeader
               title={I18n.t("messages.contentTitle")}
-              iconFont={{name: 'io-home-messaggi', size: 40}}
+              iconFont={{ name: "io-home-messaggi", size: 40 }}
               dynamicHeight={this.getHeaderHeight()}
             />
             {this.renderTabs()}

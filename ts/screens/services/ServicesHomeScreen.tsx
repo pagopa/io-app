@@ -539,7 +539,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               <React.Fragment>
                 <AnimatedScreenContentHeader
                   title={I18n.t("services.title")}
-                  iconFont={{name: 'io-home-servizi'}}
+                  iconFont={{ name: "io-home-servizi" }}
                   dynamicHeight={this.getHeaderHeight()}
                 />
                 {this.renderInnerContent()}
