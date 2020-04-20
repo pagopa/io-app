@@ -129,7 +129,7 @@ PODS:
     - React
   - RNSVG (6.5.3):
     - React
-  - RNVectorIcons (6.4.2):
+  - RNVectorIcons (6.6.0):
     - React
   - TouchID (4.4.1):
     - React
@@ -320,7 +320,7 @@ SPEC CHECKSUMS:
   RNKeychain: c658833a9cb2cbcba6423bdd6e16cce59e27da0e
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNSVG: 4501a5e968f1eb962f5481b0da53dfb59260e9b6
-  RNVectorIcons: 6607bd3a30291d0edb56f9bbe7ae411ee2b928b0
+  RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
