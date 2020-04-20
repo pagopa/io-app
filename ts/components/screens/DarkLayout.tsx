@@ -20,12 +20,14 @@ import {
 } from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
+import { IconProps } from 'react-native-vector-icons/Icon';
 
 type Props = Readonly<{
   allowGoBack?: boolean;
   headerBody?: React.ReactNode;
   title?: string;
   icon?: ImageSourcePropType;
+  iconFont?: IconProps;
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
   appLogo?: boolean;
@@ -84,6 +86,7 @@ export default class DarkLayout extends React.Component<Props> {
             hideHeader={this.props.hideHeader}
             title={this.props.title ? this.props.title : ""}
             icon={this.props.icon}
+            iconFont={this.props.iconFont}
             dark={true}
             contentStyle={this.props.contentStyle}
             dynamicSubHeader={this.props.dynamicSubHeader}
@@ -100,6 +103,7 @@ export default class DarkLayout extends React.Component<Props> {
             hideHeader={this.props.hideHeader}
             title={this.props.title ? this.props.title : ""}
             icon={this.props.icon}
+            iconFont={this.props.iconFont}
             dark={true}
             contentStyle={this.props.contentStyle}
             bounces={

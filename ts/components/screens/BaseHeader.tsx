@@ -159,15 +159,15 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   };
 
   private renderLeft = () => {
-    const { isSearchEnabled, appLogo, primary } = this.props;
+    const { isSearchEnabled, appLogo, primary, dark } = this.props;
     return (
       !isSearchEnabled &&
       (appLogo ? (
         <Left>
           <View>
             <IconFont
-              name="io-logo"
-              color={primary ? "white" : variables.brandPrimary}
+              name={"io-logo"}
+              color={(primary || dark) ? "white" : variables.brandPrimary}
             />
           </View>
         </Left>

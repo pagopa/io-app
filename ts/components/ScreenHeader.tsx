@@ -3,11 +3,14 @@ import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../theme/variables";
+import IconFont from "./ui/IconFont";
 
 type Props = {
   heading: React.ReactNode;
   icon?: ImageSourcePropType;
+  iconFont?: IconProps; // TODO: manage header image as icon https://www.pivotaltracker.com/story/show/172105485
   dark?: boolean;
 };
 
@@ -39,12 +42,22 @@ const styles = StyleSheet.create({
  */
 class ScreenHeader extends React.Component<Props> {
   public render() {
-    const { heading, icon, dark } = this.props;
+    const { heading, icon, dark, iconFont } = this.props;
+
+    const imageColor =
+      this.props.iconFont && this.props.iconFont.color
+        ? this.props.iconFont.color
+        : dark
+          ? customVariables.headerIconDark
+          : customVariables.headerIconLight;
 
     return (
       <View style={[dark && styles.darkGrayBg, styles.container]}>
         <View style={styles.text}>{heading}</View>
         {icon && <Image source={icon} style={styles.image} />}
+        {iconFont && (
+          <IconFont name={iconFont.name} size={ICON_WIDTH} color={imageColor} />
+        )}
       </View>
     );
   }

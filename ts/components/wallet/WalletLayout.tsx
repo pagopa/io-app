@@ -25,7 +25,6 @@ import {
 } from "../screens/BaseScreenComponent";
 import DarkLayout from "../screens/DarkLayout";
 import H5 from "../ui/H5";
-import PagoPALogo from "./PagoPALogo";
 
 type Props = Readonly<{
   title: string;
@@ -39,6 +38,7 @@ type Props = Readonly<{
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  appLogo?: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -102,16 +102,17 @@ export default class WalletLayout extends React.Component<Props> {
       allowGoBack,
       hideHeader,
       footerContent,
-      contentStyle
+      contentStyle,
+      appLogo
     } = this.props;
 
     return (
       <DarkLayout
         bounces={false}
         allowGoBack={allowGoBack}
-        headerBody={<PagoPALogo />}
         title={title ? title : I18n.t("wallet.wallet")}
-        icon={require("../../../img/wallet/bank.png")}
+        iconFont={{name: 'io-pagopa'}}
+        appLogo={appLogo}
         contentStyle={contentStyle}
         hasDynamicSubHeader={this.props.hasDynamicSubHeader}
         dynamicSubHeader={this.dynamicSubHeader()}
