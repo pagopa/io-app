@@ -167,7 +167,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
           <View>
             <IconFont
               name={"io-logo"}
-              color={(primary || dark) ? "white" : variables.brandPrimary}
+              color={primary || dark ? "white" : variables.brandPrimary}
             />
           </View>
         </Left>

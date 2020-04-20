@@ -111,7 +111,7 @@ export default class WalletLayout extends React.Component<Props> {
         bounces={false}
         allowGoBack={allowGoBack}
         title={title ? title : I18n.t("wallet.wallet")}
-        iconFont={{name: 'io-pagopa'}}
+        iconFont={{ name: "io-pagopa" }}
         appLogo={appLogo}
         contentStyle={contentStyle}
         hasDynamicSubHeader={this.props.hasDynamicSubHeader}

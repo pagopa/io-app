@@ -6,13 +6,13 @@
 import { H3, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
+import { IconProps } from "react-native-vector-icons/Icon";
 import variables from "../../theme/variables";
 import {
   HEADER_ANIMATION_DURATION,
   HEADER_HEIGHT
 } from "../../utils/constants";
 import ScreenHeader from "../ScreenHeader";
-import { IconProps } from 'react-native-vector-icons/Icon';
 
 type Props = Readonly<{
   title?: string;
