@@ -6,6 +6,7 @@ import {
 } from "italia-ts-commons/lib/strings";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
+  isPaymentDoneSuccessfully,
   PaymentHistory,
   PaymentsHistoryState
 } from "../../../store/reducers/payments/history";
@@ -138,14 +139,20 @@ describe("test the returnData function", () => {
 
 describe("test the checkPaymentOutcome function", () => {
   it("the first test must show the payment status as Success, because paymentState and transactionState exist", () => {
-    expect(checkPaymentOutcome(true, true)).toEqual("Success");
+    expect(
+      checkPaymentOutcome(isPaymentDoneSuccessfully(paymentHistorySuccess))
+    ).toEqual("Success");
   });
 
   it("the second test must show the payment status as Failed, because paymentState and transactionState do not exist", () => {
-    expect(checkPaymentOutcome(false)).toEqual("Failed");
+    expect(
+      checkPaymentOutcome(isPaymentDoneSuccessfully(paymentHistoryFailed))
+    ).toEqual("Failed");
   });
 
   it("the last test must show the payment status as Incomplete, because only paymentState is set and transactionState is undefined or set to false", () => {
-    expect(checkPaymentOutcome(true)).toEqual("Incomplete");
+    expect(
+      checkPaymentOutcome(isPaymentDoneSuccessfully(paymentHistoryIncomplete))
+    ).toEqual("Incomplete");
   });
 });

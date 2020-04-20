@@ -1,15 +1,18 @@
 /**
  * This component displays a list of payments
  */
-// tslint:disable-next-line: no-commented-code
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import { PaymentsHistoryState } from "../../store/reducers/payments/history";
+import {
+  isPaymentDoneSuccessfully,
+  PaymentsHistoryState
+} from "../../store/reducers/payments/history";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
+import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import DetailedlistItemPaymentComponent from "../DetailedListItemPaymentComponent";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
@@ -48,6 +51,7 @@ export type PaymentInfo = {
   amount?: number;
   grandTotal?: number;
   idTransaction?: number;
+  isValidTransaction?: boolean;
 };
 
 const getCorrectIuv = (data: RptId): string => {
@@ -67,10 +71,7 @@ export const returnData = (
   payments: PaymentsHistoryState
 ): ReadonlyArray<PaymentInfo> => {
   return payments.map((value, index) => {
-    const paymentState =
-      value.verified_data !== undefined && value.failure === undefined;
-    const transactionState = value.transaction !== undefined;
-    const esito = checkPaymentOutcome(paymentState, transactionState);
+    const esito = checkPaymentOutcome(isPaymentDoneSuccessfully(value));
     return {
       id: value.paymentId ? value.paymentId : `N-${index}`,
       esito,
@@ -93,20 +94,21 @@ export const returnData = (
           ? value.transaction.grandTotal.amount
           : undefined,
       idTransaction:
-        value.transaction !== undefined ? value.transaction.id : undefined
+        value.transaction !== undefined ? value.transaction.id : undefined,
+      isValidTransaction: typeof value.transaction === typeof Transaction
     };
   });
 };
 
 export const checkPaymentOutcome = (
-  isSetPaymentState: boolean,
-  isSetTransactionState: boolean | undefined = false
+  // tslint:disable-next-line: bool-param-default
+  isSetPaymentState?: boolean
 ): EsitoPagamento => {
-  return isSetPaymentState
-    ? isSetTransactionState
+  return isSetPaymentState !== undefined
+    ? isSetPaymentState
       ? "Success"
-      : "Incomplete"
-    : "Failed";
+      : "Failed"
+    : "Incomplete";
 };
 
 /**
@@ -141,19 +143,23 @@ export default class PaymentList extends React.Component<Props> {
               ? customVariables.brandDanger
               : customVariables.badgeYellow
         }
-        onPressItem={() =>
-          this.props.navigateToPaymentDetailInfo({
-            id: info.item.id,
-            esito: info.item.esito,
-            date: info.item.date,
-            causaleVersamento: info.item.causaleVersamento,
-            creditore: info.item.creditore,
-            iuv: info.item.iuv,
-            amount: info.item.amount,
-            grandTotal: info.item.grandTotal,
-            idTransaction: info.item.idTransaction
-          })
-        }
+        onPressItem={() => {
+          if (!info.item.isValidTransaction && info.item.esito === "Success") {
+            // Here instabug log
+          } else {
+            this.props.navigateToPaymentDetailInfo({
+              id: info.item.id,
+              esito: info.item.esito,
+              date: info.item.date,
+              causaleVersamento: info.item.causaleVersamento,
+              creditore: info.item.creditore,
+              iuv: info.item.iuv,
+              amount: info.item.amount,
+              grandTotal: info.item.grandTotal,
+              idTransaction: info.item.idTransaction
+            });
+          }
+        }}
       />
     );
   };
