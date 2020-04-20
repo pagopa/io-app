@@ -649,6 +649,8 @@ wallet:
     text: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
     fetchPspFailure: Errore temporaneo, riprova
     noPspsAvailable: Questo metodo di pagamento non può essere usato
+    contextualHelpTitle: Scelta del metodo di pagamento
+    contextualHelpContent: !include wallet/wallet_pick_payment_method.md
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento
@@ -674,6 +676,8 @@ wallet:
       verification: Sto verificando lo stato e l'importo del tuo avviso..
       generic: Sto terminando le operazioni di verifica del tuo avviso, attendi qualche secondo..
       wallet: Sto verificando se esistono metodi di pagamento salvati..
+    contextualHelpTitle: Riepilogo della transazione
+    contextualHelpContent: !include wallet/wallet_transaction_summary.md
   errorTransaction:
     submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
   insertManually:
@@ -685,6 +689,8 @@ wallet:
     entityCode: Codice Fiscale Ente Creditore
     amount: Importo (€)
     proceed: Procedi con il pagamento
+    contextualHelpTitle: Inserimento dati manuali
+    contextualHelpContent: !include wallet/insert_manual_notice.md
   total: Totale
   amount: Importo €
   payAmount: Importo dovuto
@@ -756,6 +762,8 @@ wallet:
       buttonText:
         settings: Abilita permessi
         cancel: Annulla
+    contextualHelpTitle: Come puoi pagare un avviso
+    contextualHelpContent: !include wallet/wallet_qrcode.md
   whyAFee:
     title: Perché devo pagare le commissioni?
     text: !include wallet/why_a_fee.md
