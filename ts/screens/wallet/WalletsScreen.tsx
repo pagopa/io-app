@@ -133,6 +133,7 @@ class WalletsScreen extends React.Component<Props> {
         hasDynamicSubHeader={false}
         refreshControl={walletsRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet", "wallet_methods"]}
       >
         <View style={styles.padded}>
           <FlatList

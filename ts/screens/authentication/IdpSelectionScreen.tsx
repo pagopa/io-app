@@ -138,6 +138,7 @@ const IdpSelectionScreen: React.FunctionComponent<Props> = props => {
   return (
     <BaseScreenComponent
       contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={["authentication_IPD_selection"]}
       goBack={props.navigation.goBack}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >

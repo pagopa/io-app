@@ -11,6 +11,7 @@ import I18n from "../i18n";
 import { preferredCalendarSaveSuccess } from "../store/actions/persistedPreferences";
 import { Dispatch } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
+import { convertLocalCalendarName } from "../utils/calendar";
 
 type OwnProps = {
   onCalendarSelected: (calendar: Calendar) => void;
@@ -81,7 +82,7 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
               return (
                 <ListItemComponent
                   key={calendar.id}
-                  title={calendar.title}
+                  title={convertLocalCalendarName(calendar.title)}
                   hideIcon={!isDefaultCalendar}
                   iconSize={12}
                   iconName={isDefaultCalendar ? "io-tick-big" : undefined}

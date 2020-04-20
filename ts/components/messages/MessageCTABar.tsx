@@ -43,7 +43,10 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { openAppSettings } from "../../utils/appSettings";
 import { isUpdateNeeded } from "../../utils/appVersion";
-import { checkAndRequestPermission } from "../../utils/calendar";
+import {
+  checkAndRequestPermission,
+  convertLocalCalendarName
+} from "../../utils/calendar";
 import {
   format,
   formatDateAsDay,
@@ -250,7 +253,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         showToast(
           I18n.t("messages.cta.reminderAddSuccess", {
             title,
-            calendarTitle: calendar.title
+            calendarTitle: convertLocalCalendarName(calendar.title)
           }),
           "success"
         );
