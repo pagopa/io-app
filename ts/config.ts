@@ -76,6 +76,9 @@ export const totMessageFetchWorkers = t.Integer.decode(
 export const shouldDisplayVersionInfoOverlay =
   Config.DISPLAY_VERSION_INFO_OVERLAY === "YES";
 
+export const shufflePinPadOnPayment =
+  Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";
+
 export const privacyUrl: string = t.string
   .decode(Config.PRIVACY_URL)
   .getOrElse("https://io.italia.it/app-content/tos_privacy.html");

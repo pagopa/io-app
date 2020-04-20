@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
+import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import BaseScreenComponent, {
@@ -36,6 +37,7 @@ type Props = Readonly<{
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   contentRefreshControl?: React.ReactElement<RefreshControlProps>;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 const styles = StyleSheet.create({
@@ -75,6 +77,7 @@ export default class DarkLayout extends React.Component<Props> {
         appLogo={this.props.appLogo}
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
+        faqCategories={this.props.faqCategories}
       >
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent

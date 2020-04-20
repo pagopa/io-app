@@ -152,6 +152,7 @@ class TransactionsScreen extends React.Component<Props> {
         hasDynamicSubHeader={true}
         refreshControl={transactionsRefreshControl}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_transaction"]}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
