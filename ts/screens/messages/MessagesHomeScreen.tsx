@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const AnimatedScreenContentHeader = Animated.createAnimatedComponent(
+const AnimatedScreenContentHeader: typeof ScreenContentHeader = Animated.createAnimatedComponent(
   ScreenContentHeader
 );
 
@@ -160,7 +160,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <React.Fragment>
             <AnimatedScreenContentHeader
               title={I18n.t("messages.contentTitle")}
-              icon={require("../../../img/icons/message-icon.png")}
+              iconFont={{name: 'io-home-messaggi', size: 40}}
               dynamicHeight={this.getHeaderHeight()}
             />
             {this.renderTabs()}

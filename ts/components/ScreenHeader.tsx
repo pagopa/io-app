@@ -14,7 +14,7 @@ type Props = {
   dark?: boolean;
 };
 
-const ICON_WIDTH = 48;
+const HEADER_HEIGHT = 48;
 
 const styles = StyleSheet.create({
   darkGrayBg: {
@@ -22,15 +22,16 @@ const styles = StyleSheet.create({
   },
   container: {
     justifyContent: "space-between",
-    paddingHorizontal: customVariables.contentPadding
+    paddingHorizontal: customVariables.contentPadding,
+    height: HEADER_HEIGHT
   },
   text: {
     flex: 1,
     flexGrow: 1
   },
   image: {
-    maxHeight: ICON_WIDTH,
-    maxWidth: ICON_WIDTH,
+    maxHeight: HEADER_HEIGHT,
+    maxWidth: HEADER_HEIGHT,
     resizeMode: "contain",
     flex: 1
   }
@@ -56,7 +57,7 @@ class ScreenHeader extends React.Component<Props> {
         <View style={styles.text}>{heading}</View>
         {icon && <Image source={icon} style={styles.image} />}
         {iconFont && (
-          <IconFont name={iconFont.name} size={ICON_WIDTH} color={imageColor} />
+          <IconFont name={iconFont.name} size={iconFont.size || HEADER_HEIGHT} color={imageColor} />
         )}
       </View>
     );
