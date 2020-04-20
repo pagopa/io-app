@@ -27,7 +27,7 @@ import { authenticateConfig } from "./utils/biometric";
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
 import { fromNullable } from "fp-ts/lib/Option";
-import { RTron } from "./boot/configureStoreAndPersistor";
+import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
@@ -48,6 +48,7 @@ type State = {
   biometryType?: BiometryPrintableSimpleType;
   canInsertPinBiometry: boolean;
   canInsertPinTooManyAttempts: boolean;
+  countdown?: number;
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -55,7 +56,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "onboarding.pin.contextualHelpContent"
 };
 
-const maxAttempts = 3;
+const maxAttempts = 8;
 
 const renderIdentificationByPinState = (
   identificationByPinState: IdentificationByPinState
@@ -137,10 +138,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   private checkCanInsertPin = () => {
     const identificationFailState = this.props.identificationFailState;
+    const now = new Date();
     fromNullable(identificationFailState).map(errorData => {
-      RTron.log(`Tic Tac ${errorData.nextLegalAttempt <= new Date()}`);
+      //RTron.log(`Tic Tac ${errorData.nextLegalAttempt <= now}`);
       this.setState({
-        canInsertPinTooManyAttempts: errorData.nextLegalAttempt <= new Date()
+        canInsertPinTooManyAttempts: errorData.nextLegalAttempt <= now,
+        countdown: errorData.nextLegalAttempt.getTime() - now.getTime()
       });
     });
   };
@@ -164,7 +167,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
 
     // tslint:disable-next-line: no-object-mutation
-    this.idCheckCanInsertPin = setInterval(this.checkCanInsertPin, 1000);
+    this.idCheckCanInsertPin = setInterval(this.checkCanInsertPin, 100);
+    this.checkCanInsertPin();
   }
 
   public componentWillUnmount() {
@@ -298,7 +302,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const {
       identificationByPinState,
       identificationByBiometryState,
-      biometryType
+      biometryType,
+      countdown
     } = this.state;
 
     const identificationMessage = identificationGenericData
@@ -323,7 +328,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       dispatch(identificationPinReset());
     };
 
-    return (
+    return !this.state.canInsertPinTooManyAttempts ? (
+      IdentificationLockModal({ countdown })
+    ) : (
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
           primary={true}

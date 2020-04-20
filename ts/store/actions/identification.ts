@@ -55,7 +55,7 @@ export const identificationPinReset = createAction("IDENTIFICATION_PIN_RESET");
 export const identificationReset = createAction("IDENTIFICATION_RESET");
 export const identificationForceLogout = createAction(
   "IDENTIFICATION_FORCE_LOGOUT"
-)();
+);
 
 export type IdentificationActions =
   | ActionType<typeof identificationStart>
