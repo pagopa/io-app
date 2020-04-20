@@ -102,8 +102,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
   }
 
   private updateLoginTrace = (url: string): void => {
-    // tslint:disable-next-line:no-console
-    console.log(url);
     this.setState({ loginTrace: url });
   };
 
