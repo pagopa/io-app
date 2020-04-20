@@ -20,6 +20,7 @@ import ActivityIndicator from "./ui/ActivityIndicator";
 type Props = Readonly<{
   title: string;
   body: () => React.ReactNode;
+  contentLoaded: boolean;
   isVisible: boolean;
   close: () => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
@@ -81,7 +82,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
 
     const simpleHeader = (
       <View style={styles.header}>
-        <ButtonDefaultOpacity onPress={onClose} transparent={true}>
+        <ButtonDefaultOpacity onPress={onClose}>
           <IconFont name={"io-close"} />
         </ButtonDefaultOpacity>
       </View>
@@ -100,9 +101,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
             {simpleHeader}
             <Content noPadded={true}>
               <View style={styles.padded}>
-                <View spacer={true} />
                 <H3>{this.props.title}</H3>
-                <View spacer={true} large={true} />
 
                 {this.state.content || (
                   <ActivityIndicator color={themeVariables.brandPrimaryLight} />
@@ -114,9 +113,8 @@ export class ContextualHelpModal extends React.Component<Props, State> {
                     <FAQComponent faqCategories={this.props.faqCategories} />
                   </React.Fragment>
                 )}
-
-                <View spacer={true} />
               </View>
+              <View spacer={true} large={true} />
               {this.state.content && <BetaBannerComponent />}
             </Content>
           </Container>

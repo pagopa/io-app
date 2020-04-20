@@ -12,6 +12,8 @@ import {
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
   organizationsOfInterestSelector,
+  servicesBadgeValueSelector,
+  ServicesSectionState,
   ServicesState,
   visibleServicesDetailLoadStateSelector
 } from "..";
@@ -87,7 +89,7 @@ const customServices: ServicesState = {
     ["21"]: true
   },
   firstLoading: {
-    isFirstServicesLoadingCompleted: false
+    isFirstServicesLoadingCompleted: true
   }
 };
 
@@ -118,6 +120,21 @@ const customServicesByScope: pot.Pot<ServicesByScope, Error> = pot.some({
   NATIONAL: []
 });
 
+const localServices: ReadonlyArray<ServicesSectionState> = [
+  {
+    organizationName: customOrganizations.nameByFiscalCode["2"] as string,
+    organizationFiscalCode: "2" as OrganizationFiscalCode,
+    data: [customServices.byId["21"]]
+  } as ServicesSectionState,
+  {
+    organizationName: customOrganizations.nameByFiscalCode["4"] as string,
+    organizationFiscalCode: "4" as OrganizationFiscalCode,
+    data: [customServices.byId["41"]]
+  } as ServicesSectionState
+];
+
+const nationalServices: ReadonlyArray<ServicesSectionState> = [];
+
 describe("organizationsOfInterestSelector", () => {
   it("should include organizations in the user organizationsOfInterest and providing visible services among those properly loaded", () => {
     expect(
@@ -137,7 +154,7 @@ describe("nationalServicesSectionsSelector", () => {
         customOrganizations.nameByFiscalCode,
         customServicesByScope
       )
-    ).toStrictEqual([]);
+    ).toStrictEqual(nationalServices);
   });
 });
 
@@ -149,18 +166,7 @@ describe("localServicesSectionsSelector", () => {
         customOrganizations.nameByFiscalCode,
         customServicesByScope
       )
-    ).toStrictEqual([
-      {
-        organizationName: customOrganizations.nameByFiscalCode["2"] as string,
-        organizationFiscalCode: "2" as OrganizationFiscalCode,
-        data: [customServices.byId["21"]]
-      },
-      {
-        organizationName: customOrganizations.nameByFiscalCode["4"] as string,
-        organizationFiscalCode: "4" as OrganizationFiscalCode,
-        data: [customServices.byId["41"]]
-      }
-    ]);
+    ).toStrictEqual(localServices);
   });
 });
 
@@ -196,5 +202,40 @@ describe("visibleServicesDetailLoadStateSelector", () => {
         customServices.visible
       )
     ).toBe(pot.noneLoading);
+  });
+});
+
+describe("servicesBadgeValueSelector", () => {
+  it("should return the number of unread services", () => {
+    expect(
+      servicesBadgeValueSelector.resultFunc(
+        [...nationalServices],
+        [...localServices],
+        customServices.readState,
+        true
+      )
+    ).toBe(1);
+  });
+
+  it("should return 0 if the first load is not yet completed", () => {
+    expect(
+      servicesBadgeValueSelector.resultFunc(
+        [...nationalServices],
+        [...localServices],
+        customServices.readState,
+        false
+      )
+    ).toBe(0);
+  });
+
+  it("should return 1 even if we have few duplication in services array", () => {
+    expect(
+      servicesBadgeValueSelector.resultFunc(
+        [...nationalServices],
+        [...localServices, ...localServices, ...localServices],
+        customServices.readState,
+        true
+      )
+    ).toBe(1);
   });
 });
