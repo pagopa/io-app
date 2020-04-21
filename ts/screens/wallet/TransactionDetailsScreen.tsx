@@ -276,7 +276,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             light={true}
             bordered={true}
             block={true}
-            onPress={this.props.navigation.goBack}
+            onPress={this.props.navigateToWalletHome}
           >
             <Text>{I18n.t("global.buttons.close")}</Text>
           </ButtonDefaultOpacity>

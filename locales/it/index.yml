@@ -15,6 +15,7 @@ global:
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
   genericWaiting: Attendi qualche secondo..
+  genericThanks: Grazie
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!
@@ -633,7 +634,7 @@ wallet:
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
     identificationMessage: "Conferma l'operazione inserendo il tuo codice di sblocco"
-    transactionSuccess: Il pagamento è stato completato!
+    transactionSuccess: il pagamento è stato completato!
     transactionFailure: Si è verificato un errore durante il pagamento, riprova!
     transactionTimeout: Non è stato possibile recuperare l'esito del pagamento!
     confirmCancelTitle: Vuoi annullare il pagamento?
@@ -696,7 +697,7 @@ wallet:
   date: Data
   time: Ora
   psp: Gestore della transazione
-  receipt: Ricevuta operazione
+  receipt: Ricevuta dell'operazione
   seeReceipt: Vedi la ricevuta
   transactions: Operazioni
   transaction: Operazione
@@ -710,6 +711,7 @@ wallet:
   creditDebitCards: Carte di Credito/Debito
   addPaymentMethodTitle: Aggiungi metodo di pagamento
   continue: Paga questo avviso
+  backToPayments: Torna ai pagamenti
   methods:
     comingSoon: in arrivo
     card:
