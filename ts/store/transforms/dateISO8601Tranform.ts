@@ -1,6 +1,5 @@
 import { createTransform, TransformIn, TransformOut } from "redux-persist";
 import { DateFromISOString } from "../../utils/dates";
-import { fromNullable } from "fp-ts/lib/Option";
 
 /**
  * dateFieldsTransformable contains the name of the fields that are
