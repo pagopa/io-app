@@ -14,7 +14,7 @@ import { Action } from "../actions/types";
 
 const freeAttempts = 4;
 // in seconds
-const deltaTimespanBetweenAttempts = 60;
+const deltaTimespanBetweenAttempts = 30;
 
 export const maxAttempts = 8;
 
