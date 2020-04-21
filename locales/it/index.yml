@@ -985,7 +985,7 @@ identification:
     wrongCode: Codice errato
     remainingAttempts: Ti rimangono {{attempts}} tentativi.
     remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
-    tooManyAttempts: Troppi tentativi di inserimento errati
+    tooManyAttempts: Troppi tentativi di inserimento errati.
     waitMessage: "Chiudi l'applicazione e riprova tra:"
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
