@@ -211,9 +211,9 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
     routeName: ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
     params
   });
-export const navigateToPaymentDetail = () =>
+export const navigateToPaymentsScreen = () =>
   NavigationActions.navigate({
-    routeName: ROUTES.PAYMENT_DETAIL
+    routeName: ROUTES.PAYMENTS_SCREEN
   });
 export const navigateToPaymentDetailInfo = (
   params: InferNavigationParams<typeof PaymentDetails>

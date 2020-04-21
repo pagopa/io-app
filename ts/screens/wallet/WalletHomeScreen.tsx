@@ -35,8 +35,8 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
-  navigateToPaymentDetail,
   navigateToPaymentScanQrCode,
+  navigateToPaymentsScreen,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
   navigateToWalletList
@@ -296,7 +296,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
     >
       {I18n.t("wallet.transactionHelpMessage.text1")}{" "}
       <TouchableWithoutFeedback
-        onPress={() => this.props.navigateToPaymentDetail()}
+        onPress={() => this.props.navigateToPaymentsScreen()}
       >
         <Text
           style={
@@ -378,7 +378,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
-        navigateToPaymentDetail={() => this.props.navigateToPaymentDetail()}
+        navigateToPaymentsScreen={() => this.props.navigateToPaymentsScreen()}
         readTransactions={this.props.readTransactions}
         ListEmptyComponent={this.listEmptyComponent(potPayments)}
       />
@@ -479,7 +479,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  navigateToPaymentDetail: () => dispatch(navigateToPaymentDetail()),
+  navigateToPaymentsScreen: () => dispatch(navigateToPaymentsScreen()),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest())

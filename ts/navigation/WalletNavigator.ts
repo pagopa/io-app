@@ -69,7 +69,7 @@ const WalletNavigator = createStackNavigator(
     [ROUTES.PAYMENT_PICK_PAYMENT_METHOD]: {
       screen: PickPaymentMethodScreen
     },
-    [ROUTES.PAYMENT_DETAIL]: {
+    [ROUTES.PAYMENTS_SCREEN]: {
       screen: PaymentsScreen
     },
     [ROUTES.PAYMENT_DETAIL_INFO]: {

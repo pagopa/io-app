@@ -16,7 +16,7 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
-  navigateToPaymentDetail,
+  navigateToPaymentsScreen,
   navigateToTransactionDetailsScreen,
   navigateToWalletHome,
   navigateToWalletList
@@ -165,7 +165,7 @@ class TransactionsScreen extends React.Component<Props> {
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
           }
-          navigateToPaymentDetail={() => this.props.navigateToPaymentDetail()}
+          navigateToPaymentsScreen={() => this.props.navigateToPaymentsScreen()}
           readTransactions={this.props.readTransactions}
           ListEmptyComponent={ListEmptyComponent}
         />
@@ -216,7 +216,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         }
       })
     ),
-  navigateToPaymentDetail: () => dispatch(navigateToPaymentDetail())
+  navigateToPaymentsScreen: () => dispatch(navigateToPaymentsScreen())
 });
 
 export default connect(
