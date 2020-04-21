@@ -28,7 +28,7 @@ import { identificationRequest } from "../../../store/actions/identification";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
-  navigateToTransactionDetailsScreen
+  navigateToTransactionSuccessScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -319,8 +319,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     if (isSuccessTransaction(tx)) {
       // on success:
       dispatch(
-        navigateToTransactionDetailsScreen({
-          isPaymentCompletedTransaction: true,
+        navigateToTransactionSuccessScreen({
           transaction: tx
         })
       );
