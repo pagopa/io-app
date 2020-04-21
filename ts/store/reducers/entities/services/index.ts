@@ -5,6 +5,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceTuple } from "../../../../../definitions/backend/ServiceTuple";
 import { ScopeEnum } from "../../../../../definitions/content/Service";
 import { ServicesByScope } from "../../../../../definitions/content/ServicesByScope";
 import { isDefined } from "../../../../utils/guards";
@@ -335,35 +336,25 @@ export const notSelectedServicesSectionsSelector = createSelector(
 );
 
 /**
- *  Get the sum of selected local services + national services that are not yet marked as read
+ *  Get the sum of visible services that are not yet marked as read
  */
 
 export const servicesBadgeValueSelector = createSelector(
   [
-    selectedLocalServicesSectionsSelector,
-    // Included all national services
-    notSelectedServicesSectionsSelector,
+    visibleServicesSelector,
     readServicesByIdSelector,
     isFirstVisibleServiceLoadCompletedSelector
   ],
-  (
-    localService,
-    notSelectedLocalService,
-    readServicesById,
-    isFirstVisibleServiceLoadCompleted
-  ) => {
+  (visibleServices, readServicesById, isFirstVisibleServiceLoadCompleted) => {
     if (isFirstVisibleServiceLoadCompleted) {
-      const services: ReadonlyArray<ServicesSectionState> = [
-        ...localService,
-        ...notSelectedLocalService
-      ];
-      return services.reduce((acc: number, service: ServicesSectionState) => {
-        const servicesNotRead = service.data.filter(
-          data =>
-            pot.isSome(data) &&
-            readServicesById[data.value.service_id] === undefined
-        ).length;
-        return acc + servicesNotRead;
+      const services = pot.getOrElse<ReadonlyArray<ServiceTuple>>(
+        visibleServices,
+        []
+      );
+      return services.reduce((acc: number, service: ServiceTuple) => {
+        const isServiceRead =
+          readServicesById[service.service_id] !== undefined;
+        return acc + (isServiceRead ? 0 : 1);
       }, 0);
     }
     return 0;
