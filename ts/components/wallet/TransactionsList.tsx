@@ -35,7 +35,6 @@ type Props = Readonly<{
   areMoreTransactionsAvailable: boolean;
   onLoadMoreTransactions: () => void;
   navigateToTransactionDetails: (transaction: Transaction) => void;
-  navigateToPaymentsScreen: () => void;
   helpMessage?: React.ReactNode;
   ListEmptyComponent?: React.ReactNode;
   readTransactions: ReadTransactionsState;

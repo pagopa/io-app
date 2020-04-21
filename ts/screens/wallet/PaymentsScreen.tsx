@@ -3,7 +3,6 @@
  * a "pay notice" button and payment methods info/button to
  * add new ones
  */
-import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
@@ -15,10 +14,7 @@ import { withValidatedPagoPaVersion } from "../../components/helpers/withValidat
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import PaymentList from "../../components/wallet/PaymentsList";
 import I18n from "../../i18n";
-import {
-  navigateToPaymentDetailInfo,
-  navigateToWalletAddPaymentMethod
-} from "../../store/actions/navigation";
+import { navigateToPaymentDetailInfo } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
   PaymentHistory,
@@ -71,8 +67,6 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletAddPaymentMethod: () =>
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
   navigateToPaymentDetailInfo: (param: {
     payment: PaymentHistory;
     profile?: InitializedProfile;

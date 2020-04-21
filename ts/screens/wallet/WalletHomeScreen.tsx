@@ -23,12 +23,17 @@ import { connect } from "react-redux";
 
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { ContextualHelp } from "../../components/ContextualHelp";
+import FAQComponent from "../../components/FAQComponent";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
+import Markdown from "../../components/ui/Markdown";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
@@ -36,7 +41,6 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
   navigateToPaymentScanQrCode,
-  navigateToPaymentsScreen,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
   navigateToWalletList
@@ -65,9 +69,10 @@ import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = LightModalContextInterface &
+  Readonly<{
+    navigation: NavigationScreenProp<NavigationState>;
+  }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -288,6 +293,22 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
+  // Show contextual help with faqs
+  private showContextualHelp = () => {
+    this.props.showModal(
+      <ContextualHelp
+        onClose={this.props.hideModal}
+        title={I18n.t("wallet.contextualHelpTitle")}
+        body={() => (
+          <View>
+            <Markdown>{I18n.t("wallet.contextualHelpContent")}</Markdown>
+            <FAQComponent faqCategories={["wallet", "wallet_methods"]} />
+          </View>
+        )}
+      />
+    );
+  };
+
   private helpMessage = (
     alignCenter: boolean | undefined = false
   ): React.ReactNode => (
@@ -295,9 +316,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
       style={alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp}
     >
       {I18n.t("wallet.transactionHelpMessage.text1")}{" "}
-      <TouchableWithoutFeedback
-        onPress={() => this.props.navigateToPaymentsScreen()}
-      >
+      <TouchableWithoutFeedback onPress={() => this.showContextualHelp()}>
         <Text
           style={
             alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp
@@ -378,7 +397,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
-        navigateToPaymentsScreen={() => this.props.navigateToPaymentsScreen()}
         readTransactions={this.props.readTransactions}
         ListEmptyComponent={this.listEmptyComponent(potPayments)}
       />
@@ -479,7 +497,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
-  navigateToPaymentsScreen: () => dispatch(navigateToPaymentsScreen()),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest())
@@ -490,6 +507,6 @@ export default withValidatedPagoPaVersion(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(WalletHomeScreen)
+    )(withLightModalContext(WalletHomeScreen))
   )
 );

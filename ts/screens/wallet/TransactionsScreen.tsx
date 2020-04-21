@@ -16,7 +16,6 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
-  navigateToPaymentsScreen,
   navigateToTransactionDetailsScreen,
   navigateToWalletHome,
   navigateToWalletList
@@ -165,7 +164,6 @@ class TransactionsScreen extends React.Component<Props> {
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
           }
-          navigateToPaymentsScreen={() => this.props.navigateToPaymentsScreen()}
           readTransactions={this.props.readTransactions}
           ListEmptyComponent={ListEmptyComponent}
         />
@@ -215,8 +213,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
           showToast(I18n.t("wallet.delete.failed"), "danger");
         }
       })
-    ),
-  navigateToPaymentsScreen: () => dispatch(navigateToPaymentsScreen())
+    )
 });
 
 export default connect(
