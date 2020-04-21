@@ -28,7 +28,7 @@ import { identificationRequest } from "../../../store/actions/identification";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
-  navigateToTransactionDetailsScreen
+  navigateToTransactionSuccessScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -303,8 +303,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     if (isSuccessTransaction(tx)) {
       // on success:
       dispatch(
-        navigateToTransactionDetailsScreen({
-          isPaymentCompletedTransaction: true,
+        navigateToTransactionSuccessScreen({
           transaction: tx
         })
       );
@@ -320,8 +319,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       dispatch(paymentInitializeState());
       // update the transactions state (the first transaction is the most recent)
       dispatch(fetchTransactionsRequest({ start: 0 }));
-      // navigate to the resulting transaction details
-      showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {
       // on failure:
       // navigate to entrypoint of payment or wallet home
