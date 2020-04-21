@@ -15,6 +15,7 @@ global:
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, something did not work as expected, please try again!
   genericWaiting: Wait a few seconds..
+  genericThanks: Thank you
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -219,6 +220,8 @@ profile:
     calendar:
       contextualHelpTitle: What is your favorite calendar
       contextualHelpContent: !include profile/profile_preferences_calendar.md
+      local_calendar: Local calendar
+      birthday_calendar: Birthdays
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version
@@ -271,6 +274,7 @@ authentication:
       the icons to report bugs or start a chat with the development team.
       We're waiting for your feedbacks!
     expiredCardTitle: Card expired or no longer valid
+    expiredCardHeaderTitle: Card expired
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
     expiredCardHelp: How to renew your Electronic Identity Card?
   cie:
@@ -289,6 +293,7 @@ authentication:
       pinCardHeader: Enter the PIN
       pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
       incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
+      incorrectCiePinHeaderTitle: Wrong PIN
       incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
       incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
       alert: Are you sure you want to go back?
@@ -618,7 +623,7 @@ wallet:
     changeMethod: Change the payment method
     change: Change method
     identificationMessage: Confirm the transaction with your unlock code
-    transactionSuccess: The payment has completed!
+    transactionSuccess: the payment has been completed!
     transactionFailure: There was an error with the payment, please retry!
     transactionTimeout: I couldn't retrieve the result of the payment!
     confirmCancelTitle: Do you want to cancel this payment?
@@ -684,6 +689,7 @@ wallet:
   time: Time
   psp: Payment provider
   receipt: Receipt
+  receipt2: Transaction receipt
   seeReceipt: See Receipt
   transactions: Transactions
   transaction: Transaction
@@ -698,6 +704,7 @@ wallet:
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add payment method
   continue: Continue
+  backToPayments: Back to payments
   methods:
     comingSoon: incoming
     card:

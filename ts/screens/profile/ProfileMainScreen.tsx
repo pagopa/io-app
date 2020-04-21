@@ -507,6 +507,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           </TouchableDefaultOpacity>
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["profile"]}
       >
         {screenContent()}
       </DarkLayout>
