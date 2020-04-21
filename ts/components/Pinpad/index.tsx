@@ -4,9 +4,11 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Dimensions, StyleSheet, ViewStyle } from "react-native";
 
+import { fromNullable } from "fp-ts/lib/Option";
 import { debounce, shuffle } from "lodash";
 import I18n from "../../i18n";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
+import { maxAttempts } from "../../store/reducers/identification";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
@@ -32,6 +34,7 @@ interface Props {
   onPinResetHandler?: () => void;
   onFingerPrintReq?: () => void;
   onDeleteLastDigit?: () => void;
+  remainingAttempts?: number;
 }
 
 interface State {
@@ -276,12 +279,22 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   public render() {
     const placeholderPositions = range(0, this.state.pinLength - 1);
+    const renderRemainingAttempts = fromNullable(
+      this.props.remainingAttempts
+    ).fold(false, x => x < maxAttempts);
+
     return (
       <React.Fragment>
         <View style={styles.placeholderContainer}>
           {placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <View spacer={true} />
+        {renderRemainingAttempts && (
+          <Text primary={true} style={styles.text} bold={true}>
+            Codice errato. Ti rimangono {this.props.remainingAttempts}{" "}
+            tentativi!
+          </Text>
+        )}
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <Text

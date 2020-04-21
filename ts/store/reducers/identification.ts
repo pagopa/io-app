@@ -12,6 +12,12 @@ import {
 } from "../actions/identification";
 import { Action } from "../actions/types";
 
+const freeAttempts = 4;
+// in seconds
+const deltaTimespanBetweenAttempts = 2;
+
+export const maxAttempts = 8;
+
 export enum IdentificationResult {
   "cancel" = "cancel",
   "pinreset" = "pinreset",
@@ -49,7 +55,7 @@ export type IdentificationProgressState =
   | IdentificationIdentifiedState;
 
 export type IdentificationFailData = {
-  wrongAttempts: number;
+  remainingAttempts: number;
   nextLegalAttempt: Date;
   timespanBetweenAttempts: number;
 };
@@ -60,12 +66,6 @@ export type IdentificationState = {
 };
 
 export type PersistedIdentificationState = IdentificationState & PersistPartial;
-
-const freeAttempts = 4;
-// in seconds
-const deltaTimespanBetweenAttempts = 1;
-
-const maxAttempts = 8;
 
 const INITIAL_PROGRESS_STATE: IdentificationUnidentifiedState = {
   kind: "unidentified"
@@ -80,12 +80,12 @@ const nextErrorData = (
   errorData: IdentificationFailData
 ): IdentificationFailData => {
   const newTimespan =
-    errorData.wrongAttempts + 1 > freeAttempts
+    maxAttempts - errorData.remainingAttempts + 1 > freeAttempts
       ? errorData.timespanBetweenAttempts + deltaTimespanBetweenAttempts
       : 0;
   return {
     nextLegalAttempt: new Date(Date.now() + newTimespan * 1000),
-    wrongAttempts: errorData.wrongAttempts + 1,
+    remainingAttempts: errorData.remainingAttempts - 1,
     timespanBetweenAttempts: newTimespan
   };
 };
@@ -125,7 +125,7 @@ const reducer = (
       const newErrorData = fromNullable(state.fail).fold(
         {
           nextLegalAttempt: new Date(),
-          wrongAttempts: 1,
+          remainingAttempts: maxAttempts - 1,
           timespanBetweenAttempts: 0
         },
         errorData => nextErrorData(errorData)

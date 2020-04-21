@@ -56,8 +56,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "onboarding.pin.contextualHelpContent"
 };
 
-const maxAttempts = 8;
-
 const renderIdentificationByPinState = (
   identificationByPinState: IdentificationByPinState
 ) => {
@@ -140,7 +138,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const identificationFailState = this.props.identificationFailState;
     const now = new Date();
     fromNullable(identificationFailState).map(errorData => {
-      //RTron.log(`Tic Tac ${errorData.nextLegalAttempt <= now}`);
       this.setState({
         canInsertPinTooManyAttempts: errorData.nextLegalAttempt <= now,
         countdown: errorData.nextLegalAttempt.getTime() - now.getTime()
@@ -271,7 +268,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const { dispatch, identificationFailState } = this.props;
 
     const forceLogout = fromNullable(identificationFailState)
-      .map(failState => failState.wrongAttempts >= maxAttempts - 1)
+      .map(failState => failState.remainingAttempts === 1)
       .getOrElse(false);
     if (forceLogout) {
       dispatch(identificationForceLogout());
@@ -312,6 +309,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     const canInsertPin =
       this.state.canInsertPinBiometry && this.state.canInsertPinTooManyAttempts;
+
+    const remainingAttempts = fromNullable(
+      this.props.identificationFailState
+    ).fold(undefined, failState => failState.remainingAttempts);
 
     /**
      * Create handlers merging default internal actions (to manage the identification state)
@@ -379,6 +380,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   ? onIdentificationCancelHandler
                   : undefined
               }
+              remainingAttempts={remainingAttempts}
             />
             {renderIdentificationByPinState(identificationByPinState)}
             {renderIdentificationByBiometryState(identificationByBiometryState)}
