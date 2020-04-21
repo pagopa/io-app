@@ -5,7 +5,7 @@
  */
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { Container, Content, Text, View } from "native-base";
 import * as React from "react";
 import {
   Image,
@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
+  NavigationEvents,
   NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
@@ -77,6 +78,10 @@ type OwnProps = LightModalContextInterface &
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
+
+type State = {
+  isModalVisible: boolean;
+};
 
 const styles = StyleSheet.create({
   inLineSpace: {
@@ -159,8 +164,14 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * Wallet Home Screen
  */
-class WalletHomeScreen extends React.Component<Props, never> {
+class WalletHomeScreen extends React.Component<Props, State> {
   private navListener?: NavigationEventSubscription;
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isModalVisible: false
+    };
+  }
 
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
@@ -295,6 +306,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
   // Show contextual help with faqs
   private showContextualHelp = () => {
+    this.setState({ isModalVisible: true });
     this.props.showModal(
       <ContextualHelp
         onClose={this.props.hideModal}
@@ -420,6 +432,13 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
+  private handleWillBlur = () => {
+    if (this.state.isModalVisible === true) {
+      this.props.hideModal();
+      this.setState({ isModalVisible: false });
+    }
+  };
+
   public render(): React.ReactNode {
     const { potWallets, potTransactions, potPayments } = this.props;
 
@@ -457,18 +476,21 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
 
     return (
-      <WalletLayout
-        title={I18n.t("wallet.wallet")}
-        allowGoBack={false}
-        hasDynamicSubHeader={true}
-        topContent={headerContent}
-        footerContent={footerContent}
-        refreshControl={walletRefreshControl}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet", "wallet_methods"]}
-      >
-        {transactionContent}
-      </WalletLayout>
+      <Container>
+        <NavigationEvents onWillBlur={this.handleWillBlur} />
+        <WalletLayout
+          title={I18n.t("wallet.wallet")}
+          allowGoBack={false}
+          hasDynamicSubHeader={true}
+          topContent={headerContent}
+          footerContent={footerContent}
+          refreshControl={walletRefreshControl}
+          contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["wallet", "wallet_methods"]}
+        >
+          {transactionContent}
+        </WalletLayout>
+      </Container>
     );
   }
 }

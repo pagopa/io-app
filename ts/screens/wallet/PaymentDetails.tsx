@@ -4,6 +4,7 @@
  * add new ones
  */
 import I18n from "i18n-js";
+import { BugReporting } from "instabug-reactnative";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -153,7 +154,7 @@ export default class PaymentDetails extends React.Component<Props, never> {
     </ButtonDefaultOpacity>
   );
 
-  private printInstabugLog = () => {
+  private printInstabugLogAndOpenReport = () => {
     const profile = this.props.navigation.getParam("profile");
     if (profile !== undefined) {
       instabugLog(
@@ -164,11 +165,14 @@ export default class PaymentDetails extends React.Component<Props, never> {
         TypeLogs.INFO
       );
     }
+    BugReporting.showWithOptions(BugReporting.reportType.bug, [
+      BugReporting.option.commentFieldRequired
+    ]);
   };
 
   private helpButton = () => (
     <ButtonDefaultOpacity
-      onPress={this.printInstabugLog}
+      onPress={this.printInstabugLogAndOpenReport}
       style={styles.helpButton}
     >
       <IconFont name={"io-messaggi"} style={styles.helpButtonIcon} />
