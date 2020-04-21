@@ -277,7 +277,7 @@ authentication:
     card5-title: Benvenuto nella prima versione pubblica di IO!
     card5-content: In questa versione trovi in alto a destra
       le icone per segnalare bug e aprire una chat con il team di IO.
-      Aspettiamo i tuoi feedback!.
+      Aspettiamo i tuoi feedback!
     expiredCardTitle: Carta scaduta o non più valida
     expiredCardHeaderTitle: Card scaduta o revocata
     expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
