@@ -12,22 +12,21 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import { EsitoPagamento } from "../../components/wallet/PaymentsList";
+import {
+  checkPaymentOutcome,
+  getCorrectIuv
+} from "../../components/wallet/PaymentsList";
+import {
+  isPaymentDoneSuccessfully,
+  PaymentHistory
+} from "../../store/reducers/payments/history";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
 import { formatPaymentAmount } from "../../utils/payment";
 
 type NavigationParams = Readonly<{
-  id: string;
-  esito: EsitoPagamento;
-  date: string;
-  causaleVersamento?: string;
-  creditore?: string;
-  iuv: string;
-  amount?: number;
-  grandTotal?: number;
-  idTransaction?: number;
+  payment: PaymentHistory;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -159,24 +158,45 @@ export default class PaymentDetails extends React.Component<Props, never> {
   private getAmount = (amount: number): string => {
     return formatPaymentAmount(amount);
   };
+  private formatTime = (dateBase: Date) => {
+    const hours = `${
+      dateBase.getHours() < 10 ? "0" : ""
+    }${dateBase.getHours()}`;
+
+    const minutes = `${
+      dateBase.getMinutes() < 10 ? "0" : ""
+    }${dateBase.getMinutes()}`;
+
+    return `${hours}:${minutes}`;
+  };
   public render(): React.ReactNode {
-    const esito = this.props.navigation.getParam("esito");
-    const dateBase = new Date(this.props.navigation.getParam("date"));
-    const dateAsLocal = formatDateAsLocal(dateBase, true, true);
-    // tslint:disable-next-line: restrict-plus-operands
-    const time = `${(dateBase.getHours() < 10 ? "0" : "") +
-      // tslint:disable-next-line: restrict-plus-operands
-      dateBase.getHours()}:${(dateBase.getMinutes() < 10 ? "0" : "") +
-      dateBase.getMinutes()}`;
-    const date = `${dateAsLocal} - ${time}`;
-    const causaleVersamento = this.props.navigation.getParam(
-      "causaleVersamento"
-    );
-    const creditore = this.props.navigation.getParam("creditore");
-    const iuv = this.props.navigation.getParam("iuv");
-    const amount = this.props.navigation.getParam("amount");
-    const grandTotal = this.props.navigation.getParam("grandTotal");
-    const idTransaction = this.props.navigation.getParam("idTransaction");
+    const payment = this.props.navigation.getParam("payment");
+    const esito = checkPaymentOutcome(isPaymentDoneSuccessfully(payment));
+    const date = new Date(payment.started_at);
+    const dateAndTime = `${formatDateAsLocal(
+      date,
+      true,
+      true
+    )} - ${this.formatTime(date)}`;
+    const causaleVersamento =
+      payment.verified_data !== undefined
+        ? payment.verified_data.causaleVersamento
+        : undefined;
+    const creditore =
+      payment.transaction !== undefined
+        ? payment.transaction.merchant
+        : undefined;
+    const iuv = getCorrectIuv(payment.data);
+    const amount =
+      payment.transaction !== undefined
+        ? payment.transaction.amount.amount
+        : undefined;
+    const grandTotal =
+      payment.transaction !== undefined
+        ? payment.transaction.grandTotal.amount
+        : undefined;
+    const idTransaction =
+      payment.transaction !== undefined ? payment.transaction.id : undefined;
     return (
       <BaseScreenComponent goBack={this.goBack} dark={true}>
         <Content style={styles.darkContent} noPadded={true}>
@@ -214,7 +234,7 @@ export default class PaymentDetails extends React.Component<Props, never> {
                 <Text style={styles.text1}>
                   {I18n.t("payment.details.info.dateAndTime")}
                 </Text>
-                <Text style={styles.text2}>{date}</Text>
+                <Text style={styles.text2}>{dateAndTime}</Text>
               </View>
             </View>
             <ItemSeparatorComponent noPadded={true} />

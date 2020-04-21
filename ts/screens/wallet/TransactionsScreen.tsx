@@ -166,7 +166,6 @@ class TransactionsScreen extends React.Component<Props> {
             this.props.navigateToTransactionDetailsScreen
           }
           navigateToPaymentDetail={() => this.props.navigateToPaymentDetail()}
-          paymentsHistory={this.props.potPayments}
           readTransactions={this.props.readTransactions}
           ListEmptyComponent={ListEmptyComponent}
         />

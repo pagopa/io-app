@@ -5,9 +5,11 @@ import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import I18n from "../../i18n";
 import {
   isPaymentDoneSuccessfully,
+  PaymentHistory,
   PaymentsHistoryState
 } from "../../store/reducers/payments/history";
 import variables from "../../theme/variables";
@@ -20,7 +22,8 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 type Props = Readonly<{
   title: string;
   payments: PaymentsHistoryState;
-  navigateToPaymentDetailInfo: (paymentInfo: PaymentInfo) => void;
+  profile?: InitializedProfile;
+  navigateToPaymentDetailInfo: (payment: PaymentHistory) => void;
   ListEmptyComponent?: React.ReactNode;
 }>;
 
@@ -41,20 +44,7 @@ const styles = StyleSheet.create({
 
 export type EsitoPagamento = "Success" | "Incomplete" | "Failed";
 
-export type PaymentInfo = {
-  id: string;
-  esito: EsitoPagamento;
-  date: string;
-  causaleVersamento?: string;
-  creditore?: string;
-  iuv: string;
-  amount?: number;
-  grandTotal?: number;
-  idTransaction?: number;
-  isValidTransaction?: boolean;
-};
-
-const getCorrectIuv = (data: RptId): string => {
+export const getCorrectIuv = (data: RptId): string => {
   switch (data.paymentNoticeNumber.auxDigit) {
     case "0":
       return data.paymentNoticeNumber.iuv13;
@@ -65,39 +55,6 @@ const getCorrectIuv = (data: RptId): string => {
     case "3":
       return data.paymentNoticeNumber.iuv13;
   }
-};
-
-export const returnData = (
-  payments: PaymentsHistoryState
-): ReadonlyArray<PaymentInfo> => {
-  return payments.map((value, index) => {
-    const esito = checkPaymentOutcome(isPaymentDoneSuccessfully(value));
-    return {
-      id: value.paymentId ? value.paymentId : `N-${index}`,
-      esito,
-      date: value.started_at,
-      causaleVersamento:
-        value.verified_data !== undefined
-          ? value.verified_data.causaleVersamento
-          : undefined,
-      creditore:
-        value.transaction !== undefined
-          ? value.transaction.merchant
-          : undefined,
-      iuv: getCorrectIuv(value.data),
-      amount:
-        value.transaction !== undefined
-          ? value.transaction.amount.amount
-          : undefined,
-      grandTotal:
-        value.transaction !== undefined
-          ? value.transaction.grandTotal.amount
-          : undefined,
-      idTransaction:
-        value.transaction !== undefined ? value.transaction.id : undefined,
-      isValidTransaction: typeof value.transaction === typeof Transaction
-    };
-  });
 };
 
 export const checkPaymentOutcome = (
@@ -116,48 +73,44 @@ export const checkPaymentOutcome = (
  */
 
 export default class PaymentList extends React.Component<Props> {
-  private renderPayments = (info: ListRenderItemInfo<PaymentInfo>) => {
+  private renderPayments = (info: ListRenderItemInfo<PaymentHistory>) => {
+    const esito = checkPaymentOutcome(isPaymentDoneSuccessfully(info.item));
     return (
       <DetailedlistItemPaymentComponent
         text11={
-          info.item.esito === "Success"
+          esito === "Success"
             ? I18n.t("payment.details.state.successful")
-            : info.item.esito === "Failed"
+            : esito === "Failed"
               ? I18n.t("payment.details.state.failed")
               : I18n.t("payment.details.state.incomplete")
         }
-        text2={formatDateAsLocal(new Date(info.item.date))}
+        text2={formatDateAsLocal(new Date(info.item.started_at))}
         text3={
-          info.item.esito === "Success"
-            ? info.item.causaleVersamento === undefined
+          esito === "Success"
+            ? info.item.verified_data === undefined ||
+              info.item.verified_data.causaleVersamento === undefined
               ? ""
-              : info.item.causaleVersamento
+              : info.item.verified_data.causaleVersamento
             : I18n.t("payment.details.list.iuv", {
-                iuv: info.item.iuv
+                iuv: getCorrectIuv(info.item.data)
               })
         }
         color={
-          info.item.esito === "Success"
+          esito === "Success"
             ? customVariables.brandHighlight
-            : info.item.esito === "Failed"
+            : esito === "Failed"
               ? customVariables.brandDanger
               : customVariables.badgeYellow
         }
         onPressItem={() => {
-          if (!info.item.isValidTransaction && info.item.esito === "Success") {
+          if (
+            typeof info.item.transaction !== typeof Transaction &&
+            esito === "Success" &&
+            this.props.profile
+          ) {
             // Here instabug log
           } else {
-            this.props.navigateToPaymentDetailInfo({
-              id: info.item.id,
-              esito: info.item.esito,
-              date: info.item.date,
-              causaleVersamento: info.item.causaleVersamento,
-              creditore: info.item.creditore,
-              iuv: info.item.iuv,
-              amount: info.item.amount,
-              grandTotal: info.item.grandTotal,
-              idTransaction: info.item.idTransaction
-            });
+            this.props.navigateToPaymentDetailInfo(info.item);
           }
         }}
       />
@@ -176,16 +129,19 @@ export default class PaymentList extends React.Component<Props> {
             <Text>{I18n.t("payment.details.list.title")}</Text>
           </View>
         </View>
-        <FlatList
-          scrollEnabled={false}
-          data={returnData(payments)}
-          renderItem={this.renderPayments}
-          ItemSeparatorComponent={() => (
-            <ItemSeparatorComponent noPadded={true} />
+        {payments.length > 0 &&
+          payments !== null && (
+            <FlatList
+              scrollEnabled={false}
+              data={payments}
+              renderItem={this.renderPayments}
+              ItemSeparatorComponent={() => (
+                <ItemSeparatorComponent noPadded={true} />
+              )}
+              ListFooterComponent={<View spacer={true} extralarge={true} />}
+              keyExtractor={(_, index) => index.toString()}
+            />
           )}
-          ListFooterComponent={<View spacer={true} extralarge={true} />}
-          keyExtractor={item => item.id.toString()}
-        />
       </Content>
     );
   }

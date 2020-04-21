@@ -9,11 +9,9 @@ import {
   Dimensions,
   FlatList,
   ListRenderItemInfo,
-  StyleSheet,
-  TouchableWithoutFeedback
+  StyleSheet
 } from "react-native";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
-import { PaymentsHistoryState } from "../../store/reducers/payments/history";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
@@ -38,7 +36,7 @@ type Props = Readonly<{
   onLoadMoreTransactions: () => void;
   navigateToTransactionDetails: (transaction: Transaction) => void;
   navigateToPaymentDetail: () => void;
-  paymentsHistory: PaymentsHistoryState;
+  helpMessage?: React.ReactNode;
   ListEmptyComponent?: React.ReactNode;
   readTransactions: ReadTransactionsState;
 }>;
@@ -181,19 +179,7 @@ export default class TransactionsList extends React.Component<Props, State> {
           </View>
         </View>
         <View spacer={true} />
-        {this.props.paymentsHistory.length > 0 && (
-          <Text style={styles.textStyleHelp}>
-            {I18n.t("wallet.transactionHelpMessage.text1")}{" "}
-            <TouchableWithoutFeedback
-              onPress={() => this.props.navigateToPaymentDetail()}
-            >
-              <Text style={styles.textStyleHelp} link={true}>
-                {I18n.t("wallet.transactionHelpMessage.text2")}
-              </Text>
-            </TouchableWithoutFeedback>{" "}
-            {I18n.t("wallet.transactionHelpMessage.text3")}
-          </Text>
-        )}
+        {this.props.helpMessage}
         <FlatList
           scrollEnabled={false}
           data={transactions}

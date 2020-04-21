@@ -7,10 +7,9 @@ import {
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   isPaymentDoneSuccessfully,
-  PaymentHistory,
-  PaymentsHistoryState
+  PaymentHistory
 } from "../../../store/reducers/payments/history";
-import { checkPaymentOutcome, returnData } from "../PaymentsList";
+import { checkPaymentOutcome } from "../PaymentsList";
 
 const data: RptId = {
   organizationFiscalCode: "01199250158" as string &
@@ -111,31 +110,6 @@ const paymentHistoryFailed: PaymentHistory = {
   started_at: "2020-04-05T15:51:16.237Z",
   failure: "DOMAIN_UNKNOWN"
 };
-
-/**
- * here we create a PaymentsHistoryState with the first successful payment, the second incomplete and the third failed
- */
-const paymentHistoryState: PaymentsHistoryState = [
-  paymentHistorySuccess,
-  paymentHistoryIncomplete,
-  paymentHistoryFailed
-];
-
-const paymentsData = returnData(paymentHistoryState);
-
-describe("test the returnData function", () => {
-  it("the first element in paymentHistoryState is a successful transaction so the test must return the correct transaction id", () => {
-    expect(paymentsData[0].idTransaction).toEqual(7090047996);
-  });
-
-  it("the last element in paymentHistoryState is a failed transaction so the test must return the paymentState as false", () => {
-    expect(paymentsData[2].esito).toEqual("Failed");
-  });
-
-  it("the second element must show the payment status as Incomplete", () => {
-    expect(paymentsData[1].esito).toEqual("Incomplete");
-  });
-});
 
 describe("test the checkPaymentOutcome function", () => {
   it("the first test must show the payment status as Success, because paymentState and transactionState exist", () => {

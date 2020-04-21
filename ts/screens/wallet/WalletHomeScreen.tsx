@@ -7,7 +7,12 @@ import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, RefreshControl, StyleSheet } from "react-native";
+import {
+  Image,
+  RefreshControl,
+  StyleSheet,
+  TouchableWithoutFeedback
+} from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
   NavigationEventSubscription,
@@ -127,6 +132,17 @@ const styles = StyleSheet.create({
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
+  },
+
+  textStyleHelpCenter: {
+    lineHeight: 18,
+    fontSize: 13,
+    textAlign: "center"
+  },
+
+  textStyleHelp: {
+    lineHeight: 18,
+    fontSize: 13
   }
 });
 
@@ -272,12 +288,37 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private transactionError() {
+  private helpMessage = (
+    alignCenter: boolean | undefined = false
+  ): React.ReactNode => (
+    <Text
+      style={alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp}
+    >
+      {I18n.t("wallet.transactionHelpMessage.text1")}{" "}
+      <TouchableWithoutFeedback
+        onPress={() => this.props.navigateToPaymentDetail()}
+      >
+        <Text
+          style={
+            alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp
+          }
+          link={true}
+        >
+          {I18n.t("wallet.transactionHelpMessage.text2")}
+        </Text>
+      </TouchableWithoutFeedback>{" "}
+      {I18n.t("wallet.transactionHelpMessage.text3")}
+    </Text>
+  );
+
+  private transactionError(potPayments: PaymentsHistoryState) {
     return (
       <Content
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
       >
+        <View spacer={true} />
+        {potPayments.length > 0 && this.helpMessage()}
         <View spacer={true} />
         <H5 style={styles.brandDarkGray}>{I18n.t("wallet.transactions")}</H5>
         <View spacer={true} large={true} />
@@ -301,10 +342,12 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private listEmptyComponent() {
+  private listEmptyComponent(potPayments: PaymentsHistoryState) {
     return (
       <Content scrollEnabled={false} noPadded={true}>
         <View style={styles.emptyListWrapper}>
+          {potPayments.length > 0 && this.helpMessage(true)}
+          <View spacer={true} />
           <Text style={styles.emptyListContentTitle}>
             {I18n.t("wallet.noTransactionsInWalletHome")}
           </Text>
@@ -329,7 +372,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         title={I18n.t("wallet.latestTransactions")}
         amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
-        paymentsHistory={potPayments}
+        helpMessage={potPayments.length > 0 ? this.helpMessage() : undefined}
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
@@ -337,7 +380,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
         }
         navigateToPaymentDetail={() => this.props.navigateToPaymentDetail()}
         readTransactions={this.props.readTransactions}
-        ListEmptyComponent={this.listEmptyComponent()}
+        ListEmptyComponent={this.listEmptyComponent(potPayments)}
       />
     );
   }
@@ -378,7 +421,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
           : this.withoutCardsHeader(hasNotSupportedWalletsOnly);
 
     const transactionContent = pot.isError(potTransactions)
-      ? this.transactionError()
+      ? this.transactionError(potPayments)
       : this.transactionList(potTransactions, potPayments);
 
     const footerContent =
