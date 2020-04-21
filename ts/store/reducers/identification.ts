@@ -16,7 +16,7 @@ const freeAttempts = 4;
 // in seconds
 const deltaTimespanBetweenAttempts = 2;
 
-export const maxAttempts = 2;
+export const maxAttempts = 8;
 
 export enum IdentificationResult {
   "cancel" = "cancel",

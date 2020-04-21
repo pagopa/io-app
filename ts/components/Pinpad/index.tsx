@@ -8,7 +8,6 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { debounce, shuffle } from "lodash";
 import I18n from "../../i18n";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
-import { maxAttempts } from "../../store/reducers/identification";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
@@ -277,11 +276,27 @@ class Pinpad extends React.PureComponent<Props, State> {
     this.setState({ value: "" });
   }, 100);
 
+  private renderRemainingAttempts = (remainingAttempts: number) => {
+    const wrongCode = I18n.t("identification.fail.wrongCode");
+    const remainingAttemptsString = I18n.t(
+      remainingAttempts > 1
+        ? "identification.fail.remainingAttempts"
+        : "identification.fail.remainingAttemptSingle",
+      { attempts: remainingAttempts }
+    );
+
+    return (
+      <Text primary={true} style={styles.text} bold={true}>
+        {wrongCode}. {remainingAttemptsString}
+      </Text>
+    );
+  };
+
   public render() {
     const placeholderPositions = range(0, this.state.pinLength - 1);
-    const renderRemainingAttempts = fromNullable(
+    const remainingAttemptsMessage = fromNullable(
       this.props.remainingAttempts
-    ).fold(false, x => x < maxAttempts);
+    ).fold(null, x => this.renderRemainingAttempts(x));
 
     return (
       <React.Fragment>
@@ -289,12 +304,8 @@ class Pinpad extends React.PureComponent<Props, State> {
           {placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <View spacer={true} />
-        {renderRemainingAttempts && (
-          <Text primary={true} style={styles.text} bold={true}>
-            Codice errato. Ti rimangono {this.props.remainingAttempts}{" "}
-            tentativi!
-          </Text>
-        )}
+        {remainingAttemptsMessage}
+
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <Text

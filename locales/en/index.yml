@@ -971,6 +971,12 @@ identification:
       title: Identification required
       sensorDescription: Touch sensor
       fallbackLabel: Use the unlock code
+  fail:
+    wrongCode: Wrong code
+    remainingAttempts: You have {{attempts}} attempts left.
+    remainingAttemptSingle: You have {{attempts}} attempt left.
+    tooManyAttempts: Too many attempts
+    waitMessage: "Close the application and try again in:"
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
   removeRequest:
