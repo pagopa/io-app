@@ -6,6 +6,7 @@ import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import {
   isPaymentDoneSuccessfully,
@@ -16,6 +17,7 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
+import { getPaymentHistoryDetails } from "../../utils/payment";
 import DetailedlistItemPaymentComponent from "../DetailedListItemPaymentComponent";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 
@@ -23,7 +25,10 @@ type Props = Readonly<{
   title: string;
   payments: PaymentsHistoryState;
   profile?: InitializedProfile;
-  navigateToPaymentDetailInfo: (payment: PaymentHistory) => void;
+  navigateToPaymentDetailInfo: (
+    payment: PaymentHistory,
+    profile?: InitializedProfile
+  ) => void;
   ListEmptyComponent?: React.ReactNode;
 }>;
 
@@ -108,9 +113,16 @@ export default class PaymentList extends React.Component<Props> {
             esito === "Success" &&
             this.props.profile
           ) {
-            // Here instabug log
+            // Print instabug log
+            instabugLog(
+              getPaymentHistoryDetails(info.item, this.props.profile),
+              TypeLogs.INFO
+            );
           } else {
-            this.props.navigateToPaymentDetailInfo(info.item);
+            this.props.navigateToPaymentDetailInfo(
+              info.item,
+              this.props.profile
+            );
           }
         }}
       />

@@ -8,6 +8,8 @@ import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -23,10 +25,14 @@ import {
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
-import { formatPaymentAmount } from "../../utils/payment";
+import {
+  formatPaymentAmount,
+  getPaymentHistoryDetails
+} from "../../utils/payment";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
+  profile: InitializedProfile;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -147,8 +153,24 @@ export default class PaymentDetails extends React.Component<Props, never> {
     </ButtonDefaultOpacity>
   );
 
+  private printInstabugLog = () => {
+    const profile = this.props.navigation.getParam("profile");
+    if (profile !== undefined) {
+      instabugLog(
+        getPaymentHistoryDetails(
+          this.props.navigation.getParam("payment"),
+          profile
+        ),
+        TypeLogs.INFO
+      );
+    }
+  };
+
   private helpButton = () => (
-    <ButtonDefaultOpacity style={styles.helpButton}>
+    <ButtonDefaultOpacity
+      onPress={this.printInstabugLog}
+      style={styles.helpButton}
+    >
       <IconFont name={"io-messaggi"} style={styles.helpButtonIcon} />
       <Text style={styles.helpButtonText}>
         {I18n.t("payment.details.info.buttons.help")}
