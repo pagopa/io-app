@@ -32,7 +32,7 @@ import {
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
-  profile: InitializedProfile;
+  profile?: InitializedProfile;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
