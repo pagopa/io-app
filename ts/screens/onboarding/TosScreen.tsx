@@ -13,7 +13,9 @@ import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
@@ -91,6 +93,11 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
+  body: "profile.main.privacy.privacyPolicy.contextualHelpContentPolicy"
+};
+
 /**
  * A screen to show the ToS to the user.
  */
@@ -148,6 +155,7 @@ class TosScreen extends React.PureComponent<Props, State> {
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
         goBack={isProfile || this.handleGoBack}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         headerTitle={
           isProfile
             ? I18n.t("profile.main.privacy.privacyPolicy.title")

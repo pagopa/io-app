@@ -307,6 +307,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
         headerTitle={I18n.t("messageDetails.headerTitle")}
         goBack={this.goBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["messages_detail"]}
       >
         {this.renderCurrentState()}
       </BaseScreenComponent>
