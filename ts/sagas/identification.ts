@@ -85,7 +85,8 @@ export function* startAndReturnIdentificationResult(
   canResetPin: boolean = true,
   identificationGenericData?: IdentificationGenericData,
   identificationCancelData?: IdentificationCancelData,
-  identificationSuccessData?: IdentificationSuccessData
+  identificationSuccessData?: IdentificationSuccessData,
+  shufflePad: boolean = false
 ): Iterator<Effect | SagaCallReturnType<typeof waitIdentificationResult>> {
   yield put(
     identificationStart(
@@ -93,7 +94,8 @@ export function* startAndReturnIdentificationResult(
       canResetPin,
       identificationGenericData,
       identificationCancelData,
-      identificationSuccessData
+      identificationSuccessData,
+      shufflePad
     )
   );
 
@@ -111,7 +113,8 @@ function* startAndHandleIdentificationResult(
       identificationRequestAction.payload.canResetPin,
       identificationRequestAction.payload.identificationGenericData,
       identificationRequestAction.payload.identificationCancelData,
-      identificationRequestAction.payload.identificationSuccessData
+      identificationRequestAction.payload.identificationSuccessData,
+      identificationRequestAction.payload.shufflePad
     )
   );
   const identificationResult = yield call(waitIdentificationResult);

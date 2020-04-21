@@ -44,6 +44,7 @@ type IdentificationStartedState = {
   identificationGenericData?: IdentificationGenericData;
   identificationCancelData?: IdentificationCancelData;
   identificationSuccessData?: IdentificationSuccessData;
+  shufflePad?: boolean;
 };
 
 type IdentificationIdentifiedState = {

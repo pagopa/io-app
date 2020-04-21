@@ -293,7 +293,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       pin,
       canResetPin,
       identificationGenericData,
-      identificationCancelData
+      identificationCancelData,
+      shufflePad
     } = identificationProgressState;
 
     const {
@@ -336,6 +337,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         <BaseScreenComponent
           primary={true}
           contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
           appLogo={true}
         >
           <StatusBar
@@ -360,6 +362,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   this.onIdentificationFailureHandler
                 )
               }
+              shufflePad={shufflePad}
               disabled={!canInsertPin}
               compareWithCode={pin as string}
               activeColor={"white"}

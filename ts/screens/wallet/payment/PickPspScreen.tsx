@@ -129,6 +129,7 @@ class PickPspScreen extends React.Component<Props> {
         goBack={true}
         headerTitle={I18n.t("wallet.pickPsp.title")}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["payment"]}
       >
         <Content noPadded={true}>
           <View spacer={true} />

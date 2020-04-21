@@ -14,18 +14,21 @@ import { ContextualHelp } from "../../../components/ContextualHelp";
 import { withErrorModal } from "../../../components/helpers/withErrorModal";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
+import { shufflePinPadOnPayment } from "../../../config";
 import I18n from "../../../i18n";
 import { identificationRequest } from "../../../store/actions/identification";
 import {
   navigateToPaymentPickPaymentMethodScreen,
   navigateToPaymentPickPspScreen,
-  navigateToTransactionDetailsScreen
+  navigateToTransactionSuccessScreen
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -107,6 +110,11 @@ const styles = StyleSheet.create({
 const feeForWallet = (w: Wallet): Option<number> =>
   fromNullable(w.psp).map(psp => psp.fixedCost.amount);
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.whyAFee.title",
+  body: "wallet.whyAFee.text"
+};
+
 class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
   private showHelp = () => {
     this.props.showModal(
@@ -140,6 +148,8 @@ class ConfirmPaymentMethodScreen extends React.Component<Props, never> {
       <BaseScreenComponent
         goBack={this.props.onCancel}
         headerTitle={I18n.t("wallet.ConfirmPayment.header")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["payment"]}
       >
         <Content noPadded={true}>
           <PaymentBannerComponent
@@ -293,8 +303,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     if (isSuccessTransaction(tx)) {
       // on success:
       dispatch(
-        navigateToTransactionDetailsScreen({
-          isPaymentCompletedTransaction: true,
+        navigateToTransactionSuccessScreen({
           transaction: tx
         })
       );
@@ -310,8 +319,6 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       dispatch(paymentInitializeState());
       // update the transactions state (the first transaction is the most recent)
       dispatch(fetchTransactionsRequest({ start: 0 }));
-      // navigate to the resulting transaction details
-      showToast(I18n.t("wallet.ConfirmPayment.transactionSuccess"), "success");
     } else {
       // on failure:
       // navigate to entrypoint of payment or wallet home
@@ -358,7 +365,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         },
         {
           onSuccess: onIdentificationSuccess
-        }
+        },
+        shufflePinPadOnPayment
       )
     );
   return {
