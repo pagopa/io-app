@@ -16,6 +16,7 @@ global:
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
   genericWaiting: Attendi qualche secondo..
   genericThanks: Grazie
+  genericShare: Condividi
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!
@@ -891,6 +892,13 @@ messages:
     emptyMessage:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
+  medical:
+    receipt: Ricetta elettronica
+    nre: NRE Numero Ricetta Elettronica
+    iup: IUP Identificativo Unico Prenotazione
+    cf: Codice Fiscale dell'assistito
+    deadline: Questa ricetta scade il {{date}}
+    barcodes: Codici a barre
 messageDetails:
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md

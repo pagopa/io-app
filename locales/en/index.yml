@@ -16,6 +16,7 @@ global:
   genericError: Ooops, something did not work as expected, please try again!
   genericWaiting: Wait a few seconds..
   genericThanks: Thank you
+  genericShare: Share
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -882,6 +883,13 @@ messages:
     emptyMessage:
       title: You haven't any scheduled deadline.
       subtitle:  Use the button above to check out past deadlines.
+  medical:
+    deadline: this prescription expires {{date}}
+    receipt: Electronic prescription
+    nre: NRE Electronic prescription number
+    iup: IUP Unique booking identifier
+    cf: Codice Fiscale dell'assistito
+    barcodes: Barcodes
 messageDetails:
   contextualHelpTitle: Message details
   contextualHelpContent: !include messages/message_detail.md
