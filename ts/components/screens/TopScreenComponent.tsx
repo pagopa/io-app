@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ComponentProps } from "../../types/react";
+import { FAQsCategoriesType } from "../../utils/faq";
 import { SearchType } from "../search/SearchButton";
 import BaseScreenComponent from "./BaseScreenComponent";
 
@@ -11,6 +12,7 @@ interface OwnProps {
     iconName: string;
     onPress: () => void;
   };
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
 type BaseScreenComponentProps =
@@ -43,7 +45,8 @@ class TopScreenComponent extends React.PureComponent<Props> {
       isSearchAvailable,
       searchType,
       customRightIcon,
-      customGoBack
+      customGoBack,
+      faqCategories
     } = this.props;
 
     return (
@@ -54,6 +57,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         headerTitle={goBack ? headerTitle : undefined}
         contextualHelp={contextualHelp}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={faqCategories}
         headerBody={headerBody}
         isSearchAvailable={isSearchAvailable}
         searchType={searchType}

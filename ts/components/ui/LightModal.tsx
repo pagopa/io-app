@@ -15,6 +15,8 @@ export type LightModalContextInterface = Readonly<{
     animatedValue?: AnimationLightModal
   ) => void;
   hideModal: () => void;
+  onHiddenModal: () => void;
+  setOnHiddenModal: (callback: () => void) => void;
 }>;
 
 export const LightModalContext = React.createContext<
@@ -24,7 +26,9 @@ export const LightModalContext = React.createContext<
   showModal: () => undefined,
   showModalFadeInAnimation: () => undefined,
   showAnimatedModal: () => undefined,
-  hideModal: () => undefined
+  hideModal: () => undefined,
+  onHiddenModal: () => undefined,
+  setOnHiddenModal: () => undefined
 });
 
 type Props = {};
@@ -164,11 +168,20 @@ export class LightModalProvider extends React.Component<Props, State> {
   };
 
   public hideModal = () => {
-    this.setState({
-      component: null
-    });
     fadeAnim.setValue(0);
     FadeInAnimation.stop();
+    this.setState(
+      {
+        component: null
+      },
+      () => {
+        this.state.onHiddenModal();
+      }
+    );
+  };
+
+  public setOnHiddenModal = (onHiddenModal: () => void) => {
+    this.setState({ onHiddenModal });
   };
 
   public state = {
@@ -176,7 +189,9 @@ export class LightModalProvider extends React.Component<Props, State> {
     showModal: this.showModal,
     showAnimatedModal: this.showAnimatedModal,
     showModalFadeInAnimation: this.showModalFadeInAnimation,
-    hideModal: this.hideModal
+    hideModal: this.hideModal,
+    onHiddenModal: () => undefined,
+    setOnHiddenModal: this.setOnHiddenModal
   };
 
   public render() {
