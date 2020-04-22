@@ -462,7 +462,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             identificationByBiometryState: "failure"
           });
         }
-        onIdentificationFailureHandler();
       });
   };
 }
