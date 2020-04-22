@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
@@ -10,7 +11,7 @@ import IconFont from "./ui/IconFont";
 type Props = {
   heading: React.ReactNode;
   icon?: ImageSourcePropType;
-  iconFont?: IconProps; // TODO: manage header image as icon https://www.pivotaltracker.com/story/show/172105485
+  iconFont?: IconProps;
   dark?: boolean;
 };
 
@@ -39,30 +40,41 @@ const styles = StyleSheet.create({
 
 /**
  * Component that implements the screen header with heading to the left
- * and an icon image to the right
+ * and an icon image to the right. The icon can be an image or an icon (from io-icon-font)
  */
 class ScreenHeader extends React.Component<Props> {
+  private getIcon = () => {
+    const { icon, iconFont } = this.props;
+    if (icon) {
+      return <Image source={icon} style={styles.image} />;
+    }
+    if (iconFont) {
+      const { dark } = this.props;
+      const imageColor = fromNullable(this.props.iconFont)
+        .mapNullable(s => s.color)
+        .fold(
+          dark
+            ? customVariables.headerIconDark
+            : customVariables.headerIconLight,
+          s => s
+        );
+      return (
+        <IconFont
+          name={iconFont.name}
+          size={iconFont.size || HEADER_HEIGHT}
+          color={imageColor}
+        />
+      );
+    }
+    return undefined;
+  };
+
   public render() {
-    const { heading, icon, dark, iconFont } = this.props;
-
-    const imageColor =
-      this.props.iconFont && this.props.iconFont.color
-        ? this.props.iconFont.color
-        : dark
-          ? customVariables.headerIconDark
-          : customVariables.headerIconLight;
-
+    const { heading, dark } = this.props;
     return (
       <View style={[dark && styles.darkGrayBg, styles.container]}>
         <View style={styles.text}>{heading}</View>
-        {icon && <Image source={icon} style={styles.image} />}
-        {iconFont && (
-          <IconFont
-            name={iconFont.name}
-            size={iconFont.size || HEADER_HEIGHT}
-            color={imageColor}
-          />
-        )}
+        {this.getIcon()}
       </View>
     );
   }
