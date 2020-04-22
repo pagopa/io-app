@@ -1,13 +1,16 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { NavigationInjectedProps } from "react-navigation";
+import { connect } from "react-redux";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { openLink } from "../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../i18n";
+import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
+import { ReduxProps } from "../../../store/actions/types";
 
-type Props = NavigationInjectedProps;
+type Props = NavigationInjectedProps & ReduxProps;
 
 const browseToLink = () =>
   openLink(
@@ -19,9 +22,14 @@ class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
     super(props);
   }
 
+  private handleGoBack = () => this.props.dispatch(resetToAuthenticationRoute);
+
   public render(): React.ReactNode {
     return (
-      <TopScreenComponent goBack={true}>
+      <TopScreenComponent
+        goBack={this.handleGoBack}
+        headerTitle={I18n.t("authentication.landing.expiredCardHeaderTitle")}
+      >
         <ScreenContentHeader
           title={I18n.t("authentication.landing.expiredCardTitle")}
         />
@@ -36,7 +44,7 @@ class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
           type={"SingleButton"}
           leftButton={{
             cancel: true,
-            onPress: this.props.navigation.goBack, // TODO: check navigation - redirect to Landing Screen?
+            onPress: this.handleGoBack,
             title: I18n.t("global.buttons.cancel")
           }}
         />
@@ -45,4 +53,4 @@ class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
   }
 }
 
-export default CieExpiredOrInvalidScreen;
+export default connect()(CieExpiredOrInvalidScreen);

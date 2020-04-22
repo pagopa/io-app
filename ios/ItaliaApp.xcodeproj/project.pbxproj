@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* ItaliaAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ItaliaAppTests.m */; };
 		0F9E6335AF38F39B8AFE11BE /* libPods-ItaliaAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CAACD7374073347FFCF0CF8F /* libPods-ItaliaAppTests.a */; };
@@ -35,7 +34,6 @@
 		9975E38DE95949D28D07A275 /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */; };
 		BE1A42156484487BABBC4DED /* TitilliumWeb-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */; };
 		C2CF038002D24FEEAB41B336 /* RobotoMono-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */; };
-		CE0249F3A87F4635941BE608 /* io-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF247919391E44AE83924808 /* io-icon-font.ttf */; };
 		D18E075B28304466B6CA2381 /* TitilliumWeb-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65D221FCB5A461FBC44285D /* TitilliumWeb-LightItalic.ttf */; };
 		EFFA620FCD2D46F6B942663B /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2D52800996AA471A87A7F975 /* LICENSE.txt */; };
 		F0625E7E2326824D00EDEF90 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E03A5FB22C6155200629442 /* libART.a */; };
@@ -45,6 +43,7 @@
 		F0625E8E2326832500EDEF90 /* libRNTextInputMask.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CC92F521357FDE00206602 /* libRNTextInputMask.a */; };
 		F0625E902326833000EDEF90 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F0625E8F2326833000EDEF90 /* libPods-ItaliaApp.a */; };
 		F09FEB3C231818E3007071DB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F09FEB0D231818E3007071DB /* Localizable.strings */; };
+		72D52FDB16E14E7DB36A0358 /* io-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7CCD6DB7B3D4683955EBDD7 /* io-icon-font.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -425,7 +424,6 @@
 		EC97D76D141F4681E5403F11 /* libPods-ItaliaApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItaliaApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE4F83DB63254F5285C36A40 /* TitilliumWeb-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-ExtraLight.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLight.ttf"; sourceTree = "<group>"; };
-		EF247919391E44AE83924808 /* io-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "io-icon-font.ttf"; path = "../assets/fonts/io-icon-font/io-icon-font.ttf"; sourceTree = "<group>"; };
 		F0625E792326820B00EDEF90 /* libReact-RCTImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0625E7B2326822400EDEF90 /* libReact-RCTImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0625E8F2326833000EDEF90 /* libPods-ItaliaApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-ItaliaApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -435,6 +433,7 @@
 		F5F65895457F4A8593B7110D /* libRNTextInputMask.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNTextInputMask.a; sourceTree = "<group>"; };
 		F709D4AE20E44EFAAB255A8E /* TitilliumWeb-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Italic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Italic.ttf"; sourceTree = "<group>"; };
 		FBD4A950A9AC909A1EDCDA70 /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
+		A7CCD6DB7B3D4683955EBDD7 /* io-icon-font.ttf */ = {isa = PBXFileReference; name = "io-icon-font.ttf"; path = "../assets/fonts/io-icon-font/io-icon-font.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -607,13 +606,13 @@
 				CED8B1FF1E254583BB3F285F /* TitilliumWeb-SemiBoldItalic.ttf */,
 				2D52800996AA471A87A7F975 /* LICENSE.txt */,
 				69DDBDD712454186B7493CEC /* Ionicons.ttf */,
-				EF247919391E44AE83924808 /* io-icon-font.ttf */,
 				B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */,
 				2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */,
 				AFE8D23873DE458BB54EB46B /* RobotoMono-Light.ttf */,
 				640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */,
 				76E4CEA78E3F4060ABB59808 /* RobotoMono-Regular.ttf */,
 				5389C36762A04AE69D762289 /* RobotoMono-RegularItalic.ttf */,
+				A7CCD6DB7B3D4683955EBDD7 /* io-icon-font.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1233,13 +1232,13 @@
 				72E4B1EFF7D4414483079F91 /* TitilliumWeb-SemiBoldItalic.ttf in Resources */,
 				EFFA620FCD2D46F6B942663B /* LICENSE.txt in Resources */,
 				6867BE73959A414F84C77FED /* Ionicons.ttf in Resources */,
-				CE0249F3A87F4635941BE608 /* io-icon-font.ttf in Resources */,
 				9975E38DE95949D28D07A275 /* RobotoMono-Bold.ttf in Resources */,
 				8E7BB01F1A6D4D79B17B4210 /* RobotoMono-BoldItalic.ttf in Resources */,
 				8788744508D34396942D3DB4 /* RobotoMono-Light.ttf in Resources */,
 				C2CF038002D24FEEAB41B336 /* RobotoMono-LightItalic.ttf in Resources */,
 				16E38CBD19D4437A9C020B21 /* RobotoMono-Regular.ttf in Resources */,
 				28E4866232804051B865FC10 /* RobotoMono-RegularItalic.ttf in Resources */,
+				72D52FDB16E14E7DB36A0358 /* io-icon-font.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1472,6 +1471,7 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
@@ -1507,6 +1507,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
@@ -1662,7 +1663,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 52;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1701,7 +1702,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 52;
 				/* pagopa */
 				/* DEVELOPMENT_TEAM = M2X5YQ4BJ7; */
 				/* team digitale */

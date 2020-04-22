@@ -527,6 +527,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             headerTitle={I18n.t("services.title")}
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
+            faqCategories={["services"]}
             isSearchAvailable={userMetadata !== undefined}
             searchType={"Services"}
           >

@@ -1,5 +1,5 @@
 /**
- * A component to display the list item in the MessageHomeScreen
+ * A component to display the list item in the MessagesHomeScreen
  */
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";

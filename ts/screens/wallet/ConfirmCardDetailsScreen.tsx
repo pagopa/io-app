@@ -141,6 +141,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             : I18n.t("wallet.saveCard.header")
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_methods"]}
       >
         <Content noPadded={true} style={styles.paddedLR}>
           <CardComponent
