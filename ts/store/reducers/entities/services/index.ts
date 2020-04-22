@@ -40,6 +40,7 @@ import {
   visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
+import { fromNullable } from "fp-ts/lib/Option";
 
 export type ServicesState = Readonly<{
   byId: ServicesByIdState;
@@ -198,12 +199,12 @@ const isInScope = (
  */
 const belongsToOrganization = (
   service: pot.Pot<ServicePublic, Error>,
-  organizationFiscalCode: string
+  organizationsFiscalCode: ReadonlyArray<string>
 ) =>
   pot.getOrElse(
     pot.map(
       service,
-      s => s.organization_fiscal_code === organizationFiscalCode
+      s => organizationsFiscalCode.indexOf(s.organization_fiscal_code) !== -1
     ),
     false
   );
@@ -225,19 +226,42 @@ const getServices = (
     selectedOrganizationsFiscalCodes === undefined
       ? Object.keys(services.byOrgFiscalCode)
       : selectedOrganizationsFiscalCodes;
-
+  // another workaround to avoid to display same organizations name that have different cf
+  // we group services by organization name
+  // to avoid duplication we keep in a set all organization fiscal code processed
+  const orgFiscalCodeProcessed = new Set<string>();
   return organizationsFiscalCodes
     .map((fiscalCode: string) => {
       const organizationName = organizations[fiscalCode] || fiscalCode;
       const organizationFiscalCode = fiscalCode;
-      const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
+      if (orgFiscalCodeProcessed.has(fiscalCode)) {
+        return {
+          organizationName,
+          organizationFiscalCode,
+          data: []
+        };
+      }
+
+      const orgsFiscalCodes = Object.keys(organizations).filter(cf =>
+        fromNullable(organizations[cf]).fold(
+          false,
+          name => organizationName === name // select all services that belong to organizations having organizationName
+        )
+      );
+      orgsFiscalCodes.forEach(ocf => orgFiscalCodeProcessed.add(ocf));
+      const serviceIdsForOrg = orgsFiscalCodes.reduce(
+        (acc: ReadonlyArray<string>, curr: string) => {
+          return [...acc, ...(services.byOrgFiscalCode[curr] || [])];
+        },
+        []
+      );
 
       const data = serviceIdsForOrg
         .map(id => services.byId[id])
         .filter(
           service =>
             isDefined(service) &&
-            belongsToOrganization(service, fiscalCode) && // workaround: see comments above this function definition
+            belongsToOrganization(service, orgsFiscalCodes) && // workaround: see comments above this function definition
             isInScope(service, servicesByScope, scope) &&
             isVisibleService(services.visible, service)
         )
