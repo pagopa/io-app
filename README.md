@@ -81,7 +81,7 @@ The development of the app is carried out by several contributors:
 
 ### Can I use the app?
 
-Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platforms/spid) to login to the app.
+Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platforms/spid) or have a [CIE](https://www.cartaidentita.interno.gov.it) (support ready for Android - soon for iOS) to login to the app.
 
 ### How can I help you?
 
