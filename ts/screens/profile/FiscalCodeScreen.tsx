@@ -101,6 +101,7 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
           }
           contentStyle={styles.darkBg}
           contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["profile"]}
           hideHeader={true}
           topContent={
             <React.Fragment>

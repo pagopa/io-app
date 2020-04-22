@@ -18,6 +18,7 @@ import {
   ViewStyle
 } from "react-native";
 import customVariables from "../../theme/variables";
+import { FAQsCategoriesType } from "../../utils/faq";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
@@ -37,6 +38,7 @@ type Props = Readonly<{
   refreshControl?: React.ReactElement<RefreshControlProps>;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 const styles = StyleSheet.create({
@@ -120,6 +122,7 @@ export default class WalletLayout extends React.Component<Props> {
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         contentRefreshControl={this.props.refreshControl}
+        faqCategories={this.props.faqCategories}
       >
         {this.props.children}
       </DarkLayout>
