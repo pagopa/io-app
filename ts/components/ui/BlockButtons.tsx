@@ -100,7 +100,12 @@ export default class BlockButtons extends React.Component<Props, never> {
         ? styles.buttonTwoThirds
         : styles.button;
 
-    return this.renderButton(this.props.leftButton, leftButtonStyle);
+    return (
+      <React.Fragment>
+        {this.renderButton(this.props.leftButton, leftButtonStyle)}
+        <View hspacer={true} />
+      </React.Fragment>
+    );
   };
 
   private renderButton = (
