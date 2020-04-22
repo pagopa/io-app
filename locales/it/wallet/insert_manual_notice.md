@@ -1,0 +1,2 @@
+**Qui puoi procedere al pagamento di un avviso, inserendo i dati che trovi nello stesso**: il codice alfanumerico IUV dell'avviso e il codice fiscale dell'ente creditore.
+Assicurati che l'avviso supporti il pagamento tramite PagoPA, la piattaform dei pagamento per la Pubblica Amministrazione.
