@@ -1,6 +1,7 @@
 /**
  * Services reducer
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
@@ -40,7 +41,6 @@ import {
   visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
-import { fromNullable } from "fp-ts/lib/Option";
 
 export type ServicesState = Readonly<{
   byId: ServicesByIdState;
