@@ -25,10 +25,10 @@ type OwnButtonProps = {
 };
 
 type CommonProps = Readonly<{
-  leftButton: FooterButtonProps;
+  leftButton: BlockButtonProps;
 }>;
 
-type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
+type BlockButtonProps = ComponentProps<Button> & OwnButtonProps;
 
 export interface SingleButton extends CommonProps {
   type: "SingleButton";
@@ -36,23 +36,23 @@ export interface SingleButton extends CommonProps {
 
 export interface TwoButtonsInlineHalf extends CommonProps {
   type: "TwoButtonsInlineHalf";
-  rightButton: FooterButtonProps;
+  rightButton: BlockButtonProps;
 }
 
 interface TwoButtonsInlineThird extends CommonProps {
   type: "TwoButtonsInlineThird";
-  rightButton: FooterButtonProps;
+  rightButton: BlockButtonProps;
 }
 
 interface TwoButtonsInlineThirdInverted extends CommonProps {
   type: "TwoButtonsInlineThirdInverted";
-  rightButton: FooterButtonProps;
+  rightButton: BlockButtonProps;
 }
 
 interface ThreeButtonsInLine extends CommonProps {
   type: "ThreeButtonsInLine";
-  rightButton: FooterButtonProps;
-  midButton: FooterButtonProps;
+  rightButton: BlockButtonProps;
+  midButton: BlockButtonProps;
 }
 
 type Props =
@@ -68,84 +68,56 @@ export type BlockButtonsProps = Props;
  * Implements a component that show buttons on a line on 1, 2 or 3 buttons
  */
 export default class BlockButtons extends React.Component<Props, never> {
-  private renderRightButton() {
+  private renderRightButton = () => {
     if (this.props.type === "SingleButton") {
       return null;
     }
 
-    const {
-      type,
-      rightButton: {
-        title: rightButtonTitle,
-        buttonFontSize: fontSize,
-        iconName: icon,
-        ...otherPropsRightButton
-      }
-    } = this.props;
+    const rightButtonStyle =
+      this.props.type === "TwoButtonsInlineThird"
+        ? styles.buttonTwoThirds
+        : styles.button;
 
     return (
       <React.Fragment>
         <View hspacer={true} />
-        <ButtonDefaultOpacity
-          {...otherPropsRightButton}
-          style={
-            type === "TwoButtonsInlineThird"
-              ? styles.buttonTwoThirds
-              : styles.button
-          }
-        >
-          {icon && <IconFont name={icon} />}
-          <Text
-            numberOfLines={1}
-            style={fontSize !== undefined ? { fontSize } : {}}
-          >
-            {rightButtonTitle}
-          </Text>
-        </ButtonDefaultOpacity>
+        {this.renderButton(this.props.rightButton, rightButtonStyle)}
       </React.Fragment>
     );
-  }
+  };
 
-  private renderMidButton() {
+  private renderMidButton = () => {
     if (this.props.type !== "ThreeButtonsInLine") {
       return null;
     }
-    const {
-      title: midButtonTitle,
-      buttonFontSize: fontSize,
-      iconName: icon,
-      ...otherPropsMidProps
-    } = this.props.midButton;
 
-    return (
-      <ButtonDefaultOpacity style={styles.button} {...otherPropsMidProps}>
-        {icon && <IconFont name={icon} />}
-        <Text style={fontSize !== undefined ? { fontSize } : {}}>
-          {midButtonTitle}
-        </Text>
-      </ButtonDefaultOpacity>
-    );
-  }
+    return this.renderButton(this.props.midButton, styles.button);
+  };
 
   private renderLeftButton = () => {
-    const {
-      title: leftButtonTitle,
-      buttonFontSize: fontSize,
-      iconName: icon,
-      ...otherPropsLeftButton
-    } = this.props.leftButton;
+    const leftButtonStyle =
+      this.props.type === "TwoButtonsInlineThirdInverted"
+        ? styles.buttonTwoThirds
+        : styles.button;
+
+    return this.renderButton(this.props.leftButton, leftButtonStyle);
+  };
+
+  private renderButton = (
+    props: BlockButtonProps,
+    style: ComponentProps<typeof ButtonDefaultOpacity>["style"]
+  ) => {
     return (
-      <ButtonDefaultOpacity
-        style={
-          this.props.type === "TwoButtonsInlineThirdInverted"
-            ? styles.buttonTwoThirds
-            : styles.button
-        }
-        {...otherPropsLeftButton}
-      >
-        {icon && <IconFont name={icon} />}
-        <Text style={fontSize !== undefined ? { fontSize } : {}}>
-          {leftButtonTitle}
+      <ButtonDefaultOpacity style={style} {...props}>
+        {props.iconName && <IconFont name={props.iconName} />}
+        <Text
+          style={
+            props.buttonFontSize !== undefined
+              ? { fontSize: props.buttonFontSize }
+              : {}
+          }
+        >
+          {props.title}
         </Text>
       </ButtonDefaultOpacity>
     );
