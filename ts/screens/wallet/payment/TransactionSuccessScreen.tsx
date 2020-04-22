@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import IconFont from "../../../components/ui/IconFont";
 import {
   navigateToTransactionDetailsScreen,
