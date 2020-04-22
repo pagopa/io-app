@@ -1,6 +1,7 @@
 /**
  * This component displays a list of payments
  */
+import { BugReporting } from "instabug-reactnative";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -15,7 +16,6 @@ import {
 } from "../../store/reducers/payments/history";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
-import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { getPaymentHistoryDetails } from "../../utils/payment";
 import DetailedlistItemPaymentComponent from "../DetailedListItemPaymentComponent";
@@ -109,15 +109,18 @@ export default class PaymentList extends React.Component<Props> {
         }
         onPressItem={() => {
           if (
-            typeof info.item.transaction !== typeof Transaction &&
+            info.item.transaction === undefined &&
             esito === "Success" &&
             this.props.profile
           ) {
-            // Print instabug log
+            // Print instabug log and open report screen
             instabugLog(
               getPaymentHistoryDetails(info.item, this.props.profile),
               TypeLogs.INFO
             );
+            BugReporting.showWithOptions(BugReporting.reportType.bug, [
+              BugReporting.option.commentFieldRequired
+            ]);
           } else {
             this.props.navigateToPaymentDetailInfo(
               info.item,
