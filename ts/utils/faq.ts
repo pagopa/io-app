@@ -15,6 +15,7 @@ export const FAQs: { [key in FAQsCategoriesType]: ReadonlyArray<number> } = {
   messages: [23, 24, 25, 26, 27],
   messages_detail: [27, 28, 29, 30, 31, 32],
   wallet: [33, 34, 35, 36, 37],
+  wallet_insert_notice_data: [33, 35],
   wallet_methods: [37, 41, 42],
   wallet_transaction: [38, 39, 40],
   payment: [43, 44, 45, 46],
@@ -36,6 +37,7 @@ export type FAQsCategoriesType =
   | "messages"
   | "messages_detail"
   | "wallet"
+  | "wallet_insert_notice_data"
   | "wallet_methods"
   | "wallet_transaction"
   | "payment"
