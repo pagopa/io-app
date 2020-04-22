@@ -221,10 +221,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         .then(
           () => {
             if (this.state.biometryType) {
-              this.onFingerprintRequest(
-                this.onIdentificationSuccessHandler,
-                this.onIdentificationFailureHandler
-              );
+              this.onFingerprintRequest(this.onIdentificationSuccessHandler);
             }
           },
           _ => undefined
@@ -357,10 +354,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               isFingerprintEnabled={isFingerprintEnabled}
               biometryType={biometryType}
               onFingerPrintReq={() =>
-                this.onFingerprintRequest(
-                  this.onIdentificationSuccessHandler,
-                  this.onIdentificationFailureHandler
-                )
+                this.onFingerprintRequest(this.onIdentificationSuccessHandler)
               }
               shufflePad={shufflePad}
               disabled={!canInsertPin}
@@ -433,8 +427,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   };
 
   private onFingerprintRequest = (
-    onIdentificationSuccessHandler: () => void,
-    onIdentificationFailureHandler: () => void
+    onIdentificationSuccessHandler: () => void
   ) => {
     TouchID.authenticate(
       I18n.t("identification.biometric.popup.reason"),
