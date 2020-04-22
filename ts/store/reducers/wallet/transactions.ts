@@ -23,10 +23,12 @@ const MAX_TRANSACTIONS_IN_LIST = 50;
 
 export type TransactionsState = Readonly<{
   transactions: pot.Pot<IndexedById<Transaction>, Error>;
+  total: pot.Pot<number, Error>;
 }>;
 
 const TRANSACTIONS_INITIAL_STATE: TransactionsState = {
-  transactions: pot.none
+  transactions: pot.none,
+  total: pot.none
 };
 
 // selectors
@@ -71,6 +73,34 @@ export const latestTransactionsSelector = createSelector(
     )
 );
 
+// return true if there are more transactions to load
+export const areMoreTransactionsAvailable = (state: GlobalState): boolean => {
+  return pot.getOrElse(
+    pot.map(state.wallet.transactions.transactions, transactions => {
+      return pot.getOrElse(
+        pot.map(
+          state.wallet.transactions.total,
+          t => Object.keys(transactions).length < t
+        ),
+        false
+      );
+    }),
+    false
+  );
+};
+
+// return the number of transactions loaded
+// note transactions loaded should be different (in cardinality) from ones displayed since we operate
+// a filter over them (see latestTransactionsSelector)
+export const getTransactionsLoadedLength = (state: GlobalState) =>
+  pot.getOrElse(
+    pot.map(
+      state.wallet.transactions.transactions,
+      txs => Object.keys(txs).length
+    ),
+    0
+  );
+
 // reducer
 const reducer = (
   state: TransactionsState = TRANSACTIONS_INITIAL_STATE,
@@ -80,19 +110,30 @@ const reducer = (
     case getType(fetchTransactionsRequest):
       return {
         ...state,
-        transactions: pot.toLoading(state.transactions)
+        transactions: pot.toLoading(state.transactions),
+        total: pot.toLoading(state.total)
       };
 
     case getType(fetchTransactionsSuccess):
+      const prevTransactions = pot.getOrElse<IndexedById<Transaction>>(
+        state.transactions,
+        {}
+      );
+      const total = {
+        ...prevTransactions,
+        ...toIndexed(action.payload.data, _ => _.id)
+      };
       return {
         ...state,
-        transactions: pot.some(toIndexed(action.payload, _ => _.id))
+        transactions: pot.some(total),
+        total: pot.some(action.payload.total.fold(0, s => s))
       };
 
     case getType(fetchTransactionsFailure):
       return {
         ...state,
-        transactions: pot.toError(state.transactions, action.payload)
+        transactions: pot.toError(state.transactions, action.payload),
+        total: pot.toError(state.total, action.payload)
       };
 
     default:

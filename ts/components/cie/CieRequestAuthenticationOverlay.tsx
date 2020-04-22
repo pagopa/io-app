@@ -13,7 +13,6 @@ import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
-import TopScreenComponent from "../screens/TopScreenComponent";
 
 type Props = {
   ciePin: string;
@@ -153,7 +152,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
 
   public render(): React.ReactNode {
     const ContainerComponent = withLoadingSpinner(() => (
-      <TopScreenComponent>{this.renderWebView()}</TopScreenComponent>
+      <View>{this.renderWebView()}</View>
     ));
     return (
       <ContainerComponent

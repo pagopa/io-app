@@ -5,6 +5,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceTuple } from "../../../../../definitions/backend/ServiceTuple";
 import { ScopeEnum } from "../../../../../definitions/content/Service";
 import { ServicesByScope } from "../../../../../definitions/content/ServicesByScope";
 import { isDefined } from "../../../../utils/guards";
@@ -185,6 +186,28 @@ const isInScope = (
   return false;
 };
 
+// NOTE: this is a workaround not a solution
+// since a service can change its organization fiscal code we could have
+// obsolete data in the store: byOrgFiscalCode could have services that don't belong to organization anymore
+// this cleaning its a workaround, this should be fixed on data loading and not when data are loaded
+// see https://www.pivotaltracker.com/story/show/172316333
+/**
+ * return true if service belongs to the given organization fiscal code
+ * @param service
+ * @param organizationFiscalCode
+ */
+const belongsToOrganization = (
+  service: pot.Pot<ServicePublic, Error>,
+  organizationFiscalCode: string
+) =>
+  pot.getOrElse(
+    pot.map(
+      service,
+      s => s.organization_fiscal_code === organizationFiscalCode
+    ),
+    false
+  );
+
 /**
  * A generalized function to generate sections of organizations including the available services for each organization
  * optional input:
@@ -214,6 +237,7 @@ const getServices = (
         .filter(
           service =>
             isDefined(service) &&
+            belongsToOrganization(service, fiscalCode) && // workaround: see comments above this function definition
             isInScope(service, servicesByScope, scope) &&
             isVisibleService(services.visible, service)
         )
@@ -312,34 +336,25 @@ export const notSelectedServicesSectionsSelector = createSelector(
 );
 
 /**
- *  Get the sum of selected local services + national services that are not yet marked as read
+ *  Get the sum of visible services that are not yet marked as read
  */
 
 export const servicesBadgeValueSelector = createSelector(
   [
-    nationalServicesSectionsSelector,
-    selectedLocalServicesSectionsSelector,
+    visibleServicesSelector,
     readServicesByIdSelector,
     isFirstVisibleServiceLoadCompletedSelector
   ],
-  (
-    nationalService,
-    localService,
-    readServicesById,
-    isFirstVisibleServiceLoadCompleted
-  ) => {
+  (visibleServices, readServicesById, isFirstVisibleServiceLoadCompleted) => {
     if (isFirstVisibleServiceLoadCompleted) {
-      const services: ReadonlyArray<ServicesSectionState> = [
-        ...nationalService,
-        ...localService
-      ];
-      return services.reduce((acc: number, service: ServicesSectionState) => {
-        const servicesNotRead = service.data.filter(
-          data =>
-            pot.isSome(data) &&
-            readServicesById[data.value.service_id] === undefined
-        ).length;
-        return acc + servicesNotRead;
+      const services = pot.getOrElse<ReadonlyArray<ServiceTuple>>(
+        visibleServices,
+        []
+      );
+      return services.reduce((acc: number, service: ServiceTuple) => {
+        const isServiceRead =
+          readServicesById[service.service_id] !== undefined;
+        return acc + (isServiceRead ? 0 : 1);
       }, 0);
     }
     return 0;

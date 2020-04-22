@@ -13,6 +13,7 @@ import AppHeader from "./ui/AppHeader";
 type Props = Readonly<{
   title: string;
   body: () => React.ReactNode;
+  contentLoaded: boolean;
   isVisible: boolean;
   close: () => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
@@ -86,9 +87,10 @@ export class ContextualHelpModal extends React.Component<Props, State> {
             >
               <H1>{this.props.title}</H1>
               {this.state.content}
-              {this.props.faqCategories && (
-                <FAQComponent faqCategories={this.props.faqCategories} />
-              )}
+              {this.props.faqCategories &&
+                this.props.contentLoaded && (
+                  <FAQComponent faqCategories={this.props.faqCategories} />
+                )}
               <View spacer={true} extralarge={true} />
             </Content>
           )}
