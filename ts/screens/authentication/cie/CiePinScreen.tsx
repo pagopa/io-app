@@ -35,6 +35,7 @@ type Props = ReduxProps &
 
 type State = {
   pin: string;
+  url?: string;
 };
 
 const styles = StyleSheet.create({
@@ -53,15 +54,23 @@ class CiePinScreen extends React.PureComponent<Props, State> {
   }
 
   private onProceedToCardReaderScreen = (url: string) => {
-    this.props.hideModal();
+    this.setState({ url }, () => {
+      this.props.hideModal();
+    });
+  };
 
-    this.props.navigation.navigate({
-      routeName: ROUTES.CIE_CARD_READER_SCREEN,
-      params: { ciePin: this.state.pin, authorizationUri: url }
+  private onHiddenModal = () => {
+    const ciePin = this.state.pin;
+    this.setState({ pin: "" }, () => {
+      this.props.navigation.navigate({
+        routeName: ROUTES.CIE_CARD_READER_SCREEN,
+        params: { ciePin, authorizationUri: this.state.url }
+      });
     });
   };
 
   private showModal = () => {
+    this.props.setOnHiddenModal(this.onHiddenModal);
     this.props.requestNfcEnabledCheck();
     Keyboard.dismiss();
 
