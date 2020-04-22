@@ -343,7 +343,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         style={styles.center}
       />
       <View spacer={true} />
-      
+
       <Text alignCenter={true}>{`${I18n.t("global.genericThanks")},`}</Text>
       <Text alignCenter={true} bold={true}>
         {I18n.t("wallet.newPaymentMethod.successful")}
