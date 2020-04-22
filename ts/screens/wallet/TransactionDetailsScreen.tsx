@@ -85,6 +85,9 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingRight: 0,
     marginBottom: 4
+  },
+  flex: {
+    flex: 1
   }
 });
 
@@ -158,7 +161,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
-        <Text>{label}</Text>
+        <Text style={styles.flex}>{label}</Text>
         <Text bold={true} dark={true}>
           {value}
         </Text>
@@ -202,7 +205,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
           {/** Total amount (amount + fee) */}
           <View style={styles.row}>
-            <Text style={styles.bigText} bold={true} dark={true}>
+            <Text style={[styles.bigText, styles.flex]} bold={true} dark={true}>
               {I18n.t("wallet.firstTransactionSummary.total")}
             </Text>
             <Text style={styles.bigText} bold={true} dark={true}>
