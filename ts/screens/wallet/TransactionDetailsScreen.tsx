@@ -3,8 +3,13 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
+import {
+  NavigationEvents,
+  NavigationInjectedProps,
+  NavigationRoute
+} from "react-navigation";
 import { connect } from "react-redux";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -17,8 +22,13 @@ import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryC
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
+import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { Dispatch } from "../../store/actions/types";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
+import {
+  navHistorySelector,
+  navSelector
+} from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
@@ -102,16 +112,49 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 class TransactionDetailsScreen extends React.Component<Props> {
   public componentDidMount() {
-    BackHandler.addEventListener(
-      "hardwareBackPress",
-      this.props.navigateToWalletHome
-    );
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener(
-      "hardwareBackPress",
-      this.props.navigateToWalletHome
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  private getRouteName = (route: NavigationRoute): any => {
+    if (route.index === undefined) {
+      return route.routeName;
+    }
+    return this.getRouteName(route.routes[route.index]);
+  };
+
+  private whereAmIFrom = () => {
+    if (this.props.nav.length === 0) {
+      return undefined;
+    }
+    const navLength = this.props.nav.length;
+    const lastStep = this.props.nav[navLength - 1].routes[
+      this.props.nav[navLength - 1].index
+    ];
+    RTron.log(this.props.nav.length);
+    RTron.log("whereAmIFrom", this.getRouteName(lastStep));
+    return this.getRouteName(lastStep);
+  };
+
+  // On back button navigate to wallet home (android)
+  private handleBackPress = () => {
+    if (this.whereAmIFrom() === "WALLET_HOME") {
+      this.props.navigation.goBack();
+      return true;
+    }
+    this.props.popHistory();
+    this.props.navigation.goBack();
+    return true;
+  };
+
+  private displayedWallet(transactionWallet: Wallet | undefined) {
+    return transactionWallet ? (
+      <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
+    ) : (
+      <RotatedCards cardType="Preview" />
     );
   }
 
@@ -315,6 +358,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  popHistory: () => dispatch(navigationHistoryPop(3)),
   fetchPsp: (idPsp: number) => dispatch(fetchPsp.request({ idPsp }))
 });
 
@@ -329,7 +373,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   return {
     wallets: pot.toUndefined(getWalletsById(state)),
     isLoading,
-    psp: pot.toUndefined(potPsp)
+    psp: pot.toUndefined(potPsp),
+    nav: navHistorySelector(state)
   };
 };
 
