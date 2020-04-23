@@ -1,7 +1,11 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 
 /** map, for each FAQ category, the ids of the FAQs related to the category */
-export const FAQs: { [key in FAQsCategoriesType]: ReadonlyArray<number> } = {
+export const FAQs: Record<
+  FAQsCategoriesType,
+  ReadonlyArray<number> | undefined
+> = {
   landing_SPID: [1, 2, 3],
   landing_CIE: [4, 5],
   authentication_SPID: [8, 9, 11, 12, 13, 14],
@@ -56,10 +60,11 @@ export type FAQType = {
 export const getFAQsFromCategories = (
   categories: ReadonlyArray<FAQsCategoriesType>
 ): ReadonlyArray<FAQType> => {
-  const faqIDs: Set<number> = categories.reduce((acc, val) => {
-    const ids = FAQs[val];
-    return new Set<number>([...acc, ...ids]);
-  }, new Set<number>());
+  const faqIDs: Set<number> = categories.reduce(
+    (acc, val) =>
+      new Set<number>([...acc, ...fromNullable(FAQs[val]).fold([], s => s)]),
+    new Set<number>()
+  );
 
   return Array.from(faqIDs).map<FAQType>(id => {
     return {
