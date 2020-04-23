@@ -173,6 +173,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
         dark={true}
         contextualHelpMarkdown={contextualHelpMarkdown}
         goBack={this.props.navigateToWalletHome}
+        headerTitle={I18n.t("wallet.transactionDetails")}
         faqCategories={["wallet_transaction"]}
       >
         <NavigationEvents onWillFocus={this.handleWillFocus} />
