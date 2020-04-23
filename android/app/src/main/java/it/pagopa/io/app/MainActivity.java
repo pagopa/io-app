@@ -52,11 +52,6 @@ public class MainActivity extends ReactActivity {
                 super.onCreate(savedInstanceState);
             }
         }
-        // Fix the problem described here:
-        // https://stackoverflow.com/questions/48072438/java-lang-illegalstateexception-only-fullscreen-opaque-activities-can-request-o
-        if (android.os.Build.VERSION.SDK_INT != Build.VERSION_CODES.O) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
     }
 
     @Override
