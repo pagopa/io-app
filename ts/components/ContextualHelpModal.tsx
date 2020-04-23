@@ -50,8 +50,12 @@ const styles = StyleSheet.create({
   },
   padded: {
     paddingHorizontal: customVariables.contentPadding
+  },
+  white: {
+    backgroundColor: customVariables.colorWhite
   }
 });
+
 export class ContextualHelpModal extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -96,7 +100,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         onRequestClose={onClose}
         transparent={true}
       >
-        <SafeAreaView style={styles.flex}>
+        <SafeAreaView style={[styles.flex, styles.white]}>
           <Container style={isIphoneX() ? styles.iphoneXBottom : undefined}>
             {simpleHeader}
             <Content noPadded={true}>
