@@ -13,7 +13,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import Logo from "../../components/wallet/card/Logo";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
@@ -124,10 +123,8 @@ class TransactionDetailsScreen extends React.Component<Props> {
     }
   };
 
-  public render(): React.ReactNode {
-    const { psp } = this.props;
+  private getData = () => {
     const transaction = this.props.navigation.getParam("transaction");
-
     const amount = formatNumberAmount(centsToAmount(transaction.amount.amount));
     const fee = formatNumberAmount(
       centsToAmount(
@@ -147,10 +144,14 @@ class TransactionDetailsScreen extends React.Component<Props> {
     const transactionDateTime = formatDateAsLocal(transaction.created, true)
       .concat(" - ")
       .concat(transaction.created.toLocaleTimeString());
-    const paymentMethodIcon =
+
+    const paymentMethodIcon = fromNullable(
       transactionWallet &&
-      transactionWallet.creditCard &&
-      transactionWallet.creditCard.brandLogo;
+        transactionWallet.creditCard &&
+        transactionWallet.creditCard.brandLogo
+    )
+      .map(logo => (logo.trim().length > 0 ? logo.trim() : undefined))
+      .getOrElse(undefined);
 
     const paymentMethodBrand =
       transactionWallet &&
@@ -158,7 +159,21 @@ class TransactionDetailsScreen extends React.Component<Props> {
       transactionWallet.creditCard.brand;
 
     const idTransaction = transaction.id;
+    return {
+      idTransaction,
+      paymentMethodBrand,
+      paymentMethodIcon,
+      transactionDateTime,
+      amount,
+      totalAmount,
+      fee
+    };
+  };
 
+  public render(): React.ReactNode {
+    const { psp } = this.props;
+    const transaction = this.props.navigation.getParam("transaction");
+    const data = this.getData();
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
         <Text style={styles.flex}>{label}</Text>
@@ -190,7 +205,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             <View spacer={true} large={true} />
             {standardRow(
               I18n.t("wallet.firstTransactionSummary.date"),
-              transactionDateTime
+              data.transactionDateTime
             )}
           </React.Fragment>
 
@@ -198,9 +213,12 @@ class TransactionDetailsScreen extends React.Component<Props> {
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} large={true} />
 
-          {standardRow(I18n.t("wallet.firstTransactionSummary.amount"), amount)}
+          {standardRow(
+            I18n.t("wallet.firstTransactionSummary.amount"),
+            data.amount
+          )}
           <View spacer={true} small={true} />
-          {standardRow(I18n.t("wallet.firstTransactionSummary.fee"), fee)}
+          {standardRow(I18n.t("wallet.firstTransactionSummary.fee"), data.fee)}
 
           <View spacer={true} />
 
@@ -210,11 +228,11 @@ class TransactionDetailsScreen extends React.Component<Props> {
               {I18n.t("wallet.firstTransactionSummary.total")}
             </Text>
             <Text style={styles.bigText} bold={true} dark={true}>
-              {totalAmount}
+              {data.totalAmount}
             </Text>
           </View>
 
-          {(paymentMethodIcon || (psp && psp.logoPSP)) && (
+          {(data.paymentMethodIcon || (psp && psp.logoPSP)) && (
             <React.Fragment>
               <View spacer={true} large={true} />
               <ItemSeparatorComponent noPadded={true} />
@@ -225,16 +243,23 @@ class TransactionDetailsScreen extends React.Component<Props> {
           {/** paymnet method icon */}
           {/** to be implemented with the card logo when https://github.com/pagopa/io-app/pull/1622/ is merged */}
 
-          {paymentMethodIcon ? (
+          {data.paymentMethodIcon ? (
             <View style={[styles.row, styles.centered]}>
               <Text>{I18n.t("wallet.paymentMethod")}</Text>
-              <Logo imageStyle={styles.cardLogo} />
+              <Image
+                style={styles.cardLogo}
+                source={{ uri: data.paymentMethodIcon }}
+              />
             </View>
           ) : (
-            paymentMethodBrand && <Text bold={true}>{paymentMethodBrand}</Text>
+            data.paymentMethodBrand && (
+              <Text bold={true}>{data.paymentMethodBrand}</Text>
+            )
           )}
 
-          {(paymentMethodIcon || paymentMethodBrand) && <View spacer={true} />}
+          {(data.paymentMethodIcon || data.paymentMethodBrand) && (
+            <View spacer={true} />
+          )}
 
           {/** psp logo */}
           {psp && (
@@ -260,10 +285,10 @@ class TransactionDetailsScreen extends React.Component<Props> {
               {I18n.t("wallet.firstTransactionSummary.idTransaction")}
             </Text>
             <View style={styles.row}>
-              <Text bold={true}>{idTransaction}</Text>
+              <Text bold={true}>{data.idTransaction}</Text>
               <ButtonDefaultOpacity
                 onPress={() =>
-                  clipboardSetStringWithFeedback(idTransaction.toString())
+                  clipboardSetStringWithFeedback(data.idTransaction.toString())
                 }
                 style={styles.copyButton}
               >
