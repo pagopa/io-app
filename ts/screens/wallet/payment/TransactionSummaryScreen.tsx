@@ -1,29 +1,30 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+/**
+ * This screen shows the transaction details.
+ * It should occur after the transaction identification by qr scanner or manual procedure.
+ * TODO:
+ * - integrate contextual help
+ *    https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
+ */
+
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
 } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { ActionSheet, Text, View } from "native-base";
+import { ActionSheet, Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+
+import { EnteBeneficiario } from "../../../../definitions/backend/EnteBeneficiario";
+
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import IconFont from "../../../components/ui/IconFont";
-import { PaymentSummaryComponent } from "../../../components/wallet/PaymentSummaryComponent";
-import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
+import PaymentSummaryComponent from "../../../components/wallet/PaymentSummaryComponent";
+
 import I18n from "../../../i18n";
-import {
-  navigateToPaymentManualDataInsertion,
-  navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen
-} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
   backToEntrypointPayment,
@@ -36,20 +37,33 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
+
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
+
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import {
+  navigateToPaymentManualDataInsertion,
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentTransactionErrorScreen
+} from "../../../store/actions/navigation";
 import {
   getFavoriteWallet,
   walletsSelector
 } from "../../../store/reducers/wallet/wallets";
-import customVariables from "../../../theme/variables";
+import { UNKNOWN_AMOUNT, UNKNOWN_PAYMENT_REASON } from "../../../types/unknown";
 import { PayloadForAction } from "../../../types/utils";
+import { AmountToImporto } from "../../../utils/amounts";
 import { cleanTransactionDescription } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
-import {
-  centsToAmount,
-  formatNumberAmount
-} from "../../../utils/stringBuilder";
-import { formatTextRecipient } from "../../../utils/strings";
 import { dispatchPickPspOrConfirm } from "./common";
+
+const basePrimaryButtonProps = {
+  block: true,
+  primary: true,
+  title: I18n.t("wallet.continue")
+};
 
 export type NavigationParams = Readonly<{
   rptId: RptId;
@@ -68,18 +82,33 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReduxMergedProps &
   OwnProps;
 
-const styles = StyleSheet.create({
-  lighterGray: { color: customVariables.lighterGray },
-  row: { flexDirection: "row", justifyContent: "space-between" },
-  title: { fontSize: 20 }
-});
+const formatTextRecipient = (e: EnteBeneficiario): string => {
+  const denomUnitOper = fromNullable(e.denomUnitOperBeneficiario)
+    .map(d => ` - ${d}`)
+    .getOrElse("");
+  const address = fromNullable(e.indirizzoBeneficiario).getOrElse("");
+  const civicNumber = fromNullable(e.civicoBeneficiario)
+    .map(c => ` n. ${c}`)
+    .getOrElse("");
+  const cap = fromNullable(e.capBeneficiario)
+    .map(c => `${c} `)
+    .getOrElse("");
+  const city = fromNullable(e.localitaBeneficiario)
+    .map(l => `${l} `)
+    .getOrElse("");
+  const province = fromNullable(e.provinciaBeneficiario)
+    .map(p => `(${p})`)
+    .getOrElse("");
 
-/**
- * This screen shows the transaction details.
- * It should occur after the transaction identification by qr scanner or manual procedure.
- *
- * TODO: integrate contextual help https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
- */
+  return `${e.denominazioneBeneficiario}${denomUnitOper}\n
+${address}${civicNumber}\n
+${cap}${city}${province}`;
+};
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.firstTransactionSummary.contextualHelpTitle",
+  body: "wallet.firstTransactionSummary.contextualHelpContent"
+};
 class TransactionSummaryScreen extends React.Component<Props> {
   public componentDidMount() {
     if (pot.isNone(this.props.potVerifica)) {
@@ -153,7 +182,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
     bordered: pot.isNone(this.props.paymentId),
     cancel: pot.isSome(this.props.paymentId),
     onPress: this.handleBackPress,
-    title: I18n.t("global.buttons.cancel")
+    title: I18n.t(
+      pot.isSome(this.props.paymentId)
+        ? "global.buttons.cancel"
+        : "global.buttons.back"
+    )
   });
 
   private renderFooterSingleButton() {
@@ -167,10 +200,6 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   private renderFooterButtons() {
     const { potVerifica, maybeFavoriteWallet, hasWallets } = this.props;
-    const basePrimaryButtonProps = {
-      primary: true,
-      title: I18n.t("wallet.continue")
-    };
 
     const primaryButtonProps =
       pot.isSome(potVerifica) &&
@@ -199,115 +228,93 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
   }
 
-  private getFooterButtons = () => {
-    return this.props.error.fold(
-      this.renderFooterButtons(),
-      error =>
-        error === "PAYMENT_DUPLICATED"
-          ? this.renderFooterSingleButton()
-          : this.renderFooterButtons()
-    );
-  };
-
   public render(): React.ReactNode {
-    const rptId: RptId = this.props.navigation.getParam("rptId");
-    // TODO: it should compare the current an d the initial amount BUT the initialAmount seems to be provided with an incorrect format https://www.pivotaltracker.com/story/show/172084929
-    const isAmountUpdated = true;
+    const rptId = this.props.navigation.getParam("rptId");
+    const initialAmount = this.props.navigation.getParam("initialAmount");
 
+    // when empty, it means we're still loading the verifica response
     const { potVerifica } = this.props;
 
-    const recipient = pot
+    const maybeEnteBeneficiario = pot
       .toOption(potVerifica)
       .mapNullable(_ => _.enteBeneficiario)
       .map(formatTextRecipient);
-
-    const currentAmount: string = pot.getOrElse(
-      pot.map(potVerifica, (verifica: PaymentRequestsGetResponse) =>
-        formatNumberAmount(centsToAmount(verifica.importoSingoloVersamento))
-      ),
-      "-"
-    );
-
-    const transactionDescription = pot.getOrElse<string>(
-      pot.mapNullable(potVerifica, pv =>
-        cleanTransactionDescription(pv.causaleVersamento)
-      ),
-      "-"
-    );
-
-    const standardRow = (label: string, value: string) => (
-      <View style={styles.row}>
-        <Text style={styles.lighterGray}>{label}</Text>
-        <Text bold={true} white={true}>
-          {value}
-        </Text>
-      </View>
-    );
 
     return (
       <BaseScreenComponent
         goBack={this.handleBackPress}
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
-        dark={true}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
-        <SlidedContentComponent dark={true}>
-          <PaymentSummaryComponent
-            dark={true}
-            title={I18n.t("wallet.firstTransactionSummary.title")}
-            description={transactionDescription}
-            recipient={recipient.fold("-", r => r)}
-            image={require("../../../../img/wallet/icon-avviso-pagopa.png")}
-          />
+        <Content noPadded={true}>
+          {pot.isSome(potVerifica) ? (
+            <PaymentSummaryComponent
+              hasVerificaResponse={true}
+              amount={initialAmount}
+              updatedAmount={
+                potVerifica.value.importoSingoloVersamento
+                  ? AmountToImporto.encode(
+                      potVerifica.value.importoSingoloVersamento
+                    )
+                  : UNKNOWN_AMOUNT
+              }
+              paymentReason={
+                potVerifica.value.causaleVersamento
+                  ? cleanTransactionDescription(
+                      potVerifica.value.causaleVersamento
+                    )
+                  : UNKNOWN_PAYMENT_REASON
+              }
+            />
+          ) : (
+            <PaymentSummaryComponent
+              hasVerificaResponse={false}
+              amount={initialAmount}
+            />
+          )}
 
-          <View spacer={true} large={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
+          <View content={true}>
+            {maybeEnteBeneficiario.isSome() && (
+              <React.Fragment>
+                <Text bold={true}>
+                  {I18n.t("wallet.firstTransactionSummary.entity")}
+                </Text>
+                <Text>{maybeEnteBeneficiario.value.trim()}</Text>
+                <View spacer={true} />
+              </React.Fragment>
+            )}
 
-          {/** Amount to pay */}
-          <View style={styles.row}>
-            <View style={styles.row}>
-              <Text style={[styles.title, styles.lighterGray]}>
-                {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
-              </Text>
-              {isAmountUpdated && (
-                <IconFont
-                  style={{ paddingLeft: 10 }}
-                  name={"io-notice"}
-                  size={24}
-                  color={customVariables.colorWhite}
-                />
-              )}
-            </View>
-            <Text white={true} style={[styles.title]} bold={true}>
-              {currentAmount}
+            <Text bold={true}>
+              {I18n.t("wallet.firstTransactionSummary.object")}
             </Text>
+            <Text>
+              {pot
+                .toOption(potVerifica)
+                .mapNullable(_ => _.causaleVersamento)
+                .getOrElse("...")}
+            </Text>
+            <View spacer={true} />
+            <Text>
+              <Text bold={true}>{`${I18n.t("payment.IUV")}: `}</Text>
+              {PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)}
+            </Text>
+            <Text>
+              <Text bold={true}>{`${I18n.t(
+                "payment.recipientFiscalCode"
+              )}: `}</Text>
+              {rptId.organizationFiscalCode}
+            </Text>
+            <View spacer={true} />
           </View>
+        </Content>
 
-          {isAmountUpdated && (
-            <React.Fragment>
-              <View spacer={true} small={true} />
-              <Text style={styles.lighterGray}>
-                {I18n.t("wallet.firstTransactionSummary.updateInfo")}
-              </Text>
-            </React.Fragment>
-          )}
-          <View spacer={true} large={true} />
-
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
-
-          {standardRow(
-            I18n.t("wallet.firstTransactionSummary.entityCode"),
-            rptId.organizationFiscalCode
-          )}
-          <View spacer={true} small={true} />
-          {standardRow(
-            I18n.t("wallet.firstTransactionSummary.iuv"),
-            PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
-          )}
-          <View spacer={true} large={true} />
-        </SlidedContentComponent>
-        {this.getFooterButtons()}
+        {this.props.error.fold(
+          this.renderFooterButtons(),
+          error =>
+            error === "PAYMENT_DUPLICATED"
+              ? this.renderFooterSingleButton()
+              : this.renderFooterButtons()
+        )}
       </BaseScreenComponent>
     );
   }

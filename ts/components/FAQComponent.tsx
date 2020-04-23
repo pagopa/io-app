@@ -56,7 +56,7 @@ export default function FAQComponent(props: Props) {
             ]}
           />
         </View>
-        <ItemSeparatorComponent noPadded={true} />
+        {!expanded && <ItemSeparatorComponent noPadded={true} />}
       </React.Fragment>
     );
   };
