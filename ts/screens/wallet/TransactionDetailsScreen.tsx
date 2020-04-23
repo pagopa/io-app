@@ -22,6 +22,7 @@ import { ContextualHelp } from "../../components/ContextualHelp";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
@@ -350,7 +351,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
                 ? this.labelValueRow(I18n.t("wallet.psp"), psp.businessName)
                 : undefined}
           </Grid>
+          <View spacer={true} extralarge={true} />
         </Content>
+        <EdgeBorderComponent />
       </WalletLayout>
     );
   }

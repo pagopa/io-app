@@ -156,6 +156,7 @@ class TosScreen extends React.PureComponent<Props, State> {
       <BaseScreenComponent
         goBack={isProfile || this.handleGoBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["privacy"]}
         headerTitle={
           isProfile
             ? I18n.t("profile.main.privacy.privacyPolicy.title")

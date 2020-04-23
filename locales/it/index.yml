@@ -15,7 +15,7 @@ global:
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
   genericAlert: Attenzione!
-  genericWaiting: Attendi qualche secondo..
+  genericWaiting: Attendi qualche secondo...
   genericThanks: Grazie
   jserror:
     title: Si è verificato un errore imprevisto
@@ -46,7 +46,7 @@ global:
     search: Testo da cercare
   remoteStates:
     loading: In caricamento...
-    wait: Attendi qualche secondo..
+    wait: Attendi qualche secondo...
     notAvailable: Non disponibile
   notImplemented: NON IMPLEMENTATO
   search:
@@ -70,7 +70,7 @@ connection:
   status:
     offline: Offline! Qualcosa non funzionerà.
 exit:
-  pressAgain: premi ancora per uscire
+  pressAgain: Premi ancora per uscire
 errors:
   loginError: C'è stato un errore in fase di login, ripetere la procedura.
   profileUpdateError: Si è verificato un errore durante l'aggiornamento del tuo profilo.
@@ -135,7 +135,7 @@ profile:
       title: Privacy e condizioni d'uso
       description: Esporta dati, cancella account
       subtitle: Qui trovi informazioni legate ai tuoi dati personali.
-      loading: Attendi qualche secondo, stiamo verificando il tuo profilo..
+      loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
         title: Cancella il tuo account
         description: Elimina sia dal telefono che da internet tutti i data ad esso
@@ -178,7 +178,7 @@ profile:
       pagoPAEnvAlert: La modifica richiede il riavvio dell'app
       alertConfirmTitle: Vuoi usare l'ambiente di test pagoPA?
       alertConfirmMessage: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
-      alertMessage: È necessario il riavvio dell'applicazione affinchè le modifiche abbiano effetto.
+      alertMessage: È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto.
     accountSectionHeader: Account
     appVersion:  Versione App
     backendVersion: Versione Backend
@@ -234,7 +234,7 @@ navigation:
 cie:
   title: Appoggia la carta
   layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
-  layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finchè non senti un suono.
+  layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti un suono.
 spid:
   login: ACCEDI
   loginButton: ENTRA CON
@@ -280,7 +280,7 @@ authentication:
       le icone per segnalare bug e aprire una chat con il team di IO.
       Aspettiamo i tuoi feedback!.
     expiredCardTitle: Carta scaduta o non più valida
-    expiredCardHeaderTitle: Card scaduta o revocata
+    expiredCardHeaderTitle: Carta scaduta o revocata
     expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
     expiredCardHelp: Come rinnovare la propria Carta di Identità Elettronica?
   cie:
@@ -312,8 +312,8 @@ authentication:
       title: Appoggia la carta
       headerTitle: Lettura della CIE
       layCardMessageHeader: Appoggia per qualche secondo la tua carta di identità elettronica al retro del tuo telefono.
-      layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finchè non senti una vibrazione.
-      cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo..
+      layCardMessageFooter: Se non sai con precisione dove sia l'antenna NFC sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione.
+      cieCardValid: Ok, la tua carta è valida! Attendi ancora qualche secondo...
       readerCardTitle: Tieni ferma la carta per qualche secondo
       readerCardHeader: Stiamo leggendo i dati della tua carta d'identità e verificandone la sua validità.
       readerCardFooter: Tieni ferma la carta in questa posizione ancora per qualche secondo
@@ -603,7 +603,7 @@ wallet:
     save: Salva
     notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
     temporaryError: Si è verificato un errore temporaneo nel salvataggio di questa carta, riprova.
-    loadingAlert: Sto verificando le informazioni della tua carta..
+    loadingAlert: Sto verificando le informazioni della tua carta...
   saveCardInPayment:
     header: Paga con questa carta
     title: Vuoi pagare con questa carta?
@@ -650,6 +650,8 @@ wallet:
     text: Scegli fra i metodi salvati o aggiungi un nuovo metodo di pagamento
     fetchPspFailure: Errore temporaneo, riprova
     noPspsAvailable: Questo metodo di pagamento non può essere usato
+    contextualHelpTitle: Scelta del metodo di pagamento
+    contextualHelpContent: !include wallet/wallet_pick_payment_method.md
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento
@@ -671,10 +673,12 @@ wallet:
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     moreInfo: Per saperne di più
     loadingMessage:
-      activation: Sto avvisando l'ente creditore, attendi qualche secondo..
-      verification: Sto verificando lo stato e l'importo del tuo avviso..
-      generic: Sto terminando le operazioni di verifica del tuo avviso, attendi qualche secondo..
-      wallet: Sto verificando se esistono metodi di pagamento salvati..
+      activation: Sto avvisando l'ente creditore, attendi qualche secondo...
+      verification: Sto verificando lo stato e l'importo del tuo avviso...
+      generic: Sto terminando le operazioni di verifica del tuo avviso, attendi qualche secondo...
+      wallet: Sto verificando se esistono metodi di pagamento salvati...
+    contextualHelpTitle: Riepilogo della transazione
+    contextualHelpContent: !include wallet/wallet_transaction_summary.md
   errorTransaction:
     submitBugText: Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
   insertManually:
@@ -686,6 +690,8 @@ wallet:
     entityCode: Codice Fiscale Ente Creditore
     amount: Importo (€)
     proceed: Procedi con il pagamento
+    contextualHelpTitle: Inserimento dati manuali
+    contextualHelpContent: !include wallet/insert_manual_notice.md
   total: Totale
   amount: Importo €
   payAmount: Importo dovuto
@@ -759,6 +765,8 @@ wallet:
       buttonText:
         settings: Abilita permessi
         cancel: Annulla
+    contextualHelpTitle: Come puoi pagare un avviso
+    contextualHelpContent: !include wallet/wallet_qrcode.md
   whyAFee:
     title: Perché devo pagare le commissioni?
     text: !include wallet/why_a_fee.md
@@ -766,14 +774,14 @@ wallet:
     PAYMENT_DUPLICATED: Questo avviso è già stato pagato! ;-)
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_ONGOING: Un pagamento per questo avviso è già in corso, non è possibile iniziare un nuovo pagamento ora.
-    PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poichè questo avviso è scaduto.
+    PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
     PAYMENT_UNKNOWN: Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.
     DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su pagoPA, il pagamento non può essere effettuato.
     GENERIC_ERROR: Ooops, qualcosa è andato storto! Probabilmente è un errore momentaneo, riprova per piacere!
     MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
     PAYMENT_ONGOING_NOCANCEL: Un pagamento per questo avviso è già in corso, riprova tra 30 minuti.
-    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: Se hai già atteso 30 minuti e il pagamento risulta ancora bloccato utilizza il pulsante quì sotto per inviarci una segnalazione.
+    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: Se hai già atteso 30 minuti e il pagamento risulta ancora bloccato utilizza il pulsante qui sotto per inviarci una segnalazione.
     PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
     PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
     sendReport: Invia segnalazione
@@ -956,11 +964,11 @@ services:
     all: Tutti
   loading:
     title: Sto caricando l'elenco dei servizi
-    subtitle: attendi qualche secondo..
+    subtitle: attendi qualche secondo...
   enableAll: Attiva tutti
   disableAll: Disattiva tutti
   disableAllTitle: Vuoi davvero disattivare tutti i servizi?
-  disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finchè non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
+  disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
 serviceDetail:
@@ -968,7 +976,7 @@ serviceDetail:
   contextualHelpContent: !include services/service_detail.md
   onUpdateEnabledChannelsFailure: "Si è verificato un errore temporaneo nel salvataggio delle preferenze, riprova per piacere."
   disableTitle: "Vuoi davvero disattivare il servizio?"
-  disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finchè non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
+  disableMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi il servizio, questo non potrà più contattarti tramite IO (finché non lo riattiverai). Potrai continuare a fruire il servizio attraverso altri canali (sportello, sito, etc.)"
   lockedMailAlert: "L'inoltro dei messaggi via email è {{enabled}} globalmente:"
   updatePreferences: Modifica le preferenze
   goTo: Vai alle preferenze
@@ -1143,10 +1151,10 @@ faq:
     title: "Cos'è il CVC/CVV?"
     content: !include faq/faq43.md
   44:
-    title: "Perchè devo pagare una commissione?"
+    title: "Perché devo pagare una commissione?"
     content: !include faq/faq44.md
   45:
-    title: "Perchè le commissioni cambiano da un gestore all'altro?"
+    title: "Perché le commissioni cambiano da un gestore all'altro?"
     content: !include faq/faq45.md
   46:
     title: "Puoi scegliere un gestore diverso a ogni pagamento?"
