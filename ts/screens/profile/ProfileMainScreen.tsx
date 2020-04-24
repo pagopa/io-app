@@ -32,6 +32,7 @@ import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
+import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesExperimentalFeaturesSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled
@@ -49,7 +50,6 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
-import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
@@ -63,7 +63,8 @@ type Props = OwnProps &
 
 type State = {
   showPagoPAtestSwitch: boolean;
-  numberOfTaps: number;
+  tapsOnAppVersion: number;
+  tapsOnBackendVersion: number;
 };
 
 const styles = StyleSheet.create({
@@ -116,7 +117,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     super(props);
     this.state = {
       showPagoPAtestSwitch: false,
-      numberOfTaps: 0
+      tapsOnAppVersion: 0,
+      tapsOnBackendVersion: 0
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
@@ -136,6 +138,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     }
     // This ensures modals will be closed (if there are some opened)
     this.props.hideModal();
+    if (this.idResetTap) {
+      clearInterval(this.idResetTap);
+    }
   }
 
   private handleClearCachePress() {
@@ -247,6 +252,30 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       this.props.setPagoPATestEnabled(enabled);
       this.showModal();
     }
+  };
+
+  private idResetTap?: number;
+
+  private onTapAppVersion = () => {
+    if (this.idResetTap) {
+      clearInterval(this.idResetTap);
+    }
+    if (this.state.tapsOnAppVersion === 4) {
+      this.props.setDebugModeEnabled(true);
+      this.setState({ tapsOnAppVersion: 0 });
+    } else {
+      // tslint:disable-next-line: no-object-mutation
+      this.idResetTap = setInterval(this.resetAppTapCounter, 2000);
+      const tapsOnAppVersion = this.state.tapsOnAppVersion + 1;
+      this.setState({
+        tapsOnAppVersion
+      });
+    }
+  };
+
+  private resetAppTapCounter = () => {
+    this.setState({ tapsOnAppVersion: 0 });
+    clearInterval(this.idResetTap);
   };
 
   /**
@@ -387,8 +416,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               isLastItem={true}
             />
 
-            {/* Developers Section, visible only in dev mode */}
-            {isDevEnv && (
+            {this.debugListItem(
+              `${I18n.t("profile.main.appVersion")} ${getAppLongVersion()}`,
+              this.onTapAppVersion,
+              false
+            )}
+
+            {/* Developers Section */}
+            {this.props.isDebugModeEnabled && (
               <React.Fragment>
                 <SectionHeaderComponent
                   sectionHeader={I18n.t("profile.main.developersSectionHeader")}
@@ -412,32 +447,30 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     this.onPagoPAEnvironmentToggle,
                     I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
                   )}
+                {this.developerListItem(
+                  I18n.t("profile.main.debugMode"),
+                  this.props.isDebugModeEnabled,
+                  this.props.setDebugModeEnabled
+                )}
                 {this.props.isDebugModeEnabled && (
                   <React.Fragment>
-                    {this.debugListItem(
-                      `${I18n.t(
-                        "profile.main.appVersion"
-                      )} ${getAppLongVersion()}`,
-                      () => {
-                        if (this.state.numberOfTaps === 4) {
-                          this.setState({ showPagoPAtestSwitch: true });
-                        } else {
-                          const numberOfTaps = this.state.numberOfTaps + 1;
-                          this.setState({
-                            numberOfTaps
-                          });
-                        }
-                      },
-                      false
-                    )}
-
                     {backendInfo &&
                       this.debugListItem(
                         `${I18n.t("profile.main.backendVersion")} ${
                           backendInfo.version
                         }`,
-                        () =>
-                          clipboardSetStringWithFeedback(backendInfo.version),
+                        () => {
+                          clipboardSetStringWithFeedback(backendInfo.version);
+                          if (this.state.tapsOnBackendVersion === 4) {
+                            this.setState({ showPagoPAtestSwitch: true });
+                          } else {
+                            const tapsOnBackendVersion =
+                              this.state.tapsOnBackendVersion + 1;
+                            this.setState({
+                              tapsOnBackendVersion
+                            });
+                          }
+                        },
                         false
                       )}
                     {sessionToken &&
@@ -534,6 +567,8 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetPin: () => dispatch(startPinReset()),
   clearCache: () => dispatch(clearCache()),
+  setDebugModeEnabled: (enabled: boolean) =>
+    dispatch(setDebugModeEnabled(enabled)),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
   setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
     dispatch(
