@@ -12,7 +12,6 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
-import { ServerInfo } from "../../../definitions/backend/ServerInfo";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { ContextualHelp } from "../../components/ContextualHelp";
