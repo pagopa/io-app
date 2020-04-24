@@ -231,6 +231,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     paymentsByRptId: Props["paymentsByRptId"]
   ) => {
     const { isDebugModeEnabled } = this.props;
+    RTron.log(message);
     return (
       <Content noPadded={true}>
         <MessageDetailComponent
@@ -244,6 +245,18 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
           }
           isDebugModeEnabled={isDebugModeEnabled}
         />
+        {message.medical_prescription &&
+          message.medical_prescription.image_format &&
+          message.medical_prescription.image_data && (
+            <Image
+              style={{ width: 300, height: 250 }}
+              source={{
+                uri: `data:image/png;base64,${
+                  message.medical_prescription.image_data
+                }`
+              }}
+            />
+          )}
       </Content>
     );
   };

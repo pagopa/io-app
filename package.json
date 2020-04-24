@@ -1,7 +1,7 @@
 {
   "name": "italia-app",
   "version": "0.1.0",
-  "io_beckend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v5.13.3/api_backend.yaml",
+  "io_beckend_api": "http://127.0.0.1:3000/backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v5.13.3/api_public.yaml",
   "private": true,
   "scripts": {
