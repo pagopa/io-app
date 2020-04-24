@@ -9,7 +9,6 @@ import {
   NavigationRoute
 } from "react-navigation";
 import { connect } from "react-redux";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -25,10 +24,7 @@ import { navigateToWalletHome } from "../../store/actions/navigation";
 import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { Dispatch } from "../../store/actions/types";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
-import {
-  navHistorySelector,
-  navSelector
-} from "../../store/reducers/navigationHistory";
+import { navHistorySelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
@@ -134,29 +130,25 @@ class TransactionDetailsScreen extends React.Component<Props> {
     const lastStep = this.props.nav[navLength - 1].routes[
       this.props.nav[navLength - 1].index
     ];
-    RTron.log(this.props.nav.length);
-    RTron.log("whereAmIFrom", this.getRouteName(lastStep));
     return this.getRouteName(lastStep);
   };
 
   // On back button navigate to wallet home (android)
   private handleBackPress = () => {
     if (this.whereAmIFrom() === "WALLET_HOME") {
-      this.props.navigation.goBack();
-      return true;
+      return this.props.navigation.goBack();
     }
     this.props.popHistory();
-    this.props.navigation.goBack();
-    return true;
+    return this.props.navigation.goBack();
   };
 
-  private displayedWallet(transactionWallet: Wallet | undefined) {
+  /*   private displayedWallet(transactionWallet: Wallet | undefined) {
     return transactionWallet ? (
       <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
     ) : (
       <RotatedCards cardType="Preview" />
     );
-  }
+  } */
 
   private handleWillFocus = () => {
     const transaction = this.props.navigation.getParam("transaction");
