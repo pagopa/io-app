@@ -63,9 +63,7 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps>;
 
 type State = {
-  showPagoPAtestSwitch: boolean;
   tapsOnAppVersion: number;
-  tapsOnBackendVersion: number;
 };
 
 const styles = StyleSheet.create({
@@ -117,9 +115,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      showPagoPAtestSwitch: false,
-      tapsOnAppVersion: 0,
-      tapsOnBackendVersion: 0
+      tapsOnAppVersion: 0
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
@@ -279,18 +275,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   private resetAppTapCounter = () => {
     this.setState({ tapsOnAppVersion: 0 });
     clearInterval(this.idResetTap);
-  };
-
-  private onBackendInfoTap = (backendInfo: ServerInfo) => {
-    clipboardSetStringWithFeedback(backendInfo.version);
-    if (this.state.tapsOnBackendVersion === 4) {
-      this.setState({ showPagoPAtestSwitch: true });
-    } else {
-      const tapsOnBackendVersion = this.state.tapsOnBackendVersion + 1;
-      this.setState({
-        tapsOnBackendVersion
-      });
-    }
   };
 
   /**
@@ -454,14 +438,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   this.onExperimentalFeaturesToggle
                 )*/
                 }
-                {(this.props.isPagoPATestEnabled ||
-                  this.state.showPagoPAtestSwitch) &&
-                  this.developerListItem(
-                    I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
-                    this.props.isPagoPATestEnabled,
-                    this.onPagoPAEnvironmentToggle,
-                    I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
-                  )}
+                {this.developerListItem(
+                  I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
+                  this.props.isPagoPATestEnabled,
+                  this.onPagoPAEnvironmentToggle,
+                  I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
+                )}
                 {this.developerListItem(
                   I18n.t("profile.main.debugMode"),
                   this.props.isDebugModeEnabled,
@@ -474,7 +456,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                         `${I18n.t("profile.main.backendVersion")} ${
                           backendInfo.version
                         }`,
-                        () => this.onBackendInfoTap(backendInfo),
+                        () =>
+                          clipboardSetStringWithFeedback(backendInfo.version),
                         false
                       )}
                     {sessionToken &&
