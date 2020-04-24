@@ -28,7 +28,7 @@ import {
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
-import { navigateToWalletHome } from "../store/actions/navigation";
+import { navigateBack } from "../store/actions/navigation";
 import {
   backToEntrypointPayment,
   paymentAttiva,
@@ -754,20 +754,18 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
       GlobalState
     >(_ => _.wallet.payment.entrypointRoute);
     if (entrypointRoute !== undefined) {
-      const routeName = entrypointRoute ? entrypointRoute.name : undefined;
       const key = entrypointRoute ? entrypointRoute.key : undefined;
-
-      // if the payment was initiated from the message list or detail go back
-      if (
-        routeName === ROUTES.MESSAGES_HOME ||
-        routeName === ROUTES.MESSAGE_DETAIL
-      ) {
-        const navigationBackAction = NavigationActions.back({
-          key
-        });
-        yield put(navigationBackAction);
-      } else {
-        yield put(navigateToWalletHome());
+      const routeName = entrypointRoute ? entrypointRoute.name : undefined;
+      const navigationBackAction = NavigationActions.back({
+        key
+      });
+      yield put(navigationBackAction);
+      if (routeName === ROUTES.PAYMENT_MANUAL_DATA_INSERTION) {
+        yield put(navigateBack());
+        yield put(navigateBack());
+      }
+      if (routeName === ROUTES.PAYMENT_SCAN_QR_CODE) {
+        yield put(navigateBack());
       }
     }
   });

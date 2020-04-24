@@ -1,17 +1,15 @@
 import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, BackHandler } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import IconFont from "../../../components/ui/IconFont";
-import {
-  navigateToTransactionDetailsScreen,
-  navigateToWalletHome
-} from "../../../store/actions/navigation";
+import { navigateToTransactionDetailsScreen } from "../../../store/actions/navigation";
+import { backToEntrypointPayment } from "../../../store/actions/wallet/payment";
 import customVariables from "../../../theme/variables";
 import { Transaction } from "../../../types/pagopa";
 
@@ -31,6 +29,19 @@ const styles = StyleSheet.create({
 
 class TransactionSuccessScreen extends React.PureComponent<Props> {
   private transaction = this.props.navigation.getParam("transaction");
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  private handleBackPress = () => {
+    this.props.resetToWalletHome();
+    return true;
+  };
+
   public render() {
     return (
       <BaseScreenComponent>
@@ -81,7 +92,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         transaction
       })
     ),
-  resetToWalletHome: () => dispatch(navigateToWalletHome())
+  resetToWalletHome: () => dispatch(backToEntrypointPayment())
 });
 
 export default connect(

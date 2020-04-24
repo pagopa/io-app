@@ -249,7 +249,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
         })
       );
       // reset the payment state
-      dispatch(paymentInitializeState());
+      // dispatch(paymentInitializeState());
       // update the transactions state (the first transaction is the most recent)
       dispatch(fetchTransactionsRequest({ start: 0 }));
     } else {

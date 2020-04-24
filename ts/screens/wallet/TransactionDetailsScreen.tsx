@@ -23,6 +23,7 @@ import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { Dispatch } from "../../store/actions/types";
+import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
 import { navHistorySelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
@@ -137,9 +138,10 @@ class TransactionDetailsScreen extends React.Component<Props> {
   private handleBackPress = () => {
     if (this.whereAmIFrom() === "WALLET_HOME") {
       return this.props.navigation.goBack();
+    } else {
+      this.props.navigateBackToEntrypointPayment();
+      return true;
     }
-    this.props.popHistory();
-    return this.props.navigation.goBack();
   };
 
   /*   private displayedWallet(transactionWallet: Wallet | undefined) {
@@ -350,6 +352,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  navigateBackToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
   popHistory: () => dispatch(navigationHistoryPop(3)),
   fetchPsp: (idPsp: number) => dispatch(fetchPsp.request({ idPsp }))
 });
