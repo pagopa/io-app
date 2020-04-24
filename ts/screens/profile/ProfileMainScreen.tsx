@@ -12,6 +12,7 @@ import {
   NavigationState
 } from "react-navigation";
 import { connect } from "react-redux";
+import { ServerInfo } from "../../../definitions/backend/ServerInfo";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { ContextualHelp } from "../../components/ContextualHelp";
@@ -256,6 +257,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
   private idResetTap?: number;
 
+  // When tapped 5 time activate the debug mode of the application.
+  // If more than two seconds pass between taps, the counter is reset
   private onTapAppVersion = () => {
     if (this.idResetTap) {
       clearInterval(this.idResetTap);
@@ -276,6 +279,18 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   private resetAppTapCounter = () => {
     this.setState({ tapsOnAppVersion: 0 });
     clearInterval(this.idResetTap);
+  };
+
+  private onBackendInfoTap = (backendInfo: ServerInfo) => {
+    clipboardSetStringWithFeedback(backendInfo.version);
+    if (this.state.tapsOnBackendVersion === 4) {
+      this.setState({ showPagoPAtestSwitch: true });
+    } else {
+      const tapsOnBackendVersion = this.state.tapsOnBackendVersion + 1;
+      this.setState({
+        tapsOnBackendVersion
+      });
+    }
   };
 
   /**
@@ -459,18 +474,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                         `${I18n.t("profile.main.backendVersion")} ${
                           backendInfo.version
                         }`,
-                        () => {
-                          clipboardSetStringWithFeedback(backendInfo.version);
-                          if (this.state.tapsOnBackendVersion === 4) {
-                            this.setState({ showPagoPAtestSwitch: true });
-                          } else {
-                            const tapsOnBackendVersion =
-                              this.state.tapsOnBackendVersion + 1;
-                            this.setState({
-                              tapsOnBackendVersion
-                            });
-                          }
-                        },
+                        () => this.onBackendInfoTap(backendInfo),
                         false
                       )}
                     {sessionToken &&
