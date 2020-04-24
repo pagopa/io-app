@@ -28,6 +28,7 @@ import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
   identificationFailure,
+  identificationForceLogout,
   identificationPinReset,
   identificationRequest,
   identificationStart,
@@ -269,6 +270,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(identificationSuccess):
     case getType(identificationFailure):
     case getType(identificationPinReset):
+    case getType(identificationForceLogout):
     // onboarding
     case getType(analyticsOnboardingStarted):
     case getType(createPinSuccess):
