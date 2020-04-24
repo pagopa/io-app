@@ -38,7 +38,9 @@ import {
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
@@ -103,6 +105,10 @@ ${address}${civicNumber}\n
 ${cap}${city}${province}`;
 };
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.firstTransactionSummary.contextualHelpTitle",
+  body: "wallet.firstTransactionSummary.contextualHelpContent"
+};
 class TransactionSummaryScreen extends React.Component<Props> {
   public componentDidMount() {
     if (pot.isNone(this.props.potVerifica)) {
@@ -238,6 +244,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
       <BaseScreenComponent
         goBack={this.handleBackPress}
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <Content noPadded={true}>
           {pot.isSome(potVerifica) ? (

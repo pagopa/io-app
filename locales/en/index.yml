@@ -639,6 +639,8 @@ wallet:
     text: Choose one saved payment method or add a new one
     fetchPspFailure: Temporary error, please retry
     noPspsAvailable: This payment method cannot be used
+    contextualHelpTitle: Payment method's choice
+    contextualHelpContent: !include wallet/wallet_pick_payment_method.md
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
@@ -664,6 +666,8 @@ wallet:
       verification: I am checking the status and the amount of your notice..
       generic: I am finishing the verification operations of your notice, wait a few seconds..
       wallet: I am checking for payment method..
+    contextualHelpTitle: Transaction's summary
+    contextualHelpContent: !include wallet/wallet_transaction_summary.md
   insertManually:
     header: Insert notice data
     title: Insert the notice data
@@ -673,6 +677,8 @@ wallet:
     entityCode: Entity Fiscal Code
     amount: Amount (€)
     proceed: Proceed with the transaction
+    contextualHelpTitle: Manually insert notice
+    contextualHelpContent: !include wallet/insert_manual_notice.md
   errorTransaction:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
@@ -751,6 +757,8 @@ wallet:
       buttonText:
         settings: Enable permissions
         cancel: Cancel
+    contextualHelpTitle: How to pay a notice
+    contextualHelpContent: !include wallet/wallet_qrcode.md
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include wallet/why_a_fee.md

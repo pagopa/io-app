@@ -13,7 +13,9 @@ import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -50,6 +52,11 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.payWith.contextualHelpTitle",
+  body: "wallet.payWith.contextualHelpContent"
+};
+
 class PickPaymentMethodScreen extends React.Component<Props> {
   public render(): React.ReactNode {
     const verifica = this.props.navigation.getParam("verifica");
@@ -77,6 +84,8 @@ class PickPaymentMethodScreen extends React.Component<Props> {
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("wallet.payWith.header")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_methods"]}
       >
         <Content noPadded={true}>
           <PaymentBannerComponent
