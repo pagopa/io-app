@@ -10,7 +10,8 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   RefreshControl,
-  StyleSheet
+  StyleSheet,
+  Vibration
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
@@ -25,6 +26,7 @@ import { messageNeedsCTABar } from "../../utils/messages";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import MessageListItem from "./MessageListItem";
+import { Millisecond } from "italia-ts-commons/lib/units";
 
 type ItemLayout = {
   length: number;
@@ -95,6 +97,7 @@ const styles = StyleSheet.create({
   }
 });
 
+const VIBRATION_LONG_PRESS_DURATION = 100 as Millisecond;
 const keyExtractor = (_: MessageState) => _.meta.id;
 
 const getItemHeight = (messageState: MessageState): number => {
@@ -272,6 +275,7 @@ class MessageList extends React.Component<Props, State> {
   };
 
   private onLongPress = (id: string) => {
+    Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
     const { messageStates, onLongPressItem } = this.props;
     onLongPressItem(id);
     const lastIndex = messageStates.length - 1;
