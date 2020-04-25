@@ -24,7 +24,7 @@ printf "%14s $PAGOPA_API_URL_PREFIX_TEST$PAGOPA_API_URL_SUFFIX\n" "test:"
 SEND_MSG="✅ pagopa production and test specifications have no differences"
 SEND_EXIT=0
 # mention matteo boschi slack account
-MB_SLACK="<@UGP1H4GLR>" 
+MB_SLACK="<@UQXC9SNVD>" 
 
 # json formatting (python pipe) is needed because diff command works by comparing line by line
 PAGO_PA_PROD_CONTENT=$(curl -s $PAGOPA_API_URL_PREFIX$PAGOPA_API_URL_SUFFIX | python -m json.tool)
@@ -34,24 +34,12 @@ PAGO_PA_PROD_CONTENT=$(echo $PAGO_PA_PROD_CONTENT | perl -pe "s/\"host\":\s+\".*
 PAGO_PA_TEST_CONTENT=$(curl -s $PAGOPA_API_URL_PREFIX_TEST$PAGOPA_API_URL_SUFFIX | python -m json.tool)
 PAGO_PA_TEST_CONTENT=$(echo $PAGO_PA_TEST_CONTENT | perl -pe "s/\"host\":\s+\".*?\",//")
 
-# uncomment lines below to run a test on same specs
-#PAGO_PA_PROD_CONTENT=$(curl -s $PAGOPA_API_URL_PREFIX_TEST$PAGOPA_API_URL_SUFFIX | python -m json.tool)
-#PAGO_PA_TEST_CONTENT=$(echo $PAGO_PA_TEST_CONTENT | perl -pe "s/\"host\":\s+\".*?\",//")
-#PAGO_PA_TEST_CONTENT=$PAGO_PA_PROD_CONTENT
-
-# uncomment lines below to run a test on different specs
-#PAGO_PA_PROD_CONTENT=$(curl -s $PAGOPA_API_URL_PREFIX_TEST$PAGOPA_API_URL_SUFFIX | python -m json.tool)
-#PAGO_PA_PROD_CONTENT=$(echo $PAGO_PA_PROD_CONTENT | perl -pe "s/\"host\":\s+\".*?\",//")
-#DIFFERENT_JSON_URL=https://api.myjson.com/bins/7bykb # same json as PAGO_PA_PROD_CONTENT but with 1 deletion and 1 addition
-#PAGO_PA_TEST_CONTENT=$(curl -s $DIFFERENT_JSON_URL | python -m json.tool)
-#PAGO_PA_TEST_CONTENT=$(echo $PAGO_PA_TEST_CONTENT | perl -pe "s/\"host\":\s+\".*?\",//")
-
 
 # check the diff between prod/test specs
 DIFF=$(diff -w -B <(echo $PAGO_PA_PROD_CONTENT) <(echo $PAGO_PA_TEST_CONTENT))
 VAR_LENGTH=${#DIFF}
 printf "\n"
-
+printf ${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-}
 # check if diff output is an empty string (no difference)
 if [ $VAR_LENGTH -eq "0" ]; then
     echo $SEND_MSG
