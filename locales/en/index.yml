@@ -555,7 +555,7 @@ wallet:
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
-  transactionsLoadMore: Load more
+  transactionsLoadMore: Load previous
   transacionsLoadingMore: Loading more transactions...
   pickPaymentMethod:
     unavailable:
