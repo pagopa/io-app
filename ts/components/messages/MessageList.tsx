@@ -67,6 +67,7 @@ const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
 const ITEM_LOADING_HEIGHT = ITEM_WITHOUT_CTABAR_HEIGHT;
 const ITEM_WITH_CTABAR_HEIGHT = 158;
 const ITEM_SEPARATOR_HEIGHT = 1;
+const VIBRATION_LONG_PRESS_DURATION = 100 as Millisecond;
 
 const styles = StyleSheet.create({
   itemLoadingContainer: {
@@ -97,7 +98,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const VIBRATION_LONG_PRESS_DURATION = 100 as Millisecond;
 const keyExtractor = (_: MessageState) => _.meta.id;
 
 const getItemHeight = (messageState: MessageState): number => {

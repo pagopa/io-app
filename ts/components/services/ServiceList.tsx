@@ -11,7 +11,8 @@ import {
   RefreshControl,
   SectionList,
   SectionListData,
-  StyleSheet
+  StyleSheet,
+  Vibration
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
@@ -65,9 +66,16 @@ const styles = StyleSheet.create({
 });
 
 const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
-
+const VIBRATION_LONG_PRESS_DURATION = 100 as Millisecond;
 class ServiceList extends React.Component<Props> {
   private sectionListRef = React.createRef<typeof AnimatedSectionList>();
+
+  private handleLongPressItem = () => {
+    if (this.props.onLongPressItem) {
+      this.props.onLongPressItem();
+      Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
+    }
+  };
 
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
@@ -78,7 +86,7 @@ class ServiceList extends React.Component<Props> {
       onSelect={this.props.onSelect}
       isRead={this.isRead(itemInfo.item, this.props.readServices)}
       hideSeparator={true}
-      onLongPress={this.props.onLongPressItem}
+      onLongPress={this.handleLongPressItem}
       onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
       isLongPressEnabled={this.props.isLongPressEnabled}
     />
