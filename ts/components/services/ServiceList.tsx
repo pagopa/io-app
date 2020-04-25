@@ -2,6 +2,7 @@
  * A component to render a list of services grouped by organization.
  */
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import React from "react";
 import {
   Animated,
