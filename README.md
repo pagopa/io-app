@@ -479,7 +479,7 @@ In the connection configuration enter:
 ### Development with IO dev local server
 It is super easy to setup and run. [Here](https://github.com/pagopa/io-dev-api-server) you can find all instructions.
 It can be used as it is or you can run it using the [docker image](https://github.com/pagopa/io-dev-api-server/packages).<br/>
-`.env.local` pre-filled config file is ready to use with the local server, just run this command:
+`.env.local` is included in IO app files. It is a pre-filled config file ready to use with the local server. To use it, just run these commands:<br/>
 `cp .env.local .env && yarn postinstall`
 
 ### Update the app icons
