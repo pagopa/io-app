@@ -1,6 +1,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import React from "react";
 import {
@@ -26,7 +27,6 @@ import { messageNeedsCTABar } from "../../utils/messages";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import MessageListItem from "./MessageListItem";
-import { Millisecond } from "italia-ts-commons/lib/units";
 
 type ItemLayout = {
   length: number;
