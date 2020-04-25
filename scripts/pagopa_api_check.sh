@@ -39,7 +39,8 @@ PAGO_PA_TEST_CONTENT=$(echo $PAGO_PA_TEST_CONTENT | perl -pe "s/\"host\":\s+\".*
 DIFF=$(diff -w -B <(echo $PAGO_PA_PROD_CONTENT) <(echo $PAGO_PA_TEST_CONTENT))
 VAR_LENGTH=${#DIFF}
 printf "\n"
-printf ${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-}
+temp=${ITALIAAPP_SLACK_TOKEN_PAGOPA_CHECK:-}
+printf "$temp\n"
 # check if diff output is an empty string (no difference)
 if [ $VAR_LENGTH -eq "0" ]; then
     echo $SEND_MSG
