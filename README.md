@@ -439,8 +439,8 @@ To test the io-app on a real iOS device you must:
 
 ### Development with Backend App and Local Test IDP
 
-To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.
-A light way to run IO app on your local machine is using [io-dev-api-server](https://github.com/pagopa/io-dev-api-server). This local server mocks almost totally IO backend behaviour and APIs. Note: about SPID, io-dev-api-server acts a pass throught so you can't test it.
+To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.<br/>
+If you prefer a light way to run IO app, you should consider using [io-dev-api-server](https://github.com/pagopa/io-dev-api-server). This local server mocks almost totally IO backend behaviours and APIs. Note: about SPID, io-dev-api-server acts a pass throught so you can't test it.
 
 #### App Backend and test IDP installation
 
@@ -478,7 +478,7 @@ In the connection configuration enter:
 
 ### Development with IO dev local server
 It is super easy to setup and run. [Here](https://github.com/pagopa/io-dev-api-server) you can find all instructions.
-It can be used as it is or you can run it using the [docker image](https://github.com/pagopa/io-dev-api-server/packages).
+It can be used as it is or you can run it using the [docker image](https://github.com/pagopa/io-dev-api-server/packages).<br/>
 `.env.local` pre-filled config file is ready to use with the local server, just run this command:
 `cp .env.local .env && yarn postinstall`
 
