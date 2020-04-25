@@ -447,8 +447,6 @@ workflows:
   version: 2
   build:
     jobs:
-      - pagopa_specs_diff
-
       - compile-typescript
 
       - run-tests
