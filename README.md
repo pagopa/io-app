@@ -42,7 +42,7 @@
   - [Build (release)](#build-release)
   - [Installation on physical devices (development)](#installation-on-physical-devices-development)
   - [Development with Backend App and Local Test IDP](#development-with-backend-app-and-local-test-idp)
-  - [Development with IO dev local server](#development-with-io-dev-api-server)
+  - [Development with IO dev local server](#development-with-io-dev-local-server)
   - [Update the app icons](#update-the-app-icons)
   - [Internationalization](#internationalization)
   - [Error handling](#error-handling)
