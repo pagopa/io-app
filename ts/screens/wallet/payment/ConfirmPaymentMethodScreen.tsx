@@ -261,7 +261,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       // delete the active payment from pagoPA
       dispatch(runDeleteActivePaymentSaga());
       // reset the payment state
-      dispatch(paymentInitializeState());
+      // dispatch(paymentInitializeState());
       showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
     }
   };

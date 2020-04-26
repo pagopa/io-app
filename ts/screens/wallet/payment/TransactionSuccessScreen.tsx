@@ -1,7 +1,7 @@
 import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, BackHandler } from "react-native";
+import { BackHandler, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -38,7 +38,7 @@ class TransactionSuccessScreen extends React.PureComponent<Props> {
   }
 
   private handleBackPress = () => {
-    this.props.resetToWalletHome();
+    this.props.backToEntrypointPayment();
     return true;
   };
 
@@ -75,7 +75,7 @@ class TransactionSuccessScreen extends React.PureComponent<Props> {
               title: I18n.t("wallet.backToPayments"),
               light: true,
               bordered: true,
-              onPress: this.props.resetToWalletHome
+              onPress: this.props.backToEntrypointPayment
             }}
           />
         </View>
@@ -92,7 +92,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         transaction
       })
     ),
-  resetToWalletHome: () => dispatch(backToEntrypointPayment())
+  backToEntrypointPayment: () => dispatch(backToEntrypointPayment())
 });
 
 export default connect(
