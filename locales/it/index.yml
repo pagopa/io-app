@@ -686,7 +686,6 @@ wallet:
     total: Totale pagato
     expireDate: Scadenza
     tranche: Rata
-    entity: "Ente creditore:"
     info: "Per informazioni:"
     tel: "Tel:"
     email: "Email:"
@@ -697,9 +696,10 @@ wallet:
     iuv: Codice IUV
     entityCode: Codice fiscale creditore
     updatedAmount: Importo aggiornato
-    fee: Costi di transazione 
+    fee: Costi di transazione
     idTransaction: Codice identificativo della transazione
-    updateInfo: Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
+    updateInfo:
+      Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
     loadingMessage:
       activation: Sto avvisando l'ente creditore, attendi qualche secondo...
