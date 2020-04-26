@@ -475,29 +475,6 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
-  email:
-    validation:
-      title: Remember to validate your email address
-      headerTitle: Email validation
-      info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
-        click simply on that link.<br/>
-        Until you will not validate your email address, some app functionalities
-        (payments, messages forwarding by email, etc.) will not be available, but you
-        will be able to use some other functions anyway (i.e. services, messages, etc.)"
-      ctaValidate: Send a new validation email
-      emailSentFeedback: Email sent
-      help: Your SPID profile communicates your email to IO app. If you find the address
-        wrong or that you do not use it anymore, you can edit it directly from your SPID
-        services provider account.
-    insert:
-      headerTitle: Activation
-      title: Insert your email
-      help:
-        title: Email
-        content: !include email_insert_help.md
-    ctaEdit: Edit email
-    subtitle: Some IO app functions need your email.
-    emailInputLabel: Personal email address
 pin_login:
   pin:
     pinInfo: Enter the unlock code
@@ -994,13 +971,7 @@ calendarEvents:
 reminders:
   emptyMonth: No reminders for this month
   loadMoreData: previous deadlines
-  noOtherDeadlines: There are no more deadlines
-  email:
-    title: Remember to validate your email address
-    modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"
-    modal2: "open your email client and click on the link."
-    button1: Send another verification email
-    button2: Change email address
+  noOtherDeadlines: There are no more deadline
 openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred
