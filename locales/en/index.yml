@@ -555,8 +555,8 @@ wallet:
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
-  transactionsLoadMore: Load more
-  transacionsLoadingMore: Loading more transactions...
+  transactionsLoadMore: Load previous
+  transacionsLoadingMore: Loading previous...
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
@@ -644,23 +644,24 @@ wallet:
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
-    amount: Amount
+    amount: Transaction amount
+    total: Total paid
     expireDate: Expire date
     tranche: Tranche
-    entity: 'Entity:'
     info: 'More info at:'
     tel: 'Tel:'
     email: 'Email:'
     PEC: 'PEC:'
-    recipient: 'Recipient:'
-    object: 'Transaction object:'
-    cbillCode: 'CBILL code:'
-    iuv: 'IUV:'
-    entityCode2: 'Entity/Company code:'
+    recipient: Recipient
+    object: Reason
+    date: Date and Time
+    iuv: IUV code
+    entityCode: Entity fiscal code
+    fee: Fee
+    idTransaction: Transaction identification code
     updatedAmount: Updated amount
     updateInfo: 'The pagoPa system updates automatically the amount to ensure you
       pay the exact amount and to avoid you arrears or additional interests '
-    moreInfo: More details
     loadingMessage:
       activation: I'm alerting the entity, wait a few seconds..
       verification: I am checking the status and the amount of your notice..
@@ -694,8 +695,7 @@ wallet:
   date: Date
   time: Time
   psp: Payment provider
-  receipt: Receipt
-  receipt2: Transaction receipt
+  receipt: Transaction receipt
   seeReceipt: See Receipt
   transactions: Transactions
   transaction: Transaction
@@ -704,12 +704,11 @@ wallet:
   noneTransactions: There are no transactions
   noTransactionsInWalletHome: You haven't executed any operation yet.
   noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
-  moreInfo: Learn more
   payNotice: Pay notice
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add payment method
-  continue: Continue
+  continue: Pay this notice
   backToPayments: Back to payments
   methods:
     comingSoon: incoming
