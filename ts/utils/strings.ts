@@ -2,8 +2,8 @@
  * Generic utilities for strings
  */
 
-import _ from "lodash";
 import { fromNullable } from "fp-ts/lib/Option";
+import _ from "lodash";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 
 /**
