@@ -532,8 +532,8 @@ wallet:
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
-  transactionsLoadMore: Load more
-  transacionsLoadingMore: Loading more transactions...
+  transactionsLoadMore: Load previous
+  transacionsLoadingMore: Loading previous...
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
@@ -616,31 +616,36 @@ wallet:
     text: Choose one saved payment method or add a new one
     fetchPspFailure: Temporary error, please retry
     noPspsAvailable: This payment method cannot be used
+    contextualHelpTitle: Payment method's choice
+    contextualHelpContent: !include wallet/wallet_pick_payment_method.md
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
-    amount: Amount
+    amount: Transaction amount
+    total: Total paid
     expireDate: Expire date
     tranche: Tranche
-    entity: 'Entity:'
     info: 'More info at:'
     tel: 'Tel:'
     email: 'Email:'
     PEC: 'PEC:'
-    recipient: 'Recipient:'
-    object: 'Transaction object:'
-    cbillCode: 'CBILL code:'
-    iuv: 'IUV:'
-    entityCode2: 'Entity/Company code:'
+    recipient: Recipient
+    object: Reason
+    date: Date and Time
+    iuv: IUV code
+    entityCode: Entity fiscal code
+    fee: Fee
+    idTransaction: Transaction identification code
     updatedAmount: Updated amount
     updateInfo: 'The pagoPa system updates automatically the amount to ensure you
       pay the exact amount and to avoid you arrears or additional interests '
-    moreInfo: More details
     loadingMessage:
       activation: I'm alerting the entity, wait a few seconds..
       verification: I am checking the status and the amount of your notice..
       generic: I am finishing the verification operations of your notice, wait a few seconds..
       wallet: I am checking for payment method..
+    contextualHelpTitle: Transaction's summary
+    contextualHelpContent: !include wallet/wallet_transaction_summary.md
   insertManually:
     header: Insert notice data
     title: Insert the notice data
@@ -650,6 +655,8 @@ wallet:
     entityCode: Entity Fiscal Code
     amount: Amount (€)
     proceed: Proceed with the transaction
+    contextualHelpTitle: Manually insert notice
+    contextualHelpContent: !include wallet/insert_manual_notice.md
   errorTransaction:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
@@ -665,8 +672,7 @@ wallet:
   date: Date
   time: Time
   psp: Payment provider
-  receipt: Receipt
-  receipt2: Transaction receipt
+  receipt: Transaction receipt
   seeReceipt: See Receipt
   transactions: Transactions
   transaction: Transaction
@@ -675,12 +681,11 @@ wallet:
   noneTransactions: There are no transactions
   noTransactionsInWalletHome: You haven't executed any operation yet.
   noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
-  moreInfo: Learn more
   payNotice: Pay notice
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add payment method
-  continue: Continue
+  continue: Pay this notice
   backToPayments: Back to payments
   methods:
     comingSoon: incoming
@@ -728,6 +733,8 @@ wallet:
       buttonText:
         settings: Enable permissions
         cancel: Cancel
+    contextualHelpTitle: How to pay a notice
+    contextualHelpContent: !include wallet/wallet_qrcode.md
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include wallet/why_a_fee.md

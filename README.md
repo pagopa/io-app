@@ -1,8 +1,29 @@
-[![CircleCI](https://circleci.com/gh/pagopa/io-app.svg?style=svg)](https://circleci.com/gh/pagopa/io-app)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/pagopa/io-app/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="100"/></br>
+  IO - The public services app
+</p>
 
-[![codecov](https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg)](https://codecov.io/gh/pagopa/io-app)
+<p align="center">
+    <a href="https://circleci.com/gh/pagopa/io-app">
+        <img src="https://circleci.com/gh/pagopa/io-app.svg?style=svg" />
+    </a>
+    <a href="https://codecov.io/gh/pagopa/io-app">
+        <img src="https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg" />
+    </a>
+    <a href="CODE-OF-CONDUCT.md">
+        <img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" />
+    </a>
+</p>
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code-of-conduct.md)
+<p align="center">
+    <a href="https://apps.apple.com/it/app/io/id1501681835">
+        <img src="https://raw.githubusercontent.com/pagopa/io-app/master/img/badges/app-store-badge.png" />
+    </a>
+    <a href="https://play.google.com/store/apps/details?id=it.pagopa.io.app">
+        <img src="https://raw.githubusercontent.com/pagopa/io-app/master/img/badges/google-play-badge.png" />
+    </a>
+</p>
+
 
 # The mobile app of the Digital Citizenship project
 
@@ -11,7 +32,6 @@
   - [What is the Digital Citizenship mobile app?](#what-is-the-digital-citizenship-mobile-app)
   - [Who develops the app?](#who-develops-the-app)
   - [Can I use the app?](#can-i-use-the-app)
-  - [When will the app be available?](#when-will-the-app-be-available)
   - [How can I help you?](#how-can-i-help-you)
 - [Main technologies used](#main-technologies-used)
 - [Architecture](#architecture)
@@ -22,6 +42,7 @@
   - [Build (release)](#build-release)
   - [Installation on physical devices (development)](#installation-on-physical-devices-development)
   - [Development with Backend App and Local Test IDP](#development-with-backend-app-and-local-test-idp)
+  - [Development with IO dev local server](#development-with-io-dev-local-server)
   - [Update the app icons](#update-the-app-icons)
   - [Internationalization](#internationalization)
   - [Error handling](#error-handling)
@@ -61,13 +82,7 @@ The development of the app is carried out by several contributors:
 
 ### Can I use the app?
 
-The app is being tested with a restricted group of users and stakeholders so for now, the app is not available in the app stores.
-
-However, if you are a developer you can build the app on your computer and install it manually on your device. You will need a [SPID account](https://www.agid.gov.it/en/platforms/spid) to login to the app.
-
-### When will the app be available?
-
-When the app will achieve the appropriate level of quality and usefulness, it will be made available to all citizens on the Apple and Google app stores.
+Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platforms/spid) or have a [CIE](https://www.cartaidentita.interno.gov.it) (support ready for Android - soon for iOS) to login to the app.
 
 ### How can I help you?
 
@@ -424,7 +439,8 @@ To test the io-app on a real iOS device you must:
 
 ### Development with Backend App and Local Test IDP
 
-To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.
+To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.<br/>
+If you prefer a light way to run IO app backend, you should consider using [io-dev-api-server](https://github.com/pagopa/io-dev-api-server). This local server mocks almost totally IO backend behaviours and APIs. Note: about SPID, io-dev-api-server acts a pass throught so you can't test it.
 
 #### App Backend and test IDP installation
 
@@ -459,6 +475,12 @@ In the connection configuration enter:
 
 * Proxy IP: `10.0.2.2` (or `10.0.3.2` if you use Genymotion)
 * Proxy port: `9060`
+
+### Development with IO dev local server
+It is super easy to setup and run. [Here](https://github.com/pagopa/io-dev-api-server) you can find all instructions.
+It can be used as it is or you can run it using the [docker image](https://github.com/pagopa/io-dev-api-server/packages).<br/>
+`.env.local` is included in IO app files. It is a pre-filled config file ready to use with the local server. To use it, just run these commands:<br/>
+`cp .env.local .env && yarn postinstall`
 
 ### Update the app icons
 
