@@ -3,13 +3,7 @@
  * array property. When an Identity Provider is selected a callback function is called.
  */
 import * as React from "react";
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  ListRenderItemInfo,
-  StyleSheet
-} from "react-native";
+import { FlatList, Image, ListRenderItemInfo, StyleSheet } from "react-native";
 
 import { Button } from "native-base";
 import { IdentityProvider } from "../models/IdentityProvider";
