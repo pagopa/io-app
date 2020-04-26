@@ -103,7 +103,7 @@ const AddMethodStyle = StyleSheet.create({
   notImplementedBadge: {
     height: 18,
     marginTop: 2,
-    backgroundColor: variables.disabledService
+    backgroundColor: variables.lightGray
   },
   notImplementedText: {
     fontSize: 10,

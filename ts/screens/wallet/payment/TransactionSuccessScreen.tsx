@@ -52,7 +52,7 @@ class TransactionSuccessScreen extends React.PureComponent<Props> {
         <FooterWithButtons
           type={"SingleButton"}
           upperButton={{
-            title: I18n.t("wallet.receipt2"),
+            title: I18n.t("wallet.receipt"),
             primary: true,
             onPress: () => this.props.navigateToReceipt(this.transaction)
           }}
