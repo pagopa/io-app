@@ -26,8 +26,6 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-const { width: windowWidth } = Dimensions.get("window");
-
 const GRID_GUTTER = variables.gridGutter;
 
 /**
@@ -37,13 +35,11 @@ const GRID_GUTTER = variables.gridGutter;
 const styles = StyleSheet.create({
   gridItem: {
     margin: GRID_GUTTER / 2,
-    // Calculate the real width of each item
-
-    width: (windowWidth - (2 * variables.contentPadding + 2 * GRID_GUTTER)) / 2
+    padding: 30,
+    flex: 1
   },
   idpLogo: {
-    width: 120,
-    height: 30,
+    flex: 1,
     resizeMode: "contain"
   }
 });
