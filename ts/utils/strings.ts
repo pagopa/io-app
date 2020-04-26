@@ -2,6 +2,7 @@
  * Generic utilities for strings
  */
 
+import _ from "lodash";
 import { fromNullable } from "fp-ts/lib/Option";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 
@@ -18,6 +19,25 @@ export function isTextIncludedCaseInsensitive(
   searchText: string
 ) {
   return source.toLocaleLowerCase().includes(searchText.toLocaleLowerCase());
+}
+
+/**
+ * return the same text with each token has the first char in uppercase.
+ * tokens are retrieved by splitting the text with the provided separator
+ * ex capitalize("Hello World") -> "Hello Word"
+ * ex capitalize("hello,world",",") -> "Hello,Word"
+ * @param text
+ * @param separator
+ */
+export function capitalize(text: string, separator: string = " ") {
+  return text
+    .split(separator)
+    .reduce((acc: string, curr: string, index: number) => {
+      return `${acc}${index === 0 ? "" : separator}${curr.replace(
+        new RegExp(curr.trimLeft(), "ig"),
+        _.capitalize(curr.trimLeft())
+      )}`;
+    }, "");
 }
 
 /**
