@@ -682,24 +682,25 @@ wallet:
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento
-    amount: Importo
+    amount: Importo pagamento
+    total: Totale pagato
     expireDate: Scadenza
     tranche: Rata
-    entity: "Ente creditore:"
     info: "Per informazioni:"
     tel: "Tel:"
     email: "Email:"
     PEC: "PEC:"
-    recipient: "Destintario:"
-    object: "Oggetto del pagamento:"
-    cbillCode: "Codice CBILL:"
-    iuv: "IUV:"
-    entityCode2: "Codice Ente/Azienda:"
+    recipient: Ente creditore
+    object: Causale
+    date: Data e ora
+    iuv: Codice IUV
+    entityCode: Codice fiscale creditore
     updatedAmount: Importo aggiornato
+    fee: Costi di transazione
+    idTransaction: Codice identificativo della transazione
     updateInfo:
       Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
-    moreInfo: Per saperne di più
     loadingMessage:
       activation: Sto avvisando l'ente creditore, attendi qualche secondo...
       verification: Sto verificando lo stato e l'importo del tuo avviso...
@@ -729,9 +730,8 @@ wallet:
   recipient: Destinatario
   date: Data
   time: Ora
-  psp: Prestatore pagamento
-  receipt: Ricevuta
-  receipt2: Ricevuta dell'operazione
+  psp: Gestore della transazione
+  receipt: Ricevuta dell'operazione
   seeReceipt: Vedi la ricevuta
   transactions: Operazioni
   transaction: Operazione
@@ -740,12 +740,11 @@ wallet:
   noneTransactions: Nessuna operazione
   noTransactionsInWalletHome: Non hai ancora fatto nessuna operazione.
   noTransactionsInTransactionsScreen: Non hai ancora utilizzato questo metodo di pagamento per pagare tramite IO o pagoPA. In questa lista vedrai solo le operazioni eseguite con questo metodo.
-  moreInfo: Per saperne di più
   payNotice: Paga un avviso
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
   addPaymentMethodTitle: Aggiungi metodo di pagamento
-  continue: Continua
+  continue: Paga questo avviso
   backToPayments: Torna ai pagamenti
   methods:
     comingSoon: in arrivo

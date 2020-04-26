@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandDarkestGray
   },
   disabledColor: {
-    color: customVariables.disabledService
+    color: customVariables.lightGray
   },
   info: {
     marginTop: -5
