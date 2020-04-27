@@ -1,0 +1,1 @@
+**You can view the summary of the transaction you are about to make.** The summary of the transaction is updated at this time, when you are proceeding with the payment: for this reason it may be increased by any default interest applied by the creditor. 

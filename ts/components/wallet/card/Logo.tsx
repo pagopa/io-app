@@ -63,13 +63,27 @@ const styles = StyleSheet.create({
 type Props = Readonly<{
   item?: CreditCard;
   imageStyle?: StyleProp<ImageStyle>;
+  pspLogo?: string;
 }>;
 
-const Logo: React.SFC<Props> = props => (
-  <Image
-    style={props.imageStyle ? props.imageStyle : styles.issuerLogo}
-    source={props.item ? getCardIconFromBrandLogo(props.item) : defaultCardIcon}
-  />
-);
+const Logo: React.SFC<Props> = props => {
+  const getSource = () => {
+    if (props.pspLogo && props.pspLogo.trim().length > 0) {
+      return { uri: props.pspLogo };
+    }
+
+    if (props.item) {
+      return getCardIconFromBrandLogo(props.item);
+    }
+    return defaultCardIcon;
+  };
+
+  return (
+    <Image
+      style={props.imageStyle ? props.imageStyle : styles.issuerLogo}
+      source={getSource()}
+    />
+  );
+};
 
 export default Logo;
