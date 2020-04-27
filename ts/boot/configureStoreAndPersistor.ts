@@ -34,7 +34,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 11;
+const CURRENT_REDUX_STORE_VERSION = 12;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -198,6 +198,16 @@ const migrations: MigrationManifest = {
       persistedPreferences: {
         ...(state as PersistedGlobalState).persistedPreferences,
         isCustomEmailChannelEnabled: pot.none
+      }
+    };
+  },
+  // Version 12
+  // change default state of isDebugModeEnabled: false
+  "12": (state: PersistedState) => {
+    return {
+      ...state,
+      debug: {
+        isDebugModeEnabled: false
       }
     };
   }

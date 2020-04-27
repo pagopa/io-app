@@ -16,10 +16,11 @@ import { withValidatedEmail } from "../../components/helpers/withValidatedEmail"
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import FooterWithButtons, {
+import {
   SingleButton,
   TwoButtonsInlineHalf
-} from "../../components/ui/FooterWithButtons";
+} from "../../components/ui/BlockButtons";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
 import {
@@ -176,11 +177,8 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             <View style={styles.spacerLarge} />
             <Text>
               {isFromProfileSection
-                ? `${I18n.t("email.read.details")} \n`
+                ? `${I18n.t("email.read.details")}`
                 : I18n.t("email.read.info")}
-              <Text bold={true}>
-                {isFromProfileSection && I18n.t("email.read.alert")}
-              </Text>
             </Text>
           </View>
         </ScreenContent>

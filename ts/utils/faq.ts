@@ -1,7 +1,11 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 
 /** map, for each FAQ category, the ids of the FAQs related to the category */
-export const FAQs: { [key in FAQsCategoriesType]: ReadonlyArray<number> } = {
+export const FAQs: Record<
+  FAQsCategoriesType,
+  ReadonlyArray<number> | undefined
+> = {
   landing_SPID: [1, 2, 3],
   landing_CIE: [4, 5],
   authentication_SPID: [8, 9, 11, 12, 13, 14],
@@ -15,6 +19,7 @@ export const FAQs: { [key in FAQsCategoriesType]: ReadonlyArray<number> } = {
   messages: [23, 24, 25, 26, 27],
   messages_detail: [27, 28, 29, 30, 31, 32],
   wallet: [33, 34, 35, 36, 37],
+  wallet_insert_notice_data: [33, 35],
   wallet_methods: [37, 41, 42],
   wallet_transaction: [38, 39, 40],
   payment: [43, 44, 45, 46],
@@ -36,6 +41,7 @@ export type FAQsCategoriesType =
   | "messages"
   | "messages_detail"
   | "wallet"
+  | "wallet_insert_notice_data"
   | "wallet_methods"
   | "wallet_transaction"
   | "payment"
@@ -54,10 +60,11 @@ export type FAQType = {
 export const getFAQsFromCategories = (
   categories: ReadonlyArray<FAQsCategoriesType>
 ): ReadonlyArray<FAQType> => {
-  const faqIDs: Set<number> = categories.reduce((acc, val) => {
-    const ids = FAQs[val];
-    return new Set<number>([...acc, ...ids]);
-  }, new Set<number>());
+  const faqIDs: Set<number> = categories.reduce(
+    (acc, val) =>
+      new Set<number>([...acc, ...fromNullable(FAQs[val]).fold([], s => s)]),
+    new Set<number>()
+  );
 
   return Array.from(faqIDs).map<FAQType>(id => {
     return {
