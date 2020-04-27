@@ -110,13 +110,12 @@ export default class CardComponent extends React.Component<Props> {
   };
 
   private renderTopRightCorner() {
-    const { wallet } = this.props;
-
     if (
       this.props.type === "Preview" ||
       this.props.type === "Picking" ||
       (this.props.type === "Full" && this.props.showPsp)
     ) {
+      const { wallet } = this.props;
       return (
         <View style={styles.cardLogo}>
           <Logo item={wallet.creditCard} />

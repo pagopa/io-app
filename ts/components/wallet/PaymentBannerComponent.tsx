@@ -45,7 +45,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
     <View style={styles.container}>
       <View style={styles.row}>
         <Text white={true} bold={true} style={styles.smallText}>
-          {"PAYMENT BANNER" + props.paymentReason}
+          {props.paymentReason}
         </Text>
         <Text white={true} bold={true} style={styles.smallText}>
           {formatNumberCentsToAmount(props.currentAmount, true)}
