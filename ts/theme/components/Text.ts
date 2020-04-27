@@ -27,7 +27,8 @@ export default (): Theme => {
   return {
     ".link": {
       ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
-      color: variables.textLinkColor
+      color: variables.textLinkColor,
+      textDecorationLine: "underline"
     },
     ".bold": {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
