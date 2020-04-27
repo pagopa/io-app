@@ -1,4 +1,4 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -20,7 +20,6 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
-import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { Dispatch } from "../../store/actions/types";
 import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
@@ -34,6 +33,7 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import { whereAmIFrom } from "../../utils/navigation";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -115,41 +115,14 @@ class TransactionDetailsScreen extends React.Component<Props> {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
-  private getRouteName = (route: NavigationRoute): any => {
-    if (route.index === undefined) {
-      return route.routeName;
-    }
-    return this.getRouteName(route.routes[route.index]);
-  };
-
-  private whereAmIFrom = () => {
-    if (this.props.nav.length === 0) {
-      return undefined;
-    }
-    const navLength = this.props.nav.length;
-    const lastStep = this.props.nav[navLength - 1].routes[
-      this.props.nav[navLength - 1].index
-    ];
-    return this.getRouteName(lastStep);
-  };
-
-  // On back button navigate to wallet home (android)
   private handleBackPress = () => {
-    if (this.whereAmIFrom() === "WALLET_HOME") {
+    if (whereAmIFrom(this.props.nav).fold(false, r => r === "WALLET_HOME")) {
       return this.props.navigation.goBack();
     } else {
       this.props.navigateBackToEntrypointPayment();
       return true;
     }
   };
-
-  /*   private displayedWallet(transactionWallet: Wallet | undefined) {
-    return transactionWallet ? (
-      <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
-    ) : (
-      <RotatedCards cardType="Preview" />
-    );
-  } */
 
   private handleWillFocus = () => {
     const transaction = this.props.navigation.getParam("transaction");
@@ -351,7 +324,6 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBackToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
-  popHistory: () => dispatch(navigationHistoryPop(3)),
   fetchPsp: (idPsp: number) => dispatch(fetchPsp.request({ idPsp }))
 });
 

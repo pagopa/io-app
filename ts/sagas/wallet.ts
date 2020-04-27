@@ -6,7 +6,6 @@
 
 import { none, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { NavigationActions } from "react-navigation";
 import { delay } from "redux-saga";
 import {
   call,
@@ -746,7 +745,8 @@ export function* watchPaymentInitializeSaga(): Iterator<Effect> {
 
 /**
  * This saga back to entrypoint payment if the payment was initiated from the message list or detail
- * otherwise navigate to the Home of wallet
+ * otherwise if the payment starts in scan qr code screen or in Manual data insertion screen
+ * it makes one or two supplementary step backs (the correspondant step to wallet home from these screens)
  */
 export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
   yield takeEvery(getType(backToEntrypointPayment), function*() {
@@ -756,17 +756,17 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
     if (entrypointRoute !== undefined) {
       const key = entrypointRoute ? entrypointRoute.key : undefined;
       const routeName = entrypointRoute ? entrypointRoute.name : undefined;
-      const navigationBackAction = NavigationActions.back({
-        key
-      });
-      yield put(navigationBackAction);
+      yield put(navigateBack({ key }));
+      // back to the wallet home from PAYMENT_MANUAL_DATA_INSERTION
       if (routeName === ROUTES.PAYMENT_MANUAL_DATA_INSERTION) {
         yield put(navigateBack());
         yield put(navigateBack());
       }
+      // back to the wallet home from PAYMENT_SCAN_QR_CODE
       if (routeName === ROUTES.PAYMENT_SCAN_QR_CODE) {
         yield put(navigateBack());
       }
+      yield put(paymentInitializeState());
     }
   });
 }
