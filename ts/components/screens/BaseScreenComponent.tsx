@@ -73,7 +73,7 @@ const maybeDark = fromPredicate(
   (isDark: boolean | undefined = undefined) => isDark === true
 );
 
-const ANDROID_REPORT_DELAY = 50 as Millisecond;
+const ANDROID_OPEN_REPORT_DELAY = 50 as Millisecond;
 
 class BaseScreenComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -100,7 +100,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
           if (Platform.OS === "android") {
             setTimeout(
               this.handleOnContextualHelpDismissed,
-              ANDROID_REPORT_DELAY
+              ANDROID_OPEN_REPORT_DELAY
             );
           }
           this.setState({ contextualHelpModalAnimation: "slide" });
