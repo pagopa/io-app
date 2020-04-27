@@ -23,6 +23,7 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
+import { cieAuthenticationError } from "../actions/cie";
 import { loadServiceMetadata } from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
@@ -242,6 +243,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(paymentDeletePayment.failure):
     case getType(paymentUpdateWalletPsp.failure):
     case getType(updateNotificationInstallationFailure):
+    case getType(cieAuthenticationError):
       return mp.track(action.type, {
         reason: action.payload.message
       });

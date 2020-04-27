@@ -19,6 +19,8 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
+import { cieAuthenticationError } from "../../../store/actions/cie";
+import { ReduxProps } from "../../../store/actions/types";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
@@ -29,7 +31,8 @@ type NavigationParams = {
 };
 
 type Props = NavigationScreenProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  ReduxProps;
 
 const styles = StyleSheet.create({
   padded: {
@@ -43,6 +46,17 @@ export enum ReadingState {
   "completed" = "completed",
   "waiting_card" = "waiting_card"
 }
+
+// A subset of Cie Events which is of interest to analytics
+const analyticActions = new Set([
+  "ON_TAG_DISCOVERED_NOT_CIE",
+  "ON_CARD_PIN_LOCKED",
+  "ON_PIN_ERROR",
+  "CERTIFICATE_EXPIRED",
+  "CERTIFICATE_REVOKED",
+  "AUTHENTICATION_ERROR",
+  "ON_NO_INTERNET_CONNECTION"
+]);
 
 type State = {
   // Get the current status of the card reading
@@ -90,6 +104,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     navigationRoute?: string,
     navigationParams: {} = {}
   ) => {
+    this.dispatchAnalyticEvent(errorMessage);
     this.setState(
       {
         readingState: ReadingState.error,
@@ -104,7 +119,20 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     );
   };
 
+  private dispatchAnalyticEvent = (message: string) => {
+    this.props.dispatch(
+      cieAuthenticationError({
+        message,
+        name: message
+      })
+    );
+  };
+
   private handleCieEvent = async (event: CEvent) => {
+    if (analyticActions.has(event.event)) {
+      this.dispatchAnalyticEvent(event.event);
+    }
+
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
