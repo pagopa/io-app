@@ -1,13 +1,9 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import {
-  NavigationEvents,
-  NavigationInjectedProps,
-  NavigationRoute
-} from "react-navigation";
+import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -31,9 +27,9 @@ import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
+import { whereAmIFrom } from "../../utils/navigation";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
-import { whereAmIFrom } from "../../utils/navigation";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
