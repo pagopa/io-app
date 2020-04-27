@@ -132,7 +132,12 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     maybeDark(this.props.dark).map(_ =>
       setStatusBarColorAndBackground("dark-content", customVariables.colorWhite)
     );
-    this.setState({ isHelpVisible: true });
+    this.setState({
+      isHelpVisible: true,
+      markdownContentLoaded: fromNullable(
+        this.props.contextualHelpMarkdown
+      ).fold<Option<boolean>>(none, _ => some(false))
+    });
   };
 
   private hideHelp = () => {
