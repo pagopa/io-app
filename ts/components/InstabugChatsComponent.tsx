@@ -4,6 +4,10 @@ import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import {
+  openInstabugBugReport,
+  openInstabugChat
+} from "../boot/configureInstabug";
+import {
   instabugReportClosed,
   instabugReportOpened
 } from "../store/actions/debug";
@@ -62,20 +66,13 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
       instabugReportType: some(BugReporting.reportType.question)
     });
     this.props.dispatchIBReportOpen(BugReporting.reportType.question);
-    if (this.state.hasChats) {
-      Replies.show();
-    } else {
-      Chats.show();
-    }
+    openInstabugChat(this.state.hasChats);
   };
 
   private handleIBBugPress = () => {
     this.setState({ instabugReportType: some(BugReporting.reportType.bug) });
     this.props.dispatchIBReportOpen(BugReporting.reportType.bug);
-    BugReporting.showWithOptions(BugReporting.reportType.bug, [
-      BugReporting.option.commentFieldRequired,
-      BugReporting.option.emailFieldOptional
-    ]);
+    openInstabugBugReport();
   };
 
   constructor(props: Props) {

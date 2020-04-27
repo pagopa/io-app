@@ -6,11 +6,17 @@ import {
   some
 } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
+import { BugReporting } from "instabug-reactnative";
 import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
+import { ModalBaseProps } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
+import {
+  openInstabugBugReport,
+  openInstabugChat
+} from "../../boot/configureInstabug";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
@@ -57,7 +63,9 @@ type Props = OwnProps &
 
 interface State {
   isHelpVisible: boolean;
+  requestReport: Option<BugReporting.reportType>;
   markdownContentLoaded: Option<boolean>;
+  contextualHelpModalAnimation: ModalBaseProps["animationType"];
 }
 
 const maybeDark = fromPredicate(
@@ -68,7 +76,9 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      contextualHelpModalAnimation: "slide",
       isHelpVisible: false,
+      requestReport: none,
       // if the content is markdown we listen for load end event, otherwise the content is
       // assumed always loaded
       markdownContentLoaded: fromNullable(
@@ -76,6 +86,25 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       ).fold<Option<boolean>>(none, _ => some(false))
     };
   }
+
+  private handleOnRequestAssistance = (type: BugReporting.reportType) => {
+    this.setState({ isHelpVisible: false }, () => {
+      this.setState({ requestReport: some(type) });
+    });
+  };
+
+  private handleOnContextualHelpDismissed = () => {
+    this.state.requestReport.map(type => {
+      switch (type) {
+        case BugReporting.reportType.bug:
+          openInstabugBugReport();
+          break;
+        case BugReporting.reportType.question:
+          openInstabugChat();
+          break;
+      }
+    });
+  };
 
   private showHelp = () => {
     maybeDark(this.props.dark).map(_ =>
@@ -149,9 +178,12 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         {this.props.children}
         {ch && (
           <ContextualHelpModal
+            onRequestClose={this.handleOnContextualHelpDismissed}
             title={ch.title}
             body={ch.body}
             isVisible={this.state.isHelpVisible}
+            modalAnimation={this.state.contextualHelpModalAnimation}
+            onRequestAssistance={this.handleOnRequestAssistance}
             close={this.hideHelp}
             contentLoaded={this.state.markdownContentLoaded.fold(true, s => s)}
             faqCategories={this.props.faqCategories}

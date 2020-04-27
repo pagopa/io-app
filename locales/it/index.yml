@@ -1,5 +1,6 @@
 ---
 global:
+  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
   localization:
@@ -1028,6 +1029,8 @@ instabug:
     descriptionChat: Puoi usare il nostro strumento di chat per inviare un messaggio in caso di bisogno urgente di assistenza. Riceverai una risposta direttamente su IO
     buttonBug: Segnala un bug
     descriptionBug: Puoi segnalare un errore o qualcosa che non funziona ai nostri sviluppatori, si prenderanno carico del problema al più presto.
+    title2: Sei nuovo in IO?
+    descriptionLink: Scopri come funziona e quali sono le funzionalità speciali di IO, visitando il sito
 faq:
   1:
     title: "Cos'è SPID?"
