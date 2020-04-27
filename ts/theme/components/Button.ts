@@ -81,7 +81,7 @@ export default (): Theme => {
       }
     },
 
-    ".white": { backgroundColor: "#FFFFFF" },
+    ".white": { backgroundColor: variables.colorWhite },
 
     ".cancel": {
       backgroundColor: variables.brandDarkGray,
@@ -96,10 +96,6 @@ export default (): Theme => {
     "NativeBase.Text": {
       ...makeFontStyleObject(Platform.select, variables.btnTextFontWeight),
       fontSize: variables.btnFontSize
-    },
-
-    "UIComponent.IconFont": {
-      color: variables.colorWhite
     },
 
     justifyContent: "center",
