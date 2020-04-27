@@ -14,6 +14,7 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
+  genericAlert: Attenzione!
   genericWaiting: Attendi qualche secondo...
   genericThanks: Grazie
   jserror:
@@ -628,9 +629,8 @@ wallet:
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
-    fee: Costi di commissione
+    fee: Costi di transazione
     why: Perché?
-    totalAmount: Totale
     info: "Attenzione: dopo questo passaggio non sarà più possibile annullare"
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
     changeMethod: Cambia metodo di pagamento
