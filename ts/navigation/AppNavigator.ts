@@ -70,7 +70,10 @@ const navigator = createStackNavigator(
   {
     // Let each screen handle the header and navigation
     headerMode: "none",
-    transitionConfig
+    transitionConfig,
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
 );
 
