@@ -46,10 +46,15 @@ const customVariables = Object.assign(materialVariables, {
   brandHighlight: "#00C5CA",
   brandHighLighter: "#00CDD2",
 
+  milderGray: "#5F6F80",
+  darkerGray: "#4B5C6F",
+
+  lightGray: "#909DA8",
+  lighterGray: "#C1C9D2",
+
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
   colorWhite: "#FFFFFF",
-  disabledService: "#909DA8",
   itemBorderDefaultColor: "#5F6F82",
 
   calendarExpirableColor: "#D0021B",
@@ -255,6 +260,8 @@ const customVariables = Object.assign(materialVariables, {
   inputNormalWeight: "400" as FontWeight,
 
   // Spacer
+  spacerExtrasmallHeight: 4,
+  spacerSmallHeight: 8,
   spacerHeight: 16,
   spacerLargeHeight: 24,
   spacerExtralargeHeight: 40,
