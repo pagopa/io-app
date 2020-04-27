@@ -63,6 +63,8 @@ const customVariables = Object.assign(materialVariables, {
 
   toastColor: "#C1f4f2",
 
+  alertColor: "#00CDD2",
+
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,

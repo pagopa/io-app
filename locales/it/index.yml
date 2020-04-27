@@ -14,6 +14,7 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
+  genericAlert: Attenzione!
   genericWaiting: Attendi qualche secondo...
   genericThanks: Grazie
   jserror:
@@ -441,7 +442,7 @@ email:
     upsert_ok: La richiesta di modifica email è stata inviata correttamente
     upsert_ko: Errore nella richiesta di modifica email, riprovare
   validate:
-    title: Ricorda di validare il tuo indirizzo email
+    title: Ricorda di validare il tuo indirizzo email!
     header: Validazione email
     content1:
       "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
@@ -500,31 +501,6 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
-  email:
-    validation:
-      title: Ricorda di validare il tuo indirizzo email
-      headerTitle: Validazione email
-      info:
-        "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
-        clicca semplicemente su quel link.<br/>
-        Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
-        inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
-        usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
-      ctaValidate: Invia una nuova email di validazione
-      emailSentFeedback: Invia una nuova email di validazione
-      help:
-        Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
-        indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
-        tuo provider di servizi SPID.
-    insert:
-      headerTitle: Attivazione
-      title: Inserisci la tua email
-      help:
-        title: Email
-        content: !include email_insert_help.md
-    ctaEdit: Modifica email
-    subtitle: Alcune funzioni di IO hanno bisogno della tua email.
-    emailInputLabel: Indirizzo email personale
 pin_login:
   pin:
     pinInfo: Inserisci il codice di sblocco
@@ -653,9 +629,8 @@ wallet:
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
-    fee: Costi di commissione
+    fee: Costi di transazione
     why: Perché?
-    totalAmount: Totale
     info: "Attenzione: dopo questo passaggio non sarà più possibile annullare"
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
     changeMethod: Cambia metodo di pagamento
@@ -1036,12 +1011,6 @@ reminders:
   emptyMonth: Non ci sono scadenze in questo mese
   loadMoreData: scadenze precedenti
   noOtherDeadlines: Non ci sono altre scadenze
-  email:
-    title: Ricorda di validare il tuo indirizzo email
-    modal1: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email. \n Ti abbiamo inviato una email a"
-    modal2: "apri il tuo client di posta e clicca semplicemente sul link."
-    button1: Invia una nuova email di validazione
-    button2: Modifica indirizzo email
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
 genericError: Si è verificato un errore
