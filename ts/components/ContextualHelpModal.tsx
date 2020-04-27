@@ -1,4 +1,4 @@
-import { Body, Container, Content, H1, H3, Right, View } from "native-base";
+import { Body, Container, Content, H3, Right, View } from "native-base";
 import * as React from "react";
 import { InteractionManager, Modal, StyleSheet } from "react-native";
 import IconFont from "../components/ui/IconFont";
