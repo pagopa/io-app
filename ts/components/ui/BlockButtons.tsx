@@ -107,7 +107,12 @@ export default class BlockButtons extends React.Component<Props, never> {
       return null;
     }
 
-    return this.renderButton(this.props.midButton, styles.button);
+    return (
+      <React.Fragment>
+        <View hspacer={true} />
+        {this.renderButton(this.props.midButton, styles.button)}
+      </React.Fragment>
+    );
   };
 
   private renderLeftButton = () => {
@@ -116,12 +121,7 @@ export default class BlockButtons extends React.Component<Props, never> {
         ? styles.buttonTwoThirds
         : styles.button;
 
-    return (
-      <React.Fragment>
-        {this.renderButton(this.props.leftButton, leftButtonStyle)}
-        {this.props.type !== "SingleButton" && <View hspacer={true} />}
-      </React.Fragment>
-    );
+    return this.renderButton(this.props.leftButton, leftButtonStyle);
   };
 
   private renderButton = (
