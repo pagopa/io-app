@@ -2,7 +2,7 @@ Non ti preoccupare, è sempre possibile recuperare le tue credenziali.
 
 - Se hai richiesto SPID a Aruba segui la procedura di recupero qui: [https://guide.pec.it/spid/recupero-dati/procedure-di-recupero-dati-smarriti.aspx](https://guide.pec.it/spid/recupero-dati/procedure-di-recupero-dati-smarriti.aspx)
 
-- Se hai richiesto SPID a Infocert segui la procedura di recupero qui: [https://my.infocert.it/selfcare/#/recoveryPin](ttps://my.infocert.it/selfcare/#/recoveryPin)
+- Se hai richiesto SPID a Infocert segui la procedura di recupero qui: [https://my.infocert.it/selfcare/#/recoveryPin](https://my.infocert.it/selfcare/#/recoveryPin)
 
 - Se hai richiesto SPID a Namirial segui la procedura di recupero qui: [https://portale.namirialtsp.com/private/user/spid_reset.php](https://portale.namirialtsp.com/private/user/spid_reset.php)
 
