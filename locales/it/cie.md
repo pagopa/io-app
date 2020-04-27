@@ -1,4 +1,4 @@
-**CIE**, la Carta di Identità Elettronica, ti permette di accedere a tutti i servizi della Pubblica Amministrazione. La puoi usare per accedere comodamente ad IO sul tuo smartphone. Ti servirà anche il pin che ti viene consegnato metà in anagrafe e metà per posta insieme alla carta.
+**CIE**, la Carta di Identità Elettronica, ti permette di accedere a tutti i servizi della Pubblica Amministrazione. La puoi usare per accedere comodamente ad IO sul tuo smartphone. Ti servirà anche il PIN che ti viene consegnato metà in anagrafe e metà per posta insieme alla carta.
 
 ## CIE è sicura
 
