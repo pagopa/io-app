@@ -215,6 +215,16 @@ const migrations: MigrationManifest = {
         isCustomEmailChannelEnabled: pot.none
       }
     };
+  },
+  // Version 12
+  // change default state of isDebugModeEnabled: false
+  "12": (state: PersistedState) => {
+    return {
+      ...state,
+      debug: {
+        isDebugModeEnabled: false
+      }
+    };
   }
 };
 

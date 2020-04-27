@@ -25,10 +25,7 @@ import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { Psp, Wallet } from "../../../types/pagopa";
 import { showToast } from "../../../utils/showToast";
-import {
-  centsToAmount,
-  formatNumberAmount
-} from "../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 type NavigationParams = Readonly<{
@@ -66,7 +63,8 @@ const styles = StyleSheet.create({
   flexStart: {
     width: 100,
     height: 50
-  }
+  },
+  padded: { paddingHorizontal: customVariables.contentPadding }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -114,7 +112,7 @@ class PickPspScreen extends React.Component<Props> {
         <Text style={styles.feeText}>
           {`${I18n.t("wallet.pickPsp.maxFee")} `}
           <Text bold={true} style={styles.feeText}>
-            {formatNumberAmount(centsToAmount(item.fixedCost.amount))}
+            {formatNumberCentsToAmount(item.fixedCost.amount)}
           </Text>
         </Text>
       </TouchableDefaultOpacity>
@@ -133,7 +131,7 @@ class PickPspScreen extends React.Component<Props> {
       >
         <Content noPadded={true}>
           <View spacer={true} />
-          <View style={{ paddingHorizontal: customVariables.contentPadding }}>
+          <View style={styles.padded}>
             <Text>
               {`${I18n.t("wallet.pickPsp.info")} `}
               <Text bold={true}>{`${I18n.t("wallet.pickPsp.infoBold")} `}</Text>

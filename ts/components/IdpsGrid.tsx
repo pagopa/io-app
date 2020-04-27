@@ -3,13 +3,7 @@
  * array property. When an Identity Provider is selected a callback function is called.
  */
 import * as React from "react";
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  ListRenderItemInfo,
-  StyleSheet
-} from "react-native";
+import { FlatList, Image, ListRenderItemInfo, StyleSheet } from "react-native";
 
 import { Button } from "native-base";
 import { IdentityProvider } from "../models/IdentityProvider";
@@ -26,8 +20,6 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-const { width: windowWidth } = Dimensions.get("window");
-
 const GRID_GUTTER = variables.gridGutter;
 
 /**
@@ -37,9 +29,8 @@ const GRID_GUTTER = variables.gridGutter;
 const styles = StyleSheet.create({
   gridItem: {
     margin: GRID_GUTTER / 2,
-    // Calculate the real width of each item
-
-    width: (windowWidth - (2 * variables.contentPadding + 2 * GRID_GUTTER)) / 2
+    padding: 30,
+    flex: 1
   },
   idpLogo: {
     width: 120,
