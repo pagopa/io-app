@@ -3,10 +3,7 @@ import { BugReporting, Replies } from "instabug-reactnative";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-import {
-  openInstabugBugReport,
-  openInstabugChat
-} from "../boot/configureInstabug";
+import { openInstabugChat } from "../boot/configureInstabug";
 import {
   instabugReportClosed,
   instabugReportOpened
@@ -67,12 +64,6 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
     });
     this.props.dispatchIBReportOpen(BugReporting.reportType.question);
     openInstabugChat(this.state.hasChats);
-  };
-
-  private handleIBBugPress = () => {
-    this.setState({ instabugReportType: some(BugReporting.reportType.bug) });
-    this.props.dispatchIBReportOpen(BugReporting.reportType.bug);
-    openInstabugBugReport();
   };
 
   constructor(props: Props) {
@@ -139,18 +130,6 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
             />
           </View>
         )}
-
-        <ButtonDefaultOpacity
-          onPress={this.handleIBBugPress}
-          transparent={true}
-        >
-          <IconFont
-            name="io-bug"
-            color={this.props.color}
-            accessible={true}
-            accessibilityLabel="io-bug"
-          />
-        </ButtonDefaultOpacity>
       </React.Fragment>
     );
   }
