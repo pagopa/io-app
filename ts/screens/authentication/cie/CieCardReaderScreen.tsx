@@ -47,7 +47,7 @@ export enum ReadingState {
   "waiting_card" = "waiting_card"
 }
 
-// A subset of Cie Events which is of interest to analytics
+// A subset of Cie Events (errors) which is of interest to analytics
 const analyticActions = new Set([
   "ON_TAG_DISCOVERED_NOT_CIE",
   "ON_CARD_PIN_LOCKED",
