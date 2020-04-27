@@ -1,4 +1,4 @@
-import { Body, Container, Content, H1, Right, View } from "native-base";
+import { Body, Container, Content, H1, H3, Right, View } from "native-base";
 import * as React from "react";
 import { InteractionManager, Modal, StyleSheet } from "react-native";
 import IconFont from "../components/ui/IconFont";
@@ -85,7 +85,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               contentContainerStyle={styles.contentContainerStyle}
               noPadded={true}
             >
-              <H1>{this.props.title}</H1>
+              <H3>{this.props.title}</H3>
               {this.state.content}
               {this.props.faqCategories &&
                 this.props.contentLoaded && (
