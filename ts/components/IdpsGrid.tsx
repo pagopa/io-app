@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   idpLogo: {
-    flex: 1,
+    width: 120,
+    height: 30,
     resizeMode: "contain"
   }
 });
