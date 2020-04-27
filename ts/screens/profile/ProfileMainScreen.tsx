@@ -421,7 +421,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             )}
 
             {/* Developers Section */}
-            {this.props.isDebugModeEnabled && (
+            {(this.props.isDebugModeEnabled || isDevEnv)  && (
               <React.Fragment>
                 <SectionHeaderComponent
                   sectionHeader={I18n.t("profile.main.developersSectionHeader")}
