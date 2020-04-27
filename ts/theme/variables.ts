@@ -55,6 +55,8 @@ const customVariables = Object.assign(materialVariables, {
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
   colorWhite: "#FFFFFF",
+  colorBlack: "#000000",
+  disabledService: "#909DA8",
   itemBorderDefaultColor: "#5F6F82",
 
   calendarExpirableColor: "#D0021B",
@@ -62,6 +64,10 @@ const customVariables = Object.assign(materialVariables, {
   itemSeparator: "#C9C9C9",
 
   toastColor: "#C1f4f2",
+
+  alertColor: "#00CDD2",
+  headerIconDark: "#798593",
+  headerIconLight: "#E4E7EA",
 
   // Font
   ...makeFontStyleObject(Platform.select),
