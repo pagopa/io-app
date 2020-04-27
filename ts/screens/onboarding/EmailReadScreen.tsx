@@ -177,11 +177,8 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             <View style={styles.spacerLarge} />
             <Text>
               {isFromProfileSection
-                ? `${I18n.t("email.read.details")} \n`
+                ? `${I18n.t("email.read.details")}`
                 : I18n.t("email.read.info")}
-              <Text bold={true}>
-                {isFromProfileSection && I18n.t("email.read.alert")}
-              </Text>
             </Text>
           </View>
         </ScreenContent>
