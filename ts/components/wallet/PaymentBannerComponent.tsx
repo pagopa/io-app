@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -28,21 +29,23 @@ const styles = StyleSheet.create({
   }
 });
 
+const noFee = "-";
+
 /**
  * This component displays a summary on the transaction.
  * Used for the screens from the identification of the transaction to the end of the procedure.
  * Fee is shown only when a method screen is selected
  */
 const PaymentBannerComponent: React.SFC<Props> = props => {
-  const totalAmount = props.fee
-    ? (props.currentAmount as number) + (props.fee as number)
-    : props.currentAmount;
-
+  const totalAmount = fromNullable(props.fee).fold(
+    props.currentAmount,
+    fee => (props.currentAmount as number) + (fee as number)
+  );
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <Text white={true} bold={true} style={styles.smallText}>
-          {props.paymentReason}
+          {"PAYMENT BANNER" + props.paymentReason}
         </Text>
         <Text white={true} bold={true} style={styles.smallText}>
           {formatNumberCentsToAmount(props.currentAmount, true)}
@@ -53,7 +56,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           {I18n.t("wallet.ConfirmPayment.fee")}
         </Text>
         <Text white={true} style={styles.smallText}>
-          {props.fee ? formatNumberCentsToAmount(props.fee, true) : "-"}
+          {props.fee ? formatNumberCentsToAmount(props.fee, true) : noFee}
         </Text>
       </View>
       <View style={styles.row}>
@@ -61,7 +64,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           {I18n.t("wallet.total")}
         </Text>
         <Text white={true} bold={true}>
-          {props.fee ? formatNumberCentsToAmount(totalAmount, true) : "-"}
+          {props.fee ? formatNumberCentsToAmount(totalAmount, true) : noFee}
         </Text>
       </View>
     </View>

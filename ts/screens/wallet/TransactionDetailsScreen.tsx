@@ -125,18 +125,11 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
   private getData = () => {
     const transaction = this.props.navigation.getParam("transaction");
-	// whether this transaction is the result of a just completed payment
-    const isPaymentCompletedTransaction = this.props.navigation.getParam(
-      "isPaymentCompletedTransaction",
-      false
-    );
-    const amount = formatNumberAmount(centsToAmount(transaction.amount.amount));
-    const fee = formatNumberAmount(
-      centsToAmount(
-        transaction.fee === undefined
-          ? transaction.grandTotal.amount - transaction.amount.amount
-          : transaction.fee.amount
-      )
+    const amount = formatNumberCentsToAmount(transaction.amount.amount);
+    const fee = formatNumberCentsToAmount(
+      transaction.fee === undefined
+        ? transaction.grandTotal.amount - transaction.amount.amount
+        : transaction.fee.amount
     );
     const totalAmount = formatNumberCentsToAmount(
       transaction.grandTotal.amount
@@ -270,9 +263,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
           {psp && (
             <View style={[styles.row, styles.centered]}>
               <Text>{I18n.t("wallet.psp")}</Text>
-              {psp.logoPSP ? (
+              {psp.logoPSP && psp.logoPSP.length > 0 ? (
                 <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
-              ) : psp && psp.businessName ? (
+              ) : psp.businessName ? (
                 <Text>{psp.businessName}</Text>
               ) : (
                 undefined
