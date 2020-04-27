@@ -50,6 +50,7 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
+import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
@@ -101,6 +102,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
   body: "profile.main.contextualHelpContent"
 };
+
+const consecutiveTapRequired = 4;
 
 const getAppLongVersion = () => {
   const buildNumber =
@@ -258,7 +261,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     if (this.idResetTap) {
       clearInterval(this.idResetTap);
     }
-    if (this.state.tapsOnAppVersion === 4) {
+    if (this.state.tapsOnAppVersion === consecutiveTapRequired) {
       this.props.setDebugModeEnabled(true);
       this.setState({ tapsOnAppVersion: 0 });
     } else {
@@ -421,7 +424,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             )}
 
             {/* Developers Section */}
-            {(this.props.isDebugModeEnabled || isDevEnv)  && (
+            {(this.props.isDebugModeEnabled || isDevEnv) && (
               <React.Fragment>
                 <SectionHeaderComponent
                   sectionHeader={I18n.t("profile.main.developersSectionHeader")}
