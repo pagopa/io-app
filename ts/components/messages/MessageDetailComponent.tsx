@@ -20,6 +20,7 @@ import { MultiImage } from "../ui/MultiImage";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
 import MessageMarkdown from "./MessageMarkdown";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 
 type OwnProps = {
   message: CreatedMessageWithContent;
@@ -201,6 +202,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
         <MessageMarkdown webViewStyle={styles.webview}>
           {message.content.markdown}
         </MessageMarkdown>
+        <EdgeBorderComponent />
       </View>
     );
   }
