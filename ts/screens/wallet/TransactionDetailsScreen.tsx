@@ -20,7 +20,6 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
-import { navigateToWalletHome } from "../../store/actions/navigation";
 import { navigationHistoryPop } from "../../store/actions/navigationHistory";
 import { Dispatch } from "../../store/actions/types";
 import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
@@ -222,7 +221,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
       <BaseScreenComponent
         dark={true}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        goBack={this.props.navigateToWalletHome}
+        goBack={this.handleBackPress}
         headerTitle={I18n.t("wallet.transactionDetails")}
         faqCategories={["wallet_transaction"]}
       >
@@ -340,7 +339,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             light={true}
             bordered={true}
             block={true}
-            onPress={this.props.navigateToWalletHome}
+            onPress={this.handleBackPress}
           >
             <Text>{I18n.t("global.buttons.close")}</Text>
           </ButtonDefaultOpacity>
@@ -351,7 +350,6 @@ class TransactionDetailsScreen extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateBackToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
   popHistory: () => dispatch(navigationHistoryPop(3)),
   fetchPsp: (idPsp: number) => dispatch(fetchPsp.request({ idPsp }))
