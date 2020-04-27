@@ -192,7 +192,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     return (
       <ListItem style={styles.noRightPadding}>
         <ButtonDefaultOpacity
-          info={!isDanger}
+          primary={true}
           danger={isDanger}
           small={true}
           onPress={onPress}
