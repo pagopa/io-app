@@ -1,7 +1,11 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
-import TouchID, { AuthenticationError } from "react-native-touch-id";
+import { Alert, Modal, Platform, StatusBar, StyleSheet } from "react-native";
+import FingerprintScanner, {
+  AuthenticateAndroid,
+  AuthenticateIOS,
+  FingerprintScannerError
+} from "react-native-fingerprint-scanner";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -21,7 +25,6 @@ import {
 import { ReduxProps } from "./store/actions/types";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
-import { authenticateConfig } from "./utils/biometric";
 
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
@@ -161,6 +164,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     updateBiometrySupportProp: boolean;
   }) {
     // check if the state of identification process is correct
+    // tslint:disable-next-line: no-dead-store
     const { identificationState, isFingerprintEnabled } = this.props;
 
     if (identificationState.kind !== "started") {
@@ -199,6 +203,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           _ => undefined
         );
     }
+  }
+
+  public componentWillUnmount() {
+    FingerprintScanner.release();
   }
 
   public componentDidUpdate(prevProps: Props) {
@@ -382,34 +390,57 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     onIdentificationSuccessHandler: () => void,
     onIdentificationFailureHandler: () => void
   ) => {
-    TouchID.authenticate(
-      I18n.t("identification.biometric.popup.reason"),
-      authenticateConfig
+    const authenticateAndroid: AuthenticateAndroid =
+      Platform.Version < 23
+        ? {
+            onAttempt: (error: FingerprintScannerError) =>
+              this.biometricError(error, onIdentificationFailureHandler)
+          }
+        : {
+            description: I18n.t("identification.biometric.popup.reason"),
+            negativeButtonText: I18n.t("global.buttons.cancel"),
+            onAttempt: (error: FingerprintScannerError) =>
+              this.biometricError(error, onIdentificationFailureHandler)
+          };
+    const authenticateIOS: AuthenticateIOS = {
+      description: I18n.t("identification.biometric.popup.reason"),
+      fallbackEnabled: true
+    };
+    FingerprintScanner.authenticate(
+      Platform.OS === "ios" ? authenticateIOS : authenticateAndroid
     )
       .then(() => {
         this.setState({
           identificationByBiometryState: "unstarted"
         });
         onIdentificationSuccessHandler();
+        FingerprintScanner.release();
       })
-      .catch((error: AuthenticationError) => {
-        // some error occured, enable pin insertion
-        this.setState({
-          canInsertPin: true
-        });
-        if (isDebugBiometricIdentificationEnabled) {
-          Alert.alert("identification.biometric.title", `KO: ${error.code}`);
-        }
-        if (
-          error.code !== "USER_CANCELED" &&
-          error.code !== "SYSTEM_CANCELED"
-        ) {
-          this.setState({
-            identificationByBiometryState: "failure"
-          });
-        }
-        onIdentificationFailureHandler();
+      .catch((error: FingerprintScannerError) =>
+        this.biometricError(error, onIdentificationFailureHandler)
+      );
+  };
+
+  private biometricError = (
+    error: FingerprintScannerError,
+    onIdentificationFailureHandler: () => void
+  ): void => {
+    {
+      // some error occured, enable pin insertion
+      this.setState({
+        canInsertPin: true
       });
+      if (isDebugBiometricIdentificationEnabled) {
+        Alert.alert("identification.biometric.title", `KO: ${error.message}`);
+      }
+      if (error.name !== "UserCancel" && error.name !== "SystemCancel") {
+        this.setState({
+          identificationByBiometryState: "failure"
+        });
+      }
+      onIdentificationFailureHandler();
+      FingerprintScanner.release();
+    }
   };
 }
 

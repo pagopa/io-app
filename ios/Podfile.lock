@@ -75,6 +75,8 @@ PODS:
     - React
   - react-native-config (1.0.0):
     - React
+  - react-native-fingerprint-scanner (4.0.0):
+    - React
   - react-native-image-picker (0.28.1):
     - React
   - react-native-mixpanel (1.2.0):
@@ -131,8 +133,6 @@ PODS:
     - React
   - RNVectorIcons (6.6.0):
     - React
-  - TouchID (4.4.1):
-    - React
   - yoga (0.60.5.React)
 
 DEPENDENCIES:
@@ -152,6 +152,7 @@ DEPENDENCIES:
   - react-native-calendar-events (from `../node_modules/react-native-calendar-events`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-config (from `../node_modules/react-native-config`)
+  - react-native-fingerprint-scanner (from `../node_modules/react-native-fingerprint-scanner`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -178,7 +179,6 @@ DEPENDENCIES:
   - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
-  - TouchID (from `../node_modules/react-native-touch-id`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -219,6 +219,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-config:
     :path: "../node_modules/react-native-config"
+  react-native-fingerprint-scanner:
+    :path: "../node_modules/react-native-fingerprint-scanner"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
@@ -271,8 +273,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
-  TouchID:
-    :path: "../node_modules/react-native-touch-id"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -295,6 +295,7 @@ SPEC CHECKSUMS:
   react-native-calendar-events: 667f4141959b3f90c44cd328396c1488f216922d
   react-native-camera: f4f2144140ae1e808cad97cc7caf013767c11f1b
   react-native-config: 7db9b96479164dfd7b2be68eb9079e08279511c4
+  react-native-fingerprint-scanner: 03f3d966edacf2f515e361595b6778d3502db4fb
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-netinfo: 2bb2e5094edcfecfb340a85053608526cb20f185
@@ -321,7 +322,6 @@ SPEC CHECKSUMS:
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNSVG: 4501a5e968f1eb962f5481b0da53dfb59260e9b6
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
-  TouchID: ba4c656d849cceabc2e4eef722dea5e55959ecf4
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
 PODFILE CHECKSUM: 144d1674992015df629f48661e7b91bde53204e6

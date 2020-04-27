@@ -1,7 +1,6 @@
 import { Text } from "native-base";
 import * as React from "react";
-import { View } from "react-native";
-import TouchID, { AuthenticationError } from "react-native-touch-id";
+import { Platform, View } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -10,14 +9,18 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
-import { authenticateConfig } from "../../utils/biometric";
-import { showToast } from "../../utils/showToast";
 
+import FingerprintScanner, {
+  AuthenticateAndroid,
+  AuthenticateIOS,
+  FingerprintScannerError
+} from "react-native-fingerprint-scanner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSecuritySettings } from "../../utils/appSettings";
+import { showToast } from "../../utils/showToast";
 
 type OwnProps = NavigationInjectedProps;
 
@@ -72,23 +75,46 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
     );
   }
 
+  public componentWillUnmount() {
+    FingerprintScanner.release();
+  }
+
   private setBiometricPreference = (biometricPreference: boolean): void => {
-    if (biometricPreference) {
-      // if user asks to enable biometric then call enable action directly
-      this.props.setFingerprintPreference(biometricPreference);
-      return;
-    }
-    // if user asks to disable biometric recnognition is required to proceed
-    TouchID.authenticate(
-      I18n.t("identification.biometric.popup.reason"),
-      authenticateConfig
+    const authenticateAndroid: AuthenticateAndroid =
+      Platform.Version < 23
+        ? {
+            onAttempt: (_: FingerprintScannerError) =>
+              showToast(
+                I18n.t("biometric_recognition.needed_to_disable"),
+                "danger"
+              )
+          }
+        : {
+            description: I18n.t("identification.biometric.popup.reason"),
+            negativeButtonText: I18n.t("global.buttons.cancel"),
+            onAttempt: (_: FingerprintScannerError) =>
+              showToast(
+                I18n.t("biometric_recognition.needed_to_disable"),
+                "danger"
+              )
+          };
+    const authenticateIOS: AuthenticateIOS = {
+      description: I18n.t("identification.biometric.popup.reason"),
+      fallbackEnabled: true
+    };
+    FingerprintScanner.authenticate(
+      Platform.OS === "ios" ? authenticateIOS : authenticateAndroid
     )
-      .then(() => this.props.setFingerprintPreference(biometricPreference))
-      .catch((_: AuthenticationError) =>
+      .then(() => {
+        this.props.setFingerprintPreference(biometricPreference);
+        FingerprintScanner.release();
+      })
+      .catch((_: FingerprintScannerError) => {
         // this toast will be show either if recognition fails (mismatch or user aborts)
         // or if meanwhile user disables biometric recognition in OS settings
-        showToast(I18n.t("biometric_recognition.needed_to_disable"), "danger")
-      );
+        showToast(I18n.t("biometric_recognition.needed_to_disable"), "danger");
+        FingerprintScanner.release();
+      });
   };
 
   public render() {

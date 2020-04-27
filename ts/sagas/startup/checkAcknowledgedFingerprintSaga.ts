@@ -1,4 +1,7 @@
-import TouchID, { IsSupportedConfig } from "react-native-touch-id";
+import FingerprintScanner, {
+  Biometrics,
+  Errors
+} from "react-native-fingerprint-scanner";
 import { Effect } from "redux-saga";
 import { call, put, select, take } from "redux-saga/effects";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
@@ -82,10 +85,6 @@ export function* checkAcknowledgedFingerprintSaga(): IterableIterator<Effect> {
   }
 }
 
-const isTouchIdSupportedConfig: IsSupportedConfig = {
-  unifiedErrors: true
-};
-
 /**
  * Retrieve fingerpint settings from the base system. This function wraps the basic
  * method "isSupported" of TouchID library and simplifies the possible returned values in
@@ -98,18 +97,22 @@ const isTouchIdSupportedConfig: IsSupportedConfig = {
  */
 export function getFingerprintSettings(): Promise<BiometrySimpleType> {
   return new Promise((resolve, _) => {
-    TouchID.isSupported(isTouchIdSupportedConfig)
-      .then(biometryType => {
+    FingerprintScanner.isSensorAvailable()
+      .then((biometryType: Biometrics) => {
         resolve(
-          biometryType === true
+          biometryType === "Biometrics"
             ? "FINGERPRINT"
-            : biometryType === "FaceID"
+            : biometryType === "Face ID"
               ? "FACE_ID"
               : "TOUCH_ID"
         );
       })
-      .catch(reason => {
-        resolve(reason.code === "NOT_ENROLLED" ? reason.code : "UNAVAILABLE");
+      .catch((reason: Errors) => {
+        resolve(
+          reason.name === "FingerprintScannerNotEnrolled"
+            ? "NOT_ENROLLED"
+            : "UNAVAILABLE"
+        );
       });
   });
 }

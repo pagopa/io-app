@@ -16,7 +16,7 @@ import com.rnfs.RNFSPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.calendarevents.CalendarEventsPackage;
-import com.rnfingerprint.FingerprintAuthPackage;
+import com.hieuvp.fingerprint.ReactNativeFingerprintScannerPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.horcrux.svg.SvgPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
@@ -59,7 +59,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
       return Arrays.<ReactPackage>asList(new MainReactPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
           new ImagePickerPackage(), new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
           new RNGestureHandlerPackage(), new CalendarEventsPackage(), new RNCWebViewPackage(),
-          new FingerprintAuthPackage(), new BackgroundTimerPackage(), new SvgPackage(), new RNTextInputMaskPackage(),
+          new ReactNativeFingerprintScannerPackage(), new BackgroundTimerPackage(), new SvgPackage(), new RNTextInputMaskPackage(),
           new SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new RNCameraPackage(),
           new ReactNativePushNotificationPackage(), new KeychainPackage(), new RNI18nPackage(), new Sha256Package(),
           new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(),new CiePackage(),
