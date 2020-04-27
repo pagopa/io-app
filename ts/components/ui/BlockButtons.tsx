@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -30,25 +31,40 @@ type CommonProps = Readonly<{
 
 type BlockButtonProps = ComponentProps<Button> & OwnButtonProps;
 
+/**
+ * | single button |
+ */
 export interface SingleButton extends CommonProps {
   type: "SingleButton";
 }
 
+/**
+ * | left | right |
+ */
 export interface TwoButtonsInlineHalf extends CommonProps {
   type: "TwoButtonsInlineHalf";
   rightButton: BlockButtonProps;
 }
 
+/**
+ * | left  |       right        |
+ */
 interface TwoButtonsInlineThird extends CommonProps {
   type: "TwoButtonsInlineThird";
   rightButton: BlockButtonProps;
 }
 
+/**
+ * |      left       |  right  |
+ */
 interface TwoButtonsInlineThirdInverted extends CommonProps {
   type: "TwoButtonsInlineThirdInverted";
   rightButton: BlockButtonProps;
 }
 
+/**
+ * |  left |  mid  | right |
+ */
 interface ThreeButtonsInLine extends CommonProps {
   type: "ThreeButtonsInLine";
   rightButton: BlockButtonProps;
@@ -103,7 +119,7 @@ export default class BlockButtons extends React.Component<Props, never> {
     return (
       <React.Fragment>
         {this.renderButton(this.props.leftButton, leftButtonStyle)}
-        <View hspacer={true} />
+        {this.props.type !== "SingleButton" && <View hspacer={true} />}
       </React.Fragment>
     );
   };
@@ -116,11 +132,9 @@ export default class BlockButtons extends React.Component<Props, never> {
       <ButtonDefaultOpacity style={style} {...props}>
         {props.iconName && <IconFont name={props.iconName} />}
         <Text
-          style={
-            props.buttonFontSize !== undefined
-              ? { fontSize: props.buttonFontSize }
-              : {}
-          }
+          style={fromNullable(props.buttonFontSize).fold(undefined, fs => {
+            return { fontSize: fs };
+          })}
         >
           {props.title}
         </Text>
