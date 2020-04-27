@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "space-between",
     paddingHorizontal: customVariables.contentPadding,
-    height: HEADER_HEIGHT
+    minHeight: HEADER_HEIGHT
   },
   text: {
     flex: 1,
