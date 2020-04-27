@@ -95,8 +95,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       this.setState({ isHelpVisible: false }, () => {
         this.setState({ requestReport: some(type) }, () => {
           // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
-          // we force handling here. The timeout is due to wait until the modal is completly hidden
-          // otherwise in the Instabug screeshoot we will se the contextual help content instead the screen below
+          // we force handling here. The timeout is due to wait until the modal is completely hidden
+          // otherwise in the Instabug screeshoot we will see the contextual help content instead the screen below
           if (Platform.OS === "android") {
             setTimeout(
               this.handleOnContextualHelpDismissed,
