@@ -18,9 +18,22 @@ export function handleLinkMessage(dispatch: Dispatch, href: string) {
   }
 }
 
+// remove protocol from a link ex: http://www.site.com -> www.site.com
+export const removeProtocol = (link: string): string => {
+  return link.replace(new RegExp(/https?:\/\//gi), "");
+};
+
 export function openLink(url: string, customError?: string) {
   const error = customError || I18n.t("global.genericError");
-  Linking.openURL(url).catch(() => {
-    showToast(error);
-  });
+  const getErrorToast = () => showToast(error);
+
+  Linking.canOpenURL(url)
+    .then(supported => {
+      if (supported) {
+        Linking.openURL(url).catch(getErrorToast);
+      } else {
+        showToast(I18n.t("global.genericError"));
+      }
+    })
+    .catch(getErrorToast);
 }
