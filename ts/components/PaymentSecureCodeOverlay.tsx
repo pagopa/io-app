@@ -105,8 +105,6 @@ export default class PaymentSecureCodeOverlay extends React.Component<
           <PaymentBannerComponent
             currentAmount={verifica.importoSingoloVersamento}
             paymentReason={verifica.causaleVersamento}
-            recipient={verifica.enteBeneficiario}
-            onCancel={this.props.onCancel}
           />
           <View spacer={true} />
           <ScreenContentHeader
