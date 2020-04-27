@@ -19,7 +19,6 @@ import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 import { openLink, removeProtocol } from "./ui/Markdown/handlers/link";
-import { RTron } from "../boot/configureStoreAndPersistor";
 
 type Props = Readonly<{
   title: string;
@@ -29,7 +28,6 @@ type Props = Readonly<{
   modalAnimation?: ModalBaseProps["animationType"];
   close: () => void;
   onRequestAssistance: (type: BugReporting.reportType) => void;
-  onRequestClose?: () => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
@@ -68,9 +66,6 @@ export class ContextualHelpModal extends React.Component<Props, State> {
           content: null
         })
       );
-      if (this.props.onRequestClose) {
-        this.props.onRequestClose();
-      }
       this.props.close();
     };
 
