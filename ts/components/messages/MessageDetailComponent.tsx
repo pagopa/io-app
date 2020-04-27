@@ -13,6 +13,7 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
@@ -20,7 +21,6 @@ import { MultiImage } from "../ui/MultiImage";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
 import MessageMarkdown from "./MessageMarkdown";
-import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 
 type OwnProps = {
   message: CreatedMessageWithContent;
