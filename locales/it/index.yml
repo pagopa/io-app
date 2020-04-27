@@ -631,7 +631,6 @@ wallet:
     partialAmount: Importo dovuto
     fee: Costi di transazione
     why: Perché?
-    totalAmount: Totale
     info: "Attenzione: dopo questo passaggio non sarà più possibile annullare"
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
     changeMethod: Cambia metodo di pagamento
