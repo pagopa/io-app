@@ -1,6 +1,7 @@
 /**
  * A component to show the main screen of the Profile section
  */
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { H3, List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
@@ -104,6 +105,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const consecutiveTapRequired = 4;
+const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
 
 const getAppLongVersion = () => {
   const buildNumber =
@@ -266,7 +268,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       this.setState({ tapsOnAppVersion: 0 });
     } else {
       // tslint:disable-next-line: no-object-mutation
-      this.idResetTap = setInterval(this.resetAppTapCounter, 2000);
+      this.idResetTap = setInterval(
+        this.resetAppTapCounter,
+        RESET_COUNTER_TIMEOUT
+      );
       const tapsOnAppVersion = this.state.tapsOnAppVersion + 1;
       this.setState({
         tapsOnAppVersion
