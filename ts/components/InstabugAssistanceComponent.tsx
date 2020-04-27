@@ -80,7 +80,7 @@ class InstabugAssistanceComponent extends React.PureComponent<Props, State> {
       <React.Fragment>
         <H3>{I18n.t("instabug.contextualHelp.title1")}</H3>
         <View spacer={true} />
-        <View spacer={true} extrasmall={true} />
+        <View spacer={true} xsmall={true} />
         {/** TODO: add new io-send-message icon */}
         <ButtonWithImage
           icon={"io-messaggi"}
