@@ -83,7 +83,7 @@ const lightStyles = StyleSheet.create({
 
 type Props = {
   icon: string;
-  onClick: () => void;
+  onPress: () => void;
   text: string;
   disabled?: boolean;
   light?: boolean;
@@ -92,11 +92,11 @@ type Props = {
 // Create a button consisting of an icon + label
 class ButtonWithImage extends React.PureComponent<Props> {
   public render() {
-    const { icon, onClick, text, disabled, light } = this.props;
+    const { icon, onPress, text, disabled, light } = this.props;
     return (
       <ButtonDefaultOpacity
         disabled={disabled === true}
-        onPress={onClick}
+        onPress={onPress}
         style={[
           styles.margin,
           baseStyles.button,
