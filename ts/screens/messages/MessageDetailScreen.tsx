@@ -15,7 +15,6 @@ import MessageDetailComponent from "../../components/messages/MessageDetailCompo
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import I18n from "../../i18n";
 import { loadServiceMetadata } from "../../store/actions/content";
 import {
@@ -311,7 +310,6 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
         faqCategories={["messages_detail"]}
       >
         {this.renderCurrentState()}
-        <EdgeBorderComponent />
       </BaseScreenComponent>
     );
   }

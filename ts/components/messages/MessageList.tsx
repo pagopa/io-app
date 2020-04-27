@@ -1,6 +1,7 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import React from "react";
 import {
@@ -10,7 +11,8 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   RefreshControl,
-  StyleSheet
+  StyleSheet,
+  Vibration
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
@@ -65,6 +67,7 @@ const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
 const ITEM_LOADING_HEIGHT = ITEM_WITHOUT_CTABAR_HEIGHT;
 const ITEM_WITH_CTABAR_HEIGHT = 158;
 const ITEM_SEPARATOR_HEIGHT = 1;
+const VIBRATION_LONG_PRESS_DURATION = 100 as Millisecond;
 
 const styles = StyleSheet.create({
   itemLoadingContainer: {
@@ -272,6 +275,7 @@ class MessageList extends React.Component<Props, State> {
   };
 
   private onLongPress = (id: string) => {
+    Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
     const { messageStates, onLongPressItem } = this.props;
     onLongPressItem(id);
     const lastIndex = messageStates.length - 1;

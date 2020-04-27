@@ -1,16 +1,14 @@
 /**
  * This screen allows the user to select the payment method for a selected transaction
- * TODO: "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 import { some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, List, Text, View } from "native-base";
+import { Content, List, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
@@ -59,14 +57,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 class PickPaymentMethodScreen extends React.Component<Props> {
   public render(): React.ReactNode {
-    const verifica = this.props.navigation.getParam("verifica");
-
+    const verifica: PaymentRequestsGetResponse = this.props.navigation.getParam(
+      "verifica"
+    );
     const paymentReason = verifica.causaleVersamento; // this could be empty as per pagoPA definition
-    const currentAmount = verifica.importoSingoloVersamento;
-    const recipient = verifica.enteBeneficiario;
-
     const { wallets } = this.props;
-
     const primaryButtonProps = {
       block: true,
       onPress: this.props.navigateToAddPaymentMethod,
@@ -87,23 +82,13 @@ class PickPaymentMethodScreen extends React.Component<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet_methods"]}
       >
-        <Content noPadded={true}>
+        <Content noPadded={true} bounces={false}>
           <PaymentBannerComponent
             paymentReason={paymentReason}
-            currentAmount={currentAmount}
-            recipient={recipient}
-            onCancel={this.props.navigateToTransactionSummary}
+            currentAmount={verifica.importoSingoloVersamento}
           />
 
           <View style={styles.paddedLR}>
-            <View spacer={true} />
-            <H1>
-              {I18n.t(
-                wallets.length > 0
-                  ? "wallet.payWith.title"
-                  : "wallet.payWith.noWallets.title"
-              )}
-            </H1>
             <View spacer={true} />
             <Text>
               {I18n.t(
@@ -112,13 +97,13 @@ class PickPaymentMethodScreen extends React.Component<Props> {
                   : "wallet.payWith.noWallets.text"
               )}
             </Text>
-            <View spacer={true} />
             <List
+              keyExtractor={item => `${item.idWallet}`}
               removeClippedSubviews={false}
               dataArray={wallets as any[]} // tslint:disable-line: readonly-array
               renderRow={(item): React.ReactElement<any> => (
                 <CardComponent
-                  type="Picking"
+                  type={"Picking"}
                   wallet={item}
                   mainAction={this.props.navigateToConfirmOrPickPsp}
                 />
