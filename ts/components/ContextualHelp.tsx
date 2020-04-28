@@ -7,10 +7,10 @@
 
 import { Content, View } from "native-base";
 import * as React from "react";
-import {StyleSheet} from "react-native"
-import BaseScreenComponent from './screens/BaseScreenComponent';
-import { ScreenContentHeader } from './screens/ScreenContentHeader';
-import customVariables from '../theme/variables';
+import { StyleSheet } from "react-native";
+import customVariables from "../theme/variables";
+import BaseScreenComponent from "./screens/BaseScreenComponent";
+import { ScreenContentHeader } from "./screens/ScreenContentHeader";
 
 type Props = Readonly<{
   title: string;
@@ -18,23 +18,22 @@ type Props = Readonly<{
   onClose: () => void;
 }>;
 
-const styles  = StyleSheet.create({
+const styles = StyleSheet.create({
   padded: {
     paddingHorizontal: customVariables.contentPadding
   }
-})
+});
 
 export class ContextualHelp extends React.Component<Props> {
-  
   public render(): React.ReactNode {
     return (
-      <BaseScreenComponent isModal={true} customRightIcon={{iconName: 'io-close', onPress: this.props.onClose}}>
+      <BaseScreenComponent
+        isModal={true}
+        customRightIcon={{ iconName: "io-close", onPress: this.props.onClose }}
+      >
         <Content noPadded={true}>
-          <ScreenContentHeader title={this.props.title}/>
-          <View style={styles.padded}>
-          {this.props.body()}
-          </View>
-          
+          <ScreenContentHeader title={this.props.title} />
+          <View style={styles.padded}>{this.props.body()}</View>
         </Content>
       </BaseScreenComponent>
     );

@@ -3,7 +3,7 @@ import * as React from "react";
 import BlockButtons, { BlockButtonsProps } from "./BlockButtons";
 
 type OwnProps = Readonly<{
-  withSafeArea?: boolean
+  withSafeArea?: boolean;
 }>;
 
 export type FooterWithButtonsPorps = OwnProps & BlockButtonsProps;

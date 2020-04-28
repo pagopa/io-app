@@ -32,7 +32,10 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
-import BaseScreenComponent, { ContextualHelpPropsMarkdown, BaseScreenComponentProps } from "./screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  BaseScreenComponentProps,
+  ContextualHelpPropsMarkdown
+} from "./screens/BaseScreenComponent";
 import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";

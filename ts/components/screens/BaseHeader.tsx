@@ -2,7 +2,6 @@ import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import IconFont from "../ui/IconFont";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -11,11 +10,12 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
+import GoBackButtonModal from "../GoBackButtonModal";
 import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
-import GoBackButtonModal from '../GoBackButtonModal';
+import IconFont from "../ui/IconFont";
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -29,7 +29,9 @@ const styles = StyleSheet.create({
 interface OwnProps {
   dark?: boolean;
   headerTitle?: string;
-  goBack?: React.ComponentProps<typeof GoBackButton>["goBack"] | React.ComponentProps<typeof GoBackButtonModal>['onPress'];
+  goBack?:
+    | React.ComponentProps<typeof GoBackButton>["goBack"]
+    | React.ComponentProps<typeof GoBackButtonModal>["onPress"];
   primary?: boolean;
   appLogo?: boolean;
   onShowHelp?: () => void;
@@ -56,8 +58,8 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
    * otherwise the default goback navigation will be returned
    */
   private getGoBackHandler = () => {
-    if(this.props.isModal){
-      return this.props.goBack
+    if (this.props.isModal) {
+      return this.props.goBack;
     }
 
     return typeof this.props.goBack === "function"
@@ -158,12 +160,12 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
         <Left>
           {this.props.isModal ? (
             <GoBackButtonModal
-            testID={"back-button"}
-            onPress={goBack}
-            accessible={true}
-            accessibilityLabel={I18n.t("global.buttons.back")}
-            white={dark}
-          />
+              testID={"back-button"}
+              onPress={goBack}
+              accessible={true}
+              accessibilityLabel={I18n.t("global.buttons.back")}
+              white={dark}
+            />
           ) : (
             <GoBackButton
               testID={"back-button"}
@@ -172,9 +174,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
               accessibilityLabel={I18n.t("global.buttons.back")}
               white={dark}
             />
-            
           )}
-          
         </Left>
       )
     );

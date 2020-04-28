@@ -1,12 +1,3 @@
-import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
-import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import {
-  NavigationEventPayload,
-  NavigationEvents,
-  NavigationInjectedProps
-} from "react-navigation";
-import { connect } from "react-redux";
 import { isLeft, isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import {
@@ -19,6 +10,15 @@ import {
   NonEmptyString,
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
+import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
+import * as React from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import {
+  NavigationEventPayload,
+  NavigationEvents,
+  NavigationInjectedProps
+} from "react-navigation";
+import { connect } from "react-redux";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown

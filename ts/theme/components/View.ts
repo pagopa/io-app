@@ -1,8 +1,7 @@
-
+import * as ReactNative from "react-native";
+import { FOOTER_SAFE_AREA } from "../../utils/constants";
 import { Theme } from "../types";
 import variables from "../variables";
-import * as ReactNative from "react-native";
-import { FOOTER_SAFE_AREA } from '../../utils/constants';
 import customVariables from "../variables";
 
 declare module "native-base" {
@@ -69,8 +68,7 @@ export default (): Theme => {
     },
 
     ".footer": {
-
-      ".withSafeArea":{
+      ".withSafeArea": {
         paddingBottom: variables.footerPaddingBottom + FOOTER_SAFE_AREA
       },
 

@@ -1,34 +1,33 @@
-
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Text, View, Content } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Dimensions, StyleSheet } from "react-native";
+import ImagePicker from "react-native-image-picker";
+import * as ReaderQR from "react-native-lewin-qrcode";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import I18n from "../../../i18n";
-import { Dispatch } from "../../../store/actions/types";
-import { ComponentProps } from "../../../types/react";
-import ImagePicker from "react-native-image-picker";
-import * as ReaderQR from "react-native-lewin-qrcode";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
+import FooterButtonsWithSafeArea from "../../../components/ui/FooterButtonsWithSafeArea";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
+import I18n from "../../../i18n";
 import {
   navigateToPaymentManualDataInsertion,
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHome
 } from "../../../store/actions/navigation";
+import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
+import { ComponentProps } from "../../../types/react";
 import { openAppSettings } from "../../../utils/appSettings";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
-import FooterButtonsWithSafeArea from '../../../components/ui/FooterButtonsWithSafeArea';
 
 type Props = NavigationInjectedProps & ReturnType<typeof mapDispatchToProps>;
 
@@ -236,98 +235,102 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       title: I18n.t("global.buttons.cancel")
     };
 
-    return <FooterButtonsWithSafeArea footerProps={{
-      type: 'TwoButtonsInlineThird', 
-      leftButton: secondaryButtonProps, 
-      rightButton: primaryButtonProps
-    }} />;
-  }
+    return (
+      <FooterButtonsWithSafeArea
+        footerProps={{
+          type: "TwoButtonsInlineThird",
+          leftButton: secondaryButtonProps,
+          rightButton: primaryButtonProps
+        }}
+      />
+    );
+  };
 
   public render(): React.ReactNode {
     return (
-        <BaseScreenComponent
-          headerTitle={I18n.t("wallet.QRtoPay.byCameraTitle")}
-          goBack={this.goBack}
-          contextualHelpMarkdown={contextualHelpMarkdown}
-          faqCategories={["wallet"]}
-          withSafeArea={true}
-        >
-          <NavigationEvents
+      <BaseScreenComponent
+        headerTitle={I18n.t("wallet.QRtoPay.byCameraTitle")}
+        goBack={this.goBack}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet"]}
+        withSafeArea={true}
+      >
+        <NavigationEvents
           onDidFocus={this.handleDidFocus}
           onWillBlur={this.handleWillBlur}
         />
-          <Content bounces={false} noPadded={true}>
-            {this.state.isFocused && (
-              <QRCodeScanner
-                onRead={(reading: { data: string }) =>
-                  this.onQrCodeData(reading.data)
-                }
-                ref={this.scannerRef}
-                containerStyle={styles.cameraContainer as any}
-                showMarker={true}
-                cameraStyle={styles.camera as any}
-                customMarker={
-                  <CameraMarker
-                    screenWidth={screenWidth}
-                    state={this.state.scanningState}
-                  />
-                }
-                bottomContent={
-                  <View>
-                    <ButtonDefaultOpacity
-                      onPress={this.showImagePicker}
-                      style={styles.button}
-                      bordered={true}
-                    >
-                      <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
-                    </ButtonDefaultOpacity>
-                    <View style={styles.content}>
-                      <View spacer={true} />
-                      <Text style={[styles.padded, styles.bottomText]}>
-                        {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                      </Text>
-                      <View spacer={true} extralarge={true} />
-                    </View>
-                  </View>
-                }
-                // "captureAudio" enable/disable microphone permission
-                cameraProps={{ ratio: "1:1", captureAudio: false }}
-                // "checkAndroid6Permissions" property enables permission checking for
-                // Android versions greater than 6.0 (23+).
-                checkAndroid6Permissions={true}
-                permissionDialogTitle={I18n.t(
-                  "wallet.QRtoPay.cameraUsagePermissionInfobox.title"
-                )}
-                permissionDialogMessage={I18n.t(
-                  "wallet.QRtoPay.cameraUsagePermissionInfobox.message"
-                )}
-                // "notAuthorizedView" is by default available on iOS systems ONLY.
-                // In order to make Android systems act the same as iOSs you MUST
-                // enable "checkAndroid6Permissions" property as well.
-                // On devices before SDK version 23, the permissions are automatically
-                // granted if they appear in the manifest, so message customization would
-                // be impossible.
-                notAuthorizedView={(
-                  <View style={styles.notAuthorizedContainer}>
-                    <Text style={styles.notAuthorizedText}>
-                      {I18n.t("wallet.QRtoPay.enroll_cta")}
+        <Content bounces={false} noPadded={true}>
+          {this.state.isFocused && (
+            <QRCodeScanner
+              onRead={(reading: { data: string }) =>
+                this.onQrCodeData(reading.data)
+              }
+              ref={this.scannerRef}
+              containerStyle={styles.cameraContainer as any}
+              showMarker={true}
+              cameraStyle={styles.camera as any}
+              customMarker={
+                <CameraMarker
+                  screenWidth={screenWidth}
+                  state={this.state.scanningState}
+                />
+              }
+              bottomContent={
+                <View>
+                  <ButtonDefaultOpacity
+                    onPress={this.showImagePicker}
+                    style={styles.button}
+                    bordered={true}
+                  >
+                    <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
+                  </ButtonDefaultOpacity>
+                  <View style={styles.content}>
+                    <View spacer={true} />
+                    <Text style={[styles.padded, styles.bottomText]}>
+                      {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
                     </Text>
-
-                    <ButtonDefaultOpacity
-                      onPress={openAppSettings}
-                      style={styles.notAuthorizedBtn}
-                    >
-                      <Text>
-                        {I18n.t("biometric_recognition.enroll_btnLabel")}
-                      </Text>
-                    </ButtonDefaultOpacity>
+                    <View spacer={true} extralarge={true} />
                   </View>
-                )}
-              />
-            )}
-          </Content>
-          {this.getFooterButtons()}
-        </BaseScreenComponent>
+                </View>
+              }
+              // "captureAudio" enable/disable microphone permission
+              cameraProps={{ ratio: "1:1", captureAudio: false }}
+              // "checkAndroid6Permissions" property enables permission checking for
+              // Android versions greater than 6.0 (23+).
+              checkAndroid6Permissions={true}
+              permissionDialogTitle={I18n.t(
+                "wallet.QRtoPay.cameraUsagePermissionInfobox.title"
+              )}
+              permissionDialogMessage={I18n.t(
+                "wallet.QRtoPay.cameraUsagePermissionInfobox.message"
+              )}
+              // "notAuthorizedView" is by default available on iOS systems ONLY.
+              // In order to make Android systems act the same as iOSs you MUST
+              // enable "checkAndroid6Permissions" property as well.
+              // On devices before SDK version 23, the permissions are automatically
+              // granted if they appear in the manifest, so message customization would
+              // be impossible.
+              notAuthorizedView={
+                <View style={styles.notAuthorizedContainer}>
+                  <Text style={styles.notAuthorizedText}>
+                    {I18n.t("wallet.QRtoPay.enroll_cta")}
+                  </Text>
+
+                  <ButtonDefaultOpacity
+                    onPress={openAppSettings}
+                    style={styles.notAuthorizedBtn}
+                  >
+                    <Text>
+                      {I18n.t("biometric_recognition.enroll_btnLabel")}
+                    </Text>
+                  </ButtonDefaultOpacity>
+                </View>
+              }
+            />
+          )}
+        </Content>
+        {this.getFooterButtons()}
+      </BaseScreenComponent>
     );
   }
 }

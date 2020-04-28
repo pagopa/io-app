@@ -33,9 +33,7 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import {
-  NavigationScreenProps
-} from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";

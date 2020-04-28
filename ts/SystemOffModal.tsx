@@ -4,7 +4,7 @@
  * as expected
  */
 import I18n from "i18n-js";
-import { H2, Text, View, Content } from "native-base";
+import { Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -45,19 +45,19 @@ class SystemOffModal extends React.PureComponent<Props> {
     return (
       <Modal>
         <BaseScreenComponent appLogo={true} goBack={false}>
-            <Content>
-                <Image
-                  style={styles.image}
-                  source={require("../img/servicesStatus/error-detail-icon.png")}
-                />
-                <View spacer={true} extralarge={true} />
-              <H2 style={styles.title}>{I18n.t("systemsOff.title")}</H2>
-              <View spacer={true} />
-              {message && <Text style={styles.subTitle}>{message}</Text>}
-              <Text style={styles.subTitle} bold={true}>
-                {I18n.t("systemsOff.closeApp")}
-              </Text>
-            </Content>
+          <Content>
+            <Image
+              style={styles.image}
+              source={require("../img/servicesStatus/error-detail-icon.png")}
+            />
+            <View spacer={true} extralarge={true} />
+            <H2 style={styles.title}>{I18n.t("systemsOff.title")}</H2>
+            <View spacer={true} />
+            {message && <Text style={styles.subTitle}>{message}</Text>}
+            <Text style={styles.subTitle} bold={true}>
+              {I18n.t("systemsOff.closeApp")}
+            </Text>
+          </Content>
         </BaseScreenComponent>
       </Modal>
     );

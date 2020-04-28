@@ -7,9 +7,9 @@ import { GlobalState } from "../store/reducers/types";
 import CalendarsListContainer from "./CalendarsListContainer";
 import ItemSeparatorComponent from "./ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
+import BaseScreenComponent from "./screens/BaseScreenComponent";
 import { ScreenContentHeader } from "./screens/ScreenContentHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import BaseScreenComponent from './screens/BaseScreenComponent';
 
 type Props = ReturnType<typeof mapStateToProps> & {
   onCancel: () => void;

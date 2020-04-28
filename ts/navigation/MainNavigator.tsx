@@ -107,11 +107,9 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.WALLET_TRANSACTION_DETAILS
 ];
 
-export const getTabBarVisibility = (
-  state: NavigationState
-): boolean => {
+export const getTabBarVisibility = (state: NavigationState): boolean => {
   const { routeName } = state.routes[state.index];
-  return NoTabBarRoutes.indexOf(routeName) === -1
+  return NoTabBarRoutes.indexOf(routeName) === -1;
 };
 
 /**

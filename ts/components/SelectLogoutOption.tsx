@@ -10,9 +10,9 @@ import { isLogoutRequested } from "../store/reducers/authentication";
 import { GlobalState } from "../store/reducers/types";
 import variables from "../theme/variables";
 import { withLoadingSpinner } from "./helpers/withLoadingSpinner";
+import BaseScreenComponent from "./screens/BaseScreenComponent";
 import ListItemComponent from "./screens/ListItemComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import BaseScreenComponent from './screens/BaseScreenComponent';
 
 type OwnProps = {
   onCancel: () => void;
@@ -58,7 +58,7 @@ class SelectLogoutOption extends React.PureComponent<Props> {
   public render() {
     // Using the loading spinner HOC to avoid reimplementing the Loading component
     const ContainerComponent = withLoadingSpinner(() => (
-      <BaseScreenComponent goBack={this.onBackPress} isModal={true}>      
+      <BaseScreenComponent goBack={this.onBackPress} isModal={true}>
         <Content>
           {this.props.header || null}
           <List>

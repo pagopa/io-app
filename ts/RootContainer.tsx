@@ -3,12 +3,7 @@
  */
 import { Root } from "native-base";
 import * as React from "react";
-import {
-  AppState,
-  BackHandler,
-  Linking,
-  Platform
-} from "react-native";
+import { AppState, BackHandler, Linking, Platform } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import { initialiseInstabug } from "./boot/configureInstabug";

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
 import ImageZoom from "react-native-image-pan-zoom";
-import BaseScreenComponent from '../../../components/screens/BaseScreenComponent';
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
 type Props = {
   onCancel: () => void;
@@ -28,10 +28,12 @@ const styles = StyleSheet.create({
 });
 
 class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
-
   public render() {
     return (
-      <BaseScreenComponent isModal={true} customRightIcon={{iconName: 'io-close', onPress: this.props.onCancel}}>
+      <BaseScreenComponent
+        isModal={true}
+        customRightIcon={{ iconName: "io-close", onPress: this.props.onCancel }}
+      >
         <ImageZoom
           imageHeight={screenHeight}
           imageWidth={screenWidth}

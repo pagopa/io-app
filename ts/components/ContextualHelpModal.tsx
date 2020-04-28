@@ -14,9 +14,9 @@ import customVariables from "../theme/variables";
 import { FAQsCategoriesType } from "../utils/faq";
 import FAQComponent from "./FAQComponent";
 import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
+import BaseScreenComponent from "./screens/BaseScreenComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
-import BaseScreenComponent from "./screens/BaseScreenComponent";
 import { openLink, removeProtocol } from "./ui/Markdown/handlers/link";
 
 type Props = Readonly<{
@@ -97,7 +97,6 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         <BaseScreenComponent
           customRightIcon={{ iconName: "io-close", onPress: onClose }}
         >
-          
           {!this.state.content && (
             <View centerJustified={true}>
               <ActivityIndicator color={themeVariables.brandPrimaryLight} />
@@ -109,40 +108,39 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               noPadded={true}
             >
               <View style={styles.padded}>
-              <H3>{this.props.title}</H3>
-              {this.state.content}
-              {this.props.faqCategories &&
-                this.props.contentLoaded && (
-                  <FAQComponent faqCategories={this.props.faqCategories} />
+                <H3>{this.props.title}</H3>
+                {this.state.content}
+                {this.props.faqCategories &&
+                  this.props.contentLoaded && (
+                    <FAQComponent faqCategories={this.props.faqCategories} />
+                  )}
+                {this.props.contentLoaded && (
+                  <React.Fragment>
+                    <View spacer={true} extralarge={true} />
+                    <InstabugAssistanceComponent
+                      requestAssistance={this.props.onRequestAssistance}
+                    />
+                    <View spacer={true} extralarge={true} />
+                    <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
+                    <View spacer={true} />
+                    <View spacer={true} xsmall={true} />
+                    <Text>
+                      {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
+                      <TouchableWithoutFeedback
+                        onPress={() => openLink(I18n.t("global.ioWebSite"))}
+                      >
+                        <Text link={true}>
+                          {removeProtocol(I18n.t("global.ioWebSite"))}
+                        </Text>
+                      </TouchableWithoutFeedback>
+                    </Text>
+                  </React.Fragment>
                 )}
-              {this.props.contentLoaded && (
-                <React.Fragment>
-                  <View spacer={true} extralarge={true} />
-                  <InstabugAssistanceComponent
-                    requestAssistance={this.props.onRequestAssistance}
-                  />
-                  <View spacer={true} extralarge={true} />
-                  <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
-                  <View spacer={true} />
-                  <View spacer={true} xsmall={true} />
-                  <Text>
-                    {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
-                    <TouchableWithoutFeedback
-                      onPress={() => openLink(I18n.t("global.ioWebSite"))}
-                    >
-                      <Text link={true}>
-                        {removeProtocol(I18n.t("global.ioWebSite"))}
-                      </Text>
-                    </TouchableWithoutFeedback>
-                  </Text>
-                </React.Fragment>
-              )}
               </View>
               <View spacer={true} extralarge={true} />
-              {this.props.contentLoaded && (<BetaBannerComponent />)}
+              {this.props.contentLoaded && <BetaBannerComponent />}
             </Content>
           )}
-          
         </BaseScreenComponent>
       </Modal>
     );

@@ -9,10 +9,7 @@ import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
-import {
-  NavigationScreenProp,
-  NavigationState
-} from "react-navigation";
+import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -138,7 +135,6 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
     this.props.loadWallets();
     this.props.loadTransactions(this.props.transactionsLoadedLength);
-
   }
 
   private cardHeader(isError: boolean = false) {

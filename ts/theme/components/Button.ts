@@ -1,7 +1,7 @@
+import { Platform, TouchableOpacityProperties } from "react-native";
 import { makeFontStyleObject } from "../fonts";
 import { Theme } from "../types";
 import variables from "../variables";
-import { Platform, TouchableOpacityProperties } from "react-native";
 
 declare module "native-base" {
   namespace NativeBase {

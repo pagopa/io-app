@@ -1,5 +1,5 @@
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Text, View, Content } from "native-base";
+import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import {
   BackHandler,
@@ -11,11 +11,11 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import BaseScreenComponent from "./components/screens/BaseScreenComponent";
+import { ScreenContentHeader } from "./components/screens/ScreenContentHeader";
 import FooterWithButtons from "./components/ui/FooterWithButtons";
 import I18n from "./i18n";
 import customVariables from "./theme/variables";
 import { storeUrl } from "./utils/appVersion";
-import { ScreenContentHeader } from './components/screens/ScreenContentHeader';
 
 const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
 
@@ -140,21 +140,25 @@ class UpdateAppModal extends React.PureComponent<never, State> {
     // Current version not supported
     return (
       <Modal>
-        <BaseScreenComponent appLogo={true} goBack={this.handleBackPress} isModal={true}>
-          <ScreenContentHeader title={I18n.t("titleUpdateApp")}/>
+        <BaseScreenComponent
+          appLogo={true}
+          goBack={this.handleBackPress}
+          isModal={true}
+        >
+          <ScreenContentHeader title={I18n.t("titleUpdateApp")} />
           <Content>
-              <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
-              <Image
-                style={styles.img}
-                source={require("../img/icons/update-icon.png")}
-              />
-              {this.state.hasError && (
-                <Text style={styles.textDanger}>
-                  {I18n.t("msgErrorUpdateApp")}
-                </Text>
-              )}
-            </Content>
-            {this.footer}
+            <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
+            <Image
+              style={styles.img}
+              source={require("../img/icons/update-icon.png")}
+            />
+            {this.state.hasError && (
+              <Text style={styles.textDanger}>
+                {I18n.t("msgErrorUpdateApp")}
+              </Text>
+            )}
+          </Content>
+          {this.footer}
         </BaseScreenComponent>
       </Modal>
     );
