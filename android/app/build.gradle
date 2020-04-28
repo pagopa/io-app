@@ -205,7 +205,6 @@ def enableHermes = project.ext.react.get("enableHermes", false)
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"
-    implementation project(':react-native-fingerprint-scanner')
     compile project(':react-native-cie')
     compile "com.squareup.okhttp3:okhttp:4.2.1"
     compile "com.squareup.okhttp3:logging-interceptor:4.2.1"
