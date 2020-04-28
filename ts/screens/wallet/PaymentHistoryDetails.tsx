@@ -193,7 +193,7 @@ class PaymentHistoryDetails extends React.Component<Props> {
       payment.verified_data,
       "causaleVersamento",
       m => m
-    ).fold(notAvailable, cv => cv);
+    ).fold(notAvailable, cv => cv as string);
     const creditore = maybeProperty(
       payment.transaction,
       "merchant",
