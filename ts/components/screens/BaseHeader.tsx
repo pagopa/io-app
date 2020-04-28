@@ -1,6 +1,6 @@
 import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet, BackHandler } from "react-native";
+import { BackHandler, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
@@ -40,7 +40,7 @@ interface OwnProps {
     iconName: string;
     onPress: () => void;
   };
-  goBack?: (() => void)| boolean;
+  goBack?: (() => void) | boolean;
   isModal?: boolean;
   handleHardwareBack?: boolean;
 }
@@ -51,42 +51,44 @@ type Props = OwnProps &
 
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props> {
-  
-  public componentDidMount(){
-    if(this.props.handleHardwareBack){
+  public componentDidMount() {
+    if (this.props.handleHardwareBack) {
       BackHandler.addEventListener("hardwareBackPress", this.getGoBackHandler);
     }
   }
 
-  public componentWillUnmount(){
-    if(this.props.handleHardwareBack){
-      BackHandler.removeEventListener("hardwareBackPress", this.getGoBackHandler);
+  public componentWillUnmount() {
+    if (this.props.handleHardwareBack) {
+      BackHandler.removeEventListener(
+        "hardwareBackPress",
+        this.getGoBackHandler
+      );
     }
   }
-  
+
   /**
    * if go back is a function it will be returned
    * otherwise the default goback navigation will be returned
    */
   private getGoBackHandler = () => {
-    if(this.props.goBack !== undefined) {
-      if(typeof this.props.goBack === 'boolean'){
+    if (this.props.goBack !== undefined) {
+      if (typeof this.props.goBack === "boolean") {
         return this.props.navigateBack();
       } else {
-        return this.props.goBack()
+        return this.props.goBack();
       }
-    } 
-    if (this.props.customRightBack){
-      return this.props.customRightBack.onPress()
     }
-  }
+    if (this.props.customRightBack) {
+      return this.props.customRightBack.onPress();
+    }
+  };
 
   private renderHeader = () => (
-      <TouchableDefaultOpacity onPress={this.getGoBackHandler}>
-        <Text white={this.props.primary || this.props.dark} numberOfLines={1}>
-          {this.props.headerTitle}
-        </Text>
-      </TouchableDefaultOpacity>
+    <TouchableDefaultOpacity onPress={this.getGoBackHandler}>
+      <Text white={this.props.primary || this.props.dark} numberOfLines={1}>
+        {this.props.headerTitle}
+      </Text>
+    </TouchableDefaultOpacity>
   );
 
   public render() {
@@ -150,10 +152,11 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
   private renderGoBack = () => {
     const { goBack, dark } = this.props;
-    return goBack && (
+    return (
+      goBack && (
         <Left>
           {this.props.isModal ? (
-            <GoBackButtonModal          
+            <GoBackButtonModal
               testID={"back-button"}
               onPress={this.getGoBackHandler}
               accessible={true}
@@ -170,6 +173,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
             />
           )}
         </Left>
+      )
     );
   };
 

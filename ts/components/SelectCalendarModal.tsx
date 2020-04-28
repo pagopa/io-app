@@ -44,7 +44,11 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
     const { isLoading } = this.state;
     return (
       <LoadingSpinnerOverlay isLoading={isLoading}>
-        <BaseScreenComponent isModal={true} goBack={this.onBackPress} handleHardwareBack={true}>
+        <BaseScreenComponent
+          isModal={true}
+          goBack={this.onBackPress}
+          handleHardwareBack={true}
+        >
           <Content noPadded={true}>
             <ScreenContentHeader
               title={I18n.t("messages.cta.reminderCalendarSelect")}

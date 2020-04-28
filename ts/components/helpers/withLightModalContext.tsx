@@ -1,4 +1,3 @@
-
 import hoistNonReactStatics from "hoist-non-react-statics";
 import React from "react";
 import {
@@ -15,7 +14,6 @@ export function withLightModalContext<P>(
 ) {
   // tslint:disable-next-line:max-classes-per-file
   class WithLightModalContext extends React.Component<P> {
-
     public render() {
       return (
         <LightModalConsumer>
