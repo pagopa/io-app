@@ -1,13 +1,12 @@
 /**
  * This component displays a list of payments
  */
-import { BugReporting } from "instabug-reactnative";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
 import I18n from "../../i18n";
 import {
   isPaymentDoneSuccessfully,
@@ -17,15 +16,14 @@ import {
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
-import { getPaymentHistoryDetails } from "../../utils/payment";
-import DetailedlistItemPaymentComponent from "../DetailedListItemPaymentComponent";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import PaymentHistoryItem from "./PaymentHistoryItem";
 
 type Props = Readonly<{
   title: string;
   payments: PaymentsHistoryState;
   profile?: InitializedProfile;
-  navigateToPaymentDetailInfo: (
+  navigateToPaymentHistoryDetail: (
     payment: PaymentHistory,
     profile?: InitializedProfile
   ) => void;
@@ -47,9 +45,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export type EsitoPagamento = "Success" | "Incomplete" | "Failed";
-
-export const getCorrectIuv = (data: RptId): string => {
+export const getIuv = (data: RptId): string => {
   switch (data.paymentNoticeNumber.auxDigit) {
     case "0":
       return data.paymentNoticeNumber.iuv13;
@@ -62,71 +58,61 @@ export const getCorrectIuv = (data: RptId): string => {
   }
 };
 
-export const checkPaymentOutcome = (
-  // tslint:disable-next-line: bool-param-default
-  isSetPaymentState?: boolean
-): EsitoPagamento => {
-  return isSetPaymentState !== undefined
-    ? isSetPaymentState
-      ? "Success"
-      : "Failed"
-    : "Incomplete";
-};
-
 /**
  * Payments List component
  */
 
-export default class PaymentList extends React.Component<Props> {
-  private renderPayments = (info: ListRenderItemInfo<PaymentHistory>) => {
-    const esito = checkPaymentOutcome(isPaymentDoneSuccessfully(info.item));
+export default class PaymentHistoryList extends React.Component<Props> {
+  private getPaymentHistoryInfo = (
+    paymentHistory: PaymentHistory,
+    paymentCheckout: Option<boolean>
+  ) => {
+    return paymentCheckout.fold(
+      {
+        text11: I18n.t("payment.details.state.incomplete"),
+        text3: getIuv(paymentHistory.data),
+        color: customVariables.badgeYellow
+      },
+      success => {
+        if (success) {
+          return {
+            text11: I18n.t("payment.details.state.successful"),
+            text3: fromNullable(paymentHistory.verified_data).fold("", vd =>
+              fromNullable(vd.causaleVersamento).fold("", cv => cv)
+            ),
+            color: customVariables.brandHighlight
+          };
+        }
+        return {
+          text11: I18n.t("payment.details.state.failed"),
+          text3: getIuv(paymentHistory.data),
+          color: customVariables.brandDanger
+        };
+      }
+    );
+  };
+
+  private renderHistoryPaymentItem = (
+    info: ListRenderItemInfo<PaymentHistory>
+  ) => {
+    const paymentCheckout = isPaymentDoneSuccessfully(info.item);
+    const paymentInfo = this.getPaymentHistoryInfo(info.item, paymentCheckout);
+    const datetime: string = `${formatDateAsLocal(
+      new Date(info.item.started_at),
+      true,
+      true
+    )} - ${new Date(info.item.started_at).toLocaleTimeString()}`;
     return (
-      <DetailedlistItemPaymentComponent
-        text11={
-          esito === "Success"
-            ? I18n.t("payment.details.state.successful")
-            : esito === "Failed"
-              ? I18n.t("payment.details.state.failed")
-              : I18n.t("payment.details.state.incomplete")
-        }
-        text2={formatDateAsLocal(new Date(info.item.started_at))}
-        text3={
-          esito === "Success"
-            ? info.item.verified_data === undefined ||
-              info.item.verified_data.causaleVersamento === undefined
-              ? ""
-              : info.item.verified_data.causaleVersamento
-            : I18n.t("payment.details.list.iuv", {
-                iuv: getCorrectIuv(info.item.data)
-              })
-        }
-        color={
-          esito === "Success"
-            ? customVariables.brandHighlight
-            : esito === "Failed"
-              ? customVariables.brandDanger
-              : customVariables.badgeYellow
-        }
+      <PaymentHistoryItem
+        text11={paymentInfo.text11}
+        text2={datetime}
+        text3={paymentInfo.text3}
+        color={paymentInfo.color}
         onPressItem={() => {
-          if (
-            info.item.transaction === undefined &&
-            esito === "Success" &&
+          this.props.navigateToPaymentHistoryDetail(
+            info.item,
             this.props.profile
-          ) {
-            // Print instabug log and open report screen
-            instabugLog(
-              getPaymentHistoryDetails(info.item, this.props.profile),
-              TypeLogs.INFO
-            );
-            BugReporting.showWithOptions(BugReporting.reportType.bug, [
-              BugReporting.option.commentFieldRequired
-            ]);
-          } else {
-            this.props.navigateToPaymentDetailInfo(
-              info.item,
-              this.props.profile
-            );
-          }
+          );
         }}
       />
     );
@@ -149,7 +135,7 @@ export default class PaymentList extends React.Component<Props> {
             <FlatList
               scrollEnabled={false}
               data={payments}
-              renderItem={this.renderPayments}
+              renderItem={this.renderHistoryPaymentItem}
               ItemSeparatorComponent={() => (
                 <ItemSeparatorComponent noPadded={true} />
               )}

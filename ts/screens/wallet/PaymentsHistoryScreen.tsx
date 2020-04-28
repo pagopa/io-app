@@ -12,9 +12,9 @@ import { InitializedProfile } from "../../../definitions/backend/InitializedProf
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import PaymentList from "../../components/wallet/PaymentsList";
+import PaymentHistoryList from "../../components/wallet/PaymentsHistoryList";
 import I18n from "../../i18n";
-import { navigateToPaymentDetailInfo } from "../../store/actions/navigation";
+import { navigateToPaymentHistoryDetail } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import {
   PaymentHistory,
@@ -34,7 +34,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 /**
  * Payment Screen
  */
-class PaymentScreen extends React.Component<Props, never> {
+class PaymentsHistoryScreen extends React.Component<Props, never> {
   private goBack = () => this.props.navigation.goBack();
   public render(): React.ReactNode {
     const { potPayments, potProfile } = this.props;
@@ -44,13 +44,13 @@ class PaymentScreen extends React.Component<Props, never> {
         : undefined;
     return (
       <BaseScreenComponent goBack={this.goBack}>
-        <PaymentList
+        <PaymentHistoryList
           title={I18n.t("wallet.latestTransactions")}
           payments={potPayments}
           profile={currentProfile}
           ListEmptyComponent={<View />}
-          navigateToPaymentDetailInfo={(payment: PaymentHistory) =>
-            this.props.navigateToPaymentDetailInfo({
+          navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
+            this.props.navigateToPaymentHistoryDetail({
               payment,
               profile: currentProfile
             })
@@ -67,10 +67,10 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToPaymentDetailInfo: (param: {
+  navigateToPaymentHistoryDetail: (param: {
     payment: PaymentHistory;
     profile?: InitializedProfile;
-  }) => dispatch(navigateToPaymentDetailInfo(param))
+  }) => dispatch(navigateToPaymentHistoryDetail(param))
 });
 
 export default withValidatedPagoPaVersion(
@@ -78,6 +78,6 @@ export default withValidatedPagoPaVersion(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(PaymentScreen)
+    )(PaymentsHistoryScreen)
   )
 );

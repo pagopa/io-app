@@ -2,11 +2,11 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Platform } from "react-native";
-import { makeFontStyleObject } from "../theme/fonts";
-import customVariables from "../theme/variables";
-import { BadgeComponent } from "./screens/BadgeComponent";
-import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
-import IconFont from "./ui/IconFont";
+import { makeFontStyleObject } from "../../theme/fonts";
+import customVariables from "../../theme/variables";
+import { BadgeComponent } from "../screens/BadgeComponent";
+import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
+import IconFont from "../ui/IconFont";
 
 type Props = Readonly<{
   text11: string;
@@ -73,9 +73,7 @@ const styles = StyleSheet.create({
 
 const ICON_WIDTH = 24;
 
-export default class DetailedlistItemPaymentComponent extends React.PureComponent<
-  Props
-> {
+export default class PaymentHistoryItem extends React.PureComponent<Props> {
   private getIconName = () => {
     return this.props.isSelectionModeEnabled
       ? this.props.isItemSelected

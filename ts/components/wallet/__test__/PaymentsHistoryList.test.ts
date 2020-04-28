@@ -1,3 +1,4 @@
+import { none, some } from "fp-ts/lib/Option";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { IWithinRangeIntegerTag } from "italia-ts-commons/lib/numbers";
 import {
@@ -9,7 +10,6 @@ import {
   isPaymentDoneSuccessfully,
   PaymentHistory
 } from "../../../store/reducers/payments/history";
-import { checkPaymentOutcome } from "../PaymentsList";
 
 const data: RptId = {
   organizationFiscalCode: "01199250158" as string &
@@ -113,20 +113,18 @@ const paymentHistoryFailed: PaymentHistory = {
 
 describe("test the checkPaymentOutcome function", () => {
   it("the first test must show the payment status as Success, because paymentState and transactionState exist", () => {
-    expect(
-      checkPaymentOutcome(isPaymentDoneSuccessfully(paymentHistorySuccess))
-    ).toEqual("Success");
+    expect(isPaymentDoneSuccessfully(paymentHistorySuccess)).toEqual(
+      some(true)
+    );
   });
 
   it("the second test must show the payment status as Failed, because paymentState and transactionState do not exist", () => {
-    expect(
-      checkPaymentOutcome(isPaymentDoneSuccessfully(paymentHistoryFailed))
-    ).toEqual("Failed");
+    expect(isPaymentDoneSuccessfully(paymentHistoryFailed)).toEqual(
+      some(false)
+    );
   });
 
   it("the last test must show the payment status as Incomplete, because only paymentState is set and transactionState is undefined or set to false", () => {
-    expect(
-      checkPaymentOutcome(isPaymentDoneSuccessfully(paymentHistoryIncomplete))
-    ).toEqual("Incomplete");
+    expect(isPaymentDoneSuccessfully(paymentHistoryIncomplete)).toEqual(none);
   });
 });

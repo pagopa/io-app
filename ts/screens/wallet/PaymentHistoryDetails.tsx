@@ -4,25 +4,28 @@
  * add new ones
  */
 import I18n from "i18n-js";
-import { BugReporting } from "instabug-reactnative";
+import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import { instabugLog, TypeLogs } from "../../boot/configureInstabug";
+import { connect } from "react-redux";
+import {
+  instabugLog,
+  openInstabugBugReport,
+  TypeLogs
+} from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import {
-  checkPaymentOutcome,
-  getCorrectIuv
-} from "../../components/wallet/PaymentsList";
+import { getIuv } from "../../components/wallet/PaymentsHistoryList";
 import {
   isPaymentDoneSuccessfully,
   PaymentHistory
 } from "../../store/reducers/payments/history";
+import { profileSelector } from "../../store/reducers/profile";
+import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
@@ -33,10 +36,10 @@ import {
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
-  profile?: InitializedProfile;
 }>;
 
-type OwnProps = NavigationInjectedProps<NavigationParams>;
+type OwnProps = NavigationInjectedProps<NavigationParams> &
+  ReturnType<typeof mapStateToProps>;
 
 type Props = OwnProps;
 
@@ -57,14 +60,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 10,
     paddingRight: 10
-  },
-  subHeaderContent: {
-    flexDirection: "row",
-    alignItems: "baseline",
-    justifyContent: "space-between"
-  },
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
   },
   box: {
     marginTop: 10,
@@ -140,7 +135,7 @@ const styles = StyleSheet.create({
 /**
  * Payment Details
  */
-export default class PaymentDetails extends React.Component<Props, never> {
+class PaymentHistoryDetails extends React.Component<Props> {
   private goBack = () => this.props.navigation.goBack();
 
   private copyButton = (text: string) => (
@@ -155,19 +150,13 @@ export default class PaymentDetails extends React.Component<Props, never> {
   );
 
   private printInstabugLogAndOpenReport = () => {
-    const profile = this.props.navigation.getParam("profile");
-    if (profile !== undefined) {
+    pot.map(this.props.profile, p => {
       instabugLog(
-        getPaymentHistoryDetails(
-          this.props.navigation.getParam("payment"),
-          profile
-        ),
+        getPaymentHistoryDetails(this.props.navigation.getParam("payment"), p),
         TypeLogs.INFO
       );
-    }
-    BugReporting.showWithOptions(BugReporting.reportType.bug, [
-      BugReporting.option.commentFieldRequired
-    ]);
+    });
+    openInstabugBugReport();
   };
 
   private helpButton = () => (
@@ -197,7 +186,7 @@ export default class PaymentDetails extends React.Component<Props, never> {
   };
   public render(): React.ReactNode {
     const payment = this.props.navigation.getParam("payment");
-    const esito = checkPaymentOutcome(isPaymentDoneSuccessfully(payment));
+    const paymentOutCome = isPaymentDoneSuccessfully(payment);
     const date = new Date(payment.started_at);
     const dateAndTime = `${formatDateAsLocal(
       date,
@@ -212,7 +201,7 @@ export default class PaymentDetails extends React.Component<Props, never> {
       payment.transaction !== undefined
         ? payment.transaction.merchant
         : undefined;
-    const iuv = getCorrectIuv(payment.data);
+    const iuv = getIuv(payment.data);
     const amount =
       payment.transaction !== undefined
         ? payment.transaction.amount.amount
@@ -232,7 +221,7 @@ export default class PaymentDetails extends React.Component<Props, never> {
             </View>
             <ItemSeparatorComponent noPadded={true} />
             <View style={styles.box}>
-              {esito === "Success" ? (
+              {paymentOutCome.isSome() && paymentOutCome.value ? (
                 <React.Fragment>
                   <View style={styles.box}>
                     <Text style={styles.text1}>
@@ -264,7 +253,8 @@ export default class PaymentDetails extends React.Component<Props, never> {
               </View>
             </View>
             <ItemSeparatorComponent noPadded={true} />
-            {esito === "Success" &&
+            {paymentOutCome.isSome() &&
+              paymentOutCome.value &&
               amount &&
               grandTotal && (
                 <React.Fragment>
@@ -323,7 +313,9 @@ export default class PaymentDetails extends React.Component<Props, never> {
                 </React.Fragment>
               )}
 
-            {esito !== "Success" && <View spacer={true} extralarge={true} />}
+            {paymentOutCome.fold(true, success => success === false) && (
+              <View spacer={true} extralarge={true} />
+            )}
 
             <View style={[styles.box, styles.boxHelp]}>
               <Text style={[styles.text1, styles.textHelp]}>
@@ -338,3 +330,11 @@ export default class PaymentDetails extends React.Component<Props, never> {
     );
   }
 }
+
+const mapStateToProps = (state: GlobalState) => {
+  return {
+    profile: profileSelector(state)
+  };
+};
+
+export default connect(mapStateToProps)(PaymentHistoryDetails);
