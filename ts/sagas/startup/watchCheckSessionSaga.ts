@@ -4,7 +4,8 @@ import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,
-  checkCurrentSessionResult,
+  checkCurrentSessionFailure,
+  checkCurrentSessionSuccess,
   sessionExpired
 } from "../../store/actions/authentication";
 import { SagaCallReturnType } from "../../types/utils";
@@ -23,17 +24,13 @@ export function* checkSession(
       // On response we check the current status if 401 the session is invalid
       // the result will be false and then put the session expired action
       yield put(
-        checkCurrentSessionResult({
+        checkCurrentSessionSuccess({
           sessionValid: response.value.status !== 401
         })
       );
     }
   } catch (error) {
-    yield put(
-      checkCurrentSessionResult({
-        sessionValid: false
-      })
-    );
+    yield put(checkCurrentSessionFailure(error));
   }
 }
 
@@ -42,8 +39,8 @@ export function* watchCheckSessionSaga(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Iterator<Effect> {
   yield takeLatest(getType(checkCurrentSession), checkSession, getProfile);
-  yield takeLatest(getType(checkCurrentSessionResult), function*(
-    action: ReturnType<typeof checkCurrentSessionResult>
+  yield takeLatest(getType(checkCurrentSessionSuccess), function*(
+    action: ReturnType<typeof checkCurrentSessionSuccess>
   ) {
     if (!action.payload.sessionValid) {
       yield put(sessionExpired());

@@ -73,8 +73,12 @@ export const checkCurrentSession = createStandardAction(
   "CHECK_CURRENT_SESSION"
 )();
 
-export const checkCurrentSessionResult = createStandardAction(
-  "CHECK_CURRENT_SESSION_RESULT"
+export const checkCurrentSessionFailure = createStandardAction(
+  "CHECK_CURRENT_SESSION_FAILURE"
+)<Error>();
+
+export const checkCurrentSessionSuccess = createStandardAction(
+  "CHECK_CURRENT_SESSION_SUCCESS"
 )<CheckSessionResult>();
 
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
@@ -92,7 +96,8 @@ export type AuthenticationActions =
   | ActionType<typeof sessionInformationLoadSuccess>
   | ActionType<typeof sessionInformationLoadFailure>
   | ActionType<typeof checkCurrentSession>
-  | ActionType<typeof checkCurrentSessionResult>
+  | ActionType<typeof checkCurrentSessionSuccess>
+  | ActionType<typeof checkCurrentSessionFailure>
   | ActionType<typeof sessionExpired>
   | ActionType<typeof sessionInvalid>
   | ActionType<typeof resetAuthenticationState>;
