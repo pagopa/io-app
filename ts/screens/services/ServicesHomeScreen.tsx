@@ -34,7 +34,6 @@ import {
   StyleSheet
 } from "react-native";
 import {
-  NavigationEventSubscription,
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
@@ -98,7 +97,6 @@ import {
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
 
 type OwnProps = NavigationScreenProps;
@@ -211,8 +209,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 class ServicesHomeScreen extends React.Component<Props, State> {
-  private navListener?: NavigationEventSubscription;
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -287,13 +283,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     if (pot.isError(this.props.servicesByScope)) {
       this.props.refreshServicesByScope();
     }
-
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "dark-content",
-        customVariables.colorWhite
-      );
-    }); // tslint:disable-line no-object-mutation
   }
 
   private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
@@ -428,12 +417,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     const enableServices = this.areAllServicesInboxChannelDisabled();
     this.setState({ enableServices });
   };
-
-  public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
-  }
 
   // This method enable or disable services and update the enableServices props
   private disableOrEnableTabServices = () => {

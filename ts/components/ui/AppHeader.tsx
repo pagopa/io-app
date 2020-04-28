@@ -9,12 +9,20 @@ import ConnectionBar from "../ConnectionBar";
 type Props = NativeBase.Header;
 
 const AppHeader: React.SFC<Props> = props => {
+  const backgroundColor = props.primary
+    ? variables.brandPrimary
+    : props.dark
+      ? variables.brandDarkGray
+      : variables.colorWhite;
+
   return (
     <React.Fragment>
       <Header
-        androidStatusBarColor={variables.androidStatusBarColor}
-        iosBarStyle={"dark-content"}
         {...props}
+        androidStatusBarColor={backgroundColor}
+        iosBarStyle={
+          props.primary || props.dark ? "light-content" : "dark-content"
+        }
       />
       <ConnectionBar />
     </React.Fragment>

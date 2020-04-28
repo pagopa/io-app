@@ -50,7 +50,6 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -110,8 +109,6 @@ const getAppLongVersion = () => {
 };
 
 class ProfileMainScreen extends React.PureComponent<Props, State> {
-  private navListener?: NavigationEventSubscription;
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -121,19 +118,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
 
-  public componentDidMount() {
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "light-content",
-        customVariables.brandDarkGray
-      );
-    }); // tslint:disable-line no-object-mutation
-  }
-
   public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
     // This ensures modals will be closed (if there are some opened)
     this.props.hideModal();
   }

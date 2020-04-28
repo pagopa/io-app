@@ -10,7 +10,6 @@ import * as React from "react";
 import { Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
-  NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
@@ -50,10 +49,8 @@ import {
   latestTransactionsSelector
 } from "../../store/reducers/wallet/transactions";
 import { walletsSelector } from "../../store/reducers/wallet/wallets";
-import customVariables from "../../theme/variables";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -134,8 +131,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * Wallet Home Screen
  */
 class WalletHomeScreen extends React.Component<Props, never> {
-  private navListener?: NavigationEventSubscription;
-
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
@@ -143,18 +138,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
     this.props.loadWallets();
     this.props.loadTransactions(this.props.transactionsLoadedLength);
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "light-content",
-        customVariables.brandDarkGray
-      );
-    }); // tslint:disable-line no-object-mutation
-  }
 
-  public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
   }
 
   private cardHeader(isError: boolean = false) {

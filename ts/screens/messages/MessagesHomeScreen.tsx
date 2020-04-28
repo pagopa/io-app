@@ -6,7 +6,6 @@ import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
 import {
-  NavigationEventSubscription,
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
@@ -41,7 +40,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT } from "../../utils/constants";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -99,7 +97,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen that contains all the Tabs related to messages.
  */
 class MessagesHomeScreen extends React.PureComponent<Props, State> {
-  private navListener?: NavigationEventSubscription;
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -130,18 +127,6 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     this.onRefreshMessages();
-    this.navListener = this.props.navigation.addListener("didFocus", () => {
-      setStatusBarColorAndBackground(
-        "dark-content",
-        customVariables.colorWhite
-      );
-    }); // tslint:disable-line no-object-mutation
-  }
-
-  public componentWillUnmount() {
-    if (this.navListener) {
-      this.navListener.remove();
-    }
   }
 
   public render() {

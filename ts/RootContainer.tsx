@@ -7,8 +7,7 @@ import {
   AppState,
   BackHandler,
   Linking,
-  Platform,
-  StatusBar
+  Platform
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
@@ -138,7 +137,6 @@ class RootContainer extends React.PureComponent<Props> {
 
     return (
       <Root>
-        <StatusBar barStyle={"dark-content"} />
         {Platform.OS === "android" && (
           <FlagSecureComponent
             isFlagSecureEnabled={!this.props.isDebugModeEnabled}

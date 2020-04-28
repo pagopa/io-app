@@ -12,7 +12,6 @@ import {
 import { StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
-import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
@@ -49,13 +48,6 @@ const styles = StyleSheet.create({
 });
 
 export default class DarkLayout extends React.Component<Props> {
-  public componentDidMount() {
-    setStatusBarColorAndBackground(
-      "light-content",
-      customVariables.brandDarkGray
-    );
-  }
-
   private screenContent() {
     return (
       <React.Fragment>
