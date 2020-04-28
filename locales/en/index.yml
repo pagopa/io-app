@@ -1,5 +1,6 @@
 ---
 global:
+  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
   localization:
@@ -14,6 +15,7 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, something did not work as expected, please try again!
+  genericAlert: Warning!
   genericWaiting: Wait a few seconds..
   genericThanks: Thank you
   jserror:
@@ -475,29 +477,6 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
-  email:
-    validation:
-      title: Remember to validate your email address
-      headerTitle: Email validation
-      info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
-        click simply on that link.<br/>
-        Until you will not validate your email address, some app functionalities
-        (payments, messages forwarding by email, etc.) will not be available, but you
-        will be able to use some other functions anyway (i.e. services, messages, etc.)"
-      ctaValidate: Send a new validation email
-      emailSentFeedback: Email sent
-      help: Your SPID profile communicates your email to IO app. If you find the address
-        wrong or that you do not use it anymore, you can edit it directly from your SPID
-        services provider account.
-    insert:
-      headerTitle: Activation
-      title: Insert your email
-      help:
-        title: Email
-        content: !include email_insert_help.md
-    ctaEdit: Edit email
-    subtitle: Some IO app functions need your email.
-    emailInputLabel: Personal email address
 pin_login:
   pin:
     pinInfo: Enter the unlock code
@@ -580,8 +559,8 @@ wallet:
     text1: If you have had problems during a payment,
     text2: consult the help
     text3: at the top right of this page
-  transactionsLoadMore: Load more
-  transacionsLoadingMore: Loading more transactions...
+  transactionsLoadMore: Load previous
+  transacionsLoadingMore: Loading previous...
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
@@ -642,8 +621,7 @@ wallet:
     partialAmount: Amount to pay
     fee: Fee
     why: Why?
-    totalAmount: Total amount
-    info: 'Warning: after this step it will not be possible to come back'
+    info: 'After this step it will not be possible to come back.'
     info2: You are using your favourite payment method.
     changeMethod: Change the payment method
     change: Change method
@@ -664,31 +642,36 @@ wallet:
     text: Choose one saved payment method or add a new one
     fetchPspFailure: Temporary error, please retry
     noPspsAvailable: This payment method cannot be used
+    contextualHelpTitle: Payment method's choice
+    contextualHelpContent: !include wallet/wallet_pick_payment_method.md
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
-    amount: Amount
+    amount: Transaction amount
+    total: Total paid
     expireDate: Expire date
     tranche: Tranche
-    entity: 'Entity:'
     info: 'More info at:'
     tel: 'Tel:'
     email: 'Email:'
     PEC: 'PEC:'
-    recipient: 'Recipient:'
-    object: 'Transaction object:'
-    cbillCode: 'CBILL code:'
-    iuv: 'IUV:'
-    entityCode2: 'Entity/Company code:'
+    recipient: Recipient
+    object: Reason
+    date: Date and Time
+    iuv: IUV code
+    entityCode: Entity fiscal code
+    fee: Fee
+    idTransaction: Transaction identification code
     updatedAmount: Updated amount
     updateInfo: 'The pagoPa system updates automatically the amount to ensure you
       pay the exact amount and to avoid you arrears or additional interests '
-    moreInfo: More details
     loadingMessage:
       activation: I'm alerting the entity, wait a few seconds..
       verification: I am checking the status and the amount of your notice..
       generic: I am finishing the verification operations of your notice, wait a few seconds..
       wallet: I am checking for payment method..
+    contextualHelpTitle: Transaction's summary
+    contextualHelpContent: !include wallet/wallet_transaction_summary.md
   insertManually:
     header: Insert notice data
     title: Insert the notice data
@@ -698,6 +681,8 @@ wallet:
     entityCode: Entity Fiscal Code
     amount: Amount (€)
     proceed: Proceed with the transaction
+    contextualHelpTitle: Manually insert notice
+    contextualHelpContent: !include wallet/insert_manual_notice.md
   errorTransaction:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
@@ -713,8 +698,7 @@ wallet:
   date: Date
   time: Time
   psp: Payment provider
-  receipt: Receipt
-  receipt2: Transaction receipt
+  receipt: Transaction receipt
   seeReceipt: See Receipt
   transactions: Transactions
   transaction: Transaction
@@ -723,12 +707,11 @@ wallet:
   noneTransactions: There are no transactions
   noTransactionsInWalletHome: You haven't executed any operation yet.
   noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
-  moreInfo: Learn more
   payNotice: Pay notice
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add payment method
-  continue: Continue
+  continue: Pay this notice
   backToPayments: Back to payments
   methods:
     comingSoon: incoming
@@ -776,6 +759,8 @@ wallet:
       buttonText:
         settings: Enable permissions
         cancel: Cancel
+    contextualHelpTitle: How to pay a notice
+    contextualHelpContent: !include wallet/wallet_qrcode.md
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include wallet/why_a_fee.md
@@ -1012,13 +997,7 @@ calendarEvents:
 reminders:
   emptyMonth: No reminders for this month
   loadMoreData: previous deadlines
-  noOtherDeadlines: There are no more deadlines
-  email:
-    title: Remember to validate your email address
-    modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"
-    modal2: "open your email client and click on the link."
-    button1: Send another verification email
-    button2: Change email address
+  noOtherDeadlines: There are no more deadline
 openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred
@@ -1030,6 +1009,15 @@ btnUpdateApp: Update the IO app
 systemsOff:
   title: Unable to start IO
   closeApp: close the application and try again
+instabug:
+  contextualHelp:
+    title1: Do you need help?
+    buttonChat: Send us a message
+    descriptionChat: You can use our chat tool to send a message in case of urgent need for assistance. You will receive an answer directly on IO
+    buttonBug: Report a bug
+    descriptionBug: You can report an error or something that does not work to our developers, they will take care of the problem as soon as possible.
+    title2: Are you new to IO?
+    descriptionLink: Find out how it works and what are the special features of IO, by visiting the site
 faq:
   1:
     title: "What is SPID?"
