@@ -195,6 +195,7 @@ class PaymentHistoryDetails extends React.Component<Props> {
       "causaleVersamento",
       m => m
     ).fold(notAvailable, cv => cv);
+    // tslint:disable-no-inferred-empty-object-type
     const creditore = maybeProperty(
       payment.transaction,
       "merchant",
