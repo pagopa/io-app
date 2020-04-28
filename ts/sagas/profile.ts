@@ -46,8 +46,8 @@ export function* loadProfile(
       const initializedProfile = response.value.value as InitializedProfile;
       yield put(profileLoadSuccess(initializedProfile));
       // send the hash of fiscal code to Instabug
-      sha256(initializedProfile.fiscal_code).then(hash =>
-        setInstabugUserAttribute("fiscalcode", hash)
+      sha256(initializedProfile.fiscal_code).then(hashCF =>
+        setInstabugUserAttribute("fiscalcode", hashCF)
       );
 
       return some(response.value.value);
