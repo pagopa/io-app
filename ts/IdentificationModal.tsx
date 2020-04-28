@@ -283,6 +283,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           contextualHelpMarkdown={contextualHelpMarkdown}
           faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
           appLogo={true}
+          withSafeArea={true}
         >
           <StatusBar
             barStyle="light-content"

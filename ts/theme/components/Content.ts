@@ -1,4 +1,3 @@
-import { FOOTER_SAFE_AREA } from "../../utils/constants";
 import { Theme } from "../types";
 import variables from "../variables";
 
@@ -20,7 +19,6 @@ export default (): Theme => {
       backgroundColor: variables.contentAlternativeBackground
     },
     ".noPadded": {
-      paddingBottom: FOOTER_SAFE_AREA,
       paddingTop: 0,
       paddingHorizontal: 0
     },
@@ -29,9 +27,6 @@ export default (): Theme => {
     },
     backgroundColor: variables.contentBackground,
 
-    // It implies the content backgound color covers the bottom space in iPhone X
-    marginBottom: -FOOTER_SAFE_AREA,
-    paddingBottom: FOOTER_SAFE_AREA + variables.contentPadding,
     paddingTop: variables.contentPadding,
     paddingHorizontal: variables.contentPadding
   };

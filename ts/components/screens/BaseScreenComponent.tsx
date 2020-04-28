@@ -33,6 +33,7 @@ interface OwnProps {
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  withSafeArea?: boolean;
 }
 
 type Props = OwnProps & React.ComponentProps<typeof BaseHeader>;
@@ -84,7 +85,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     const {
       contextualHelp,
       contextualHelpMarkdown,
-      headerBody
+      headerBody,
+      withSafeArea
     } = this.props;
 
     const ch = contextualHelp
@@ -105,7 +107,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         : undefined;
 
     return (
-      <Container>
+      <Container withSafeArea={withSafeArea}>
         <BaseHeader
           {...this.props}
           onShowHelp={

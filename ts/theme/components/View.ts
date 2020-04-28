@@ -1,7 +1,8 @@
+
 import { Theme } from "../types";
 import variables from "../variables";
-
 import * as ReactNative from "react-native";
+import { FOOTER_SAFE_AREA } from '../../utils/constants';
 
 declare module "native-base" {
   namespace NativeBase {
@@ -16,20 +17,10 @@ declare module "native-base" {
       content?: boolean;
       padded?: boolean;
       centerJustified?: boolean;
+      withSafeArea?: boolean;
     }
   }
 }
-
-/**
- * TODO:
- * if no components are inserted as footer, the following component should be
- * included at the bottom of the screen to show the proper shadow upside the navigation bar:
- *
- * <View footer={true} noPadded={true}/>
- *
- * TODO: check if this rule is still valid or a workaround has been implemented to avoid it been manually done
- * https://www.pivotaltracker.com/story/show/170819564
- */
 
 export default (): Theme => {
   return {
@@ -66,6 +57,11 @@ export default (): Theme => {
     },
 
     ".footer": {
+
+      ".withSafeArea":{
+        paddingBottom: variables.footerPaddingBottom + FOOTER_SAFE_AREA
+      },
+
       backgroundColor: variables.footerBackground,
       paddingBottom: variables.footerPaddingBottom,
       paddingLeft: variables.footerPaddingLeft,
@@ -73,6 +69,7 @@ export default (): Theme => {
       paddingTop: variables.footerPaddingTop,
       borderBottomWidth: variables.footerBottomBorderWidth,
       borderBottomColor: variables.brandGray,
+
       // iOS shadow
       shadowColor: variables.footerShadowColor,
       shadowOffset: {
@@ -84,11 +81,13 @@ export default (): Theme => {
       // Android shadow
       elevation: variables.footerElevation
     },
+
     ".content": {
       padding: variables.contentPadding,
       backgroundColor: variables.contentBackground,
       flex: 1
     },
+
     ".centerJustified": {
       flex: 1,
       justifyContent: "center"

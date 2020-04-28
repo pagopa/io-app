@@ -1,26 +1,21 @@
-/**
- * The screen allows to identify a transaction by the QR code on the analogic notice
- */
+
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
-import { Container, Text, View } from "native-base";
+import { Text, View, Content } from "native-base";
 import * as React from "react";
-import { Alert, Dimensions, ScrollView, StyleSheet } from "react-native";
+import { Alert, Dimensions, StyleSheet } from "react-native";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-
 import I18n from "../../../i18n";
 import { Dispatch } from "../../../store/actions/types";
 import { ComponentProps } from "../../../types/react";
-
 import ImagePicker from "react-native-image-picker";
 import * as ReaderQR from "react-native-lewin-qrcode";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import {
   navigateToPaymentManualDataInsertion,
@@ -32,10 +27,9 @@ import variables from "../../../theme/variables";
 import { openAppSettings } from "../../../utils/appSettings";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
+import FooterButtonsWithSafeArea from '../../../components/ui/FooterButtonsWithSafeArea';
 
-type OwnProps = NavigationInjectedProps;
-
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = NavigationInjectedProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
@@ -222,7 +216,9 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
   private handleWillBlur = () => this.setState({ isFocused: false });
 
-  public render(): React.ReactNode {
+  private scannerRef = React.createRef<QRCodeScanner>();
+
+  private getFooterButtons = () => {
     const primaryButtonProps = {
       block: true,
       primary: true,
@@ -237,25 +233,33 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       title: I18n.t("global.buttons.cancel")
     };
 
+    return <FooterButtonsWithSafeArea footerProps={{
+      type: 'TwoButtonsInlineThird', 
+      leftButton: secondaryButtonProps, 
+      rightButton: primaryButtonProps
+    }} />;
+  }
+
+  public render(): React.ReactNode {
     return (
-      <Container style={styles.white}>
-        <NavigationEvents
-          onDidFocus={this.handleDidFocus}
-          onWillBlur={this.handleWillBlur}
-        />
         <BaseScreenComponent
           headerTitle={I18n.t("wallet.QRtoPay.byCameraTitle")}
           goBack={this.goBack}
           contextualHelpMarkdown={contextualHelpMarkdown}
           faqCategories={["wallet"]}
+          withSafeArea={true}
         >
-          <ScrollView bounces={false}>
+          <NavigationEvents
+          onDidFocus={this.handleDidFocus}
+          onWillBlur={this.handleWillBlur}
+        />
+          <Content bounces={false} noPadded={true}>
             {this.state.isFocused && (
               <QRCodeScanner
                 onRead={(reading: { data: string }) =>
                   this.onQrCodeData(reading.data)
                 }
-                ref="scanner" // tslint:disable-line jsx-no-string-ref
+                ref={this.scannerRef}
                 containerStyle={styles.cameraContainer as any}
                 showMarker={true}
                 cameraStyle={styles.camera as any}
@@ -300,7 +304,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 // On devices before SDK version 23, the permissions are automatically
                 // granted if they appear in the manifest, so message customization would
                 // be impossible.
-                notAuthorizedView={
+                notAuthorizedView={(
                   <View style={styles.notAuthorizedContainer}>
                     <Text style={styles.notAuthorizedText}>
                       {I18n.t("wallet.QRtoPay.enroll_cta")}
@@ -315,17 +319,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                       </Text>
                     </ButtonDefaultOpacity>
                   </View>
-                }
+                )}
               />
             )}
-          </ScrollView>
+          </Content>
+          {this.getFooterButtons()}
         </BaseScreenComponent>
-        <FooterWithButtons
-          type="TwoButtonsInlineThird"
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-        />
-      </Container>
     );
   }
 }

@@ -9,8 +9,6 @@ import * as React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import {
   createBottomTabNavigator,
-  NavigationRoute,
-  NavigationScreenProp,
   NavigationState,
   StackActions
 } from "react-navigation";
@@ -108,17 +106,11 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.INSERT_EMAIL_SCREEN
 ];
 
-const getTabBarVisibility = (
-  nav: NavigationScreenProp<NavigationRoute>
+export const getTabBarVisibility = (
+  state: NavigationState
 ): boolean => {
-  const state = nav.state as NavigationState;
-
   const { routeName } = state.routes[state.index];
-
-  if (NoTabBarRoutes.indexOf(routeName) !== -1) {
-    return false;
-  }
-  return true;
+  return NoTabBarRoutes.indexOf(routeName) === -1
 };
 
 /**
@@ -146,7 +138,7 @@ const navigation = createBottomTabNavigator(
   },
   {
     defaultNavigationOptions: ({ navigation: nav }) => ({
-      tabBarVisible: getTabBarVisibility(nav),
+      tabBarVisible: getTabBarVisibility(nav.state as NavigationState),
       tabBarLabel: (options: {
         tintColor: string | null;
         focused: boolean;

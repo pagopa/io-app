@@ -26,6 +26,7 @@ type OwnButtonProps = {
 type CommonProps = Readonly<{
   leftButton: FooterButtonProps;
   upperButton?: FooterButtonProps;
+  withSafeArea?: boolean;
 }>;
 
 type FooterButtonProps = ComponentProps<Button> & OwnButtonProps;
@@ -55,12 +56,14 @@ type Props =
   | TwoButtonsInlineThird
   | TwoButtonsInlineThirdInverted;
 
+export type FooterWithButtonsPorps = Props;
+
 /**
  * Implements a component that show buttons as sticky footer. It can displays 1 or 2 lines of buttons.
  * the upper line can include one blocked button
  * The bottom line can be include 1 or 2 buttons. If they are 2, they can have the inlineHalf  or the inlineOneThird style
  */
-export default class FooterWithButtons extends React.Component<Props, never> {
+export default class FooterWithButtons extends React.Component<Props> {
   private renderRightButton() {
     if (this.props.type === "SingleButton") {
       return null;
@@ -153,7 +156,7 @@ export default class FooterWithButtons extends React.Component<Props, never> {
 
   public render() {
     return (
-      <View footer={true}>
+      <View footer={true} withSafeArea={this.props.withSafeArea}>
         {this.props.upperButton && this.renderUpperButton()}
         {this.renderBottomButtonsLine()}
       </View>

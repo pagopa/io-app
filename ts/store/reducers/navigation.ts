@@ -15,6 +15,7 @@ const INITIAL_STATE: NavigationState = AppNavigator.router.getStateForAction(
 );
 
 // Selectors
+// other selector on the current navigation state are declared within navigationHistory
 
 export const navigationStateSelector = (state: GlobalState): NavigationState =>
   state.nav;
