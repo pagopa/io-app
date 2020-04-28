@@ -548,7 +548,7 @@ payment:
   recipientFiscalCode: Codice fiscale beneficiario
   details:
     state:
-      successful: A buon fine
+      successful: Concluso
       incomplete: Non terminato
       failed: Fallito
     info:
@@ -558,12 +558,12 @@ payment:
       title: Dettaglio Pagamento
       enteCreditore: Ente Creditore
       causaleVersamento: Causale
-      dateAndTime: Data e Ora
-      paymentAmount: Importo Pagamento
-      transactionCosts: Costi di Transazione
-      totalPaid: Totale Pagato
+      dateAndTime: Data e ora
+      paymentAmount: Importo pagamento
+      transactionCosts: Costi di transazione
+      totalPaid: Totale pagato
       transactionCode: Codice identificativo della transazione
-      help: Se hai riscontrato un problema con questo pagamento, Scrivici per maggiorni informazioni e dettagli
+      help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
     list:
       title: Tentativi di pagamento
       iuv: Pagamento IUV {{iuv}}

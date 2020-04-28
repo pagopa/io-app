@@ -6,7 +6,6 @@ import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import I18n from "../../i18n";
 import {
   isPaymentDoneSuccessfully,
@@ -17,16 +16,13 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import PaymentHistoryItem from "./PaymentHistoryItem";
 
 type Props = Readonly<{
   title: string;
   payments: PaymentsHistoryState;
-  profile?: InitializedProfile;
-  navigateToPaymentHistoryDetail: (
-    payment: PaymentHistory,
-    profile?: InitializedProfile
-  ) => void;
+  navigateToPaymentHistoryDetail: (payment: PaymentHistory) => void;
   ListEmptyComponent?: React.ReactNode;
 }>;
 
@@ -48,13 +44,14 @@ const styles = StyleSheet.create({
 export const getIuv = (data: RptId): string => {
   switch (data.paymentNoticeNumber.auxDigit) {
     case "0":
+    case "3":
       return data.paymentNoticeNumber.iuv13;
     case "1":
       return data.paymentNoticeNumber.iuv17;
     case "2":
       return data.paymentNoticeNumber.iuv15;
-    case "3":
-      return data.paymentNoticeNumber.iuv13;
+    default:
+      return "";
   }
 };
 
@@ -109,10 +106,7 @@ export default class PaymentHistoryList extends React.Component<Props> {
         text3={paymentInfo.text3}
         color={paymentInfo.color}
         onPressItem={() => {
-          this.props.navigateToPaymentHistoryDetail(
-            info.item,
-            this.props.profile
-          );
+          this.props.navigateToPaymentHistoryDetail(info.item);
         }}
       />
     );
@@ -130,19 +124,17 @@ export default class PaymentHistoryList extends React.Component<Props> {
             <Text>{I18n.t("payment.details.list.title")}</Text>
           </View>
         </View>
-        {payments.length > 0 &&
-          payments !== null && (
-            <FlatList
-              scrollEnabled={false}
-              data={payments}
-              renderItem={this.renderHistoryPaymentItem}
-              ItemSeparatorComponent={() => (
-                <ItemSeparatorComponent noPadded={true} />
-              )}
-              ListFooterComponent={<View spacer={true} extralarge={true} />}
-              keyExtractor={(_, index) => index.toString()}
-            />
+
+        <FlatList
+          scrollEnabled={false}
+          data={payments}
+          renderItem={this.renderHistoryPaymentItem}
+          ItemSeparatorComponent={() => (
+            <ItemSeparatorComponent noPadded={true} />
           )}
+          ListFooterComponent={payments.length > 0 && <EdgeBorderComponent />}
+          keyExtractor={(_, index) => index.toString()}
+        />
       </Content>
     );
   }

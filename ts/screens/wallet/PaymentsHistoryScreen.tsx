@@ -3,12 +3,11 @@
  * a "pay notice" button and payment methods info/button to
  * add new ones
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import { reverse } from "fp-ts/lib/Array";
 import { View } from "native-base";
 import * as React from "react";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -20,7 +19,6 @@ import {
   PaymentHistory,
   paymentsHistorySelector
 } from "../../store/reducers/payments/history";
-import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 
 type OwnProps = Readonly<{
@@ -37,28 +35,19 @@ type Props = ReturnType<typeof mapStateToProps> &
 class PaymentsHistoryScreen extends React.Component<Props, never> {
   private goBack = () => this.props.navigation.goBack();
   public render(): React.ReactNode {
-    const { historyPayments, potProfile } = this.props;
-    // order by started_at DESC
-    const payments = [...historyPayments].sort((a, b) => {
-      const keyA = a.started_at;
-      const keyB = b.started_at;
-      return keyA < keyB ? 1 : keyA > keyB ? -1 : 0;
-    });
-    const currentProfile =
-      !pot.isError(potProfile) && pot.isSome(potProfile)
-        ? potProfile.value
-        : undefined;
+    const { historyPayments } = this.props;
     return (
-      <BaseScreenComponent goBack={this.goBack}>
+      <BaseScreenComponent
+        goBack={this.goBack}
+        headerTitle={I18n.t("payment.details.list.title")}
+      >
         <PaymentHistoryList
           title={I18n.t("wallet.latestTransactions")}
-          payments={payments}
-          profile={currentProfile}
+          payments={reverse([...historyPayments])}
           ListEmptyComponent={<View />}
           navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
             this.props.navigateToPaymentHistoryDetail({
-              payment,
-              profile: currentProfile
+              payment
             })
           }
         />
@@ -68,15 +57,12 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  historyPayments: paymentsHistorySelector(state),
-  potProfile: profileSelector(state)
+  historyPayments: paymentsHistorySelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToPaymentHistoryDetail: (param: {
-    payment: PaymentHistory;
-    profile?: InitializedProfile;
-  }) => dispatch(navigateToPaymentHistoryDetail(param))
+  navigateToPaymentHistoryDetail: (param: { payment: PaymentHistory }) =>
+    dispatch(navigateToPaymentHistoryDetail(param))
 });
 
 export default withValidatedPagoPaVersion(

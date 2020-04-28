@@ -14,9 +14,6 @@ type Props = Readonly<{
   text3: string;
   color: string;
   onPressItem: () => void;
-  onLongPressItem?: () => void;
-  isSelectionModeEnabled?: boolean;
-  isItemSelected?: boolean;
 }>;
 
 const styles = StyleSheet.create({
@@ -74,19 +71,10 @@ const styles = StyleSheet.create({
 const ICON_WIDTH = 24;
 
 export default class PaymentHistoryItem extends React.PureComponent<Props> {
-  private getIconName = () => {
-    return this.props.isSelectionModeEnabled
-      ? this.props.isItemSelected
-        ? "io-checkbox-on"
-        : "io-checkbox-off"
-      : "io-right";
-  };
-
   public render() {
     return (
       <TouchableDefaultOpacity
         onPress={this.props.onPressItem}
-        onLongPress={this.props.onLongPressItem}
         style={styles.verticalPad}
       >
         <View style={styles.spaced}>
@@ -111,7 +99,7 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
           </View>
           <View style={styles.icon}>
             <IconFont
-              name={this.getIconName()}
+              name={"io-right"}
               size={ICON_WIDTH}
               color={customVariables.contentPrimaryBackground}
             />

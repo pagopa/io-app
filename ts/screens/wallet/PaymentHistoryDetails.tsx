@@ -3,6 +3,7 @@
  * a "pay notice" button and payment methods info/button to
  * add new ones
  */
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
@@ -29,10 +30,8 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
-import {
-  formatPaymentAmount,
-  getPaymentHistoryDetails
-} from "../../utils/payment";
+import { getPaymentHistoryDetails } from "../../utils/payment";
+import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -132,6 +131,18 @@ const styles = StyleSheet.create({
   }
 });
 
+const notAvailable = "n/a";
+
+const maybeProperty = <T, K extends keyof T, R>(
+  item: T | undefined,
+  key: K,
+  extractor: (value: T[K]) => R
+): Option<R> => {
+  return fromNullable(item)
+    .mapNullable(s => s[key])
+    .map(value => extractor(value));
+};
+
 /**
  * Payment Details
  */
@@ -170,50 +181,41 @@ class PaymentHistoryDetails extends React.Component<Props> {
       </Text>
     </ButtonDefaultOpacity>
   );
-  private getAmount = (amount: number): string => {
-    return formatPaymentAmount(amount);
-  };
-  private formatTime = (dateBase: Date) => {
-    const hours = `${
-      dateBase.getHours() < 10 ? "0" : ""
-    }${dateBase.getHours()}`;
-
-    const minutes = `${
-      dateBase.getMinutes() < 10 ? "0" : ""
-    }${dateBase.getMinutes()}`;
-
-    return `${hours}:${minutes}`;
-  };
   public render(): React.ReactNode {
     const payment = this.props.navigation.getParam("payment");
     const paymentOutCome = isPaymentDoneSuccessfully(payment);
-    const date = new Date(payment.started_at);
-    const dateAndTime = `${formatDateAsLocal(
-      date,
+    const datetime: string = `${formatDateAsLocal(
+      new Date(payment.started_at),
       true,
       true
-    )} - ${this.formatTime(date)}`;
-    const causaleVersamento =
-      payment.verified_data !== undefined
-        ? payment.verified_data.causaleVersamento
-        : undefined;
-    const creditore =
-      payment.transaction !== undefined
-        ? payment.transaction.merchant
-        : undefined;
+    )} - ${new Date(payment.started_at).toLocaleTimeString()}`;
+    const causaleVersamento = maybeProperty(
+      payment.verified_data,
+      "causaleVersamento",
+      m => m
+    ).fold(notAvailable, cv => cv);
+    const creditore = maybeProperty(
+      payment.transaction,
+      "merchant",
+      m => m
+    ).fold(notAvailable, c => c);
     const iuv = getIuv(payment.data);
-    const amount =
-      payment.transaction !== undefined
-        ? payment.transaction.amount.amount
-        : undefined;
-    const grandTotal =
-      payment.transaction !== undefined
-        ? payment.transaction.grandTotal.amount
-        : undefined;
-    const idTransaction =
-      payment.transaction !== undefined ? payment.transaction.id : undefined;
+    const amount = maybeProperty(payment.transaction, "amount", m => m.amount);
+    const grandTotal = maybeProperty(
+      payment.transaction,
+      "grandTotal",
+      m => m.amount
+    );
+    const idTransaction = maybeProperty(payment.transaction, "id", m => m).fold(
+      notAvailable,
+      id => `${id}`
+    );
     return (
-      <BaseScreenComponent goBack={this.goBack} dark={true}>
+      <BaseScreenComponent
+        goBack={this.goBack}
+        dark={true}
+        headerTitle={I18n.t("payment.details.info.title")}
+      >
         <Content style={styles.darkContent} noPadded={true}>
           <View style={styles.whiteContent}>
             <View style={styles.box}>
@@ -249,14 +251,14 @@ class PaymentHistoryDetails extends React.Component<Props> {
                 <Text style={styles.text1}>
                   {I18n.t("payment.details.info.dateAndTime")}
                 </Text>
-                <Text style={styles.text2}>{dateAndTime}</Text>
+                <Text style={styles.text2}>{datetime}</Text>
               </View>
             </View>
             <ItemSeparatorComponent noPadded={true} />
             {paymentOutCome.isSome() &&
               paymentOutCome.value &&
-              amount &&
-              grandTotal && (
+              amount.isSome() &&
+              grandTotal.isSome() && (
                 <React.Fragment>
                   <View style={styles.box}>
                     <View style={styles.row}>
@@ -264,7 +266,7 @@ class PaymentHistoryDetails extends React.Component<Props> {
                         {I18n.t("payment.details.info.paymentAmount")}
                       </Text>
                       <Text style={styles.text2}>
-                        € {this.getAmount(amount)}
+                        {formatNumberCentsToAmount(amount.value, true)}
                       </Text>
                     </View>
 
@@ -273,7 +275,10 @@ class PaymentHistoryDetails extends React.Component<Props> {
                         {I18n.t("payment.details.info.transactionCosts")}
                       </Text>
                       <Text style={styles.text2}>
-                        € {this.getAmount(grandTotal - amount)}
+                        {formatNumberCentsToAmount(
+                          grandTotal.value - amount.value,
+                          true
+                        )}
                       </Text>
                     </View>
                     <View spacer={true} />
@@ -284,7 +289,7 @@ class PaymentHistoryDetails extends React.Component<Props> {
                         {I18n.t("payment.details.info.totalPaid")}
                       </Text>
                       <Text style={[styles.text2, styles.textBig]}>
-                        € {this.getAmount(grandTotal)}
+                        {formatNumberCentsToAmount(grandTotal.value, true)}
                       </Text>
                     </View>
                   </View>
@@ -312,11 +317,7 @@ class PaymentHistoryDetails extends React.Component<Props> {
                   </View>
                 </React.Fragment>
               )}
-
-            {paymentOutCome.fold(true, success => success === false) && (
-              <View spacer={true} extralarge={true} />
-            )}
-
+            <View spacer={true} extralarge={true} />
             <View style={[styles.box, styles.boxHelp]}>
               <Text style={[styles.text1, styles.textHelp]}>
                 {I18n.t("payment.details.info.help")}
