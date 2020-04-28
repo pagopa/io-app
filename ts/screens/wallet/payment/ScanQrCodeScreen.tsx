@@ -24,6 +24,7 @@ import {
 } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
+import customVariables from "../../../theme/variables";
 import { openAppSettings } from "../../../utils/appSettings";
 import { decodePagoPaQrCode } from "../../../utils/payment";
 import { showToast } from "../../../utils/showToast";
@@ -220,6 +221,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
   private getFooterButtons = () => {
     const primaryButtonProps = {
+      buttonFontSize: customVariables.btnFontSize - 1,
       block: true,
       primary: true,
       onPress: this.props.navigateToPaymentManualDataInsertion,
@@ -227,6 +229,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     };
 
     const secondaryButtonProps = {
+      buttonFontSize: customVariables.btnFontSize - 1,
       block: true,
       cancel: true,
       onPress: this.props.navigation.goBack,

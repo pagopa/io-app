@@ -15,21 +15,9 @@ declare module "native-base" {
 
 export default (): Theme => {
   return {
-    ".block": {
-      ".iconVeryLeft": {
-        "UIComponent.IconFont": {
-          flex: 0,
-          borderRightWidth: 1,
-          borderColor: "#FFFFFF",
-          margin: 0,
-          padding: 11,
-          paddingLeft: 15,
-          paddingRight: 15
-        },
-        "NativeBase.Text": { flex: 1, textAlign: "center" },
-        padding: 0,
-        display: "flex"
-      }
+    ".info": {
+      backgroundColor: variables.brandHighLighter,
+      bordercolor: variables.brandHighLighter
     },
 
     ".xsmall": {
@@ -59,6 +47,9 @@ export default (): Theme => {
           color: variables.btnLightTextColor,
           fontWeight: variables.textBoldWeight
         },
+        "UIComponent.IconFont": {
+          color: variables.btnLightTextColor
+        },
         borderWidth: 1,
         borderColor: variables.btnLightBorderColor,
         backgroundColor: variables.brandLight,
@@ -69,7 +60,9 @@ export default (): Theme => {
           backgroundColor: variables.colorWhite
         }
       },
-      "NativeBase.Text": { fontWeight: variables.textNormalWeight }
+      "NativeBase.Text": {
+        fontWeight: variables.textNormalWeight
+      }
     },
 
     ".bordered": {
@@ -77,15 +70,24 @@ export default (): Theme => {
         "NativeBase.Icon": {
           color: variables.btnDisabledBg
         },
-
+        "UIComponent.IconFont": {
+          color: variables.btnDisabledBg
+        },
         backgroundColor: variables.colorWhite
+      },
+      "UIComponent.IconFont": {
+        color: variables.brandPrimary
       }
     },
 
-    ".white": { backgroundColor: "#FFFFFF" },
+    ".white": { backgroundColor: variables.colorWhite },
+
     ".cancel": {
       backgroundColor: variables.brandDarkGray,
       "NativeBase.Text": {
+        color: variables.colorWhite
+      },
+      "UIComponent.IconFont": {
         color: variables.colorWhite
       }
     },
