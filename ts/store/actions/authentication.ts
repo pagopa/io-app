@@ -21,6 +21,10 @@ export type LogoutError = {
   options: LogoutOption;
 };
 
+export type CheckSessionResult = {
+  sessionValid: boolean;
+};
+
 export const idpSelected = createStandardAction("IDP_SELECTED")<
   IdentityProvider
 >();
@@ -65,6 +69,14 @@ export const resetAuthenticationState = createStandardAction(
   "RESET_AUTHENTICATION_STATE"
 )();
 
+export const checkCurrentSession = createStandardAction(
+  "CHECK_CURRENT_SESSION"
+)();
+
+export const checkCurrentSessionResult = createStandardAction(
+  "CHECK_CURRENT_SESSION_RESULT"
+)<CheckSessionResult>();
+
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
@@ -79,6 +91,8 @@ export type AuthenticationActions =
   | ActionType<typeof logoutFailure>
   | ActionType<typeof sessionInformationLoadSuccess>
   | ActionType<typeof sessionInformationLoadFailure>
+  | ActionType<typeof checkCurrentSession>
+  | ActionType<typeof checkCurrentSessionResult>
   | ActionType<typeof sessionExpired>
   | ActionType<typeof sessionInvalid>
   | ActionType<typeof resetAuthenticationState>;
