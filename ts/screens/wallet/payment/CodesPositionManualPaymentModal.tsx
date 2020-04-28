@@ -32,7 +32,7 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
     return (
       <BaseScreenComponent
         isModal={true}
-        customRightIcon={{ iconName: "io-close", onPress: this.props.onCancel }}
+        customRightBack={{ iconName: "io-close", onPress: this.props.onCancel }}
       >
         <ImageZoom
           imageHeight={screenHeight}

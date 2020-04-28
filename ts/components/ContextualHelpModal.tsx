@@ -95,7 +95,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         onRequestClose={onClose}
       >
         <BaseScreenComponent
-          customRightIcon={{ iconName: "io-close", onPress: onClose }}
+          customRightBack={{ iconName: "io-close", onPress: onClose }}
         >
           {!this.state.content && (
             <View centerJustified={true}>

@@ -8,10 +8,6 @@ interface OwnProps {
   headerTitle?: string;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
-  customRightIcon?: {
-    iconName: string;
-    onPress: () => void;
-  };
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
@@ -22,7 +18,7 @@ type BaseScreenComponentProps =
   | "contextualHelp"
   | "contextualHelpMarkdown"
   | "headerBody"
-  | "customGoBack";
+  | "customRightBack";
 
 type Props = OwnProps &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
@@ -44,8 +40,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
       headerBody,
       isSearchAvailable,
       searchType,
-      customRightIcon,
-      customGoBack,
+      customRightBack,
       faqCategories
     } = this.props;
 
@@ -61,8 +56,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         headerBody={headerBody}
         isSearchAvailable={isSearchAvailable}
         searchType={searchType}
-        customRightIcon={customRightIcon}
-        customGoBack={customGoBack}
+        customRightBack={customRightBack}
       >
         {this.props.children}
       </BaseScreenComponent>

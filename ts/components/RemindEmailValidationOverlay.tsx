@@ -227,12 +227,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       ]
     );
 
-  private customOnboardingGoBack = (
-    <IconFont name={"io-back"} onPress={this.handleOnboardingGoBack} />
-  );
-
   private onMainProps: BaseScreenComponentProps = {
-    customRightIcon: {
+    customRightBack: {
       iconName: "io-close",
       onPress: this.props.navigateBack
     }
@@ -240,7 +236,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private onBoardingProps: BaseScreenComponentProps = {
     headerTitle: I18n.t("email.validate.header"),
-    customGoBack: this.customOnboardingGoBack
+    goBack: this.handleOnboardingGoBack
   };
 
   private handleOnContentLoadEnd = () => {

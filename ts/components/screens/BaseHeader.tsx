@@ -29,9 +29,6 @@ const styles = StyleSheet.create({
 interface OwnProps {
   dark?: boolean;
   headerTitle?: string;
-  goBack?:
-    | React.ComponentProps<typeof GoBackButton>["goBack"]
-    | React.ComponentProps<typeof GoBackButtonModal>["onPress"];
   primary?: boolean;
   appLogo?: boolean;
   onShowHelp?: () => void;
@@ -39,12 +36,12 @@ interface OwnProps {
   body?: React.ReactNode;
   isSearchAvailable?: boolean;
   searchType?: SearchType;
-  customRightIcon?: {
+  customRightBack?: {
     iconName: string;
     onPress: () => void;
   };
+  goBack?: (() => void)| boolean;
   isModal?: boolean;
-  customGoBack?: React.ReactNode;
 }
 
 type Props = OwnProps &
@@ -58,39 +55,26 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
    * otherwise the default goback navigation will be returned
    */
   private getGoBackHandler = () => {
-    if (this.props.isModal) {
-      return this.props.goBack;
+    if(this.props.goBack !== undefined) {
+      if(typeof this.props.goBack === 'boolean'){
+        return this.props.navigateBack();
+      } else {
+        return this.props.goBack()
+      }
+    } 
+    if (this.props.customRightBack){
+      return this.props.customRightBack.onPress()
     }
+    
+  }
 
-    return typeof this.props.goBack === "function"
-      ? this.props.goBack()
-      : this.props.navigateBack();
-  };
-
-  private renderHeader = () => {
-    const { customGoBack, headerTitle } = this.props;
-    // if customGoBack is provided only the header text will be rendered
-    if (customGoBack) {
-      return (
-        <Text
-          white={this.props.primary || this.props.dark ? true : undefined}
-          numberOfLines={1}
-        >
-          {headerTitle}
-        </Text>
-      );
-    }
-    const isWhite = this.props.primary || this.props.dark;
-    // if no customGoBack is provided also the header text could be press to execute goBack
-    // note goBack could a boolean or a function (check this.getGoBackHandler)
-    return (
+  private renderHeader = () => (
       <TouchableDefaultOpacity onPress={this.getGoBackHandler}>
-        <Text white={isWhite} numberOfLines={1}>
-          {headerTitle}
+        <Text white={this.props.primary || this.props.dark} numberOfLines={1}>
+          {this.props.headerTitle}
         </Text>
       </TouchableDefaultOpacity>
-    );
-  };
+  );
 
   public render() {
     const { goBack, headerTitle, body, isSearchEnabled, dark } = this.props;
@@ -119,7 +103,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       onShowHelp,
       isSearchAvailable,
       searchType,
-      customRightIcon
+      customRightBack
     } = this.props;
 
     return (
@@ -137,14 +121,14 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
           )}
 
         {isSearchAvailable && <SearchButton searchType={searchType} />}
-        {customRightIcon &&
+        {customRightBack &&
           !isSearchEnabled && (
             <ButtonDefaultOpacity
-              onPress={customRightIcon.onPress}
+              onPress={customRightBack.onPress}
               style={styles.helpButton}
               transparent={true}
             >
-              <IconFont name={customRightIcon.iconName} />
+              <IconFont name={customRightBack.iconName} />
             </ButtonDefaultOpacity>
           )}
       </Right>
@@ -152,16 +136,13 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
   };
 
   private renderGoBack = () => {
-    const { goBack, dark, customGoBack } = this.props;
-    return customGoBack ? (
-      <Left>{customGoBack}</Left>
-    ) : (
-      goBack && (
+    const { goBack, dark } = this.props;
+    return goBack && (
         <Left>
           {this.props.isModal ? (
-            <GoBackButtonModal
+            <GoBackButtonModal          
               testID={"back-button"}
-              onPress={goBack}
+              onPress={this.getGoBackHandler}
               accessible={true}
               accessibilityLabel={I18n.t("global.buttons.back")}
               white={dark}
@@ -176,7 +157,6 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
             />
           )}
         </Left>
-      )
     );
   };
 

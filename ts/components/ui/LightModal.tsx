@@ -1,8 +1,3 @@
-/**
- * Provides a mechanism to display non-native modals (i.e. overlays)
- * on top of the root component.
- */
-
 import React from "react";
 import { Animated, Dimensions, Easing, StyleSheet, View } from "react-native";
 
@@ -19,6 +14,10 @@ export type LightModalContextInterface = Readonly<{
   setOnHiddenModal: (callback: () => void) => void;
 }>;
 
+/**
+ * Provides a mechanism to display non-native modals (i.e. overlays)
+ * on top of the root component.
+ */
 export const LightModalContext = React.createContext<
   LightModalContextInterface
 >({

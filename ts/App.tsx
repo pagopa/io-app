@@ -13,8 +13,6 @@ export const { store, persistor } = configureStoreAndPersistor();
 
 /**
  * Main component of the application
- *
- * TODO: Add a loading screen @https://www.pivotaltracker.com/story/show/155583084
  */
 export const App: React.SFC<never> = () => (
   <StyleProvider style={theme()}>

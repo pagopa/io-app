@@ -15,9 +15,6 @@ interface Props {
  * for items not related to a navigation route (eg Modal and light modals)
  */
 export default class GoBackButtonModal extends React.PureComponent<Props> {
-  public static defaultProps: Partial<Props> = {
-    white: false
-  };
 
   public componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);

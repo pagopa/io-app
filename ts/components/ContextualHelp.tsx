@@ -29,7 +29,7 @@ export class ContextualHelp extends React.Component<Props> {
     return (
       <BaseScreenComponent
         isModal={true}
-        customRightIcon={{ iconName: "io-close", onPress: this.props.onClose }}
+        customRightBack={{ iconName: "io-close", onPress: this.props.onClose }}
       >
         <Content noPadded={true}>
           <ScreenContentHeader title={this.props.title} />
