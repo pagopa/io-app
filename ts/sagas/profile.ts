@@ -43,7 +43,7 @@ export function* loadProfile(
       // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
       // discriminated union!
       // tslint:disable-next-line:no-useless-cast
-      const initializedProfile = response.value.value as InitializedProfile;
+      const initializedProfile = response.value.value;
       yield put(profileLoadSuccess(initializedProfile));
 
       // send the hash of fiscal code to Instabug
