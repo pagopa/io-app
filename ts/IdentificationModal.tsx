@@ -1,6 +1,6 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
+import { Alert, Modal, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 import Pinpad from "./components/Pinpad";
@@ -11,6 +11,8 @@ import IconFont from "./components/ui/IconFont";
 import TextWithIcon from "./components/ui/TextWithIcon";
 import { isDebugBiometricIdentificationEnabled } from "./config";
 import I18n from "./i18n";
+import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
+import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 import {
   identificationCancel,
   identificationFailure,
@@ -21,8 +23,6 @@ import { ReduxProps } from "./store/actions/types";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 import { authenticateConfig } from "./utils/biometric";
-import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
-import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -277,7 +277,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
 
     return (
-      <Modal onRequestClose={onRequestCloseHandler}>
+      <Modal onRequestClose={onRequestCloseHandler} transparent={true}>
         <BaseScreenComponent
           primary={true}
           contextualHelpMarkdown={contextualHelpMarkdown}
@@ -285,10 +285,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           appLogo={true}
           withSafeArea={true}
         >
-          <StatusBar
-            barStyle="light-content"
-            backgroundColor={variables.contentPrimaryBackground}
-          />
           <Content primary={true} contentContainerStyle={styles.pinPad}>
             <Text
               bold={true}

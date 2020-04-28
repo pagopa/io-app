@@ -23,7 +23,7 @@ import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { ContextualHelpModal } from "../ContextualHelpModal";
 import Markdown from "../ui/Markdown";
-import BaseHeader from './BaseHeader';
+import BaseHeader from "./BaseHeader";
 
 export interface ContextualHelpProps {
   title: string;
@@ -129,7 +129,10 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     maybeDark(this.props.dark || this.props.primary).map(_ =>
       setStatusBarColorAndBackground(
         "light-content",
-        this.props.dark ? customVariables.brandDarkGray : customVariables.contentPrimaryBackground
+        fromNullable(this.props.dark).fold(
+          customVariables.contentPrimaryBackground,
+          () => customVariables.brandDarkGray
+        )
       )
     );
     this.handleOnContextualHelpDismissed();
