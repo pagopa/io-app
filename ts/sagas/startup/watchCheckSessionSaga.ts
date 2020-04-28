@@ -25,7 +25,7 @@ export function* checkSession(
       // the result will be false and then put the session expired action
       yield put(
         checkCurrentSessionSuccess({
-          sessionValid: response.value.status !== 401
+          isSessionValid: response.value.status !== 401
         })
       );
     }
@@ -42,7 +42,7 @@ export function* watchCheckSessionSaga(
   yield takeLatest(getType(checkCurrentSessionSuccess), function*(
     action: ReturnType<typeof checkCurrentSessionSuccess>
   ) {
-    if (!action.payload.sessionValid) {
+    if (!action.payload.isSessionValid) {
       yield put(sessionExpired());
     }
   });
