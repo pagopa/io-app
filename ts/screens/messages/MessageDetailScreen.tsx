@@ -230,7 +230,8 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     paymentsByRptId: Props["paymentsByRptId"]
   ) => {
     const { isDebugModeEnabled } = this.props;
-    RTron.log(message);
+    const maybeMedicalData = fromNullable(message.content.prescription_data);
+    const attachments = fromNullable(message.content.attachments);
     return (
       <Content noPadded={true}>
         <MessageDetailComponent
@@ -244,18 +245,35 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
           }
           isDebugModeEnabled={isDebugModeEnabled}
         />
-        {message.medical_prescription &&
-          message.medical_prescription.image_format &&
-          message.medical_prescription.image_data && (
-            <Image
-              style={{ width: 300, height: 250 }}
-              source={{
-                uri: `data:image/png;base64,${
-                  message.medical_prescription.image_data
-                }`
-              }}
-            />
-          )}
+        {maybeMedicalData.isSome() && (
+          <React.Fragment>
+            <Text>{maybeMedicalData.value.nre}</Text>
+            <Text>
+              {fromNullable(maybeMedicalData.value.iup).fold("n/a", s => s)}
+            </Text>
+            <Text>
+              {fromNullable(maybeMedicalData.value.prescriber_fiscal_code).fold(
+                "n/a",
+                s => s as string
+              )}
+            </Text>
+          </React.Fragment>
+        )}
+        {attachments.isSome() &&
+          attachments.value.map((att, idx) => {
+            return (
+              <React.Fragment key={`frag_${idx}`}>
+                <Text key={`text_${idx}`}>{att.name}</Text>
+                <Image
+                  key={`image_${idx}`}
+                  style={{ width: 300, height: 600, resizeMode: "contain" }}
+                  source={{
+                    uri: `data:image/png;base64,${att.base64_content}`
+                  }}
+                />
+              </React.Fragment>
+            );
+          })}
       </Content>
     );
   };
