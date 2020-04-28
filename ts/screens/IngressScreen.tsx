@@ -5,16 +5,16 @@ import * as pot from "italia-ts-commons/lib/pot";
 import {
   Body,
   CheckBox,
-  Container,
+  Content,
   List,
   ListItem,
   Spinner,
   Text
 } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import ConnectionBar from "../components/ConnectionBar";
+import BaseScreenComponent from "../components/screens/BaseScreenComponent";
 import I18n from "../i18n";
 import { startApplicationInitialization } from "../store/actions/application";
 import { ReduxProps } from "../store/actions/types";
@@ -24,17 +24,8 @@ import {
 } from "../store/reducers/authentication";
 import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
-import variables from "../theme/variables";
 
 type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: variables.contentPaddingLarge,
-    backgroundColor: variables.brandPrimary
-  }
-});
 class IngressScreen extends React.PureComponent<Props> {
   public componentDidMount() {
     // Dispatch START_APPLICATION_INITIALIZATION to initialize the app
@@ -58,25 +49,27 @@ class IngressScreen extends React.PureComponent<Props> {
       }
     );
     return (
-      <Container style={styles.container}>
+      <BaseScreenComponent goBack={false} primary={true}>
         <ConnectionBar />
-        <Text white={true} alignCenter={true}>
-          {I18n.t("startup.title")}
-        </Text>
-        <Spinner color="white" />
-        <List withContentLateralPadding={true}>
-          {items.map((item, index) => (
-            <ListItem key={`item-${index}`}>
-              <CheckBox checked={item.enabled} />
-              <Body>
-                <Text white={true} bold={item.enabled}>
-                  {item.label}
-                </Text>
-              </Body>
-            </ListItem>
-          ))}
-        </List>
-      </Container>
+        <Content primary={true}>
+          <Text white={true} alignCenter={true}>
+            {I18n.t("startup.title")}
+          </Text>
+          <Spinner color="white" />
+          <List withContentLateralPadding={true}>
+            {items.map((item, index) => (
+              <ListItem key={`item-${index}`}>
+                <CheckBox checked={item.enabled} />
+                <Body>
+                  <Text white={true} bold={item.enabled}>
+                    {item.label}
+                  </Text>
+                </Body>
+              </ListItem>
+            ))}
+          </List>
+        </Content>
+      </BaseScreenComponent>
     );
   }
 }
