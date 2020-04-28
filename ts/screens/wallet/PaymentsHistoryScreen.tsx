@@ -37,7 +37,13 @@ type Props = ReturnType<typeof mapStateToProps> &
 class PaymentsHistoryScreen extends React.Component<Props, never> {
   private goBack = () => this.props.navigation.goBack();
   public render(): React.ReactNode {
-    const { potPayments, potProfile } = this.props;
+    const { historyPayments, potProfile } = this.props;
+    // order by started_at DESC
+    const payments = [...historyPayments].sort((a, b) => {
+      const keyA = a.started_at;
+      const keyB = b.started_at;
+      return keyA < keyB ? 1 : keyA > keyB ? -1 : 0;
+    });
     const currentProfile =
       !pot.isError(potProfile) && pot.isSome(potProfile)
         ? potProfile.value
@@ -46,7 +52,7 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
       <BaseScreenComponent goBack={this.goBack}>
         <PaymentHistoryList
           title={I18n.t("wallet.latestTransactions")}
-          payments={potPayments}
+          payments={payments}
           profile={currentProfile}
           ListEmptyComponent={<View />}
           navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
@@ -62,7 +68,7 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  potPayments: paymentsHistorySelector(state),
+  historyPayments: paymentsHistorySelector(state),
   potProfile: profileSelector(state)
 });
 
