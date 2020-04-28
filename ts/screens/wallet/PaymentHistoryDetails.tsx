@@ -32,6 +32,8 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
 import { getPaymentHistoryDetails } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
+import { Transaction } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -189,29 +191,35 @@ class PaymentHistoryDetails extends React.Component<Props> {
       true,
       true
     )} - ${new Date(payment.started_at).toLocaleTimeString()}`;
-    // tslint:disable-no-inferred-empty-object-type
-    const causaleVersamento = maybeProperty(
-      payment.verified_data,
+    const causaleVersamento = maybeProperty<
+      PaymentRequestsGetResponse,
       "causaleVersamento",
-      m => m
-    ).fold(notAvailable, cv => cv);
-    // tslint:disable-no-inferred-empty-object-type
-    const creditore = maybeProperty(
+      string
+    >(payment.verified_data, "causaleVersamento", m => m).fold(
+      notAvailable,
+      cv => cv
+    );
+    const creditore = maybeProperty<Transaction, "merchant", string>(
       payment.transaction,
       "merchant",
       m => m
     ).fold(notAvailable, c => c);
     const iuv = getIuv(payment.data);
-    const amount = maybeProperty(payment.transaction, "amount", m => m.amount);
-    const grandTotal = maybeProperty(
+    const amount = maybeProperty<Transaction, "amount", number>(
+      payment.transaction,
+      "amount",
+      m => m.amount
+    );
+    const grandTotal = maybeProperty<Transaction, "grandTotal", number>(
       payment.transaction,
       "grandTotal",
       m => m.amount
     );
-    const idTransaction = maybeProperty(payment.transaction, "id", m => m).fold(
-      notAvailable,
-      id => `${id}`
-    );
+    const idTransaction = maybeProperty<Transaction, "id", number>(
+      payment.transaction,
+      "id",
+      m => m
+    ).fold(notAvailable, id => `${id}`);
     return (
       <BaseScreenComponent
         goBack={this.goBack}
