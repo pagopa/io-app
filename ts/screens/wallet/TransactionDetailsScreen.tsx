@@ -1,36 +1,20 @@
-/**
- * Transaction details screen, displaying
- * a list of information available about a
- * specific transaction.
- * TODO: check what controls implemented into this screen will be included into API
- *      - number deimals fixed to 2
- *      - get total amount from fee + amount
- *      - currency symbol
- *      - sum of amounts
- *      @https://www.pivotaltracker.com/n/projects/2048617/stories/157769657
- */
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, Image, StyleSheet } from "react-native";
-import { Col, Grid, Row } from "react-native-easy-grid";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
-import { ContextualHelp } from "../../components/ContextualHelp";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
-import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
-import H5 from "../../components/ui/H5";
-import IconFont from "../../components/ui/IconFont";
+import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import Markdown from "../../components/ui/Markdown";
-import Logo from "../../components/wallet/card/Logo";
-import { RotatedCards } from "../../components/wallet/card/RotatedCards";
-import WalletLayout from "../../components/wallet/WalletLayout";
+import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
+import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -38,11 +22,12 @@ import { fetchPsp } from "../../store/actions/wallet/transactions";
 import { GlobalState } from "../../store/reducers/types";
 import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
-import variables from "../../theme/variables";
-import { Transaction, Wallet } from "../../types/pagopa";
+import customVariables from "../../theme/variables";
+import { Transaction } from "../../types/pagopa";
+import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
-import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
 type NavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -62,60 +47,46 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 
 const styles = StyleSheet.create({
-  value: {
-    flex: 1,
-    flexDirection: "row"
-  },
-
-  valueImage: {
-    justifyContent: "flex-end",
-    alignItems: "flex-end"
-  },
-
-  align: {
-    textAlign: "right"
-  },
-
-  titleRow: {
-    justifyContent: "space-between"
-  },
-
-  whyLink: {
-    color: variables.textLinkColor
-  },
-
-  alignCenter: {
-    alignItems: "center"
-  },
-
-  white: {
-    color: variables.colorWhite
-  },
-
-  brandDarkGray: {
-    color: variables.brandDarkGray
-  },
-
-  whiteContent: {
-    backgroundColor: variables.colorWhite,
-    flex: 1
-  },
-
-  noBottomPadding: {
-    padding: variables.contentPadding,
-    paddingBottom: 0
-  },
-
   pspLogo: {
-    width: 100,
-    height: 30,
+    width: 60,
+    height: 20,
     resizeMode: "contain"
   },
-
-  creditCardLogo: {
-    width: 48,
+  cardLogo: {
+    alignSelf: "flex-end",
     height: 30,
-    resizeMode: "contain"
+    width: 48
+  },
+  darkText: {
+    color: customVariables.brandDarkestGray
+  },
+  bigText: {
+    fontSize: 20
+  },
+  row: { flexDirection: "row", justifyContent: "space-between" },
+  cardIcon: {
+    alignSelf: "flex-end",
+    height: 30,
+    width: 48
+  },
+  centered: { alignItems: "center" },
+  copyButton: {
+    paddingHorizontal: 8,
+    backgroundColor: customVariables.colorWhite,
+    borderColor: customVariables.brandPrimary,
+    borderWidth: 1,
+    paddingBottom: 0,
+    paddingTop: 0,
+    height: 28
+  },
+  copyText: {
+    color: customVariables.brandPrimary,
+    paddingLeft: 0,
+    paddingRight: 0,
+    marginBottom: 4
+  },
+  flex: {
+    flex: 1
   }
 });
 
@@ -124,98 +95,23 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.detailsTransaction.contextualHelpContent"
 };
 
+/**
+ * Transaction details screen, displaying
+ * a list of information available about a
+ * specific transaction.
+ */
 class TransactionDetailsScreen extends React.Component<Props> {
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+    BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.props.navigateToWalletHome
+    );
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
-  }
-  // On back button navigate to wallet home (android)
-  private handleBackPress = () => this.props.navigateToWalletHome();
-
-  private displayedWallet(transactionWallet: Wallet | undefined) {
-    return transactionWallet ? (
-      <RotatedCards cardType="Preview" wallets={[transactionWallet]} />
-    ) : (
-      <RotatedCards cardType="Preview" />
-    );
-  }
-
-  /**
-   * It provides the proper header to the screen. If isTransactionStarted
-   * (the user displays the screen during the process of identify and accept a transaction)
-   * then the "Thank you message" is displayed
-   */
-  private topContent(
-    paymentCompleted: boolean,
-    transactionWallet: Wallet | undefined
-  ) {
-    return (
-      <React.Fragment>
-        {paymentCompleted ? (
-          <View>
-            <Grid>
-              <Col size={1} />
-              <Col size={5} style={styles.alignCenter}>
-                <View spacer={true} />
-                <Row>
-                  <H1 style={styles.white}>{I18n.t("wallet.thanks")}</H1>
-                </Row>
-                <Row>
-                  <Text white={true}>{I18n.t("wallet.endPayment")}</Text>
-                </Row>
-                <View spacer={true} />
-              </Col>
-              <Col size={1} />
-            </Grid>
-          </View>
-        ) : (
-          <View spacer={true} />
-        )}
-        {this.displayedWallet(transactionWallet)}
-      </React.Fragment>
-    );
-  }
-
-  /**
-   * It provides the proper format to the listed content by using flex layout
-   */
-  private labelValueRow(
-    label: string | React.ReactElement<any>,
-    value: string | React.ReactElement<any>,
-    labelIsNote: boolean = true
-  ): React.ReactNode {
-    return (
-      <Col>
-        <View spacer={true} />
-        <Row style={{ alignItems: "center" }}>
-          <Text note={labelIsNote}>{label}</Text>
-          <Text style={[styles.value, styles.align]} bold={true}>
-            {value}
-          </Text>
-        </Row>
-      </Col>
-    );
-  }
-
-  /**
-   * It provides the proper format to the listed content by using flex layout
-   */
-  private labelImageRow(
-    label: string | React.ReactElement<any>,
-    value: string | React.ReactElement<any>,
-    labelIsNote: boolean = true
-  ): React.ReactNode {
-    return (
-      <Col>
-        <View spacer={true} />
-        <Row style={{ alignItems: "center" }}>
-          <Text note={labelIsNote}>{label}</Text>
-          <View style={[styles.value, styles.valueImage]}>{value}</View>
-        </Row>
-      </Col>
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.props.navigateToWalletHome
     );
   }
 
@@ -227,136 +123,192 @@ class TransactionDetailsScreen extends React.Component<Props> {
     }
   };
 
-  private showHelp = () => {
-    this.props.showModal(
-      <ContextualHelp
-        onClose={this.props.hideModal}
-        title={I18n.t("wallet.whyAFee.title")}
-        body={() => <Markdown>{I18n.t("wallet.whyAFee.text")}</Markdown>}
-      />
-    );
-  };
-
-  public render(): React.ReactNode {
-    const { psp } = this.props;
+  private getData = () => {
     const transaction = this.props.navigation.getParam("transaction");
-
-    // whether this transaction is the result of a just completed payment
-    const isPaymentCompletedTransaction = this.props.navigation.getParam(
-      "isPaymentCompletedTransaction",
-      false
+    const amount = formatNumberCentsToAmount(transaction.amount.amount);
+    const fee = formatNumberCentsToAmount(
+      transaction.fee === undefined
+        ? transaction.grandTotal.amount - transaction.amount.amount
+        : transaction.fee.amount
     );
-    const amount = formatNumberAmount(centsToAmount(transaction.amount.amount));
-    const fee = formatNumberAmount(
-      centsToAmount(
-        transaction.fee === undefined
-          ? transaction.grandTotal.amount - transaction.amount.amount
-          : transaction.fee.amount
-      )
-    );
-    const totalAmount = formatNumberAmount(
-      centsToAmount(transaction.grandTotal.amount)
+    const totalAmount = formatNumberCentsToAmount(
+      transaction.grandTotal.amount
     );
 
     const transactionWallet = this.props.wallets
       ? this.props.wallets[transaction.idWallet]
       : undefined;
 
-    const creditCard =
-      transactionWallet !== undefined
-        ? transactionWallet.creditCard
-        : undefined;
+    const transactionDateTime = formatDateAsLocal(transaction.created, true)
+      .concat(" - ")
+      .concat(transaction.created.toLocaleTimeString());
+
+    const paymentMethodIcon = fromNullable(
+      transactionWallet &&
+        transactionWallet.creditCard &&
+        transactionWallet.creditCard.brandLogo
+    )
+      .map(logo => (logo.trim().length > 0 ? logo.trim() : undefined))
+      .getOrElse(undefined);
+
+    const paymentMethodBrand =
+      transactionWallet &&
+      transactionWallet.creditCard &&
+      transactionWallet.creditCard.brand;
+
+    const idTransaction = transaction.id;
+    return {
+      idTransaction,
+      paymentMethodBrand,
+      paymentMethodIcon,
+      transactionDateTime,
+      amount,
+      totalAmount,
+      fee
+    };
+  };
+
+  public render(): React.ReactNode {
+    const { psp } = this.props;
+    const transaction = this.props.navigation.getParam("transaction");
+    const data = this.getData();
+    const standardRow = (label: string, value: string) => (
+      <View style={styles.row}>
+        <Text style={styles.flex}>{label}</Text>
+        <Text bold={true} dark={true}>
+          {value}
+        </Text>
+      </View>
+    );
 
     return (
-      <WalletLayout
-        title={I18n.t("wallet.transaction")}
-        allowGoBack={!isPaymentCompletedTransaction}
-        topContent={this.topContent(
-          isPaymentCompletedTransaction,
-          transactionWallet
-        )}
-        hideHeader={true}
-        hasDynamicSubHeader={false}
+      <BaseScreenComponent
+        dark={true}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        goBack={this.props.navigateToWalletHome}
+        headerTitle={I18n.t("wallet.transactionDetails")}
         faqCategories={["wallet_transaction"]}
       >
         <NavigationEvents onWillFocus={this.handleWillFocus} />
-        <Content
-          scrollEnabled={false}
-          style={[styles.noBottomPadding, styles.whiteContent]}
-        >
-          <Grid>
-            <Row style={styles.titleRow}>
-              <H5 style={styles.brandDarkGray}>
-                {I18n.t("wallet.transactionDetails")}
-              </H5>
-              <IconFont
-                name="io-close"
-                size={variables.iconSizeBase}
-                onPress={this.props.navigateToWalletHome}
-                style={styles.brandDarkGray}
-              />
-            </Row>
-            <View spacer={true} large={true} />
-            {this.labelValueRow(
-              I18n.t("wallet.total"),
-              <H5 style={styles.value}>{`€ ${totalAmount}`}</H5>
-            )}
-            {this.labelValueRow(I18n.t("wallet.payAmount"), `€ ${amount}`)}
-            <TouchableDefaultOpacity onPress={this.showHelp}>
-              {this.labelValueRow(
-                <Text>
-                  <Text note={true}>{`${I18n.t(
-                    "wallet.transactionFee"
-                  )} `}</Text>
+        <SlidedContentComponent hasFlatBottom={true}>
+          <PaymentSummaryComponent
+            title={I18n.t("wallet.receipt")}
+            recipient={transaction.merchant}
+            description={cleanTransactionDescription(transaction.description)}
+          />
 
-                  <Text style={styles.whyLink} note={true} bold={true}>
-                    {I18n.t("wallet.why")}
-                  </Text>
-                </Text>,
-                `€ ${fee}`
+          {/** transaction date */}
+          <React.Fragment>
+            <View spacer={true} xsmall={true} />
+            <View spacer={true} large={true} />
+            {standardRow(
+              I18n.t("wallet.firstTransactionSummary.date"),
+              data.transactionDateTime
+            )}
+          </React.Fragment>
+
+          <View spacer={true} large={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} large={true} />
+
+          {standardRow(
+            I18n.t("wallet.firstTransactionSummary.amount"),
+            data.amount
+          )}
+          <View spacer={true} small={true} />
+          {standardRow(I18n.t("wallet.firstTransactionSummary.fee"), data.fee)}
+
+          <View spacer={true} />
+
+          {/** Total amount (amount + fee) */}
+          <View style={styles.row}>
+            <Text style={[styles.bigText, styles.flex]} bold={true} dark={true}>
+              {I18n.t("wallet.firstTransactionSummary.total")}
+            </Text>
+            <Text style={styles.bigText} bold={true} dark={true}>
+              {data.totalAmount}
+            </Text>
+          </View>
+
+          {(data.paymentMethodIcon || (psp && psp.logoPSP)) && (
+            <React.Fragment>
+              <View spacer={true} large={true} />
+              <ItemSeparatorComponent noPadded={true} />
+              <View spacer={true} large={true} />
+            </React.Fragment>
+          )}
+
+          {/** paymnet method icon */}
+          {/** to be implemented with the card logo when https://github.com/pagopa/io-app/pull/1622/ is merged */}
+
+          {data.paymentMethodIcon ? (
+            <View style={[styles.row, styles.centered]}>
+              <Text>{I18n.t("wallet.paymentMethod")}</Text>
+              <Image
+                style={styles.cardLogo}
+                source={{ uri: data.paymentMethodIcon }}
+              />
+            </View>
+          ) : (
+            data.paymentMethodBrand && (
+              <Text bold={true}>{data.paymentMethodBrand}</Text>
+            )
+          )}
+
+          {(data.paymentMethodIcon || data.paymentMethodBrand) && (
+            <View spacer={true} />
+          )}
+
+          {/** psp logo */}
+          {psp && (
+            <View style={[styles.row, styles.centered]}>
+              <Text>{I18n.t("wallet.psp")}</Text>
+              {psp.logoPSP && psp.logoPSP.length > 0 ? (
+                <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
+              ) : psp.businessName ? (
+                <Text>{psp.businessName}</Text>
+              ) : (
+                undefined
               )}
-            </TouchableDefaultOpacity>
-            {this.labelValueRow(
-              I18n.t("wallet.paymentReason"),
-              cleanTransactionDescription(transaction.description)
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.recipient"),
-              transaction.merchant
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.date"),
-              formatDateAsLocal(transaction.created, true)
-            )}
-            {this.labelValueRow(
-              I18n.t("wallet.time"),
-              transaction.created.toLocaleTimeString()
-            )}
-            {creditCard && creditCard.brandLogo
-              ? this.labelImageRow(
-                  I18n.t("wallet.paymentMethod"),
-                  <Logo imageStyle={styles.creditCardLogo} item={creditCard} />
-                )
-              : creditCard && creditCard.brand
-                ? this.labelValueRow(
-                    I18n.t("wallet.paymentMethod"),
-                    creditCard.brand
-                  )
-                : undefined}
-            {psp && psp.logoPSP
-              ? this.labelImageRow(
-                  I18n.t("wallet.psp"),
-                  <Image style={styles.pspLogo} source={{ uri: psp.logoPSP }} />
-                )
-              : psp && psp.businessName
-                ? this.labelValueRow(I18n.t("wallet.psp"), psp.businessName)
-                : undefined}
-          </Grid>
-          <View spacer={true} extralarge={true} />
-        </Content>
-        <EdgeBorderComponent />
-      </WalletLayout>
+            </View>
+          )}
+
+          <View spacer={true} large={true} />
+          <ItemSeparatorComponent noPadded={true} />
+          <View spacer={true} large={true} />
+
+          {/** Transaction id */}
+          <View>
+            <Text>
+              {I18n.t("wallet.firstTransactionSummary.idTransaction")}
+            </Text>
+            <View style={styles.row}>
+              <Text bold={true}>{data.idTransaction}</Text>
+              <ButtonDefaultOpacity
+                onPress={() =>
+                  clipboardSetStringWithFeedback(data.idTransaction.toString())
+                }
+                style={styles.copyButton}
+              >
+                <Text style={styles.copyText}>
+                  {I18n.t("clipboard.copyText")}
+                </Text>
+              </ButtonDefaultOpacity>
+            </View>
+          </View>
+
+          <View spacer={true} large={true} />
+          <View spacer={true} large={true} />
+          <ButtonDefaultOpacity
+            light={true}
+            bordered={true}
+            block={true}
+            onPress={this.props.navigateToWalletHome}
+          >
+            <Text>{I18n.t("global.buttons.close")}</Text>
+          </ButtonDefaultOpacity>
+        </SlidedContentComponent>
+      </BaseScreenComponent>
     );
   }
 }

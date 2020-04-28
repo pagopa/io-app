@@ -1,5 +1,6 @@
 ---
 global:
+  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
   localization:
@@ -14,6 +15,7 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, qualcosa è andato storto, riprova per piacere!
+  genericAlert: Attenzione!
   genericWaiting: Attendi qualche secondo...
   genericThanks: Grazie
   jserror:
@@ -63,7 +65,7 @@ clipboard:
   copyFeedback: Copiato negli appunti
   copyText: copia
 betaBanner:
-  title: 'L’app IO è in versione beta.'
+  title: "L’app IO è in versione beta."
   description: Le tue segnalazioni ci aiutano a migliorare giorno dopo giorno.
 connection:
   status:
@@ -137,9 +139,10 @@ profile:
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
         title: Cancella il tuo account
-        description: Elimina sia dal telefono che da internet tutti i data ad esso
+        description:
+          Elimina sia dal telefono che da internet tutti i data ad esso
           associati
-        alert: 
+        alert:
           requestTitle: Sei sicuro di voler cancellare il tuo account?
           requestSubtitle: Tutti i tuoi messaggi e le tue preferenze saranno eliminati definitivamente.
           oldRequest: Abbiamo già preso in carico una richiesta di eliminazione del tuo profilo.
@@ -147,12 +150,13 @@ profile:
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
       exportData:
         title: Esporta i tuoi dati
-        description: Ricevi nella tua email tutti i dati associati al tuo account in
+        description:
+          Ricevi nella tua email tutti i dati associati al tuo account in
           un formato aperto
-        alert: 
+        alert:
           requestTitle: Sei sicuro di voler esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
-          confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo. 
+          confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo.
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
         title: Informativa e condizioni d'uso
@@ -162,7 +166,7 @@ profile:
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
-        contextualHelpContent: !include profile/profile_privacy_main.md  
+        contextualHelpContent: !include profile/profile_privacy_main.md
     appInfo:
       title: Informazioni su IO beta
       description: Per saperne di più sull'app IO
@@ -179,12 +183,13 @@ profile:
       alertConfirmMessage: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
       alertMessage: È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto.
     accountSectionHeader: Account
-    appVersion:  Versione App
+    appVersion: Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
   preferences:
     title: Preferenze
-    subtitle: Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
+    subtitle:
+      Queste impostazioni verranno utilizzate da tutti i servizi della Pubblica
       Amministrazione.
     contextualHelpTitle: Le tue preferenze
     contextualHelpContent: !include profile/profile_preferences_home.md
@@ -238,13 +243,15 @@ spid:
   login: ACCEDI
   loginButton: ENTRA CON
   selectIdp: Per procedere all'accesso, seleziona il gestione della tua identità SPID
-  selectDemoIdp: Se non possiedi ancora una tua identità SPID, naviga l'app in modalità
+  selectDemoIdp:
+    Se non possiedi ancora una tua identità SPID, naviga l'app in modalità
     demo
   loginErrorAlert:
     title: Errore login
     message: Mi spiace, si è verificato un errore durante l'accesso, potresti riprovare?
   subscription:
-    line1: SPID è l'identità digitale per accedere ai servizi online della Pubblica
+    line1:
+      SPID è l'identità digitale per accedere ai servizi online della Pubblica
       Amministrazione Italiana.
     line2: Inserisci la tua email per attivarla.
 authentication:
@@ -263,16 +270,20 @@ authentication:
     nospid: Non hai SPID? Scopri di più
     nospid-nocie: Non hai SPID o CIE? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
-    card1-content: Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni
+    card1-content:
+      Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni
       Pubbliche
     card2-title: Usa i tuoi metodi di pagamento preferiti
-    card2-content: Puoi pagare un tributo o una multa con il tuo conto corrente e
+    card2-content:
+      Puoi pagare un tributo o una multa con il tuo conto corrente e
       le tue carte
     card3-title: Paga velocemente un avviso cartaceo
-    card3-content: Tramite la scansione del QR code puoi velocemente pagare anche
+    card3-content:
+      Tramite la scansione del QR code puoi velocemente pagare anche
       un avviso cartaceo
     card4-title: Potrai utilizzare l'app solo tramite SPID
-    card4-content: L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
+    card4-content:
+      L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
       Digitale) per garantire la tua sicurezza online
     card5-title: Benvenuto nella prima versione pubblica di IO!
     card5-content: In questa versione trovi in alto a destra
@@ -302,7 +313,7 @@ authentication:
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
       alert: Sei sicuro di voler tornare indietro?
-    pinTempLocked: 
+    pinTempLocked:
       header: Pin bloccato
       title: Carta temporaneamente bloccata
       content: !include cie/temporary_blocked_cie.md
@@ -319,7 +330,7 @@ authentication:
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
         readerCardLostHeader: Non abbiamo ancora terminato le operazioni di lettura dei dati della carta.
-        onTagLost: Hai rimosso la carta troppo presto. Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo. 
+        onTagLost: Hai rimosso la carta troppo presto. Tieni la carta appoggiata sul retro dello smartphone finché nello schermo non comparirà una conferma. Basterà qualche secondo.
         tryAgain: Si è verificato un errore durante la verifica della tua carta. Probabilmente è un errore momentaneo, riprova per piacere!
         generic: Si è verificato un errore durante la verifica della tua carta. Se non riesci a risolvere il problema, segnalacelo con l’icona della coccinella in alto a destra. Grazie!
         unknownCardTitle: Carta sconosciuta
@@ -329,10 +340,12 @@ authentication:
   spid_information_request:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
-    paragraph1: SPID, il Sistema Pubblico di Identità Digitale, ti permette di accedere
+    paragraph1:
+      SPID, il Sistema Pubblico di Identità Digitale, ti permette di accedere
       a tutti i servizi della Pubblica Amministrazione con un'unica Identità Digitale
       (username e password).
-    paragraph2: Se ti va, lasciaci il tuo indirizzo email per ricevere promemoria
+    paragraph2:
+      Se ti va, lasciaci il tuo indirizzo email per ricevere promemoria
       e aggiornamenti su questa app
     paragraph3: Proseguendo dichiari di accettare le
     tosLinkText: regole sul trattamento dei dati personali
@@ -343,21 +356,24 @@ authentication:
     contentTitle: Cos'è SPID?
     moreLinkText: Per saperne di più
     subtitle: SPID è sicuro
-    paragraph1: SPID, il Sistema Pubblico di Identità Digitale, ti permette di accedere
+    paragraph1:
+      SPID, il Sistema Pubblico di Identità Digitale, ti permette di accedere
       a tutti i servizi della Pubblica Amministrazione con un'unica Identità Digitale
       (username e password).
-    paragraph2-part1: 'SPID ti permette di fare online cose che prima potevi fare
-      solo di persona: per registrarti a SPID dovrai quindi '
+    paragraph2-part1:
+      "SPID ti permette di fare online cose che prima potevi fare
+      solo di persona: per registrarti a SPID dovrai quindi "
     paragraph2-bold: certificare la tua identità
-    paragraph2-part2: 'completando il riconoscimento presso un Identity Provider.
-      Ecco cosa dovrai fare:'
-    point1-value: '1'
+    paragraph2-part2:
+      "completando il riconoscimento presso un Identity Provider.
+      Ecco cosa dovrai fare:"
+    point1-value: "1"
     point1-content: "Scegli il tuo \nIdentity Provider"
-    point2-value: '2'
+    point2-value: "2"
     point2-content: Inserisci i tuoi dati anagrafici ed il tuo cellulare
-    point3-value: '3'
+    point3-value: "3"
     point3-content: Carica una copia dei tuoi documenti d'identità
-    point4-value: '4'
+    point4-value: "4"
     point4-content: "Completa il \nriconoscimento"
     knowMore: Puoi saperne di più su spid.gov.it
   idp_selection:
@@ -374,9 +390,10 @@ authentication:
     logout: Errore nel logout
     network:
       title: Problema di accesso
-      body: L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi.
-            Se disponi di un altra identità SPID scegli un provider alternativo.
-            Puoi segnalarci il problema con l’icona della coccinella in alto a destra.
+      body:
+        L'identity provider che hai scelto non è disponibile in questo momento, puoi riprovare più tardi.
+        Se disponi di un altra identità SPID scegli un provider alternativo.
+        Puoi segnalarci il problema con l’icona della coccinella in alto a destra.
     login:
       title: Errore nel login
       body: Si è verificato un errore durante il login, si prega di riprovare!
@@ -398,7 +415,8 @@ email:
       usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo
       il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua
       casella di posta elettronica.
-    details: Puoi modificare questo indirizzo, che dovrai validare cliccando su un
+    details:
+      Puoi modificare questo indirizzo, che dovrai validare cliccando su un
       link che spediremo alla tua casella di posta. Nel frattempo, le funzioni di IO che
       dipendono dalla email (pagamenti, inoltro messaggi, etc.) saranno disattivate.
     alert: "Attenzione: il tuo account pagoPA è associato alla tua email,
@@ -425,13 +443,15 @@ email:
     upsert_ok: La richiesta di modifica email è stata inviata correttamente
     upsert_ko: Errore nella richiesta di modifica email, riprovare
   validate:
-    title: Ricorda di validare il tuo indirizzo email
+    title: Ricorda di validare il tuo indirizzo email!
     header: Validazione email
-    content1: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
+    content1:
+      "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
       clicca semplicemente su quel link.<br/>Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
       inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
       usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
-    content2: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email.<br/>Ti abbiamo inviato una email a <b>{{email}}</b>:
+    content2:
+      "Per usare alcune funzioni di IO devi validare il tuo indirizzo email.<br/>Ti abbiamo inviato una email a <b>{{email}}</b>:
       apri il tuo client di posta e clicca semplicemente sul link."
     cta: Invia una nuova email di validazione
     sent: Email inviata
@@ -455,11 +475,13 @@ onboarding:
     headerTitle: Attivazione
     contentTitle: Scegli un codice di sblocco
     contentTitleConfirm: Digita ancora il codice di sblocco
-    pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando
+    pinInfo:
+      Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando
       dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere
       composto di 6 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento
       entrando con SPID.
-    pinInfoSelected: Questo codice ti verrà richiesto ogni volta che aprirai l’app
+    pinInfoSelected:
+      Questo codice ti verrà richiesto ogni volta che aprirai l’app
       e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive.
     continue: Continua
     reset: Modifica il codice
@@ -480,36 +502,14 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
-  email:
-    validation:
-      title: Ricorda di validare il tuo indirizzo email
-      headerTitle: Validazione email
-      info: "Ti abbiamo inviato una mail a <b>{{email}}</b> con un link per validare la mail:
-        clicca semplicemente su quel link.<br/>
-        Finché non validerai il tuo indirizzo email alcune funzioni dell'app (pagamenti,
-        inoltro dei messaggi via mail, ecc.) non potranno essere utilizzate, ma potrai
-        usare comunque altre funzioni (es. servizi, messaggi, ecc.)."
-      ctaValidate: Invia una nuova email di validazione
-      emailSentFeedback: Invia una nuova email di validazione
-      help: Il tuo profilo SPID trasferisce ad IO il tuo indirizzo email. Se è un
-        indirizzo sbagliato o che non utilizzi più, puoi modificarlo direttamente dal
-        tuo provider di servizi SPID.
-    insert:
-      headerTitle: Attivazione
-      title: Inserisci la tua email
-      help:
-        title: Email
-        content: !include email_insert_help.md
-    ctaEdit: Modifica email
-    subtitle: Alcune funzioni di IO hanno bisogno della tua email.
-    emailInputLabel: Indirizzo email personale
 pin_login:
   pin:
     pinInfo: Inserisci il codice di sblocco
     reset:
       button: Codice di sblocco dimenticato?
       button_short: Reimposta il codice di sblocco
-      tip: Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente con la tua identità
+      tip:
+        Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente con la tua identità
         SPID.
       tip_short: Dovrai effettuare di nuovo l'accesso.
     confirmValid: Codice di sblocco corretto
@@ -530,7 +530,8 @@ forms:
       email:
         placeholder: indirizzo email
 lipsum:
-  medium: Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui
+  medium:
+    Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui
     id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus.
     Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium
     totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus.
@@ -561,8 +562,8 @@ wallet:
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
   transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
-  transactionsLoadMore: Carica di più
-  transacionsLoadingMore: Carico altre transazioni...
+  transactionsLoadMore: Carica precedenti
+  transacionsLoadingMore: Carico precedenti...
   pickPaymentMethod:
     unavailable:
       title: Questo metodo di pagamento non è ancora disponibile
@@ -571,11 +572,12 @@ wallet:
   delete:
     successful: Carta cancellata correttamente
     failed: Impossibile cancellare la carta
-    alert: 'Il metodo di pagamento usato per la transazione non è più presente nel portafoglio'
+    alert: "Il metodo di pagamento usato per la transazione non è più presente nel portafoglio"
   newPaymentMethod:
     add: aggiungi
     addButton: Aggiungi un metodo
-    addDescription: Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
+    addDescription:
+      Puoi aggiungere i tuoi metodi di pagamento (carte, conti correnti,
       ecc.) per non doverli inserire ad ogni transazione.
     walletAlert: "Nel tuo portafoglio sono registrati dei metodi di pagamento ma nessuno di questi è compatibile con IO"
     successful: Carta aggiunta con successo
@@ -597,7 +599,8 @@ wallet:
     header: Salva la carta
     title: Vuoi salvare questa carta?
     infoTitle: Imposta la carta come metodo di pagamento preferito
-    info: Al prossimo pagamento ti verrà automaticamente proposto questo metodo di
+    info:
+      Al prossimo pagamento ti verrà automaticamente proposto questo metodo di
       pagamento
     save: Salva
     notice: Per verificare la carta troverai una transazione di pochi centesimi che verrà stornata dal tuo conto.
@@ -611,7 +614,8 @@ wallet:
   endPayment: Il tuo pagamento è concluso
   pickPsp:
     title: Scegli il gestore
-    info: Questa carta non è stata emessa da nessun istituto che fa parte del circuito
+    info:
+      Questa carta non è stata emessa da nessun istituto che fa parte del circuito
       pagoPA.
     infoBold: Scegli il soggetto economico
     info2: (PSP) che dovrà gestire la tua transazione.
@@ -626,10 +630,9 @@ wallet:
     goToPay: Conferma e paga
     askConfirm: Confermi il pagamento?
     partialAmount: Importo dovuto
-    fee: Costi di commissione
+    fee: Costi di transazione
     why: Perché?
-    totalAmount: Totale
-    info: 'Attenzione: dopo questo passaggio non sarà più possibile annullare'
+    info: "Attenzione: dopo questo passaggio non sarà più possibile annullare"
     info2: Stai utilizzando il tuo metodo di pagamento preferito.
     changeMethod: Cambia metodo di pagamento
     change: Cambia metodo
@@ -655,23 +658,25 @@ wallet:
   firstTransactionSummary:
     header: Riepilogo avviso di Pagamento
     title: Avviso di pagamento
-    amount: Importo
+    amount: Importo pagamento
+    total: Totale pagato
     expireDate: Scadenza
     tranche: Rata
-    entity: 'Ente creditore:'
-    info: 'Per informazioni:'
-    tel: 'Tel:'
-    email: 'Email:'
-    PEC: 'PEC:'
-    recipient: 'Destintario:'
-    object: 'Oggetto del pagamento:'
-    cbillCode: 'Codice CBILL:'
-    iuv: 'IUV:'
-    entityCode2: 'Codice Ente/Azienda:'
+    info: "Per informazioni:"
+    tel: "Tel:"
+    email: "Email:"
+    PEC: "PEC:"
+    recipient: Ente creditore
+    object: Causale
+    date: Data e ora
+    iuv: Codice IUV
+    entityCode: Codice fiscale creditore
     updatedAmount: Importo aggiornato
-    updateInfo: Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
+    fee: Costi di transazione
+    idTransaction: Codice identificativo della transazione
+    updateInfo:
+      Il sistema pagoPA aggiorna automaticamente l'importo per assicurarti
       di aver pagato esattamente quanto dovuto ed evitarti così more o altri interessi
-    moreInfo: Per saperne di più
     loadingMessage:
       activation: Sto avvisando l'ente creditore, attendi qualche secondo...
       verification: Sto verificando lo stato e l'importo del tuo avviso...
@@ -701,9 +706,8 @@ wallet:
   recipient: Destinatario
   date: Data
   time: Ora
-  psp: Prestatore pagamento
-  receipt: Ricevuta
-  receipt2: Ricevuta dell'operazione
+  psp: Gestore della transazione
+  receipt: Ricevuta dell'operazione
   seeReceipt: Vedi la ricevuta
   transactions: Operazioni
   transaction: Operazione
@@ -712,12 +716,11 @@ wallet:
   noneTransactions: Nessuna operazione
   noTransactionsInWalletHome: Non hai ancora fatto nessuna operazione.
   noTransactionsInTransactionsScreen: Non hai ancora utilizzato questo metodo di pagamento per pagare tramite IO o pagoPA. In questa lista vedrai solo le operazioni eseguite con questo metodo.
-  moreInfo: Per saperne di più
   payNotice: Paga un avviso
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
   addPaymentMethodTitle: Aggiungi metodo di pagamento
-  continue: Continua
+  continue: Paga questo avviso
   backToPayments: Torna ai pagamenti
   methods:
     comingSoon: in arrivo
@@ -727,11 +730,11 @@ wallet:
     bank:
       name: Bancomat Pay
       maxFee: Commissione massima 0.50€
-    satispay: 
+    satispay:
       name: Satispay
-    postepay: 
+    postepay:
       name: Postepay
-    paypal: 
+    paypal:
       name: Paypal
     notImplemented: Prossimamente
   addCardTitle: Dati carta
@@ -752,7 +755,8 @@ wallet:
     chooser: Carica immagine dalla galleria
     wrongQrCode: Non è un QR Code pagoPA!
     byCameraTitle: QR Code avviso
-    cameraUsageInfo: Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
+    cameraUsageInfo:
+      Inquadra il QR Code che trovi nell'avviso con la fotocamera, oppure
       inserisci manualmente i dati identificativi (IUV e codice ente/azienda).
     setManually: Inserisci i dati manualmente
     enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
@@ -795,7 +799,8 @@ saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
   favoriteTitle: Imposta la carta come metodo di pagamento preferito
-  favoriteText: Al prossimo pagamento ti verrà automaticamente proposto questo metodo
+  favoriteText:
+    Al prossimo pagamento ti verrà automaticamente proposto questo metodo
     di pagamento
 cardComponent:
   validUntil: Valida fino al
@@ -826,7 +831,7 @@ messages:
   yesterday: ieri
   errorLoading:
     details: Impossibile caricare i dettagli del messaggio
-    senderInfo:  Mittente sconosciuto
+    senderInfo: Mittente sconosciuto
     serviceInfo: Info sul servizio mancanti
     departmentInfo: Info sul dipartimento mancanti
   loadingErrorTitle: Non è stato possibile caricare i messaggi
@@ -911,7 +916,8 @@ messageDetails:
 notifications:
   installation:
     errorTitle: Notifiche push
-    errorMessage: La registrazione verso il servizio di notifiche push ha generato
+    errorMessage:
+      La registrazione verso il servizio di notifiche push ha generato
       un errore
 biometric_recognition:
   title: Riconoscimento biometrico
@@ -922,7 +928,7 @@ biometric_recognition:
   enroll_cta: Il riconoscimento biometrico è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
   enroll_btnLabel: Vai alle impostazioni
   needed_to_disable: Riconoscimento richiesto per disabilitare
-send_email_messages: 
+send_email_messages:
   title: Inoltro dei messaggi via email
   subtitle: Vuoi che IO inoltri il contenuto dei messaggi anche a
   options:
@@ -1006,12 +1012,6 @@ reminders:
   emptyMonth: Non ci sono scadenze in questo mese
   loadMoreData: scadenze precedenti
   noOtherDeadlines: Non ci sono altre scadenze
-  email:
-    title: Ricorda di validare il tuo indirizzo email
-    modal1: "Per usare alcune funzioni di IO devi validare il tuo indirizzo email. \n Ti abbiamo inviato una email a"
-    modal2: "apri il tuo client di posta e clicca semplicemente sul link."
-    button1: Invia una nuova email di validazione
-    button2: Modifica indirizzo email
 openMaps:
   genericError: Si è verificato un errore durante l'apertura della mappa
 genericError: Si è verificato un errore
@@ -1022,6 +1022,15 @@ btnUpdateApp: Aggiorna l'app IO
 systemsOff:
   title: Impossibile usare IO
   closeApp: chiudi l'applicazione e riprova
+instabug:
+  contextualHelp:
+    title1: Hai bisogno di aiuto?
+    buttonChat: Inviaci un messaggio
+    descriptionChat: Puoi usare il nostro strumento di chat per inviare un messaggio in caso di bisogno urgente di assistenza. Riceverai una risposta direttamente su IO
+    buttonBug: Segnala un bug
+    descriptionBug: Puoi segnalare un errore o qualcosa che non funziona ai nostri sviluppatori, si prenderanno carico del problema al più presto.
+    title2: Sei nuovo in IO?
+    descriptionLink: Scopri come funziona e quali sono le funzionalità speciali di IO, visitando il sito
 faq:
   1:
     title: "Cos'è SPID?"
@@ -1032,7 +1041,7 @@ faq:
   3:
     title: "Hai perso le tue credenziali SPID?"
     content: !include faq/faq3.md
-  4: 
+  4:
     title: "Cos'è la CIE?"
     content: !include faq/faq4.md
   5:
@@ -1067,7 +1076,7 @@ faq:
     content: !include faq/faq15.md
   16:
     title: "Il tuo telefono ha il lettore NFC?"
-    content:  !include faq/faq16.md
+    content: !include faq/faq16.md
   17:
     title: "A cosa serve il Codice di sblocco?"
     content: !include faq/faq17.md
@@ -1077,8 +1086,8 @@ faq:
   19:
     title: "Il riconoscimento biometrico è sicuro?"
     content: !include faq/faq19.md
-  
-  20: 
+
+  20:
     title: "Quando ti verrà chiesto il riconoscimento biometrico?"
     content: !include faq/faq20.md
   21:
@@ -1132,7 +1141,7 @@ faq:
   37:
     title: "Quali metodi di pagamento puoi aggiungere?"
     content: !include faq/faq37.md
-  38: 
+  38:
     title: "Riepilogo della transazione e ricevuta del pagamento sono la stessa cosa?"
     content: !include faq/faq38.md
   39:
