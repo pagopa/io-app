@@ -189,11 +189,12 @@ class PaymentHistoryDetails extends React.Component<Props> {
       true,
       true
     )} - ${new Date(payment.started_at).toLocaleTimeString()}`;
+    // tslint:disable-no-inferred-empty-object-type
     const causaleVersamento = maybeProperty(
       payment.verified_data,
       "causaleVersamento",
       m => m
-    ).fold(notAvailable, cv => cv as string);
+    ).fold(notAvailable, cv => cv);
     const creditore = maybeProperty(
       payment.transaction,
       "merchant",
