@@ -28,7 +28,8 @@ export type BiometryPrintableSimpleType =
   | "TOUCH_ID"
   | "FACE_ID";
 
-type Props = NavigationScreenProps<NavigationParams> & ReturnType<typeof mapDispatchToProps>;
+type Props = NavigationScreenProps<NavigationParams> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",
