@@ -1,10 +1,5 @@
-/**
- * A screen to invite the user to update the app because current version is not supported yet
- *
- */
-
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Container, H2, Text, View } from "native-base";
+import { Button, Text, View, Content } from "native-base";
 import * as React from "react";
 import {
   BackHandler,
@@ -20,12 +15,12 @@ import FooterWithButtons from "./components/ui/FooterWithButtons";
 import I18n from "./i18n";
 import customVariables from "./theme/variables";
 import { storeUrl } from "./utils/appVersion";
+import { ScreenContentHeader } from './components/screens/ScreenContentHeader';
 
 const timeoutErrorMsg: Millisecond = 5000 as Millisecond;
 
 const styles = StyleSheet.create({
   text: {
-    marginTop: customVariables.contentPadding,
     fontSize: 18
   },
   textDanger: {
@@ -47,6 +42,10 @@ const styles = StyleSheet.create({
 
 type State = { hasError: boolean };
 
+/**
+ * A screen to invite the user to update the app because current version is not supported yet
+ *
+ */
 class UpdateAppModal extends React.PureComponent<never, State> {
   constructor(props: never) {
     super(props);
@@ -55,20 +54,16 @@ class UpdateAppModal extends React.PureComponent<never, State> {
     };
   }
   private idTimeout?: number;
+
   // No Event on back button android
   private handleBackPress = () => {
     return true;
   };
 
-  public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-  }
-
   public componentWillUnmount() {
     if (this.idTimeout) {
       clearTimeout(this.idTimeout);
     }
-    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
   private openAppStore = () => {
@@ -145,10 +140,9 @@ class UpdateAppModal extends React.PureComponent<never, State> {
     // Current version not supported
     return (
       <Modal>
-        <BaseScreenComponent appLogo={true} goBack={false}>
-          <Container>
-            <View style={styles.container}>
-              <H2>{I18n.t("titleUpdateApp")}</H2>
+        <BaseScreenComponent appLogo={true} goBack={this.handleBackPress} isModal={true}>
+          <ScreenContentHeader title={I18n.t("titleUpdateApp")}/>
+          <Content>
               <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
               <Image
                 style={styles.img}
@@ -159,10 +153,9 @@ class UpdateAppModal extends React.PureComponent<never, State> {
                   {I18n.t("msgErrorUpdateApp")}
                 </Text>
               )}
-            </View>
-          </Container>
+            </Content>
+            {this.footer}
         </BaseScreenComponent>
-        {this.footer}
       </Modal>
     );
   }

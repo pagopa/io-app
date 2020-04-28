@@ -1,23 +1,20 @@
 import * as React from "react";
 import { BackHandler } from "react-native";
-import { NavigationInjectedProps, withNavigation } from "react-navigation";
 import variables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
 
-interface OwnProps {
+interface Props {
   [k: string]: any;
-  onPress?: () => void;
+  onPress: () => void;
   white?: boolean;
 }
 
-type Props = NavigationInjectedProps & OwnProps;
-
 /**
  * A component to display a the back button (eg on screen header)
- * for screens related to a navigation route
+ * for items not related to a navigation route (eg Modal and light modals)
  */
-class GoBackButton extends React.PureComponent<Props> {
+export default class GoBackButtonModal extends React.PureComponent<Props> {
   public static defaultProps: Partial<Props> = {
     white: false
   };
@@ -31,17 +28,9 @@ class GoBackButton extends React.PureComponent<Props> {
   }
 
   private handleBackPress = () => {
-    this.getOnPressHandler()();
-
+    this.props.onPress();
     return true;
   };
-
-  private handleOnPressDefault = () => this.props.navigation.goBack(null);
-
-  private getOnPressHandler = () =>
-    typeof this.props.onPress === "function"
-      ? this.props.onPress
-      : this.handleOnPressDefault;
 
   public render() {
     const { white, ...restProps } = this.props;
@@ -49,7 +38,7 @@ class GoBackButton extends React.PureComponent<Props> {
     const buttonProps = {
       transparent: true,
       ...restProps,
-      onPress: this.getOnPressHandler()
+      onPress: this.props.onPress
     };
 
     return (
@@ -62,5 +51,3 @@ class GoBackButton extends React.PureComponent<Props> {
     );
   }
 }
-
-export default withNavigation(GoBackButton);

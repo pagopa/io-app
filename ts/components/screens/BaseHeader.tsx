@@ -2,7 +2,7 @@ import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import IconFont from "../../components/ui/IconFont";
+import IconFont from "../ui/IconFont";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -15,6 +15,7 @@ import { InstabugButtons } from "../InstabugButtons";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
+import GoBackButtonModal from '../GoBackButtonModal';
 
 const styles = StyleSheet.create({
   helpButton: {
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
 interface OwnProps {
   dark?: boolean;
   headerTitle?: string;
-  goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
+  goBack?: React.ComponentProps<typeof GoBackButton>["goBack"] | React.ComponentProps<typeof GoBackButtonModal>['onPress'];
   primary?: boolean;
   appLogo?: boolean;
   onShowHelp?: () => void;
@@ -41,6 +42,7 @@ interface OwnProps {
     iconName: string;
     onPress: () => void;
   };
+  isModal?: boolean;
   customGoBack?: React.ReactNode;
 }
 
@@ -48,12 +50,16 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-class BaseHeaderComponent extends React.PureComponent<Props> {
+class BaseHeader extends React.PureComponent<Props> {
   /**
    * if go back is a function it will be returned
    * otherwise the default goback navigation will be returned
    */
   private getGoBackHandler = () => {
+    if(this.props.isModal){
+      return this.props.goBack
+    }
+
     return typeof this.props.goBack === "function"
       ? this.props.goBack()
       : this.props.navigateBack();
@@ -146,13 +152,25 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     ) : (
       goBack && (
         <Left>
-          <GoBackButton
+          {this.props.isModal ? (
+            <GoBackButtonModal
             testID={"back-button"}
             onPress={goBack}
             accessible={true}
             accessibilityLabel={I18n.t("global.buttons.back")}
             white={dark}
           />
+          ) : (
+            <GoBackButton
+              testID={"back-button"}
+              onPress={goBack}
+              accessible={true}
+              accessibilityLabel={I18n.t("global.buttons.back")}
+              white={dark}
+            />
+            
+          )}
+          
         </Left>
       )
     );
@@ -188,7 +206,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export const BaseHeader = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BaseHeaderComponent);
+)(BaseHeader);

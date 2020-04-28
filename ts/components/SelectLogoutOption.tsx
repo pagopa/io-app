@@ -1,6 +1,6 @@
-import { Container, Content, List, View } from "native-base";
+import { Content, List, View } from "native-base";
 import React from "react";
-import { BackHandler, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { connect } from "react-redux";
 import I18n from "../i18n";
@@ -12,6 +12,7 @@ import variables from "../theme/variables";
 import { withLoadingSpinner } from "./helpers/withLoadingSpinner";
 import ListItemComponent from "./screens/ListItemComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
+import BaseScreenComponent from './screens/BaseScreenComponent';
 
 type OwnProps = {
   onCancel: () => void;
@@ -57,8 +58,8 @@ class SelectLogoutOption extends React.PureComponent<Props> {
   public render() {
     // Using the loading spinner HOC to avoid reimplementing the Loading component
     const ContainerComponent = withLoadingSpinner(() => (
-      <Container>
-        <Content style={styles.content}>
+      <BaseScreenComponent goBack={this.onBackPress} isModal={true}>      
+        <Content>
           {this.props.header || null}
           <List>
             <ListItemComponent
@@ -86,18 +87,10 @@ class SelectLogoutOption extends React.PureComponent<Props> {
             block: true
           }}
         />
-      </Container>
+      </BaseScreenComponent>
     ));
 
     return <ContainerComponent isLoading={this.props.isLogoutInProgress} />;
-  }
-
-  public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-  }
-
-  public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
 }
 

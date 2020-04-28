@@ -3,7 +3,6 @@ import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
-
 import Pinpad from "./components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -22,9 +21,7 @@ import { ReduxProps } from "./store/actions/types";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 import { authenticateConfig } from "./utils/biometric";
-
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
-
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;

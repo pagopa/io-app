@@ -50,28 +50,23 @@ const styles = StyleSheet.create({
     paddingRight: variables.contentPadding,
     paddingLeft: variables.contentPadding
   },
-
   white: {
     backgroundColor: variables.brandPrimaryInverted
   },
-
   bottomText: {
     textAlign: "center",
     paddingTop: cameraTextOverlapping
   },
-
   content: {
     backgroundColor: variables.colorWhite,
     marginTop: -cameraTextOverlapping,
     zIndex: 1
   },
-
   cameraContainer: {
     alignItems: "flex-start",
     justifyContent: "center",
     backgroundColor: "transparent"
   },
-
   button: {
     flex: 1,
     alignContent: "center",
@@ -82,7 +77,6 @@ const styles = StyleSheet.create({
     backgroundColor: variables.colorWhite,
     zIndex: 999
   },
-
   camera: {
     alignItems: "center",
     justifyContent: "center",
@@ -90,7 +84,6 @@ const styles = StyleSheet.create({
     height: screenWidth,
     width: screenWidth
   },
-
   notAuthorizedContainer: {
     padding: variables.contentPadding,
     flex: 1,
@@ -115,6 +108,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
   body: "wallet.QRtoPay.contextualHelpContent"
 };
+
+/**
+ * A screen to identify a transaction by the QR code placed on the analogic notice
+ */
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
   private goBack = () => this.props.navigation.goBack();

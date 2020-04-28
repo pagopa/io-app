@@ -6,7 +6,7 @@ import {
   some
 } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
-import { Container } from "native-base";
+import { Container} from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
@@ -15,9 +15,8 @@ import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { ContextualHelpModal } from "../ContextualHelpModal";
-import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
-import { BaseHeader } from "./BaseHeader";
+import BaseHeader from './BaseHeader';
 
 export interface ContextualHelpProps {
   title: string;
@@ -33,27 +32,10 @@ interface OwnProps {
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
-  appLogo?: boolean;
-  isSearchAvailable?: boolean;
-  searchType?: SearchType;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
-type BaseHeaderProps =
-  | "dark"
-  | "appLogo"
-  | "primary"
-  | "goBack"
-  | "headerTitle"
-  | "onShowHelp"
-  | "body"
-  | "isSearchAvailable"
-  | "searchType"
-  | "customRightIcon"
-  | "customGoBack";
-
-type Props = OwnProps &
-  Pick<React.ComponentProps<typeof BaseHeader>, BaseHeaderProps>;
+type Props = OwnProps & React.ComponentProps<typeof BaseHeader>;
 
 interface State {
   isHelpVisible: boolean;
@@ -78,7 +60,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   }
 
   private showHelp = () => {
-    maybeDark(this.props.dark).map(_ =>
+    maybeDark(this.props.dark || this.props.primary).map(_ =>
       setStatusBarColorAndBackground("dark-content", customVariables.colorWhite)
     );
 
@@ -86,10 +68,10 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   };
 
   private hideHelp = () => {
-    maybeDark(this.props.dark).map(_ =>
+    maybeDark(this.props.dark || this.props.primary).map(_ =>
       setStatusBarColorAndBackground(
         "light-content",
-        customVariables.brandDarkGray
+        this.props.dark ? customVariables.brandDarkGray : customVariables.contentPrimaryBackground
       )
     );
 
@@ -98,18 +80,9 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {
-      dark,
-      appLogo,
       contextualHelp,
       contextualHelpMarkdown,
-      goBack,
-      headerBody,
-      headerTitle,
-      primary,
-      isSearchAvailable,
-      searchType,
-      customRightIcon,
-      customGoBack
+      headerBody
     } = this.props;
 
     const ch = contextualHelp
@@ -132,19 +105,11 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     return (
       <Container>
         <BaseHeader
-          primary={primary}
-          dark={dark}
-          goBack={goBack}
-          headerTitle={headerTitle}
+          {...this.props}
           onShowHelp={
             contextualHelp || contextualHelpMarkdown ? this.showHelp : undefined
           }
-          isSearchAvailable={isSearchAvailable}
-          searchType={searchType}
           body={headerBody}
-          appLogo={appLogo}
-          customRightIcon={customRightIcon}
-          customGoBack={customGoBack}
         />
         {this.props.children}
         {ch && (

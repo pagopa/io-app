@@ -1,21 +1,13 @@
-import { Container, Content, H3, View } from "native-base";
+import { Content, H3, View } from "native-base";
 import * as React from "react";
-import {
-  InteractionManager,
-  Modal,
-  SafeAreaView,
-  StyleSheet
-} from "react-native";
-import { isIphoneX } from "react-native-iphone-x-helper";
-import IconFont from "../components/ui/IconFont";
+import { InteractionManager, Modal, StyleSheet } from "react-native";
 import themeVariables from "../theme/variables";
 import customVariables from "../theme/variables";
-import { FOOTER_SAFE_AREA } from "../utils/constants";
 import { FAQsCategoriesType } from "../utils/faq";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FAQComponent from "./FAQComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
+import BaseScreenComponent from "./screens/BaseScreenComponent";
 
 type Props = Readonly<{
   title: string;
@@ -41,9 +33,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignContent: "center",
     paddingHorizontal: customVariables.contentPadding
-  },
-  iphoneXBottom: {
-    marginBottom: FOOTER_SAFE_AREA
   },
   flex: {
     flex: 1
@@ -84,14 +73,6 @@ export class ContextualHelpModal extends React.Component<Props, State> {
       this.props.close();
     };
 
-    const simpleHeader = (
-      <View style={styles.header}>
-        <ButtonDefaultOpacity onPress={onClose} transparent={true}>
-          <IconFont name={"io-close"} />
-        </ButtonDefaultOpacity>
-      </View>
-    );
-
     return (
       <Modal
         visible={this.props.isVisible}
@@ -100,29 +81,32 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         onRequestClose={onClose}
         transparent={true}
       >
-        <SafeAreaView style={[styles.flex, styles.white]}>
-          <Container style={isIphoneX() ? styles.iphoneXBottom : undefined}>
-            {simpleHeader}
-            <Content noPadded={true}>
-              <View style={styles.padded}>
-                <H3>{this.props.title}</H3>
+        <BaseScreenComponent
+          customRightIcon={{ iconName: "io-close", onPress: onClose }}
+        >
+          <Content
+            noPadded={true}
+            contentContainerStyle={styles.contentContainerStyle}
+          >
+            <View style={styles.padded}>
+              <H3>{this.props.title}</H3>
 
-                {this.state.content || (
-                  <ActivityIndicator color={themeVariables.brandPrimaryLight} />
-                )}
+              {this.state.content || (
+                <ActivityIndicator color={themeVariables.brandPrimaryLight} />
+              )}
 
-                {this.props.faqCategories && (
-                  <React.Fragment>
-                    <View spacer={true} extralarge={true} />
-                    <FAQComponent faqCategories={this.props.faqCategories} />
-                  </React.Fragment>
-                )}
-              </View>
+              {this.props.faqCategories && (
+                <React.Fragment>
+                  <View spacer={true} extralarge={true} />
+                  <FAQComponent faqCategories={this.props.faqCategories} />
+                </React.Fragment>
+              )}
+
               <View spacer={true} large={true} />
-              {this.state.content && <BetaBannerComponent />}
-            </Content>
-          </Container>
-        </SafeAreaView>
+            </View>
+            {this.state.content && <BetaBannerComponent />}
+          </Content>
+        </BaseScreenComponent>
       </Modal>
     );
   }
