@@ -45,10 +45,11 @@ export function* loadProfile(
       // tslint:disable-next-line:no-useless-cast
       const initializedProfile = response.value.value as InitializedProfile;
       yield put(profileLoadSuccess(initializedProfile));
+
       // send the hash of fiscal code to Instabug
-      sha256(initializedProfile.fiscal_code).then(hashCF =>
-        setInstabugUserAttribute("fiscalcode", hashCF)
-      );
+      sha256(initializedProfile.fiscal_code)
+        .then(hashCF => setInstabugUserAttribute("fiscalcode", hashCF))
+        .catch();
 
       return some(response.value.value);
     }
