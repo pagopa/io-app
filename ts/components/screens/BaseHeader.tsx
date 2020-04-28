@@ -1,6 +1,6 @@
 import { Body, Left, Right, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, BackHandler } from "react-native";
 import { connect } from "react-redux";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
@@ -42,6 +42,7 @@ interface OwnProps {
   };
   goBack?: (() => void)| boolean;
   isModal?: boolean;
+  handleHardwareBack?: boolean;
 }
 
 type Props = OwnProps &
@@ -50,6 +51,19 @@ type Props = OwnProps &
 
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props> {
+  
+  public componentDidMount(){
+    if(this.props.handleHardwareBack){
+      BackHandler.addEventListener("hardwareBackPress", this.getGoBackHandler);
+    }
+  }
+
+  public componentWillUnmount(){
+    if(this.props.handleHardwareBack){
+      BackHandler.removeEventListener("hardwareBackPress", this.getGoBackHandler);
+    }
+  }
+  
   /**
    * if go back is a function it will be returned
    * otherwise the default goback navigation will be returned
@@ -65,7 +79,6 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     if (this.props.customRightBack){
       return this.props.customRightBack.onPress()
     }
-    
   }
 
   private renderHeader = () => (
