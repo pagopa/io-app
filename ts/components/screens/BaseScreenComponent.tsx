@@ -37,6 +37,8 @@ interface OwnProps {
 
 type Props = OwnProps & React.ComponentProps<typeof BaseHeader>;
 
+export type BaseScreenComponentProps = Props;
+
 interface State {
   isHelpVisible: boolean;
   markdownContentLoaded: Option<boolean>;

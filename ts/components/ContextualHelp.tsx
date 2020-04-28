@@ -5,15 +5,12 @@
  * needed)
  */
 
-import { Body, Container, Content, H1, Right } from "native-base";
+import { Content, View } from "native-base";
 import * as React from "react";
-import { BackHandler, StyleSheet } from "react-native";
-
-import IconFont from "../components/ui/IconFont";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import AppHeader from "./ui/AppHeader";
-
-import themeVariables from "../theme/variables";
+import {StyleSheet} from "react-native"
+import BaseScreenComponent from './screens/BaseScreenComponent';
+import { ScreenContentHeader } from './screens/ScreenContentHeader';
+import customVariables from '../theme/variables';
 
 type Props = Readonly<{
   title: string;
@@ -21,51 +18,25 @@ type Props = Readonly<{
   onClose: () => void;
 }>;
 
-const styles = StyleSheet.create({
-  contentContainerStyle: {
-    padding: themeVariables.contentPadding
+const styles  = StyleSheet.create({
+  padded: {
+    paddingHorizontal: customVariables.contentPadding
   }
-});
+})
 
 export class ContextualHelp extends React.Component<Props> {
-  public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.handleBackPressed);
-  }
-
-  public componentWillUnmount() {
-    BackHandler.removeEventListener(
-      "hardwareBackPress",
-      this.handleBackPressed
-    );
-  }
-
-  private handleBackPressed = () => {
-    this.props.onClose();
-    return true;
-  };
-
+  
   public render(): React.ReactNode {
     return (
-      <Container>
-        <AppHeader noLeft={true}>
-          <Body />
-          <Right>
-            <ButtonDefaultOpacity
-              onPress={() => this.props.onClose()}
-              transparent={true}
-            >
-              <IconFont name="io-close" />
-            </ButtonDefaultOpacity>
-          </Right>
-        </AppHeader>
-        <Content
-          contentContainerStyle={styles.contentContainerStyle}
-          noPadded={true}
-        >
-          <H1>{this.props.title}</H1>
+      <BaseScreenComponent isModal={true} customRightIcon={{iconName: 'io-close', onPress: this.props.onClose}}>
+        <Content noPadded={true}>
+          <ScreenContentHeader title={this.props.title}/>
+          <View style={styles.padded}>
           {this.props.body()}
+          </View>
+          
         </Content>
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }

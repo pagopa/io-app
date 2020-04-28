@@ -1,8 +1,6 @@
-import { Container, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import React from "react";
-import { BackHandler, StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendar-events";
-
 import { connect } from "react-redux";
 import I18n from "../i18n";
 import { GlobalState } from "../store/reducers/types";
@@ -11,17 +9,12 @@ import ItemSeparatorComponent from "./ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import { ScreenContentHeader } from "./screens/ScreenContentHeader";
 import FooterWithButtons from "./ui/FooterWithButtons";
+import BaseScreenComponent from './screens/BaseScreenComponent';
 
 type Props = ReturnType<typeof mapStateToProps> & {
   onCancel: () => void;
   onCalendarSelected: (calendar: Calendar) => void;
 };
-
-const styles = StyleSheet.create({
-  content: {
-    paddingTop: 48
-  }
-});
 
 type State = {
   isLoading: boolean;
@@ -51,8 +44,8 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
     const { isLoading } = this.state;
     return (
       <LoadingSpinnerOverlay isLoading={isLoading}>
-        <Container>
-          <Content noPadded={true} style={styles.content}>
+        <BaseScreenComponent isModal={true} goBack={this.onBackPress}>
+          <Content noPadded={true}>
             <ScreenContentHeader
               title={I18n.t("messages.cta.reminderCalendarSelect")}
             />
@@ -80,17 +73,9 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
               }}
             />
           )}
-        </Container>
+        </BaseScreenComponent>
       </LoadingSpinnerOverlay>
     );
-  }
-
-  public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-  }
-
-  public componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
 }
 

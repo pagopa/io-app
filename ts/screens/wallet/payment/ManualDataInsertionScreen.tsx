@@ -1,13 +1,3 @@
-/**
- * This screen allows the user to manually insert the data which identify the transaction:
- * - Numero Avviso, which includes: aux, digit, application code, codice IUV
- * - Codice Fiscale Ente CReditore (corresponding to codiceIdentificativoEnte)
- * - amount of the transaction
- *  TODO:
- *  - integrate contextual help to obtain details on the data to insert for manually identifying the transaction
- *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
- */
-
 import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
@@ -17,7 +7,6 @@ import {
   NavigationInjectedProps
 } from "react-navigation";
 import { connect } from "react-redux";
-
 import { isLeft, isRight } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import {
@@ -31,7 +20,6 @@ import {
   OrganizationFiscalCode
 } from "italia-ts-commons/lib/strings";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
-
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
@@ -76,7 +64,6 @@ const styles = StyleSheet.create({
   whiteBg: {
     backgroundColor: variables.colorWhite
   },
-
   noLeftMargin: {
     marginLeft: 0
   }
@@ -90,6 +77,13 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.insertManually.contextualHelpTitle",
   body: "wallet.insertManually.contextualHelpContent"
 };
+
+/**
+ * This screen allows the user to manually insert the data which identify the transaction:
+ * - Numero Avviso, which includes: aux, digit, application code, codice IUV
+ * - Codice Fiscale Ente CReditore (corresponding to codiceIdentificativoEnte)
+ * - amount of the transaction
+ */
 class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);

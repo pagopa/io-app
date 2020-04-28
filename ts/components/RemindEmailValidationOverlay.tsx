@@ -7,7 +7,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, H2, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, BackHandler, Image, StyleSheet } from "react-native";
+import { Alert, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import {
   navigateBack,
@@ -32,10 +32,7 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
-import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
-import TopScreenComponent, {
-  TopScreenComponentProps
-} from "./screens/TopScreenComponent";
+import BaseScreenComponent, { ContextualHelpPropsMarkdown, BaseScreenComponentProps } from "./screens/BaseScreenComponent";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
@@ -95,7 +92,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.props.navigateBack);
     // Periodically check if the user validate his own email address
     // tslint:disable-next-line: no-object-mutation
     this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
@@ -105,10 +101,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener(
-      "hardwareBackPress",
-      this.props.navigateBack
-    );
     // if a timeout is running we have to stop it
     if (this.idTimeout !== undefined) {
       clearTimeout(this.idTimeout);
@@ -229,14 +221,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     <IconFont name={"io-back"} onPress={this.handleOnboardingGoBack} />
   );
 
-  private onMainProps: TopScreenComponentProps = {
+  private onMainProps: BaseScreenComponentProps = {
     customRightIcon: {
       iconName: "io-close",
       onPress: this.props.navigateBack
     }
   };
 
-  private onBoardingProps: TopScreenComponentProps = {
+  private onBoardingProps: BaseScreenComponentProps = {
     headerTitle: I18n.t("email.validate.header"),
     customGoBack: this.customOnboardingGoBack
   };
@@ -312,9 +304,11 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       ? I18n.t("email.validate.validated")
       : I18n.t("email.validate.title");
     return (
-      <TopScreenComponent
+      <BaseScreenComponent
         {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
         contextualHelpMarkdown={this.contextualHelpMarkdown}
+        isModal={true}
+        goBack={this.props.navigateBack}
       >
         <Content>
           <React.Fragment>
@@ -341,7 +335,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         {(this.state.emailHasBeenValidate ||
           this.state.isContentLoadCompleted) &&
           this.renderFooter()}
-      </TopScreenComponent>
+      </BaseScreenComponent>
     );
   }
 }

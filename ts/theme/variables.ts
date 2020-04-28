@@ -235,7 +235,6 @@ const customVariables = Object.assign(materialVariables, {
 
   // Modal
   modalMargin: 0,
-  modalPadding: 24,
   modalHeaderHeight: 75,
 
   // Text

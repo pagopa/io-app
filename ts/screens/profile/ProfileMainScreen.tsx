@@ -7,7 +7,6 @@ import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   NavigationEvents,
-  NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
 } from "react-navigation";
