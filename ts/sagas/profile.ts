@@ -4,11 +4,13 @@
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { sha256 } from "react-native-sha256";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { BackendClient } from "../api/backend";
+import { setInstabugUserAttribute } from "../boot/configureInstabug";
 import { tosVersion } from "../config";
 import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
@@ -41,7 +43,13 @@ export function* loadProfile(
       // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
       // discriminated union!
       // tslint:disable-next-line:no-useless-cast
-      yield put(profileLoadSuccess(response.value.value as InitializedProfile));
+      const initializedProfile = response.value.value as InitializedProfile;
+      yield put(profileLoadSuccess(initializedProfile));
+      // send the hash of fiscal code to Instabug
+      sha256(initializedProfile.fiscal_code).then(hash =>
+        setInstabugUserAttribute("fiscalcode", hash)
+      );
+
       return some(response.value.value);
     }
     if (response.value.status === 401) {
