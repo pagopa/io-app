@@ -11,7 +11,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
-import { InstabugButtons } from "../InstabugButtons";
+import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
   helpButton: {
     padding: 8
   },
-
   noLeft: {
     marginLeft: variables.contentPadding - variables.appHeaderPaddingHorizontal
   }
@@ -48,6 +47,7 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+/** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props> {
   /**
    * if go back is a function it will be returned
@@ -64,16 +64,20 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     // if customGoBack is provided only the header text will be rendered
     if (customGoBack) {
       return (
-        <Text white={this.props.primary} numberOfLines={1}>
+        <Text
+          white={this.props.primary || this.props.dark ? true : undefined}
+          numberOfLines={1}
+        >
           {headerTitle}
         </Text>
       );
     }
+    const isWhite = this.props.primary || this.props.dark;
     // if no customGoBack is provided also the header text could be press to execute goBack
     // note goBack could a boolean or a function (check this.getGoBackHandler)
     return (
       <TouchableDefaultOpacity onPress={this.getGoBackHandler}>
-        <Text white={this.props.primary} numberOfLines={1}>
+        <Text white={isWhite} numberOfLines={1}>
           {headerTitle}
         </Text>
       </TouchableDefaultOpacity>
@@ -112,7 +116,7 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
 
     return (
       <Right>
-        {!isSearchEnabled && <InstabugButtons />}
+        {!isSearchEnabled && <InstabugChatsComponent />}
         {onShowHelp &&
           !isSearchEnabled && (
             <ButtonDefaultOpacity

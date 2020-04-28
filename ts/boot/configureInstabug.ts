@@ -1,5 +1,10 @@
 import { Option } from "fp-ts/lib/Option";
-import Instabug, { NetworkLogger } from "instabug-reactnative";
+import Instabug, {
+  BugReporting,
+  Chats,
+  NetworkLogger,
+  Replies
+} from "instabug-reactnative";
 
 import { Locales } from "../../locales/locales";
 import { instabugToken } from "../config";
@@ -63,6 +68,21 @@ export const initialiseInstabug = () => {
       ? instabugLocales.it
       : instabugLocales.en
   );
+};
+
+export const openInstabugBugReport = () => {
+  BugReporting.showWithOptions(BugReporting.reportType.bug, [
+    BugReporting.option.commentFieldRequired,
+    BugReporting.option.emailFieldOptional
+  ]);
+};
+
+export const openInstabugChat = (hasChats: boolean = false) => {
+  if (hasChats) {
+    Replies.show();
+  } else {
+    Chats.show();
+  }
 };
 
 export const setInstabugUserAttribute = (
