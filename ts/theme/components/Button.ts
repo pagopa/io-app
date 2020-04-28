@@ -81,7 +81,7 @@ export default (): Theme => {
       }
     },
 
-    ".white": { backgroundColor: "#FFFFFF" },
+    ".white": { backgroundColor: variables.colorWhite },
 
     ".cancel": {
       backgroundColor: variables.brandDarkGray,

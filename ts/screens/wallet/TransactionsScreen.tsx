@@ -10,6 +10,7 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import H5 from "../../components/ui/H5";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
@@ -84,6 +85,7 @@ const ListEmptyComponent = (
     <View spacer={true} />
     <Text>{I18n.t("wallet.noTransactionsInTransactionsScreen")}</Text>
     <View spacer={true} large={true} />
+    <EdgeBorderComponent />
   </Content>
 );
 

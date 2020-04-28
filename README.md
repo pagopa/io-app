@@ -42,6 +42,7 @@
   - [Build (release)](#build-release)
   - [Installation on physical devices (development)](#installation-on-physical-devices-development)
   - [Development with Backend App and Local Test IDP](#development-with-backend-app-and-local-test-idp)
+  - [Development with IO dev local server](#development-with-io-dev-local-server)
   - [Update the app icons](#update-the-app-icons)
   - [Internationalization](#internationalization)
   - [Error handling](#error-handling)
@@ -438,7 +439,8 @@ To test the io-app on a real iOS device you must:
 
 ### Development with Backend App and Local Test IDP
 
-To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.
+To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.<br/>
+If you prefer a light way to run IO app backend, you should consider using [io-dev-api-server](https://github.com/pagopa/io-dev-api-server). This local server mocks almost totally IO backend behaviours and APIs. Note: about SPID, io-dev-api-server acts a pass throught so you can't test it.
 
 #### App Backend and test IDP installation
 
@@ -473,6 +475,12 @@ In the connection configuration enter:
 
 * Proxy IP: `10.0.2.2` (or `10.0.3.2` if you use Genymotion)
 * Proxy port: `9060`
+
+### Development with IO dev local server
+It is super easy to setup and run. [Here](https://github.com/pagopa/io-dev-api-server) you can find all instructions.
+It can be used as it is or you can run it using the [docker image](https://github.com/pagopa/io-dev-api-server/packages).<br/>
+`.env.local` is included in IO app files. It is a pre-filled config file ready to use with the local server. To use it, just run these commands:<br/>
+`cp .env.local .env && yarn postinstall`
 
 ### Update the app icons
 
