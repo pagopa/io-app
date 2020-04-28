@@ -11,6 +11,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   instabugLog,
   openInstabugBugReport,
@@ -28,12 +29,11 @@ import {
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
+import { Transaction } from "../../types/pagopa";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
 import { getPaymentHistoryDetails } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
-import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-import { Transaction } from "../../types/pagopa";
 
 type NavigationParams = Readonly<{
   payment: PaymentHistory;
