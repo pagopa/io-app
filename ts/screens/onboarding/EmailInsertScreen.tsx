@@ -81,8 +81,8 @@ type State = Readonly<{
 
 // TODO: update content (https://www.pivotaltracker.com/n/projects/2048617/stories/169392558)
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "onboarding.email.insert.help.title",
-  body: "onboarding.email.insert.help.content"
+  title: "email.insert.help.title",
+  body: "email.insert.help.content"
 };
 
 /**

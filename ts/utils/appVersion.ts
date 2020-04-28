@@ -5,8 +5,8 @@ import semver from "semver";
 import { ServerInfo } from "../../definitions/backend/ServerInfo";
 
 export const storeUrl = Platform.select({
-  ios: "itms-apps://itunes.apple.com/it/app/testflight/id899247664?mt=8",
-  android: "market://details?id=it.teamdigitale.app.italiaapp"
+  ios: "itms-apps://itunes.apple.com/it/app/io/id1501681835",
+  android: "market://details?id=it.pagopa.io.app"
 });
 
 /**

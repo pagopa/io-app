@@ -631,7 +631,10 @@ class MessageAgenda extends React.PureComponent<Props, State> {
   }
 
   public scrollToLocation = (params: SectionListScrollParams) => {
-    if (this.sectionListRef.current !== null) {
+    if (
+      this.sectionListRef !== undefined &&
+      this.sectionListRef.current !== null
+    ) {
       this.sectionListRef.current.scrollToLocation(params);
     }
   };
