@@ -7,10 +7,9 @@ import {
   checkCurrentSessionResult,
   sessionExpired
 } from "../../store/actions/authentication";
-import { profileLoadFailure } from "../../store/actions/profile";
 import { SagaCallReturnType } from "../../types/utils";
 
-export function* verifySession(
+export function* checkSession(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Iterator<Effect> {
   try {
@@ -29,14 +28,18 @@ export function* verifySession(
       );
     }
   } catch (error) {
-    yield put(profileLoadFailure(error));
+    yield put(
+      checkCurrentSessionResult({
+        sessionValid: false
+      })
+    );
   }
 }
 
 export function* watchCheckSessionSaga(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Iterator<Effect> {
-  yield takeLatest(getType(checkCurrentSession), verifySession, getProfile);
+  yield takeLatest(getType(checkCurrentSession), checkSession, getProfile);
   yield takeLatest(getType(checkCurrentSessionResult), function*(
     action: ReturnType<typeof checkCurrentSessionResult>
   ) {
