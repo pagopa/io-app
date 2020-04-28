@@ -1,9 +1,3 @@
-/**
- * A component to show the action buttons on a message.
- * For messages with the proper configuration, the user can:
- * - add a message-related calendar event
- * - start the message-related payment
- */
 import { isToday } from "date-fns";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
@@ -12,7 +6,6 @@ import React from "react";
 import { Alert, StyleSheet } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
-
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -135,7 +128,12 @@ const styles = StyleSheet.create({
     marginLeft: 16
   }
 });
-
+/**
+ * A component to show the action buttons on a message.
+ * For messages with the proper configuration, the user can:
+ * - add a message-related calendar event
+ * - start the message-related payment
+ */
 class MessageCTABar extends React.PureComponent<Props, State> {
   private navigateToMessageDetail = () => {
     const { message, navigateToMessageDetail } = this.props;

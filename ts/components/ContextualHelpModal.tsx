@@ -1,21 +1,33 @@
-import { Body, Container, Content, H1, Right, View } from "native-base";
+import I18n from "i18n-js";
+import { BugReporting } from "instabug-reactnative";
+import { Body, Container, Content, H3, Right, Text, View } from "native-base";
 import * as React from "react";
-import { InteractionManager, Modal, StyleSheet } from "react-native";
+import {
+  InteractionManager,
+  Modal,
+  ModalBaseProps,
+  StyleSheet,
+  TouchableWithoutFeedback
+} from "react-native";
 import IconFont from "../components/ui/IconFont";
 import themeVariables from "../theme/variables";
 import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FAQComponent from "./FAQComponent";
+import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
+import { openLink, removeProtocol } from "./ui/Markdown/handlers/link";
 
 type Props = Readonly<{
   title: string;
   body: () => React.ReactNode;
   contentLoaded: boolean;
   isVisible: boolean;
+  modalAnimation?: ModalBaseProps["animationType"];
   close: () => void;
+  onRequestAssistance: (type: BugReporting.reportType) => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
@@ -61,8 +73,9 @@ export class ContextualHelpModal extends React.Component<Props, State> {
       <Modal
         visible={this.props.isVisible}
         onShow={onModalShow}
-        animationType="slide"
+        animationType={this.props.modalAnimation || "slide"}
         transparent={true}
+        onDismiss={onClose}
         onRequestClose={onClose}
       >
         <Container>
@@ -85,15 +98,38 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               contentContainerStyle={styles.contentContainerStyle}
               noPadded={true}
             >
-              <H1>{this.props.title}</H1>
+              <H3>{this.props.title}</H3>
               {this.state.content}
               {this.props.faqCategories &&
                 this.props.contentLoaded && (
                   <FAQComponent faqCategories={this.props.faqCategories} />
                 )}
-              <View spacer={true} extralarge={true} />
+              {this.props.contentLoaded && (
+                <React.Fragment>
+                  <View spacer={true} extralarge={true} />
+                  <InstabugAssistanceComponent
+                    requestAssistance={this.props.onRequestAssistance}
+                  />
+                  <View spacer={true} extralarge={true} />
+                  <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
+                  <View spacer={true} />
+                  <View spacer={true} xsmall={true} />
+                  <Text>
+                    {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
+                    <TouchableWithoutFeedback
+                      onPress={() => openLink(I18n.t("global.ioWebSite"))}
+                    >
+                      <Text link={true}>
+                        {removeProtocol(I18n.t("global.ioWebSite"))}
+                      </Text>
+                    </TouchableWithoutFeedback>
+                  </Text>
+                </React.Fragment>
+              )}
             </Content>
           )}
+          <View spacer={true} extralarge={true} />
+
           <BetaBannerComponent />
         </Container>
       </Modal>
