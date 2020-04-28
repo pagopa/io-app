@@ -28,13 +28,7 @@ class MedicalMessageDetailScreen extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: GlobalState, props: OwnProps) => {
   const messageId = props.navigation.getParam("messageId");
-  const maybeMessageState = fromNullable(
-    messageStateByIdSelector(messageId)(state)
-  );
-
-  return (
-    maybeMessageState
-  );
+  return fromNullable(messageStateByIdSelector(messageId)(state));
 };
 
 export default connect(mapStateToProps)(MedicalMessageDetailScreen);
