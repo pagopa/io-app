@@ -22,7 +22,7 @@ export type LogoutError = {
 };
 
 export type CheckSessionResult = {
-  sessionValid: boolean;
+  isSessionValid: boolean;
 };
 
 export const idpSelected = createStandardAction("IDP_SELECTED")<
