@@ -17,10 +17,11 @@ export function* checkSession(
       getProfile,
       {}
     );
-    // we got an error, throw it
     if (response.isLeft()) {
       throw Error(readableReport(response.value));
     } else {
+      // On response we check the current status if 401 the session is invalid
+      // the result will be false and then put the session expired action
       yield put(
         checkCurrentSessionResult({
           sessionValid: response.value.status !== 401
@@ -36,6 +37,7 @@ export function* checkSession(
   }
 }
 
+// Saga that listen to check session dispatch and returns it's validity
 export function* watchCheckSessionSaga(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Iterator<Effect> {
