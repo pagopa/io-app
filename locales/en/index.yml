@@ -275,7 +275,7 @@ authentication:
     card5-title: Welcome to the public version of IO!
     card5-content: In this version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
-      We're waiting for your feedbacks!
+      We're waiting for your feedback!
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Card expired
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
