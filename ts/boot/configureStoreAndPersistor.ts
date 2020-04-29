@@ -34,7 +34,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 12;
+const CURRENT_REDUX_STORE_VERSION = 13;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -178,6 +178,7 @@ const migrations: MigrationManifest = {
       }
     };
   },
+  
   // Version 10
   // since entities.messages are not persisted anymore, empty the related store section
   "10": (state: PersistedState) => {
@@ -206,17 +207,6 @@ const migrations: MigrationManifest = {
   },
 
   // Version 12
-  // add the default state for isCustomEmailChannelEnabled
-  "12": (state: PersistedState) => {
-    return {
-      ...state,
-      persistedPreferences: {
-        ...(state as PersistedGlobalState).persistedPreferences,
-        isCustomEmailChannelEnabled: pot.none
-      }
-    };
-  },
-  // Version 12
   // change default state of isDebugModeEnabled: false
   "12": (state: PersistedState) => {
     return {
@@ -225,7 +215,19 @@ const migrations: MigrationManifest = {
         isDebugModeEnabled: false
       }
     };
-  }
+  },
+
+  // Version 13
+  // add the default state for isCustomEmailChannelEnabled
+  "13": (state: PersistedState) => {
+    return {
+      ...state,
+      persistedPreferences: {
+        ...(state as PersistedGlobalState).persistedPreferences,
+        isCustomEmailChannelEnabled: pot.none
+      }
+    };
+  },
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
