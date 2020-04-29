@@ -127,10 +127,12 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
-    if (event.url && event.url !== this.state.loginTrace) {
+    if (event.url) {
       const urlChanged = event.url.split("?")[0];
-      this.props.dispatchIdpLoginUrlChanged(urlChanged);
-      this.updateLoginTrace(urlChanged);
+      if (urlChanged !== this.state.loginTrace) {
+        this.props.dispatchIdpLoginUrlChanged(urlChanged);
+        this.updateLoginTrace(urlChanged);
+      }
     }
     this.setState({
       requestState: event.loading ? pot.noneLoading : pot.some(true)
@@ -148,7 +150,11 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private renderMask = () => {
-    if (pot.isLoading(this.state.requestState)) {
+    const isAssertion = fromNullable(this.state.loginTrace).fold(
+      false,
+      s => s.indexOf("/assertionConsumerService") > -1
+    );
+    if (pot.isLoading(this.state.requestState) || isAssertion) {
       return (
         <View style={styles.refreshIndicatorContainer}>
           <RefreshIndicator />
@@ -229,11 +235,6 @@ class IdpLoginScreen extends React.Component<Props, State> {
           loggedOutWithIdpAuth.idp.name
         }`}
       >
-        {!hasError &&
-          fromNullable(this.state.loginTrace).fold(
-            false,
-            s => s.indexOf("/assertionConsumerService") > -1
-          ) && <LoadingSpinnerOverlay isLoading={true} />}
         {!hasError && (
           <WebView
             textZoom={100}
