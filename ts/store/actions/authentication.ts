@@ -5,12 +5,14 @@
 import {
   ActionType,
   createAction,
+  createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
+import { Errors } from "io-ts";
 
 export type LogoutOption = {
   keepUserData: boolean;
@@ -69,17 +71,11 @@ export const resetAuthenticationState = createStandardAction(
   "RESET_AUTHENTICATION_STATE"
 )();
 
-export const checkCurrentSession = createStandardAction(
-  "CHECK_CURRENT_SESSION"
-)();
-
-export const checkCurrentSessionFailure = createStandardAction(
+export const checkCurrentSession = createAsyncAction(
+  "CHECK_CURRENT_SESSION_REQUEST",
+  "CHECK_CURRENT_SESSION_SUCCESS",
   "CHECK_CURRENT_SESSION_FAILURE"
-)<Error>();
-
-export const checkCurrentSessionSuccess = createStandardAction(
-  "CHECK_CURRENT_SESSION_SUCCESS"
-)<CheckSessionResult>();
+)<void, CheckSessionResult, Errors>();
 
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
@@ -96,8 +92,6 @@ export type AuthenticationActions =
   | ActionType<typeof sessionInformationLoadSuccess>
   | ActionType<typeof sessionInformationLoadFailure>
   | ActionType<typeof checkCurrentSession>
-  | ActionType<typeof checkCurrentSessionSuccess>
-  | ActionType<typeof checkCurrentSessionFailure>
   | ActionType<typeof sessionExpired>
   | ActionType<typeof sessionInvalid>
   | ActionType<typeof resetAuthenticationState>;

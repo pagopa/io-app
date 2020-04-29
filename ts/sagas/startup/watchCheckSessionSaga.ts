@@ -1,49 +1,53 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, Effect, put, takeLatest } from "redux-saga/effects";
+import { SagaIterator } from "redux-saga";
+import { call, put, takeLatest } from "redux-saga/effects";
 import { getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import {
   checkCurrentSession,
-  checkCurrentSessionFailure,
-  checkCurrentSessionSuccess,
   sessionExpired
 } from "../../store/actions/authentication";
 import { SagaCallReturnType } from "../../types/utils";
 
 export function* checkSession(
-  getProfile: ReturnType<typeof BackendClient>["getProfile"]
-): Iterator<Effect> {
+  getSessionValidity: ReturnType<typeof BackendClient>["getProfile"]
+): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof getProfile> = yield call(
-      getProfile,
+    const response: SagaCallReturnType<typeof getSessionValidity> = yield call(
+      getSessionValidity,
       {}
     );
     if (response.isLeft()) {
-      throw Error(readableReport(response.value));
+      throw response.value;
     } else {
       // On response we check the current status if 401 the session is invalid
       // the result will be false and then put the session expired action
       yield put(
-        checkCurrentSessionSuccess({
+        checkCurrentSession.success({
           isSessionValid: response.value.status !== 401
         })
       );
     }
   } catch (error) {
-    yield put(checkCurrentSessionFailure(error));
+    yield put(checkCurrentSession.failure(error));
+  }
+}
+
+export function* checkSessionResult(
+  action: ReturnType<typeof checkCurrentSession["success"]>
+) {
+  if (!action.payload.isSessionValid) {
+    yield put(sessionExpired());
   }
 }
 
 // Saga that listen to check session dispatch and returns it's validity
 export function* watchCheckSessionSaga(
-  getProfile: ReturnType<typeof BackendClient>["getProfile"]
-): Iterator<Effect> {
-  yield takeLatest(getType(checkCurrentSession), checkSession, getProfile);
-  yield takeLatest(getType(checkCurrentSessionSuccess), function*(
-    action: ReturnType<typeof checkCurrentSessionSuccess>
-  ) {
-    if (!action.payload.isSessionValid) {
-      yield put(sessionExpired());
-    }
-  });
+  getSessionValidity: ReturnType<typeof BackendClient>["getProfile"]
+): SagaIterator {
+  yield takeLatest(
+    getType(checkCurrentSession.request),
+    checkSession,
+    getSessionValidity
+  );
+  yield takeLatest(getType(checkCurrentSession.success), checkSessionResult);
 }
