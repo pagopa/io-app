@@ -25,6 +25,7 @@ type Props = Readonly<{
   body: () => React.ReactNode;
   contentLoaded: boolean;
   isVisible: boolean;
+  onLinkClicked?: (url: string) => void;
   modalAnimation?: ModalBaseProps["animationType"];
   close: () => void;
   onRequestAssistance: (type: BugReporting.reportType) => void;
@@ -102,7 +103,10 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               {this.state.content}
               {this.props.faqCategories &&
                 this.props.contentLoaded && (
-                  <FAQComponent faqCategories={this.props.faqCategories} />
+                  <FAQComponent
+                    onLinkClicked={this.props.onLinkClicked}
+                    faqCategories={this.props.faqCategories}
+                  />
                 )}
               {this.props.contentLoaded && (
                 <React.Fragment>

@@ -24,6 +24,7 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
+import { isIoInternalLink } from "../ui/Markdown/handlers/link";
 import { BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
@@ -151,6 +152,13 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     this.setState({ isHelpVisible: false });
   };
 
+  private handleOnLinkClicked = (url: string) => {
+    RTron.log("handleOnLinkClicked", url);
+    if (isIoInternalLink(url)) {
+      this.hideHelp();
+    }
+  };
+
   public render() {
     const {
       dark,
@@ -173,6 +181,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         ? {
             body: () => (
               <Markdown
+                onLinkClicked={this.handleOnLinkClicked}
                 onLoadEnd={() => {
                   this.setState({ markdownContentLoaded: some(true) });
                 }}
@@ -205,6 +214,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         {ch && (
           <ContextualHelpModal
             title={ch.title}
+            onLinkClicked={this.handleOnLinkClicked}
             body={ch.body}
             isVisible={this.state.isHelpVisible}
             modalAnimation={this.state.contextualHelpModalAnimation}
