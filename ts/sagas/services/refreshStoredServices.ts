@@ -29,7 +29,7 @@ export function* refreshStoredServices(
         // - is not in the redux store
         storedService === undefined ||
         // - is in the redux store as PotNone and not loading
-        (pot.isNone(storedService) && !pot.isLoading(storedService)) ||
+        pot.isNone(storedService) ||
         // - is in the redux store as PotSome, is not updating and is outdated
         (pot.isSome(storedService) &&
           !pot.isUpdating(storedService) &&
@@ -37,7 +37,6 @@ export function* refreshStoredServices(
       );
     })
     .map(_ => _.service_id);
-
   // Parallel fetch of those services content that we haven't loaded yet or need to be updated
   yield all(
     serviceDetailIdsToLoad.map(id => put(loadServiceDetail.request(id)))
