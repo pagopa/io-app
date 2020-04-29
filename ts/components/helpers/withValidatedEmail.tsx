@@ -71,6 +71,7 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
                 closeModalAndNavigateToEmailInsertScreen={
                   this.handleForcedClose
                 }
+                onClose={this.hideModal}
               />
             );
           }}
