@@ -566,7 +566,7 @@ payment:
       help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
     list:
       title: Tentativi di pagamento
-      iuv: Pagamento IUV {{iuv}}
+      iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Pagamenti
   alert:

@@ -100,12 +100,6 @@ import {
 import { showToast } from "../../utils/showToast";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import ServiceDetailsScreen from "./ServiceDetailsScreen";
-import {
-  openInstabugBugReport,
-  instabugLog,
-  TypeLogs
-} from "../../boot/configureInstabug";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type OwnProps = NavigationScreenProps;
 
@@ -327,31 +321,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         />
         <View spacer={true} extralarge={true} />
         <Text bold={true}>{I18n.t("services.loading.title")}</Text>
-
         <Text>{I18n.t("services.loading.subtitle")}</Text>
-        <View spacer={true} extralarge={true} />
-        <ButtonDefaultOpacity
-          primary={false}
-          style={{ alignSelf: "center" }}
-          onPress={() => {
-            // collect all usefull data
-            const allProps = this.props;
-            const isInnerContentRendered = this.state.isInnerContentRendered;
-            const toLog = JSON.stringify({
-              props: allProps,
-              isInnerContentRendered
-            });
-            const splittedLog = toLog.match(/.{1,4000}/g);
-            if (splittedLog) {
-              splittedLog.map((log, idx) => {
-                instabugLog(JSON.stringify({ chunk: idx, log }), TypeLogs.INFO);
-              });
-            }
-            openInstabugBugReport();
-          }}
-        >
-          <Text>{"invia report di debug"}</Text>
-        </ButtonDefaultOpacity>
       </View>
     );
   }
