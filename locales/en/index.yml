@@ -1,6 +1,6 @@
 ---
 global:
-  ioURL: 'io.italia.it'
+  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
   localization:
@@ -15,7 +15,9 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, something did not work as expected, please try again!
+  genericAlert: Warning!
   genericWaiting: Wait a few seconds..
+  genericThanks: Thank you
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -98,7 +100,7 @@ profile:
     spid: SPID PROFILE
   unknown: UNKNOWN
   logout:
-    menulabel: Logout from this SPID identity
+    menulabel: Logout from IO
     cta:
       header: How do you want to quit the app?
       keepData:
@@ -220,6 +222,8 @@ profile:
     calendar:
       contextualHelpTitle: What is your favorite calendar
       contextualHelpContent: !include profile/profile_preferences_calendar.md
+      local_calendar: Local calendar
+      birthday_calendar: Birthdays
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version
@@ -270,8 +274,9 @@ authentication:
     card5-title: Welcome to the public version of IO!
     card5-content: In this version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
-      We're waiting for your feedbacks!
+      We're waiting for your feedback!
     expiredCardTitle: Card expired or no longer valid
+    expiredCardHeaderTitle: Card expired
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
     expiredCardHelp: How to renew your Electronic Identity Card?
   cie:
@@ -290,6 +295,7 @@ authentication:
       pinCardHeader: Enter the PIN
       pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
       incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
+      incorrectCiePinHeaderTitle: Wrong PIN
       incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.
       incorrectCiePinContent2: Keep in mind that the PIN code of your Electronic Identity Card (CIE) is composed of 8 digits. Four digits that were given to you at the registry office and another four digits that were sent to you at home, along with the card.
       alert: Are you sure you want to go back?
@@ -471,29 +477,6 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
-  email:
-    validation:
-      title: Remember to validate your email address
-      headerTitle: Email validation
-      info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
-        click simply on that link.<br/>
-        Until you will not validate your email address, some app functionalities
-        (payments, messages forwarding by email, etc.) will not be available, but you
-        will be able to use some other functions anyway (i.e. services, messages, etc.)"
-      ctaValidate: Send a new validation email
-      emailSentFeedback: Email sent
-      help: Your SPID profile communicates your email to IO app. If you find the address
-        wrong or that you do not use it anymore, you can edit it directly from your SPID
-        services provider account.
-    insert:
-      headerTitle: Activation
-      title: Insert your email
-      help:
-        title: Email
-        content: !include email_insert_help.md
-    ctaEdit: Edit email
-    subtitle: Some IO app functions need your email.
-    emailInputLabel: Personal email address
 pin_login:
   pin:
     pinInfo: Enter the unlock code
@@ -551,6 +534,8 @@ wallet:
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
+  transactionsLoadMore: Load previous
+  transacionsLoadingMore: Loading previous...
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
@@ -611,13 +596,12 @@ wallet:
     partialAmount: Amount to pay
     fee: Fee
     why: Why?
-    totalAmount: Total amount
-    info: 'Warning: after this step it will not be possible to come back'
+    info: 'After this step it will not be possible to come back.'
     info2: You are using your favourite payment method.
     changeMethod: Change the payment method
     change: Change method
     identificationMessage: Confirm the transaction with your unlock code
-    transactionSuccess: The payment has completed!
+    transactionSuccess: the payment has been completed!
     transactionFailure: There was an error with the payment, please retry!
     transactionTimeout: I couldn't retrieve the result of the payment!
     confirmCancelTitle: Do you want to cancel this payment?
@@ -633,31 +617,36 @@ wallet:
     text: Choose one saved payment method or add a new one
     fetchPspFailure: Temporary error, please retry
     noPspsAvailable: This payment method cannot be used
+    contextualHelpTitle: Payment method's choice
+    contextualHelpContent: !include wallet/wallet_pick_payment_method.md
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
-    amount: Amount
+    amount: Transaction amount
+    total: Total paid
     expireDate: Expire date
     tranche: Tranche
-    entity: 'Entity:'
     info: 'More info at:'
     tel: 'Tel:'
     email: 'Email:'
     PEC: 'PEC:'
-    recipient: 'Recipient:'
-    object: 'Transaction object:'
-    cbillCode: 'CBILL code:'
-    iuv: 'IUV:'
-    entityCode2: 'Entity/Company code:'
+    recipient: Recipient
+    object: Reason
+    date: Date and Time
+    iuv: IUV code
+    entityCode: Entity fiscal code
+    fee: Fee
+    idTransaction: Transaction identification code
     updatedAmount: Updated amount
     updateInfo: 'The pagoPa system updates automatically the amount to ensure you
       pay the exact amount and to avoid you arrears or additional interests '
-    moreInfo: More details
     loadingMessage:
       activation: I'm alerting the entity, wait a few seconds..
       verification: I am checking the status and the amount of your notice..
       generic: I am finishing the verification operations of your notice, wait a few seconds..
       wallet: I am checking for payment method..
+    contextualHelpTitle: Transaction's summary
+    contextualHelpContent: !include wallet/wallet_transaction_summary.md
   insertManually:
     header: Insert notice data
     title: Insert the notice data
@@ -667,6 +656,8 @@ wallet:
     entityCode: Entity Fiscal Code
     amount: Amount (€)
     proceed: Proceed with the transaction
+    contextualHelpTitle: Manually insert notice
+    contextualHelpContent: !include wallet/insert_manual_notice.md
   errorTransaction:
     submitBugText: If you can't solve the problem, please let us know with the ladybug icon at the top right. Thank you!
   transactionDetails: Transaction details
@@ -682,7 +673,7 @@ wallet:
   date: Date
   time: Time
   psp: Payment provider
-  receipt: Receipt
+  receipt: Transaction receipt
   seeReceipt: See Receipt
   transactions: Transactions
   transaction: Transaction
@@ -691,12 +682,12 @@ wallet:
   noneTransactions: There are no transactions
   noTransactionsInWalletHome: You haven't executed any operation yet.
   noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
-  moreInfo: Learn more
   payNotice: Pay notice
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add payment method
-  continue: Continue
+  continue: Pay this notice
+  backToPayments: Back to payments
   methods:
     comingSoon: incoming
     card:
@@ -743,6 +734,8 @@ wallet:
       buttonText:
         settings: Enable permissions
         cancel: Cancel
+    contextualHelpTitle: How to pay a notice
+    contextualHelpContent: !include wallet/wallet_qrcode.md
   whyAFee:
     title: Why do I have to pay a fee?
     text: !include wallet/why_a_fee.md
@@ -979,13 +972,7 @@ calendarEvents:
 reminders:
   emptyMonth: No reminders for this month
   loadMoreData: previous deadlines
-  noOtherDeadlines: There are no more deadlines
-  email:
-    title: Remember to validate your email address
-    modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"
-    modal2: "open your email client and click on the link."
-    button1: Send another verification email
-    button2: Change email address
+  noOtherDeadlines: There are no more deadline
 openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred

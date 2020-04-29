@@ -14,6 +14,7 @@ declare module "native-base" {
       rightAlign?: boolean;
       alternativeBold?: boolean;
       white?: boolean;
+      dark?: boolean;
       alignCenter?: boolean;
       primary?: boolean;
       badge?: boolean;
@@ -49,6 +50,9 @@ export default (): Theme => {
     },
     ".white": {
       color: variables.colorWhite
+    },
+    ".dark": {
+      color: variables.brandDarkestGray
     },
     ".alignCenter": {
       textAlign: "center"

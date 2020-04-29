@@ -1,22 +1,14 @@
 import I18n from "i18n-js";
 import { BugReporting } from "instabug-reactnative";
-import {
-  Body,
-  Container,
-  Content,
-  H1,
-  H3,
-  Right,
-  Text,
-  View
-} from "native-base";
+import { Body, Container, Content, H3, Right, Text, View } from "native-base";
 import * as React from "react";
 import {
   InteractionManager,
+  Modal,
+  ModalBaseProps,
   StyleSheet,
   TouchableWithoutFeedback
 } from "react-native";
-import Modal from "react-native-modal";
 import IconFont from "../components/ui/IconFont";
 import themeVariables from "../theme/variables";
 import { ioItaliaLink } from "../utils/deepLink";
@@ -28,13 +20,16 @@ import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
-import { openLink } from "./ui/Markdown/handlers/link";
+import { openLink, removeProtocol } from "./ui/Markdown/handlers/link";
 
 type OwnProps = Readonly<{
   title: string;
   body: () => React.ReactNode;
+  contentLoaded: boolean;
   isVisible: boolean;
+  modalAnimation?: ModalBaseProps["animationType"];
   close: () => void;
+  onRequestAssistance: (type: BugReporting.reportType) => void;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
@@ -93,11 +88,12 @@ export class ContextualHelpModal extends React.Component<Props, State> {
 
     return (
       <Modal
-        isVisible={this.props.isVisible}
-        onModalShow={onModalShow}
-        onModalWillHide={onClose}
-        onModalHide={this.props.openInstabugReport}
-        style={styles.noMargin}
+        visible={this.props.isVisible}
+        onShow={onModalShow}
+        animationType={this.props.modalAnimation || "slide"}
+        transparent={true}
+        onDismiss={onClose}
+        onRequestClose={onClose}
       >
         <Container>
           <AppHeader noLeft={true}>
@@ -119,38 +115,38 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               contentContainerStyle={styles.contentContainerStyle}
               noPadded={true}
             >
-              <H1>{this.props.title}</H1>
-              <View spacer={true} />
-
+              <H3>{this.props.title}</H3>
               {this.state.content}
-
-              <View spacer={true} extralarge={true} />
-
-              {this.props.faqCategories && (
-                <FAQComponent faqCategories={this.props.faqCategories} />
+              {this.props.faqCategories &&
+                this.props.contentLoaded && (
+                  <FAQComponent faqCategories={this.props.faqCategories} />
+                )}
+              {this.props.contentLoaded && (
+                <React.Fragment>
+                  <View spacer={true} extralarge={true} />
+                  <InstabugAssistanceComponent
+                    requestAssistance={this.props.onRequestAssistance}
+                  />
+                  <View spacer={true} extralarge={true} />
+                  <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
+                  <View spacer={true} />
+                  <View spacer={true} xsmall={true} />
+                  <Text>
+                    {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
+                    <TouchableWithoutFeedback
+                      onPress={() => openLink(I18n.t("global.ioWebSite"))}
+                    >
+                      <Text link={true}>
+                        {removeProtocol(I18n.t("global.ioWebSite"))}
+                      </Text>
+                    </TouchableWithoutFeedback>
+                  </Text>
+                </React.Fragment>
               )}
-
-              <View spacer={true} extralarge={true} />
-
-              <InstabugAssistanceComponent
-                setReportType={this.handleSetReportType}
-              />
-
-              <View spacer={true} extralarge={true} />
-              <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
-              <View spacer={true} />
-              <View spacer={true} extrasmall={true} />
-              <Text>
-                {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
-                <TouchableWithoutFeedback
-                  onPress={() => openLink(ioItaliaLink)}
-                >
-                  <Text link={true}>{I18n.t("global.ioURL")}</Text>
-                </TouchableWithoutFeedback>
-              </Text>
-              <View spacer={true} extralarge={true} />
             </Content>
           )}
+          <View spacer={true} extralarge={true} />
+
           <BetaBannerComponent />
         </Container>
       </Modal>

@@ -66,7 +66,7 @@ save_node_cache: &save_node_cache
     key: *node_cache_key
 
 install_node_modules: &install_node_modules
-  run: 
+  run:
     name: install npm packages
     command: |
       echo "//npm.pkg.github.com/:_authToken=$GITHUB_PACKAGE_APP_TOKEN" > ~/.npmrc
@@ -78,7 +78,6 @@ install_node_modules: &install_node_modules
 
 version: 2
 jobs:
-
   # Compile typescript
   compile-typescript:
     <<: *defaults_js
@@ -101,7 +100,6 @@ jobs:
           paths:
             - italia-app
 
-
   # Runs tests
   run-tests:
     <<: *defaults_js
@@ -118,7 +116,7 @@ jobs:
 
       # Run tests
       - run: yarn test
-      - run: 'bash <(curl -s https://codecov.io/bash)'
+      - run: "bash <(curl -s https://codecov.io/bash)"
 
   # Runs Danger checks on PR
   lint-typescript:
@@ -192,7 +190,7 @@ jobs:
       - run:
           command: ./scripts/keystore-setup.sh
 
-      # Build the js bundle in release mode	
+      # Build the js bundle in release mode
       - run: yarn bundle:android-release
 
       # Run alpha lane
@@ -251,7 +249,7 @@ jobs:
       - run:
           command: ./scripts/keystore-setup.sh
 
-      # Build the js bundle in release mode	
+      # Build the js bundle in release mode
       - run:
           command: yarn bundle:android-release
 
@@ -349,8 +347,8 @@ jobs:
 
       # TODO: possibly remove this after the following issue has been fixed:
       # https://github.com/GeekyAnts/NativeBase/issues/1957
-      - run: '[ -d node_modules/native-base/dist/src/Utils ] && mv node_modules/native-base/dist/src/Utils node_modules/native-base/dist/src/utils'
-      - run: '[ -d node_modules/native-base/src/Utils ] && mv node_modules/native-base/src/Utils node_modules/native-base/src/utils'
+      - run: "[ -d node_modules/native-base/dist/src/Utils ] && mv node_modules/native-base/dist/src/Utils node_modules/native-base/dist/src/utils"
+      - run: "[ -d node_modules/native-base/src/Utils ] && mv node_modules/native-base/src/Utils node_modules/native-base/src/utils"
 
       # Remove watchman from node global packages
       - run:
@@ -449,7 +447,6 @@ workflows:
   version: 2
   build:
     jobs:
-
       - compile-typescript
 
       - run-tests
@@ -491,24 +488,24 @@ workflows:
             - test-ios-e2e-build
 
       # Build Android alpha release only on master branch
-      - alpha-release-android:
-          requires:
-            - compile-typescript
-            - run-tests
-            - lint-typescript
-          filters:
-            branches:
-              only: master
+      #- alpha-release-android:
+      #    requires:
+      #      - compile-typescript
+      #      - run-tests
+      #      - lint-typescript
+      #    filters:
+      #      branches:
+      #        only: master
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status
   nightly-pagopa-specs-check:
-      triggers:
-        - schedule:
-            cron: "0 03 * * *"
-            filters:
-              branches:
-                only:
-                  - master
-      jobs:
-        - pagopa_specs_diff
+    triggers:
+      - schedule:
+          cron: "0 03 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - pagopa_specs_diff

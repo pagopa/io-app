@@ -1,8 +1,9 @@
 import { none, Option, some } from "fp-ts/lib/Option";
-import { BugReporting, Chats, Replies } from "instabug-reactnative";
+import { BugReporting, Replies } from "instabug-reactnative";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
+import { openInstabugChat } from "../boot/configureInstabug";
 import {
   instabugReportClosed,
   instabugReportOpened
@@ -48,7 +49,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  instabugReportType: Option<string>;
+  instabugReportType: Option<BugReporting.reportType>;
   hasChats: boolean;
 };
 
@@ -58,24 +59,11 @@ type State = {
  */
 class InstabugChatsComponent extends React.PureComponent<Props, State> {
   private handleIBChatPress = () => {
-    const chat = "chat";
-    this.setState({ instabugReportType: some(chat) });
-    this.props.dispatchIBReportOpen(chat);
-    if (this.state.hasChats) {
-      Replies.show();
-    } else {
-      Chats.show();
-    }
-  };
-
-  private handleIBBugPress = () => {
-    const bug = "bug";
-    this.setState({ instabugReportType: some(bug) });
-    this.props.dispatchIBReportOpen(bug);
-    BugReporting.showWithOptions(BugReporting.reportType.bug, [
-      BugReporting.option.commentFieldRequired,
-      BugReporting.option.emailFieldHidden
-    ]);
+    this.setState({
+      instabugReportType: some(BugReporting.reportType.question)
+    });
+    this.props.dispatchIBReportOpen(BugReporting.reportType.question);
+    openInstabugChat(this.state.hasChats);
   };
 
   constructor(props: Props) {
@@ -142,18 +130,6 @@ class InstabugChatsComponent extends React.PureComponent<Props, State> {
             />
           </View>
         )}
-
-        <ButtonDefaultOpacity
-          onPress={this.handleIBBugPress}
-          transparent={true}
-        >
-          <IconFont
-            name="io-bug"
-            color={this.props.color}
-            accessible={true}
-            accessibilityLabel="io-bug"
-          />
-        </ButtonDefaultOpacity>
       </React.Fragment>
     );
   }
@@ -164,9 +140,9 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchIBReportOpen: (type: string) =>
+  dispatchIBReportOpen: (type: BugReporting.reportType) =>
     dispatch(instabugReportOpened({ type })),
-  dispatchIBReportClosed: (type: string, how: string) =>
+  dispatchIBReportClosed: (type: BugReporting.reportType, how: string) =>
     dispatch(instabugReportClosed({ type, how })),
   dispatchUpdateInstabugUnreadMessagesCounter: () =>
     dispatch(updateInstabugUnreadMessages())

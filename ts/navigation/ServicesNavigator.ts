@@ -15,7 +15,10 @@ const ServicesNavigator = createStackNavigator(
   },
   {
     // Let each screen handle the header and navigation
-    headerMode: "none"
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
 );
 

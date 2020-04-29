@@ -18,6 +18,11 @@ export function handleLinkMessage(dispatch: Dispatch, href: string) {
   }
 }
 
+// remove protocol from a link ex: http://www.site.com -> www.site.com
+export const removeProtocol = (link: string): string => {
+  return link.replace(new RegExp(/https?:\/\//gi), "");
+};
+
 export function openLink(url: string, customError?: string) {
   const error = customError || I18n.t("global.genericError");
   const getErrorToast = () => showToast(error);
@@ -27,7 +32,7 @@ export function openLink(url: string, customError?: string) {
       if (supported) {
         Linking.openURL(url).catch(getErrorToast);
       } else {
-        showToast("il link non è suppotato dal tuo dispositivo");
+        showToast(I18n.t("global.genericError"));
       }
     })
     .catch(getErrorToast);

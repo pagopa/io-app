@@ -150,6 +150,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
     return (
       <TopScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["messages"]}
         headerTitle={I18n.t("messages.contentTitle")}
         isSearchAvailable={true}
         searchType={"Messages"}

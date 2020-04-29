@@ -1,10 +1,12 @@
 /**
  * Services reducer
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceTuple } from "../../../../../definitions/backend/ServiceTuple";
 import { ScopeEnum } from "../../../../../definitions/content/Service";
 import { ServicesByScope } from "../../../../../definitions/content/ServicesByScope";
 import { isDefined } from "../../../../utils/guards";
@@ -197,12 +199,12 @@ const isInScope = (
  */
 const belongsToOrganization = (
   service: pot.Pot<ServicePublic, Error>,
-  organizationFiscalCode: string
+  organizationsFiscalCode: ReadonlyArray<string>
 ) =>
   pot.getOrElse(
     pot.map(
       service,
-      s => s.organization_fiscal_code === organizationFiscalCode
+      s => organizationsFiscalCode.indexOf(s.organization_fiscal_code) !== -1
     ),
     false
   );
@@ -224,19 +226,42 @@ const getServices = (
     selectedOrganizationsFiscalCodes === undefined
       ? Object.keys(services.byOrgFiscalCode)
       : selectedOrganizationsFiscalCodes;
-
+  // another workaround to avoid to display same organizations name that have different cf
+  // we group services by organization name
+  // to avoid duplication we keep in a set all organization fiscal code processed
+  const orgFiscalCodeProcessed = new Set<string>();
   return organizationsFiscalCodes
     .map((fiscalCode: string) => {
       const organizationName = organizations[fiscalCode] || fiscalCode;
       const organizationFiscalCode = fiscalCode;
-      const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
+      if (orgFiscalCodeProcessed.has(fiscalCode)) {
+        return {
+          organizationName,
+          organizationFiscalCode,
+          data: []
+        };
+      }
+
+      const orgsFiscalCodes = Object.keys(organizations).filter(cf =>
+        fromNullable(organizations[cf]).fold(
+          false,
+          name => organizationName === name // select all services that belong to organizations having organizationName
+        )
+      );
+      orgsFiscalCodes.forEach(ocf => orgFiscalCodeProcessed.add(ocf));
+      const serviceIdsForOrg = orgsFiscalCodes.reduce(
+        (acc: ReadonlyArray<string>, curr: string) => {
+          return [...acc, ...(services.byOrgFiscalCode[curr] || [])];
+        },
+        []
+      );
 
       const data = serviceIdsForOrg
         .map(id => services.byId[id])
         .filter(
           service =>
             isDefined(service) &&
-            belongsToOrganization(service, fiscalCode) && // workaround: see comments above this function definition
+            belongsToOrganization(service, orgsFiscalCodes) && // workaround: see comments above this function definition
             isInScope(service, servicesByScope, scope) &&
             isVisibleService(services.visible, service)
         )
@@ -335,34 +360,25 @@ export const notSelectedServicesSectionsSelector = createSelector(
 );
 
 /**
- *  Get the sum of selected local services + national services that are not yet marked as read
+ *  Get the sum of visible services that are not yet marked as read
  */
 
 export const servicesBadgeValueSelector = createSelector(
   [
-    nationalServicesSectionsSelector,
-    selectedLocalServicesSectionsSelector,
+    visibleServicesSelector,
     readServicesByIdSelector,
     isFirstVisibleServiceLoadCompletedSelector
   ],
-  (
-    nationalService,
-    localService,
-    readServicesById,
-    isFirstVisibleServiceLoadCompleted
-  ) => {
+  (visibleServices, readServicesById, isFirstVisibleServiceLoadCompleted) => {
     if (isFirstVisibleServiceLoadCompleted) {
-      const services: ReadonlyArray<ServicesSectionState> = [
-        ...nationalService,
-        ...localService
-      ];
-      return services.reduce((acc: number, service: ServicesSectionState) => {
-        const servicesNotRead = service.data.filter(
-          data =>
-            pot.isSome(data) &&
-            readServicesById[data.value.service_id] === undefined
-        ).length;
-        return acc + servicesNotRead;
+      const services = pot.getOrElse<ReadonlyArray<ServiceTuple>>(
+        visibleServices,
+        []
+      );
+      return services.reduce((acc: number, service: ServiceTuple) => {
+        const isServiceRead =
+          readServicesById[service.service_id] !== undefined;
+        return acc + (isServiceRead ? 0 : 1);
       }, 0);
     }
     return 0;

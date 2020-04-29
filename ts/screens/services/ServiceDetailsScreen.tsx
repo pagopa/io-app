@@ -57,6 +57,7 @@ import {
 } from "../../utils/profile";
 import { logosForService } from "../../utils/services";
 import { showToast } from "../../utils/showToast";
+import { capitalize } from "../../utils/strings";
 import { handleItemOnPress } from "../../utils/url";
 
 type NavigationParams = Readonly<{
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandDarkestGray
   },
   disabledColor: {
-    color: customVariables.disabledService
+    color: customVariables.lightGray
   },
   info: {
     marginTop: -5
@@ -664,6 +665,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
         goBack={this.props.navigation.goBack}
         headerTitle={I18n.t("serviceDetail.headerTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["services_detail"]}
       >
         <Content>
           <Grid>
@@ -683,7 +685,7 @@ class ServiceDetailsScreen extends React.Component<Props, State> {
           )}
           {canRenderItems(this.state.isMarkdownLoaded, potServiceMetadata) &&
             renderInformationRow(
-              "C.F.",
+              capitalize(I18n.t("profile.fiscalCode.fiscalCode")),
               service.organization_fiscal_code,
               service.organization_fiscal_code,
               "COPY"

@@ -5,7 +5,7 @@ import * as React from "react";
 import ButtonWithImage from "./ButtonWithImage";
 
 type Props = Readonly<{
-  setReportType: (type: BugReporting.reportType) => void;
+  requestAssistance: (type: BugReporting.reportType) => void;
 }>;
 
 /**
@@ -18,11 +18,11 @@ class InstabugAssistanceComponent extends React.PureComponent<Props> {
       <React.Fragment>
         <H3>{I18n.t("instabug.contextualHelp.title1")}</H3>
         <View spacer={true} />
-        <View spacer={true} extrasmall={true} />
+        <View spacer={true} xsmall={true} />
         <ButtonWithImage
           icon={"io-send-message"}
-          onClick={() =>
-            this.props.setReportType(BugReporting.reportType.question)
+          onPress={() =>
+            this.props.requestAssistance(BugReporting.reportType.question)
           }
           text={I18n.t("instabug.contextualHelp.buttonChat")}
           disabled={false}
@@ -34,7 +34,9 @@ class InstabugAssistanceComponent extends React.PureComponent<Props> {
 
         <ButtonWithImage
           icon={"io-bug"}
-          onClick={() => this.props.setReportType(BugReporting.reportType.bug)}
+          onPress={() =>
+            this.props.requestAssistance(BugReporting.reportType.bug)
+          }
           text={I18n.t("instabug.contextualHelp.buttonBug")}
           disabled={false}
           light={true}

@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
   helpButton: {
     padding: 8
   },
-
   noLeft: {
     marginLeft: variables.contentPadding - variables.appHeaderPaddingHorizontal
   }
@@ -65,16 +64,20 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
     // if customGoBack is provided only the header text will be rendered
     if (customGoBack) {
       return (
-        <Text white={this.props.primary} numberOfLines={1}>
+        <Text
+          white={this.props.primary || this.props.dark ? true : undefined}
+          numberOfLines={1}
+        >
           {headerTitle}
         </Text>
       );
     }
+    const isWhite = this.props.primary || this.props.dark;
     // if no customGoBack is provided also the header text could be press to execute goBack
     // note goBack could a boolean or a function (check this.getGoBackHandler)
     return (
       <TouchableDefaultOpacity onPress={this.getGoBackHandler}>
-        <Text white={this.props.primary} numberOfLines={1}>
+        <Text white={isWhite} numberOfLines={1}>
           {headerTitle}
         </Text>
       </TouchableDefaultOpacity>
