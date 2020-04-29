@@ -178,7 +178,7 @@ const migrations: MigrationManifest = {
       }
     };
   },
-  
+
   // Version 10
   // since entities.messages are not persisted anymore, empty the related store section
   "10": (state: PersistedState) => {
@@ -227,7 +227,7 @@ const migrations: MigrationManifest = {
         isCustomEmailChannelEnabled: pot.none
       }
     };
-  },
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
