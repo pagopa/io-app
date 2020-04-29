@@ -1,5 +1,6 @@
 ---
 global:
+  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
   localization:
@@ -273,7 +274,7 @@ authentication:
     card5-title: Welcome to the public version of IO!
     card5-content: In this version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
-      We're waiting for your feedbacks!
+      We're waiting for your feedback!
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Card expired
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
@@ -983,6 +984,15 @@ btnUpdateApp: Update the IO app
 systemsOff:
   title: Unable to start IO
   closeApp: close the application and try again
+instabug:
+  contextualHelp:
+    title1: Do you need help?
+    buttonChat: Send us a message
+    descriptionChat: You can use our chat tool to send a message in case of urgent need for assistance. You will receive an answer directly on IO
+    buttonBug: Report a bug
+    descriptionBug: You can report an error or something that does not work to our developers, they will take care of the problem as soon as possible.
+    title2: Are you new to IO?
+    descriptionLink: Find out how it works and what are the special features of IO, by visiting the site
 faq:
   1:
     title: "What is SPID?"
