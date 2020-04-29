@@ -5,17 +5,11 @@
  */
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Container, Content, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import {
-  Image,
-  RefreshControl,
-  StyleSheet,
-  TouchableWithoutFeedback
-} from "react-native";
+import { Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
-  NavigationEvents,
   NavigationEventSubscription,
   NavigationScreenProp,
   NavigationState
@@ -24,8 +18,6 @@ import { connect } from "react-redux";
 
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { ContextualHelp } from "../../components/ContextualHelp";
-import FAQComponent from "../../components/FAQComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
@@ -34,7 +26,6 @@ import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import Markdown from "../../components/ui/Markdown";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
@@ -78,10 +69,6 @@ type OwnProps = LightModalContextInterface &
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
-
-type State = {
-  isModalVisible: boolean;
-};
 
 const styles = StyleSheet.create({
   inLineSpace: {
@@ -164,14 +151,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * Wallet Home Screen
  */
-class WalletHomeScreen extends React.Component<Props, State> {
+class WalletHomeScreen extends React.Component<Props> {
   private navListener?: NavigationEventSubscription;
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isModalVisible: false
-    };
-  }
 
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
@@ -304,23 +285,6 @@ class WalletHomeScreen extends React.Component<Props, State> {
     );
   }
 
-  // Show contextual help with faqs
-  private showContextualHelp = () => {
-    this.setState({ isModalVisible: true });
-    this.props.showModal(
-      <ContextualHelp
-        onClose={this.props.hideModal}
-        title={I18n.t("wallet.contextualHelpTitle")}
-        body={() => (
-          <View>
-            <Markdown>{I18n.t("wallet.contextualHelpContent")}</Markdown>
-            <FAQComponent faqCategories={["wallet", "wallet_methods"]} />
-          </View>
-        )}
-      />
-    );
-  };
-
   private helpMessage = (
     alignCenter: boolean | undefined = false
   ): React.ReactNode => (
@@ -329,18 +293,16 @@ class WalletHomeScreen extends React.Component<Props, State> {
       <Text
         style={alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp}
       >
-        {I18n.t("wallet.transactionHelpMessage.text1")}{" "}
-        <TouchableWithoutFeedback onPress={this.showContextualHelp}>
-          <Text
-            style={
-              alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp
-            }
-            link={true}
-          >
-            {I18n.t("wallet.transactionHelpMessage.text2")}
-          </Text>
-        </TouchableWithoutFeedback>{" "}
-        {I18n.t("wallet.transactionHelpMessage.text3")}
+        {`${I18n.t("wallet.transactionHelpMessage.text1")} `}
+        <Text
+          style={
+            alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp
+          }
+          bold={true}
+        >
+          {I18n.t("wallet.transactionHelpMessage.text2")}
+        </Text>
+        {` ${I18n.t("wallet.transactionHelpMessage.text3")}`}
       </Text>
     </React.Fragment>
   );
@@ -431,13 +393,6 @@ class WalletHomeScreen extends React.Component<Props, State> {
     );
   }
 
-  private handleWillBlur = () => {
-    if (this.state.isModalVisible === true) {
-      this.props.hideModal();
-      this.setState({ isModalVisible: false });
-    }
-  };
-
   public render(): React.ReactNode {
     const { potWallets, potTransactions, historyPayments } = this.props;
 
@@ -475,21 +430,18 @@ class WalletHomeScreen extends React.Component<Props, State> {
     );
 
     return (
-      <Container>
-        <NavigationEvents onWillBlur={this.handleWillBlur} />
-        <WalletLayout
-          title={I18n.t("wallet.wallet")}
-          allowGoBack={false}
-          hasDynamicSubHeader={true}
-          topContent={headerContent}
-          footerContent={footerContent}
-          refreshControl={walletRefreshControl}
-          contextualHelpMarkdown={contextualHelpMarkdown}
-          faqCategories={["wallet", "wallet_methods"]}
-        >
-          {transactionContent}
-        </WalletLayout>
-      </Container>
+      <WalletLayout
+        title={I18n.t("wallet.wallet")}
+        allowGoBack={false}
+        hasDynamicSubHeader={true}
+        topContent={headerContent}
+        footerContent={footerContent}
+        refreshControl={walletRefreshControl}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet", "wallet_methods"]}
+      >
+        {transactionContent}
+      </WalletLayout>
     );
   }
 }
