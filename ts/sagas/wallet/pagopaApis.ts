@@ -1,10 +1,11 @@
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
-import { call, Effect, put, select } from "redux-saga/effects";
+import { call, Effect, put, select, take } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 
 import { fromNullable } from "fp-ts/lib/Option";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
+import { checkCurrentSession } from "../../store/actions/authentication";
 import {
   paymentAttiva,
   paymentCheck,
@@ -59,20 +60,29 @@ export function* fetchWalletsRequestHandler(
   pagoPaClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>
 ): Iterator<Effect> {
-  const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
-  try {
-    const getResponse: SagaCallReturnType<typeof request> = yield call(request);
-    if (getResponse.isRight()) {
-      if (getResponse.value.status === 200) {
-        yield put(fetchWalletsSuccess(getResponse.value.value.data));
+  yield put(checkCurrentSession.request());
+  const sessionAction: ActionType<
+    typeof checkCurrentSession["success"]
+  > = yield take(checkCurrentSession.success);
+
+  if (fromNullable(sessionAction).fold(false, s => s.payload.isSessionValid)) {
+    const request = pmSessionManager.withRefresh(pagoPaClient.getWallets);
+    try {
+      const getResponse: SagaCallReturnType<typeof request> = yield call(
+        request
+      );
+      if (getResponse.isRight()) {
+        if (getResponse.value.status === 200) {
+          yield put(fetchWalletsSuccess(getResponse.value.value.data));
+        } else {
+          throw Error(`response status ${getResponse.value.status}`);
+        }
       } else {
-        throw Error(`response status ${getResponse.value.status}`);
+        throw Error(readablePrivacyReport(getResponse.value));
       }
-    } else {
-      throw Error(readablePrivacyReport(getResponse.value));
+    } catch (error) {
+      yield put(fetchWalletsFailure(error));
     }
-  } catch (error) {
-    yield put(fetchWalletsFailure(error));
   }
 }
 
@@ -84,27 +94,34 @@ export function* fetchTransactionsRequestHandler(
   pmSessionManager: SessionManager<PaymentManagerToken>,
   action: ActionType<typeof fetchTransactionsRequest>
 ): Iterator<Effect> {
-  const request = pmSessionManager.withRefresh(
-    pagoPaClient.getTransactions(action.payload.start)
-  );
-  try {
-    const response: SagaCallReturnType<typeof request> = yield call(request);
-    if (response.isRight()) {
-      if (response.value.status === 200) {
-        yield put(
-          fetchTransactionsSuccess({
-            data: response.value.value.data,
-            total: fromNullable(response.value.value.total)
-          })
-        );
+  yield put(checkCurrentSession.request());
+  const sessionAction: ActionType<
+    typeof checkCurrentSession["success"]
+  > = yield take(checkCurrentSession.success);
+
+  if (fromNullable(sessionAction).fold(false, s => s.payload.isSessionValid)) {
+    const request = pmSessionManager.withRefresh(
+      pagoPaClient.getTransactions(action.payload.start)
+    );
+    try {
+      const response: SagaCallReturnType<typeof request> = yield call(request);
+      if (response.isRight()) {
+        if (response.value.status === 200) {
+          yield put(
+            fetchTransactionsSuccess({
+              data: response.value.value.data,
+              total: fromNullable(response.value.value.total)
+            })
+          );
+        } else {
+          throw Error(`response status ${response.value.status}`);
+        }
       } else {
-        throw Error(`response status ${response.value.status}`);
+        throw Error(readablePrivacyReport(response.value));
       }
-    } else {
-      throw Error(readablePrivacyReport(response.value));
+    } catch (error) {
+      yield put(fetchTransactionsFailure(error));
     }
-  } catch (error) {
-    yield put(fetchTransactionsFailure(error));
   }
 }
 
