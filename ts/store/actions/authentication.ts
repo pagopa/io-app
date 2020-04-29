@@ -9,10 +9,10 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
+import { Errors } from "io-ts";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
-import { Errors } from "io-ts";
 
 export type LogoutOption = {
   keepUserData: boolean;
