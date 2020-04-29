@@ -162,7 +162,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     </ButtonDefaultOpacity>
   );
 
-  private printInstabugLogAndOpenReport = () => {
+  private instabugLogAndOpenReport = () => {
     pot.map(this.props.profile, p => {
       instabugLog(
         getPaymentHistoryDetails(this.props.navigation.getParam("payment"), p),
@@ -174,7 +174,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
   private helpButton = () => (
     <ButtonDefaultOpacity
-      onPress={this.printInstabugLogAndOpenReport}
+      onPress={this.instabugLogAndOpenReport}
       style={styles.helpButton}
     >
       <IconFont name={"io-messaggi"} style={styles.helpButtonIcon} />

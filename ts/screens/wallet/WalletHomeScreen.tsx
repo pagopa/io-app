@@ -330,7 +330,7 @@ class WalletHomeScreen extends React.Component<Props, State> {
         style={alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp}
       >
         {I18n.t("wallet.transactionHelpMessage.text1")}{" "}
-        <TouchableWithoutFeedback onPress={() => this.showContextualHelp()}>
+        <TouchableWithoutFeedback onPress={this.showContextualHelp}>
           <Text
             style={
               alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp
@@ -377,7 +377,6 @@ class WalletHomeScreen extends React.Component<Props, State> {
     return (
       <Content scrollEnabled={false} noPadded={true}>
         <View style={styles.emptyListWrapper}>
-          {potPayments.length > 0 && <View spacer={true} />}
           {potPayments.length > 0 && this.helpMessage(true)}
           <Text style={styles.emptyListContentTitle}>
             {I18n.t("wallet.noTransactionsInWalletHome")}
