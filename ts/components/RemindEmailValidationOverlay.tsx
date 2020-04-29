@@ -43,6 +43,7 @@ import Markdown from "./ui/Markdown";
 
 type OwnProp = {
   closeModalAndNavigateToEmailInsertScreen: () => void;
+  onClose: () => void;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -146,6 +147,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     } else {
       this.props.navigateBack();
     }
+    this.props.onClose();
   };
 
   public componentDidUpdate(prevProps: Props) {
