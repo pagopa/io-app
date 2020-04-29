@@ -46,6 +46,17 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 210
   },
+  imageView: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center'
+
+  },
+  gradient: {
+    position: 'absolute',
+    backgroundColor: customVariables.colorBlack,
+    opacity: 0.3,
+  },
   inputContainer: {
     width: "100%",
     paddingHorizontal: customVariables.contentPadding
@@ -85,6 +96,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding
   }
 });
+
+const ICON_SIZE_BIG = 72;
 
 class DonationDetailScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -257,8 +270,12 @@ class DonationDetailScreen extends React.PureComponent<Props, State> {
           <View spacer={true} />
 
           <TouchableDefaultOpacity onPress={this.showVideo}>
-            {/** TODO: add icon for representing reproducible video */}
             <Image source={{ uri: this.item.cover }} style={styles.cover} />
+            {/** TODO: evaluate shadow behind icon instead of uniform dark opacity */}
+            <View style={[styles.gradient, styles.cover]}/>
+            <View style={[styles.imageView, styles.cover]}>
+              <IconFont name={'io-play'} size={ICON_SIZE_BIG} color={customVariables.colorWhite}/>
+            </View>
           </TouchableDefaultOpacity>
           <View spacer={true} />
           <Text style={styles.padded}>{this.item.description}</Text>
