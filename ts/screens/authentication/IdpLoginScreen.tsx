@@ -134,8 +134,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
         this.updateLoginTrace(urlChanged);
       }
     }
+    const isAssertion = fromNullable(event.url).fold(
+      false,
+      s => s.indexOf("/assertionConsumerService") > -1
+    );
     this.setState({
-      requestState: event.loading ? pot.noneLoading : pot.some(true)
+      requestState:
+        event.loading || isAssertion ? pot.noneLoading : pot.some(true)
     });
   };
 
@@ -150,11 +155,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
   };
 
   private renderMask = () => {
-    const isAssertion = fromNullable(this.state.loginTrace).fold(
-      false,
-      s => s.indexOf("/assertionConsumerService") > -1
-    );
-    if (pot.isLoading(this.state.requestState) || isAssertion) {
+    if (pot.isLoading(this.state.requestState)) {
       return (
         <View style={styles.refreshIndicatorContainer}>
           <RefreshIndicator />
