@@ -47,15 +47,14 @@ const styles = StyleSheet.create({
     height: 210
   },
   imageView: {
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center'
-
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center"
   },
   gradient: {
-    position: 'absolute',
+    position: "absolute",
     backgroundColor: customVariables.colorBlack,
-    opacity: 0.3,
+    opacity: 0.3
   },
   inputContainer: {
     width: "100%",
@@ -272,9 +271,13 @@ class DonationDetailScreen extends React.PureComponent<Props, State> {
           <TouchableDefaultOpacity onPress={this.showVideo}>
             <Image source={{ uri: this.item.cover }} style={styles.cover} />
             {/** TODO: evaluate shadow behind icon instead of uniform dark opacity */}
-            <View style={[styles.gradient, styles.cover]}/>
+            <View style={[styles.gradient, styles.cover]} />
             <View style={[styles.imageView, styles.cover]}>
-              <IconFont name={'io-play'} size={ICON_SIZE_BIG} color={customVariables.colorWhite}/>
+              <IconFont
+                name={"io-play"}
+                size={ICON_SIZE_BIG}
+                color={customVariables.colorWhite}
+              />
             </View>
           </TouchableDefaultOpacity>
           <View spacer={true} />
