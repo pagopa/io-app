@@ -153,7 +153,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   };
 
   private handleOnLinkClicked = (url: string) => {
-    RTron.log("handleOnLinkClicked", url);
     if (isIoInternalLink(url)) {
       this.hideHelp();
     }

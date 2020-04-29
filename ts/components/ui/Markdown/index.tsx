@@ -359,7 +359,6 @@ class Markdown extends React.PureComponent<Props, State> {
     messageOrErrors.map(message => {
       switch (message.type) {
         case "LINK_MESSAGE":
-          RTron.log("LINK_MESSAGE", message.payload.href);
           handleLinkMessage(dispatch, message.payload.href);
           fromNullable(this.props.onLinkClicked).map(s =>
             s(message.payload.href)
