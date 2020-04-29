@@ -10,7 +10,7 @@ import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
 import TransactionErrorScreen from "../screens/wallet/payment/TransactionErrorScreen";
 import TransactionSuccessScreen from "../screens/wallet/payment/TransactionSuccessScreen";
 import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
-import PaymentHistoryDetails from "../screens/wallet/PaymentHistoryDetails";
+import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetailsScreen";
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
@@ -73,7 +73,7 @@ const WalletNavigator = createStackNavigator(
       screen: PaymentsHistoryScreen
     },
     [ROUTES.PAYMENT_HISTORY_DETAIL_INFO]: {
-      screen: PaymentHistoryDetails
+      screen: PaymentHistoryDetailsScreen
     }
   },
   {

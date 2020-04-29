@@ -148,7 +148,7 @@ const maybeProperty = <T, K extends keyof T, R>(
 /**
  * Payment Details
  */
-class PaymentHistoryDetails extends React.Component<Props> {
+class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private goBack = () => this.props.navigation.goBack();
 
   private copyButton = (text: string) => (
@@ -327,7 +327,7 @@ class PaymentHistoryDetails extends React.Component<Props> {
                   </View>
                 </React.Fragment>
               )}
-            <View spacer={true} extralarge={true} />
+            <View spacer={true} />
             <View style={[styles.box, styles.boxHelp]}>
               <Text style={[styles.text1, styles.textHelp]}>
                 {I18n.t("payment.details.info.help")}
@@ -348,4 +348,4 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-export default connect(mapStateToProps)(PaymentHistoryDetails);
+export default connect(mapStateToProps)(PaymentHistoryDetailsScreen);

@@ -555,8 +555,8 @@ payment:
       buttons:
         copy: copia
         help: Contatta l'assistenza
-      title: Dettaglio Pagamento
-      enteCreditore: Ente Creditore
+      title: Dettaglio pagamento
+      enteCreditore: Ente creditore
       causaleVersamento: Causale
       dateAndTime: Data e ora
       paymentAmount: Importo pagamento

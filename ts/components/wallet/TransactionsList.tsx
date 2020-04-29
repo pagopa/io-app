@@ -177,7 +177,6 @@ export default class TransactionsList extends React.Component<Props, State> {
             <Text>{I18n.t("wallet.amount")}</Text>
           </View>
         </View>
-        <View spacer={true} />
         {this.props.helpMessage}
         <FlatList
           scrollEnabled={false}

@@ -21,7 +21,7 @@ import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
 import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErrorScreen";
 import TransactionSuccessScreen from "../../screens/wallet/payment/TransactionSuccessScreen";
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
-import PaymentHistoryDetails from "../../screens/wallet/PaymentHistoryDetails";
+import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import { InferNavigationParams } from "../../types/react";
@@ -212,7 +212,7 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
     params
   });
 export const navigateToPaymentHistoryDetail = (
-  params: InferNavigationParams<typeof PaymentHistoryDetails>
+  params: InferNavigationParams<typeof PaymentHistoryDetailsScreen>
 ) =>
   NavigationActions.navigate({
     routeName: ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
