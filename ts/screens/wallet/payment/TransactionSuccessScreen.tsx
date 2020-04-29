@@ -1,3 +1,4 @@
+import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";

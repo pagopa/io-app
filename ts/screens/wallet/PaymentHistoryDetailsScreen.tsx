@@ -4,13 +4,13 @@
  * add new ones
  */
 import { fromNullable, Option } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
+import { DetailEnum } from "../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   instabugLog,
@@ -22,6 +22,7 @@ import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import { getIuv } from "../../components/wallet/PaymentsHistoryList";
+import I18n from "../../i18n";
 import {
   isPaymentDoneSuccessfully,
   PaymentHistory
