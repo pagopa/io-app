@@ -10,7 +10,7 @@ import IconFont from "./ui/IconFont";
 type Props = {
   heading: React.ReactNode;
   icon?: ImageSourcePropType;
-  iconFont?: IconProps; // TODO: manage header image as icon https://www.pivotaltracker.com/story/show/172105485
+  iconFont?: IconProps;
   dark?: boolean;
 };
 
