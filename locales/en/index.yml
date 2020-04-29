@@ -513,6 +513,7 @@ datetimes:
   yesterday: yesterday
   todayAt: today, at
 payment:
+  errorDetails: Details
   currentPsp: Your current PSP is
   noPsp: You have yet to select a PSP
   changePsp: Change PSP

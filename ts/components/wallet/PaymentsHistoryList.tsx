@@ -6,6 +6,7 @@ import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { DetailEnum } from "../../../definitions/backend/PaymentProblemJson";
 import I18n from "../../i18n";
 import {
   isPaymentDoneSuccessfully,
@@ -42,18 +43,23 @@ const styles = StyleSheet.create({
 });
 
 export const getIuv = (data: RptId): string => {
-  switch (data.paymentNoticeNumber.auxDigit) {
-    case "0":
-    case "3":
-      return data.paymentNoticeNumber.iuv13;
-    case "1":
-      return data.paymentNoticeNumber.iuv17;
-    case "2":
-      return data.paymentNoticeNumber.iuv15;
-    default:
-      return "";
-  }
+  const iuv = () => {
+    switch (data.paymentNoticeNumber.auxDigit) {
+      case "0":
+      case "3":
+        return data.paymentNoticeNumber.iuv13;
+      case "1":
+        return data.paymentNoticeNumber.iuv17;
+      case "2":
+        return data.paymentNoticeNumber.iuv15;
+      default:
+        return "";
+    }
+  };
+  return `IUV ${iuv()}`;
 };
+
+const notAvailable = I18n.t("global.remoteStates.notAvailable");
 
 /**
  * Payments List component
@@ -74,12 +80,15 @@ export default class PaymentHistoryList extends React.Component<Props> {
         if (success) {
           return {
             text11: I18n.t("payment.details.state.successful"),
-            text3: fromNullable(paymentHistory.verified_data).fold("", vd =>
-              fromNullable(vd.causaleVersamento).fold("", cv => cv)
+            text3: fromNullable(paymentHistory.verified_data).fold(
+              notAvailable,
+              vd =>
+                fromNullable(vd.causaleVersamento).fold(notAvailable, cv => cv)
             ),
             color: customVariables.brandHighlight
           };
         }
+
         return {
           text11: I18n.t("payment.details.state.failed"),
           text3: getIuv(paymentHistory.data),
@@ -94,6 +103,7 @@ export default class PaymentHistoryList extends React.Component<Props> {
   ) => {
     const paymentCheckout = isPaymentDoneSuccessfully(info.item);
     const paymentInfo = this.getPaymentHistoryInfo(info.item, paymentCheckout);
+
     const datetime: string = `${formatDateAsLocal(
       new Date(info.item.started_at),
       true,

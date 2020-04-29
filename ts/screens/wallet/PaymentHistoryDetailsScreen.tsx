@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const notAvailable = "n/a";
+const notAvailable = I18n.t("global.remoteStates.notAvailable");
 
 const maybeProperty = <T, K extends keyof T, R>(
   item: T | undefined,
@@ -143,6 +143,32 @@ const maybeProperty = <T, K extends keyof T, R>(
   return fromNullable(item)
     .mapNullable(s => s[key])
     .map(value => extractor(value));
+};
+
+const renderErrorTransactionMessage = (
+  error?: keyof typeof DetailEnum
+): string | undefined => {
+  if (error === undefined) {
+    return undefined;
+  }
+  switch (error) {
+    case "PAYMENT_DUPLICATED":
+      return I18n.t("wallet.errors.PAYMENT_DUPLICATED");
+    case "INVALID_AMOUNT":
+      return I18n.t("wallet.errors.INVALID_AMOUNT");
+    case "PAYMENT_ONGOING":
+      return I18n.t("wallet.errors.PAYMENT_ONGOING");
+    case "PAYMENT_EXPIRED":
+      return I18n.t("wallet.errors.PAYMENT_EXPIRED");
+    case "PAYMENT_UNAVAILABLE":
+      return I18n.t("wallet.errors.PAYMENT_UNAVAILABLE");
+    case "PAYMENT_UNKNOWN":
+      return I18n.t("wallet.errors.PAYMENT_UNKNOWN");
+    case "DOMAIN_UNKNOWN":
+      return I18n.t("wallet.errors.DOMAIN_UNKNOWN");
+    default:
+      return undefined;
+  }
 };
 
 /**
@@ -185,6 +211,9 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   );
   public render(): React.ReactNode {
     const payment = this.props.navigation.getParam("payment");
+    const errorDetail = fromNullable(
+      renderErrorTransactionMessage(payment.failure)
+    );
     const paymentOutCome = isPaymentDoneSuccessfully(payment);
     const datetime: string = `${formatDateAsLocal(
       new Date(payment.started_at),
@@ -254,6 +283,14 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                     <Text style={styles.text1}>{I18n.t("payment.IUV")}</Text>
                     <Text style={styles.text2}>{iuv}</Text>
                   </View>
+                  {errorDetail.isSome() && (
+                    <View key={"error"} style={styles.box}>
+                      <Text style={styles.text1}>
+                        {I18n.t("payment.errorDetails")}
+                      </Text>
+                      <Text style={styles.text2}>{errorDetail.value}</Text>
+                    </View>
+                  )}
                 </React.Fragment>
               )}
 

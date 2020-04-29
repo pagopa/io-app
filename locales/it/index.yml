@@ -541,6 +541,7 @@ datetimes:
   yesterday: ieri
   todayAt: oggi, alle
 payment:
+  errorDetails: Dettagli
   currentPsp: Il PSP scelto è
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
