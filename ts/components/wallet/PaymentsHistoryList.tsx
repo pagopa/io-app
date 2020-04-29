@@ -6,7 +6,6 @@ import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import { DetailEnum } from "../../../definitions/backend/PaymentProblemJson";
 import I18n from "../../i18n";
 import {
   isPaymentDoneSuccessfully,
