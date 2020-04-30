@@ -3,7 +3,7 @@
  * a "pay notice" button and payment methods info/button to
  * add new ones
  */
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -33,6 +33,7 @@ import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
+import { maybeInnerProperty } from "../../utils/options";
 import { getPaymentHistoryDetails } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
@@ -136,16 +137,6 @@ const styles = StyleSheet.create({
 
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
 
-const maybeProperty = <T, K extends keyof T, R>(
-  item: T | undefined,
-  key: K,
-  extractor: (value: T[K]) => R
-): Option<R> => {
-  return fromNullable(item)
-    .mapNullable(s => s[key])
-    .map(value => extractor(value));
-};
-
 const renderErrorTransactionMessage = (
   error?: keyof typeof DetailEnum
 ): string | undefined => {
@@ -221,7 +212,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       true,
       true
     )} - ${new Date(payment.started_at).toLocaleTimeString()}`;
-    const causaleVersamento = maybeProperty<
+    const causaleVersamento = maybeInnerProperty<
       PaymentRequestsGetResponse,
       "causaleVersamento",
       string
@@ -229,23 +220,23 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       notAvailable,
       cv => cv
     );
-    const creditore = maybeProperty<Transaction, "merchant", string>(
+    const creditore = maybeInnerProperty<Transaction, "merchant", string>(
       payment.transaction,
       "merchant",
       m => m
     ).fold(notAvailable, c => c);
     const iuv = getIuv(payment.data);
-    const amount = maybeProperty<Transaction, "amount", number>(
+    const amount = maybeInnerProperty<Transaction, "amount", number>(
       payment.transaction,
       "amount",
       m => m.amount
     );
-    const grandTotal = maybeProperty<Transaction, "grandTotal", number>(
+    const grandTotal = maybeInnerProperty<Transaction, "grandTotal", number>(
       payment.transaction,
       "grandTotal",
       m => m.amount
     );
-    const idTransaction = maybeProperty<Transaction, "id", number>(
+    const idTransaction = maybeInnerProperty<Transaction, "id", number>(
       payment.transaction,
       "id",
       m => m
