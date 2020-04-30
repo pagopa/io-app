@@ -267,20 +267,33 @@ describe("servicesBadgeValueSelector", () => {
   it("should return the number of unread services", () => {
     expect(
       servicesBadgeValueSelector.resultFunc(
-        customServices.visible,
+        [...nationalServices],
+        [...localServices],
         customServices.readState,
         true
       )
-    ).toBe(5);
+    ).toBe(1);
   });
 
   it("should return 0 if the first load is not yet completed", () => {
     expect(
       servicesBadgeValueSelector.resultFunc(
-        customServices.visible,
+        [...nationalServices],
+        [...localServices],
         customServices.readState,
         false
       )
     ).toBe(0);
+  });
+
+  it("should return 1 even if we have few duplication in services array", () => {
+    expect(
+      servicesBadgeValueSelector.resultFunc(
+        [...nationalServices],
+        [...localServices, ...localServices, ...localServices],
+        customServices.readState,
+        true
+      )
+    ).toBe(1);
   });
 });
