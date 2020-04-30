@@ -39,6 +39,7 @@ type OwnProps = {
   sections: ReadonlyArray<SectionListData<pot.Pot<ServicePublic, Error>>>;
   profile: ProfileState;
   isRefreshing: boolean;
+  renderUnreadState: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
@@ -85,7 +86,10 @@ class ServiceList extends React.Component<Props> {
       item={itemInfo.item}
       profile={this.props.profile}
       onSelect={this.props.onSelect}
-      isRead={this.isRead(itemInfo.item, this.props.readServices)}
+      isRead={
+        !this.props.renderUnreadState ||
+        this.isRead(itemInfo.item, this.props.readServices)
+      }
       hideSeparator={true}
       onLongPress={this.handleLongPressItem}
       onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
