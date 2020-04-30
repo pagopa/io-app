@@ -28,6 +28,7 @@ type OwnProps = {
   onChooserAreasOfInterestPress?: () => void;
   selectedOrganizationsFiscalCodes?: Set<string>;
   isLocal?: boolean;
+  isAll: boolean;
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
   onItemSwitchValueChanged?: (
@@ -151,6 +152,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
       : this.emptyListComponent();
     return (
       <ServiceList
+        renderUnreadState={!this.props.isAll}
         animated={this.props.animated}
         sections={this.props.sections}
         profile={this.props.profile}

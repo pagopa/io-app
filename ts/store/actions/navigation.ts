@@ -21,6 +21,7 @@ import PickPspScreen from "../../screens/wallet/payment/PickPspScreen";
 import TransactionErrorScreen from "../../screens/wallet/payment/TransactionErrorScreen";
 import TransactionSuccessScreen from "../../screens/wallet/payment/TransactionSuccessScreen";
 import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSummaryScreen";
+import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
 import { InferNavigationParams } from "../../types/react";
@@ -210,7 +211,13 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
     routeName: ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
     params
   });
-
+export const navigateToPaymentHistoryDetail = (
+  params: InferNavigationParams<typeof PaymentHistoryDetailsScreen>
+) =>
+  NavigationActions.navigate({
+    routeName: ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
+    params
+  });
 export const navigateToWalletHome = () =>
   NavigationActions.navigate({
     routeName: ROUTES.WALLET_HOME
