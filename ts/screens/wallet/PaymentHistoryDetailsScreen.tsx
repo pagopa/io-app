@@ -5,7 +5,7 @@
  */
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
@@ -22,6 +22,7 @@ import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import { getIuv } from "../../components/wallet/PaymentsHistoryList";
+import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import {
   isPaymentDoneSuccessfully,
@@ -47,12 +48,6 @@ type OwnProps = NavigationInjectedProps<NavigationParams> &
 type Props = OwnProps;
 
 const styles = StyleSheet.create({
-  darkContent: {
-    backgroundColor: customVariables.brandDarkGray,
-    flex: 1,
-    paddingLeft: 10,
-    paddingRight: 10
-  },
   whiteContent: {
     backgroundColor: customVariables.colorWhite,
     borderTopLeftRadius: 20,
@@ -244,10 +239,11 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     return (
       <BaseScreenComponent
         goBack={this.goBack}
+        showInstabugChat={false}
         dark={true}
         headerTitle={I18n.t("payment.details.info.title")}
       >
-        <Content style={styles.darkContent} noPadded={true}>
+        <SlidedContentComponent>
           <View style={styles.whiteContent}>
             <View style={styles.box}>
               <Text>{I18n.t("payment.details.info.title")}</Text>
@@ -365,7 +361,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               <View style={styles.row}>{this.helpButton()}</View>
             </View>
           </View>
-        </Content>
+        </SlidedContentComponent>
       </BaseScreenComponent>
     );
   }

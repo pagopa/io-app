@@ -2,6 +2,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Platform } from "react-native";
+import I18n from "../../i18n";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { BadgeComponent } from "../screens/BadgeComponent";
@@ -94,7 +95,7 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
               numberOfLines={2}
               style={[styles.text3, styles.text3FontWeight]}
             >
-              {this.props.text3}
+              {`${I18n.t("payment.IUV")} ${this.props.text3}`}
             </Text>
           </View>
           <View style={styles.icon}>

@@ -56,6 +56,7 @@ type BaseHeaderProps =
   | "onShowHelp"
   | "body"
   | "isSearchAvailable"
+  | "showInstabugChat"
   | "searchType"
   | "customRightIcon"
   | "customGoBack";
@@ -171,7 +172,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       isSearchAvailable,
       searchType,
       customRightIcon,
-      customGoBack
+      customGoBack,
+      showInstabugChat
     } = this.props;
 
     const ch = contextualHelp
@@ -195,6 +197,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     return (
       <Container>
         <BaseHeader
+          showInstabugChat={showInstabugChat}
           primary={primary}
           dark={dark}
           goBack={goBack}

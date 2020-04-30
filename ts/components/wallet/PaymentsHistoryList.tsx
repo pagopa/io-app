@@ -42,20 +42,17 @@ const styles = StyleSheet.create({
 });
 
 export const getIuv = (data: RptId): string => {
-  const iuv = () => {
-    switch (data.paymentNoticeNumber.auxDigit) {
-      case "0":
-      case "3":
-        return data.paymentNoticeNumber.iuv13;
-      case "1":
-        return data.paymentNoticeNumber.iuv17;
-      case "2":
-        return data.paymentNoticeNumber.iuv15;
-      default:
-        return "";
-    }
-  };
-  return `IUV ${iuv()}`;
+  switch (data.paymentNoticeNumber.auxDigit) {
+    case "0":
+    case "3":
+      return data.paymentNoticeNumber.iuv13;
+    case "1":
+      return data.paymentNoticeNumber.iuv17;
+    case "2":
+      return data.paymentNoticeNumber.iuv15;
+    default:
+      return "";
+  }
 };
 
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
