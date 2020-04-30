@@ -3,7 +3,10 @@ import { call, put, select, take, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
 import { startApplicationInitialization } from "../store/actions/application";
-import { sessionInvalid } from "../store/actions/authentication";
+import {
+  checkCurrentSession,
+  sessionInvalid
+} from "../store/actions/authentication";
 import {
   identificationCancel,
   identificationPinReset,
@@ -56,7 +59,12 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
       return IdentificationResult.pinreset;
     }
 
+    /**
+     * When the user access with the Pin or Biometric recognition we check the current stored session
+     * to logout the user if it's no more valid.
+     */
     case getType(identificationSuccess): {
+      yield put(checkCurrentSession.request());
       return IdentificationResult.success;
     }
 

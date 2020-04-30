@@ -7,6 +7,7 @@ import {
   applicationChangeState,
   ApplicationState
 } from "../../store/actions/application";
+import { checkCurrentSession } from "../../store/actions/authentication";
 import { identificationRequest } from "../../store/actions/identification";
 import { navSelector } from "../../store/reducers/navigationHistory";
 import { getCurrentRouteName } from "../../utils/navigation";
@@ -64,6 +65,11 @@ export function* watchApplicationActivitySaga(): IterableIterator<Effect> {
       // Cancel the background timer if running
       yield cancel(identificationBackgroundTimer);
       identificationBackgroundTimer = undefined;
+      /**
+       * If app comes from background to active before the timeout limit it checks the session
+       * to logout the user if the session is no more valid.
+       */
+      yield put(checkCurrentSession.request());
     }
     yield fork(watchNotificationSaga, lastState, newApplicationState);
 
