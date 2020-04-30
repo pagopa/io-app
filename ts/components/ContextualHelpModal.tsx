@@ -16,6 +16,7 @@ import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FAQComponent from "./FAQComponent";
 import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
+import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
 import { openLink } from "./ui/Markdown/handlers/link";
@@ -132,6 +133,7 @@ export class ContextualHelpModal extends React.Component<Props, State> {
                   </Text>
                 </React.Fragment>
               )}
+              {this.props.contentLoaded && <EdgeBorderComponent />}
             </Content>
           )}
           <View spacer={true} extralarge={true} />
