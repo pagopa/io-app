@@ -1,7 +1,7 @@
-import I18n from "i18n-js";
 import { BugReporting } from "instabug-reactnative";
 import { H3, Text, View } from "native-base";
 import * as React from "react";
+import I18n from "../i18n";
 import ButtonWithImage from "./ButtonWithImage";
 
 type Props = Readonly<{
