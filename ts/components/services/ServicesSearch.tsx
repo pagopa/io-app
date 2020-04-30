@@ -149,6 +149,7 @@ class ServicesSearch extends React.PureComponent<Props, State> {
     return filteredServiceSectionsStates.length > 0 ? (
       <ServicesSectionsList
         {...this.props}
+        isAll={true}
         sections={filteredServiceSectionsStates}
         profile={this.props.profile}
         isRefreshing={isFiltering}

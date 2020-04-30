@@ -7,10 +7,13 @@
 
 // tslint:disable:no-invalid-this
 
+import { Millisecond } from "italia-ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
+
+export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
 // tslint:disable-next-line:no-object-mutation
 const customVariables = Object.assign(materialVariables, {
