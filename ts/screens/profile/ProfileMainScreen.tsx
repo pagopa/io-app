@@ -53,7 +53,6 @@ import customVariables from "../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { isDevEnv } from "../../utils/environment";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
-import { showToast } from "../../utils/showToast";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
