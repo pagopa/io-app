@@ -18,7 +18,7 @@ import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
-import { openLink, removeProtocol } from "./ui/Markdown/handlers/link";
+import { openLink } from "./ui/Markdown/handlers/link";
 
 type Props = Readonly<{
   title: string;
