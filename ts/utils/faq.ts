@@ -1,5 +1,4 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import { TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 
 /** map, for each FAQ category, the ids of the FAQs related to the category */
@@ -68,11 +67,9 @@ export const getFAQsFromCategories = (
   );
 
   return Array.from(faqIDs).map<FAQType>(id => {
-    const title = `faq.${id}.title` as TranslationKeys;
-    const content = `faq.${id}.content` as TranslationKeys;
     return {
-      title: I18n.t(title),
-      content: I18n.t(content)
+      title: I18n.t(`faq.${id}.title`, { defaultValue: "faq title n/a" }),
+      content: I18n.t(`faq.${id}.content`, { defaultValue: "faq content n/a" })
     };
   });
 };
