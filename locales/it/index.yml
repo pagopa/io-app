@@ -542,11 +542,33 @@ datetimes:
   yesterday: ieri
   todayAt: oggi, alle
 payment:
+  errorDetails: Dettagli
   currentPsp: Il PSP scelto è
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
   IUV: IUV
   recipientFiscalCode: Codice fiscale beneficiario
+  details:
+    state:
+      successful: Concluso
+      incomplete: Non terminato
+      failed: Fallito
+    info:
+      buttons:
+        copy: copia
+        help: Contatta l'assistenza
+      title: Dettaglio pagamento
+      enteCreditore: Ente creditore
+      causaleVersamento: Causale
+      dateAndTime: Data e ora
+      paymentAmount: Importo pagamento
+      transactionCosts: Costi di transazione
+      totalPaid: Totale pagato
+      transactionCode: Codice identificativo della transazione
+      help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
+    list:
+      title: Tentativi di pagamento
+      iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Pagamenti
   alert:
@@ -563,6 +585,10 @@ wallet:
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
   transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
+  transactionHelpMessage:
+    text1: Se hai avuto problemi durante un pagamento,
+    text2: consulta l'help
+    text3: in alto a destra su questa pagina
   transactionsLoadMore: Carica precedenti
   transacionsLoadingMore: Carico precedenti...
   pickPaymentMethod:
@@ -1202,3 +1228,6 @@ faq:
   56:
     title: "Come cancellare tutti i tuoi dati da IO?"
     content: !include faq/faq56.md
+  57:
+    title: "Hai avuto problemi durante un pagamento?"
+    content: !include faq/faq57.md
