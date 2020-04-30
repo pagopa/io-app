@@ -122,6 +122,7 @@ profile:
     forgetCurrentSession: Forget current session
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
+    developerModeOn: Developer mode enabled
     cache:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
@@ -1010,15 +1011,18 @@ btnUpdateApp: Update the IO app
 systemsOff:
   title: Unable to start IO
   closeApp: close the application and try again
+contextualHelp:
+  title: IO helps you
 instabug:
   contextualHelp:
     title1: Do you need help?
     buttonChat: Send us a message
-    descriptionChat: You can use our chat tool to send a message in case of urgent need for assistance. You will receive an answer directly on IO
+    description: "Remember that if you have any doubts about the content of a message, we suggest you to contact the public administration that sent it to you directly: you will find the contact details at the bottom of the message or in the relevant service card."
+    descriptionChat: "If you have found an error or something that is not working in the app, report a bug to the developers: they will take care of the problem as soon as possible and they will answer you directly via IO."
     buttonBug: Report a bug
     descriptionBug: You can report an error or something that does not work to our developers, they will take care of the problem as soon as possible.
     title2: Are you new to IO?
-    descriptionLink: Find out how it works and what are the special features of IO, by visiting the site
+    descriptionLink: Find out more about the IO project, its history and what news await you by visiting the website
 faq:
   1:
     title: "What is SPID?"
