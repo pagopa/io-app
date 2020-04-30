@@ -1023,15 +1023,18 @@ btnUpdateApp: Aggiorna l'app IO
 systemsOff:
   title: Impossibile usare IO
   closeApp: chiudi l'applicazione e riprova
+contextualHelp:
+  title: IO ti aiuto
 instabug:
   contextualHelp:
     title1: Hai bisogno di aiuto?
+    description: "Ricorda che se hai dubbi sul contenuto di un messaggio, ti consigliamo di contattare direttamente l'ente che te lo ha inviato: troverai i recapiti in fondo al messaggo o nella scheda del relativo servizio."
     buttonChat: Inviaci un messaggio
-    descriptionChat: Puoi usare il nostro strumento di chat per inviare un messaggio in caso di bisogno urgente di assistenza. Riceverai una risposta direttamente su IO
+    descriptionChat: "Se invece hai trovato un errore o qualcosa che non funziona nell’app, segnala un bug agli sviluppatori: si prenderanno carico del problema al più presto e ti risponderanno direttamente tramite IO."
     buttonBug: Segnala un bug
     descriptionBug: Puoi segnalare un errore o qualcosa che non funziona ai nostri sviluppatori, si prenderanno carico del problema al più presto.
     title2: Sei nuovo in IO?
-    descriptionLink: Scopri come funziona e quali sono le funzionalità speciali di IO, visitando il sito
+    descriptionLink: Scopri di più sul progetto IO, sulla sua storia e su quali novità ti attendono, visitando il sito
 faq:
   1:
     title: "Cos'è SPID?"
