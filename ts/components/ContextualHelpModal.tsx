@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import { BugReporting } from "instabug-reactnative";
 import { Body, Container, Content, H3, Right, Text, View } from "native-base";
 import * as React from "react";
@@ -10,6 +9,7 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 import IconFont from "../components/ui/IconFont";
+import I18n from "../i18n";
 import themeVariables from "../theme/variables";
 import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";

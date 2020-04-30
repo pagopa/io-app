@@ -5,7 +5,6 @@ import {
   Option,
   some
 } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import { BugReporting, Replies } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";
@@ -18,6 +17,7 @@ import {
   openInstabugBugReport,
   openInstabugChat
 } from "../../boot/configureInstabug";
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";

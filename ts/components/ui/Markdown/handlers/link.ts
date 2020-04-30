@@ -1,5 +1,5 @@
-import I18n from "i18n-js";
 import { Linking } from "react-native";
+import I18n from "../../../../i18n";
 import { Dispatch } from "../../../../store/actions/types";
 import { showToast } from "../../../../utils/showToast";
 import { handleInternalLink, IO_INTERNAL_LINK_PREFIX } from "./internalLink";

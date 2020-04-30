@@ -1,12 +1,12 @@
 /**
  * A component to render a list of services organized in sections, one for each organization.
  */
-import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import React from "react";
 import { Image, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import I18n from "../../i18n";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";

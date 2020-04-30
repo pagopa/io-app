@@ -7,7 +7,6 @@
  * The fac-simile back side can be rendered for both full and landscape modes,
  * and it includes the barcode of the fiscal code with the code 128 format
  */
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -22,6 +21,7 @@ import Barcode from "react-native-barcode-builder";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
+import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { extractFiscalCodeData } from "../utils/profile";
 
