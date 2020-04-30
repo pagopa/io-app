@@ -122,6 +122,7 @@ profile:
     forgetCurrentSession: Forget current session
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
+    developerModeOn: Developer mode enabled
     cache:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
