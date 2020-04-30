@@ -339,22 +339,40 @@ export const notSelectedServicesSectionsSelector = createSelector(
     organizationsOfInterestSelector
   ],
   (services, organizations, servicesByScope, selectedOrganizations) => {
-    // tslint:disable-next-line:no-let
-    let notSelectedOrganizations;
-    if (organizations !== undefined) {
-      notSelectedOrganizations = Object.keys(organizations).filter(
+    const notSelectedOrganizations = fromNullable(organizations).map(orgs => {
+      // add to organizations all cf of other organizations having the same organization name
+      const organizationsWithSameNames = fromNullable(selectedOrganizations)
+        .map(so =>
+          so.reduce((acc, curr) => {
+            const orgName = fromNullable(orgs[curr]);
+            return orgName.fold(acc, on => {
+              if (organizations !== undefined) {
+                const orgsFiscalCodes = Object.keys(organizations).filter(cf =>
+                  fromNullable(organizations[cf]).fold(
+                    false,
+                    name => on === name // select all services that belong to organizations having organizationName
+                  )
+                );
+                orgsFiscalCodes.forEach(ofc => acc.add(ofc));
+              }
+              return acc;
+            });
+          }, new Set<string>())
+        )
+        .fold([], s => Array.from(s));
+      return Object.keys(orgs).filter(
         fiscalCode =>
-          selectedOrganizations &&
-          selectedOrganizations.indexOf(fiscalCode) === -1
+          organizationsWithSameNames &&
+          organizationsWithSameNames.indexOf(fiscalCode) === -1
       );
-    }
+    });
 
     return getServices(
       services,
       organizations,
       servicesByScope,
       undefined,
-      notSelectedOrganizations
+      notSelectedOrganizations.toUndefined()
     );
   }
 );
