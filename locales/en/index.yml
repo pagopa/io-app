@@ -123,6 +123,7 @@ profile:
     forgetCurrentSession: Forget current session
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
+    developerModeOn: Developer mode enabled
     cache:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
@@ -136,22 +137,22 @@ profile:
     privacy:
       title: Information and conditions of use
       description: Export data, delete account
-      subtitle: Here you find information related to your personal data.  
+      subtitle: Here you find information related to your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
         description: Remove all data associated to your account from your phone and
           our systems
-        alert: 
+        alert:
           requestTitle: Are you sure you want to delete your account?
           requestSubtitle: All your messages and personal settings will be lost.
           oldRequest: We are already proceeding to delete your account
           confirmSubtitle: After processing, you will receive an email confirming the deletion.
-        error: An error occurred while submit your deletion request, please retry! 
+        error: An error occurred while submit your deletion request, please retry!
       exportData:
         title: Export your data
         description: Send to your email all your account’s data in an open format
-        alert: 
+        alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
           confirmSubtitle: After processing, you will receive an email containing all your data.
@@ -514,18 +515,40 @@ datetimes:
   yesterday: yesterday
   todayAt: today, at
 payment:
+  errorDetails: Details
   currentPsp: Your current PSP is
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
   IUV: IUV
   recipientFiscalCode: Recipient fiscal code
+  details:
+    state:
+      successful: Successful
+      incomplete: Not finished
+      failed: Failed
+    info:
+      buttons:
+        copy: copy
+        help: Contact support
+      title: Payment Detail
+      enteCreditore: Creditor
+      causaleVersamento: Causal
+      dateAndTime: Date and time
+      paymentAmount: Payment amount
+      transactionCosts: Transaction costs
+      totalPaid: Total paid
+      transactionCode: Transaction identification code
+      help: If you have encountered a problem with this payment, write to us for more information and details
+    list:
+      title: Payment attempts
+      iuv: IUV payment {{iuv}}
 wallet:
   wallet: Payments
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
-    btnUpdateApp: Update the IO app 
+    btnUpdateApp: Update the IO app
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
@@ -535,6 +558,10 @@ wallet:
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
+  transactionHelpMessage:
+    text1: If you have had problems during a payment,
+    text2: consult the help
+    text3: at the top right of this page
   transactionsLoadMore: Load previous
   transacionsLoadingMore: Loading previous...
   pickPaymentMethod:
@@ -697,11 +724,11 @@ wallet:
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
-    satispay: 
+    satispay:
       name: Satispay
-    postepay: 
+    postepay:
       name: Postepay
-    paypal: 
+    paypal:
       name: Paypal
     notImplemented: Coming soon
   addCardTitle: Card details
@@ -897,7 +924,7 @@ biometric_recognition:
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
   needed_to_disable: Recognition required to disable
-send_email_messages: 
+send_email_messages:
   title: Forward messages by email
   subtitle: Do you want IO to forward messages contents by email to
   options:
@@ -986,21 +1013,24 @@ openMaps:
 genericError: An error occurred
 titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
-messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need 
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need
   to update it to the latest version."
 btnUpdateApp: Update the IO app
 systemsOff:
   title: Unable to start IO
   closeApp: close the application and try again
+contextualHelp:
+  title: IO helps you
 instabug:
   contextualHelp:
     title1: Do you need help?
     buttonChat: Send us a message
-    descriptionChat: You can use our chat tool to send a message in case of urgent need for assistance. You will receive an answer directly on IO
+    description: "Remember that if you have any doubts about the content of a message, we suggest you to contact the public administration that sent it to you directly: you will find the contact details at the bottom of the message or in the relevant service card."
+    descriptionChat: "If you have found an error or something that is not working in the app, report a bug to the developers: they will take care of the problem as soon as possible and they will answer you directly via IO."
     buttonBug: Report a bug
     descriptionBug: You can report an error or something that does not work to our developers, they will take care of the problem as soon as possible.
     title2: Are you new to IO?
-    descriptionLink: Find out how it works and what are the special features of IO, by visiting the site
+    descriptionLink: Find out more about the IO project, its history and what news await you by visiting the website
 faq:
   1:
     title: "What is SPID?"
@@ -1011,7 +1041,7 @@ faq:
   3:
     title: "Have you lost your SPID credentials?"
     content: !include faq/faq3.md
-  4: 
+  4:
     title: "What is CIE?"
     content: !include faq/faq4.md
   5:
@@ -1056,7 +1086,7 @@ faq:
   19:
     title: "Is biometric recognition safe?"
     content: !include faq/faq19.md
-  20: 
+  20:
     title: "When will you be asked for biometric recognition?"
     content: !include faq/faq20.md
   21:
@@ -1110,7 +1140,7 @@ faq:
   37:
     title: "What payment methods can you add?"
     content: !include faq/faq37.md
-  38: 
+  38:
     title: "Are transaction summary and payment receipt the same thing?"
     content: !include faq/faq38.md
   39:
@@ -1167,3 +1197,6 @@ faq:
   56:
     title: "Come cancellare tutti i tuoi dati da IO?"
     content: !include faq/faq56.md
+  57:
+    title: "Did you have problems during a payment?"
+    content: !include faq/faq57.md

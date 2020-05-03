@@ -5,7 +5,6 @@ import {
   Option,
   some
 } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import { BugReporting, Replies } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";
@@ -18,12 +17,14 @@ import {
   openInstabugBugReport,
   openInstabugChat
 } from "../../boot/configureInstabug";
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { ContextualHelpModal } from "../ContextualHelpModal";
 import { SearchType } from "../search/SearchButton";
 import Markdown from "../ui/Markdown";
+import { isIoInternalLink } from "../ui/Markdown/handlers/link";
 import { BaseHeader } from "./BaseHeader";
 
 export interface ContextualHelpProps {
@@ -55,6 +56,7 @@ type BaseHeaderProps =
   | "onShowHelp"
   | "body"
   | "isSearchAvailable"
+  | "showInstabugChat"
   | "searchType"
   | "customRightIcon"
   | "customGoBack";
@@ -151,6 +153,12 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     this.setState({ isHelpVisible: false });
   };
 
+  private handleOnLinkClicked = (url: string) => {
+    if (isIoInternalLink(url)) {
+      this.hideHelp();
+    }
+  };
+
   public render() {
     const {
       dark,
@@ -164,7 +172,8 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       isSearchAvailable,
       searchType,
       customRightIcon,
-      customGoBack
+      customGoBack,
+      showInstabugChat
     } = this.props;
 
     const ch = contextualHelp
@@ -173,6 +182,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         ? {
             body: () => (
               <Markdown
+                onLinkClicked={this.handleOnLinkClicked}
                 onLoadEnd={() => {
                   this.setState({ markdownContentLoaded: some(true) });
                 }}
@@ -187,6 +197,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     return (
       <Container>
         <BaseHeader
+          showInstabugChat={showInstabugChat}
           primary={primary}
           dark={dark}
           goBack={goBack}
@@ -205,6 +216,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         {ch && (
           <ContextualHelpModal
             title={ch.title}
+            onLinkClicked={this.handleOnLinkClicked}
             body={ch.body}
             isVisible={this.state.isHelpVisible}
             modalAnimation={this.state.contextualHelpModalAnimation}

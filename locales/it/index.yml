@@ -123,6 +123,7 @@ profile:
     forgetCurrentSession: Dimentica sessione corrente
     contextualHelpTitle: Cosa puoi fare nel tuo Profilo
     contextualHelpContent: !include profile/profile_account_main.md
+    developerModeOn: Modalità sviluppatore attivata
     cache:
       alert: Sei sicuro di voler eliminare la cache?
       clear: Elimina cache
@@ -542,11 +543,33 @@ datetimes:
   yesterday: ieri
   todayAt: oggi, alle
 payment:
+  errorDetails: Dettagli
   currentPsp: Il PSP scelto è
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
   IUV: IUV
   recipientFiscalCode: Codice fiscale beneficiario
+  details:
+    state:
+      successful: Concluso
+      incomplete: Non terminato
+      failed: Fallito
+    info:
+      buttons:
+        copy: copia
+        help: Contatta l'assistenza
+      title: Dettaglio pagamento
+      enteCreditore: Ente creditore
+      causaleVersamento: Causale
+      dateAndTime: Data e ora
+      paymentAmount: Importo pagamento
+      transactionCosts: Costi di transazione
+      totalPaid: Totale pagato
+      transactionCode: Codice identificativo della transazione
+      help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
+    list:
+      title: Tentativi di pagamento
+      iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Pagamenti
   alert:
@@ -563,6 +586,10 @@ wallet:
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
   transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
+  transactionHelpMessage:
+    text1: Se hai avuto problemi durante un pagamento,
+    text2: consulta l'help
+    text3: in alto a destra su questa pagina
   transactionsLoadMore: Carica precedenti
   transacionsLoadingMore: Carico precedenti...
   pickPaymentMethod:
@@ -1030,15 +1057,18 @@ btnUpdateApp: Aggiorna l'app IO
 systemsOff:
   title: Impossibile usare IO
   closeApp: chiudi l'applicazione e riprova
+contextualHelp:
+  title: IO ti aiuto
 instabug:
   contextualHelp:
     title1: Hai bisogno di aiuto?
+    description: "Ricorda che se hai dubbi sul contenuto di un messaggio, ti consigliamo di contattare direttamente l'ente che te lo ha inviato: troverai i recapiti in fondo al messaggo o nella scheda del relativo servizio."
     buttonChat: Inviaci un messaggio
-    descriptionChat: Puoi usare il nostro strumento di chat per inviare un messaggio in caso di bisogno urgente di assistenza. Riceverai una risposta direttamente su IO
+    descriptionChat: "Se invece hai trovato un errore o qualcosa che non funziona nell’app, segnala un bug agli sviluppatori: si prenderanno carico del problema al più presto e ti risponderanno direttamente tramite IO."
     buttonBug: Segnala un bug
     descriptionBug: Puoi segnalare un errore o qualcosa che non funziona ai nostri sviluppatori, si prenderanno carico del problema al più presto.
     title2: Sei nuovo in IO?
-    descriptionLink: Scopri come funziona e quali sono le funzionalità speciali di IO, visitando il sito
+    descriptionLink: Scopri di più sul progetto IO, sulla sua storia e su quali novità ti attendono, visitando il sito
 faq:
   1:
     title: "Cos'è SPID?"
@@ -1206,3 +1236,6 @@ faq:
   56:
     title: "Come cancellare tutti i tuoi dati da IO?"
     content: !include faq/faq56.md
+  57:
+    title: "Hai avuto problemi durante un pagamento?"
+    content: !include faq/faq57.md
