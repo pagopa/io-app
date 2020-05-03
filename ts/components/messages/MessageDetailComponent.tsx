@@ -1,9 +1,11 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { H1, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 
+import { fromNullable } from "fp-ts/lib/Option";
+import { SvgXml } from "react-native-svg";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -120,7 +122,8 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
             }`
           ]
         : undefined;
-
+    const maybeMedicalData = fromNullable(message.content.prescription_data);
+    const attachments = fromNullable(message.content.attachments);
     return (
       <View style={styles.mainWrapper}>
         <View style={styles.headerContainer}>
@@ -202,6 +205,54 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
         <MessageMarkdown webViewStyle={styles.webview}>
           {message.content.markdown}
         </MessageMarkdown>
+        {maybeMedicalData.isSome() && (
+          <React.Fragment>
+            <Text>{maybeMedicalData.value.nre}</Text>
+            <Text>
+              {fromNullable(maybeMedicalData.value.iup).fold("n/a", s => s)}
+            </Text>
+            <Text>
+              {fromNullable(maybeMedicalData.value.prescriber_fiscal_code).fold(
+                "n/a",
+                s => s as string
+              )}
+            </Text>
+          </React.Fragment>
+        )}
+        {attachments.isSome() &&
+          attachments.value.map((att, idx) => {
+            // we should show the SvgXml and share the png version
+            // these two image are the same. They differ only for the mime_type
+            const image =
+              att.mime_type === "image/svg+xml" ? (
+                <SvgXml
+                  key={`svg_${idx}`}
+                  xml={Buffer.from(att.base64_content, "base64").toString(
+                    "ascii"
+                  )}
+                  width="100%"
+                />
+              ) : (
+                <Image
+                  key={`image_${idx}`}
+                  style={{
+                    width: 300,
+                    height: 100,
+                    resizeMode: "contain"
+                  }}
+                  source={{
+                    uri: `data:image/png;base64,${att.base64_content}`
+                  }}
+                />
+              );
+            return (
+              <View key={`frag_${idx}`} style={{ padding: 10 }}>
+                <Text key={`text_${idx}`}>{att.name}</Text>
+                {image}
+                <View spacer={true} />
+              </View>
+            );
+          })}
         <EdgeBorderComponent />
       </View>
     );
