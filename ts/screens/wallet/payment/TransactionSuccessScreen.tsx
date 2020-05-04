@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -8,6 +7,7 @@ import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import IconFont from "../../../components/ui/IconFont";
+import I18n from "../../../i18n";
 import {
   navigateToTransactionDetailsScreen,
   navigateToWalletHome
@@ -53,7 +53,7 @@ class TransactionSuccessScreen extends React.PureComponent<Props> {
           <BlockButtons
             type={"SingleButton"}
             leftButton={{
-              title: I18n.t("wallet.receipt2"),
+              title: I18n.t("wallet.receipt"),
               primary: true,
               onPress: () => this.props.navigateToReceipt(this.transaction)
             }}

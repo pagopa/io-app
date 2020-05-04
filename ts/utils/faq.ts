@@ -1,5 +1,5 @@
 import { fromNullable } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
+import I18n from "../i18n";
 
 /** map, for each FAQ category, the ids of the FAQs related to the category */
 export const FAQs: Record<
@@ -18,7 +18,7 @@ export const FAQs: Record<
   unlock: [17, 18],
   messages: [23, 24, 25, 26, 27],
   messages_detail: [27, 28, 29, 30, 31, 32],
-  wallet: [33, 34, 35, 36, 37],
+  wallet: [57, 33, 34, 35, 36, 37],
   wallet_insert_notice_data: [33, 35],
   wallet_methods: [37, 41, 42],
   wallet_transaction: [38, 39, 40],
@@ -68,8 +68,8 @@ export const getFAQsFromCategories = (
 
   return Array.from(faqIDs).map<FAQType>(id => {
     return {
-      title: I18n.t(`faq.${id}.title`),
-      content: I18n.t(`faq.${id}.content`)
+      title: I18n.t(`faq.${id}.title`, { defaultValue: "faq title n/a" }),
+      content: I18n.t(`faq.${id}.content`, { defaultValue: "faq content n/a" })
     };
   });
 };
