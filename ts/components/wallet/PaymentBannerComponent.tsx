@@ -53,7 +53,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
           style={[styles.smallText, styles.flex]}
           numberOfLines={1}
         >
-          {`${props.paymentReason} asdasdasd asd asdasdasdasd asd asd`}
+          {`${props.paymentReason}`}
         </Text>
         <Text white={true} bold={true} style={styles.smallText}>
           {formatNumberCentsToAmount(props.currentAmount, true)}
