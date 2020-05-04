@@ -390,16 +390,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     onIdentificationFailureHandler: () => void
   ) => {
     fingerprintAuth()
-      .then(res => {
-        if (res === true) {
-          this.setState({
-            identificationByBiometryState: "unstarted"
-          });
-          onIdentificationSuccessHandler();
-          unmountBiometricAuth();
-        }
+      .then(() => {
+        unmountBiometricAuth();
+        this.setState({
+          identificationByBiometryState: "unstarted"
+        });
+        onIdentificationSuccessHandler();
       })
-      .catch(error => {
+      .catch((error: FingerprintError) => {
+        unmountBiometricAuth();
         this.biometricError(error, onIdentificationFailureHandler);
       });
   };

@@ -50,9 +50,7 @@ export const unmountBiometricAuth = (): void => FingerprintScanner.release();
  * Start the biometric authentication, and return a boolean Promise with value true in case of success
  * and a FingerprintScannerError in case of failure
  */
-export const fingerprintAuth = (): Promise<
-  boolean | FingerprintScannerError
-> => {
+export const fingerprintAuth = (): Promise<void> => {
   const authenticateAndroid: AuthenticateAndroid =
     Platform.Version < 23
       ? {
@@ -69,15 +67,7 @@ export const fingerprintAuth = (): Promise<
   };
   return FingerprintScanner.authenticate(
     Platform.OS === "ios" ? authenticateIOS : authenticateAndroid
-  )
-    .then(() => {
-      FingerprintScanner.release();
-      return true;
-    })
-    .catch((error: FingerprintScannerError) => {
-      FingerprintScanner.release();
-      return error;
-    });
+  );
 };
 
 export type FingerprintError = FingerprintScannerError;

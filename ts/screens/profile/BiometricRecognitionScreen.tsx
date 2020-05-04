@@ -15,6 +15,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { openAppSecuritySettings } from "../../utils/appSettings";
 import {
   fingerprintAuth,
+  FingerprintError,
   getFingerprintSettings,
   unmountBiometricAuth
 } from "../../utils/fingerprint";
@@ -79,12 +80,12 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
 
   private setBiometricPreference = (biometricPreference: boolean): void => {
     fingerprintAuth()
-      .then(res => {
-        if (res === true) {
-          this.props.setFingerprintPreference(biometricPreference);
-        }
+      .then(() => {
+        unmountBiometricAuth();
+        this.props.setFingerprintPreference(biometricPreference);
       })
-      .catch(_ => {
+      .catch((_: FingerprintError) => {
+        unmountBiometricAuth();
         // this toast will be show either if recognition fails (mismatch or user aborts)
         // or if meanwhile user disables biometric recognition in OS settings
         showToast(I18n.t("biometric_recognition.needed_to_disable"), "danger");
