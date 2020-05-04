@@ -263,9 +263,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     if (this.idResetTap) {
       clearInterval(this.idResetTap);
     }
+    // do nothing
+    if (this.props.isDebugModeEnabled || isDevEnv) {
+      return;
+    }
     if (this.state.tapsOnAppVersion === consecutiveTapRequired) {
       this.props.setDebugModeEnabled(true);
       this.setState({ tapsOnAppVersion: 0 });
+      Toast.show({ text: I18n.t("profile.main.developerModeOn") });
     } else {
       // tslint:disable-next-line: no-object-mutation
       this.idResetTap = setInterval(

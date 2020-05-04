@@ -1,7 +1,7 @@
-import I18n from "i18n-js";
 import { BugReporting } from "instabug-reactnative";
 import { H3, Text, View } from "native-base";
 import * as React from "react";
+import I18n from "../i18n";
 import ButtonWithImage from "./ButtonWithImage";
 
 type Props = Readonly<{
@@ -18,20 +18,10 @@ class InstabugAssistanceComponent extends React.PureComponent<Props> {
       <React.Fragment>
         <H3>{I18n.t("instabug.contextualHelp.title1")}</H3>
         <View spacer={true} />
-        <View spacer={true} xsmall={true} />
-        <ButtonWithImage
-          icon={"io-send-message"}
-          onPress={() =>
-            this.props.requestAssistance(BugReporting.reportType.question)
-          }
-          text={I18n.t("instabug.contextualHelp.buttonChat")}
-          disabled={false}
-          light={true}
-        />
+        <Text>{I18n.t("instabug.contextualHelp.description")}</Text>
         <View spacer={true} />
-        <Text>{I18n.t("instabug.contextualHelp.descriptionChat")}</Text>
+        <Text>{I18n.t("instabug.contextualHelp.descriptionBug")}</Text>
         <View spacer={true} />
-
         <ButtonWithImage
           icon={"io-bug"}
           onPress={() =>
@@ -42,7 +32,17 @@ class InstabugAssistanceComponent extends React.PureComponent<Props> {
           light={true}
         />
         <View spacer={true} />
-        <Text>{I18n.t("instabug.contextualHelp.descriptionBug")}</Text>
+        <Text>{I18n.t("instabug.contextualHelp.descriptionChat")}</Text>
+        <View spacer={true} />
+        <ButtonWithImage
+          icon={"io-send-message"}
+          onPress={() =>
+            this.props.requestAssistance(BugReporting.reportType.question)
+          }
+          text={I18n.t("instabug.contextualHelp.buttonChat")}
+          disabled={false}
+          light={true}
+        />
       </React.Fragment>
     );
   }

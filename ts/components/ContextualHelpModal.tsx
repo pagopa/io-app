@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import { BugReporting } from "instabug-reactnative";
 import { Body, Container, Content, H3, Right, Text, View } from "native-base";
 import * as React from "react";
@@ -10,21 +9,24 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 import IconFont from "../components/ui/IconFont";
+import I18n from "../i18n";
 import themeVariables from "../theme/variables";
 import { FAQsCategoriesType } from "../utils/faq";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FAQComponent from "./FAQComponent";
 import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
+import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
 import AppHeader from "./ui/AppHeader";
-import { openLink, removeProtocol } from "./ui/Markdown/handlers/link";
+import { openLink } from "./ui/Markdown/handlers/link";
 
 type Props = Readonly<{
   title: string;
   body: () => React.ReactNode;
   contentLoaded: boolean;
   isVisible: boolean;
+  onLinkClicked?: (url: string) => void;
   modalAnimation?: ModalBaseProps["animationType"];
   close: () => void;
   onRequestAssistance: (type: BugReporting.reportType) => void;
@@ -79,8 +81,12 @@ export class ContextualHelpModal extends React.Component<Props, State> {
         onRequestClose={onClose}
       >
         <Container>
-          <AppHeader noLeft={true}>
-            <Body />
+          <AppHeader noLeft={false}>
+            <Body>
+              <Text white={false} numberOfLines={1}>
+                {I18n.t("contextualHelp.title")}
+              </Text>
+            </Body>
             <Right>
               <ButtonDefaultOpacity onPress={onClose} transparent={true}>
                 <IconFont name="io-close" />
@@ -99,10 +105,14 @@ export class ContextualHelpModal extends React.Component<Props, State> {
               noPadded={true}
             >
               <H3>{this.props.title}</H3>
+              <View spacer={true} />
               {this.state.content}
               {this.props.faqCategories &&
                 this.props.contentLoaded && (
-                  <FAQComponent faqCategories={this.props.faqCategories} />
+                  <FAQComponent
+                    onLinkClicked={this.props.onLinkClicked}
+                    faqCategories={this.props.faqCategories}
+                  />
                 )}
               {this.props.contentLoaded && (
                 <React.Fragment>
@@ -110,22 +120,20 @@ export class ContextualHelpModal extends React.Component<Props, State> {
                   <InstabugAssistanceComponent
                     requestAssistance={this.props.onRequestAssistance}
                   />
-                  <View spacer={true} extralarge={true} />
+                  <View spacer={true} />
                   <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
                   <View spacer={true} />
-                  <View spacer={true} xsmall={true} />
                   <Text>
                     {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
                     <TouchableWithoutFeedback
                       onPress={() => openLink(I18n.t("global.ioWebSite"))}
                     >
-                      <Text link={true}>
-                        {removeProtocol(I18n.t("global.ioWebSite"))}
-                      </Text>
+                      <Text link={true}>{I18n.t("global.ioWebSite")}</Text>
                     </TouchableWithoutFeedback>
                   </Text>
                 </React.Fragment>
               )}
+              {this.props.contentLoaded && <EdgeBorderComponent />}
             </Content>
           )}
           <View spacer={true} extralarge={true} />

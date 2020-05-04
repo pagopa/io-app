@@ -1,4 +1,5 @@
 import { range } from "fp-ts/lib/Array";
+import { none, some } from "fp-ts/lib/Option";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -51,7 +52,7 @@ describe("payments history", () => {
   });
 
   it("should not recognize a payment as failed or successfully", () => {
-    expect(isPaymentDoneSuccessfully(state[0])).toBeUndefined();
+    expect(isPaymentDoneSuccessfully(state[0])).toEqual(none);
   });
 
   it("should not add a payment in the history because it is the same", () => {
@@ -66,7 +67,7 @@ describe("payments history", () => {
   });
 
   it("should not recognize a payment as failed or successfully", () => {
-    expect(isPaymentDoneSuccessfully(state[0])).toBeUndefined();
+    expect(isPaymentDoneSuccessfully(state[0])).toEqual(none);
   });
 
   it("should update the existing payment history with the payment id", () => {
@@ -133,7 +134,7 @@ describe("payments history", () => {
   });
 
   it("should recognize a sucessfully payment", () => {
-    expect(isPaymentDoneSuccessfully(state[0])).toBeTruthy();
+    expect(isPaymentDoneSuccessfully(state[0])).toEqual(some(true));
   });
 
   it("should update the existing payment history with failure value", () => {
@@ -143,7 +144,7 @@ describe("payments history", () => {
   });
 
   it("should recognize a failed payment", () => {
-    expect(isPaymentDoneSuccessfully(state[0])).toBeFalsy();
+    expect(isPaymentDoneSuccessfully(state[0])).toEqual(some(false));
   });
 
   it("should add a payment in the history", () => {
