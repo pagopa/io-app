@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 14
+  },
+  flex: {
+    flex: 1
   }
 });
 
@@ -44,8 +47,13 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Text white={true} bold={true} style={styles.smallText}>
-          {props.paymentReason}
+        <Text
+          white={true}
+          bold={true}
+          style={[styles.smallText, styles.flex]}
+          numberOfLines={1}
+        >
+          {`${props.paymentReason} asdasdasd asd asdasdasdasd asd asd`}
         </Text>
         <Text white={true} bold={true} style={styles.smallText}>
           {formatNumberCentsToAmount(props.currentAmount, true)}
