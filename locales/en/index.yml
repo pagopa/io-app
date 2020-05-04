@@ -539,6 +539,9 @@ payment:
       transactionCode: Transaction identification code
       help: If you have encountered a problem with this payment, write to us for more information and details
     list:
+      empty:
+          title: No payment attempts
+          description: IO didn't store any payment attempts. Here you can find last payment attempts
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
