@@ -1,3 +1,4 @@
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
@@ -26,7 +27,7 @@ import { authenticateConfig } from "./utils/biometric";
 
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
@@ -48,7 +49,7 @@ type State = {
   biometryType?: BiometryPrintableSimpleType;
   canInsertPinBiometry: boolean;
   canInsertPinTooManyAttempts: boolean;
-  countdown?: number;
+  countdown: Option<Millisecond>;
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -127,6 +128,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       identificationByPinState: "unstarted",
       identificationByBiometryState: "unstarted",
       canInsertPinBiometry: false,
+      countdown: none,
       canInsertPinTooManyAttempts:
         this.props.identificationFailState === undefined
     };
@@ -140,7 +142,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     fromNullable(identificationFailState).map(errorData => {
       this.setState({
         canInsertPinTooManyAttempts: errorData.nextLegalAttempt <= now,
-        countdown: errorData.nextLegalAttempt.getTime() - now.getTime()
+        countdown: some((errorData.nextLegalAttempt.getTime() -
+          now.getTime()) as Millisecond)
       });
     });
   };
