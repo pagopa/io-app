@@ -176,7 +176,12 @@ export function* watchContentMunicipalityLoadSaga(): Iterator<Effect> {
         throw response.value;
       }
     } catch (e) {
-      yield put(contentMunicipalityLoad.failure(e));
+      yield put(
+        contentMunicipalityLoad.failure({
+          error: e,
+          codiceCatastale: codiceCatastale as string
+        })
+      );
     }
   });
 }
