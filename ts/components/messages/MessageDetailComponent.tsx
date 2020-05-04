@@ -12,7 +12,6 @@ import variables from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import FooterWithButtons from "../ui/FooterWithButtons";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
@@ -126,73 +125,63 @@ export default class MessageDetailComponent extends React.PureComponent<
         : undefined;
 
     return (
-      <React.Fragment>
-        <Content noPadded={true}>
-          <View style={styles.headerContainer}>
-            {/** TODO: update header */}
-            {/* Service */}
-            {service && (
-              <Grid style={styles.serviceContainer}>
-                <Col>
-                  <H4>{service.organization_name}</H4>
+      <Content noPadded={true}>
+        <View style={styles.headerContainer}>
+          {/** TODO: update header */}
+          {/* Service */}
+          {service && (
+            <Grid style={styles.serviceContainer}>
+              <Col>
+                <H4>{service.organization_name}</H4>
+                <TouchableDefaultOpacity onPress={onServiceLinkPress}>
+                  <H6>{service.service_name}</H6>
+                </TouchableDefaultOpacity>
+              </Col>
+              {service.service_id && (
+                <Col style={styles.serviceCol}>
                   <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                    <H6>{service.service_name}</H6>
+                    <MultiImage
+                      style={styles.serviceMultiImage}
+                      source={logosForService(service)}
+                    />
                   </TouchableDefaultOpacity>
                 </Col>
-                {service.service_id && (
-                  <Col style={styles.serviceCol}>
-                    <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                      <MultiImage
-                        style={styles.serviceMultiImage}
-                        source={logosForService(service)}
-                      />
-                    </TouchableDefaultOpacity>
-                  </Col>
-                )}
-              </Grid>
-            )}
+              )}
+            </Grid>
+          )}
 
-            {/* Subject */}
-            <View style={styles.subjectContainer}>
-              <H1>{message.content.subject}</H1>
-            </View>
+          {/* Subject */}
+          <View style={styles.subjectContainer}>
+            <H1>{message.content.subject}</H1>
           </View>
+        </View>
 
-          {this.state.isContentLoadCompleted &&
-            messageNeedsCTABar(message) && (
-              <MessageCTABar
-                message={message}
-                service={service}
-                payment={payment}
-              />
-            )}
-
-          <MessageMarkdown
-            webViewStyle={styles.webview}
-            onLoadEnd={this.onMarkdownLoadEnd}
-          >
-            {message.content.markdown}
-          </MessageMarkdown>
-
-          {this.state.isContentLoadCompleted && (
-            <MessageDetailData
+        {this.state.isContentLoadCompleted &&
+          messageNeedsCTABar(message) && (
+            <MessageCTABar
               message={message}
-              serviceDetail={potServiceDetail}
-              serviceMetadata={potServiceMetadata}
-              goToServiceDetail={onServiceLinkPress}
+              service={service}
+              payment={payment}
             />
           )}
-          <View spacer={true} large={true} />
-        </Content>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            bordered: true,
-            title: I18n.t("messages.cta.reminder"),
-            iconName: "io-plus"
-          }}
-        />
-      </React.Fragment>
+
+        <MessageMarkdown
+          webViewStyle={styles.webview}
+          onLoadEnd={this.onMarkdownLoadEnd}
+        >
+          {message.content.markdown}
+        </MessageMarkdown>
+
+        {this.state.isContentLoadCompleted && (
+          <MessageDetailData
+            message={message}
+            serviceDetail={potServiceDetail}
+            serviceMetadata={potServiceMetadata}
+            goToServiceDetail={onServiceLinkPress}
+          />
+        )}
+        <View spacer={true} large={true} />
+      </Content>
     );
   }
 }
