@@ -3,7 +3,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { BackHandler, ScrollView, StyleSheet } from "react-native";
-import ScreenBrightness from "react-native-screen-brightness";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -25,6 +24,7 @@ import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
+import { getBrightness, setBrightness } from "../../utils/brightness";
 
 type Props = ReturnType<typeof mapStateToProps> &
   NavigationInjectedProps &
@@ -88,16 +88,17 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
   }
 
   public componentDidMount() {
-    const screenBrightness = ScreenBrightness.getAppBrightness();
+    const screenBrightness = getBrightness();
     // tslint:disable-next-line: no-floating-promises
     screenBrightness.then(brightness => {
       this.setState(
         {
           baseBrightnessValue: brightness
         },
-        () => ScreenBrightness.setAppBrightness(0.8)
+        () => setBrightness(0.9)
       );
     });
+
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
     if (this.props.profile !== undefined) {
       const maybeCodiceCatastale = CodiceCatastale.decode(
@@ -116,7 +117,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
 
   private resetAppBrightness = () => {
     if (this.state.baseBrightnessValue !== undefined) {
-      ScreenBrightness.setAppBrightness(this.state.baseBrightnessValue);
+      setBrightness(this.state.baseBrightnessValue);
     }
   };
 
@@ -126,7 +127,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
 
   private handleBackPress = () => {
     if (this.state.baseBrightnessValue !== undefined) {
-      ScreenBrightness.setAppBrightness(this.state.baseBrightnessValue);
+      setBrightness(this.state.baseBrightnessValue);
     }
     this.props.navigation.goBack();
     return true;
