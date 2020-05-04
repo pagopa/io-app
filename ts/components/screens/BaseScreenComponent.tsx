@@ -99,7 +99,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         { requestReport: some(type) },
         this.handleOnContextualHelpDismissed
       );
-
       return;
     }
     const contextualHelpModalAnimation = Platform.select<
