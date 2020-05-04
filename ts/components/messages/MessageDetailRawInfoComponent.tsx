@@ -3,7 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { format } from "../../utils/dates";
 
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
@@ -11,7 +11,7 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "../ui/IconFont";
 
 type OwnProps = {
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   service?: ServicePublic;
   onServiceLinkPress?: () => void;
 };

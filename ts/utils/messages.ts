@@ -2,11 +2,11 @@
  * Generic utilities for messages
  */
 
-import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
 export function messageContainsText(
-  message: CreatedMessageWithContent,
+  message: CreatedMessageWithContentAndAttachments,
   searchText: string
 ) {
   return (
@@ -16,19 +16,19 @@ export function messageContainsText(
 }
 
 export function messageNeedsDueDateCTA(
-  message: CreatedMessageWithContent
+  message: CreatedMessageWithContentAndAttachments
 ): boolean {
   return message.content.due_date !== undefined;
 }
 
 export function messageNeedsPaymentCTA(
-  message: CreatedMessageWithContent
+  message: CreatedMessageWithContentAndAttachments
 ): boolean {
   return message.content.payment_data !== undefined;
 }
 
 export function messageNeedsCTABar(
-  message: CreatedMessageWithContent
+  message: CreatedMessageWithContentAndAttachments
 ): boolean {
   return messageNeedsDueDateCTA(message) || messageNeedsPaymentCTA(message);
 }
@@ -36,20 +36,20 @@ export function messageNeedsCTABar(
 type MessagePaymentUnexpirable = {
   kind: "UNEXPIRABLE";
   noticeNumber: NonNullable<
-    CreatedMessageWithContent["content"]["payment_data"]
+    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >["notice_number"];
   amount: NonNullable<
-    CreatedMessageWithContent["content"]["payment_data"]
+    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >["amount"];
 };
 
 type MessagePaymentExpirable = {
   kind: "EXPIRABLE";
   noticeNumber: NonNullable<
-    CreatedMessageWithContent["content"]["payment_data"]
+    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >["notice_number"];
   amount: NonNullable<
-    CreatedMessageWithContent["content"]["payment_data"]
+    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >["amount"];
   expireStatus: "VALID" | "EXPIRING" | "EXPIRED";
   dueDate: Date;
@@ -61,7 +61,7 @@ export type MessagePaymentExpirationInfo =
 
 export function getMessagePaymentExpirationInfo(
   paymentData: NonNullable<
-    CreatedMessageWithContent["content"]["payment_data"]
+    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >,
   dueDate?: Date
 ): MessagePaymentExpirationInfo {

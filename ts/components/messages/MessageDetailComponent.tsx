@@ -6,7 +6,7 @@ import { Col, Grid } from "react-native-easy-grid";
 
 import { fromNullable } from "fp-ts/lib/Option";
 import { SvgXml } from "react-native-svg";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
@@ -25,7 +25,7 @@ import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
 import MessageMarkdown from "./MessageMarkdown";
 
 type OwnProps = {
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   paymentsByRptId: PaymentByRptIdState;
   potService: pot.Pot<ServicePublic, Error>;
   onServiceLinkPress?: () => void;
@@ -227,9 +227,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
               att.mime_type === "image/svg+xml" ? (
                 <SvgXml
                   key={`svg_${idx}`}
-                  xml={Buffer.from(att.base64_content, "base64").toString(
-                    "ascii"
-                  )}
+                  xml={Buffer.from(att.content, "base64").toString("ascii")}
                   width="100%"
                 />
               ) : (
@@ -241,7 +239,7 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
                     resizeMode: "contain"
                   }}
                   source={{
-                    uri: `data:image/png;base64,${att.base64_content}`
+                    uri: `data:image/png;base64,${att.content}`
                   }}
                 />
               );

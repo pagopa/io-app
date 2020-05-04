@@ -6,7 +6,7 @@ import React from "react";
 import { Alert, StyleSheet } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { NavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
@@ -67,7 +67,7 @@ import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
 
 type OwnProps = {
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   service?: ServicePublic;
   payment?: PaidReason;
   small?: boolean;
@@ -236,7 +236,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
   private saveCalendarEvent = (
     calendar: Calendar,
-    message: CreatedMessageWithContent,
+    message: CreatedMessageWithContentAndAttachments,
     dueDate: Date,
     title: string
   ) =>
@@ -271,7 +271,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
 
   private confirmSaveCalendarEventAlert = (
     calendar: Calendar,
-    message: CreatedMessageWithContent,
+    message: CreatedMessageWithContentAndAttachments,
     dueDate: Date,
     title: string,
     eventId: string
@@ -312,7 +312,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     );
 
   private addCalendarEventToDeviceCalendar = (
-    message: CreatedMessageWithContent,
+    message: CreatedMessageWithContentAndAttachments,
     dueDate: Date
   ) => (calendar: Calendar) => {
     const title = I18n.t("messages.cta.reminderTitle", {

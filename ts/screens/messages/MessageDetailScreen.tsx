@@ -6,7 +6,7 @@ import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -225,7 +225,7 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    * Used when we have all data to properly render the content of the screen.
    */
   private renderFullState = (
-    message: CreatedMessageWithContent,
+    message: CreatedMessageWithContentAndAttachments,
     service: pot.Pot<ServicePublic, Error>,
     paymentsByRptId: Props["paymentsByRptId"]
   ) => {

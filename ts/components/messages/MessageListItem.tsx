@@ -4,7 +4,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaidReason } from "../../store/reducers/entities/payments";
@@ -15,7 +15,7 @@ import MessageCTABar from "./MessageCTABar";
 
 type Props = {
   isRead: boolean;
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   service?: ServicePublic;
   payment?: PaidReason;
   onPress: (id: string) => void;
