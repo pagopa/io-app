@@ -72,17 +72,15 @@ class MessageDetailData extends React.PureComponent<Props> {
       ? this.props.serviceMetadata.value
       : undefined;
 
-  private callService = () => {
-    if (this.metadata && this.metadata.phone) {
-      handleItemOnPress(`tel:${this.metadata.phone}`);
-    }
-  };
+  private callService =
+    this.metadata && this.metadata.phone
+      ? handleItemOnPress(`tel:${this.metadata.phone}`)
+      : undefined;
 
-  private sendEmailToService = () => {
-    if (this.metadata && this.metadata.email) {
-      handleItemOnPress(`mailto:${this.metadata.email}`);
-    }
-  };
+  private sendEmailToService =
+    this.metadata && this.metadata.email
+      ? handleItemOnPress(`mailto:${this.metadata.email}`)
+      : undefined;
 
   private renderButtons = () => {
     if (!this.metadata) {
