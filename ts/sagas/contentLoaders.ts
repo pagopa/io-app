@@ -179,7 +179,7 @@ export function* watchContentMunicipalityLoadSaga(): Iterator<Effect> {
       yield put(
         contentMunicipalityLoad.failure({
           error: e,
-          codiceCatastale: codiceCatastale as string
+          codiceCatastale
         })
       );
     }
