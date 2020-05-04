@@ -1,7 +1,5 @@
 import { none, Option, some } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import React from "react";
 import {
@@ -18,11 +16,14 @@ import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import I18n from "../../i18n";
 import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
-import customVariables from "../../theme/variables";
+import customVariables, {
+  VIBRATION_LONG_PRESS_DURATION
+} from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
@@ -67,7 +68,6 @@ const ITEM_WITHOUT_CTABAR_HEIGHT = 114;
 const ITEM_LOADING_HEIGHT = ITEM_WITHOUT_CTABAR_HEIGHT;
 const ITEM_WITH_CTABAR_HEIGHT = 158;
 const ITEM_SEPARATOR_HEIGHT = 1;
-const VIBRATION_LONG_PRESS_DURATION = 100 as Millisecond;
 
 const styles = StyleSheet.create({
   itemLoadingContainer: {

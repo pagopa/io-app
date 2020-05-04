@@ -29,7 +29,7 @@ export function* refreshStoredServices(
         // - is not in the redux store
         storedService === undefined ||
         // - is in the redux store as PotNone and not loading
-        (pot.isNone(storedService) && !pot.isLoading(storedService)) ||
+        pot.isNone(storedService) ||
         // - is in the redux store as PotSome, is not updating and is outdated
         (pot.isSome(storedService) &&
           !pot.isUpdating(storedService) &&

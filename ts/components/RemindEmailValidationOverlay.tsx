@@ -2,13 +2,13 @@
  * A component to remind the user to validate his email
  */
 import { none, Option, some } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, BackHandler, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import I18n from "../i18n";
 import {
   navigateBack,
   navigateToEmailInsertScreen

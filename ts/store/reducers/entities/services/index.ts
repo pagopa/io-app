@@ -6,7 +6,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { ServiceTuple } from "../../../../../definitions/backend/ServiceTuple";
 import { ScopeEnum } from "../../../../../definitions/content/Service";
 import { ServicesByScope } from "../../../../../definitions/content/ServicesByScope";
 import { isDefined } from "../../../../utils/guards";
@@ -339,47 +338,77 @@ export const notSelectedServicesSectionsSelector = createSelector(
     organizationsOfInterestSelector
   ],
   (services, organizations, servicesByScope, selectedOrganizations) => {
-    // tslint:disable-next-line:no-let
-    let notSelectedOrganizations;
-    if (organizations !== undefined) {
-      notSelectedOrganizations = Object.keys(organizations).filter(
+    const notSelectedOrganizations = fromNullable(organizations).map(orgs => {
+      // add to organizations all cf of other organizations having the same organization name
+      const organizationsWithSameNames = fromNullable(selectedOrganizations)
+        .map(so =>
+          so.reduce((acc, curr) => {
+            const orgName = fromNullable(orgs[curr]);
+            return orgName.fold(acc, on => {
+              if (organizations !== undefined) {
+                const orgsFiscalCodes = Object.keys(organizations).filter(cf =>
+                  fromNullable(organizations[cf]).fold(
+                    false,
+                    name => on === name // select all services that belong to organizations having organizationName
+                  )
+                );
+                orgsFiscalCodes.forEach(ofc => acc.add(ofc));
+              }
+              return acc;
+            });
+          }, new Set<string>())
+        )
+        .fold([], s => Array.from(s));
+      return Object.keys(orgs).filter(
         fiscalCode =>
-          selectedOrganizations &&
-          selectedOrganizations.indexOf(fiscalCode) === -1
+          organizationsWithSameNames &&
+          organizationsWithSameNames.indexOf(fiscalCode) === -1
       );
-    }
+    });
 
     return getServices(
       services,
       organizations,
       servicesByScope,
       undefined,
-      notSelectedOrganizations
+      notSelectedOrganizations.toUndefined()
     );
   }
 );
 
 /**
- *  Get the sum of visible services that are not yet marked as read
+ *  Get the sum of selected local services + national that are not yet marked as read
  */
 
 export const servicesBadgeValueSelector = createSelector(
   [
-    visibleServicesSelector,
+    nationalServicesSectionsSelector,
+    selectedLocalServicesSectionsSelector,
     readServicesByIdSelector,
     isFirstVisibleServiceLoadCompletedSelector
   ],
-  (visibleServices, readServicesById, isFirstVisibleServiceLoadCompleted) => {
+  (
+    nationalService,
+    localService,
+    readServicesById,
+    isFirstVisibleServiceLoadCompleted
+  ) => {
     if (isFirstVisibleServiceLoadCompleted) {
-      const services = pot.getOrElse<ReadonlyArray<ServiceTuple>>(
-        visibleServices,
-        []
+      const servicesSet: Set<ServicesSectionState> = new Set([
+        ...nationalService,
+        ...localService
+      ]);
+      return [...servicesSet].reduce(
+        (acc: number, service: ServicesSectionState) => {
+          const servicesNotRead = service.data.filter(
+            data =>
+              pot.isSome(data) &&
+              readServicesById[data.value.service_id] === undefined
+          ).length;
+          return acc + servicesNotRead;
+        },
+        0
       );
-      return services.reduce((acc: number, service: ServiceTuple) => {
-        const isServiceRead =
-          readServicesById[service.service_id] !== undefined;
-        return acc + (isServiceRead ? 0 : 1);
-      }, 0);
     }
     return 0;
   }
