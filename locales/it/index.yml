@@ -568,6 +568,9 @@ payment:
       transactionCode: Codice identificativo della transazione
       help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
     list:
+      empty:
+        title: Nessun tentativo di pagamento
+        description: IO non ha memorizzato tentativi di pagamento. Qui troverai i tentativi di pagamento più recenti
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
 wallet:
