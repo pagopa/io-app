@@ -131,7 +131,7 @@ class Pinpad extends React.PureComponent<Props, State> {
               )
             : undefined,
         Tuple2(pinPadValues[0], () => this.handlePinDigit(pinPadValues[0])),
-        Tuple2("<", this.deleteLastDigit)
+        Tuple2("⌫", this.deleteLastDigit)
       ]
     ];
   };

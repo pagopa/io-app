@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
 
   buttonTextLabel: {
-    fontSize: radius - 5
+    fontSize: radius + 4
   },
 
   white: {
@@ -118,7 +118,7 @@ const renderPinRow = (
           renderPinCol(
             el.e1,
             el.e2,
-            el.e1.length === 1 ? "digit" : "label",
+            RegExp(/^[0-9]$/).test(el.e1) ? "digit" : "label",
             `pinpad-digit-${el.e2}`,
             buttonType,
             isDisabled
