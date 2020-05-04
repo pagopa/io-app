@@ -105,7 +105,6 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
       ModalBaseProps["animationType"]
     >({
       ios: "slide",
-      android: "none",
       default: "none"
     });
     this.setState({ contextualHelpModalAnimation }, () => {
