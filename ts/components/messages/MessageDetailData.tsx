@@ -93,7 +93,7 @@ class MessageDetailData extends React.PureComponent<Props> {
       bordered: true,
       white: true,
       title: I18n.t("messageDetails.call"),
-      iconName: 'io-phone',
+      iconName: "io-phone",
       onPress: this.callService
     };
 
@@ -105,7 +105,10 @@ class MessageDetailData extends React.PureComponent<Props> {
       onPress: this.sendEmailToService
     };
 
-    if (!this.metadata.phone || !this.metadata.email) {
+    if (
+      this.metadata.phone === undefined ||
+      this.metadata.email === undefined
+    ) {
       return (
         <BlockButtons
           type={"SingleButton"}
