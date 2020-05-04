@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-
   flex: {
     flex: 1
   }
@@ -94,6 +93,7 @@ class MessageDetailData extends React.PureComponent<Props> {
       bordered: true,
       white: true,
       title: I18n.t("messageDetails.call"),
+      iconName: 'io-phone',
       onPress: this.callService
     };
 
