@@ -54,23 +54,17 @@ class CiePinScreen extends React.PureComponent<Props, State> {
   }
 
   private onProceedToCardReaderScreen = (url: string) => {
+    const ciePin = this.state.pin;
     this.setState({ url }, () => {
+      this.props.navigation.navigate({
+        routeName: ROUTES.CIE_CARD_READER_SCREEN,
+        params: { ciePin, authorizationUri: url }
+      });
       this.props.hideModal();
     });
   };
 
-  private onHiddenModal = () => {
-    const ciePin = this.state.pin;
-    this.setState({ pin: "" }, () => {
-      this.props.navigation.navigate({
-        routeName: ROUTES.CIE_CARD_READER_SCREEN,
-        params: { ciePin, authorizationUri: this.state.url }
-      });
-    });
-  };
-
   private showModal = () => {
-    this.props.setOnHiddenModal(this.onHiddenModal);
     this.props.requestNfcEnabledCheck();
     Keyboard.dismiss();
 

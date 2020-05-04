@@ -8,14 +8,12 @@ import IconFont from "./ui/IconFont";
 const styles = StyleSheet.create({
   viewRL: {
     justifyContent: "center",
-    alignItems: "center",
-    flex: 0.25
+    alignItems: "center"
   },
 
   viewCenter: {
     justifyContent: "center",
-    alignItems: "center",
-    flex: 0.5
+    alignItems: "center"
   },
 
   margin: {
