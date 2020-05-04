@@ -2,7 +2,8 @@ import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { BackHandler, ScrollView, StyleSheet } from "react-native";
+import ScreenBrightness from "react-native-screen-brightness";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -13,6 +14,7 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import DarkLayout from "../../components/screens/DarkLayout";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import H5 from "../../components/ui/H5";
+import IconFont from "../../components/ui/IconFont";
 import {
   BottomTopAnimation,
   LightModalContextInterface
@@ -66,7 +68,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.fiscalCode.help"
 };
 
-class FiscalCodeScreen extends React.PureComponent<Props> {
+type State = {
+  baseBrightnessValue?: number;
+};
+
+class FiscalCodeScreen extends React.PureComponent<Props, State> {
   private showModal(showBackSide: boolean = false) {
     if (this.props.profile) {
       const component = (
@@ -82,6 +88,17 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
   }
 
   public componentDidMount() {
+    const screenBrightness = ScreenBrightness.getAppBrightness();
+    // tslint:disable-next-line: no-floating-promises
+    screenBrightness.then(brightness => {
+      this.setState(
+        {
+          baseBrightnessValue: brightness
+        },
+        () => ScreenBrightness.setAppBrightness(0.8)
+      );
+    });
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
     if (this.props.profile !== undefined) {
       const maybeCodiceCatastale = CodiceCatastale.decode(
         this.props.profile.fiscal_code.substring(11, 15)
@@ -92,16 +109,45 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
       }
     }
   }
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+    this.resetAppBrightness();
+  }
+
+  private resetAppBrightness = () => {
+    if (this.state.baseBrightnessValue !== undefined) {
+      ScreenBrightness.setAppBrightness(this.state.baseBrightnessValue);
+    }
+  };
+
+  private goBack = () => {
+    this.props.navigation.goBack();
+  };
+
+  private handleBackPress = () => {
+    if (this.state.baseBrightnessValue !== undefined) {
+      ScreenBrightness.setAppBrightness(this.state.baseBrightnessValue);
+    }
+    this.props.navigation.goBack();
+    return true;
+  };
+
+  private customOnboardingGoBack = (
+    <IconFont
+      name={"io-back"}
+      style={{ color: customVariables.colorWhite }}
+      onPress={this.goBack}
+    />
+  );
 
   public render() {
     return (
       <React.Fragment>
         <DarkLayout
           allowGoBack={true}
+          customGoBack={this.customOnboardingGoBack}
           headerBody={
-            <TouchableDefaultOpacity
-              onPress={() => this.props.navigation.goBack()}
-            >
+            <TouchableDefaultOpacity onPress={this.goBack}>
               <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
             </TouchableDefaultOpacity>
           }

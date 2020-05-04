@@ -39,6 +39,7 @@ type Props = Readonly<{
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   contentRefreshControl?: React.ReactElement<RefreshControlProps>;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  customGoBack?: React.ReactNode;
 }>;
 
 const styles = StyleSheet.create({
@@ -71,6 +72,7 @@ export default class DarkLayout extends React.Component<Props> {
     return (
       <TopScreenComponent
         goBack={this.props.allowGoBack}
+        customGoBack={this.props.customGoBack}
         headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
