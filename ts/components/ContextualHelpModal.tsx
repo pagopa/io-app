@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import { BugReporting } from "instabug-reactnative";
 import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
@@ -9,6 +8,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback
 } from "react-native";
+import I18n from "../i18n";
 import themeVariables from "../theme/variables";
 import customVariables from "../theme/variables";
 import { FAQsCategoriesType } from "../utils/faq";
@@ -17,13 +17,14 @@ import InstabugAssistanceComponent from "./InstabugAssistanceComponent";
 import BaseScreenComponent from "./screens/BaseScreenComponent";
 import BetaBannerComponent from "./screens/BetaBannerComponent";
 import ActivityIndicator from "./ui/ActivityIndicator";
-import { openLink, removeProtocol } from "./ui/Markdown/handlers/link";
+import { openLink } from "./ui/Markdown/handlers/link";
 
 type Props = Readonly<{
   title: string;
   body: () => React.ReactNode;
   contentLoaded: boolean;
   isVisible: boolean;
+  onLinkClicked?: (url: string) => void;
   modalAnimation?: ModalBaseProps["animationType"];
   close: () => void;
   onRequestAssistance: (type: BugReporting.reportType) => void;
@@ -112,7 +113,10 @@ export class ContextualHelpModal extends React.Component<Props, State> {
                 {this.state.content}
                 {this.props.faqCategories &&
                   this.props.contentLoaded && (
-                    <FAQComponent faqCategories={this.props.faqCategories} />
+                    <FAQComponent
+                      onLinkClicked={this.props.onLinkClicked}
+                      faqCategories={this.props.faqCategories}
+                    />
                   )}
                 {this.props.contentLoaded && (
                   <React.Fragment>
@@ -120,18 +124,15 @@ export class ContextualHelpModal extends React.Component<Props, State> {
                     <InstabugAssistanceComponent
                       requestAssistance={this.props.onRequestAssistance}
                     />
-                    <View spacer={true} extralarge={true} />
+                    <View spacer={true} />
                     <H3>{I18n.t("instabug.contextualHelp.title2")}</H3>
                     <View spacer={true} />
-                    <View spacer={true} xsmall={true} />
                     <Text>
                       {`${I18n.t("instabug.contextualHelp.descriptionLink")} `}
                       <TouchableWithoutFeedback
                         onPress={() => openLink(I18n.t("global.ioWebSite"))}
                       >
-                        <Text link={true}>
-                          {removeProtocol(I18n.t("global.ioWebSite"))}
-                        </Text>
+                        <Text link={true}>{I18n.t("global.ioWebSite")}</Text>
                       </TouchableWithoutFeedback>
                     </Text>
                   </React.Fragment>

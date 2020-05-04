@@ -1,6 +1,6 @@
 import { addDays, addMonths, addWeeks } from "date-fns";
-import I18n from "i18n-js";
 import PushNotification from "react-native-push-notification";
+import I18n from "../i18n";
 
 // this tag gets associated to all scheduled notifications and is used to cancel them
 // once the user logs in the first time

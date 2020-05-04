@@ -197,6 +197,7 @@ type OwnProps = {
   animated?: boolean;
   useCustomSortedList?: boolean;
   onLoadEnd?: () => void;
+  onLinkClicked?: (url: string) => void;
   onError?: (error: any) => void;
   /**
    * The code will be inserted in the html body between
@@ -359,6 +360,9 @@ class Markdown extends React.PureComponent<Props, State> {
       switch (message.type) {
         case "LINK_MESSAGE":
           handleLinkMessage(dispatch, message.payload.href);
+          fromNullable(this.props.onLinkClicked).map(s =>
+            s(message.payload.href)
+          );
           break;
 
         case "RESIZE_MESSAGE":

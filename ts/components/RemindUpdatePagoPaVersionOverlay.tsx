@@ -1,8 +1,8 @@
-import I18n from "i18n-js";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Button, Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet } from "react-native";
+import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
 

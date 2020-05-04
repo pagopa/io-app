@@ -11,15 +11,16 @@ import { Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
-
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import BoxedRefreshIndicator from "../../components/ui/BoxedRefreshIndicator";
 import H5 from "../../components/ui/H5";
 import IconFont from "../../components/ui/IconFont";
+import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { AddPaymentMethodButton } from "../../components/wallet/AddPaymentMethodButton";
 import CardsFan from "../../components/wallet/card/CardsFan";
 import TransactionsList from "../../components/wallet/TransactionsList";
@@ -38,6 +39,10 @@ import {
 } from "../../store/actions/wallet/transactions";
 import { fetchWalletsRequest } from "../../store/actions/wallet/wallets";
 import { transactionsReadSelector } from "../../store/reducers/entities";
+import {
+  paymentsHistorySelector,
+  PaymentsHistoryState
+} from "../../store/reducers/payments/history";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import {
@@ -49,9 +54,10 @@ import { walletsSelector } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
+type OwnProps = LightModalContextInterface &
+  Readonly<{
+    navigation: NavigationScreenProp<NavigationState>;
+  }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -116,6 +122,17 @@ const styles = StyleSheet.create({
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
+  },
+
+  textStyleHelpCenter: {
+    lineHeight: 18,
+    fontSize: 13,
+    textAlign: "center"
+  },
+
+  textStyleHelp: {
+    lineHeight: 18,
+    fontSize: 13
   }
 });
 
@@ -127,7 +144,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * Wallet Home Screen
  */
-class WalletHomeScreen extends React.Component<Props, never> {
+class WalletHomeScreen extends React.Component<Props> {
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
@@ -247,14 +264,35 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private transactionError() {
+  private helpMessage = (
+    alignCenter: boolean | undefined = false
+  ): React.ReactNode => (
+    <React.Fragment>
+      <View spacer={true} large={true} />
+      <Text
+        style={alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp}
+      >
+        {`${I18n.t("wallet.transactionHelpMessage.text1")} `}
+        <Text
+          style={
+            alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp
+          }
+          bold={true}
+        >
+          {I18n.t("wallet.transactionHelpMessage.text2")}
+        </Text>
+        {` ${I18n.t("wallet.transactionHelpMessage.text3")}`}
+      </Text>
+    </React.Fragment>
+  );
+
+  private transactionError(potPayments: PaymentsHistoryState) {
     return (
       <Content
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
       >
-        <View spacer={true} />
-        <H5 style={styles.brandDarkGray}>{I18n.t("wallet.transactions")}</H5>
+        {potPayments.length > 0 && this.helpMessage()}
         <View spacer={true} large={true} />
         <Text style={[styles.inLineSpace, styles.brandDarkGray]}>
           {I18n.t("wallet.transactionsLoadFailure")}
@@ -276,10 +314,11 @@ class WalletHomeScreen extends React.Component<Props, never> {
     );
   }
 
-  private listEmptyComponent() {
+  private listEmptyComponent(potPayments: PaymentsHistoryState) {
     return (
       <Content scrollEnabled={false} noPadded={true}>
         <View style={styles.emptyListWrapper}>
+          {potPayments.length > 0 && this.helpMessage(true)}
           <Text style={styles.emptyListContentTitle}>
             {I18n.t("wallet.noTransactionsInWalletHome")}
           </Text>
@@ -296,20 +335,22 @@ class WalletHomeScreen extends React.Component<Props, never> {
   };
 
   private transactionList(
-    potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
+    potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>,
+    potPayments: PaymentsHistoryState
   ) {
     return (
       <TransactionsList
         title={I18n.t("wallet.latestTransactions")}
         amount={I18n.t("wallet.amount")}
         transactions={potTransactions}
+        helpMessage={potPayments.length > 0 ? this.helpMessage() : undefined}
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
           this.props.navigateToTransactionDetailsScreen
         }
         readTransactions={this.props.readTransactions}
-        ListEmptyComponent={this.listEmptyComponent()}
+        ListEmptyComponent={this.listEmptyComponent(potPayments)}
       />
     );
   }
@@ -332,7 +373,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
   }
 
   public render(): React.ReactNode {
-    const { potWallets, potTransactions } = this.props;
+    const { potWallets, potTransactions, historyPayments } = this.props;
 
     const wallets = pot.getOrElse(potWallets, []);
 
@@ -350,8 +391,8 @@ class WalletHomeScreen extends React.Component<Props, never> {
           : this.withoutCardsHeader(hasNotSupportedWalletsOnly);
 
     const transactionContent = pot.isError(potTransactions)
-      ? this.transactionError()
-      : this.transactionList(potTransactions);
+      ? this.transactionError(historyPayments)
+      : this.transactionList(potTransactions, historyPayments);
 
     const footerContent =
       pot.isSome(potWallets) && this.footerButton(potWallets);
@@ -386,6 +427,7 @@ class WalletHomeScreen extends React.Component<Props, never> {
 
 const mapStateToProps = (state: GlobalState) => ({
   potWallets: walletsSelector(state),
+  historyPayments: paymentsHistorySelector(state),
   potTransactions: latestTransactionsSelector(state),
   transactionsLoadedLength: getTransactionsLoadedLength(state),
   areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
@@ -417,6 +459,6 @@ export default withValidatedPagoPaVersion(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(WalletHomeScreen)
+    )(withLightModalContext(WalletHomeScreen))
   )
 );

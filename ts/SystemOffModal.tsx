@@ -3,12 +3,12 @@
  * not work properly. This is due to avoid user tries to access features or services potentially can't work
  * as expected
  */
-import I18n from "i18n-js";
 import { Content, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import BaseScreenComponent from "./components/screens/BaseScreenComponent";
+import I18n from "./i18n";
 import { backendServicesStatusSelector } from "./store/reducers/backendStatus";
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";

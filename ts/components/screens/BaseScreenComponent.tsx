@@ -5,7 +5,6 @@ import {
   Option,
   some
 } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import { BugReporting, Replies } from "instabug-reactnative";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Container } from "native-base";
@@ -18,11 +17,13 @@ import {
   openInstabugBugReport,
   openInstabugChat
 } from "../../boot/configureInstabug";
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import { ContextualHelpModal } from "../ContextualHelpModal";
 import Markdown from "../ui/Markdown";
+import { isIoInternalLink } from "../ui/Markdown/handlers/link";
 import BaseHeader from "./BaseHeader";
 
 export interface ContextualHelpProps {
@@ -76,7 +77,21 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   }
 
   private handleOnRequestAssistance = (type: BugReporting.reportType) => {
-    this.setState({ contextualHelpModalAnimation: "none" }, () => {
+    // don't close modal if the report isn't a bug (bug brings a screenshot)
+    if (type !== BugReporting.reportType.bug) {
+      this.setState(
+        { requestReport: some(type) },
+        this.handleOnContextualHelpDismissed
+      );
+      return;
+    }
+    const contextualHelpModalAnimation = Platform.select<
+      ModalBaseProps["animationType"]
+    >({
+      ios: "slide",
+      default: "none"
+    });
+    this.setState({ contextualHelpModalAnimation }, () => {
       this.setState({ isHelpVisible: false }, () => {
         this.setState({ requestReport: some(type) }, () => {
           // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
@@ -139,6 +154,12 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
     this.setState({ isHelpVisible: false });
   };
 
+  private handleOnLinkClicked = (url: string) => {
+    if (isIoInternalLink(url)) {
+      this.hideHelp();
+    }
+  };
+
   public render() {
     const {
       contextualHelp,
@@ -153,6 +174,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         ? {
             body: () => (
               <Markdown
+                onLinkClicked={this.handleOnLinkClicked}
                 onLoadEnd={() => {
                   this.setState({ markdownContentLoaded: some(true) });
                 }}
@@ -177,6 +199,7 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
         {ch && (
           <ContextualHelpModal
             title={ch.title}
+            onLinkClicked={this.handleOnLinkClicked}
             body={ch.body}
             isVisible={this.state.isHelpVisible}
             modalAnimation={this.state.contextualHelpModalAnimation}
