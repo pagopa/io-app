@@ -5,9 +5,11 @@
 import {
   ActionType,
   createAction,
+  createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
 
+import { Errors } from "io-ts";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import { SessionToken } from "../../types/SessionToken";
@@ -19,6 +21,10 @@ export type LogoutOption = {
 export type LogoutError = {
   error: Error;
   options: LogoutOption;
+};
+
+export type CheckSessionResult = {
+  isSessionValid: boolean;
 };
 
 export const idpSelected = createStandardAction("IDP_SELECTED")<
@@ -65,6 +71,12 @@ export const resetAuthenticationState = createStandardAction(
   "RESET_AUTHENTICATION_STATE"
 )();
 
+export const checkCurrentSession = createAsyncAction(
+  "CHECK_CURRENT_SESSION_REQUEST",
+  "CHECK_CURRENT_SESSION_SUCCESS",
+  "CHECK_CURRENT_SESSION_FAILURE"
+)<void, CheckSessionResult, Errors>();
+
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
@@ -79,6 +91,7 @@ export type AuthenticationActions =
   | ActionType<typeof logoutFailure>
   | ActionType<typeof sessionInformationLoadSuccess>
   | ActionType<typeof sessionInformationLoadFailure>
+  | ActionType<typeof checkCurrentSession>
   | ActionType<typeof sessionExpired>
   | ActionType<typeof sessionInvalid>
   | ActionType<typeof resetAuthenticationState>;

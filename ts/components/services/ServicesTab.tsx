@@ -3,7 +3,6 @@
  */
 import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { createFactory } from "react";
 import * as React from "react";
@@ -13,6 +12,7 @@ import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import IconFont from "../../components/ui/IconFont";
 import Switch from "../../components/ui/Switch";
+import I18n from "../../i18n";
 import { userMetadataUpsert } from "../../store/actions/userMetadata";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
@@ -39,6 +39,7 @@ import ServicesSectionsList from "./ServicesSectionsList";
 
 type OwnProps = Readonly<{
   isLocal?: boolean;
+  isAll: boolean;
   updateToast?: () => void;
   sections: ReadonlyArray<ServicesSectionState>;
   isRefreshing: boolean;
@@ -227,6 +228,7 @@ class ServicesTab extends React.PureComponent<Props> {
     return (
       <ServicesSectionsList
         isLocal={this.props.isLocal}
+        isAll={this.props.isAll}
         sections={this.props.sections}
         profile={this.props.profile}
         isRefreshing={this.props.isRefreshing}
