@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -18,6 +17,7 @@ import {
   BottomTopAnimation,
   LightModalContextInterface
 } from "../../components/ui/LightModal";
+import I18n from "../../i18n";
 import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";

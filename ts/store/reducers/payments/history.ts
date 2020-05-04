@@ -11,8 +11,7 @@
  * - "transaction" coming from payment manager when we ask for info about latest transaction
  * - "failure" coming from the failure of a verification (paymentVerifica.failure)
  */
-
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, Option, some } from "fp-ts/lib/Option";
 import { RptId } from "italia-pagopa-commons/lib/pagopa";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
@@ -126,22 +125,20 @@ export const paymentsHistorySelector = (state: GlobalState) =>
   state.payments.history;
 
 /**
- * return true if payment ends successfully
- * return false if payment ends with a failure
- * return undefined if payements didn't end (no data to say failure or success)
+ * return some(true) if payment ends successfully
+ * return some(false) if payment ends with a failure
+ * return none if payements didn't end (no data to say failure or success)
  * @param payment
  */
-export const isPaymentDoneSuccessfully = (payment: PaymentHistory) => {
+export const isPaymentDoneSuccessfully = (
+  payment: PaymentHistory
+): Option<boolean> => {
   if (payment.failure) {
-    return false;
+    return some(false);
   }
-  const maybeSuccess = fromNullable(payment.transaction).map(
+  return fromNullable(payment.transaction).map(
     t => t !== undefined && isSuccessTransaction(t)
   );
-  if (maybeSuccess.isSome()) {
-    return maybeSuccess.value;
-  }
-  return undefined;
 };
 
 export default reducer;
