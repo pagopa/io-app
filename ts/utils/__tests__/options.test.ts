@@ -1,5 +1,5 @@
 import { none, Option, some } from "fp-ts/lib/Option";
-import { areSetEqual, areStringsEqual } from "../options";
+import { areSetEqual, areStringsEqual, maybeInnerProperty } from "../options";
 
 describe("areSetEqual", () => {
   it("should return true for equal set of strings", () => {
@@ -78,5 +78,48 @@ describe("areStringEqual", () => {
 
   it("should return false if at least one of the compared objects is none", () => {
     expect(areStringsEqual(none, some("a"))).toBeFalsy();
+  });
+});
+
+describe("maybeInnerProperty", () => {
+  it("should return the inner property", () => {
+    const obj = {
+      person: {
+        name: "John"
+      }
+    };
+    const innerProp = maybeInnerProperty(obj.person, "name", n => n);
+    expect(innerProp).toEqual(some("John"));
+  });
+
+  it("should return the inner property", () => {
+    const obj = {
+      person: {
+        name: "John"
+      }
+    };
+    const innerProp = maybeInnerProperty(obj.person, "name", n => n + "salt");
+    expect(innerProp).toEqual(some("Johnsalt"));
+  });
+
+  it("should return the none", () => {
+    const obj = {
+      person: {
+        name: undefined
+      }
+    };
+    const innerProp = maybeInnerProperty(obj.person, "name", n => n);
+    expect(innerProp).toEqual(none);
+  });
+
+  it("should return the none", () => {
+    type Person = {
+      person?: { name?: string };
+    };
+    const obj: Person = {
+      person: undefined
+    };
+    const innerProp = maybeInnerProperty(obj.person, "name", n => n);
+    expect(innerProp).toEqual(none);
   });
 });
