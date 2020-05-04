@@ -74,6 +74,7 @@ import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
+import { watchCheckSessionSaga } from "./startup/watchCheckSessionSaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
@@ -233,6 +234,9 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Start watching for requests of refresh the profile
   yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+
+  // Start watching for requests of checkSession
+  yield fork(watchCheckSessionSaga, backendClient.getProfile);
 
   // Start watching for the requests of a new verification email to
   // validate the user email address
