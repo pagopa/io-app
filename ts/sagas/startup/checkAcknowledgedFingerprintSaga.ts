@@ -1,7 +1,3 @@
-import FingerprintScanner, {
-  Biometrics,
-  Errors
-} from "react-native-fingerprint-scanner";
 import { Effect } from "redux-saga";
 import { call, put, select, take } from "redux-saga/effects";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
@@ -9,6 +5,7 @@ import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
 import { GlobalState } from "../../store/reducers/types";
+import { getFingerprintSettings } from "../../utils/fingerprint";
 export type BiometrySimpleType =
   | "FINGERPRINT"
   | "FACE_ID"
@@ -83,36 +80,4 @@ export function* checkAcknowledgedFingerprintSaga(): IterableIterator<Effect> {
     // Navigate to the FingerprintScreen and wait for acknowledgment
     yield call(onboardFingerprintIfAvailableSaga);
   }
-}
-
-/**
- * Retrieve fingerpint settings from the base system. This function wraps the basic
- * method "isSupported" of TouchID library and simplifies the possible returned values in
- * function of its usage:
- * * FaceID/TouchID/Fingerprint: in case of biometric recognition supported.
- * * Not Enrolled: in case of biometric recognition supported but no data registered.
- * * Unavailable: for all other negative cases.
- *
- * More info about library can be found here: https://github.com/naoufal/react-native-touch-id
- */
-export function getFingerprintSettings(): Promise<BiometrySimpleType> {
-  return new Promise((resolve, _) => {
-    FingerprintScanner.isSensorAvailable()
-      .then((biometryType: Biometrics) => {
-        resolve(
-          biometryType === "Biometrics"
-            ? "FINGERPRINT"
-            : biometryType === "Face ID"
-              ? "FACE_ID"
-              : "TOUCH_ID"
-        );
-      })
-      .catch((reason: Errors) => {
-        resolve(
-          reason.name === "FingerprintScannerNotEnrolled"
-            ? "NOT_ENROLLED"
-            : "UNAVAILABLE"
-        );
-      });
-  });
 }

@@ -1,11 +1,6 @@
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, Modal, Platform, StatusBar, StyleSheet } from "react-native";
-import FingerprintScanner, {
-  AuthenticateAndroid,
-  AuthenticateIOS,
-  FingerprintScannerError
-} from "react-native-fingerprint-scanner";
+import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
@@ -26,9 +21,13 @@ import { ReduxProps } from "./store/actions/types";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 
-import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
-
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
+import {
+  fingerprintAuth,
+  FingerprintError,
+  getFingerprintSettings,
+  unmountBiometricAuth
+} from "./utils/fingerprint";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -206,7 +205,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount() {
-    FingerprintScanner.release();
+    unmountBiometricAuth();
   }
 
   public componentDidUpdate(prevProps: Props) {
@@ -390,39 +389,23 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     onIdentificationSuccessHandler: () => void,
     onIdentificationFailureHandler: () => void
   ) => {
-    const authenticateAndroid: AuthenticateAndroid =
-      Platform.Version < 23
-        ? {
-            onAttempt: (error: FingerprintScannerError) =>
-              this.biometricError(error, onIdentificationFailureHandler)
-          }
-        : {
-            description: I18n.t("identification.biometric.popup.reason"),
-            negativeButtonText: I18n.t("global.buttons.cancel"),
-            onAttempt: (error: FingerprintScannerError) =>
-              this.biometricError(error, onIdentificationFailureHandler)
-          };
-    const authenticateIOS: AuthenticateIOS = {
-      description: I18n.t("identification.biometric.popup.reason"),
-      fallbackEnabled: true
-    };
-    FingerprintScanner.authenticate(
-      Platform.OS === "ios" ? authenticateIOS : authenticateAndroid
-    )
-      .then(() => {
-        this.setState({
-          identificationByBiometryState: "unstarted"
-        });
-        onIdentificationSuccessHandler();
-        FingerprintScanner.release();
+    fingerprintAuth()
+      .then(res => {
+        if (res === true) {
+          this.setState({
+            identificationByBiometryState: "unstarted"
+          });
+          onIdentificationSuccessHandler();
+          unmountBiometricAuth();
+        }
       })
-      .catch((error: FingerprintScannerError) =>
-        this.biometricError(error, onIdentificationFailureHandler)
-      );
+      .catch(error => {
+        this.biometricError(error, onIdentificationFailureHandler);
+      });
   };
 
   private biometricError = (
-    error: FingerprintScannerError,
+    error: FingerprintError,
     onIdentificationFailureHandler: () => void
   ): void => {
     {
@@ -439,7 +422,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         });
       }
       onIdentificationFailureHandler();
-      FingerprintScanner.release();
+      unmountBiometricAuth();
     }
   };
 }

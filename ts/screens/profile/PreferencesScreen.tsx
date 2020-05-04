@@ -21,7 +21,6 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   navigateToCalendarPreferenceScreen,
   navigateToEmailForwardingPreferenceScreen,
@@ -44,6 +43,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
 import { checkAndRequestPermission } from "../../utils/calendar";
+import { getFingerprintSettings } from "../../utils/fingerprint";
 import { getLocalePrimary } from "../../utils/locale";
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
