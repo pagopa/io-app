@@ -29,13 +29,13 @@ import {
   isMessageRead,
   messagesStatusSelector
 } from "../../store/reducers/entities/messages/messagesStatus";
+import { paymentsByRptIdSelector } from "../../store/reducers/entities/payments";
 import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import ServiceDetailsScreen from "../services/ServiceDetailsScreen";
-import { paymentsByRptIdSelector } from '../../store/reducers/entities/payments';
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
@@ -347,7 +347,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     potMessage,
     potServiceDetail,
     potServiceMetadata,
-    paymentsByRptId: paymentsByRptIdSelector(state),
+    paymentsByRptId: paymentsByRptIdSelector(state)
   };
 };
 

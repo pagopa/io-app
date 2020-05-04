@@ -94,15 +94,15 @@ export default function MessageDetailData(props: Props) {
 
       <View spacer={true} />
 
-        <React.Fragment>
-          <View style={styles.row}>
-            <Text style={styles.flex}>{`${I18n.t(
-              "messageDetails.id"
-            )} ${messageId}`}</Text>
-            <CopyButtonComponent textToCopy={messageId} />
-          </View>
-          <View spacer={true} />
-        </React.Fragment>
+      <React.Fragment>
+        <View style={styles.row}>
+          <Text style={styles.flex}>{`${I18n.t(
+            "messageDetails.id"
+          )} ${messageId}`}</Text>
+          <CopyButtonComponent textToCopy={messageId} />
+        </View>
+        <View spacer={true} />
+      </React.Fragment>
 
       <BlockButtons
         type={"TwoButtonsInlineHalf"}
