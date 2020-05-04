@@ -126,9 +126,6 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
   };
 
   private renderWebView() {
-    if (this.state.hasError) {
-      return this.renderError();
-    }
     return (
       <View style={styles.flex}>
         {this.state.findOpenApp === false && (
