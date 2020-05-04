@@ -1,6 +1,6 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H3, Text, View } from "native-base";
+import { H3, Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, Image, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -35,6 +35,7 @@ import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import ServiceDetailsScreen from "../services/ServiceDetailsScreen";
+import { paymentsByRptIdSelector } from '../../store/reducers/entities/payments';
 
 type MessageDetailScreenNavigationParams = {
   messageId: string;
@@ -226,25 +227,23 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
    */
   private renderFullState = (message: CreatedMessageWithContent) => {
     const {
-      isDebugModeEnabled,
       potServiceDetail,
       potServiceMetadata,
       paymentsByRptId
     } = this.props;
 
     return (
-        <MessageDetailComponent
-          message={message}
-          paymentsByRptId={paymentsByRptId}
-          potServiceDetail={potServiceDetail}
-          potServiceMetadata={potServiceMetadata}
-          onServiceLinkPress={
-            pot.isSome(potServiceDetail)
-              ? () => this.onServiceLinkPressHandler(potServiceDetail.value)
-              : undefined
-          }
-          isDebugModeEnabled={isDebugModeEnabled}
-        />
+      <MessageDetailComponent
+        message={message}
+        paymentsByRptId={paymentsByRptId}
+        potServiceDetail={potServiceDetail}
+        potServiceMetadata={potServiceMetadata}
+        onServiceLinkPress={
+          pot.isSome(potServiceDetail)
+            ? () => this.onServiceLinkPressHandler(potServiceDetail.value)
+            : undefined
+        }
+      />
     );
   };
 
@@ -348,8 +347,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     potMessage,
     potServiceDetail,
     potServiceMetadata,
-    paymentsByRptId: state.entities.paymentByRptId,
-    isDebugModeEnabled: state.debug.isDebugModeEnabled
+    paymentsByRptId: paymentsByRptIdSelector(state),
   };
 };
 

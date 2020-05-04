@@ -33,7 +33,6 @@ type OwnProps = Readonly<{
   serviceMetadata?: ServiceMetadataState;
   paymentsByRptId?: PaymentByRptIdState;
   goToServiceDetail?: () => void;
-  isDebugModeEnabled?: boolean;
 }>;
 
 type Props = OwnProps & ViewProps;
@@ -95,7 +94,6 @@ export default function MessageDetailData(props: Props) {
 
       <View spacer={true} />
 
-      {props.isDebugModeEnabled && (
         <React.Fragment>
           <View style={styles.row}>
             <Text style={styles.flex}>{`${I18n.t(
@@ -105,7 +103,6 @@ export default function MessageDetailData(props: Props) {
           </View>
           <View spacer={true} />
         </React.Fragment>
-      )}
 
       <BlockButtons
         type={"TwoButtonsInlineHalf"}

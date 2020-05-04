@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { H1, View, Content } from "native-base";
+import { Content, H1, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -12,13 +12,13 @@ import variables from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
+import FooterWithButtons from "../ui/FooterWithButtons";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageMarkdown from "./MessageMarkdown";
-import FooterWithButtons from '../ui/FooterWithButtons';
 
 type Props = Readonly<{
   message: CreatedMessageWithContent;
@@ -26,7 +26,6 @@ type Props = Readonly<{
   potServiceDetail: pot.Pot<ServicePublic, Error>;
   potServiceMetadata: ServiceMetadataState;
   onServiceLinkPress?: () => void;
-  isDebugModeEnabled?: boolean;
 }>;
 
 type State = Readonly<{
@@ -84,25 +83,26 @@ const styles = StyleSheet.create({
 /**
  * A component to render the message detail.
  */
-export default class MessageDetailComponent extends React.PureComponent<Props, State> {
-  constructor(props: Props){
+export default class MessageDetailComponent extends React.PureComponent<
+  Props,
+  State
+> {
+  constructor(props: Props) {
     super(props);
-    this.state = { isContentLoadCompleted: false};
+    this.state = { isContentLoadCompleted: false };
   }
-  
+
   private onMarkdownLoadEnd = () => {
-    this.setState({isContentLoadCompleted: true});
-  }
-  
-  
+    this.setState({ isContentLoadCompleted: true });
+  };
+
   public render() {
     const {
       message,
       potServiceDetail,
       potServiceMetadata,
       paymentsByRptId,
-      onServiceLinkPress,
-      isDebugModeEnabled
+      onServiceLinkPress
     } = this.props;
 
     const service =
@@ -124,71 +124,74 @@ export default class MessageDetailComponent extends React.PureComponent<Props, S
             }`
           ]
         : undefined;
-  
+
     return (
       <React.Fragment>
         <Content noPadded={true}>
-        <View style={styles.headerContainer}>
-          {/** TODO: update header */}
-          {/* Service */}
-          {service && (
-            <Grid style={styles.serviceContainer}>
-              <Col>
-                <H4>{service.organization_name}</H4>
-                <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                  <H6>{service.service_name}</H6>
-                </TouchableDefaultOpacity>
-              </Col>
-              {service.service_id && (
-                <Col style={styles.serviceCol}>
+          <View style={styles.headerContainer}>
+            {/** TODO: update header */}
+            {/* Service */}
+            {service && (
+              <Grid style={styles.serviceContainer}>
+                <Col>
+                  <H4>{service.organization_name}</H4>
                   <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                    <MultiImage
-                      style={styles.serviceMultiImage}
-                      source={logosForService(service)}
-                    />
+                    <H6>{service.service_name}</H6>
                   </TouchableDefaultOpacity>
                 </Col>
-              )}
-            </Grid>
-          )}
+                {service.service_id && (
+                  <Col style={styles.serviceCol}>
+                    <TouchableDefaultOpacity onPress={onServiceLinkPress}>
+                      <MultiImage
+                        style={styles.serviceMultiImage}
+                        source={logosForService(service)}
+                      />
+                    </TouchableDefaultOpacity>
+                  </Col>
+                )}
+              </Grid>
+            )}
 
-          {/* Subject */}
-          <View style={styles.subjectContainer}>
-            <H1>{message.content.subject}</H1>
+            {/* Subject */}
+            <View style={styles.subjectContainer}>
+              <H1>{message.content.subject}</H1>
+            </View>
           </View>
-        </View>
 
-        {(this.state.isContentLoadCompleted && messageNeedsCTABar(message)) && (
-          <MessageCTABar
-            message={message}
-            service={service}
-            payment={payment}
-          />
-        )}
+          {this.state.isContentLoadCompleted &&
+            messageNeedsCTABar(message) && (
+              <MessageCTABar
+                message={message}
+                service={service}
+                payment={payment}
+              />
+            )}
 
-        <MessageMarkdown 
-          webViewStyle={styles.webview}
-          onLoadEnd={this.onMarkdownLoadEnd}
-        >
-          {message.content.markdown}
-        </MessageMarkdown>
+          <MessageMarkdown
+            webViewStyle={styles.webview}
+            onLoadEnd={this.onMarkdownLoadEnd}
+          >
+            {message.content.markdown}
+          </MessageMarkdown>
 
-        {this.state.isContentLoadCompleted &&(  
-          <MessageDetailData
-            message={message}
-            serviceDetail={potServiceDetail}
-            serviceMetadata={potServiceMetadata}
-            isDebugModeEnabled={isDebugModeEnabled}
-            goToServiceDetail={onServiceLinkPress}
-          />
-        )}
-        <View spacer={true} large={true}/>
-      </Content>
-      <FooterWithButtons type={'SingleButton'} leftButton={{
-        bordered: true,
-        title: I18n.t('messages.cta.reminder'),
-        iconName: 'io-plus'
-      }}/>
+          {this.state.isContentLoadCompleted && (
+            <MessageDetailData
+              message={message}
+              serviceDetail={potServiceDetail}
+              serviceMetadata={potServiceMetadata}
+              goToServiceDetail={onServiceLinkPress}
+            />
+          )}
+          <View spacer={true} large={true} />
+        </Content>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={{
+            bordered: true,
+            title: I18n.t("messages.cta.reminder"),
+            iconName: "io-plus"
+          }}
+        />
       </React.Fragment>
     );
   }
