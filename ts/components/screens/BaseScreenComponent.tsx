@@ -93,7 +93,23 @@ class BaseScreenComponent extends React.PureComponent<Props, State> {
   }
 
   private handleOnRequestAssistance = (type: BugReporting.reportType) => {
-    this.setState({ contextualHelpModalAnimation: "none" }, () => {
+    // don't close modal if the report isn't a bug (bug brings a screenshot)
+    if (type !== BugReporting.reportType.bug) {
+      this.setState(
+        { requestReport: some(type) },
+        this.handleOnContextualHelpDismissed
+      );
+
+      return;
+    }
+    const contextualHelpModalAnimation = Platform.select<
+      ModalBaseProps["animationType"]
+    >({
+      ios: "slide",
+      android: "none",
+      default: "none"
+    });
+    this.setState({ contextualHelpModalAnimation }, () => {
       this.setState({ isHelpVisible: false }, () => {
         this.setState({ requestReport: some(type) }, () => {
           // since in Android we have no way to handle Modal onDismiss event https://reactnative.dev/docs/modal#ondismiss
