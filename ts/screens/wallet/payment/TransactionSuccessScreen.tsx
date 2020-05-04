@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -6,8 +5,9 @@ import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import BlockButtons from "../../../components/ui/BlockButtons";
 import IconFont from "../../../components/ui/IconFont";
+import I18n from "../../../i18n";
 import {
   navigateToTransactionDetailsScreen,
   navigateToWalletHome
@@ -49,20 +49,25 @@ class TransactionSuccessScreen extends React.PureComponent<Props> {
           </Text>
         </Content>
 
-        <FooterWithButtons
-          type={"SingleButton"}
-          upperButton={{
-            title: I18n.t("wallet.receipt2"),
-            primary: true,
-            onPress: () => this.props.navigateToReceipt(this.transaction)
-          }}
-          leftButton={{
-            title: I18n.t("wallet.backToPayments"),
-            light: true,
-            bordered: true,
-            onPress: this.props.resetToWalletHome
-          }}
-        />
+        <View footer={true}>
+          <BlockButtons
+            type={"SingleButton"}
+            leftButton={{
+              title: I18n.t("wallet.receipt"),
+              primary: true,
+              onPress: () => this.props.navigateToReceipt(this.transaction)
+            }}
+          />
+          <BlockButtons
+            type={"SingleButton"}
+            leftButton={{
+              title: I18n.t("wallet.backToPayments"),
+              light: true,
+              bordered: true,
+              onPress: this.props.resetToWalletHome
+            }}
+          />
+        </View>
       </BaseScreenComponent>
     );
   }

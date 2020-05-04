@@ -1,8 +1,8 @@
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
@@ -16,6 +16,7 @@ import {
   BottomTopAnimation,
   LightModalContextInterface
 } from "../../components/ui/LightModal";
+import I18n from "../../i18n";
 import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
@@ -24,6 +25,7 @@ import customVariables from "../../theme/variables";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
 type Props = ReturnType<typeof mapStateToProps> &
+  NavigationInjectedProps &
   ReturnType<typeof mapDispatchToProps> &
   LightModalContextInterface;
 
@@ -97,7 +99,11 @@ class FiscalCodeScreen extends React.PureComponent<Props> {
         <DarkLayout
           allowGoBack={true}
           headerBody={
-            <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
+            <TouchableDefaultOpacity
+              onPress={() => this.props.navigation.goBack()}
+            >
+              <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
+            </TouchableDefaultOpacity>
           }
           contentStyle={styles.darkBg}
           contextualHelpMarkdown={contextualHelpMarkdown}

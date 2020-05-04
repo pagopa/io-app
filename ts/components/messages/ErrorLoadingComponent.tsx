@@ -1,7 +1,7 @@
-import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 
 const styles = StyleSheet.create({

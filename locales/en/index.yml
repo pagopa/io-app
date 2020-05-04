@@ -1,5 +1,6 @@
 ---
 global:
+  ioWebSite: https://io.italia.it
   symbols:
     question: "?"
   localization:
@@ -14,6 +15,7 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
   genericError: Ooops, something did not work as expected, please try again!
+  genericAlert: Warning!
   genericWaiting: Wait a few seconds..
   genericThanks: Thank you
   jserror:
@@ -120,6 +122,7 @@ profile:
     forgetCurrentSession: Forget current session
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
+    developerModeOn: Developer mode enabled
     cache:
       alert: Are you sure you want to clear the cache?
       clear: Clear cache
@@ -133,22 +136,22 @@ profile:
     privacy:
       title: Information and conditions of use
       description: Export data, delete account
-      subtitle: Here you find information related to your personal data.  
+      subtitle: Here you find information related to your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
         title: Delete your account
         description: Remove all data associated to your account from your phone and
           our systems
-        alert: 
+        alert:
           requestTitle: Are you sure you want to delete your account?
           requestSubtitle: All your messages and personal settings will be lost.
           oldRequest: We are already proceeding to delete your account
           confirmSubtitle: After processing, you will receive an email confirming the deletion.
-        error: An error occurred while submit your deletion request, please retry! 
+        error: An error occurred while submit your deletion request, please retry!
       exportData:
         title: Export your data
         description: Send to your email all your account’s data in an open format
-        alert: 
+        alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
           confirmSubtitle: After processing, you will receive an email containing all your data.
@@ -272,7 +275,7 @@ authentication:
     card5-title: Welcome to the public version of IO!
     card5-content: In this version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
-      We're waiting for your feedbacks!
+      We're waiting for your feedback!
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Card expired
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
@@ -475,29 +478,6 @@ onboarding:
         faceId: FaceID
         touchId: TouchID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
-  email:
-    validation:
-      title: Remember to validate your email address
-      headerTitle: Email validation
-      info: "We sent an email to <b>{{email}}</b> with a link to validate your email:
-        click simply on that link.<br/>
-        Until you will not validate your email address, some app functionalities
-        (payments, messages forwarding by email, etc.) will not be available, but you
-        will be able to use some other functions anyway (i.e. services, messages, etc.)"
-      ctaValidate: Send a new validation email
-      emailSentFeedback: Email sent
-      help: Your SPID profile communicates your email to IO app. If you find the address
-        wrong or that you do not use it anymore, you can edit it directly from your SPID
-        services provider account.
-    insert:
-      headerTitle: Activation
-      title: Insert your email
-      help:
-        title: Email
-        content: !include email_insert_help.md
-    ctaEdit: Edit email
-    subtitle: Some IO app functions need your email.
-    emailInputLabel: Personal email address
 pin_login:
   pin:
     pinInfo: Enter the unlock code
@@ -534,18 +514,43 @@ datetimes:
   yesterday: yesterday
   todayAt: today, at
 payment:
+  errorDetails: Details
   currentPsp: Your current PSP is
   noPsp: You have yet to select a PSP
   changePsp: Change PSP
   IUV: IUV
   recipientFiscalCode: Recipient fiscal code
+  details:
+    state:
+      successful: Successful
+      incomplete: Not finished
+      failed: Failed
+    info:
+      buttons:
+        copy: copy
+        help: Contact support
+      title: Payment Detail
+      enteCreditore: Creditor
+      causaleVersamento: Causal
+      dateAndTime: Date and time
+      paymentAmount: Payment amount
+      transactionCosts: Transaction costs
+      totalPaid: Total paid
+      transactionCode: Transaction identification code
+      help: If you have encountered a problem with this payment, write to us for more information and details
+    list:
+      empty:
+          title: No payment attempts
+          description: IO didn't store any payment attempts. Here you can find last payment attempts
+      title: Payment attempts
+      iuv: IUV payment {{iuv}}
 wallet:
   wallet: Payments
   alert:
     msgErrorUpdateApp: "An error occurred while opening the app store"
     titlePagoPaUpdateApp: Update required
     messagePagoPaUpdateApp: "IO often introduces small improvements and new features: to continue using the wallet you need to update the app to the latest version."
-    btnUpdateApp: Update the IO app 
+    btnUpdateApp: Update the IO app
   contextualHelpTitle: About this section
   contextualHelpContent: !include wallet/wallet_home.md
   creditcards: Credit Cards
@@ -555,8 +560,12 @@ wallet:
   walletLoadFailure: Loading payment methods has failed, please retry.
   transactionsLoadMessage: Loading transactions...
   transactionsLoadFailure: Loading your transactions has failed, please retry.
-  transactionsLoadMore: Load more
-  transacionsLoadingMore: Loading more transactions...
+  transactionHelpMessage:
+    text1: If you have had problems during a payment,
+    text2: consult the help
+    text3: at the top right of this page
+  transactionsLoadMore: Load previous
+  transacionsLoadingMore: Loading previous...
   pickPaymentMethod:
     unavailable:
       title: This payment method is not available at this time
@@ -617,8 +626,7 @@ wallet:
     partialAmount: Amount to pay
     fee: Fee
     why: Why?
-    totalAmount: Total amount
-    info: 'Warning: after this step it will not be possible to come back'
+    info: 'After this step it will not be possible to come back.'
     info2: You are using your favourite payment method.
     changeMethod: Change the payment method
     change: Change method
@@ -644,23 +652,24 @@ wallet:
   firstTransactionSummary:
     header: Transaction notice summary
     title: Transaction notice
-    amount: Amount
+    amount: Transaction amount
+    total: Total paid
     expireDate: Expire date
     tranche: Tranche
-    entity: 'Entity:'
     info: 'More info at:'
     tel: 'Tel:'
     email: 'Email:'
     PEC: 'PEC:'
-    recipient: 'Recipient:'
-    object: 'Transaction object:'
-    cbillCode: 'CBILL code:'
-    iuv: 'IUV:'
-    entityCode2: 'Entity/Company code:'
+    recipient: Recipient
+    object: Reason
+    date: Date and Time
+    iuv: IUV code
+    entityCode: Entity fiscal code
+    fee: Fee
+    idTransaction: Transaction identification code
     updatedAmount: Updated amount
     updateInfo: 'The pagoPa system updates automatically the amount to ensure you
       pay the exact amount and to avoid you arrears or additional interests '
-    moreInfo: More details
     loadingMessage:
       activation: I'm alerting the entity, wait a few seconds..
       verification: I am checking the status and the amount of your notice..
@@ -694,8 +703,7 @@ wallet:
   date: Date
   time: Time
   psp: Payment provider
-  receipt: Receipt
-  receipt2: Transaction receipt
+  receipt: Transaction receipt
   seeReceipt: See Receipt
   transactions: Transactions
   transaction: Transaction
@@ -704,12 +712,11 @@ wallet:
   noneTransactions: There are no transactions
   noTransactionsInWalletHome: You haven't executed any operation yet.
   noTransactionsInTransactionsScreen: You never used this payment method to pay with IO or pagoPA. In this list you will only see the transactions performed with this method.
-  moreInfo: Learn more
   payNotice: Pay notice
   latestTransactions: Your latest transactions
   creditDebitCards: Credit/Debit Cards
   addPaymentMethodTitle: Add payment method
-  continue: Continue
+  continue: Pay this notice
   backToPayments: Back to payments
   methods:
     comingSoon: incoming
@@ -719,11 +726,11 @@ wallet:
     bank:
       name: Bancomat Pay
       maxFee: Maximum fee of 0.50€
-    satispay: 
+    satispay:
       name: Satispay
-    postepay: 
+    postepay:
       name: Postepay
-    paypal: 
+    paypal:
       name: Paypal
     notImplemented: Coming soon
   addCardTitle: Card details
@@ -912,7 +919,7 @@ biometric_recognition:
   enroll_cta: Biometric recognition is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
   enroll_btnLabel: Go to settings
   needed_to_disable: Recognition required to disable
-send_email_messages: 
+send_email_messages:
   title: Forward messages by email
   subtitle: Do you want IO to forward messages contents by email to
   options:
@@ -1001,24 +1008,30 @@ calendarEvents:
 reminders:
   emptyMonth: No reminders for this month
   loadMoreData: previous deadlines
-  noOtherDeadlines: There are no more deadlines
-  email:
-    title: Remember to validate your email address
-    modal1: "Some functionalities of IO require you validate your email address. \n We sent an email to"
-    modal2: "open your email client and click on the link."
-    button1: Send another verification email
-    button2: Change email address
+  noOtherDeadlines: There are no more deadline
 openMaps:
   genericError: An error occurred while opening the map
 genericError: An error occurred
 titleUpdateApp: Update IO!
 msgErrorUpdateApp: "An error occurred while opening the app store"
-messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need 
+messageUpdateApp: "IO often introduces small improvements and new features: to continue using the app you need
   to update it to the latest version."
 btnUpdateApp: Update the IO app
 systemsOff:
   title: Unable to start IO
   closeApp: close the application and try again
+contextualHelp:
+  title: IO helps you
+instabug:
+  contextualHelp:
+    title1: Do you need help?
+    buttonChat: Send us a message
+    description: "Remember that if you have any doubts about the content of a message, we suggest you to contact the public administration that sent it to you directly: you will find the contact details at the bottom of the message or in the relevant service card."
+    descriptionChat: "If you have found an error or something that is not working in the app, report a bug to the developers: they will take care of the problem as soon as possible and they will answer you directly via IO."
+    buttonBug: Report a bug
+    descriptionBug: You can report an error or something that does not work to our developers, they will take care of the problem as soon as possible.
+    title2: Are you new to IO?
+    descriptionLink: Find out more about the IO project, its history and what news await you by visiting the website
 faq:
   1:
     title: "What is SPID?"
@@ -1029,7 +1042,7 @@ faq:
   3:
     title: "Have you lost your SPID credentials?"
     content: !include faq/faq3.md
-  4: 
+  4:
     title: "What is CIE?"
     content: !include faq/faq4.md
   5:
@@ -1074,7 +1087,7 @@ faq:
   19:
     title: "Is biometric recognition safe?"
     content: !include faq/faq19.md
-  20: 
+  20:
     title: "When will you be asked for biometric recognition?"
     content: !include faq/faq20.md
   21:
@@ -1128,7 +1141,7 @@ faq:
   37:
     title: "What payment methods can you add?"
     content: !include faq/faq37.md
-  38: 
+  38:
     title: "Are transaction summary and payment receipt the same thing?"
     content: !include faq/faq38.md
   39:
@@ -1185,3 +1198,6 @@ faq:
   56:
     title: "Come cancellare tutti i tuoi dati da IO?"
     content: !include faq/faq56.md
+  57:
+    title: "Did you have problems during a payment?"
+    content: !include faq/faq57.md

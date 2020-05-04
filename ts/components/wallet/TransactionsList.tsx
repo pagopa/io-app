@@ -1,6 +1,7 @@
 /**
  * This component displays a list of transactions
  */
+import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -10,13 +11,12 @@ import {
   ListRenderItemInfo,
   StyleSheet
 } from "react-native";
-import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
-import { centsToAmount, formatNumberAmount } from "../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
@@ -35,6 +35,7 @@ type Props = Readonly<{
   areMoreTransactionsAvailable: boolean;
   onLoadMoreTransactions: () => void;
   navigateToTransactionDetails: (transaction: Transaction) => void;
+  helpMessage?: React.ReactNode;
   ListEmptyComponent?: React.ReactNode;
   readTransactions: ReadTransactionsState;
 }>;
@@ -51,6 +52,10 @@ const styles = StyleSheet.create({
   },
   brandDarkGray: {
     color: variables.brandDarkGray
+  },
+  textStyleHelp: {
+    lineHeight: 18,
+    fontSize: 13
   },
   moreButton: {
     flex: 1,
@@ -91,7 +96,7 @@ export default class TransactionsList extends React.Component<Props, State> {
     // Check if the current transaction is stored among the read transactions.
     const isNew = this.props.readTransactions[item.id.toString()] === undefined;
 
-    const amount = formatNumberAmount(centsToAmount(item.amount.amount));
+    const amount = formatNumberCentsToAmount(item.amount.amount);
     const datetime: string = `${formatDateAsLocal(
       item.created,
       true,
@@ -172,6 +177,7 @@ export default class TransactionsList extends React.Component<Props, State> {
             <Text>{I18n.t("wallet.amount")}</Text>
           </View>
         </View>
+        {this.props.helpMessage}
         <FlatList
           scrollEnabled={false}
           data={transactions}

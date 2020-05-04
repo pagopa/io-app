@@ -1,5 +1,4 @@
 import { none, Option, some } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import React from "react";
@@ -10,17 +9,21 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   RefreshControl,
-  StyleSheet
+  StyleSheet,
+  Vibration
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import I18n from "../../i18n";
 import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import { ServicesByIdState } from "../../store/reducers/entities/services/servicesById";
-import customVariables from "../../theme/variables";
+import customVariables, {
+  VIBRATION_LONG_PRESS_DURATION
+} from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
@@ -272,6 +275,7 @@ class MessageList extends React.Component<Props, State> {
   };
 
   private onLongPress = (id: string) => {
+    Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
     const { messageStates, onLongPressItem } = this.props;
     onLongPressItem(id);
     const lastIndex = messageStates.length - 1;
