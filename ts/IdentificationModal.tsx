@@ -369,9 +369,13 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const canInsertPin =
       this.state.canInsertPinBiometry && this.state.canInsertPinTooManyAttempts;
 
-    const remainingAttempts = this.props.identificationFailState.fold(
+    // display the remaining attempts number only if start to lock the application for too many attempts
+    const displayRemainingAttempts = this.props.identificationFailState.fold(
       undefined,
-      failState => failState.remainingAttempts
+      failState =>
+        failState.remainingAttempts <= maxAttempts - freeAttempts
+          ? failState.remainingAttempts
+          : undefined
     );
 
     /**
@@ -439,7 +443,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   ? onIdentificationCancelHandler
                   : undefined
               }
-              remainingAttempts={remainingAttempts}
+              remainingAttempts={displayRemainingAttempts}
             />
             {renderIdentificationByPinState(identificationByPinState)}
             {renderIdentificationByBiometryState(identificationByBiometryState)}
