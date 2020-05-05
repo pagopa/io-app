@@ -14,7 +14,7 @@ import {
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
-const freeAttempts = 4;
+export const freeAttempts = 4;
 const deltaTimespanBetweenAttempts = 30 as Second;
 
 export const maxAttempts = 8;

@@ -21,7 +21,11 @@ import {
   identificationSuccess
 } from "./store/actions/identification";
 import { ReduxProps } from "./store/actions/types";
-import { identificationFailSelector } from "./store/reducers/identification";
+import {
+  freeAttempts,
+  identificationFailSelector,
+  maxAttempts
+} from "./store/reducers/identification";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 import { authenticateConfig } from "./utils/biometric";
@@ -55,6 +59,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.pin.contextualHelpTitle",
   body: "onboarding.pin.contextualHelpContent"
 };
+
+const checkPinInterval = 100 as Millisecond;
+
+// the threshold of attempts after which it is necessary to activate the timer check
+const checkTimerThreshold = maxAttempts - freeAttempts;
 
 const renderIdentificationByPinState = (
   identificationByPinState: IdentificationByPinState
@@ -131,17 +140,39 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
   }
 
-  private idCheckCanInsertPin?: number;
+  private idUpdateCanInsertPinTooManyAttempts?: number;
 
-  private checkCanInsertPin = () => {
-    const identificationFailState = this.props.identificationFailState;
-    const now = new Date();
-    identificationFailState.map(errorData => {
+  /**
+   * Update the state using the actual props value of the `identificationFailState`
+   * return the updated value of `canInsertPinTooManyAttempts` in order to be used without waiting the state update
+   */
+  private updateCanInsertPinTooManyAttempts = () => {
+    return this.props.identificationFailState.map(errorData => {
+      const now = new Date();
+      const canInsertPinTooManyAttempts = errorData.nextLegalAttempt <= now;
       this.setState({
-        canInsertPinTooManyAttempts: errorData.nextLegalAttempt <= now,
+        canInsertPinTooManyAttempts,
         countdown: (errorData.nextLegalAttempt.getTime() -
           now.getTime()) as Millisecond
       });
+      return canInsertPinTooManyAttempts;
+    });
+  };
+
+  /**
+   * Activate the interval check on the pin state if the condition is satisfied
+   * @param remainingAttempts
+   */
+  private scheduleCanInsertPinUpdate = () => {
+    this.props.identificationFailState.map(failState => {
+      if (failState.remainingAttempts < checkTimerThreshold) {
+        this.updateCanInsertPinTooManyAttempts();
+        // tslint:disable-next-line: no-object-mutation
+        this.idUpdateCanInsertPinTooManyAttempts = setInterval(
+          this.updateCanInsertPinTooManyAttempts,
+          checkPinInterval
+        );
+      }
     });
   };
 
@@ -163,16 +194,16 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       this.setState({ canInsertPinBiometry: true });
     }
 
-    // tslint:disable-next-line: no-object-mutation
-    this.idCheckCanInsertPin = setInterval(this.checkCanInsertPin, 100);
-    this.checkCanInsertPin();
+    // first time the component is mounted, need to calculate the state value for `canInsertPinTooManyAttempts`
+    // and schedule the update if needed
+    this.updateCanInsertPinTooManyAttempts().map(_ =>
+      this.scheduleCanInsertPinUpdate()
+    );
   }
 
+  // atm this method is never called because the component won't be never unmount
   public componentWillUnmount() {
-    if (this.idCheckCanInsertPin !== undefined) {
-      clearTimeout(this.idCheckCanInsertPin);
-    }
-    clearInterval(this.idCheckCanInsertPin);
+    clearInterval(this.idUpdateCanInsertPinTooManyAttempts);
   }
 
   /**
@@ -229,7 +260,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     }
   }
 
-  public componentDidUpdate(prevProps: Props) {
+  public componentDidUpdate(prevProps: Props, prevState: State) {
     // When app becomes active from background the state of TouchID support
     // must be updated, because it might be switched off.
     if (
@@ -242,6 +273,36 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         updateBiometrySupportProp:
           prevProps.appState !== "active" && this.props.appState === "active"
       });
+    }
+
+    const previousAttempts = prevProps.identificationFailState
+      .map(x => x.remainingAttempts)
+      .getOrElse(Number.MAX_VALUE);
+    const currentAttempts = this.props.identificationFailState
+      .map(x => x.remainingAttempts)
+      .getOrElse(Number.MAX_VALUE);
+
+    // trigger an update in the management of the updateInterval if the attempts or the state
+    // `canInsertPinTooManyAttempts` is changed
+    if (
+      previousAttempts !== currentAttempts ||
+      prevState.canInsertPinTooManyAttempts !==
+        this.state.canInsertPinTooManyAttempts
+    ) {
+      // trigger a state update based on the current props and use the results to choose what to do
+      // with the scheduled interval
+      const caninsertPin = this.updateCanInsertPinTooManyAttempts().getOrElse(
+        true
+      );
+      // if the pin can be inserted, the timer is no longer needed
+      if (caninsertPin) {
+        clearInterval(this.idUpdateCanInsertPinTooManyAttempts);
+        this.idUpdateCanInsertPinTooManyAttempts = undefined;
+
+        // if the pin can't be inserted and is not scheduled an interval, schedule an update
+      } else if (this.idUpdateCanInsertPinTooManyAttempts === undefined) {
+        this.scheduleCanInsertPinUpdate();
+      }
     }
   }
 
