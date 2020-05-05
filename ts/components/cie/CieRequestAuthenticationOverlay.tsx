@@ -3,13 +3,7 @@
  */
 import { View } from "native-base";
 import * as React from "react";
-import {
-  BackHandler,
-  NavState,
-  StyleSheet,
-  Platform,
-  Text
-} from "react-native";
+import { BackHandler, NavState, StyleSheet, Platform } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -44,21 +38,10 @@ const styles = StyleSheet.create({
 // INFRA DEV -> xx_servizicie_test
 const CIE_IDP_ID = "xx_servizicie";
 
-const injectJsiOS: string = `
-is.androidTablet = () => true;
-is.androidPhone = () => true;
-is.not.ipad = () => true;
-is.chrome = () => true;
-is.not.edge = () => true;
-is.not.opera = () => true;
-  alert("finito");
-  true;
-`;
-
 // this value assignment tries to decrease the sleeping time of a script
 // sleeping is due to allow user to read page content until the content changes to an
 // automatic redirect
-const injectJs = Platform.select({ ios: injectJsiOS, default: "" });
+const injectJs = "seconds = 0;";
 
 const iOSUserAgent =
   "Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36";
@@ -103,13 +86,17 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     if (this.state.findOpenApp) {
       return false;
     }
-    if (event.url !== undefined && event.url.indexOf("errore.jsp") !== -1) {
-      // injectJavascript: `window.location.href = 'https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&OpenApp=1&value='+b+'&authnRequestString='+c;`
+    if (
+      Platform.OS === "ios" &&
+      event.url !== undefined &&
+      event.url.indexOf("errore.jsp") !== -1
+    ) {
       this.setState({
         injectJavascript: `window.location.href = 'https://idserver.servizicie.interno.gov.it/OpenApp?nextUrl=https://idserver.servizicie.interno.gov.it/idp/Authn/X509&name='+a+'&value='+b+'&authnRequestString='+c+'&OpText='+d+'&imgUrl='+f;`
       });
       return false;
     }
+
     // TODO: check if we can distinguish among different type of errors
     //      some errors could suggest ro redirect the user to the landing screen , not back
     if (event.url && event.url.indexOf("errore") !== -1) {
@@ -188,7 +175,7 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
     ));
     return (
       <ContainerComponent
-        isLoading={false}
+        isLoading={true}
         loadingOpacity={1.0}
         loadingCaption={I18n.t("global.genericWaiting")}
         onCancel={this.props.onClose}
