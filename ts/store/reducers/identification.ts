@@ -1,4 +1,3 @@
-import { Second } from "italia-ts-commons/lib/units";
 import { getType } from "typesafe-actions";
 
 import { fromNullable } from "fp-ts/lib/Option";
@@ -15,7 +14,7 @@ import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 export const freeAttempts = 4;
-const deltaTimespanBetweenAttempts = 30 as Second;
+const deltaTimespanBetweenAttempts = 30;
 
 export const maxAttempts = 8;
 

@@ -49,7 +49,7 @@ export const IdentificationLockModal: React.FunctionComponent<
   Props
 > = props => {
   const minuteSeconds = fromNullable(props.countdown).fold("0:00", x =>
-    fromMillisecondsToTimeRepresentation(x as Millisecond)
+    fromMillisecondsToTimeRepresentation(x)
   );
 
   return (

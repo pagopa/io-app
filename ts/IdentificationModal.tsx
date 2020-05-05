@@ -297,6 +297,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       // if the pin can be inserted, the timer is no longer needed
       if (caninsertPin) {
         clearInterval(this.idUpdateCanInsertPinTooManyAttempts);
+        // tslint:disable-next-line: no-object-mutation
         this.idUpdateCanInsertPinTooManyAttempts = undefined;
 
         // if the pin can't be inserted and is not scheduled an interval, schedule an update
