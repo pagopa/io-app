@@ -27,7 +27,7 @@ import { authenticateConfig } from "./utils/biometric";
 
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
@@ -49,7 +49,7 @@ type State = {
   biometryType?: BiometryPrintableSimpleType;
   canInsertPinBiometry: boolean;
   canInsertPinTooManyAttempts: boolean;
-  countdown: Option<Millisecond>;
+  countdown?: Millisecond;
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -128,7 +128,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       identificationByPinState: "unstarted",
       identificationByBiometryState: "unstarted",
       canInsertPinBiometry: false,
-      countdown: none,
       canInsertPinTooManyAttempts:
         this.props.identificationFailState === undefined
     };
@@ -142,8 +141,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     fromNullable(identificationFailState).map(errorData => {
       this.setState({
         canInsertPinTooManyAttempts: errorData.nextLegalAttempt <= now,
-        countdown: some((errorData.nextLegalAttempt.getTime() -
-          now.getTime()) as Millisecond)
+        countdown: (errorData.nextLegalAttempt.getTime() -
+          now.getTime()) as Millisecond
       });
     });
   };

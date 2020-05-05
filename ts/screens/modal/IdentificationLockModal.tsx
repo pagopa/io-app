@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { Option } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -8,7 +8,7 @@ import I18n from "../../i18n";
 
 type Props = {
   // milliseconds
-  countdown: Option<Millisecond>;
+  countdown?: Millisecond;
 };
 
 const styles = StyleSheet.create({
@@ -48,7 +48,7 @@ const fromMillisecondsToTimeRepresentation = (ms: Millisecond): string =>
 export const IdentificationLockModal: React.FunctionComponent<
   Props
 > = props => {
-  const minuteSeconds = props.countdown.fold("0:00", x =>
+  const minuteSeconds = fromNullable(props.countdown).fold("0:00", x =>
     fromMillisecondsToTimeRepresentation(x as Millisecond)
   );
 
