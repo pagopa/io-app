@@ -46,6 +46,6 @@ include ':react-native-cie'
 project(':react-native-cie').projectDir = new File(rootProject.projectDir, '../node_modules/@pagopa/react-native-cie/android')
 include ':react-native-community-netinfo'
 project(':react-native-community-netinfo').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/netinfo/android')
-include ':react-native-fingerprint-scanner'
-project(':react-native-fingerprint-scanner').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fingerprint-scanner/android')
+include ':react-native-biometrics'
+project(':react-native-biometrics').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-biometrics/android')
 include ':app'

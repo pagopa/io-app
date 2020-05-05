@@ -2,6 +2,7 @@ package it.pagopa.io.app;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.rnbiometrics.ReactNativeBiometricsPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.sha256lib.Sha256Package;
 import com.kevinejohn.RNMixpanel.RNMixpanel;
@@ -16,7 +17,6 @@ import com.rnfs.RNFSPackage;
 import com.levelasquez.androidopensettings.AndroidOpenSettingsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.calendarevents.CalendarEventsPackage;
-import com.hieuvp.fingerprint.ReactNativeFingerprintScannerPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.horcrux.svg.SvgPackage;
 import com.RNTextInputMask.RNTextInputMaskPackage;
@@ -56,10 +56,10 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new ReactNativeBiometricsPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
           new ImagePickerPackage(), new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
           new RNGestureHandlerPackage(), new CalendarEventsPackage(), new RNCWebViewPackage(),
-          new ReactNativeFingerprintScannerPackage(), new BackgroundTimerPackage(), new SvgPackage(), new RNTextInputMaskPackage(),
+          new BackgroundTimerPackage(), new SvgPackage(), new RNTextInputMaskPackage(),
           new SplashScreenReactPackage(), new ReactNativeExceptionHandlerPackage(), new RNCameraPackage(),
           new ReactNativePushNotificationPackage(), new KeychainPackage(), new RNI18nPackage(), new Sha256Package(),
           new RNMixpanel(), new RNDeviceInfo(), new ReactNativeConfigPackage(),new CiePackage(),
