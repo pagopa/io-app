@@ -281,6 +281,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     if (pot.isSome(potMessage) && !pot.isLoading(potServiceDetail)) {
       refreshService(potMessage.value.sender_service_id);
     }
+    pot.map(potMessage, m => {
+      this.props.loadServiceMetadata(m.sender_service_id as ServiceId);
+    });
     this.setMessageReadState();
   }
 
@@ -335,11 +338,12 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
     .getOrElse(pot.none);
 
   // Map the potential message to the potential service
-  const potServiceMetadata = maybeMessageState
-    .mapNullable(_ =>
-      serviceMetadataByIdSelector(_.meta.sender_service_id)(state)
-    )
-    .getOrElse(pot.none);
+  const potServiceMetadata = pot.getOrElse(
+    pot.map(potMessage, m =>
+      serviceMetadataByIdSelector(m.sender_service_id)(state)
+    ),
+    pot.none
+  );
 
   return {
     maybeMeta,

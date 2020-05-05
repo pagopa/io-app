@@ -73,24 +73,34 @@ class MessageDetailData extends React.PureComponent<Props> {
     };
   }
 
+  get hasEmailOrPhone(): boolean {
+    return this.data.metadata.fold(
+      false,
+      m => m.phone !== undefined || m.email !== undefined
+    );
+  }
+
   private callService = () =>
     this.data.metadata.map(p => {
       fromNullable(p.phone).map(phoneNumber =>
-        handleItemOnPress(`tel:${phoneNumber}`)
+        handleItemOnPress(`tel:${phoneNumber}`)()
       );
     });
 
   private sendEmailToService = () =>
     this.data.metadata.map(p => {
-      fromNullable(p.email).map(email => handleItemOnPress(`mailto:${email}`));
+      fromNullable(p.email).map(email =>
+        handleItemOnPress(`mailto:${email}`)()
+      );
     });
 
   private renderButtons = () => {
-    if (this.data.metadata.isNone()) {
+    if (!this.hasEmailOrPhone) {
       return undefined;
     }
     const phone = this.data.metadata.fold(undefined, m => m.phone);
     const email = this.data.metadata.fold(undefined, m => m.email);
+
     const callButton: BlockButtonProps = {
       bordered: true,
       white: true,
@@ -153,24 +163,27 @@ class MessageDetailData extends React.PureComponent<Props> {
               </Text>
             </Text>
           )}
+        {this.hasEmailOrPhone && (
+          <React.Fragment>
+            <View spacer={true} />
 
-        <View spacer={true} />
+            <Text bold={true}>{I18n.t("messageDetails.question")}</Text>
+            <Text>{I18n.t("messageDetails.answer")}</Text>
 
-        <Text bold={true}>{I18n.t("messageDetails.question")}</Text>
-        <Text>{I18n.t("messageDetails.answer")}</Text>
+            <View spacer={true} />
 
-        <View spacer={true} />
-
-        <React.Fragment>
-          <View style={styles.row}>
-            <Text style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
-              this.props.message.id
-            }`}</Text>
-            <CopyButtonComponent textToCopy={this.props.message.id} />
-          </View>
-          <View spacer={true} />
-        </React.Fragment>
-        {this.renderButtons()}
+            <React.Fragment>
+              <View style={styles.row}>
+                <Text style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
+                  this.props.message.id
+                }`}</Text>
+                <CopyButtonComponent textToCopy={this.props.message.id} />
+              </View>
+              <View spacer={true} />
+            </React.Fragment>
+            {this.renderButtons()}
+          </React.Fragment>
+        )}
       </View>
     );
   }
