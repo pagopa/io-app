@@ -124,11 +124,11 @@ profile:
     contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Modalità sviluppatore attivata
     cache:
-      alert: Sei sicuro di voler eliminare la cache?
+      alert: Vuoi davvero eliminare la cache?
       clear: Elimina cache
       cleared: La cache è stata eliminata.
     resetPin:
-      confirmTitle: Sei sicuro di voler reimpostare il codice di sblocco?
+      confirmTitle: Vuoi davvero reimpostare il codice di sblocco?
       confirmMsg: Ti verrà richiesto nuovamente di accedere.
     preferences:
       title: Preferenze
@@ -144,7 +144,7 @@ profile:
           Elimina sia dal telefono che da internet tutti i data ad esso
           associati
         alert:
-          requestTitle: Sei sicuro di voler cancellare il tuo account?
+          requestTitle: Vuoi davvero cancellare il tuo account?
           requestSubtitle: Tutti i tuoi messaggi e le tue preferenze saranno eliminati definitivamente.
           oldRequest: Abbiamo già preso in carico una richiesta di eliminazione del tuo profilo.
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell\'avvenuta eliminazione.
@@ -155,7 +155,7 @@ profile:
           Ricevi nella tua email tutti i dati associati al tuo account in
           un formato aperto
         alert:
-          requestTitle: Sei sicuro di voler esportare tutti i tuoi dati?
+          requestTitle: Vuoi davvero esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo.
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
@@ -175,7 +175,7 @@ profile:
     developersSectionHeader: Sviluppatori
     experimentalFeatures:
       confirmTitle: Funzionalità sperimentali
-      confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
+      confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Vuoi davvero abilitarle?
       bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     pagoPaEnvironment:
       pagoPaEnv: Ambiente pagoPA di Test
@@ -300,7 +300,7 @@ authentication:
     noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
-      noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
+      noNfcConnectionTitle: Hai appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
       enableNfcTitle: Attiva NFC
       enableNfcHeader: Verifica NFC
@@ -313,7 +313,7 @@ authentication:
       incorrectCiePinHeaderTitle: PIN errato
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
-      alert: Sei sicuro di voler tornare indietro?
+      alert: Vuoi davvero tornare indietro?
     pinTempLocked:
       header: Pin bloccato
       title: Carta temporaneamente bloccata
@@ -899,7 +899,7 @@ messages:
     reminderAddSuccess: "Promemoria aggiunto"
     reminderAddFailure: "Errore durante l'aggiunta del promemoria, riprova per piacere"
     reminderRemoveRequest:
-      title: Sei sicuro di voler rimuovere il promemoria?
+      title: Vuoi davvero rimuovere il promemoria?
       ok: Rimuovi promemoria
       cancel: Annulla l'operazione
     reminderRemoveSuccess: "Promemoria eliminato"
@@ -1035,7 +1035,7 @@ identification:
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
   removeRequest:
-    title: Sei sicuro di voler rimuovere l'evento?
+    title: Vuoi davvero rimuovere l'evento?
     ok: Rimuovi evento
     cancel: Annulla l'operazione
 reminders:
