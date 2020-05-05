@@ -642,6 +642,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         >
           <ServicesTab
             isLocal={true}
+            isAll={false}
             sections={localTabSections}
             isRefreshing={isRefreshing}
             onRefresh={this.refreshScreenContent}
@@ -668,6 +669,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           heading={I18n.t("services.tab.national")}
         >
           <ServicesTab
+            isAll={false}
             sections={nationalTabSections}
             isRefreshing={isRefreshing}
             onRefresh={this.refreshScreenContent}
@@ -685,6 +687,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           heading={I18n.t("services.tab.all")}
         >
           <ServicesTab
+            isAll={true}
             sections={allTabSections}
             isRefreshing={isRefreshing}
             onRefresh={this.refreshScreenContent}

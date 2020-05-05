@@ -30,6 +30,7 @@ import {
   deleteWalletRequest,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
+import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
 import {
   areMoreTransactionsAvailable,
@@ -177,6 +178,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   transactions: getWalletTransactionsCreator(
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state),
+  potPayments: paymentsHistorySelector(state),
   transactionsLoadedLength: getTransactionsLoadedLength(state),
   favoriteWallet: getFavoriteWalletId(state),
   readTransactions: state.entities.transactionsRead,
