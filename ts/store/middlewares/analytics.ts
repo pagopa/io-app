@@ -23,7 +23,10 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
-import { loadServiceMetadata } from "../actions/content";
+import {
+  contentMunicipalityLoad,
+  loadServiceMetadata
+} from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
@@ -245,6 +248,12 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
         reason: action.payload.message
       });
 
+    // track when a missing municipality is detected
+    case getType(contentMunicipalityLoad.failure):
+      return mp.track(action.type, {
+        reason: action.payload.error.message,
+        codice_catastale: action.payload.codiceCatastale
+      });
     // download / delete profile
     case getType(upsertUserDataProcessing.success):
       return mp.track(action.type, action.payload);
