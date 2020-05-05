@@ -21,13 +21,12 @@ import {
   identificationSuccess
 } from "./store/actions/identification";
 import { ReduxProps } from "./store/actions/types";
+import { identificationFailSelector } from "./store/reducers/identification";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 import { authenticateConfig } from "./utils/biometric";
 
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
-
-import { fromNullable } from "fp-ts/lib/Option";
 import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
@@ -128,8 +127,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       identificationByPinState: "unstarted",
       identificationByBiometryState: "unstarted",
       canInsertPinBiometry: false,
-      canInsertPinTooManyAttempts:
-        this.props.identificationFailState === undefined
+      canInsertPinTooManyAttempts: this.props.identificationFailState.isNone()
     };
   }
 
@@ -138,7 +136,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   private checkCanInsertPin = () => {
     const identificationFailState = this.props.identificationFailState;
     const now = new Date();
-    fromNullable(identificationFailState).map(errorData => {
+    identificationFailState.map(errorData => {
       this.setState({
         canInsertPinTooManyAttempts: errorData.nextLegalAttempt <= now,
         countdown: (errorData.nextLegalAttempt.getTime() -
@@ -266,7 +264,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   private onIdentificationFailureHandler = () => {
     const { dispatch, identificationFailState } = this.props;
 
-    const forceLogout = fromNullable(identificationFailState)
+    const forceLogout = identificationFailState
       .map(failState => failState.remainingAttempts === 1)
       .getOrElse(false);
     if (forceLogout) {
@@ -310,9 +308,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const canInsertPin =
       this.state.canInsertPinBiometry && this.state.canInsertPinTooManyAttempts;
 
-    const remainingAttempts = fromNullable(
-      this.props.identificationFailState
-    ).fold(undefined, failState => failState.remainingAttempts);
+    const remainingAttempts = this.props.identificationFailState.fold(
+      undefined,
+      failState => failState.remainingAttempts
+    );
 
     /**
      * Create handlers merging default internal actions (to manage the identification state)
@@ -463,7 +462,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState) => ({
   identificationProgressState: state.identification.progress,
-  identificationFailState: state.identification.fail,
+  identificationFailState: identificationFailSelector(state),
   isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
   appState: state.appState.appState
 });

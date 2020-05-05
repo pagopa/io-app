@@ -11,6 +11,7 @@ import {
   identificationSuccess
 } from "../actions/identification";
 import { Action } from "../actions/types";
+import { GlobalState } from "./types";
 
 const freeAttempts = 4;
 // in seconds
@@ -142,5 +143,8 @@ const reducer = (
       return state;
   }
 };
+
+export const identificationFailSelector = (state: GlobalState) =>
+  fromNullable(state.identification.fail);
 
 export default reducer;
