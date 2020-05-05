@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { createTransform, TransformIn, TransformOut } from "redux-persist";
 import { DateFromISOString } from "../../utils/dates";
 
@@ -46,14 +47,14 @@ const dateReviver = (key: any, value: any): any => {
 };
 
 const encoder: TransformIn<any, string> = (value: any, _: string): any =>
-  value !== undefined
-    ? JSON.parse(JSON.stringify(value), dataReplacer)
-    : undefined;
+  fromNullable(value).fold(undefined, v =>
+    JSON.parse(JSON.stringify(v), dataReplacer)
+  );
 
 const decoder: TransformOut<string, any> = (value: any, _: string): any =>
-  value !== undefined
-    ? JSON.parse(JSON.stringify(value), dateReviver)
-    : undefined;
+  fromNullable(value).fold(undefined, v =>
+    JSON.parse(JSON.stringify(v), dateReviver)
+  );
 
 /**
  * date tasformer will be applied only to entities (whitelist)
