@@ -12,6 +12,11 @@ type ServiceMetadataFailure = {
   serviceId: string;
 };
 
+type MunicipalityFailure = {
+  error: Error;
+  codiceCatastale: string;
+};
+
 type ServiceLetadataSuccess = {
   serviceId: string;
   data: ServiceMetadataState;
@@ -30,7 +35,7 @@ export const contentMunicipalityLoad = createAsyncAction(
 )<
   CodiceCatastale,
   { codiceCatastale: CodiceCatastale; data: MunicipalityMetadata },
-  Error
+  MunicipalityFailure
 >();
 
 export const loadVisibleServicesByScope = createAsyncAction(
