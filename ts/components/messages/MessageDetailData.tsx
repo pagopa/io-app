@@ -1,3 +1,4 @@
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
@@ -5,6 +6,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { Service } from "../../../definitions/content/Service";
 import { ServiceMetadataState } from "../../store/reducers/content";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
@@ -35,6 +37,13 @@ type Props = Readonly<{
   goToServiceDetail?: () => void;
 }>;
 
+type MessageData = {
+  service_detail: Option<ServicePublic>;
+  organization_name: Option<string>;
+  service_name: Option<string>;
+  metadata: Option<Service>;
+};
+
 /**
  * A component to render a summary of data about the message and the related service.
  * If data are available, the user can start a call or send and email to the service
@@ -48,45 +57,40 @@ class MessageDetailData extends React.PureComponent<Props> {
   private date = format(this.props.message.created_at, this.dateFormat);
   private time = format(this.props.message.created_at, "hh:mm");
 
-  private organizationName = pot.getOrElse(
-    pot.map(this.props.serviceDetail, s => s.organization_name),
-    undefined
-  );
+  get data(): MessageData {
+    const serviceDetail = pot.toOption(this.props.serviceDetail);
+    const metadata =
+      this.props.serviceMetadata === undefined
+        ? none
+        : pot.toOption(this.props.serviceMetadata);
+    return {
+      service_detail: serviceDetail,
+      organization_name: serviceDetail.map(s => s.organization_name),
+      service_name: serviceDetail.map(s => s.service_name),
+      metadata: metadata.fold(none, m =>
+        fromNullable(m).fold(none, mm => some(mm))
+      )
+    };
+  }
 
-  private serviceDetail = pot.getOrElse(
-    pot.map(this.props.serviceDetail, s => s),
-    undefined
-  );
+  private callService = () =>
+    this.data.metadata.map(p => {
+      fromNullable(p.phone).map(phoneNumber =>
+        handleItemOnPress(`tel:${phoneNumber}`)
+      );
+    });
 
-  private serviceName = pot.getOrElse(
-    pot.map(this.props.serviceDetail, s => s.service_name),
-    undefined
-  );
-
-  private messageId = this.props.message.id;
-
-  private metadata =
-    this.props.serviceMetadata &&
-    pot.isSome(this.props.serviceMetadata) &&
-    this.props.serviceMetadata.value
-      ? this.props.serviceMetadata.value
-      : undefined;
-
-  private callService =
-    this.metadata && this.metadata.phone
-      ? handleItemOnPress(`tel:${this.metadata.phone}`)
-      : undefined;
-
-  private sendEmailToService =
-    this.metadata && this.metadata.email
-      ? handleItemOnPress(`mailto:${this.metadata.email}`)
-      : undefined;
+  private sendEmailToService = () =>
+    this.data.metadata.map(p => {
+      fromNullable(p.email).map(email => handleItemOnPress(`mailto:${email}`));
+    });
 
   private renderButtons = () => {
-    if (!this.metadata) {
+    if (this.data.metadata.isNone()) {
       return undefined;
     }
-
+    const phone = this.data.metadata.fold(undefined, m => m.phone);
+    const email = this.data.metadata.fold(undefined, m => m.email);
     const callButton: BlockButtonProps = {
       bordered: true,
       white: true,
@@ -103,14 +107,11 @@ class MessageDetailData extends React.PureComponent<Props> {
       onPress: this.sendEmailToService
     };
 
-    if (
-      this.metadata.phone === undefined ||
-      this.metadata.email === undefined
-    ) {
+    if (phone === undefined || email === undefined) {
       return (
         <BlockButtons
           type={"SingleButton"}
-          leftButton={this.metadata.phone ? callButton : emailButton}
+          leftButton={phone ? callButton : emailButton}
         />
       );
     }
@@ -132,23 +133,23 @@ class MessageDetailData extends React.PureComponent<Props> {
           <Text bold={true}>{` ${this.date} - ${this.time}`}</Text>
         </Text>
 
-        {this.organizationName && (
+        {this.data.organization_name.isSome() && (
           <Text>
             {I18n.t("messageDetails.sender")}
-            <Text bold={true}>{` ${this.organizationName}`}</Text>
+            <Text bold={true}>{` ${this.data.organization_name.value}`}</Text>
           </Text>
         )}
 
-        {this.serviceName &&
-          this.serviceDetail && (
+        {this.data.service_name.isSome() &&
+          this.data.service_detail.isSome() && (
             <Text>
               {`${I18n.t("messageDetails.service")} `}
               <Text
                 bold={true}
-                link={this.serviceDetail !== undefined}
+                link={true}
                 onPress={this.props.goToServiceDetail}
               >
-                {this.serviceName}
+                {this.data.service_detail.value.service_name}
               </Text>
             </Text>
           )}
@@ -163,9 +164,9 @@ class MessageDetailData extends React.PureComponent<Props> {
         <React.Fragment>
           <View style={styles.row}>
             <Text style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
-              this.messageId
+              this.props.message.id
             }`}</Text>
-            <CopyButtonComponent textToCopy={this.messageId} />
+            <CopyButtonComponent textToCopy={this.props.message.id} />
           </View>
           <View spacer={true} />
         </React.Fragment>
