@@ -8,7 +8,6 @@
  * footer with a button for starting a new payment
  */
 
-import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -17,6 +16,7 @@ import {
   StyleSheet,
   ViewStyle
 } from "react-native";
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import {
