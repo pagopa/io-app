@@ -1,6 +1,7 @@
 /**
  * A component to show the main screen of the Profile section
  */
+import { Millisecond } from "italia-ts-commons/lib/units";
 import { H3, List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, ScrollView, StyleSheet } from "react-native";
@@ -63,8 +64,7 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps>;
 
 type State = {
-  showPagoPAtestSwitch: boolean;
-  numberOfTaps: number;
+  tapsOnAppVersion: number;
 };
 
 const styles = StyleSheet.create({
@@ -104,6 +104,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.main.contextualHelpContent"
 };
 
+const consecutiveTapRequired = 4;
+const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
+
 const getAppLongVersion = () => {
   const buildNumber =
     Platform.OS === "ios" ? ` (${DeviceInfo.getBuildNumber()})` : "";
@@ -116,8 +119,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      showPagoPAtestSwitch: false,
-      numberOfTaps: 0
+      tapsOnAppVersion: 0
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
@@ -137,6 +139,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     }
     // This ensures modals will be closed (if there are some opened)
     this.props.hideModal();
+    if (this.idResetTap) {
+      clearInterval(this.idResetTap);
+    }
   }
 
   private handleClearCachePress() {
@@ -187,7 +192,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     return (
       <ListItem style={styles.noRightPadding}>
         <ButtonDefaultOpacity
-          info={!isDanger}
+          primary={true}
           danger={isDanger}
           small={true}
           onPress={onPress}
@@ -248,6 +253,40 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       this.props.setPagoPATestEnabled(enabled);
       this.showModal();
     }
+  };
+
+  private idResetTap?: number;
+
+  // When tapped 5 time activate the debug mode of the application.
+  // If more than two seconds pass between taps, the counter is reset
+  private onTapAppVersion = () => {
+    if (this.idResetTap) {
+      clearInterval(this.idResetTap);
+    }
+    // do nothing
+    if (this.props.isDebugModeEnabled || isDevEnv) {
+      return;
+    }
+    if (this.state.tapsOnAppVersion === consecutiveTapRequired) {
+      this.props.setDebugModeEnabled(true);
+      this.setState({ tapsOnAppVersion: 0 });
+      Toast.show({ text: I18n.t("profile.main.developerModeOn") });
+    } else {
+      // tslint:disable-next-line: no-object-mutation
+      this.idResetTap = setInterval(
+        this.resetAppTapCounter,
+        RESET_COUNTER_TIMEOUT
+      );
+      const tapsOnAppVersion = this.state.tapsOnAppVersion + 1;
+      this.setState({
+        tapsOnAppVersion
+      });
+    }
+  };
+
+  private resetAppTapCounter = () => {
+    this.setState({ tapsOnAppVersion: 0 });
+    clearInterval(this.idResetTap);
   };
 
   /**
@@ -354,7 +393,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               title={I18n.t("profile.main.privacy.title")}
               subTitle={I18n.t("profile.main.privacy.description")}
               onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY_MAIN)}
-              isLastItem={true}
             />
 
             {/* APP IO */}
@@ -389,9 +427,15 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               isLastItem={true}
             />
 
+            {this.debugListItem(
+              `${I18n.t("profile.main.appVersion")} ${getAppLongVersion()}`,
+              this.onTapAppVersion,
+              false
+            )}
+
             {/* Developers Section */}
-            {isDevEnv && (
-              <View>
+            {(this.props.isDebugModeEnabled || isDevEnv) && (
+              <React.Fragment>
                 <SectionHeaderComponent
                   sectionHeader={I18n.t("profile.main.developersSectionHeader")}
                 />
@@ -406,14 +450,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                   this.onExperimentalFeaturesToggle
                 )*/
                 }
-                {(this.props.isPagoPATestEnabled ||
-                  this.state.showPagoPAtestSwitch) &&
-                  this.developerListItem(
-                    I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
-                    this.props.isPagoPATestEnabled,
-                    this.onPagoPAEnvironmentToggle,
-                    I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
-                  )}
+                {this.developerListItem(
+                  I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
+                  this.props.isPagoPATestEnabled,
+                  this.onPagoPAEnvironmentToggle,
+                  I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
+                )}
                 {this.developerListItem(
                   I18n.t("profile.main.debugMode"),
                   this.props.isDebugModeEnabled,
@@ -421,23 +463,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                 )}
                 {this.props.isDebugModeEnabled && (
                   <React.Fragment>
-                    {this.debugListItem(
-                      `${I18n.t(
-                        "profile.main.appVersion"
-                      )} ${getAppLongVersion()}`,
-                      () => {
-                        if (this.state.numberOfTaps === 4) {
-                          this.setState({ showPagoPAtestSwitch: true });
-                        } else {
-                          const numberOfTaps = this.state.numberOfTaps + 1;
-                          this.setState({
-                            numberOfTaps
-                          });
-                        }
-                      },
-                      false
-                    )}
-
                     {backendInfo &&
                       this.debugListItem(
                         `${I18n.t("profile.main.backendVersion")} ${
@@ -487,7 +512,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                     )}
                   </React.Fragment>
                 )}
-              </View>
+              </React.Fragment>
             )}
 
             {/* end list */}
@@ -514,6 +539,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           </TouchableDefaultOpacity>
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["profile"]}
       >
         {screenContent()}
       </DarkLayout>

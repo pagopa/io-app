@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Accordion, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -13,6 +14,7 @@ import Markdown from "./ui/Markdown";
 
 type Props = Readonly<{
   faqCategories: ReadonlyArray<FAQsCategoriesType>;
+  onLinkClicked?: (url: string) => void;
 }>;
 
 const styles = StyleSheet.create({
@@ -56,14 +58,20 @@ export default function FAQComponent(props: Props) {
             ]}
           />
         </View>
-        <ItemSeparatorComponent noPadded={true} />
+        {!expanded && <ItemSeparatorComponent noPadded={true} />}
       </React.Fragment>
     );
   };
 
   const renderContent = (item: FAQType) => (
     <View style={styles.pad}>
-      <Markdown>{item.content}</Markdown>
+      <Markdown
+        onLinkClicked={(url: string) => {
+          fromNullable(props.onLinkClicked).map(s => s(url));
+        }}
+      >
+        {item.content}
+      </Markdown>
     </View>
   );
 

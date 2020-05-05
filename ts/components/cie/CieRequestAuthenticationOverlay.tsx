@@ -19,8 +19,6 @@ import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
-import TopScreenComponent from "../screens/TopScreenComponent";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 type Props = {
   ciePin: string;
@@ -158,9 +156,6 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
   };
 
   private renderWebView() {
-    //if (this.state.hasError) {
-    //  return this.renderError();
-    //}
     return (
       <View style={styles.flex}>
         {this.state.findOpenApp === false && (
@@ -180,24 +175,16 @@ export default class CieRequestAuthenticationOverlay extends React.PureComponent
             key={this.state.webViewKey}
           />
         )}
-        <ButtonDefaultOpacity
-          style={{ width: 200, height: 50, marginBottom: 20 }}
-          onPress={() => {
-            if (this.webView !== null && this.webView.current != null) {
-              this.webView.current.goBack();
-              console.warn("sono qui");
-            }
-          }}
-        >
-          <Text>{"go back"}</Text>
-        </ButtonDefaultOpacity>
       </View>
     );
   }
 
   public render(): React.ReactNode {
+    if (this.state.hasError) {
+      return this.renderError();
+    }
     const ContainerComponent = withLoadingSpinner(() => (
-      <TopScreenComponent>{this.renderWebView()}</TopScreenComponent>
+      <View>{this.renderWebView()}</View>
     ));
     return (
       <ContainerComponent

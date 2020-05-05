@@ -74,6 +74,7 @@ import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
+import { watchCheckSessionSaga } from "./startup/watchCheckSessionSaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
@@ -93,7 +94,7 @@ const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
  * Handles the application startup and the main application logic loop
  */
 // tslint:disable-next-line:cognitive-complexity no-big-function
-function* initializeApplicationSaga(): IterableIterator<Effect> {
+export function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -126,6 +127,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     ? previousSessionToken
     : yield call(authenticationSaga);
 
+  // Handles the expiration of the session token
+  yield fork(watchSessionExpiredSaga);
+
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
     apiUrlPrefix,
@@ -145,7 +149,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // when we're using the previous session token, that session has expired
     // so we need to reset the session token and restart from scratch.
     yield put(sessionExpired());
-    yield put(startApplicationInitialization());
     return;
   }
 
@@ -231,6 +234,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Start watching for requests of refresh the profile
   yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+
+  // Start watching for requests of checkSession
+  yield fork(watchCheckSessionSaga, backendClient.getProfile);
 
   // Start watching for the requests of a new verification email to
   // validate the user email address
@@ -337,8 +343,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Watch for the app going to background/foreground
   yield fork(watchApplicationActivitySaga);
-  // Handles the expiration of the session token
-  yield fork(watchSessionExpiredSaga);
+
   // Watch for requests to logout
   yield spawn(watchLogoutSaga, backendClient.logout);
   // Watch for requests to reset the unlock code.

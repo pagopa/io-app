@@ -8,7 +8,11 @@ import customVariables from "../../theme/variables";
 
 const badgeWidth = 10;
 
-export class BadgeComponent extends React.PureComponent<{}> {
+type Props = {
+  color?: string;
+};
+
+export class BadgeComponent extends React.PureComponent<Props> {
   public render() {
     return (
       <Svg width={badgeWidth} height={badgeWidth}>
@@ -16,7 +20,11 @@ export class BadgeComponent extends React.PureComponent<{}> {
           cx={"50%"}
           cy={"50%"}
           r={badgeWidth / 2}
-          fill={customVariables.contentPrimaryBackground}
+          fill={
+            this.props.color
+              ? this.props.color
+              : customVariables.contentPrimaryBackground
+          }
         />
       </Svg>
     );

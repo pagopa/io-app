@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     paddingRight: 16
   },
   disabledItem: {
-    color: customVariables.disabledService
+    color: customVariables.lightGray
   },
   description: {
     fontSize: 14,

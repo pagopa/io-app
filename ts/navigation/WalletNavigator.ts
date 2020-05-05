@@ -8,7 +8,10 @@ import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethod
 import PickPspScreen from "../screens/wallet/payment/PickPspScreen";
 import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
 import TransactionErrorScreen from "../screens/wallet/payment/TransactionErrorScreen";
+import TransactionSuccessScreen from "../screens/wallet/payment/TransactionSuccessScreen";
 import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
+import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetailsScreen";
+import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../screens/wallet/TransactionsScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
@@ -51,6 +54,9 @@ const WalletNavigator = createStackNavigator(
     [ROUTES.PAYMENT_TRANSACTION_SUMMARY]: {
       screen: TransactionSummaryScreen
     },
+    [ROUTES.PAYMENT_TRANSACTION_SUCCESS]: {
+      screen: TransactionSuccessScreen
+    },
     [ROUTES.PAYMENT_TRANSACTION_ERROR]: {
       screen: TransactionErrorScreen
     },
@@ -62,11 +68,20 @@ const WalletNavigator = createStackNavigator(
     },
     [ROUTES.PAYMENT_PICK_PAYMENT_METHOD]: {
       screen: PickPaymentMethodScreen
+    },
+    [ROUTES.PAYMENTS_HISTORY_SCREEN]: {
+      screen: PaymentsHistoryScreen
+    },
+    [ROUTES.PAYMENT_HISTORY_DETAIL_INFO]: {
+      screen: PaymentHistoryDetailsScreen
     }
   },
   {
     // Let each screen handle the header and navigation
-    headerMode: "none"
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
 );
 
