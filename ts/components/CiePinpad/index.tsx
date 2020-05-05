@@ -72,6 +72,15 @@ class CiePinpad extends React.PureComponent<Props, State> {
     this.props.onPinChanged(text);
   };
 
+  public handleOnResetPinpad = () => {
+    if (this.hiddenInput) {
+      this.hiddenInput.clear();
+    }
+    this.setState({
+      pin: undefined
+    });
+  };
+
   private handleOnFocus = () => {
     // force hidden input to have focus
     if (this.hiddenInput) {
