@@ -37,6 +37,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/titillium_regular"
                 android:text="@string/splash_io_name"
                 android:paddingTop="16dp"
                 android:textSize="16dp"
