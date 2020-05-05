@@ -192,9 +192,9 @@ export default function content(
         municipality: {
           codiceCatastale: pot.toError(
             state.municipality.codiceCatastale,
-            action.payload
+            action.payload.error
           ),
-          data: pot.toError(state.municipality.data, action.payload)
+          data: pot.toError(state.municipality.data, action.payload.error)
         }
       };
 
