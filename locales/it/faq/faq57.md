@@ -1,0 +1,1 @@
+Se hai avuto problemi durante un pagamento e non sai se sia andato a buon fine, o perché sia fallito, consulta la lista dei tuoi [tentativi di pagamento](ioit://PAYMENTS_HISTORY_SCREEN). Dalla lista potrai selezionare una più operazioni fallite e contattare l'assistenza.

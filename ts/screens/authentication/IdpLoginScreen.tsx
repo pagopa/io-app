@@ -2,6 +2,7 @@
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -126,13 +127,20 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
-    if (event.url && event.url !== this.state.loginTrace) {
+    if (event.url) {
       const urlChanged = event.url.split("?")[0];
-      this.props.dispatchIdpLoginUrlChanged(urlChanged);
-      this.updateLoginTrace(urlChanged);
+      if (urlChanged !== this.state.loginTrace) {
+        this.props.dispatchIdpLoginUrlChanged(urlChanged);
+        this.updateLoginTrace(urlChanged);
+      }
     }
+    const isAssertion = fromNullable(event.url).fold(
+      false,
+      s => s.indexOf("/assertionConsumerService") > -1
+    );
     this.setState({
-      requestState: event.loading ? pot.noneLoading : pot.some(true)
+      requestState:
+        event.loading || isAssertion ? pot.noneLoading : pot.some(true)
     });
   };
 
