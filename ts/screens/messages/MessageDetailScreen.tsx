@@ -281,8 +281,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     if (pot.isSome(potMessage) && !pot.isLoading(potServiceDetail)) {
       refreshService(potMessage.value.sender_service_id);
     }
+    // load service metadata to get information about email & phone (needed in MessageDetailData)
     pot.map(potMessage, m => {
-      this.props.loadServiceMetadata(m.sender_service_id as ServiceId);
+      this.props.loadServiceMetadata(m.sender_service_id);
     });
     this.setMessageReadState();
   }
@@ -360,8 +361,8 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
   return {
     refreshService: (serviceId: string) =>
       dispatch(loadServiceDetail.request(serviceId)),
-    loadServiceMetadata: (serviceId: ServiceId) =>
-      dispatch(loadServiceMetadata.request(serviceId)),
+    loadServiceMetadata: (serviceId: string) =>
+      dispatch(loadServiceMetadata.request(serviceId as ServiceId)),
     loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
       dispatch(loadMessageWithRelations.request(meta)),
     setMessageReadState: (isRead: boolean) =>
