@@ -5,13 +5,12 @@ import {
   requiredProp1 as reqP,
   tag
 } from "italia-ts-commons/lib/types";
-
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
 import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
 import { Psp as PspPagoPA } from "../../definitions/pagopa/Psp";
-import { PspListResponse as PspListResponsePagoPA } from "../../definitions/pagopa/PspListResponse";
+import { PspListResponseCD as PspListResponsePagoPA } from "../../definitions/pagopa/PspListResponseCD";
 import { PspResponse as PspResponsePagoPA } from "../../definitions/pagopa/PspResponse";
 import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
 import { SessionResponse as SessionResponsePagoPA } from "../../definitions/pagopa/SessionResponse";
@@ -21,7 +20,6 @@ import { TransactionResponse as TransactionResponsePagoPA } from "../../definiti
 import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
 import { WalletListResponse as WalletListResponsePagoPA } from "../../definitions/pagopa/WalletListResponse";
 import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa/WalletResponse";
-
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,

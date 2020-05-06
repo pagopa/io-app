@@ -71,7 +71,7 @@ const IncludeYamlType = (includeRoot: string) =>
  *
  * TODO: support including files (e.g. markdown docs)
  */
-async function readLocaleDoc(
+export async function readLocaleDoc(
   rootPath: string,
   locale: string
 ): Promise<LocaleDoc> {
@@ -93,7 +93,10 @@ async function readLocaleDoc(
 /**
  * Extracts all the translation keys from a parsed yaml
  */
-function extractKeys(subDoc: any, base: string = ""): ReadonlyArray<string> {
+export function extractKeys(
+  subDoc: any,
+  base: string = ""
+): ReadonlyArray<string> {
   const baseWithDelimiter = base.length > 0 ? `${base}.` : "";
   const keys = Object.keys(subDoc);
   const terminalKeys = keys
@@ -189,74 +192,77 @@ ${localesDeclarations}
 }
 
 async function run(rootPath: string): Promise<void> {
-  console.log(chalk.whiteBright("Translations builder"));
+  try {
+    console.log(chalk.whiteBright("Translations builder"));
 
-  const masterLocale = process.env.I18N_MASTER_LOCALE || "en";
+    const masterLocale = process.env.I18N_MASTER_LOCALE || "en";
 
-  const locales = fs
-    .readdirSync(root)
-    .filter(d => fs.statSync(path.join(root, d)).isDirectory())
-    .sort((a, b) => (a === masterLocale ? -1 : b === masterLocale ? 1 : 0));
+    const locales = fs
+      .readdirSync(root)
+      .filter(d => fs.statSync(path.join(root, d)).isDirectory())
+      .sort((a, b) => (a === masterLocale ? -1 : b === masterLocale ? 1 : 0));
 
-  if (locales.indexOf(masterLocale) < 0) {
-    throw new Error(`Master locale not found: ${root}/${masterLocale}`);
-  }
-
-  console.log("Locales:", chalk.blueBright(locales.join(", ")));
-  console.log("Master locale:", chalk.blueBright(masterLocale));
-  console.log("Locales path:", chalk.blueBright(rootPath));
-
-  // read the YAML files for all locales
-  console.log(chalk.gray("[1/4]"), "Reading translations...");
-  const localeDocs = await Promise.all(
-    locales.map(async l => await readLocaleDoc(rootPath, l))
-  );
-
-  // extract the keys from all locale files
-  console.log(chalk.gray("[2/4]"), "Extracting keys...");
-  const localeKeys: ReadonlyArray<LocaleDocWithKeys> = localeDocs.map(d => ({
-    ...d,
-    keys: extractKeys(d.doc)
-  }));
-
-  // the master locale is the first one
-  const masterKeys = localeKeys[0];
-  console.log(
-    chalk.greenBright(
-      `${chalk.bold(
-        String(masterKeys.keys.length)
-      )} keys in master locale "${chalk.bold(masterKeys.locale)}"`
-    )
-  );
-  const otherLocaleKeys = localeKeys.slice(1);
-
-  // compare keys of locales with master keys
-  console.log(chalk.gray("[3/4]"), "Comparing keys...");
-  const checkedLocaleKeys: ReadonlyArray<
-    LocaleDocWithCheckedKeys
-  > = otherLocaleKeys.map(l => ({
-    ...l,
-    ...compareLocaleKeys(masterKeys.keys, l.keys)
-  }));
-
-  // look for locales that have missing or extra keys
-  const badLocales = checkedLocaleKeys.filter(
-    l => l.missing.length > 0 || l.extra.length > 0
-  );
-
-  if (badLocales.length > 0) {
-    badLocales.forEach(reportBadLocale);
-    if (!Boolean(process.env.I18N_IGNORE_LOCALE_ERRORS)) {
-      throw Error("bad locales detected");
+    if (locales.indexOf(masterLocale) < 0) {
+      throw new Error(`Master locale not found: ${root}/${masterLocale}`);
     }
-  }
 
-  const emitPath = path.join(rootPath, "locales.ts");
-  console.log(
-    chalk.gray("[4/4]"),
-    `Writing locales typescript to [${emitPath}]...`
-  );
-  await emitTsDefinitions(localeKeys, emitPath);
+    console.log("Locales:", chalk.blueBright(locales.join(", ")));
+    console.log("Master locale:", chalk.blueBright(masterLocale));
+    console.log("Locales path:", chalk.blueBright(rootPath));
+
+    // read the YAML files for all locales
+    console.log(chalk.gray("[1/4]"), "Reading translations...");
+    const localeDocs = await Promise.all(
+      locales.map(async l => await readLocaleDoc(rootPath, l))
+    );
+
+    // extract the keys from all locale files
+    console.log(chalk.gray("[2/4]"), "Extracting keys...");
+    const localeKeys: ReadonlyArray<LocaleDocWithKeys> = localeDocs.map(d => ({
+      ...d,
+      keys: extractKeys(d.doc)
+    }));
+    // the master locale is the first one
+    const masterKeys = localeKeys[0];
+    console.log(
+      chalk.greenBright(
+        `${chalk.bold(
+          String(masterKeys.keys.length)
+        )} keys in master locale "${chalk.bold(masterKeys.locale)}"`
+      )
+    );
+    const otherLocaleKeys = localeKeys.slice(1);
+
+    // compare keys of locales with master keys
+    console.log(chalk.gray("[3/4]"), "Comparing keys...");
+    const checkedLocaleKeys: ReadonlyArray<
+      LocaleDocWithCheckedKeys
+    > = otherLocaleKeys.map(l => ({
+      ...l,
+      ...compareLocaleKeys(masterKeys.keys, l.keys)
+    }));
+
+    // look for locales that have missing or extra keys
+    const badLocales = checkedLocaleKeys.filter(
+      l => l.missing.length > 0 || l.extra.length > 0
+    );
+
+    if (badLocales.length > 0) {
+      badLocales.forEach(reportBadLocale);
+      if (!Boolean(process.env.I18N_IGNORE_LOCALE_ERRORS)) {
+        throw Error("bad locales detected");
+      }
+    }
+
+    const emitPath = path.join(rootPath, "locales.ts");
+    console.log(
+      chalk.gray("[4/4]"),
+      `Writing locales typescript to [${emitPath}]...`
+    );
+    await emitTsDefinitions(localeKeys, emitPath);
+  } catch (e) {
+    console.log(e.message);
+  }
 }
 
 run(root).then(() => console.log("done"), () => process.exit(1));

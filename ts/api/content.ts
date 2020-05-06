@@ -1,24 +1,20 @@
 /**
  * This module implements the types and a client for retrieving the static
- * content published at https://github.com/teamdigitale/italia-services-metadata
+ * content published at https://github.com/pagopa/io-services-metadata
  */
-
 import {
   basicResponseDecoder,
   BasicResponseType,
   createFetchRequestForApi,
   IGetApiRequestType
 } from "italia-ts-commons/lib/requests";
-
-import { contentRepoUrl } from "../config";
-
-import { defaultRetryingFetch } from "../utils/fetch";
-
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { Service as ServiceMetadata } from "../../definitions/content/Service";
 import { ServicesByScope } from "../../definitions/content/ServicesByScope";
+import { contentRepoUrl } from "../config";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
+import { defaultRetryingFetch } from "../utils/fetch";
 
 type GetServiceT = IGetApiRequestType<
   {

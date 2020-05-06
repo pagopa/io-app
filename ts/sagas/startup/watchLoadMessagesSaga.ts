@@ -28,7 +28,7 @@ import {
   loadMessagesCancelled,
   removeMessages as removeMessagesAction
 } from "../../store/actions/messages";
-import { loadService } from "../../store/actions/services";
+import { loadServiceDetail } from "../../store/actions/services";
 import { messagesAllIdsSelector } from "../../store/reducers/entities/messages/messagesAllIds";
 import { messagesStateByIdSelector } from "../../store/reducers/entities/messages/messagesById";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -54,11 +54,6 @@ export function* loadMessages(
     > = yield select<GlobalState>(messagesAllIdsSelector);
     const cachedMessagesAllIds = pot.getOrElse(potCachedMessagesAllIds, []);
 
-    // Load already cached services from the store
-    const cachedServicesById: ReturnType<
-      typeof servicesByIdSelector
-    > = yield select<GlobalState>(servicesByIdSelector);
-
     // Request the list of messages from the Backend
     const response: SagaCallReturnType<typeof getMessages> = yield call(
       getMessages,
@@ -75,7 +70,7 @@ export function* loadMessages(
         yield put(sessionExpired());
         return;
       } else if (response.value.status !== 200) {
-        // TODO: provide status code along with message in error
+        // TODO: provide status code along with message in error https://www.pivotaltracker.com/story/show/170819193
         const error =
           response.value.status === 500 && response.value.value.title
             ? response.value.value.title
@@ -120,19 +115,34 @@ export function* loadMessages(
         // Filter messages already in the store
         const pendingMessages = reversedItems.filter(shouldLoadMessage);
 
-        const shouldLoadService = (id: string) =>
-          cachedServicesById[id] === undefined;
+        // Load already cached services from the store
+        const cachedServicesById: ReturnType<
+          typeof servicesByIdSelector
+        > = yield select<GlobalState>(servicesByIdSelector);
+
+        const shouldLoadService = (id: string) => {
+          const cached = cachedServicesById[id];
+          // we need to load a service if (one of these is true)
+          // - service is not cached
+          // - service is not loading AND (service is none OR service is error)
+          return (
+            cached === undefined ||
+            (!pot.isLoading(cached) &&
+              (pot.isNone(cached) || pot.isError(cached)))
+          );
+        };
 
         // Filter services already in the store
         const pendingServicesIds = pendingMessages
           .map(_ => _.sender_service_id)
           .filter(shouldLoadService)
           .filter(uniqueItem); // Get unique ids
-
         // Fetch the services detail in parallel
-        // We don't need to store the results because the SERVICE_LOAD_SUCCESS is already dispatched by each `loadService` action called.
+        // We don't need to store the results because the LOAD_SERVICE_DETAIL_REQUEST is already dispatched by each `loadServiceDetail` action called.
         // We fetch services first because to show messages you need the related service info
-        yield all(pendingServicesIds.map(id => put(loadService.request(id))));
+        yield all(
+          pendingServicesIds.map(id => put(loadServiceDetail.request(id)))
+        );
 
         // Fetch the messages detail in parallel
         // We don't need to store the results because the MESSAGE_LOAD_SUCCESS is already dispatched by each `loadMessage` action called,

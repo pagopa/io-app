@@ -1,7 +1,7 @@
 /**
  * Utils for Option items
  */
-import { Option } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 
 // Check if 2 option set contains the same items
 export function areSetEqual<T>(a: Option<Set<T>>, b: Option<Set<T>>) {
@@ -14,3 +14,32 @@ export function areSetEqual<T>(a: Option<Set<T>>, b: Option<Set<T>>) {
   items.forEach(item => diff.delete(item));
   return diff.size === 0;
 }
+
+// Check if 2 option strings has the same value
+export function areStringsEqual(
+  aa: Option<string>,
+  bb: Option<string>,
+  caseInsensitive: boolean = false
+): boolean {
+  return aa.fold(false, (a: string) =>
+    bb.fold(false, (b: string) => {
+      return caseInsensitive ? a.toLowerCase() === b.toLowerCase() : a === b;
+    })
+  );
+}
+
+/**
+ * return some of item[key] if item is defined and item[key] too
+ * @param item
+ * @param key
+ * @param extractor
+ */
+export const maybeInnerProperty = <T, K extends keyof T, R>(
+  item: T | undefined,
+  key: K,
+  extractor: (value: T[K]) => R
+): Option<R> => {
+  return fromNullable(item)
+    .mapNullable(s => s[key])
+    .map(value => extractor(value));
+};

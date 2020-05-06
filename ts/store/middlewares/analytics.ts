@@ -4,6 +4,7 @@ import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
 import { mixpanel } from "../../mixpanel";
+import { getCurrentRouteName } from "../../utils/navigation";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted,
@@ -22,7 +23,10 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
-import { contentServiceLoad } from "../actions/content";
+import {
+  contentMunicipalityLoad,
+  loadServiceMetadata
+} from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
@@ -51,8 +55,10 @@ import {
   profileLoadSuccess,
   profileUpsert
 } from "../actions/profile";
-import { loadService, loadVisibleServices } from "../actions/services";
+import { loadServiceDetail, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
+import { upsertUserDataProcessing } from "../actions/userDataProcessing";
+import { userMetadataUpsert } from "../actions/userMetadata";
 import {
   paymentAttiva,
   paymentCheck,
@@ -90,6 +96,7 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
+
 // tslint:disable cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
@@ -133,11 +140,16 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(profileFirstLogin):
       return mp.track(action.type, action.payload);
+
+    case getType(fetchTransactionsSuccess):
+      return mp.track(action.type, {
+        count: action.payload.data.length,
+        total: action.payload.total.getOrElse(-1)
+      });
     //
     // Wallet actions (with properties)
     //
     case getType(fetchWalletsSuccess):
-    case getType(fetchTransactionsSuccess):
       return mp.track(action.type, {
         count: action.payload.length
       });
@@ -206,10 +218,11 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, action.payload);
 
     // logout / load message / failure
+    case getType(upsertUserDataProcessing.failure):
     case getType(loadMessage.failure):
     case getType(logoutFailure):
-    case getType(loadService.failure):
-    case getType(contentServiceLoad.failure):
+    case getType(loadServiceDetail.failure):
+    case getType(loadServiceMetadata.failure):
       return mp.track(action.type, {
         reason: action.payload.error.message
       });
@@ -217,6 +230,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(sessionInformationLoadFailure):
     case getType(profileLoadFailure):
     case getType(profileUpsert.failure):
+    case getType(userMetadataUpsert.failure):
     case getType(loginFailure):
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
@@ -233,6 +247,16 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload.message
       });
+
+    // track when a missing municipality is detected
+    case getType(contentMunicipalityLoad.failure):
+      return mp.track(action.type, {
+        reason: action.payload.error.message,
+        codice_catastale: action.payload.codiceCatastale
+      });
+    // download / delete profile
+    case getType(upsertUserDataProcessing.success):
+      return mp.track(action.type, action.payload);
 
     //
     // Actions (without properties)
@@ -259,6 +283,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(createPinSuccess):
     // profile
     case getType(profileUpsert.success):
+    // userMetadata
+    case getType(userMetadataUpsert.success):
     // messages
     case getType(loadMessages.request):
 
@@ -270,11 +296,12 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(loadVisibleServices.request):
     case getType(loadVisibleServices.success):
 
-    case getType(loadService.request):
-    case getType(loadService.success):
+    case getType(loadServiceDetail.request):
+    case getType(loadServiceDetail.success):
 
-    // content
-    case getType(contentServiceLoad.success):
+    case getType(loadServiceMetadata.request):
+    case getType(loadServiceMetadata.success):
+
     // wallet
     case getType(fetchWalletsRequest):
 
@@ -326,53 +353,7 @@ export const actionTracking = (_: MiddlewareAPI) => (next: Dispatch) => (
   }
   return next(action);
 };
-// gets the current screen from navigation state
-// TODO: Need to be fixed
-export function getCurrentRouteName(navNode: any): string | undefined {
-  if (!navNode) {
-    return undefined;
-  }
-  if (
-    navNode.index === undefined &&
-    navNode.routeName &&
-    typeof navNode.routeName === "string"
-  ) {
-    // navNode is a NavigationLeafRoute
-    return navNode.routeName;
-  }
-  if (
-    navNode.routes &&
-    navNode.index !== undefined &&
-    navNode.routes[navNode.index]
-  ) {
-    const route = navNode.routes[navNode.index];
-    return getCurrentRouteName(route);
-  }
-  return undefined;
-}
 
-export function getCurrentRouteKey(navNode: any): string | undefined {
-  if (!navNode) {
-    return undefined;
-  }
-  if (
-    navNode.index === undefined &&
-    navNode.key &&
-    typeof navNode.key === "string"
-  ) {
-    // navNode is a NavigationLeafRoute
-    return navNode.key;
-  }
-  if (
-    navNode.routes &&
-    navNode.index !== undefined &&
-    navNode.routes[navNode.index]
-  ) {
-    const route = navNode.routes[navNode.index];
-    return getCurrentRouteKey(route);
-  }
-  return undefined;
-}
 /*
   The middleware acts as a general hook in order to track any meaningful navigation action
   https://reactnavigation.org/docs/guides/screen-tracking#Screen-tracking-with-Redux

@@ -8,18 +8,21 @@ import {
   startOfToday,
   subMonths
 } from "date-fns";
-import { none, Option, some } from "fp-ts/lib/Option";
+import { index as fpIndex } from "fp-ts/lib/Array";
+import { fromNullable, isNone, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { View } from "native-base";
 import React from "react";
-import { Platform, SectionListScrollParams, StyleSheet } from "react-native";
+import { SectionListScrollParams, StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
+import {
+  lexicallyOrderedMessagesStateSelector,
+  MessagesStateAndStatus
+} from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import { isCreatedMessageWithContentAndDueDate } from "../../types/CreatedMessageWithContentAndDueDate";
 import { ComponentProps } from "../../types/react";
-import { HEADER_HEIGHT } from "../../utils/constants";
 import { DateFromISOString } from "../../utils/dates";
 import {
   InjectedWithItemsSelectionProps,
@@ -36,14 +39,9 @@ import MessageAgenda, {
 // How many past months to load in batch
 const PAST_DATA_MONTHS = 3;
 
-const SCROLL_RANGE_FOR_ANIMATION = HEADER_HEIGHT;
-
 const styles = StyleSheet.create({
   listWrapper: {
     flex: 1
-  },
-  animatedStartPosition: {
-    bottom: Platform.OS === "ios" ? SCROLL_RANGE_FOR_ANIMATION : 0
   },
   listContainer: {
     flex: 1
@@ -51,6 +49,7 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
+  currentTab: number;
   messagesState: ReturnType<typeof lexicallyOrderedMessagesStateSelector>;
   navigateToMessageDetail: (id: string) => void;
   setMessagesArchivedState: (
@@ -75,13 +74,60 @@ type State = {
   maybeLastLoadedStartOfMonthTime: Option<number>;
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
   allMessageIdsState: Set<string>;
+  isContinuosScrollEnabled: boolean;
+  lastDeadlineId: Option<string>;
+  nextDeadlineId: Option<string>;
+};
+
+/**
+ * Get the last deadline id (the oldest in time is the first in array position)
+ */
+export const getLastDeadlineId = (sections: Sections): Option<string> => {
+  return fromNullable(sections)
+    .chain(s => fpIndex(0, s))
+    .chain(d => fpIndex(0, [...d.data]))
+    .fold(none, item => {
+      if (!isFakeItem(item)) {
+        return some(item.e1.id);
+      }
+      return none;
+    });
+};
+
+/**
+ * Get the next deadline id
+ */
+export const getNextDeadlineId = (sections: Sections): Option<string> => {
+  const now = startOfDay(new Date()).getTime();
+  return sections
+    .reduce<Option<MessageAgendaItem>>((acc, curr) => {
+      const item = curr.data[0];
+      // if item is fake, return the accumulator
+      if (isFakeItem(item)) {
+        return acc;
+      }
+      const newDate = new Date(item.e1.content.due_date).getTime();
+      const diff = newDate - now;
+      // if the acc is none, we don't need to make comparison with previous value
+      if (isNone(acc)) {
+        // just check the newDate is about future
+        return diff >= 0 ? some(item) : none;
+      }
+      const lastDate = acc.value.e1.content.due_date.getTime();
+      // if the new date is about future and is less than in accomulator
+      if (diff >= 0 && diff < now - lastDate) {
+        return some(item);
+      }
+      return acc;
+    }, none)
+    .map(item => item.e1.id);
 };
 
 /**
  * Filter only the messages with a due date and group them by due_date day.
  */
 const generateSections = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
 ): Sections =>
   pot.getOrElse(
     pot.map(
@@ -89,7 +135,7 @@ const generateSections = (
       _ =>
         // tslint:disable-next-line:readonly-array
         _.reduce<MessageAgendaItem[]>((accumulator, messageState) => {
-          const { isRead, isArchived, message } = messageState;
+          const { message, isArchived, isRead } = messageState;
           if (
             !isArchived &&
             pot.isSome(message) &&
@@ -251,6 +297,19 @@ const selectPastMonthsData = (
 
   return newSections;
 };
+
+// return true if the last section is loaded
+const isLastSectionLoaded = (
+  lastDeadlineId: Option<string>,
+  sections: Sections
+): boolean =>
+  lastDeadlineId.fold(false, lastId =>
+    sections
+      .map(s => s.data)
+      .some(items =>
+        items.some(item => !isFakeItem(item) && item.e1.id === lastId)
+      )
+  );
 
 const selectInitialSectionsToRender = (
   sections: Sections,
@@ -415,6 +474,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
               startOfMonth(
                 subMonths(lastLoadedStartOfMonthTime, PAST_DATA_MONTHS)
               ).getTime()
+            ),
+            isContinuosScrollEnabled: !isLastSectionLoaded(
+              this.state.lastDeadlineId,
+              [...moreSectionsToRender, ...prevState.sectionsToRender]
             )
           };
         });
@@ -429,7 +492,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       sections: [],
       sectionsToRender: [],
       maybeLastLoadedStartOfMonthTime: none,
-      allMessageIdsState: new Set()
+      allMessageIdsState: new Set(),
+      isContinuosScrollEnabled: true,
+      lastDeadlineId: none,
+      nextDeadlineId: none
     };
   }
 
@@ -438,8 +504,15 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const { maybeLastLoadedStartOfMonthTime } = this.state;
 
     const sections = await Promise.resolve(generateSections(messagesState));
+    const lastDeadlineId = await Promise.resolve(getLastDeadlineId(sections));
+    const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
+
     const sectionsToRender = await Promise.resolve(
       selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
+    );
+    // If there are older deadlines the scroll must be enabled to allow data loading when requested
+    const isContinuosScrollEnabled = await Promise.resolve(
+      !isLastSectionLoaded(lastDeadlineId, sectionsToRender)
     );
 
     this.setState({
@@ -448,7 +521,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       sectionsToRender,
       allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
         sectionsToRender
-      )
+      ),
+      isContinuosScrollEnabled,
+      lastDeadlineId,
+      nextDeadlineId
     });
   }
 
@@ -457,14 +533,25 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
     const { messagesState: prevMessagesState } = prevProps;
     const { maybeLastLoadedStartOfMonthTime } = this.state;
 
+    if (prevProps.currentTab !== this.props.currentTab) {
+      this.props.resetSelection();
+    }
+
     if (messagesState !== prevMessagesState) {
       this.setState({
         isWorking: true
       });
 
       const sections = await Promise.resolve(generateSections(messagesState));
+      const lastDeadlineId = await Promise.resolve(getLastDeadlineId(sections));
+      const nextDeadlineId = await Promise.resolve(getNextDeadlineId(sections));
+
       const sectionsToRender = await Promise.resolve(
         selectInitialSectionsToRender(sections, maybeLastLoadedStartOfMonthTime)
+      );
+      // If there are older deadlines the scroll must be enabled to allow data loading when requested
+      const isContinuosScrollEnabled = await Promise.resolve(
+        !isLastSectionLoaded(lastDeadlineId, sectionsToRender)
       );
 
       this.setState({
@@ -473,7 +560,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         sectionsToRender,
         allMessageIdsState: this.generateMessagesIdsFromMessageAgendaSection(
           sectionsToRender
-        )
+        ),
+        isContinuosScrollEnabled,
+        lastDeadlineId,
+        nextDeadlineId
       });
     }
   }
@@ -502,7 +592,14 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       selectedItemIds,
       resetSelection
     } = this.props;
-    const { allMessageIdsState, isWorking, sectionsToRender } = this.state;
+    const {
+      allMessageIdsState,
+      isWorking,
+      sectionsToRender,
+      isContinuosScrollEnabled,
+      lastDeadlineId,
+      nextDeadlineId
+    } = this.state;
 
     const isRefreshing = pot.isLoading(messagesState) || isWorking;
 
@@ -520,6 +617,9 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             onLongPressItem={this.handleOnLongPressItem}
             onMoreDataRequest={this.onLoadMoreDataRequest}
             onContentSizeChange={this.onContentSizeChange}
+            isContinuosScrollEnabled={isContinuosScrollEnabled}
+            lastDeadlineId={lastDeadlineId}
+            nextDeadlineId={nextDeadlineId}
           />
         </View>
         <ListSelectionBar
@@ -529,7 +629,6 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           onToggleAllSelection={this.toggleAllMessagesSelection}
           onResetSelection={resetSelection}
           primaryButtonText={I18n.t("messages.cta.archive")}
-          containerStyle={[styles.animatedStartPosition]}
         />
       </View>
     );

@@ -2,12 +2,15 @@ import { Theme } from "../types";
 import variables from "../variables";
 
 import * as ReactNative from "react-native";
+import customVariables from "../variables";
 
 declare module "native-base" {
   namespace NativeBase {
     interface View extends ReactNative.ViewProperties {
       spacer?: boolean;
       hspacer?: boolean;
+      xsmall?: boolean;
+      small?: boolean;
       large?: boolean;
       extralarge?: boolean;
       modal?: boolean;
@@ -21,18 +24,30 @@ declare module "native-base" {
 }
 
 /**
- * TO DO:
+ * TODO:
  * if no components are inserted as footer, the following component should be
  * included at the bottom of the screen to show the proper shadow upside the navigation bar:
  *
  * <View footer={true} noPadded={true}/>
+ *
+ * TODO: check if this rule is still valid or a workaround has been implemented to avoid it been manually done
+ * https://www.pivotaltracker.com/story/show/170819564
  */
 
 export default (): Theme => {
   return {
     ".spacer": {
+      xsmall: {
+        height: customVariables.spacerExtrasmallHeight
+      },
+      small: {
+        height: customVariables.spacerSmallHeight
+      },
       ".large": {
         height: variables.spacerLargeHeight
+      },
+      ".extrasmall": {
+        height: variables.spacerExtrasmallHeight
       },
 
       ".extralarge": {

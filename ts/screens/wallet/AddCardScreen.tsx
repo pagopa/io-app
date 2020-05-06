@@ -7,22 +7,15 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { entries, range, size } from "lodash";
 import { Content, Item, Text, View } from "native-base";
 import * as React from "react";
-import {
-  AppState,
-  AppStateStatus,
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet
-} from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-import { isExpired } from "./../../utils/dates";
-
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { LabelledItem } from "../../components/LabelledItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import MaskedInput from "../../components/ui/MaskedInput";
 import { cardIcons } from "../../components/wallet/card/Logo";
@@ -39,6 +32,7 @@ import {
   CreditCardExpirationYear,
   CreditCardPan
 } from "../../utils/input";
+import { isExpired } from "./../../utils/dates";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -81,6 +75,11 @@ const styles = StyleSheet.create({
     backgroundColor: variables.colorWhite
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.saveCard.contextualHelpTitle",
+  body: "wallet.saveCard.contextualHelpContent"
+};
 
 const CARD_LOGOS_COLUMNS = 4;
 const EMPTY_CARD_HOLDER = "";
@@ -156,22 +155,6 @@ class AddCardScreen extends React.Component<Props, State> {
     this.state = INITIAL_STATE;
   }
 
-  public componentDidMount() {
-    // The AppState change is also stored and notified by our redux store but
-    // we are using the event listener directly because we want to clear the
-    // input fields as soon as possible before going to background (remember
-    // Android does not have an "inactive" intermediate state).
-    // If we wait the AppState change from the store sometimes when we reopen
-    // the app the input values are still present and after some milliseconds
-    // get cleared.
-
-    AppState.addEventListener("change", this.handleAppStateChange);
-  }
-
-  public componentWillUnmount() {
-    AppState.removeEventListener("change", this.handleAppStateChange);
-  }
-
   public render(): React.ReactNode {
     const primaryButtonPropsFromState = (
       state: State
@@ -217,6 +200,8 @@ class AddCardScreen extends React.Component<Props, State> {
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("wallet.addCardTitle")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_methods"]}
       >
         <ScrollView
           bounces={false}
@@ -301,11 +286,13 @@ class AddCardScreen extends React.Component<Props, State> {
                       EMPTY_CARD_SECURITY_CODE
                     ),
                     placeholder: I18n.t("wallet.dummyCard.values.securityCode"),
-                    keyboardType: "numeric",
                     returnKeyType: "done",
                     maxLength: 4,
-                    secureTextEntry: true,
                     mask: "[0009]",
+                    keyboardType: "numeric",
+                    secureTextEntry: true,
+                    // Android only
+                    isNumericSecureKeyboard: true,
                     onChangeText: (_, value) =>
                       this.updateSecurityCodeState(value)
                   }}
@@ -397,23 +384,6 @@ class AddCardScreen extends React.Component<Props, State> {
         value && value !== EMPTY_CARD_SECURITY_CODE ? some(value) : none
     });
   }
-
-  private handleAppStateChange = (nextAppStateStatus: AppStateStatus) => {
-    if (nextAppStateStatus !== "active") {
-      // Due to a bug in the `react-native-text-input-mask` library we have to
-      // reset the value in the TextInputMask components by calling the "clear" method.
-      if (this.panRef.current) {
-        this.panRef.current._root.clear();
-      }
-      if (this.expirationDateRef.current) {
-        this.expirationDateRef.current._root.clear();
-      }
-      if (this.securityCodeRef.current) {
-        this.securityCodeRef.current._root.clear();
-      }
-      this.setState(INITIAL_STATE);
-    }
-  };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({

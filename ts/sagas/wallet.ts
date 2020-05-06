@@ -68,7 +68,8 @@ import {
   payCreditCardVerificationRequest,
   payCreditCardVerificationSuccess,
   runStartOrResumeAddCreditCardSaga,
-  setFavouriteWalletRequest
+  setFavouriteWalletRequest,
+  setWalletSessionEnabled
 } from "../store/actions/wallet/wallets";
 import { GlobalState } from "../store/reducers/types";
 
@@ -81,6 +82,12 @@ import { SessionToken } from "../types/SessionToken";
 
 import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 
+import ROUTES from "../navigation/routes";
+import { profileLoadSuccess, profileUpsert } from "../store/actions/profile";
+import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
+import { getCurrentRouteKey, getCurrentRouteName } from "../utils/navigation";
+import { SessionManager } from "../utils/SessionManager";
+import { paymentsDeleteUncompletedSaga } from "./payments";
 import {
   addWalletCreditCardRequestHandler,
   deleteWalletRequestHandler,
@@ -99,14 +106,6 @@ import {
   setFavouriteWalletRequestHandler,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
-
-import ROUTES from "../navigation/routes";
-import {
-  getCurrentRouteKey,
-  getCurrentRouteName
-} from "../store/middlewares/analytics";
-import { SessionManager } from "../utils/SessionManager";
-import { paymentsDeleteUncompletedSaga } from "./payments";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -486,6 +485,7 @@ function* deleteActivePaymentSaga() {
  * and a new PagopaToken gets received from the backend. Infact, the
  * pagoPaClient passed as paramenter to this saga, embeds the PagopaToken.
  */
+// tslint:disable-next-line: no-big-function
 export function* watchWalletSaga(
   sessionToken: SessionToken,
   walletToken: string,
@@ -537,7 +537,12 @@ export function* watchWalletSaga(
   // refreshing of the PM session when calling its APIs, keeping a shared token
   // and serializing the refresh requests.
   const pmSessionManager = new SessionManager(getPaymentManagerSession);
-
+  // check if the current profile (this saga starts only when the user is logged in)
+  // has an email address validated
+  const isEmailValidated: ReturnType<
+    typeof isProfileEmailValidatedSelector
+  > = yield select<GlobalState>(isProfileEmailValidatedSelector);
+  yield call(pmSessionManager.setSessionEnabled, isEmailValidated);
   //
   // Sagas
   //
@@ -673,11 +678,55 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  /**
+   * whenever the profile is loaded (from a load request or from un update)
+   * check if the email is validated. If it not the session manager has to be disabled
+   */
+  yield takeLatest(
+    [getType(profileUpsert.success), getType(profileLoadSuccess)],
+    checkProfile
+  );
+
+  yield takeLatest(
+    getType(setWalletSessionEnabled),
+    setWalletSessionEnabledSaga,
+    pmSessionManager
+  );
+
   yield fork(paymentsDeleteUncompletedSaga);
 }
 
+function* checkProfile(
+  action:
+    | ActionType<typeof profileUpsert.success>
+    | ActionType<typeof profileLoadSuccess>
+) {
+  const enabled = action.payload.is_email_validated === true;
+  yield put(setWalletSessionEnabled(enabled));
+}
+
+function* enableSessionManager(
+  enable: boolean,
+  sessionManager: SessionManager<PaymentManagerToken>
+) {
+  yield call(sessionManager.setSessionEnabled, enable);
+}
+
 /**
- * This saga track each time a new payment of the route from which it started is initiated
+ * enable the Session Manager to perform request with a fresh token
+ * otherwise the Session Manager doesn't refresh the token and it doesn't
+ * perform requests to payment manager
+ * @param sessionManager
+ * @param action
+ */
+function* setWalletSessionEnabledSaga(
+  sessionManager: SessionManager<PaymentManagerToken>,
+  action: ActionType<typeof setWalletSessionEnabled>
+): Iterator<Effect> {
+  yield call(enableSessionManager, action.payload, sessionManager);
+}
+/**
+ * This saga checks what is the route whence a new payment is started
  */
 export function* watchPaymentInitializeSaga(): Iterator<Effect> {
   yield takeEvery(getType(paymentInitializeState), function*() {

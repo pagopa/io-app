@@ -31,7 +31,6 @@ class ScreenContent extends React.PureComponent<Props> {
       title,
       icon,
       subtitle,
-      banner,
       dark,
       hideHeader,
       contentStyle,
@@ -52,7 +51,6 @@ class ScreenContent extends React.PureComponent<Props> {
             icon={icon}
             title={title}
             subtitle={subtitle}
-            banner={banner}
             dark={dark}
           />
         )}

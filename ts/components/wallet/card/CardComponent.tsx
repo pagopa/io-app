@@ -13,9 +13,7 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-
 import I18n from "../../../i18n";
-
 import variables from "../../../theme/variables";
 import { CreditCard, Wallet } from "../../../types/pagopa";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
@@ -39,8 +37,10 @@ interface FullCommonProps extends BaseProps {
   isFavorite?: pot.Pot<boolean, string>;
   onSetFavorite?: (willBeFavorite: boolean) => void;
   hideMenu?: boolean;
+  extraSpace?: boolean;
   hideFavoriteIcon?: boolean;
   onDelete?: () => void;
+  showPsp?: boolean;
 }
 
 interface FullProps extends FullCommonProps {
@@ -110,7 +110,18 @@ export default class CardComponent extends React.Component<Props> {
   };
 
   private renderTopRightCorner() {
-    const { wallet } = this.props;
+    if (
+      this.props.type === "Preview" ||
+      this.props.type === "Picking" ||
+      (this.props.type === "Full" && this.props.showPsp)
+    ) {
+      const { wallet } = this.props;
+      return (
+        <View style={styles.cardLogo}>
+          <Logo item={wallet.creditCard} />
+        </View>
+      );
+    }
 
     if (this.props.type === "Full" || this.props.type === "Header") {
       const {
@@ -122,7 +133,7 @@ export default class CardComponent extends React.Component<Props> {
       } = this.props;
 
       return (
-        <React.Fragment>
+        <View style={styles.row}>
           {!hideFavoriteIcon &&
             isFavorite !== undefined && (
               <IconFont
@@ -144,7 +155,7 @@ export default class CardComponent extends React.Component<Props> {
             <Menu>
               <MenuTrigger>
                 <IconFont
-                  name="io-more"
+                  name={"io-more"}
                   color={variables.brandPrimary}
                   style={styles.paddedIcon}
                 />
@@ -174,14 +185,6 @@ export default class CardComponent extends React.Component<Props> {
               </MenuOptions>
             </Menu>
           )}
-        </React.Fragment>
-      );
-    }
-
-    if (this.props.type === "Preview") {
-      return (
-        <View style={styles.cardLogo}>
-          <Logo item={wallet.creditCard} />
         </View>
       );
     }
@@ -190,7 +193,29 @@ export default class CardComponent extends React.Component<Props> {
   }
 
   private renderBody(creditCard: CreditCard) {
-    const { type } = this.props;
+    const { type, wallet } = this.props;
+
+    const getBodyIcon = () => {
+      if (
+        this.props.type === "Picking" ||
+        (this.props.type === "Full" && this.props.showPsp)
+      ) {
+        return wallet.psp ? (
+          <View style={[styles.cardPsp]}>
+            <Logo item={creditCard} pspLogo={wallet.psp.logoPSP} />
+          </View>
+        ) : (
+          <View style={[styles.cardPsp]}>
+            <Logo />
+          </View>
+        );
+      }
+      return (
+        <View style={[styles.cardLogo, { alignSelf: "flex-end" }]}>
+          <Logo item={creditCard} />
+        </View>
+      );
+    };
 
     if (type === "Preview") {
       return null;
@@ -198,12 +223,8 @@ export default class CardComponent extends React.Component<Props> {
 
     const expirationDate = buildExpirationDate(creditCard);
     const isExpired = isExpiredCard(creditCard);
-
     return (
-      <View
-        style={[styles.columns, styles.paddedTop, styles.body]}
-        onTouchEnd={this.handleOnCardPress}
-      >
+      <View style={[styles.columns, styles.paddedTop]}>
         <View>
           <Text
             style={[
@@ -222,10 +243,7 @@ export default class CardComponent extends React.Component<Props> {
             {creditCard.holder.toUpperCase()}
           </Text>
         </View>
-
-        <View style={styles.cardLogo}>
-          <Logo item={creditCard} />
-        </View>
+        {getBodyIcon()}
       </View>
     );
   }
@@ -258,7 +276,7 @@ export default class CardComponent extends React.Component<Props> {
       >
         <Text style={footerTextStyle}>{text}</Text>
         <IconFont
-          name="io-right"
+          name={"io-right"}
           size={variables.iconSize2}
           style={footerTextStyle}
         />
@@ -277,23 +295,16 @@ export default class CardComponent extends React.Component<Props> {
         style={[styles.card, hasFlatBottom ? styles.flatBottom : undefined]}
       >
         <View style={[styles.cardInner]}>
-          <View style={[styles.row]}>
-            <View
-              style={[styles.row, styles.numberArea]}
-              onTouchEnd={this.handleOnCardPress}
-            >
+          <View style={[styles.row, styles.spaced]}>
+            <View style={styles.row}>
               <Text style={[CreditCardStyles.smallTextStyle]}>
                 {`${HIDDEN_CREDITCARD_NUMBERS}`}
               </Text>
-
               <Text style={[CreditCardStyles.largeTextStyle]}>
                 {`${wallet.creditCard.pan.slice(-4)}`}
               </Text>
             </View>
-
-            <View style={styles.topRightCornerContainer}>
-              {this.renderTopRightCorner()}
-            </View>
+            <View>{this.renderTopRightCorner()}</View>
           </View>
 
           {this.renderBody(wallet.creditCard)}

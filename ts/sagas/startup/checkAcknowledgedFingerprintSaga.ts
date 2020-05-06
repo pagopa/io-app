@@ -1,12 +1,9 @@
 import TouchID, { IsSupportedConfig } from "react-native-touch-id";
 import { Effect } from "redux-saga";
 import { call, put, select, take } from "redux-saga/effects";
-import { getType } from "typesafe-actions";
-
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
-
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
 import { GlobalState } from "../../store/reducers/types";
 export type BiometrySimpleType =
@@ -44,7 +41,7 @@ function* onboardFingerprintIfAvailableSaga(): IterableIterator<Effect> {
 
     // Wait for the user to press "Continue" button after having read the
     // informative text
-    yield take(getType(fingerprintAcknowledge.request));
+    yield take(fingerprintAcknowledge.request);
 
     // Receive the acknowledgement, then update system state that flags this
     // screen as "Read"
@@ -80,7 +77,7 @@ export function* checkAcknowledgedFingerprintSaga(): IterableIterator<Effect> {
   > = yield select<GlobalState>(isFingerprintAcknowledgedSelector);
 
   if (!isFingerprintAcknowledged) {
-    // Navigate to the FingerprintScreen
+    // Navigate to the FingerprintScreen and wait for acknowledgment
     yield call(onboardFingerprintIfAvailableSaga);
   }
 }

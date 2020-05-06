@@ -2,15 +2,15 @@
  * A screen to show if the fingerprint is supported to the user.
  */
 
-import { Text, View } from "native-base";
+import { Content, Text } from "native-base";
 import * as React from "react";
+import { Alert } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-
-import { Alert } from "react-native";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import ScreenContent from "../../components/screens/ScreenContent";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { BiometrySimpleType } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
@@ -31,6 +31,11 @@ export type BiometryPrintableSimpleType =
 type OwnProps = NavigationScreenProps<NavigationParams>;
 
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.contextualHelpTitle",
+  body: "onboarding.contextualHelpContent"
+};
 
 export class FingerprintScreen extends React.PureComponent<Props> {
   /**
@@ -78,7 +83,7 @@ export class FingerprintScreen extends React.PureComponent<Props> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => this.props.abortOnboarding()
+          onPress: this.props.abortOnboarding
         }
       ]
     );
@@ -90,33 +95,32 @@ export class FingerprintScreen extends React.PureComponent<Props> {
       <TopScreenComponent
         goBack={this.handleGoBack}
         headerTitle={I18n.t("onboarding.fingerprint.headerTitle")}
-        title={I18n.t("onboarding.fingerprint.title")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["onboarding_fingerprint"]}
       >
-        <ScreenContent
+        <ScreenContentHeader
           title={I18n.t("onboarding.fingerprint.title")}
           icon={this.renderIcon(biometryType)}
-        >
-          <View content={true}>
-            <Text>
-              {biometryType !== "NOT_ENROLLED"
-                ? I18n.t("onboarding.fingerprint.body.enrolledText", {
-                    biometryType: this.renderBiometryType(
-                      biometryType as BiometryPrintableSimpleType
-                    )
-                  })
-                : I18n.t("onboarding.fingerprint.body.notEnrolledText")}
-            </Text>
-          </View>
-        </ScreenContent>
-        <View footer={true}>
-          <ButtonDefaultOpacity
-            block={true}
-            primary={true}
-            onPress={this.props.fingerprintAcknowledgeRequest}
-          >
-            <Text>{I18n.t("global.buttons.continue")}</Text>
-          </ButtonDefaultOpacity>
-        </View>
+        />
+        <Content>
+          <Text>
+            {biometryType !== "NOT_ENROLLED"
+              ? I18n.t("onboarding.fingerprint.body.enrolledText", {
+                  biometryType: this.renderBiometryType(
+                    biometryType as BiometryPrintableSimpleType
+                  )
+                })
+              : I18n.t("onboarding.fingerprint.body.notEnrolledText")}
+          </Text>
+        </Content>
+        <FooterWithButtons
+          type={"SingleButton"}
+          leftButton={{
+            title: I18n.t("global.buttons.continue"),
+            primary: true,
+            onPress: this.props.fingerprintAcknowledgeRequest
+          }}
+        />
       </TopScreenComponent>
     );
   }

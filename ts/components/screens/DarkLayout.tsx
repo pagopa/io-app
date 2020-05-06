@@ -1,15 +1,23 @@
+/**
+ * A component to display a brandDarkGray background color on the screen using it
+ */
 import { View } from "native-base";
 import * as React from "react";
 import {
   ImageSourcePropType,
   RefreshControlProps,
-  StatusBar,
   StyleProp,
   ViewStyle
 } from "react-native";
 import { StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
+import { FAQsCategoriesType } from "../../utils/faq";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import AnimatedScreenContent from "./AnimatedScreenContent";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "./BaseScreenComponent";
 import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
 
@@ -27,9 +35,10 @@ type Props = Readonly<{
   dynamicSubHeader?: React.ReactNode;
   topContentHeight?: number;
   footerContent?: React.ReactNode;
-  contextualHelp?: { title: string; body: () => React.ReactNode };
-  banner?: React.ReactNode;
+  contextualHelp?: ContextualHelpProps;
+  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   contentRefreshControl?: React.ReactElement<RefreshControlProps>;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 const styles = StyleSheet.create({
@@ -40,15 +49,20 @@ const styles = StyleSheet.create({
 });
 
 export default class DarkLayout extends React.Component<Props> {
+  public componentDidMount() {
+    setStatusBarColorAndBackground(
+      "light-content",
+      customVariables.brandDarkGray
+    );
+  }
+
   private screenContent() {
-    const { banner } = this.props;
     return (
       <React.Fragment>
         <View style={styles.headerContents}>
           <View spacer={true} />
           {this.props.topContent}
         </View>
-        {banner}
         {this.props.children}
       </React.Fragment>
     );
@@ -57,17 +71,14 @@ export default class DarkLayout extends React.Component<Props> {
     return (
       <TopScreenComponent
         goBack={this.props.allowGoBack}
-        title={this.props.title ? this.props.title : ""}
+        headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
         appLogo={this.props.appLogo}
         contextualHelp={this.props.contextualHelp}
+        contextualHelpMarkdown={this.props.contextualHelpMarkdown}
+        faqCategories={this.props.faqCategories}
       >
-        <StatusBar
-          backgroundColor={customVariables.brandDarkGray}
-          barStyle={"light-content"}
-        />
-
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
             hideHeader={this.props.hideHeader}

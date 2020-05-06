@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
+import * as pot from "italia-ts-commons/lib/pot";
 import { NavigationState } from "react-navigation";
 import { createReactNavigationReduxMiddleware } from "react-navigation-redux-helpers";
-
 import { applyMiddleware, compose, createStore, Reducer } from "redux";
 import { createLogger } from "redux-logger";
 import {
@@ -14,7 +14,6 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
-import { isDevEnvironment } from "../config";
 import rootSaga from "../sagas";
 import { Action, Store, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -29,12 +28,13 @@ import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { NAVIGATION_MIDDLEWARE_LISTENERS_KEY } from "../utils/constants";
+import { isDevEnv } from "../utils/environment";
 import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 7;
+const CURRENT_REDUX_STORE_VERSION = 12;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -148,23 +148,85 @@ const migrations: MigrationManifest = {
         }
       }
     };
+  },
+
+  // Version 8
+  // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
+  // they will be stored only when a service details screen is displayed
+  "8": (state: PersistedState) => {
+    return {
+      ...state,
+      content: {
+        ...(state as PersistedGlobalState).content,
+        servicesMetadata: {
+          ...(state as PersistedGlobalState).content.servicesMetadata,
+          byId: {}
+        }
+      }
+    };
+  },
+
+  // Version 9
+  // we fix a bug on the version 8 of the migration implying a no proper creation of the content segment of store
+  // (the servicesByScope state was not properly initialized)
+  "9": (state: PersistedState) => {
+    return {
+      ...state,
+      content: {
+        ...(state as PersistedGlobalState).content,
+        servicesByScope: pot.none
+      }
+    };
+  },
+  // Version 10
+  // since entities.messages are not persisted anymore, empty the related store section
+  "10": (state: PersistedState) => {
+    return {
+      ...state,
+      entities: {
+        ...(state as PersistedGlobalState).entities,
+        messages: {}
+      }
+    };
+  },
+
+  // Version 11
+  // add the default state for isCustomEmailChannelEnabled
+  "11": (state: PersistedState) => {
+    return {
+      ...state,
+      persistedPreferences: {
+        ...(state as PersistedGlobalState).persistedPreferences,
+        isCustomEmailChannelEnabled: pot.none
+      }
+    };
+  },
+  // Version 12
+  // change default state of isDebugModeEnabled: false
+  "12": (state: PersistedState) => {
+    return {
+      ...state,
+      debug: {
+        isDebugModeEnabled: false
+      }
+    };
   }
 };
 
-const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
+const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
 
 const rootPersistConfig: PersistConfig = {
   key: "root",
   storage: AsyncStorage,
   version: CURRENT_REDUX_STORE_VERSION,
-  migrate: createMigrate(migrations, { debug: isDevEnvironment() }),
-
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
+  // entities implement a persist reduce that avoids to persist messages. Other entities section will be persisted
+  blacklist: ["entities"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
     "notifications",
     "profile",
-    "entities",
     "debug",
     "persistedPreferences",
     "installation",
@@ -173,6 +235,7 @@ const rootPersistConfig: PersistConfig = {
     "userMetadata"
   ],
   // Transform functions used to manipulate state on store/rehydrate
+  // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374
   transforms: [DateISO8601Transform, PotTransform]
 };
 
@@ -191,9 +254,9 @@ const logger = createLogger({
 });
 
 // configure Reactotron if the app is running in dev mode
-export const RTron = __DEV__ ? configureReactotron() : {};
+export const RTron = isDevEnv ? configureReactotron() : {};
 const sagaMiddleware = createSagaMiddleware(
-  __DEV__ ? { sagaMonitor: RTron.createSagaMonitor() } : {}
+  isDevEnv ? { sagaMonitor: RTron.createSagaMonitor() } : {}
 );
 
 /**
@@ -230,7 +293,7 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
     analytics.screenTracking // tracks screen navigation,
   );
   // add Reactotron enhancer if the app is running in dev mode
-  const enhancer: StoreEnhancer = __DEV__
+  const enhancer: StoreEnhancer = isDevEnv
     ? composeEnhancers(middlewares, RTron.createEnhancer())
     : composeEnhancers(middlewares);
 

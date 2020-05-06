@@ -1,0 +1,22 @@
+diff --git a/node_modules/instabug-reactnative/index.d.ts b/node_modules/instabug-reactnative/index.d.ts
+index f081181..3f07a5b 100644
+--- a/node_modules/instabug-reactnative/index.d.ts
++++ b/node_modules/instabug-reactnative/index.d.ts
+@@ -9,7 +9,7 @@ export namespace BugReporting {
+   function setInvocationOptions(invocationOptions: invocationOptions[]): void;
+   function onInvokeHandler(handler: () => void): void;
+   function onReportSubmitHandler(preSendingHandler: () => void): void;
+-  function onSDKDismissedHandler(handler: (dismiss: dismissType, report: reportType) => void): void;
++  function onSDKDismissedHandler(handler: (dismiss: string, report: string) => void): void;
+   function setDidSelectPromptOptionHandler(didSelectPromptOptionHandler: () => void): void;
+   function setShakingThresholdForiPhone(iPhoneShakingThreshold: number): void;
+   function setShakingThresholdForiPad(iPadShakingThreshold: number): void;
+@@ -80,7 +80,7 @@ export namespace Replies {
+   function show(): void;
+   function setOnNewReplyReceivedCallback(onNewReplyReceivedCallback: () => void): void;
+   function setOnNewReplyReceivedHandler(onNewReplyReceivedHandler: () => void): void;
+-  function getUnreadRepliesCount(messageCountCallback: () => void): void;
++  function getUnreadRepliesCount(unreadRepliesCountCallback: (count: number) => void): void;
+   function setInAppNotificationsEnabled(inAppNotificationsEnabled: boolean): void;
+   function setInAppNotificationSound(shouldPlaySound: boolean): void;
+ }

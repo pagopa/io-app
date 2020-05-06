@@ -5,6 +5,7 @@ import { StyleSheet, ViewStyle } from "react-native";
 interface PlaceholderProps {
   color: string;
   placeHolderStyle?: ViewStyle;
+  scalableDimension?: ViewStyle;
 }
 
 const styles = StyleSheet.create({
@@ -27,20 +28,25 @@ const styles = StyleSheet.create({
   }
 });
 
-export const Bullet: React.SFC<PlaceholderProps> = ({ color }) => (
-  <View style={styles.placeholder}>
+export const Bullet: React.SFC<PlaceholderProps> = ({
+  color,
+  scalableDimension
+}) => (
+  <View style={[styles.placeholder, scalableDimension]}>
     <View style={[styles.placeholderBullet, { backgroundColor: color }]} />
   </View>
 );
 
 export const Baseline: React.SFC<PlaceholderProps> = ({
   color,
-  placeHolderStyle
+  placeHolderStyle,
+  scalableDimension
 }) => (
   <View
     style={[
       styles.placeholder,
       [styles.placeholderBaseline, placeHolderStyle],
+      scalableDimension,
       { borderBottomColor: color }
     ]}
   />

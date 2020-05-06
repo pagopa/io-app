@@ -5,10 +5,9 @@
  * https://www.pivotaltracker.com/story/show/159440294
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
-
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
@@ -20,8 +19,8 @@ import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {
   contentMunicipalityLoad,
-  contentServiceLoad,
-  contentServicesByScopeLoad
+  loadServiceMetadata,
+  loadVisibleServicesByScope
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { removeServiceTuples } from "../actions/services";
@@ -63,6 +62,8 @@ const initialContentState: ContentState = {
 };
 
 // Selectors
+export const contentSelector = (state: GlobalState) => state.content;
+
 export const servicesMetadataSelector = (state: GlobalState) =>
   state.content.servicesMetadata;
 
@@ -72,7 +73,11 @@ export const municipalitySelector = (state: GlobalState) =>
 export const servicesMetadataByIdSelector = (state: GlobalState) =>
   state.content.servicesMetadata.byId;
 
-export const servicesByScope = (state: GlobalState) =>
+export const serviceMetadataByIdSelector = (serviceId: string) => (
+  state: GlobalState
+) => servicesMetadataByIdSelector(state)[serviceId];
+
+export const servicesByScopeSelector = (state: GlobalState) =>
   state.content.servicesByScope;
 
 /**
@@ -84,7 +89,7 @@ export const isServiceIdInScopeSelector = (
   serviceId: ServiceId,
   scope: ScopeEnum
 ) =>
-  createSelector(servicesByScope, maybeServicesByScope =>
+  createSelector(servicesByScopeSelector, maybeServicesByScope =>
     pot.getOrElse(
       pot.map(
         maybeServicesByScope,
@@ -113,7 +118,7 @@ export const servicesInScopeSelector = (
   services: ReadonlyArray<ServicePublic>,
   scope: ScopeEnum
 ) =>
-  createSelector(servicesByScope, maybeServicesByScope =>
+  createSelector(servicesByScopeSelector, maybeServicesByScope =>
     pot.getOrElse(
       pot.map(maybeServicesByScope, sbs =>
         services.filter(service => {
@@ -129,7 +134,7 @@ export default function content(
   action: Action
 ): ContentState {
   switch (action.type) {
-    case getType(contentServiceLoad.request):
+    case getType(loadServiceMetadata.request):
       return {
         ...state,
         servicesMetadata: {
@@ -141,7 +146,7 @@ export default function content(
           }
         }
       };
-    case getType(contentServiceLoad.success):
+    case getType(loadServiceMetadata.success):
       return {
         ...state,
         servicesMetadata: {
@@ -152,7 +157,7 @@ export default function content(
         }
       };
 
-    case getType(contentServiceLoad.failure):
+    case getType(loadServiceMetadata.failure):
       return {
         ...state,
         servicesMetadata: {
@@ -190,26 +195,26 @@ export default function content(
         municipality: {
           codiceCatastale: pot.toError(
             state.municipality.codiceCatastale,
-            action.payload
+            action.payload.error
           ),
-          data: pot.toError(state.municipality.data, action.payload)
+          data: pot.toError(state.municipality.data, action.payload.error)
         }
       };
 
     // services by scope
-    case getType(contentServicesByScopeLoad.request):
+    case getType(loadVisibleServicesByScope.request):
       return {
         ...state,
-        servicesByScope: pot.noneLoading
+        servicesByScope: pot.toLoading(state.servicesByScope)
       };
 
-    case getType(contentServicesByScopeLoad.success):
+    case getType(loadVisibleServicesByScope.success):
       return {
         ...state,
         servicesByScope: pot.some(action.payload)
       };
 
-    case getType(contentServicesByScopeLoad.failure):
+    case getType(loadVisibleServicesByScope.failure):
       return {
         ...state,
         servicesByScope: pot.toError(state.servicesByScope, action.payload)
@@ -224,7 +229,7 @@ export default function content(
 
     case getType(removeServiceTuples): {
       // removeServiceTuples is dispatched to remove from the store
-      // the service content (and, here, metadata) related to services that are
+      // the service detail (and, here, metadata) related to services that are
       // no more visible and that are not related to messages list
 
       // references of the services to be removed from the store

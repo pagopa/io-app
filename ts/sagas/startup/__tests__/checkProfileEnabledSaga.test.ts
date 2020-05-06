@@ -9,7 +9,6 @@ import {
 import { getType } from "typesafe-actions";
 
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import { UserProfile } from "../../../../definitions/backend/UserProfile";
 
 import { startApplicationInitialization } from "../../../store/actions/application";
 import { profileUpsert } from "../../../store/actions/profile";
@@ -17,10 +16,11 @@ import { profileUpsert } from "../../../store/actions/profile";
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
 
 describe("checkProfileEnabledSaga", () => {
-  const profile: UserProfile = {
+  const profile: InitializedProfile = {
     has_profile: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
+    is_email_enabled: false,
     email: "test@example.com" as EmailString,
     spid_email: "test@example.com" as EmailString,
     family_name: "Connor",
@@ -32,12 +32,14 @@ describe("checkProfileEnabledSaga", () => {
 
   const upsertAction = profileUpsert.request({
     is_inbox_enabled: true,
-    is_webhook_enabled: true,
-    email: profile.spid_email
+    is_webhook_enabled: true
   });
 
   const updatedProfile: InitializedProfile = {
     ...profile,
+    is_email_enabled: false,
+    is_inbox_enabled: false,
+    is_webhook_enabled: false,
     version: 1 as NonNegativeInteger
   };
 

@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation";
-
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import ROUTES from "./routes";
@@ -15,7 +14,10 @@ const MessagesNavigator = createStackNavigator(
   },
   {
     // Let each screen handle the header and navigation
-    headerMode: "none"
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
 );
 

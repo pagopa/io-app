@@ -1,9 +1,9 @@
 import { Option } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import React, { ComponentProps } from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";

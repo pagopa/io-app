@@ -9,6 +9,8 @@ import { RefreshControl, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import H5 from "../../components/ui/H5";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import TransactionsList from "../../components/wallet/TransactionsList";
@@ -28,8 +30,13 @@ import {
   deleteWalletRequest,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
+import { paymentsHistorySelector } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
-import { getWalletTransactionsCreator } from "../../store/reducers/wallet/transactions";
+import {
+  areMoreTransactionsAvailable,
+  getTransactionsLoadedLength,
+  getWalletTransactionsCreator
+} from "../../store/reducers/wallet/transactions";
 import { getFavoriteWalletId } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
@@ -65,6 +72,11 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.walletCardTransaction.contextualHelpTitle",
+  body: "wallet.walletCardTransaction.contextualHelpContent"
+};
+
 const ListEmptyComponent = (
   <Content
     scrollEnabled={false}
@@ -74,6 +86,7 @@ const ListEmptyComponent = (
     <View spacer={true} />
     <Text>{I18n.t("wallet.noTransactionsInTransactionsScreen")}</Text>
     <View spacer={true} large={true} />
+    <EdgeBorderComponent />
   </Content>
 );
 
@@ -92,7 +105,7 @@ class TransactionsScreen extends React.Component<Props> {
         </View>
 
         <CardComponent
-          type="Header"
+          type={"Header"}
           wallet={selectedWallet}
           hideFavoriteIcon={false}
           hideMenu={false}
@@ -108,6 +121,10 @@ class TransactionsScreen extends React.Component<Props> {
     );
   }
 
+  private handleLoadMoreTransactions = () => {
+    this.props.loadTransactions(this.props.transactionsLoadedLength);
+  };
+
   public render(): React.ReactNode {
     const selectedWallet = this.props.navigation.getParam("selectedWallet");
 
@@ -119,7 +136,7 @@ class TransactionsScreen extends React.Component<Props> {
     const transactionsRefreshControl = (
       <RefreshControl
         onRefresh={() => {
-          this.props.loadTransactions();
+          this.props.loadTransactions(this.props.transactionsLoadedLength);
         }}
         // The refresh control spinner is displayed only at pull-to-refresh
         // while, during the transactions reload, it is displayed the custom transaction
@@ -137,11 +154,15 @@ class TransactionsScreen extends React.Component<Props> {
         hideHeader={true}
         hasDynamicSubHeader={true}
         refreshControl={transactionsRefreshControl}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_transaction"]}
       >
         <TransactionsList
           title={I18n.t("wallet.transactions")}
           amount={I18n.t("wallet.amount")}
           transactions={this.props.transactions}
+          areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
+          onLoadMoreTransactions={this.handleLoadMoreTransactions}
           navigateToTransactionDetails={
             this.props.navigateToTransactionDetailsScreen
           }
@@ -157,12 +178,16 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   transactions: getWalletTransactionsCreator(
     ownProps.navigation.getParam("selectedWallet").idWallet
   )(state),
+  potPayments: paymentsHistorySelector(state),
+  transactionsLoadedLength: getTransactionsLoadedLength(state),
   favoriteWallet: getFavoriteWalletId(state),
-  readTransactions: state.entities.transactionsRead
+  readTransactions: state.entities.transactionsRead,
+  areMoreTransactionsAvailable: areMoreTransactionsAvailable(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadTransactions: () => dispatch(fetchTransactionsRequest()),
+  loadTransactions: (start: number) =>
+    dispatch(fetchTransactionsRequest({ start })),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));
     dispatch(

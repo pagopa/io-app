@@ -1,9 +1,8 @@
 import * as React from "react";
-
 import { ComponentProps } from "../../types/react";
+import { FAQsCategoriesType } from "../../utils/faq";
 import { SearchType } from "../search/SearchButton";
 import BaseScreenComponent from "./BaseScreenComponent";
-import { ScreenContentHeader } from "./ScreenContentHeader";
 
 interface OwnProps {
   headerTitle?: string;
@@ -13,6 +12,7 @@ interface OwnProps {
     iconName: string;
     onPress: () => void;
   };
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }
 
 type BaseScreenComponentProps =
@@ -20,11 +20,14 @@ type BaseScreenComponentProps =
   | "appLogo"
   | "goBack"
   | "contextualHelp"
-  | "headerBody";
+  | "contextualHelpMarkdown"
+  | "headerBody"
+  | "customGoBack";
 
 type Props = OwnProps &
-  Pick<ComponentProps<typeof ScreenContentHeader>, "title"> &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
+
+export type TopScreenComponentProps = Props;
 
 /**
  * Wraps a BaseScreenComponent with a title and a subtitle
@@ -35,13 +38,15 @@ class TopScreenComponent extends React.PureComponent<Props> {
       dark,
       appLogo,
       goBack,
-      title,
       headerTitle,
       contextualHelp,
+      contextualHelpMarkdown,
       headerBody,
       isSearchAvailable,
       searchType,
-      customRightIcon
+      customRightIcon,
+      customGoBack,
+      faqCategories
     } = this.props;
 
     return (
@@ -49,12 +54,15 @@ class TopScreenComponent extends React.PureComponent<Props> {
         appLogo={appLogo}
         dark={dark}
         goBack={goBack}
-        headerTitle={goBack ? headerTitle || title : undefined}
+        headerTitle={goBack ? headerTitle : undefined}
         contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={faqCategories}
         headerBody={headerBody}
         isSearchAvailable={isSearchAvailable}
         searchType={searchType}
         customRightIcon={customRightIcon}
+        customGoBack={customGoBack}
       >
         {this.props.children}
       </BaseScreenComponent>

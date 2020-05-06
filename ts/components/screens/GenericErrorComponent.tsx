@@ -1,12 +1,16 @@
-import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { SingleButton, TwoButtonsInlineHalf } from "../ui/BlockButtons";
 import FooterWithButtons from "../ui/FooterWithButtons";
 
 type Props = Readonly<{
   onRetry: () => void;
+  onCancel?: () => void;
+  image?: ImageSourcePropType;
+  text?: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -23,6 +27,37 @@ const styles = StyleSheet.create({
 });
 
 export default class GenericErrorComponent extends React.PureComponent<Props> {
+  private renderFooterButtons = () => {
+    const footerProps1: TwoButtonsInlineHalf = {
+      type: "TwoButtonsInlineHalf",
+      leftButton: {
+        bordered: true,
+        title: I18n.t("global.buttons.cancel"),
+        onPress: this.props.onCancel
+      },
+      rightButton: {
+        primary: true,
+        title: I18n.t("global.buttons.retry"),
+        onPress: this.props.onRetry
+      }
+    };
+
+    const footerProps2: SingleButton = {
+      type: "SingleButton",
+      leftButton: {
+        primary: true,
+        title: I18n.t("global.buttons.retry"),
+        onPress: this.props.onRetry
+      }
+    };
+
+    return (
+      <FooterWithButtons
+        {...(this.props.onCancel ? footerProps1 : footerProps2)}
+      />
+    );
+  };
+
   public render() {
     return (
       <React.Fragment>
@@ -30,11 +65,14 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
           <View style={styles.center}>
             <View spacer={true} extralarge={true} />
             <Image
-              source={require("../../../img/wallet/errors/generic-error-icon.png")}
+              source={
+                this.props.image ||
+                require("../../../img/wallet/errors/generic-error-icon.png")
+              }
             />
             <View spacer={true} />
             <Text bold={true} alignCenter={true} style={styles.errorText}>
-              {I18n.t("wallet.errors.GENERIC_ERROR")}
+              {this.props.text || I18n.t("wallet.errors.GENERIC_ERROR")}
             </Text>
             <View spacer={true} extralarge={true} />
             <View spacer={true} extralarge={true} />
@@ -44,15 +82,7 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
             <View spacer={true} extralarge={true} />
           </View>
         </Content>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            block: true,
-            primary: true,
-            onPress: this.props.onRetry,
-            title: I18n.t("global.buttons.retry")
-          }}
-        />
+        {this.renderFooterButtons()}
       </React.Fragment>
     );
   }

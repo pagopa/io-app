@@ -1,61 +1,53 @@
 platform :ios, '9.0'
-
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 target 'ItaliaApp' do
 
-  pod 'React', :path => "../node_modules/react-native", :subspecs => [
-    "Core",
-    "ART",
-    "RCTActionSheet",
-    "RCTAnimation",
-    "RCTCameraRoll",
-    "RCTImage",
-    "RCTNetwork",
-    "RCTText",
-    "RCTVibration",
-    "RCTWebSocket",
-    "RCTPushNotification",
-    "DevSupport"
-  ]
-
-  # Explicitly include Yoga if you are using RN >= 0.42.0
-  pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
-
-  pod 'react-native-config', :path => '../node_modules/react-native-config'
-
-  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
-
-
-  pod 'react-native-mixpanel', :path => '../node_modules/react-native-mixpanel'
-
-  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
-
-  pod 'RNKeychain', :path => '../node_modules/react-native-keychain'
+  pod 'React', :path => '../node_modules/react-native/'
+  pod 'React-Core', :path => '../node_modules/react-native/React'
+  pod 'React-DevSupport', :path => '../node_modules/react-native/React'
+  pod 'React-RCTActionSheet', :path => '../node_modules/react-native/Libraries/ActionSheetIOS'
+  pod 'React-RCTAnimation', :path => '../node_modules/react-native/Libraries/NativeAnimation'
+  pod 'React-RCTBlob', :path => '../node_modules/react-native/Libraries/Blob'
+  pod 'React-RCTImage', :path => '../node_modules/react-native/Libraries/Image'
+  pod 'React-RCTLinking', :path => '../node_modules/react-native/Libraries/LinkingIOS'
+  pod 'React-RCTNetwork', :path => '../node_modules/react-native/Libraries/Network'
+  pod 'React-RCTSettings', :path => '../node_modules/react-native/Libraries/Settings'
+  pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text'
+  pod 'React-RCTVibration', :path => '../node_modules/react-native/Libraries/Vibration'
+  pod 'React-RCTWebSocket', :path => '../node_modules/react-native/Libraries/WebSocket'
+  pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
+  pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
+  pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
+  pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
-  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
+
+
+
 
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
 
-  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
-
-  pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
 
-  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
 
-  pod 'TouchID', :path => '../node_modules/react-native-touch-id'
 
-  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
-  pod 'react-native-calendar-events', :path => '../node_modules/react-native-calendar-events'
 
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
-  pod 'RNFS', :path => '../node_modules/react-native-fs'
 
-  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
-  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
+  target 'ItaliaAppTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+  use_native_modules!
 
 end
 

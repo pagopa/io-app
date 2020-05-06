@@ -9,14 +9,16 @@ const ServicesNavigator = createStackNavigator(
     [ROUTES.SERVICES_HOME]: {
       screen: ServicesHomeScreen
     },
-    // TODO Replace when the new detail screen is available
     [ROUTES.SERVICE_DETAIL]: {
       screen: ServiceDetailsScreen
     }
   },
   {
     // Let each screen handle the header and navigation
-    headerMode: "none"
+    headerMode: "none",
+    defaultNavigationOptions: {
+      gesturesEnabled: false
+    }
   }
 );
 

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
 
   buttonTextLabel: {
-    fontSize: radius
+    fontSize: radius - 5
   },
 
   white: {

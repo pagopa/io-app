@@ -6,7 +6,6 @@
  *  TODO:
  *  - integrate contextual help to obtain details on the data to insert for manually identifying the transaction
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
- *  - "back" & "cancel" behavior to be implemented @https://www.pivotaltracker.com/story/show/159229087
  */
 
 import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
@@ -33,7 +32,9 @@ import {
 } from "italia-ts-commons/lib/strings";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
@@ -85,6 +86,10 @@ const AmountInEuroCentsFromString = NumberFromString.pipe(
   AmountInEuroCentsFromNumber
 );
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "wallet.insertManually.contextualHelpTitle",
+  body: "wallet.insertManually.contextualHelpContent"
+};
 class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -169,6 +174,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("wallet.insertManually.header")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_insert_notice_data"]}
       >
         <NavigationEvents onWillFocus={this.handleWillFocus} />
         <ScrollView style={styles.whiteBg} keyboardShouldPersistTaps="handled">
@@ -193,6 +200,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <Label>{I18n.t("wallet.insertManually.noticeCode")}</Label>
                 <Input
                   keyboardType={"numeric"}
+                  returnKeyType={"done"}
                   maxLength={18}
                   onChangeText={value => {
                     this.setState({
@@ -216,6 +224,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <Label>{I18n.t("wallet.insertManually.entityCode")}</Label>
                 <Input
                   keyboardType={"numeric"}
+                  returnKeyType={"done"}
                   maxLength={11}
                   onChangeText={value => {
                     this.setState({
@@ -239,6 +248,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                 <Label>{I18n.t("wallet.insertManually.amount")}</Label>
                 <Input
                   keyboardType={"numeric"}
+                  returnKeyType={"done"}
                   maxLength={10}
                   value={this.state.inputAmountValue}
                   onChangeText={value =>

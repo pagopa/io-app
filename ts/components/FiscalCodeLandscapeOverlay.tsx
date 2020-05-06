@@ -12,7 +12,7 @@ import {
   StyleSheet
 } from "react-native";
 import { isIphoneX } from "react-native-iphone-x-helper";
-import { UserProfile } from "../../definitions/backend/UserProfile";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
 import IconFont from "../components/ui/IconFont";
 import customVariables from "../theme/variables";
@@ -21,7 +21,7 @@ import AppHeader from "./ui/AppHeader";
 
 type Props = Readonly<{
   onCancel: () => void;
-  profile: UserProfile;
+  profile: InitializedProfile;
   municipality: pot.Pot<Municipality, Error>;
   showBackSide?: boolean;
 }>;

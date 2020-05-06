@@ -2,41 +2,51 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
-
 import { none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { EmailString } from "italia-ts-commons/lib/strings";
-import { untag } from "italia-ts-commons/lib/types";
 import { Content, Form, Text, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet
 } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationScreenProps, StackActions } from "react-navigation";
 import { connect } from "react-redux";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import H4 from "../../components/ui/H4";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
-import { abortOnboarding, emailInsert } from "../../store/actions/onboarding";
+import { navigateToEmailReadScreen } from "../../store/actions/navigation";
+import {
+  abortOnboarding,
+  emailAcknowledged,
+  emailInsert
+} from "../../store/actions/onboarding";
+import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { profileSelector } from "../../store/reducers/profile";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
+import {
+  isProfileEmailValidatedSelector,
+  profileEmailSelector,
+  profileSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
-
-type NavigationParams = {
-  isFromProfileSection?: boolean;
-};
+import { areStringsEqual } from "../../utils/options";
+import { showToast } from "../../utils/showToast";
 
 type Props = ReduxProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  NavigationScreenProps<NavigationParams>;
+  NavigationScreenProps;
 
 const styles = StyleSheet.create({
   flex: {
@@ -64,14 +74,16 @@ const styles = StyleSheet.create({
 
 const EMPTY_EMAIL = "";
 
-const contextualHelp = {
-  title: I18n.t("email.insert.help.title"),
-  body: () => <Markdown>{I18n.t("email.insert.help.content")}</Markdown>
-};
-
 type State = Readonly<{
   email: Option<string>;
+  isMounted: boolean;
 }>;
+
+// TODO: update content (https://www.pivotaltracker.com/n/projects/2048617/stories/169392558)
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "email.insert.help.title",
+  body: "email.insert.help.content"
+};
 
 /**
  * A screen to allow user to insert an email address.
@@ -79,39 +91,34 @@ type State = Readonly<{
 class EmailInsertScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { email: this.props.email };
-    this.handleGoBack = this.handleGoBack.bind(this);
-    this.isValidEmail = this.isValidEmail.bind(this);
-    this.updateEmailState = this.updateEmailState.bind(this);
+    this.state = { email: this.props.optionEmail, isMounted: true };
   }
 
-  /**
-   * Footer
-   *
-   * TODO1: add navigation to the dedicated modal
-   *          https://www.pivotaltracker.com/story/show/169545858
-   * TODO:2 save the inserted new email
-   *          https://www.pivotaltracker.com/n/projects/2048617/stories/169264055
-   */
-  private renderFooterButtons() {
+  private continueOnPress = () => {
+    Keyboard.dismiss();
+    if (this.isValidEmail()) {
+      // The profile is reloaded to check if the user email
+      // has been updated within another session
+      this.props.reloadProfile();
+    }
+  };
+
+  private renderFooterButtons = () => {
     const continueButtonProps = {
-      disabled: this.isValidEmail() !== true,
-      onPress: this.isFromProfileSection
-        ? () => {
-            // TODO1
-            // TODO2
-            Alert.alert(I18n.t("global.notImplemented"));
-          }
-        : this.props.dispatchEmailInsert,
+      disabled: this.isValidEmail() !== true && !this.props.isLoading,
+      onPress: this.continueOnPress,
       title: I18n.t("global.buttons.continue"),
       block: true,
       primary: this.isValidEmail()
     };
 
     return (
-      <FooterWithButtons type="SingleButton" leftButton={continueButtonProps} />
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={continueButtonProps}
+      />
     );
-  }
+  };
 
   /** validate email returning three possible values:
    * - _true_,      if email is valid.
@@ -120,7 +127,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
    * - _undefined_, if email field is empty. This state is consumed by
    * LabelledItem Component and it used for style pourposes ONLY.
    */
-  private isValidEmail() {
+  private isValidEmail = () => {
     return this.state.email
       .map(value => {
         if (EMPTY_EMAIL === value) {
@@ -129,18 +136,28 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
         return EmailString.decode(value).isRight();
       })
       .toUndefined();
-  }
+  };
 
-  private updateEmailState(value: string) {
+  private handleOnChangeEmailText = (value: string) => {
     this.setState({
       email: value !== EMPTY_EMAIL ? some(value) : none
     });
-  }
+  };
 
-  private handleGoBack() {
-    if (this.isFromProfileSection) {
+  private handleGoBack = () => {
+    // goback if the onboarding is completed
+    if (this.props.isOnboardingCompleted) {
       this.props.navigation.goBack();
+    }
+    // if the onboarding is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
+    // see https://www.pivotaltracker.com/story/show/171424350
+    else if (this.props.optionEmail.isSome()) {
+      this.setState({ isMounted: false }, () => {
+        this.navigateToEmailReadScreen();
+      });
     } else {
+      // if the user is in onboarding phase, go back has to
+      // abort login (an user with no email can't access the home)
       Alert.alert(
         I18n.t("onboarding.alert.title"),
         I18n.t("onboarding.alert.description"),
@@ -152,25 +169,85 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           {
             text: I18n.t("global.buttons.exit"),
             style: "default",
-            onPress: () => this.props.dispatch(abortOnboarding())
+            onPress: this.props.abortOnboarding
           }
         ]
       );
     }
-  }
+  };
 
-  get isFromProfileSection() {
-    return this.props.navigation.getParam("isFromProfileSection") || false;
-  }
+  private navigateToEmailReadScreen = () => {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [navigateToEmailReadScreen()]
+    });
+    this.props.navigation.dispatch(resetAction);
+  };
 
   public componentDidMount() {
-    if (this.isFromProfileSection) {
+    if (this.props.isOnboardingCompleted) {
       this.setState({ email: some(EMPTY_EMAIL) });
     }
   }
 
+  public componentDidUpdate(prevProps: Props) {
+    if (!this.state.isMounted) {
+      return;
+    }
+    // if we were updating the profile
+    if (pot.isUpdating(prevProps.profile)) {
+      // and we got an error
+      if (pot.isError(this.props.profile)) {
+        // display a toast with error
+        showToast(I18n.t("email.edit.upsert_ko"), "danger");
+      } else if (pot.isSome(this.props.profile)) {
+        // user is inserting his email from onboarding phase
+        // he comes from checkAcknowledgedEmailSaga if onboarding is not finished yet
+        // and he has not an email
+        if (
+          !this.props.isOnboardingCompleted &&
+          prevProps.optionEmail.isNone()
+        ) {
+          // since this screen is mounted from saga it won't be unmounted because on saga
+          // we have a direct navigation instead of back
+          // so we have to force a reset (to get this screen unmounted) and navigate to emailReadScreen
+          // isMounted is used as a guard to prevent update while the screen is unmounting
+          this.setState({ isMounted: false }, () => {
+            this.props.acknowledgeEmailInsert();
+            this.navigateToEmailReadScreen();
+          });
+          return;
+        }
+        // go back (to the EmailReadScreen)
+        this.handleGoBack();
+        return;
+      }
+    }
+
+    // When the profile reload is completed, check if the email is changed since the last reload
+    if (
+      pot.isLoading(prevProps.profile) &&
+      !pot.isLoading(this.props.profile)
+    ) {
+      // Check both if the email has been changed within another session and
+      // if the inserted email match with the email stored into the user profile
+      const isTheSameEmail = areStringsEqual(
+        this.props.optionEmail,
+        this.state.email,
+        true
+      );
+      if (!isTheSameEmail) {
+        this.state.email.map(e => {
+          this.props.updateEmail(e as EmailString);
+        });
+      } else {
+        Alert.alert(I18n.t("email.insert.alert"));
+      }
+    }
+  }
+
   public render() {
-    const { isFromProfileSection } = this;
+    const isFromProfileSection = this.props.isOnboardingCompleted;
     return (
       <BaseScreenComponent
         goBack={this.handleGoBack}
@@ -179,7 +256,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             ? I18n.t("profile.preferences.list.email")
             : I18n.t("email.insert.header")
         }
-        contextualHelp={contextualHelp}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <View style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
@@ -198,7 +275,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                   : I18n.t("email.insert.subtitle")}
                 {isFromProfileSection && (
                   <Text style={styles.darkestGray}>
-                    {` ${this.props.email.getOrElse("")}`}
+                    {` ${this.props.optionEmail.getOrElse("")}`}
                   </Text>
                 )}
               </Text>
@@ -216,10 +293,12 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                   icon="io-envelope"
                   isValid={this.isValidEmail()}
                   inputProps={{
+                    returnKeyType: "done",
+                    onSubmitEditing: this.continueOnPress,
                     autoCapitalize: "none",
+                    keyboardType: "email-address",
                     value: this.state.email.getOrElse(EMPTY_EMAIL),
-                    onChangeText: (value: string) =>
-                      this.updateEmailState(value),
+                    onChangeText: this.handleOnChangeEmailText,
                     style: styles.emailInput
                   }}
                   iconStyle={styles.icon}
@@ -227,38 +306,49 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
               </Form>
             </View>
           </Content>
-
-          <KeyboardAvoidingView
-            behavior="padding"
-            keyboardVerticalOffset={Platform.select({
-              ios: 100,
-              android: 80
-            })}
-          >
-            {this.renderFooterButtons()}
-          </KeyboardAvoidingView>
         </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "android" ? "height" : "padding"}
+          keyboardVerticalOffset={Platform.select({
+            ios: 0,
+            android: customVariables.contentPadding
+          })}
+        >
+          {this.renderFooterButtons()}
+        </KeyboardAvoidingView>
       </BaseScreenComponent>
     );
   }
 }
 
 function mapStateToProps(state: GlobalState) {
-  const optionProfile = pot.toOption(profileSelector(state));
-  // TODO: get info on validation from profile
-  //      https://www.pivotaltracker.com/story/show/168662501
-  const isEmailValidated = true;
+  const profile = profileSelector(state);
   return {
-    email: optionProfile.map(_ => untag(_.spid_email)),
-    isEmailValidated
+    profile,
+    optionEmail: profileEmailSelector(state),
+    isEmailValidated: isProfileEmailValidatedSelector(state),
+    isLoading: pot.isUpdating(profile) || pot.isLoading(profile),
+    isOnboardingCompleted: isOnboardingCompletedSelector(state)
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchEmailInsert: () => dispatch(emailInsert())
+  updateEmail: (email: EmailString) =>
+    dispatch(
+      profileUpsert.request({
+        email
+      })
+    ),
+  navigateToEmailReadScreen: () => {
+    dispatch(navigateToEmailReadScreen());
+  },
+  acknowledgeEmailInsert: () => dispatch(emailInsert()),
+  acknowledgeEmail: () => dispatch(emailAcknowledged()),
+  abortOnboarding: () => dispatch(abortOnboarding()),
+  reloadProfile: () => dispatch(profileLoadRequest())
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EmailInsertScreen);
+)(withLoadingSpinner(EmailInsertScreen));

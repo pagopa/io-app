@@ -61,6 +61,11 @@ const styles = StyleSheet.create({
   errorMessageSubtitle: {
     textAlign: "center",
     fontSize: customVariables.fontSizeSmall
+  },
+
+  paddedLR: {
+    paddingLeft: customVariables.contentPadding,
+    paddingRight: customVariables.contentPadding
   }
 });
 
@@ -218,7 +223,7 @@ class TransactionErrorScreen extends React.Component<Props> {
         goBack={this.onPressCancel}
         headerTitle={I18n.t("wallet.firstTransactionSummary.header")}
       >
-        <Content>
+        <Content noPadded={true} style={styles.paddedLR}>
           <View style={styles.contentWrapper}>
             <View spacer={true} extralarge={true} />
 
@@ -255,14 +260,11 @@ class TransactionErrorScreen extends React.Component<Props> {
    */
   private renderButtons = (canRetry: boolean) => {
     const cancelButtonProps = {
-      block: true,
-      light: true,
       cancel: true,
       onPress: this.onPressCancel,
       title: I18n.t("global.buttons.cancel")
     };
     const retryButtonProps = {
-      block: true,
       primary: true,
       onPress: this.onPressRetry,
       title: I18n.t("global.buttons.retry")
@@ -276,7 +278,7 @@ class TransactionErrorScreen extends React.Component<Props> {
     };
     return canRetry ? (
       <FooterWithButtons
-        type="TwoButtonsInlineThird"
+        type={"TwoButtonsInlineThird"}
         leftButton={cancelButtonProps}
         rightButton={retryButtonProps}
       />

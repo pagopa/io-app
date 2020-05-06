@@ -2,7 +2,7 @@
  * A reducer to store the organization names and fiscal codes
  */
 import { getType } from "typesafe-actions";
-import { loadService } from "../../../actions/services";
+import { loadServiceDetail } from "../../../actions/services";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
@@ -25,7 +25,7 @@ const reducer = (
   action: Action
 ): OrganizationsAllState => {
   switch (action.type) {
-    case getType(loadService.success):
+    case getType(loadServiceDetail.success):
       const organization = state.find(
         _ => _.fiscalCode === action.payload.organization_fiscal_code
       );

@@ -2,12 +2,12 @@ import { Effect } from "redux-saga";
 import { put, take } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 
-import { UserProfileUnion } from "../../api/backend";
+import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
 import { profileFirstLogin, profileUpsert } from "../../store/actions/profile";
 
 export function* checkProfileEnabledSaga(
-  profile: UserProfileUnion
+  profile: InitializedProfile
 ): IterableIterator<Effect> {
   if (
     !profile.has_profile ||
@@ -19,14 +19,13 @@ export function* checkProfileEnabledSaga(
     // active in the API.
     // FIXME: the `version` field has the same meaning at the `has_profile`
     //        field, we should get rid of `has_profile`.
-    //        see https://github.com/teamdigitale/italia-backend/blob/v0.0.48/src/types/profile.ts#L33
+    //        see https://github.com/pagopa/io-backend/blob/v0.0.48/src/types/profile.ts#L33
 
     // Upsert the user profile to enable inbox and webhook
     yield put(
       profileUpsert.request({
         is_inbox_enabled: true,
-        is_webhook_enabled: true,
-        email: profile.spid_email
+        is_webhook_enabled: true
       })
     );
     const action:

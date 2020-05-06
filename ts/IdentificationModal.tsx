@@ -5,9 +5,10 @@ import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 
 import Pinpad from "./components/Pinpad";
-import BaseScreenComponent from "./components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "./components/screens/BaseScreenComponent";
 import IconFont from "./components/ui/IconFont";
-import Markdown from "./components/ui/Markdown";
 import TextWithIcon from "./components/ui/TextWithIcon";
 import { isDebugBiometricIdentificationEnabled } from "./config";
 import I18n from "./i18n";
@@ -29,9 +30,9 @@ import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScr
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
 /**
- * Type used in the local state to save the result of Pinpad PIN matching.
- * State is "unstarted" if the user still need to insert the PIN.
- * State is "failure" when the PIN inserted by the user do not match the
+ * Type used in the local state to save the result of Pinpad code matching.
+ * State is "unstarted" if the user still need to insert the unlock code.
+ * State is "failure" when the unlock code inserted by the user do not match the
  * stored one.
  */
 type IdentificationByPinState = "unstarted" | "failure";
@@ -45,11 +46,9 @@ type State = {
   canInsertPin: boolean;
 };
 
-const contextualHelp = {
-  title: I18n.t("pin_login.unlock_screen.help.title"),
-  body: () => (
-    <Markdown>{I18n.t("pin_login.unlock_screen.help.content")}</Markdown>
-  )
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.pin.contextualHelpTitle",
+  body: "onboarding.pin.contextualHelpContent"
 };
 
 const renderIdentificationByPinState = (
@@ -126,7 +125,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
   }
 
-  public componentWillMount() {
+  public componentDidMount() {
     const { isFingerprintEnabled } = this.props;
     if (isFingerprintEnabled) {
       getFingerprintSettings().then(
@@ -140,7 +139,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         _ => 0
       );
     } else {
-      // if the biometric is not available unlock the pin insertion
+      // if the biometric is not available unlock the unlock code insertion
       this.setState({ canInsertPin: true });
     }
   }
@@ -251,7 +250,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       pin,
       canResetPin,
       identificationGenericData,
-      identificationCancelData
+      identificationCancelData,
+      shufflePad
     } = identificationState;
 
     const {
@@ -283,7 +283,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
           primary={true}
-          contextualHelp={contextualHelp}
+          contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
           appLogo={true}
         >
           <StatusBar
@@ -308,6 +309,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   this.onIdentificationFailureHandler
                 )
               }
+              shufflePad={shufflePad}
               disabled={!this.state.canInsertPin}
               compareWithCode={pin as string}
               activeColor={"white"}
@@ -391,6 +393,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         onIdentificationSuccessHandler();
       })
       .catch((error: AuthenticationError) => {
+        // some error occured, enable pin insertion
+        this.setState({
+          canInsertPin: true
+        });
         if (isDebugBiometricIdentificationEnabled) {
           Alert.alert("identification.biometric.title", `KO: ${error.code}`);
         }
@@ -400,11 +406,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         ) {
           this.setState({
             identificationByBiometryState: "failure"
-          });
-        } else {
-          // if the user dismissed the biometric dialog, unlock the pin insertion
-          this.setState({
-            canInsertPin: true
           });
         }
         onIdentificationFailureHandler();

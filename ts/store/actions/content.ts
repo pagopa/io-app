@@ -1,5 +1,4 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ServicesByScope } from "../../../definitions/content/ServicesByScope";
@@ -8,21 +7,26 @@ import { ServiceMetadataState } from "../reducers/content";
 
 // TODO: check if response with code !== 200 can mean different errors.
 // If false, the failure payload could be just the serviceID as before
-export type ContentServiceFailure = {
+type ServiceMetadataFailure = {
   error: Error;
   serviceId: string;
 };
 
-export type ContentServiceSuccess = {
+type MunicipalityFailure = {
+  error: Error;
+  codiceCatastale: string;
+};
+
+type ServiceLetadataSuccess = {
   serviceId: string;
   data: ServiceMetadataState;
 };
 
-export const contentServiceLoad = createAsyncAction(
-  "CONTENT_SERVICE_LOAD_REQUEST",
-  "CONTENT_SERVICE_LOAD_SUCCESS",
-  "CONTENT_SERVICE_LOAD_FAILURE"
-)<ServiceId, ContentServiceSuccess, ContentServiceFailure>();
+export const loadServiceMetadata = createAsyncAction(
+  "LOAD_SERVICE_METADATA_REQUEST",
+  "LOAD_SERVICE_METADATA_SUCCESS",
+  "LOAD_SERVICE_METADATA_FAILURE"
+)<ServiceId, ServiceLetadataSuccess, ServiceMetadataFailure>();
 
 export const contentMunicipalityLoad = createAsyncAction(
   "CONTENT_MUNICIPALITY_LOAD_REQUEST",
@@ -31,16 +35,16 @@ export const contentMunicipalityLoad = createAsyncAction(
 )<
   CodiceCatastale,
   { codiceCatastale: CodiceCatastale; data: MunicipalityMetadata },
-  Error
+  MunicipalityFailure
 >();
 
-export const contentServicesByScopeLoad = createAsyncAction(
-  "CONTENT_SERVICES_BY_SCOPE_LOAD_REQUEST",
-  "CONTENT_SERVICES_BY_SCOPE_LOAD_SUCCESS",
-  "CONTENT_SERVICES_BY_SCOPE_LOAD_FAILURE"
+export const loadVisibleServicesByScope = createAsyncAction(
+  "LOAD_VISIBLE_SERVICES_BY_SCOPE_REQUEST",
+  "LOAD_VISIBLE_SERVICES_BY_SCOPE_SUCCESS",
+  "LOAD_VISIBLE_SERVICES_BY_SCOPE_FAILURE"
 )<void, ServicesByScope, Error>();
 
 export type ContentActions =
-  | ActionType<typeof contentServiceLoad>
+  | ActionType<typeof loadServiceMetadata>
   | ActionType<typeof contentMunicipalityLoad>
-  | ActionType<typeof contentServicesByScopeLoad>;
+  | ActionType<typeof loadVisibleServicesByScope>;

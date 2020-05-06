@@ -1,10 +1,11 @@
+import { BugReporting } from "instabug-reactnative";
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 /**
  * instabug report type i.e bug, chat etc.
  */
 export type InstabugReport = {
-  type: string;
+  type: BugReporting.reportType;
 };
 
 /**

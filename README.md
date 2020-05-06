@@ -1,8 +1,29 @@
-[![CircleCI](https://circleci.com/gh/teamdigitale/io-app.svg?style=svg)](https://circleci.com/gh/teamdigitale/io-app)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/pagopa/io-app/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="100"/></br>
+  IO - The public services app
+</p>
 
-[![codecov](https://codecov.io/gh/teamdigitale/io-app/branch/master/graph/badge.svg)](https://codecov.io/gh/teamdigitale/io-app)
+<p align="center">
+    <a href="https://circleci.com/gh/pagopa/io-app">
+        <img src="https://circleci.com/gh/pagopa/io-app.svg?style=svg" />
+    </a>
+    <a href="https://codecov.io/gh/pagopa/io-app">
+        <img src="https://codecov.io/gh/pagopa/io-app/branch/master/graph/badge.svg" />
+    </a>
+    <a href="CODE-OF-CONDUCT.md">
+        <img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" />
+    </a>
+</p>
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code-of-conduct.md)
+<p align="center">
+    <a href="https://apps.apple.com/it/app/io/id1501681835">
+        <img src="https://raw.githubusercontent.com/pagopa/io-app/master/img/badges/app-store-badge.png" />
+    </a>
+    <a href="https://play.google.com/store/apps/details?id=it.pagopa.io.app">
+        <img src="https://raw.githubusercontent.com/pagopa/io-app/master/img/badges/google-play-badge.png" />
+    </a>
+</p>
+
 
 # The mobile app of the Digital Citizenship project
 
@@ -11,7 +32,6 @@
   - [What is the Digital Citizenship mobile app?](#what-is-the-digital-citizenship-mobile-app)
   - [Who develops the app?](#who-develops-the-app)
   - [Can I use the app?](#can-i-use-the-app)
-  - [When will the app be available?](#when-will-the-app-be-available)
   - [How can I help you?](#how-can-i-help-you)
 - [Main technologies used](#main-technologies-used)
 - [Architecture](#architecture)
@@ -22,6 +42,7 @@
   - [Build (release)](#build-release)
   - [Installation on physical devices (development)](#installation-on-physical-devices-development)
   - [Development with Backend App and Local Test IDP](#development-with-backend-app-and-local-test-idp)
+  - [Development with IO dev local server](#development-with-io-dev-local-server)
   - [Update the app icons](#update-the-app-icons)
   - [Internationalization](#internationalization)
   - [Error handling](#error-handling)
@@ -61,19 +82,13 @@ The development of the app is carried out by several contributors:
 
 ### Can I use the app?
 
-The app is being tested with a restricted group of users and stakeholders so for now, the app is not available in the app stores.
-
-However, if you are a developer you can build the app on your computer and install it manually on your device. You will need a [SPID account](https://www.agid.gov.it/en/platforms/spid) to login to the app.
-
-### When will the app be available?
-
-When the app will achieve the appropriate level of quality and usefulness, it will be made available to all citizens on the Apple and Google app stores.
+Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platforms/spid) or have a [CIE](https://www.cartaidentita.interno.gov.it) (support ready for Android - soon for iOS) to login to the app.
 
 ### How can I help you?
 
-[Reporting bugs](https://github.com/teamdigitale/italia-app/issues), bug fixes, [translations](https://github.com/teamdigitale/italia-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/teamdigitale/italia-app/pulls)!
+[Reporting bugs](https://github.com/pagopa/io-app/issues), bug fixes, [translations](https://github.com/pagopa/io-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/pagopa/io-app/pulls)!
 
-If you have some time to spare and wish to get involved on a regular basis, [contact us](mailto:federico@teamdigitale.governo.it).
+If you have some time to spare and wish to get involved on a regular basis, [contact us](mailto:federico.feroldi@pagopa.it).
 
 ## Main technologies used
 
@@ -87,7 +102,7 @@ If you have some time to spare and wish to get involved on a regular basis, [con
 
 ### SPID Authentication
 
-The application relies on a [backend](https://github.com/teamdigitale/ItaliaApp-backend) for the authentication through SPID (the Public System for Digital Identity) and for interacting with the other components and APIs that are part of the [digital citizenship project](https://github.com/teamdigitale/digital-citizenship).
+The application relies on a [backend](https://github.com/pagopa/io-backend) for the authentication through SPID (the Public System for Digital Identity) and for interacting with the other components and APIs that are part of the [digital citizenship project](https://github.com/teamdigitale/digital-citizenship).
 
 The backend implements a SAML2 Service Provider that deals with user authentication with the SPID Identity Providers (IdP).
 
@@ -115,73 +130,103 @@ You need a recent macOS , Linux or Windows 10 based computer, and an Unix based 
 
 The following instructions have been tested on a macOS running Mojave, on Linux Ubuntu 18.04 and on Windows with Ubuntu 18.04 installed with WSL. The described procedure assume you are using the `bash` shell; they may work with other shells but you may need to tweak the configuration for your shell. In the following when we will refer to Linux we also mean Windows with WSL.
 
-#### Install nodenv
+#### Install asdf
 
-On macOS and Linux we recommend the use of [nodenv](https://github.com/nodenv/nodenv) for managing multiple versions of NodeJS.
+On macOS and Linux we recommend the use of [asdf](https://github.com/asdf-vm/asdf) for managing multiple versions of NodeJS and Ruby.
 
-The node version used in this project is stored in [.node-version](.node-version).
+The versions used in this project are stored in [.tool-versions](.tool-fersions).
 
-If you already have nodenv installed and configured on your system, the correct version node will be set when you access the app directory.
+If you already have asdf installed and configured on your system, the correct version node will be set when you access the app directory.
 
 To install, follow the steps described below.
 
-##### Install nodenv on macOS
+##### Install asdf on macOS
 
 First, if you do not have it already, install [brew](https://brew.sh) following the installation instructions in the home page.
 
-Install `nodenv` with the command:
+Install `asdf` with the command:
 
 ```
-brew install nodenv
+brew install asdf
 ```
 
-Brew installs `nodenv` in the path so no more steps are needed. Check you have it available with the command `which nodenv`.
+Brew installs `asdf` in the path so no more steps are needed. Check you have it available with the command `which asdf`.
 
-##### Install nodenv on Linux 
+##### Install asdf on Linux 
 
 This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. Your mileage may vary.
 
 ```
-git clone https://github.com/nodenv/nodenv-installer
-./nodenv-installer/bin/nodenv-installer
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+cd ~/.asdf
+git checkout "$(git describe --abbrev=0 --tags)"
 ```
 
-Add `nodenv` to the PATH, then reload the configuation as follows:
+Add `asdf` to the PATH, then reload the configuation as follows:
 
 ```
-echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >>~/.bashrc
+echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+echo -e '\n. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-Check you have it available with the command `which nodenv`.
+Check you have it available with the command `which asdf`.
 
 #### Completing and verifying configuration
 
-Either on Mac or Linux you need to add to your shell the initialization command and reload the configuration:
+Now you have to add the specific plugins for `node` and `ruby`.
 
 ```
-echo 'eval "$(nodenv init -)"' >>~/.bashrc
-source ~/.bashrc
+asdf plugin add ruby
+asdf plugin add nodejs
 ```
 
-(if you use a different shell than bash you may need to adapt the command to your shell initialization files).
+Before you can install your version of Ruby, you need a C compiler and some libraries. On Ubuntu or Debian based systems use:
 
-Finally you can install your version of `node` using `nodenv` (replace `<work-dir>` with your actual work directory)
+```
+sudo apt-get update
+sudo apt-get install build-essential libssl-dev libreadline-dev zlib1g-dev
+```
+
+Import the Node.js release team's OpenPGP keys to main keyring:
+
+```
+bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+```
+
+Finally you can install your version of `node` and `ruby` using `asdf` (replace `<work-dir>` with your actual work directory)
 
 ```
 cd <work-dir>/io-app
-nodenv install
+asdf install ruby 2.4.2
+asdf install nodejs 10.13.0
 ```
 
-You should now verify that the output of the `nodenv version` command and the version of the node in the PATH are the same as the content of the `.node-version` file. For example:
+You should now verify that the output of the `asdf current` command and the version of the node in the PATH are the same as the content of the `.tool-versions` file. For example:
 
 ```
-$ nodenv version
-10.13.0 (set by <work-dir>/io-app/.node-version)
+$ asdf current
+nodejs         10.13.0  (set by <work-dir>/io-app/.tool-versions)
+ruby           2.4.2    (set by <work-dir>/io-app/.tool-versions)
+
 $ node -v
 v10.13.0
-$ cat .node-version
-10.13.0
+
+$ ruby -v
+ruby 2.4.2p198 (2017-09-14 revision 59899) [x86_64-linux]
+
+$ cat .tool-versions
+ruby 2.4.2
+nodejs 10.13.0
+```
+
+#### Migration from nodenv and rbenv
+
+If you’re migrating from other tools and want to use your existing `.node-version` or `.ruby-version` version files, do this.
+
+Add a `.asdfrc` file to your home directory and asdf will use the settings specified in the file. The file should be formatted like this:
+```
+legacy_version_file = yes
 ```
 
 #### Install yarn
@@ -195,96 +240,17 @@ Yarn is a node application. IF you have already installed in your system version
 npm install -g yarn
 ```
 
-If you do not have node already installed you can install  `yarn` using `nodenv` with this procedure:
+If you do not have node already installed you can install  `yarn` using `asdf` with this procedure:
 
 ```
 cd <work-dir>/io-app
-nodenv global $(cat .node-version)
-curl -o- -L https://yarnpkg.com/install.sh | bash
+asdf global nodejs 10.13.0
+npm install -g yarn
 ```
 
 Now you have to login and logout again from the terminal as yarn installs the configuration in different places on macOS or Linux.
 
 Verify it was installed correctly with the command `which yarn`. It should tell you the installation path of the command. 
-
-#### Install rbenv
-
-On macOS and Linux, for managing multiple versions of Ruby (needed for _Fastlane_ and _CocoaPods_), we recommend the use of [rbenv](https://github.com/rbenv/rbenv).
-
-The Ruby version used in this project is stored in [.ruby-version](.ruby-version).
-
-If you already have rbenv installed and configured on your system, the correct Ruby version will be set, when you access the app directory.
-
-To install, follow the steps described below.
-
-##### Installing `rbenv` on macOS
-
-You should already have installed `brew` so use:
-
-```
-brew install rbenv
-```
-
-Brew installs `rbenv` in the path so no more steps are needed.
-
-##### Installing `rbenv` on Linux 
-
-This is the generic installation procedure for Linux that should work on many distributions. The procedure has been tested on Ubuntu Linux. 
-
-```
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-mkdir ~/.rbenv/plugins
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-```
-
-Add `rbenv` to the PATH as follows then reload the intialization file
-
-```
-echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >>~/.bashrc
-source ~/.bashrc
-```
-
-Verify you have installed it correctly with the command `which rbenv`.
-
-#### Completing and verifying configuration
-
-Either on Mac or Linux you need to add to your shell the initialization command then reload the configuration:
-
-```
-echo 'eval "$(rbenv init -)"' >>~/.bashrc
-source ~/.bashrc
-```
-
-(if you use a different shell than bash you may need to adapt the command to your shell initialization files).
-
-
-Before you can install your version of Ruby, you need a C compiler and some libraries. On Ubuntu or Debian based systems use:
-
-```
-sudo apt-get update
-sudo apt-get install build-essential libssl-dev libreadline-dev zlib1g-dev
- ```
-
-Now you can install your version of `ruby` using `rbenv` (replace `<work-dir>` with your actual work directory)
-
-```
-cd <work-dir>/io-app
-rbenv install
-```
-
-You should verify that the output of the `rbenv version` command and the content of the file `.ruby-version` are the same:
-
-For example (replace `<work-dir>` with your actual work directory):
-
-```
-$ cd <work-dir>/io-app
-$ rbenv version
-2.4.2 (set by <work-dir>/io-app/.ruby-version)
-$ ruby -v
-ruby 2.4.2p198 (2017-09-14 revision 59899) [x86_64-linux]
-$ cat .ruby-version
-2.4.2
-```
 
 #### Install bundler
 
@@ -300,11 +266,11 @@ sudo gem install bundler:2.0.2
 
 In some version of Linux you may not have Ruby installed. In some versions of macOS, bundler is not able to install the dependencies because the ruby provided by the system is not complete enough. 
 
-In those cases, you need to install the bundler using the ruby installed by `rbenv` using the following procedure.
+In those cases, you need to install the bundler using the ruby installed by `asdf` using the following procedure.
 
 ```
 cd <work-dir>/io-app
-rbenv global $(cat .ruby-version)
+asdf global ruby 2.7.4
 gem install bundler:2.0.2
 ```
 
@@ -338,6 +304,12 @@ _Note: The sample configuration sets the app to interface with our test environm
 
 
 #### Dependencies
+
+**module for CIE authentication**
+IO uses a [react native module](https://github.com/pagopa/io-cie-android-sdk) to allow authentication through CIE (Carta di Indentità Elettronica)
+This package is hosted on [Github Packages](https://github.com/features/packages). In order to install this package you need to be able to access the github registry.
+The configuration is pretty simple and fast, you can follow [these instructions](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages)
+**If you don't do this step you can't download and install the cie module.**
 
 Now you can install the libraries used by the project:
 
@@ -395,7 +367,7 @@ To release a new alpha:
 $ bundle exec fastlane alpha
 ```
 
-_Note: the alpha releases on Android are automatically carried by the `alpha-release-android` job on [circleci](https://circleci.com/gh/teamdigitale/italia-app) on each by merge to the master branch._
+_Note: the alpha releases on Android are automatically carried by the `alpha-release-android` job on [circleci](https://circleci.com/gh/pagopa/io-app) on each by merge to the master branch._
 
 ### Installation on physical devices (development)
 
@@ -418,11 +390,12 @@ To test the io-app on a real iOS device you must:
 
 ### Development with Backend App and Local Test IDP
 
-To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.
+To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.<br/>
+If you prefer a light way to run IO app backend, you should consider using [io-dev-api-server](https://github.com/pagopa/io-dev-api-server). This local server mocks almost totally IO backend behaviours and APIs. Note: about SPID, io-dev-api-server acts a pass throught so you can't test it.
 
 #### App Backend and test IDP installation
 
-Follow the documentation of the repository [italia-backend](https://github.com/teamdigitale/italia-backend).
+Follow the documentation of the repository [italia-backend](https://github.com/pagopa/io-backend).
 
 #### WebView, HTTPS and self-signed certificates
 
@@ -453,6 +426,12 @@ In the connection configuration enter:
 
 * Proxy IP: `10.0.2.2` (or `10.0.3.2` if you use Genymotion)
 * Proxy port: `9060`
+
+### Development with IO dev local server
+It is super easy to setup and run. [Here](https://github.com/pagopa/io-dev-api-server) you can find all instructions.
+It can be used as it is or you can run it using the [docker image](https://github.com/pagopa/io-dev-api-server/packages).<br/>
+`.env.local` is included in IO app files. It is a pre-filled config file ready to use with the local server. To use it, just run these commands:<br/>
+`cp .env.local .env && yarn postinstall`
 
 ### Update the app icons
 
@@ -524,7 +503,7 @@ To update the icon-font to a new version, it is necessary to extract and correct
 Once the two files have been copied, it is necessary to update the link of the asset by installing globally and running react-native-asset (version 1.1.4):
 
 ```
-$ yarn global add react-native-asset@1.1.4
+$ yarn global add react-native-asset@2.0.0
 $ react-native-asset
 ```
 

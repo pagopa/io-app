@@ -5,7 +5,7 @@
 publiccodeYmlVersion: '0.2'
 name: IO
 releaseDate: '2019-05-02'
-url: 'https://github.com/teamdigitale/io-app'
+url: 'https://github.com/pagopa/io-app'
 applicationSuite: IO
 landingURL: 'https://io.italia.it/'
 softwareVersion: 0.1.0
@@ -21,11 +21,11 @@ maintenance:
   type: internal
   contacts:
     - name: Federico Feroldi
-      email: federico@teamdigitale.governo.it
+      email: federico.feroldi@pagopa.it
 legal:
   license: EUPL-1.2
-  mainCopyrightOwner: Presidenza del Consiglio dei Ministri e Agenzia per l’Italia Digitale
-  repoOwner: Team per la Trasformazione Digitale - Presidenza del Consiglio dei Ministri
+  mainCopyrightOwner: pagoPA SpA
+  repoOwner: https://www.pagopa.gov.it/
   authorsFile: AUTHORS.md
 intendedAudience:
   scope:
@@ -88,7 +88,7 @@ description:
 
       - fungere da _reference implementation_ delle integrazioni con la
       piattaforma di Cittadinanza Digitale
-    documentation: 'https://github.com/teamdigitale/io-app'
+    documentation: 'https://github.com/pagopa/io-app'
     features:
       - Messaggi
       - Pagamenti

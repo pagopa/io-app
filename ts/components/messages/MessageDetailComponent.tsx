@@ -1,59 +1,52 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { H1, Text, View } from "native-base";
+import { Content, H1, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
+import { ServiceMetadataState } from "../../store/reducers/content";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
-import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
 import MessageCTABar from "./MessageCTABar";
-import MessageDetailRawInfoComponent from "./MessageDetailRawInfoComponent";
+import MessageDetailData from "./MessageDetailData";
 import MessageMarkdown from "./MessageMarkdown";
 
-type OwnProps = {
+type Props = Readonly<{
   message: CreatedMessageWithContent;
   paymentsByRptId: PaymentByRptIdState;
-  potService: pot.Pot<ServicePublic, Error>;
+  potServiceDetail: pot.Pot<ServicePublic, Error>;
+  potServiceMetadata: ServiceMetadataState;
   onServiceLinkPress?: () => void;
-  isDebugModeEnabled?: boolean;
-};
+}>;
 
-type Props = OwnProps;
+type State = Readonly<{
+  isContentLoadCompleted: boolean;
+}>;
 
 const styles = StyleSheet.create({
-  mainWrapper: {
-    paddingBottom: 100
-  },
-
   headerContainer: {
     padding: variables.contentPadding
   },
-
   serviceContainer: {
     marginBottom: variables.contentPadding
   },
-
   subjectContainer: {
-    marginBottom: variables.spacerHeight
+    marginBottom: variables.spacerSmallHeight
   },
-
   ctaBarContainer: {
-    backgroundColor: variables.contentAlternativeBackground,
+    backgroundColor: variables.brandGray,
     padding: variables.contentPadding,
     marginBottom: variables.contentPadding
   },
-
   webview: {
     marginLeft: variables.contentPadding,
     marginRight: variables.contentPadding
@@ -90,25 +83,37 @@ const styles = StyleSheet.create({
 /**
  * A component to render the message detail.
  */
-export default class MessageDetailComponent extends React.PureComponent<Props> {
+export default class MessageDetailComponent extends React.PureComponent<
+  Props,
+  State
+> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { isContentLoadCompleted: false };
+  }
+
+  private onMarkdownLoadEnd = () => {
+    this.setState({ isContentLoadCompleted: true });
+  };
+
   public render() {
     const {
       message,
-      potService,
+      potServiceDetail,
+      potServiceMetadata,
       paymentsByRptId,
-      onServiceLinkPress,
-      isDebugModeEnabled
+      onServiceLinkPress
     } = this.props;
 
     const service =
-      potService !== undefined
-        ? pot.isNone(potService)
+      potServiceDetail !== undefined
+        ? pot.isNone(potServiceDetail)
           ? ({
               organization_name: I18n.t("messages.errorLoading.senderInfo"),
               department_name: I18n.t("messages.errorLoading.departmentInfo"),
               service_name: I18n.t("messages.errorLoading.serviceInfo")
             } as ServicePublic)
-          : pot.toUndefined(potService)
+          : pot.toUndefined(potServiceDetail)
         : undefined;
 
     const payment =
@@ -121,8 +126,9 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
         : undefined;
 
     return (
-      <View style={styles.mainWrapper}>
+      <Content noPadded={true}>
         <View style={styles.headerContainer}>
+          {/** TODO: update header */}
           {/* Service */}
           {service && (
             <Grid style={styles.serviceContainer}>
@@ -149,59 +155,35 @@ export default class MessageDetailComponent extends React.PureComponent<Props> {
           <View style={styles.subjectContainer}>
             <H1>{message.content.subject}</H1>
           </View>
-
-          {isDebugModeEnabled && (
-            <View style={styles.messageIDContainer}>
-              <View style={styles.messageIDLabelContainer}>
-                <Text style={styles.messageIDLabelText}>ID: {message.id}</Text>
-              </View>
-              <View style={styles.messageIDBtnContainer}>
-                <ButtonDefaultOpacity
-                  light={true}
-                  bordered={true}
-                  primary={true}
-                  onPress={() => clipboardSetStringWithFeedback(message.id)}
-                  style={{
-                    height: variables.btnWidgetHeight,
-                    paddingTop: 1,
-                    paddingBottom: 2
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: variables.fontSizeSmall,
-                      lineHeight: variables.btnXSmallLineHeight,
-                      paddingRight: 8,
-                      paddingLeft: 8
-                    }}
-                  >
-                    {I18n.t("clipboard.copyText")}
-                  </Text>
-                </ButtonDefaultOpacity>
-              </View>
-            </View>
-          )}
-
-          {/* RawInfo */}
-          <MessageDetailRawInfoComponent
-            message={message}
-            service={service}
-            onServiceLinkPress={onServiceLinkPress}
-          />
         </View>
 
-        {messageNeedsCTABar(message) && (
-          <MessageCTABar
-            message={message}
-            service={service}
-            payment={payment}
-          />
-        )}
+        {this.state.isContentLoadCompleted &&
+          messageNeedsCTABar(message) && (
+            <MessageCTABar
+              message={message}
+              service={service}
+              payment={payment}
+            />
+          )}
 
-        <MessageMarkdown webViewStyle={styles.webview}>
+        <MessageMarkdown
+          webViewStyle={styles.webview}
+          onLoadEnd={this.onMarkdownLoadEnd}
+        >
           {message.content.markdown}
         </MessageMarkdown>
-      </View>
+
+        {this.state.isContentLoadCompleted && (
+          <MessageDetailData
+            message={message}
+            serviceDetail={potServiceDetail}
+            serviceMetadata={potServiceMetadata}
+            goToServiceDetail={onServiceLinkPress}
+          />
+        )}
+        {this.state.isContentLoadCompleted && <EdgeBorderComponent />}
+        <View spacer={true} large={true} />
+      </Content>
     );
   }
 }

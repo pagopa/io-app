@@ -37,8 +37,7 @@ const styles = StyleSheet.create({
     height: imgDimension,
     borderRadius: imgDimension / 2,
     position: "absolute",
-    bottom: boxDimension / 2 - imgDimension / 2,
-    overflow: "hidden"
+    bottom: boxDimension / 2 - imgDimension / 2
   },
   titleHeader: {
     marginTop: 35
@@ -62,10 +61,14 @@ const CardSelectionScreen: React.SFC<Props> = props => {
     <BaseScreenComponent goBack={true}>
       <Content noPadded={true} bounces={false}>
         <ScreenHeader
-          heading={<H2 style={styles.titleHeader}>{I18n.t("cie.title")}</H2>}
+          heading={
+            <H2 style={styles.titleHeader}>
+              {I18n.t("authentication.cie.card.title")}
+            </H2>
+          }
         />
         <Text style={styles.messageHeader}>
-          {I18n.t("cie.layCardMessageHeader")}
+          {I18n.t("authentication.cie.card.layCardMessageHeader")}
         </Text>
         <View style={{ alignItems: "center", height: boxDimension }}>
           <AnimatedRing
@@ -88,12 +91,12 @@ const CardSelectionScreen: React.SFC<Props> = props => {
           />
 
           <Image
-            source={require("../../../img/landing/place-card-illustration.png")}
+            source={require("../../../img/cie/place-card-illustration.png")}
             style={styles.img}
           />
         </View>
         <Text style={styles.messageFooter}>
-          {I18n.t("cie.layCardMessageFooter")}
+          {I18n.t("authentication.cie.card.layCardMessageFooter")}
         </Text>
       </Content>
       <View footer={true}>

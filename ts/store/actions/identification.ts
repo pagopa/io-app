@@ -9,7 +9,7 @@ import {
 
 /**
  * An action dispatched by the screen.
- * The identification saga will intercept it and enrich with the current pin.
+ * The identification saga will intercept it and enrich with the current unlock code.
  */
 export const identificationRequest = createAction(
   "IDENTIFICATION_REQUEST",
@@ -17,13 +17,15 @@ export const identificationRequest = createAction(
     canResetPin: boolean = true,
     identificationGenericData?: IdentificationGenericData,
     identificationCancelData?: IdentificationCancelData,
-    identificationSuccessData?: IdentificationSuccessData
+    identificationSuccessData?: IdentificationSuccessData,
+    shufflePad: boolean = false
   ) =>
     resolve({
       canResetPin,
       identificationGenericData,
       identificationCancelData,
-      identificationSuccessData
+      identificationSuccessData,
+      shufflePad
     })
 );
 
@@ -37,14 +39,16 @@ export const identificationStart = createAction(
     canResetPin: boolean = true,
     identificationGenericData?: IdentificationGenericData,
     identificationCancelData?: IdentificationCancelData,
-    identificationSuccessData?: IdentificationSuccessData
+    identificationSuccessData?: IdentificationSuccessData,
+    shufflePad: boolean = false
   ) =>
     resolve({
       pin,
       canResetPin,
       identificationGenericData,
       identificationCancelData,
-      identificationSuccessData
+      identificationSuccessData,
+      shufflePad
     })
 );
 

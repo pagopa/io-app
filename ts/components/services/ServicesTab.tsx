@@ -3,15 +3,16 @@
  */
 import { left } from "fp-ts/lib/Either";
 import { Option, some } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
-import * as React from "react";
 import { createFactory } from "react";
-import { Animated, StyleSheet, TouchableOpacity } from "react-native";
+import * as React from "react";
+import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import IconFont from "../../components/ui/IconFont";
+import Switch from "../../components/ui/Switch";
+import I18n from "../../i18n";
 import { userMetadataUpsert } from "../../store/actions/userMetadata";
 import { Organization } from "../../store/reducers/entities/organizations/organizationsAll";
 import {
@@ -28,6 +29,7 @@ import {
 } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
+import { getEnabledChannelsForService } from "../../utils/profile";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";
 import ChooserListContainer from "../ChooserListContainer";
 import { withLightModalContext } from "../helpers/withLightModalContext";
@@ -37,6 +39,7 @@ import ServicesSectionsList from "./ServicesSectionsList";
 
 type OwnProps = Readonly<{
   isLocal?: boolean;
+  isAll: boolean;
   updateToast?: () => void;
   sections: ReadonlyArray<ServicesSectionState>;
   isRefreshing: boolean;
@@ -47,8 +50,11 @@ type OwnProps = Readonly<{
   updateOrganizationsOfInterestMetadata?: (
     selectedItemIds: Option<Set<string>>
   ) => void;
-  onItemSwitchValueChanged: (service: ServicePublic, value: boolean) => void;
-  tabOffset: Animated.Value;
+  onItemSwitchValueChanged: (
+    services: ReadonlyArray<ServicePublic>,
+    value: boolean
+  ) => void;
+  tabScrollOffset: Animated.Value;
 }>;
 
 type Props = OwnProps &
@@ -62,8 +68,11 @@ const styles = StyleSheet.create({
   organizationLogo: {
     marginBottom: 0
   },
-  icon: {
-    paddingHorizontal: (24 - ICON_SIZE) / 2 // (io-right icon width) - (io-trash icon width)
+  iconContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: (24 - ICON_SIZE) / 2 // (io-right icon width) - (io-trash icon width),
   }
 });
 
@@ -140,38 +149,86 @@ class ServicesTab extends React.PureComponent<Props> {
   private renderLocalQuickSectionDeletion = (section: ServicesSectionState) => {
     return (
       <TouchableOpacity onPress={() => this.onPressItem(section)}>
-        <IconFont
-          name={"io-trash"}
-          color={customVariables.brandMildGray}
-          size={ICON_SIZE}
-          style={styles.icon}
-        />
+        <View style={styles.iconContainer}>
+          <IconFont
+            name={"io-trash"}
+            color={customVariables.brandMildGray}
+            size={ICON_SIZE}
+          />
+        </View>
       </TouchableOpacity>
     );
   };
 
-  private onTabScroll = (tabOffset: Animated.Value) => {
-    return {
-      onScroll: Animated.event(
-        [
-          {
-            nativeEvent: {
-              contentOffset: {
-                y: tabOffset
-              }
-            }
+  private renderSwitchAllOrganizationServices = (
+    section: ServicesSectionState
+  ) => {
+    // retrieve all services
+    const services = section.data.reduce(
+      (
+        acc: ReadonlyArray<ServicePublic>,
+        curr: pot.Pot<ServicePublic, Error>
+      ) => {
+        const service = pot.getOrElse(curr, undefined);
+        if (service) {
+          return [...acc, service];
+        }
+        return acc;
+      },
+      []
+    );
+    // if at least one is enabled
+    const isSwitchEnabled = services.some(service => {
+      const uiEnabledChannels = getEnabledChannelsForService(
+        this.props.profile,
+        service.service_id
+      );
+      return uiEnabledChannels.inbox;
+    });
+    return (
+      <Switch
+        key={section.organizationFiscalCode}
+        value={isSwitchEnabled}
+        onValueChange={value => {
+          if (services.length > 0) {
+            this.props.onItemSwitchValueChanged(services, value);
           }
-        ],
-        { useNativeDriver: true }
-      ),
-      scrollEventThrottle: 8 // target is 120fps
+        }}
+        disabled={
+          pot.isLoading(this.props.profile) ||
+          pot.isUpdating(this.props.profile)
+        }
+      />
+    );
+  };
+
+  private onTabScroll = () => {
+    return {
+      onScroll: Animated.event([
+        {
+          nativeEvent: {
+            contentOffset: { y: this.props.tabScrollOffset }
+          }
+        }
+      ]),
+      scrollEventThrottle: 8
     };
   };
 
   public render() {
+    // the right icon in the organization section could be
+    // - if long press is enabled: a switch to enable/disable all related services
+    // - if the organization is local a button to remove it
+    // - none
+    const renderRightIcon = this.props.isLongPressEnabled
+      ? this.renderSwitchAllOrganizationServices
+      : this.props.isLocal
+        ? this.renderLocalQuickSectionDeletion
+        : undefined;
     return (
       <ServicesSectionsList
         isLocal={this.props.isLocal}
+        isAll={this.props.isAll}
         sections={this.props.sections}
         profile={this.props.profile}
         isRefreshing={this.props.isRefreshing}
@@ -189,10 +246,8 @@ class ServicesTab extends React.PureComponent<Props> {
         onLongPressItem={this.props.handleOnLongPressItem}
         isLongPressEnabled={this.props.isLongPressEnabled}
         onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
-        animated={this.onTabScroll(this.props.tabOffset)}
-        renderRightIcon={
-          this.props.isLocal ? this.renderLocalQuickSectionDeletion : undefined
-        }
+        animated={this.onTabScroll()}
+        renderRightIcon={renderRightIcon}
       />
     );
   }

@@ -1,6 +1,6 @@
 import { Text } from "native-base";
 import React, { ComponentProps } from "react";
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
@@ -12,7 +12,6 @@ type Props = {
   small?: boolean;
   disabled?: boolean;
   onPress: ComponentProps<typeof ButtonDefaultOpacity>["onPress"];
-  useShortLabel?: boolean;
 };
 
 const baseStyles = StyleSheet.create({
@@ -79,18 +78,19 @@ const disabledStyles = StyleSheet.create({
   }
 });
 
+const screenWidth = Dimensions.get("window").width;
+const minScreenWidth = 320;
+// On small devices use short label
+const reminderText = I18n.t(
+  screenWidth <= minScreenWidth
+    ? "messages.cta.reminderShort"
+    : "messages.cta.reminder"
+);
+
 class CalendarEventButton extends React.PureComponent<Props> {
   public render() {
-    const {
-      isEventInDeviceCalendar,
-      small,
-      disabled,
-      onPress,
-      useShortLabel
-    } = this.props;
-
+    const { isEventInDeviceCalendar, small, disabled, onPress } = this.props;
     const iconName = isEventInDeviceCalendar ? "io-tick-big" : "io-plus";
-
     return (
       <ButtonDefaultOpacity
         disabled={disabled}
@@ -120,11 +120,7 @@ class CalendarEventButton extends React.PureComponent<Props> {
             disabled && disabledStyles.text
           ]}
         >
-          {I18n.t(
-            useShortLabel
-              ? "messages.cta.reminderShort"
-              : "messages.cta.reminder"
-          )}
+          {reminderText}
         </Text>
       </ButtonDefaultOpacity>
     );

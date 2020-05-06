@@ -25,7 +25,7 @@ interface Props {
 export const AddPaymentMethodButton: React.SFC<Props> = ({ onPress }) => (
   <TouchableDefaultOpacity onPress={onPress} style={styles.button}>
     <IconFont name="io-plus" color={customVariables.colorWhite} />
-    <Text style={styles.label}>
+    <Text style={styles.label} bold={true}>
       {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
     </Text>
   </TouchableDefaultOpacity>

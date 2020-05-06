@@ -1,4 +1,5 @@
 import * as t from "io-ts";
+import * as r from "italia-ts-commons/lib/requests";
 import {
   ApiHeaderJson,
   composeHeaderProducers,
@@ -13,7 +14,6 @@ import {
   ResponseDecoder
 } from "italia-ts-commons/lib/requests";
 import { Omit } from "italia-ts-commons/lib/types";
-import { AuthenticatedProfile } from "../../definitions/backend/AuthenticatedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
@@ -29,6 +29,8 @@ import {
   GetServiceT,
   getSessionStateDefaultDecoder,
   GetSessionStateT,
+  getUserDataProcessingDefaultDecoder,
+  GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
   getUserMessagesDefaultDecoder,
   GetUserMessagesT,
@@ -39,32 +41,17 @@ import {
   GetUserProfileT,
   getVisibleServicesDefaultDecoder,
   GetVisibleServicesT,
-  upsertProfileDefaultDecoder,
-  UpsertProfileT,
+  StartEmailValidationProcessT,
+  updateProfileDefaultDecoder,
+  UpdateProfileT,
+  upsertUserDataProcessingDefaultDecoder,
+  UpsertUserDataProcessingT,
   upsertUserMetadataDefaultDecoder,
   UpsertUserMetadataT
 } from "../../definitions/backend/requestTypes";
 
 import { SessionToken } from "../types/SessionToken";
 import { defaultRetryingFetch } from "../utils/fetch";
-
-/**
- * Here we have to redefine the auto-generated UserProfile type since the
- * generated one is not a discriminated union (swagger specs don't support
- * constant values that can discriminate union types).
- */
-export const UserProfileUnion = t.union([
-  t.intersection([
-    InitializedProfile,
-    t.interface({ has_profile: t.literal(true) })
-  ]),
-  t.intersection([
-    AuthenticatedProfile,
-    t.interface({ has_profile: t.literal(false) })
-  ])
-]);
-
-export type UserProfileUnion = t.TypeOf<typeof UserProfileUnion>;
 
 //
 // Other helper types
@@ -125,6 +112,7 @@ function ParamAuthorizationBearerHeaderProducer<
 // Create client
 //
 
+// tslint:disable-next-line: no-big-function
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
@@ -182,16 +170,16 @@ export function BackendClient(
     url: () => "/api/v1/profile",
     query: _ => ({}),
     headers: tokenHeaderProducer,
-    response_decoder: getUserProfileDecoder(UserProfileUnion)
+    response_decoder: getUserProfileDecoder(InitializedProfile)
   };
 
-  const createOrUpdateProfileT: UpsertProfileT = {
+  const createOrUpdateProfileT: UpdateProfileT = {
     method: "post",
     url: () => "/api/v1/profile",
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     query: _ => ({}),
-    body: p => JSON.stringify(p.extendedProfile),
-    response_decoder: upsertProfileDefaultDecoder()
+    body: p => JSON.stringify(p.profile),
+    response_decoder: updateProfileDefaultDecoder()
   };
 
   const getUserMetadataT: GetUserMetadataT = {
@@ -202,6 +190,52 @@ export function BackendClient(
     response_decoder: getUserMetadataDefaultDecoder()
   };
 
+  // Custom decoder until we fix the problem in the io-utils generator
+  // https://www.pivotaltracker.com/story/show/169915207
+  const startEmailValidationCustomDecoder = () => {
+    return r.composeResponseDecoders(
+      r.composeResponseDecoders(
+        r.composeResponseDecoders(
+          r.composeResponseDecoders(
+            r.composeResponseDecoders(
+              r.constantResponseDecoder<undefined, 202>(202, undefined),
+              r.ioResponseDecoder<
+                400,
+                (typeof ProblemJson)["_A"],
+                (typeof ProblemJson)["_O"]
+              >(400, ProblemJson)
+            ),
+            r.constantResponseDecoder<undefined, 401>(401, undefined)
+          ),
+          r.ioResponseDecoder<
+            404,
+            (typeof ProblemJson)["_A"],
+            (typeof ProblemJson)["_O"]
+          >(404, ProblemJson)
+        ),
+        r.ioResponseDecoder<
+          429,
+          (typeof ProblemJson)["_A"],
+          (typeof ProblemJson)["_O"]
+        >(429, ProblemJson)
+      ),
+      r.ioResponseDecoder<
+        500,
+        (typeof ProblemJson)["_A"],
+        (typeof ProblemJson)["_O"]
+      >(500, ProblemJson)
+    );
+  };
+
+  const postStartEmailValidationProcessT: StartEmailValidationProcessT = {
+    method: "post",
+    url: () => "/api/v1/email-validation-process",
+    query: _ => ({}),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    body: _ => JSON.stringify({}),
+    response_decoder: startEmailValidationCustomDecoder()
+  };
+
   const createOrUpdateUserMetadataT: UpsertUserMetadataT = {
     method: "post",
     url: () => "/api/v1/user-metadata",
@@ -209,6 +243,24 @@ export function BackendClient(
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     body: p => JSON.stringify(p.userMetadata),
     response_decoder: upsertUserMetadataDefaultDecoder()
+  };
+
+  const getUserDataProcessingT: GetUserDataProcessingT = {
+    method: "get",
+    url: ({ userDataProcessingChoiceParam }) =>
+      `/api/v1/user-data-processing/${userDataProcessingChoiceParam}`,
+    query: _ => ({}),
+    headers: tokenHeaderProducer,
+    response_decoder: getUserDataProcessingDefaultDecoder()
+  };
+
+  const postUserDataProcessingT: UpsertUserDataProcessingT = {
+    method: "post",
+    url: () => `/api/v1/user-data-processing`,
+    query: _ => ({}),
+    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+    body: _ => JSON.stringify(_.userDataProcessingChoiceRequest),
+    response_decoder: upsertUserDataProcessingDefaultDecoder()
   };
 
   const createOrUpdateInstallationT: CreateOrUpdateInstallationT = {
@@ -297,6 +349,15 @@ export function BackendClient(
     ),
     getPaymentId: withBearerToken(
       createFetchRequestForApi(getPaymentIdT, options)
+    ),
+    startEmailValidationProcess: withBearerToken(
+      createFetchRequestForApi(postStartEmailValidationProcessT, options)
+    ),
+    getUserDataProcessingRequest: withBearerToken(
+      createFetchRequestForApi(getUserDataProcessingT, options)
+    ),
+    postUserDataProcessingRequest: withBearerToken(
+      createFetchRequestForApi(postUserDataProcessingT, options)
     )
   };
 }

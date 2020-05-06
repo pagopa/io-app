@@ -1,6 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
 import { PotFromActions } from "../../../types/utils";
 import { pspsForLocale } from "../../../utils/payment";
 import { Action } from "../../actions/types";
@@ -95,7 +94,7 @@ const reducer = (
     // start a new payment from scratch
     case getType(paymentInitializeState):
       return PAYMENT_INITIAL_STATE;
-    // tracking of the route from which the payment started
+    // track the route whence the payment started
     case getType(paymentInitializeEntrypointRoute):
       return {
         ...state,

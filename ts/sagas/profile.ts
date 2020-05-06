@@ -7,15 +7,17 @@ import { readableReport } from "italia-ts-commons/lib/reporters";
 import { call, Effect, put, select, takeLatest } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
-import { UserProfileUnion } from "../api/backend";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { BackendClient } from "../api/backend";
 import { tosVersion } from "../config";
 import I18n from "../i18n";
 import { sessionExpired } from "../store/actions/authentication";
 import {
   profileLoadFailure,
+  profileLoadRequest,
   profileLoadSuccess,
-  profileUpsert
+  profileUpsert,
+  startEmailValidation
 } from "../store/actions/profile";
 import { profileSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
@@ -24,7 +26,7 @@ import { SagaCallReturnType } from "../types/utils";
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
-): Iterator<Effect | Option<UserProfileUnion>> {
+): Iterator<Effect | Option<InitializedProfile>> {
   try {
     const response: SagaCallReturnType<typeof getProfile> = yield call(
       getProfile,
@@ -39,7 +41,7 @@ export function* loadProfile(
       // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
       // discriminated union!
       // tslint:disable-next-line:no-useless-cast
-      yield put(profileLoadSuccess(response.value.value as UserProfileUnion));
+      yield put(profileLoadSuccess(response.value.value as InitializedProfile));
       return some(response.value.value);
     }
     if (response.value.status === 401) {
@@ -83,6 +85,8 @@ function* createOrUpdateProfileSaga(
     ? {
         is_inbox_enabled: currentProfile.is_inbox_enabled,
         is_webhook_enabled: currentProfile.is_webhook_enabled,
+        is_email_validated: currentProfile.is_email_validated || false,
+        is_email_enabled: currentProfile.is_email_enabled,
         version: currentProfile.version,
         email: currentProfile.email,
         preferred_languages: currentProfile.preferred_languages,
@@ -93,6 +97,8 @@ function* createOrUpdateProfileSaga(
     : {
         is_inbox_enabled: false,
         is_webhook_enabled: false,
+        is_email_validated: action.payload.is_email_validated || false,
+        is_email_enabled: action.payload.is_email_enabled || false,
         ...action.payload,
         accepted_tos_version: tosVersion,
         version: 0
@@ -101,25 +107,30 @@ function* createOrUpdateProfileSaga(
     const response: SagaCallReturnType<
       typeof createOrUpdateProfile
     > = yield call(createOrUpdateProfile, {
-      extendedProfile: newProfile
+      profile: newProfile
     });
 
     if (response.isLeft()) {
-      yield put(
-        profileUpsert.failure(new Error(readableReport(response.value)))
-      );
-      return;
+      throw new Error(readableReport(response.value));
+    }
+
+    if (response.value.status === 409) {
+      // It could happen that profile update fails due to version number mismatch
+      // app has a different version of profile compared to that one owned by the backend
+      // so we force profile reloading (see https://www.pivotaltracker.com/n/projects/2048617/stories/171994417)
+      yield put(profileLoadRequest());
+      throw new Error(response.value.value.title);
     }
 
     if (response.value.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield put(sessionExpired());
-      return;
+      throw new Error(I18n.t("profile.errors.upsert"));
     }
 
     if (response.value.status !== 200) {
       // We got a error, send a SESSION_UPSERT_FAILURE action
-      throw response.value.value.title;
+      throw new Error(response.value.value.title);
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
       yield put(profileUpsert.success(response.value.value));
@@ -130,7 +141,7 @@ function* createOrUpdateProfileSaga(
   }
 }
 
-// This function listens for Profile related requests and calls the needed saga.
+// This function listens for Profile upsert requests and calls the needed saga.
 export function* watchProfileUpsertRequestsSaga(
   createOrUpdateProfile: ReturnType<
     typeof BackendClient
@@ -140,5 +151,58 @@ export function* watchProfileUpsertRequestsSaga(
     getType(profileUpsert.request),
     createOrUpdateProfileSaga,
     createOrUpdateProfile
+  );
+}
+
+// This function listens for Profile refresh requests and calls the needed saga.
+export function* watchProfileRefreshRequestsSaga(
+  getProfile: ReturnType<typeof BackendClient>["getProfile"]
+): Iterator<Effect> {
+  yield takeLatest(getType(profileLoadRequest), loadProfile, getProfile);
+}
+
+// make a request to start the email validation process that sends to the user
+// an email with a link to validate it
+export function* startEmailValidationProcessSaga(
+  startEmailValidationProcess: ReturnType<
+    typeof BackendClient
+  >["startEmailValidationProcess"]
+): Iterator<Effect | Option<InitializedProfile>> {
+  try {
+    const response: SagaCallReturnType<
+      typeof startEmailValidationProcess
+    > = yield call(startEmailValidationProcess, {});
+    // we got an error, throw it
+    if (response.isLeft()) {
+      throw Error(readableReport(response.value));
+    }
+    if (response.value.status === 202) {
+      yield put(startEmailValidation.success());
+      return some(response.value.value);
+    }
+    if (response.value.status === 401) {
+      // in case we got an expired session while loading the profile, we reset
+      // the session
+      yield put(sessionExpired());
+    }
+    throw response
+      ? Error(`response status ${response.value.status}`)
+      : Error(I18n.t("profile.errors.load"));
+  } catch (error) {
+    yield put(startEmailValidation.failure(error));
+  }
+  return none;
+}
+
+// This function listens for request to send again the email validation to profile email and calls the needed saga.
+export function* watchProfileSendEmailValidationSaga(
+  startEmailValidationProcess: ReturnType<
+    typeof BackendClient
+  >["startEmailValidationProcess"]
+): Iterator<Effect> {
+  yield takeLatest(
+    getType(startEmailValidation.request),
+    startEmailValidationProcessSaga,
+    startEmailValidationProcess
   );
 }

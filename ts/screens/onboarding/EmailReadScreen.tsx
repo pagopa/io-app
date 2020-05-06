@@ -1,25 +1,27 @@
 /**
- * A screen to display the email used by IO
+ * A screen to display the email address used by IO
  * The _isFromProfileSection_ navigation parameter let the screen being adapted
  * if:
  * - it is displayed during the user onboarding
  * - it is displayed after the onboarding (navigation from the profile section)
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { untag } from "italia-ts-commons/lib/types";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, StyleSheet } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationScreenProps, StackActions } from "react-navigation";
 import { connect } from "react-redux";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import FooterWithButtons, {
+import {
   SingleButton,
   TwoButtonsInlineHalf
-} from "../../components/ui/FooterWithButtons";
+} from "../../components/ui/BlockButtons";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import IconFont from "../../components/ui/IconFont";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import {
   navigateBack,
@@ -30,18 +32,19 @@ import {
   emailAcknowledged
 } from "../../store/actions/onboarding";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { profileSelector } from "../../store/reducers/profile";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
+import {
+  profileEmailSelector,
+  profileSelector
+} from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
-
-type NavigationParams = {
-  isFromProfileSection?: boolean;
-};
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  NavigationScreenProps<NavigationParams>;
+  NavigationScreenProps;
 
 const styles = StyleSheet.create({
   emailLabel: { fontSize: 14 },
@@ -68,9 +71,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const contextualHelp = {
-  title: I18n.t("email.read.title"),
-  body: () => <Markdown>{I18n.t("email.read.help")}</Markdown>
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.email.contextualHelpTitle",
+  body: "profile.preferences.email.contextualHelpContent"
 };
 
 export class EmailReadScreen extends React.PureComponent<Props> {
@@ -80,7 +83,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
   }
 
   get isFromProfileSection() {
-    return this.props.navigation.getParam("isFromProfileSection") || false;
+    return this.props.isOnboardingCompleted;
   }
 
   private handleGoBack() {
@@ -107,30 +110,32 @@ export class EmailReadScreen extends React.PureComponent<Props> {
 
   public render() {
     const { isFromProfileSection } = this;
-    const { optionProfile } = this.props;
-
-    const profileEmail = optionProfile
-      .map(_ => untag(_.spid_email))
-      .getOrElse("");
-
+    const { isOnboardingCompleted } = this.props;
     const footerProps1: SingleButton = {
       type: "SingleButton",
       leftButton: {
         bordered: true,
         title: I18n.t("email.edit.cta"),
-        onPress: () =>
-          this.props.navigateToEmailInsertScreen(isFromProfileSection)
+        onPress: this.props.navigateToEmailInsertScreen
       }
     };
-
     const footerProps2: TwoButtonsInlineHalf = {
       type: "TwoButtonsInlineHalf",
       leftButton: {
         block: true,
         bordered: true,
         title: I18n.t("email.edit.cta"),
-        onPress: () =>
-          this.props.navigateToEmailInsertScreen(isFromProfileSection)
+        onPress: () => {
+          if (!isOnboardingCompleted) {
+            const resetAction = StackActions.reset({
+              index: 0,
+              actions: [navigateToEmailInsertScreen()]
+            });
+            this.props.navigation.dispatch(resetAction);
+            return;
+          }
+          this.props.navigateToEmailInsertScreen();
+        }
       },
       rightButton: {
         block: true,
@@ -143,8 +148,8 @@ export class EmailReadScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        title={I18n.t("profile.preferences.list.email")}
-        contextualHelp={contextualHelp}
+        headerTitle={I18n.t("profile.preferences.list.email")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <ScreenContent
           title={I18n.t("email.read.title")}
@@ -165,16 +170,15 @@ export class EmailReadScreen extends React.PureComponent<Props> {
                 size={24}
                 style={styles.icon}
               />
-              <Text style={styles.email}>{profileEmail}</Text>
+              <Text style={styles.email}>
+                {this.props.optionEmail.getOrElse("GIGI")}
+              </Text>
             </View>
             <View style={styles.spacerLarge} />
             <Text>
               {isFromProfileSection
-                ? `${I18n.t("email.read.details")} \n`
+                ? `${I18n.t("email.read.details")}`
                 : I18n.t("email.read.info")}
-              <Text bold={true}>
-                {isFromProfileSection && I18n.t("email.read.alert")}
-              </Text>
             </Text>
           </View>
         </ScreenContent>
@@ -186,22 +190,35 @@ export class EmailReadScreen extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  optionProfile: pot.toOption(profileSelector(state))
-});
+const mapStateToProps = (state: GlobalState) => {
+  const isOnboardingCompleted = isOnboardingCompletedSelector(state);
+  const potUserMetadata = userMetadataSelector(state);
+
+  // If the screen is displayed as last item of the onboarding ,show loading spinner
+  // until the user metadata load is completed
+  const isLoading = !isOnboardingCompleted && pot.isLoading(potUserMetadata);
+  return {
+    optionProfile: pot.toOption(profileSelector(state)),
+    optionEmail: profileEmailSelector(state),
+    isOnboardingCompleted,
+    isLoading
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   acknowledgeEmail: () => dispatch(emailAcknowledged()),
   abortOnboarding: () => dispatch(abortOnboarding()),
-  navigateToEmailInsertScreen: (isFromProfileSection: boolean) => {
-    dispatch(navigateToEmailInsertScreen({ isFromProfileSection }));
+  navigateToEmailInsertScreen: () => {
+    dispatch(navigateToEmailInsertScreen());
   },
   navigateBack: () => {
     dispatch(navigateBack());
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EmailReadScreen);
+export default withValidatedEmail(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withLoadingSpinner(EmailReadScreen))
+);

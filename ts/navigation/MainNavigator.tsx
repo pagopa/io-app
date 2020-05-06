@@ -50,7 +50,7 @@ const ROUTE_ICON: RouteIconMap = {
 
 const getLabel = (routeName: string): string => {
   const fallbackLabel = "unknown"; // fallback label
-  // "routeName as Routes" is assumed to be safe as explained @https://github.com/teamdigitale/italia-app/pull/193#discussion_r192347234
+  // "routeName as Routes" is assumed to be safe as explained @https://github.com/pagopa/io-app/pull/193#discussion_r192347234
   // adding fallback anyway -- better safe than sorry
   const label = ROUTE_LABEL[routeName as Routes];
   return label === undefined ? fallbackLabel : label;
@@ -102,7 +102,13 @@ const NoTabBarRoutes: ReadonlyArray<string> = [
   ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
   ROUTES.PAYMENT_PICK_PSP,
   ROUTES.PAYMENT_PICK_PAYMENT_METHOD,
-  ROUTES.PAYMENT_TRANSACTION_ERROR
+  ROUTES.PAYMENT_TRANSACTION_ERROR,
+  ROUTES.PAYMENT_TRANSACTION_SUCCESS,
+  ROUTES.READ_EMAIL_SCREEN,
+  ROUTES.INSERT_EMAIL_SCREEN,
+  ROUTES.PAYMENTS_HISTORY_SCREEN,
+  ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
+  ROUTES.WALLET_TRANSACTION_DETAILS
 ];
 
 const getTabBarVisibility = (

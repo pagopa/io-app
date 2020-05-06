@@ -7,13 +7,13 @@ import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import { authenticateConfig } from "../../utils/biometric";
 import { showToast } from "../../utils/showToast";
 
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
@@ -32,6 +32,11 @@ type State = {
 
 const INITIAL_STATE: State = {
   isFingerprintAvailable: true
+};
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "biometric_recognition.contextualHelpTitle",
+  body: "biometric_recognition.contextualHelpContent"
 };
 
 /**
@@ -54,7 +59,7 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
 
   private goBack = () => this.props.navigation.goBack();
 
-  public componentWillMount() {
+  public componentDidMount() {
     getFingerprintSettings().then(
       biometryTypeOrUnsupportedReason => {
         this.setState({
@@ -91,14 +96,10 @@ class BiometricRecognitionScreen extends React.Component<Props, State> {
 
     return (
       <TopScreenComponent
-        title={I18n.t("biometric_recognition.title")}
+        headerTitle={I18n.t("biometric_recognition.title")}
         goBack={this.goBack}
-        contextualHelp={{
-          title: I18n.t("biometric_recognition.title"),
-          body: () => (
-            <Markdown>{I18n.t("biometric_recognition.help")}</Markdown>
-          )
-        }}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["onboarding_fingerprint"]}
       >
         <ScreenContentHeader
           title={I18n.t("biometric_recognition.title")}
