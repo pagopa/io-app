@@ -10,6 +10,8 @@ declare module "native-base" {
       white?: boolean;
       cancel?: boolean;
       xsmall?: boolean;
+      gray?: boolean;
+      darkGray?: boolean;
     }
   }
 }
@@ -33,13 +35,37 @@ export default (): Theme => {
       },
       "UIComponent.IconFont": {
         fontSize: variables.btnSmallFontSize,
-        paddingTop: 1
       }
     },
 
     ".small": {
       height: variables.btnSmallHeight,
-      "NativeBase.Text": { fontSize: variables.btnSmallFontSize }
+      "NativeBase.Text": { 
+        fontSize: variables.btnSmallFontSize 
+      },
+      "UIComponent.IconFont": {
+        fontSize: variables.btnSmallFontSize,
+      }
+    },
+    
+    ".darkGray": {
+      "NativeBase.Text": {
+        color: variables.colorWhite
+      },
+      "UIComponent.IconFont": {
+        color: variables.colorWhite
+      },
+      backgroundColor: variables.brandDarkGray
+    },
+
+    ".gray": {
+      "NativeBase.Text": {
+        color: variables.brandHighlight
+      },
+      "UIComponent.IconFont": {
+        color: variables.brandHighlight
+      },
+      backgroundColor: variables.brandGray
     },
 
     ".light": {
@@ -67,9 +93,6 @@ export default (): Theme => {
     },
 
     ".bordered": {
-      ".white": {
-        backgroundColor: variables.colorWhite
-      },
       ".disabled": {
         "NativeBase.Icon": {
           color: variables.btnDisabledBg
@@ -81,7 +104,8 @@ export default (): Theme => {
       },
       "UIComponent.IconFont": {
         color: variables.brandPrimary
-      }
+      },
+      backgroundColor: variables.colorWhite
     },
 
     ".white": { backgroundColor: variables.colorWhite },
@@ -96,9 +120,22 @@ export default (): Theme => {
       }
     },
 
+    ".disabled": {
+      "UIComponent.IconFont": {
+        color: variables.colorWhite
+      }
+    },
+
     "NativeBase.Text": {
       ...makeFontStyleObject(Platform.select, variables.btnTextFontWeight),
-      fontSize: variables.btnFontSize
+      fontSize: variables.btnFontSize,
+      paddingLeft: 0,
+      paddingRight: 0
+    },
+
+    "UIComponent.IconFont": {
+      fontSize: variables.btnSmallFontSize,
+      paddingRight: 4
     },
 
     justifyContent: "center",

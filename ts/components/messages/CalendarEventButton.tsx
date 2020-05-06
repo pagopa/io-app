@@ -19,7 +19,6 @@ import {
 } from "../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 import { preferredCalendarSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { openAppSettings } from "../../utils/appSettings";
 import {
   checkAndRequestPermission,
@@ -37,8 +36,6 @@ type OwnProps = {
   message: CreatedMessageWithContent;
   small?: boolean;
   disabled?: boolean;
-  // hideModal: () => void; // TODO evaluate if can attach light modal to this component
-  // showModal: (component: ReactNode) => void; // TODO evaluate if can attach light modal to this component
 };
 
 type Props = OwnProps &
@@ -51,62 +48,6 @@ type State = Readonly<{
   isEventInDeviceCalendar: boolean;
 }>;
 
-const baseStyles = StyleSheet.create({
-  button: {
-    flex: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 0,
-    paddingBottom: 0,
-    height: 40
-  },
-  icon: {
-    lineHeight: 24
-  },
-  text: {
-    paddingRight: 0,
-    paddingBottom: 0,
-    paddingLeft: 0,
-    fontSize: 14,
-    lineHeight: 20
-  }
-});
-
-const validStyles = StyleSheet.create({
-  button: {
-    backgroundColor: customVariables.colorWhite,
-    borderWidth: 1,
-    borderColor: customVariables.brandPrimary
-  },
-  icon: {
-    color: customVariables.brandPrimary
-  },
-  text: {
-    color: customVariables.brandPrimary
-  }
-});
-
-const smallStyles = StyleSheet.create({
-  button: {
-    height: 32
-  },
-  icon: {},
-  text: {}
-});
-
-const disabledStyles = StyleSheet.create({
-  button: {
-    backgroundColor: "#b5b5b5",
-    borderWidth: 0
-  },
-  icon: {
-    color: customVariables.colorWhite
-  },
-  text: {
-    color: customVariables.colorWhite
-  }
-});
-
 const screenWidth = Dimensions.get("window").width;
 const minScreenWidth = 320;
 // On small devices use short label
@@ -115,6 +56,12 @@ const reminderText = I18n.t(
     ? "messages.cta.reminderShort"
     : "messages.cta.reminder"
 );
+
+const styles = StyleSheet.create({
+  button: {
+    flex: 1
+  }
+})
 
 class CalendarEventButton extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -398,37 +345,19 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
       ? "io-tick-big"
       : "io-plus";
     return (
-      <ButtonDefaultOpacity
-        disabled={disabled}
-        onPress={this.onPressHandler}
-        style={[
-          baseStyles.button,
-          validStyles.button,
-          small && smallStyles.button,
-          disabled && disabledStyles.button
-        ]}
-      >
-        <IconFont
-          name={iconName}
-          style={[
-            baseStyles.icon,
-            validStyles.icon,
-            small && smallStyles.icon,
-            disabled && disabledStyles.icon
-          ]}
-        />
-
-        <Text
-          style={[
-            baseStyles.text,
-            validStyles.text,
-            small && smallStyles.text,
-            disabled && disabledStyles.text
-          ]}
+        <ButtonDefaultOpacity
+          disabled={disabled}
+          onPress={this.onPressHandler}
+          xsmall={small}
+          small={!small}
+          bordered={!disabled}
+          style={styles.button}
         >
-          {reminderText}
-        </Text>
-      </ButtonDefaultOpacity>
+          <IconFont name={iconName}/>
+          <Text>
+            {reminderText}
+          </Text>
+        </ButtonDefaultOpacity>
     );
   }
 }

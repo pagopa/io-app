@@ -40,7 +40,7 @@ import {
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
 } from "../../utils/payment";
-import CalendarIconComponent from "../CalendarIconComponent";
+import CalendarIconComponent from "./CalendarIconComponent";
 import StyledIconFont from "../ui/IconFont";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
