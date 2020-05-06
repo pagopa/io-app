@@ -943,6 +943,15 @@ messageDetails:
     organizationName: Inviato da
     departmentName: Dipartimento
     serviceName: Servizio
+  addMemo: !include messages/addMemo.md
+  dateSending: "Data e ora invio:"
+  sender: "Mittente:"
+  service: "Servizio:"
+  question: "Qualcosa non è chiaro?"
+  answer: Se non ti è chiaro il contenuto del messaggio, devi segnalare un errore o vuoi approfondire, puoi contattare direttamente i referenti del servizio indicando il seguente ID del messaggio.
+  call: Chiama
+  write: Scrivi
+  id: "ID:"
 notifications:
   installation:
     errorTitle: Notifiche push
