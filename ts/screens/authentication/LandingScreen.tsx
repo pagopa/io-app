@@ -3,15 +3,7 @@
  * It includes a carousel with highlights on the app functionalities
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import {
-  Body,
-  CheckBox,
-  Content,
-  List,
-  ListItem,
-  Text,
-  View
-} from "native-base";
+import { Body, Content, List, ListItem, Text, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
