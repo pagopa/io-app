@@ -148,9 +148,9 @@ class LandingScreen extends React.PureComponent<Props> {
     return (
       <React.Fragment>
         <View spacer={true} />
-        <Text>
+        <Markdown>
           {I18n.t("authentication.landing.cie_unsupported.android_desc")}
-        </Text>
+        </Markdown>
         <View spacer={true} extralarge={true} />
         <List>
           <ListItem>
@@ -204,7 +204,7 @@ class LandingScreen extends React.PureComponent<Props> {
             <Markdown>
               {I18n.t("authentication.landing.cie_unsupported.body")}
             </Markdown>
-            {/* Platform.OS === "android" && */ this.renderAndroidConditions()}
+            {Platform.OS === "android" && this.renderAndroidConditions()}
           </React.Fragment>
         )}
       />

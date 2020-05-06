@@ -252,7 +252,7 @@ authentication:
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
-      android_desc: "Specifically, the cases in which you cannot access with an Electronic Identity Card (CIE) on your Android device are:"
+      android_desc: !include cie/cieNotSupported_android.md
       os_version_unsupported: your operating system does not have a version compatible with CIE authentication
       nfc_incompatible: your device does not have an NFC antenna compatible with CIE authentication
     contentTitleCie: Don't have SPID or CIE?
