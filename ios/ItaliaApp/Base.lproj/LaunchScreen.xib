@@ -34,13 +34,13 @@
                             <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                         </view>
                         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EVT-gP-y6b" userLabel="view_logo_io">
-                            <rect key="frame" x="20.5" y="150" width="373" height="190"/>
+                            <rect key="frame" x="20.5" y="170" width="373" height="200"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_io" translatesAutoresizingMaskIntoConstraints="NO" id="gDT-W0-NNs">
-                                    <rect key="frame" x="154.5" y="20" width="64" height="54.5"/>
+                                    <rect key="frame" x="154.5" y="20" width="64" height="52.5"/>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app_io_text_label" translatesAutoresizingMaskIntoConstraints="NO" id="7LS-h6-Yer" userLabel="app_io_label">
-                                    <rect key="frame" x="96.5" y="82.5" width="180" height="25"/>
+                                    <rect key="frame" x="96.5" y="87.5" width="180" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="180" id="InA-Qi-YYH"/>
                                         <constraint firstAttribute="height" constant="25" id="iDp-sN-U5E"/>
@@ -51,7 +51,7 @@
                             <constraints>
                                 <constraint firstItem="gDT-W0-NNs" firstAttribute="centerX" secondItem="EVT-gP-y6b" secondAttribute="centerX" id="1Jv-Jc-nAm"/>
                                 <constraint firstItem="7LS-h6-Yer" firstAttribute="centerX" secondItem="EVT-gP-y6b" secondAttribute="centerX" id="A4n-8Q-Tcm"/>
-                                <constraint firstItem="7LS-h6-Yer" firstAttribute="top" secondItem="gDT-W0-NNs" secondAttribute="bottom" constant="8" id="nWA-6h-uIh"/>
+                                <constraint firstItem="7LS-h6-Yer" firstAttribute="top" secondItem="gDT-W0-NNs" secondAttribute="bottom" constant="15" id="nWA-6h-uIh"/>
                                 <constraint firstItem="gDT-W0-NNs" firstAttribute="top" secondItem="EVT-gP-y6b" secondAttribute="top" constant="20" id="omO-nL-42d"/>
                                 <constraint firstItem="7LS-h6-Yer" firstAttribute="centerY" secondItem="EVT-gP-y6b" secondAttribute="centerY" id="qPb-yp-LlF"/>
                             </constraints>
@@ -59,9 +59,9 @@
                     </subviews>
                     <constraints>
                         <constraint firstItem="oKA-RH-eTA" firstAttribute="top" relation="greaterThanOrEqual" secondItem="EVT-gP-y6b" secondAttribute="bottom" id="4rp-V9-TIl"/>
-                        <constraint firstItem="EVT-gP-y6b" firstAttribute="top" relation="lessThanOrEqual" secondItem="CFy-E3-mQ3" secondAttribute="top" constant="150" id="Df6-tX-Kww"/>
+                        <constraint firstItem="EVT-gP-y6b" firstAttribute="top" relation="lessThanOrEqual" secondItem="CFy-E3-mQ3" secondAttribute="top" constant="170" id="Df6-tX-Kww"/>
                         <constraint firstItem="EVT-gP-y6b" firstAttribute="top" relation="greaterThanOrEqual" secondItem="CFy-E3-mQ3" secondAttribute="top" id="EcB-Hc-wk6"/>
-                        <constraint firstItem="oKA-RH-eTA" firstAttribute="top" relation="lessThanOrEqual" secondItem="EVT-gP-y6b" secondAttribute="bottom" constant="200" id="GLD-mX-hC0"/>
+                        <constraint firstItem="oKA-RH-eTA" firstAttribute="top" relation="lessThanOrEqual" secondItem="EVT-gP-y6b" secondAttribute="bottom" constant="170" id="GLD-mX-hC0"/>
                         <constraint firstItem="kB5-FB-v2M" firstAttribute="top" secondItem="oKA-RH-eTA" secondAttribute="bottom" constant="30" id="RCt-IV-K0U"/>
                         <constraint firstItem="EVT-gP-y6b" firstAttribute="width" secondItem="CFy-E3-mQ3" secondAttribute="width" multiplier="0.9" id="XMe-JL-XEX"/>
                         <constraint firstItem="dgM-zD-vYW" firstAttribute="top" secondItem="kB5-FB-v2M" secondAttribute="bottom" constant="30" id="hqj-WO-4wO"/>
