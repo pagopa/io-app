@@ -5,10 +5,9 @@
  * https://www.pivotaltracker.com/story/show/159440294
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
-
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
@@ -73,6 +72,10 @@ export const municipalitySelector = (state: GlobalState) =>
 
 export const servicesMetadataByIdSelector = (state: GlobalState) =>
   state.content.servicesMetadata.byId;
+
+export const serviceMetadataByIdSelector = (serviceId: string) => (
+  state: GlobalState
+) => servicesMetadataByIdSelector(state)[serviceId];
 
 export const servicesByScopeSelector = (state: GlobalState) =>
   state.content.servicesByScope;
@@ -192,9 +195,9 @@ export default function content(
         municipality: {
           codiceCatastale: pot.toError(
             state.municipality.codiceCatastale,
-            action.payload
+            action.payload.error
           ),
-          data: pot.toError(state.municipality.data, action.payload)
+          data: pot.toError(state.municipality.data, action.payload.error)
         }
       };
 
