@@ -18,6 +18,7 @@ import {
 } from "../../store/reducers/authentication";
 import { profileSelector } from "../../store/reducers/profile";
 import { SessionToken } from "../../types/SessionToken";
+import { dispatchEmailValidationToMixpanel } from "../analytics/emailValidatedToMixpanel";
 import { previousInstallationDataDeleteSaga } from "../installation";
 import { loadProfile } from "../profile";
 import { initializeApplicationSaga } from "../startup";
@@ -32,6 +33,16 @@ jest.mock("react-native-background-timer", () => {
 });
 
 jest.mock("../../api/backend");
+
+jest.mock("react-native-mixpanel", () => {
+  return {
+    MixpanelInstance: jest.fn(() => {
+      return {
+        initialize: () => Promise.resolve()
+      };
+    })
+  };
+});
 
 const profile: InitializedProfile = {
   has_profile: true,
@@ -64,6 +75,8 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // updateInstallationSaga
+      .fork(dispatchEmailValidationToMixpanel)
+      .next()
       .select(sessionInfoSelector)
       .next(none)
       .next(none) // loadSessionInformationSaga
