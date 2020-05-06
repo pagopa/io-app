@@ -40,7 +40,7 @@ export default (): Theme => {
       xsmall: {
         height: customVariables.spacerExtrasmallHeight
       },
-      small: {
+      ".small": {
         height: customVariables.spacerSmallHeight
       },
       ".large": {
@@ -59,6 +59,9 @@ export default (): Theme => {
 
     // horizontal spacer
     ".hspacer": {
+      ".small": {
+        width: variables.spacerSmallHeight
+      },
       ".large": {
         width: variables.spacerLargeWidth
       },
