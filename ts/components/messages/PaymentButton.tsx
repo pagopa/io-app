@@ -141,7 +141,7 @@ class PaymentButton extends React.PureComponent<Props> {
 
     return (
       <ButtonDefaultOpacity
-        primary={!isExpired(messagePaymentExpirationInfo) || !disabled}
+        primary={!isExpired(messagePaymentExpirationInfo) && !disabled}
         disabled={disabled}
         onPress={this.handleOnPress}
         darkGray={isExpired(messagePaymentExpirationInfo)}
