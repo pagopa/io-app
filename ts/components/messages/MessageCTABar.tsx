@@ -9,23 +9,17 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
-import {
-  format,
-  formatDateAsDay,
-  formatDateAsMonth,
-} from "../../utils/dates";
+import { format, formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
   getMessagePaymentExpirationInfo,
   isExpirable,
   isExpired,
   isExpiring
 } from "../../utils/messages";
-import {
-  formatPaymentAmount
-} from "../../utils/payment";
-import CalendarIconComponent from "./CalendarIconComponent";
+import { formatPaymentAmount } from "../../utils/payment";
 import StyledIconFont from "../ui/IconFont";
 import CalendarEventButton from "./CalendarEventButton";
+import CalendarIconComponent from "./CalendarIconComponent";
 import PaymentButton from "./PaymentButton";
 
 type Props = {
@@ -80,7 +74,6 @@ const styles = StyleSheet.create({
  * - start the message-related payment
  */
 class MessageCTABar extends React.PureComponent<Props> {
-
   get paid(): boolean {
     return this.props.payment !== undefined;
   }
@@ -88,14 +81,18 @@ class MessageCTABar extends React.PureComponent<Props> {
   private maybeMessagePaymentExpirationInfo = () => {
     const { message } = this.props;
     const { payment_data, due_date } = message.content;
-    return fromNullable(payment_data).map(
-      paymentData => getMessagePaymentExpirationInfo(paymentData, due_date)
+    return fromNullable(payment_data).map(paymentData =>
+      getMessagePaymentExpirationInfo(paymentData, due_date)
     );
   };
   private paymentExpirationInfo = this.maybeMessagePaymentExpirationInfo();
 
-  private isPaymentExpired = this.paymentExpirationInfo.fold(false, info => isExpired(info));
-  private isPaymentExpiring = this.paymentExpirationInfo.fold(false, info => isExpiring(info));
+  private isPaymentExpired = this.paymentExpirationInfo.fold(false, info =>
+    isExpired(info)
+  );
+  private isPaymentExpiring = this.paymentExpirationInfo.fold(false, info =>
+    isExpiring(info)
+  );
 
   private renderCalendarIcon = () => {
     const { message, small } = this.props;
@@ -113,23 +110,21 @@ class MessageCTABar extends React.PureComponent<Props> {
     }
 
     // - the component is rendered in the expanded virsion (not in the message list but only in the message detail)
-    if(!small){
-      return undefined
+    if (!small) {
+      return undefined;
     }
-
 
     // - the payment related to the message has an expiration date and it is in the future
     if (this.isPaymentExpired) {
       return undefined;
     }
-    
+
     return (
       <CalendarIconComponent
         small={small}
         month={capitalize(formatDateAsMonth(due_date))}
         day={formatDateAsDay(due_date)}
         backgroundColor={
-          //TODO: it will change
           this.isPaymentExpiring
             ? variables.calendarExpirableColor
             : variables.brandDarkGray
@@ -141,16 +136,12 @@ class MessageCTABar extends React.PureComponent<Props> {
 
   // Render a button to add/remove an event related to the message in the calendar
   private renderCalendarEventButton = () => {
-    const {
-      message,
-      small,
-      disabled
-    } = this.props;
+    const { message, small, disabled } = this.props;
     const { due_date } = message.content;
 
     // The add/remove reminder button is shown if:
     // - if the message has a due date
-    if(due_date === undefined){
+    if (due_date === undefined) {
       return undefined;
     }
 
@@ -163,7 +154,7 @@ class MessageCTABar extends React.PureComponent<Props> {
     if (this.isPaymentExpired) {
       return undefined;
     }
-    
+
     return (
       <CalendarEventButton
         small={small}
@@ -180,10 +171,7 @@ class MessageCTABar extends React.PureComponent<Props> {
     const paymentInfo = this.paymentExpirationInfo;
 
     // the button is displayed if the payment has an expiration date in the future
-    if (
-      paymentInfo.isNone() ||
-      (!small && this.isPaymentExpired)
-    ) {
+    if (paymentInfo.isNone() || (!small && this.isPaymentExpired)) {
       return undefined;
     }
 
@@ -227,10 +215,10 @@ class MessageCTABar extends React.PureComponent<Props> {
           ]}
         >
           {calendarIcon}
-          {calendarIcon && ( <View hspacer={true} small={true} />)}
-          
+          {calendarIcon && <View hspacer={true} small={true} />}
+
           {calendarEventButton}
-          {calendarEventButton && ( <View hspacer={true} small={true} />)}
+          {calendarEventButton && <View hspacer={true} small={true} />}
 
           {paymentButton}
         </View>
@@ -252,8 +240,7 @@ class MessageCTABar extends React.PureComponent<Props> {
       this.paymentExpirationInfo.isSome() &&
       isExpirable(this.paymentExpirationInfo.value)
     ) {
-      const messagePaymentExpirationInfo =
-        this.paymentExpirationInfo.value;
+      const messagePaymentExpirationInfo = this.paymentExpirationInfo.value;
 
       const dueDate = messagePaymentExpirationInfo.dueDate;
 

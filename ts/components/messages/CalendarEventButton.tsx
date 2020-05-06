@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1
   }
-})
+});
 
 class CalendarEventButton extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -345,19 +345,17 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
       ? "io-tick-big"
       : "io-plus";
     return (
-        <ButtonDefaultOpacity
-          disabled={disabled}
-          onPress={this.onPressHandler}
-          xsmall={small}
-          small={!small}
-          bordered={!disabled}
-          style={styles.button}
-        >
-          <IconFont name={iconName}/>
-          <Text>
-            {reminderText}
-          </Text>
-        </ButtonDefaultOpacity>
+      <ButtonDefaultOpacity
+        disabled={disabled}
+        onPress={this.onPressHandler}
+        xsmall={small}
+        small={!small}
+        bordered={!disabled}
+        style={styles.button}
+      >
+        <IconFont name={iconName} />
+        <Text>{reminderText}</Text>
+      </ButtonDefaultOpacity>
     );
   }
 }

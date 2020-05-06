@@ -34,20 +34,20 @@ export default (): Theme => {
         paddingTop: 1
       },
       "UIComponent.IconFont": {
-        fontSize: variables.btnSmallFontSize,
+        fontSize: variables.btnSmallFontSize
       }
     },
 
     ".small": {
       height: variables.btnSmallHeight,
-      "NativeBase.Text": { 
-        fontSize: variables.btnSmallFontSize 
+      "NativeBase.Text": {
+        fontSize: variables.btnSmallFontSize
       },
       "UIComponent.IconFont": {
-        fontSize: variables.btnSmallFontSize,
+        fontSize: variables.btnSmallFontSize
       }
     },
-    
+
     ".darkGray": {
       "NativeBase.Text": {
         color: variables.colorWhite
