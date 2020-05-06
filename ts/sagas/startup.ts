@@ -50,6 +50,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
+import { dispatchEmailValidationToMixpanel } from "./analytics/emailValidatedToMixpanel";
 
 import {
   startAndReturnIdentificationResult,
@@ -129,6 +130,9 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Handles the expiration of the session token
   yield fork(watchSessionExpiredSaga);
+
+  // Watch for the event of email vaidated
+  yield fork(dispatchEmailValidationToMixpanel);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
