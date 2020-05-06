@@ -539,6 +539,9 @@ payment:
       transactionCode: Transaction identification code
       help: If you have encountered a problem with this payment, write to us for more information and details
     list:
+      empty:
+          title: No payment attempts
+          description: IO didn't store any payment attempts. Here you can find last payment attempts
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
@@ -909,6 +912,15 @@ messageDetails:
     organizationName: Sent by
     departmentName: Department
     serviceName: Service
+  addMemo: !include messages/addMemo.md
+  dateSending: "Date and time sending:"
+  sender: "Sender:"
+  service: "Service:"
+  question: "Is something unclear?"
+  answer: If something is unclear about the content of the message, you want to report an error, or you want to know more about it, you can contact the service directly by indicating the following message ID.
+  call: Call
+  write: Write
+  id: "ID:"
 notifications:
   installation:
     errorTitle: Push notifications

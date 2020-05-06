@@ -143,9 +143,7 @@ export const getPaymentHistoryDetails = (
   profile: InitializedProfile
 ): string => {
   const separator = " / ";
-  const profileDetails = `- name: ${profile.name}${separator}- surname: ${
-    profile.family_name
-  }${separator}- spid_email: ${fromNullable(
+  const profileDetails = `- spid_email: ${fromNullable(
     profile.spid_email as string
   ).getOrElse("n/a")}${separator}- email: ${fromNullable(
     profile.email as string
@@ -153,17 +151,17 @@ export const getPaymentHistoryDetails = (
   const paymentDetails = `- payment start time: ${formatDateAsReminder(
     new Date(payment.started_at)
   )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
-  const successDetails = fromNullable(payment.verified_data)
-    .map(pv => `- success verifica: ${JSON.stringify(pv, null, 4)}`)
+  const ccp = fromNullable(payment.verified_data)
+    .map(pv => `- ccp: ${pv.codiceContestoPagamento}`)
     .getOrElse("");
   const failureDetails = fromNullable(payment.failure)
-    .map(pf => `- failure verifica: ${pf}`)
+    .map(pf => `- errore: ${pf}`)
     .getOrElse("");
   return profileDetails
     .concat(separator)
     .concat(paymentDetails)
     .concat(separator)
-    .concat(successDetails)
+    .concat(ccp)
     .concat(separator)
     .concat(failureDetails);
 };
