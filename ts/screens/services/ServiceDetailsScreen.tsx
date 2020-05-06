@@ -1,7 +1,3 @@
-/**
- * Screen displaying the details of a selected service. The user
- * can enable/disable the service and customize the notification settings.
- */
 import { fromNullable } from "fp-ts/lib/Option";
 import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
 import * as pot from "italia-ts-commons/lib/pot";
@@ -213,6 +209,10 @@ export const canRenderItems = (
   return false;
 };
 
+/**
+ * Screen displaying the details of a selected service. The user
+ * can enable/disable the service and customize the notification settings.
+ */
 class ServiceDetailsScreen extends React.Component<Props, State> {
   get serviceId() {
     return this.props.navigation.getParam("service").service_id;
