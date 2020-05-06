@@ -37,23 +37,23 @@
                             <rect key="frame" x="20.5" y="150" width="373" height="190"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_io" translatesAutoresizingMaskIntoConstraints="NO" id="gDT-W0-NNs">
-                                    <rect key="frame" x="154.5" y="20" width="64" height="52"/>
+                                    <rect key="frame" x="154.5" y="20" width="64" height="54.5"/>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app_io_text_label" translatesAutoresizingMaskIntoConstraints="NO" id="7LS-h6-Yer" userLabel="app_io_label">
-                                    <rect key="frame" x="86" y="80" width="200" height="30"/>
+                                    <rect key="frame" x="96.5" y="82.5" width="180" height="25"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="200" id="InA-Qi-YYH"/>
-                                        <constraint firstAttribute="height" constant="30" id="iDp-sN-U5E"/>
+                                        <constraint firstAttribute="width" constant="180" id="InA-Qi-YYH"/>
+                                        <constraint firstAttribute="height" constant="25" id="iDp-sN-U5E"/>
                                     </constraints>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="7LS-h6-Yer" firstAttribute="centerY" secondItem="EVT-gP-y6b" secondAttribute="centerY" id="5E8-et-qvg"/>
-                                <constraint firstItem="gDT-W0-NNs" firstAttribute="centerX" secondItem="EVT-gP-y6b" secondAttribute="centerX" id="lPi-hj-ywW"/>
+                                <constraint firstItem="gDT-W0-NNs" firstAttribute="centerX" secondItem="EVT-gP-y6b" secondAttribute="centerX" id="1Jv-Jc-nAm"/>
+                                <constraint firstItem="7LS-h6-Yer" firstAttribute="centerX" secondItem="EVT-gP-y6b" secondAttribute="centerX" id="A4n-8Q-Tcm"/>
                                 <constraint firstItem="7LS-h6-Yer" firstAttribute="top" secondItem="gDT-W0-NNs" secondAttribute="bottom" constant="8" id="nWA-6h-uIh"/>
                                 <constraint firstItem="gDT-W0-NNs" firstAttribute="top" secondItem="EVT-gP-y6b" secondAttribute="top" constant="20" id="omO-nL-42d"/>
-                                <constraint firstItem="7LS-h6-Yer" firstAttribute="centerX" secondItem="EVT-gP-y6b" secondAttribute="centerX" id="qlp-6D-f8R"/>
+                                <constraint firstItem="7LS-h6-Yer" firstAttribute="centerY" secondItem="EVT-gP-y6b" secondAttribute="centerY" id="qPb-yp-LlF"/>
                             </constraints>
                         </view>
                     </subviews>
