@@ -1,7 +1,12 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import RNCalendarEvents from "react-native-calendar-events";
+import { fromNullable, Option, some, none } from "fp-ts/lib/Option";
+import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
+import { formatDateAsReminder } from './dates';
+import { CreatedMessageWithContent } from '../../definitions/backend/CreatedMessageWithContent';
+import { showToast } from './showToast';
+import { AddCalendarEventPayload } from '../store/actions/calendarEvents';
+import { CalendarEvent } from '../store/reducers/entities/calendarEvents/calendarEventsByMessageId';
 
 /**
  * Utility functions to interact with the device calendars
@@ -76,3 +81,89 @@ export function convertLocalCalendarName(calendarTitle: string) {
     calendarTitleTranslations[calendarTitle.trim().toLowerCase()]
   ).fold(calendarTitle, s => I18n.t(s));
 }
+
+
+/**
+   * Check if an event for endDate with that title already exists in the calendar.
+   * Return the event id if it is found
+   */
+export const searchEventInCalendar = async (
+    endDate: Date,
+    title: string
+  ): Promise<Option<string>> => {
+    const startDate = new Date(endDate.getTime());
+    return RNCalendarEvents.fetchAllEvents(
+      formatDateAsReminder(new Date(startDate.setDate(endDate.getDate() - 1))),
+      formatDateAsReminder(endDate)
+    )
+      .then(
+        events => {
+          return fromNullable(events)
+            .mapNullable(evs =>
+              evs.find(e => {
+                return (
+                  e.title === title &&
+                  new Date(e.endDate).getDay() === endDate.getDay()
+                );
+              })
+            )
+            .map(ev => some(ev.id))
+            .getOrElse(none);
+        },
+        // handle promise rejection
+        () => {
+          return none;
+        }
+      )
+      .catch(() => none);
+  };
+
+export const saveCalendarEvent = (
+  calendar: Calendar,
+  message: CreatedMessageWithContent,
+  dueDate: Date,
+  title: string,
+  addCalendarEvent: (calendarEvent: AddCalendarEventPayload) => void
+) =>
+  RNCalendarEvents.saveEvent(title, {
+    calendarId: calendar.id,
+    startDate: formatDateAsReminder(dueDate),
+    endDate: formatDateAsReminder(dueDate),
+    allDay: true,
+    alarms: []
+  })
+    .then(eventId => {
+      showToast(
+        I18n.t("messages.cta.reminderAddSuccess", {
+          title,
+          calendarTitle: convertLocalCalendarName(calendar.title)
+        }),
+        "success"
+      );
+      const messageId = message.id;
+      addCalendarEvent({
+        messageId,
+        eventId
+      })
+    })
+    .catch(_ =>
+      showToast(I18n.t("messages.cta.reminderAddFailure"), "danger")
+    );
+
+export const removeCalendarEventFromDeviceCalendar = (
+      calendarEvent: CalendarEvent | undefined,
+      onRemoveEvent: (calendarEvent: CalendarEvent) => void
+    ) => {
+      if (calendarEvent) {
+        RNCalendarEvents.removeEvent(calendarEvent.eventId)
+          .then(_ => {
+            showToast(I18n.t("messages.cta.reminderRemoveSuccess"), "success");
+            onRemoveEvent(calendarEvent);
+          })
+          .catch(_ =>
+            showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger")
+          );
+      } else {
+        showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger");
+      }
+    };

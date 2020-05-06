@@ -23,11 +23,9 @@ const baseStyles = StyleSheet.create({
     paddingBottom: 0,
     height: 40
   },
-
   icon: {
     lineHeight: 24
   },
-
   text: {
     paddingRight: 0,
     paddingBottom: 0,
@@ -43,11 +41,9 @@ const validStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: customVariables.brandPrimary
   },
-
   icon: {
     color: customVariables.brandPrimary
   },
-
   text: {
     color: customVariables.brandPrimary
   }
@@ -57,9 +53,7 @@ const smallStyles = StyleSheet.create({
   button: {
     height: 32
   },
-
   icon: {},
-
   text: {}
 });
 
@@ -68,11 +62,9 @@ const disabledStyles = StyleSheet.create({
     backgroundColor: "#b5b5b5",
     borderWidth: 0
   },
-
   icon: {
     color: customVariables.colorWhite
   },
-
   text: {
     color: customVariables.colorWhite
   }

@@ -1,5 +1,5 @@
 import { isToday } from "date-fns";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
@@ -38,13 +38,14 @@ import { openAppSettings } from "../../utils/appSettings";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import {
   checkAndRequestPermission,
-  convertLocalCalendarName
+  searchEventInCalendar,
+  saveCalendarEvent,
+  removeCalendarEventFromDeviceCalendar
 } from "../../utils/calendar";
 import {
   format,
   formatDateAsDay,
   formatDateAsMonth,
-  formatDateAsReminder
 } from "../../utils/dates";
 import {
   getMessagePaymentExpirationInfo,
@@ -57,7 +58,6 @@ import {
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
 } from "../../utils/payment";
-import { showToast } from "../../utils/showToast";
 import CalendarIconComponent from "../CalendarIconComponent";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import SelectCalendarModal from "../SelectCalendarModal";
@@ -90,18 +90,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-
   topContainerLarge: {
     paddingVertical: variables.contentPadding / 2,
     paddingHorizontal: variables.contentPadding,
     backgroundColor: variables.brandGray
   },
-
   topContainerPaid: {
     paddingVertical: 0,
     paddingHorizontal: 0
   },
-
   bottomContainer: {
     display: "flex",
     flexDirection: "row",
@@ -109,25 +106,22 @@ const styles = StyleSheet.create({
     paddingVertical: variables.contentPadding / 2,
     paddingHorizontal: variables.contentPadding
   },
-
   bottomContainerValid: {
     backgroundColor: variables.brandGray
   },
-
   bottomContainerExpiring: {
     backgroundColor: "#D0021B"
   },
-
   bottomContainerExpired: {
     backgroundColor: variables.brandDarkGray
   },
-
   bottomContainerText: {
     flex: 1,
     flexWrap: "wrap",
     marginLeft: 16
   }
 });
+
 /**
  * A component to show the action buttons on a message.
  * For messages with the proper configuration, the user can:
@@ -143,41 +137,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
   get paid(): boolean {
     return this.props.payment !== undefined;
   }
-
-  /**
-   * Check if an event for endDate with that title already exists in the calendar.
-   * Return the event id if it is found
-   */
-  private searchEventInCalendar = async (
-    endDate: Date,
-    title: string
-  ): Promise<Option<string>> => {
-    const startDate = new Date(endDate.getTime());
-    return RNCalendarEvents.fetchAllEvents(
-      formatDateAsReminder(new Date(startDate.setDate(endDate.getDate() - 1))),
-      formatDateAsReminder(endDate)
-    )
-      .then(
-        events => {
-          return fromNullable(events)
-            .mapNullable(evs =>
-              evs.find(e => {
-                return (
-                  e.title === title &&
-                  new Date(e.endDate).getDay() === endDate.getDay()
-                );
-              })
-            )
-            .map(ev => some(ev.id))
-            .getOrElse(none);
-        },
-        // handle promise rejection
-        () => {
-          return none;
-        }
-      )
-      .catch(() => none);
-  };
 
   /**
    * A function to check if the eventId of the CalendarEvent stored in redux
@@ -234,41 +193,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       .catch();
   };
 
-  private saveCalendarEvent = (
-    calendar: Calendar,
-    message: CreatedMessageWithContent,
-    dueDate: Date,
-    title: string
-  ) =>
-    RNCalendarEvents.saveEvent(title, {
-      calendarId: calendar.id,
-      startDate: formatDateAsReminder(dueDate),
-      endDate: formatDateAsReminder(dueDate),
-      allDay: true,
-      alarms: []
-    })
-      .then(eventId => {
-        showToast(
-          I18n.t("messages.cta.reminderAddSuccess", {
-            title,
-            calendarTitle: convertLocalCalendarName(calendar.title)
-          }),
-          "success"
-        );
-        // Add the calendar event to the store
-        this.props.addCalendarEvent({
-          messageId: message.id,
-          eventId
-        });
-
-        this.setState({
-          isEventInDeviceCalendar: true
-        });
-      })
-      .catch(_ =>
-        showToast(I18n.t("messages.cta.reminderAddFailure"), "danger")
-      );
-
   private confirmSaveCalendarEventAlert = (
     calendar: Calendar,
     message: CreatedMessageWithContent,
@@ -305,11 +229,24 @@ class MessageCTABar extends React.PureComponent<Props, State> {
           text: I18n.t("messages.cta.reminderAlertAdd"),
           style: "default",
           onPress: () =>
-            this.saveCalendarEvent(calendar, message, dueDate, title)
+            saveCalendarEvent(calendar, message, dueDate, title, this.addCalendarEvent)
         }
       ],
       { cancelable: false }
     );
+
+  // Add the calendar event to the store
+  private addCalendarEvent = (calendarEvent: AddCalendarEventPayload) =>{
+    this.props.addCalendarEvent({
+        messageId: calendarEvent.messageId,
+        eventId: calendarEvent.eventId
+      });
+
+      this.setState({
+        isEventInDeviceCalendar: true
+      });
+    
+  }
 
   private addCalendarEventToDeviceCalendar = (
     message: CreatedMessageWithContent,
@@ -327,11 +264,11 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       this.props.preferredCalendarSaveSuccess(calendar);
     }
 
-    this.searchEventInCalendar(dueDate, title)
+    searchEventInCalendar(dueDate, title)
       .then(mayBeEventId =>
         mayBeEventId.foldL(
           async () => {
-            await this.saveCalendarEvent(calendar, message, dueDate, title);
+            await saveCalendarEvent(calendar, message, dueDate, title, this.addCalendarEvent);
           },
           async eventId => {
             this.confirmSaveCalendarEventAlert(
@@ -344,29 +281,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
           }
         )
       )
-      .catch(() => this.saveCalendarEvent(calendar, message, dueDate, title));
-  };
-
-  private removeCalendarEventFromDeviceCalendar = (
-    calendarEvent: CalendarEvent | undefined
-  ) => {
-    if (calendarEvent) {
-      RNCalendarEvents.removeEvent(calendarEvent.eventId)
-        .then(_ => {
-          showToast(I18n.t("messages.cta.reminderRemoveSuccess"), "success");
-          this.props.removeCalendarEvent({
-            messageId: calendarEvent.messageId
-          });
-          this.setState({
-            isEventInDeviceCalendar: false
-          });
-        })
-        .catch(_ =>
-          showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger")
-        );
-    } else {
-      showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger");
-    }
+      .catch(() => saveCalendarEvent(calendar, message, dueDate, title, addCalendarEvent));
   };
 
   private renderCalendarIcon = (
@@ -443,6 +358,15 @@ class MessageCTABar extends React.PureComponent<Props, State> {
       return null;
     }
 
+    const onRemoveCalendarEvent = (calendarEvent: CalendarEvent) => {
+      this.props.removeCalendarEvent({
+        messageId: calendarEvent.messageId
+      });
+      this.setState({
+        isEventInDeviceCalendar: false
+      });
+    }
+
     // Create an action to add or remove the event
     const onPressHandler = () => {
       // Check the authorization status
@@ -464,7 +388,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
                     style: "destructive",
                     onPress: () => {
                       // after confirmation remove it
-                      this.removeCalendarEventFromDeviceCalendar(calendarEvent);
+                      removeCalendarEventFromDeviceCalendar(calendarEvent, onRemoveCalendarEvent);
                     }
                   }
                 ],
