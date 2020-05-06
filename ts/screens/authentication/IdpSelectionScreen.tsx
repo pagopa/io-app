@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     padding: variables.contentPadding,
     flex: 1,
-    backgroundColor: variables.contentAlternativeBackground
+    backgroundColor: variables.brandGray
   }
 });
 
