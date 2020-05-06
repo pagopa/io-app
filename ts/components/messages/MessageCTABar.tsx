@@ -4,25 +4,11 @@ import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { connect } from "react-redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
-import { NavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
-import {
-  navigateToMessageDetailScreenAction,
-  navigateToPaymentTransactionSummaryScreen,
-  navigateToWalletHome
-} from "../../store/actions/navigation";
-import { loadServiceDetail } from "../../store/actions/services";
-import { Dispatch } from "../../store/actions/types";
-import { paymentInitializeState } from "../../store/actions/wallet/payment";
-import { serverInfoDataSelector } from "../../store/reducers/backendInfo";
 import { PaidReason } from "../../store/reducers/entities/payments";
-import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
-import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import { isUpdateNeeded } from "../../utils/appVersion";
 import {
   format,
   formatDateAsDay,
@@ -35,26 +21,20 @@ import {
   isExpiring
 } from "../../utils/messages";
 import {
-  formatPaymentAmount,
-  getAmountFromPaymentAmount,
-  getRptIdFromNoticeNumber
+  formatPaymentAmount
 } from "../../utils/payment";
 import CalendarIconComponent from "./CalendarIconComponent";
 import StyledIconFont from "../ui/IconFont";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
 
-type OwnProps = {
+type Props = {
   message: CreatedMessageWithContent;
   service?: ServicePublic;
   payment?: PaidReason;
   small?: boolean;
   disabled?: boolean;
 };
-
-type Props = OwnProps &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   topContainer: {
@@ -100,10 +80,6 @@ const styles = StyleSheet.create({
  * - start the message-related payment
  */
 class MessageCTABar extends React.PureComponent<Props> {
-  private navigateToMessageDetail = () => {
-    const { message, navigateToMessageDetail } = this.props;
-    navigateToMessageDetail(message.id);
-  };
 
   get paid(): boolean {
     return this.props.payment !== undefined;
@@ -213,47 +189,14 @@ class MessageCTABar extends React.PureComponent<Props> {
 
     const messagePaymentExpirationInfo = paymentInfo.value;
 
-    const expired = isExpired(messagePaymentExpirationInfo);
-    const rptId = fromNullable(service).chain(_ =>
-      getRptIdFromNoticeNumber(
-        _.organization_fiscal_code,
-        messagePaymentExpirationInfo.noticeNumber
-      )
-    );
-    const amount = getAmountFromPaymentAmount(
-      messagePaymentExpirationInfo.amount
-    );
-
-    const onPressHandler = expired
-      ? this.navigateToMessageDetail
-      : !disabled && !this.paid && amount.isSome() && rptId.isSome()
-        ? () => {
-            this.props.refreshService(message.sender_service_id);
-            // TODO: optimize the managment of the payment initialization https://www.pivotaltracker.com/story/show/169702534
-            if (
-              this.props.isEmailValidated &&
-              !this.props.isUpdatedNeededPagoPa
-            ) {
-              this.props.paymentInitializeState();
-              this.props.navigateToPaymentTransactionSummaryScreen({
-                rptId: rptId.value,
-                initialAmount: amount.value
-              });
-            } else {
-              // Navigating to Wallet home, having the email address is not validated,
-              // it will be displayed RemindEmailValidationOverlay
-              this.props.navigateToWalletHomeScreen();
-            }
-          }
-        : undefined;
-
     return (
       <PaymentButton
         paid={this.paid}
         messagePaymentExpirationInfo={messagePaymentExpirationInfo}
         small={small}
         disabled={disabled}
-        onPress={onPressHandler}
+        service={service}
+        message={message}
       />
     );
   }
@@ -424,26 +367,4 @@ class MessageCTABar extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  isEmailValidated: isProfileEmailValidatedSelector(state),
-  isUpdatedNeededPagoPa: isUpdateNeeded(
-    serverInfoDataSelector(state),
-    "min_app_version_pagopa"
-  )
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshService: (serviceId: string) =>
-    dispatch(loadServiceDetail.request(serviceId)),
-  navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageDetailScreenAction({ messageId })),
-  navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome()),
-  paymentInitializeState: () => dispatch(paymentInitializeState()),
-  navigateToPaymentTransactionSummaryScreen: (params: NavigationParams) =>
-    dispatch(navigateToPaymentTransactionSummaryScreen(params)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MessageCTABar);
+export default MessageCTABar;
