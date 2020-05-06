@@ -10,16 +10,10 @@ type Props = {
 };
 
 class CalendarIconComponent extends React.PureComponent<Props, never> {
-  
-  private DIMENSION =  this.props.small ? 32 :40;
+  private DIMENSION = this.props.small ? 32 : 40;
 
   public render() {
-    const {
-      month,
-      day,
-      backgroundColor,
-      textColor
-    } = this.props;
+    const { month, day, backgroundColor, textColor } = this.props;
     return (
       <Svg height={this.DIMENSION} width={this.DIMENSION} viewBox="0 0 40 40">
         <G id="calendar">
