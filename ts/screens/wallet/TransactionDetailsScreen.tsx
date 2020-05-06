@@ -6,6 +6,7 @@ import { BackHandler, Image, StyleSheet } from "react-native";
 import { NavigationEvents, NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import CopyButtonComponent from "../../components/CopyButtonComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
@@ -25,7 +26,6 @@ import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
-import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { formatDateAsLocal } from "../../utils/dates";
 import { whereAmIFrom } from "../../utils/navigation";
 import { cleanTransactionDescription } from "../../utils/payment";
@@ -72,21 +72,6 @@ const styles = StyleSheet.create({
     width: 48
   },
   centered: { alignItems: "center" },
-  copyButton: {
-    paddingHorizontal: 8,
-    backgroundColor: customVariables.colorWhite,
-    borderColor: customVariables.brandPrimary,
-    borderWidth: 1,
-    paddingBottom: 0,
-    paddingTop: 0,
-    height: 28
-  },
-  copyText: {
-    color: customVariables.brandPrimary,
-    paddingLeft: 0,
-    paddingRight: 0,
-    marginBottom: 4
-  },
   flex: {
     flex: 1
   }
@@ -289,16 +274,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             </Text>
             <View style={styles.row}>
               <Text bold={true}>{data.idTransaction}</Text>
-              <ButtonDefaultOpacity
-                onPress={() =>
-                  clipboardSetStringWithFeedback(data.idTransaction.toString())
-                }
-                style={styles.copyButton}
-              >
-                <Text style={styles.copyText}>
-                  {I18n.t("clipboard.copyText")}
-                </Text>
-              </ButtonDefaultOpacity>
+              <CopyButtonComponent textToCopy={data.idTransaction.toString()} />
             </View>
           </View>
 
