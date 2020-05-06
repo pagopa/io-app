@@ -1,8 +1,13 @@
 import { Platform } from "react-native";
-import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+  isIphoneX
+} from "react-native-iphone-x-helper";
 import customVariables from "../theme/variables";
 
 export const PIN_LENGTH = 5;
+export const PIN_LENGTH_SIX = 6;
 
 // A key to identify the Set of the listeners of the navigtion middleware.
 export const NAVIGATION_MIDDLEWARE_LISTENERS_KEY: string = "root";
@@ -14,3 +19,8 @@ export const HEADER_HEIGHT =
       ? 18
       : getStatusBarHeight(true)
     : customVariables.spacerHeight);
+
+// On iPhone X we have a higher bottom padding for content
+export const FOOTER_SAFE_AREA = getBottomSpace();
+
+export const HEADER_ANIMATION_DURATION = 200;

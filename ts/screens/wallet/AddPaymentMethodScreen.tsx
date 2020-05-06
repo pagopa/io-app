@@ -1,17 +1,3 @@
-/**
- * This is the screen presented to the user
- * when they request adding a new payment method.
- * From here, they can select their payment method
- * of choice (although only credit cards will be allowed
- * initially).
- *
- * This screen allows also to add a new payment method after a transaction is identified.
- *
- * The header banner provides a summary on the transaction to perform.
- *
- * Keep in mind that the rest of the "add credit card" process
- * is handled @https://www.pivotaltracker.com/story/show/157838293
- */
 import { Option } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import { Content, H1, Text, View } from "native-base";
@@ -19,7 +5,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
-
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import BaseScreenComponent, {
@@ -34,7 +19,6 @@ import {
 } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import variables from "../../theme/variables";
-import { AmountToImporto } from "../../utils/amounts";
 
 type NavigationParams = Readonly<{
   inPayment: Option<{
@@ -61,6 +45,20 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.newPaymentMethod.contextualHelpContent"
 };
 
+/**
+ * This is the screen presented to the user
+ * when they request adding a new payment method.
+ * From here, they can select their payment method
+ * of choice (although only credit cards will be allowed
+ * initially).
+ *
+ * This screen allows also to add a new payment method after a transaction is identified.
+ *
+ * The header banner provides a summary on the transaction to perform.
+ *
+ * Keep in mind that the rest of the "add credit card" process
+ * is handled @https://www.pivotaltracker.com/story/show/157838293
+ */
 class AddPaymentMethodScreen extends React.PureComponent<Props> {
   public render(): React.ReactNode {
     const inPayment = this.props.navigation.getParam("inPayment");
@@ -69,6 +67,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
       <BaseScreenComponent
         goBack={true}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet", "wallet_methods"]}
         headerTitle={
           inPayment.isSome()
             ? I18n.t("wallet.payWith.header")
@@ -79,11 +78,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
           <Content noPadded={true}>
             <PaymentBannerComponent
               paymentReason={inPayment.value.verifica.causaleVersamento}
-              currentAmount={AmountToImporto.encode(
-                inPayment.value.verifica.importoSingoloVersamento
-              )}
-              recipient={inPayment.value.verifica.enteBeneficiario}
-              onCancel={this.props.navigateToTransactionSummary}
+              currentAmount={inPayment.value.verifica.importoSingoloVersamento}
             />
             <View style={styles.paddedLR}>
               <View spacer={true} large={true} />
@@ -95,7 +90,7 @@ class AddPaymentMethodScreen extends React.PureComponent<Props> {
             </View>
           </Content>
         ) : (
-          <Content>
+          <Content noPadded={true} style={styles.paddedLR}>
             <PaymentMethodsList
               navigateToAddCreditCard={this.props.navigateToAddCreditCard}
             />

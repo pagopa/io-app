@@ -6,7 +6,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 
-import { isDefined } from "../../../../utils/guards";
 import { Action } from "../../../actions/types";
 import messagesAllIdsReducer, {
   messagesAllIdsSelector,
@@ -15,11 +14,17 @@ import messagesAllIdsReducer, {
 
 import messagesByIdReducer, {
   messagesStateByIdSelector,
+  MessageState,
   MessageStateById
 } from "./messagesById";
 import messagesIdsByServiceIdReducer, {
   MessagesIdsByServiceId
 } from "./messagesIdsByServiceId";
+import {
+  EMPTY_MESSAGE_STATUS,
+  messagesStatusSelector,
+  MessageStatus
+} from "./messagesStatus";
 
 export type MessagesState = Readonly<{
   byId: MessageStateById;
@@ -46,6 +51,9 @@ export const lexicallyOrderedMessagesIds = createSelector(
     )
 );
 
+// this type is need to combine message data to message status. Note
+// that message status is a data holded only by the app (isRead / isArchived)
+export type MessagesStateAndStatus = MessageState & MessageStatus;
 /**
  * A selector that using the inversely lexically ordered messages IDs
  * returned by lexicallyOrderedMessagesIds returns an array of the
@@ -54,9 +62,27 @@ export const lexicallyOrderedMessagesIds = createSelector(
 export const lexicallyOrderedMessagesStateSelector = createSelector(
   lexicallyOrderedMessagesIds,
   messagesStateByIdSelector,
-  (potIds, messageStateById) =>
+  messagesStatusSelector,
+  (potIds, messageStateById, messagesStatus) =>
     pot.map(potIds, ids =>
-      ids.map(messageId => messageStateById[messageId]).filter(isDefined)
+      ids.reduce(
+        (acc: ReadonlyArray<MessagesStateAndStatus>, messageId: string) => {
+          const message = messageStateById[messageId];
+          if (message === undefined) {
+            return acc;
+          }
+          const messageStatus =
+            messagesStatus[messageId] || EMPTY_MESSAGE_STATUS;
+          return [
+            ...acc,
+            {
+              ...message,
+              ...messageStatus
+            }
+          ];
+        },
+        []
+      )
     )
 );
 

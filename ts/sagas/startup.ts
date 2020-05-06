@@ -50,6 +50,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
+
 import {
   startAndReturnIdentificationResult,
   watchIdentificationRequest
@@ -68,16 +69,19 @@ import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
 import { checkAcknowledgedFingerprintSaga } from "./startup/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
+import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotificationPreferencesSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
+import { watchCheckSessionSaga } from "./startup/watchCheckSessionSaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchPinResetSaga } from "./startup/watchPinResetSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
+import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import {
   loadUserMetadata,
   watchLoadUserMetadata,
@@ -90,14 +94,14 @@ const WAIT_INITIALIZE_SAGA = 3000 as Millisecond;
  * Handles the application startup and the main application logic loop
  */
 // tslint:disable-next-line:cognitive-complexity no-big-function
-function* initializeApplicationSaga(): IterableIterator<Effect> {
+export function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
   // 2. FIXME: as a workaround for iOS only. Below iOS version 12.3 Keychain is
   //           not cleared between one installation and another, so it is
   //           needed to manually clear previous installation user info in
-  //           order to force the user to choose PIN and run through onboarding
+  //           order to force the user to choose unlock code and run through onboarding
   //           every new installation.
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
@@ -123,6 +127,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     ? previousSessionToken
     : yield call(authenticationSaga);
 
+  // Handles the expiration of the session token
+  yield fork(watchSessionExpiredSaga);
+
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
     apiUrlPrefix,
@@ -142,7 +149,6 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     // when we're using the previous session token, that session has expired
     // so we need to reset the session token and restart from scratch.
     yield put(sessionExpired());
-    yield put(startApplicationInitialization());
     return;
   }
 
@@ -199,7 +205,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     lastLoggedInProfileState.value.fiscal_code !== userProfile.fiscal_code
   ) {
     // Delete all data while keeping current session:
-    // Delete the current PIN from the Keychain
+    // Delete the current unlock code from the Keychain
     // tslint:disable-next-line:saga-yield-return-type
     yield call(deletePin);
     // Delete all onboarding data
@@ -211,9 +217,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     idpSelector
   );
 
-  setInstabugProfileAttributes(userProfile, maybeIdp);
+  setInstabugProfileAttributes(maybeIdp);
 
-  // Retrieve the configured PIN from the keychain
+  // Retrieve the configured unlock code from the keychain
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield call(getPin);
 
   // tslint:disable-next-line:no-let
@@ -229,6 +235,9 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   // Start watching for requests of refresh the profile
   yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
 
+  // Start watching for requests of checkSession
+  yield fork(watchCheckSessionSaga, backendClient.getProfile);
+
   // Start watching for the requests of a new verification email to
   // validate the user email address
   yield fork(
@@ -241,7 +250,7 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   if (!previousSessionToken || isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
-    // reason, he was logged in but there is no PIN set, thus we need
+    // reason, he was logged in but there is no unlock code set, thus we need
     // to pass through the onboarding process.
 
     // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
@@ -260,12 +269,12 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
     if (!isSessionRefreshed) {
       // The user was previously logged in, so no onboarding is needed
       // The session was valid so the user didn't event had to do a full login,
-      // in this case we ask the user to identify using the PIN.
+      // in this case we ask the user to identify using the unlock code.
       const identificationResult: SagaCallReturnType<
         typeof startAndReturnIdentificationResult
       > = yield call(startAndReturnIdentificationResult, storedPin);
       if (identificationResult === IdentificationResult.pinreset) {
-        // If we are here the user had chosen to reset the PIN
+        // If we are here the user had chosen to reset the unlock code
         yield put(startApplicationInitialization());
         return;
       }
@@ -310,6 +319,12 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
   yield fork(watchLoadUserMetadata, backendClient.getUserMetadata);
   yield fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
 
+  yield fork(
+    watchUserDataProcessingSaga,
+    backendClient.getUserDataProcessingRequest,
+    backendClient.postUserDataProcessingRequest
+  );
+
   // Load visible services and service details from backend when requested
   yield fork(watchLoadServicesSaga, backendClient);
 
@@ -328,14 +343,16 @@ function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Watch for the app going to background/foreground
   yield fork(watchApplicationActivitySaga);
-  // Handles the expiration of the session token
-  yield fork(watchSessionExpiredSaga);
+
   // Watch for requests to logout
   yield spawn(watchLogoutSaga, backendClient.logout);
-  // Watch for requests to reset the PIN.
+  // Watch for requests to reset the unlock code.
   yield fork(watchPinResetSaga);
   // Watch for identification request
   yield fork(watchIdentificationRequest, storedPin);
+
+  // Watch for checking the user email notifications preferences
+  yield fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
   const pendingMessageState: ReturnType<

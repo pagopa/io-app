@@ -23,7 +23,10 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
-import { loadServiceMetadata } from "../actions/content";
+import {
+  contentMunicipalityLoad,
+  loadServiceMetadata
+} from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
 import {
   identificationCancel,
@@ -54,6 +57,8 @@ import {
 } from "../actions/profile";
 import { loadServiceDetail, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
+import { upsertUserDataProcessing } from "../actions/userDataProcessing";
+import { userMetadataUpsert } from "../actions/userMetadata";
 import {
   paymentAttiva,
   paymentCheck,
@@ -135,11 +140,16 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(profileFirstLogin):
       return mp.track(action.type, action.payload);
+
+    case getType(fetchTransactionsSuccess):
+      return mp.track(action.type, {
+        count: action.payload.data.length,
+        total: action.payload.total.getOrElse(-1)
+      });
     //
     // Wallet actions (with properties)
     //
     case getType(fetchWalletsSuccess):
-    case getType(fetchTransactionsSuccess):
       return mp.track(action.type, {
         count: action.payload.length
       });
@@ -208,6 +218,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, action.payload);
 
     // logout / load message / failure
+    case getType(upsertUserDataProcessing.failure):
     case getType(loadMessage.failure):
     case getType(logoutFailure):
     case getType(loadServiceDetail.failure):
@@ -219,6 +230,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(sessionInformationLoadFailure):
     case getType(profileLoadFailure):
     case getType(profileUpsert.failure):
+    case getType(userMetadataUpsert.failure):
     case getType(loginFailure):
     case getType(loadMessages.failure):
     case getType(loadVisibleServices.failure):
@@ -235,6 +247,16 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, {
         reason: action.payload.message
       });
+
+    // track when a missing municipality is detected
+    case getType(contentMunicipalityLoad.failure):
+      return mp.track(action.type, {
+        reason: action.payload.error.message,
+        codice_catastale: action.payload.codiceCatastale
+      });
+    // download / delete profile
+    case getType(upsertUserDataProcessing.success):
+      return mp.track(action.type, action.payload);
 
     //
     // Actions (without properties)
@@ -261,6 +283,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     case getType(createPinSuccess):
     // profile
     case getType(profileUpsert.success):
+    // userMetadata
+    case getType(userMetadataUpsert.success):
     // messages
     case getType(loadMessages.request):
 

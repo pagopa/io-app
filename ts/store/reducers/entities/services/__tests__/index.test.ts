@@ -12,6 +12,8 @@ import {
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
   organizationsOfInterestSelector,
+  servicesBadgeValueSelector,
+  ServicesSectionState,
   ServicesState,
   visibleServicesDetailLoadStateSelector
 } from "..";
@@ -70,24 +72,44 @@ const customServices: ServicesState = {
       service_id: "42" as ServiceId,
       service_name: "service1" as ServiceName,
       version: 1
+    }),
+    ["43"]: pot.someLoading({
+      department_name: "test" as DepartmentName,
+      organization_fiscal_code: "5" as OrganizationFiscalCode,
+      organization_name: "same_organization_name" as OrganizationName,
+      service_id: "43" as ServiceId,
+      service_name: "service1" as ServiceName,
+      version: 1
+    }),
+    ["44"]: pot.someLoading({
+      department_name: "test" as DepartmentName,
+      organization_fiscal_code: "6" as OrganizationFiscalCode,
+      organization_name: "same_organization_name" as OrganizationName,
+      service_id: "44" as ServiceId,
+      service_name: "service1" as ServiceName,
+      version: 1
     })
   },
   byOrgFiscalCode: {
     ["2"]: ["21" as ServiceId, "22" as ServiceId] as ReadonlyArray<ServiceId>,
     ["3"]: ["31" as ServiceId] as ReadonlyArray<ServiceId>,
-    ["4"]: ["41" as ServiceId, "42" as ServiceId] as ReadonlyArray<ServiceId>
+    ["4"]: ["41" as ServiceId, "42" as ServiceId] as ReadonlyArray<ServiceId>,
+    ["5"]: ["43" as ServiceId] as ReadonlyArray<ServiceId>,
+    ["6"]: ["44" as ServiceId] as ReadonlyArray<ServiceId>
   },
   visible: pot.some([
     { service_id: "11", version: 1 } as ServiceTuple,
     { service_id: "21", version: 1 } as ServiceTuple,
     { service_id: "22", version: 1 } as ServiceTuple,
-    { service_id: "41", version: 1 } as ServiceTuple
+    { service_id: "41", version: 1 } as ServiceTuple,
+    { service_id: "43", version: 1 } as ServiceTuple,
+    { service_id: "44", version: 1 } as ServiceTuple
   ]),
   readState: {
     ["21"]: true
   },
   firstLoading: {
-    isFirstServicesLoadingCompleted: false
+    isFirstServicesLoadingCompleted: true
   }
 };
 
@@ -104,12 +126,22 @@ const customOrganizations: OrganizationsState = {
     {
       name: "organization4",
       fiscalCode: "4"
+    },
+    {
+      name: "same_organization_name",
+      fiscalCode: "5"
+    },
+    {
+      name: "same_organization_name",
+      fiscalCode: "6"
     }
   ],
   nameByFiscalCode: {
     ["2" as OrganizationFiscalCode]: "organizzazion2" as NonEmptyString,
     ["3" as OrganizationFiscalCode]: "organizzazion3" as NonEmptyString,
-    ["4" as OrganizationFiscalCode]: "organizzazion4" as NonEmptyString
+    ["4" as OrganizationFiscalCode]: "organizzazion4" as NonEmptyString,
+    ["5" as OrganizationFiscalCode]: "same_organization_name" as NonEmptyString,
+    ["6" as OrganizationFiscalCode]: "same_organization_name" as NonEmptyString
   }
 };
 
@@ -117,6 +149,21 @@ const customServicesByScope: pot.Pot<ServicesByScope, Error> = pot.some({
   LOCAL: ["21", "41"],
   NATIONAL: []
 });
+
+const localServices: ReadonlyArray<ServicesSectionState> = [
+  {
+    organizationName: customOrganizations.nameByFiscalCode["2"] as string,
+    organizationFiscalCode: "2" as OrganizationFiscalCode,
+    data: [customServices.byId["21"]]
+  } as ServicesSectionState,
+  {
+    organizationName: customOrganizations.nameByFiscalCode["4"] as string,
+    organizationFiscalCode: "4" as OrganizationFiscalCode,
+    data: [customServices.byId["41"]]
+  } as ServicesSectionState
+];
+
+const nationalServices: ReadonlyArray<ServicesSectionState> = [];
 
 describe("organizationsOfInterestSelector", () => {
   it("should include organizations in the user organizationsOfInterest and providing visible services among those properly loaded", () => {
@@ -137,7 +184,7 @@ describe("nationalServicesSectionsSelector", () => {
         customOrganizations.nameByFiscalCode,
         customServicesByScope
       )
-    ).toStrictEqual([]);
+    ).toStrictEqual(nationalServices);
   });
 });
 
@@ -149,18 +196,7 @@ describe("localServicesSectionsSelector", () => {
         customOrganizations.nameByFiscalCode,
         customServicesByScope
       )
-    ).toStrictEqual([
-      {
-        organizationName: customOrganizations.nameByFiscalCode["2"] as string,
-        organizationFiscalCode: "2" as OrganizationFiscalCode,
-        data: [customServices.byId["21"]]
-      },
-      {
-        organizationName: customOrganizations.nameByFiscalCode["4"] as string,
-        organizationFiscalCode: "4" as OrganizationFiscalCode,
-        data: [customServices.byId["41"]]
-      }
-    ]);
+    ).toStrictEqual(localServices);
   });
 });
 
@@ -183,6 +219,34 @@ describe("notSelectedServicesSectionsSelector", () => {
         organizationName: customOrganizations.nameByFiscalCode["4"] as string,
         organizationFiscalCode: "4" as OrganizationFiscalCode,
         data: [customServices.byId["41"]]
+      },
+      {
+        organizationName: customOrganizations.nameByFiscalCode["5"] as string,
+        organizationFiscalCode: "5" as OrganizationFiscalCode,
+        data: [customServices.byId["43"], customServices.byId["44"]]
+      }
+    ]);
+  });
+});
+
+describe("notSelectedServicesSectionsSelector", () => {
+  it("should return all the visible services with scope equal to both NATIONAL and LOCAL not included in organizationsOfInterest", () => {
+    const servicesByScope: pot.Pot<ServicesByScope, Error> = pot.some({
+      LOCAL: ["43"],
+      NATIONAL: ["21"]
+    });
+    expect(
+      notSelectedServicesSectionsSelector.resultFunc(
+        customServices,
+        customOrganizations.nameByFiscalCode,
+        servicesByScope,
+        ["4", "5"] // this organization has the same name of another organization (id:6)
+      )
+    ).toStrictEqual([
+      {
+        organizationName: customOrganizations.nameByFiscalCode["2"] as string,
+        organizationFiscalCode: "2" as OrganizationFiscalCode,
+        data: [customServices.byId["21"]]
       }
     ]);
   });
@@ -196,5 +260,40 @@ describe("visibleServicesDetailLoadStateSelector", () => {
         customServices.visible
       )
     ).toBe(pot.noneLoading);
+  });
+});
+
+describe("servicesBadgeValueSelector", () => {
+  it("should return the number of unread services", () => {
+    expect(
+      servicesBadgeValueSelector.resultFunc(
+        [...nationalServices],
+        [...localServices],
+        customServices.readState,
+        true
+      )
+    ).toBe(1);
+  });
+
+  it("should return 0 if the first load is not yet completed", () => {
+    expect(
+      servicesBadgeValueSelector.resultFunc(
+        [...nationalServices],
+        [...localServices],
+        customServices.readState,
+        false
+      )
+    ).toBe(0);
+  });
+
+  it("should return 1 even if we have few duplication in services array", () => {
+    expect(
+      servicesBadgeValueSelector.resultFunc(
+        [...nationalServices],
+        [...localServices, ...localServices, ...localServices],
+        customServices.readState,
+        true
+      )
+    ).toBe(1);
   });
 });

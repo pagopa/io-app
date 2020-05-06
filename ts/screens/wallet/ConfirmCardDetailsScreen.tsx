@@ -7,7 +7,7 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Modal } from "react-native";
+import { Modal, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
@@ -64,6 +64,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 type State = Readonly<{
   setAsFavourite: boolean;
 }>;
+
+const styles = StyleSheet.create({
+  paddedLR: {
+    paddingLeft: customVariables.contentPadding,
+    paddingRight: customVariables.contentPadding
+  }
+});
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.saveCard.contextualHelpTitle",
@@ -134,8 +141,9 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             : I18n.t("wallet.saveCard.header")
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet_methods"]}
       >
-        <Content>
+        <Content noPadded={true} style={styles.paddedLR}>
           <CardComponent
             wallet={wallet}
             type={"Full"}
@@ -229,7 +237,8 @@ const mapStateToProps = (state: GlobalState) => {
     checkout3dsUrl: pot.isLoading(creditCardCheckout3ds)
       ? pot.toOption(creditCardCheckout3ds)
       : none,
-    loadingOpacity: 0.98
+    loadingOpacity: 0.98,
+    loadingCaption: I18n.t("wallet.saveCard.loadingAlert")
   };
 };
 

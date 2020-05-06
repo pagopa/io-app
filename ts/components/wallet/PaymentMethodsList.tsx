@@ -4,7 +4,7 @@
  */
 
 import color from "color";
-import { Badge, Left, ListItem, Right, Text, View } from "native-base";
+import { Badge, ListItem, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, Platform, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
@@ -30,14 +30,14 @@ type IPaymentMethod = Readonly<{
   icon?: any;
   image?: any;
   implemented: boolean;
-  onPress?: () => void;
 }>;
 
 const underlayColor = "transparent";
 const styles = StyleSheet.create({
   listItem: {
     marginLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
+    flexDirection: "row"
   },
   disabled: {
     opacity: 0.75
@@ -51,8 +51,47 @@ const styles = StyleSheet.create({
   },
   methodImage: {
     width: 70
+  },
+  columnLeft: {
+    flex: 0.7
+  },
+  columnRight: {
+    flex: 0.3,
+    alignItems: "center",
+    alignContent: "center"
   }
 });
+
+const implementedMethod: IPaymentMethod = {
+  name: I18n.t("wallet.methods.card.name"),
+  maxFee: I18n.t("wallet.methods.card.maxFee"),
+  icon: "io-48-card",
+  implemented: true
+};
+const paymentMethods: ReadonlyArray<IPaymentMethod> = [
+  {
+    name: I18n.t("wallet.methods.satispay.name"),
+    image: require("../../../img/wallet/payment-methods/satispay-logoi.png"),
+    implemented: false
+  },
+  {
+    name: I18n.t("wallet.methods.postepay.name"),
+    image: require("../../../img/wallet/payment-methods/postepay-logo.png"),
+    implemented: false
+  },
+  {
+    name: I18n.t("wallet.methods.paypal.name"),
+    image: require("../../../img/wallet/payment-methods/paypal-logo.png"),
+    implemented: false
+  },
+  {
+    name: I18n.t("wallet.methods.bank.name"),
+    image: require("../../../img/wallet/payment-methods/bancomatpay-logo.png"),
+    implemented: false
+  }
+].sort((a, b) =>
+  a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase())
+);
 
 const AddMethodStyle = StyleSheet.create({
   transactionText: {
@@ -64,7 +103,7 @@ const AddMethodStyle = StyleSheet.create({
   notImplementedBadge: {
     height: 18,
     marginTop: 2,
-    backgroundColor: variables.disabledService
+    backgroundColor: variables.lightGray
   },
   notImplementedText: {
     fontSize: 10,
@@ -88,51 +127,27 @@ class PaymentMethodsList extends React.Component<Props, never> {
   };
 
   public render(): React.ReactNode {
-    const paymentMethods: ReadonlyArray<IPaymentMethod> = [
-      {
-        onPress: this.props.navigateToAddCreditCard,
-        name: I18n.t("wallet.methods.card.name"),
-        maxFee: I18n.t("wallet.methods.card.maxFee"),
-        icon: "io-48-card",
-        implemented: true
-      },
-      {
-        name: I18n.t("wallet.methods.satispay.name"),
-        image: require("../../../img/wallet/payment-methods/satispay-logoi.png"),
-        implemented: false
-      },
-      {
-        name: I18n.t("wallet.methods.postepay.name"),
-        image: require("../../../img/wallet/payment-methods/postepay-logo.png"),
-        implemented: false
-      },
-      {
-        name: I18n.t("wallet.methods.paypal.name"),
-        image: require("../../../img/wallet/payment-methods/paypal-logo.png"),
-        implemented: false
-      },
-      {
-        name: I18n.t("wallet.methods.bank.name"),
-        image: require("../../../img/wallet/payment-methods/bancomatpay-logo.png"),
-        implemented: false
-      }
-    ];
     return (
       <View>
+        <View spacer={true} large={true} />
         <FlatList
           removeClippedSubviews={false}
-          data={paymentMethods}
+          data={[implementedMethod, ...paymentMethods]}
           keyExtractor={item => item.name}
           renderItem={itemInfo => {
             const isItemDisabled = !itemInfo.item.implemented;
             const disabledStyle = isItemDisabled ? styles.disabled : {};
             return (
               <ListItem
-                style={[styles.listItem]}
-                onPress={itemInfo.item.onPress}
+                style={styles.listItem}
+                onPress={() => {
+                  if (itemInfo.item.implemented) {
+                    this.props.navigateToAddCreditCard();
+                  }
+                }}
                 underlayColor={underlayColor}
               >
-                <Left>
+                <View style={styles.columnLeft}>
                   <Grid>
                     <Row>
                       <View style={styles.methodItem}>
@@ -164,8 +179,8 @@ class PaymentMethodsList extends React.Component<Props, never> {
                       </Row>
                     )}
                   </Grid>
-                </Left>
-                <Right style={AddMethodStyle.centeredContents}>
+                </View>
+                <View style={styles.columnRight}>
                   {itemInfo.item.icon && (
                     <IconFont
                       name={itemInfo.item.icon}
@@ -184,7 +199,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
                       resizeMode={"contain"}
                     />
                   )}
-                </Right>
+                </View>
               </ListItem>
             );
           }}
@@ -193,6 +208,7 @@ class PaymentMethodsList extends React.Component<Props, never> {
         <TouchableDefaultOpacity onPress={this.showHelp}>
           <Text link={true}>{I18n.t("wallet.whyAFee.title")}</Text>
         </TouchableDefaultOpacity>
+        <View spacer={true} large={true} />
       </View>
     );
   }

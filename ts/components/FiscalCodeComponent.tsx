@@ -7,7 +7,6 @@
  * The fac-simile back side can be rendered for both full and landscape modes,
  * and it includes the barcode of the fiscal code with the code 128 format
  */
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -22,6 +21,7 @@ import Barcode from "react-native-barcode-builder";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
+import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { extractFiscalCodeData } from "../utils/profile";
 
@@ -85,10 +85,10 @@ const cardSpacerL = 16 * landscapeScaleFactor;
 const cardLargeSpacerL = 24 * landscapeScaleFactor;
 const cardLineHeightL = 26 * landscapeScaleFactor;
 
-const barCodeHeightL = 107 * landscapeScaleFactor;
-const barCodeWidthL = 512 * landscapeScaleFactor;
-const barCodeMarginLeftL = 170 * landscapeScaleFactor;
-const barCodeMarginTopL = 164 * landscapeScaleFactor;
+const barCodeHeightL = 110 * landscapeScaleFactor;
+const barCodeWidthL = 520 * landscapeScaleFactor;
+const barCodeMarginLeftL = 168 * landscapeScaleFactor;
+const barCodeMarginTopL = 181 * landscapeScaleFactor;
 
 const fiscalCodeHeightL =
   -94 * landscapeScaleFactor + // rotation correction factor
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
   },
 
   landscapeFacSimile: {
-    marginTop: 295 * landscapeScaleFactor,
+    marginTop: 290 * landscapeScaleFactor,
     position: "absolute",
     color: customVariables.brandDarkestGray,
     fontSize: textFontSizeL,
@@ -413,7 +413,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         <Barcode
           value={fiscalCode}
           format={"CODE128"}
-          background={"transparent"}
+          background={"white"}
           height={barCodeHeightL - 5}
           width={(barCodeWidthL - 5) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />

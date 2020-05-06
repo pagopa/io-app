@@ -4,7 +4,10 @@ import { View } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import { lexicallyOrderedMessagesStateSelector } from "../../store/reducers/entities/messages";
+import {
+  lexicallyOrderedMessagesStateSelector,
+  MessagesStateAndStatus
+} from "../../store/reducers/entities/messages";
 import { MessageState } from "../../store/reducers/entities/messages/messagesById";
 import {
   InjectedWithItemsSelectionProps,
@@ -54,7 +57,7 @@ type State = {
  * Filter only the messages that are archived.
  */
 const generateMessagesStateArchivedArray = (
-  potMessagesState: pot.Pot<ReadonlyArray<MessageState>, string>
+  potMessagesState: pot.Pot<ReadonlyArray<MessagesStateAndStatus>, string>
 ): ReadonlyArray<MessageState> =>
   pot.getOrElse(
     pot.map(potMessagesState, _ =>

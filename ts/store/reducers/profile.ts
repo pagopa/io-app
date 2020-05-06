@@ -3,7 +3,6 @@
  * It only manages SUCCESS actions because all UI state properties (like loading/error)
  * are managed by different global reducers.
  */
-
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
@@ -29,6 +28,18 @@ const INITIAL_STATE: ProfileState = pot.none;
 
 export const profileSelector = (state: GlobalState): ProfileState =>
   state.profile;
+
+export const isEmailEnabledSelector = createSelector(profileSelector, profile =>
+  pot.getOrElse(pot.map(profile, p => p.is_email_enabled), false)
+);
+
+export const isInboxEnabledSelector = createSelector(
+  profileSelector,
+  profile =>
+    pot.isSome(profile) && InitializedProfile.is(profile.value)
+      ? profile.value.is_inbox_enabled
+      : false
+);
 
 export const getProfileEmail = (
   user: InitializedProfile
@@ -133,7 +144,7 @@ const reducer = (
             ...currentProfile,
             has_profile: true,
             email: newProfile.email,
-            is_email_enabled: newProfile.is_email_enabled,
+            is_email_enabled: newProfile.is_email_enabled === true,
             is_inbox_enabled: newProfile.is_inbox_enabled === true,
             is_email_validated: newProfile.is_email_validated === true,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
@@ -154,6 +165,7 @@ const reducer = (
             ...currentProfile,
             email: newProfile.email,
             is_inbox_enabled: newProfile.is_inbox_enabled === true,
+            is_email_enabled: newProfile.is_email_enabled === true,
             is_email_validated: newProfile.is_email_validated === true,
             is_webhook_enabled: newProfile.is_webhook_enabled === true,
             preferred_languages: newProfile.preferred_languages,

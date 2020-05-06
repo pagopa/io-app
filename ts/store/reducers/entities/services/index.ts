@@ -1,6 +1,7 @@
 /**
  * Services reducer
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
@@ -185,6 +186,28 @@ const isInScope = (
   return false;
 };
 
+// NOTE: this is a workaround not a solution
+// since a service can change its organization fiscal code we could have
+// obsolete data in the store: byOrgFiscalCode could have services that don't belong to organization anymore
+// this cleaning its a workaround, this should be fixed on data loading and not when data are loaded
+// see https://www.pivotaltracker.com/story/show/172316333
+/**
+ * return true if service belongs to the given organization fiscal code
+ * @param service
+ * @param organizationFiscalCode
+ */
+const belongsToOrganization = (
+  service: pot.Pot<ServicePublic, Error>,
+  organizationsFiscalCode: ReadonlyArray<string>
+) =>
+  pot.getOrElse(
+    pot.map(
+      service,
+      s => organizationsFiscalCode.indexOf(s.organization_fiscal_code) !== -1
+    ),
+    false
+  );
+
 /**
  * A generalized function to generate sections of organizations including the available services for each organization
  * optional input:
@@ -202,18 +225,42 @@ const getServices = (
     selectedOrganizationsFiscalCodes === undefined
       ? Object.keys(services.byOrgFiscalCode)
       : selectedOrganizationsFiscalCodes;
-
+  // another workaround to avoid to display same organizations name that have different cf
+  // we group services by organization name
+  // to avoid duplication we keep in a set all organization fiscal code processed
+  const orgFiscalCodeProcessed = new Set<string>();
   return organizationsFiscalCodes
     .map((fiscalCode: string) => {
       const organizationName = organizations[fiscalCode] || fiscalCode;
       const organizationFiscalCode = fiscalCode;
-      const serviceIdsForOrg = services.byOrgFiscalCode[fiscalCode] || [];
+      if (orgFiscalCodeProcessed.has(fiscalCode)) {
+        return {
+          organizationName,
+          organizationFiscalCode,
+          data: []
+        };
+      }
+
+      const orgsFiscalCodes = Object.keys(organizations).filter(cf =>
+        fromNullable(organizations[cf]).fold(
+          false,
+          name => organizationName === name // select all services that belong to organizations having organizationName
+        )
+      );
+      orgsFiscalCodes.forEach(ocf => orgFiscalCodeProcessed.add(ocf));
+      const serviceIdsForOrg = orgsFiscalCodes.reduce(
+        (acc: ReadonlyArray<string>, curr: string) => {
+          return [...acc, ...(services.byOrgFiscalCode[curr] || [])];
+        },
+        []
+      );
 
       const data = serviceIdsForOrg
         .map(id => services.byId[id])
         .filter(
           service =>
             isDefined(service) &&
+            belongsToOrganization(service, orgsFiscalCodes) && // workaround: see comments above this function definition
             isInScope(service, servicesByScope, scope) &&
             isVisibleService(services.visible, service)
         )
@@ -291,28 +338,46 @@ export const notSelectedServicesSectionsSelector = createSelector(
     organizationsOfInterestSelector
   ],
   (services, organizations, servicesByScope, selectedOrganizations) => {
-    // tslint:disable-next-line:no-let
-    let notSelectedOrganizations;
-    if (organizations !== undefined) {
-      notSelectedOrganizations = Object.keys(organizations).filter(
+    const notSelectedOrganizations = fromNullable(organizations).map(orgs => {
+      // add to organizations all cf of other organizations having the same organization name
+      const organizationsWithSameNames = fromNullable(selectedOrganizations)
+        .map(so =>
+          so.reduce((acc, curr) => {
+            const orgName = fromNullable(orgs[curr]);
+            return orgName.fold(acc, on => {
+              if (organizations !== undefined) {
+                const orgsFiscalCodes = Object.keys(organizations).filter(cf =>
+                  fromNullable(organizations[cf]).fold(
+                    false,
+                    name => on === name // select all services that belong to organizations having organizationName
+                  )
+                );
+                orgsFiscalCodes.forEach(ofc => acc.add(ofc));
+              }
+              return acc;
+            });
+          }, new Set<string>())
+        )
+        .fold([], s => Array.from(s));
+      return Object.keys(orgs).filter(
         fiscalCode =>
-          selectedOrganizations &&
-          selectedOrganizations.indexOf(fiscalCode) === -1
+          organizationsWithSameNames &&
+          organizationsWithSameNames.indexOf(fiscalCode) === -1
       );
-    }
+    });
 
     return getServices(
       services,
       organizations,
       servicesByScope,
       undefined,
-      notSelectedOrganizations
+      notSelectedOrganizations.toUndefined()
     );
   }
 );
 
 /**
- *  Get the sum of selected local services + national services that are not yet marked as read
+ *  Get the sum of selected local services + national that are not yet marked as read
  */
 
 export const servicesBadgeValueSelector = createSelector(
@@ -329,18 +394,21 @@ export const servicesBadgeValueSelector = createSelector(
     isFirstVisibleServiceLoadCompleted
   ) => {
     if (isFirstVisibleServiceLoadCompleted) {
-      const services: ReadonlyArray<ServicesSectionState> = [
+      const servicesSet: Set<ServicesSectionState> = new Set([
         ...nationalService,
         ...localService
-      ];
-      return services.reduce((acc: number, service: ServicesSectionState) => {
-        const servicesNotRead = service.data.filter(
-          data =>
-            pot.isSome(data) &&
-            readServicesById[data.value.service_id] === undefined
-        ).length;
-        return acc + servicesNotRead;
-      }, 0);
+      ]);
+      return [...servicesSet].reduce(
+        (acc: number, service: ServicesSectionState) => {
+          const servicesNotRead = service.data.filter(
+            data =>
+              pot.isSome(data) &&
+              readServicesById[data.value.service_id] === undefined
+          ).length;
+          return acc + servicesNotRead;
+        },
+        0
+      );
     }
     return 0;
   }

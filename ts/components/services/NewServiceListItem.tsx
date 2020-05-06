@@ -1,8 +1,8 @@
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import I18n from "../../i18n";
 
 import { ProfileState } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
@@ -20,7 +20,10 @@ type Props = Readonly<{
   isRead: boolean;
   hideSeparator: boolean;
   onLongPress?: () => void;
-  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
+  onItemSwitchValueChanged?: (
+    services: ReadonlyArray<ServicePublic>,
+    value: boolean
+  ) => void;
   isLongPressEnabled: boolean;
 }>;
 
@@ -106,7 +109,7 @@ export default class NewServiceListItem extends React.PureComponent<
           this.setState({
             switchValue: value
           });
-          onItemSwitchValueChanged(service, value);
+          onItemSwitchValueChanged([service], value);
         }
       });
     }

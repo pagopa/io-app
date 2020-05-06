@@ -1,4 +1,4 @@
-import { fromEither, Option } from "fp-ts/lib/Option";
+import { fromEither, fromNullable, Option } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
   AmountInEuroCentsFromNumber,
@@ -12,9 +12,12 @@ import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
 
 import I18n from "../i18n";
 
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { PaymentAmount } from "../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../definitions/backend/PaymentNoticeNumber";
+import { PaymentHistory } from "../store/reducers/payments/history";
 import { Psp, Wallet } from "../types/pagopa";
+import { formatDateAsReminder } from "./dates";
 
 /**
  * A method to convert an payment amount in a proper formatted string
@@ -107,7 +110,6 @@ export const cleanTransactionDescription = (description: string): string => {
   // detect description in pagoPA format - note that we also check for cases
   // without the leading slash since some services don't add it (mistake on
   // their side)
-  const maxLength = 60;
   if (
     !description.startsWith("/RFA/") &&
     !description.startsWith("/RFB/") &&
@@ -115,18 +117,40 @@ export const cleanTransactionDescription = (description: string): string => {
     !description.startsWith("RFB/")
   ) {
     // not a description in the pagoPA format, return the description unmodified
-    return `${description.substr(0, maxLength)}${
-      description.length > maxLength ? "..." : ""
-    }`;
+    return description;
   }
 
   const descriptionParts = description.split("/TXT/");
 
-  const splitted =
-    descriptionParts.length > 1
-      ? descriptionParts[descriptionParts.length - 1].trim()
-      : "";
-  return `${splitted.substr(0, maxLength)}${
-    description.length > maxLength ? "..." : ""
-  }`;
+  return descriptionParts.length > 1
+    ? descriptionParts[descriptionParts.length - 1].trim()
+    : "";
+};
+
+export const getPaymentHistoryDetails = (
+  payment: PaymentHistory,
+  profile: InitializedProfile
+): string => {
+  const separator = " / ";
+  const profileDetails = `- spid_email: ${fromNullable(
+    profile.spid_email as string
+  ).getOrElse("n/a")}${separator}- email: ${fromNullable(
+    profile.email as string
+  ).getOrElse("n/a")}${separator}- cf: ${profile.fiscal_code as string}`;
+  const paymentDetails = `- payment start time: ${formatDateAsReminder(
+    new Date(payment.started_at)
+  )}${separator}- payment data: ${JSON.stringify(payment.data, null, 4)}`;
+  const ccp = fromNullable(payment.verified_data)
+    .map(pv => `- ccp: ${pv.codiceContestoPagamento}`)
+    .getOrElse("");
+  const failureDetails = fromNullable(payment.failure)
+    .map(pf => `- errore: ${pf}`)
+    .getOrElse("");
+  return profileDetails
+    .concat(separator)
+    .concat(paymentDetails)
+    .concat(separator)
+    .concat(ccp)
+    .concat(separator)
+    .concat(failureDetails);
 };

@@ -2,13 +2,13 @@
  * A component to remind the user to validate his email
  */
 import { none, Option, some } from "fp-ts/lib/Option";
-import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Content, H2, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Alert, BackHandler, Image, StyleSheet } from "react-native";
+import { Alert, BackHandler, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import I18n from "../i18n";
 import {
   navigateBack,
   navigateToEmailInsertScreen
@@ -31,15 +31,19 @@ import {
   profileSelector
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
+import customVariables from "../theme/variables";
+import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
 } from "./screens/TopScreenComponent";
+import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
 
 type OwnProp = {
   closeModalAndNavigateToEmailInsertScreen: () => void;
+  onClose: () => void;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -52,14 +56,26 @@ type State = {
   isCtaSentEmailValidationDisabled: boolean;
   isContentLoadCompleted: boolean;
   emailHasBeenValidate: boolean;
+  displayError: boolean;
 };
 
 const styles = StyleSheet.create({
-  imageChecked: {
+  center: {
     alignSelf: "center"
   },
   emailTitle: {
     textAlign: "center"
+  },
+  error: {
+    backgroundColor: customVariables.brandDanger,
+    paddingHorizontal: customVariables.contentPadding,
+    paddingVertical: 11,
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  validated: {
+    paddingTop: 8,
+    paddingHorizontal: 30
   }
 });
 
@@ -67,6 +83,8 @@ const emailSentTimeout = 10000 as Millisecond; // 10 seconds
 const profilePolling = 5000 as Millisecond; // 5 seconds
 
 const EMPTY_EMAIL = "";
+const MARKDOWN_BODY_STYLE = "body { text-align: center;}";
+const VALIDATION_ICON_WIDTH = 84;
 
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   private idTimeout?: number;
@@ -79,7 +97,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       isLoading: false,
       isContentLoadCompleted: false,
       isCtaSentEmailValidationDisabled: false,
-      emailHasBeenValidate: false
+      emailHasBeenValidate: false,
+      displayError: false
     };
   }
 
@@ -128,6 +147,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     } else {
       this.props.navigateBack();
     }
+    this.props.onClose();
   };
 
   public componentDidUpdate(prevProps: Props) {
@@ -140,6 +160,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           isLoading: false,
           isCtaSentEmailValidationDisabled: false
         });
+        if (!this.state.displayError) {
+          this.setState({ displayError: true });
+        }
       } else if (pot.isSome(this.props.emailValidationRequest)) {
         // schedule a timeout to make the cta button disabled and showing inside
         // the string that email has been sent.
@@ -155,7 +178,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         }, emailSentTimeout);
         this.setState({
           ctaSendEmailValidationText: I18n.t("email.validate.sent"),
-          isLoading: false
+          isLoading: false,
+          displayError: false
         });
       }
     }
@@ -171,9 +195,26 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
   }
 
-  private contextualHelp = {
-    title: I18n.t("email.validate.title"),
-    body: () => <Markdown>{I18n.t("email.validate.help")}</Markdown>
+  private renderErrorBanner = (
+    <View style={styles.error}>
+      <Text white={true}>{I18n.t("global.actions.retry")}</Text>
+      <View>
+        <IconFont
+          name={"io-close"}
+          onPress={() => {
+            this.setState({ displayError: false });
+          }}
+          color={customVariables.colorWhite}
+          accessible={true}
+          accessibilityLabel={I18n.t("global.buttons.close")}
+        />
+      </View>
+    </View>
+  );
+
+  private contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+    title: "email.validate.title",
+    body: "email.validate.help"
   };
 
   private handleOnboardingGoBack = () =>
@@ -206,7 +247,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private onBoardingProps: TopScreenComponentProps = {
     headerTitle: I18n.t("email.validate.header"),
-    title: I18n.t("email.validate.title"),
     customGoBack: this.customOnboardingGoBack
   };
 
@@ -235,83 +275,99 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     // show two buttons where the left one is a CTA
     // to edit again the email
     return (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThirdInverted"}
-        leftButton={{
-          block: true,
-          bordered: true,
-          disabled: this.state.isLoading,
-          onPress: () => {
-            if (!isOnboardingCompleted) {
-              this.props.closeModalAndNavigateToEmailInsertScreen();
-            }
-            this.props.navigateToEmailInsertScreen();
-          },
-          title: I18n.t("email.edit.title")
-        }}
-        rightButton={{
-          block: true,
-          primary: true,
-          onPress: this.handleOnClose,
-          disabled: this.state.isLoading,
-          title: isOnboardingCompleted
-            ? I18n.t("global.buttons.ok")
-            : I18n.t("global.buttons.continue")
-        }}
-      />
+      <View footer={true}>
+        <BlockButtons
+          type={"SingleButton"}
+          leftButton={{
+            title: this.state.ctaSendEmailValidationText,
+            onPress: this.handleSendEmailValidationButton,
+            light: true,
+            bordered: true,
+            disabled:
+              this.state.isLoading ||
+              this.state.isCtaSentEmailValidationDisabled
+          }}
+        />
+        <View spacer={true} />
+        <BlockButtons
+          type={"TwoButtonsInlineThirdInverted"}
+          leftButton={{
+            block: true,
+            bordered: true,
+            disabled: this.state.isLoading,
+            onPress: () => {
+              if (!isOnboardingCompleted) {
+                this.props.closeModalAndNavigateToEmailInsertScreen();
+                return;
+              }
+              this.props.navigateToEmailInsertScreen();
+            },
+            title: I18n.t("email.edit.title")
+          }}
+          rightButton={{
+            block: true,
+            primary: true,
+            onPress: this.handleOnClose,
+            disabled: this.state.isLoading,
+            title: isOnboardingCompleted
+              ? I18n.t("global.buttons.ok")
+              : I18n.t("global.buttons.continue")
+          }}
+        />
+      </View>
     );
   };
 
   public render() {
     const email = this.props.optionEmail.getOrElse(EMPTY_EMAIL);
+
     const { isOnboardingCompleted } = this.props;
-    const image = this.state.emailHasBeenValidate
-      ? require("../../img/email-checked-icon_ok.png")
-      : require("../../img/email-checked-icon.png");
+
+    const icon = this.state.emailHasBeenValidate
+      ? "io-email-validated"
+      : "io-email-to-validate";
+
     const title = this.state.emailHasBeenValidate
       ? I18n.t("email.validate.validated")
       : I18n.t("email.validate.title");
+
     return (
       <TopScreenComponent
         {...(isOnboardingCompleted ? this.onMainProps : this.onBoardingProps)}
-        contextualHelp={this.contextualHelp}
+        contextualHelpMarkdown={this.contextualHelpMarkdown}
       >
-        <Content>
-          <React.Fragment>
-            <Image style={styles.imageChecked} source={image} />
-            <View spacer={true} extralarge={true} />
-          </React.Fragment>
-          <H2 style={isOnboardingCompleted ? styles.emailTitle : undefined}>
+        <Content bounces={false}>
+          <View spacer={true} extralarge={true} />
+          <IconFont
+            name={icon}
+            size={VALIDATION_ICON_WIDTH}
+            color={customVariables.brandHighlight}
+            style={styles.center}
+          />
+          <View spacer={true} extralarge={true} />
+          <Text alignCenter={true} bold={true}>
             {title}
-          </H2>
-          <View spacer={true} />
+          </Text>
           {!this.state.emailHasBeenValidate ? (
-            <Markdown onLoadEnd={this.handleOnContentLoadEnd}>
+            <Markdown
+              onLoadEnd={this.handleOnContentLoadEnd}
+              cssStyle={MARKDOWN_BODY_STYLE}
+            >
               {isOnboardingCompleted
                 ? I18n.t("email.validate.content2", { email })
                 : I18n.t("email.validate.content1", { email })}
             </Markdown>
           ) : (
-            <Text>{I18n.t("email.validate.validated_ok")}</Text>
+            <View style={styles.validated}>
+              <Text alignCenter={true}>
+                {I18n.t("email.validate.validated_ok")}
+              </Text>
+            </View>
           )}
-          <View spacer={true} />
-          {this.state.isContentLoadCompleted &&
-            !this.state.emailHasBeenValidate && (
-              <Button
-                block={true}
-                light={true}
-                bordered={true}
-                disabled={
-                  this.state.isLoading ||
-                  this.state.isCtaSentEmailValidationDisabled
-                }
-                onPress={this.handleSendEmailValidationButton}
-              >
-                <Text>{this.state.ctaSendEmailValidationText}</Text>
-              </Button>
-            )}
           <View spacer={true} large={true} />
         </Content>
+
+        {this.state.displayError && this.renderErrorBanner}
         {(this.state.emailHasBeenValidate ||
           this.state.isContentLoadCompleted) &&
           this.renderFooter()}

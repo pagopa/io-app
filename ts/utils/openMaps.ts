@@ -1,5 +1,5 @@
-import { Toast } from "native-base";
-import { Linking, Platform } from "react-native";
+import { Platform } from "react-native";
+import { openLink } from "../components/ui/Markdown/handlers/link";
 import I18n from "../i18n";
 
 export function openMaps(
@@ -23,7 +23,5 @@ export function openMaps(
           android: `${intentScheme}${label}`
         });
 
-  Linking.openURL(url).catch(() =>
-    Toast.show({ text: I18n.t("openMaps.genericError") })
-  );
+  openLink(url, I18n.t("openMaps.genericError"));
 }

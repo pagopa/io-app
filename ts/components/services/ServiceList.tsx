@@ -11,13 +11,16 @@ import {
   RefreshControl,
   SectionList,
   SectionListData,
-  StyleSheet
+  StyleSheet,
+  Vibration
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
-import customVariables from "../../theme/variables";
+import customVariables, {
+  VIBRATION_LONG_PRESS_DURATION
+} from "../../theme/variables";
 import variables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
@@ -36,6 +39,7 @@ type OwnProps = {
   sections: ReadonlyArray<SectionListData<pot.Pot<ServicePublic, Error>>>;
   profile: ProfileState;
   isRefreshing: boolean;
+  renderUnreadState: boolean;
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
@@ -44,7 +48,10 @@ type OwnProps = {
   >["ListEmptyComponent"];
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
-  onItemSwitchValueChanged?: (service: ServicePublic, value: boolean) => void;
+  onItemSwitchValueChanged?: (
+    services: ReadonlyArray<ServicePublic>,
+    value: boolean
+  ) => void;
   renderRightIcon?: (selectedOrgId: ServicesSectionState) => React.ReactNode;
 };
 
@@ -62,9 +69,15 @@ const styles = StyleSheet.create({
 });
 
 const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
-
 class ServiceList extends React.Component<Props> {
   private sectionListRef = React.createRef<typeof AnimatedSectionList>();
+
+  private handleLongPressItem = () => {
+    if (this.props.onLongPressItem) {
+      this.props.onLongPressItem();
+      Vibration.vibrate(VIBRATION_LONG_PRESS_DURATION);
+    }
+  };
 
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
@@ -73,9 +86,12 @@ class ServiceList extends React.Component<Props> {
       item={itemInfo.item}
       profile={this.props.profile}
       onSelect={this.props.onSelect}
-      isRead={this.isRead(itemInfo.item, this.props.readServices)}
+      isRead={
+        !this.props.renderUnreadState ||
+        this.isRead(itemInfo.item, this.props.readServices)
+      }
       hideSeparator={true}
-      onLongPress={this.props.onLongPressItem}
+      onLongPress={this.handleLongPressItem}
       onItemSwitchValueChanged={this.props.onItemSwitchValueChanged}
       isLongPressEnabled={this.props.isLongPressEnabled}
     />

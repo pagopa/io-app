@@ -6,12 +6,13 @@ import * as React from "react";
 import {
   ImageSourcePropType,
   RefreshControlProps,
-  StatusBar,
   StyleProp,
   ViewStyle
 } from "react-native";
 import { StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
+import { FAQsCategoriesType } from "../../utils/faq";
+import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
@@ -37,6 +38,7 @@ type Props = Readonly<{
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   contentRefreshControl?: React.ReactElement<RefreshControlProps>;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
 }>;
 
 const styles = StyleSheet.create({
@@ -47,6 +49,13 @@ const styles = StyleSheet.create({
 });
 
 export default class DarkLayout extends React.Component<Props> {
+  public componentDidMount() {
+    setStatusBarColorAndBackground(
+      "light-content",
+      customVariables.brandDarkGray
+    );
+  }
+
   private screenContent() {
     return (
       <React.Fragment>
@@ -62,18 +71,14 @@ export default class DarkLayout extends React.Component<Props> {
     return (
       <TopScreenComponent
         goBack={this.props.allowGoBack}
-        title={this.props.title ? this.props.title : ""}
+        headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
         appLogo={this.props.appLogo}
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
+        faqCategories={this.props.faqCategories}
       >
-        <StatusBar
-          backgroundColor={customVariables.brandDarkGray}
-          barStyle={"light-content"}
-        />
-
         {this.props.hasDynamicSubHeader ? (
           <AnimatedScreenContent
             hideHeader={this.props.hideHeader}

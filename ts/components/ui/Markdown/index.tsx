@@ -127,8 +127,7 @@ const generateInlineCss = (cssStyle: string) => {
   </style>`;
 };
 
-const generateCustomFontList = () => {
-  return `<style>
+const generateCustomFontList = `<style>
     ol {
       list-style: none;
       counter-reset: li;
@@ -148,12 +147,23 @@ const generateCustomFontList = () => {
       line-height: 18px;
     }
   </style>`;
-};
+
+const avoidTextSelectionCSS = `<style>
+    body {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>`;
 
 const generateHtml = (
   content: string,
   cssStyle?: string,
-  useCustomSortedList: boolean = false
+  useCustomSortedList: boolean = false,
+  avoidTextSelection: boolean = false
 ) => {
   return `
   <!DOCTYPE html>
@@ -164,7 +174,8 @@ const generateHtml = (
   <body>
   ${GLOBAL_CSS}
   ${cssStyle ? generateInlineCss(cssStyle) : ""}
-  ${useCustomSortedList ? generateCustomFontList() : ""}
+  ${avoidTextSelection ? avoidTextSelectionCSS : ""}
+  ${useCustomSortedList ? generateCustomFontList : ""}
   ${content}
   </body>
   </html>
@@ -186,12 +197,13 @@ type OwnProps = {
   animated?: boolean;
   useCustomSortedList?: boolean;
   onLoadEnd?: () => void;
+  onLinkClicked?: (url: string) => void;
   onError?: (error: any) => void;
   /**
    * The code will be inserted in the html body between
    * <script> and </script> tags.
    */
-
+  avoidTextSelection?: boolean;
   cssStyle?: string;
   webViewStyle?: StyleProp<ViewStyle>;
 };
@@ -224,7 +236,8 @@ class Markdown extends React.PureComponent<Props, State> {
       animated,
       onError,
       cssStyle,
-      useCustomSortedList
+      useCustomSortedList,
+      avoidTextSelection
     } = this.props;
 
     this.compileMarkdownAsync(
@@ -232,7 +245,8 @@ class Markdown extends React.PureComponent<Props, State> {
       animated,
       onError,
       cssStyle,
-      useCustomSortedList
+      useCustomSortedList,
+      avoidTextSelection
     );
 
     AppState.addEventListener("change", this.handleAppStateChange);
@@ -346,6 +360,9 @@ class Markdown extends React.PureComponent<Props, State> {
       switch (message.type) {
         case "LINK_MESSAGE":
           handleLinkMessage(dispatch, message.payload.href);
+          fromNullable(this.props.onLinkClicked).map(s =>
+            s(message.payload.href)
+          );
           break;
 
         case "RESIZE_MESSAGE":
@@ -363,7 +380,8 @@ class Markdown extends React.PureComponent<Props, State> {
     animated: boolean = false,
     onError?: (error: any) => void,
     cssStyle?: string,
-    useCustomSortedList: boolean = false
+    useCustomSortedList: boolean = false,
+    avoidTextSelection: boolean = false
   ) => {
     InteractionManager.runAfterInteractions(() => {
       if (animated) {
@@ -383,7 +401,12 @@ class Markdown extends React.PureComponent<Props, State> {
           error
             ? fromNullable(onError).map(_ => _(error))
             : this.setState({
-                html: generateHtml(String(file), cssStyle, useCustomSortedList)
+                html: generateHtml(
+                  String(file),
+                  cssStyle,
+                  useCustomSortedList,
+                  avoidTextSelection
+                )
               });
         }
       );

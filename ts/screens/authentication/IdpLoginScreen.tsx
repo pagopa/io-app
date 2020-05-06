@@ -2,6 +2,7 @@
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
  */
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -16,7 +17,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
-import * as config from "../../config";
 import I18n from "../../i18n";
 import { loginFailure, loginSuccess } from "../../store/actions/authentication";
 import { idpLoginUrlChanged } from "../../store/actions/authentication";
@@ -27,7 +27,7 @@ import {
 } from "../../store/reducers/authentication";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
-import { extractLoginResult } from "../../utils/login";
+import { getIdpLoginUri, onLoginUriChanged } from "../../utils/login";
 
 type Props = NavigationScreenProps &
   ReturnType<typeof mapStateToProps> &
@@ -43,10 +43,6 @@ type State = {
   errorCode?: string;
   loginTrace?: string;
 };
-
-const LOGIN_BASE_URL = `${
-  config.apiUrlPrefix
-}/login?authLevel=SpidL2&entityID=`;
 
 const brokenLinkImage = require("../../../img/broken-link.png");
 
@@ -92,31 +88,6 @@ const styles = StyleSheet.create({
   }
 });
 
-/**
- * Extract the login result from the given url.
- * Return true if the url contains login pattern & token
- */
-const onNavigationStateChange = (
-  onFailure: (errorCode: string | undefined) => void,
-  onSuccess: (_: SessionToken) => void
-) => (navState: NavState): boolean => {
-  if (navState.url) {
-    // If the url is not related to login this will be `null`
-    const loginResult = extractLoginResult(navState.url);
-    if (loginResult) {
-      if (loginResult.success) {
-        // In case of successful login
-        onSuccess(loginResult.token);
-        return true;
-      } else {
-        // In case of login failure
-        onFailure(loginResult.errorCode);
-      }
-    }
-  }
-  return false;
-};
-
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_login.contextualHelpTitle",
   body: "authentication.idp_login.contextualHelpContent"
@@ -156,18 +127,25 @@ class IdpLoginScreen extends React.Component<Props, State> {
     this.setState({ requestState: pot.noneLoading });
 
   private handleNavigationStateChange = (event: NavState): void => {
-    if (event.url && event.url !== this.state.loginTrace) {
+    if (event.url) {
       const urlChanged = event.url.split("?")[0];
-      this.props.dispatchIdpLoginUrlChanged(urlChanged);
-      this.updateLoginTrace(urlChanged);
+      if (urlChanged !== this.state.loginTrace) {
+        this.props.dispatchIdpLoginUrlChanged(urlChanged);
+        this.updateLoginTrace(urlChanged);
+      }
     }
+    const isAssertion = fromNullable(event.url).fold(
+      false,
+      s => s.indexOf("/assertionConsumerService") > -1
+    );
     this.setState({
-      requestState: event.loading ? pot.noneLoading : pot.some(true)
+      requestState:
+        event.loading || isAssertion ? pot.noneLoading : pot.some(true)
     });
   };
 
   private handleShouldStartLoading = (event: NavState): boolean => {
-    const isLoginUrlWithToken = onNavigationStateChange(
+    const isLoginUrlWithToken = onLoginUriChanged(
       this.handleLoginFailure,
       this.props.dispatchLoginSuccess
     )(event);
@@ -247,12 +225,13 @@ class IdpLoginScreen extends React.Component<Props, State> {
       // before the redux state is updated succesfully)
       return <LoadingSpinnerOverlay isLoading={true} />;
     }
-    const loginUri = LOGIN_BASE_URL + loggedOutWithIdpAuth.idp.entityID;
+    const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.entityID);
 
     return (
       <BaseScreenComponent
         goBack={true}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["authentication_SPID", "authentication_CIE"]}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
           loggedOutWithIdpAuth.idp.name
         }`}
