@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
 /**
  * A component used to identify the the user.
  * The identification process can be activated calling a saga or dispatching the
- * requestIdentification redux action.
+ * identificationRequest redux action.
  */
 class IdentificationModal extends React.PureComponent<Props, State> {
   constructor(props: Props) {
