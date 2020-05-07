@@ -1,4 +1,7 @@
+import { Either } from "fp-ts/lib/Either";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { Task } from "fp-ts/lib/Task";
+import { tryCatch } from "fp-ts/lib/TaskEither";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { TranslationKeys } from "../../locales/locales";
@@ -81,7 +84,31 @@ export function convertLocalCalendarName(calendarTitle: string) {
     calendarTitleTranslations[calendarTitle.trim().toLowerCase()]
   ).fold(calendarTitle, s => I18n.t(s));
 }
-
+/**
+ * return a Promise where left is an error
+ * and right is a boolean -> true === the is in calendar
+ * @param eventId
+ */
+export const isEventInCalendar = (
+  eventId: string
+): Promise<Either<Error, boolean>> => {
+  const authTask = new Task(() => checkAndRequestPermission());
+  const findTask = new Task(() => RNCalendarEvents.findEventById(eventId));
+  return tryCatch(
+    () =>
+      authTask
+        .chain(auth => {
+          if (!auth.authorized) {
+            return new Task(() => Promise.reject());
+          }
+          return findTask;
+        })
+        .run(),
+    message => new Error(String(message))
+  )
+    .map(ev => ev !== null)
+    .run();
+};
 /**
  * Check if an event for endDate with that title already exists in the calendar.
  * Return the event id if it is found

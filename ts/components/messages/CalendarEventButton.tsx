@@ -22,6 +22,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
 import {
   checkAndRequestPermission,
+  isEventInCalendar,
   removeCalendarEventFromDeviceCalendar,
   saveCalendarEvent,
   searchEventInCalendar
@@ -77,7 +78,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
    * It is important to make this check because the event can be removed outside
    * the App.
    */
-  private checkIfEventInCalendar = (
+  private checkIfEventInCalendar = async (
     calendarEvent: CalendarEvent | undefined
   ) => {
     if (calendarEvent === undefined) {
@@ -86,60 +87,42 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
       });
       return;
     }
-    checkAndRequestPermission()
-      .then(
-        hasPermission => {
-          if (hasPermission) {
-            RNCalendarEvents.findEventById(calendarEvent.eventId)
-              .then(
-                event => {
-                  if (event) {
-                    // The event is in the store and also in the device calendar
-                    // Update the state to display and handle the reminder button correctly
-                    this.setState({
-                      isEventInDeviceCalendar: true
-                    });
-                  } else {
-                    // The event is in the store but not in the device calendar.
-                    // Remove it from store too
-                    this.props.removeCalendarEvent(calendarEvent);
-                  }
-                },
-                // handle promise rejection
-                () => {
-                  this.setState({
-                    isEventInDeviceCalendar: false
-                  });
-                }
-              )
-              .catch();
-          }
-        },
-        // handle promise rejection
-        // tslint:disable-next-line: no-identical-functions
-        () => {
+    const maybeInCalendar = await isEventInCalendar(calendarEvent.eventId);
+    maybeInCalendar.fold(
+      _ =>
+        this.setState({
+          isEventInDeviceCalendar: false
+        }),
+      isEventInDeviceCalendar => {
+        if (isEventInDeviceCalendar) {
+          // The event is in the store and also in the device calendar
+          // Update the state to display and handle the reminder button correctly
           this.setState({
-            isEventInDeviceCalendar: false
+            isEventInDeviceCalendar
           });
+        } else {
+          // The event is in the store but not in the device calendar.
+          // Remove it from store too
+          this.props.removeCalendarEvent(calendarEvent);
         }
-      )
-      .catch();
+      }
+    );
   };
 
-  public componentDidMount() {
+  public async componentDidMount() {
     const { calendarEvent } = this.props;
 
     // If we have a calendar event in the store associated to this message
     // Check if the event is still in the device calendar
-    this.checkIfEventInCalendar(calendarEvent);
+    await this.checkIfEventInCalendar(calendarEvent);
   }
 
-  public componentDidUpdate(prevProps: Props) {
+  public async componentDidUpdate(prevProps: Props) {
     // if calenderEvent changes means reminder has been changed
     if (prevProps.calendarEvent !== this.props.calendarEvent) {
       // if a calendarEvent exists we have to check if it really exists as calendar event
       // the event can be removed outside the App.
-      this.checkIfEventInCalendar(this.props.calendarEvent);
+      await this.checkIfEventInCalendar(this.props.calendarEvent);
     }
   }
 
