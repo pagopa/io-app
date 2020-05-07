@@ -18,11 +18,11 @@ import {
 } from "../../store/reducers/authentication";
 import { profileSelector } from "../../store/reducers/profile";
 import { SessionToken } from "../../types/SessionToken";
-import { dispatchEmailValidationToMixpanel } from "../analytics/emailValidatedToMixpanel";
 import { previousInstallationDataDeleteSaga } from "../installation";
 import { loadProfile } from "../profile";
 import { initializeApplicationSaga } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
+import { watchEmailValidatedChangedSaga } from "../watchEmailValidatedChangedSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -68,6 +68,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
+      .fork(watchEmailValidatedChangedSaga, none)
+      .next()
       .put(resetProfileState())
       .next()
       .select(sessionTokenSelector)
@@ -75,8 +77,6 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // updateInstallationSaga
-      .fork(dispatchEmailValidationToMixpanel)
-      .next()
       .select(sessionInfoSelector)
       .next(none)
       .next(none) // loadSessionInformationSaga
@@ -91,6 +91,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .select(profileSelector)
+      .next(pot.some(profile))
+      .fork(watchEmailValidatedChangedSaga, none)
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
@@ -110,6 +112,8 @@ describe("initializeApplicationSaga", () => {
       .put(previousInstallationDataDeleteSuccess())
       .next()
       .select(profileSelector)
+      .next(pot.some(profile))
+      .fork(watchEmailValidatedChangedSaga, none)
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()

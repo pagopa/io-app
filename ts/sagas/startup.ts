@@ -1,4 +1,4 @@
-import { isNone, Option } from "fp-ts/lib/Option";
+import { fromNullable, isNone, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { NavigationActions, NavigationState } from "react-navigation";
@@ -113,8 +113,12 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
     typeof profileSelector
   > = yield select<GlobalState>(profileSelector);
 
+  const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
+    ? fromNullable(lastLoggedInProfileState.value.is_email_validated)
+    : none;
+
   // Watch for profile changes
-  yield fork(watchEmailValidatedChangedSaga, lastLoggedInProfileState);
+  yield fork(watchEmailValidatedChangedSaga, lastEmailValidated);
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
