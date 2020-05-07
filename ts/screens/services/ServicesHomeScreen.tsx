@@ -220,7 +220,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       currentTabServicesId: [],
       isLongPressEnabled: false,
       enableServices: false,
-      toastErrorMessage: EMPTY_MESSAGE,
+      toastErrorMessage: I18n.t("global.genericError"),
       isInnerContentRendered: false
     };
   }
