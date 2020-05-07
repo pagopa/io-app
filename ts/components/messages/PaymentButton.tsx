@@ -18,12 +18,10 @@ import { paymentInitializeState } from "../../store/actions/wallet/payment";
 import { serverInfoDataSelector } from "../../store/reducers/backendInfo";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { InferNavigationParams } from "../../types/react";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import {
   isExpired,
-  isUnexpirable,
   MessagePaymentExpirationInfo
 } from "../../utils/messages";
 import {
@@ -79,11 +77,6 @@ const getButtonText = (
  * paired with a message.
  */
 class PaymentButton extends React.PureComponent<Props> {
-  private hideIcon =
-    isUnexpirable(this.props.messagePaymentExpirationInfo) ||
-    isExpired(this.props.messagePaymentExpirationInfo) ||
-    !this.props.small;
-
   private navigateToMessageDetail = () => {
     this.props.navigateToMessageDetail(this.props.message.id);
   };
@@ -156,16 +149,8 @@ class PaymentButton extends React.PureComponent<Props> {
         onPress={this.handleOnPress}
         darkGray={isExpired(messagePaymentExpirationInfo)}
         xsmall={small}
-        small={!small}
         style={styles.button}
       >
-        {!this.hideIcon ||
-          (paid && (
-            <IconFont
-              name={"io-timer"}
-              color={!disabled ? customVariables.brandHighlight : undefined}
-            />
-          ))}
         <Text>{getButtonText(messagePaymentExpirationInfo, false)}</Text>
       </ButtonDefaultOpacity>
     );

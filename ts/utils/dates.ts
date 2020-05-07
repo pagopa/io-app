@@ -75,6 +75,23 @@ export function isExpired(expireMonth: number, expireYear: number): boolean {
     expireYear < currentYear ||
     (expireYear === currentYear && expireMonth < currentMonth)
   );
+};
+
+/**
+ * A function to check if the given date is in the past or in the future.
+ * It returns:
+ * -VALID, if the date is in the future
+ * -EXPIRING, if the date is within the next 24 hours
+ * -EXPIRED, if the date is in the past
+ * @param date Date
+ */
+export const isDatePassedAway = (date: Date) => {
+  const remainingMilliseconds = date.getTime() - Date.now();
+  return remainingMilliseconds > 1000 * 60 * 60 * 24
+      ? "VALID"
+      : remainingMilliseconds > 0
+        ? "EXPIRING"
+        : "EXPIRED";
 }
 
 /* 

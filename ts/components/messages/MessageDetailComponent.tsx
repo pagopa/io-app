@@ -9,16 +9,19 @@ import I18n from "../../i18n";
 import { ServiceMetadataState } from "../../store/reducers/content";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
-import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
-import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
-import MessageCTABar from "./MessageCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageMarkdown from "./MessageMarkdown";
+import MessageDueDateBar from './MessageDueDateBar';
+import PaymentButton from './PaymentButton';
+import { fromNullable } from 'fp-ts/lib/Option';
+import { getMessagePaymentExpirationInfo } from '../../utils/messages';
+import CalendarEventButton from './CalendarEventButton';
+import { isDatePassedAway } from '../../utils/dates';
 
 type Props = Readonly<{
   message: CreatedMessageWithContent;
@@ -77,6 +80,9 @@ const styles = StyleSheet.create({
   serviceMultiImage: {
     width: 60,
     height: 60
+  },
+  row: {
+    flexDirection: 'row'
   }
 });
 
@@ -96,17 +102,73 @@ export default class MessageDetailComponent extends React.PureComponent<
     this.setState({ isContentLoadCompleted: true });
   };
 
-  public render() {
-    const {
-      message,
-      potServiceDetail,
-      potServiceMetadata,
-      paymentsByRptId,
-      onServiceLinkPress
-    } = this.props;
+  get paymentExpirationInfo() {
+    const { message } = this.props;
+    const { payment_data, due_date } = message.content;
+    return fromNullable(payment_data).map(paymentData =>
+      getMessagePaymentExpirationInfo(paymentData, due_date)
+    );
+  };
 
-    const service =
-      potServiceDetail !== undefined
+  // TODO: isolate as component
+  private renderMessageCTAAsFooterButtons = () => {
+    const { message } = this.props;
+    const {payment, service} = this;
+
+    /**
+     * render the reminder button if:
+     * - there is a due date
+     * - if payment, the payment has not being completed yet
+     * - if payment and if invalid_after_due_date is true, the due date is in the future
+     */
+    const checkReminderButtonVisibility = () => {
+      const isDueDatePassed = message.content.due_date && isDatePassedAway(message.content.due_date) === 'EXPIRED';
+      return message.content.due_date
+          ? message.content.payment_data
+            ? message.content.payment_data.invalid_after_due_date
+              ? isDueDatePassed
+              : true // TODO: check this condition - we add a reminder in the past!
+            : isDueDatePassed
+          : false
+    };
+    const showReminderButton = checkReminderButtonVisibility();
+
+    /**
+     * Render the payment button if:
+     * - there is a payment for the message 
+     * - the payment has not being completed yet
+     */ 
+    const showPaymentButton = this.paymentExpirationInfo.fold(false, _ =>  payment === undefined);
+
+    if(!showReminderButton && !showPaymentButton){
+      return null;
+    }
+
+    return (
+      <View footer={true} style={styles.row}>
+        {showReminderButton && (
+          <CalendarEventButton message={message} />
+        )}
+
+        {(showReminderButton && showPaymentButton) && (<View hspacer={true}/>)}
+
+        {payment === undefined && this.paymentExpirationInfo.isSome() && (
+          <PaymentButton 
+            message={message} 
+            service={service} 
+            paid={false} 
+            messagePaymentExpirationInfo={this.paymentExpirationInfo.value}
+          />
+        )}
+      </View>
+    )
+  }
+
+  get service (){
+    const {
+      potServiceDetail,
+    } = this.props;
+    return  potServiceDetail !== undefined
         ? pot.isNone(potServiceDetail)
           ? ({
               organization_name: I18n.t("messages.errorLoading.senderInfo"),
@@ -115,20 +177,32 @@ export default class MessageDetailComponent extends React.PureComponent<
             } as ServicePublic)
           : pot.toUndefined(potServiceDetail)
         : undefined;
+  }
 
-    const payment =
-      message.content.payment_data !== undefined && service !== undefined
-        ? paymentsByRptId[
-            `${service.organization_fiscal_code}${
-              message.content.payment_data.notice_number
-            }`
-          ]
-        : undefined;
+  get payment() {
+    const {message, paymentsByRptId} = this.props;
+    return message.content.payment_data !== undefined && this.service !== undefined
+      ? paymentsByRptId[
+          `${this.service.organization_fiscal_code}${
+            message.content.payment_data.notice_number
+          }`
+        ]
+      : undefined;
+  }
 
+  public render() {
+    const {
+      message,
+      potServiceDetail,
+      potServiceMetadata,
+      onServiceLinkPress
+    } = this.props;
+    const {service, payment} = this;
+    
     return (
+      <React.Fragment>
       <Content noPadded={true}>
         <View style={styles.headerContainer}>
-          {/** TODO: update header */}
           {/* Service */}
           {service && (
             <Grid style={styles.serviceContainer}>
@@ -157,14 +231,12 @@ export default class MessageDetailComponent extends React.PureComponent<
           </View>
         </View>
 
-        {this.state.isContentLoadCompleted &&
-          messageNeedsCTABar(message) && (
-            <MessageCTABar
-              message={message}
-              service={service}
-              payment={payment}
-            />
-          )}
+       
+        <MessageDueDateBar
+          message={message}
+          service={service}
+          payment={payment}
+        />
 
         <MessageMarkdown
           webViewStyle={styles.webview}
@@ -181,9 +253,9 @@ export default class MessageDetailComponent extends React.PureComponent<
             goToServiceDetail={onServiceLinkPress}
           />
         )}
-        {this.state.isContentLoadCompleted && <EdgeBorderComponent />}
-        <View spacer={true} large={true} />
       </Content>
+      {this.renderMessageCTAAsFooterButtons()}
+      </React.Fragment>
     );
   }
 }

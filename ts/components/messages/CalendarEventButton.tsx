@@ -349,7 +349,6 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         disabled={disabled}
         onPress={this.onPressHandler}
         xsmall={small}
-        small={!small}
         bordered={!disabled}
         style={styles.button}
       >

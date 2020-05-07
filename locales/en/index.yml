@@ -835,20 +835,14 @@ messages:
     deselectAll: None
     payment:
       expired: Payment expired
-      validAlert:
-        block1: You can pay this notice until
-        block2: "{{time}} of {{day}}."
-      expiringAlert:
-        block1: This notice
-        block2: expire {{todayOrTomorrow}}
-        block3: at
-      expiredAlert:
-        block1: The notice of
-        block2: € {{amount}}
-        block3: is
-        block4: expired
-        block5: at
-        block6: of
+      addMemo: 
+          block1: Add a reminder for the 
+          block2: at
+      expiringAlert: This notice expire today at
+      expiredAlert: 
+        block1: The notice expired at 
+        block2: of
+      medicalExpiration: this prescription expires the {{date}}
     pay: Pay € {{amount}}
     paid: Paid € {{amount}}
     reminder: Reminder
