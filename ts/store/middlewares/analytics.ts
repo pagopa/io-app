@@ -3,7 +3,6 @@ import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
@@ -148,7 +147,6 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // dispatch to mixpanel when the email is validated
     case getType(emailValidationChanged):
       if (action.payload) {
-        RTron.log("SEND emailValidationChanged");
         return mp.track(emailValidationComplete);
       }
       break;
