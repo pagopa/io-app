@@ -1,7 +1,7 @@
 import { Text } from "native-base";
 import React from "react";
 import { Alert, Dimensions, StyleSheet } from "react-native";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
