@@ -48,22 +48,22 @@ export const fingerprintAuth = (): Promise<boolean | FingerprintError> => {
     promptMessage: I18n.t("identification.biometric.popup.reason")
   };
   return ReactNativeBiometrics.simplePrompt(
-    Platform.OS === "ios" ? authenticateIOS : authenticateAndroid
+    Platform.select({
+      ios: authenticateIOS,
+      android: authenticateAndroid
+    })
   )
     .then(resultObject => {
       const { success } = resultObject;
-
-      return success;
+      if (success === true) {
+        return success;
+      } else {
+        throw new Error("error_authenticate");
+      }
     })
     .catch((error: string | undefined) => {
-      return {
-        name: "FingerprintGenericError",
-        message: error ? error : "FingerprintGenericError"
-      };
+      throw new Error(error);
     });
 };
 
-export type FingerprintError = {
-  name: string;
-  message: string;
-};
+export type FingerprintError = Error;
