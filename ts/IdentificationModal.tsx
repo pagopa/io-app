@@ -50,7 +50,7 @@ type State = {
   identificationByPinState: IdentificationByPinState;
   identificationByBiometryState: IdentificationByBiometryState;
   biometryType?: BiometryPrintableSimpleType;
-  canInsertPinBiometry: boolean;
+  biometryAuthNotAvailable: boolean;
   canInsertPinTooManyAttempts: boolean;
   countdown?: Millisecond;
 };
@@ -135,7 +135,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     this.state = {
       identificationByPinState: "unstarted",
       identificationByBiometryState: "unstarted",
-      canInsertPinBiometry: false,
+      biometryAuthNotAvailable: false,
       canInsertPinTooManyAttempts: this.props.identificationFailState.isNone()
     };
   }
@@ -191,7 +191,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       );
     } else {
       // if the biometric is not available unlock the unlock code insertion
-      this.setState({ canInsertPinBiometry: true });
+      this.setState({ biometryAuthNotAvailable: true });
     }
 
     // first time the component is mounted, need to calculate the state value for `canInsertPinTooManyAttempts`
@@ -241,7 +241,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                   biometryType !== "UNAVAILABLE"
                     ? biometryType
                     : undefined,
-                canInsertPinBiometry:
+                biometryAuthNotAvailable:
                   biometryType === "NOT_ENROLLED" ||
                   biometryType === "UNAVAILABLE"
               });
@@ -368,7 +368,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       : this.renderBiometryType();
 
     const canInsertPin =
-      this.state.canInsertPinBiometry && this.state.canInsertPinTooManyAttempts;
+      this.state.biometryAuthNotAvailable &&
+      this.state.canInsertPinTooManyAttempts;
 
     // display the remaining attempts number only if start to lock the application for too many attempts
     const displayRemainingAttempts = this.props.identificationFailState.fold(
@@ -509,7 +510,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       .catch((error: AuthenticationError) => {
         // some error occured, enable pin insertion
         this.setState({
-          canInsertPinBiometry: true
+          biometryAuthNotAvailable: true
         });
         if (isDebugBiometricIdentificationEnabled) {
           Alert.alert("identification.biometric.title", `KO: ${error.code}`);
