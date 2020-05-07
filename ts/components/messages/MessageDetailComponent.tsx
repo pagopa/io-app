@@ -181,7 +181,6 @@ export default class MessageDetailComponent extends React.PureComponent<
             goToServiceDetail={onServiceLinkPress}
           />
         )}
-        {this.state.isContentLoadCompleted && <EdgeBorderComponent />}
         <View spacer={true} large={true} />
       </Content>
     );
