@@ -10,7 +10,7 @@ let maybePreviousEmailValidated: Option<boolean> = none;
 /**
  * This saga check for the event of `profileLoadSuccess` and check when the email validation is completed
  * in order to dispatch the event to mixpanel
- * @param initialEmailValidated: the initial profile before refresh
+ * @param initialEmailValidated: the initial email validate value from profile, before refresh
  */
 export function* watchEmailValidatedChangedSaga(
   initialEmailValidated: Option<boolean>
@@ -22,6 +22,7 @@ export function* watchEmailValidatedChangedSaga(
 function* checkEmailChanged(action: ActionType<typeof profileLoadSuccess>) {
   const profileUpdate = action.payload;
 
+  // dispatch the action only if a previous state exists.
   const emailStateChanged = maybePreviousEmailValidated
     .map(x => x !== profileUpdate.is_email_validated)
     .getOrElse(false);
