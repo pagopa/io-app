@@ -8,7 +8,7 @@ import { profileLoadSuccess } from "../store/actions/profile";
 let maybePreviousEmailValidated: Option<boolean> = none;
 
 /**
- * This saga check for the event of `profileLoadSuccess` and check when the email validation is completed
+ * This saga checks for the event of `profileLoadSuccess` and checks when the email validation is completed
  * in order to dispatch the event to mixpanel
  * @param initialEmailValidated: the initial email validate value from profile, before refresh
  */
