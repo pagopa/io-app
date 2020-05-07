@@ -29,7 +29,7 @@ type CommonProps = Readonly<{
   leftButton: BlockButtonProps;
 }>;
 
-type BlockButtonProps = ComponentProps<Button> & OwnButtonProps;
+export type BlockButtonProps = ComponentProps<Button> & OwnButtonProps;
 
 /**
  * | single button |

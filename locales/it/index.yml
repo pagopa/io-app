@@ -105,10 +105,10 @@ profile:
       header: Come vuoi uscire dall'app?
       keepData:
         title: Esci ma conserva i miei dati
-        description: Per poter usare IO dovrai nuovamente accedere con la tua identità SPID, ma tutti i tuoi dati verranno conservati nell'applicazione (stato di lettura, etc.) e saranno immediatamente disponibili quando lanci l'app.
+        description: "Per poter usare IO dovrai nuovamente accedere con la tua identità digitale ma tutte le impostazioni saranno disponibili quando lanci l'App. Questa funzione non comporta una cancellazione dei dati personali che ti riguardano da parte dell'App."
       resetData:
         title: Esci e resetta l'applicazione
-        description: "L'app IO verrà ripristinata al suo stato iniziale, come fosse appena installata: se vuoi accedere con una diversa identità, o pensi di non volere più utilizzare l'app IO, puoi scegliere questa opzione. Tutti i dati che IO ha salvato sul tuo dispositivo verranno cancellati."
+        description: "Le impostazioni e i dati salvati sul tuo dispositivo saranno resettati. Questa funzione non comporta una cancellazione dei dati personali che ti riguardano da parte dell'App."
   errors:
     load: Errore nel caricamento del profilo
     upsert: Errore nella creazione o nell'aggiornamento del profilo
@@ -122,47 +122,44 @@ profile:
     forgetCurrentSession: Dimentica sessione corrente
     contextualHelpTitle: Cosa puoi fare nel tuo Profilo
     contextualHelpContent: !include profile/profile_account_main.md
+    developerModeOn: Modalità sviluppatore attivata
     cache:
-      alert: Sei sicuro di voler eliminare la cache?
+      alert: Vuoi davvero eliminare la cache?
       clear: Elimina cache
       cleared: La cache è stata eliminata.
     resetPin:
-      confirmTitle: Sei sicuro di voler reimpostare il codice di sblocco?
+      confirmTitle: Vuoi davvero reimpostare il codice di sblocco?
       confirmMsg: Ti verrà richiesto nuovamente di accedere.
     preferences:
       title: Preferenze
       description: Gestisci le preferenze dell'applicazione
     privacy:
       title: Privacy e condizioni d'uso
-      description: Esporta dati, cancella account
-      subtitle: Qui trovi informazioni legate ai tuoi dati personali.
+      description: I tuoi diritti e obblighi nell’uso di IO
+      subtitle: Qui trovi informazioni sulle condizioni legali e sul trattamento dei tuoi dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
-        title: Cancella il tuo account
-        description:
-          Elimina sia dal telefono che da internet tutti i data ad esso
-          associati
+        title: Cancella il tuo profilo
+        description: Richiedi cancellazione delle informazioni relative al tuo profilo IO
         alert:
-          requestTitle: Sei sicuro di voler cancellare il tuo account?
-          requestSubtitle: Tutti i tuoi messaggi e le tue preferenze saranno eliminati definitivamente.
+          requestTitle: Sei sicuro di voler richiedere la cancellazione del tuo account?
+          requestSubtitle: Per usare IO dovrai registrarti nuovamente. La cancellazione non riguarda i dati trattati per conto degli Enti Erogatori.
           oldRequest: Abbiamo già preso in carico una richiesta di eliminazione del tuo profilo.
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell\'avvenuta eliminazione.
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
       exportData:
-        title: Esporta i tuoi dati
-        description:
-          Ricevi nella tua email tutti i dati associati al tuo account in
-          un formato aperto
+        title: Accedi ai tuoi dati
+        description: Ricevi una copia dei dati associati al tuo profilo IO
         alert:
-          requestTitle: Sei sicuro di voler esportare tutti i tuoi dati?
+          requestTitle: Vuoi davvero esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email con tutte le informazioni associate al tuo profilo.
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
         title: Informativa e condizioni d'uso
-        description: Rivedi le regole sulla privacy che hai accettato
+        description: Consulta l’Informativa Privacy e le condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
-        updated: E' necessario prendere visione della nuova versione dell'Informativa
+        updated: È necessario prendere visione della nuova versione dell'Informativa
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
         contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
         contextualHelpTitle: Le tue impostazioni di privacy
@@ -174,7 +171,7 @@ profile:
     developersSectionHeader: Sviluppatori
     experimentalFeatures:
       confirmTitle: Funzionalità sperimentali
-      confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Sei sicuro di volerle abilitare?
+      confirmMessage: Le funzionalità sperimentali potrebbero rendere l'applicazione instabile. Vuoi davvero abilitarle?
       bannerMessage: Stai usando funzioni sperimentali che potrebbero essere incomplete o instabili.
     pagoPaEnvironment:
       pagoPaEnv: Ambiente pagoPA di Test
@@ -299,7 +296,7 @@ authentication:
     noDataTitle: Per usare IO è necessario autorizzare l'invio dei dati
     authToSendData: !include cie/auth_to_send_data.md
     nfc:
-      noNfcConnectionTitle: Sei sicuro di aver appoggiato la carta?
+      noNfcConnectionTitle: Hai appoggiato la carta?
       noNfcConnectionContent: !include cie/noNfcConnection.md
       enableNfcTitle: Attiva NFC
       enableNfcHeader: Verifica NFC
@@ -312,7 +309,7 @@ authentication:
       incorrectCiePinHeaderTitle: PIN errato
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.
       incorrectCiePinContent2: Ricorda che il codice PIN della tua Carta d'Identità Elettronica (CIE) è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre quattro cifre che ti sono state spedite a casa, insieme alla carta.
-      alert: Sei sicuro di voler tornare indietro?
+      alert: Vuoi davvero tornare indietro?
     pinTempLocked:
       header: Pin bloccato
       title: Carta temporaneamente bloccata
@@ -541,11 +538,36 @@ datetimes:
   yesterday: ieri
   todayAt: oggi, alle
 payment:
+  errorDetails: Dettagli
   currentPsp: Il PSP scelto è
   noPsp: Non hai ancora selezionato un PSP
   changePsp: Cambia PSP
   IUV: IUV
   recipientFiscalCode: Codice fiscale beneficiario
+  details:
+    state:
+      successful: Concluso
+      incomplete: Non terminato
+      failed: Fallito
+    info:
+      buttons:
+        copy: copia
+        help: Contatta l'assistenza
+      title: Dettaglio pagamento
+      enteCreditore: Ente creditore
+      causaleVersamento: Causale
+      dateAndTime: Data e ora
+      paymentAmount: Importo pagamento
+      transactionCosts: Costi di transazione
+      totalPaid: Totale pagato
+      transactionCode: Codice identificativo della transazione
+      help: Se hai riscontrato un problema con questo pagamento, scrivici per maggiori informazioni e dettagli
+    list:
+      empty:
+        title: Nessun tentativo di pagamento
+        description: IO non ha memorizzato tentativi di pagamento. Qui troverai i tentativi di pagamento più recenti
+      title: Tentativi di pagamento
+      iuv: Codice IUV {{iuv}}
 wallet:
   wallet: Pagamenti
   alert:
@@ -562,6 +584,10 @@ wallet:
   walletLoadFailure: Non è stato possibile caricare i metodi di pagamento, riprova per piacere.
   transactionsLoadMessage: Carico lo storico delle transazioni...
   transactionsLoadFailure: Non è stato possibile caricare lo storico delle tue operazioni, riprova per piacere.
+  transactionHelpMessage:
+    text1: Se hai avuto problemi durante un pagamento,
+    text2: consulta l'help
+    text3: in alto a destra su questa pagina
   transactionsLoadMore: Carica precedenti
   transacionsLoadingMore: Carico precedenti...
   pickPaymentMethod:
@@ -869,7 +895,7 @@ messages:
     reminderAddSuccess: "Promemoria aggiunto"
     reminderAddFailure: "Errore durante l'aggiunta del promemoria, riprova per piacere"
     reminderRemoveRequest:
-      title: Sei sicuro di voler rimuovere il promemoria?
+      title: Vuoi davvero rimuovere il promemoria?
       ok: Rimuovi promemoria
       cancel: Annulla l'operazione
     reminderRemoveSuccess: "Promemoria eliminato"
@@ -913,6 +939,15 @@ messageDetails:
     organizationName: Inviato da
     departmentName: Dipartimento
     serviceName: Servizio
+  addMemo: !include messages/addMemo.md
+  dateSending: "Data e ora invio:"
+  sender: "Mittente:"
+  service: "Servizio:"
+  question: "Qualcosa non è chiaro?"
+  answer: Se non ti è chiaro il contenuto del messaggio, devi segnalare un errore o vuoi approfondire, puoi contattare direttamente i referenti del servizio indicando il seguente ID del messaggio.
+  call: Chiama
+  write: Scrivi
+  id: "ID:"
 notifications:
   installation:
     errorTitle: Notifiche push
@@ -1005,7 +1040,7 @@ identification:
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
   removeRequest:
-    title: Sei sicuro di voler rimuovere l'evento?
+    title: Vuoi davvero rimuovere l'evento?
     ok: Rimuovi evento
     cancel: Annulla l'operazione
 reminders:
@@ -1022,15 +1057,18 @@ btnUpdateApp: Aggiorna l'app IO
 systemsOff:
   title: Impossibile usare IO
   closeApp: chiudi l'applicazione e riprova
+contextualHelp:
+  title: IO ti aiuto
 instabug:
   contextualHelp:
     title1: Hai bisogno di aiuto?
+    description: "Ricorda che se hai dubbi sul contenuto di un messaggio, ti consigliamo di contattare direttamente l'ente che te lo ha inviato: troverai i recapiti in fondo al messaggo o nella scheda del relativo servizio."
     buttonChat: Inviaci un messaggio
-    descriptionChat: Puoi usare il nostro strumento di chat per inviare un messaggio in caso di bisogno urgente di assistenza. Riceverai una risposta direttamente su IO
+    descriptionChat: "Se invece hai trovato un errore o qualcosa che non funziona nell’app, segnala un bug agli sviluppatori: si prenderanno carico del problema al più presto e ti risponderanno direttamente tramite IO."
     buttonBug: Segnala un bug
     descriptionBug: Puoi segnalare un errore o qualcosa che non funziona ai nostri sviluppatori, si prenderanno carico del problema al più presto.
     title2: Sei nuovo in IO?
-    descriptionLink: Scopri come funziona e quali sono le funzionalità speciali di IO, visitando il sito
+    descriptionLink: Scopri di più sul progetto IO, sulla sua storia e su quali novità ti attendono, visitando il sito
 faq:
   1:
     title: "Cos'è SPID?"
@@ -1054,7 +1092,7 @@ faq:
     title: "Come scelgiere un Identity Provider?"
     content: !include faq/faq7.md
   8:
-    title: "E' possibile avere più di un'identità digitale?"
+    title: "È possibile avere più di un'identità digitale?"
     content: !include faq/faq8.md
   9:
     title: "Qual è la tua password?"
@@ -1081,7 +1119,7 @@ faq:
     title: "A cosa serve il Codice di sblocco?"
     content: !include faq/faq17.md
   18:
-    title: "E' possibile reimpostare il Codice di sblocco in un secondo momento?"
+    title: "È possibile reimpostare il Codice di sblocco in un secondo momento?"
     content: !include faq/faq18.md
   19:
     title: "Il riconoscimento biometrico è sicuro?"
@@ -1106,7 +1144,7 @@ faq:
     title: "I messaggi possono essere cancellati?"
     content: !include faq/faq25.md
   26:
-    title: "E' possibile rispondere ai messaggi?"
+    title: "È possibile rispondere ai messaggi?"
     content: !include faq/faq26.md
   27:
     title: "Come si collega un calendario?"
@@ -1127,7 +1165,7 @@ faq:
     title: "Cos'è il codice identificativo del messaggio?"
     content: !include faq/faq32.md
   33:
-    title: "E' possibile pagare un avviso che non hai ricevuto tramite l'app IO?"
+    title: "È possibile pagare un avviso che non hai ricevuto tramite l'app IO?"
     content: !include faq/faq33.md
   34:
     title: "Che cos'è un QR code?"
@@ -1198,3 +1236,6 @@ faq:
   56:
     title: "Come cancellare tutti i tuoi dati da IO?"
     content: !include faq/faq56.md
+  57:
+    title: "Hai avuto problemi durante un pagamento?"
+    content: !include faq/faq57.md

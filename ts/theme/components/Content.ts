@@ -17,7 +17,7 @@ declare module "native-base" {
 export default (): Theme => {
   return {
     ".alternative": {
-      backgroundColor: variables.contentAlternativeBackground
+      backgroundColor: variables.brandGray
     },
     ".noPadded": {
       paddingBottom: FOOTER_SAFE_AREA,
