@@ -50,7 +50,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
-import { dispatchEmailValidationToMixpanel } from "./analytics/emailValidatedToMixpanel";
+import { watchEmailValidatedChangedSaga } from "./watchEmailValidatedChangedSaga";
 
 import {
   startAndReturnIdentificationResult,
@@ -104,6 +104,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
   //           needed to manually clear previous installation user info in
   //           order to force the user to choose unlock code and run through onboarding
   //           every new installation.
+
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
 
@@ -111,6 +112,9 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
   const lastLoggedInProfileState: ReturnType<
     typeof profileSelector
   > = yield select<GlobalState>(profileSelector);
+
+  // Watch for profile changes
+  yield fork(watchEmailValidatedChangedSaga, lastLoggedInProfileState);
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
@@ -130,9 +134,6 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Handles the expiration of the session token
   yield fork(watchSessionExpiredSaga);
-
-  // Watch for the event of email vaidated
-  yield fork(dispatchEmailValidationToMixpanel);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(

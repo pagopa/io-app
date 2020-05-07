@@ -19,6 +19,7 @@ import { CieAuthenticationActions } from "./cie";
 import { ContentActions } from "./content";
 import { DebugActions } from "./debug";
 import { DeepLinkActions } from "./deepLink";
+import { EmailValidationAction } from "./emailValidationChange";
 import { IdentificationActions } from "./identification";
 import { InstabugInfoActions } from "./instabug";
 import { InstallationActions } from "./installation";
@@ -68,7 +69,8 @@ export type Action =
   | PaymentsActions
   | OrganizationsActions
   | InstabugInfoActions
-  | UserDataProcessingActions;
+  | UserDataProcessingActions
+  | EmailValidationAction;
 
 export type Dispatch = DispatchAPI<Action>;
 

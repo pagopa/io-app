@@ -3,6 +3,7 @@ import { sha256 } from "react-native-sha256";
 import { NavigationActions } from "react-navigation";
 import { getType } from "typesafe-actions";
 import { setInstabugUserAttribute } from "../../boot/configureInstabug";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 import { mixpanel } from "../../mixpanel";
 import { getCurrentRouteName } from "../../utils/navigation";
 import {
@@ -28,6 +29,7 @@ import {
   loadServiceMetadata
 } from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
+import { emailValidationChanged } from "../actions/emailValidationChange";
 import {
   identificationCancel,
   identificationFailure,
@@ -97,6 +99,8 @@ import {
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
 
+const emailValidationComplete = "EMAIL_VALIDATION_COMPLETED";
+
 // tslint:disable cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
   action: Action
@@ -140,6 +144,14 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(profileFirstLogin):
       return mp.track(action.type, action.payload);
+
+    // dispatch to mixpanel when the email is validated
+    case getType(emailValidationChanged):
+      if (action.payload) {
+        RTron.log("SEND emailValidationChanged");
+        return mp.track(emailValidationComplete);
+      }
+      break;
 
     case getType(fetchTransactionsSuccess):
       return mp.track(action.type, {
