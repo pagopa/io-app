@@ -11,7 +11,6 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
-import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
@@ -181,7 +180,6 @@ export default class MessageDetailComponent extends React.PureComponent<
             goToServiceDetail={onServiceLinkPress}
           />
         )}
-        {this.state.isContentLoadCompleted && <EdgeBorderComponent />}
         <View spacer={true} large={true} />
       </Content>
     );
