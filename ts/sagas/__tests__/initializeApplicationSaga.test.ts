@@ -34,16 +34,6 @@ jest.mock("react-native-background-timer", () => {
 
 jest.mock("../../api/backend");
 
-jest.mock("react-native-mixpanel", () => {
-  return {
-    MixpanelInstance: jest.fn(() => {
-      return {
-        initialize: () => Promise.resolve()
-      };
-    })
-  };
-});
-
 const profile: InitializedProfile = {
   has_profile: true,
   is_inbox_enabled: true,
