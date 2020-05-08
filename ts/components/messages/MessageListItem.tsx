@@ -74,7 +74,6 @@ class MessageListItem extends React.PureComponent<Props> {
           <React.Fragment>
             <View spacer={true} large={true} />
             <MessageListCTABar
-              paid={this.props.payment !== undefined}
               message={message}
               service={service}
               payment={payment}
