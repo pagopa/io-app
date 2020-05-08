@@ -159,7 +159,7 @@ class MessageCTABar extends React.PureComponent<Props> {
     );
   };
 
-  // Render abutton to display details of the payment related to the message
+  // Render a button to display details of the payment related to the message
   private renderPaymentButton() {
     const { message, service, small, disabled } = this.props;
 
