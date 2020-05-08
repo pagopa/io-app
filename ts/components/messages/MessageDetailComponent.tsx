@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A component to render the message detail.
+ * A component to render the message detail. It has 2 main styles: traditional message and medical prescription
  */
 export default class MessageDetailComponent extends React.PureComponent<
   Props,
@@ -224,7 +224,6 @@ export default class MessageDetailComponent extends React.PureComponent<
         )}
         <View spacer={true} extralarge={true} />
       </Content>
-      /** TODO: add footer bar if is medical precription*/
     );
   }
-}
+};
