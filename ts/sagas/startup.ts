@@ -50,7 +50,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
-import { watchEmailValidatedChangedSaga } from "./watchEmailValidatedChangedSaga";
+import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
 import {
   startAndReturnIdentificationResult,
@@ -118,7 +118,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
     : none;
 
   // Watch for profile changes
-  yield fork(watchEmailValidatedChangedSaga, lastEmailValidated);
+  yield fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.

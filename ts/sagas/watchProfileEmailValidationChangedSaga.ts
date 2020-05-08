@@ -12,7 +12,7 @@ let maybePreviousEmailValidated: Option<boolean> = none;
  * in order to dispatch the event to mixpanel
  * @param initialEmailValidated: the initial email validate value from profile, before refresh
  */
-export function* watchEmailValidatedChangedSaga(
+export function* watchProfileEmailValidationChangedSaga(
   initialEmailValidated: Option<boolean>
 ): IterableIterator<Effect> {
   maybePreviousEmailValidated = initialEmailValidated;

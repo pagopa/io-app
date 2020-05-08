@@ -22,7 +22,7 @@ import { previousInstallationDataDeleteSaga } from "../installation";
 import { loadProfile } from "../profile";
 import { initializeApplicationSaga } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
-import { watchEmailValidatedChangedSaga } from "../watchEmailValidatedChangedSaga";
+import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -58,7 +58,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
-      .fork(watchEmailValidatedChangedSaga, none)
+      .fork(watchProfileEmailValidationChangedSaga, none)
       .next()
       .put(resetProfileState())
       .next()
@@ -82,7 +82,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
-      .fork(watchEmailValidatedChangedSaga, none)
+      .fork(watchProfileEmailValidationChangedSaga, none)
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
@@ -103,7 +103,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
-      .fork(watchEmailValidatedChangedSaga, none)
+      .fork(watchProfileEmailValidationChangedSaga, none)
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
