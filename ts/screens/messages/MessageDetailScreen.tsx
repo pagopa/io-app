@@ -298,8 +298,8 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     }
   }
 
-  // load service metadata to get information about email & phone (needed in MessageDetailData)
-  // this load is not related if the message has been load or not
+  // force load service metadata to get information about email & phone (needed in MessageDetailData)
+  // the last version is preferred (fresh updates)
   private loadServicesMetadata() {
     if (!pot.isLoading(this.props.potServiceMetadata)) {
       pot.map(this.props.potMessage, m => {
