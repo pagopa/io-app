@@ -16,10 +16,12 @@ export function* watchProfileEmailValidationChangedSaga(
   initialEmailValidated: Option<boolean>
 ): IterableIterator<Effect> {
   maybePreviousEmailValidated = initialEmailValidated;
-  yield takeEvery(getType(profileLoadSuccess), checkEmailChanged);
+  yield takeEvery(getType(profileLoadSuccess), checkProfileEmailChanged);
 }
 
-function* checkEmailChanged(action: ActionType<typeof profileLoadSuccess>) {
+export function* checkProfileEmailChanged(
+  action: ActionType<typeof profileLoadSuccess>
+) {
   const profileUpdate = action.payload;
 
   // dispatch the action only if a previous state exists.
