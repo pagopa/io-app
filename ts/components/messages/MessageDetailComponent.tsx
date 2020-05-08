@@ -173,9 +173,6 @@ export default class MessageDetailComponent extends React.PureComponent<
             payment={payment}
           />
 
-          <View spacer={true} />
-          <MedicalPrescriptionDueDateBar message={message} />
-
           <MessageMarkdown
             webViewStyle={styles.webview}
             onLoadEnd={this.onMarkdownLoadEnd}
