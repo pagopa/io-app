@@ -10,7 +10,7 @@ import { Version } from "../../../definitions/backend/Version";
 import { profileLoadSuccess } from "../../store/actions/profile";
 import { profileEmailValidationChanged } from "../../store/actions/profileEmailValidationChange";
 import {
-  isEmailProfileChanged,
+  isProfileEmailValidatedChanged,
   testableCheckProfileEmailChanged as checkProfileEmailChanged
 } from "../watchProfileEmailValidationChangedSaga";
 
@@ -29,46 +29,25 @@ const profile: InitializedProfile = {
   version: 1 as Version
 };
 
-describe("isEmailProfileChanged", () => {
-  // true -> true -> no changes
-  expect(isEmailProfileChanged(profile, some(true))).toBeFalsy();
+describe("isEmailValidatedChanged", () => {
+  it("test all the combination for the method isEmailValidatedChanged", () => {
+    expect(isProfileEmailValidatedChanged(some(true), some(true))).toBeFalsy();
+    expect(
+      isProfileEmailValidatedChanged(some(false), some(false))
+    ).toBeFalsy();
+    expect(isProfileEmailValidatedChanged(none, some(false))).toBeFalsy();
+    expect(isProfileEmailValidatedChanged(none, some(true))).toBeFalsy();
+    expect(isProfileEmailValidatedChanged(some(false), none)).toBeFalsy();
+    expect(isProfileEmailValidatedChanged(some(true), none)).toBeFalsy();
+    expect(isProfileEmailValidatedChanged(none, none)).toBeFalsy();
 
-  // false -> true -> changed
-  expect(
-    isEmailProfileChanged({ ...profile, is_email_validated: false }, some(true))
-  ).toBeTruthy();
-
-  // false -> false -> no changes
-  expect(
-    isEmailProfileChanged(
-      { ...profile, is_email_validated: false },
-      some(false)
-    )
-  ).toBeFalsy();
-
-  // false -> none -> unknown
-  expect(isEmailProfileChanged(profile, none)).toBeFalsy();
-
-  // true -> false -> changed
-  expect(
-    isEmailProfileChanged({ ...profile, is_email_validated: true }, some(false))
-  ).toBeTruthy();
-
-  // undefined -> false -> unknown
-  expect(
-    isEmailProfileChanged(
-      { ...profile, is_email_validated: undefined },
-      some(false)
-    )
-  ).toBeFalsy();
-
-  // undefined -> none -> unknown
-  expect(
-    isEmailProfileChanged(
-      { ...profile, is_email_validated: undefined },
-      some(false)
-    )
-  ).toBeFalsy();
+    expect(
+      isProfileEmailValidatedChanged(some(true), some(false))
+    ).toBeTruthy();
+    expect(
+      isProfileEmailValidatedChanged(some(false), some(true))
+    ).toBeTruthy();
+  });
 });
 
 describe("checkProfileEmailChanged", () => {
