@@ -40,6 +40,9 @@ export default (): Theme => {
       xsmall: {
         height: customVariables.spacerExtrasmallHeight
       },
+      ".xsmall": {
+        height: customVariables.spacerExtrasmallHeight
+      },
       ".small": {
         height: customVariables.spacerSmallHeight
       },

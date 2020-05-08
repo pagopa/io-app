@@ -78,14 +78,13 @@ class MessageCTABar extends React.PureComponent<Props> {
     return this.props.payment !== undefined;
   }
 
-  private maybeMessagePaymentExpirationInfo = () => {
+  get paymentExpirationInfo() {
     const { message } = this.props;
     const { payment_data, due_date } = message.content;
     return fromNullable(payment_data).map(paymentData =>
       getMessagePaymentExpirationInfo(paymentData, due_date)
     );
-  };
-  private paymentExpirationInfo = this.maybeMessagePaymentExpirationInfo();
+  }
 
   private isPaymentExpired = this.paymentExpirationInfo.fold(false, info =>
     isExpired(info)
@@ -98,13 +97,13 @@ class MessageCTABar extends React.PureComponent<Props> {
     const { message, small } = this.props;
     const { due_date } = message.content;
 
-    // The calendar icon is shown if:
-    // - the payment related to the message is not yet paid
+    // The calendar icon is hidden if:
+    // - the payment related to the message has been paid
     if (this.paid) {
       return undefined;
     }
 
-    // - the message has a due date
+    // - the message has any a due date
     if (!due_date) {
       return undefined;
     }
@@ -134,18 +133,18 @@ class MessageCTABar extends React.PureComponent<Props> {
     const { message, small, disabled } = this.props;
     const { due_date } = message.content;
 
-    // The add/remove reminder button is shown if:
+    // The add/remove reminder button is hidden if:
     // - if the message has a due date
     if (due_date === undefined) {
       return undefined;
     }
 
-    // - if the message is relative to a payment and it is not paid
+    // - if the message is relative to a payment and it has been paid
     if (this.paid) {
       return undefined;
     }
 
-    // - the payment related to the message has been expired
+    // - the payment related to the message expired
     if (this.isPaymentExpired) {
       return undefined;
     }
@@ -165,7 +164,8 @@ class MessageCTABar extends React.PureComponent<Props> {
 
     const paymentInfo = this.paymentExpirationInfo;
 
-    // the button is displayed if the payment has an expiration date in the future
+    // don't show payment button if the message doesn't contain payment info or
+    // the payment is expired and it has to be rendered in the large version
     if (paymentInfo.isNone() || (!small && this.isPaymentExpired)) {
       return undefined;
     }

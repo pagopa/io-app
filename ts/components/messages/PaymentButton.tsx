@@ -110,6 +110,7 @@ class PaymentButton extends React.PureComponent<Props> {
 
     if (expired) {
       this.navigateToMessageDetail();
+      return;
     }
 
     if (!disabled && !paid && amount.isSome() && rptId.isSome()) {
