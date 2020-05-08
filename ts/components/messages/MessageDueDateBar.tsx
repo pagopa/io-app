@@ -18,9 +18,9 @@ import {
   isExpiring,
   paymentExpirationInfo
 } from "../../utils/messages";
+import { formatPaymentAmount } from "../../utils/payment";
 import StyledIconFont from "../ui/IconFont";
 import CalendarIconComponent from "./CalendarIconComponent";
-import { formatPaymentAmount } from '../../utils/payment';
 
 type Props = {
   message: CreatedMessageWithContent;
@@ -28,7 +28,7 @@ type Props = {
   payment?: PaidReason;
 };
 
-const CALENDAR_ICON_HEIGHT = 40
+const CALENDAR_ICON_HEIGHT = 40;
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding,
     paddingVertical: customVariables.appHeaderPaddingHorizontal,
     alignItems: "center",
-    minHeight: CALENDAR_ICON_HEIGHT + 2 * customVariables.appHeaderPaddingHorizontal
+    minHeight:
+      CALENDAR_ICON_HEIGHT + 2 * customVariables.appHeaderPaddingHorizontal
   },
   text: {
     flex: 1,
@@ -45,6 +46,9 @@ const styles = StyleSheet.create({
   },
   highlight: {
     color: customVariables.brandHighlight
+  },
+  center: {
+    justifyContent: "center"
   }
 });
 
@@ -61,7 +65,9 @@ class MessageDueDateBar extends React.PureComponent<Props> {
   }
 
   get amount() {
-    return this.paymentExpirationInfo.fold(undefined, i => formatPaymentAmount(i.amount)); 
+    return this.paymentExpirationInfo.fold(undefined, i =>
+      formatPaymentAmount(i.amount)
+    );
   }
 
   get isPaymentExpired() {
@@ -166,15 +172,22 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     }
 
     return (
-      <View style={[
-        styles.container, 
-        this.bannerStyle, 
-        paid && {justifyContent: 'center'}
-      ]}>
+      <View
+        style={[
+          styles.container,
+          this.bannerStyle,
+          paid ? styles.center : undefined
+        ]}
+      >
         {this.paid ? (
           <React.Fragment>
-            <StyledIconFont name={"io-tick-big"} color={customVariables.brandHighlight}/>
-            <Text style={styles.highlight} bold={true}>{I18n.t("messages.cta.paid", {amount})}</Text>
+            <StyledIconFont
+              name={"io-tick-big"}
+              color={customVariables.brandHighlight}
+            />
+            <Text style={styles.highlight}>
+              {I18n.t("messages.cta.paid", { amount })}
+            </Text>
           </React.Fragment>
         ) : (
           <React.Fragment>

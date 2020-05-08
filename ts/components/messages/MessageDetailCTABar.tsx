@@ -44,7 +44,6 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
   }
 
-  // Evaluate if use 'isExpiring' or 'isToday' (from date-fns) to determe if it is expiring today
   get isPaymentExpiring() {
     return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
   }
@@ -55,9 +54,9 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
 
   // Render a button to add/remove an event related to the message in the calendar
   private renderCalendarEventButton = () => {
-    // The add/remove reminder button is shown if:
-    // - if the message has a due date
-    // - if the message has a payment and it is not paid nor expired
+    // The add/remove reminder button is hidden:
+    // - if the message hasn't a due date
+    // - if the message has a payment and it has been paid or is expired
     if (this.dueDate !== undefined && !this.paid && !this.isPaymentExpired) {
       return <CalendarEventButton message={this.props.message} />;
     }
