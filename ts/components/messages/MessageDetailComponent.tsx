@@ -12,11 +12,11 @@ import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
+import OrganizationHeader from "../OrganizationHeader";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageMarkdown from "./MessageMarkdown";
-import MessageOrganizationHeader from "./MessageOrganizationHeader";
 
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
@@ -149,7 +149,7 @@ export default class MessageDetailComponent extends React.PureComponent<
           <View spacer={true} />
           {service !== undefined && (
             <React.Fragment>
-              {service && <MessageOrganizationHeader service={service} />}
+              {service && <OrganizationHeader service={service} />}
               <View spacer={true} large={true} />
             </React.Fragment>
           )}
@@ -226,4 +226,4 @@ export default class MessageDetailComponent extends React.PureComponent<
       </Content>
     );
   }
-};
+}

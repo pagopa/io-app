@@ -1,11 +1,11 @@
 import { Col, Grid, Text } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import customVariables from "../../theme/variables";
-import { logosForService } from "../../utils/services";
-import H5 from "../ui/H5";
-import { MultiImage } from "../ui/MultiImage";
+import { ServicePublic } from "../../definitions/backend/ServicePublic";
+import customVariables from "../theme/variables";
+import { logosForService } from "../utils/services";
+import H5 from "./ui/H5";
+import { MultiImage } from "./ui/MultiImage";
 
 const styles = StyleSheet.create({
   serviceCol: {
@@ -28,7 +28,7 @@ type Props = {
  * A component to render the name of the organization and of the related service
  * with the corresponding image
  */
-class MessageOrganizationHeader extends React.PureComponent<Props> {
+export default class OrganizationHeader extends React.PureComponent<Props> {
   public render() {
     const { service } = this.props;
     return (
@@ -49,5 +49,3 @@ class MessageOrganizationHeader extends React.PureComponent<Props> {
     );
   }
 }
-
-export default MessageOrganizationHeader;
