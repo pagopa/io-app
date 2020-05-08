@@ -890,8 +890,9 @@ messages:
       title: You haven't any scheduled deadline.
       subtitle:  Use the button above to check out past deadlines.
   medical:
+    prescription: Electronic prescription
+    memo: Reminder for the recipient
     deadline: this prescription expires {{date}}
-    receipt: Electronic prescription
     nre: NRE Electronic prescription number
     iup: IUP Unique booking identifier
     cf: Codice Fiscale dell'assistito

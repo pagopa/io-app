@@ -924,7 +924,8 @@ messages:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
   medical:
-    receipt: Ricetta elettronica
+    prescription: Ricetta elettronica
+    memo: Promemoria per l'assistito
     nre: NRE Numero Ricetta Elettronica
     iup: IUP Identificativo Unico Prenotazione
     cf: Codice Fiscale dell'assistito

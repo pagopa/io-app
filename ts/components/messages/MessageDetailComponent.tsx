@@ -1,10 +1,8 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H1, Text, View } from "native-base";
+import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
-
-import { fromNullable } from "fp-ts/lib/Option";
 import { SvgXml } from "react-native-svg";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -12,16 +10,13 @@ import I18n from "../../i18n";
 import { ServiceMetadataState } from "../../store/reducers/content";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
-import { logosForService } from "../../utils/services";
-import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
-import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import H4 from "../ui/H4";
-import H6 from "../ui/H6";
-import { MultiImage } from "../ui/MultiImage";
+import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageMarkdown from "./MessageMarkdown";
+import MessageOrganizationHeader from "./MessageOrganizationHeader";
 
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
@@ -36,8 +31,8 @@ type State = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    padding: variables.contentPadding
+  padded: {
+    paddingHorizontal: variables.contentPadding
   },
   serviceContainer: {
     marginBottom: variables.contentPadding
@@ -74,12 +69,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     height: variables.lineHeightBase
   },
-  serviceCol: {
-    width: 60
-  },
-  serviceMultiImage: {
-    width: 60,
-    height: 60
+  reducedText: {
+    fontSize: customVariables.fontSizeSmall
   }
 });
 
@@ -99,6 +90,29 @@ export default class MessageDetailComponent extends React.PureComponent<
     this.setState({ isContentLoadCompleted: true });
   };
 
+  private getTitle = () => {
+    if (this.maybeMedicalData.isSome()) {
+      return (
+        <React.Fragment>
+          <H3>{I18n.t("messages.medical.prescription")}</H3>
+          <Text style={styles.reducedText}>
+            {I18n.t("messages.medical.memo")}
+          </Text>
+        </React.Fragment>
+      );
+    }
+
+    return <H3>{this.props.message.content.subject}</H3>;
+  };
+
+  get maybeMedicalData() {
+    return fromNullable(this.props.message.content.prescription_data);
+  }
+
+  get attachments() {
+    return fromNullable(this.props.message.content.attachments);
+  }
+
   public render() {
     const {
       message,
@@ -107,6 +121,7 @@ export default class MessageDetailComponent extends React.PureComponent<
       paymentsByRptId,
       onServiceLinkPress
     } = this.props;
+    const { maybeMedicalData } = this;
 
     const service =
       potServiceDetail !== undefined
@@ -127,39 +142,27 @@ export default class MessageDetailComponent extends React.PureComponent<
             }`
           ]
         : undefined;
-    const maybeMedicalData = fromNullable(message.content.prescription_data);
-    const attachments = fromNullable(message.content.attachments);
+
     return (
       <Content noPadded={true}>
-        <View style={styles.headerContainer}>
-          {/** TODO: update header */}
-          {/* Service */}
-          {service && (
-            <Grid style={styles.serviceContainer}>
-              <Col>
-                <H4>{service.organization_name}</H4>
-                <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                  <H6>{service.service_name}</H6>
-                </TouchableDefaultOpacity>
-              </Col>
-              {service.service_id && (
-                <Col style={styles.serviceCol}>
-                  <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                    <MultiImage
-                      style={styles.serviceMultiImage}
-                      source={logosForService(service)}
-                    />
-                  </TouchableDefaultOpacity>
-                </Col>
-              )}
-            </Grid>
+        <View style={styles.padded}>
+          <View spacer={true} />
+          {service !== undefined && (
+            <React.Fragment>
+              {service && <MessageOrganizationHeader service={service} />}
+              <View spacer={true} large={true} />
+            </React.Fragment>
           )}
-
           {/* Subject */}
-          <View style={styles.subjectContainer}>
-            <H1>{message.content.subject}</H1>
-          </View>
+          {this.getTitle()}
+          <View spacer={true} />
         </View>
+
+        {maybeMedicalData.isSome() && (
+          <MedicalPrescriptionIdentifiersComponent
+            prescriptionData={maybeMedicalData.value}
+          />
+        )}
 
         {this.state.isContentLoadCompleted &&
           messageNeedsCTABar(message) && (
@@ -177,34 +180,9 @@ export default class MessageDetailComponent extends React.PureComponent<
           {message.content.markdown}
         </MessageMarkdown>
 
-        {this.state.isContentLoadCompleted && (
-          <MessageDetailData
-            message={message}
-            serviceDetail={potServiceDetail}
-            serviceMetadata={potServiceMetadata}
-            goToServiceDetail={onServiceLinkPress}
-          />
-        )}
-
-        <MessageMarkdown webViewStyle={styles.webview}>
-          {message.content.markdown}
-        </MessageMarkdown>
-        {maybeMedicalData.isSome() && (
-          <React.Fragment>
-            <Text>{maybeMedicalData.value.nre}</Text>
-            <Text>
-              {fromNullable(maybeMedicalData.value.iup).fold("n/a", s => s)}
-            </Text>
-            <Text>
-              {fromNullable(maybeMedicalData.value.prescriber_fiscal_code).fold(
-                "n/a",
-                s => s as string
-              )}
-            </Text>
-          </React.Fragment>
-        )}
-        {attachments.isSome() &&
-          attachments.value.map((att, idx) => {
+        {this.state.isContentLoadCompleted &&
+          this.attachments.isSome() &&
+          this.attachments.value.map((att, idx) => {
             // we should show the SvgXml and share the png version
             // these two image are the same. They differ only for the mime_type
             const image =
@@ -228,15 +206,25 @@ export default class MessageDetailComponent extends React.PureComponent<
                 />
               );
             return (
-              <View key={`frag_${idx}`} style={{ padding: 10 }}>
+              <View key={`frag_${idx}`} style={styles.padded}>
                 <Text key={`text_${idx}`}>{att.name}</Text>
                 {image}
                 <View spacer={true} />
               </View>
             );
           })}
-        <EdgeBorderComponent />
+
+        {this.state.isContentLoadCompleted && (
+          <MessageDetailData
+            message={message}
+            serviceDetail={potServiceDetail}
+            serviceMetadata={potServiceMetadata}
+            goToServiceDetail={onServiceLinkPress}
+          />
+        )}
+        <View spacer={true} extralarge={true} />
       </Content>
+      /** TODO: add footer bar if is medical precription*/
     );
   }
 }

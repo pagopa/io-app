@@ -4,7 +4,9 @@ import FooterWithButtons from "../ui/FooterWithButtons";
 
 type Props = ReadonlyArray<{}>;
 
-export default class MedicalMessageCTABar extends React.PureComponent<Props> {
+export default class MedicalPrescriptionCTABar extends React.PureComponent<
+  Props
+> {
   public render() {
     return (
       // Convert to BlockButtons
