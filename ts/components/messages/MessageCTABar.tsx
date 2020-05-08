@@ -145,7 +145,7 @@ class MessageCTABar extends React.PureComponent<Props> {
       return undefined;
     }
 
-    // - the payment related to the message has an expiration date and it is in the future
+    // - the payment related to the message has been expired
     if (this.isPaymentExpired) {
       return undefined;
     }
