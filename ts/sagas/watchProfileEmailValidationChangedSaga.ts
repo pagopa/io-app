@@ -1,6 +1,7 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { Effect, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { profileLoadSuccess } from "../store/actions/profile";
 import { profileEmailValidationChanged } from "../store/actions/profileEmailValidationChange";
 
@@ -19,15 +20,24 @@ export function* watchProfileEmailValidationChangedSaga(
   yield takeEvery(getType(profileLoadSuccess), checkProfileEmailChanged);
 }
 
-export function* checkProfileEmailChanged(
+export const isEmailProfileChanged = (
+  profile: InitializedProfile,
+  maybeEmailValidated: Option<boolean>
+): boolean =>
+  maybeEmailValidated
+    .map(x => x !== profile.is_email_validated)
+    .getOrElse(false);
+
+function* checkProfileEmailChanged(
   action: ActionType<typeof profileLoadSuccess>
 ) {
   const profileUpdate = action.payload;
 
   // dispatch the action only if a previous state exists.
-  const emailStateChanged = maybePreviousEmailValidated
-    .map(x => x !== profileUpdate.is_email_validated)
-    .getOrElse(false);
+  const emailStateChanged = isEmailProfileChanged(
+    profileUpdate,
+    maybePreviousEmailValidated
+  );
 
   if (emailStateChanged) {
     yield put(
