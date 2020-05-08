@@ -20,6 +20,7 @@ import {
 } from "../../utils/messages";
 import StyledIconFont from "../ui/IconFont";
 import CalendarIconComponent from "./CalendarIconComponent";
+import { formatPaymentAmount } from '../../utils/payment';
 
 type Props = {
   message: CreatedMessageWithContent;
@@ -27,17 +28,23 @@ type Props = {
   payment?: PaidReason;
 };
 
+const CALENDAR_ICON_HEIGHT = 40
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     paddingHorizontal: customVariables.contentPadding,
     paddingVertical: customVariables.appHeaderPaddingHorizontal,
-    alignItems: "center"
+    alignItems: "center",
+    minHeight: CALENDAR_ICON_HEIGHT + 2 * customVariables.appHeaderPaddingHorizontal
   },
   text: {
     flex: 1,
     paddingRight: 60,
     paddingLeft: 5
+  },
+  highlight: {
+    color: customVariables.brandHighlight
   }
 });
 
@@ -51,6 +58,10 @@ class MessageDueDateBar extends React.PureComponent<Props> {
 
   get paid(): boolean {
     return this.props.payment !== undefined;
+  }
+
+  get amount() {
+    return this.paymentExpirationInfo.fold(undefined, i => formatPaymentAmount(i.amount)); 
   }
 
   get isPaymentExpired() {
@@ -148,18 +159,22 @@ class MessageDueDateBar extends React.PureComponent<Props> {
    * Display description on message deadlines
    */
   public render() {
-    const { dueDate } = this;
+    const { dueDate, amount, paid } = this;
 
     if (dueDate === undefined) {
       return null;
     }
 
     return (
-      <View style={[styles.container, this.bannerStyle]}>
+      <View style={[
+        styles.container, 
+        this.bannerStyle, 
+        paid && {justifyContent: 'center'}
+      ]}>
         {this.paid ? (
           <React.Fragment>
-            <StyledIconFont name={"io-tick-big"} />
-            <Text>{I18n.t("messages.cta.paid")}</Text>
+            <StyledIconFont name={"io-tick-big"} color={customVariables.brandHighlight}/>
+            <Text style={styles.highlight} bold={true}>{I18n.t("messages.cta.paid", {amount})}</Text>
           </React.Fragment>
         ) : (
           <React.Fragment>
