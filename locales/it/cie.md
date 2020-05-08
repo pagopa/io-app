@@ -6,4 +6,4 @@ Insieme a SPID, CIE è l'unico strumento che consente di certificare la propria 
 
 ## Come ottenere CIE
 
-Puoi fare richiesta della CIE presso l'anagrafe del tuo comune di residenza o dimora: per saperne di più vai su [www.cartaidentita.interno.gov.it](https://www.cartaidentita.interno.gov.it)
+Puoi fare richiesta della CIE presso l'anagrafe del tuo comune di residenza o dimora: per saperne di più vai su [www.cartaidentita.interno.gov.it](https://cartaidentita.interno.gov.it)

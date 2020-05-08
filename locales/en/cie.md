@@ -6,4 +6,4 @@ Together with SPID, CIE is the only tool that allows you to certify your digital
 
 ## How to get CIE
 
-You can apply for the CIE at the registry office of your municipality of residence: to learn more go to [www.cartaidentita.interno.gov.it](https://www.cartaidentita.interno.gov.it)
+You can apply for the CIE at the registry office of your municipality of residence: to learn more go to [www.cartaidentita.interno.gov.it](www.cartaidentita.interno.gov.it)
