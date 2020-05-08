@@ -1,8 +1,8 @@
 import { fromNullable, none, Option } from "fp-ts/lib/Option";
 import { Effect, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { emailValidationChanged } from "../store/actions/emailValidationChange";
 import { profileLoadSuccess } from "../store/actions/profile";
+import { profileEmailValidationChanged } from "../store/actions/profileEmailValidationChange";
 
 // tslint:disable-next-line:no-let
 let maybePreviousEmailValidated: Option<boolean> = none;
@@ -29,7 +29,7 @@ function* checkEmailChanged(action: ActionType<typeof profileLoadSuccess>) {
 
   if (emailStateChanged) {
     yield put(
-      emailValidationChanged(profileUpdate.is_email_validated || false)
+      profileEmailValidationChanged(profileUpdate.is_email_validated || false)
     );
   }
 

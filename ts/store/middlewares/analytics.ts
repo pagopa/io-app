@@ -28,7 +28,6 @@ import {
   loadServiceMetadata
 } from "../actions/content";
 import { instabugReportClosed, instabugReportOpened } from "../actions/debug";
-import { emailValidationChanged } from "../actions/emailValidationChange";
 import {
   identificationCancel,
   identificationFailure,
@@ -56,6 +55,7 @@ import {
   profileLoadSuccess,
   profileUpsert
 } from "../actions/profile";
+import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
 import { loadServiceDetail, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import { upsertUserDataProcessing } from "../actions/userDataProcessing";
@@ -97,8 +97,6 @@ import {
   setFavouriteWalletRequest,
   setFavouriteWalletSuccess
 } from "../actions/wallet/wallets";
-
-const emailValidationComplete = "EMAIL_VALIDATION_COMPLETED";
 
 // tslint:disable cognitive-complexity no-big-function
 const trackAction = (mp: NonNullable<typeof mixpanel>) => (
@@ -145,11 +143,8 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
       return mp.track(action.type, action.payload);
 
     // dispatch to mixpanel when the email is validated
-    case getType(emailValidationChanged):
-      if (action.payload) {
-        return mp.track(emailValidationComplete);
-      }
-      break;
+    case getType(profileEmailValidationChanged):
+      return mp.track(action.type, { isEmailValidated: action.payload });
 
     case getType(fetchTransactionsSuccess):
       return mp.track(action.type, {
