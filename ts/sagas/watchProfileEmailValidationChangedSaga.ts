@@ -4,6 +4,7 @@ import { ActionType, getType } from "typesafe-actions";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { profileLoadSuccess } from "../store/actions/profile";
 import { profileEmailValidationChanged } from "../store/actions/profileEmailValidationChange";
+import { isTestEnv } from "../utils/environment";
 
 // tslint:disable-next-line:no-let
 let maybePreviousEmailValidated: Option<boolean> = none;
@@ -47,3 +48,7 @@ function* checkProfileEmailChanged(
 
   maybePreviousEmailValidated = fromNullable(profileUpdate.is_email_validated);
 }
+
+export const testableCheckProfileEmailChanged = isTestEnv
+  ? checkProfileEmailChanged
+  : undefined;
