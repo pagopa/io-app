@@ -172,23 +172,23 @@ export default class MessageDetailComponent extends React.PureComponent<
             payment={payment}
           />
 
-        <MessageMarkdown
-          webViewStyle={styles.webview}
-          onLoadEnd={this.onMarkdownLoadEnd}
-        >
-          {message.content.markdown}
-        </MessageMarkdown>
+          <MessageMarkdown
+            webViewStyle={styles.webview}
+            onLoadEnd={this.onMarkdownLoadEnd}
+          >
+            {message.content.markdown}
+          </MessageMarkdown>
 
-        {this.state.isContentLoadCompleted && (
-          <MessageDetailData
-            message={message}
-            serviceDetail={potServiceDetail}
-            serviceMetadata={potServiceMetadata}
-            goToServiceDetail={onServiceLinkPress}
-          />
-        )}
-        <View spacer={true} large={true} />
-      </Content>
+          {this.state.isContentLoadCompleted && (
+            <MessageDetailData
+              message={message}
+              serviceDetail={potServiceDetail}
+              serviceMetadata={potServiceMetadata}
+              goToServiceDetail={onServiceLinkPress}
+            />
+          )}
+          <View spacer={true} large={true} />
+        </Content>
         <MessageDetailCTABar
           message={message}
           service={service}
