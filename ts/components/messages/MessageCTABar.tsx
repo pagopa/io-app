@@ -586,35 +586,6 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     );
   }
 
-  /*
-  private renderTopContainer = (
-    messagePaymentExpirationInfo: MessagePaymentExpirationInfo
-  ) => {
-    const { small } = this.props;
-
-    if (
-      !small &&
-      messagePaymentExpirationInfo.kind === "EXPIRABLE" &&
-      messagePaymentExpirationInfo.expireStatus === "EXPIRED"
-    ) {
-      return null;
-    }
-
-    const calendarIcon = this.renderCalendarIcon(messagePaymentExpirationInfo);
-
-    const paymentButton = this.renderPaymentButton(
-      messagePaymentExpirationInfo
-    );
-
-    return (
-      <View style={[styles.topContainer, !small && styles.topContainerLarge]}>
-        {calendarIcon}
-        {paymentButton}
-      </View>
-    );
-  };
-  */
-
   private renderTopContainer = (
     maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
   ) => {
