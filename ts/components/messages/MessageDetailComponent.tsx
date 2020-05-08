@@ -15,7 +15,6 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
-import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MessageDetailCTABar from "./MessageDetailCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageDueDateBar from "./MessageDueDateBar";
@@ -173,22 +172,23 @@ export default class MessageDetailComponent extends React.PureComponent<
             payment={payment}
           />
 
-          <MessageMarkdown
-            webViewStyle={styles.webview}
-            onLoadEnd={this.onMarkdownLoadEnd}
-          >
-            {message.content.markdown}
-          </MessageMarkdown>
+        <MessageMarkdown
+          webViewStyle={styles.webview}
+          onLoadEnd={this.onMarkdownLoadEnd}
+        >
+          {message.content.markdown}
+        </MessageMarkdown>
 
-          {this.state.isContentLoadCompleted && (
-            <MessageDetailData
-              message={message}
-              serviceDetail={potServiceDetail}
-              serviceMetadata={potServiceMetadata}
-              goToServiceDetail={onServiceLinkPress}
-            />
-          )}
-        </Content>
+        {this.state.isContentLoadCompleted && (
+          <MessageDetailData
+            message={message}
+            serviceDetail={potServiceDetail}
+            serviceMetadata={potServiceMetadata}
+            goToServiceDetail={onServiceLinkPress}
+          />
+        )}
+        <View spacer={true} large={true} />
+      </Content>
         <MessageDetailCTABar
           message={message}
           service={service}
