@@ -879,7 +879,10 @@ messages:
       expiredAlert: 
         block1: Il pagamento è scaduto alle ore
         block2: del
-      medicalExpiration: Questa ricetta scade il {{date}}
+    presctiption:  
+      addMemo: Questa ricetta scade il
+      expiringAlert: Questa ricetta scade oggi
+      expiredAlert: questa ricetta è scaduta
     pay: Paga € {{amount}}
     paid: Hai pagato € {{amount}}
     reminder: Promemoria

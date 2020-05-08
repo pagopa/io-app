@@ -1,40 +1,26 @@
-import { capitalize } from "lodash";
 import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { PaidReason } from "../../store/reducers/entities/payments";
-import customVariables from "../../theme/variables";
-import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
   isExpired,
   isExpiring,
   paymentExpirationInfo
 } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
-import CalendarIconComponent from "./CalendarIconComponent";
 import PaymentButton from "./PaymentButton";
 
 type Props = {
   message: CreatedMessageWithContent;
   service?: ServicePublic;
   payment?: PaidReason;
-  disabled?: boolean;
 };
 
 const styles = StyleSheet.create({
-  topContainer: {
+  row: {
     flexDirection: "row"
-  },
-  topContainerLarge: {
-    paddingVertical: customVariables.contentPadding / 2,
-    paddingHorizontal: customVariables.contentPadding,
-    backgroundColor: customVariables.brandGray
-  },
-  topContainerPaid: {
-    paddingVertical: 0,
-    paddingHorizontal: 0
   }
 });
 
@@ -45,7 +31,7 @@ const styles = StyleSheet.create({
  * - a button to add/remove a calendar event
  * - a button to show/start a payment
  */
-class MessageListCTABar extends React.PureComponent<Props> {
+class MessageDetailCTABar extends React.PureComponent<Props> {
   get paymentExpirationInfo() {
     return paymentExpirationInfo(this.props.message);
   }
@@ -67,62 +53,30 @@ class MessageListCTABar extends React.PureComponent<Props> {
     return this.props.message.content.due_date;
   }
 
-  private renderCalendarIcon = () => {
-    const { dueDate } = this;
-
-    // The calendar icon is shown if:
-    // - the message has a due date
-    // - the payment related to the message is not yet paid
-    if (dueDate !== undefined && !this.paid) {
-      const iconBackgoundColor = this.isPaymentExpiring
-        ? customVariables.calendarExpirableColor
-        : customVariables.brandDarkGray;
-      return (
-        <CalendarIconComponent
-          small={true}
-          month={capitalize(formatDateAsMonth(dueDate))}
-          day={formatDateAsDay(dueDate)}
-          backgroundColor={iconBackgoundColor}
-          textColor={customVariables.colorWhite}
-        />
-      );
-    }
-    return undefined;
-  };
-
   // Render a button to add/remove an event related to the message in the calendar
   private renderCalendarEventButton = () => {
     // The add/remove reminder button is shown if:
     // - if the message has a due date
     // - if the message has a payment and it is not paid nor expired
     if (this.dueDate !== undefined && !this.paid && !this.isPaymentExpired) {
-      return (
-        <CalendarEventButton
-          small={true}
-          disabled={this.props.disabled}
-          message={this.props.message}
-        />
-      );
+      return <CalendarEventButton message={this.props.message} />;
     }
-    return undefined;
+    return null;
   };
 
   // Render abutton to display details of the payment related to the message
   private renderPaymentButton() {
-    const { message, service, disabled } = this.props;
-    const { paid } = this;
+    const { message, service } = this.props;
 
     // The button is displayed if the payment has an expiration date in the future
     if (this.paymentExpirationInfo.isNone()) {
-      return undefined;
+      return null;
     }
 
     return (
       <PaymentButton
-        paid={paid}
+        paid={this.paid}
         messagePaymentExpirationInfo={this.paymentExpirationInfo.value}
-        small={true}
-        disabled={disabled}
         service={service}
         message={message}
       />
@@ -130,18 +84,21 @@ class MessageListCTABar extends React.PureComponent<Props> {
   }
 
   public render() {
-    const calendarIcon = this.renderCalendarIcon();
-    const calendarEventButton = this.renderCalendarEventButton();
-    return (
-      <View style={[styles.topContainer, this.paid && styles.topContainerPaid]}>
-        {calendarIcon}
-        {calendarIcon && <View hspacer={true} small={true} />}
-        {calendarEventButton}
-        {calendarEventButton && <View hspacer={true} small={true} />}
-        {this.renderPaymentButton()}
-      </View>
-    );
+    const paymentButton = this.renderPaymentButton();
+    const calendarButton = this.renderCalendarEventButton();
+
+    if (paymentButton && calendarButton) {
+      return (
+        <View footer={true} style={styles.row}>
+          {this.renderCalendarEventButton()}
+          {paymentButton !== null &&
+            calendarButton !== null && <View hspacer={true} />}
+          {this.renderPaymentButton()}
+        </View>
+      );
+    }
+    return null;
   }
 }
 
-export default MessageListCTABar;
+export default MessageDetailCTABar;

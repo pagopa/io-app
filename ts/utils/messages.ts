@@ -2,6 +2,7 @@
  * Generic utilities for messages
  */
 
+import { fromNullable } from "fp-ts/lib/Option";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
@@ -88,6 +89,13 @@ export function getMessagePaymentExpirationInfo(
 
   return { kind: "UNEXPIRABLE", noticeNumber: notice_number, amount };
 }
+
+export const paymentExpirationInfo = (message: CreatedMessageWithContent) => {
+  const { payment_data, due_date } = message.content;
+  return fromNullable(payment_data).map(paymentData =>
+    getMessagePaymentExpirationInfo(paymentData, due_date)
+  );
+};
 
 export const isUnexpirable = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo

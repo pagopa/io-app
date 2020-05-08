@@ -11,7 +11,7 @@ import { PaidReason } from "../../store/reducers/entities/payments";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
-import MessageListCTABar from './MessageListCTABar';
+import MessageListCTABar from "./MessageListCTABar";
 
 type Props = {
   isRead: boolean;

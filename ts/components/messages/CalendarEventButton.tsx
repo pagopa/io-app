@@ -35,6 +35,7 @@ import { LightModalContextInterface } from "../ui/LightModal";
 type OwnProps = {
   message: CreatedMessageWithContent;
   small?: boolean;
+  medium?: boolean;
   disabled?: boolean;
 };
 
@@ -340,7 +341,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const { small, disabled } = this.props;
+    const { small, disabled, medium } = this.props;
     const iconName = this.state.isEventInDeviceCalendar
       ? "io-tick-big"
       : "io-plus";
@@ -349,6 +350,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         disabled={disabled}
         onPress={this.onPressHandler}
         xsmall={small}
+        small={medium}
         bordered={!disabled}
         style={styles.button}
       >

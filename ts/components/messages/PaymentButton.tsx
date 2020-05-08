@@ -20,10 +20,7 @@ import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
 import { isUpdateNeeded } from "../../utils/appVersion";
-import {
-  isExpired,
-  MessagePaymentExpirationInfo
-} from "../../utils/messages";
+import { isExpired, MessagePaymentExpirationInfo } from "../../utils/messages";
 import {
   formatPaymentAmount,
   getAmountFromPaymentAmount,

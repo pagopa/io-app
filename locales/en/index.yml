@@ -841,8 +841,11 @@ messages:
       expiringAlert: This notice expire today at
       expiredAlert: 
         block1: The notice expired at 
-        block2: of
-      medicalExpiration: this prescription expires the {{date}}
+        block2: "on"
+    presctiption:  
+      addMemo: This prescription expires the
+      expiringAlert: This prescription expires today
+      expiredAlert: This prescription is expired on
     pay: Pay € {{amount}}
     paid: Paid € {{amount}}
     reminder: Reminder

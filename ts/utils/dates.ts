@@ -75,7 +75,7 @@ export function isExpired(expireMonth: number, expireYear: number): boolean {
     expireYear < currentYear ||
     (expireYear === currentYear && expireMonth < currentMonth)
   );
-};
+}
 
 /**
  * A function to check if the given date is in the past or in the future.
@@ -88,11 +88,11 @@ export function isExpired(expireMonth: number, expireYear: number): boolean {
 export const isDatePassedAway = (date: Date) => {
   const remainingMilliseconds = date.getTime() - Date.now();
   return remainingMilliseconds > 1000 * 60 * 60 * 24
-      ? "VALID"
-      : remainingMilliseconds > 0
-        ? "EXPIRING"
-        : "EXPIRED";
-}
+    ? "VALID"
+    : remainingMilliseconds > 0
+      ? "EXPIRING"
+      : "EXPIRED";
+};
 
 /* 
 * this code is a copy from gcanti repository https://github.com/gcanti/io-ts-types/blob/06b29a2e74c64b21ee2f2477cabf98616a7af35f/src/Date/DateFromISOString.ts
