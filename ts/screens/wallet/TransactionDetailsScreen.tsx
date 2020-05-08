@@ -48,8 +48,10 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 const styles = StyleSheet.create({
   pspLogo: {
-    width: 60,
-    height: 20,
+    maxWidth: 80,
+    maxHeight: 32,
+    width: "100%",
+    height: "100%",
     resizeMode: "contain"
   },
   cardLogo: {
