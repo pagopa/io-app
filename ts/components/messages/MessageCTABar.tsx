@@ -109,7 +109,7 @@ class MessageCTABar extends React.PureComponent<Props> {
       return undefined;
     }
 
-    // - the component is rendered in the expanded virsion (not in the message list but only in the message detail)
+    // - the component is rendered in the expanded version (not in the message list but only in the message detail)
     if (!small) {
       return undefined;
     }
