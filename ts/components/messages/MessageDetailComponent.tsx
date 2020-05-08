@@ -179,15 +179,19 @@ export default class MessageDetailComponent extends React.PureComponent<
             {message.content.markdown}
           </MessageMarkdown>
 
-          {this.state.isContentLoadCompleted && (
-            <MessageDetailData
-              message={message}
-              serviceDetail={potServiceDetail}
-              serviceMetadata={potServiceMetadata}
-              goToServiceDetail={onServiceLinkPress}
-            />
-          )}
           <View spacer={true} large={true} />
+
+          {this.state.isContentLoadCompleted && (
+            <React.Fragment>
+              <MessageDetailData
+                message={message}
+                serviceDetail={potServiceDetail}
+                serviceMetadata={potServiceMetadata}
+                goToServiceDetail={onServiceLinkPress}
+              />
+              <View spacer={true} large={true} />
+            </React.Fragment>
+          )}
         </Content>
         <MessageDetailCTABar
           message={message}

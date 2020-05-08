@@ -172,36 +172,39 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     }
 
     return (
-      <View
-        style={[
-          styles.container,
-          this.bannerStyle,
-          paid ? styles.center : undefined
-        ]}
-      >
-        {this.paid ? (
-          <React.Fragment>
-            <StyledIconFont
-              name={"io-tick-big"}
-              color={customVariables.brandHighlight}
-            />
-            <Text style={styles.highlight}>
-              {I18n.t("messages.cta.paid", { amount })}
-            </Text>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            {this.renderCalendarIcon()}
-            <View hspacer={true} small={true} />
-            <Text
-              style={styles.text}
-              white={this.isPaymentExpiring || this.isPaymentExpired}
-            >
-              {this.textContent}
-            </Text>
-          </React.Fragment>
-        )}
-      </View>
+      <React.Fragment>
+        <View
+          style={[
+            styles.container,
+            this.bannerStyle,
+            paid ? styles.center : undefined
+          ]}
+        >
+          {this.paid ? (
+            <React.Fragment>
+              <StyledIconFont
+                name={"io-tick-big"}
+                color={customVariables.brandHighlight}
+              />
+              <Text style={styles.highlight}>
+                {I18n.t("messages.cta.paid", { amount })}
+              </Text>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              {this.renderCalendarIcon()}
+              <View hspacer={true} small={true} />
+              <Text
+                style={styles.text}
+                white={this.isPaymentExpiring || this.isPaymentExpired}
+              >
+                {this.textContent}
+              </Text>
+            </React.Fragment>
+          )}
+        </View>
+        <View spacer={true} large={true} />
+      </React.Fragment>
     );
   }
 }
