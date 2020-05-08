@@ -14,8 +14,10 @@ import re
 import requests
 import multiprocessing as mp
 
+manager = mp.Manager()
+invalid_uris = manager.list()
 uris = []
-invalid_uris = []
+
 
 def readFile(path):
     with open(path, 'r') as f:
@@ -36,10 +38,54 @@ def testhttpuri(uri):
     except:
         print("failed to connect")
         invalid_uris.append(uri)
-        print(invalid_uris)
         
 scanDirectory("./locales")
 
 pool = mp.Pool(mp.cpu_count())
 pool.map(testhttpuri, [uri for uri in uris])
 pool.close()
+
+print(invalid_uris)
+# import ssl
+# import certifi
+# from slack import WebClient
+# from slack.errors import SlackApiError
+
+# slack_token = os.environ["SLACK_API_TOKEN"]
+# client = WebClient(token=slack_token)
+
+# def send_slack_message():
+#     try:
+#         # avoid ssl certificate warning
+#         ssl_context = ssl.create_default_context(cafile=certifi.where())
+#         slack_token = slack_token
+#         rtm_client = WebClient(
+#             token=slack_token, ssl=ssl_context
+#         )
+#         if(len(invalid_uris) > 0):
+#             for url in invalid_uris:
+#                 invalid_uris_message = invalid_uris_message + "- " + url + "\n"
+#             rtm_client.chat_postMessage(
+#                 channel="C012Q68D1U4",
+#                 text= {
+#                     "type": "mrkdwn",
+#                     "text": ":warning: There are " + len(invalid_uris) + " uris that are not working properly please check them: \n" +
+#                         invalid_uris
+#                 }
+#             )
+#         else:
+#             rtm_client.chat_postMessage(
+#                 channel="C012Q68D1U4",
+#                 text= {
+#                     "type": "mrkdwn",
+#                     "text": ":white_check_mark: There are no incorrect urls"
+#                 }
+#             )
+#     except SlackApiError as e:
+#         # You will get a SlackApiError if "ok" is False
+#         assert e.response["ok"] is False
+#         # str like 'invalid_auth', 'channel_not_found'
+#         assert e.response["error"]
+#         print(f"Got an error: {e.response['error']}")
+
+# send_slack_message()
