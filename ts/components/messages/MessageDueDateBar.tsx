@@ -80,9 +80,14 @@ class MessageDueDateBar extends React.PureComponent<Props> {
   }
 
   get bannerStyle(): ViewStyle {
+    if(this.paid){
+      return {backgroundColor: customVariables.brandGray};
+    }
+
     if (this.isPaymentExpired) {
       return { backgroundColor: customVariables.brandDarkGray };
     }
+
     if (this.isPaymentExpiring) {
       return { backgroundColor: customVariables.calendarExpirableColor };
     }
@@ -146,14 +151,15 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     const { dueDate } = this;
 
     if (dueDate) {
-      const iconBackgoundColor =
-        this.isPaymentExpiring || this.isPaymentExpired
+      const iconBackgoundColor = this.paid
+        ? customVariables.lighterGray
+        : this.isPaymentExpiring || this.isPaymentExpired
           ? customVariables.colorWhite
-          : this.paid
-            ? customVariables.lighterGray
-            : customVariables.brandDarkGray;
+          : customVariables.brandDarkGray;
 
-      const textColor = this.isPaymentExpiring
+      const textColor = this.paid 
+        ? customVariables.colorWhite
+        : this.isPaymentExpiring
         ? customVariables.calendarExpirableColor
         : this.isPaymentExpired
           ? customVariables.brandDarkGray
@@ -195,7 +201,7 @@ class MessageDueDateBar extends React.PureComponent<Props> {
             <View hspacer={true} small={true} />
             <Text
               style={styles.text}
-              white={this.isPaymentExpiring || this.isPaymentExpired}
+              white={!this.paid &&(this.isPaymentExpiring || this.isPaymentExpired)}
             >
               {this.textContent}
             </Text>

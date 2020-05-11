@@ -59,10 +59,6 @@ const styles = StyleSheet.create({
  * paired with a message.
  */
 class PaymentButton extends React.PureComponent<Props> {
-  private navigateToMessageDetail = () => {
-    this.props.navigateToMessageDetail(this.props.message.id);
-  };
-
   private getButtonText = (): string => {
     const { messagePaymentExpirationInfo } = this.props;
     const { amount } = messagePaymentExpirationInfo;
@@ -73,13 +69,17 @@ class PaymentButton extends React.PureComponent<Props> {
       });
     }
 
-    if (isExpired(messagePaymentExpirationInfo)) {
+    if (this.isPaymentExpired) {
       return I18n.t("messages.cta.payment.expired");
     }
 
     return I18n.t("messages.cta.pay", {
       amount: formatPaymentAmount(amount)
     });
+  };
+
+  get isPaymentExpired(){
+    return !this.props.paid && isExpired(this.props.messagePaymentExpirationInfo);
   };
 
   private handleOnPress = () => {
@@ -90,7 +90,7 @@ class PaymentButton extends React.PureComponent<Props> {
       disabled,
       message
     } = this.props;
-    const expired = isExpired(this.props.messagePaymentExpirationInfo);
+
     const amount = getAmountFromPaymentAmount(
       messagePaymentExpirationInfo.amount
     );
@@ -102,8 +102,9 @@ class PaymentButton extends React.PureComponent<Props> {
       )
     );
 
-    if (expired) {
-      this.navigateToMessageDetail();
+    if (this.isPaymentExpired || paid) {
+      this.props.navigateToMessageDetail();
+      return;
     }
 
     if (!disabled && !paid && amount.isSome() && rptId.isSome()) {
@@ -124,17 +125,17 @@ class PaymentButton extends React.PureComponent<Props> {
   };
 
   public render() {
-    const { messagePaymentExpirationInfo, small, disabled } = this.props;
+    const { messagePaymentExpirationInfo, small, disabled,paid } = this.props;
 
     return (
       <ButtonDefaultOpacity
-        primary={!isExpired(messagePaymentExpirationInfo) && !disabled}
+        primary={!this.isPaymentExpired && !disabled}
         disabled={disabled}
         onPress={this.handleOnPress}
-        gray={this.props.paid}
-        darkGray={isExpired(messagePaymentExpirationInfo)}
+        gray={paid}
+        darkGray={!paid && this.isPaymentExpired}
         xsmall={small}
-        alert={!this.props.paid && isExpiring(messagePaymentExpirationInfo)}
+        alert={!paid && isExpiring(messagePaymentExpirationInfo)}
         style={this.props.small ? styles.twoThird : styles.half}
       >
         <Text>{this.getButtonText()}</Text>
@@ -151,9 +152,9 @@ const mapStateToProps = (state: GlobalState) => ({
   )
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageDetailScreenAction({ messageId })),
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => ({
+  navigateToMessageDetail: () =>
+    dispatch(navigateToMessageDetailScreenAction({ messageId: ownProps.message.id })),
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
   paymentInitializeState: () => dispatch(paymentInitializeState()),
