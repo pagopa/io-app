@@ -34,6 +34,7 @@ import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PinSetActions } from "./pinset";
 import { PreferencesActions } from "./preferences";
 import { ProfileActions } from "./profile";
+import { ProfileEmailValidationAction } from "./profileEmailValidationChange";
 import { SearchActions } from "./search";
 import { ServicesActions } from "./services";
 import { UserDataProcessingActions } from "./userDataProcessing";
@@ -70,7 +71,8 @@ export type Action =
   | DonationsActions
   | OrganizationsActions
   | InstabugInfoActions
-  | UserDataProcessingActions;
+  | UserDataProcessingActions
+  | ProfileEmailValidationAction;
 
 export type Dispatch = DispatchAPI<Action>;
 
