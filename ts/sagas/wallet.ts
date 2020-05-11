@@ -763,7 +763,7 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {
         yield put(navigateBack());
       }
       // back to the wallet home from PAYMENT_SCAN_QR_CODE
-      if (routeName === ROUTES.PAYMENT_SCAN_QR_CODE) {
+      else if (routeName === ROUTES.PAYMENT_SCAN_QR_CODE) {
         yield put(navigateBack());
       }
       yield put(paymentInitializeState());
