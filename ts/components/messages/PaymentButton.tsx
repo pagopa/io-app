@@ -89,6 +89,11 @@ class PaymentButton extends React.PureComponent<Props> {
   };
 
   private handleOnPress = () => {
+    const expired = isExpired(this.props.messagePaymentExpirationInfo);
+    if (expired) {
+      this.navigateToMessageDetail();
+      return;
+    }
     const {
       messagePaymentExpirationInfo,
       service,
@@ -96,7 +101,7 @@ class PaymentButton extends React.PureComponent<Props> {
       disabled,
       message
     } = this.props;
-    const expired = isExpired(this.props.messagePaymentExpirationInfo);
+
     const amount = getAmountFromPaymentAmount(
       messagePaymentExpirationInfo.amount
     );
@@ -107,11 +112,6 @@ class PaymentButton extends React.PureComponent<Props> {
         messagePaymentExpirationInfo.noticeNumber
       )
     );
-
-    if (expired) {
-      this.navigateToMessageDetail();
-      return;
-    }
 
     if (!disabled && !paid && amount.isSome() && rptId.isSome()) {
       this.props.refreshService(message.sender_service_id);
@@ -144,12 +144,12 @@ class PaymentButton extends React.PureComponent<Props> {
   );
 
   public render() {
-    const { paid, messagePaymentExpirationInfo, small, disabled } = this.props;
+    const { paid } = this.props;
 
     if (paid) {
       return this.paidButton;
     }
-
+    const { messagePaymentExpirationInfo, small, disabled } = this.props;
     return (
       <ButtonDefaultOpacity
         primary={!isExpired(messagePaymentExpirationInfo) && !disabled}

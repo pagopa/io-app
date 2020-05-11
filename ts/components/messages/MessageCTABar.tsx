@@ -130,7 +130,7 @@ class MessageCTABar extends React.PureComponent<Props> {
 
   // Render a button to add/remove an event related to the message in the calendar
   private renderCalendarEventButton = () => {
-    const { message, small, disabled } = this.props;
+    const { message } = this.props;
     const { due_date } = message.content;
 
     // The add/remove reminder button is hidden if:
@@ -149,6 +149,7 @@ class MessageCTABar extends React.PureComponent<Props> {
       return undefined;
     }
 
+    const { small, disabled } = this.props;
     return (
       <CalendarEventButton
         small={small}
