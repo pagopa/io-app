@@ -21,9 +21,19 @@ SLACK_TOKEN = os.environ["SLACK_API_TOKEN"]
 SLACK_CHANNEL = "C012Q68D1U4"
 
 
+"""
+Scan the chosen directory, and the sub-directories and returns the execution of readFile from the found collection of files
+"""
+
+
 def scanDirectory(path):
     files = glob.glob(path + '/**/*.md', recursive=True)
     return readFile(files)
+
+
+"""
+Reads the collection of files passed as parameter and returns the set of uris found inside all the files
+"""
 
 
 def readFile(files):
@@ -37,6 +47,12 @@ def readFile(files):
     return uris
 
 
+"""
+Tests the uri passed as a parameter making an http get request.
+If it causes an exeption or an error code it appends the url to the collection of invalid_uris
+"""
+
+
 def testhttpuri(uri):
     try:
         r = requests.get(uri, headers=HEADERS, timeout=MAX_TIMEOUT)
@@ -46,6 +62,11 @@ def testhttpuri(uri):
     except:
         print("failed to connect")
         invalid_uris.append(uri)
+
+
+"""
+Sends the report of the check to slack to notify the status of the static texts of the app
+"""
 
 
 def send_slack_message():
