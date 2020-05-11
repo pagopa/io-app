@@ -147,13 +147,13 @@ class LandingScreen extends React.PureComponent<Props> {
         <List>
           <ListItem>
             <IconFont
-              name={
-                this.props.hasCieApiLevelSupport
-                  ? "io-checkbox-off"
-                  : "io-checkbox-on"
-              }
+              name="io-tick-big"
               size={16}
-              color={customVariables.contentPrimaryBackground}
+              color={
+                this.props.hasCieApiLevelSupport
+                  ? customVariables.brandLightGray
+                  : customVariables.contentPrimaryBackground
+              }
             />
             <Body>
               <Text>
@@ -165,13 +165,13 @@ class LandingScreen extends React.PureComponent<Props> {
           </ListItem>
           <ListItem>
             <IconFont
-              name={
-                this.props.hasCieNFCFeature
-                  ? "io-checkbox-off"
-                  : "io-checkbox-on"
-              }
+              name="io-tick-big"
               size={16}
-              color={customVariables.contentPrimaryBackground}
+              color={
+                this.props.hasCieNFCFeature
+                  ? customVariables.brandLightGray
+                  : customVariables.contentPrimaryBackground
+              }
             />
             <Body>
               <Text>
