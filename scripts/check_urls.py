@@ -62,17 +62,19 @@ def readFile(files):
 
 def test_http_uri(uri):
     """
-    Tests the uri passed as argument making an http get request.
-    If it causes an exception or an error code the uri will be returned
+    Tests the uri passed as a parameter making an http get request.
+    If it causes an exception or an error code it appends the url to the collection of invalid_uris
     :param uri: the uri to test
     :return: the uri if it is problematic, None otherwise
     """
     try:
         r = requests.get(uri, headers=HEADERS, timeout=MAX_TIMEOUT)
-        if r.ok:
+        if r.status_code != requests.codes.ok:
+            invalid_uris.append(uri)
             return None
     except:
         print("failed to connect:" + uri)
+        # invalid_uris.append(uri)
         return uri
 
 
@@ -113,7 +115,7 @@ def send_slack_message(invalid_uris):
         print(f"Got an error: {e.response['error']}")
 
 
-run_test = len(argv) > 1 and argv[1] == "run_tests"
+run_test = len(argv) > 1 and argv[1] == "run_test"
 # since this code is executed multiple time for each process spawned
 # we have to ensure the init part is execute only the first time
 if not run_test and __name__ == '__main__':
