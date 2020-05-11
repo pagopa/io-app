@@ -20,14 +20,17 @@ import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { InferNavigationParams } from "../../types/react";
 import { isUpdateNeeded } from "../../utils/appVersion";
-import { isExpired, MessagePaymentExpirationInfo } from "../../utils/messages";
+import {
+  isExpired,
+  isExpiring,
+  MessagePaymentExpirationInfo
+} from "../../utils/messages";
 import {
   formatPaymentAmount,
   getAmountFromPaymentAmount,
   getRptIdFromNoticeNumber
 } from "../../utils/payment";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import IconFont from "../ui/IconFont";
 
 type OwnProps = {
   paid: boolean;
@@ -43,31 +46,13 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
-  button: {
+  half: {
     flex: 1
+  },
+  twoThird: {
+    flex: 7
   }
 });
-
-const getButtonText = (
-  messagePaymentExpirationInfo: MessagePaymentExpirationInfo,
-  paid: boolean
-): string => {
-  const { amount } = messagePaymentExpirationInfo;
-
-  if (paid) {
-    return I18n.t("messages.cta.paid", {
-      amount: formatPaymentAmount(amount)
-    });
-  }
-
-  if (isExpired(messagePaymentExpirationInfo)) {
-    return I18n.t("messages.cta.payment.expired");
-  }
-
-  return I18n.t("messages.cta.pay", {
-    amount: formatPaymentAmount(amount)
-  });
-};
 
 /**
  * A component to render the button related to the payment
@@ -76,6 +61,25 @@ const getButtonText = (
 class PaymentButton extends React.PureComponent<Props> {
   private navigateToMessageDetail = () => {
     this.props.navigateToMessageDetail(this.props.message.id);
+  };
+
+  private getButtonText = (): string => {
+    const { messagePaymentExpirationInfo } = this.props;
+    const { amount } = messagePaymentExpirationInfo;
+
+    if (this.props.paid) {
+      return I18n.t("messages.cta.paid", {
+        amount: formatPaymentAmount(amount)
+      });
+    }
+
+    if (isExpired(messagePaymentExpirationInfo)) {
+      return I18n.t("messages.cta.payment.expired");
+    }
+
+    return I18n.t("messages.cta.pay", {
+      amount: formatPaymentAmount(amount)
+    });
   };
 
   private handleOnPress = () => {
@@ -119,36 +123,21 @@ class PaymentButton extends React.PureComponent<Props> {
     }
   };
 
-  private paidButton = (
-    <ButtonDefaultOpacity
-      xsmall={this.props.small}
-      gray={true}
-      style={styles.button}
-    >
-      <IconFont name={"io-tick-big"} />
-      <Text>
-        {getButtonText(this.props.messagePaymentExpirationInfo, true)}
-      </Text>
-    </ButtonDefaultOpacity>
-  );
-
   public render() {
-    const { paid, messagePaymentExpirationInfo, small, disabled } = this.props;
-
-    if (paid) {
-      return this.paidButton;
-    }
+    const { messagePaymentExpirationInfo, small, disabled } = this.props;
 
     return (
       <ButtonDefaultOpacity
         primary={!isExpired(messagePaymentExpirationInfo) && !disabled}
         disabled={disabled}
         onPress={this.handleOnPress}
+        gray={this.props.paid}
         darkGray={isExpired(messagePaymentExpirationInfo)}
         xsmall={small}
-        style={styles.button}
+        alert={!this.props.paid && isExpiring(messagePaymentExpirationInfo)}
+        style={this.props.small ? styles.twoThird : styles.half}
       >
-        <Text>{getButtonText(messagePaymentExpirationInfo, false)}</Text>
+        <Text>{this.getButtonText()}</Text>
       </ButtonDefaultOpacity>
     );
   }

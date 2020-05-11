@@ -12,6 +12,7 @@ declare module "native-base" {
       xsmall?: boolean;
       gray?: boolean;
       darkGray?: boolean;
+      alert?: boolean;
     }
   }
 }
@@ -48,6 +49,16 @@ export default (): Theme => {
       }
     },
 
+    ".alert": {
+      "NativeBase.Text": {
+        color: variables.colorWhite
+      },
+      "UIComponent.IconFont": {
+        color: variables.colorWhite
+      },
+      backgroundColor: variables.calendarExpirableColor
+    },
+
     ".darkGray": {
       "NativeBase.Text": {
         color: variables.colorWhite
@@ -60,12 +71,12 @@ export default (): Theme => {
 
     ".gray": {
       "NativeBase.Text": {
-        color: variables.brandHighlight
+        color: variables.colorWhite
       },
       "UIComponent.IconFont": {
-        color: variables.brandHighlight
+        color: variables.colorWhite
       },
-      backgroundColor: variables.brandGray
+      backgroundColor: variables.lighterGray
     },
 
     ".light": {

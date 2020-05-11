@@ -61,6 +61,9 @@ const reminderText = I18n.t(
 const styles = StyleSheet.create({
   button: {
     flex: 1
+  },
+  oneThird: {
+    flex: 5
   }
 });
 
@@ -352,7 +355,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         xsmall={small}
         small={medium}
         bordered={!disabled}
-        style={styles.button}
+        style={this.props.small ? styles.oneThird : styles.button}
       >
         <IconFont name={iconName} />
         <Text>{reminderText}</Text>

@@ -847,7 +847,7 @@ messages:
       expiringAlert: This prescription expires today
       expiredAlert: This prescription is expired on
     pay: Pay € {{amount}}
-    paid: Paid € {{amount}}
+    paid: Paid
     reminder: Reminder
     reminderShort: Memo
     reminderCalendarSelect: In which calendar you want to add the reminder?

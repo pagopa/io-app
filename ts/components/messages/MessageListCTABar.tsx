@@ -74,15 +74,12 @@ class MessageListCTABar extends React.PureComponent<Props> {
     // - the message has a due date
     // - the payment related to the message is not yet paid
     if (dueDate !== undefined && !this.paid) {
-      const iconBackgoundColor = this.isPaymentExpiring
-        ? customVariables.calendarExpirableColor
-        : customVariables.brandDarkGray;
       return (
         <CalendarIconComponent
           small={true}
           month={capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
-          backgroundColor={iconBackgoundColor}
+          backgroundColor={customVariables.brandDarkGray}
           textColor={customVariables.colorWhite}
         />
       );

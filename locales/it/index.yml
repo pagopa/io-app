@@ -881,7 +881,7 @@ messages:
       expiringAlert: Questa ricetta scade oggi
       expiredAlert: questa ricetta è scaduta
     pay: Paga € {{amount}}
-    paid: Hai pagato € {{amount}}
+    paid: Pagato
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
