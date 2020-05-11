@@ -58,6 +58,8 @@ class MessageListItem extends React.PureComponent<Props> {
       I18n.t("messages.yesterday")
     );
 
+    const medicalPrescriptionData = message.content.prescription_data;
+
     return (
       <DetailedlistItemComponent
         isNew={!isRead}
@@ -70,18 +72,19 @@ class MessageListItem extends React.PureComponent<Props> {
         isSelectionModeEnabled={isSelectionModeEnabled}
         isItemSelected={isSelected}
       >
-        {messageNeedsCTABar(message) && (
-          <React.Fragment>
-            <View spacer={true} large={true} />
-            <MessageCTABar
-              message={message}
-              service={service}
-              payment={payment}
-              small={true}
-              disabled={isSelectionModeEnabled}
-            />
-          </React.Fragment>
-        )}
+        {messageNeedsCTABar(message) &&
+          medicalPrescriptionData === undefined && (
+            <React.Fragment>
+              <View spacer={true} large={true} />
+              <MessageCTABar
+                message={message}
+                service={service}
+                payment={payment}
+                small={true}
+                disabled={isSelectionModeEnabled}
+              />
+            </React.Fragment>
+          )}
       </DetailedlistItemComponent>
     );
   }
