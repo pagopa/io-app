@@ -144,8 +144,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     this.scannerReactivateTimeoutHandler = setTimeout(() => {
       // tslint:disable-next-line:no-object-mutation
       this.scannerReactivateTimeoutHandler = undefined;
-      if (this.QRCodeScanner.current) {
-        this.QRCodeScanner.current.reactivate();
+      if (this.qrCodeScanner.current) {
+        this.qrCodeScanner.current.reactivate();
         this.setState({
           scanningState: "SCANNING"
         });
@@ -264,7 +264,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 onRead={(reading: { data: string }) =>
                   this.onQrCodeData(reading.data)
                 }
-                ref={this.QRCodeScanner}
+                ref={this.qrCodeScanner}
                 containerStyle={styles.cameraContainer as any}
                 showMarker={true}
                 cameraStyle={styles.camera as any}
