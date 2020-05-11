@@ -164,7 +164,9 @@ export default class MessageDetailComponent extends React.PureComponent<
           />
         )}
 
+        {/** TODO: add CTA for prescription https://www.pivotaltracker.com/story/show/172553600 */}
         {this.state.isContentLoadCompleted &&
+          maybeMedicalData.isNone() &&
           messageNeedsCTABar(message) && (
             <MessageCTABar
               message={message}
