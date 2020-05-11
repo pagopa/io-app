@@ -69,7 +69,7 @@ class TransactionSuccessScreen extends React.PureComponent<Props> {
               onPress: () => this.props.navigateToReceipt(this.transaction)
             }}
           />
-          <View spacer={true}/>
+          <View spacer={true} />
           <BlockButtons
             type={"SingleButton"}
             leftButton={{
