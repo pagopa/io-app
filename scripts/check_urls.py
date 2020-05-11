@@ -52,6 +52,7 @@ def test_http_uri(uri):
   Tests the uri passed as a parameter making an http get request.
   If it causes an exception or an error code it appends the url to the collection of invalid_uris
   :param uri: the uri to test
+  :return: the uri if it is problematic, None otherwise
   """
   try:
     r = requests.get(uri, headers=HEADERS, timeout=MAX_TIMEOUT)
@@ -110,7 +111,9 @@ if __name__ == '__main__':
   print("found and processing %d uris..." % len(all_uris))
   for uri in all_uris:
     invalid_uri_processing.append(pool.apply_async(test_http_uri, args=(uri,)))
+  # get all processes results
   invalid_uris = list(map(lambda r: r.get(), invalid_uri_processing))
+  # remove None results from list
   invalid_uris = list(filter(lambda r: r is not None, invalid_uris))
   pool.close()
   print('found %d broken uri' % len(invalid_uris))
