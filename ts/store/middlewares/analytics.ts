@@ -55,6 +55,7 @@ import {
   profileLoadSuccess,
   profileUpsert
 } from "../actions/profile";
+import { profileEmailValidationChanged } from "../actions/profileEmailValidationChange";
 import { loadServiceDetail, loadVisibleServices } from "../actions/services";
 import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import { upsertUserDataProcessing } from "../actions/userDataProcessing";
@@ -140,6 +141,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     case getType(profileFirstLogin):
       return mp.track(action.type, action.payload);
+
+    // dispatch to mixpanel when the email is validated
+    case getType(profileEmailValidationChanged):
+      return mp.track(action.type, { isEmailValidated: action.payload });
 
     case getType(fetchTransactionsSuccess):
       return mp.track(action.type, {
