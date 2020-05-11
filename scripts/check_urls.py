@@ -1,57 +1,53 @@
 #!/usr/bin/python3
 
 import os
-
-def scanDirectory(path):
-    entries = os.listdir(path)
-    for entry in entries:
-        if os.path.isfile(os.path.join(path, entry)) and ".md" in entry:
-            readFile(os.path.join(path, entry))
-        if (os.path.isdir(os.path.join(path, entry))):
-            scanDirectory(os.path.join(path, entry))
-
+import glob
 import re
 import requests
 import multiprocessing as mp
-
-manager = mp.Manager()
-invalid_uris = manager.list()
-uris = []
-
-
-def readFile(path):
-    with open(path, 'r') as f:
-        for line in f.readlines():
-            result = re.search(r"\[(.*?)\]\((.*?)\)", line)
-            if(result and not "ioit://" in result.group(2)):
-                uris.append(result.group(2))
-
-def testhttpuri(uri):
-    try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
-        }
-        r = requests.get(uri, headers=headers, timeout = 5)
-        if r.status_code != requests.codes.ok:
-            print(uri,r.status_code)
-            invalid_uris.append(uri)
-    except:
-        print("failed to connect")
-        invalid_uris.append(uri)
-        
-scanDirectory("./locales")
-
-pool = mp.Pool(mp.cpu_count())
-pool.map(testhttpuri, [uri for uri in uris])
-pool.close()
-
 import ssl
 import certifi
 from slack import WebClient
 from slack.errors import SlackApiError
 
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+}
+MAX_TIMEOUT = 5
+manager = mp.Manager()
+invalid_uris = manager.list()
+global_uris = set()
 slack_token = os.environ["SLACK_API_TOKEN"]
+SLACK_CHANNEL = "C012Q68D1U4"
 client = WebClient(token=slack_token)
+
+
+def scanDirectory(path):
+    files = glob.glob(path + '/**/*.md', recursive=True)
+    return readFile(files)
+
+
+def readFile(files):
+    uris = set()
+    for path in files:
+        with open(path, 'r') as f:
+            for line in f.readlines():
+                result = re.search(r"\[(.*?)\]\((.*?)\)", line)
+                if(result and not "ioit://" in result.group(2)):
+                    uris.add(result.group(2))
+    return uris
+
+
+def testhttpuri(uri):
+    try:
+        r = requests.get(uri, headers=HEADERS, timeout=MAX_TIMEOUT)
+        if r.status_code != requests.codes.ok:
+            print(uri, r.status_code)
+            invalid_uris.append(uri)
+    except:
+        print("failed to connect")
+        invalid_uris.append(uri)
+
 
 def send_slack_message():
     try:
@@ -65,17 +61,17 @@ def send_slack_message():
             for url in invalid_uris:
                 invalid_uris_message = invalid_uris_message + "- " + url + "\n"
             rtm_client.chat_postMessage(
-                channel="C012Q68D1U4",
-                text= {
+                channel=SLACK_CHANNEL,
+                text={
                     "type": "mrkdwn",
                     "text": ":warning: There are " + len(invalid_uris) + " uris that are not working properly please check them: \n" +
-                        invalid_uris
+                    invalid_uris
                 }
             )
         else:
             rtm_client.chat_postMessage(
-                channel="C012Q68D1U4",
-                text= {
+                channel=SLACK_CHANNEL,
+                text={
                     "type": "mrkdwn",
                     "text": ":white_check_mark: There are no incorrect urls"
                 }
@@ -86,5 +82,12 @@ def send_slack_message():
         # str like 'invalid_auth', 'channel_not_found'
         assert e.response["error"]
         print(f"Got an error: {e.response['error']}")
+
+
+global_uris = scanDirectory("./locales")
+
+pool = mp.Pool(mp.cpu_count())
+pool.map(testhttpuri, [uri for uri in global_uris])
+pool.close()
 
 send_slack_message()
