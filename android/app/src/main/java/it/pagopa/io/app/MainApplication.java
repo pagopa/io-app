@@ -2,6 +2,7 @@ package it.pagopa.io.app;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.reactNativeQuickActions.AppShortcutsPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.sha256lib.Sha256Package;
 import com.kevinejohn.RNMixpanel.RNMixpanel;
@@ -56,7 +57,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(), new AppShortcutsPackage(), new AsyncStoragePackage(), new QRScanReaderPackage(),
           new ImagePickerPackage(), new FlagSecurePackage(), new RNFSPackage(), new AndroidOpenSettingsPackage(),
           new RNGestureHandlerPackage(), new CalendarEventsPackage(), new RNCWebViewPackage(),
           new FingerprintAuthPackage(), new BackgroundTimerPackage(), new SvgPackage(), new RNTextInputMaskPackage(),

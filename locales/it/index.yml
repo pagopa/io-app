@@ -743,6 +743,7 @@ wallet:
   noTransactionsInWalletHome: Non hai ancora fatto nessuna operazione.
   noTransactionsInTransactionsScreen: Non hai ancora utilizzato questo metodo di pagamento per pagare tramite IO o pagoPA. In questa lista vedrai solo le operazioni eseguite con questo metodo.
   payNotice: Paga un avviso
+  payNoticeLong:  Paga un avviso con QR code
   latestTransactions: Le tue operazioni
   creditDebitCards: Carte di Credito/Debito
   addPaymentMethodTitle: Aggiungi metodo di pagamento
