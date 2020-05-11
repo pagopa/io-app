@@ -60,7 +60,10 @@ export default class MedicalPrescriptionIdentifiersComponent extends React.PureC
         <View spacer={true} />
         {this.renderItem(I18n.t("messages.medical.iup"), iup)}
         <View spacer={true} />
-        {this.renderItem(I18n.t("messages.medical.fc"), prescriberFiscalCode)}
+        {this.renderItem(
+          I18n.t("messages.medical.patient_fiscal_code"),
+          prescriberFiscalCode
+        )}
         <View spacer={true} />
       </View>
     );

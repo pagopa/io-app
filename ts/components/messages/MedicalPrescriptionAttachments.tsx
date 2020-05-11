@@ -1,13 +1,19 @@
+import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { MessageAttachment } from "../../../definitions/backend/MessageAttachment";
 import customVariables from "../../theme/variables";
+import ItemSeparatorComponent from "../ItemSeparatorComponent";
 
 type Props = Readonly<{
   attachments: ReadonlyArray<MessageAttachment>;
+  organizationName?: string;
+  typeToRender: "svg" | "png";
 }>;
+
+const BARCODE_HEIGHT = 52;
 
 const styles = StyleSheet.create({
   padded: {
@@ -15,8 +21,16 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 300,
-    height: 100,
+    height: BARCODE_HEIGHT,
     resizeMode: "contain"
+  },
+  note: {
+    fontSize: 12,
+    lineHeight: 16
+  },
+  label: {
+    fontSize: 12,
+    lineHeight: 22
   }
 });
 
@@ -30,6 +44,7 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
       <SvgXml
         xml={Buffer.from(att.content, "base64").toString("ascii")}
         width={"100%"}
+        height={BARCODE_HEIGHT}
       />
     ) : (
       <Image
@@ -43,9 +58,9 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
   private renderItem = ({ item }: { item: MessageAttachment }) => {
     return (
       <View style={styles.padded}>
-        <Text>
-          {item.name}
-          {item.mime_type}
+        <View spacer={true} small={true} />
+        <Text style={styles.label}>
+          {I18n.t(`messages.medical.${item.name}`).toUpperCase()}
         </Text>
         {this.getImage(item)}
         <View spacer={true} />
@@ -54,7 +69,31 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
   };
 
   private attachmentsToRender = this.props.attachments.filter(a =>
-    a.mime_type.includes("svg")
+    a.mime_type.includes(this.props.typeToRender)
+  );
+
+  private footerItem = (
+    <React.Fragment>
+      <ItemSeparatorComponent />
+      <View spacer={true} />
+      <Text style={[styles.note, styles.padded]}>
+        {I18n.t("messages.medical.note")}
+      </Text>
+    </React.Fragment>
+  );
+
+  private headerItem = (
+    <View style={styles.padded}>
+      <Text bold={true}>
+        {I18n.t("messages.medical.nationalService").toUpperCase()}
+      </Text>
+      {this.props.organizationName && (
+        <Text style={styles.label}>
+          {this.props.organizationName.toUpperCase()}
+        </Text>
+      )}
+      <ItemSeparatorComponent noPadded={true} bold={true} />
+    </View>
   );
 
   public render() {
@@ -63,6 +102,9 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
         data={this.attachmentsToRender}
         renderItem={this.renderItem}
         keyExtractor={(_, idx: number) => `attachment-${idx}`}
+        ItemSeparatorComponent={ItemSeparatorComponent}
+        ListHeaderComponent={this.headerItem}
+        ListFooterComponent={this.footerItem}
       />
     );
   }

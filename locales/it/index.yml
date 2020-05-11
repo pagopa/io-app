@@ -928,9 +928,12 @@ messages:
     memo: Promemoria per l'assistito
     nre: NRE Numero Ricetta Elettronica
     iup: IUP Identificativo Unico Prenotazione
-    cf: Codice Fiscale dell'assistito
+    patient_fiscal_code: Codice Fiscale dell'assistito
+    prescriber_fiscal_code: Codice fiscale del medico
     deadline: Questa ricetta scade il {{date}}
     barcodes: Codici a barre
+    nationalService: Servizio Sanitario Nazionale
+    note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
 messageDetails:
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md

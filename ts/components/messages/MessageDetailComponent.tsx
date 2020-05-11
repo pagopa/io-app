@@ -182,9 +182,17 @@ export default class MessageDetailComponent extends React.PureComponent<
 
         {this.state.isContentLoadCompleted &&
           this.attachments.isSome() && (
-            <MedicalPrescriptionAttachments
-              attachments={this.attachments.value}
-            />
+            <React.Fragment>
+              <View spacer={true} large={true} />
+              <MedicalPrescriptionAttachments
+                attachments={this.attachments.value}
+                organizationName={
+                  service ? service.organization_name : undefined
+                }
+                typeToRender={"svg"}
+              />
+              <View spacer={true} extralarge={true} />
+            </React.Fragment>
           )}
 
         {this.state.isContentLoadCompleted && (
