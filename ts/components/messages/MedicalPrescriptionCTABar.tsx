@@ -2,7 +2,7 @@ import I18n from "i18n-js";
 import * as React from "react";
 import FooterWithButtons from "../ui/FooterWithButtons";
 
-type Props = ReadonlyArray<{}>;
+type Props = Readonly<{}>;
 
 export default class MedicalPrescriptionCTABar extends React.PureComponent<
   Props

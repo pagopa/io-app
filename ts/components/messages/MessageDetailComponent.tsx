@@ -2,8 +2,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
-import { SvgXml } from "react-native-svg";
+import { StyleSheet } from "react-native";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -13,6 +12,7 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { messageNeedsCTABar } from "../../utils/messages";
 import OrganizationHeader from "../OrganizationHeader";
+import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
 import MessageCTABar from "./MessageCTABar";
 import MessageDetailData from "./MessageDetailData";
@@ -181,38 +181,11 @@ export default class MessageDetailComponent extends React.PureComponent<
         </MessageMarkdown>
 
         {this.state.isContentLoadCompleted &&
-          this.attachments.isSome() &&
-          this.attachments.value.map((att, idx) => {
-            // we should show the SvgXml and share the png version
-            // these two image are the same. They differ only for the mime_type
-            const image =
-              att.mime_type === "image/svg+xml" ? (
-                <SvgXml
-                  key={`svg_${idx}`}
-                  xml={Buffer.from(att.content, "base64").toString("ascii")}
-                  width="100%"
-                />
-              ) : (
-                <Image
-                  key={`image_${idx}`}
-                  style={{
-                    width: 300,
-                    height: 100,
-                    resizeMode: "contain"
-                  }}
-                  source={{
-                    uri: `data:image/png;base64,${att.content}`
-                  }}
-                />
-              );
-            return (
-              <View key={`frag_${idx}`} style={styles.padded}>
-                <Text key={`text_${idx}`}>{att.name}</Text>
-                {image}
-                <View spacer={true} />
-              </View>
-            );
-          })}
+          this.attachments.isSome() && (
+            <MedicalPrescriptionAttachments
+              attachments={this.attachments.value}
+            />
+          )}
 
         {this.state.isContentLoadCompleted && (
           <MessageDetailData
