@@ -834,6 +834,7 @@ messages:
     deselectAll: None
     payment:
       expired: Payment expired
+      paid: This notice is paid. Show the receipt in your
       addMemo: 
           block1: Add a reminder for the 
           block2: at

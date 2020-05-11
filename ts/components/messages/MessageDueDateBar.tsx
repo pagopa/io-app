@@ -2,9 +2,12 @@ import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
+import { navigateToWalletHome } from "../../store/actions/navigation";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
 import {
@@ -18,15 +21,15 @@ import {
   isExpiring,
   paymentExpirationInfo
 } from "../../utils/messages";
-import { formatPaymentAmount } from "../../utils/payment";
-import StyledIconFont from "../ui/IconFont";
 import CalendarIconComponent from "./CalendarIconComponent";
 
-type Props = {
+type OwnProps = {
   message: CreatedMessageWithContent;
   service?: ServicePublic;
   payment?: PaidReason;
 };
+
+type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 const CALENDAR_ICON_HEIGHT = 40;
 
@@ -64,12 +67,6 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     return this.props.payment !== undefined;
   }
 
-  get amount() {
-    return this.paymentExpirationInfo.fold(undefined, i =>
-      formatPaymentAmount(i.amount)
-    );
-  }
-
   get isPaymentExpired() {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
   }
@@ -100,6 +97,17 @@ class MessageDueDateBar extends React.PureComponent<Props> {
 
     const time = format(dueDate, "HH.mm");
     const date = formatDateAsLocal(dueDate, true, true);
+
+    if (this.paid) {
+      return (
+        <React.Fragment>
+          {`${I18n.t("messages.cta.payment.paid")} `}
+          <Text link={true} onPress={this.props.onGoToWallet}>
+            {I18n.t("wallet.wallet")}
+          </Text>
+        </React.Fragment>
+      );
+    }
 
     if (this.isPaymentExpiring) {
       return (
@@ -137,11 +145,13 @@ class MessageDueDateBar extends React.PureComponent<Props> {
   private renderCalendarIcon = () => {
     const { dueDate } = this;
 
-    if (dueDate && !this.paid) {
+    if (dueDate) {
       const iconBackgoundColor =
         this.isPaymentExpiring || this.isPaymentExpired
           ? customVariables.colorWhite
-          : customVariables.brandDarkGray;
+          : this.paid
+            ? customVariables.lighterGray
+            : customVariables.brandDarkGray;
 
       const textColor = this.isPaymentExpiring
         ? customVariables.calendarExpirableColor
@@ -165,7 +175,7 @@ class MessageDueDateBar extends React.PureComponent<Props> {
    * Display description on message deadlines
    */
   public render() {
-    const { dueDate, amount, paid } = this;
+    const { dueDate, paid } = this;
 
     if (dueDate === undefined) {
       return null;
@@ -180,28 +190,16 @@ class MessageDueDateBar extends React.PureComponent<Props> {
             paid ? styles.center : undefined
           ]}
         >
-          {this.paid ? (
-            <React.Fragment>
-              <StyledIconFont
-                name={"io-tick-big"}
-                color={customVariables.brandHighlight}
-              />
-              <Text style={styles.highlight}>
-                {I18n.t("messages.cta.paid", { amount })}
-              </Text>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {this.renderCalendarIcon()}
-              <View hspacer={true} small={true} />
-              <Text
-                style={styles.text}
-                white={this.isPaymentExpiring || this.isPaymentExpired}
-              >
-                {this.textContent}
-              </Text>
-            </React.Fragment>
-          )}
+          <React.Fragment>
+            {this.renderCalendarIcon()}
+            <View hspacer={true} small={true} />
+            <Text
+              style={styles.text}
+              white={this.isPaymentExpiring || this.isPaymentExpired}
+            >
+              {this.textContent}
+            </Text>
+          </React.Fragment>
         </View>
         <View spacer={true} large={true} />
       </React.Fragment>
@@ -209,4 +207,11 @@ class MessageDueDateBar extends React.PureComponent<Props> {
   }
 }
 
-export default MessageDueDateBar;
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onGoToWallet: () => dispatch(navigateToWalletHome())
+});
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(MessageDueDateBar);

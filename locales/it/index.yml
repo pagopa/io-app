@@ -868,6 +868,7 @@ messages:
     deselectAll: Nessuno
     payment:
       expired: Pagamento scaduto
+      paid: Questo avviso è stato pagato. Visualizza la ricevuta nei tuoi
       addMemo: 
           block1: Aggiungi un promemoria per il
           block2: alle ore
