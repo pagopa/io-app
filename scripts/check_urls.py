@@ -17,9 +17,8 @@ MAX_TIMEOUT = 5
 manager = mp.Manager()
 invalid_uris = manager.list()
 global_uris = set()
-slack_token = os.environ["SLACK_API_TOKEN"]
+SLACK_TOKEN = os.environ["SLACK_API_TOKEN"]
 SLACK_CHANNEL = "C012Q68D1U4"
-client = WebClient(token=slack_token)
 
 
 def scanDirectory(path):
@@ -53,19 +52,19 @@ def send_slack_message():
     try:
         # avoid ssl certificate warning
         ssl_context = ssl.create_default_context(cafile=certifi.where())
-        slack_token = slack_token
         rtm_client = WebClient(
-            token=slack_token, ssl=ssl_context
+            token=SLACK_TOKEN, ssl=ssl_context
         )
-        if(len(invalid_uris) > 0):
+        if len(invalid_uris) > 0:
             for url in invalid_uris:
                 invalid_uris_message = invalid_uris_message + "- " + url + "\n"
+            message = ":warning: There are %d uris that are not working properly please check them: \n%s" % (
+                len(invalid_uris), "\n".join(invalid_uris_message))
             rtm_client.chat_postMessage(
                 channel=SLACK_CHANNEL,
                 text={
                     "type": "mrkdwn",
-                    "text": ":warning: There are " + len(invalid_uris) + " uris that are not working properly please check them: \n" +
-                    invalid_uris
+                    "text": message
                 }
             )
         else:
