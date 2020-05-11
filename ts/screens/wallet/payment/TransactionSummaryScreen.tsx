@@ -136,7 +136,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
         buttonIndex => {
           if (buttonIndex === 0) {
             this.props.resetPayment();
-            this.props.navigation.goBack();
+            this.props.goBack();
+            this.props.goBack();
             showToast(
               I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"),
               "success"
@@ -468,6 +469,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     );
 
   return {
+    backToEntrypointPayment,
     dispatchPaymentVerificaRequest,
     navigateToPaymentTransactionError,
     dispatchNavigateToPaymentManualDataInsertion,
