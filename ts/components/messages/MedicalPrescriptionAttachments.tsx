@@ -1,6 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { FlatList, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { MessageAttachment } from "../../../definitions/backend/MessageAttachment";
 import customVariables from "../../theme/variables";
@@ -25,16 +25,14 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
 > {
   // We should show the SvgXml and share the png version.
   // These two image are the same. They differ only for the mime_type
-  private getImage = (att: MessageAttachment, idx: number) =>
+  private getImage = (att: MessageAttachment) =>
     att.mime_type === "image/svg+xml" ? (
       <SvgXml
-        key={`svg_${idx}`}
         xml={Buffer.from(att.content, "base64").toString("ascii")}
         width={"100%"}
       />
     ) : (
       <Image
-        key={`image_${idx}`}
         style={styles.image}
         source={{
           uri: `data:image/png;base64,${att.content}`
@@ -42,15 +40,30 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
       />
     );
 
+  private renderItem = ({ item }: { item: MessageAttachment }) => {
+    return (
+      <View style={styles.padded}>
+        <Text>
+          {item.name}
+          {item.mime_type}
+        </Text>
+        {this.getImage(item)}
+        <View spacer={true} />
+      </View>
+    );
+  };
+
+  private attachmentsToRender = this.props.attachments.filter(a =>
+    a.mime_type.includes("svg")
+  );
+
   public render() {
-    return this.props.attachments.map((att, idx) => {
-      return (
-        <View key={`frag_${idx}`} style={styles.padded}>
-          <Text key={`text_${idx}`}>{att.name}</Text>
-          {this.getImage(att, idx)}
-          <View spacer={true} />
-        </View>
-      );
-    });
+    return (
+      <FlatList
+        data={this.attachmentsToRender}
+        renderItem={this.renderItem}
+        keyExtractor={(_, idx: number) => `attachment-${idx}`}
+      />
+    );
   }
 }
