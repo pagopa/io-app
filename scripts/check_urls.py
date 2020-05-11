@@ -16,6 +16,7 @@ HEADERS = {
 MAX_TIMEOUT = 5
 global_uris = set()
 SLACK_TOKEN = os.environ.get("SLACK_API_TOKEN", None)
+tagged_people = ["<@UTVS9R0SF>"]
 SLACK_CHANNEL = "#io_status"
 
 
@@ -78,7 +79,8 @@ def send_slack_message(invalid_uris):
     )
     if len(invalid_uris) > 0:
       invalid_uris_message = "\n".join(list(map(lambda iu: "- " + iu, invalid_uris)))
-      message = ":warning: There are %d uris in *IO App* that are not working properly please check them: \n%s" % (
+      tags = " ".join(tagged_people)
+      message = "%s :warning: There are %d uris in *IO App* that are not working:\n%s" % (tags,
         len(invalid_uris), invalid_uris_message)
       message_blocks = []
       message_blocks.append({
@@ -119,6 +121,6 @@ if __name__ == '__main__':
   print('found %d broken uri' % len(invalid_uris))
   if len(invalid_uris) > 0:
     if SLACK_TOKEN:
-      send_slack_message()
+      send_slack_message(invalid_uris)
     else:
       print("no SLACK token provided")
