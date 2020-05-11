@@ -108,11 +108,6 @@ class MessageCTABar extends React.PureComponent<Props> {
       return undefined;
     }
 
-    // - the component is rendered in the expanded version (not in the message list but only in the message detail)
-    if (!small) {
-      return undefined;
-    }
-
     return (
       <CalendarIconComponent
         small={small}
@@ -193,6 +188,10 @@ class MessageCTABar extends React.PureComponent<Props> {
    */
   private renderTopContainer = () => {
     const { small } = this.props;
+
+    if (!small && this.isPaymentExpired) {
+      return undefined;
+    }
 
     const calendarIcon = this.renderCalendarIcon();
     const calendarEventButton = this.renderCalendarEventButton();
