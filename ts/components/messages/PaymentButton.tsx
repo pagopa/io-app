@@ -78,9 +78,11 @@ class PaymentButton extends React.PureComponent<Props> {
     });
   };
 
-  get isPaymentExpired(){
-    return !this.props.paid && isExpired(this.props.messagePaymentExpirationInfo);
-  };
+  get isPaymentExpired() {
+    return (
+      !this.props.paid && isExpired(this.props.messagePaymentExpirationInfo)
+    );
+  }
 
   private handleOnPress = () => {
     const {
@@ -125,7 +127,7 @@ class PaymentButton extends React.PureComponent<Props> {
   };
 
   public render() {
-    const { messagePaymentExpirationInfo, small, disabled,paid } = this.props;
+    const { messagePaymentExpirationInfo, small, disabled, paid } = this.props;
 
     return (
       <ButtonDefaultOpacity
@@ -154,7 +156,9 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => ({
   navigateToMessageDetail: () =>
-    dispatch(navigateToMessageDetailScreenAction({ messageId: ownProps.message.id })),
+    dispatch(
+      navigateToMessageDetailScreenAction({ messageId: ownProps.message.id })
+    ),
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
   paymentInitializeState: () => dispatch(paymentInitializeState()),
