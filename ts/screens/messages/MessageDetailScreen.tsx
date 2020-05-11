@@ -268,10 +268,9 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
 
   private setMessageReadState = () => {
     const { potMessage, isRead } = this.props;
-
     if (pot.isSome(potMessage) && !isRead) {
       // Set the message read state to TRUE
-      this.props.setMessageReadState(true);
+      this.props.setMessageReadState(potMessage.value.id, true);
     }
   };
 
@@ -281,23 +280,31 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
     if (pot.isSome(potMessage) && !pot.isLoading(potServiceDetail)) {
       refreshService(potMessage.value.sender_service_id);
     }
-    // load service metadata to get information about email & phone (needed in MessageDetailData)
-    pot.map(potMessage, m => {
-      this.props.loadServiceMetadata(m.sender_service_id);
-    });
+    this.loadServicesMetadata();
     this.setMessageReadState();
   }
 
   public componentDidUpdate(prevProps: Props) {
     const { potMessage, potServiceDetail, refreshService } = this.props;
     const { potMessage: prevPotMessage } = prevProps;
+
     // if the message was not yet loaded in the component's mount, the service is refreshed here once the message is loaded
-    if (
-      !pot.isSome(prevPotMessage) &&
-      pot.isSome(potMessage) &&
-      !pot.isLoading(potServiceDetail)
-    ) {
-      refreshService(potMessage.value.sender_service_id);
+    if (!pot.isSome(prevPotMessage) && pot.isSome(potMessage)) {
+      this.setMessageReadState();
+      if (!pot.isLoading(potServiceDetail)) {
+        refreshService(potMessage.value.sender_service_id);
+      }
+      this.loadServicesMetadata();
+    }
+  }
+
+  // force load service metadata to get information about email & phone (needed in MessageDetailData)
+  // the last version is preferred (fresh updates)
+  private loadServicesMetadata() {
+    if (!pot.isLoading(this.props.potServiceMetadata)) {
+      pot.map(this.props.potMessage, m => {
+        this.props.loadServiceMetadata(m.sender_service_id);
+      });
     }
   }
 
@@ -340,7 +347,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   // Map the potential message to the potential service
   const potServiceMetadata = pot.getOrElse(
-    pot.map(potMessage, m =>
+    pot.mapNullable(potMessage, m =>
       serviceMetadataByIdSelector(m.sender_service_id)(state)
     ),
     pot.none
@@ -356,8 +363,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
-  const messageId = ownProps.navigation.getParam("messageId");
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     refreshService: (serviceId: string) =>
       dispatch(loadServiceDetail.request(serviceId)),
@@ -365,7 +371,7 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => {
       dispatch(loadServiceMetadata.request(serviceId as ServiceId)),
     loadMessageWithRelations: (meta: CreatedMessageWithoutContent) =>
       dispatch(loadMessageWithRelations.request(meta)),
-    setMessageReadState: (isRead: boolean) =>
+    setMessageReadState: (messageId: string, isRead: boolean) =>
       dispatch(setMessageReadState(messageId, isRead)),
     navigateToServiceDetailsScreen: (
       params: InferNavigationParams<typeof ServiceDetailsScreen>
