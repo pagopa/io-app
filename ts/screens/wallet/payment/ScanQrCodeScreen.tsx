@@ -119,7 +119,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
   private goBack = () => this.props.navigation.goBack();
-  private QRCodeScanner = React.createRef<QRCodeScanner>();
+  private qrCodeScanner = React.createRef<QRCodeScanner>();
 
   /**
    * Handles valid pagoPA QR codes
