@@ -4,13 +4,16 @@
  * add new ones
  */
 import { reverse } from "fp-ts/lib/Array";
-import { View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import H5 from "../../components/ui/H5";
 import PaymentHistoryList from "../../components/wallet/PaymentsHistoryList";
 import I18n from "../../i18n";
 import { navigateToPaymentHistoryDetail } from "../../store/actions/navigation";
@@ -20,6 +23,7 @@ import {
   paymentsHistorySelector
 } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
+import variables from "../../theme/variables";
 
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;
@@ -28,6 +32,34 @@ type OwnProps = Readonly<{
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
+
+const styles = StyleSheet.create({
+  noBottomPadding: {
+    padding: variables.contentPadding,
+    paddingBottom: 0
+  },
+  brandDarkGray: {
+    color: variables.brandDarkGray
+  },
+  whiteBg: {
+    backgroundColor: variables.colorWhite
+  }
+});
+
+const ListEmptyComponent = (
+  <Content
+    scrollEnabled={false}
+    style={[styles.noBottomPadding, styles.whiteBg]}
+  >
+    <H5 style={styles.brandDarkGray}>
+      {I18n.t("payment.details.list.empty.title")}
+    </H5>
+    <View spacer={true} />
+    <Text>{I18n.t("payment.details.list.empty.description")}</Text>
+    <View spacer={true} large={true} />
+    <EdgeBorderComponent />
+  </Content>
+);
 
 /**
  * Payment Screen
@@ -44,7 +76,7 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
         <PaymentHistoryList
           title={I18n.t("wallet.latestTransactions")}
           payments={reverse([...historyPayments])}
-          ListEmptyComponent={<View />}
+          ListEmptyComponent={ListEmptyComponent}
           navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
             this.props.navigateToPaymentHistoryDetail({
               payment

@@ -6,7 +6,7 @@ import { Content, Text } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import I18n from "../../i18n";
-import { abortOnboarding } from "../../store/actions/onboarding";
+import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import { openNFCSettings } from "../../utils/cie";
@@ -43,7 +43,7 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => this.props.dispatch(abortOnboarding())
+          onPress: () => this.props.dispatch(resetToAuthenticationRoute)
         }
       ]
     );
