@@ -22,7 +22,7 @@ import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 import PaymentButton from "./PaymentButton";
 
-type OwnProps = {
+type Props = {
   message: CreatedMessageWithContentAndAttachments;
   service?: ServicePublic;
   payment?: PaidReason;
