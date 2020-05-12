@@ -103,7 +103,6 @@ class MessageDetailData extends React.PureComponent<Props> {
 
     const callButton: BlockButtonProps = {
       bordered: true,
-      white: true,
       title: I18n.t("messageDetails.call"),
       iconName: "io-phone",
       onPress: this.callService
@@ -111,7 +110,6 @@ class MessageDetailData extends React.PureComponent<Props> {
 
     const emailButton: BlockButtonProps = {
       bordered: true,
-      white: true,
       title: I18n.t("messageDetails.write"),
       iconName: "io-envelope",
       onPress: this.sendEmailToService
