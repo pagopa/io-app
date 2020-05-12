@@ -48,8 +48,15 @@ export default StyleSheet.create({
   },
   cardPsp: {
     alignSelf: "flex-end",
-    width: 70,
-    height: 30
+    width: 80,
+    height: 32
+  },
+  pspLogo: {
+    maxWidth: 80,
+    maxHeight: 32,
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain"
   },
   footerButton: {
     borderRadius: 6,

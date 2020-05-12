@@ -22,14 +22,23 @@ const customVariables = Object.assign(materialVariables, {
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
+  textLightButtonWeight: "600" as FontWeight,
+
   btnHeight: 48,
   btnWidgetHeight: 24,
   btnFontSize: 16,
+  btnIconSize: 24,
+
   btnXSmallHeight: 32,
-  btnXSmallLineHeight: 20,
-  btnSmallHeight: 39,
-  btnSmallFontSize: 16,
+  btnXSmallLineHeight: 18,
   btnXSmallFontSize: 14,
+  btnXSmallIconSize: 18,
+
+  btnSmallHeight: 39,
+  btnSmallLineHeight: 20,
+  btnSmallFontSize: 14,
+  btnSmallIconSize: 20,
+
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
@@ -80,6 +89,9 @@ const customVariables = Object.assign(materialVariables, {
   get fontSizeSmaller(): number {
     return this.fontSizeBase * 0.75;
   },
+  get fontSizeXSmall(): number {
+    return this.fontSizeBase * 0.8125;
+  },
   get fontSizeSmall(): number {
     return this.fontSizeBase * 0.875;
   },
@@ -102,6 +114,8 @@ const customVariables = Object.assign(materialVariables, {
     return this.fontSizeBase * 2.5;
   },
   lineHeightBase: 24,
+  lineHeightSmall: 18,
+  lineHeightXSmall: 17,
   get lineHeightFontSizeRatio(): number {
     return this.lineHeightBase / this.fontSizeBase;
   },
