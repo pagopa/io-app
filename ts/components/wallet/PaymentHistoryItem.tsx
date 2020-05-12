@@ -33,17 +33,11 @@ const styles = StyleSheet.create({
   brandDarkGray: {
     color: customVariables.brandDarkGray
   },
-  text2Style: {
-    lineHeight: 18,
-    fontSize: 13
-  },
   viewStyle: {
     flexDirection: "row"
   },
   text11: {
-    fontSize: 14,
     paddingLeft: 8,
-    lineHeight: 18,
     color: customVariables.brandDarkestGray
   },
   text3FontWeight: {
@@ -80,13 +74,13 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
       >
         <View style={styles.spaced}>
           <BadgeComponent color={this.props.color} />
-          <Text style={styles.text11}>{this.props.text11}</Text>
+          <Text style={styles.text11} small={true}>
+            {this.props.text11}
+          </Text>
         </View>
 
         <View style={styles.viewStyle}>
-          <Text note={true} style={styles.text2Style}>
-            {this.props.text2}
-          </Text>
+          <Text xsmall={true}>{this.props.text2}</Text>
         </View>
         <View style={styles.smallSpacer} />
         <View style={styles.text3Line}>
