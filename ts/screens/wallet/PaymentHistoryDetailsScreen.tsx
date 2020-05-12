@@ -19,9 +19,13 @@ import {
 } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
+import { BadgeComponent } from "../../components/screens/BadgeComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import { getIuv } from "../../components/wallet/PaymentsHistoryList";
+import {
+  getIuv,
+  getPaymentHistoryInfo
+} from "../../components/wallet/PaymentsHistoryList";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import {
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
     paddingRight: 10
   },
   box: {
-    marginTop: 10,
+    marginTop: 2,
     marginBottom: 10,
     flexDirection: "column",
     justifyContent: "flex-start"
@@ -120,6 +124,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: customVariables.brandPrimary
   },
+  paymentOutcome: {
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    alignItems: "center"
+  },
   helpButtonText: {
     paddingRight: 10,
     paddingBottom: 0,
@@ -127,6 +136,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     color: customVariables.brandPrimary
+  },
+
+  text11: {
+    fontSize: 14,
+    paddingLeft: 8,
+    lineHeight: 18,
+    color: customVariables.brandDarkestGray
   }
 });
 
@@ -198,6 +214,10 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   );
   public render(): React.ReactNode {
     const payment = this.props.navigation.getParam("payment");
+    const paymentCheckout = isPaymentDoneSuccessfully(payment);
+    const paymentInfo = getPaymentHistoryInfo(payment, paymentCheckout);
+    const paymentOutcomeDescription = paymentInfo.text11;
+    const paymentOutcomeColor = paymentInfo.color;
     const errorDetail = fromNullable(
       renderErrorTransactionMessage(payment.failure)
     );
@@ -249,6 +269,11 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               <Text>{I18n.t("payment.details.info.title")}</Text>
             </View>
             <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} />
+            <View style={styles.paymentOutcome}>
+              <BadgeComponent color={paymentOutcomeColor} />
+              <Text style={styles.text11}>{paymentOutcomeDescription}</Text>
+            </View>
             <View style={styles.box}>
               {paymentOutCome.isSome() && paymentOutCome.value ? (
                 <React.Fragment>
