@@ -29,6 +29,7 @@ const customVariables = Object.assign(materialVariables, {
   btnXSmallLineHeight: 20,
   btnSmallHeight: 39,
   btnSmallFontSize: 16,
+  btnXSmallFontSize: 14,
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
