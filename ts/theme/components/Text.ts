@@ -29,7 +29,7 @@ export default (): Theme => {
   return {
     ".xsmall": {
       fontSize: variables.fontSizeXSmall,
-      lineHeight: variables.lineHeightXSmall,    
+      lineHeight: variables.lineHeightXSmall,
       marginBottom: -2 // to solve alignment of the text in the given lineHeight
     },
     ".small": {

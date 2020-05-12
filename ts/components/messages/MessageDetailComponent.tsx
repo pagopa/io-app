@@ -181,7 +181,7 @@ export default class MessageDetailComponent extends React.PureComponent<
           />
         )}
         <View spacer={true} large={true} />
-        <View spacer={true} small={true}/>
+        <View spacer={true} small={true} />
       </Content>
     );
   }

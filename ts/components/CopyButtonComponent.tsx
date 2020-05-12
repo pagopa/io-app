@@ -22,8 +22,6 @@ const styles = StyleSheet.create({
   },
   text: {
     ...makeFontStyleObject(Platform.select, customVariables.textNormalWeight),
-    lineHeight: 18,
-    fontSize: 14,
     color: customVariables.brandPrimary,
     paddingLeft: 0,
     paddingRight: 0
@@ -37,7 +35,9 @@ export default function CopyButtonComponent(props: Props) {
       style={styles.button}
       bordered={true}
     >
-      <Text style={styles.text}>{I18n.t("clipboard.copyText")}</Text>
+      <Text style={styles.text} small={true}>
+        {I18n.t("clipboard.copyText")}
+      </Text>
     </ButtonDefaultOpacity>
   );
 }
