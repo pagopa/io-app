@@ -136,8 +136,6 @@ type DataLoadFailure =
   | "userMetadaLoadFailure"
   | undefined;
 
-const EMPTY_MESSAGE = "";
-
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -252,7 +250,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       currentTabServicesId: [],
       isLongPressEnabled: false,
       enableServices: false,
-      toastErrorMessage: EMPTY_MESSAGE,
+      toastErrorMessage: I18n.t("global.genericError"),
       isInnerContentRendered: false
     };
   }
