@@ -1,72 +1,28 @@
 import { isToday } from "date-fns";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
-import { Alert, StyleSheet } from "react-native";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-import { connect } from "react-redux";
+import { StyleSheet } from "react-native";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
-import { NavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
-import {
-  addCalendarEvent,
-  AddCalendarEventPayload,
-  removeCalendarEvent,
-  RemoveCalendarEventPayload
-} from "../../store/actions/calendarEvents";
-import {
-  navigateToMessageDetailScreenAction,
-  navigateToPaymentTransactionSummaryScreen,
-  navigateToWalletHome
-} from "../../store/actions/navigation";
-import { preferredCalendarSaveSuccess } from "../../store/actions/persistedPreferences";
-import { loadServiceDetail } from "../../store/actions/services";
-import { Dispatch } from "../../store/actions/types";
-import { paymentInitializeState } from "../../store/actions/wallet/payment";
-import { serverInfoDataSelector } from "../../store/reducers/backendInfo";
-import {
-  CalendarEvent,
-  calendarEventByMessageIdSelector
-} from "../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 import { PaidReason } from "../../store/reducers/entities/payments";
-import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
-import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import { openAppSettings } from "../../utils/appSettings";
-import { isUpdateNeeded } from "../../utils/appVersion";
-import {
-  checkAndRequestPermission,
-  convertLocalCalendarName
-} from "../../utils/calendar";
-import {
-  format,
-  formatDateAsDay,
-  formatDateAsMonth,
-  formatDateAsReminder
-} from "../../utils/dates";
+import { format, formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
   getMessagePaymentExpirationInfo,
   isExpirable,
   isExpired,
-  MessagePaymentExpirationInfo
+  isExpiring
 } from "../../utils/messages";
-import {
-  formatPaymentAmount,
-  getAmountFromPaymentAmount,
-  getRptIdFromNoticeNumber
-} from "../../utils/payment";
-import { showToast } from "../../utils/showToast";
-import CalendarIconComponent from "../CalendarIconComponent";
-import { withLightModalContext } from "../helpers/withLightModalContext";
-import SelectCalendarModal from "../SelectCalendarModal";
+import { formatPaymentAmount } from "../../utils/payment";
 import StyledIconFont from "../ui/IconFont";
-import { LightModalContextInterface } from "../ui/LightModal";
 import CalendarEventButton from "./CalendarEventButton";
+import CalendarIconComponent from "./CalendarIconComponent";
 import PaymentButton from "./PaymentButton";
 
-type OwnProps = {
+type Props = {
   message: CreatedMessageWithContent;
   service?: ServicePublic;
   payment?: PaidReason;
@@ -74,34 +30,20 @@ type OwnProps = {
   disabled?: boolean;
 };
 
-type Props = OwnProps &
-  LightModalContextInterface &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
-
-type State = {
-  // Store if the event is in the device calendar
-  isEventInDeviceCalendar: boolean;
-};
-
 const styles = StyleSheet.create({
   topContainer: {
     display: "flex",
-    flexDirection: "row",
-    alignItems: "center"
+    flexDirection: "row"
   },
-
   topContainerLarge: {
     paddingVertical: variables.contentPadding / 2,
     paddingHorizontal: variables.contentPadding,
     backgroundColor: variables.brandGray
   },
-
   topContainerPaid: {
     paddingVertical: 0,
     paddingHorizontal: 0
   },
-
   bottomContainer: {
     display: "flex",
     flexDirection: "row",
@@ -109,304 +51,70 @@ const styles = StyleSheet.create({
     paddingVertical: variables.contentPadding / 2,
     paddingHorizontal: variables.contentPadding
   },
-
   bottomContainerValid: {
     backgroundColor: variables.brandGray
   },
-
   bottomContainerExpiring: {
     backgroundColor: "#D0021B"
   },
-
   bottomContainerExpired: {
     backgroundColor: variables.brandDarkGray
   },
-
   bottomContainerText: {
     flex: 1,
     flexWrap: "wrap",
     marginLeft: 16
   }
 });
+
 /**
  * A component to show the action buttons on a message.
  * For messages with the proper configuration, the user can:
  * - add a message-related calendar event
  * - start the message-related payment
  */
-class MessageCTABar extends React.PureComponent<Props, State> {
-  private navigateToMessageDetail = () => {
-    const { message, navigateToMessageDetail } = this.props;
-    navigateToMessageDetail(message.id);
-  };
-
+class MessageCTABar extends React.PureComponent<Props> {
   get paid(): boolean {
     return this.props.payment !== undefined;
   }
 
-  /**
-   * Check if an event for endDate with that title already exists in the calendar.
-   * Return the event id if it is found
-   */
-  private searchEventInCalendar = async (
-    endDate: Date,
-    title: string
-  ): Promise<Option<string>> => {
-    const startDate = new Date(endDate.getTime());
-    return RNCalendarEvents.fetchAllEvents(
-      formatDateAsReminder(new Date(startDate.setDate(endDate.getDate() - 1))),
-      formatDateAsReminder(endDate)
-    )
-      .then(
-        events => {
-          return fromNullable(events)
-            .mapNullable(evs =>
-              evs.find(e => {
-                return (
-                  e.title === title &&
-                  new Date(e.endDate).getDay() === endDate.getDay()
-                );
-              })
-            )
-            .map(ev => some(ev.id))
-            .getOrElse(none);
-        },
-        // handle promise rejection
-        () => {
-          return none;
-        }
-      )
-      .catch(() => none);
-  };
-
-  /**
-   * A function to check if the eventId of the CalendarEvent stored in redux
-   * is really/still in the device calendar.
-   * It is important to make this check because the event can be removed outside
-   * the App.
-   */
-  private checkIfEventInCalendar = (
-    calendarEvent: CalendarEvent | undefined
-  ) => {
-    if (calendarEvent === undefined) {
-      this.setState({
-        isEventInDeviceCalendar: false
-      });
-      return;
-    }
-    checkAndRequestPermission()
-      .then(
-        hasPermission => {
-          if (hasPermission) {
-            RNCalendarEvents.findEventById(calendarEvent.eventId)
-              .then(
-                event => {
-                  if (event) {
-                    // The event is in the store and also in the device calendar
-                    // Update the state to display and handle the reminder button correctly
-                    this.setState({
-                      isEventInDeviceCalendar: true
-                    });
-                  } else {
-                    // The event is in the store but not in the device calendar.
-                    // Remove it from store too
-                    this.props.removeCalendarEvent(calendarEvent);
-                  }
-                },
-                // handle promise rejection
-                () => {
-                  this.setState({
-                    isEventInDeviceCalendar: false
-                  });
-                }
-              )
-              .catch();
-          }
-        },
-        // handle promise rejection
-        // tslint:disable-next-line: no-identical-functions
-        () => {
-          this.setState({
-            isEventInDeviceCalendar: false
-          });
-        }
-      )
-      .catch();
-  };
-
-  private saveCalendarEvent = (
-    calendar: Calendar,
-    message: CreatedMessageWithContent,
-    dueDate: Date,
-    title: string
-  ) =>
-    RNCalendarEvents.saveEvent(title, {
-      calendarId: calendar.id,
-      startDate: formatDateAsReminder(dueDate),
-      endDate: formatDateAsReminder(dueDate),
-      allDay: true,
-      alarms: []
-    })
-      .then(eventId => {
-        showToast(
-          I18n.t("messages.cta.reminderAddSuccess", {
-            title,
-            calendarTitle: convertLocalCalendarName(calendar.title)
-          }),
-          "success"
-        );
-        // Add the calendar event to the store
-        this.props.addCalendarEvent({
-          messageId: message.id,
-          eventId
-        });
-
-        this.setState({
-          isEventInDeviceCalendar: true
-        });
-      })
-      .catch(_ =>
-        showToast(I18n.t("messages.cta.reminderAddFailure"), "danger")
-      );
-
-  private confirmSaveCalendarEventAlert = (
-    calendar: Calendar,
-    message: CreatedMessageWithContent,
-    dueDate: Date,
-    title: string,
-    eventId: string
-  ) =>
-    Alert.alert(
-      I18n.t("messages.cta.reminderAlertTitle"),
-      I18n.t("messages.cta.reminderAlertDescription"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("messages.cta.reminderAlertKeep"),
-          style: "default",
-          onPress: () =>
-            this.setState(
-              {
-                isEventInDeviceCalendar: true
-              },
-              () => {
-                // Add the calendar event to the store
-                this.props.addCalendarEvent({
-                  messageId: message.id,
-                  eventId
-                });
-              }
-            )
-        },
-        {
-          text: I18n.t("messages.cta.reminderAlertAdd"),
-          style: "default",
-          onPress: () =>
-            this.saveCalendarEvent(calendar, message, dueDate, title)
-        }
-      ],
-      { cancelable: false }
+  get paymentExpirationInfo() {
+    const { message } = this.props;
+    const { payment_data, due_date } = message.content;
+    return fromNullable(payment_data).map(paymentData =>
+      getMessagePaymentExpirationInfo(paymentData, due_date)
     );
+  }
 
-  private addCalendarEventToDeviceCalendar = (
-    message: CreatedMessageWithContent,
-    dueDate: Date
-  ) => (calendar: Calendar) => {
-    const title = I18n.t("messages.cta.reminderTitle", {
-      title: message.content.subject
-    });
+  private isPaymentExpired = this.paymentExpirationInfo.fold(false, info =>
+    isExpired(info)
+  );
+  private isPaymentExpiring = this.paymentExpirationInfo.fold(false, info =>
+    isExpiring(info)
+  );
 
-    const { preferredCalendar } = this.props;
-
-    this.props.hideModal();
-
-    if (preferredCalendar === undefined) {
-      this.props.preferredCalendarSaveSuccess(calendar);
-    }
-
-    this.searchEventInCalendar(dueDate, title)
-      .then(mayBeEventId =>
-        mayBeEventId.foldL(
-          async () => {
-            await this.saveCalendarEvent(calendar, message, dueDate, title);
-          },
-          async eventId => {
-            this.confirmSaveCalendarEventAlert(
-              calendar,
-              message,
-              dueDate,
-              title,
-              eventId
-            );
-          }
-        )
-      )
-      .catch(() => this.saveCalendarEvent(calendar, message, dueDate, title));
-  };
-
-  private removeCalendarEventFromDeviceCalendar = (
-    calendarEvent: CalendarEvent | undefined
-  ) => {
-    if (calendarEvent) {
-      RNCalendarEvents.removeEvent(calendarEvent.eventId)
-        .then(_ => {
-          showToast(I18n.t("messages.cta.reminderRemoveSuccess"), "success");
-          this.props.removeCalendarEvent({
-            messageId: calendarEvent.messageId
-          });
-          this.setState({
-            isEventInDeviceCalendar: false
-          });
-        })
-        .catch(_ =>
-          showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger")
-        );
-    } else {
-      showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger");
-    }
-  };
-
-  private renderCalendarIcon = (
-    maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
-  ) => {
+  private renderCalendarIcon = () => {
     const { message, small } = this.props;
     const { due_date } = message.content;
 
-    // if the message is relative to a payment and it is paid
-    // calendar icon will be never shown
+    // The calendar icon is hidden if:
+    // - the payment related to the message has been paid
     if (this.paid) {
-      return null;
+      return undefined;
     }
+
+    // - the message has any a due date
     if (!due_date) {
-      return null;
+      return undefined;
     }
-
-    if (
-      !small &&
-      maybeMessagePaymentExpirationInfo.isSome() &&
-      isExpired(maybeMessagePaymentExpirationInfo.value)
-    ) {
-      return null;
-    }
-
-    const calendarIconComponentSize = small ? 32 : 40;
-
-    const isPaymentExpiring =
-      maybeMessagePaymentExpirationInfo.isSome() &&
-      maybeMessagePaymentExpirationInfo.value.kind === "EXPIRABLE" &&
-      maybeMessagePaymentExpirationInfo.value.expireStatus === "EXPIRING";
 
     return (
       <CalendarIconComponent
-        height={calendarIconComponentSize}
-        width={calendarIconComponentSize}
+        small={small}
         month={capitalize(formatDateAsMonth(due_date))}
         day={formatDateAsDay(due_date)}
         backgroundColor={
-          isPaymentExpiring
+          this.isPaymentExpiring
             ? variables.calendarExpirableColor
             : variables.brandDarkGray
         }
@@ -415,165 +123,50 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     );
   };
 
-  private renderCalendarEventButton = (
-    maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
-  ) => {
-    const {
-      message,
-      small,
-      disabled,
-      calendarEvent,
-      preferredCalendar,
-      hideModal,
-      showModal
-    } = this.props;
+  // Render a button to add/remove an event related to the message in the calendar
+  private renderCalendarEventButton = () => {
+    const { message } = this.props;
     const { due_date } = message.content;
-    const { isEventInDeviceCalendar } = this.state;
 
-    // if the message is relative to a payment and it is paid
-    // reminder will be never shown
-    if (this.paid || due_date === undefined) {
-      return null;
+    // The add/remove reminder button is hidden if:
+    // - if the message has a due date
+    if (due_date === undefined) {
+      return undefined;
     }
 
-    if (
-      maybeMessagePaymentExpirationInfo.isSome() &&
-      isExpired(maybeMessagePaymentExpirationInfo.value)
-    ) {
-      return null;
+    // - if the message is relative to a payment and it has been paid
+    if (this.paid) {
+      return undefined;
     }
 
-    // Create an action to add or remove the event
-    const onPressHandler = () => {
-      // Check the authorization status
-      checkAndRequestPermission()
-        .then(calendarPermission => {
-          if (calendarPermission.authorized) {
-            if (isEventInDeviceCalendar) {
-              // If the event is in the calendar prompt an alert and ask for confirmation
-              Alert.alert(
-                I18n.t("messages.cta.reminderRemoveRequest.title"),
-                undefined,
-                [
-                  {
-                    text: I18n.t("messages.cta.reminderRemoveRequest.cancel"),
-                    style: "cancel"
-                  },
-                  {
-                    text: I18n.t("messages.cta.reminderRemoveRequest.ok"),
-                    style: "destructive",
-                    onPress: () => {
-                      // after confirmation remove it
-                      this.removeCalendarEventFromDeviceCalendar(calendarEvent);
-                    }
-                  }
-                ],
-                { cancelable: false }
-              );
-            } else if (preferredCalendar !== undefined) {
-              this.addCalendarEventToDeviceCalendar(message, due_date)(
-                preferredCalendar
-              );
-            } else {
-              // The event need to be added
-              // Show a modal to let the user select a calendar
-              showModal(
-                <SelectCalendarModal
-                  onCancel={hideModal}
-                  onCalendarSelected={this.addCalendarEventToDeviceCalendar(
-                    message,
-                    due_date
-                  )}
-                />
-              );
-            }
-          } else if (!calendarPermission.asked) {
-            // Authorized is false (denied, restricted or undetermined)
-            // If the user denied permission previously (not in this session)
-            // prompt an alert to inform that his calendar permissions could have been turned off
-            Alert.alert(
-              I18n.t("messages.cta.calendarPermDenied.title"),
-              undefined,
-              [
-                {
-                  text: I18n.t("messages.cta.calendarPermDenied.cancel"),
-                  style: "cancel"
-                },
-                {
-                  text: I18n.t("messages.cta.calendarPermDenied.ok"),
-                  style: "default",
-                  onPress: () => {
-                    // open app settings to turn on the calendar permissions
-                    openAppSettings();
-                  }
-                }
-              ],
-              { cancelable: true }
-            );
-          }
-        })
-        // No permission to add/remove the reminder
-        .catch();
-    };
+    // - the payment related to the message expired
+    if (this.isPaymentExpired) {
+      return undefined;
+    }
 
+    const { small, disabled } = this.props;
     return (
       <CalendarEventButton
-        isEventInDeviceCalendar={isEventInDeviceCalendar}
         small={small}
         disabled={disabled}
-        onPress={onPressHandler}
+        message={this.props.message}
       />
     );
   };
 
-  private renderPaymentButton(
-    maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
-  ) {
+  // Render a button to display details of the payment related to the message
+  private renderPaymentButton() {
     const { message, service, small, disabled } = this.props;
 
-    if (
-      maybeMessagePaymentExpirationInfo.isNone() ||
-      (!small && isExpired(maybeMessagePaymentExpirationInfo.value))
-    ) {
-      return null;
+    const paymentInfo = this.paymentExpirationInfo;
+
+    // don't show payment button if the message doesn't contain payment info or
+    // the payment is expired and it has to be rendered in the large version
+    if (paymentInfo.isNone() || (!small && this.isPaymentExpired)) {
+      return undefined;
     }
 
-    const messagePaymentExpirationInfo =
-      maybeMessagePaymentExpirationInfo.value;
-
-    const expired = isExpired(messagePaymentExpirationInfo);
-    const rptId = fromNullable(service).chain(_ =>
-      getRptIdFromNoticeNumber(
-        _.organization_fiscal_code,
-        messagePaymentExpirationInfo.noticeNumber
-      )
-    );
-    const amount = getAmountFromPaymentAmount(
-      messagePaymentExpirationInfo.amount
-    );
-
-    const onPressHandler = expired
-      ? this.navigateToMessageDetail
-      : !disabled && !this.paid && amount.isSome() && rptId.isSome()
-        ? () => {
-            this.props.refreshService(message.sender_service_id);
-            // TODO: optimize the managment of the payment initialization https://www.pivotaltracker.com/story/show/169702534
-            if (
-              this.props.isEmailValidated &&
-              !this.props.isUpdatedNeededPagoPa
-            ) {
-              this.props.paymentInitializeState();
-              this.props.navigateToPaymentTransactionSummaryScreen({
-                rptId: rptId.value,
-                initialAmount: amount.value
-              });
-            } else {
-              // Navigating to Wallet home, having the email address is not validated,
-              // it will be displayed RemindEmailValidationOverlay
-              this.props.navigateToWalletHomeScreen();
-            }
-          }
-        : undefined;
+    const messagePaymentExpirationInfo = paymentInfo.value;
 
     return (
       <PaymentButton
@@ -581,25 +174,28 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         messagePaymentExpirationInfo={messagePaymentExpirationInfo}
         small={small}
         disabled={disabled}
-        onPress={onPressHandler}
+        service={service}
+        message={message}
       />
     );
   }
 
-  private renderTopContainer = (
-    maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
-  ) => {
+  /**
+   * Render on a row, if available:
+   * - a calendar icon
+   * - a button to add/remove a calendar event
+   * - a button to show/start a payment
+   */
+  private renderTopContainer = () => {
     const { small } = this.props;
 
-    const calendarIcon = this.renderCalendarIcon(
-      maybeMessagePaymentExpirationInfo
-    );
-    const calendarEventButton = this.renderCalendarEventButton(
-      maybeMessagePaymentExpirationInfo
-    );
-    const paymentButton = this.renderPaymentButton(
-      maybeMessagePaymentExpirationInfo
-    );
+    if (!small && this.isPaymentExpired) {
+      return undefined;
+    }
+
+    const calendarIcon = this.renderCalendarIcon();
+    const calendarEventButton = this.renderCalendarEventButton();
+    const paymentButton = this.renderPaymentButton();
     if (
       calendarIcon !== null ||
       calendarEventButton !== null ||
@@ -613,19 +209,11 @@ class MessageCTABar extends React.PureComponent<Props, State> {
             !small && styles.topContainerLarge
           ]}
         >
-          {calendarIcon !== null && (
-            <React.Fragment>
-              {calendarIcon}
-              <View style={{ marginLeft: 8 }} />
-            </React.Fragment>
-          )}
+          {calendarIcon}
+          {calendarIcon && <View hspacer={true} small={true} />}
 
-          {calendarEventButton !== null && (
-            <React.Fragment>
-              {calendarEventButton}
-              <View style={{ marginLeft: 8 }} />
-            </React.Fragment>
-          )}
+          {calendarEventButton}
+          {calendarEventButton && <View hspacer={true} small={true} />}
 
           {paymentButton}
         </View>
@@ -635,18 +223,19 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     return null;
   };
 
-  private renderBottomContainer = (
-    maybeMessagePaymentExpirationInfo: Option<MessagePaymentExpirationInfo>
-  ) => {
+  /**
+   * Display description on message deadlines
+   */
+  private renderBottomContainer = () => {
     const { small } = this.props;
 
+    // If in the message detail and the payment is not expired
     if (
       !small &&
-      maybeMessagePaymentExpirationInfo.isSome() &&
-      isExpirable(maybeMessagePaymentExpirationInfo.value)
+      this.paymentExpirationInfo.isSome() &&
+      isExpirable(this.paymentExpirationInfo.value)
     ) {
-      const messagePaymentExpirationInfo =
-        maybeMessagePaymentExpirationInfo.value;
+      const messagePaymentExpirationInfo = this.paymentExpirationInfo.value;
 
       const dueDate = messagePaymentExpirationInfo.dueDate;
 
@@ -718,8 +307,7 @@ class MessageCTABar extends React.PureComponent<Props, State> {
         return (
           <View style={[styles.bottomContainer, styles.bottomContainerExpired]}>
             <CalendarIconComponent
-              height={40}
-              width={40}
+              small={this.props.small}
               month={formatDateAsMonth(dueDate).toUpperCase()}
               day={formatDateAsDay(dueDate)}
               backgroundColor={variables.colorWhite}
@@ -751,79 +339,14 @@ class MessageCTABar extends React.PureComponent<Props, State> {
     return null;
   };
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      isEventInDeviceCalendar: false
-    };
-  }
-
-  public componentDidMount() {
-    const { calendarEvent } = this.props;
-
-    // If we have a calendar event in the store associated to this message
-    // Check if the event is still in the device calendar
-    this.checkIfEventInCalendar(calendarEvent);
-  }
-
-  public componentDidUpdate(prevProps: Props) {
-    // if calenderEvent changes means reminder has been changed
-    if (prevProps.calendarEvent !== this.props.calendarEvent) {
-      // if a calendarEvent exists we have to check if it really exists as calendar event
-      // the event can be removed outside the App.
-      this.checkIfEventInCalendar(this.props.calendarEvent);
-    }
-  }
-
   public render() {
-    const { message } = this.props;
-    const { payment_data, due_date } = message.content;
-
-    const maybeMessagePaymentExpirationInfo = fromNullable(payment_data).map(
-      paymentData => getMessagePaymentExpirationInfo(paymentData, due_date)
-    );
-
     return (
       <React.Fragment>
-        {this.renderTopContainer(maybeMessagePaymentExpirationInfo)}
-        {this.renderBottomContainer(maybeMessagePaymentExpirationInfo)}
+        {this.renderTopContainer()}
+        {this.renderBottomContainer()}
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
-  calendarEvent: calendarEventByMessageIdSelector(ownProps.message.id)(state),
-  preferredCalendar: state.persistedPreferences.preferredCalendar,
-  isEmailValidated: isProfileEmailValidatedSelector(state),
-  isUpdatedNeededPagoPa: isUpdateNeeded(
-    serverInfoDataSelector(state),
-    "min_app_version_pagopa"
-  )
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  refreshService: (serviceId: string) =>
-    dispatch(loadServiceDetail.request(serviceId)),
-  navigateToMessageDetail: (messageId: string) =>
-    dispatch(navigateToMessageDetailScreenAction({ messageId })),
-  navigateToWalletHomeScreen: () => dispatch(navigateToWalletHome()),
-  paymentInitializeState: () => dispatch(paymentInitializeState()),
-  navigateToPaymentTransactionSummaryScreen: (params: NavigationParams) =>
-    dispatch(navigateToPaymentTransactionSummaryScreen(params)),
-  addCalendarEvent: (calendarEvent: AddCalendarEventPayload) =>
-    dispatch(addCalendarEvent(calendarEvent)),
-  removeCalendarEvent: (calendarEvent: RemoveCalendarEventPayload) =>
-    dispatch(removeCalendarEvent(calendarEvent)),
-  preferredCalendarSaveSuccess: (calendar: Calendar) =>
-    dispatch(
-      preferredCalendarSaveSuccess({
-        preferredCalendar: calendar
-      })
-    )
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withLightModalContext(MessageCTABar));
+export default MessageCTABar;
