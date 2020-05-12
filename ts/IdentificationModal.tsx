@@ -31,9 +31,7 @@ import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 import { authenticateConfig } from "./utils/biometric";
 
-import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
 import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
-import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
