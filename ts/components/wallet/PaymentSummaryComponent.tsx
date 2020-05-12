@@ -47,7 +47,9 @@ const styles = StyleSheet.create({
 export const PaymentSummaryComponent = (props: Props) => {
   const renderItem = (label: string, value: string) => (
     <React.Fragment>
-      <Text small={true} style={props.dark && styles.lighterGray}>{label}</Text>
+      <Text small={true} style={props.dark && styles.lighterGray}>
+        {label}
+      </Text>
       <Text bold={true} dark={!props.dark} white={props.dark}>
         {value}
       </Text>

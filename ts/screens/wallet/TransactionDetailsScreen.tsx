@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   centered: { alignItems: "center" },
   flex: {
     flex: 1,
-    alignSelf: 'center'
+    alignSelf: "center"
   }
 });
 
@@ -122,10 +122,12 @@ class TransactionDetailsScreen extends React.Component<Props> {
     const fee = formatNumberCentsToAmount(
       transaction.fee === undefined
         ? transaction.grandTotal.amount - transaction.amount.amount
-        : transaction.fee.amount, true
+        : transaction.fee.amount,
+      true
     );
     const totalAmount = formatNumberCentsToAmount(
-      transaction.grandTotal.amount, true
+      transaction.grandTotal.amount,
+      true
     );
 
     const transactionWallet = this.props.wallets
@@ -168,7 +170,9 @@ class TransactionDetailsScreen extends React.Component<Props> {
 
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
-        <Text small={true} style={styles.flex}>{label}</Text>
+        <Text small={true} style={styles.flex}>
+          {label}
+        </Text>
         <Text bold={true} dark={true}>
           {value}
         </Text>

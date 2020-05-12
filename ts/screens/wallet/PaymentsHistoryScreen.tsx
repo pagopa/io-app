@@ -53,7 +53,7 @@ const ListEmptyComponent = (
 );
 
 /**
- * A screen displaying the list of all the transactions apprached 
+ * A screen displaying the list of all the transactions apprached
  * by the user (completed or cancelled for any reason).
  */
 class PaymentsHistoryScreen extends React.Component<Props, never> {

@@ -158,7 +158,9 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
   private standardRow = (label: string, value: string) => (
     <View style={styles.row}>
-      <Text small={true} style={styles.flex}>{label}</Text>
+      <Text small={true} style={styles.flex}>
+        {label}
+      </Text>
       <Text bold={true} dark={true}>
         {value}
       </Text>
