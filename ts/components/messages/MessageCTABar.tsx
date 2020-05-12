@@ -227,6 +227,11 @@ class MessageCTABar extends React.PureComponent<Props> {
    * Display description on message deadlines
    */
   private renderBottomContainer = () => {
+
+    if(this.paid){
+      return undefined
+    }
+
     const { small } = this.props;
 
     // If in the message detail and the payment is not expired
