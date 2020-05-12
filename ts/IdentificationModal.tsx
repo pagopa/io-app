@@ -275,12 +275,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       });
     }
 
-    const previousAttempts = prevProps.identificationFailState
-      .map(x => x.remainingAttempts)
-      .getOrElse(Number.MAX_VALUE);
-    const currentAttempts = this.props.identificationFailState
-      .map(x => x.remainingAttempts)
-      .getOrElse(Number.MAX_VALUE);
+    const previousAttempts = prevProps.identificationFailState.fold(
+      Number.MAX_VALUE,
+      x => x.remainingAttempts
+    );
+
+    const currentAttempts = this.props.identificationFailState.fold(
+      Number.MAX_VALUE,
+      x => x.remainingAttempts
+    );
 
     // trigger an update in the management of the updateInterval if the attempts or the state
     // `canInsertPinTooManyAttempts` is changed
