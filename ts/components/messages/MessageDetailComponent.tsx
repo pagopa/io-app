@@ -10,10 +10,7 @@ import { ServiceMetadataState } from "../../store/reducers/content";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
-import {
-  messageNeedsCTABar,
-  getPrescriptionDataFromName
-} from "../../utils/messages";
+import { messageNeedsCTABar } from "../../utils/messages";
 import OrganizationHeader from "../OrganizationHeader";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
