@@ -136,8 +136,6 @@ type DataLoadFailure =
   | "userMetadaLoadFailure"
   | undefined;
 
-const EMPTY_MESSAGE = "";
-
 const styles = StyleSheet.create({
   container: {
     flex: 1
