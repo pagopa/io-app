@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   flex: {
-    flex: 1
+    flex: 1,
+    alignSelf: 'center'
   }
 });
 
@@ -170,6 +171,7 @@ class MessageDetailData extends React.PureComponent<Props> {
             <View spacer={true} />
 
             <Text bold={true}>{I18n.t("messageDetails.question")}</Text>
+            <View spacer={true} xsmall={true}/>
             <Text small={true}>{I18n.t("messageDetails.answer")}</Text>
 
             <View spacer={true} />
@@ -184,6 +186,7 @@ class MessageDetailData extends React.PureComponent<Props> {
               <View spacer={true} />
             </React.Fragment>
             {this.renderButtons()}
+            <View spacer={true} small={true}/>
           </React.Fragment>
         )}
       </View>

@@ -28,10 +28,13 @@ declare module "native-base" {
 export default (): Theme => {
   return {
     ".xsmall": {
-      fontSize: variables.fontSizeXSmall
+      fontSize: variables.fontSizeXSmall,
+      lineHeight: variables.lineHeightXSmall,    
+      marginBottom: -2 // to solve alignment of the text in the given lineHeight
     },
     ".small": {
-      fontSize: variables.fontSizeSmall
+      fontSize: variables.fontSizeSmall,
+      lineHeight: variables.lineHeightSmall
     },
     ".link": {
       ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
