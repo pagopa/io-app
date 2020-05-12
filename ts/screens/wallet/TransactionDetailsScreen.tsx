@@ -162,6 +162,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
     const { psp } = this.props;
     const transaction = this.props.navigation.getParam("transaction");
     const data = this.getData();
+
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
         <Text style={styles.flex}>{label}</Text>
@@ -188,14 +189,12 @@ class TransactionDetailsScreen extends React.Component<Props> {
           />
 
           {/** transaction date */}
-          <React.Fragment>
-            <View spacer={true} xsmall={true} />
-            <View spacer={true} large={true} />
-            {standardRow(
-              I18n.t("wallet.firstTransactionSummary.date"),
-              data.transactionDateTime
-            )}
-          </React.Fragment>
+          <View spacer={true} xsmall={true} />
+          <View spacer={true} large={true} />
+          {standardRow(
+            I18n.t("wallet.firstTransactionSummary.date"),
+            data.transactionDateTime
+          )}
 
           <View spacer={true} large={true} />
           <ItemSeparatorComponent noPadded={true} />
@@ -288,6 +287,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
           >
             <Text>{I18n.t("global.buttons.close")}</Text>
           </ButtonDefaultOpacity>
+          <View spacer={true} />
         </SlidedContentComponent>
       </BaseScreenComponent>
     );

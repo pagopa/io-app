@@ -1,13 +1,8 @@
-/**
- * Wallet home screen, with a list of recent transactions,
- * a "pay notice" button and payment methods info/button to
- * add new ones
- */
 import { reverse } from "fp-ts/lib/Array";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
@@ -25,13 +20,9 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 
-type OwnProps = Readonly<{
-  navigation: NavigationScreenProp<NavigationState>;
-}>;
-
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  OwnProps;
+  NavigationScreenProps;
 
 const styles = StyleSheet.create({
   noBottomPadding: {
@@ -62,15 +53,15 @@ const ListEmptyComponent = (
 );
 
 /**
- * Payment Screen
+ * A screen displaying the list of all the transactions apprached 
+ * by the user (completed or cancelled for any reason).
  */
 class PaymentsHistoryScreen extends React.Component<Props, never> {
-  private goBack = () => this.props.navigation.goBack();
   public render(): React.ReactNode {
     const { historyPayments } = this.props;
     return (
       <BaseScreenComponent
-        goBack={this.goBack}
+        goBack={this.props.navigation.goBack}
         headerTitle={I18n.t("payment.details.list.title")}
       >
         <PaymentHistoryList

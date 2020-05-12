@@ -7,8 +7,11 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 
 type Props = Readonly<{
   title: string;
-  recipient: string;
-  description: string;
+  recipient?: string;
+  description?: string;
+  iuv?: string;
+  error?: string;
+  dateTime?: string;
   dark?: boolean;
   image?: ImageSourcePropType;
 }>;
@@ -32,6 +35,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     paddingRight: 4
+  },
+  flex: {
+    flex: 1
   }
 });
 
@@ -39,6 +45,16 @@ const styles = StyleSheet.create({
  * This component displays the transaction details
  */
 export const PaymentSummaryComponent = (props: Props) => {
+  const renderItem = (label: string, value: string) => (
+    <React.Fragment>
+      <Text small={true} style={props.dark && styles.lighterGray}>{label}</Text>
+      <Text bold={true} dark={!props.dark} white={props.dark}>
+        {value}
+      </Text>
+      <View spacer={true} />
+    </React.Fragment>
+  );
+
   return (
     <React.Fragment>
       <Text
@@ -58,23 +74,16 @@ export const PaymentSummaryComponent = (props: Props) => {
 
       <View style={styles.row}>
         <View style={styles.column}>
-          {/** recipient */}
-          <Text style={props.dark && styles.lighterGray}>
-            {I18n.t("wallet.recipient")}
-          </Text>
-          <Text bold={true} dark={!props.dark} white={props.dark}>
-            {props.recipient}
-          </Text>
+          {props.recipient &&
+            renderItem(I18n.t("wallet.recipient"), props.recipient)}
 
-          <View spacer={true} />
+          {props.description &&
+            renderItem(
+              I18n.t("wallet.firstTransactionSummary.object"),
+              props.description
+            )}
 
-          {/** transaction/notice description */}
-          <Text style={props.dark && styles.lighterGray}>
-            {I18n.t("wallet.firstTransactionSummary.object")}
-          </Text>
-          <Text bold={true} dark={!props.dark} white={props.dark}>
-            {props.description}
-          </Text>
+          {props.iuv && renderItem(I18n.t("payment.IUV"), props.iuv)}
         </View>
 
         {props.image !== undefined && <Image source={props.image} />}
