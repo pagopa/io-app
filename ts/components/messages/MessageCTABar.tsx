@@ -227,9 +227,8 @@ class MessageCTABar extends React.PureComponent<Props> {
    * Display description on message deadlines
    */
   private renderBottomContainer = () => {
-
-    if(this.paid){
-      return undefined
+    if (this.paid) {
+      return undefined;
     }
 
     const { small } = this.props;
