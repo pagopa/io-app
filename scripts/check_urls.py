@@ -62,19 +62,17 @@ def readFile(files):
 
 def test_http_uri(uri):
     """
-    Tests the uri passed as a parameter making an http get request.
-    If it causes an exception or an error code it appends the url to the collection of invalid_uris
+    Tests the uri passed as argument making an http get request.
+    If it causes an exception or an error code the uri will be returned
     :param uri: the uri to test
     :return: the uri if it is problematic, None otherwise
     """
     try:
         r = requests.get(uri, headers=HEADERS, timeout=MAX_TIMEOUT)
-        if r.status_code != requests.codes.ok:
-            invalid_uris.append(uri)
+        if r.ok:
             return None
     except:
         print("failed to connect:" + uri)
-        # invalid_uris.append(uri)
         return uri
 
 
