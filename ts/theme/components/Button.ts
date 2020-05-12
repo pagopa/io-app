@@ -134,7 +134,8 @@ export default (): Theme => {
     },
 
     "UIComponent.IconFont": {
-      fontSize: variables.btnSmallFontSize,
+      // color: variables.textColor,
+      fontSize: variables.btnWidgetHeight,
       paddingRight: 4
     },
 
