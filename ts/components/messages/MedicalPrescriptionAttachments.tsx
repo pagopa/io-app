@@ -4,10 +4,13 @@ import * as React from "react";
 import { FlatList, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { MessageAttachment } from "../../../definitions/backend/MessageAttachment";
+import { PrescriptionData } from "../../../definitions/backend/PrescriptionData";
 import customVariables from "../../theme/variables";
+import { getPrescriptionDataFromName } from "../../utils/messages";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 
 type Props = Readonly<{
+  prescriptionData?: PrescriptionData;
   attachments: ReadonlyArray<MessageAttachment>;
   organizationName?: string;
   typeToRender: "svg" | "png";
@@ -56,12 +59,18 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
     );
 
   private renderItem = ({ item }: { item: MessageAttachment }) => {
+    const value = getPrescriptionDataFromName(
+      this.props.prescriptionData,
+      item.name
+    );
     return (
       <View style={styles.padded}>
         <View spacer={true} small={true} />
         <Text style={styles.label}>
           {I18n.t(`messages.medical.${item.name}`).toUpperCase()}
         </Text>
+        {/* ONLY FOR TEST PURPOSE - REMOVE ME */}
+        {value.isSome() && <Text>{value.value}</Text>}
         {this.getImage(item)}
         <View spacer={true} />
       </View>

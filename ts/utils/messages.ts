@@ -2,7 +2,9 @@
  * Generic utilities for messages
  */
 
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
 export function messageContainsText(
@@ -116,3 +118,25 @@ export const isExpired = (
 ) =>
   isExpirable(messagePaymentExpirationInfo) &&
   messagePaymentExpirationInfo.expireStatus === "EXPIRED";
+
+/**
+ * given a name, return the relative prescription data value if it corresponds to a field
+ * @param message
+ * @param name it should be a string nre | iup | prescriber_fiscal_code
+ */
+export const getPrescriptionDataFromName = (
+  prescriptionData: PrescriptionData | undefined,
+  name: string
+): Option<string> => {
+  return fromNullable(prescriptionData).fold(none, pd => {
+    switch (name.toLowerCase()) {
+      case "nre":
+        return some(pd.nre);
+      case "iup":
+        return fromNullable(pd.iup);
+      case "prescriber_fiscal_code":
+        return fromNullable(pd.prescriber_fiscal_code);
+    }
+    return none;
+  });
+};
