@@ -6,11 +6,11 @@ import * as React from "react";
 import {
   AppState,
   BackHandler,
+  DeviceEventEmitter,
   Linking,
   Platform,
   StatusBar
 } from "react-native";
-import QuickActions from "react-native-quick-actions";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import { initialiseInstabug } from "./boot/configureInstabug";
@@ -33,7 +33,7 @@ import SystemOffModal from "./SystemOffModal";
 import UpdateAppModal from "./UpdateAppModal";
 import { getNavigateActionFromDeepLink } from "./utils/deepLink";
 
-import { fromNullable, Option, some, none } from "fp-ts/lib/Option";
+import { fromNullable } from "fp-ts/lib/Option";
 import { serverInfoDataSelector } from "./store/reducers/backendInfo";
 // Check min version app supported
 import { isUpdateNeeded } from "./utils/appVersion";
@@ -63,12 +63,11 @@ class RootContainer extends React.PureComponent<Props> {
     if (!url) {
       return;
     }
-    console.warn("naviga!!");
     const action = getNavigateActionFromDeepLink(url);
     // immediately navigate to the resolved action
     this.props.setDeepLink(action, true);
   };
-  
+
   public componentDidMount() {
     initialiseInstabug();
     BackHandler.addEventListener("hardwareBackPress", this.handleBackButton);
@@ -85,15 +84,16 @@ class RootContainer extends React.PureComponent<Props> {
     AppState.addEventListener("change", this.handleApplicationActivity);
     // Hide splash screen
     SplashScreen.hide();
-    // Get shortcuts
-    QuickActions.popInitialAction()
-      .then(data => {
-        console.warn(data.userInfo.url);
-        const action = getNavigateActionFromDeepLink(data.userInfo.url);
-        // immediately navigate to the resolved action
-        this.props.setDeepLink(action, true);
-      })
-      .catch();
+    if (Platform.OS === "android" && Platform.Version >= 24) {
+      // Shortcut listener app foreground/background
+      DeviceEventEmitter.addListener("quickActionShortcut", data => {
+        if (data !== null && data.userInfo !== null) {
+          const action = getNavigateActionFromDeepLink(data.userInfo.url);
+          // immediately navigate to the resolved action
+          this.props.setDeepLink(action, true);
+        }
+      });
+    }
   }
 
   public componentWillUnmount() {

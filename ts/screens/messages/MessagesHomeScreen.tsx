@@ -5,8 +5,10 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
+import QuickActions from "react-native-quick-actions";
 import {
   NavigationEventSubscription,
+  NavigationNavigateActionPayload,
   NavigationScreenProps
 } from "react-navigation";
 import { connect } from "react-redux";
@@ -20,6 +22,7 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import I18n from "../../i18n";
+import { setDeepLink } from "../../store/actions/deepLink";
 import {
   loadMessages,
   setMessagesArchivedState
@@ -41,6 +44,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT } from "../../utils/constants";
+import { getNavigateActionFromDeepLink } from "../../utils/deepLink";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type Props = NavigationScreenProps &
@@ -129,6 +133,18 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
+    if (Platform.OS === "android" && Platform.Version >= 24) {
+      // Get shortcuts
+      QuickActions.popInitialAction()
+        .then(data => {
+          if (data !== null && data.userInfo !== null) {
+            const action = getNavigateActionFromDeepLink(data.userInfo.url);
+            // immediately navigate to the resolved action
+            this.props.setDeepLink(action, true);
+          }
+        })
+        .catch();
+    }
     this.onRefreshMessages();
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
@@ -343,7 +359,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   updateMessagesArchivedState: (
     ids: ReadonlyArray<string>,
     archived: boolean
-  ) => dispatch(setMessagesArchivedState(ids, archived))
+  ) => dispatch(setMessagesArchivedState(ids, archived)),
+  setDeepLink: (
+    navigationPayload: NavigationNavigateActionPayload,
+    // tslint:disable-next-line: bool-param-default
+    immediate?: boolean
+  ) => dispatch(setDeepLink(navigationPayload, immediate))
 });
 
 export default connect(

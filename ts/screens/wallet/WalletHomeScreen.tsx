@@ -9,7 +9,7 @@ import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
-import QuickActions from "react-native-quick-actions";
+
 import {
   NavigationEventSubscription,
   NavigationScreenProp,
@@ -149,8 +149,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.contextualHelpContent"
 };
 
-const QRSCREEN = "QRSCREEN";
-
 /**
  * Wallet Home Screen
  */
@@ -170,18 +168,6 @@ class WalletHomeScreen extends React.Component<Props> {
         customVariables.brandDarkGray
       );
     }); // tslint:disable-line no-object-mutation
-    // Add shortcut
-    QuickActions.setShortcutItems([
-      {
-        type: QRSCREEN,
-        title: I18n.t("wallet.payNotice"),
-        subtitle: I18n.t("wallet.payNoticeLong"),
-        icon: "qrcode_shortcuts",
-        userInfo: {
-          url: "ioit://ioit/PAYMENT_SCAN_QR_CODE"
-        }
-      }
-    ]);
   }
 
   public componentWillUnmount() {

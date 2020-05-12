@@ -2,6 +2,7 @@
  * The screen allows to identify a transaction by the QR code on the analogic notice
  */
 import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
+import * as pot from "italia-ts-commons/lib/pot";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Container, Text, View } from "native-base";
 import * as React from "react";
@@ -21,6 +22,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { RefreshIndicator } from "../../../components/ui/RefreshIndicator";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import {
   navigateToPaymentManualDataInsertion,
@@ -28,6 +30,9 @@ import {
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import { fetchWalletsRequest } from "../../../store/actions/wallet/wallets";
+import { GlobalState } from "../../../store/reducers/types";
+import { walletsSelector } from "../../../store/reducers/wallet/wallets";
 import variables from "../../../theme/variables";
 import customVariables from "../../../theme/variables";
 import { openAppSettings } from "../../../utils/appSettings";
@@ -36,7 +41,9 @@ import { showToast } from "../../../utils/showToast";
 
 type OwnProps = NavigationInjectedProps;
 
-type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
+type Props = OwnProps &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
@@ -215,6 +222,14 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     };
   }
 
+  public componentDidMount() {
+    const { getWallets } = this.props;
+    // Check wallet
+    if (!pot.isSome(getWallets)) {
+      this.props.fetchWalletsRequest();
+    }
+  }
+
   public componentWillUnmount() {
     if (this.scannerReactivateTimeoutHandler) {
       // cancel the QR scanner reactivation before unmounting the component
@@ -222,9 +237,24 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     }
   }
 
+  public componentDidUpdate(prevProps: Props) {
+    if (
+      pot.isSome(this.props.getWallets) &&
+      !pot.isSome(prevProps.getWallets)
+    ) {
+      this.handleDidFocus();
+    }
+  }
+
   private handleDidFocus = () => this.setState({ isFocused: true });
 
   private handleWillBlur = () => this.setState({ isFocused: false });
+
+  private loadingIndicator = (
+    <View style={{ paddingTop: 100, paddingBottom: 100 }}>
+      <RefreshIndicator />
+    </View>
+  );
 
   public render(): React.ReactNode {
     const primaryButtonProps = {
@@ -243,6 +273,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       title: I18n.t("global.buttons.cancel")
     };
 
+    const { getWallets } = this.props;
+
     return (
       <Container style={styles.white}>
         <NavigationEvents
@@ -256,6 +288,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           faqCategories={["wallet"]}
         >
           <ScrollView bounces={false}>
+            {!this.state.isFocused &&
+              ((pot.isSome(getWallets) && getWallets.value.length === 0) ||
+                !pot.isSome(getWallets)) &&
+              this.loadingIndicator}
             {this.state.isFocused && (
               <QRCodeScanner
                 onRead={(reading: { data: string }) =>
@@ -336,6 +372,10 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   }
 }
 
+const mapStateToProps = (state: GlobalState) => ({
+  getWallets: walletsSelector(state)
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => dispatch(navigateToWalletHome()),
   navigateToPaymentManualDataInsertion: () =>
@@ -351,10 +391,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         initialAmount
       })
     );
+  },
+  fetchWalletsRequest: () => {
+    dispatch(fetchWalletsRequest());
   }
 });
 
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(ScanQrCodeScreen);

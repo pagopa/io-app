@@ -1,10 +1,12 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
+import { Platform } from "react-native";
+import QuickActions from "react-native-quick-actions";
 import { call, Effect, put, select } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-
-import { fromNullable } from "fp-ts/lib/Option";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
+import I18n from "../../i18n";
 import {
   paymentAttiva,
   paymentCheck,
@@ -65,6 +67,24 @@ export function* fetchWalletsRequestHandler(
     if (getResponse.isRight()) {
       if (getResponse.value.status === 200) {
         yield put(fetchWalletsSuccess(getResponse.value.value.data));
+        if (
+          getResponse.value.value.data.length > 0 &&
+          Platform.OS === "android" &&
+          Platform.Version >= 24
+        ) {
+          // Add the qr code payment shortcut
+          yield call(QuickActions.setShortcutItems, [
+            {
+              type: "QRSCREEN",
+              title: I18n.t("wallet.payNotice"),
+              subtitle: I18n.t("wallet.payNoticeLong"),
+              icon: "qrcode_shortcuts",
+              userInfo: {
+                url: "ioit://ioit/PAYMENT_SCAN_QR_CODE"
+              }
+            }
+          ]);
+        }
       } else {
         throw Error(`response status ${getResponse.value.status}`);
       }

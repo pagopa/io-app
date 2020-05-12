@@ -1,4 +1,6 @@
 import { readableReport } from "italia-ts-commons/lib/reporters";
+import { Platform } from "react-native";
+import QuickActions from "react-native-quick-actions";
 import { Effect } from "redux-saga";
 import { call, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
@@ -25,6 +27,10 @@ export function* watchLogoutSaga(
     // FIXME: if there's no connectivity to the backend, this request will
     //        block for a while.
     try {
+      // Remove the shortcuts
+      if (Platform.OS === "android" && Platform.Version >= 24) {
+        QuickActions.clearShortcutItems();
+      }
       const response: SagaCallReturnType<typeof logout> = yield call(
         logout,
         {}
