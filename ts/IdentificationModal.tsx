@@ -256,10 +256,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     // When app becomes active from background the state of TouchID support
     // must be updated, because it might be switched off.
     if (
-      (prevProps.appState === "background" &&
+      this.state.canInsertPinTooManyAttempts &&
+      ((prevProps.appState === "background" &&
         this.props.appState === "active") ||
-      (prevProps.identificationProgressState.kind !== "started" &&
-        this.props.identificationProgressState.kind === "started")
+        (prevProps.identificationProgressState.kind !== "started" &&
+          this.props.identificationProgressState.kind === "started"))
     ) {
       this.maybeTriggerFingerprintRequest({
         updateBiometrySupportProp:
