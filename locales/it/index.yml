@@ -1002,6 +1002,7 @@ services:
   contactPhone: Telefono
   areasOfInterest:
     selectMessage: Scegli le aree geografiche (comuni, regioni, etc.) dove risiedi o che frequenti solitamente per vederne qui i relativi servizi. Potrai modificarle in ogni momento.
+    selectMessageEmptyOrgs: Al momento non è possibile aggiungere una località. Per favore trascina in basso per aggiornare i dati e riprova a selezionare un'area.
     addButton: Aggiungi le tue aree di interesse
     editButton: Modifica le aree di interesse
     searchEmpty: Se non trovi la tua area di interesse, significa che gli enti di quel territorio non espongono ancora servizi su IO.
