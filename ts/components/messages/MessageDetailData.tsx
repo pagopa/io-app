@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1
-  }
+  },
+
 });
 
 type Props = Readonly<{
@@ -103,6 +104,8 @@ class MessageDetailData extends React.PureComponent<Props> {
 
     const callButton: BlockButtonProps = {
       bordered: true,
+      small: true,
+      lightText: true,
       title: I18n.t("messageDetails.call"),
       iconName: "io-phone",
       onPress: this.callService
@@ -110,6 +113,8 @@ class MessageDetailData extends React.PureComponent<Props> {
 
     const emailButton: BlockButtonProps = {
       bordered: true,
+      small: true,
+      lightText: true,
       title: I18n.t("messageDetails.write"),
       iconName: "io-envelope",
       onPress: this.sendEmailToService
@@ -166,13 +171,13 @@ class MessageDetailData extends React.PureComponent<Props> {
             <View spacer={true} />
 
             <Text bold={true}>{I18n.t("messageDetails.question")}</Text>
-            <Text>{I18n.t("messageDetails.answer")}</Text>
+            <Text small={true}>{I18n.t("messageDetails.answer")}</Text>
 
             <View spacer={true} />
 
             <React.Fragment>
               <View style={styles.row}>
-                <Text style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
+                <Text xsmall={true} style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
                   this.props.message.id
                 }`}</Text>
                 <CopyButtonComponent textToCopy={this.props.message.id} />

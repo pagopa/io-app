@@ -12,6 +12,7 @@ declare module "native-base" {
       xsmall?: boolean;
       gray?: boolean;
       darkGray?: boolean;
+      lightText?: boolean;
     }
   }
 }
@@ -30,22 +31,32 @@ export default (): Theme => {
         lineHeight: variables.btnXSmallLineHeight
       },
       "NativeBase.Icon": {
-        fontSize: variables.btnXSmallFontSize,
-        paddingTop: 1
+        fontSize: variables.btnXSmallIconSize,
+        paddingTop: 1,
+        paddingRight: 4
       },
       "UIComponent.IconFont": {
-        fontSize: variables.btnXSmallFontSize
+        fontSize: variables.btnXSmallIconSize,
+        paddingRight: 4
       }
     },
 
     ".small": {
       height: variables.btnSmallHeight,
+      '.lightText': {
+        "NativeBase.Text": {
+          ...makeFontStyleObject(Platform.select, variables.textLightButtonWeight),
+        },
+      },
       "NativeBase.Text": {
-        fontSize: variables.btnSmallFontSize
+        fontSize: variables.btnSmallFontSize,
+        lineHeight: variables.btnSmallLineHeight
       },
       "UIComponent.IconFont": {
-        fontSize: variables.btnSmallFontSize
-      }
+        fontSize: variables.btnSmallIconSize,
+        paddingRight: 4
+      },
+      
     },
 
     ".darkGray": {
@@ -134,9 +145,8 @@ export default (): Theme => {
     },
 
     "UIComponent.IconFont": {
-      // color: variables.textColor,
       fontSize: variables.btnWidgetHeight,
-      paddingRight: 4
+      paddingRight: 8
     },
 
     justifyContent: "center",

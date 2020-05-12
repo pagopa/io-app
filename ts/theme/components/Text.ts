@@ -19,12 +19,20 @@ declare module "native-base" {
       primary?: boolean;
       badge?: boolean;
       robotomono?: boolean;
+      small?: boolean;
+      xsmall?: boolean;
     }
   }
 }
 
 export default (): Theme => {
   return {
+    ".xsmall": {
+      fontSize: variables.fontSizeXSmall
+    },
+    ".small": {
+      fontSize: variables.fontSizeSmall
+    },
     ".link": {
       ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
       color: variables.textLinkColor,
