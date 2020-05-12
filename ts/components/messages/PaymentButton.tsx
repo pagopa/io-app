@@ -128,7 +128,6 @@ class PaymentButton extends React.PureComponent<Props> {
 
   public render() {
     const { messagePaymentExpirationInfo, small, disabled, paid } = this.props;
-
     return (
       <ButtonDefaultOpacity
         primary={!this.isPaymentExpired && !disabled}

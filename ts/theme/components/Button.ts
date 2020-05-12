@@ -35,7 +35,8 @@ export default (): Theme => {
         paddingTop: 1
       },
       "UIComponent.IconFont": {
-        fontSize: variables.btnXSmallFontSize
+        fontSize: 18,
+        paddingRight: 4
       }
     },
 
@@ -45,7 +46,7 @@ export default (): Theme => {
         fontSize: variables.btnSmallFontSize
       },
       "UIComponent.IconFont": {
-        fontSize: variables.btnSmallFontSize
+        fontSize: 20
       }
     },
 
@@ -145,8 +146,8 @@ export default (): Theme => {
     },
 
     "UIComponent.IconFont": {
-      fontSize: variables.btnSmallFontSize,
-      paddingRight: 4
+      fontSize: variables.btnWidgetHeight,
+      paddingRight: 8
     },
 
     justifyContent: "center",
