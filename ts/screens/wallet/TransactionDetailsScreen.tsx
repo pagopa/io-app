@@ -17,15 +17,17 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
-import { navigateToWalletHome } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
 import { fetchPsp } from "../../store/actions/wallet/transactions";
+import { navHistorySelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import { pspStateByIdSelector } from "../../store/reducers/wallet/pspsById";
 import { getWalletsById } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { formatDateAsLocal } from "../../utils/dates";
+import { whereAmIFrom } from "../../utils/navigation";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 
@@ -89,18 +91,21 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 class TransactionDetailsScreen extends React.Component<Props> {
   public componentDidMount() {
-    BackHandler.addEventListener(
-      "hardwareBackPress",
-      this.props.navigateToWalletHome
-    );
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
   public componentWillUnmount() {
-    BackHandler.removeEventListener(
-      "hardwareBackPress",
-      this.props.navigateToWalletHome
-    );
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
+
+  private handleBackPress = () => {
+    if (whereAmIFrom(this.props.nav).fold(false, r => r === "WALLET_HOME")) {
+      return this.props.navigation.goBack();
+    } else {
+      this.props.navigateBackToEntrypointPayment();
+      return true;
+    }
+  };
 
   private handleWillFocus = () => {
     const transaction = this.props.navigation.getParam("transaction");
@@ -172,7 +177,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
       <BaseScreenComponent
         dark={true}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        goBack={this.props.navigateToWalletHome}
+        goBack={this.handleBackPress}
         headerTitle={I18n.t("wallet.transactionDetails")}
         faqCategories={["wallet_transaction"]}
       >
@@ -281,7 +286,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
             light={true}
             bordered={true}
             block={true}
-            onPress={this.props.navigateToWalletHome}
+            onPress={this.handleBackPress}
           >
             <Text>{I18n.t("global.buttons.close")}</Text>
           </ButtonDefaultOpacity>
@@ -292,7 +297,7 @@ class TransactionDetailsScreen extends React.Component<Props> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: () => dispatch(navigateToWalletHome()),
+  navigateBackToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
   fetchPsp: (idPsp: number) => dispatch(fetchPsp.request({ idPsp }))
 });
 
@@ -307,7 +312,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   return {
     wallets: pot.toUndefined(getWalletsById(state)),
     isLoading,
-    psp: pot.toUndefined(potPsp)
+    psp: pot.toUndefined(potPsp),
+    nav: navHistorySelector(state)
   };
 };
 
