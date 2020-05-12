@@ -24,8 +24,6 @@ const styles = StyleSheet.create({
   },
   experimentalFeaturesBannerMessage: {
     ...makeFontStyleObject(Platform.select, "600"),
-    fontSize: 14,
-    lineHeight: 18,
     color: variables.colorWhite
   }
 });
@@ -40,7 +38,7 @@ const ExperimentalFeaturesBanner = (
       />
     </View>
     <View style={styles.experimentalFeaturesBannerRight}>
-      <Text style={styles.experimentalFeaturesBannerMessage}>
+      <Text style={styles.experimentalFeaturesBannerMessage} small={true}>
         {I18n.t("profile.main.experimentalFeatures.bannerMessage")}
       </Text>
     </View>
