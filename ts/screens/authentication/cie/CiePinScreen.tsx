@@ -54,23 +54,17 @@ class CiePinScreen extends React.PureComponent<Props, State> {
   }
 
   private onProceedToCardReaderScreen = (url: string) => {
-    this.setState({ url }, () => {
+    const ciePin = this.state.pin;
+    this.setState({ url, pin: "" }, () => {
+      this.props.navigation.navigate({
+        routeName: ROUTES.CIE_CARD_READER_SCREEN,
+        params: { ciePin, authorizationUri: url }
+      });
       this.props.hideModal();
     });
   };
 
-  private onHiddenModal = () => {
-    const ciePin = this.state.pin;
-    this.setState({ pin: "" }, () => {
-      this.props.navigation.navigate({
-        routeName: ROUTES.CIE_CARD_READER_SCREEN,
-        params: { ciePin, authorizationUri: this.state.url }
-      });
-    });
-  };
-
   private showModal = () => {
-    this.props.setOnHiddenModal(this.onHiddenModal);
     this.props.requestNfcEnabledCheck();
     Keyboard.dismiss();
 
@@ -109,6 +103,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
           <View spacer={true} />
           <View style={styles.container}>
             <CiePinpad
+              pin={this.state.pin}
               pinLength={CIE_PIN_LENGTH}
               description={I18n.t("authentication.cie.pin.pinCardContent")}
               onPinChanged={this.handelOnPinChanged}

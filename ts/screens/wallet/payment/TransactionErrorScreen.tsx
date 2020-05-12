@@ -8,7 +8,7 @@ import { BugReporting } from "instabug-reactnative";
 import { RptId, RptIdFromString } from "italia-pagopa-commons/lib/pagopa";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { BackHandler, Image, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { setInstabugUserAttribute } from "../../../boot/configureInstabug";
@@ -19,6 +19,7 @@ import I18n from "../../../i18n";
 import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  backToEntrypointPayment,
   paymentAttiva,
   paymentIdPolling,
   paymentVerifica
@@ -131,6 +132,19 @@ export const renderErrorTransactionMessage = (
 };
 
 class TransactionErrorScreen extends React.Component<Props> {
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  private handleBackPress = () => {
+    this.props.backToEntrypointPayment();
+    return true;
+  };
+
   // Save the rptId as attribute and open the Instabug chat.
   private sendPaymentBlockedBug = () => {
     const rptId = this.props.navigation.getParam("rptId");
@@ -310,7 +324,8 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToPaymentManualDataInsertion: (isInvalidAmount: boolean) =>
-    dispatch(navigateToPaymentManualDataInsertion({ isInvalidAmount }))
+    dispatch(navigateToPaymentManualDataInsertion({ isInvalidAmount })),
+  backToEntrypointPayment: () => dispatch(backToEntrypointPayment())
 });
 
 export default connect(
