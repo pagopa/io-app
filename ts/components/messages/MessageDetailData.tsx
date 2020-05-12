@@ -26,8 +26,7 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1
-  },
-
+  }
 });
 
 type Props = Readonly<{
@@ -177,9 +176,9 @@ class MessageDetailData extends React.PureComponent<Props> {
 
             <React.Fragment>
               <View style={styles.row}>
-                <Text xsmall={true} style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
-                  this.props.message.id
-                }`}</Text>
+                <Text xsmall={true} style={styles.flex}>{`${I18n.t(
+                  "messageDetails.id"
+                )} ${this.props.message.id}`}</Text>
                 <CopyButtonComponent textToCopy={this.props.message.id} />
               </View>
               <View spacer={true} />

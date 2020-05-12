@@ -43,10 +43,13 @@ export default (): Theme => {
 
     ".small": {
       height: variables.btnSmallHeight,
-      '.lightText': {
+      ".lightText": {
         "NativeBase.Text": {
-          ...makeFontStyleObject(Platform.select, variables.textLightButtonWeight),
-        },
+          ...makeFontStyleObject(
+            Platform.select,
+            variables.textLightButtonWeight
+          )
+        }
       },
       "NativeBase.Text": {
         fontSize: variables.btnSmallFontSize,
@@ -55,8 +58,7 @@ export default (): Theme => {
       "UIComponent.IconFont": {
         fontSize: variables.btnSmallIconSize,
         paddingRight: 4
-      },
-      
+      }
     },
 
     ".darkGray": {
