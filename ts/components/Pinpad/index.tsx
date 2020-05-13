@@ -4,6 +4,7 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Dimensions, StyleSheet, ViewStyle } from "react-native";
 
+import { fromNullable } from "fp-ts/lib/Option";
 import { debounce, shuffle } from "lodash";
 import I18n from "../../i18n";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
@@ -31,6 +32,7 @@ interface Props {
   onPinResetHandler?: () => void;
   onFingerPrintReq?: () => void;
   onDeleteLastDigit?: () => void;
+  remainingAttempts?: number;
 }
 
 interface State {
@@ -271,14 +273,36 @@ class Pinpad extends React.PureComponent<Props, State> {
     this.setState({ value: "" });
   }, 100);
 
+  private renderRemainingAttempts = (remainingAttempts: number) => {
+    const wrongCode = I18n.t("identification.fail.wrongCode");
+    const remainingAttemptsString = I18n.t(
+      remainingAttempts > 1
+        ? "identification.fail.remainingAttempts"
+        : "identification.fail.remainingAttemptSingle",
+      { attempts: remainingAttempts }
+    );
+
+    return (
+      <Text primary={true} style={styles.text} bold={true}>
+        {wrongCode}. {remainingAttemptsString}
+      </Text>
+    );
+  };
+
   public render() {
     const placeholderPositions = range(0, this.state.pinLength - 1);
+    const remainingAttemptsMessage = fromNullable(
+      this.props.remainingAttempts
+    ).fold(null, x => this.renderRemainingAttempts(x));
+
     return (
       <React.Fragment>
         <View style={styles.placeholderContainer}>
           {placeholderPositions.map(this.renderPlaceholder)}
         </View>
         <View spacer={true} />
+        {remainingAttemptsMessage}
+
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <Text
