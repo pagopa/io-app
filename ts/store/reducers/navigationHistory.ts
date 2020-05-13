@@ -43,5 +43,7 @@ export const isOnboardingCompletedSelector = (state: GlobalState) =>
   state.nav.routes.length > 0 && state.nav.routes[0].routeName === ROUTES.MAIN;
 
 export const navSelector = (state: GlobalState) => state.nav;
+export const navHistorySelector = (state: GlobalState) =>
+  state.navigationHistory;
 
 export default reducer;

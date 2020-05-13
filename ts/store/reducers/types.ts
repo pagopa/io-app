@@ -12,7 +12,7 @@ import { DebugState } from "./debug";
 import { DeepLinkState } from "./deepLink";
 import { EmailValidationState } from "./emailValidation";
 import { PersistedEntitiesState } from "./entities";
-import { IdentificationState } from "./identification";
+import { PersistedIdentificationState } from "./identification";
 import { InstabugUnreadMessagesState } from "./instabug/instabugUnreadMessages";
 import { InstallationState } from "./installation";
 import { NavigationHistoryState } from "./navigationHistory";
@@ -51,7 +51,7 @@ export type GlobalState = Readonly<{
   persistedPreferences: PersistedPreferencesState;
   content: ContentState;
   navigationHistory: NavigationHistoryState;
-  identification: IdentificationState;
+  identification: PersistedIdentificationState;
   installation: InstallationState;
   debug: DebugState;
   search: SearchState;
