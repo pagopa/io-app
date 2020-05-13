@@ -19,7 +19,7 @@ import {
   loginFailure,
   loginSuccess
 } from "../../../store/actions/authentication";
-import { cieEventEmit, CieEvent } from "../../../store/actions/cie";
+import { CieEvent, cieEventEmit } from "../../../store/actions/cie";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
