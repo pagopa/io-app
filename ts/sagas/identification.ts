@@ -6,6 +6,7 @@ import { startApplicationInitialization } from "../store/actions/application";
 import { sessionInvalid } from "../store/actions/authentication";
 import {
   identificationCancel,
+  identificationForceLogout,
   identificationPinReset,
   identificationRequest,
   identificationReset,
@@ -27,14 +28,17 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
 
+type ResultAction =
+  | ActionType<typeof identificationCancel>
+  | ActionType<typeof identificationPinReset>
+  | ActionType<typeof identificationForceLogout>
+  | ActionType<typeof identificationSuccess>;
 // Wait the identification and return the result
 function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
-  const resultAction:
-    | ActionType<typeof identificationCancel>
-    | ActionType<typeof identificationPinReset>
-    | ActionType<typeof identificationSuccess> = yield take([
+  const resultAction: ResultAction = yield take([
     getType(identificationCancel),
     getType(identificationPinReset),
+    getType(identificationForceLogout),
     getType(identificationSuccess)
   ]);
 
@@ -58,6 +62,12 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
 
     case getType(identificationSuccess): {
       return IdentificationResult.success;
+    }
+
+    case getType(identificationForceLogout): {
+      yield put(sessionInvalid());
+      yield put(identificationReset());
+      return IdentificationResult.pinreset;
     }
 
     default: {

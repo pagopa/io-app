@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { logoutFailure, logoutSuccess } from "../actions/authentication";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
+import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import appStateReducer from "./appState";
 import authenticationReducer, { AuthenticationState } from "./authentication";
 import backendInfoReducer from "./backendInfo";
@@ -20,7 +21,7 @@ import { debugReducer } from "./debug";
 import deepLinkReducer from "./deepLink";
 import emailValidationReducer from "./emailValidation";
 import entitiesReducer, { EntitiesState } from "./entities";
-import identificationReducer from "./identification";
+import identificationReducer, { IdentificationState } from "./identification";
 import instabugUnreadMessagesReducer from "./instabug/instabugUnreadMessages";
 import installationReducer from "./installation";
 import navigationReducer from "./navigation";
@@ -51,6 +52,14 @@ export const entitiesPersistConfig: PersistConfig = {
   blacklist: ["messages"]
 };
 
+// A custom configuration to store the fail information of the identification section
+export const identificationPersistConfig: PersistConfig = {
+  key: "identification",
+  storage: AsyncStorage,
+  blacklist: ["progress"],
+  transforms: [DateISO8601Transform]
+};
+
 /**
  * Here we combine all the reducers.
  * We use the best practice of separating UI state from the DATA state.
@@ -76,7 +85,6 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   backendInfo: backendInfoReducer,
   backendStatus: backendStatusReducer,
   preferences: preferencesReducer,
-  identification: identificationReducer,
   navigationHistory: navigationHistoryReducer,
   instabug: instabugUnreadMessagesReducer,
   search: searchReducer,
@@ -93,6 +101,11 @@ const appReducer: Reducer<GlobalState, Action> = combineReducers<
   ),
 
   // standard persistor, see configureStoreAndPersistor.ts
+
+  identification: persistReducer<IdentificationState, Action>(
+    identificationPersistConfig,
+    identificationReducer
+  ),
   onboarding: onboardingReducer,
   notifications: notificationsReducer,
   profile: profileReducer,
