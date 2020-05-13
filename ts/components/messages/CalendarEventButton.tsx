@@ -32,7 +32,6 @@ import { withLightModalContext } from "../helpers/withLightModalContext";
 import SelectCalendarModal from "../SelectCalendarModal";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type OwnProps = {
   message: CreatedMessageWithContent;
@@ -95,7 +94,6 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
     const mayBeInCalendar = await isEventInCalendar(
       calendarEvent.eventId
     ).run();
-    RTron.log("mayBeInCalendar", mayBeInCalendar);
     this.setState({
       isEventInDeviceCalendar: mayBeInCalendar.fold(_ => false, s => s)
     });
