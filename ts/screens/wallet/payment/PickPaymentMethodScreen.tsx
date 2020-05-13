@@ -14,6 +14,7 @@ import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinn
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import CardComponent from "../../../components/wallet/card/CardComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -109,6 +110,7 @@ class PickPaymentMethodScreen extends React.Component<Props> {
                 />
               )}
             />
+            {wallets.length > 0 && <EdgeBorderComponent />}
           </View>
         </Content>
 
