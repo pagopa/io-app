@@ -39,6 +39,7 @@ type OwnProps = {
   disabled?: boolean;
   message: CreatedMessageWithContent;
   service?: ServicePublic;
+  enableAlertStyle?: boolean;
 };
 
 type Props = OwnProps &
@@ -127,7 +128,7 @@ class PaymentButton extends React.PureComponent<Props> {
   };
 
   public render() {
-    const { messagePaymentExpirationInfo, small, disabled, paid } = this.props;
+    const { messagePaymentExpirationInfo, small, disabled, paid, enableAlertStyle } = this.props;
     return (
       <ButtonDefaultOpacity
         primary={!this.isPaymentExpired && !disabled}
@@ -136,7 +137,7 @@ class PaymentButton extends React.PureComponent<Props> {
         gray={paid}
         darkGray={!paid && this.isPaymentExpired}
         xsmall={small}
-        alert={!paid && isExpiring(messagePaymentExpirationInfo)}
+        alert={enableAlertStyle && !paid && isExpiring(messagePaymentExpirationInfo)}
         style={this.props.small ? styles.twoThird : styles.half}
       >
         <Text>{this.getButtonText()}</Text>
