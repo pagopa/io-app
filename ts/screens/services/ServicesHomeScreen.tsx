@@ -36,6 +36,11 @@ import {
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import {
+  instabugLog,
+  openInstabugBugReport,
+  TypeLogs
+} from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -46,6 +51,7 @@ import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton"
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import ServicesTab from "../../components/services/ServicesTab";
+import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {
@@ -70,6 +76,7 @@ import {
   notSelectedServicesSectionsSelector,
   selectedLocalServicesSectionsSelector,
   ServicesSectionState,
+  servicesSelector,
   visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { readServicesByIdSelector } from "../../store/reducers/entities/services/readStateByServiceId";
@@ -124,8 +131,6 @@ type DataLoadFailure =
   | "servicesLoadFailure"
   | "userMetadaLoadFailure"
   | undefined;
-
-const EMPTY_MESSAGE = "";
 
 const styles = StyleSheet.create({
   container: {
@@ -194,6 +199,31 @@ const styles = StyleSheet.create({
   buttonBar: {
     flex: 2,
     marginEnd: 5
+  },
+  // TODO: remove this section after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
+  helpButton: {
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 8,
+    height: 40,
+    backgroundColor: customVariables.colorWhite,
+    borderWidth: 1,
+    borderColor: customVariables.brandPrimary
+  },
+  helpButtonIcon: {
+    lineHeight: 24,
+    color: customVariables.brandPrimary
+  },
+  helpButtonText: {
+    paddingRight: 10,
+    paddingBottom: 0,
+    paddingLeft: 10,
+    fontSize: 14,
+    lineHeight: 20,
+    color: customVariables.brandPrimary
   }
 });
 
@@ -214,7 +244,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       currentTabServicesId: [],
       isLongPressEnabled: false,
       enableServices: false,
-      toastErrorMessage: EMPTY_MESSAGE,
+      toastErrorMessage: I18n.t("global.genericError"),
       isInnerContentRendered: false
     };
   }
@@ -296,6 +326,35 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       extrapolate: "clamp"
     });
 
+  /*TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
+  private instabugLogAndOpenReport = () => {
+    this.sendDataToInstabug();
+    openInstabugBugReport();
+  };
+  /*TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
+  private sendDataToInstabug() {
+    instabugLog(
+      "userMetadata: " + JSON.stringify(this.props.potUserMetadata),
+      TypeLogs.INFO
+    );
+
+    instabugLog(
+      "services: " + JSON.stringify(this.props.debugONLYServices),
+      TypeLogs.INFO
+    );
+
+    instabugLog(
+      `Internal component state: isInnerContentRendered=${
+        this.state.isInnerContentRendered
+      }  visibleServicesContentLoadState=${JSON.stringify(
+        this.props.visibleServicesContentLoadState
+      )} loadDataFailure=${JSON.stringify(
+        this.props.loadDataFailure
+      )} servicesByScope=${JSON.stringify(this.props.servicesByScope)}`,
+      TypeLogs.INFO
+    );
+  }
+
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
   private renderServiceLoadingPlaceholder() {
     return (
@@ -309,6 +368,17 @@ class ServicesHomeScreen extends React.Component<Props, State> {
         <View spacer={true} extralarge={true} />
         <Text bold={true}>{I18n.t("services.loading.title")}</Text>
         <Text>{I18n.t("services.loading.subtitle")}</Text>
+        {/*TODO: remove this component after the resolution of https://www.pivotaltracker.com/story/show/172431153 */}
+        <View spacer={true} extralarge={true} />
+        <ButtonDefaultOpacity
+          onPress={this.instabugLogAndOpenReport}
+          style={styles.helpButton}
+        >
+          <IconFont name={"io-bug"} style={styles.helpButtonIcon} />
+          <Text style={styles.helpButtonText}>
+            {I18n.t("instabug.contextualHelp.buttonBug")}
+          </Text>
+        </ButtonDefaultOpacity>
       </View>
     );
   }
@@ -749,6 +819,7 @@ const mapStateToProps = (state: GlobalState) => {
       : undefined;
 
   return {
+    debugONLYServices: servicesSelector(state),
     isLoadingServices,
     visibleServicesContentLoadState,
     servicesByScope,

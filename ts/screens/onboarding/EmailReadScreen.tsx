@@ -47,7 +47,6 @@ type Props = ReduxProps &
   NavigationScreenProps;
 
 const styles = StyleSheet.create({
-  emailLabel: { fontSize: 14 },
   emailWithIcon: {
     flexDirection: "row",
     justifyContent: "flex-start",
@@ -158,9 +157,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
           }
         >
           <View style={styles.content}>
-            <Text style={styles.emailLabel}>
-              {I18n.t("email.insert.label")}
-            </Text>
+            <Text small={true}>{I18n.t("email.insert.label")}</Text>
             <View style={styles.spacerSmall} />
             <View style={styles.emailWithIcon}>
               <IconFont
