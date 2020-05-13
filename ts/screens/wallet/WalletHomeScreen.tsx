@@ -74,63 +74,47 @@ const styles = StyleSheet.create({
   inLineSpace: {
     lineHeight: 20
   },
-
   white: {
     color: variables.colorWhite
   },
-
   container: {
     flex: 1,
     alignItems: "flex-start",
     justifyContent: "center",
     backgroundColor: "transparent"
   },
-
   flex1: {
     flex: 1
   },
-
   flexRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   },
-
   emptyListWrapper: {
     padding: variables.contentPadding,
     alignItems: "center"
   },
-
   emptyListContentTitle: {
     paddingBottom: variables.contentPadding / 2,
     fontSize: variables.fontSizeSmall
   },
-
-  bordercColorBrandGray: {
-    borderColor: variables.brandGray
-  },
-
   colorBrandGray: {
     color: variables.brandGray
   },
-
   brandDarkGray: {
     color: variables.brandDarkGray
   },
-
   brandLightGray: {
     color: variables.brandLightGray
   },
-
   whiteBg: {
     backgroundColor: variables.colorWhite
   },
-
   noBottomPadding: {
     padding: variables.contentPadding,
     paddingBottom: 0
   },
-
   centered: {
     textAlign: "center"
   }
@@ -222,13 +206,12 @@ class WalletHomeScreen extends React.Component<Props> {
         <Row>
           <View style={styles.container}>
             <ButtonDefaultOpacity
-              bordered={true}
               block={true}
-              style={styles.bordercColorBrandGray}
+              whiteBordered={true}
               onPress={this.props.navigateToWalletAddPaymentMethod}
               activeOpacity={1}
             >
-              <Text bold={true} style={styles.colorBrandGray}>
+              <Text bold={true}>
                 {I18n.t("wallet.newPaymentMethod.addButton")}
               </Text>
             </ButtonDefaultOpacity>
