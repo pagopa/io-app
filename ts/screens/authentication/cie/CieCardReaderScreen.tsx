@@ -226,7 +226,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   private handleCieSuccess = (cieConsentUri: string) => {
     this.setState({ readingState: ReadingState.completed }, () => {
-      this.props.handleCieEventEmit("CIE_READ_SUCCESS");
+      this.props.handleCieEventEmit("READ_SUCCESS");
       this.updateContent();
       setTimeout(async () => {
         this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
