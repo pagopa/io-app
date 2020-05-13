@@ -53,10 +53,6 @@ const styles = StyleSheet.create({
   brandDarkGray: {
     color: variables.brandDarkGray
   },
-  textStyleHelp: {
-    lineHeight: 18,
-    fontSize: 13
-  },
   moreButton: {
     flex: 1,
     alignContent: "center",
