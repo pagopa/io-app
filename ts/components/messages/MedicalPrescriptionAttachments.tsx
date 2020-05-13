@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 12,
     lineHeight: 22
+  },
+  customHeader: {
+    marginBottom: -4
   }
 });
 
@@ -69,9 +72,14 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
         <Text style={styles.label}>
           {I18n.t(`messages.medical.${item.name}`).toUpperCase()}
         </Text>
-        {/* ONLY FOR TEST PURPOSE - REMOVE ME */}
-        {value.isSome() && <Text>{value.value}</Text>}
         {this.getImage(item)}
+        {value.isSome() && (
+          <Text
+            small={true}
+            semibold={true}
+            style={{ textAlign: "center" }}
+          >{`*${value.value}*`}</Text>
+        )}
         <View spacer={true} />
       </View>
     );
@@ -93,7 +101,7 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
 
   private headerItem = (
     <View style={styles.padded}>
-      <Text bold={true}>
+      <Text bold={true} style={styles.customHeader}>
         {I18n.t("messages.medical.nationalService").toUpperCase()}
       </Text>
       {this.props.organizationName && (
@@ -101,6 +109,7 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
           {this.props.organizationName.toUpperCase()}
         </Text>
       )}
+      <View spacer={true} xsmall={true} />
       <ItemSeparatorComponent noPadded={true} bold={true} />
     </View>
   );
