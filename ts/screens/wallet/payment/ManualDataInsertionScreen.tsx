@@ -47,6 +47,7 @@ import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { NumberFromString } from "../../../utils/number";
+import { showToast } from "../../../utils/showToast";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -145,12 +146,19 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           .chain(rptId =>
             this.state.delocalizedAmount
               .chain(fromEither)
-              .map(delocalizedAmount =>
+              .map(delocalizedAmount => {
+                if (parseInt(delocalizedAmount, 10) <= 0) {
+                  showToast(
+                    I18n.t("wallet.insertManually.amountError"),
+                    "danger"
+                  );
+                  return;
+                }
                 this.props.navigateToTransactionSummary(
                   rptId,
                   delocalizedAmount
-                )
-              )
+                );
+              })
           )
       );
   };
