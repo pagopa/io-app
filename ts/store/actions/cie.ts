@@ -11,8 +11,9 @@ import {
 
 export type CieEvent =
   | CEvent["event"]
-  | "CIE_READ_SUCCESS"
-  | "CIE_DATA_CONSENT_SUCCESS";
+  | "READ_SUCCESS"
+  | "DATA_CONSENT_SUCCESS"
+  | "DATA_CONSENT_ERROR";
 
 export const cieIsSupported = createAsyncAction(
   "CIE_IS_SUPPORTED_REQUEST",

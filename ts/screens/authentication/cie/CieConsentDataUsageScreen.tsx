@@ -93,6 +93,7 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
 
   private handleLoginSuccess = (token: SessionToken) => {
     this.setState({ isLoading: true });
+    this.props.handleCieEventEmit("DATA_CONSENT_SUCCESS");
     this.props.loginSuccess(token);
   };
 
@@ -110,6 +111,7 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
     this.props.loginFailure(
       new Error(`login CIE failure with code ${errorCode || "n/a"}`)
     );
+    this.props.handleCieEventEmit("DATA_CONSENT_ERROR");
     this.props.resetNavigation();
   };
 

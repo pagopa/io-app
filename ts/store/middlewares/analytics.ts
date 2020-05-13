@@ -350,7 +350,7 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
 
     // events from CIE Manager
     case getType(cieEventEmit):
-      return mp.track(action.payload);
+      return mp.track(`CIE_${action.payload}`);
   }
   return Promise.resolve();
 };
