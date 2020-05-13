@@ -149,42 +149,38 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
    */
   public render() {
     const { dueDate } = this;
-
-    if (dueDate === undefined) {
-      return null;
-    }
-
-    const textComponent = (
-      <Text
-        style={styles.text}
-        white={this.isPrescriptionExpiring || this.isPrescriptionExpired}
-      >
-        {this.textContent}
-      </Text>
-    );
-
-    return !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
-      <View style={[styles.container, this.bannerStyle]}>
+    return dueDate.fold(null, _ => {
+      const textComponent = (
         <Text
           style={styles.text}
           white={this.isPrescriptionExpiring || this.isPrescriptionExpired}
         >
           {this.textContent}
         </Text>
-        <View spacer={true} xsmall={true} />
-        <View style={styles.row}>
+      );
+      return !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
+        <View style={[styles.container, this.bannerStyle]}>
+          <Text
+            style={styles.text}
+            white={this.isPrescriptionExpiring || this.isPrescriptionExpired}
+          >
+            {this.textContent}
+          </Text>
+          <View spacer={true} xsmall={true} />
+          <View style={styles.row}>
+            {this.renderCalendarIcon()}
+            <View hspacer={true} small={true} />
+            <CalendarEventButton message={this.props.message} medium={true} />
+          </View>
+        </View>
+      ) : (
+        <View style={[styles.container, styles.row, this.bannerStyle]}>
           {this.renderCalendarIcon()}
           <View hspacer={true} small={true} />
-          <CalendarEventButton message={this.props.message} medium={true} />
+          {textComponent}
         </View>
-      </View>
-    ) : (
-      <View style={[styles.container, styles.row, this.bannerStyle]}>
-        {this.renderCalendarIcon()}
-        <View hspacer={true} small={true} />
-        {textComponent}
-      </View>
-    );
+      );
+    });
   }
 }
 
