@@ -3,12 +3,13 @@
  * It includes a carousel with highlights on the app functionalities
  */
 import * as pot from "italia-ts-commons/lib/pot";
-import { Body, Content, List, ListItem, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import CieNotSupported from "../../components/cie/CieNotSupported";
 import { ContextualHelp } from "../../components/ContextualHelp";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -19,7 +20,6 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import ROUTES from "../../navigation/routes";
@@ -36,7 +36,6 @@ import {
 } from "../../store/reducers/cie";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import customVariables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import { showToast } from "../../utils/showToast";
@@ -136,68 +135,16 @@ class LandingScreen extends React.PureComponent<Props> {
     }
   }
 
-  private renderAndroidConditions = () => {
-    return (
-      <React.Fragment>
-        <View spacer={true} />
-        <Markdown>
-          {I18n.t("authentication.landing.cie_unsupported.android_desc")}
-        </Markdown>
-        <View spacer={true} extralarge={true} />
-        <List>
-          <ListItem>
-            <IconFont
-              name="io-tick-big"
-              size={16}
-              color={
-                this.props.hasCieApiLevelSupport
-                  ? customVariables.brandLightGray
-                  : customVariables.contentPrimaryBackground
-              }
-            />
-            <Body>
-              <Text>
-                {I18n.t(
-                  "authentication.landing.cie_unsupported.os_version_unsupported"
-                )}
-              </Text>
-            </Body>
-          </ListItem>
-          <ListItem>
-            <IconFont
-              name="io-tick-big"
-              size={16}
-              color={
-                this.props.hasCieNFCFeature
-                  ? customVariables.brandLightGray
-                  : customVariables.contentPrimaryBackground
-              }
-            />
-            <Body>
-              <Text>
-                {I18n.t(
-                  "authentication.landing.cie_unsupported.nfc_incompatible"
-                )}
-              </Text>
-            </Body>
-          </ListItem>
-        </List>
-      </React.Fragment>
-    );
-  };
-
   private openUnsupportedCIEModal = () => {
     this.props.showAnimatedModal(
       <ContextualHelp
         onClose={this.props.hideModal}
         title={I18n.t("authentication.landing.cie_unsupported.title")}
         body={() => (
-          <React.Fragment>
-            <Markdown>
-              {I18n.t("authentication.landing.cie_unsupported.body")}
-            </Markdown>
-            {Platform.OS === "android" && this.renderAndroidConditions()}
-          </React.Fragment>
+          <CieNotSupported
+            hasCieApiLevelSupport={this.props.hasCieApiLevelSupport}
+            hasCieNFCFeature={this.props.hasCieNFCFeature}
+          />
         )}
       />
     );
