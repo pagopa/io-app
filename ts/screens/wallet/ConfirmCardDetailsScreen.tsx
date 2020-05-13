@@ -7,14 +7,12 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { BackHandler, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import { RTron } from "../../boot/configureStoreAndPersistor";
-import Checkout3DsComponent from "../modal/Checkout3DsModal";
 import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import NoticeBox from "../../components/NoticeBox";
@@ -39,6 +37,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
+import Checkout3DsComponent from "../modal/Checkout3DsModal";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 type NavigationParams = Readonly<{
@@ -80,9 +79,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   public componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", () =>
-      RTron.log("OMG TAP")
-    );
     // reset the credit card boarding state on mount
     this.props.addWalletCreditCardInit();
   }
