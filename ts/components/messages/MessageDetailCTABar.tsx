@@ -1,4 +1,5 @@
 import { View } from "native-base";
+import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
@@ -49,7 +50,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
   }
 
   get dueDate() {
-    return this.props.message.content.due_date;
+    return fromNullable(this.props.message.content.due_date);
   }
 
   // Render a button to add/remove an event related to the message in the calendar
@@ -57,10 +58,11 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     // The add/remove reminder button is hidden:
     // - if the message hasn't a due date
     // - if the message has a payment and it has been paid or is expired
-    if (this.dueDate !== undefined && !this.paid && !this.isPaymentExpired) {
-      return <CalendarEventButton message={this.props.message} />;
-    }
-    return null;
+    return this.dueDate
+      .chain(fromPredicate(() => !this.paid && !this.isPaymentExpired))
+      .fold(null, _ => {
+        return <CalendarEventButton message={this.props.message} />;
+      });
   };
 
   // Render abutton to display details of the payment related to the message
