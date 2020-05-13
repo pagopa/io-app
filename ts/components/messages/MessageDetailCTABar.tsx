@@ -1,5 +1,5 @@
-import { View } from "native-base";
 import { fromNullable, fromPredicate } from "fp-ts/lib/Option";
+import { View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
