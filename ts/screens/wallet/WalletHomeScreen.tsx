@@ -132,15 +132,8 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
 
-  textStyleHelpCenter: {
-    lineHeight: 18,
-    fontSize: 13,
+  centered: {
     textAlign: "center"
-  },
-
-  textStyleHelp: {
-    lineHeight: 18,
-    fontSize: 13
   }
 });
 
@@ -286,19 +279,14 @@ class WalletHomeScreen extends React.Component<Props> {
     );
   }
 
-  private helpMessage = (
-    alignCenter: boolean | undefined = false
-  ): React.ReactNode => (
+  private helpMessage = (alignCenter: boolean = false): React.ReactNode => (
     <React.Fragment>
       <View spacer={true} large={true} />
-      <Text
-        style={alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp}
-      >
+      <Text xsmall={true} style={alignCenter ? styles.centered : undefined}>
         {`${I18n.t("wallet.transactionHelpMessage.text1")} `}
         <Text
-          style={
-            alignCenter ? styles.textStyleHelpCenter : styles.textStyleHelp
-          }
+          xsmall={true}
+          style={alignCenter ? styles.centered : undefined}
           bold={true}
         >
           {I18n.t("wallet.transactionHelpMessage.text2")}
@@ -314,6 +302,7 @@ class WalletHomeScreen extends React.Component<Props> {
         scrollEnabled={false}
         style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
       >
+        {this.helpMessage()}
         {potPayments.length > 0 && this.helpMessage()}
         <View spacer={true} large={true} />
         <Text style={[styles.inLineSpace, styles.brandDarkGray]}>

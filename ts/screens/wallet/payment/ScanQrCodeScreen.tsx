@@ -126,6 +126,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
   private goBack = () => this.props.navigation.goBack();
+  private qrCodeScanner = React.createRef<QRCodeScanner>();
 
   /**
    * Handles valid pagoPA QR codes
@@ -150,10 +151,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     this.scannerReactivateTimeoutHandler = setTimeout(() => {
       // tslint:disable-next-line:no-object-mutation
       this.scannerReactivateTimeoutHandler = undefined;
-      (this.refs.scanner as QRCodeScanner).reactivate();
-      this.setState({
-        scanningState: "SCANNING"
-      });
+      if (this.qrCodeScanner.current) {
+        this.qrCodeScanner.current.reactivate();
+        this.setState({
+          scanningState: "SCANNING"
+        });
+      }
     }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
   };
 
@@ -297,7 +300,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 onRead={(reading: { data: string }) =>
                   this.onQrCodeData(reading.data)
                 }
-                ref="scanner" // tslint:disable-line jsx-no-string-ref
+                ref={this.qrCodeScanner}
                 containerStyle={styles.cameraContainer as any}
                 showMarker={true}
                 cameraStyle={styles.camera as any}
