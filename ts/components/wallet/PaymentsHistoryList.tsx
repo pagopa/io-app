@@ -56,49 +56,47 @@ export const getIuv = (data: RptId): string => {
 };
 
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
+export const getPaymentHistoryInfo = (
+  paymentHistory: PaymentHistory,
+  paymentCheckout: Option<boolean>
+) => {
+  return paymentCheckout.fold(
+    {
+      text11: I18n.t("payment.details.state.incomplete"),
+      text3: getIuv(paymentHistory.data),
+      color: customVariables.badgeYellow
+    },
+    success => {
+      if (success) {
+        return {
+          text11: I18n.t("payment.details.state.successful"),
+          text3: fromNullable(paymentHistory.verified_data).fold(
+            notAvailable,
+            vd =>
+              fromNullable(vd.causaleVersamento).fold(notAvailable, cv => cv)
+          ),
+          color: customVariables.brandHighlight
+        };
+      }
 
+      return {
+        text11: I18n.t("payment.details.state.failed"),
+        text3: getIuv(paymentHistory.data),
+        color: customVariables.brandDanger
+      };
+    }
+  );
+};
 /**
  * Payments List component
  */
 
 export default class PaymentHistoryList extends React.Component<Props> {
-  private getPaymentHistoryInfo = (
-    paymentHistory: PaymentHistory,
-    paymentCheckout: Option<boolean>
-  ) => {
-    return paymentCheckout.fold(
-      {
-        text11: I18n.t("payment.details.state.incomplete"),
-        text3: getIuv(paymentHistory.data),
-        color: customVariables.badgeYellow
-      },
-      success => {
-        if (success) {
-          return {
-            text11: I18n.t("payment.details.state.successful"),
-            text3: fromNullable(paymentHistory.verified_data).fold(
-              notAvailable,
-              vd =>
-                fromNullable(vd.causaleVersamento).fold(notAvailable, cv => cv)
-            ),
-            color: customVariables.brandHighlight
-          };
-        }
-
-        return {
-          text11: I18n.t("payment.details.state.failed"),
-          text3: getIuv(paymentHistory.data),
-          color: customVariables.brandDanger
-        };
-      }
-    );
-  };
-
   private renderHistoryPaymentItem = (
     info: ListRenderItemInfo<PaymentHistory>
   ) => {
     const paymentCheckout = isPaymentDoneSuccessfully(info.item);
-    const paymentInfo = this.getPaymentHistoryInfo(info.item, paymentCheckout);
+    const paymentInfo = getPaymentHistoryInfo(info.item, paymentCheckout);
 
     const datetime: string = `${formatDateAsLocal(
       new Date(info.item.started_at),
