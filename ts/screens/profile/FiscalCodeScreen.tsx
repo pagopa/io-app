@@ -126,9 +126,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
   };
 
   private handleBackPress = () => {
-    if (this.state.baseBrightnessValue !== undefined) {
-      setBrightness(this.state.baseBrightnessValue);
-    }
+    this.resetAppBrightness();
     this.props.navigation.goBack();
     return true;
   };
@@ -137,7 +135,10 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
     <IconFont
       name={"io-back"}
       style={{ color: customVariables.colorWhite }}
-      onPress={this.goBack}
+      onPress={() => {
+        this.resetAppBrightness();
+        this.goBack();
+      }}
     />
   );
 
