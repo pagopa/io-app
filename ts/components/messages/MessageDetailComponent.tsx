@@ -192,8 +192,8 @@ export default class MessageDetailComponent extends React.PureComponent<
             </React.Fragment>
           )}
         </Content>
-        <View spacer={true} large={true}/>
-        <View spacer={true} small={true}/>
+        <View spacer={true} large={true} />
+        <View spacer={true} small={true} />
         <MessageDetailCTABar
           message={message}
           service={service}
