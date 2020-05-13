@@ -36,10 +36,6 @@ const styles = StyleSheet.create({
   brandDarkGray: {
     color: customVariables.brandDarkGray
   },
-  text2Style: {
-    lineHeight: 18,
-    fontSize: 13
-  },
   badgeContainer: {
     flex: 0,
     paddingRight: 8,
@@ -50,8 +46,6 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   text11: {
-    fontSize: 14,
-    lineHeight: 18,
     color: customVariables.brandDarkestGray
   },
   new: {
@@ -65,9 +59,6 @@ const styles = StyleSheet.create({
     color: customVariables.brandDarkestGray
   },
   text12: {
-    ...makeFontStyleObject(Platform.select, "700"),
-    fontSize: 16,
-    color: customVariables.brandDarkGray,
     lineHeight: 18,
     marginBottom: -4
   },
@@ -108,14 +99,16 @@ export default class DetailedlistItemComponent extends React.PureComponent<
         style={styles.verticalPad}
       >
         <View style={styles.spaced}>
-          <Text style={styles.text11}>{this.props.text11}</Text>
-          <Text style={styles.text12}>{this.props.text12}</Text>
+          <Text small={true} dark={true}>
+            {this.props.text11}
+          </Text>
+          <Text bold={true} style={styles.text12}>
+            {this.props.text12}
+          </Text>
         </View>
 
         <View style={styles.viewStyle}>
-          <Text note={true} style={styles.text2Style}>
-            {this.props.text2}
-          </Text>
+          <Text xsmall={true}>{this.props.text2}</Text>
         </View>
         <View style={styles.smallSpacer} />
         <View style={styles.text3Line}>

@@ -73,9 +73,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  text1: {
-    fontSize: 14
-  },
   text2: {
     color: customVariables.brandDarkestGray,
     fontWeight: "700"
@@ -253,13 +250,13 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               {paymentOutCome.isSome() && paymentOutCome.value ? (
                 <React.Fragment>
                   <View style={styles.box}>
-                    <Text style={styles.text1}>
+                    <Text small={true}>
                       {I18n.t("payment.details.info.enteCreditore")}
                     </Text>
                     <Text style={styles.text2}>{creditore}</Text>
                   </View>
                   <View style={styles.box}>
-                    <Text style={styles.text1}>
+                    <Text small={true}>
                       {I18n.t("payment.details.info.causaleVersamento")}
                     </Text>
                     <Text style={styles.text2}>{causaleVersamento}</Text>
@@ -268,14 +265,12 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               ) : (
                 <React.Fragment>
                   <View style={styles.box}>
-                    <Text style={styles.text1}>{I18n.t("payment.IUV")}</Text>
+                    <Text small={true}>{I18n.t("payment.IUV")}</Text>
                     <Text style={styles.text2}>{iuv}</Text>
                   </View>
                   {errorDetail.isSome() && (
                     <View key={"error"} style={styles.box}>
-                      <Text style={styles.text1}>
-                        {I18n.t("payment.errorDetails")}
-                      </Text>
+                      <Text small={true}>{I18n.t("payment.errorDetails")}</Text>
                       <Text style={styles.text2}>{errorDetail.value}</Text>
                     </View>
                   )}
@@ -283,7 +278,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               )}
 
               <View style={styles.row}>
-                <Text style={styles.text1}>
+                <Text small={true}>
                   {I18n.t("payment.details.info.dateAndTime")}
                 </Text>
                 <Text style={styles.text2}>{datetime}</Text>
@@ -297,7 +292,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 <React.Fragment>
                   <View style={styles.box}>
                     <View style={styles.row}>
-                      <Text style={styles.text1}>
+                      <Text small={true}>
                         {I18n.t("payment.details.info.paymentAmount")}
                       </Text>
                       <Text style={styles.text2}>
@@ -306,7 +301,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                     </View>
 
                     <View style={styles.row}>
-                      <Text style={styles.text1}>
+                      <Text small={true}>
                         {I18n.t("payment.details.info.transactionCosts")}
                       </Text>
                       <Text style={styles.text2}>
@@ -319,7 +314,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                     <View spacer={true} />
                     <View style={styles.row}>
                       <Text
-                        style={[styles.text1, styles.textBig, styles.textBold]}
+                        small={true}
+                        style={[styles.textBig, styles.textBold]}
                       >
                         {I18n.t("payment.details.info.totalPaid")}
                       </Text>
@@ -333,7 +329,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
                   <View style={styles.row}>
                     <View style={styles.box}>
-                      <Text style={styles.text1}>
+                      <Text small={true}>
                         {I18n.t("payment.details.info.transactionCode")}
                       </Text>
                       <Text style={styles.text2}>{idTransaction}</Text>
@@ -354,7 +350,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               )}
             <View spacer={true} />
             <View style={[styles.box, styles.boxHelp]}>
-              <Text style={[styles.text1, styles.textHelp]}>
+              <Text small={true} style={styles.textHelp}>
                 {I18n.t("payment.details.info.help")}
               </Text>
               <View spacer={true} />

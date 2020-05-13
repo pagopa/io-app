@@ -1,3 +1,3 @@
-Se hai già effettuato dei pagamenti tramite PagoPA ma non vedi nel 'Pagamenti' le tue ricevute, significa che hai registrato i pagamenti su PagoPA con una mail diversa da quella con cui ti sei autenticato sull'app IO.
-I pagamenti PagoPA sono associati alla mail (e non al codice fiscale): per questo motivo, fino al momento in cui non verrà effettuata una riconciliazione per codice fiscale, rimarranno associati ad account diversi, se le mail utilizzate sono diverse.
+Se hai già effettuato dei pagamenti tramite pagoPA ma non vedi nel 'Pagamenti' le tue ricevute, significa che hai registrato i pagamenti su pagoPA con una mail diversa da quella con cui ti sei autenticato sull'app IO.
+I pagamenti pagoPA sono associati alla mail (e non al codice fiscale): per questo motivo, fino al momento in cui non verrà effettuata una riconciliazione per codice fiscale, rimarranno associati ad account diversi, se le mail utilizzate sono diverse.
 Puoi in ogni momento modificare la mail associata all'app IO nella sezione 'Profilo', selezionando il campo indirizzo mail.
