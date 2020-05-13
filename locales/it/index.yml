@@ -996,6 +996,7 @@ services:
   contactPhone: Telefono
   areasOfInterest:
     selectMessage: Scegli le aree geografiche (comuni, regioni, etc.) dove risiedi o che frequenti solitamente per vederne qui i relativi servizi. Potrai modificarle in ogni momento.
+    selectMessageEmptyOrgs: Al momento non è possibile aggiungere una località. Per favore trascina in basso per aggiornare i dati e riprova a selezionare un'area.
     addButton: Aggiungi le tue aree di interesse
     editButton: Modifica le aree di interesse
     searchEmpty: Se non trovi la tua area di interesse, significa che gli enti di quel territorio non espongono ancora servizi su IO.
@@ -1171,10 +1172,10 @@ faq:
     title: "Che cos'è un QR code?"
     content: !include faq/faq34.md
   35:
-    title: "Che cos'è PagoPA?"
+    title: "Che cos'è pagoPA?"
     content: !include faq/faq35.md
   36:
-    title: "Non vedi le tue ricevute PagoPA?"
+    title: "Non vedi le tue ricevute pagoPA?"
     content: !include faq/faq36.md
   37:
     title: "Quali metodi di pagamento puoi aggiungere?"

@@ -2,7 +2,6 @@ import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-
 import Pinpad from "./components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -11,6 +10,8 @@ import IconFont from "./components/ui/IconFont";
 import TextWithIcon from "./components/ui/TextWithIcon";
 import { isDebugBiometricIdentificationEnabled } from "./config";
 import I18n from "./i18n";
+import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
+import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 import {
   identificationCancel,
   identificationFailure,
@@ -28,6 +29,7 @@ import {
   getFingerprintSettings,
   unmountBiometricAuth
 } from "./utils/fingerprint";
+import { authenticateConfig } from "./utils/biometric";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -98,13 +100,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     width: "100%"
   },
-  resetPinMessage: {
-    alignSelf: "center",
-    color: variables.colorWhite,
-    fontSize: 14,
-    lineHeight: 18,
-    width: "80%"
-  },
   pinPad: {
     justifyContent: "center",
     flexGrow: 1
@@ -114,7 +109,7 @@ const styles = StyleSheet.create({
 /**
  * A component used to identify the the user.
  * The identification process can be activated calling a saga or dispatching the
- * requestIdentification redux action.
+ * identificationRequest redux action.
  */
 class IdentificationModal extends React.PureComponent<Props, State> {
   constructor(props: Props) {

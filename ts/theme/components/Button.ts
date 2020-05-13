@@ -10,6 +10,9 @@ declare module "native-base" {
       white?: boolean;
       cancel?: boolean;
       xsmall?: boolean;
+      gray?: boolean;
+      darkGray?: boolean;
+      lightText?: boolean;
     }
   }
 }
@@ -24,22 +27,58 @@ export default (): Theme => {
     ".xsmall": {
       height: variables.btnXSmallHeight,
       "NativeBase.Text": {
-        fontSize: variables.btnSmallFontSize,
+        fontSize: variables.btnXSmallFontSize,
         lineHeight: variables.btnXSmallLineHeight
       },
       "NativeBase.Icon": {
-        fontSize: variables.btnSmallFontSize,
-        paddingTop: 1
+        fontSize: variables.btnXSmallIconSize,
+        paddingTop: 1,
+        paddingRight: 4
       },
       "UIComponent.IconFont": {
-        fontSize: variables.btnSmallFontSize,
-        paddingTop: 1
+        fontSize: variables.btnXSmallIconSize,
+        paddingRight: 4
       }
     },
 
     ".small": {
       height: variables.btnSmallHeight,
-      "NativeBase.Text": { fontSize: variables.btnSmallFontSize }
+      ".lightText": {
+        "NativeBase.Text": {
+          ...makeFontStyleObject(
+            Platform.select,
+            variables.textLightButtonWeight
+          )
+        }
+      },
+      "NativeBase.Text": {
+        fontSize: variables.btnSmallFontSize,
+        lineHeight: variables.btnSmallLineHeight
+      },
+      "UIComponent.IconFont": {
+        fontSize: variables.btnSmallIconSize,
+        paddingRight: 4
+      }
+    },
+
+    ".darkGray": {
+      "NativeBase.Text": {
+        color: variables.colorWhite
+      },
+      "UIComponent.IconFont": {
+        color: variables.colorWhite
+      },
+      backgroundColor: variables.brandDarkGray
+    },
+
+    ".gray": {
+      "NativeBase.Text": {
+        color: variables.brandHighlight
+      },
+      "UIComponent.IconFont": {
+        color: variables.brandHighlight
+      },
+      backgroundColor: variables.brandGray
     },
 
     ".light": {
@@ -67,9 +106,6 @@ export default (): Theme => {
     },
 
     ".bordered": {
-      ".white": {
-        backgroundColor: variables.colorWhite
-      },
       ".disabled": {
         "NativeBase.Icon": {
           color: variables.btnDisabledBg
@@ -81,7 +117,8 @@ export default (): Theme => {
       },
       "UIComponent.IconFont": {
         color: variables.brandPrimary
-      }
+      },
+      backgroundColor: variables.colorWhite
     },
 
     ".white": { backgroundColor: variables.colorWhite },
@@ -96,12 +133,26 @@ export default (): Theme => {
       }
     },
 
+    ".disabled": {
+      "UIComponent.IconFont": {
+        color: variables.colorWhite
+      }
+    },
+
     "NativeBase.Text": {
       ...makeFontStyleObject(Platform.select, variables.btnTextFontWeight),
-      fontSize: variables.btnFontSize
+      fontSize: variables.btnFontSize,
+      paddingLeft: 0,
+      paddingRight: 0
+    },
+
+    "UIComponent.IconFont": {
+      fontSize: variables.btnWidgetHeight,
+      paddingRight: 8
     },
 
     justifyContent: "center",
+    paddingHorizontal: 16,
 
     borderRadius: variables.borderRadiusBase,
     height: variables.btnHeight,
