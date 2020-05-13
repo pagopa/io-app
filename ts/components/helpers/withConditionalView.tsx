@@ -16,7 +16,7 @@ export function withConditionalView<P, T, C>(
    * the contition component to ensure the nagivigation can address the proper
    * navigation paramaters
    */
-  type nullN = {}
+  type nullN = {};
   type NP = P extends NavigationInjectedProps<infer N> ? N : nullN;
   type NC = C extends NavigationInjectedProps<infer N> ? N : nullN;
   type NN = NavigationInjectedProps<NP & NC>;
