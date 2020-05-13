@@ -19,6 +19,7 @@ import {
   loginFailure,
   loginSuccess
 } from "../../../store/actions/authentication";
+import { cieEventEmit, CieEvent } from "../../../store/actions/cie";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
@@ -173,6 +174,7 @@ class CieConsentDataUsageScreen extends React.PureComponent<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  handleCieEventEmit: (event: CieEvent) => dispatch(cieEventEmit(event)),
   resetNavigation: () => dispatch(resetToAuthenticationRoute),
   loginSuccess: (token: SessionToken) => dispatch(loginSuccess(token)),
   loginFailure: (error: Error) => dispatch(loginFailure(error))

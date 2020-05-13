@@ -2,7 +2,17 @@
  * Action types and action creator related to authentication by CIE
  */
 
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import { Event as CEvent } from "@pagopa/react-native-cie";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
+
+export type CieEvent =
+  | CEvent["event"]
+  | "CIE_READ_SUCCESS"
+  | "CIE_DATA_CONSENT_SUCCESS";
 
 export const cieIsSupported = createAsyncAction(
   "CIE_IS_SUPPORTED_REQUEST",
@@ -22,7 +32,13 @@ export const updateReadingState = createAsyncAction(
   "UPDATE_READING_STATE_FAILURE"
 )<void, string, Error>();
 
+/**
+ * Action used to send CIE Events to Mixpanel
+ */
+export const cieEventEmit = createStandardAction("CIE_EVENT_EMIT")<CieEvent>();
+
 export type CieAuthenticationActions =
   | ActionType<typeof cieIsSupported>
   | ActionType<typeof nfcIsEnabled>
-  | ActionType<typeof updateReadingState>;
+  | ActionType<typeof updateReadingState>
+  | ActionType<typeof cieEventEmit>;

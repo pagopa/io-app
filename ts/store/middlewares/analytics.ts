@@ -23,6 +23,7 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
+import { cieEventEmit } from "../actions/cie";
 import {
   contentMunicipalityLoad,
   loadServiceMetadata
@@ -346,6 +347,10 @@ const trackAction = (mp: NonNullable<typeof mixpanel>) => (
     // other
     case getType(updateNotificationsInstallationToken):
       return mp.track(action.type);
+
+    // events from CIE Manager
+    case getType(cieEventEmit):
+      return mp.track(action.payload);
   }
   return Promise.resolve();
 };

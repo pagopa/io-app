@@ -19,6 +19,8 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
+import { CieEvent, cieEventEmit } from "../../../store/actions/cie";
+import { Dispatch } from "../../../store/actions/types";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
@@ -29,7 +31,8 @@ type NavigationParams = {
 };
 
 type Props = NavigationScreenProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   padded: {
@@ -105,6 +108,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   };
 
   private handleCieEvent = async (event: CEvent) => {
+    this.props.handleCieEventEmit(event.event);
     switch (event.event) {
       // Reading starts
       case "ON_TAG_DISCOVERED":
@@ -142,6 +146,10 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError(I18n.t("authentication.cie.card.error.tryAgain"));
         break;
 
+      case "PIN_INPUT_ERROR":
+        this.setError(I18n.t("authentication.cie.card.error.generic"));
+        break;
+
       // The inserted pin is incorrect
       case "ON_PIN_ERROR":
         this.setError(
@@ -151,6 +159,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
             remainingCount: event.attemptsLeft
           }
         );
+        break;
+
+      case "STOP_NFC_ERROR":
+      case "START_NFC_ERROR":
+        this.setError(I18n.t("authentication.cie.card.error.tryAgain"));
         break;
 
       // CIE is Expired or Revoked
@@ -213,6 +226,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   private handleCieSuccess = (cieConsentUri: string) => {
     this.setState({ readingState: ReadingState.completed }, () => {
+      this.props.handleCieEventEmit("CIE_READ_SUCCESS");
       this.updateContent();
       setTimeout(async () => {
         this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
@@ -275,7 +289,14 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-export default connect(mapStateToProps)(
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  handleCieEventEmit: (event: CieEvent) => dispatch(cieEventEmit(event))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
   withConditionalView(
     CieCardReaderScreen,
     (props: Props) => props.isNfcEnabled,
