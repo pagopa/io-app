@@ -3,7 +3,6 @@ import * as React from "react";
 import { Modal, NavState, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { NavigationInjectedProps, withNavigation } from "react-navigation";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -82,7 +81,6 @@ class Checkout3DsModal extends React.Component<Props, State> {
         }
       }
     );
-    RTron.log("Back");
   };
 
   public render() {
