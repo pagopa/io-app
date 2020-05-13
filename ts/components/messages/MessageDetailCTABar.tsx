@@ -67,6 +67,9 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
 
   // Render abutton to display details of the payment related to the message
   private renderPaymentButton() {
+    if (this.paid) {
+      return null;
+    }
     // The button is displayed if the payment has an expiration date in the future
     return this.paymentExpirationInfo.fold(null, pei => {
       const { message, service } = this.props;
