@@ -4,6 +4,7 @@
 
 import { fromNullable } from "fp-ts/lib/Option";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
+import { getExpireStatus } from "./dates";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
 export function messageContainsText(
@@ -43,7 +44,7 @@ type MessagePaymentUnexpirable = {
     CreatedMessageWithContent["content"]["payment_data"]
   >["amount"];
 };
-
+export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
 type MessagePaymentExpirable = {
   kind: "EXPIRABLE";
   noticeNumber: NonNullable<
@@ -52,7 +53,7 @@ type MessagePaymentExpirable = {
   amount: NonNullable<
     CreatedMessageWithContent["content"]["payment_data"]
   >["amount"];
-  expireStatus: "VALID" | "EXPIRING" | "EXPIRED";
+  expireStatus: ExpireStatus;
   dueDate: Date;
 };
 
@@ -69,14 +70,7 @@ export function getMessagePaymentExpirationInfo(
   const { notice_number, amount, invalid_after_due_date } = paymentData;
 
   if (invalid_after_due_date && dueDate !== undefined) {
-    const remainingMilliseconds = dueDate.getTime() - Date.now();
-
-    const expireStatus =
-      remainingMilliseconds > 1000 * 60 * 60 * 24
-        ? "VALID"
-        : remainingMilliseconds > 0
-          ? "EXPIRING"
-          : "EXPIRED";
+    const expireStatus = getExpireStatus(dueDate);
 
     return {
       kind: "EXPIRABLE",

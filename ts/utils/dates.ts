@@ -5,6 +5,7 @@ import * as t from "io-ts";
 import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
 import { getLocalePrimary } from "./locale";
+import { ExpireStatus } from "./messages";
 
 type DFNSLocales = { [index in Locales]: object };
 
@@ -85,7 +86,7 @@ export function isExpired(expireMonth: number, expireYear: number): boolean {
  * -EXPIRED, if the date is in the past
  * @param date Date
  */
-export const isDatePassedAway = (date: Date) => {
+export const getExpireStatus = (date: Date): ExpireStatus => {
   const remainingMilliseconds = date.getTime() - Date.now();
   return remainingMilliseconds > 1000 * 60 * 60 * 24
     ? "VALID"

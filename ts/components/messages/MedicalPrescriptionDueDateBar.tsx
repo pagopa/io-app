@@ -3,7 +3,7 @@
 // - it shoudn't be optional!!!
 // - if due date is different, check what to pass to CalendarEventButton (it is NO more message or check in the component what to check to consider the proper due date)
 
-import { fromNullable } from "fp-ts/lib/Option";
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
@@ -16,9 +16,9 @@ import {
   formatDateAsDay,
   formatDateAsLocal,
   formatDateAsMonth,
-  isDatePassedAway
+  getExpireStatus
 } from "../../utils/dates";
-import { getMessagePaymentExpirationInfo } from "../../utils/messages";
+import { getMessagePaymentExpirationInfo, ExpireStatus } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
@@ -62,16 +62,16 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     return fromNullable(this.props.message.content.due_date);
   }
 
-  get expirationStatus() {
-    return this.dueDate.fold(undefined, date => isDatePassedAway(date));
+  get expirationStatus(): Option<ExpireStatus> {
+    return this.dueDate.fold(none, d => some(getExpireStatus(d)));
   }
 
   get isPrescriptionExpired() {
-    return this.expirationStatus === "EXPIRED";
+    return this.expirationStatus.fold(false, es => es === "EXPIRED");
   }
 
   get isPrescriptionExpiring() {
-    return this.expirationStatus === "EXPIRING";
+    return this.expirationStatus.fold(false, es => es === "EXPIRING");
   }
 
   get bannerStyle(): ViewStyle {
