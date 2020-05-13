@@ -1,3 +1,3 @@
-If you have already made payments through PagoPA but do not see your receipts in the 'Payments', it means that you have registered the payments on PagoPA with an email other than the one with which you authenticated yourself on the IO app.
-PagoPA payments are associated with the email (and not with the tax code): for this reason, until the time when a reconciliation by tax code is not carried out, they will remain associated with different accounts, if the emails used are different.
+If you have already made payments through pagoPA but do not see your receipts in the 'Payments', it means that you have registered the payments on pagoPA with an email other than the one with which you authenticated yourself on the IO app.
+pagoPA payments are associated with the email (and not with the tax code): for this reason, until the time when a reconciliation by tax code is not carried out, they will remain associated with different accounts, if the emails used are different.
 You can change the email associated with the IO app in the 'Profile' section at any time by selecting the email address field.
