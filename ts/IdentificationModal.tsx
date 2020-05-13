@@ -200,6 +200,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   // atm this method is never called because the component won't be never unmount
   public componentWillUnmount() {
     clearInterval(this.idUpdateCanInsertPinTooManyAttempts);
+    unmountBiometricAuth();
   }
 
   /**
@@ -220,7 +221,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }) {
     // check if the state of identification process is correct
     // tslint:disable-next-line: no-dead-store
-    const { identificationState, isFingerprintEnabled } = this.props;
+    const { identificationProgressState, isFingerprintEnabled } = this.props;
 
     if (identificationProgressState.kind !== "started") {
       return;
@@ -255,10 +256,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           _ => undefined
         );
     }
-  }
-
-  public componentWillUnmount() {
-    unmountBiometricAuth();
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
@@ -513,7 +510,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       })
       .catch((error: FingerprintError) => {
         unmountBiometricAuth();
-        this.biometricError(error, onIdentificationFailureHandler);
+        this.biometricError(error, this.onIdentificationFailureHandler);
       });
   };
 
@@ -524,7 +521,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     {
       // some error occured, enable pin insertion
       this.setState({
-        canInsertPin: true
+        biometryAuthAvailable: false
       });
       if (isDebugBiometricIdentificationEnabled) {
         Alert.alert("identification.biometric.title", `KO: ${error.message}`);
