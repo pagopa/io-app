@@ -1,8 +1,8 @@
-Hello! On this page we have collected some useful informations to get **an overview about IO**, from the idea behind the app to the current state of open beta. 
+Hello! On this page we have collected some useful information to get **an overview about IO**, from the idea behind the app to the current state of open beta. 
 
 **What is IO?**
 -------------
-The IO project [io.italia.it](https://io.italia.it) is an important step in the vision of digital citizenship of the Italian Government. Conceived from [Digital Transformation Team](https://teamdigitale.governo.it/) and now developed from [PagoPA S.p.A.](https://www.pagopa.gov.it/it/pagopa-spa/), it aims to **simplify citizens' access to all the digital services of the Public Administration** and the rights that these guarantee. 
+The IO project [io.italia.it](https://io.italia.it) is an important step in the vision of digital citizenship of the Italian Government. Conceived by [Digital Transformation Team](https://teamdigitale.governo.it/) and now developed by [PagoPA S.p.A.](https://www.pagopa.gov.it/it/pagopa-spa/), it aims to **simplify citizens' access to all the digital services of the Public Administration** and the rights that these guarantee. 
 
 The result of this project is [IO, the public services app](https://io.italia.it/): a single channel through which all local and national authorities (municipalities, regions, central agencies) offer their services to citizens, in a **simple and personalized way, directly on smartphones.**
 

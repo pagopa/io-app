@@ -105,10 +105,10 @@ profile:
       header: Come vuoi uscire dall'app?
       keepData:
         title: Esci ma conserva i miei dati
-        description: Per poter usare IO dovrai nuovamente accedere con la tua identità SPID, ma tutti i tuoi dati verranno conservati nell'applicazione (stato di lettura, etc.) e saranno immediatamente disponibili quando lanci l'app.
+        description: "Per poter usare IO dovrai nuovamente accedere con la tua identità digitale ma tutte le impostazioni saranno disponibili quando lanci l'App. Questa funzione non comporta una cancellazione dei dati personali che ti riguardano da parte dell'App."
       resetData:
         title: Esci e resetta l'applicazione
-        description: "L'app IO verrà ripristinata al suo stato iniziale, come fosse appena installata: se vuoi accedere con una diversa identità, o pensi di non volere più utilizzare l'app IO, puoi scegliere questa opzione. Tutti i dati che IO ha salvato sul tuo dispositivo verranno cancellati."
+        description: "Le impostazioni e i dati salvati sul tuo dispositivo saranno resettati. Questa funzione non comporta una cancellazione dei dati personali che ti riguardano da parte dell'App."
   errors:
     load: Errore nel caricamento del profilo
     upsert: Errore nella creazione o nell'aggiornamento del profilo
@@ -135,25 +135,21 @@ profile:
       description: Gestisci le preferenze dell'applicazione
     privacy:
       title: Privacy e condizioni d'uso
-      description: Esporta dati, cancella account
-      subtitle: Qui trovi informazioni legate ai tuoi dati personali.
+      description: I tuoi diritti e obblighi nell’uso di IO
+      subtitle: Qui trovi informazioni sulle condizioni legali e sul trattamento dei tuoi dati personali.
       loading: Attendi qualche secondo, stiamo verificando il tuo profilo...
       removeAccount:
-        title: Cancella il tuo account
-        description:
-          Elimina sia dal telefono che da Internet tutti i dati ad esso
-          associati
+        title: Cancella il tuo profilo
+        description: Richiedi cancellazione delle informazioni relative al tuo profilo IO
         alert:
-          requestTitle: Vuoi davvero cancellare il tuo account?
-          requestSubtitle: Tutti i tuoi messaggi e le tue preferenze saranno eliminati definitivamente.
+          requestTitle: Sei sicuro di voler richiedere la cancellazione del tuo account?
+          requestSubtitle: Per usare IO dovrai registrarti nuovamente. La cancellazione non riguarda i dati trattati per conto degli Enti Erogatori.
           oldRequest: Abbiamo già preso in carico una richiesta di eliminazione del tuo profilo.
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell\'avvenuta eliminazione.
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
       exportData:
-        title: Esporta i tuoi dati
-        description:
-          Ricevi nella tua email tutti i dati associati al tuo account in
-          un formato aperto
+        title: Accedi ai tuoi dati
+        description: Ricevi una copia dei dati associati al tuo profilo IO
         alert:
           requestTitle: Vuoi davvero esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.
@@ -161,7 +157,7 @@ profile:
         error: Si è verificato un errore nella richiesta di esportazione dei dati, riprova.
       privacyPolicy:
         title: Informativa e condizioni d'uso
-        description: Rivedi le regole sulla privacy che hai accettato
+        description: Consulta l’Informativa Privacy e le condizioni d’uso di IO
         header: Informativa sul trattamento dei dati personali degli utenti dell'app IO
         updated: È necessario prendere visione della nuova versione dell'Informativa
         contextualHelpTitlePolicy: Informativa sul trattamento dei dati personali e condizioni d'uso del servizio
@@ -1000,6 +996,7 @@ services:
   contactPhone: Telefono
   areasOfInterest:
     selectMessage: Scegli le aree geografiche (comuni, regioni, etc.) dove risiedi o che frequenti solitamente per vederne qui i relativi servizi. Potrai modificarle in ogni momento.
+    selectMessageEmptyOrgs: Al momento non è possibile aggiungere una località. Per favore trascina in basso per aggiornare i dati e riprova a selezionare un'area.
     addButton: Aggiungi le tue aree di interesse
     editButton: Modifica le aree di interesse
     searchEmpty: Se non trovi la tua area di interesse, significa che gli enti di quel territorio non espongono ancora servizi su IO.
@@ -1175,10 +1172,10 @@ faq:
     title: "Che cos'è un QR code?"
     content: !include faq/faq34.md
   35:
-    title: "Che cos'è PagoPA?"
+    title: "Che cos'è pagoPA?"
     content: !include faq/faq35.md
   36:
-    title: "Non vedi le tue ricevute PagoPA?"
+    title: "Non vedi le tue ricevute pagoPA?"
     content: !include faq/faq36.md
   37:
     title: "Quali metodi di pagamento puoi aggiungere?"
