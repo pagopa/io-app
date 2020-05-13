@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, View } from "native-base";
 import * as React from "react";
@@ -19,7 +20,6 @@ import MessageDetailCTABar from "./MessageDetailCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageDueDateBar from "./MessageDueDateBar";
 import MessageMarkdown from "./MessageMarkdown";
-import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = Readonly<{
   message: CreatedMessageWithContent;

@@ -1,3 +1,4 @@
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
@@ -67,16 +68,16 @@ class MessageDueDateBar extends React.PureComponent<Props> {
     return this.props.payment !== undefined;
   }
 
-  get isPaymentExpired() {
+  get isPaymentExpired(): boolean {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
   }
 
-  get isPaymentExpiring() {
+  get isPaymentExpiring(): boolean {
     return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
   }
 
-  get dueDate() {
-    return this.props.message.content.due_date;
+  get dueDate(): Option<Date> {
+    return fromNullable(this.props.message.content.due_date);
   }
 
   get bannerStyle(): ViewStyle {
@@ -95,11 +96,11 @@ class MessageDueDateBar extends React.PureComponent<Props> {
   }
 
   get textContent() {
-    const { dueDate } = this;
-    if (!dueDate) {
+    const { dueDate: maybeDueDate } = this;
+    if (maybeDueDate.isNone()) {
       return undefined;
     }
-
+    const dueDate = maybeDueDate.value;
     const time = format(dueDate, "HH.mm");
     const date = formatDateAsLocal(dueDate, true, true);
 
@@ -138,8 +139,10 @@ class MessageDueDateBar extends React.PureComponent<Props> {
       <React.Fragment>
         {I18n.t("messages.cta.payment.addMemo.block1")}
         <Text bold={true}>{` ${date} `}</Text>
+        {"["}
         {I18n.t("messages.cta.payment.addMemo.block2")}
         <Text bold={true}>{` ${time}`}</Text>
+        {"]"}
       </React.Fragment>
     );
   }
@@ -148,9 +151,8 @@ class MessageDueDateBar extends React.PureComponent<Props> {
   // - the payment related to the message is not yet paid
   // - the message has a due date
   private renderCalendarIcon = () => {
-    const { dueDate } = this;
-
-    if (dueDate) {
+    const { dueDate: maybeDueDate } = this;
+    return maybeDueDate.fold(null, dd => {
       const iconBackgoundColor = this.paid
         ? customVariables.lighterGray
         : this.isPaymentExpiring || this.isPaymentExpired
@@ -167,14 +169,13 @@ class MessageDueDateBar extends React.PureComponent<Props> {
 
       return (
         <CalendarIconComponent
-          month={capitalize(formatDateAsMonth(dueDate))}
-          day={formatDateAsDay(dueDate)}
+          month={capitalize(formatDateAsMonth(dd))}
+          day={formatDateAsDay(dd)}
           backgroundColor={iconBackgoundColor}
           textColor={textColor}
         />
       );
-    }
-    return null;
+    });
   };
 
   /**
@@ -183,7 +184,7 @@ class MessageDueDateBar extends React.PureComponent<Props> {
   public render() {
     const { dueDate, paid } = this;
 
-    if (dueDate === undefined) {
+    if (dueDate.isNone()) {
       return null;
     }
 

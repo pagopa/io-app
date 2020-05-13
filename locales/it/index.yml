@@ -869,14 +869,14 @@ messages:
     payment:
       expired: Pagamento scaduto
       paid: Questo avviso è stato pagato. Visualizza la ricevuta nei tuoi
-      addMemo: 
-          block1: Aggiungi un promemoria per il
-          block2: alle ore
+      addMemo:
+        block1: Aggiungi un promemoria per il
+        block2: alle
       expiringAlert: Questo avviso scade oggi alle
-      expiredAlert: 
+      expiredAlert:
         block1: Il pagamento è scaduto alle ore
         block2: del
-    presctiption:  
+    presctiption:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
       expiredAlert: questa ricetta è scaduta
