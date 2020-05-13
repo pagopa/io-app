@@ -1,13 +1,21 @@
-import { Container } from "native-base";
+import { ActionSheet } from "native-base";
 import * as React from "react";
 import { NavState, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
+import { NavigationInjectedProps, withNavigation } from "react-navigation";
+import I18n from "../i18n";
+import { showToast } from "../utils/showToast";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "./screens/BaseScreenComponent";
 import { RefreshIndicator } from "./ui/RefreshIndicator";
 
-type Props = Readonly<{
+type OwnProps = Readonly<{
   url: string;
   onCheckout3dsSuccess: () => void;
 }>;
+
+type Props = OwnProps & NavigationInjectedProps;
 
 type State = {
   isWebViewLoading: boolean;
@@ -26,10 +34,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Checkout3DsComponent extends React.Component<
-  Props,
-  State
-> {
+class Checkout3DsComponent extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -52,10 +57,41 @@ export default class Checkout3DsComponent extends React.Component<
     }
   };
 
+  private contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+    title: "wallet.saveCard.contextualHelpTitle",
+    body: "wallet.saveCard.contextualHelpContent"
+  };
+
+  private goBack = () => {
+    ActionSheet.show(
+      {
+        options: [
+          I18n.t("wallet.newPaymentMethod.abort.confirm"),
+          I18n.t("wallet.newPaymentMethod.abort.cancel")
+        ],
+        destructiveButtonIndex: 0,
+        cancelButtonIndex: 1,
+        title: I18n.t("wallet.newPaymentMethod.abort.title")
+      },
+      buttonIndex => {
+        if (buttonIndex === 0) {
+          // on cancel:
+          this.props.navigation.goBack();
+          showToast(I18n.t("wallet.newPaymentMethod.abort.success"), "success");
+        }
+      }
+    );
+  };
+
   public render() {
     const { url } = this.props;
     return (
-      <Container>
+      <BaseScreenComponent
+        goBack={this.goBack}
+        contextualHelpMarkdown={this.contextualHelpMarkdown}
+        headerTitle={I18n.t("wallet.saveCard.header")}
+        faqCategories={["wallet_methods"]}
+      >
         <WebView
           textZoom={100}
           source={{ uri: url }}
@@ -69,7 +105,9 @@ export default class Checkout3DsComponent extends React.Component<
             <RefreshIndicator />
           </View>
         )}
-      </Container>
+      </BaseScreenComponent>
     );
   }
 }
+
+export default withNavigation(Checkout3DsComponent);

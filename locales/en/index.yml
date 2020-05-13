@@ -585,6 +585,11 @@ wallet:
     failedCardAlreadyExists: The card you are adding already exists
     contextualHelpTitle: How to add a payment method
     contextualHelpContent: !include wallet/wallet_add_payment_method.md
+    abort:
+      title: Do you want to cancel adding a new payment method?
+      confirm: Cancel the operation
+      cancel: Continue with the operation
+      success: The payment method entry was successfully canceled
   textMsg:
     title: Text confirmation code
     header: Confirmation code

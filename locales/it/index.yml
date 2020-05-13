@@ -611,6 +611,11 @@ wallet:
     failedCardAlreadyExists: La carta che stai inserendo è già presente
     contextualHelpTitle: Come aggiungere un metodo di pagamento
     contextualHelpContent: !include wallet/wallet_add_payment_method.md
+    abort:
+      title: Vuoi annullare l'inserimento di un nuovo metodo di pagamento?
+      confirm: Annulla l'inserimento
+      cancel: Continua con l'inserimento
+      success: L'inserimento del metodo di pagamento è stato annullato correttamente
   textMsg:
     title: Codice di conferma
     header: Codice di Conferma SMS
