@@ -19,6 +19,7 @@ import MessageDetailCTABar from "./MessageDetailCTABar";
 import MessageDetailData from "./MessageDetailData";
 import MessageDueDateBar from "./MessageDueDateBar";
 import MessageMarkdown from "./MessageMarkdown";
+import { fromNullable } from "fp-ts/lib/Option";
 
 type Props = Readonly<{
   message: CreatedMessageWithContent;
@@ -102,27 +103,29 @@ export default class MessageDetailComponent extends React.PureComponent<
 
   get service() {
     const { potServiceDetail } = this.props;
-    return potServiceDetail !== undefined
-      ? pot.isNone(potServiceDetail)
+    return fromNullable(
+      pot.isNone(potServiceDetail)
         ? ({
             organization_name: I18n.t("messages.errorLoading.senderInfo"),
             department_name: I18n.t("messages.errorLoading.departmentInfo"),
             service_name: I18n.t("messages.errorLoading.serviceInfo")
           } as ServicePublic)
         : pot.toUndefined(potServiceDetail)
-      : undefined;
+    );
   }
 
   get payment() {
     const { message, paymentsByRptId } = this.props;
-    return message.content.payment_data !== undefined &&
-      this.service !== undefined
-      ? paymentsByRptId[
-          `${this.service.organization_fiscal_code}${
+    return this.service.fold(undefined, service => {
+      if (message.content.payment_data !== undefined) {
+        return paymentsByRptId[
+          `${service.organization_fiscal_code}${
             message.content.payment_data.notice_number
           }`
-        ]
-      : undefined;
+        ];
+      }
+      return undefined;
+    });
   }
 
   public render() {
@@ -139,20 +142,20 @@ export default class MessageDetailComponent extends React.PureComponent<
         <Content noPadded={true}>
           <View style={styles.headerContainer}>
             {/* Service */}
-            {service && (
+            {service.isSome() && (
               <Grid style={styles.serviceContainer}>
                 <Col>
-                  <H4>{service.organization_name}</H4>
+                  <H4>{service.value.organization_name}</H4>
                   <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                    <H6>{service.service_name}</H6>
+                    <H6>{service.value.service_name}</H6>
                   </TouchableDefaultOpacity>
                 </Col>
-                {service.service_id && (
+                {service.value.service_id && (
                   <Col style={styles.serviceCol}>
                     <TouchableDefaultOpacity onPress={onServiceLinkPress}>
                       <MultiImage
                         style={styles.serviceMultiImage}
-                        source={logosForService(service)}
+                        source={logosForService(service.value)}
                       />
                     </TouchableDefaultOpacity>
                   </Col>
@@ -168,7 +171,7 @@ export default class MessageDetailComponent extends React.PureComponent<
 
           <MessageDueDateBar
             message={message}
-            service={service}
+            service={service.toUndefined()}
             payment={payment}
           />
 
@@ -196,7 +199,7 @@ export default class MessageDetailComponent extends React.PureComponent<
         <View spacer={true} small={true} />
         <MessageDetailCTABar
           message={message}
-          service={service}
+          service={service.toUndefined()}
           payment={this.payment}
         />
       </React.Fragment>
