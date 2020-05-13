@@ -1,10 +1,3 @@
-/**
- * A HOC to display the WrappedComponent when the email is validated, otherwise the RemindEmailValidationOverlay will be displayed
- *
- * TODO: fix workaround introduced to solve bug on navigation during the onboarding (https://github.com/react-navigation/react-navigation/issues/4867)
- *       If the didFocus and the blur related events are not fired, at forward navigation the hideModal is dispatched manually
- */
-
 import { none } from "fp-ts/lib/Option";
 import React from "react";
 import { View } from "react-native";
@@ -95,7 +88,7 @@ const ConditionalView = withLightModalContext(
   ModalRemindEmailValidationOverlay
 );
 
-export type Props = ReturnType<typeof mapStateToProps>;
+type Props = ReturnType<typeof mapStateToProps>;
 
 const mapStateToProps = (state: GlobalState) => {
   const isEmailValidated = isProfileEmailValidatedSelector(state);
@@ -115,6 +108,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(acknowledgeOnEmailValidation(none))
 });
 
+/**
+ * A HOC to display the WrappedComponent when the email is validated, otherwise the RemindEmailValidationOverlay will be displayed
+ *
+ * TODO: fix workaround introduced to solve bug on navigation during the onboarding (https://github.com/react-navigation/react-navigation/issues/4867)
+ *       If the didFocus and the blur related events are not fired, at forward navigation the hideModal is dispatched manually
+ */
 export function withValidatedEmail<P>(
   WrappedComponent: React.ComponentType<P>
 ) {
@@ -122,7 +121,7 @@ export function withValidatedEmail<P>(
     mapStateToProps,
     mapDispatchToProps
   )(
-    withConditionalView(
+    withConditionalView<P, Props, any>(
       WrappedComponent,
       (props: Props) => props.isEmailValidated,
       ConditionalView
