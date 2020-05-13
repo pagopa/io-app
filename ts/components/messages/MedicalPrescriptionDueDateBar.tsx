@@ -89,7 +89,6 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     if (dueDate.isNone()) {
       return undefined;
     }
-    const date = formatDateAsLocal(dueDate.value, true, true);
 
     if (this.isPrescriptionExpiring) {
       return (
@@ -98,7 +97,7 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
         </React.Fragment>
       );
     }
-
+    const date = formatDateAsLocal(dueDate.value, true, true);
     if (this.isPrescriptionExpired) {
       return (
         <React.Fragment>
@@ -150,20 +149,9 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
   public render() {
     const { dueDate } = this;
     return dueDate.fold(null, _ => {
-      const textComponent = (
-        <Text
-          style={styles.text}
-          white={this.isPrescriptionExpiring || this.isPrescriptionExpired}
-        >
-          {this.textContent}
-        </Text>
-      );
       return !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
         <View style={[styles.container, this.bannerStyle]}>
-          <Text
-            style={styles.text}
-            white={this.isPrescriptionExpiring || this.isPrescriptionExpired}
-          >
+          <Text style={styles.text} white={false}>
             {this.textContent}
           </Text>
           <View spacer={true} xsmall={true} />
@@ -177,7 +165,9 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
         <View style={[styles.container, styles.row, this.bannerStyle]}>
           {this.renderCalendarIcon()}
           <View hspacer={true} small={true} />
-          {textComponent}
+          <Text style={styles.text} white={true}>
+            {this.textContent}
+          </Text>
         </View>
       );
     });
