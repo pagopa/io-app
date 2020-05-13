@@ -1,3 +1,4 @@
+import { fromNullable, Option } from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { View } from "native-base";
 import React from "react";
@@ -58,13 +59,13 @@ class MessageListCTABar extends React.PureComponent<Props> {
     return this.paymentExpirationInfo.fold(false, info => isExpired(info));
   }
 
-  // Evaluate if use 'isExpiring' or 'isToday' (from date-fns) to determe if it is expiring today
+  // Evaluate if use 'isExpiring' or 'isToday' (from date-fns) to determine if it is expiring today
   get isPaymentExpiring() {
     return this.paymentExpirationInfo.fold(false, info => isExpiring(info));
   }
 
-  get dueDate() {
-    return this.props.message.content.due_date;
+  get dueDate(): Option<Date> {
+    return fromNullable(this.props.message.content.due_date);
   }
 
   private renderCalendarIcon = () => {
@@ -73,12 +74,12 @@ class MessageListCTABar extends React.PureComponent<Props> {
     // The calendar icon is shown if:
     // - the message has a due date
     // - the payment related to the message is not yet paid
-    if (dueDate !== undefined && !this.paid) {
+    if (dueDate.isSome() && !this.paid) {
       return (
         <CalendarIconComponent
           small={true}
-          month={capitalize(formatDateAsMonth(dueDate))}
-          day={formatDateAsDay(dueDate)}
+          month={capitalize(formatDateAsMonth(dueDate.value))}
+          day={formatDateAsDay(dueDate.value)}
           backgroundColor={customVariables.brandDarkGray}
           textColor={customVariables.colorWhite}
         />
@@ -92,39 +93,35 @@ class MessageListCTABar extends React.PureComponent<Props> {
     // The add/remove reminder button is shown if:
     // - if the message has a due date
     // - if the message has a payment and it is not paid nor expired
-    if (this.dueDate !== undefined && !this.paid && !this.isPaymentExpired) {
-      return (
+    return this.dueDate
+      .filter(() => !this.paid && !this.isPaymentExpired)
+      .fold(undefined, _ => (
         <CalendarEventButton
           small={true}
           disabled={this.props.disabled}
           message={this.props.message}
         />
-      );
-    }
-    return undefined;
+      ));
   };
 
   // Render abutton to display details of the payment related to the message
   private renderPaymentButton() {
-    const { message, service, disabled } = this.props;
-    const { paid } = this;
-
     // The button is displayed if the payment has an expiration date in the future
-    if (this.paymentExpirationInfo.isNone()) {
-      return undefined;
-    }
-
-    return (
-      <PaymentButton
-        paid={paid}
-        messagePaymentExpirationInfo={this.paymentExpirationInfo.value}
-        small={true}
-        disabled={disabled}
-        service={service}
-        message={message}
-        enableAlertStyle={true}
-      />
-    );
+    return this.paymentExpirationInfo.fold(undefined, pei => {
+      const { message, service, disabled } = this.props;
+      const { paid } = this;
+      return (
+        <PaymentButton
+          paid={paid}
+          messagePaymentExpirationInfo={pei}
+          small={true}
+          disabled={disabled}
+          service={service}
+          message={message}
+          enableAlertStyle={true}
+        />
+      );
+    });
   }
 
   public render() {
