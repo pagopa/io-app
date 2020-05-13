@@ -966,6 +966,7 @@ services:
   contactPhone: Phone
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
+    selectMessageEmptyOrgs: At the moment it is not possible to add a location. Please pull down to refresh the data and try again.
     addButton: Add your areas of interest
     editButton: Change the areas of interest
     searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
@@ -1007,6 +1008,12 @@ identification:
       title: Identification required
       sensorDescription: Touch sensor
       fallbackLabel: Use the unlock code
+  fail:
+    wrongCode: Wrong code
+    remainingAttempts: You have {{attempts}} attempts left.
+    remainingAttemptSingle: You have {{attempts}} attempt left.
+    tooManyAttempts: Too many attempts.
+    waitMessage: "Try again in:"
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
   removeRequest:

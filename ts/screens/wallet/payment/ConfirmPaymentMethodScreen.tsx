@@ -267,23 +267,19 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           kind: "COMPLETED"
         })
       );
-      // reset the payment state
-      dispatch(paymentInitializeState());
       // update the transactions state (the first transaction is the most recent)
       dispatch(fetchTransactionsRequest({ start: 0 }));
       // navigate to the resulting transaction details
       showToast(I18n.t("wallet.confirmPayment.transactionSuccess"), "success");
     } else {
       // on failure:
-      // navigate to entrypoint of payment or wallet home
-      dispatch(backToEntrypointPayment());
       // signal faliure
       dispatch(paymentCompletedFailure());
       // delete the active payment from pagoPA
       dispatch(runDeleteActivePaymentSaga());
-      // reset the payment state
-      dispatch(paymentInitializeState());
-      showToast(I18n.t("wallet.confirmPayment.transactionFailure"), "danger");
+      // navigate to entrypoint of payment or wallet home
+      dispatch(backToEntrypointPayment());
+      showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
     }
   };
 
