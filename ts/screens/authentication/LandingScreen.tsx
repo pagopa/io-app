@@ -197,6 +197,17 @@ class LandingScreen extends React.PureComponent<Props> {
 
         <View footer={true}>
           <ButtonDefaultOpacity
+            block={true}
+            primary={true}
+            iconLeft={true}
+            onPress={this.navigateToIdpSelection}
+            testID={"landing-button-login-spid"}
+          >
+            <IconFont name={"io-profilo"} color={variables.colorWhite} />
+            <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
+          </ButtonDefaultOpacity>
+          <View spacer={true} />
+          <ButtonDefaultOpacity
             style={!this.props.isCieSupported ? styles.noCie : undefined}
             block={true}
             primary={true}
@@ -206,17 +217,6 @@ class LandingScreen extends React.PureComponent<Props> {
           >
             <IconFont name={"io-cie"} color={variables.colorWhite} />
             <Text>{I18n.t("authentication.landing.loginCie")}</Text>
-          </ButtonDefaultOpacity>
-          <View spacer={true} />
-          <ButtonDefaultOpacity
-            block={true}
-            primary={true}
-            iconLeft={true}
-            onPress={this.navigateToIdpSelection}
-            testID={"landing-button-login-spid"}
-          >
-            <IconFont name={"io-profilo"} color={variables.colorWhite} />
-            <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
           </ButtonDefaultOpacity>
           <View spacer={true} />
           <ButtonDefaultOpacity

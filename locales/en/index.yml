@@ -249,7 +249,7 @@ spid:
 authentication:
   landing:
     cie_unsupported:
-      title: Accesso con CIE non disponibile
+      title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
       os_version_unsupported: your operating system does not have a version compatible with CIE authentication
