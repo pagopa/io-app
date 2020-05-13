@@ -189,10 +189,11 @@ export default class MessageDetailComponent extends React.PureComponent<
                 serviceMetadata={potServiceMetadata}
                 goToServiceDetail={onServiceLinkPress}
               />
-              <View spacer={true} large={true} />
             </React.Fragment>
           )}
         </Content>
+        <View spacer={true} large={true}/>
+        <View spacer={true} small={true}/>
         <MessageDetailCTABar
           message={message}
           service={service}
