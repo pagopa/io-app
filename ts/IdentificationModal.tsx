@@ -10,8 +10,6 @@ import IconFont from "./components/ui/IconFont";
 import TextWithIcon from "./components/ui/TextWithIcon";
 import { isDebugBiometricIdentificationEnabled } from "./config";
 import I18n from "./i18n";
-import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
-import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 import {
   identificationCancel,
   identificationFailure,
@@ -29,7 +27,6 @@ import {
   getFingerprintSettings,
   unmountBiometricAuth
 } from "./utils/fingerprint";
-import { authenticateConfig } from "./utils/biometric";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
