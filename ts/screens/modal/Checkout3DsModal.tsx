@@ -1,14 +1,15 @@
 import { ActionSheet } from "native-base";
 import * as React from "react";
-import { NavState, StyleSheet, View } from "react-native";
+import { Modal, NavState, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { NavigationInjectedProps, withNavigation } from "react-navigation";
-import I18n from "../i18n";
-import { showToast } from "../utils/showToast";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
-} from "./screens/BaseScreenComponent";
-import { RefreshIndicator } from "./ui/RefreshIndicator";
+} from "../../components/screens/BaseScreenComponent";
+import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
+import I18n from "../../i18n";
+import { showToast } from "../../utils/showToast";
 
 type OwnProps = Readonly<{
   url: string;
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Checkout3DsComponent extends React.Component<Props, State> {
+class Checkout3DsModal extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -81,33 +82,41 @@ class Checkout3DsComponent extends React.Component<Props, State> {
         }
       }
     );
+    RTron.log("Back");
   };
 
   public render() {
     const { url } = this.props;
     return (
-      <BaseScreenComponent
-        goBack={this.goBack}
-        contextualHelpMarkdown={this.contextualHelpMarkdown}
-        headerTitle={I18n.t("wallet.saveCard.header")}
-        faqCategories={["wallet_methods"]}
+      <Modal
+        animationType="fade"
+        transparent={false}
+        visible={true}
+        onRequestClose={this.goBack}
       >
-        <WebView
-          textZoom={100}
-          source={{ uri: url }}
-          onNavigationStateChange={this.navigationStateChanged}
-          javaScriptEnabled={true}
-          onLoadStart={() => this.updateLoadingState(true)}
-          onLoadEnd={() => this.updateLoadingState(false)}
-        />
-        {this.state.isWebViewLoading && (
-          <View style={styles.refreshIndicatorContainer}>
-            <RefreshIndicator />
-          </View>
-        )}
-      </BaseScreenComponent>
+        <BaseScreenComponent
+          goBack={this.goBack}
+          contextualHelpMarkdown={this.contextualHelpMarkdown}
+          headerTitle={I18n.t("wallet.saveCard.header")}
+          faqCategories={["wallet_methods"]}
+        >
+          <WebView
+            textZoom={100}
+            source={{ uri: url }}
+            onNavigationStateChange={this.navigationStateChanged}
+            javaScriptEnabled={true}
+            onLoadStart={() => this.updateLoadingState(true)}
+            onLoadEnd={() => this.updateLoadingState(false)}
+          />
+          {this.state.isWebViewLoading && (
+            <View style={styles.refreshIndicatorContainer}>
+              <RefreshIndicator />
+            </View>
+          )}
+        </BaseScreenComponent>
+      </Modal>
     );
   }
 }
 
-export default withNavigation(Checkout3DsComponent);
+export default withNavigation(Checkout3DsModal);

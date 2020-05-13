@@ -7,13 +7,14 @@ import { AmountInEuroCents, RptId } from "italia-pagopa-commons/lib/pagopa";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Modal, StyleSheet } from "react-native";
+import { BackHandler, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
-import Checkout3DsComponent from "../../components/Checkout3DsComponent";
+import { RTron } from "../../boot/configureStoreAndPersistor";
+import Checkout3DsComponent from "../modal/Checkout3DsModal";
 import { withErrorModal } from "../../components/helpers/withErrorModal";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import NoticeBox from "../../components/NoticeBox";
@@ -79,6 +80,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", () =>
+      RTron.log("OMG TAP")
+    );
     // reset the credit card boarding state on mount
     this.props.addWalletCreditCardInit();
   }
@@ -189,18 +193,12 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             rightButton={primaryButtonProps}
           />
         )}
-        <Modal
-          animationType="fade"
-          transparent={false}
-          visible={this.props.checkout3dsUrl.isSome()}
-        >
-          {this.props.checkout3dsUrl.isSome() && (
-            <Checkout3DsComponent
-              url={this.props.checkout3dsUrl.value}
-              onCheckout3dsSuccess={this.props.creditCardCheckout3dsSuccess}
-            />
-          )}
-        </Modal>
+        {this.props.checkout3dsUrl.isSome() && (
+          <Checkout3DsComponent
+            url={this.props.checkout3dsUrl.value}
+            onCheckout3dsSuccess={this.props.creditCardCheckout3dsSuccess}
+          />
+        )}
       </BaseScreenComponent>
     );
   }
