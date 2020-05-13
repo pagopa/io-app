@@ -18,7 +18,10 @@ import {
   formatDateAsMonth,
   getExpireStatus
 } from "../../utils/dates";
-import { getMessagePaymentExpirationInfo, ExpireStatus } from "../../utils/messages";
+import {
+  getMessagePaymentExpirationInfo,
+  ExpireStatus
+} from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
