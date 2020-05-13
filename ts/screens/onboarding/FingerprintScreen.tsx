@@ -5,7 +5,7 @@
 import { Content, Text } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -19,16 +19,16 @@ import {
 } from "../../store/actions/onboarding";
 import { Dispatch } from "../../store/actions/types";
 
-type NavigationParams = {
+type NavigationParams = Readonly<{
   biometryType: BiometrySimpleType;
-};
+}>;
 
 export type BiometryPrintableSimpleType =
   | "FINGERPRINT"
   | "TOUCH_ID"
   | "FACE_ID";
 
-type Props = NavigationScreenProps<NavigationParams> &
+type Props = NavigationInjectedProps<NavigationParams> &
   ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
