@@ -31,7 +31,8 @@ export function* checkCieAvailabilitySaga(
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<
-      typeof isCIEAuthenticationSupported
+      typeof isCIEAuthenticationSupported,
+      Promise<boolean>
     > = yield call(isCIEAuthenticationSupported);
     yield put(cieIsSupported.success(response));
   } catch (e) {
@@ -46,7 +47,8 @@ export function* checkNfcEnablementSaga(): SagaIterator {
   try {
     while (true) {
       const isNfcEnabled: SagaCallReturnType<
-        typeof cieManager.isNFCEnabled
+        typeof cieManager.isNFCEnabled,
+        Promise<boolean>
       > = yield call(cieManager.isNFCEnabled);
       yield put(nfcIsEnabled.success(isNfcEnabled));
       if (isNfcEnabled) {
