@@ -16,8 +16,9 @@ export function withConditionalView<P, T, C>(
    * the contition component to ensure the nagivigation can address the proper
    * navigation paramaters
    */
-  type NP = P extends NavigationInjectedProps<infer N> ? N : never;
-  type NC = C extends NavigationInjectedProps<infer N> ? N : never;
+  type nullN = {}
+  type NP = P extends NavigationInjectedProps<infer N> ? N : nullN;
+  type NC = C extends NavigationInjectedProps<infer N> ? N : nullN;
   type NN = NavigationInjectedProps<NP & NC>;
 
   class ConditionalView extends React.PureComponent<(P | C) & T & NN> {
