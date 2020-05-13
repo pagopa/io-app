@@ -228,6 +228,7 @@ class ServicesTab extends React.PureComponent<Props> {
     return (
       <ServicesSectionsList
         isLocal={this.props.isLocal}
+        isSelectableOrgsEmpty={this.props.selectableOrganizations.length === 0}
         isAll={this.props.isAll}
         sections={this.props.sections}
         profile={this.props.profile}

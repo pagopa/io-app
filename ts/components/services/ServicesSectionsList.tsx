@@ -40,6 +40,7 @@ type OwnProps = {
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
+  isSelectableOrgsEmpty?: boolean;
 };
 
 type Props = AnimatedProps & OwnProps;
@@ -85,7 +86,9 @@ class ServicesSectionsList extends React.PureComponent<Props> {
       this.props.isLocal && (
         <View style={styles.headerContentWrapper}>
           <Text style={styles.message}>
-            {I18n.t("services.areasOfInterest.selectMessage")}
+            {this.props.isSelectableOrgsEmpty
+              ? I18n.t("services.areasOfInterest.selectMessageEmptyOrgs")
+              : I18n.t("services.areasOfInterest.selectMessage")}
           </Text>
           <View spacer={true} large={true} />
           <ButtonDefaultOpacity
@@ -94,6 +97,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
             style={styles.button}
             block={true}
             onPress={this.props.onChooserAreasOfInterestPress}
+            disabled={this.props.isSelectableOrgsEmpty}
           >
             <IconFont name="io-plus" style={styles.icon} />
             <Text style={styles.textButton}>
@@ -134,7 +138,11 @@ class ServicesSectionsList extends React.PureComponent<Props> {
             style={styles.button}
             block={true}
             onPress={this.props.onChooserAreasOfInterestPress}
-            disabled={this.props.isRefreshing || this.props.isLongPressEnabled}
+            disabled={
+              this.props.isRefreshing ||
+              this.props.isLongPressEnabled ||
+              this.props.isSelectableOrgsEmpty
+            }
           >
             <Text style={styles.textButton}>
               {I18n.t("services.areasOfInterest.editButton")}
