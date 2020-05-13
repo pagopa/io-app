@@ -121,8 +121,7 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
   // - the message has a due date
   private renderCalendarIcon = () => {
     const { dueDate } = this;
-
-    if (dueDate.isSome()) {
+    return dueDate.fold(null, dd => {
       const iconBackgoundColor =
         this.isPrescriptionExpiring || this.isPrescriptionExpired
           ? customVariables.colorWhite
@@ -136,14 +135,13 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
 
       return (
         <CalendarIconComponent
-          month={capitalize(formatDateAsMonth(dueDate.value))}
-          day={formatDateAsDay(dueDate.value)}
+          month={capitalize(formatDateAsMonth(dd))}
+          day={formatDateAsDay(dd)}
           backgroundColor={iconBackgoundColor}
           textColor={textColor}
         />
       );
-    }
-    return null;
+    });
   };
 
   /**
