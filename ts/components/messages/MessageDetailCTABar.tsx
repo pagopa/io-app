@@ -88,13 +88,12 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     const paymentButton = this.renderPaymentButton();
     const calendarButton = this.renderCalendarEventButton();
 
-    if (paymentButton && calendarButton) {
+    if (paymentButton || calendarButton) {
       return (
         <View footer={true} style={styles.row}>
-          {this.renderCalendarEventButton()}
-          {paymentButton !== null &&
-            calendarButton !== null && <View hspacer={true} />}
-          {this.renderPaymentButton()}
+          {calendarButton}
+          {paymentButton && calendarButton && <View hspacer={true} />}
+          {paymentButton}
         </View>
       );
     }
