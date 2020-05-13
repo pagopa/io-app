@@ -74,11 +74,11 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
         </Text>
         {this.getImage(item)}
         {value.isSome() && (
-          <Text
-            small={true}
-            semibold={true}
-            style={{ textAlign: "center" }}
-          >{`*${value.value}*`}</Text>
+          <Text small={true} semibold={true} style={{ textAlign: "center" }}>
+            {I18n.t("global.symbols.asterisk")}
+            {value.value}
+            {I18n.t("global.symbols.asterisk")}
+          </Text>
         )}
         <View spacer={true} />
       </View>

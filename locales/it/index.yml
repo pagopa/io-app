@@ -3,6 +3,7 @@ global:
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
+    asterisk: "*"
   localization:
     decimalSeparator: ","
   date:
