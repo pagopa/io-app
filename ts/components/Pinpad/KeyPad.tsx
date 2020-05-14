@@ -1,9 +1,10 @@
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, Platform } from "react-native";
 import variables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { makeFontStyleObject } from '../../theme/fonts';
 
 type Digit = ITuple2<string, () => void> | undefined;
 
@@ -13,8 +14,8 @@ type Props = Readonly<{
   isDisabled: boolean;
 }>;
 
-// TODO: make it variable based on screen width
-const radius = 20;
+// it generate buttons width of 56
+const radius = 18;
 
 const styles = StyleSheet.create({
   roundButton: {
@@ -25,27 +26,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: (radius + 10) * 2,
     height: (radius + 10) * 2,
-    borderRadius: radius + 10,
-    shadowOffset: { height: 0, width: 0 },
-    shadowOpacity: 0,
-    elevation: 0
+    borderRadius: radius + 10
   },
 
   buttonTextBase: {
-    margin: 0,
-    paddingTop: Math.round(radius / 2) + 4,
-    lineHeight: radius + 10,
-    fontWeight: "200"
+    ...makeFontStyleObject(Platform.select, "300"),
+    fontSize: 30,
+    lineHeight: 32,
+    marginBottom: -10
   },
-
-  buttonTextDigit: {
-    fontSize: radius + 10
+  image: { 
+    width: 40, 
+    height: 48 
   },
-
-  buttonTextLabel: {
-    fontSize: radius - 5
-  },
-
   white: {
     color: variables.colorWhite
   }
@@ -79,25 +72,20 @@ const renderPinCol = (
       >
         {!label.endsWith(".png") ? (
           <Text
-            style={[
-              styles.buttonTextBase,
-              style === "digit"
-                ? styles.buttonTextDigit
-                : styles.buttonTextLabel,
-              style === "label" && buttonType === "primary" ? styles.white : {}
-            ]}
+            white={style === "label" && buttonType === "primary"}
+            style={styles.buttonTextBase}
           >
             {label}
           </Text>
         ) : label === "faceid-onboarding-icon.png" ? (
           <Image
             source={require("../../../img/icons/faceid-onboarding-icon.png")}
-            style={{ width: 40, height: 48 }}
+            style={styles.image}
           />
         ) : (
           <Image
             source={require("../../../img/icons/fingerprint-onboarding-icon.png")}
-            style={{ width: 40, height: 48 }}
+            style={styles.image}
           />
         )}
       </ButtonDefaultOpacity>
