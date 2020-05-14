@@ -73,7 +73,7 @@ const renderIdentificationByPinState = (
       <React.Fragment>
         <TextWithIcon danger={true}>
           <IconFont name="io-close" color={"white"} />
-          <Text white={true}>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
+          <Text white={true}>{I18n.t("identification.unlockCode.confirmInvalid")}</Text>
         </TextWithIcon>
       </React.Fragment>
     );

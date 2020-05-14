@@ -498,26 +498,7 @@ onboarding:
         fingerprint: la tua impronta digitale
         faceId: FaceID
         touchId: TouchID
-      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
-pin_login:
-  pin:
-    pinInfo: Inserisci il codice di sblocco
-    reset:
-      button: Codice di sblocco dimenticato?
-      button_short: Reimposta il codice di sblocco
-      tip:
-        Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente con la tua identità
-        SPID.
-      tip_short: Dovrai effettuare di nuovo l'accesso.
-    confirmValid: Codice di sblocco corretto
-    confirmInvalid: codice di sblocco non valido
-  unlock_screen:
-    help:
-      title: Accesso con codice di sblocco
-      content: !include onboarding/onboarding_pin.md
-  forgetPin:
-    confirmTitle: Hai dimenticato il codice di sblocco?
-    confirmMsg: Per poter scegliere un nuovo codice di sblocco dovrai fare di nuovo accesso con SPID.
+      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md  
 forms:
   validators:
     required: Valore richiesto
@@ -1048,6 +1029,23 @@ identification:
     remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
     tooManyAttempts: Troppi tentativi di inserimento errati.
     waitMessage: "Riprova tra:"
+  unlockCode:
+    reset:
+      button: Codice di sblocco dimenticato?
+      button_short: Reimposta il codice di sblocco
+      tip:
+        Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente con la tua identità
+        SPID.
+      tip_short: Dovrai effettuare di nuovo l'accesso.
+    confirmValid: Codice di sblocco corretto
+    confirmInvalid: codice di sblocco non valido
+  unlock_screen:
+    help:
+      title: Accesso con codice di sblocco
+      content: !include onboarding/onboarding_pin.md
+  forgetCode:
+    confirmTitle: Hai dimenticato il
+    confirmMsg: Per poter scegliere un nuovo codice di sblocco dovrai fare di nuovo accesso con SPID.
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
   removeRequest:

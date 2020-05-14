@@ -137,11 +137,11 @@ class Pinpad extends React.PureComponent<Props, State> {
       ]
     ];
   };
-
+  
   private confirmResetAlert = () =>
     Alert.alert(
-      I18n.t("pin_login.forgetPin.confirmTitle"),
-      I18n.t("pin_login.forgetPin.confirmMsg"),
+      I18n.t("identification.forgetCode.confirmTitle"),
+      I18n.t("identification.forgetCode.confirmMsg"),
       [
         {
           text: I18n.t("global.buttons.confirm"),
@@ -309,7 +309,7 @@ class Pinpad extends React.PureComponent<Props, State> {
               onPress={this.confirmResetAlert}
               style={styles.text}
             >
-              {I18n.t("pin_login.pin.reset.button")}
+              {I18n.t("identification.unlockCode.reset.button")}
             </Text>
             <View spacer={true} />
           </React.Fragment>
