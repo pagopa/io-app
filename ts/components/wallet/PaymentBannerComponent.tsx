@@ -59,7 +59,7 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
       </View>
       <View style={styles.row}>
         <Text white={true} small={true}>
-          {I18n.t("wallet.ConfirmPayment.fee")}
+          {I18n.t("wallet.confirmPayment.fee")}
         </Text>
         <Text white={true} small={true}>
           {props.fee ? formatNumberCentsToAmount(props.fee, true) : noFee}

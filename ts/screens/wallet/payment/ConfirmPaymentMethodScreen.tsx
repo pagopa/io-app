@@ -279,7 +279,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       dispatch(runDeleteActivePaymentSaga());
       // navigate to entrypoint of payment or wallet home
       dispatch(backToEntrypointPayment());
-      showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
+      showToast(I18n.t("wallet.confirmPayment.transactionFailure"), "danger");
     }
   };
 
