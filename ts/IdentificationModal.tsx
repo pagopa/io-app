@@ -30,10 +30,10 @@ import {
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 import { authenticateConfig } from "./utils/biometric";
-
 import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
+import { Dispatch } from 'redux';
 
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
+type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps> & ReduxProps;
 
 /**
  * Type used in the local state to save the result of Pinpad code matching.
@@ -55,8 +55,8 @@ type State = {
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "onboarding.pin.contextualHelpTitle",
-  body: "onboarding.pin.contextualHelpContent"
+  title: "onboarding.unlockCode.contextualHelpTitle",
+  body: "onboarding.unlockCode.contextualHelpContent"
 };
 
 const checkPinInterval = 100 as Millisecond;
@@ -336,8 +336,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   public render() {
     const {
       identificationProgressState,
-      isFingerprintEnabled,
-      dispatch
+      isFingerprintEnabled
     } = this.props;
 
     if (identificationProgressState.kind !== "started") {
@@ -385,12 +384,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       if (identificationCancelData) {
         identificationCancelData.onCancel();
       }
-      dispatch(identificationCancel());
+      this.props.onCancelIdentification();
     };
 
-    const onPinResetHandler = () => {
-      dispatch(identificationPinReset());
-    };
 
     return !this.state.canInsertPinTooManyAttempts ? (
       IdentificationLockModal({ countdown })
@@ -415,7 +411,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               {identificationMessage}
             </Text>
             <Pinpad
-              onPinResetHandler={canResetPin ? onPinResetHandler : undefined}
+              onPinResetHandler={canResetPin ? this.props.onPinResetHandler : undefined}
               isFingerprintEnabled={isFingerprintEnabled}
               biometryType={biometryType}
               onFingerPrintReq={() =>
@@ -524,6 +520,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   };
 }
 
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onPinResetHandler: () => dispatch(identificationPinReset()),
+  onCancelIdentification: () => dispatch(identificationCancel())
+})
+
 const mapStateToProps = (state: GlobalState) => ({
   identificationProgressState: state.identification.progress,
   identificationFailState: identificationFailSelector(state),
@@ -531,4 +532,4 @@ const mapStateToProps = (state: GlobalState) => ({
   appState: state.appState.appState
 });
 
-export default connect(mapStateToProps)(IdentificationModal);
+export default connect(mapStateToProps, mapDispatchToProps)(IdentificationModal);

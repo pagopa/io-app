@@ -445,10 +445,9 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Activation
-    continue: Continue
     accept: Accept
     error: Loading error
-  pin:
+  unlockCode:
     headerTitle: Activation
     contentTitle: Choose an unlock code
     contentTitleConfirm: Insert your code again
@@ -458,7 +457,6 @@ onboarding:
       with SPID.
     pinInfoSelected: This code will be requested each time you open the app and when
       you need to view sensitive data or make dispositive transactions.
-    continue: Continue
     reset: Change the code
     confirmValid: thanks, you can continue
     confirmInvalid: the two pins do not match

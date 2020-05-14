@@ -1,7 +1,3 @@
-/**
- * A screen that allow the user to set the unlock code.
- */
-
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H3, Text, View } from "native-base";
 import * as React from "react";
@@ -9,7 +5,6 @@ import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -23,6 +18,7 @@ import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setPin } from "../../utils/keychain";
+import H4 from '../../components/ui/H4';
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -69,15 +65,21 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  header: { lineHeight: 40 }
+  header: { 
+    fontSize: 20,
+    lineHeight: 22
+  }
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "onboarding.pin.contextualHelpTitle",
-  body: "onboarding.pin.contextualHelpContent"
+  title: "onboarding.unlockCode.contextualHelpTitle",
+  body: "onboarding.unlockCode.contextualHelpContent"
 };
 
-class PinScreen extends React.Component<Props, State> {
+/**
+ * A screen that allows the user to set the unlock code.
+ */
+class PinScreen extends React.PureComponent<Props, State> {
   private pinConfirmComponent: Pinpad | null = null;
 
   constructor(props: Props) {
@@ -159,8 +161,8 @@ class PinScreen extends React.Component<Props, State> {
         <H3 style={styles.header}>
           {I18n.t("onboarding.pin.contentTitleConfirm")}
         </H3>
-      );
-    }
+    );
+  }
   }
 
   // Render the unlock code match/doesn't match feedback message
@@ -173,12 +175,12 @@ class PinScreen extends React.Component<Props, State> {
       state === "PinConfirmed" ? (
         <TextWithIcon success={true}>
           <IconFont name="io-tick-big" />
-          <Text>{I18n.t("onboarding.pin.confirmValid")}</Text>
+          <Text>{I18n.t("onboarding.unlockCode.confirmValid")}</Text>
         </TextWithIcon>
       ) : (
         <TextWithIcon danger={true}>
           <IconFont name="io-close" />
-          <Text>{I18n.t("onboarding.pin.confirmInvalid")}</Text>
+          <Text>{I18n.t("onboarding.unlockCode.confirmInvalid")}</Text>
         </TextWithIcon>
       );
     return (
@@ -239,9 +241,9 @@ class PinScreen extends React.Component<Props, State> {
   // Render the description for the different states
   public renderDescription(pinState: PinState) {
     if (pinState.state === "PinUnselected") {
-      return <Text>{I18n.t("onboarding.pin.pinInfo")}</Text>;
+      return <Text>{I18n.t("onboarding.unlockCode.pinInfo")}</Text>;
     } else {
-      return <Text>{I18n.t("onboarding.pin.pinInfoSelected")}</Text>;
+      return <Text>{I18n.t("onboarding.unlockCode.pinInfoSelected")}</Text>;
     }
   }
 
@@ -261,7 +263,7 @@ class PinScreen extends React.Component<Props, State> {
           disabled={false}
           onPress={onPress}
         >
-          <Text>{I18n.t("onboarding.pin.continue")}</Text>
+          <Text>{I18n.t("global.buttons.continue")}</Text>
         </ButtonDefaultOpacity>
         <View spacer={true} />
       </React.Fragment>
@@ -281,7 +283,7 @@ class PinScreen extends React.Component<Props, State> {
               bordered={true}
               onPress={() => this.onPinReset()}
             >
-              <Text>{I18n.t("onboarding.pin.reset")}</Text>
+              <Text>{I18n.t("onboarding.unlockCode.reset")}</Text>
             </ButtonDefaultOpacity>
           </React.Fragment>
         )}

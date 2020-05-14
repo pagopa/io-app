@@ -465,10 +465,9 @@ onboarding:
   contextualHelpContent: !include onboarding/onboarding_fingerprint.md
   tos:
     headerTitle: Attivazione
-    continue: Continua
     accept: Accetta
     error: Errore nel caricamento
-  pin:
+  unlockCode:
     headerTitle: Attivazione
     contentTitle: Scegli un codice di sblocco
     contentTitleConfirm: Digita ancora il codice di sblocco
@@ -480,7 +479,6 @@ onboarding:
     pinInfoSelected:
       Questo codice ti verrà richiesto ogni volta che aprirai l’app
       e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive.
-    continue: Continua
     reset: Modifica il codice
     confirmValid: grazie, puoi continuare
     confirmInvalid: i due codici non coincidono
