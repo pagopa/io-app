@@ -11,7 +11,7 @@ import { PaidReason } from "../../store/reducers/entities/payments";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
 import { messageNeedsCTABar } from "../../utils/messages";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
-import MessageCTABar from "./MessageCTABar";
+import MessageListCTABar from "./MessageListCTABar";
 
 type Props = {
   isRead: boolean;
@@ -73,11 +73,10 @@ class MessageListItem extends React.PureComponent<Props> {
         {messageNeedsCTABar(message) && (
           <React.Fragment>
             <View spacer={true} large={true} />
-            <MessageCTABar
+            <MessageListCTABar
               message={message}
               service={service}
               payment={payment}
-              small={true}
               disabled={isSelectionModeEnabled}
             />
           </React.Fragment>
