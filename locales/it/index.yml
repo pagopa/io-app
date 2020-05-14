@@ -1029,15 +1029,16 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  messageFingerPrint: "Appoggia l'impronta o inserisci il codice di sblocco"
-  messageFaceID: "Usa FaceID o inserisci il codice di sblocco"
-  messageEnterPin: "Inserisci il codice di sblocco"
+  title: Sblocca l'app
+  subtitleCode: enter the unlock code
+  subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
+  subtitleCodeFaceId: "use FaceID o il codice di sblocco"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
     title: Identificazione Biometrica
     popup:
-      reason: Identificazione
+      reason: Identificazione tramite touch ID non riuscita
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
       fallbackLabel: Usa il codice di sblocco

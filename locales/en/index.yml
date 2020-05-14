@@ -992,15 +992,16 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  messageFingerPrint: "Use the fingerprint or enter the unlock code"
-  messageFaceID: "Use FaceID or enter the unlock code"
-  messageEnterPin: "Enter the unlock code"
+  title: Unlock the app
+  subtitleCode: enter the unlock code
+  subtitleCodeFingerprint: use the fingerprint or the unlock code
+  subtitleCodeFaceId: use the FaceID or enter the unlock code
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint
     title: Biometric identification
     popup:
-      reason: Identification
+      reason: Identification by touch ID failed
       title: Identification required
       sensorDescription: Touch sensor
       fallbackLabel: Use the unlock code

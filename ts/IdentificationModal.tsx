@@ -32,6 +32,7 @@ import variables from "./theme/variables";
 import { authenticateConfig } from "./utils/biometric";
 import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
 import { Dispatch } from 'redux';
+import customVariables from './theme/variables';
 
 type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -102,16 +103,9 @@ const renderIdentificationByBiometryState = (
 const onRequestCloseHandler = () => undefined;
 
 const styles = StyleSheet.create({
-  identificationMessage: {
-    alignSelf: "center",
-    color: variables.colorWhite,
-    fontSize: 16,
-    lineHeight: 20,
-    width: "100%"
-  },
-  pinPad: {
-    justifyContent: "center",
-    flexGrow: 1
+  header: {
+    fontSize: 20,
+    lineHeight: 22
   }
 });
 
@@ -347,7 +341,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const {
       pin,
       canResetPin,
-      identificationGenericData,
       identificationCancelData,
       shufflePad
     } = identificationProgressState;
@@ -358,10 +351,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       biometryType,
       countdown
     } = this.state;
-
-    const identificationMessage = identificationGenericData
-      ? identificationGenericData.message
-      : this.renderBiometryType();
 
     const canInsertPin =
       !this.state.biometryAuthAvailable &&
@@ -387,6 +376,20 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       this.props.onCancelIdentification();
     };
 
+    const renderHeader = () => (
+      <React.Fragment>
+        <Text
+              bold={true}
+              alignCenter={true}
+              style={styles.header}
+              white={true}
+            >
+              {I18n.t('identification.title')}
+            </Text>
+            <Text alignCenter={true} white={true}>{this.getInstructions()}</Text>
+      </React.Fragment>
+    )
+
 
     return !this.state.canInsertPinTooManyAttempts ? (
       IdentificationLockModal({ countdown })
@@ -402,14 +405,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             barStyle="light-content"
             backgroundColor={variables.contentPrimaryBackground}
           />
-          <Content primary={true} contentContainerStyle={styles.pinPad}>
-            <Text
-              bold={true}
-              alignCenter={true}
-              style={styles.identificationMessage}
-            >
-              {identificationMessage}
-            </Text>
+          <Content primary={true}>
+            {renderHeader()}
+
             <Pinpad
               onPinResetHandler={canResetPin ? this.props.onPinResetHandler : undefined}
               isFingerprintEnabled={isFingerprintEnabled}
@@ -420,9 +418,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               shufflePad={shufflePad}
               disabled={!canInsertPin}
               compareWithCode={pin as string}
-              activeColor={"white"}
-              inactiveColor={"white"}
-              buttonType="primary"
+              activeColor={customVariables.colorWhite}
+              inactiveColor={customVariables.colorWhite}
+              buttonType={"primary"}
               delayOnFailureMillis={1000}
               onFulfill={(_: string, __: boolean) =>
                 this.onPinFullfill(
@@ -451,19 +449,19 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }
 
   /**
-   * Print the only BiometrySimplePrintableType values that are passed to the UI
+   * Return the proper instruction based on the avaiable identification method
    * @param biometrySimplePrintableType
    */
-  private renderBiometryType(): string {
+  private getInstructions(): string {
     switch (this.state.biometryType) {
       case "FINGERPRINT":
-        return I18n.t("identification.messageFingerPrint");
+        return I18n.t("identification.subtitleCodeFingerprint");
       case "FACE_ID":
-        return I18n.t("identification.messageFaceID");
+        return I18n.t("identification.subtitleCodeFaceId");
       case "TOUCH_ID":
-        return I18n.t("identification.messageFingerPrint");
+        return I18n.t("identification.subtitleCodeFingerprint");
       default:
-        return I18n.t("identification.messageEnterPin");
+        return I18n.t("identification.subtitleCode");
     }
   }
 
