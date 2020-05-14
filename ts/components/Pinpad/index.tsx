@@ -1,10 +1,10 @@
 import { range } from "fp-ts/lib/Array";
+import { fromNullable } from "fp-ts/lib/Option";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { debounce, shuffle } from "lodash";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Dimensions, StyleSheet, ViewStyle } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
-import { debounce, shuffle } from "lodash";
 import I18n from "../../i18n";
 import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
 import { PinString } from "../../types/PinString";
@@ -134,7 +134,7 @@ class Pinpad extends React.PureComponent<Props, State> {
       ]
     ];
   };
-  
+
   private confirmResetAlert = () =>
     Alert.alert(
       I18n.t("identification.forgetCode.confirmTitle"),
@@ -307,8 +307,15 @@ class Pinpad extends React.PureComponent<Props, State> {
               style={styles.text}
             >
               {`${I18n.t("identification.unlockCode.reset.button")} `}
-              <Text underlined={true} white={this.props.buttonType === "primary"}>{I18n.t('identification.unlockCode.reset.code')}</Text>
-              <Text white={this.props.buttonType === "primary"}>{I18n.t("global.symbols.question")}</Text>
+              <Text
+                underlined={true}
+                white={this.props.buttonType === "primary"}
+              >
+                {I18n.t("identification.unlockCode.reset.code")}
+              </Text>
+              <Text white={this.props.buttonType === "primary"}>
+                {I18n.t("global.symbols.question")}
+              </Text>
             </Text>
             <View spacer={true} />
           </React.Fragment>

@@ -49,7 +49,7 @@ export default (): Theme => {
       ...makeFontStyleObject(Platform.select, variables.textNormalWeight, true)
     },
     ".underlined": {
-      textDecorationLine: 'underline'
+      textDecorationLine: "underline"
     },
     ".leftAlign": {
       textAlign: "left"
