@@ -305,7 +305,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }
 
   private onIdentificationSuccessHandler = () => {
-    const { identificationProgressState, dispatch } = this.props;
+    const { identificationProgressState } = this.props;
 
     if (identificationProgressState.kind !== "started") {
       return;
@@ -317,19 +317,19 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     if (identificationSuccessData) {
       identificationSuccessData.onSuccess();
     }
-    dispatch(identificationSuccess());
+    this.props.onIdentificationSuccess();
   };
 
   private onIdentificationFailureHandler = () => {
-    const { dispatch, identificationFailState } = this.props;
+    const { identificationFailState } = this.props;
 
     const forceLogout = identificationFailState
       .map(failState => failState.remainingAttempts === 1)
       .getOrElse(false);
     if (forceLogout) {
-      dispatch(identificationForceLogout());
+      this.props.onIdentificationForceLogout();
     } else {
-      dispatch(identificationFailure());
+      this.props.onIdentificationFailure();
     }
   };
 
@@ -522,7 +522,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onPinResetHandler: () => dispatch(identificationPinReset()),
-  onCancelIdentification: () => dispatch(identificationCancel())
+  onCancelIdentification: () => dispatch(identificationCancel()),
+  onIdentificationSuccess: () => dispatch(identificationSuccess()),
+  onIdentificationForceLogout: () => dispatch(identificationForceLogout()),
+  onIdentificationFailure: () => dispatch(identificationFailure())
 })
 
 const mapStateToProps = (state: GlobalState) => ({
