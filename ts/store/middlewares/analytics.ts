@@ -23,6 +23,7 @@ import {
   sessionInformationLoadSuccess,
   sessionInvalid
 } from "../actions/authentication";
+import { cieAuthenticationError } from "../actions/cie";
 import {
   contentMunicipalityLoad,
   loadServiceMetadata
