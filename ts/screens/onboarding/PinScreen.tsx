@@ -1,5 +1,5 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { Content, H3, Text, View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
@@ -18,7 +18,6 @@ import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setPin } from "../../utils/keychain";
-import H4 from '../../components/ui/H4';
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -199,7 +198,7 @@ class PinScreen extends React.PureComponent<Props, State> {
           inactiveColor={variables.brandLightGray}
           activeColor={variables.brandDarkGray}
           onFulfill={this.onPinFulfill}
-          buttonType="light"
+          buttonType={"light"}
         />
       );
     } else {
@@ -214,7 +213,7 @@ class PinScreen extends React.PureComponent<Props, State> {
             compareWithCode={pinState.pin}
             onFulfill={this.onPinConfirmFulfill}
             ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
-            buttonType="light"
+            buttonType={"light"}
             onDeleteLastDigit={this.onPinConfirmRemoveLastDigit}
           />
 

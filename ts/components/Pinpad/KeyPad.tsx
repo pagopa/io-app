@@ -75,7 +75,8 @@ const renderPinCol = (
         style={buttonStyle}
         block={style === "label"}
         primary={buttonType === "primary"}
-        light={buttonType === "light"}
+        //light={buttonType === "light"}
+        unNamed={buttonType === "light"}
       >
         {!label.endsWith(".png") ? (
           <Text

@@ -64,6 +64,7 @@ const customVariables = Object.assign(materialVariables, {
 
   lightGray: "#909DA8",
   lighterGray: "#C1C9D2",
+  lightestGray: "#E0E3E6",
 
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",

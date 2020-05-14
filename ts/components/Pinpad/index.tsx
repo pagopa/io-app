@@ -302,7 +302,6 @@ class Pinpad extends React.PureComponent<Props, State> {
         </View>
         <View spacer={true} />
         {remainingAttemptsMessage}
-
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <Text
