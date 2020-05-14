@@ -444,7 +444,6 @@ jobs:
           command: ./scripts/pagopa_api_check.sh
 
   io_check_uris:
-    working_directory: ./scripts/check_urls
     docker:
       - image: circleci/python:3.8
     steps:
@@ -452,6 +451,7 @@ jobs:
       - run:
           name: check uris validity on static texts
           command: |
+            cd scripts/check_urls
             sudo pip install pipenv
             pipenv install
             pipenv run python3 check_urls.py
@@ -527,7 +527,7 @@ workflows:
   nightly-io-check-static-url:
     triggers:
       - schedule:
-          cron: "33 10 * * *"
+          cron: "42 10 * * *"
           filters:
             branches:
               only:
