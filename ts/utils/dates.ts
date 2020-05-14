@@ -5,6 +5,7 @@ import * as t from "io-ts";
 import { Locales } from "../../locales/locales";
 import I18n from "../i18n";
 import { getLocalePrimary } from "./locale";
+import { ExpireStatus } from "./messages";
 
 type DFNSLocales = { [index in Locales]: object };
 
@@ -76,6 +77,23 @@ export function isExpired(expireMonth: number, expireYear: number): boolean {
     (expireYear === currentYear && expireMonth < currentMonth)
   );
 }
+
+/**
+ * A function to check if the given date is in the past or in the future.
+ * It returns:
+ * -VALID, if the date is in the future
+ * -EXPIRING, if the date is within the next 24 hours
+ * -EXPIRED, if the date is in the past
+ * @param date Date
+ */
+export const getExpireStatus = (date: Date): ExpireStatus => {
+  const remainingMilliseconds = date.getTime() - Date.now();
+  return remainingMilliseconds > 1000 * 60 * 60 * 24
+    ? "VALID"
+    : remainingMilliseconds > 0
+      ? "EXPIRING"
+      : "EXPIRED";
+};
 
 /* 
 * this code is a copy from gcanti repository https://github.com/gcanti/io-ts-types/blob/06b29a2e74c64b21ee2f2477cabf98616a7af35f/src/Date/DateFromISOString.ts

@@ -17,8 +17,14 @@ import CopyButtonComponent from "../../components/CopyButtonComponent";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import { getIuv } from "../../components/wallet/PaymentsHistoryList";
-import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
+import {
+  getIuv,
+  getPaymentHistoryInfo
+} from "../../components/wallet/PaymentsHistoryList";
+import {
+  paymentStatusType,
+  PaymentSummaryComponent
+} from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import {
@@ -97,6 +103,12 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   private getData = () => {
     const payment = this.props.navigation.getParam("payment");
 
+    const paymentCheckout = isPaymentDoneSuccessfully(payment);
+    const paymentInfo = getPaymentHistoryInfo(payment, paymentCheckout);
+    const paymentStatus: paymentStatusType = {
+      color: paymentInfo.color,
+      description: paymentInfo.text11
+    };
     const errorDetail = fromNullable(
       renderErrorTransactionMessage(payment.failure)
     );
@@ -148,6 +160,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       reason,
       iuv,
       paymentOutcome,
+      paymentInfo,
+      paymentStatus,
       dateTime,
       amount,
       grandTotal,
@@ -210,12 +224,14 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               title={I18n.t("payment.details.info.title")}
               recipient={data.recipient}
               description={data.reason}
+              paymentStatus={data.paymentStatus}
             />
           ) : (
             <React.Fragment>
               <PaymentSummaryComponent
                 title={I18n.t("payment.details.info.title")}
                 iuv={data.iuv}
+                paymentStatus={data.paymentStatus}
               />
               {data.errorDetail.isSome() && (
                 <View key={"error"}>

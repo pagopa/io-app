@@ -4,6 +4,7 @@ import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import { BadgeComponent } from "../screens/BadgeComponent";
 
 type Props = Readonly<{
   title: string;
@@ -14,7 +15,13 @@ type Props = Readonly<{
   dateTime?: string;
   dark?: boolean;
   image?: ImageSourcePropType;
+  paymentStatus?: paymentStatusType;
 }>;
+
+export type paymentStatusType = {
+  color: string;
+  description: string;
+};
 
 const styles = StyleSheet.create({
   title: {
@@ -38,6 +45,12 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1
+  },
+  paymentOutcome: {
+    flexDirection: "row",
+  },
+  text11: {
+    paddingLeft: 8
   }
 });
 
@@ -53,6 +66,19 @@ export const PaymentSummaryComponent = (props: Props) => {
       <Text bold={true} dark={!props.dark} white={props.dark}>
         {value}
       </Text>
+      <View spacer={true} />
+    </React.Fragment>
+  );
+
+  const tt = props.paymentStatus && (
+    <React.Fragment>
+      <View style={styles.paymentOutcome}>
+        <BadgeComponent color={props.paymentStatus.color} />
+        <View hspacer={true} small={true}/>
+        <Text small={true}>
+          {props.paymentStatus.description}
+        </Text>
+      </View>
       <View spacer={true} />
     </React.Fragment>
   );
@@ -73,6 +99,8 @@ export const PaymentSummaryComponent = (props: Props) => {
       <View spacer={true} />
       <ItemSeparatorComponent noPadded={true} />
       <View spacer={true} large={true} />
+
+      {tt}
 
       <View style={styles.row}>
         <View style={styles.column}>

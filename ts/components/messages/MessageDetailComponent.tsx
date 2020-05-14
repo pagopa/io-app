@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, H1, View } from "native-base";
 import * as React from "react";
@@ -9,14 +10,15 @@ import I18n from "../../i18n";
 import { ServiceMetadataState } from "../../store/reducers/content";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import variables from "../../theme/variables";
-import { messageNeedsCTABar } from "../../utils/messages";
+import { paymentExpirationInfo } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import H4 from "../ui/H4";
 import H6 from "../ui/H6";
 import { MultiImage } from "../ui/MultiImage";
-import MessageCTABar from "./MessageCTABar";
+import MessageDetailCTABar from "./MessageDetailCTABar";
 import MessageDetailData from "./MessageDetailData";
+import MessageDueDateBar from "./MessageDueDateBar";
 import MessageMarkdown from "./MessageMarkdown";
 
 type Props = Readonly<{
@@ -95,94 +97,112 @@ export default class MessageDetailComponent extends React.PureComponent<
     this.setState({ isContentLoadCompleted: true });
   };
 
+  get paymentExpirationInfo() {
+    return paymentExpirationInfo(this.props.message);
+  }
+
+  get service() {
+    const { potServiceDetail } = this.props;
+    return fromNullable(
+      pot.isNone(potServiceDetail)
+        ? ({
+            organization_name: I18n.t("messages.errorLoading.senderInfo"),
+            department_name: I18n.t("messages.errorLoading.departmentInfo"),
+            service_name: I18n.t("messages.errorLoading.serviceInfo")
+          } as ServicePublic)
+        : pot.toUndefined(potServiceDetail)
+    );
+  }
+
+  get payment() {
+    const { message, paymentsByRptId } = this.props;
+    return this.service.fold(undefined, service => {
+      if (message.content.payment_data !== undefined) {
+        return paymentsByRptId[
+          `${service.organization_fiscal_code}${
+            message.content.payment_data.notice_number
+          }`
+        ];
+      }
+      return undefined;
+    });
+  }
+
   public render() {
     const {
       message,
       potServiceDetail,
       potServiceMetadata,
-      paymentsByRptId,
       onServiceLinkPress
     } = this.props;
-
-    const service =
-      potServiceDetail !== undefined
-        ? pot.isNone(potServiceDetail)
-          ? ({
-              organization_name: I18n.t("messages.errorLoading.senderInfo"),
-              department_name: I18n.t("messages.errorLoading.departmentInfo"),
-              service_name: I18n.t("messages.errorLoading.serviceInfo")
-            } as ServicePublic)
-          : pot.toUndefined(potServiceDetail)
-        : undefined;
-
-    const payment =
-      message.content.payment_data !== undefined && service !== undefined
-        ? paymentsByRptId[
-            `${service.organization_fiscal_code}${
-              message.content.payment_data.notice_number
-            }`
-          ]
-        : undefined;
+    const { service, payment } = this;
 
     return (
-      <Content noPadded={true}>
-        <View style={styles.headerContainer}>
-          {/** TODO: update header */}
-          {/* Service */}
-          {service && (
-            <Grid style={styles.serviceContainer}>
-              <Col>
-                <H4>{service.organization_name}</H4>
-                <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                  <H6>{service.service_name}</H6>
-                </TouchableDefaultOpacity>
-              </Col>
-              {service.service_id && (
-                <Col style={styles.serviceCol}>
+      <React.Fragment>
+        <Content noPadded={true}>
+          <View style={styles.headerContainer}>
+            {/* Service */}
+            {service.isSome() && (
+              <Grid style={styles.serviceContainer}>
+                <Col>
+                  <H4>{service.value.organization_name}</H4>
                   <TouchableDefaultOpacity onPress={onServiceLinkPress}>
-                    <MultiImage
-                      style={styles.serviceMultiImage}
-                      source={logosForService(service)}
-                    />
+                    <H6>{service.value.service_name}</H6>
                   </TouchableDefaultOpacity>
                 </Col>
-              )}
-            </Grid>
-          )}
+                {service.value.service_id && (
+                  <Col style={styles.serviceCol}>
+                    <TouchableDefaultOpacity onPress={onServiceLinkPress}>
+                      <MultiImage
+                        style={styles.serviceMultiImage}
+                        source={logosForService(service.value)}
+                      />
+                    </TouchableDefaultOpacity>
+                  </Col>
+                )}
+              </Grid>
+            )}
 
-          {/* Subject */}
-          <View style={styles.subjectContainer}>
-            <H1>{message.content.subject}</H1>
+            {/* Subject */}
+            <View style={styles.subjectContainer}>
+              <H1>{message.content.subject}</H1>
+            </View>
           </View>
-        </View>
 
-        {this.state.isContentLoadCompleted &&
-          messageNeedsCTABar(message) && (
-            <MessageCTABar
-              message={message}
-              service={service}
-              payment={payment}
-            />
-          )}
-
-        <MessageMarkdown
-          webViewStyle={styles.webview}
-          onLoadEnd={this.onMarkdownLoadEnd}
-        >
-          {message.content.markdown}
-        </MessageMarkdown>
-
-        {this.state.isContentLoadCompleted && (
-          <MessageDetailData
+          <MessageDueDateBar
             message={message}
-            serviceDetail={potServiceDetail}
-            serviceMetadata={potServiceMetadata}
-            goToServiceDetail={onServiceLinkPress}
+            service={service.toUndefined()}
+            payment={payment}
           />
-        )}
+
+          <MessageMarkdown
+            webViewStyle={styles.webview}
+            onLoadEnd={this.onMarkdownLoadEnd}
+          >
+            {message.content.markdown}
+          </MessageMarkdown>
+
+          <View spacer={true} large={true} />
+
+          {this.state.isContentLoadCompleted && (
+            <React.Fragment>
+              <MessageDetailData
+                message={message}
+                serviceDetail={potServiceDetail}
+                serviceMetadata={potServiceMetadata}
+                goToServiceDetail={onServiceLinkPress}
+              />
+            </React.Fragment>
+          )}
+        </Content>
         <View spacer={true} large={true} />
         <View spacer={true} small={true} />
-      </Content>
+        <MessageDetailCTABar
+          message={message}
+          service={service.toUndefined()}
+          payment={this.payment}
+        />
+      </React.Fragment>
     );
   }
 }
