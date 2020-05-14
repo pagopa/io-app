@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
   header: { 
     fontSize: 20,
     lineHeight: 22
-  }
+  },
+  description: {lineHeight: 22}
 });
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -156,7 +157,7 @@ class PinScreen extends React.PureComponent<Props, State> {
         <Text style={styles.header} alignCenter={true} bold={true} dark={true}>
           {I18n.t( pinState.state === "PinUnselected" ? "onboarding.unlockCode.contentTitle" : "onboarding.unlockCode.contentTitleConfirm")}
             </Text>
-        <Text alignCenter={true}>{I18n.t(pinState.state === "PinUnselected" ? "onboarding.unlockCode.contentSubtitle" : "onboarding.unlockCode.contentTitleConfirmSubtitle" )}</Text>
+        <Text alignCenter={true} dark={true}>{I18n.t(pinState.state === "PinUnselected" ? "onboarding.unlockCode.contentSubtitle" : "onboarding.unlockCode.contentTitleConfirmSubtitle" )}</Text>
       </React.Fragment>
     );
   }
@@ -237,9 +238,9 @@ class PinScreen extends React.PureComponent<Props, State> {
   // Render the description for the different states
   public renderDescription(pinState: PinState) {
     if (pinState.state === "PinUnselected") {
-      return <Text>{I18n.t("onboarding.unlockCode.pinInfo")}</Text>;
+      return <Text style={styles.description}>{I18n.t("onboarding.unlockCode.pinInfo")}</Text>;
     } else {
-      return <Text>{I18n.t("onboarding.unlockCode.pinInfoSelected")}</Text>;
+      return <Text style={styles.description}>{I18n.t("onboarding.unlockCode.pinInfoSelected")}</Text>;
     }
   }
 
@@ -258,6 +259,7 @@ class PinScreen extends React.PureComponent<Props, State> {
           primary={true}
           disabled={false}
           onPress={onPress}
+          //small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
         >
           <Text>{I18n.t("global.buttons.continue")}</Text>
         </ButtonDefaultOpacity>
@@ -278,6 +280,7 @@ class PinScreen extends React.PureComponent<Props, State> {
               block={true}
               bordered={true}
               onPress={() => this.onPinReset()}
+              //small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
             >
               <Text>{I18n.t("onboarding.unlockCode.reset")}</Text>
             </ButtonDefaultOpacity>
