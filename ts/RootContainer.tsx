@@ -6,7 +6,6 @@ import * as React from "react";
 import {
   AppState,
   BackHandler,
-  DeviceEventEmitter,
   Linking,
   Platform,
   StatusBar
@@ -37,6 +36,7 @@ import { fromNullable } from "fp-ts/lib/Option";
 import { serverInfoDataSelector } from "./store/reducers/backendInfo";
 // Check min version app supported
 import { isUpdateNeeded } from "./utils/appVersion";
+import Shortcut from "./utils/shortcut";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -84,16 +84,8 @@ class RootContainer extends React.PureComponent<Props> {
     AppState.addEventListener("change", this.handleApplicationActivity);
     // Hide splash screen
     SplashScreen.hide();
-    if (Platform.OS === "android" && Platform.Version > 24) {
-      // Shortcut listener app foreground/background
-      DeviceEventEmitter.addListener("quickActionShortcut", data => {
-        if (data !== null && data.userInfo !== null) {
-          const action = getNavigateActionFromDeepLink(data.userInfo.url);
-          // immediately navigate to the resolved action
-          this.props.setDeepLink(action, true);
-        }
-      });
-    }
+    // Shortcut listener app foreground/background
+    Shortcut.addListener(this.props.setDeepLink);
   }
 
   public componentWillUnmount() {

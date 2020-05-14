@@ -5,7 +5,6 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs } from "native-base";
 import * as React from "react";
 import { Animated, Platform, StyleSheet } from "react-native";
-import QuickActions from "react-native-quick-actions";
 import {
   NavigationEventSubscription,
   NavigationNavigateActionPayload,
@@ -44,7 +43,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT } from "../../utils/constants";
-import { getNavigateActionFromDeepLink } from "../../utils/deepLink";
+import Shortcut from "../../utils/shortcut";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type Props = NavigationScreenProps &
@@ -133,18 +132,8 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
-    if (Platform.OS === "android" && Platform.Version > 24) {
-      // Get shortcuts
-      QuickActions.popInitialAction()
-        .then(data => {
-          if (data !== null && data.userInfo !== null) {
-            const action = getNavigateActionFromDeepLink(data.userInfo.url);
-            // immediately navigate to the resolved action
-            this.props.setDeepLink(action, true);
-          }
-        })
-        .catch();
-    }
+    // Get any actions sent when the app is cold-launched
+    Shortcut.popInitialAction(this.props.setDeepLink);
     this.onRefreshMessages();
     this.navListener = this.props.navigation.addListener("didFocus", () => {
       setStatusBarColorAndBackground(
