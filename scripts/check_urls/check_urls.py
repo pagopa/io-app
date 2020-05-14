@@ -14,9 +14,9 @@ from os.path import dirname, abspath, join
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
 }
-MAX_TIMEOUT = 5
+MAX_TIMEOUT = 7
 global_uris = set()
-SLACK_TOKEN = os.environ.get("SLACK_API_TOKEN", None)
+SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", None)
 tagged_people = ["<@UTVS9R0SF>"]
 SLACK_CHANNEL = "#io_status"
 
@@ -120,7 +120,7 @@ if not run_test and __name__ == '__main__':
     manager = Manager()
     print("scanning locales folder...")
     all_uris = scan_directory(
-        abspath(join(dirname(__file__), "..", "locales")))
+        abspath(join(dirname(__file__), "../..", "locales")))
     pool = Pool(cpu_count())
     invalid_uri_processing = []
     print("found and processing %d uris..." % len(all_uris))

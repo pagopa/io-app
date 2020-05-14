@@ -443,6 +443,19 @@ jobs:
           name: check api specs alignment
           command: ./scripts/pagopa_api_check.sh
 
+  io_check_uris:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - run:
+          name: check uris validity on static texts
+          command: |
+            cd scripts/check_urls
+            sudo pip install pipenv
+            pipenv install
+            pipenv run python3 check_urls.py
+
 workflows:
   version: 2
   build:
@@ -509,3 +522,4 @@ workflows:
                 - master
     jobs:
       - pagopa_specs_diff
+      - io_check_uris
