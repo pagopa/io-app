@@ -200,11 +200,26 @@ class LandingScreen extends React.PureComponent<Props> {
             block={true}
             primary={true}
             iconLeft={true}
-            onPress={this.navigateToIdpSelection}
-            testID={"landing-button-login-spid"}
+            onPress={
+              this.props.isCieSupported
+                ? this.navigateToCiePinScreen
+                : this.navigateToIdpSelection
+            }
+            testID={
+              this.props.isCieSupported
+                ? "landing-button-login-cie"
+                : "landing-button-login-spid"
+            }
           >
-            <IconFont name={"io-profilo"} color={variables.colorWhite} />
-            <Text>{I18n.t("authentication.landing.loginSpid")}</Text>
+            <IconFont
+              name={this.props.isCieSupported ? "io-cie" : "io-profilo"}
+              color={variables.colorWhite}
+            />
+            <Text>
+              {this.props.isCieSupported
+                ? I18n.t("authentication.landing.loginCie")
+                : I18n.t("authentication.landing.loginSpid")}
+            </Text>
           </ButtonDefaultOpacity>
           <View spacer={true} />
           <ButtonDefaultOpacity
@@ -212,11 +227,26 @@ class LandingScreen extends React.PureComponent<Props> {
             block={true}
             primary={true}
             iconLeft={true}
-            onPress={this.navigateToCiePinScreen}
-            testID={"landing-button-login-cie"}
+            onPress={
+              this.props.isCieSupported
+                ? this.navigateToIdpSelection
+                : this.navigateToCiePinScreen
+            }
+            testID={
+              this.props.isCieSupported
+                ? "landing-button-login-spid"
+                : "landing-button-login-cie"
+            }
           >
-            <IconFont name={"io-cie"} color={variables.colorWhite} />
-            <Text>{I18n.t("authentication.landing.loginCie")}</Text>
+            <IconFont
+              name={this.props.isCieSupported ? "io-profilo" : "io-cie"}
+              color={variables.colorWhite}
+            />
+            <Text>
+              {this.props.isCieSupported
+                ? I18n.t("authentication.landing.loginSpid")
+                : I18n.t("authentication.landing.loginCie")}
+            </Text>
           </ButtonDefaultOpacity>
           <View spacer={true} />
           <ButtonDefaultOpacity
