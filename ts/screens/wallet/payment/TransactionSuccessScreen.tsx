@@ -73,7 +73,7 @@ class TransactionSuccessScreen extends React.PureComponent<Props> {
           <BlockButtons
             type={"SingleButton"}
             leftButton={{
-              title: I18n.t("wallet.backToPayments"),
+              title: I18n.t("global.buttons.close"),
               light: true,
               bordered: true,
               onPress: this.props.backToEntrypointPayment

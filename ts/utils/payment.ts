@@ -157,11 +157,13 @@ export const getPaymentHistoryDetails = (
   const failureDetails = fromNullable(payment.failure)
     .map(pf => `- errore: ${pf}`)
     .getOrElse("");
-  return profileDetails
-    .concat(separator)
-    .concat(paymentDetails)
-    .concat(separator)
-    .concat(ccp)
-    .concat(separator)
-    .concat(failureDetails);
+  return profileDetails.concat(
+    separator,
+    paymentDetails,
+    paymentDetails,
+    separator,
+    ccp,
+    separator,
+    failureDetails
+  );
 };
