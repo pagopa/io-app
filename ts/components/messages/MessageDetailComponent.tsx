@@ -213,11 +213,11 @@ export default class MessageDetailComponent extends React.PureComponent<
         </Content>
         <View spacer={true} large={true} />
         <View spacer={true} small={true} />
-        <MessageDetailCTABar
+        {this.maybeMedicalData.isNone() && (<MessageDetailCTABar
           message={message}
           service={service.toUndefined()}
           payment={this.payment}
-        />
+        />)}
       </React.Fragment>
     );
   }
