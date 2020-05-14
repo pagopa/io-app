@@ -196,7 +196,7 @@ class PinScreen extends React.PureComponent<Props, State> {
       return (
         <Pinpad
           inactiveColor={variables.brandLightGray}
-          activeColor={variables.brandDarkGray}
+          activeColor={variables.contentPrimaryBackground}
           onFulfill={this.onPinFulfill}
           buttonType={"light"}
         />
@@ -209,7 +209,7 @@ class PinScreen extends React.PureComponent<Props, State> {
         <React.Fragment>
           <Pinpad
             inactiveColor={variables.brandLightGray}
-            activeColor={variables.brandDarkGray}
+            activeColor={variables.contentPrimaryBackground}
             compareWithCode={pinState.pin}
             onFulfill={this.onPinConfirmFulfill}
             ref={pinpad => (this.pinConfirmComponent = pinpad)} // tslint:disable-line no-object-mutation
