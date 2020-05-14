@@ -24,6 +24,7 @@ import TransactionSummaryScreen from "../../screens/wallet/payment/TransactionSu
 import PaymentHistoryDetailsScreen from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import TransactionDetailsScreen from "../../screens/wallet/TransactionDetailsScreen";
 import TransactionsScreen from "../../screens/wallet/TransactionsScreen";
+import WalletHomeScreen from "../../screens/wallet/WalletHomeScreen";
 import { InferNavigationParams } from "../../types/react";
 
 export const navigationRestore = createStandardAction("NAVIGATION_RESTORE")<
@@ -211,6 +212,7 @@ export const navigateToPaymentConfirmPaymentMethodScreen = (
     routeName: ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
     params
   });
+
 export const navigateToPaymentHistoryDetail = (
   params: InferNavigationParams<typeof PaymentHistoryDetailsScreen>
 ) =>
@@ -218,9 +220,13 @@ export const navigateToPaymentHistoryDetail = (
     routeName: ROUTES.PAYMENT_HISTORY_DETAIL_INFO,
     params
   });
-export const navigateToWalletHome = () =>
+
+export const navigateToWalletHome = (
+  params?: InferNavigationParams<typeof WalletHomeScreen>
+) =>
   NavigationActions.navigate({
-    routeName: ROUTES.WALLET_HOME
+    routeName: ROUTES.WALLET_HOME,
+    params
   });
 
 export const navigateToWalletList = () =>
