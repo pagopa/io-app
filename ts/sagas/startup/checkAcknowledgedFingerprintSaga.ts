@@ -5,7 +5,7 @@ import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { isFingerprintAcknowledgedSelector } from "../../store/reducers/onboarding";
 import { GlobalState } from "../../store/reducers/types";
-import { getFingerprintSettings } from "../../utils/fingerprint";
+import { getFingerprintSettings } from "../../utils/biometric";
 export type BiometrySimpleType =
   | "FINGERPRINT"
   | "FACE_ID"

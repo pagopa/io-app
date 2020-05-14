@@ -18,7 +18,7 @@ import {
   FingerprintError,
   getFingerprintSettings,
   unmountBiometricAuth
-} from "../../utils/fingerprint";
+} from "../../utils/biometric";
 import { showToast } from "../../utils/showToast";
 
 type OwnProps = NavigationInjectedProps;
