@@ -684,7 +684,6 @@ wallet:
     noticeCode: Notice Code
     entityCode: Entity Fiscal Code
     amount: Amount (€)
-    amountError: Enter an amount greater than 0
     proceed: Proceed with the transaction
     contextualHelpTitle: Manually insert notice
     contextualHelpContent: !include wallet/insert_manual_notice.md

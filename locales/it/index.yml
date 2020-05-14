@@ -720,7 +720,6 @@ wallet:
     noticeCode: Codice Avviso
     entityCode: Codice Fiscale Ente Creditore
     amount: Importo (€)
-    amountError: Inserire un importo maggiore di 0
     proceed: Procedi con il pagamento
     contextualHelpTitle: Inserimento dati manuali
     contextualHelpContent: !include wallet/insert_manual_notice.md

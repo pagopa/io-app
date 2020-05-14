@@ -47,7 +47,6 @@ import { Dispatch } from "../../../store/actions/types";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import variables from "../../../theme/variables";
 import { NumberFromString } from "../../../utils/number";
-import { showToast } from "../../../utils/showToast";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 type NavigationParams = {
@@ -119,6 +118,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
   private isFormValid = () =>
     this.state.delocalizedAmount.map(isRight).getOrElse(false) &&
+    this.state.delocalizedAmount
+      .chain(fromEither)
+      .map(delocalizedAmount => {
+        return parseInt(delocalizedAmount, 10) > 0;
+      })
+      .getOrElse(false) &&
     this.state.paymentNoticeNumber.map(isRight).getOrElse(false) &&
     this.state.organizationFiscalCode.map(isRight).getOrElse(false);
 
@@ -146,19 +151,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           .chain(rptId =>
             this.state.delocalizedAmount
               .chain(fromEither)
-              .map(delocalizedAmount => {
-                if (parseInt(delocalizedAmount, 10) <= 0) {
-                  showToast(
-                    I18n.t("wallet.insertManually.amountError"),
-                    "danger"
-                  );
-                  return;
-                }
+              .map(delocalizedAmount =>
                 this.props.navigateToTransactionSummary(
                   rptId,
                   delocalizedAmount
-                );
-              })
+                )
+              )
           )
       );
   };
@@ -246,12 +244,24 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <Item
                 style={styles.noLeftMargin}
                 floatingLabel={true}
-                error={this.state.delocalizedAmount
-                  .map(isLeft)
-                  .getOrElse(false)}
-                success={this.state.delocalizedAmount
-                  .map(isRight)
-                  .getOrElse(false)}
+                error={
+                  this.state.delocalizedAmount.map(isLeft).getOrElse(false) ||
+                  this.state.delocalizedAmount
+                    .chain(fromEither)
+                    .map(delocalizedAmount => {
+                      return parseInt(delocalizedAmount, 10) <= 0;
+                    })
+                    .getOrElse(false)
+                }
+                success={
+                  this.state.delocalizedAmount.map(isRight).getOrElse(false) &&
+                  this.state.delocalizedAmount
+                    .chain(fromEither)
+                    .map(delocalizedAmount => {
+                      return parseInt(delocalizedAmount, 10) > 0;
+                    })
+                    .getOrElse(false)
+                }
               >
                 <Label>{I18n.t("wallet.insertManually.amount")}</Label>
                 <Input
