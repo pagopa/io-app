@@ -1,1 +1,1 @@
-To login you need to have a device with NFC technology or a device compatible with the current implementation (iOS devices are not yet compatible but will soon become compatible with the new update).
+To login you need a device with NFC technology and the operating system with the minimum requirements (**iOS** devices are not yet compatible but will become compatible with the next updates).
