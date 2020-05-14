@@ -285,6 +285,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatch(
       identificationRequest(
         false,
+        true,
         {
           message: I18n.t("wallet.ConfirmPayment.identificationMessage")
         },

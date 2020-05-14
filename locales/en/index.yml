@@ -976,6 +976,7 @@ serviceDetail:
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
   title: Unlock the app
+  titleValidation: Confirm the procedure
   subtitleCode: enter the unlock code
   subtitleCodeFingerprint: use the fingerprint or the unlock code
   subtitleCodeFaceId: use the FaceID or enter the unlock code
@@ -996,7 +997,8 @@ identification:
     waitMessage: "Try again in:"
   unlockCode:
     reset:
-      button: Did you forget the unlock code?
+      button: Did you forget the
+      code: unlock code
       button_short: Reset unlock code
       tip: To reset your unlock code you will have to login again with your SPID account.
       tip_short: You will have to login again.

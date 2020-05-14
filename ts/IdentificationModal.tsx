@@ -21,7 +21,6 @@ import {
   identificationPinReset,
   identificationSuccess
 } from "./store/actions/identification";
-import { ReduxProps } from "./store/actions/types";
 import {
   freeAttempts,
   identificationFailSelector,
@@ -34,7 +33,7 @@ import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal
 import { Dispatch } from 'redux';
 import customVariables from './theme/variables';
 
-type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps> & ReduxProps;
+type Props = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
 
 /**
  * Type used in the local state to save the result of Pinpad code matching.
@@ -341,6 +340,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     const {
       pin,
       canResetPin,
+      isValidatingTask,
       identificationCancelData,
       shufflePad
     } = identificationProgressState;
@@ -376,27 +376,31 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       this.props.onCancelIdentification();
     };
 
-    const renderHeader = () => (
+    const renderHeader = () => {
+      return (
       <React.Fragment>
         <Text
               bold={true}
               alignCenter={true}
               style={styles.header}
-              white={true}
+              white={!isValidatingTask}
+              dark={isValidatingTask}
             >
-              {I18n.t('identification.title')}
+              {I18n.t(isValidatingTask ? 'identification.titleValidation' : 'identification.title')}
             </Text>
-            <Text alignCenter={true} white={true}>{this.getInstructions()}</Text>
+            <Text alignCenter={true} white={!isValidatingTask} dark={isValidatingTask}>{this.getInstructions()}</Text>
       </React.Fragment>
     )
+    }
 
+    const defaultColor = isValidatingTask ? customVariables.contentPrimaryBackground : customVariables.colorWhite;
 
     return !this.state.canInsertPinTooManyAttempts ? (
       IdentificationLockModal({ countdown })
     ) : (
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
-          primary={true}
+          primary={!isValidatingTask}
           contextualHelpMarkdown={contextualHelpMarkdown}
           faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
           appLogo={true}
@@ -405,7 +409,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             barStyle="light-content"
             backgroundColor={variables.contentPrimaryBackground}
           />
-          <Content primary={true}>
+          <Content primary={!isValidatingTask}>
             {renderHeader()}
 
             <Pinpad
@@ -418,9 +422,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               shufflePad={shufflePad}
               disabled={!canInsertPin}
               compareWithCode={pin as string}
-              activeColor={customVariables.colorWhite}
-              inactiveColor={customVariables.colorWhite}
-              buttonType={"primary"}
+              activeColor={defaultColor}
+              inactiveColor={defaultColor}
+              buttonType={isValidatingTask ? "light" : "primary"}
               delayOnFailureMillis={1000}
               onFulfill={(_: string, __: boolean) =>
                 this.onPinFullfill(

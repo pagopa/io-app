@@ -1011,6 +1011,7 @@ serviceDetail:
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
   title: Sblocca l'app
+  titleValidation: Conferma l'operazione
   subtitleCode: enter the unlock code
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
   subtitleCodeFaceId: "use FaceID o il codice di sblocco"
@@ -1031,7 +1032,8 @@ identification:
     waitMessage: "Riprova tra:"
   unlockCode:
     reset:
-      button: Codice di sblocco dimenticato?
+      button: Hai dimenticato il
+      code: codice di sblocco
       button_short: Reimposta il codice di sblocco
       tip:
         Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente con la tua identità

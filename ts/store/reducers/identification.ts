@@ -41,6 +41,7 @@ type IdentificationStartedState = {
   kind: "started";
   pin: PinString;
   canResetPin: boolean;
+  isValidatingTask: boolean,
   identificationGenericData?: IdentificationGenericData;
   identificationCancelData?: IdentificationCancelData;
   identificationSuccessData?: IdentificationSuccessData;

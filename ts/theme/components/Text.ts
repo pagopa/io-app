@@ -9,13 +9,14 @@ declare module "native-base" {
     interface Text extends TextProperties {
       link?: boolean;
       bold?: boolean;
+      alternativeBold?: boolean;
       italic?: boolean;
+      underlined?: boolean;
       leftAlign?: boolean;
       rightAlign?: boolean;
-      alternativeBold?: boolean;
+      alignCenter?: boolean;
       white?: boolean;
       dark?: boolean;
-      alignCenter?: boolean;
       primary?: boolean;
       badge?: boolean;
       robotomono?: boolean;
@@ -46,6 +47,9 @@ export default (): Theme => {
     },
     ".italic": {
       ...makeFontStyleObject(Platform.select, variables.textNormalWeight, true)
+    },
+    ".underlined": {
+      textDecorationLine: 'underline'
     },
     ".leftAlign": {
       textAlign: "left"

@@ -83,6 +83,7 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
 export function* startAndReturnIdentificationResult(
   pin: PinString,
   canResetPin: boolean = true,
+  isValidatingTask: boolean = false, 
   identificationGenericData?: IdentificationGenericData,
   identificationCancelData?: IdentificationCancelData,
   identificationSuccessData?: IdentificationSuccessData,
@@ -92,6 +93,7 @@ export function* startAndReturnIdentificationResult(
     identificationStart(
       pin,
       canResetPin,
+      isValidatingTask,
       identificationGenericData,
       identificationCancelData,
       identificationSuccessData,
