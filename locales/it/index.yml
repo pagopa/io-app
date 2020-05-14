@@ -611,6 +611,11 @@ wallet:
     failedCardAlreadyExists: La carta che stai inserendo è già presente
     contextualHelpTitle: Come aggiungere un metodo di pagamento
     contextualHelpContent: !include wallet/wallet_add_payment_method.md
+    abort:
+      title: Vuoi annullare l'inserimento di un nuovo metodo di pagamento?
+      confirm: Annulla l'inserimento
+      cancel: Continua con l'inserimento
+      success: L'inserimento del metodo di pagamento è stato annullato correttamente
   textMsg:
     title: Codice di conferma
     header: Codice di Conferma SMS
@@ -868,22 +873,20 @@ messages:
     deselectAll: Nessuno
     payment:
       expired: Pagamento scaduto
-      validAlert:
-        block1: Puoi pagare questo avviso fino alle
-        block2: "{{time}} del {{day}}."
-      expiringAlert:
-        block1: Questo avviso
-        block2: scade {{todayOrTomorrow}}
-        block3: alle
+      paid: Questo avviso è stato pagato. Visualizza la ricevuta nei tuoi
+      addMemo:
+        block1: Aggiungi un promemoria per il
+        block2: alle
+      expiringAlert: Questo avviso scade oggi alle
       expiredAlert:
-        block1: Il pagamento di
-        block2: € {{amount}}
-        block3: è
-        block4: scaduto
-        block5: alle
-        block6: del
+        block1: Il pagamento è scaduto alle ore
+        block2: del
+    presctiption:
+      addMemo: Questa ricetta scade il
+      expiringAlert: Questa ricetta scade oggi
+      expiredAlert: questa ricetta è scaduta
     pay: Paga € {{amount}}
-    paid: Hai pagato € {{amount}}
+    paid: Pagato
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
