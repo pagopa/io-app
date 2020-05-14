@@ -1,12 +1,12 @@
 /**
  * A component to render a list of services organized in sections, one for each organization.
  */
-import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import React from "react";
 import { Image, NativeScrollEvent, NativeSyntheticEvent } from "react-native";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import I18n from "../../i18n";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import { ReadStateByServicesId } from "../../store/reducers/entities/services/readStateByServiceId";
 import { ProfileState } from "../../store/reducers/profile";
@@ -28,6 +28,7 @@ type OwnProps = {
   onChooserAreasOfInterestPress?: () => void;
   selectedOrganizationsFiscalCodes?: Set<string>;
   isLocal?: boolean;
+  isAll: boolean;
   onLongPressItem?: () => void;
   isLongPressEnabled: boolean;
   onItemSwitchValueChanged?: (
@@ -39,6 +40,7 @@ type OwnProps = {
   onRefresh: () => void;
   onSelect: (service: ServicePublic) => void;
   readServices: ReadStateByServicesId;
+  isSelectableOrgsEmpty?: boolean;
 };
 
 type Props = AnimatedProps & OwnProps;
@@ -84,7 +86,9 @@ class ServicesSectionsList extends React.PureComponent<Props> {
       this.props.isLocal && (
         <View style={styles.headerContentWrapper}>
           <Text style={styles.message}>
-            {I18n.t("services.areasOfInterest.selectMessage")}
+            {this.props.isSelectableOrgsEmpty
+              ? I18n.t("services.areasOfInterest.selectMessageEmptyOrgs")
+              : I18n.t("services.areasOfInterest.selectMessage")}
           </Text>
           <View spacer={true} large={true} />
           <ButtonDefaultOpacity
@@ -93,6 +97,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
             style={styles.button}
             block={true}
             onPress={this.props.onChooserAreasOfInterestPress}
+            disabled={this.props.isSelectableOrgsEmpty}
           >
             <IconFont name="io-plus" style={styles.icon} />
             <Text style={styles.textButton}>
@@ -133,7 +138,11 @@ class ServicesSectionsList extends React.PureComponent<Props> {
             style={styles.button}
             block={true}
             onPress={this.props.onChooserAreasOfInterestPress}
-            disabled={this.props.isRefreshing || this.props.isLongPressEnabled}
+            disabled={
+              this.props.isRefreshing ||
+              this.props.isLongPressEnabled ||
+              this.props.isSelectableOrgsEmpty
+            }
           >
             <Text style={styles.textButton}>
               {I18n.t("services.areasOfInterest.editButton")}
@@ -151,6 +160,7 @@ class ServicesSectionsList extends React.PureComponent<Props> {
       : this.emptyListComponent();
     return (
       <ServiceList
+        renderUnreadState={!this.props.isAll}
         animated={this.props.animated}
         sections={this.props.sections}
         profile={this.props.profile}

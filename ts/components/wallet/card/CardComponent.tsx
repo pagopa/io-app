@@ -202,7 +202,11 @@ export default class CardComponent extends React.Component<Props> {
       ) {
         return wallet.psp ? (
           <View style={[styles.cardPsp]}>
-            <Logo item={creditCard} pspLogo={wallet.psp.logoPSP} />
+            <Logo
+              item={creditCard}
+              pspLogo={wallet.psp.logoPSP}
+              imageStyle={styles.pspLogo}
+            />
           </View>
         ) : (
           <View style={[styles.cardPsp]}>

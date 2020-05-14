@@ -1,4 +1,4 @@
-import { isNone, Option } from "fp-ts/lib/Option";
+import { fromNullable, isNone, none, Option } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { NavigationActions, NavigationState } from "react-navigation";
@@ -50,6 +50,7 @@ import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin, getPin } from "../utils/keychain";
 import { startTimer } from "../utils/timer";
+import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 
 import {
   startAndReturnIdentificationResult,
@@ -74,6 +75,7 @@ import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
+import { watchCheckSessionSaga } from "./startup/watchCheckSessionSaga";
 import { watchMessagesLoadOrCancelSaga } from "./startup/watchLoadMessagesSaga";
 import { loadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
@@ -102,6 +104,7 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
   //           needed to manually clear previous installation user info in
   //           order to force the user to choose unlock code and run through onboarding
   //           every new installation.
+
   yield call(previousInstallationDataDeleteSaga);
   yield put(previousInstallationDataDeleteSuccess());
 
@@ -109,6 +112,13 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
   const lastLoggedInProfileState: ReturnType<
     typeof profileSelector
   > = yield select<GlobalState>(profileSelector);
+
+  const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
+    ? fromNullable(lastLoggedInProfileState.value.is_email_validated)
+    : none;
+
+  // Watch for profile changes
+  yield fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
 
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
@@ -233,6 +243,9 @@ export function* initializeApplicationSaga(): IterableIterator<Effect> {
 
   // Start watching for requests of refresh the profile
   yield fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+
+  // Start watching for requests of checkSession
+  yield fork(watchCheckSessionSaga, backendClient.getProfile);
 
   // Start watching for the requests of a new verification email to
   // validate the user email address

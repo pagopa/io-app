@@ -7,10 +7,13 @@
 
 // tslint:disable:no-invalid-this
 
+import { Millisecond } from "italia-ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { FontWeight, makeFontStyleObject } from "./fonts";
 import { ThemeSimpleValue } from "./types";
+
+export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;
 
 // tslint:disable-next-line:no-object-mutation
 const customVariables = Object.assign(materialVariables, {
@@ -19,13 +22,23 @@ const customVariables = Object.assign(materialVariables, {
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
+  textLightButtonWeight: "600" as FontWeight,
+
   btnHeight: 48,
   btnWidgetHeight: 24,
   btnFontSize: 16,
+  btnIconSize: 24,
+
   btnXSmallHeight: 32,
-  btnXSmallLineHeight: 20,
+  btnXSmallLineHeight: 18,
+  btnXSmallFontSize: 14,
+  btnXSmallIconSize: 18,
+
   btnSmallHeight: 39,
-  btnSmallFontSize: 16,
+  btnSmallLineHeight: 20,
+  btnSmallFontSize: 14,
+  btnSmallIconSize: 20,
+
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
@@ -55,6 +68,8 @@ const customVariables = Object.assign(materialVariables, {
   cardExpiredTextColor: "#FF0000",
   cardFontColor: "#17324D",
   colorWhite: "#FFFFFF",
+  colorBlack: "#000000",
+  disabledService: "#909DA8",
   itemBorderDefaultColor: "#5F6F82",
 
   calendarExpirableColor: "#D0021B",
@@ -62,14 +77,20 @@ const customVariables = Object.assign(materialVariables, {
   itemSeparator: "#C9C9C9",
 
   toastColor: "#C1f4f2",
+  badgeYellow: "#ffc824",
 
   alertColor: "#00CDD2",
+  headerIconDark: "#798593",
+  headerIconLight: "#E4E7EA",
 
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
   get fontSizeSmaller(): number {
     return this.fontSizeBase * 0.75;
+  },
+  get fontSizeXSmall(): number {
+    return this.fontSizeBase * 0.8125;
   },
   get fontSizeSmall(): number {
     return this.fontSizeBase * 0.875;
@@ -93,6 +114,8 @@ const customVariables = Object.assign(materialVariables, {
     return this.fontSizeBase * 2.5;
   },
   lineHeightBase: 24,
+  lineHeightSmall: 18,
+  lineHeightXSmall: 17,
   get lineHeightFontSizeRatio(): number {
     return this.lineHeightBase / this.fontSizeBase;
   },
@@ -142,7 +165,6 @@ const customVariables = Object.assign(materialVariables, {
   contentPadding: 24,
   contentPaddingLarge: 48,
   contentBackground: "#FFFFFF",
-  contentAlternativeBackground: "#F5F6F7",
   contentPrimaryBackground: "#0073E6",
 
   // Footer

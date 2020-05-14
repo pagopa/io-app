@@ -1,6 +1,7 @@
 /**
  * This component displays a list of transactions
  */
+import I18n from "i18n-js";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -10,7 +11,6 @@ import {
   ListRenderItemInfo,
   StyleSheet
 } from "react-native";
-import I18n from "../../i18n";
 import { ReadTransactionsState } from "../../store/reducers/entities/readTransactions";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
@@ -35,6 +35,7 @@ type Props = Readonly<{
   areMoreTransactionsAvailable: boolean;
   onLoadMoreTransactions: () => void;
   navigateToTransactionDetails: (transaction: Transaction) => void;
+  helpMessage?: React.ReactNode;
   ListEmptyComponent?: React.ReactNode;
   readTransactions: ReadTransactionsState;
 }>;
@@ -172,6 +173,7 @@ export default class TransactionsList extends React.Component<Props, State> {
             <Text>{I18n.t("wallet.amount")}</Text>
           </View>
         </View>
+        {this.props.helpMessage}
         <FlatList
           scrollEnabled={false}
           data={transactions}

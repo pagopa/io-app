@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  smallText: {
-    fontSize: 14
+  flex: {
+    flex: 1
   }
 });
 
@@ -44,23 +44,29 @@ const PaymentBannerComponent: React.SFC<Props> = props => {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Text white={true} bold={true} style={styles.smallText}>
+        <Text
+          white={true}
+          bold={true}
+          style={styles.flex}
+          small={true}
+          numberOfLines={1}
+        >
           {props.paymentReason}
         </Text>
-        <Text white={true} bold={true} style={styles.smallText}>
+        <Text white={true} bold={true} small={true}>
           {formatNumberCentsToAmount(props.currentAmount, true)}
         </Text>
       </View>
       <View style={styles.row}>
-        <Text white={true} style={styles.smallText}>
+        <Text white={true} small={true}>
           {I18n.t("wallet.ConfirmPayment.fee")}
         </Text>
-        <Text white={true} style={styles.smallText}>
+        <Text white={true} small={true}>
           {props.fee ? formatNumberCentsToAmount(props.fee, true) : noFee}
         </Text>
       </View>
       <View style={styles.row}>
-        <Text white={true} bold={true} style={styles.smallText}>
+        <Text white={true} bold={true} small={true}>
           {I18n.t("wallet.total")}
         </Text>
         <Text white={true} bold={true}>

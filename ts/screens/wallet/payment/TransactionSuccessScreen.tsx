@@ -1,17 +1,15 @@
-import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { BackHandler, StyleSheet } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import BlockButtons from "../../../components/ui/BlockButtons";
 import IconFont from "../../../components/ui/IconFont";
-import {
-  navigateToTransactionDetailsScreen,
-  navigateToWalletHome
-} from "../../../store/actions/navigation";
+import I18n from "../../../i18n";
+import { navigateToTransactionDetailsScreen } from "../../../store/actions/navigation";
+import { backToEntrypointPayment } from "../../../store/actions/wallet/payment";
 import customVariables from "../../../theme/variables";
 import { Transaction } from "../../../types/pagopa";
 
@@ -31,6 +29,19 @@ const styles = StyleSheet.create({
 
 class TransactionSuccessScreen extends React.PureComponent<Props> {
   private transaction = this.props.navigation.getParam("transaction");
+  public componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  public componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  private handleBackPress = () => {
+    this.props.backToEntrypointPayment();
+    return true;
+  };
+
   public render() {
     return (
       <BaseScreenComponent>
@@ -49,20 +60,26 @@ class TransactionSuccessScreen extends React.PureComponent<Props> {
           </Text>
         </Content>
 
-        <FooterWithButtons
-          type={"SingleButton"}
-          upperButton={{
-            title: I18n.t("wallet.receipt"),
-            primary: true,
-            onPress: () => this.props.navigateToReceipt(this.transaction)
-          }}
-          leftButton={{
-            title: I18n.t("wallet.backToPayments"),
-            light: true,
-            bordered: true,
-            onPress: this.props.resetToWalletHome
-          }}
-        />
+        <View footer={true}>
+          <BlockButtons
+            type={"SingleButton"}
+            leftButton={{
+              title: I18n.t("wallet.receipt"),
+              primary: true,
+              onPress: () => this.props.navigateToReceipt(this.transaction)
+            }}
+          />
+          <View spacer={true} />
+          <BlockButtons
+            type={"SingleButton"}
+            leftButton={{
+              title: I18n.t("global.buttons.close"),
+              light: true,
+              bordered: true,
+              onPress: this.props.backToEntrypointPayment
+            }}
+          />
+        </View>
       </BaseScreenComponent>
     );
   }
@@ -76,7 +93,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
         transaction
       })
     ),
-  resetToWalletHome: () => dispatch(navigateToWalletHome())
+  backToEntrypointPayment: () => dispatch(backToEntrypointPayment())
 });
 
 export default connect(

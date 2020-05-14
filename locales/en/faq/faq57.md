@@ -1,0 +1,1 @@
+If you have had problems during a payment and do not know if it has been successful, or why it has failed, check the [status of your payments](ioit://PAYMENTS_HISTORY_SCREEN). From the list you can select the failed operations and contact support.

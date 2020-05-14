@@ -1,12 +1,10 @@
-import I18n from "i18n-js";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import FooterWithButtons, {
-  SingleButton,
-  TwoButtonsInlineHalf
-} from "../ui/FooterWithButtons";
+import { SingleButton, TwoButtonsInlineHalf } from "../ui/BlockButtons";
+import FooterWithButtons from "../ui/FooterWithButtons";
 
 type Props = Readonly<{
   onRetry: () => void;

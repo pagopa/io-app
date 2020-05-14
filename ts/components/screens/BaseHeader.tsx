@@ -11,7 +11,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import GoBackButton from "../GoBackButton";
-import { InstabugButtons } from "../InstabugButtons";
+import InstabugChatsComponent from "../InstabugChatsComponent";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import AppHeader from "../ui/AppHeader";
@@ -35,6 +35,7 @@ interface OwnProps {
   // A property to set a custom AppHeader body
   body?: React.ReactNode;
   isSearchAvailable?: boolean;
+  showInstabugChat?: boolean;
   searchType?: SearchType;
   customRightIcon?: {
     iconName: string;
@@ -47,6 +48,7 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+/** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props> {
   /**
    * if go back is a function it will be returned
@@ -110,12 +112,14 @@ class BaseHeaderComponent extends React.PureComponent<Props> {
       onShowHelp,
       isSearchAvailable,
       searchType,
+      showInstabugChat,
       customRightIcon
     } = this.props;
 
     return (
       <Right>
-        {!isSearchEnabled && <InstabugButtons />}
+        {!isSearchEnabled &&
+          showInstabugChat !== false && <InstabugChatsComponent />}
         {onShowHelp &&
           !isSearchEnabled && (
             <ButtonDefaultOpacity
