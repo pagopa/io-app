@@ -52,7 +52,10 @@ export default function cieReducer(
     case getType(hasApiLevelSupport.failure):
       return {
         ...state,
-        hasApiLevelSupport: pot.toError(state.isCieSupported, action.payload)
+        hasApiLevelSupport: pot.toError(
+          state.hasApiLevelSupport,
+          action.payload
+        )
       };
     case getType(hasNFCFeature.success):
       return {
@@ -62,7 +65,7 @@ export default function cieReducer(
     case getType(hasNFCFeature.failure):
       return {
         ...state,
-        hasNFCFeature: pot.toError(state.isCieSupported, action.payload)
+        hasNFCFeature: pot.toError(state.hasNFCFeature, action.payload)
       };
     case getType(nfcIsEnabled.success):
       return {

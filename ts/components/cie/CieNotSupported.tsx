@@ -11,6 +11,8 @@ type Props = {
   hasCieNFCFeature: boolean;
 };
 
+const ICON_SIZE = 16;
+
 const CieNotSupported: React.FunctionComponent<Props> = props => {
   return (
     <React.Fragment>
@@ -28,7 +30,7 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
             <ListItem>
               <IconFont
                 name="io-tick-big"
-                size={16}
+                size={ICON_SIZE}
                 color={
                   props.hasCieApiLevelSupport
                     ? customVariables.brandLightGray
@@ -46,7 +48,7 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
             <ListItem>
               <IconFont
                 name="io-tick-big"
-                size={16}
+                size={ICON_SIZE}
                 color={
                   props.hasCieNFCFeature
                     ? customVariables.brandLightGray

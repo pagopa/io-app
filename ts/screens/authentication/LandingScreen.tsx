@@ -101,9 +101,6 @@ const styles = StyleSheet.create({
   },
   noCie: {
     opacity: 0.35
-  },
-  checkboxBackground: {
-    backgroundColor: "#0073E6"
   }
 });
 
