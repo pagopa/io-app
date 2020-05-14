@@ -1,6 +1,5 @@
-import { ActionSheet } from "native-base";
 import * as React from "react";
-import { Modal, NavState, StyleSheet, View } from "react-native";
+import { Alert, Modal, NavState, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { NavigationInjectedProps, withNavigation } from "react-navigation";
 import BaseScreenComponent, {
@@ -63,24 +62,19 @@ class Checkout3DsModal extends React.Component<Props, State> {
   };
 
   private goBack = () => {
-    ActionSheet.show(
+    Alert.alert(I18n.t("wallet.newPaymentMethod.abort.title"), "", [
       {
-        options: [
-          I18n.t("wallet.newPaymentMethod.abort.confirm"),
-          I18n.t("wallet.newPaymentMethod.abort.cancel")
-        ],
-        destructiveButtonIndex: 0,
-        cancelButtonIndex: 1,
-        title: I18n.t("wallet.newPaymentMethod.abort.title")
-      },
-      buttonIndex => {
-        if (buttonIndex === 0) {
-          // on cancel:
+        text: I18n.t("wallet.newPaymentMethod.abort.confirm"),
+        onPress: () => {
           this.props.navigation.goBack();
           showToast(I18n.t("wallet.newPaymentMethod.abort.success"), "success");
-        }
+        },
+        style: "cancel"
+      },
+      {
+        text: I18n.t("wallet.newPaymentMethod.abort.cancel")
       }
-    );
+    ]);
   };
 
   public render() {
