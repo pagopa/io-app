@@ -220,13 +220,12 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         <Row>
           <View style={styles.container}>
             <ButtonDefaultOpacity
-              bordered={true}
               block={true}
-              style={styles.bordercColorBrandGray}
+              whiteBordered={true}
               onPress={this.props.navigateToWalletAddPaymentMethod}
               activeOpacity={1}
             >
-              <Text bold={true} style={styles.colorBrandGray}>
+              <Text bold={true}>
                 {I18n.t("wallet.newPaymentMethod.addButton")}
               </Text>
             </ButtonDefaultOpacity>
