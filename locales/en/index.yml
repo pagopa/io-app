@@ -587,6 +587,11 @@ wallet:
     failedCardAlreadyExists: The card you are adding already exists
     contextualHelpTitle: How to add a payment method
     contextualHelpContent: !include wallet/wallet_add_payment_method.md
+    abort:
+      title: Do you want to cancel adding a new payment method?
+      confirm: Cancel the operation
+      cancel: Continue with the operation
+      success: The payment method entry was successfully canceled
   textMsg:
     title: Text confirmation code
     header: Confirmation code
@@ -836,22 +841,20 @@ messages:
     deselectAll: None
     payment:
       expired: Payment expired
-      validAlert:
-        block1: You can pay this notice until
-        block2: "{{time}} of {{day}}."
-      expiringAlert:
-        block1: This notice
-        block2: expire {{todayOrTomorrow}}
-        block3: at
-      expiredAlert:
-        block1: The notice of
-        block2: € {{amount}}
-        block3: is
-        block4: expired
-        block5: at
-        block6: of
+      paid: This notice is paid. Show the receipt in your
+      addMemo: 
+          block1: Add a reminder for the 
+          block2: at
+      expiringAlert: This notice expire today at
+      expiredAlert: 
+        block1: The notice expired at 
+        block2: "on"
+    presctiption:  
+      addMemo: This prescription expires the
+      expiringAlert: This prescription expires today
+      expiredAlert: This prescription is expired on
     pay: Pay € {{amount}}
-    paid: Paid € {{amount}}
+    paid: Paid
     reminder: Reminder
     reminderShort: Memo
     reminderCalendarSelect: In which calendar you want to add the reminder?
