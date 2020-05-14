@@ -42,8 +42,8 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
+import { getFingerprintSettings } from "../../utils/biometric";
 import { checkAndRequestPermission } from "../../utils/calendar";
-import { getFingerprintSettings } from "../../utils/fingerprint";
 import { getLocalePrimary } from "../../utils/locale";
 type OwnProps = Readonly<{
   navigation: NavigationScreenProp<NavigationState>;

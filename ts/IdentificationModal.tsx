@@ -33,7 +33,7 @@ import {
   FingerprintError,
   getFingerprintSettings,
   unmountBiometricAuth
-} from "./utils/fingerprint";
+} from "./utils/biometric";
 
 import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
 
