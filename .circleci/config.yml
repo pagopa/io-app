@@ -444,13 +444,17 @@ jobs:
           command: ./scripts/pagopa_api_check.sh
 
   io_check_uris:
+    working_directory: ./scripts/check_urls
     docker:
       - image: circleci/python:3.7.7
     steps:
       - checkout
       - run:
           name: check uris validity on static texts
-          command: python3 ./scripts/check_urls.py
+          command: |
+            sudo pip install pipenv
+            pipenv install
+            pipenv run python3 check_urls.py
 
 workflows:
   version: 2
@@ -508,24 +512,25 @@ workflows:
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status
-  nightly-pagopa-specs-check:
-    triggers:
-      - schedule:
-          cron: "0 03 * * *"
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      - pagopa_specs_diff
+  # nightly-pagopa-specs-check:
+  #   triggers:
+  #     - schedule:
+  #         cron: "0 03 * * *"
+  #         filters:
+  #           branches:
+  #             only:
+  #               - master
+  #   jobs:
+  #     - pagopa_specs_diff
+  #     - io_check_uris
 
   nightly-io-check-static-url:
     triggers:
       - schedule:
-          cron: "0 0 4 1/1 * ? *"
+          cron: "15 20 * * *"
           filters:
             branches:
               only:
-                - master
+                - 172772843-add-checkurl-script-circleci
     jobs:
       - io_check_uris

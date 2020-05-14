@@ -16,7 +16,8 @@ HEADERS = {
 }
 MAX_TIMEOUT = 5
 global_uris = set()
-SLACK_TOKEN = os.environ.get("SLACK_TOKEN_IO_CHECK_URLS", None)
+#SLACK_TOKEN = os.environ.get("SLACK_TOKEN_IO_CHECK_URLS", None)
+SLACK_TOKEN = "xoxb-842391135888-1104175920439-yruXhSwxoSqAPMv537t7ujkE"
 tagged_people = ["<@UTVS9R0SF>"]
 SLACK_CHANNEL = "#io_status"
 
@@ -120,7 +121,7 @@ if not run_test and __name__ == '__main__':
     manager = Manager()
     print("scanning locales folder...")
     all_uris = scan_directory(
-        abspath(join(dirname(__file__), "..", "locales")))
+        abspath(join(dirname(__file__), "../..", "locales")))
     pool = Pool(cpu_count())
     invalid_uri_processing = []
     print("found and processing %d uris..." % len(all_uris))
