@@ -446,7 +446,7 @@ jobs:
   io_check_uris:
     working_directory: ./scripts/check_urls
     docker:
-      - image: circleci/python:3.7.7
+      - image: circleci/python:3.8
     steps:
       - checkout
       - run:
@@ -527,7 +527,7 @@ workflows:
   nightly-io-check-static-url:
     triggers:
       - schedule:
-          cron: "23 10 * * *"
+          cron: "33 10 * * *"
           filters:
             branches:
               only:
