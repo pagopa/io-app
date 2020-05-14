@@ -477,7 +477,7 @@ onboarding:
       Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando
       dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere
       composto di 6 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento
-      entrando con SPID.
+      dopo l'autenticazione.
     pinInfoSelected:
       Questo codice ti verrà richiesto ogni volta che aprirai l’app
       e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive.
