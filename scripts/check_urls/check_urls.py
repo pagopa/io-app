@@ -14,7 +14,7 @@ from os.path import dirname, abspath, join
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
 }
-MAX_TIMEOUT = 5
+MAX_TIMEOUT = 7
 global_uris = set()
 SLACK_TOKEN = os.environ.get("IO_APP_SLACK_TOKEN_CHECK_URLS", None)
 tagged_people = ["<@UTVS9R0SF>"]

@@ -527,7 +527,7 @@ workflows:
   nightly-io-check-static-url:
     triggers:
       - schedule:
-          cron: "42 10 * * *"
+          cron: "05 11 * * *"
           filters:
             branches:
               only:
