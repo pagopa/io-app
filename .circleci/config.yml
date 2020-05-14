@@ -512,25 +512,14 @@ workflows:
   # nightly workflow to check pagopa specs (runs only on master branch)
   # if prod and dev specs are different
   # a slack notification will be sent on channel #io-status
-  # nightly-pagopa-specs-check:
-  #   triggers:
-  #     - schedule:
-  #         cron: "0 03 * * *"
-  #         filters:
-  #           branches:
-  #             only:
-  #               - master
-  #   jobs:
-  #     - pagopa_specs_diff
-  #     - io_check_uris
-
-  nightly-io-check-static-url:
+  nightly-pagopa-specs-check:
     triggers:
       - schedule:
-          cron: "45 11 * * *"
+          cron: "0 03 * * *"
           filters:
             branches:
               only:
-                - 172772843-add-checkurl-script-circleci
+                - master
     jobs:
+      - pagopa_specs_diff
       - io_check_uris
