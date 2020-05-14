@@ -28,7 +28,7 @@ export function* watchLogoutSaga(
     //        block for a while.
     try {
       // Remove the shortcuts
-      if (Platform.OS === "android" && Platform.Version >= 24) {
+      if (Platform.OS === "android" && Platform.Version > 24) {
         QuickActions.clearShortcutItems();
       }
       const response: SagaCallReturnType<typeof logout> = yield call(

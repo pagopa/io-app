@@ -84,7 +84,7 @@ class RootContainer extends React.PureComponent<Props> {
     AppState.addEventListener("change", this.handleApplicationActivity);
     // Hide splash screen
     SplashScreen.hide();
-    if (Platform.OS === "android" && Platform.Version >= 24) {
+    if (Platform.OS === "android" && Platform.Version > 24) {
       // Shortcut listener app foreground/background
       DeviceEventEmitter.addListener("quickActionShortcut", data => {
         if (data !== null && data.userInfo !== null) {

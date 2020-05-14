@@ -70,7 +70,7 @@ export function* fetchWalletsRequestHandler(
         if (
           getResponse.value.value.data.length > 0 &&
           Platform.OS === "android" &&
-          Platform.Version >= 24
+          Platform.Version > 24
         ) {
           // Add the qr code payment shortcut
           yield call(QuickActions.setShortcutItems, [

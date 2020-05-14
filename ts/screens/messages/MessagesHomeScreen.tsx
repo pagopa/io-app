@@ -133,7 +133,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
-    if (Platform.OS === "android" && Platform.Version >= 24) {
+    if (Platform.OS === "android" && Platform.Version > 24) {
       // Get shortcuts
       QuickActions.popInitialAction()
         .then(data => {
