@@ -152,17 +152,14 @@ class PinScreen extends React.PureComponent<Props, State> {
 
   // Render a different header when the user need to confirm the unlock code
   public renderContentHeader(pinState: PinState) {
-    if (pinState.state === "PinUnselected") {
-      return (
-        <H3 style={styles.header}>{I18n.t("onboarding.pin.contentTitle")}</H3>
-      );
-    } else {
-      return (
-        <H3 style={styles.header}>
-          {I18n.t("onboarding.pin.contentTitleConfirm")}
-        </H3>
+    return(
+      <React.Fragment>
+        <Text style={styles.header} alignCenter={true} bold={true} dark={true}>
+          {I18n.t( pinState.state === "PinUnselected" ? "onboarding.unlockCode.contentTitle" : "onboarding.unlockCode.contentTitleConfirm")}
+            </Text>
+        <Text alignCenter={true}>{I18n.t(pinState.state === "PinUnselected" ? "onboarding.unlockCode.contentSubtitle" : "onboarding.unlockCode.contentTitleConfirmSubtitle" )}</Text>
+      </React.Fragment>
     );
-  }
   }
 
   // Render the unlock code match/doesn't match feedback message

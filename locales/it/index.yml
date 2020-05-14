@@ -470,7 +470,9 @@ onboarding:
   unlockCode:
     headerTitle: Attivazione
     contentTitle: Scegli un codice di sblocco
-    contentTitleConfirm: Digita ancora il codice di sblocco
+    contentSubtitle: inserisci un codice di 6 cifre
+    contentTitleConfirm: Ripeti il codice di sblocco
+    contentTitleConfirmSubtitle: inserisci di nuovo il codice di 6 cifre
     pinInfo:
       Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando
       dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere

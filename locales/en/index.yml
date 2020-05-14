@@ -450,7 +450,9 @@ onboarding:
   unlockCode:
     headerTitle: Activation
     contentTitle: Choose an unlock code
+    contentSubtitle: insert a code of 6 digits
     contentTitleConfirm: Insert your code again
+    contentTitleConfirmSubtitle: insert again the code of 6 digits
     pinInfo: This code will be requested each time you open the app and when you need
       to view sensitive data or make dispositive transactions. It must be composed
       of 6 digits. Remember it carefully. You can change it at any time by entering
