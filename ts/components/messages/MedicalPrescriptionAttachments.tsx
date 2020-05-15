@@ -10,9 +10,12 @@ import customVariables from "../../theme/variables";
 import { getPrescriptionDataFromName } from "../../utils/messages";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 
-type BarCodeContent = { name: string; content: string };
+// the key is the attachment name, the value the decoded content
+type BarCodeContents = {
+  [key: string]: string;
+};
 type State = {
-  barCodeContents: ReadonlyArray<BarCodeContent>;
+  barCodeContents: BarCodeContents;
 };
 
 type Props = Readonly<{
@@ -53,33 +56,35 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
 > {
   constructor(props: Props) {
     super(props);
-    this.state = { barCodeContents: [] };
+    this.state = { barCodeContents: {} };
   }
 
   public async componentDidMount() {
-    const barCodeContents = await new Promise<ReadonlyArray<BarCodeContent>>(
-      (res, _) => {
-        const attchs = this.attachmentsToRender;
-        const content = attchs.map(a => {
+    // async attachment decoding from base64 to ascii
+    // ascii is needed to have the plain xml to render inside SvgXml
+    const barCodeContents = await new Promise<BarCodeContents>((res, _) => {
+      const attchs = this.attachmentsToRender;
+      const content = attchs.reduce<BarCodeContents>(
+        (acc: BarCodeContents, curr: MessageAttachment) => {
           return {
-            name: a.name,
-            content: Buffer.from(a.content, "base64").toString("ascii")
+            ...acc,
+            [curr.name]: Buffer.from(curr.content, "base64").toString("ascii")
           };
-        });
-        res(content);
-      }
-    );
+        },
+        {}
+      );
+      res(content);
+    });
     this.setState({ barCodeContents });
   }
 
   // We should show the SvgXml and share the png version.
   // These two image are the same. They differ only for the mime_type
   private getImage = (att: MessageAttachment) =>
-    fromNullable(
-      this.state.barCodeContents.find(cc => cc.name === att.name)
-    ).fold(undefined, barcode => (
-      <SvgXml xml={barcode.content} width={"100%"} height={BARCODE_HEIGHT} />
-    ));
+    fromNullable(this.state.barCodeContents[att.name]).fold(
+      undefined,
+      content => <SvgXml xml={content} width={"100%"} height={BARCODE_HEIGHT} />
+    );
 
   private renderItem = ({ item }: { item: MessageAttachment }) => {
     const value = getPrescriptionDataFromName(
