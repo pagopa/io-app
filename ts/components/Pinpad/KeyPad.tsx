@@ -1,10 +1,12 @@
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
-import { Image, Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../../theme/fonts";
 import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import StyledIconFont from "../ui/IconFont";
 
 type Digit = ITuple2<string, () => void> | undefined;
 
@@ -16,28 +18,32 @@ type Props = Readonly<{
 
 // it generate buttons width of 56
 const radius = 18;
+const BUTTON_DIAMETER = 56;
+
+const SMALL_ICON_WIDTH = 17;
+const ICON_WIDTH = 48;
 
 const styles = StyleSheet.create({
   roundButton: {
     paddingTop: 0,
     paddingBottom: 0,
+    paddingRight: 0,
+    paddingLeft: 0,
     marginBottom: 16,
     alignSelf: "center",
     justifyContent: "center",
-    width: (radius + 10) * 2,
-    height: (radius + 10) * 2,
-    borderRadius: radius + 10
+    width: BUTTON_DIAMETER,
+    height: BUTTON_DIAMETER,
+    borderRadius: BUTTON_DIAMETER / 2
   },
-
+  transparent: {
+    backgroundColor: "transparent"
+  },
   buttonTextBase: {
     ...makeFontStyleObject(Platform.select, "300"),
     fontSize: 30,
     lineHeight: 32,
     marginBottom: -10
-  },
-  image: {
-    width: 40,
-    height: 48
   },
   white: {
     color: variables.colorWhite
@@ -45,9 +51,11 @@ const styles = StyleSheet.create({
   buttonTextDigit: {
     fontSize: radius + 10
   },
-
   buttonTextLabel: {
     fontSize: radius - 5
+  },
+  noPadded: {
+    paddingRight: 0
   }
 });
 
@@ -63,10 +71,14 @@ const renderPinCol = (
     style === "digit"
       ? styles.roundButton
       : style === "label"
-        ? {
-            backgroundColor: "transparent"
-          }
-        : {};
+        ? [styles.roundButton, styles.transparent]
+        : undefined;
+
+  const iconName =
+    label.includes("icon:") || label.startsWith("reducedIcon:")
+      ? label.split(":")[1]
+      : undefined;
+
   return (
     <Col key={key}>
       <ButtonDefaultOpacity
@@ -77,7 +89,7 @@ const renderPinCol = (
         primary={buttonType === "primary"}
         unNamed={buttonType === "light"}
       >
-        {!label.endsWith(".png") ? (
+        {!iconName ? (
           <Text
             white={style === "label" && buttonType === "primary"}
             style={[
@@ -87,15 +99,16 @@ const renderPinCol = (
           >
             {label}
           </Text>
-        ) : label === "faceid-onboarding-icon.png" ? (
-          <Image
-            source={require("../../../img/icons/faceid-onboarding-icon.png")}
-            style={styles.image}
-          />
         ) : (
-          <Image
-            source={require("../../../img/icons/fingerprint-onboarding-icon.png")}
-            style={styles.image}
+          <StyledIconFont
+            name={label.split(":")[1]}
+            size={label.includes("sicon") ? SMALL_ICON_WIDTH : ICON_WIDTH}
+            style={[styles.noPadded]}
+            color={
+              buttonType === "light"
+                ? customVariables.contentPrimaryBackground
+                : customVariables.colorWhite
+            }
           />
         )}
       </ButtonDefaultOpacity>

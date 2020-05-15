@@ -71,19 +71,19 @@ class Pinpad extends React.PureComponent<Props, State> {
   private shakeAnimationRef = React.createRef<ShakeAnimation>();
 
   /**
-   * Print the only BiometrySimplePrintableType values that are passed to the UI
-   * @param biometrySimplePrintableType
+   * Get the name of the icon (from icon font) to represent
+   * // TODO check if it should be always the io-fingerprint icon for both fingerprint and FaceID
    */
-  private renderBiometryType(
+  private getBiometryIconName(
     biometryPrintableSimpleType: BiometryPrintableSimpleType
   ): string {
     switch (biometryPrintableSimpleType) {
       case "FINGERPRINT":
-        return "fingerprint-onboarding-icon.png";
+        return "icon:io-fingerprint";
       case "FACE_ID":
-        return "faceid-onboarding-icon.png";
+        return "icon:io-fingerprint";
       case "TOUCH_ID":
-        return "fingerprint-onboarding-icon.png";
+        return "icon:io-fingerprint";
     }
   }
 
@@ -99,6 +99,12 @@ class Pinpad extends React.PureComponent<Props, State> {
     }
   };
 
+  /**
+   * the pad can be componed by
+   * - strings
+   * - chars
+   * - icons (from icon font): they has to be declared as 'icon:<ICONAME>' (width 48) or 'sicon:<ICONAME>' (width 17)
+   */
   private pinPadDigits = (): ComponentProps<typeof KeyPad>["digits"] => {
     const { pinPadValues } = this.state;
 
@@ -123,13 +129,12 @@ class Pinpad extends React.PureComponent<Props, State> {
         this.props.biometryType &&
         this.props.onFingerPrintReq
           ? Tuple2(
-              // set the image name
-              this.renderBiometryType(this.props.biometryType),
+              this.getBiometryIconName(this.props.biometryType),
               this.props.onFingerPrintReq
             )
           : undefined,
         Tuple2(pinPadValues[0], () => this.handlePinDigit(pinPadValues[0])),
-        Tuple2("<", this.deleteLastDigit) // TODO: use icon instead
+        Tuple2("sicon:io-cancel", this.deleteLastDigit) // TODO: use icon instead
       ]
     ];
   };
