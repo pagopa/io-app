@@ -37,6 +37,10 @@ export function messageNeedsCTABar(
   return messageNeedsDueDateCTA(message) || messageNeedsPaymentCTA(message);
 }
 
+export const hasPrescriptionData = (
+  message: CreatedMessageWithContentAndAttachments
+): boolean => fromNullable(message.content.prescription_data).isSome();
+
 type MessagePaymentUnexpirable = {
   kind: "UNEXPIRABLE";
   noticeNumber: NonNullable<

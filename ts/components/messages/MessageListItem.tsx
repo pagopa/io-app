@@ -9,7 +9,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import { messageNeedsCTABar } from "../../utils/messages";
+import { hasPrescriptionData, messageNeedsCTABar } from "../../utils/messages";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
 import MessageListCTABar from "./MessageListCTABar";
 
@@ -58,8 +58,6 @@ class MessageListItem extends React.PureComponent<Props> {
       I18n.t("messages.yesterday")
     );
 
-    const medicalPrescriptionData = message.content.prescription_data;
-
     return (
       <DetailedlistItemComponent
         isNew={!isRead}
@@ -72,8 +70,8 @@ class MessageListItem extends React.PureComponent<Props> {
         isSelectionModeEnabled={isSelectionModeEnabled}
         isItemSelected={isSelected}
       >
-        {messageNeedsCTABar(message) &&
-          medicalPrescriptionData === undefined && (
+        {!hasPrescriptionData(message) &&
+          messageNeedsCTABar(message) && (
             <React.Fragment>
               <View spacer={true} large={true} />
               <MessageListCTABar
