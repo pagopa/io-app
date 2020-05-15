@@ -25,13 +25,6 @@ export function formatDateAsReminder(
   return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 }
 
-export function toLocal(date: Date): ReturnType<typeof dateFnsFormat> {
-  const localePrimary = getLocalePrimary(I18n.currentLocale());
-  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]", {
-    locale: localePrimary
-  });
-}
-
 /**
  *
  * It provides the format of the date depending on the system locale (DD/MM or MM/DD as default)
