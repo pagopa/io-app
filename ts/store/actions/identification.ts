@@ -1,7 +1,4 @@
-import {
-  ActionType,
-  createAction
-} from "typesafe-actions";
+import { ActionType, createAction } from "typesafe-actions";
 
 import { PinString } from "../../types/PinString";
 import {
