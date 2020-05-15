@@ -116,7 +116,7 @@ describe("Identification reducer", () => {
       identificationCancel(),
       identificationSuccess(),
       identificationStartMock
-    ].map(action => expectFailSequenceFromStartingState(action));
+    ].forEach(action => expectFailSequenceFromStartingState(action));
   });
   it("should execute multiple fail sequence after a reset of the fail state correctly", () => {
     const identificationResetState = reducer(undefined, identificationReset());
