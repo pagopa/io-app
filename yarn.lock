@@ -1045,10 +1045,10 @@
     node-fetch "^2.1.1"
     url-template "^2.0.8"
 
-"@pagopa/react-native-cie@0.2.1":
-  version "0.2.1"
-  resolved "https://npm.pkg.github.com/download/@pagopa/react-native-cie/0.2.1/8fc1468000174c724dadf72db5b155e08af9480c4a8d55f2e2d666565748a097#3416a4cf880693b55887cb64a959bf82d190d20d"
-  integrity sha512-TQoZxf9OGdlPXRAbxzvvnj18DLwABKnscg0uWAXSiuG6awULdOnnuKWSXW0SFtOAea+pGzFaSaD88ojedxFINA==
+"@pagopa/react-native-cie@0.2.2":
+  version "0.2.2"
+  resolved "https://npm.pkg.github.com/download/@pagopa/react-native-cie/0.2.2/5594a38025e8a0ea446e1b933a966f767679975bee47707234585bd9598b092f#ecc644b4da611b03ef0c26f0ff3872ccfb8c1757"
+  integrity sha512-+OS7spye20HjI6G1/sF+sY+tVoTfvxPkmELYPXMRzr9gRym5bGpUro/smZqFxNEaFrNbp9rXS5Sa/e3gAe4fMA==
 
 "@react-native-community/async-storage@^1.6.1":
   version "1.6.1"
