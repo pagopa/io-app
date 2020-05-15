@@ -87,17 +87,21 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
     }
   }
 
-  public componentDidMount() {
-    const screenBrightness = getBrightness();
-    // tslint:disable-next-line: no-floating-promises
-    screenBrightness.then(brightness => {
-      this.setState(
-        {
+  public async componentDidMount() {
+    const screenBrightness = await getBrightness();
+    screenBrightness.fold(
+      _ => {
+        this.setState({
+          baseBrightnessValue: undefined
+        });
+      },
+      brightness => {
+        this.setState({
           baseBrightnessValue: brightness
-        },
-        () => setBrightness(0.9)
-      );
-    });
+        });
+        setBrightness(0.9);
+      }
+    );
 
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
     if (this.props.profile !== undefined) {
