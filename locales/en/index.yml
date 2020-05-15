@@ -852,7 +852,9 @@ messages:
     presctiption:  
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
-      expiredAlert: This prescription is expired on
+      expiredAlert:
+          block1: The prescription expired at 
+          block2: "on"
     pay: Pay € {{amount}}
     paid: Paid
     reminder: Reminder

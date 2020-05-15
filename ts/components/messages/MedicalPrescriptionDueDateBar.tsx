@@ -16,7 +16,8 @@ import {
   formatDateAsDay,
   formatDateAsLocal,
   formatDateAsMonth,
-  getExpireStatus
+  getExpireStatus,
+  format
 } from "../../utils/dates";
 import {
   ExpireStatus,
@@ -24,6 +25,7 @@ import {
 } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
+import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = {
   message: CreatedMessageWithContent;
@@ -90,7 +92,8 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     if (dueDate.isNone()) {
       return undefined;
     }
-
+    const date = formatDateAsLocal(dueDate.value, true, true);
+    const time = format(dueDate.value, "HH.mm");
     if (this.isPrescriptionExpiring) {
       return (
         <React.Fragment>
@@ -98,11 +101,13 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
         </React.Fragment>
       );
     }
-    const date = formatDateAsLocal(dueDate.value, true, true);
+
     if (this.isPrescriptionExpired) {
       return (
         <React.Fragment>
-          {I18n.t("messages.cta.presctiption.expiredAlert")}
+          {I18n.t("messages.cta.presctiption.expiredAlert.block1")}
+          <Text bold={true} white={true}>{` ${time} `}</Text>
+          {I18n.t("messages.cta.presctiption.expiredAlert.block2")}
           <Text bold={true} white={true}>{` ${date}`}</Text>
         </React.Fragment>
       );

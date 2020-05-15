@@ -886,7 +886,10 @@ messages:
     presctiption:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
-      expiredAlert: questa ricetta è scaduta
+      expiredAlert:
+          block1: La ricetta è scaduta alle ore
+          block2: del
+      
     pay: Paga € {{amount}}
     paid: Pagato
     reminder: Promemoria
