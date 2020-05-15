@@ -17,6 +17,7 @@
     "tsc:noemit": "tsc --noemit",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
+    "check_urls": "python3 scripts/check_urls.py",
     "generate:pagopa-api-definitions": "rimraf definitions/pagopa && mkdir -p definitions/pagopa && gen-api-models --api-spec https://wisp2.pagopa.gov.it/pp-restapi-CD/v2/api-docs --out-dir ./definitions/pagopa --no-strict --request-types --response-decoders --default-error-type undefined",
     "generate:mock-google-services-json": "cp mock-google-services.json ./android/app/google-services.json",
     "generate:api-definitions": "rimraf definitions/backend && mkdir -p definitions/backend && gen-api-models --api-spec $npm_package_io_backend_api --out-dir ./definitions/backend --no-strict --request-types --response-decoders  && gen-api-models --api-spec $npm_package_io_public_api --out-dir ./definitions/backend",
@@ -27,7 +28,7 @@
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts"
   },
   "dependencies": {
-    "@pagopa/react-native-cie": "0.1.9",
+    "@pagopa/react-native-cie": "0.2.2",
     "@react-native-community/async-storage": "^1.6.1",
     "abort-controller": "^1.0.2",
     "async-mutex": "^0.1.3",

@@ -105,10 +105,10 @@ profile:
       header: How do you want to quit the app?
       keepData:
         title: Quit keeping all data
-        description: In order to use IO, you will log in with you SPID identity again, but any data will be conserved by this app (reading status, etc.) and will be immediately available at next launch.
+        description: In order to use IO, you will log in with you digital identity again, but any settings data will be conserved  and will be immediately available at next launch. This choise does not concern in a cancellation of the personal data concerning you by the App.
       resetData:
         title: Quit and reset this app
-        description: "IO app will be restored to its initial state, as if it would just be installed: if you want log in with a different identity, or if you are into not using IO app anymore, you should choose this option. All data saved by IO on this device will be deleted."
+        description: "IO app will be restored to its initial state, as if it would just be installed. This option does not concern in a cancellation of the personal data concerning you by the App."
   errors:
     load: Error loading the profile
     upsert: Error creating or updating the profile
@@ -135,22 +135,21 @@ profile:
       description: Manage app internal preferences
     privacy:
       title: Information and conditions of use
-      description: Export data, delete account
-      subtitle: Here you find information related to your personal data.
+      description: Your rights and obligations when using IO
+      subtitle: Here you find information on the legal conditions and on the processing of your personal data.
       loading: Wait few seconds, we're checking your profile..
       removeAccount:
-        title: Delete your account
-        description: Remove all data associated to your account from your phone and
-          our systems
+        title: Delete your profile
+        description: Request cancellation of information related to your IO profile
         alert:
-          requestTitle: Are you sure you want to delete your account?
-          requestSubtitle: All your messages and personal settings will be lost.
+          requestTitle: Are you sure you want request the cancellation of your account?
+          requestSubtitle: To use IO you will need to register again. The cancellation does not concern the data processed by public administrations.
           oldRequest: We are already proceeding to delete your account
           confirmSubtitle: After processing, you will receive an email confirming the deletion.
         error: An error occurred while submit your deletion request, please retry!
       exportData:
-        title: Export your data
-        description: Send to your email all your account’s data in an open format
+        title: Access your data
+        description: Receive a copy of the data associated with your IO profile
         alert:
           requestTitle: Are you sure you want to export all your data?
           oldRequest: We are already proceeding to export all your data
@@ -158,7 +157,7 @@ profile:
         error: An error occurred while submit your exporting request, please retry!
       privacyPolicy:
         title: Privacy policy
-        description: Review the accepted privacy terms
+        description: See the Privacy policy and the conditions of use of IO
         header: Information note on the processing of the IO app users's personal data
         updated: It is required to accept the new version of Terms and Conditions
         contextualHelpTitlePolicy: What is the information on the processing of personal data
@@ -586,6 +585,11 @@ wallet:
     failedCardAlreadyExists: The card you are adding already exists
     contextualHelpTitle: How to add a payment method
     contextualHelpContent: !include wallet/wallet_add_payment_method.md
+    abort:
+      title: Do you want to cancel adding a new payment method?
+      confirm: Cancel the operation
+      cancel: Continue with the operation
+      success: The payment method entry was successfully canceled
   textMsg:
     title: Text confirmation code
     header: Confirmation code
@@ -835,22 +839,20 @@ messages:
     deselectAll: None
     payment:
       expired: Payment expired
-      validAlert:
-        block1: You can pay this notice until
-        block2: "{{time}} of {{day}}."
-      expiringAlert:
-        block1: This notice
-        block2: expire {{todayOrTomorrow}}
-        block3: at
-      expiredAlert:
-        block1: The notice of
-        block2: € {{amount}}
-        block3: is
-        block4: expired
-        block5: at
-        block6: of
+      paid: This notice is paid. Show the receipt in your
+      addMemo: 
+          block1: Add a reminder for the 
+          block2: at
+      expiringAlert: This notice expire today at
+      expiredAlert: 
+        block1: The notice expired at 
+        block2: "on"
+    presctiption:  
+      addMemo: This prescription expires the
+      expiringAlert: This prescription expires today
+      expiredAlert: This prescription is expired on
     pay: Pay € {{amount}}
-    paid: Paid € {{amount}}
+    paid: Paid
     reminder: Reminder
     reminderShort: Memo
     reminderCalendarSelect: In which calendar you want to add the reminder?
@@ -906,6 +908,15 @@ messageDetails:
     organizationName: Sent by
     departmentName: Department
     serviceName: Service
+  addMemo: !include messages/addMemo.md
+  dateSending: "Date and time sending:"
+  sender: "Sender:"
+  service: "Service:"
+  question: "Is something unclear?"
+  answer: If something is unclear about the content of the message, you want to report an error, or you want to know more about it, you can contact the service directly by indicating the following message ID.
+  call: Call
+  write: Write
+  id: "ID:"
 notifications:
   installation:
     errorTitle: Push notifications
@@ -952,6 +963,7 @@ services:
   contactPhone: Phone
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
+    selectMessageEmptyOrgs: At the moment it is not possible to add a location. Please pull down to refresh the data and try again.
     addButton: Add your areas of interest
     editButton: Change the areas of interest
     searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
@@ -993,6 +1005,12 @@ identification:
       title: Identification required
       sensorDescription: Touch sensor
       fallbackLabel: Use the unlock code
+  fail:
+    wrongCode: Wrong code
+    remainingAttempts: You have {{attempts}} attempts left.
+    remainingAttemptSingle: You have {{attempts}} attempt left.
+    tooManyAttempts: Too many attempts.
+    waitMessage: "Try again in:"
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
   removeRequest:
