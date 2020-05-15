@@ -339,7 +339,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     // The identification state is started we need to show the modal
     const {
       pin,
-      canResetPin,
+      canResetPin,  // TODO: check if, during the payment, we have to show the button to reset the pin. It means we have to cancel the payment and then logout!!
       isValidatingTask,
       identificationCancelData,
       shufflePad
@@ -425,9 +425,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             {renderHeader()}
 
             <Pinpad
-              onPinResetHandler={
-                canResetPin ? this.props.onPinResetHandler : undefined
-              }
+              onPinResetHandler={this.props.onPinResetHandler}
               isFingerprintEnabled={isFingerprintEnabled}
               biometryType={biometryType}
               onFingerPrintReq={() =>
@@ -537,7 +535,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onPinResetHandler: () => dispatch(identificationPinReset()),
+  onPinResetHandler: () => dispatch(identificationPinReset({isInPayment: true})),
   onCancelIdentification: () => dispatch(identificationCancel()),
   onIdentificationSuccess: () => dispatch(identificationSuccess()),
   onIdentificationForceLogout: () => dispatch(identificationForceLogout()),
