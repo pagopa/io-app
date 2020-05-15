@@ -18,7 +18,7 @@ import {
 } from "react-navigation";
 import { connect } from "react-redux";
 
-import { isLeft, isRight } from "fp-ts/lib/Either";
+import { isLeft, isRight, left, right } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
@@ -118,12 +118,6 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
 
   private isFormValid = () =>
     this.state.delocalizedAmount.map(isRight).getOrElse(false) &&
-    this.state.delocalizedAmount
-      .chain(fromEither)
-      .map(delocalizedAmount => {
-        return parseInt(delocalizedAmount, 10) > 0;
-      })
-      .getOrElse(false) &&
     this.state.paymentNoticeNumber.map(isRight).getOrElse(false) &&
     this.state.organizationFiscalCode.map(isRight).getOrElse(false);
 
@@ -244,24 +238,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <Item
                 style={styles.noLeftMargin}
                 floatingLabel={true}
-                error={
-                  this.state.delocalizedAmount.map(isLeft).getOrElse(false) ||
-                  this.state.delocalizedAmount
-                    .chain(fromEither)
-                    .map(delocalizedAmount => {
-                      return parseInt(delocalizedAmount, 10) <= 0;
-                    })
-                    .getOrElse(false)
-                }
-                success={
-                  this.state.delocalizedAmount.map(isRight).getOrElse(false) &&
-                  this.state.delocalizedAmount
-                    .chain(fromEither)
-                    .map(delocalizedAmount => {
-                      return parseInt(delocalizedAmount, 10) > 0;
-                    })
-                    .getOrElse(false)
-                }
+                error={this.state.delocalizedAmount
+                  .map(isLeft)
+                  .getOrElse(false)}
+                success={this.state.delocalizedAmount
+                  .map(isRight)
+                  .getOrElse(false)}
               >
                 <Label>{I18n.t("wallet.insertManually.amount")}</Label>
                 <Input
@@ -275,8 +257,22 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                       delocalizedAmount: some(
                         value.replace(this.decimalSeparatorRe, ".")
                       )
-                        .filter(NonEmptyString.is)
+                        .filter(s => NonEmptyString.is(s))
                         .map(_ => AmountInEuroCentsFromString.decode(_))
+                        // transform again the result
+                        .map(aec => {
+                          // if it is left just return
+                          if (aec.isLeft()) {
+                            return aec;
+                          }
+                          // check if it is a positive integer
+                          const v = parseInt(aec.value, 10);
+                          if (!isNaN(v) && v > 0) {
+                            return right(aec.value);
+                          }
+                          // if it is not a number nor a positive number return left
+                          return left([]);
+                        })
                     })
                   }
                 />
