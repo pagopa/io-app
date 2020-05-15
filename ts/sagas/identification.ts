@@ -16,19 +16,22 @@ import {
 import { navigateToMessageDetailScreenAction } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
 import {
+  paymentDeletePayment,
+  runDeleteActivePaymentSaga
+} from "../store/actions/wallet/payment";
+import {
   IdentificationCancelData,
   IdentificationGenericData,
   IdentificationResult,
   IdentificationSuccessData
 } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
+import { paymentsCurrentStateSelector } from "../store/reducers/payments/current";
 import { GlobalState } from "../store/reducers/types";
 import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
 import { PinString } from "../types/PinString";
 import { SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
-import { runDeleteActivePaymentSaga, paymentDeletePayment } from '../store/actions/wallet/payment';
-import { paymentsCurrentStateSelector } from '../store/reducers/payments/current';
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -49,13 +52,17 @@ function* waitIdentificationResult(): Iterator<Effect | IdentificationResult> {
       return IdentificationResult.cancel;
 
     case getType(identificationPinReset): {
-
-      // If a payment is occurring, delete the active payment from pagoPA 
-      const paymentState: ReturnType<typeof paymentsCurrentStateSelector> = yield select(paymentsCurrentStateSelector);
-      if(paymentState.kind === "ACTIVATED"){
+      // If a payment is occurring, delete the active payment from pagoPA
+      const paymentState: ReturnType<
+        typeof paymentsCurrentStateSelector
+      > = yield select(paymentsCurrentStateSelector);
+      if (paymentState.kind === "ACTIVATED") {
         yield put(runDeleteActivePaymentSaga());
         // we try to wait untinl the payment deactivation is completed. If the request to backend fails for any reason, we proceed anyway with session invalidation
-        yield take([paymentDeletePayment.failure, paymentDeletePayment.success ])
+        yield take([
+          paymentDeletePayment.failure,
+          paymentDeletePayment.success
+        ]);
       }
 
       // Invalidate the session

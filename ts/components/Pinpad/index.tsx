@@ -118,15 +118,16 @@ class Pinpad extends React.PureComponent<Props, State> {
         Tuple2(pinPadValues[8], () => this.handlePinDigit(pinPadValues[8])),
         Tuple2(pinPadValues[9], () => this.handlePinDigit(pinPadValues[9]))
       ],
-      [ this.props.isFingerprintEnabled &&
-            this.props.biometryType &&
-            this.props.onFingerPrintReq
-            ? Tuple2(
-                // set the image name
-                this.renderBiometryType(this.props.biometryType),
-                this.props.onFingerPrintReq
-              )
-            : undefined,
+      [
+        this.props.isFingerprintEnabled &&
+        this.props.biometryType &&
+        this.props.onFingerPrintReq
+          ? Tuple2(
+              // set the image name
+              this.renderBiometryType(this.props.biometryType),
+              this.props.onFingerPrintReq
+            )
+          : undefined,
         Tuple2(pinPadValues[0], () => this.handlePinDigit(pinPadValues[0])),
         Tuple2("<", this.deleteLastDigit) // TODO: use icon instead
       ]
@@ -326,11 +327,19 @@ class Pinpad extends React.PureComponent<Props, State> {
             isDisabled={this.state.isDisabled}
           />
         </ShakeAnimation>
-        {this.props.onCancel && ( 
+        {this.props.onCancel && (
           <React.Fragment>
-            <View spacer={true} large={true}/>
-            <Text style={styles.mediumText} alignCenter={true} link={true} onPress={this.props.onCancel}>{I18n.t('global.buttons.cancel')}</Text>
-        </React.Fragment>)}
+            <View spacer={true} large={true} />
+            <Text
+              style={styles.mediumText}
+              alignCenter={true}
+              link={true}
+              onPress={this.props.onCancel}
+            >
+              {I18n.t("global.buttons.cancel")}
+            </Text>
+          </React.Fragment>
+        )}
       </React.Fragment>
     );
   }

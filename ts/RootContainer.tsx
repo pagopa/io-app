@@ -126,7 +126,7 @@ class RootContainer extends React.PureComponent<Props> {
     if (isAppOutOfDate) {
       return <UpdateAppModal />;
     }
-    return <IdentificationModal/>;
+    return <IdentificationModal />;
   }
 
   public render() {

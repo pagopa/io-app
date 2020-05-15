@@ -179,13 +179,13 @@ class PinScreen extends React.PureComponent<Props, State> {
         <React.Fragment>
           <View spacer={true} extralarge={true} />
           <TextWithIcon danger={true}>
-              <IconFont name="io-close" />
-              <Text>{I18n.t("onboarding.unlockCode.confirmInvalid")}</Text>
-            </TextWithIcon>
+            <IconFont name="io-close" />
+            <Text>{I18n.t("onboarding.unlockCode.confirmInvalid")}</Text>
+          </TextWithIcon>
         </React.Fragment>
       );
     }
-   
+
     return undefined;
   }
 
@@ -238,11 +238,11 @@ class PinScreen extends React.PureComponent<Props, State> {
 
   // Render the description for the different states
   public renderDescription() {
-      return (
-        <Text alignCenter={true} style={styles.description}>
-          {I18n.t("onboarding.unlockCode.pinInfo")}
-        </Text>
-      );
+    return (
+      <Text alignCenter={true} style={styles.description}>
+        {I18n.t("onboarding.unlockCode.pinInfo")}
+      </Text>
+    );
   }
 
   public renderContinueButton(pinState: PinState) {

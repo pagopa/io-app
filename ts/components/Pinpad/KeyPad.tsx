@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 
   buttonTextLabel: {
     fontSize: radius - 5
-  },
+  }
 });
 
 const renderPinCol = (
@@ -82,7 +82,7 @@ const renderPinCol = (
             white={style === "label" && buttonType === "primary"}
             style={[
               styles.buttonTextBase,
-              style === "label" && styles.buttonTextLabel,
+              style === "label" && styles.buttonTextLabel
             ]}
           >
             {label}
