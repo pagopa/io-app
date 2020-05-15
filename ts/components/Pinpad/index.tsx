@@ -49,6 +49,10 @@ const styles = StyleSheet.create({
   text: {
     alignSelf: "center",
     justifyContent: "center"
+  },
+  mediumText: {
+    fontSize: 18,
+    lineHeight: 21
   }
 });
 
@@ -114,13 +118,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         Tuple2(pinPadValues[8], () => this.handlePinDigit(pinPadValues[8])),
         Tuple2(pinPadValues[9], () => this.handlePinDigit(pinPadValues[9]))
       ],
-      [
-        this.props.onCancel
-          ? Tuple2(
-              I18n.t("global.buttons.cancel").toUpperCase(),
-              this.props.onCancel
-            )
-          : this.props.isFingerprintEnabled &&
+      [ this.props.isFingerprintEnabled &&
             this.props.biometryType &&
             this.props.onFingerPrintReq
             ? Tuple2(
@@ -328,6 +326,11 @@ class Pinpad extends React.PureComponent<Props, State> {
             isDisabled={this.state.isDisabled}
           />
         </ShakeAnimation>
+        {this.props.onCancel && ( 
+          <React.Fragment>
+            <View spacer={true} large={true}/>
+            <Text style={styles.mediumText} alignCenter={true} link={true} onPress={this.props.onCancel}>{I18n.t('global.buttons.cancel')}</Text>
+        </React.Fragment>)}
       </React.Fragment>
     );
   }
