@@ -132,18 +132,17 @@ export default class MessageDetailComponent extends React.PureComponent<
   }
 
   private getTitle = () => {
-    if (this.maybeMedicalData.isSome()) {
-      return (
+    return this.maybeMedicalData.fold(
+      <H3>{this.props.message.content.subject}</H3>,
+      _ => (
         <React.Fragment>
           <H3>{I18n.t("messages.medical.prescription")}</H3>
           <Text style={styles.reducedText}>
             {I18n.t("messages.medical.memo")}
           </Text>
         </React.Fragment>
-      );
-    }
-
-    return <H3>{this.props.message.content.subject}</H3>;
+      )
+    );
   };
 
   public render() {

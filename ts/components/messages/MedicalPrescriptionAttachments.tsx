@@ -96,7 +96,7 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
         <View spacer={true} small={true} />
         <Text style={styles.label}>
           {I18n.t(`messages.medical.${item.name}`, {
-            defaultValue: "n/a"
+            defaultValue: I18n.t("messages.medical.not_available")
           }).toUpperCase()}
         </Text>
         {this.getImage(item)}
