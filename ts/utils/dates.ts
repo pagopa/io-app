@@ -25,8 +25,11 @@ export function formatDateAsReminder(
   return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
 }
 
-export function toLocalDate(date: Date): ReturnType<typeof dateFnsFormat> {
-  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+export function toLocal(date: Date): ReturnType<typeof dateFnsFormat> {
+  const localePrimary = getLocalePrimary(I18n.currentLocale());
+  return dateFnsFormat(date, "YYYY-MM-DDTHH:mm:ss.SSS[Z]", {
+    locale: localePrimary
+  });
 }
 
 /**
