@@ -1,4 +1,4 @@
-import { isLeft, isRight } from "fp-ts/lib/Either";
+import { isLeft, isRight, left, right } from "fp-ts/lib/Either";
 import { fromEither, none, Option, some } from "fp-ts/lib/Option";
 import {
   AmountInEuroCents,
@@ -251,8 +251,22 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                       delocalizedAmount: some(
                         value.replace(this.decimalSeparatorRe, ".")
                       )
-                        .filter(NonEmptyString.is)
+                        .filter(s => NonEmptyString.is(s))
                         .map(_ => AmountInEuroCentsFromString.decode(_))
+                        // transform again the result
+                        .map(aec => {
+                          // if it is left just return
+                          if (aec.isLeft()) {
+                            return aec;
+                          }
+                          // check if it is a positive integer
+                          const v = parseInt(aec.value, 10);
+                          if (!isNaN(v) && v > 0) {
+                            return right(aec.value);
+                          }
+                          // if it is not a number nor a positive number return left
+                          return left([]);
+                        })
                     })
                   }
                 />
