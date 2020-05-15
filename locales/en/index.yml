@@ -900,7 +900,7 @@ messages:
     nre: NRE Electronic prescription number
     iup: IUP Unique booking identifier
     patient_fiscal_code: Patient's fiscal code
-    prescriber_fiscal_code: Medical doctor's fiscal code
+    prescriber_fiscal_code: Doctor's fiscal code
     barcodes: Barcodes
     nationalService: National Health Service
     note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
