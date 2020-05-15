@@ -13,11 +13,11 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import {
+  format,
   formatDateAsDay,
   formatDateAsLocal,
   formatDateAsMonth,
-  getExpireStatus,
-  format
+  getExpireStatus
 } from "../../utils/dates";
 import {
   ExpireStatus,
@@ -25,7 +25,6 @@ import {
 } from "../../utils/messages";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 type Props = {
   message: CreatedMessageWithContent;
