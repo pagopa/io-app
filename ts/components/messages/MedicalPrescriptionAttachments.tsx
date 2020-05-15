@@ -1,10 +1,10 @@
-import I18n from "i18n-js";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { MessageAttachment } from "../../../definitions/backend/MessageAttachment";
 import { PrescriptionData } from "../../../definitions/backend/PrescriptionData";
+import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { getPrescriptionDataFromName } from "../../utils/messages";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
@@ -70,7 +70,9 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
       <View style={styles.padded}>
         <View spacer={true} small={true} />
         <Text style={styles.label}>
-          {I18n.t(`messages.medical.${item.name}`).toUpperCase()}
+          {I18n.t(`messages.medical.${item.name}`, {
+            defaultValue: "n/a"
+          }).toUpperCase()}
         </Text>
         {this.getImage(item)}
         {value.isSome() && (
@@ -85,9 +87,11 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
     );
   };
 
-  private attachmentsToRender = this.props.attachments.filter(a =>
-    a.mime_type.includes(this.props.typeToRender)
-  );
+  get attachmentsToRender(): ReadonlyArray<MessageAttachment> {
+    return this.props.attachments.filter(a =>
+      a.mime_type.includes(this.props.typeToRender)
+    );
+  }
 
   private footerItem = (
     <React.Fragment>

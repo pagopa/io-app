@@ -12,6 +12,7 @@ import variables from "../../theme/variables";
 import customVariables from "../../theme/variables";
 import { paymentExpirationInfo } from "../../utils/messages";
 import OrganizationHeader from "../OrganizationHeader";
+import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";
 import MessageDetailCTABar from "./MessageDetailCTABar";
@@ -199,6 +200,20 @@ export default class MessageDetailComponent extends React.PureComponent<
           </MessageMarkdown>
 
           <View spacer={true} large={true} />
+          {this.attachments.isSome() &&
+            this.state.isContentLoadCompleted && (
+              <React.Fragment>
+                <MedicalPrescriptionAttachments
+                  prescriptionData={this.maybeMedicalData.toUndefined()}
+                  attachments={this.attachments.value}
+                  organizationName={this.service
+                    .map(s => s.organization_name)
+                    .toUndefined()}
+                  typeToRender={"svg"}
+                />
+                <View spacer={true} large={true} />
+              </React.Fragment>
+            )}
 
           {this.state.isContentLoadCompleted && (
             <React.Fragment>
