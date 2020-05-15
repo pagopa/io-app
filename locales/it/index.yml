@@ -928,10 +928,11 @@ messages:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
   medical:
+    not_available: "n/a"
     prescription: Ricetta elettronica
     memo: Promemoria per l'assistito
-    nre: NRE Numero Ricetta Elettronica
-    iup: IUP Identificativo Unico Prenotazione
+    nre: Numero Ricetta Elettronica
+    iup: Identificativo Unico Prenotazione
     patient_fiscal_code: Codice Fiscale dell'assistito
     prescriber_fiscal_code: Codice fiscale del medico
     deadline: Questa ricetta scade il {{date}}

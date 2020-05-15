@@ -894,11 +894,12 @@ messages:
       title: You haven't any scheduled deadline.
       subtitle:  Use the button above to check out past deadlines.
   medical:
+    not_available: "n/a"
     prescription: Electronic prescription
     memo: Reminder for the recipient
     deadline: this prescription expires {{date}}
-    nre: NRE Electronic prescription number
-    iup: IUP Unique booking identifier
+    nre: Electronic prescription number
+    iup: Unique booking identifier
     patient_fiscal_code: Patient's fiscal code
     prescriber_fiscal_code: Doctor's fiscal code
     barcodes: Barcodes

@@ -209,7 +209,6 @@ export default class MessageDetailComponent extends React.PureComponent<
                   organizationName={this.service
                     .map(s => s.organization_name)
                     .toUndefined()}
-                  typeToRender={"svg"}
                 />
                 <View spacer={true} large={true} />
               </React.Fragment>

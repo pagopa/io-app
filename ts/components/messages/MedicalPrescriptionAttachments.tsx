@@ -1,6 +1,7 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { FlatList, Image, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { MessageAttachment } from "../../../definitions/backend/MessageAttachment";
 import { PrescriptionData } from "../../../definitions/backend/PrescriptionData";
@@ -9,11 +10,15 @@ import customVariables from "../../theme/variables";
 import { getPrescriptionDataFromName } from "../../utils/messages";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 
+type BarCodeContent = { name: string; content: string };
+type State = {
+  barCodeContents: ReadonlyArray<BarCodeContent>;
+};
+
 type Props = Readonly<{
   prescriptionData?: PrescriptionData;
   attachments: ReadonlyArray<MessageAttachment>;
   organizationName?: string;
-  typeToRender: "svg" | "png";
 }>;
 
 const BARCODE_HEIGHT = 52;
@@ -40,26 +45,41 @@ const styles = StyleSheet.create({
   }
 });
 
+const svgXml = "image/svg+xml";
+
 export default class MedicalPrescriptionAttachments extends React.PureComponent<
-  Props
+  Props,
+  State
 > {
+  constructor(props: Props) {
+    super(props);
+    this.state = { barCodeContents: [] };
+  }
+
+  public async componentDidMount() {
+    const barCodeContents = await new Promise<ReadonlyArray<BarCodeContent>>(
+      (res, _) => {
+        const attchs = this.attachmentsToRender;
+        const content = attchs.map(a => {
+          return {
+            name: a.name,
+            content: Buffer.from(a.content, "base64").toString("ascii")
+          };
+        });
+        res(content);
+      }
+    );
+    this.setState({ barCodeContents });
+  }
+
   // We should show the SvgXml and share the png version.
   // These two image are the same. They differ only for the mime_type
   private getImage = (att: MessageAttachment) =>
-    att.mime_type === "image/svg+xml" ? (
-      <SvgXml
-        xml={Buffer.from(att.content, "base64").toString("ascii")}
-        width={"100%"}
-        height={BARCODE_HEIGHT}
-      />
-    ) : (
-      <Image
-        style={styles.image}
-        source={{
-          uri: `data:image/png;base64,${att.content}`
-        }}
-      />
-    );
+    fromNullable(
+      this.state.barCodeContents.find(cc => cc.name === att.name)
+    ).fold(undefined, barcode => (
+      <SvgXml xml={barcode.content} width={"100%"} height={BARCODE_HEIGHT} />
+    ));
 
   private renderItem = ({ item }: { item: MessageAttachment }) => {
     const value = getPrescriptionDataFromName(
@@ -88,9 +108,7 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
   };
 
   get attachmentsToRender(): ReadonlyArray<MessageAttachment> {
-    return this.props.attachments.filter(a =>
-      a.mime_type.includes(this.props.typeToRender)
-    );
+    return this.props.attachments.filter(a => a.mime_type === svgXml);
   }
 
   private footerItem = (
