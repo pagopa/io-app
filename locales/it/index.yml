@@ -473,16 +473,8 @@ onboarding:
     contentSubtitle: inserisci un codice di 6 cifre
     contentTitleConfirm: Ripeti il codice di sblocco
     contentTitleConfirmSubtitle: inserisci di nuovo il codice di 6 cifre
-    pinInfo:
-      Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando
-      dovrai visualizzare dati sensibili o compiere operazioni dispositive. Deve essere
-      composto di 6 cifre. Ricordalo con attenzione. Potrai cambiarlo in ogni momento
-      dopo l'autenticazione.
-    pinInfoSelected:
-      Questo codice ti verrà richiesto ogni volta che aprirai l’app
-      e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive.
+    pinInfo: Questo codice ti verrà richiesto ogni volta che aprirai l’app e quando dovrai visualizzare dati sensibili o compiere operazioni dispositive. Potrai cambiarlo in ogni momento dopo l'autenticazione.
     reset: Modifica il codice
-    confirmValid: grazie, puoi continuare
     confirmInvalid: i due codici non coincidono
     contextualHelpTitle: Qual è il tuo codice di sblocco
     contextualHelpContent: !include onboarding/onboarding_pin.md

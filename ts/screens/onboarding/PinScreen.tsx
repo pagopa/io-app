@@ -174,28 +174,19 @@ class PinScreen extends React.PureComponent<Props, State> {
 
   // Render the unlock code match/doesn't match feedback message
   public renderCodeInputConfirmValidation() {
-    const state = this.state.pinState.state;
-    if (state !== "PinConfirmed" && state !== "PinConfirmError") {
-      return undefined;
-    }
-    const validationMessage =
-      state === "PinConfirmed" ? (
-        <TextWithIcon success={true}>
-          <IconFont name="io-tick-big" />
-          <Text>{I18n.t("onboarding.unlockCode.confirmValid")}</Text>
-        </TextWithIcon>
-      ) : (
-        <TextWithIcon danger={true}>
-          <IconFont name="io-close" />
-          <Text>{I18n.t("onboarding.unlockCode.confirmInvalid")}</Text>
-        </TextWithIcon>
+    if (this.state.pinState.state === "PinConfirmError") {
+      return (
+        <React.Fragment>
+          <View spacer={true} extralarge={true} />
+          <TextWithIcon danger={true}>
+              <IconFont name="io-close" />
+              <Text>{I18n.t("onboarding.unlockCode.confirmInvalid")}</Text>
+            </TextWithIcon>
+        </React.Fragment>
       );
-    return (
-      <React.Fragment>
-        <View spacer={true} extralarge={true} />
-        {validationMessage}
-      </React.Fragment>
-    );
+    }
+   
+    return undefined;
   }
 
   // Render select/confirm Pinpad component
@@ -240,26 +231,18 @@ class PinScreen extends React.PureComponent<Props, State> {
       <Content>
         {this.renderContentHeader(pinState)}
         {this.renderCodeInput(pinState)}
-        {this.renderDescription(pinState)}
+        {this.renderDescription()}
       </Content>
     );
   }
 
   // Render the description for the different states
-  public renderDescription(pinState: PinState) {
-    if (pinState.state === "PinUnselected") {
+  public renderDescription() {
       return (
-        <Text style={styles.description}>
+        <Text alignCenter={true} style={styles.description}>
           {I18n.t("onboarding.unlockCode.pinInfo")}
         </Text>
       );
-    } else {
-      return (
-        <Text style={styles.description}>
-          {I18n.t("onboarding.unlockCode.pinInfoSelected")}
-        </Text>
-      );
-    }
   }
 
   public renderContinueButton(pinState: PinState) {
