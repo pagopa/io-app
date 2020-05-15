@@ -995,7 +995,7 @@ identification:
       button: Did you forget the
       code: unlock code
       button_short: Reset unlock code
-      tip: To reset your unlock code you will have to login again with your SPID account.
+      tip: To reset your unlock code you will have to log in again.
       tip_short: You will have to login again.
     confirmValid: Correct unlock code
     confirmInvalid: Invalid unlock code
@@ -1005,7 +1005,7 @@ identification:
       content: !include onboarding/onboarding_pin.md
   forgetCode:
     confirmTitle: Did you forget the unlock code?
-    confirmMsg: To be able to choose a new unlock code you will need to log in again with SPID.
+    confirmMsg: To be able to choose a new unlock code you will need to log in again.
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
   removeRequest:

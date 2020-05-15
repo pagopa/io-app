@@ -1028,8 +1028,7 @@ identification:
       code: codice di sblocco
       button_short: Reimposta il codice di sblocco
       tip:
-        Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente con la tua identità
-        SPID.
+        Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente.
       tip_short: Dovrai effettuare di nuovo l'accesso.
     confirmValid: Codice di sblocco corretto
     confirmInvalid: codice di sblocco non valido
@@ -1039,7 +1038,7 @@ identification:
       content: !include onboarding/onboarding_pin.md
   forgetCode:
     confirmTitle: Hai dimenticato il
-    confirmMsg: Per poter scegliere un nuovo codice di sblocco dovrai fare di nuovo accesso con SPID.
+    confirmMsg: Per poter scegliere un nuovo codice di sblocco dovrai accedere nuovamente.
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
   removeRequest:
