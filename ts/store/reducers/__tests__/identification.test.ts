@@ -1,4 +1,5 @@
 import { range } from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
 import { fromNullable } from "fp-ts/lib/Option";
 import { PinString } from "../../../types/PinString";
 import {
@@ -116,6 +117,17 @@ describe("Identification reducer", () => {
       identificationSuccess(),
       identificationStartMock
     ].map(action => expectFailSequenceFromStartingState(action));
+  });
+  it("should execute multiple fail sequence after a reset of the fail state correctly", () => {
+    const identificationResetState = reducer(undefined, identificationReset());
+
+    pipe(
+      expectFailSequence,
+      (state: IdentificationState) => reducer(state, identificationSuccess()),
+      expectFailSequence,
+      (state: IdentificationState) => reducer(state, identificationReset()),
+      expectFailSequence
+    )(identificationResetState);
   });
 });
 
