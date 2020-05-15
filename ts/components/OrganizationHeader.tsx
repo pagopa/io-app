@@ -28,24 +28,24 @@ type Props = {
  * A component to render the name of the organization and of the related service
  * with the corresponding image
  */
-export default class OrganizationHeader extends React.PureComponent<Props> {
-  public render() {
-    const { service } = this.props;
-    return (
-      <Grid>
-        <Col>
-          <H5>{service.organization_name}</H5>
-          <Text style={styles.reducedText}>{service.service_name}</Text>
+const OrganizationHeader = (props: Props) => {
+  const { service } = props;
+  return (
+    <Grid>
+      <Col>
+        <H5>{service.organization_name}</H5>
+        <Text style={styles.reducedText}>{service.service_name}</Text>
+      </Col>
+      {service.service_id && (
+        <Col style={styles.serviceCol}>
+          <MultiImage
+            style={styles.serviceMultiImage}
+            source={logosForService(service)}
+          />
         </Col>
-        {service.service_id && (
-          <Col style={styles.serviceCol}>
-            <MultiImage
-              style={styles.serviceMultiImage}
-              source={logosForService(service)}
-            />
-          </Col>
-        )}
-      </Grid>
-    );
-  }
-}
+      )}
+    </Grid>
+  );
+};
+
+export default OrganizationHeader;
