@@ -490,8 +490,8 @@ onboarding:
       enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
         fingerprint: la tua impronta digitale
-        faceId: FaceID
-        touchId: TouchID
+        faceId: Face ID
+        touchId: Touch ID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md  
 forms:
   validators:
@@ -1023,7 +1023,7 @@ identification:
   titleValidation: Conferma l'operazione
   subtitleCode: enter the unlock code
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
-  subtitleCodeFaceId: "use FaceID o il codice di sblocco"
+  subtitleCodeFaceId: "use Face ID o il codice di sblocco"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale

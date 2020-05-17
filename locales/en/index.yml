@@ -470,8 +470,8 @@ onboarding:
       enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
         fingerprint: your fingerprint
-        faceId: FaceID
-        touchId: TouchID
+        faceId: Face ID
+        touchId: Touch ID
       notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
 forms:
   validators:
@@ -990,7 +990,7 @@ identification:
   titleValidation: Confirm the procedure
   subtitleCode: enter the unlock code
   subtitleCodeFingerprint: use the fingerprint or the unlock code
-  subtitleCodeFaceId: use the FaceID or enter the unlock code
+  subtitleCodeFaceId: use the Face ID or enter the unlock code
   biometric:
     failure: Identification failed
     fingerprintType: Fingerprint

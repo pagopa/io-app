@@ -72,7 +72,7 @@ class Pinpad extends React.PureComponent<Props, State> {
 
   /**
    * Get the name of the icon (from icon font) to represent
-   * // TODO check if it should be always the io-fingerprint icon for both fingerprint and FaceID
+   * // TODO check if it should be always the io-fingerprint icon for both fingerprint and Face ID
    */
   private getBiometryIconName(
     biometryPrintableSimpleType: BiometryPrintableSimpleType
