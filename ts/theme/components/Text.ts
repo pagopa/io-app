@@ -9,6 +9,7 @@ declare module "native-base" {
     interface Text extends TextProperties {
       link?: boolean;
       bold?: boolean;
+      semibold?: boolean;
       italic?: boolean;
       leftAlign?: boolean;
       rightAlign?: boolean;
@@ -43,6 +44,9 @@ export default (): Theme => {
     },
     ".bold": {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
+    },
+    ".semibold": {
+      ...makeFontStyleObject(Platform.select, variables.textLinkWeight)
     },
     ".italic": {
       ...makeFontStyleObject(Platform.select, variables.textNormalWeight, true)

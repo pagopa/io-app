@@ -3,6 +3,7 @@ global:
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
+    asterisk: "*"
   localization:
     decimalSeparator: ","
   date:
@@ -19,6 +20,7 @@ global:
   genericAlert: Attenzione!
   genericWaiting: Attendi qualche secondo...
   genericThanks: Grazie
+  genericShare: Condividi
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!
@@ -885,7 +887,10 @@ messages:
     presctiption:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
-      expiredAlert: questa ricetta è scaduta
+      expiredAlert:
+          block1: La ricetta è scaduta alle ore
+          block2: del
+      
     pay: Paga € {{amount}}
     paid: Pagato
     reminder: Promemoria
@@ -926,6 +931,18 @@ messages:
     emptyMessage:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
+  medical:
+    not_available: "n/a"
+    prescription: Ricetta elettronica
+    memo: Promemoria per l'assistito
+    nre: Numero Ricetta Elettronica
+    iup: Identificativo Unico Prenotazione
+    patient_fiscal_code: Codice Fiscale dell'assistito
+    prescriber_fiscal_code: Codice fiscale del medico
+    deadline: Questa ricetta scade il {{date}}
+    barcodes: Codici a barre
+    nationalService: Servizio Sanitario Nazionale
+    note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
 messageDetails:
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md

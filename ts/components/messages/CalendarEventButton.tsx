@@ -195,8 +195,8 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
     searchEventInCalendar(dueDate, title)
       .then(mayBeEventId =>
         mayBeEventId.foldL(
-          async () => {
-            await saveCalendarEvent(
+          () => {
+            saveCalendarEvent(
               calendar,
               message,
               dueDate,
