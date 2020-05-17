@@ -8,7 +8,6 @@ import * as ReaderQR from "react-native-lewin-qrcode";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import { NavigationEvents, NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
@@ -36,17 +35,24 @@ type State = Readonly<{
 }>;
 
 const screenWidth = Dimensions.get("screen").width;
+const screenHeight = Dimensions.get("screen").height;
 
 // Delay for reactivating the QR scanner after a scan
 const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 
+// Qr scanner height is based on screen height to prevent the
+// user has to scroll to read the bottom content (4 lines text on iPhone 6)
+const getScannerHeight = () => {
+  const footerHeight = variables.btnHeight * 2 + variables.spacerHeight;
+  const availableHeight =
+    screenHeight - variables.appHeaderHeight - footerHeight;
+  const minScannerHeight = (availableHeight * 2) / 3;
+  return minScannerHeight >= screenWidth ? screenWidth : minScannerHeight;
+};
+
 const styles = StyleSheet.create({
   padded: {
-    paddingRight: variables.contentPadding,
-    paddingLeft: variables.contentPadding
-  },
-  white: {
-    backgroundColor: variables.brandPrimaryInverted
+    paddingHorizontal: variables.contentPadding
   },
   cameraContainer: {
     alignItems: "flex-start",
@@ -57,21 +63,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "transparent",
-    height: screenWidth,
+    height: getScannerHeight(),
     width: screenWidth
   },
   notAuthorizedContainer: {
     padding: variables.contentPadding,
-    flex: 1,
-    alignItems: "center"
-  },
-  notAuthorizedText: {
-    textAlign: "justify",
-    marginBottom: 25
-  },
-  notAuthorizedBtn: {
-    flex: 1,
-    alignSelf: "center"
+    height: screenHeight // it prevents CameraBottomContent is displayed if we haven't camera permissions
   }
 });
 
@@ -81,7 +78,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 /**
- * A screen to identify a transaction by scanning the QR code on the analogic notice
+ * A screen to identify a transaction by scanning the QR Code on the analogic notice
  */
 class ScanQrCodeScreen extends React.Component<Props, State> {
   public constructor(props: Props) {
@@ -97,7 +94,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   private qrCodeScanner = React.createRef<QRCodeScanner>();
 
   /**
-   * Handles valid pagoPA QR codes
+   * Handles valid pagoPA QR Codes
    */
   private onValidQrCode = (data: ITuple2<RptId, AmountInEuroCents>) => {
     this.setState({
@@ -107,7 +104,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   };
 
   /**
-   * Handles invalid pagoPA QR codes
+   * Handles invalid pagoPA QR Codes
    */
   private onInvalidQrCode = () => {
     showToast(I18n.t("wallet.QRtoPay.wrongQrCode"), "danger");
@@ -128,7 +125,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     }, QRCODE_SCANNER_REACTIVATION_TIME_MS);
   };
 
-  // Gets called by the QR code reader on new QR code reads
+  // Gets called by the QR Code reader on new QR Code reads
   private onQrCodeData = (data: string) => {
     const resultOrError = decodePagoPaQrCode(data);
     resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
@@ -233,16 +230,16 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
 
   private CameraNotAuthorizedView = (
     <View style={styles.notAuthorizedContainer}>
-      <Text style={styles.notAuthorizedText}>
-        {I18n.t("wallet.QRtoPay.enroll_cta")}
+      <Text>
+        {I18n.t("wallet.QRtoPay.enroll_cta.block1")}
+        <Text bold={true}>{` ${I18n.t(
+          "wallet.QRtoPay.enroll_cta.block2"
+        )}`}</Text>
+        <Text>{` ${I18n.t("wallet.QRtoPay.enroll_cta.block3")}`}</Text>
       </Text>
-
-      <ButtonDefaultOpacity
-        onPress={openAppSettings}
-        style={styles.notAuthorizedBtn}
-      >
-        <Text>{I18n.t("biometric_recognition.enroll_btnLabel")}</Text>
-      </ButtonDefaultOpacity>
+      <Text link={true} onPress={openAppSettings}>
+        {I18n.t("biometric_recognition.enroll_btnLabel")}
+      </Text>
     </View>
   );
 
@@ -266,7 +263,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           onDidFocus={this.handleDidFocus}
           onWillBlur={this.handleWillBlur}
         />
-        <Content bounces={false} noPadded={true}>
+        <Content bounces={false} noPadded={true} scrollEnabled={false}>
           {this.state.isScreenFocused && (
             <QRCodeScanner
               onRead={this.onRead}
