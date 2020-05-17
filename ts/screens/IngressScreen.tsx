@@ -49,7 +49,7 @@ class IngressScreen extends React.PureComponent<Props> {
       }
     );
     return (
-      <BaseScreenComponent goBack={false} primary={true}>
+      <BaseScreenComponent goBack={false} primary={true} withSafeArea={true}>
         <ConnectionBar />
         <Content primary={true}>
           <Text white={true} alignCenter={true}>
