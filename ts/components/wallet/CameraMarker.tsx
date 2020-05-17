@@ -16,7 +16,7 @@ type Props = {
 /**
  * Renders a square camera marker.
  *
- * This is overlayed on the camera preview of the QR code scanner.
+ * This is overlayed on the camera preview of the QR Code scanner.
  */
 export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
   const iconName =

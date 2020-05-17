@@ -278,7 +278,7 @@ authentication:
       le tue carte
     card3-title: Paga velocemente un avviso cartaceo
     card3-content:
-      Tramite la scansione del QR code puoi velocemente pagare anche
+      Tramite la scansione del QR Code puoi velocemente pagare anche
       un avviso cartaceo
     card4-title: Potrai utilizzare l'app solo tramite SPID
     card4-content:
@@ -794,10 +794,13 @@ wallet:
       block3: oppure inserisci manualmente
       block4: i dati identificativi (IUV e codice ente/azienda).
     setManually: Inserisci i dati manualmente
-    enroll_cta: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. Vai nel menu impostazioni di questo dispositivo e configuralo per abilitare questa feature.
+    enroll_cta:
+      block1: L'uso della fotocamera è presente su questo dispositivo, ma non è configurato. 
+      block2: Vai nel menu impostazioni di questo dispositivo
+      block3: e configuralo per abilitare la lettuare del QR Code.
     cameraUsagePermissionInfobox:
       title: "Permesso per utilizzare la fotocamera da parte di IO"
-      message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR code"
+      message: "IO richiede di poter utilizzare la fotocamera ed inquadrare il QR Code"
     settingsAlert:
       title: Sembra che l'accesso alle foto sia stato negato
       message: IO ha bisogno di accedere alle foto per scansionare i codici QR
@@ -1197,7 +1200,7 @@ faq:
     title: "È possibile pagare un avviso che non hai ricevuto tramite l'app IO?"
     content: !include faq/faq33.md
   34:
-    title: "Che cos'è un QR code?"
+    title: "Che cos'è un QR Code?"
     content: !include faq/faq34.md
   35:
     title: "Che cos'è pagoPA?"

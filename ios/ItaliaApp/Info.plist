@@ -57,7 +57,7 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>IO needs access to the calendar to add event reminders</string>
 	<key>NSCameraUsageDescription</key>
-	<string>IO needs access to the camera to scan QR codes</string>
+	<string>IO needs access to the camera to scan QR Codes</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app needs NSLocationWhenInUseUsageDescription permission</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -67,7 +67,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>The app needs NSPhotoLibraryAddUsageDescription permission</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>IO needs access to the Photos to scan QR codes</string>
+	<string>IO needs access to the Photos to scan QR Codes</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>The app needs NSSpeechRecognitionUsageDescription permission</string>
 	<key>NSAppleMusicUsageDescription</key>

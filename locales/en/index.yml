@@ -268,7 +268,7 @@ authentication:
     card2-title: Use your favourite payment methods
     card2-content: You can pay a tax or a penalty by your bank account and your cards
     card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical
+    card3-content: You can pay a notice also by scanning the QR Code on the physical
       notice
     card4-title: You can use the app by SPID only
     card4-content: The access is allowed only by SPID (Public Service of Digital Identity)
@@ -763,13 +763,16 @@ wallet:
       block3: or manually insert 
       block4: the data related to the transacion (IUV and entity/company code).
     setManually: Insert data manually
-    enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
+    enroll_cta: 
+      block1: Camera usage is available on this device, but it is not enrolled.
+      block2: Please go to settings menu 
+      block3: and enroll it to enable the QR Code scanner.
     cameraUsagePermissionInfobox:
       title: "IO Camera usage permission"
-      message: "IO app needs Camera usage permission to shoot at the QR code"
+      message: "IO app needs Camera usage permission to shoot at the QR Code"
     settingsAlert:
       title: It seems access to Photos has been denied
-      message: IO needs access to the Photos to scan QR codes
+      message: IO needs access to the Photos to scan QR Codes
       buttonText:
         settings: Enable permissions
         cancel: Cancel
@@ -1161,7 +1164,7 @@ faq:
     title: "Is it possible to pay a notice that you have not received through the IO app?"
     content: !include faq/faq33.md
   34:
-    title: "What is a QR code?"
+    title: "What is a QR Code?"
     content: !include faq/faq34.md
   35:
     title: "What is pagoPA"

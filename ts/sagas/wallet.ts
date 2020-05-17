@@ -745,7 +745,7 @@ export function* watchPaymentInitializeSaga(): Iterator<Effect> {
 
 /**
  * This saga back to entrypoint payment if the payment was initiated from the message list or detail
- * otherwise if the payment starts in scan qr code screen or in Manual data insertion screen
+ * otherwise if the payment starts in scan QR Code screen or in Manual data insertion screen
  * it makes one or two supplementary step backs (the correspondant step to wallet home from these screens)
  */
 export function* watchBackToEntrypointPaymentSaga(): Iterator<Effect> {

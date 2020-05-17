@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 
 /**
  * This screen shows the transaction details.
- * It should occur after the transaction identification by qr scanner or manual procedure.
+ * It should occur after the transaction identification by QR Code scanner or manual procedure.
  *
  * TODO: integrate contextual help https://www.pivotaltracker.com/n/projects/2048617/stories/158108270
  */
