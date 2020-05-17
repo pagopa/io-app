@@ -757,8 +757,11 @@ wallet:
     chooser: Pick image from gallery
     wrongQrCode: Not a pagoPA QR Code!
     byCameraTitle: Notice QR Code
-    cameraUsageInfo: Capture the QR Code on the payment notice with the camera, or
-      manually insert the transaction-related data (IUV and the entity/company code).
+    info: 
+      block1: Capture the QR Code 
+      block2: on the payment notice with the camera, 
+      block3: or manually insert 
+      block4: the data related to the transacion (IUV and entity/company code).
     setManually: Insert data manually
     enroll_cta: Camera usage is available on this device, but it is not enrolled. Please go to settings menu and enroll it to enable this feature in this app.
     cameraUsagePermissionInfobox:
