@@ -34,6 +34,7 @@ import {
   fetchWalletsRequest,
   setFavouriteWalletRequest
 } from "../../store/actions/wallet/wallets";
+import { navSelector } from "../../store/reducers/navigationHistory";
 import { GlobalState } from "../../store/reducers/types";
 import {
   getFavoriteWalletId,
@@ -41,9 +42,8 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
-import { showToast } from "../../utils/showToast";
-import { navSelector } from "../../store/reducers/navigationHistory";
 import { getCurrentRouteKey } from "../../utils/navigation";
+import { showToast } from "../../utils/showToast";
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -66,7 +66,8 @@ type OwnProps = Readonly<{
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mergeProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletList.contextualHelpTitle",
