@@ -307,7 +307,7 @@ authentication:
       title: Inserisci il PIN della tua carta
       header: Inserisci il PIN
       description: 
-        block1: Il codice PIN è composto da 8 cifre.
+        block1: "Il codice PIN è composto da 8 cifre:"
         block2: "-Quattro cifre che ti sono state consegnate all'anagrafe,"
         block3: "-Quattro cifre ti sono state consegnate insieme alla carta."
         block4: "Mettile insieme, in quest'ordine, e inseriscile qui per favore."

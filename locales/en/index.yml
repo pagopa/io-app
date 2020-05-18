@@ -296,7 +296,7 @@ authentication:
       title: Enter the PIN of your card
       header: Enter the PIN
       description:
-        block1: The PIN code consists of 8 digits. 
+        block1: "The PIN code consists of 8 digits:"
         block2: "-Four digits have been delivered to you at the registry office,"
         block3: "-Four digits have been delivered along with the card."
         block4: Put them together, in that order, and enter them here please.
