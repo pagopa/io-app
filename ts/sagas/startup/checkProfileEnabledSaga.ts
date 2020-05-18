@@ -41,13 +41,8 @@ export function* checkProfileEnabledSaga(
       yield put(startApplicationInitialization());
     } else {
       // First time login
-      if (!profile.has_profile) {
-        yield put(
-          profileFirstLogin({
-            fiscal_code: profile.fiscal_code,
-            spid_email: profile.spid_email
-          })
-        );
+      if (profile.version === 0) {
+        yield put(profileFirstLogin());
       }
     }
   }
