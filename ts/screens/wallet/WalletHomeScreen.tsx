@@ -159,6 +159,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         this.props.navigateBack(maybeKeyFrom);
       } else {
         this.props.navigation.setParams({ newMethodAdded: false });
+        this.props.navigateToWalletList();
       }
     } else {
       this.props.navigateBack();
@@ -390,16 +391,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       <IconFont
         name={"io-close"}
         style={styles.end}
-        onPress={() => {
-          const maybeKeyFrom = fromNullable(
-            this.props.navigation.getParam("keyFrom")
-          ).fold("", s => s);
-          if (maybeKeyFrom !== "") {
-            this.props.navigateBack(maybeKeyFrom);
-          } else {
-            this.props.navigation.setParams({ newMethodAdded: false });
-          }
-        }}
+        onPress={this.handleBackPress}
       />
       <IconFont
         name={"io-complete"}
