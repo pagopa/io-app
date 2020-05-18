@@ -42,6 +42,8 @@ import {
 import variables from "../../theme/variables";
 import { Wallet } from "../../types/pagopa";
 import { showToast } from "../../utils/showToast";
+import { navSelector } from "../../store/reducers/navigationHistory";
+import { getCurrentRouteKey } from "../../utils/navigation";
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -156,7 +158,8 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     wallets: pot.getOrElse(potWallets, []),
     isLoading: pot.isLoading(potWallets),
-    favoriteWallet: getFavoriteWalletId(state)
+    favoriteWallet: getFavoriteWalletId(state),
+    nav: navSelector(state)
   };
 };
 
@@ -166,8 +169,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
-  navigateToWalletAddPaymentMethod: () =>
-    dispatch(navigateToWalletAddPaymentMethod({ inPayment: none })),
+  navigateToAddPaymentMethod: (key?: string) =>
+    dispatch(
+      navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom: key })
+    ),
   deleteWallet: (walletId: number) =>
     dispatch(
       deleteWalletRequest({
@@ -187,7 +192,26 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
+const mergeProps = (
+  stateProps: ReturnType<typeof mapStateToProps>,
+  dispatchProps: ReturnType<typeof mapDispatchToProps>,
+  ownProps: OwnProps
+) => {
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    ...ownProps,
+    ...{
+      navigateToWalletAddPaymentMethod: () =>
+        dispatchProps.navigateToAddPaymentMethod(
+          getCurrentRouteKey(stateProps.nav)
+        )
+    }
+  };
+};
+
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  mergeProps
 )(withLoadingSpinner(WalletsScreen));

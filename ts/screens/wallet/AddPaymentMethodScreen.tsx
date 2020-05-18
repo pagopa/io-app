@@ -27,6 +27,7 @@ type NavigationParams = Readonly<{
     verifica: PaymentRequestsGetResponse;
     idPayment: string;
   }>;
+  keyFrom?: string;
 }>;
 
 type OwnProps = NavigationInjectedProps<NavigationParams>;
@@ -130,7 +131,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateToAddCreditCard: () =>
     dispatch(
       navigateToWalletAddCreditCard({
-        inPayment: props.navigation.getParam("inPayment")
+        inPayment: props.navigation.getParam("inPayment"),
+        keyFrom: props.navigation.getParam("keyFrom")
       })
     )
 });

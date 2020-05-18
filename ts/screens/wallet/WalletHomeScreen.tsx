@@ -2,7 +2,7 @@ import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
-import { Image, RefreshControl, StyleSheet } from "react-native";
+import { BackHandler, Image, RefreshControl, StyleSheet } from "react-native";
 import { Grid, Row } from "react-native-easy-grid";
 import {
   NavigationEventSubscription,
@@ -25,6 +25,7 @@ import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import I18n from "../../i18n";
 import {
+  navigateBack,
   navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod,
@@ -57,6 +58,7 @@ import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
+  keyFrom?: string;
 }>;
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -142,7 +144,27 @@ class WalletHomeScreen extends React.PureComponent<Props> {
     return this.props.navigation.getParam("newMethodAdded");
   }
 
+  get navigationKeyFrom() {
+    return this.props.navigation.getParam("keyFrom");
+  }
+
   private navListener?: NavigationEventSubscription;
+
+  private handleBackPress = () => {
+    if (this.newMethodAdded) {
+      const maybeKeyFrom = fromNullable(
+        this.props.navigation.getParam("keyFrom")
+      ).fold("", s => s);
+      if (maybeKeyFrom !== "") {
+        this.props.navigateBack(maybeKeyFrom);
+      } else {
+        this.props.navigation.setParams({ newMethodAdded: false });
+      }
+    } else {
+      this.props.navigateBack();
+    }
+    return true;
+  };
 
   public componentDidMount() {
     // WIP loadTransactions should not be called from here
@@ -156,13 +178,15 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         "light-content",
         customVariables.brandDarkGray
       );
-    }); // tslint:disable-line no-object-mutation
+    });
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
   public componentWillUnmount() {
     if (this.navListener) {
       this.navListener.remove();
     }
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
   }
 
   private cardHeader(isError: boolean = false) {
@@ -366,9 +390,16 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       <IconFont
         name={"io-close"}
         style={styles.end}
-        onPress={() =>
-          this.props.navigation.setParams({ newMethodAdded: false })
-        }
+        onPress={() => {
+          const maybeKeyFrom = fromNullable(
+            this.props.navigation.getParam("keyFrom")
+          ).fold("", s => s);
+          if (maybeKeyFrom !== "") {
+            this.props.navigateBack(maybeKeyFrom);
+          } else {
+            this.props.navigation.setParams({ newMethodAdded: false });
+          }
+        }}
       />
       <IconFont
         name={"io-complete"}
@@ -488,6 +519,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     );
   },
+  navigateBack: (keyFrom?: string) => dispatch(navigateBack({ key: keyFrom })),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequest({ start })),
   loadWallets: () => dispatch(fetchWalletsRequest())
