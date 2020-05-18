@@ -293,9 +293,13 @@ authentication:
       enableNfcHeader: Check NFC
       enableNfcContent: For allowing the app to verify your Electronic Identity Card, you must first activate the NFC function of your device. Come back here when you're done!
     pin:
-      pinCardTitle: Enter the PIN of your card
-      pinCardHeader: Enter the PIN
-      pinCardContent: The PIN code consists of 8 digits. Four digits have been delivered to you at the registry office and another four digits have been sent to your home along with the card. Put them together, in that order, and enter them here please.
+      title: Enter the PIN of your card
+      header: Enter the PIN
+      description:
+        block1: The PIN code consists of 8 digits. 
+        block2: "-Four digits have been delivered to you at the registry office,"
+        block3: "-Four digits have been delivered along with the card."
+        block4: Put them together, in that order, and enter them here please.
       incorrectCiePinTitle: Incorrect PIN, you still have {{remainingCount}} attempts
       incorrectCiePinHeaderTitle: Wrong PIN
       incorrectCiePinContent1: For your security, you can try entering the card PIN no more than three times. Then you will have to unlock the card by entering the PUK.

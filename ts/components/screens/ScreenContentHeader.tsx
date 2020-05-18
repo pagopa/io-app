@@ -14,6 +14,7 @@ import {
 import ScreenHeader from "../ScreenHeader";
 
 type Props = Readonly<{
+  padded?: boolean;
   title?: string;
   icon?: ImageSourcePropType;
   subtitle?: string;
@@ -23,8 +24,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   subheaderContainer: {
-    paddingLeft: variables.contentPadding,
-    paddingRight: variables.contentPadding
+    paddingHorizontal: variables.contentPadding
   },
   darkGrayBg: {
     backgroundColor: variables.brandDarkGray
@@ -75,7 +75,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
   }
 
   public render() {
-    const { subtitle, dark, icon } = this.props;
+    const { subtitle, dark, icon, padded } = this.props;
 
     return (
       <View style={dark && styles.darkGrayBg}>
@@ -86,14 +86,15 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
             }
           } // if the condition "!== undefined" is not specified, once dynamicHeight.value = 0, dynamicHeight is assumend as false
         >
-          <View spacer={true} />
+          {padded && <View spacer={true} />}
           <ScreenHeader
             heading={<H3 style={dark && styles.white}>{this.props.title}</H3>}
             icon={icon}
             dark={dark}
+            padded={padded}
           />
           {subtitle && (
-            <View style={styles.subheaderContainer}>
+            <View style={padded ? styles.subheaderContainer : undefined}>
               <Text>{subtitle}</Text>
               <View spacer={true} large={true} />
             </View>

@@ -1,13 +1,12 @@
 /**
  * A screen that allow the user to insert the Cie PIN.
  */
-import { View } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
   StyleSheet
 } from "react-native";
 import { NavigationInjectedProps } from "react-navigation";
@@ -15,8 +14,8 @@ import { connect } from "react-redux";
 import CieRequestAuthenticationOverlay from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import {
   BottomTopAnimation,
@@ -33,19 +32,18 @@ type Props = ReduxProps &
   NavigationInjectedProps &
   LightModalContextInterface;
 
-type State = {
+type State = Readonly<{
   pin: string;
   url?: string;
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: variables.contentPadding
-  }
-});
+}>;
 
 const CIE_PIN_LENGTH = 8;
+
+const styles = StyleSheet.create({
+  reducedHeight: {
+    lineHeight: 21
+  }
+});
 
 class CiePinScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -91,26 +89,37 @@ class CiePinScreen extends React.PureComponent<Props, State> {
 
   public render() {
     return (
-      <TopScreenComponent
+      <BaseScreenComponent
         goBack={true}
-        headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
+        headerTitle={I18n.t("authentication.cie.pin.header")}
       >
-        <ScrollView>
+        <Content>
           <ScreenContentHeader
-            title={I18n.t("authentication.cie.pin.pinCardTitle")}
-            icon={require("../../../../img/icons/icon_insert_cie_pin.png")}
+            padded={false}
+            title={I18n.t("authentication.cie.pin.title")}
           />
           <View spacer={true} />
-          <View style={styles.container}>
-            <CiePinpad
-              pin={this.state.pin}
-              pinLength={CIE_PIN_LENGTH}
-              description={I18n.t("authentication.cie.pin.pinCardContent")}
-              onPinChanged={this.handelOnPinChanged}
-              onSubmit={this.handleOnContinue}
-            />
-          </View>
-        </ScrollView>
+          <CiePinpad
+            pin={this.state.pin}
+            pinLength={CIE_PIN_LENGTH}
+            onPinChanged={this.handelOnPinChanged}
+            onSubmit={this.handleOnContinue}
+          />
+          <Text style={styles.reducedHeight}>
+            <Text bold={true}>
+              {I18n.t("authentication.cie.pin.description.block1")}
+            </Text>
+            <Text>{`\n${I18n.t(
+              "authentication.cie.pin.description.block2"
+            )}`}</Text>
+            <Text>{`\n${I18n.t(
+              "authentication.cie.pin.description.block3"
+            )}`}</Text>
+            <Text>{`\n${I18n.t(
+              "authentication.cie.pin.description.block4"
+            )}`}</Text>
+          </Text>
+        </Content>
         {this.state.pin.length === CIE_PIN_LENGTH && (
           <FooterWithButtons
             type={"SingleButton"}
@@ -128,7 +137,7 @@ class CiePinScreen extends React.PureComponent<Props, State> {
             android: variables.contentPadding
           })}
         />
-      </TopScreenComponent>
+      </BaseScreenComponent>
     );
   }
 }

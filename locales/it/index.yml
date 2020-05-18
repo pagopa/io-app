@@ -304,9 +304,13 @@ authentication:
       enableNfcHeader: Verifica NFC
       enableNfcContent: Per permettere all'app di verificare la tua Carta di Identità Elettronica devi prima attivare la funzione NFC del tuo dispositivo. Torna qui quando avrai finito!
     pin:
-      pinCardTitle: Inserisci il PIN della tua carta
-      pinCardHeader: Inserisci il PIN
-      pinCardContent: Il codice PIN è composto da 8 cifre. Quattro cifre che ti sono state consegnate all'anagrafe e altre 4 cifre ti sono state spedite a casa, insieme alla carta. Mettile insieme, in quest'ordine, e inseriscile qui per favore.
+      title: Inserisci il PIN della tua carta
+      header: Inserisci il PIN
+      description: 
+        block1: Il codice PIN è composto da 8 cifre.
+        block2: "-Quattro cifre che ti sono state consegnate all'anagrafe,"
+        block3: "-Quattro cifre ti sono state consegnate insieme alla carta."
+        block4: "Mettile insieme, in quest'ordine, e inseriscile qui per favore."
       incorrectCiePinTitle: PIN errato, hai ancora {{remainingCount}} tentativi
       incorrectCiePinHeaderTitle: PIN errato
       incorrectCiePinContent1: Per la tua sicurezza puoi provare ad inserire il PIN della carta non più di tre volte. Poi dovrai sbloccare la carta inserendo il PUK.

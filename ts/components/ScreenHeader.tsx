@@ -9,6 +9,7 @@ type Props = {
   heading: React.ReactNode;
   icon?: ImageSourcePropType;
   dark?: boolean;
+  padded?: boolean;
 };
 
 const ICON_WIDTH = 48;
@@ -18,7 +19,9 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.brandDarkGray
   },
   container: {
-    justifyContent: "space-between",
+    justifyContent: "space-between"
+  },
+  padded: {
     paddingHorizontal: customVariables.contentPadding
   },
   text: {
@@ -38,11 +41,20 @@ const styles = StyleSheet.create({
  * and an icon image to the right
  */
 class ScreenHeader extends React.Component<Props> {
+  public static defaultProps: Partial<Props> = {
+    padded: true
+  };
   public render() {
-    const { heading, icon, dark } = this.props;
+    const { heading, icon, dark, padded } = this.props;
 
     return (
-      <View style={[dark && styles.darkGrayBg, styles.container]}>
+      <View
+        style={[
+          dark && styles.darkGrayBg,
+          padded && styles.padded,
+          styles.container
+        ]}
+      >
         <View style={styles.text}>{heading}</View>
         {icon && <Image source={icon} style={styles.image} />}
       </View>

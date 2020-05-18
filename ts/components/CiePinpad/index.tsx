@@ -1,16 +1,18 @@
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import * as React from "react";
 import { Dimensions, StyleSheet, TextInput } from "react-native";
 import variables from "../../theme/variables";
 import { Baseline } from "../Pinpad/Placeholders";
 
 type Props = {
-  description: string;
   pinLength: number;
   onPinChanged: (pin: string) => void;
   onSubmit: (pin: string) => void;
   pin?: string;
 };
+
+// It makes the placeholder be more similar to the PinPad placeholder
+const PLACEHOLDER_SIZE = 12;
 
 const styles = StyleSheet.create({
   placeholderContainer: {
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     textAlign: "center",
-    fontSize: variables.fontSize3
+    fontSize: PLACEHOLDER_SIZE
   },
   input: {
     backgroundColor: "red",
@@ -41,6 +43,9 @@ const styles = StyleSheet.create({
     left: -100,
     right: 0,
     bottom: 0
+  },
+  center: {
+    alignItems: "center"
   }
 });
 
@@ -96,7 +101,7 @@ class CiePinpad extends React.PureComponent<Props> {
         : width;
 
     return (
-      <View style={{ alignItems: "center" }} key={`input_view-${i}`}>
+      <View style={styles.center} key={`input_view-${i}`}>
         <TextInput
           style={{
             ...styles.textInputStyle,
@@ -118,7 +123,7 @@ class CiePinpad extends React.PureComponent<Props> {
             // The color is based on the current box
             !this.props.pin || i >= this.props.pin.length
               ? variables.brandLightGray
-              : variables.brandDarkestGray
+              : 'transparent'
           }
           placeHolderStyle={{
             ...styles.placeHolderStyle,
@@ -157,7 +162,6 @@ class CiePinpad extends React.PureComponent<Props> {
             .map((_, i) => this.inputBoxGenerator(i))}
         </View>
         <View spacer={true} />
-        <Text>{this.props.description}</Text>
       </View>
     );
   }
