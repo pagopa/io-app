@@ -179,7 +179,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
         "light-content",
         customVariables.brandDarkGray
       );
-    });
+    }); // tslint:disable-line no-object-mutation
     BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
   }
 
