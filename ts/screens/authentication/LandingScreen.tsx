@@ -66,7 +66,7 @@ const getCards = (
   {
     id: 4,
     image: isCIEAvailable
-      ? require("../../../img/cie/CIE-onboarding-illustration.png")
+      ? require("../../../img/cie/Icon_accessSPIDoCIE.png")
       : require("../../../img/landing/04.png"),
     title: isCIEAvailable
       ? I18n.t("authentication.landing.loginSpidCie")
@@ -208,7 +208,7 @@ const mapStateToProps = (state: GlobalState) => {
   const isCIEAuthenticationSupported = isCieSupportedSelector(state);
   return {
     isSessionExpired: isSessionExpiredSelector(state),
-    isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false)
+    isCieSupported: true//pot.getOrElse(isCIEAuthenticationSupported, false)
   };
 };
 
