@@ -10,7 +10,8 @@ import {
   FlatList,
   ListRenderItemInfo,
   RefreshControl,
-  StyleSheet
+  StyleSheet,
+  Alert
 } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
@@ -84,9 +85,11 @@ class WalletsScreen extends React.Component<Props> {
         wallet={item}
         isFavorite={isFavorite}
         onSetFavorite={(willBeFavorite: boolean) =>
-          this.props.setFavoriteWallet(
-            willBeFavorite ? item.idWallet : undefined
-          )
+          willBeFavorite
+            ? this.props.setFavoriteWallet(item.idWallet)
+            : this.props.wallets.length > 0
+              ? Alert.alert(I18n.t("wallet.alert.favourite"))
+              : undefined
         }
         onDelete={() => this.props.deleteWallet(item.idWallet)}
         mainAction={this.props.navigateToWalletTransactionsScreen}
