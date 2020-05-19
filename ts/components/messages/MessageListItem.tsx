@@ -4,18 +4,18 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import { messageNeedsCTABar } from "../../utils/messages";
+import { hasPrescriptionData, messageNeedsCTABar } from "../../utils/messages";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
 import MessageListCTABar from "./MessageListCTABar";
 
 type Props = {
   isRead: boolean;
-  message: CreatedMessageWithContent;
+  message: CreatedMessageWithContentAndAttachments;
   service?: ServicePublic;
   payment?: PaidReason;
   onPress: (id: string) => void;
@@ -70,17 +70,18 @@ class MessageListItem extends React.PureComponent<Props> {
         isSelectionModeEnabled={isSelectionModeEnabled}
         isItemSelected={isSelected}
       >
-        {messageNeedsCTABar(message) && (
-          <React.Fragment>
-            <View spacer={true} large={true} />
-            <MessageListCTABar
-              message={message}
-              service={service}
-              payment={payment}
-              disabled={isSelectionModeEnabled}
-            />
-          </React.Fragment>
-        )}
+        {!hasPrescriptionData(message) &&
+          messageNeedsCTABar(message) && (
+            <React.Fragment>
+              <View spacer={true} large={true} />
+              <MessageListCTABar
+                message={message}
+                service={service}
+                payment={payment}
+                disabled={isSelectionModeEnabled}
+              />
+            </React.Fragment>
+          )}
       </DetailedlistItemComponent>
     );
   }
