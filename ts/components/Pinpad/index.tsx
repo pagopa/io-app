@@ -71,19 +71,18 @@ class Pinpad extends React.PureComponent<Props, State> {
   private shakeAnimationRef = React.createRef<ShakeAnimation>();
 
   /**
-   * Get the name of the icon (from icon font) to represent
-   * // TODO check if it should be always the io-fingerprint icon for both fingerprint and Face ID
+   * Get the name of the icon (from icon font) to represent depending on 
+   * the available biometry functionality available on the device
    */
   private getBiometryIconName(
     biometryPrintableSimpleType: BiometryPrintableSimpleType
   ): string {
     switch (biometryPrintableSimpleType) {
       case "FINGERPRINT":
-        return "icon:io-fingerprint";
-      case "FACE_ID":
-        return "icon:io-fingerprint";
       case "TOUCH_ID":
         return "icon:io-fingerprint";
+      case "FACE_ID":
+        return "icon:io-face-id";
     }
   }
 
