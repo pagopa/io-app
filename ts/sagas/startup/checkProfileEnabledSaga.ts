@@ -10,10 +10,8 @@ export function* checkProfileEnabledSaga(
   profile: InitializedProfile
 ): IterableIterator<Effect> {
   if (
-    profile.version === 0 ||
-    !profile.email ||
-    !profile.is_inbox_enabled ||
-    !profile.is_webhook_enabled
+    profile.version === 0 &&
+    (!profile.email || !profile.is_inbox_enabled || !profile.is_webhook_enabled)
   ) {
     // Upsert the user profile to enable inbox and webhook
     yield put(
