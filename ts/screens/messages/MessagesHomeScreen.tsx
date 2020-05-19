@@ -42,8 +42,8 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
-import Shortcut from "../../utils/shortcut";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
+import Shortcut from "../../utils/shortcut";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
 
 type Props = NavigationScreenProps &
