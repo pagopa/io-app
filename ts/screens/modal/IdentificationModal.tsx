@@ -4,34 +4,34 @@ import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
-import Pinpad from "./components/Pinpad";
+import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
-} from "./components/screens/BaseScreenComponent";
-import IconFont from "./components/ui/IconFont";
-import TextWithIcon from "./components/ui/TextWithIcon";
-import { isDebugBiometricIdentificationEnabled } from "./config";
-import I18n from "./i18n";
-import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
-import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
+} from "../../components/screens/BaseScreenComponent";
+import IconFont from "../../components/ui/IconFont";
+import TextWithIcon from "../../components/ui/TextWithIcon";
+import { isDebugBiometricIdentificationEnabled } from "../../config";
+import I18n from "../../i18n";
+import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
 import {
   identificationCancel,
   identificationFailure,
   identificationForceLogout,
   identificationPinReset,
   identificationSuccess
-} from "./store/actions/identification";
-import { ReduxProps } from "./store/actions/types";
+} from "../../store/actions/identification";
+import { ReduxProps } from "../../store/actions/types";
 import {
   freeAttempts,
   identificationFailSelector,
   maxAttempts
-} from "./store/reducers/identification";
-import { GlobalState } from "./store/reducers/types";
-import variables from "./theme/variables";
-import { authenticateConfig } from "./utils/biometric";
+} from "../../store/reducers/identification";
+import { GlobalState } from "../../store/reducers/types";
+import variables from "../../theme/variables";
+import { authenticateConfig } from "../../utils/biometric";
+import { BiometryPrintableSimpleType } from "../onboarding/FingerprintScreen";
 
-import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
+import { IdentificationLockModal } from "./IdentificationLockModal";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
@@ -153,7 +153,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   /**
    * Activate the interval check on the pin state if the condition is satisfied
-   * @param remainingAttempts
    */
   private scheduleCanInsertPinUpdate = () => {
     this.props.identificationFailState.map(failState => {
@@ -456,7 +455,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   /**
    * Print the only BiometrySimplePrintableType values that are passed to the UI
-   * @param biometrySimplePrintableType
    */
   private renderBiometryType(): string {
     switch (this.state.biometryType) {
