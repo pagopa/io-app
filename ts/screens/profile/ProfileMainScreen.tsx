@@ -23,7 +23,6 @@ import SectionHeaderComponent from "../../components/screens/SectionHeaderCompon
 import SelectLogoutOption from "../../components/SelectLogoutOption";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
-import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
