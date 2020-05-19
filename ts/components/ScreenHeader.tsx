@@ -50,15 +50,13 @@ class ScreenHeader extends React.Component<Props> {
     }
     return fromNullable(iconFont).fold(undefined, ic => {
       const { dark } = this.props;
-      const imageColor = fromNullable(this.props.iconFont)
-        .mapNullable(s => s.color)
-        .fold(
-          fromNullable(dark).fold(
-            customVariables.headerIconLight,
-            _ => customVariables.headerIconDark
-          ),
-          s => s
-        );
+      const imageColor = fromNullable(ic.color).getOrElse(
+        fromNullable(dark).fold(
+          customVariables.headerIconLight,
+          d =>
+            d ? customVariables.headerIconDark : customVariables.headerIconLight
+        )
+      );
       return (
         <IconFont
           name={ic.name}
