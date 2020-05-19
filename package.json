@@ -192,5 +192,9 @@
   },
   "browser": {
     "path": "path-browserify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pagopa/io-app.git"
   }
 }
