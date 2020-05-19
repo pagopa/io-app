@@ -72,7 +72,7 @@ class Pinpad extends React.PureComponent<Props, State> {
   private shakeAnimationRef = React.createRef<ShakeAnimation>();
 
   /**
-   * Get the name of the icon (from icon font) to represent depending on 
+   * Get the name of the icon (from icon font) to represent depending on
    * the available biometry functionality available on the device
    */
   private getBiometryIconName(
@@ -142,7 +142,11 @@ class Pinpad extends React.PureComponent<Props, State> {
   private confirmResetAlert = () =>
     Alert.alert(
       I18n.t("identification.forgetCode.confirmTitle"),
-      I18n.t(this.props.isValidatingTask ? "identification.forgetCode.confirmMsgWithTask" : "identification.forgetCode.confirmMsg"),
+      I18n.t(
+        this.props.isValidatingTask
+          ? "identification.forgetCode.confirmMsgWithTask"
+          : "identification.forgetCode.confirmMsg"
+      ),
       [
         {
           text: I18n.t("global.buttons.confirm"),

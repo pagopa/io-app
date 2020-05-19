@@ -4,6 +4,7 @@ import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
@@ -17,7 +18,6 @@ import { createPinSuccess } from "../../store/actions/pinset";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setPin } from "../../utils/keychain";
-import { Dispatch } from 'redux';
 
 type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
 
@@ -351,7 +351,9 @@ class PinScreen extends React.PureComponent<Props, State> {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   createPinSuccess: (pin: PinString) => dispatch(createPinSuccess(pin)),
   abortOnboarding: () => dispatch(abortOnboarding())
+});
 
-})
-
-export default connect(undefined, mapDispatchToProps)(PinScreen);
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(PinScreen);
