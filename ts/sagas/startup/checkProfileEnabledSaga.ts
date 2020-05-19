@@ -5,7 +5,6 @@ import { ActionType, getType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
 import { profileFirstLogin, profileUpsert } from "../../store/actions/profile";
-import { RTron } from "../../boot/configureStoreAndPersistor";
 
 export function* checkProfileEnabledSaga(
   profile: InitializedProfile
