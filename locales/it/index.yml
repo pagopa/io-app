@@ -1054,8 +1054,9 @@ identification:
       title: Accesso con codice di sblocco
       content: !include onboarding/onboarding_pin.md
   forgetCode:
-    confirmTitle: Hai dimenticato il
+    confirmTitle: Hai dimenticato il codice di sblocco?
     confirmMsg: Per poter scegliere un nuovo codice di sblocco dovrai accedere nuovamente.
+    confirmMsgWithTask: Per poter scegliere un nuovo codice di sblocco dovrai annullare l'operazione corrente e accedere nuovamente.
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
   removeRequest:

@@ -426,6 +426,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
             <Pinpad
               onPinResetHandler={this.props.onPinResetHandler}
+              isValidatingTask={isValidatingTask}
               isFingerprintEnabled={isFingerprintEnabled}
               biometryType={biometryType}
               onFingerPrintReq={() =>

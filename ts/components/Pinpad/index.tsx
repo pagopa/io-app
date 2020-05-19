@@ -20,6 +20,7 @@ interface Props {
   clearOnInvalid?: boolean;
   shufflePad?: boolean;
   isFingerprintEnabled?: any;
+  isValidatingTask?: boolean;
   biometryType?: any;
   compareWithCode?: string;
   inactiveColor: string;
@@ -141,7 +142,7 @@ class Pinpad extends React.PureComponent<Props, State> {
   private confirmResetAlert = () =>
     Alert.alert(
       I18n.t("identification.forgetCode.confirmTitle"),
-      I18n.t("identification.forgetCode.confirmMsg"),
+      I18n.t(this.props.isValidatingTask ? "identification.forgetCode.confirmMsgWithTask" : "identification.forgetCode.confirmMsg"),
       [
         {
           text: I18n.t("global.buttons.confirm"),
