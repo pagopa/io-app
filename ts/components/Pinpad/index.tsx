@@ -159,7 +159,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         Tuple2(
           right({ name: "io-cancel", size: SMALL_ICON_WIDTH }),
           this.deleteLastDigit
-        ) // TODO: use icon instead
+        )
       ]
     ];
   };
