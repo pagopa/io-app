@@ -9,6 +9,8 @@ import customVariables from "../theme/variables";
 export const PIN_LENGTH = 5;
 export const PIN_LENGTH_SIX = 6;
 
+export const HEADER_ICON_HEIGHT = 48;
+
 // A key to identify the Set of the listeners of the navigtion middleware.
 export const NAVIGATION_MIDDLEWARE_LISTENERS_KEY: string = "root";
 

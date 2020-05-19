@@ -6,6 +6,7 @@ import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../theme/variables";
+import { HEADER_ICON_HEIGHT } from "../utils/constants";
 import IconFont from "./ui/IconFont";
 
 type Props = {
@@ -15,8 +16,6 @@ type Props = {
   dark?: boolean;
 };
 
-const HEADER_HEIGHT = 48;
-
 const styles = StyleSheet.create({
   darkGrayBg: {
     backgroundColor: customVariables.brandDarkGray
@@ -24,15 +23,15 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "space-between",
     paddingHorizontal: customVariables.contentPadding,
-    minHeight: HEADER_HEIGHT
+    minHeight: HEADER_ICON_HEIGHT
   },
   text: {
     flex: 1,
     flexGrow: 1
   },
   image: {
-    maxHeight: HEADER_HEIGHT,
-    maxWidth: HEADER_HEIGHT,
+    maxHeight: HEADER_ICON_HEIGHT,
+    maxWidth: HEADER_ICON_HEIGHT,
     resizeMode: "contain",
     flex: 1
   }
@@ -63,7 +62,7 @@ class ScreenHeader extends React.Component<Props> {
       return (
         <IconFont
           name={ic.name}
-          size={Math.min(ic.size || HEADER_HEIGHT, HEADER_HEIGHT)}
+          size={Math.min(ic.size || HEADER_ICON_HEIGHT, HEADER_ICON_HEIGHT)}
           color={imageColor}
         />
       );
