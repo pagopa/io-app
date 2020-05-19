@@ -1,4 +1,5 @@
 import { range } from "fp-ts/lib/Array";
+import { left, right } from "fp-ts/lib/Either";
 import { fromNullable } from "fp-ts/lib/Option";
 import { Tuple2 } from "italia-ts-commons/lib/tuples";
 import { debounce, shuffle } from "lodash";
@@ -62,7 +63,8 @@ const screenWidth = Dimensions.get("window").width;
 const width = 36;
 const sideMargin = 32;
 const margin = 12;
-
+const SMALL_ICON_WIDTH = 17;
+const ICON_WIDTH = 48;
 /**
  * A customized CodeInput component.
  */
@@ -77,13 +79,13 @@ class Pinpad extends React.PureComponent<Props, State> {
    */
   private getBiometryIconName(
     biometryPrintableSimpleType: BiometryPrintableSimpleType
-  ): string {
+  ): { name: string; size: number } {
     switch (biometryPrintableSimpleType) {
       case "FINGERPRINT":
       case "TOUCH_ID":
-        return "icon:io-fingerprint";
+        return { name: "io-fingerprint", size: ICON_WIDTH };
       case "FACE_ID":
-        return "icon:io-face-id";
+        return { name: "io-face-id", size: ICON_WIDTH };
     }
   }
 
@@ -110,31 +112,54 @@ class Pinpad extends React.PureComponent<Props, State> {
 
     return [
       [
-        Tuple2(pinPadValues[1], () => this.handlePinDigit(pinPadValues[1])),
-        Tuple2(pinPadValues[2], () => this.handlePinDigit(pinPadValues[2])),
-        Tuple2(pinPadValues[3], () => this.handlePinDigit(pinPadValues[3]))
+        Tuple2(left(pinPadValues[1]), () =>
+          this.handlePinDigit(pinPadValues[1])
+        ),
+        Tuple2(left(pinPadValues[2]), () =>
+          this.handlePinDigit(pinPadValues[2])
+        ),
+        Tuple2(left(pinPadValues[3]), () =>
+          this.handlePinDigit(pinPadValues[3])
+        )
       ],
       [
-        Tuple2(pinPadValues[4], () => this.handlePinDigit(pinPadValues[4])),
-        Tuple2(pinPadValues[5], () => this.handlePinDigit(pinPadValues[5])),
-        Tuple2(pinPadValues[6], () => this.handlePinDigit(pinPadValues[6]))
+        Tuple2(left(pinPadValues[4]), () =>
+          this.handlePinDigit(pinPadValues[4])
+        ),
+        Tuple2(left(pinPadValues[5]), () =>
+          this.handlePinDigit(pinPadValues[5])
+        ),
+        Tuple2(left(pinPadValues[6]), () =>
+          this.handlePinDigit(pinPadValues[6])
+        )
       ],
       [
-        Tuple2(pinPadValues[7], () => this.handlePinDigit(pinPadValues[7])),
-        Tuple2(pinPadValues[8], () => this.handlePinDigit(pinPadValues[8])),
-        Tuple2(pinPadValues[9], () => this.handlePinDigit(pinPadValues[9]))
+        Tuple2(left(pinPadValues[7]), () =>
+          this.handlePinDigit(pinPadValues[7])
+        ),
+        Tuple2(left(pinPadValues[8]), () =>
+          this.handlePinDigit(pinPadValues[8])
+        ),
+        Tuple2(left(pinPadValues[9]), () =>
+          this.handlePinDigit(pinPadValues[9])
+        )
       ],
       [
         this.props.isFingerprintEnabled &&
         this.props.biometryType &&
         this.props.onFingerPrintReq
           ? Tuple2(
-              this.getBiometryIconName(this.props.biometryType),
+              right(this.getBiometryIconName(this.props.biometryType)),
               this.props.onFingerPrintReq
             )
           : undefined,
-        Tuple2(pinPadValues[0], () => this.handlePinDigit(pinPadValues[0])),
-        Tuple2("sicon:io-cancel", this.deleteLastDigit) // TODO: use icon instead
+        Tuple2(left(pinPadValues[0]), () =>
+          this.handlePinDigit(pinPadValues[0])
+        ),
+        Tuple2(
+          right({ name: "io-cancel", size: SMALL_ICON_WIDTH }),
+          this.deleteLastDigit
+        ) // TODO: use icon instead
       ]
     ];
   };
@@ -288,7 +313,7 @@ class Pinpad extends React.PureComponent<Props, State> {
     );
 
     return (
-      <Text primary={true} style={styles.text} bold={true}>
+      <Text primary={true} style={styles.text} bold={true} white={true}>
         {wrongCode}. {remainingAttemptsString}
       </Text>
     );

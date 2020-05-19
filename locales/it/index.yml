@@ -492,7 +492,7 @@ onboarding:
         fingerprint: la tua impronta digitale
         faceId: Face ID
         touchId: Touch ID
-      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md  
+      notEnrolledText: !include onboarding/tos_fingerprint_not_enrolled.md
 forms:
   validators:
     required: Valore richiesto
@@ -860,9 +860,9 @@ messages:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
       expiredAlert:
-          block1: La ricetta è scaduta alle ore
-          block2: del
-      
+        block1: La ricetta è scaduta alle ore
+        block2: del
+
     pay: Paga € {{amount}}
     paid: Pagato
     reminder: Promemoria
@@ -1021,9 +1021,9 @@ serviceDetail:
 identification:
   title: Sblocca l'app
   titleValidation: Conferma l'operazione
-  subtitleCode: enter the unlock code
+  subtitleCode: inserisci il codice di sblocco
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
-  subtitleCodeFaceId: "use Face ID o il codice di sblocco"
+  subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
   biometric:
     failure: Identificazione fallita
     fingerprintType: Impronta digitale
@@ -1044,8 +1044,7 @@ identification:
       button: Hai dimenticato il
       code: codice di sblocco
       button_short: Reimposta il codice di sblocco
-      tip:
-        Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente.
+      tip: Per reimpostare il tuo codice di sblocco dovrai accedere nuovamente.
       tip_short: Dovrai effettuare di nuovo l'accesso.
     confirmValid: Codice di sblocco corretto
     confirmInvalid: codice di sblocco non valido

@@ -1,3 +1,4 @@
+import { Either } from "fp-ts/lib/Either";
 import { ITuple2 } from "italia-ts-commons/lib/tuples";
 import { Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
@@ -8,7 +9,10 @@ import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import StyledIconFont from "../ui/IconFont";
 
-type Digit = ITuple2<string, () => void> | undefined;
+// left -> the string to represent as text
+// right -> the icon to represent with name and size
+type DigitRpr = Either<string, { name: string; size: number }>;
+type Digit = ITuple2<DigitRpr, () => void> | undefined;
 
 type Props = Readonly<{
   digits: ReadonlyArray<ReadonlyArray<Digit>>;
@@ -19,9 +23,6 @@ type Props = Readonly<{
 // it generate buttons width of 56
 const radius = 18;
 const BUTTON_DIAMETER = 56;
-
-const SMALL_ICON_WIDTH = 17;
-const ICON_WIDTH = 48;
 
 const styles = StyleSheet.create({
   roundButton: {
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
 });
 
 const renderPinCol = (
-  label: string,
+  label: DigitRpr,
   handler: () => void,
   style: "digit" | "label",
   key: string,
@@ -74,11 +75,6 @@ const renderPinCol = (
         ? [styles.roundButton, styles.transparent]
         : undefined;
 
-  const iconName =
-    label.includes("icon:") || label.startsWith("reducedIcon:")
-      ? label.split(":")[1]
-      : undefined;
-
   return (
     <Col key={key}>
       <ButtonDefaultOpacity
@@ -89,27 +85,34 @@ const renderPinCol = (
         primary={buttonType === "primary"}
         unNamed={buttonType === "light"}
       >
-        {!iconName ? (
-          <Text
-            white={style === "label" && buttonType === "primary"}
-            style={[
-              styles.buttonTextBase,
-              style === "label" && styles.buttonTextLabel
-            ]}
-          >
-            {label}
-          </Text>
-        ) : (
-          <StyledIconFont
-            name={label.split(":")[1]}
-            size={label.includes("sicon") ? SMALL_ICON_WIDTH : ICON_WIDTH}
-            style={[styles.noPadded]}
-            color={
-              buttonType === "light"
-                ? customVariables.contentPrimaryBackground
-                : customVariables.colorWhite
-            }
-          />
+        {label.fold(
+          l => {
+            return (
+              <Text
+                white={style === "label" && buttonType === "primary"}
+                style={[
+                  styles.buttonTextBase,
+                  style === "label" && styles.buttonTextLabel
+                ]}
+              >
+                {l}
+              </Text>
+            );
+          },
+          ic => {
+            return (
+              <StyledIconFont
+                name={ic.name}
+                size={ic.size}
+                style={[styles.noPadded]}
+                color={
+                  buttonType === "light"
+                    ? customVariables.contentPrimaryBackground
+                    : customVariables.colorWhite
+                }
+              />
+            );
+          }
         )}
       </ButtonDefaultOpacity>
     </Col>
@@ -129,7 +132,7 @@ const renderPinRow = (
           renderPinCol(
             el.e1,
             el.e2,
-            el.e1.length === 1 ? "digit" : "label",
+            el.e1.isLeft() ? "digit" : "label",
             `pinpad-digit-${el.e2}`,
             buttonType,
             isDisabled
