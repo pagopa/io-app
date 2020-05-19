@@ -1,6 +1,3 @@
-/**
- * A component to show the main screen of the Profile section
- */
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { H3, List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
@@ -113,6 +110,9 @@ const getAppLongVersion = () => {
   return `${DeviceInfo.getVersion()}${buildNumber}`;
 };
 
+/**
+ * A screen to show all the options related to the user profile
+ */
 class ProfileMainScreen extends React.PureComponent<Props, State> {
   private navListener?: NavigationEventSubscription;
 
@@ -524,9 +524,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     return (
       <DarkLayout
-        allowGoBack={false}
         bounces={false}
-        headerBody={<IconFont name="io-logo" color={"white"} />}
+        appLogo={true}
         title={I18n.t("profile.main.title")}
         icon={require("../../../img/icons/profile-illustration.png")}
         topContent={
