@@ -23,11 +23,14 @@ import {
   identificationPinReset,
   identificationSuccess
 } from "./store/actions/identification";
+import { appCurrentStateSelector } from "./store/reducers/appState";
 import {
   freeAttempts,
   identificationFailSelector,
-  maxAttempts
+  maxAttempts,
+  progressSelector
 } from "./store/reducers/identification";
+import { isFingerprintEnabledSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
 import customVariables from "./theme/variables";
@@ -119,6 +122,10 @@ const styles = StyleSheet.create({
  * A component used to identify the the user.
  * The identification process can be activated calling a saga or dispatching the
  * identificationRequest redux action.
+ * The mocal can have 2 design:
+ * 1. primary background: used to autenticate the user when he/she enters the app
+ * 2. white background: uset to identify the user when when he/she wants to complete a task (eg a payment)
+ * The 2nd design is displayed when isValidatingTask (from the identificationProgressState) is true
  */
 class IdentificationModal extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -340,10 +347,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       return null;
     }
 
-    // The identification state is started we need to show the modal
+    // The identification is started, we need to show the modal
     const {
       pin,
-      // canResetPin, TODO: check if, during the payment, we have to show the button to reset the pin. It means we have to cancel the payment and then logout!!
       isValidatingTask,
       identificationCancelData,
       shufflePad
@@ -551,10 +557,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  identificationProgressState: state.identification.progress,
+  identificationProgressState: progressSelector(state),
   identificationFailState: identificationFailSelector(state),
-  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-  appState: state.appState.appState
+  isFingerprintEnabled: isFingerprintEnabledSelector(state),
+  appState: appCurrentStateSelector(state)
 });
 
 export default connect(
