@@ -122,9 +122,9 @@ const styles = StyleSheet.create({
  * A component used to identify the the user.
  * The identification process can be activated calling a saga or dispatching the
  * identificationRequest redux action.
- * The mocal can have 2 design:
+ * The modal can have 2 designs:
  * 1. primary background: used to autenticate the user when he/she enters the app
- * 2. white background: uset to identify the user when when he/she wants to complete a task (eg a payment)
+ * 2. white background: used to identify the user when he/she wants to complete a task (eg a payment)
  * The 2nd design is displayed when isValidatingTask (from the identificationProgressState) is true
  */
 class IdentificationModal extends React.PureComponent<Props, State> {
