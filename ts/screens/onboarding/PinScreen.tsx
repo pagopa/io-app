@@ -2,7 +2,7 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
-import { NavigationScreenProp, NavigationState } from "react-navigation";
+import { NavigationScreenProps } from "react-navigation";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import Pinpad from "../../components/Pinpad";
@@ -14,16 +14,12 @@ import TextWithIcon from "../../components/ui/TextWithIcon";
 import I18n from "../../i18n";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import { createPinSuccess } from "../../store/actions/pinset";
-import { ReduxProps } from "../../store/actions/types";
 import variables from "../../theme/variables";
 import { PinString } from "../../types/PinString";
 import { setPin } from "../../utils/keychain";
+import { Dispatch } from 'redux';
 
-type OwnProps = {
-  navigation: NavigationScreenProp<NavigationState>;
-};
-
-type Props = ReduxProps & OwnProps;
+type Props = NavigationScreenProps & ReturnType<typeof mapDispatchToProps>;
 
 type PinUnselected = {
   state: "PinUnselected";
@@ -247,20 +243,16 @@ class PinScreen extends React.PureComponent<Props, State> {
 
   public renderContinueButton(pinState: PinState) {
     if (pinState.state !== "PinConfirmed") {
-      return;
+      return undefined;
     }
 
-    const { pin } = pinState;
-
-    const onPress = () => this.setPin(pin);
     return (
       <React.Fragment>
         <ButtonDefaultOpacity
           block={true}
           primary={true}
           disabled={false}
-          onPress={onPress}
-          // small={true} TODO: it should be height 40 and text 16 - conflict with message cta style
+          onPress={() => this.setPin(pinState.pin)}
         >
           <Text>{I18n.t("global.buttons.continue")}</Text>
         </ButtonDefaultOpacity>
@@ -303,7 +295,7 @@ class PinScreen extends React.PureComponent<Props, State> {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => this.props.dispatch(abortOnboarding())
+          onPress: this.props.abortOnboarding
         }
       ]
     );
@@ -341,7 +333,7 @@ class PinScreen extends React.PureComponent<Props, State> {
             savedPin: pot.some(pin)
           }
         });
-        this.props.dispatch(createPinSuccess(pin));
+        this.props.createPinSuccess(pin);
       },
       _ =>
         // TODO: show toast if error (https://www.pivotaltracker.com/story/show/170819508)
@@ -356,4 +348,10 @@ class PinScreen extends React.PureComponent<Props, State> {
   };
 }
 
-export default connect()(PinScreen);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  createPinSuccess: (pin: PinString) => dispatch(createPinSuccess(pin)),
+  abortOnboarding: () => dispatch(abortOnboarding())
+
+})
+
+export default connect(undefined, mapDispatchToProps)(PinScreen);
