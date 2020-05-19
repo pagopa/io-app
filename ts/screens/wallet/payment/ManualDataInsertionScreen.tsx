@@ -12,7 +12,7 @@ import {
 } from "italia-ts-commons/lib/strings";
 import { Content, Form, H1, Input, Item, Label, Text } from "native-base";
 import * as React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { Keyboard, ScrollView, StyleSheet } from "react-native";
 import {
   NavigationEventPayload,
   NavigationEvents,
@@ -283,6 +283,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     );
   }
   private showModal = () => {
+    Keyboard.dismiss();
     this.props.showModal(
       <CodesPositionManualPaymentModal onCancel={this.props.hideModal} />
     );
