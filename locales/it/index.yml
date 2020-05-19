@@ -1021,7 +1021,7 @@ serviceDetail:
 identification:
   title: Sblocca l'app
   titleValidation: Conferma l'operazione
-  subtitleCode: enter the unlock code
+  subtitleCode: inserisci il codice di sblocco
   subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
   subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
   biometric:
