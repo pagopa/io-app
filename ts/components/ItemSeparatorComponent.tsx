@@ -5,12 +5,18 @@ import customVariables from "../theme/variables";
 
 type Props = Readonly<{
   noPadded?: boolean;
+  bold?: boolean;
 }>;
 
 const styles = StyleSheet.create({
   itemSeparator: {
-    backgroundColor: customVariables.itemSeparator,
+    backgroundColor: customVariables.itemSeparator
+  },
+  smallHeight: {
     height: StyleSheet.hairlineWidth
+  },
+  boldHeight: {
+    height: 2
   },
   horizontalPad: {
     marginLeft: customVariables.contentPadding,
@@ -24,7 +30,8 @@ export default class ItemSeparatorComponent extends React.PureComponent<Props> {
       <View
         style={[
           styles.itemSeparator,
-          !this.props.noPadded && styles.horizontalPad
+          !this.props.noPadded && styles.horizontalPad,
+          this.props.bold ? styles.boldHeight : styles.smallHeight
         ]}
       />
     );

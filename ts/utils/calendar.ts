@@ -148,11 +148,12 @@ export const saveCalendarEvent = (
   dueDate: Date,
   title: string,
   onAddCalendarEvent?: (calendarEvent: AddCalendarEventPayload) => void
-) =>
+) => {
+  const dueDateIsoString = dueDate.toISOString();
   RNCalendarEvents.saveEvent(title, {
     calendarId: calendar.id,
-    startDate: formatDateAsReminder(dueDate),
-    endDate: formatDateAsReminder(dueDate),
+    startDate: dueDateIsoString,
+    endDate: dueDateIsoString,
     allDay: true,
     alarms: []
   })
@@ -173,6 +174,7 @@ export const saveCalendarEvent = (
       }
     })
     .catch(_ => showToast(I18n.t("messages.cta.reminderAddFailure"), "danger"));
+};
 
 export const removeCalendarEventFromDeviceCalendar = (
   calendarEvent: CalendarEvent | undefined,
