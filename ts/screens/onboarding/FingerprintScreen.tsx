@@ -33,7 +33,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 /**
- * A screen to show, if the fingerprint is supported by the device, 
+ * A screen to show, if the fingerprint is supported by the device,
  * the instruction to enable the fingerprint/faceID usage
  */
 class FingerprintScreen extends React.PureComponent<Props> {
@@ -61,12 +61,12 @@ class FingerprintScreen extends React.PureComponent<Props> {
   private getBiometryIconName(biometryType: BiometrySimpleType) {
     switch (biometryType) {
       case "FACE_ID":
-        return "io-face-id"
+        return "io-face-id";
       case "FINGERPRINT":
       case "TOUCH_ID":
       case "NOT_ENROLLED":
       case "UNAVAILABLE":
-        return "io-fingerprint"
+        return "io-fingerprint";
     }
   }
 
@@ -99,7 +99,7 @@ class FingerprintScreen extends React.PureComponent<Props> {
       >
         <ScreenContentHeader
           title={I18n.t("onboarding.fingerprint.title")}
-          iconFont={{name: this.getBiometryIconName(biometryType)}}
+          iconFont={{ name: this.getBiometryIconName(biometryType) }}
         />
         <Content>
           <Text>
