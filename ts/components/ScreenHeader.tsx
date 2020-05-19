@@ -44,17 +44,20 @@ const styles = StyleSheet.create({
  */
 class ScreenHeader extends React.Component<Props> {
   private getIcon = () => {
-    const { icon, iconFont } = this.props;
+    const { icon } = this.props;
     if (icon) {
       return <Image source={icon} style={styles.image} />;
     }
+    const { iconFont } = this.props;
     return fromNullable(iconFont).fold(undefined, ic => {
       const { dark } = this.props;
       const imageColor = fromNullable(ic.color).getOrElse(
         fromNullable(dark).fold(
           customVariables.headerIconLight,
-          d =>
-            d ? customVariables.headerIconDark : customVariables.headerIconLight
+          isDark =>
+            isDark
+              ? customVariables.headerIconDark
+              : customVariables.headerIconLight
         )
       );
       return (
