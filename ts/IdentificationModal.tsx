@@ -4,6 +4,7 @@ import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 import Pinpad from "./components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -13,6 +14,7 @@ import TextWithIcon from "./components/ui/TextWithIcon";
 import { isDebugBiometricIdentificationEnabled } from "./config";
 import I18n from "./i18n";
 import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
+import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
 import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
 import {
   identificationCancel,
@@ -21,19 +23,21 @@ import {
   identificationPinReset,
   identificationSuccess
 } from "./store/actions/identification";
-import { ReduxProps } from "./store/actions/types";
+import { appCurrentStateSelector } from "./store/reducers/appState";
 import {
   freeAttempts,
   identificationFailSelector,
-  maxAttempts
+  maxAttempts,
+  progressSelector
 } from "./store/reducers/identification";
+import { isFingerprintEnabledSelector } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import variables from "./theme/variables";
+import customVariables from "./theme/variables";
 import { authenticateConfig } from "./utils/biometric";
 
-import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
-
-type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 /**
  * Type used in the local state to save the result of Pinpad code matching.
@@ -55,8 +59,8 @@ type State = {
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "onboarding.pin.contextualHelpTitle",
-  body: "onboarding.pin.contextualHelpContent"
+  title: "onboarding.unlockCode.contextualHelpTitle",
+  body: "onboarding.unlockCode.contextualHelpContent"
 };
 
 const checkPinInterval = 100 as Millisecond;
@@ -65,14 +69,20 @@ const checkPinInterval = 100 as Millisecond;
 const checkTimerThreshold = maxAttempts - freeAttempts;
 
 const renderIdentificationByPinState = (
-  identificationByPinState: IdentificationByPinState
+  identificationByPinState: IdentificationByPinState,
+  isValidatingTask: boolean
 ) => {
   if (identificationByPinState === "failure") {
     return (
       <React.Fragment>
-        <TextWithIcon danger={true}>
-          <IconFont name="io-close" color={"white"} />
-          <Text white={true}>{I18n.t("pin_login.pin.confirmInvalid")}</Text>
+        <TextWithIcon>
+          <IconFont
+            name={"io-close"}
+            color={!isValidatingTask ? variables.colorWhite : undefined}
+          />
+          <Text white={!isValidatingTask}>
+            {I18n.t("identification.unlockCode.confirmInvalid")}
+          </Text>
         </TextWithIcon>
       </React.Fragment>
     );
@@ -89,7 +99,7 @@ const renderIdentificationByBiometryState = (
       <React.Fragment>
         <View spacer={true} extralarge={true} />
         <TextWithIcon danger={true}>
-          <IconFont name="io-close" color={"white"} />
+          <IconFont name={"io-close"} color={"white"} />
           <Text white={true}>{I18n.t("identification.biometric.failure")}</Text>
         </TextWithIcon>
       </React.Fragment>
@@ -102,16 +112,9 @@ const renderIdentificationByBiometryState = (
 const onRequestCloseHandler = () => undefined;
 
 const styles = StyleSheet.create({
-  identificationMessage: {
-    alignSelf: "center",
-    color: variables.colorWhite,
-    fontSize: 16,
-    lineHeight: 20,
-    width: "100%"
-  },
-  pinPad: {
-    justifyContent: "center",
-    flexGrow: 1
+  header: {
+    fontSize: 20,
+    lineHeight: 22
   }
 });
 
@@ -119,6 +122,10 @@ const styles = StyleSheet.create({
  * A component used to identify the the user.
  * The identification process can be activated calling a saga or dispatching the
  * identificationRequest redux action.
+ * The modal can have 2 designs:
+ * 1. primary background: used to autenticate the user when he/she enters the app
+ * 2. white background: used to identify the user when he/she wants to complete a task (eg a payment)
+ * The 2nd design is displayed when isValidatingTask (from the identificationProgressState) is true
  */
 class IdentificationModal extends React.PureComponent<Props, State> {
   constructor(props: Props) {
@@ -305,7 +312,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }
 
   private onIdentificationSuccessHandler = () => {
-    const { identificationProgressState, dispatch } = this.props;
+    const { identificationProgressState } = this.props;
 
     if (identificationProgressState.kind !== "started") {
       return;
@@ -317,38 +324,33 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     if (identificationSuccessData) {
       identificationSuccessData.onSuccess();
     }
-    dispatch(identificationSuccess());
+    this.props.onIdentificationSuccess();
   };
 
   private onIdentificationFailureHandler = () => {
-    const { dispatch, identificationFailState } = this.props;
+    const { identificationFailState } = this.props;
 
     const forceLogout = identificationFailState
       .map(failState => failState.remainingAttempts === 1)
       .getOrElse(false);
     if (forceLogout) {
-      dispatch(identificationForceLogout());
+      this.props.onIdentificationForceLogout();
     } else {
-      dispatch(identificationFailure());
+      this.props.onIdentificationFailure();
     }
   };
 
   public render() {
-    const {
-      identificationProgressState,
-      isFingerprintEnabled,
-      dispatch
-    } = this.props;
+    const { identificationProgressState, isFingerprintEnabled } = this.props;
 
     if (identificationProgressState.kind !== "started") {
       return null;
     }
 
-    // The identification state is started we need to show the modal
+    // The identification is started, we need to show the modal
     const {
       pin,
-      canResetPin,
-      identificationGenericData,
+      isValidatingTask,
       identificationCancelData,
       shufflePad
     } = identificationProgressState;
@@ -359,10 +361,6 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       biometryType,
       countdown
     } = this.state;
-
-    const identificationMessage = identificationGenericData
-      ? identificationGenericData.message
-      : this.renderBiometryType();
 
     const canInsertPin =
       !this.state.biometryAuthAvailable &&
@@ -385,19 +383,46 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       if (identificationCancelData) {
         identificationCancelData.onCancel();
       }
-      dispatch(identificationCancel());
+      this.props.onCancelIdentification();
     };
 
-    const onPinResetHandler = () => {
-      dispatch(identificationPinReset());
+    const renderHeader = () => {
+      return (
+        <React.Fragment>
+          <Text
+            bold={true}
+            alignCenter={true}
+            style={styles.header}
+            white={!isValidatingTask}
+            dark={isValidatingTask}
+          >
+            {I18n.t(
+              isValidatingTask
+                ? "identification.titleValidation"
+                : "identification.title"
+            )}
+          </Text>
+          <Text
+            alignCenter={true}
+            white={!isValidatingTask}
+            dark={isValidatingTask}
+          >
+            {this.getInstructions()}
+          </Text>
+        </React.Fragment>
+      );
     };
+
+    const defaultColor = isValidatingTask
+      ? customVariables.contentPrimaryBackground
+      : customVariables.colorWhite;
 
     return !this.state.canInsertPinTooManyAttempts ? (
       IdentificationLockModal({ countdown })
     ) : (
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
-          primary={true}
+          primary={!isValidatingTask}
           contextualHelpMarkdown={contextualHelpMarkdown}
           faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
           appLogo={true}
@@ -406,16 +431,12 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             barStyle="light-content"
             backgroundColor={variables.contentPrimaryBackground}
           />
-          <Content primary={true} contentContainerStyle={styles.pinPad}>
-            <Text
-              bold={true}
-              alignCenter={true}
-              style={styles.identificationMessage}
-            >
-              {identificationMessage}
-            </Text>
+          <Content primary={!isValidatingTask}>
+            {renderHeader()}
+
             <Pinpad
-              onPinResetHandler={canResetPin ? onPinResetHandler : undefined}
+              onPinResetHandler={this.props.onPinResetHandler}
+              isValidatingTask={isValidatingTask}
               isFingerprintEnabled={isFingerprintEnabled}
               biometryType={biometryType}
               onFingerPrintReq={() =>
@@ -424,9 +445,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               shufflePad={shufflePad}
               disabled={!canInsertPin}
               compareWithCode={pin as string}
-              activeColor={"white"}
-              inactiveColor={"white"}
-              buttonType="primary"
+              activeColor={defaultColor}
+              inactiveColor={defaultColor}
+              buttonType={isValidatingTask ? "light" : "primary"}
               delayOnFailureMillis={1000}
               onFulfill={(_: string, __: boolean) =>
                 this.onPinFullfill(
@@ -444,7 +465,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               }
               remainingAttempts={displayRemainingAttempts}
             />
-            {renderIdentificationByPinState(identificationByPinState)}
+            {renderIdentificationByPinState(
+              identificationByPinState,
+              isValidatingTask
+            )}
             {renderIdentificationByBiometryState(identificationByBiometryState)}
 
             <View spacer={true} large={true} />
@@ -455,19 +479,19 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }
 
   /**
-   * Print the only BiometrySimplePrintableType values that are passed to the UI
+   * Return the proper instruction based on the avaiable identification method
    * @param biometrySimplePrintableType
    */
-  private renderBiometryType(): string {
+  private getInstructions(): string {
     switch (this.state.biometryType) {
       case "FINGERPRINT":
-        return I18n.t("identification.messageFingerPrint");
+        return I18n.t("identification.subtitleCodeFingerprint");
       case "FACE_ID":
-        return I18n.t("identification.messageFaceID");
+        return I18n.t("identification.subtitleCodeFaceId");
       case "TOUCH_ID":
-        return I18n.t("identification.messageFingerPrint");
+        return I18n.t("identification.subtitleCodeFingerprint");
       default:
-        return I18n.t("identification.messageEnterPin");
+        return I18n.t("identification.subtitleCode");
     }
   }
 
@@ -524,11 +548,22 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   };
 }
 
-const mapStateToProps = (state: GlobalState) => ({
-  identificationProgressState: state.identification.progress,
-  identificationFailState: identificationFailSelector(state),
-  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled,
-  appState: state.appState.appState
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onPinResetHandler: () => dispatch(identificationPinReset()),
+  onCancelIdentification: () => dispatch(identificationCancel()),
+  onIdentificationSuccess: () => dispatch(identificationSuccess()),
+  onIdentificationForceLogout: () => dispatch(identificationForceLogout()),
+  onIdentificationFailure: () => dispatch(identificationFailure())
 });
 
-export default connect(mapStateToProps)(IdentificationModal);
+const mapStateToProps = (state: GlobalState) => ({
+  identificationProgressState: progressSelector(state),
+  identificationFailState: identificationFailSelector(state),
+  isFingerprintEnabled: isFingerprintEnabledSelector(state),
+  appState: appCurrentStateSelector(state)
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IdentificationModal);

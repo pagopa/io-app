@@ -41,6 +41,7 @@ type IdentificationStartedState = {
   kind: "started";
   pin: PinString;
   canResetPin: boolean;
+  isValidatingTask: boolean; // it is true if the identification process is occurring to confirm a task (eg. a payment)
   identificationGenericData?: IdentificationGenericData;
   identificationCancelData?: IdentificationCancelData;
   identificationSuccessData?: IdentificationSuccessData;
@@ -143,7 +144,11 @@ const reducer = (
   }
 };
 
+export default reducer;
+
+// Selectors
 export const identificationFailSelector = (state: GlobalState) =>
   fromNullable(state.identification.fail);
 
-export default reducer;
+export const progressSelector = (state: GlobalState) =>
+  state.identification.progress;
