@@ -7,6 +7,7 @@ import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../theme/variables";
 import IconFont from "./ui/IconFont";
+import { RTron } from "../boot/configureStoreAndPersistor";
 
 type Props = {
   heading: React.ReactNode;
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
 class ScreenHeader extends React.Component<Props> {
   private getIcon = () => {
     const { icon } = this.props;
+    RTron.log(icon, this.props.iconFont);
     if (icon) {
       return <Image source={icon} style={styles.image} />;
     }
@@ -63,7 +65,7 @@ class ScreenHeader extends React.Component<Props> {
       return (
         <IconFont
           name={ic.name}
-          size={ic.size || HEADER_HEIGHT}
+          size={Math.min(ic.size || HEADER_HEIGHT, HEADER_HEIGHT)}
           color={imageColor}
         />
       );
