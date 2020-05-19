@@ -2,7 +2,7 @@ import { right } from "fp-ts/lib/Either";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { put } from "redux-saga/effects";
-import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import {
   loadMessage as loadMessageAction,
@@ -22,7 +22,7 @@ const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testMessageId2 = "01CD4QN3Q2KS2T791PPMT2H9DM";
 const testServiceId1 = "5a563817fcc896087002ea46c49a";
 
-const testMessageWithContent1: CreatedMessageWithContent = {
+const testMessageWithContent1: CreatedMessageWithContentAndAttachments = {
   id: testMessageId1,
   fiscal_code: "" as any,
   created_at: new Date(),
@@ -43,7 +43,7 @@ const testMessageMeta1: MessageState = {
   message: pot.some(testMessageWithContent1)
 };
 
-const testMessageWithContent2: CreatedMessageWithContent = {
+const testMessageWithContent2: CreatedMessageWithContentAndAttachments = {
   id: testMessageId2,
   fiscal_code: "" as any,
   created_at: new Date(),

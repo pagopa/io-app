@@ -4,14 +4,14 @@ import * as t from "io-ts";
 import * as pot from "italia-ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 
-import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { loadMessage as loadMessageAction } from "../../../store/actions/messages";
 import { fetchMessage, loadMessage } from "../messages";
 
 const testMessageId1 = "01BX9NSMKAAAS5PSP2FATZM6BQ";
 const testServiceId1 = "5a563817fcc896087002ea46c49a";
 
-const testMessageWithContent1: CreatedMessageWithContent = {
+const testMessageWithContent1: CreatedMessageWithContentAndAttachments = {
   id: testMessageId1,
   fiscal_code: "" as any,
   created_at: new Date(),
