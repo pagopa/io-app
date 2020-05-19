@@ -22,6 +22,7 @@
  *
  */
 import { Option } from "fp-ts/lib/Option";
+import Instabug from "instabug-reactnative";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
@@ -345,7 +346,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     openInstabugBugReport();
   };
   /*TODO: remove this method after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
+  private instabugReportTag = "services-loading-error";
   private sendDataToInstabug() {
+    Instabug.appendTags([this.instabugReportTag]);
     instabugLog(
       "userMetadata: " + JSON.stringify(this.props.potUserMetadata),
       TypeLogs.INFO
