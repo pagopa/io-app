@@ -7,11 +7,11 @@ import * as pot from "italia-ts-commons/lib/pot";
 import { Left, Right, Text, View } from "native-base";
 import * as React from "react";
 import {
+  Alert,
   FlatList,
   ListRenderItemInfo,
   RefreshControl,
-  StyleSheet,
-  Alert
+  StyleSheet
 } from "react-native";
 import { NavigationScreenProp, NavigationState } from "react-navigation";
 import { connect } from "react-redux";
