@@ -80,7 +80,6 @@ const customVariables = Object.assign(materialVariables, {
   toastColor: "#C1f4f2",
   badgeYellow: "#ffc824",
 
-  alertColor: "#00CDD2",
   headerIconDark: "#798593",
   headerIconLight: "#E4E7EA",
 
