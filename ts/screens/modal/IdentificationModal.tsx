@@ -5,36 +5,36 @@ import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import TouchID, { AuthenticationError } from "react-native-touch-id";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import Pinpad from "./components/Pinpad";
+import Pinpad from "../../components/Pinpad";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
-} from "./components/screens/BaseScreenComponent";
-import IconFont from "./components/ui/IconFont";
-import TextWithIcon from "./components/ui/TextWithIcon";
-import { isDebugBiometricIdentificationEnabled } from "./config";
-import I18n from "./i18n";
-import { getFingerprintSettings } from "./sagas/startup/checkAcknowledgedFingerprintSaga";
-import { IdentificationLockModal } from "./screens/modal/IdentificationLockModal";
-import { BiometryPrintableSimpleType } from "./screens/onboarding/FingerprintScreen";
+} from "../../components/screens/BaseScreenComponent";
+import IconFont from "../../components/ui/IconFont";
+import TextWithIcon from "../../components/ui/TextWithIcon";
+import { isDebugBiometricIdentificationEnabled } from "../../config";
+import I18n from "../../i18n";
+import { getFingerprintSettings } from "../../sagas/startup/checkAcknowledgedFingerprintSaga";
+import { IdentificationLockModal } from "../../screens/modal/IdentificationLockModal";
+import { BiometryPrintableSimpleType } from "../../screens/onboarding/FingerprintScreen";
 import {
   identificationCancel,
   identificationFailure,
   identificationForceLogout,
   identificationPinReset,
   identificationSuccess
-} from "./store/actions/identification";
-import { appCurrentStateSelector } from "./store/reducers/appState";
+} from "../../store/actions/identification";
+import { appCurrentStateSelector } from "../../store/reducers/appState";
 import {
   freeAttempts,
   identificationFailSelector,
   maxAttempts,
   progressSelector
-} from "./store/reducers/identification";
-import { isFingerprintEnabledSelector } from "./store/reducers/persistedPreferences";
-import { GlobalState } from "./store/reducers/types";
-import variables from "./theme/variables";
-import customVariables from "./theme/variables";
-import { authenticateConfig } from "./utils/biometric";
+} from "../../store/reducers/identification";
+import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { GlobalState } from "../../store/reducers/types";
+import variables from "../../theme/variables";
+import customVariables from "../../theme/variables";
+import { authenticateConfig } from "../../utils/biometric";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
