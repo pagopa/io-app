@@ -313,8 +313,13 @@ class Pinpad extends React.PureComponent<Props, State> {
     );
 
     return (
-      <Text primary={true} style={styles.text} bold={true} white={true}>
-        {wrongCode}. {remainingAttemptsString}
+      <Text
+        style={styles.text}
+        bold={true}
+        white={this.props.buttonType === "primary"}
+        primary={this.props.buttonType !== "primary"}
+      >
+        {`${wrongCode}. ${remainingAttemptsString}`}
       </Text>
     );
   };

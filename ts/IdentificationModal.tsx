@@ -66,14 +66,18 @@ const checkPinInterval = 100 as Millisecond;
 const checkTimerThreshold = maxAttempts - freeAttempts;
 
 const renderIdentificationByPinState = (
-  identificationByPinState: IdentificationByPinState
+  identificationByPinState: IdentificationByPinState,
+  isValidatingTask: boolean
 ) => {
   if (identificationByPinState === "failure") {
     return (
       <React.Fragment>
-        <TextWithIcon danger={true}>
-          <IconFont name="io-close" color={"white"} />
-          <Text white={true}>
+        <TextWithIcon>
+          <IconFont
+            name={"io-close"}
+            color={!isValidatingTask ? variables.colorWhite : undefined}
+          />
+          <Text white={!isValidatingTask}>
             {I18n.t("identification.unlockCode.confirmInvalid")}
           </Text>
         </TextWithIcon>
@@ -92,7 +96,7 @@ const renderIdentificationByBiometryState = (
       <React.Fragment>
         <View spacer={true} extralarge={true} />
         <TextWithIcon danger={true}>
-          <IconFont name="io-close" color={"white"} />
+          <IconFont name={"io-close"} color={"white"} />
           <Text white={true}>{I18n.t("identification.biometric.failure")}</Text>
         </TextWithIcon>
       </React.Fragment>
@@ -455,7 +459,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               }
               remainingAttempts={displayRemainingAttempts}
             />
-            {renderIdentificationByPinState(identificationByPinState)}
+            {renderIdentificationByPinState(
+              identificationByPinState,
+              isValidatingTask
+            )}
             {renderIdentificationByBiometryState(identificationByBiometryState)}
 
             <View spacer={true} large={true} />
