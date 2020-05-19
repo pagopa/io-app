@@ -30,6 +30,7 @@ class ScreenContent extends React.PureComponent<Props> {
     const {
       title,
       icon,
+      iconFont,
       subtitle,
       dark,
       hideHeader,
@@ -49,6 +50,7 @@ class ScreenContent extends React.PureComponent<Props> {
         {!hideHeader && (
           <ScreenContentHeader
             icon={icon}
+            iconFont={iconFont}
             title={title}
             subtitle={subtitle}
             dark={dark}

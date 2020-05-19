@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   padded: { paddingHorizontal: customVariables.contentPadding },
   alert: {
-    backgroundColor: customVariables.alertColor,
+    backgroundColor: customVariables.brandHighLighter,
     paddingHorizontal: customVariables.contentPadding,
     paddingVertical: 11,
     flexDirection: "row"

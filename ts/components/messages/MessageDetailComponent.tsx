@@ -172,23 +172,22 @@ export default class MessageDetailComponent extends React.PureComponent<
             <View spacer={true} />
           </View>
 
-          {maybeMedicalData.isSome() && (
-            <MedicalPrescriptionIdentifiersComponent
-              prescriptionData={maybeMedicalData.value}
-            />
-          )}
+          {maybeMedicalData.fold(undefined, md => (
+            <MedicalPrescriptionIdentifiersComponent prescriptionData={md} />
+          ))}
 
-          {this.maybeMedicalData.isSome() ? (
-            <MedicalPrescriptionDueDateBar
-              message={message}
-              service={service.toUndefined()}
-            />
-          ) : (
+          {this.maybeMedicalData.fold(
             <MessageDueDateBar
               message={message}
               service={service.toUndefined()}
               payment={payment}
-            />
+            />,
+            _ => (
+              <MedicalPrescriptionDueDateBar
+                message={message}
+                service={service.toUndefined()}
+              />
+            )
           )}
 
           <MessageMarkdown
@@ -226,12 +225,13 @@ export default class MessageDetailComponent extends React.PureComponent<
         </Content>
         <View spacer={true} large={true} />
         <View spacer={true} small={true} />
-        {this.maybeMedicalData.isNone() && (
+        {this.maybeMedicalData.fold(
           <MessageDetailCTABar
             message={message}
             service={service.toUndefined()}
             payment={this.payment}
-          />
+          />,
+          _ => undefined
         )}
       </React.Fragment>
     );
