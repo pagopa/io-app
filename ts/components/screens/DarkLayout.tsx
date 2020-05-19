@@ -10,6 +10,7 @@ import {
   ViewStyle
 } from "react-native";
 import { StyleSheet } from "react-native";
+import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
@@ -26,6 +27,7 @@ type Props = Readonly<{
   headerBody?: React.ReactNode;
   title?: string;
   icon?: ImageSourcePropType;
+  iconFont?: IconProps;
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
   appLogo?: boolean;
@@ -84,6 +86,7 @@ export default class DarkLayout extends React.Component<Props> {
             hideHeader={this.props.hideHeader}
             title={this.props.title ? this.props.title : ""}
             icon={this.props.icon}
+            iconFont={this.props.iconFont}
             dark={true}
             contentStyle={this.props.contentStyle}
             dynamicSubHeader={this.props.dynamicSubHeader}
@@ -100,6 +103,7 @@ export default class DarkLayout extends React.Component<Props> {
             hideHeader={this.props.hideHeader}
             title={this.props.title ? this.props.title : ""}
             icon={this.props.icon}
+            iconFont={this.props.iconFont}
             dark={true}
             contentStyle={this.props.contentStyle}
             bounces={
