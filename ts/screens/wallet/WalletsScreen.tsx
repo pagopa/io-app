@@ -66,8 +66,7 @@ type OwnProps = Readonly<{
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mergeProps>;
+  ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.walletList.contextualHelpTitle",
@@ -107,7 +106,11 @@ class WalletsScreen extends React.Component<Props> {
           </Left>
           <Right>
             <AddPaymentMethodButton
-              onPress={this.props.navigateToWalletAddPaymentMethod}
+              onPress={() =>
+                this.props.navigateToWalletAddPaymentMethod(
+                  getCurrentRouteKey(this.props.nav)
+                )
+              }
             />
           </Right>
         </View>
@@ -170,7 +173,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(navigateToWalletTransactionsScreen({ selectedWallet })),
   setFavoriteWallet: (walletId?: number) =>
     dispatch(setFavouriteWalletRequest(walletId)),
-  navigateToAddPaymentMethod: (key?: string) =>
+  navigateToWalletAddPaymentMethod: (key?: string) =>
     dispatch(
       navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom: key })
     ),
@@ -193,26 +196,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-const mergeProps = (
-  stateProps: ReturnType<typeof mapStateToProps>,
-  dispatchProps: ReturnType<typeof mapDispatchToProps>,
-  ownProps: OwnProps
-) => {
-  return {
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps,
-    ...{
-      navigateToWalletAddPaymentMethod: () =>
-        dispatchProps.navigateToAddPaymentMethod(
-          getCurrentRouteKey(stateProps.nav)
-        )
-    }
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
+  mapDispatchToProps
 )(withLoadingSpinner(WalletsScreen));
