@@ -3,6 +3,7 @@ global:
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
+    asterisk: "*"
   localization:
     decimalSeparator: "."
   date:
@@ -18,6 +19,7 @@ global:
   genericAlert: Warning!
   genericWaiting: Wait a few seconds..
   genericThanks: Thank you
+  genericShare: Share
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -851,7 +853,9 @@ messages:
     presctiption:  
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
-      expiredAlert: This prescription is expired on
+      expiredAlert:
+          block1: The prescription expired at 
+          block2: "on"
     pay: Pay € {{amount}}
     paid: Paid
     reminder: Reminder
@@ -892,6 +896,18 @@ messages:
     emptyMessage:
       title: You haven't any scheduled deadline.
       subtitle:  Use the button above to check out past deadlines.
+  medical:
+    not_available: "n/a"
+    prescription: Electronic prescription
+    memo: Reminder for the recipient
+    deadline: this prescription expires {{date}}
+    nre: Electronic prescription number
+    iup: Unique booking identifier
+    patient_fiscal_code: Patient's fiscal code
+    prescriber_fiscal_code: Doctor's fiscal code
+    barcodes: Barcodes
+    nationalService: National Health Service
+    note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
 messageDetails:
   contextualHelpTitle: Message details
   contextualHelpContent: !include messages/message_detail.md
