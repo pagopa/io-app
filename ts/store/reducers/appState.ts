@@ -24,6 +24,9 @@ export const initialAppState: AppState = {
 export const appStateSelector = (state: GlobalState): AppState =>
   state.appState;
 
+export const appCurrentStateSelector = (state: GlobalState) =>
+  state.appState.appState;
+
 export default function appState(
   state: AppState = initialAppState,
   action: Action

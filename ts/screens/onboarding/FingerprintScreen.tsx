@@ -1,7 +1,3 @@
-/**
- * A screen to show if the fingerprint is supported to the user.
- */
-
 import { Content, Text } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
@@ -36,7 +32,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "onboarding.contextualHelpContent"
 };
 
-export class FingerprintScreen extends React.PureComponent<Props> {
+/**
+ * A screen to show, if the fingerprint is supported by the device,
+ * the instruction to enable the fingerprint/faceID usage
+ */
+class FingerprintScreen extends React.PureComponent<Props> {
   /**
    * Print the only BiometrySimplePrintableType values that are passed to the UI
    * @param biometrySimplePrintableType
@@ -58,15 +58,15 @@ export class FingerprintScreen extends React.PureComponent<Props> {
    * Print the icon according to current biometry status
    * @param biometrySimplePrintableType
    */
-  private renderIcon(biometryType: BiometrySimpleType) {
+  private getBiometryIconName(biometryType: BiometrySimpleType) {
     switch (biometryType) {
       case "FACE_ID":
-        return require("../../../img/icons/faceid-onboarding-icon.png");
+        return "io-face-id";
       case "FINGERPRINT":
       case "TOUCH_ID":
       case "NOT_ENROLLED":
       case "UNAVAILABLE":
-        return require("../../../img/icons/fingerprint-onboarding-icon.png");
+        return "io-fingerprint";
     }
   }
 
@@ -99,7 +99,7 @@ export class FingerprintScreen extends React.PureComponent<Props> {
       >
         <ScreenContentHeader
           title={I18n.t("onboarding.fingerprint.title")}
-          icon={this.renderIcon(biometryType)}
+          iconFont={{ name: this.getBiometryIconName(biometryType) }}
         />
         <Content>
           <Text>
