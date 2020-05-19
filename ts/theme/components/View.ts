@@ -58,6 +58,9 @@ export default (): Theme => {
 
     // horizontal spacer
     ".hspacer": {
+      ".small": {
+        width: variables.spacerSmallHeight
+      },
       ".large": {
         width: variables.spacerLargeWidth
       },

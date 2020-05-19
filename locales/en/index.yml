@@ -4,6 +4,7 @@ global:
   symbols:
     question: "?"
     euro: €
+    asterisk: "*"
   localization:
     decimalSeparator: "."
   date:
@@ -19,6 +20,7 @@ global:
   genericAlert: Warning!
   genericWaiting: Wait a few seconds..
   genericThanks: Thank you
+  genericShare: Share
   jserror:
     title: Unexpected error occurred
     message: We have reported this to our team! Please close the app and start again!
@@ -586,6 +588,11 @@ wallet:
     failedCardAlreadyExists: The card you are adding already exists
     contextualHelpTitle: How to add a payment method
     contextualHelpContent: !include wallet/wallet_add_payment_method.md
+    abort:
+      title: Do you want to cancel adding a new payment method?
+      confirm: Cancel the operation
+      cancel: Continue with the operation
+      success: The payment method entry was successfully canceled
   textMsg:
     title: Text confirmation code
     header: Confirmation code
@@ -848,22 +855,22 @@ messages:
     deselectAll: None
     payment:
       expired: Payment expired
-      validAlert:
-        block1: You can pay this notice until
-        block2: "{{time}} of {{day}}."
-      expiringAlert:
-        block1: This notice
-        block2: expire {{todayOrTomorrow}}
-        block3: at
+      paid: This notice is paid. Show the receipt in your
+      addMemo: 
+          block1: Add a reminder for the 
+          block2: at
+      expiringAlert: This notice expire today at
+      expiredAlert: 
+        block1: The notice expired at 
+        block2: "on"
+    presctiption:  
+      addMemo: This prescription expires the
+      expiringAlert: This prescription expires today
       expiredAlert:
-        block1: The notice of
-        block2: € {{amount}}
-        block3: is
-        block4: expired
-        block5: at
-        block6: of
+          block1: The prescription expired at 
+          block2: "on"
     pay: Pay € {{amount}}
-    paid: Paid € {{amount}}
+    paid: Paid
     reminder: Reminder
     reminderShort: Memo
     reminderCalendarSelect: In which calendar you want to add the reminder?
@@ -902,6 +909,18 @@ messages:
     emptyMessage:
       title: You haven't any scheduled deadline.
       subtitle:  Use the button above to check out past deadlines.
+  medical:
+    not_available: "n/a"
+    prescription: Electronic prescription
+    memo: Reminder for the recipient
+    deadline: this prescription expires {{date}}
+    nre: Electronic prescription number
+    iup: Unique booking identifier
+    patient_fiscal_code: Patient's fiscal code
+    prescriber_fiscal_code: Doctor's fiscal code
+    barcodes: Barcodes
+    nationalService: National Health Service
+    note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
 messageDetails:
   contextualHelpTitle: Message details
   contextualHelpContent: !include messages/message_detail.md
@@ -974,6 +993,7 @@ services:
   contactPhone: Phone
   areasOfInterest:
     selectMessage: Choose the geographical areas (municipalities, regions, etc.) where you reside or that you usually visit to see the relative services here. You can change them at any time.
+    selectMessageEmptyOrgs: At the moment it is not possible to add a location. Please pull down to refresh the data and try again.
     addButton: Add your areas of interest
     editButton: Change the areas of interest
     searchEmpty: If you do not find your area of interest, it means that the organizations of that territory do not yet exhibit services on IO.
@@ -1015,6 +1035,12 @@ identification:
       title: Identification required
       sensorDescription: Touch sensor
       fallbackLabel: Use the unlock code
+  fail:
+    wrongCode: Wrong code
+    remainingAttempts: You have {{attempts}} attempts left.
+    remainingAttemptSingle: You have {{attempts}} attempt left.
+    tooManyAttempts: Too many attempts.
+    waitMessage: "Try again in:"
 calendarEvents:
   calendarSelect: In which calendar you want to add the event?
   removeRequest:

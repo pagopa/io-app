@@ -9,6 +9,7 @@ declare module "native-base" {
     interface Text extends TextProperties {
       link?: boolean;
       bold?: boolean;
+      semibold?: boolean;
       italic?: boolean;
       leftAlign?: boolean;
       rightAlign?: boolean;
@@ -19,12 +20,23 @@ declare module "native-base" {
       primary?: boolean;
       badge?: boolean;
       robotomono?: boolean;
+      small?: boolean;
+      xsmall?: boolean;
     }
   }
 }
 
 export default (): Theme => {
   return {
+    ".xsmall": {
+      fontSize: variables.fontSizeXSmall,
+      lineHeight: variables.lineHeightXSmall,
+      marginBottom: -2 // to solve alignment of the text in the given lineHeight
+    },
+    ".small": {
+      fontSize: variables.fontSizeSmall,
+      lineHeight: variables.lineHeightSmall
+    },
     ".link": {
       ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
       color: variables.textLinkColor,
@@ -32,6 +44,9 @@ export default (): Theme => {
     },
     ".bold": {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
+    },
+    ".semibold": {
+      ...makeFontStyleObject(Platform.select, variables.textLinkWeight)
     },
     ".italic": {
       ...makeFontStyleObject(Platform.select, variables.textNormalWeight, true)

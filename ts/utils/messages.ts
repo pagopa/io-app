@@ -2,11 +2,15 @@
  * Generic utilities for messages
  */
 
+import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import { CreatedMessageWithContent } from "../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
+import { getExpireStatus } from "./dates";
 import { isTextIncludedCaseInsensitive } from "./strings";
 
 export function messageContainsText(
-  message: CreatedMessageWithContent,
+  message: CreatedMessageWithContentAndAttachments,
   searchText: string
 ) {
   return (
@@ -16,42 +20,46 @@ export function messageContainsText(
 }
 
 export function messageNeedsDueDateCTA(
-  message: CreatedMessageWithContent
+  message: CreatedMessageWithContentAndAttachments
 ): boolean {
   return message.content.due_date !== undefined;
 }
 
 export function messageNeedsPaymentCTA(
-  message: CreatedMessageWithContent
+  message: CreatedMessageWithContentAndAttachments
 ): boolean {
   return message.content.payment_data !== undefined;
 }
 
 export function messageNeedsCTABar(
-  message: CreatedMessageWithContent
+  message: CreatedMessageWithContentAndAttachments
 ): boolean {
   return messageNeedsDueDateCTA(message) || messageNeedsPaymentCTA(message);
 }
 
+export const hasPrescriptionData = (
+  message: CreatedMessageWithContentAndAttachments
+): boolean => fromNullable(message.content.prescription_data).isSome();
+
 type MessagePaymentUnexpirable = {
   kind: "UNEXPIRABLE";
   noticeNumber: NonNullable<
-    CreatedMessageWithContent["content"]["payment_data"]
+    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >["notice_number"];
   amount: NonNullable<
-    CreatedMessageWithContent["content"]["payment_data"]
+    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >["amount"];
 };
-
+export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
 type MessagePaymentExpirable = {
   kind: "EXPIRABLE";
   noticeNumber: NonNullable<
-    CreatedMessageWithContent["content"]["payment_data"]
+    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >["notice_number"];
   amount: NonNullable<
-    CreatedMessageWithContent["content"]["payment_data"]
+    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >["amount"];
-  expireStatus: "VALID" | "EXPIRING" | "EXPIRED";
+  expireStatus: ExpireStatus;
   dueDate: Date;
 };
 
@@ -61,21 +69,14 @@ export type MessagePaymentExpirationInfo =
 
 export function getMessagePaymentExpirationInfo(
   paymentData: NonNullable<
-    CreatedMessageWithContent["content"]["payment_data"]
+    CreatedMessageWithContentAndAttachments["content"]["payment_data"]
   >,
   dueDate?: Date
 ): MessagePaymentExpirationInfo {
   const { notice_number, amount, invalid_after_due_date } = paymentData;
 
   if (invalid_after_due_date && dueDate !== undefined) {
-    const remainingMilliseconds = dueDate.getTime() - Date.now();
-
-    const expireStatus =
-      remainingMilliseconds > 1000 * 60 * 60 * 24
-        ? "VALID"
-        : remainingMilliseconds > 0
-          ? "EXPIRING"
-          : "EXPIRED";
+    const expireStatus = getExpireStatus(dueDate);
 
     return {
       kind: "EXPIRABLE",
@@ -88,6 +89,13 @@ export function getMessagePaymentExpirationInfo(
 
   return { kind: "UNEXPIRABLE", noticeNumber: notice_number, amount };
 }
+
+export const paymentExpirationInfo = (message: CreatedMessageWithContent) => {
+  const { payment_data, due_date } = message.content;
+  return fromNullable(payment_data).map(paymentData =>
+    getMessagePaymentExpirationInfo(paymentData, due_date)
+  );
+};
 
 export const isUnexpirable = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
@@ -116,3 +124,25 @@ export const isExpired = (
 ) =>
   isExpirable(messagePaymentExpirationInfo) &&
   messagePaymentExpirationInfo.expireStatus === "EXPIRED";
+
+/**
+ * given a name, return the relative prescription data value if it corresponds to a field
+ * @param message
+ * @param name it should be a string nre | iup | prescriber_fiscal_code
+ */
+export const getPrescriptionDataFromName = (
+  prescriptionData: PrescriptionData | undefined,
+  name: string
+): Option<string> => {
+  return fromNullable(prescriptionData).fold(none, pd => {
+    switch (name.toLowerCase()) {
+      case "nre":
+        return some(pd.nre);
+      case "iup":
+        return fromNullable(pd.iup);
+      case "prescriber_fiscal_code":
+        return fromNullable(pd.prescriber_fiscal_code);
+    }
+    return none;
+  });
+};

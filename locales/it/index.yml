@@ -4,6 +4,7 @@ global:
   symbols:
     question: "?"
     euro: €
+    asterisk: "*"
   localization:
     decimalSeparator: ","
   date:
@@ -19,6 +20,7 @@ global:
   genericAlert: Attenzione!
   genericWaiting: Attendi qualche secondo...
   genericThanks: Grazie
+  genericShare: Condividi
   jserror:
     title: Si è verificato un errore imprevisto
     message: Abbiamo segnalato questo al nostro team! Si prega di chiudere l'app e ricominciare!
@@ -612,6 +614,11 @@ wallet:
     failedCardAlreadyExists: La carta che stai inserendo è già presente
     contextualHelpTitle: Come aggiungere un metodo di pagamento
     contextualHelpContent: !include wallet/wallet_add_payment_method.md
+    abort:
+      title: Vuoi annullare l'inserimento di un nuovo metodo di pagamento?
+      confirm: Annulla l'inserimento
+      cancel: Continua con l'inserimento
+      success: L'inserimento del metodo di pagamento è stato annullato correttamente
   textMsg:
     title: Codice di conferma
     header: Codice di Conferma SMS
@@ -882,22 +889,23 @@ messages:
     deselectAll: Nessuno
     payment:
       expired: Pagamento scaduto
-      validAlert:
-        block1: Puoi pagare questo avviso fino alle
-        block2: "{{time}} del {{day}}."
-      expiringAlert:
-        block1: Questo avviso
-        block2: scade {{todayOrTomorrow}}
-        block3: alle
+      paid: Questo avviso è stato pagato. Visualizza la ricevuta nei tuoi
+      addMemo:
+        block1: Aggiungi un promemoria per il
+        block2: alle
+      expiringAlert: Questo avviso scade oggi alle
       expiredAlert:
-        block1: Il pagamento di
-        block2: € {{amount}}
-        block3: è
-        block4: scaduto
-        block5: alle
-        block6: del
+        block1: Il pagamento è scaduto alle ore
+        block2: del
+    presctiption:
+      addMemo: Questa ricetta scade il
+      expiringAlert: Questa ricetta scade oggi
+      expiredAlert:
+          block1: La ricetta è scaduta alle ore
+          block2: del
+      
     pay: Paga € {{amount}}
-    paid: Hai pagato € {{amount}}
+    paid: Pagato
     reminder: Promemoria
     reminderShort: Memo
     reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
@@ -936,6 +944,18 @@ messages:
     emptyMessage:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
+  medical:
+    not_available: "n/a"
+    prescription: Ricetta elettronica
+    memo: Promemoria per l'assistito
+    nre: Numero Ricetta Elettronica
+    iup: Identificativo Unico Prenotazione
+    patient_fiscal_code: Codice Fiscale dell'assistito
+    prescriber_fiscal_code: Codice fiscale del medico
+    deadline: Questa ricetta scade il {{date}}
+    barcodes: Codici a barre
+    nationalService: Servizio Sanitario Nazionale
+    note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
 messageDetails:
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md
@@ -1010,6 +1030,7 @@ services:
   contactPhone: Telefono
   areasOfInterest:
     selectMessage: Scegli le aree geografiche (comuni, regioni, etc.) dove risiedi o che frequenti solitamente per vederne qui i relativi servizi. Potrai modificarle in ogni momento.
+    selectMessageEmptyOrgs: Al momento non è possibile aggiungere una località. Per favore trascina in basso per aggiornare i dati e riprova a selezionare un'area.
     addButton: Aggiungi le tue aree di interesse
     editButton: Modifica le aree di interesse
     searchEmpty: Se non trovi la tua area di interesse, significa che gli enti di quel territorio non espongono ancora servizi su IO.
@@ -1051,6 +1072,12 @@ identification:
       title: Identificazione richiesta
       sensorDescription: Tocca il sensore
       fallbackLabel: Usa il codice di sblocco
+  fail:
+    wrongCode: Codice errato
+    remainingAttempts: Ti rimangono {{attempts}} tentativi.
+    remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
+    tooManyAttempts: Troppi tentativi di inserimento errati.
+    waitMessage: "Riprova tra:"
 calendarEvents:
   calendarSelect: In quale calendario vuoi aggiungere l'evento?
   removeRequest:
@@ -1185,10 +1212,10 @@ faq:
     title: "Che cos'è un QR code?"
     content: !include faq/faq34.md
   35:
-    title: "Che cos'è PagoPA?"
+    title: "Che cos'è pagoPA?"
     content: !include faq/faq35.md
   36:
-    title: "Non vedi le tue ricevute PagoPA?"
+    title: "Non vedi le tue ricevute pagoPA?"
     content: !include faq/faq36.md
   37:
     title: "Quali metodi di pagamento puoi aggiungere?"
