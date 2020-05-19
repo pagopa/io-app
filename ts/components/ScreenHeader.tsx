@@ -48,7 +48,7 @@ class ScreenHeader extends React.Component<Props> {
     if (icon) {
       return <Image source={icon} style={styles.image} />;
     }
-    if (iconFont) {
+    return fromNullable(iconFont).fold(undefined, ic => {
       const { dark } = this.props;
       const imageColor = fromNullable(this.props.iconFont)
         .mapNullable(s => s.color)
@@ -61,13 +61,12 @@ class ScreenHeader extends React.Component<Props> {
         );
       return (
         <IconFont
-          name={iconFont.name}
-          size={iconFont.size || HEADER_HEIGHT}
+          name={ic.name}
+          size={ic.size || HEADER_HEIGHT}
           color={imageColor}
         />
       );
-    }
-    return undefined;
+    });
   };
 
   public render() {
