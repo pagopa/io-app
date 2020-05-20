@@ -22,7 +22,6 @@
 		3A3CA4696BA44782A02FE37E /* TitilliumWeb-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B021D4CC17ED4D54B7944FED /* TitilliumWeb-SemiBold.ttf */; };
 		4D331CF68DAC4800A6D6297A /* TitilliumWeb-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C2483C363E432BB4D0A583 /* TitilliumWeb-Regular.ttf */; };
 		570BBC8FC70C4A76ABF035AC /* TitilliumWeb-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 163BC670599B42509D4D138E /* TitilliumWeb-Light.ttf */; };
-		61CC93112135818C00206602 /* InputMask.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61CC930F2135818B00206602 /* InputMask.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6867BE73959A414F84C77FED /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 69DDBDD712454186B7493CEC /* Ionicons.ttf */; };
 		6B44A74498354CC19B90FE9C /* TitilliumWeb-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6754714BBEF54AA59833C0EB /* TitilliumWeb-ExtraLightItalic.ttf */; };
 		72E4B1EFF7D4414483079F91 /* TitilliumWeb-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CED8B1FF1E254583BB3F285F /* TitilliumWeb-SemiBoldItalic.ttf */; };
@@ -33,7 +32,7 @@
 		8C7948EB37334D2DADB1E7AE /* TitilliumWeb-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE4F83DB63254F5285C36A40 /* TitilliumWeb-ExtraLight.ttf */; };
 		8D109BF3B47F46FDA6B105CE /* TitilliumWeb-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E4EECD1122B401CAC190472 /* TitilliumWeb-BoldItalic.ttf */; };
 		8E7BB01F1A6D4D79B17B4210 /* RobotoMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */; };
-		95BD51C124754E5100E63481 /* libRNNativeCiesdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C6C656243E3B830031DD75 /* libRNNativeCiesdk.a */; };
+		9504C9D02475C99700ABD334 /* libRNNativeCiesdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95C6C656243E3B830031DD75 /* libRNNativeCiesdk.a */; };
 		95C6C65B243E3E2B0031DD75 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C6C65A243E3E2B0031DD75 /* File.swift */; };
 		9975E38DE95949D28D07A275 /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */; };
 		BE1A42156484487BABBC4DED /* TitilliumWeb-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */; };
@@ -45,7 +44,6 @@
 		F0625E7F2326825600EDEF90 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		F0625E802326826400EDEF90 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 13302F73209B350200C9B38F /* libRCTPushNotification.a */; };
 		F0625E8D2326831D00EDEF90 /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CC92FA21357FDE00206602 /* libReactNativeExceptionHandler.a */; };
-		F0625E8E2326832500EDEF90 /* libRNTextInputMask.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CC92F521357FDE00206602 /* libRNTextInputMask.a */; };
 		F09FEB3C231818E3007071DB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F09FEB0D231818E3007071DB /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -364,7 +362,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				61CC93112135818C00206602 /* InputMask.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,7 +404,6 @@
 		58F80D6D97CC591B7BDC2E0C /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		61CC92FB2135800100206602 /* InputMaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = InputMaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		61CC930F2135818B00206602 /* InputMask.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = InputMask.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62455F356D8529F5D60CAC88 /* Pods-ItaliaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.debug.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.debug.xcconfig"; sourceTree = "<group>"; };
 		640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-LightItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-LightItalic.ttf"; sourceTree = "<group>"; };
 		6754714BBEF54AA59833C0EB /* TitilliumWeb-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-ExtraLightItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
@@ -466,12 +462,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95BD51C124754E5100E63481 /* libRNNativeCiesdk.a in Frameworks */,
+				9504C9D02475C99700ABD334 /* libRNNativeCiesdk.a in Frameworks */,
 				F0625E7E2326824D00EDEF90 /* libART.a in Frameworks */,
 				F0625E7F2326825600EDEF90 /* JavaScriptCore.framework in Frameworks */,
 				F0625E802326826400EDEF90 /* libRCTPushNotification.a in Frameworks */,
 				F0625E8D2326831D00EDEF90 /* libReactNativeExceptionHandler.a in Frameworks */,
-				F0625E8E2326832500EDEF90 /* libRNTextInputMask.a in Frameworks */,
 				86263C3EEDF1EE16D2DD5A76 /* libPods-ItaliaApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -726,7 +721,6 @@
 			isa = PBXGroup;
 			children = (
 				95C6C65A243E3E2B0031DD75 /* File.swift */,
-				61CC930F2135818B00206602 /* InputMask.framework */,
 				61CC92FB2135800100206602 /* InputMaskTests.xctest */,
 				194A5D2A1F027F5A0078620E /* Podfile */,
 				13B07FAE1A68108700A75B9A /* ItaliaApp */,
@@ -1585,7 +1579,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaAppDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 63;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1629,7 +1623,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaAppRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 63;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
