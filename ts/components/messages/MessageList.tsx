@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 import Placeholder from "rn-placeholder";
-import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { MessagesStateAndStatus } from "../../store/reducers/entities/messages";
@@ -229,7 +229,7 @@ class MessageList extends React.Component<Props, State> {
           // CreatedMessageWithContent cast is needed because of the lack of
           // "markdown" required property. It is not passed because it's not
           // needed for giving feedback in the messsage list
-        } as CreatedMessageWithContent)
+        } as CreatedMessageWithContentAndAttachments)
       : potMessage.value;
 
     const service =
