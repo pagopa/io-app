@@ -125,5 +125,7 @@
 		<string>A0000002471001</string>
 		<string>00000000000000</string>
 	</array>
+	<key>method</key>
+    <string>app-store</string>
 </dict>
 </plist>
