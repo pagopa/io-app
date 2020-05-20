@@ -208,7 +208,7 @@ const mapStateToProps = (state: GlobalState) => {
   const isCIEAuthenticationSupported = isCieSupportedSelector(state);
   return {
     isSessionExpired: isSessionExpiredSelector(state),
-    isCieSupported: true//pot.getOrElse(isCIEAuthenticationSupported, false)
+    isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false)
   };
 };
 

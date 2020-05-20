@@ -123,7 +123,7 @@ class CiePinpad extends React.PureComponent<Props> {
             // The color is based on the current box
             !this.props.pin || i >= this.props.pin.length
               ? variables.brandLightGray
-              : 'transparent'
+              : "transparent"
           }
           placeHolderStyle={{
             ...styles.placeHolderStyle,

@@ -1,36 +1,41 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../theme/variables";
+import { HEADER_ICON_HEIGHT } from "../utils/constants";
+import IconFont from "./ui/IconFont";
 
 type Props = {
   heading: React.ReactNode;
   icon?: ImageSourcePropType;
+  iconFont?: IconProps;
   dark?: boolean;
   padded?: boolean;
 };
-
-const ICON_WIDTH = 48;
 
 const styles = StyleSheet.create({
   darkGrayBg: {
     backgroundColor: customVariables.brandDarkGray
   },
-  container: {
-    justifyContent: "space-between"
-  },
   padded: {
     paddingHorizontal: customVariables.contentPadding
+  },
+  container: {
+    justifyContent: "space-between",
+    paddingHorizontal: customVariables.contentPadding,
+    minHeight: HEADER_ICON_HEIGHT
   },
   text: {
     flex: 1,
     flexGrow: 1
   },
   image: {
-    maxHeight: ICON_WIDTH,
-    maxWidth: ICON_WIDTH,
+    maxHeight: HEADER_ICON_HEIGHT,
+    maxWidth: HEADER_ICON_HEIGHT,
     resizeMode: "contain",
     flex: 1
   }
@@ -38,15 +43,41 @@ const styles = StyleSheet.create({
 
 /**
  * Component that implements the screen header with heading to the left
- * and an icon image to the right
+ * and an icon image to the right. The icon can be an image or an icon (from io-icon-font)
  */
 class ScreenHeader extends React.Component<Props> {
   public static defaultProps: Partial<Props> = {
     padded: true
   };
-  public render() {
-    const { heading, icon, dark, padded } = this.props;
+  private getIcon = () => {
+    const { icon } = this.props;
+    if (icon) {
+      return <Image source={icon} style={styles.image} />;
+    }
+    const { iconFont } = this.props;
+    return fromNullable(iconFont).fold(undefined, ic => {
+      const { dark } = this.props;
+      const imageColor = fromNullable(ic.color).getOrElse(
+        fromNullable(dark).fold(
+          customVariables.headerIconLight,
+          isDark =>
+            isDark
+              ? customVariables.headerIconDark
+              : customVariables.headerIconLight
+        )
+      );
+      return (
+        <IconFont
+          name={ic.name}
+          size={Math.min(ic.size || HEADER_ICON_HEIGHT, HEADER_ICON_HEIGHT)}
+          color={imageColor}
+        />
+      );
+    });
+  };
 
+  public render() {
+    const { heading, dark, padded } = this.props;
     return (
       <View
         style={[
@@ -56,7 +87,7 @@ class ScreenHeader extends React.Component<Props> {
         ]}
       >
         <View style={styles.text}>{heading}</View>
-        {icon && <Image source={icon} style={styles.image} />}
+        {this.getIcon()}
       </View>
     );
   }
