@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   padded: { paddingHorizontal: customVariables.contentPadding },
   alert: {
-    backgroundColor: customVariables.alertColor,
+    backgroundColor: customVariables.brandHighLighter,
     paddingHorizontal: customVariables.contentPadding,
     paddingVertical: 11,
     flexDirection: "row"
@@ -248,20 +248,16 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           kind: "COMPLETED"
         })
       );
-      // reset the payment state
-      dispatch(paymentInitializeState());
       // update the transactions state (the first transaction is the most recent)
       dispatch(fetchTransactionsRequest({ start: 0 }));
     } else {
       // on failure:
-      // navigate to entrypoint of payment or wallet home
-      dispatch(backToEntrypointPayment());
       // signal faliure
       dispatch(paymentCompletedFailure());
       // delete the active payment from pagoPA
       dispatch(runDeleteActivePaymentSaga());
-      // reset the payment state
-      dispatch(paymentInitializeState());
+      // navigate to entrypoint of payment or wallet home
+      dispatch(backToEntrypointPayment());
       showToast(I18n.t("wallet.ConfirmPayment.transactionFailure"), "danger");
     }
   };
@@ -289,6 +285,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     dispatch(
       identificationRequest(
         false,
+        true,
         {
           message: I18n.t("wallet.ConfirmPayment.identificationMessage")
         },

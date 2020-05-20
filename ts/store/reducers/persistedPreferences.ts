@@ -90,3 +90,9 @@ export const wasServiceAlertDisplayedOnceSelector = (state: GlobalState) =>
 
 export const isCustomEmailChannelEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isCustomEmailChannelEnabled;
+
+export const preferredCalendarSelector = (state: GlobalState) =>
+  state.persistedPreferences.preferredCalendar;
+
+export const isFingerprintEnabledSelector = (state: GlobalState) =>
+  state.persistedPreferences.isFingerprintEnabled;

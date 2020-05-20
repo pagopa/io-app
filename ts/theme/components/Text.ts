@@ -9,22 +9,34 @@ declare module "native-base" {
     interface Text extends TextProperties {
       link?: boolean;
       bold?: boolean;
+      semibold?: boolean;
       italic?: boolean;
+      underlined?: boolean;
       leftAlign?: boolean;
       rightAlign?: boolean;
-      alternativeBold?: boolean;
+      alignCenter?: boolean;
       white?: boolean;
       dark?: boolean;
-      alignCenter?: boolean;
       primary?: boolean;
       badge?: boolean;
       robotomono?: boolean;
+      small?: boolean;
+      xsmall?: boolean;
     }
   }
 }
 
 export default (): Theme => {
   return {
+    ".xsmall": {
+      fontSize: variables.fontSizeXSmall,
+      lineHeight: variables.lineHeightXSmall,
+      marginBottom: -2 // to solve alignment of the text in the given lineHeight
+    },
+    ".small": {
+      fontSize: variables.fontSizeSmall,
+      lineHeight: variables.lineHeightSmall
+    },
     ".link": {
       ...makeFontStyleObject(Platform.select, variables.textLinkWeight),
       color: variables.textLinkColor,
@@ -33,20 +45,20 @@ export default (): Theme => {
     ".bold": {
       ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
+    ".semibold": {
+      ...makeFontStyleObject(Platform.select, variables.textLinkWeight)
+    },
     ".italic": {
       ...makeFontStyleObject(Platform.select, variables.textNormalWeight, true)
+    },
+    ".underlined": {
+      textDecorationLine: "underline"
     },
     ".leftAlign": {
       textAlign: "left"
     },
     ".rightAlign": {
       textAlign: "right"
-    },
-    ".alternativeBold": {
-      lineHeight: variables.lineHeight2,
-      fontWeight: variables.textBoldWeight,
-      color: variables.h1Color,
-      ...makeFontStyleObject(Platform.select, variables.textBoldWeight)
     },
     ".white": {
       color: variables.colorWhite

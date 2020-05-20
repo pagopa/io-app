@@ -19,9 +19,13 @@ import {
 } from "../../boot/configureInstabug";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
+import { BadgeComponent } from "../../components/screens/BadgeComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
-import { getIuv } from "../../components/wallet/PaymentsHistoryList";
+import {
+  getIuv,
+  getPaymentHistoryInfo
+} from "../../components/wallet/PaymentsHistoryList";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
 import {
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
     paddingRight: 10
   },
   box: {
-    marginTop: 10,
+    marginTop: 2,
     marginBottom: 10,
     flexDirection: "column",
     justifyContent: "flex-start"
@@ -72,9 +76,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between"
-  },
-  text1: {
-    fontSize: 14
   },
   text2: {
     color: customVariables.brandDarkestGray,
@@ -120,6 +121,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: customVariables.brandPrimary
   },
+  paymentOutcome: {
+    justifyContent: "flex-start",
+    flexDirection: "row",
+    alignItems: "center"
+  },
   helpButtonText: {
     paddingRight: 10,
     paddingBottom: 0,
@@ -127,6 +133,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     color: customVariables.brandPrimary
+  },
+
+  text11: {
+    fontSize: 14,
+    paddingLeft: 8,
+    lineHeight: 18,
+    color: customVariables.brandDarkestGray
   }
 });
 
@@ -198,6 +211,10 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   );
   public render(): React.ReactNode {
     const payment = this.props.navigation.getParam("payment");
+    const paymentCheckout = isPaymentDoneSuccessfully(payment);
+    const paymentInfo = getPaymentHistoryInfo(payment, paymentCheckout);
+    const paymentOutcomeDescription = paymentInfo.text11;
+    const paymentOutcomeColor = paymentInfo.color;
     const errorDetail = fromNullable(
       renderErrorTransactionMessage(payment.failure)
     );
@@ -249,17 +266,22 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               <Text>{I18n.t("payment.details.info.title")}</Text>
             </View>
             <ItemSeparatorComponent noPadded={true} />
+            <View spacer={true} />
+            <View style={styles.paymentOutcome}>
+              <BadgeComponent color={paymentOutcomeColor} />
+              <Text style={styles.text11}>{paymentOutcomeDescription}</Text>
+            </View>
             <View style={styles.box}>
               {paymentOutCome.isSome() && paymentOutCome.value ? (
                 <React.Fragment>
                   <View style={styles.box}>
-                    <Text style={styles.text1}>
+                    <Text small={true}>
                       {I18n.t("payment.details.info.enteCreditore")}
                     </Text>
                     <Text style={styles.text2}>{creditore}</Text>
                   </View>
                   <View style={styles.box}>
-                    <Text style={styles.text1}>
+                    <Text small={true}>
                       {I18n.t("payment.details.info.causaleVersamento")}
                     </Text>
                     <Text style={styles.text2}>{causaleVersamento}</Text>
@@ -268,14 +290,12 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               ) : (
                 <React.Fragment>
                   <View style={styles.box}>
-                    <Text style={styles.text1}>{I18n.t("payment.IUV")}</Text>
+                    <Text small={true}>{I18n.t("payment.IUV")}</Text>
                     <Text style={styles.text2}>{iuv}</Text>
                   </View>
                   {errorDetail.isSome() && (
                     <View key={"error"} style={styles.box}>
-                      <Text style={styles.text1}>
-                        {I18n.t("payment.errorDetails")}
-                      </Text>
+                      <Text small={true}>{I18n.t("payment.errorDetails")}</Text>
                       <Text style={styles.text2}>{errorDetail.value}</Text>
                     </View>
                   )}
@@ -283,7 +303,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               )}
 
               <View style={styles.row}>
-                <Text style={styles.text1}>
+                <Text small={true}>
                   {I18n.t("payment.details.info.dateAndTime")}
                 </Text>
                 <Text style={styles.text2}>{datetime}</Text>
@@ -297,7 +317,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 <React.Fragment>
                   <View style={styles.box}>
                     <View style={styles.row}>
-                      <Text style={styles.text1}>
+                      <Text small={true}>
                         {I18n.t("payment.details.info.paymentAmount")}
                       </Text>
                       <Text style={styles.text2}>
@@ -306,7 +326,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                     </View>
 
                     <View style={styles.row}>
-                      <Text style={styles.text1}>
+                      <Text small={true}>
                         {I18n.t("payment.details.info.transactionCosts")}
                       </Text>
                       <Text style={styles.text2}>
@@ -319,7 +339,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                     <View spacer={true} />
                     <View style={styles.row}>
                       <Text
-                        style={[styles.text1, styles.textBig, styles.textBold]}
+                        small={true}
+                        style={[styles.textBig, styles.textBold]}
                       >
                         {I18n.t("payment.details.info.totalPaid")}
                       </Text>
@@ -333,7 +354,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
                   <View style={styles.row}>
                     <View style={styles.box}>
-                      <Text style={styles.text1}>
+                      <Text small={true}>
                         {I18n.t("payment.details.info.transactionCode")}
                       </Text>
                       <Text style={styles.text2}>{idTransaction}</Text>
@@ -354,7 +375,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               )}
             <View spacer={true} />
             <View style={[styles.box, styles.boxHelp]}>
-              <Text style={[styles.text1, styles.textHelp]}>
+              <Text small={true} style={styles.textHelp}>
                 {I18n.t("payment.details.info.help")}
               </Text>
               <View spacer={true} />

@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   flex: {
-    flex: 1
+    flex: 1,
+    alignSelf: "center"
   }
 });
 
@@ -49,13 +50,8 @@ type MessageData = {
  * If data are available, the user can start a call or send and email to the service
  */
 class MessageDetailData extends React.PureComponent<Props> {
-  private dateFormat = formatDateAsLocal(
-    this.props.message.created_at,
-    true,
-    true
-  );
-  private date = format(this.props.message.created_at, this.dateFormat);
-  private time = format(this.props.message.created_at, "hh:mm");
+  private date = formatDateAsLocal(this.props.message.created_at);
+  private time = format(this.props.message.created_at, "HH.mm");
 
   get data(): MessageData {
     const serviceDetail = pot.toOption(this.props.serviceDetail);
@@ -103,7 +99,8 @@ class MessageDetailData extends React.PureComponent<Props> {
 
     const callButton: BlockButtonProps = {
       bordered: true,
-      white: true,
+      small: true,
+      lightText: true,
       title: I18n.t("messageDetails.call"),
       iconName: "io-phone",
       onPress: this.callService
@@ -111,7 +108,8 @@ class MessageDetailData extends React.PureComponent<Props> {
 
     const emailButton: BlockButtonProps = {
       bordered: true,
-      white: true,
+      small: true,
+      lightText: true,
       title: I18n.t("messageDetails.write"),
       iconName: "io-envelope",
       onPress: this.sendEmailToService
@@ -168,20 +166,22 @@ class MessageDetailData extends React.PureComponent<Props> {
             <View spacer={true} />
 
             <Text bold={true}>{I18n.t("messageDetails.question")}</Text>
-            <Text>{I18n.t("messageDetails.answer")}</Text>
+            <View spacer={true} xsmall={true} />
+            <Text small={true}>{I18n.t("messageDetails.answer")}</Text>
 
             <View spacer={true} />
 
             <React.Fragment>
               <View style={styles.row}>
-                <Text style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
-                  this.props.message.id
-                }`}</Text>
+                <Text xsmall={true} style={styles.flex}>{`${I18n.t(
+                  "messageDetails.id"
+                )} ${this.props.message.id}`}</Text>
                 <CopyButtonComponent textToCopy={this.props.message.id} />
               </View>
               <View spacer={true} />
             </React.Fragment>
             {this.renderButtons()}
+            <View spacer={true} small={true} />
           </React.Fragment>
         )}
       </View>
