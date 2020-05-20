@@ -1,6 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Dimensions, StyleSheet, TextInput } from "react-native";
+import { Dimensions, StyleSheet, TextInput, Platform } from "react-native";
 import variables from "../../theme/variables";
 import { Baseline } from "../Pinpad/Placeholders";
 
@@ -29,8 +29,16 @@ const styles = StyleSheet.create({
     marginTop: 2
   },
   textInputStyle: {
+    color: "black",
     textAlign: "center",
-    fontSize: variables.fontSize3
+    fontSize: Platform.select({
+      ios: variables.fontSize2,
+      default: variables.fontSize3
+    }),
+    marginBottom: Platform.select({
+      ios: 4,
+      default: 0
+    })
   },
   input: {
     backgroundColor: "red",

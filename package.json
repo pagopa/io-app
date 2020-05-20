@@ -72,7 +72,7 @@
     "react-native-sha256": "1.2.3",
     "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^12.1.0",
-    "react-native-text-input-mask": "^0.9.0",
+    "react-native-text-input-mask": "2.0.0",
     "react-native-touch-id": "^4.4.1",
     "react-native-vector-icons": "^6.6.0",
     "react-native-webview": "8.0.0",
