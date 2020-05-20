@@ -204,7 +204,11 @@ class TosScreen extends React.PureComponent<Props, State> {
           )}
       </BaseScreenComponent>
     ));
-    return <ContainerComponent isLoading={this.state.isLoading} />;
+    return (
+      <ContainerComponent
+        isLoading={this.state.isLoading || this.props.isLoading}
+      />
+    );
   }
 
   private handleGoBack = () =>
@@ -228,7 +232,7 @@ class TosScreen extends React.PureComponent<Props, State> {
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
-    isLoading: pot.isLoading(userMetadataSelector(state)),
+    isLoading: pot.isUpdating(potProfile),
     hasAcceptedOldTosVersion: pot.getOrElse(
       pot.map(
         potProfile,

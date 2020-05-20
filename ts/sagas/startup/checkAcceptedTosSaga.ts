@@ -27,7 +27,6 @@ export function* checkAcceptedTosSaga(
   ) {
     // Navigate to the TosScreen
     yield put(navigateToTosScreen);
-
     // Wait the user accept the ToS
     yield take(tosAccepted);
   }
@@ -38,5 +37,6 @@ export function* checkAcceptedTosSaga(
    */
   if (userProfile.has_profile) {
     yield put(profileUpsert.request({ accepted_tos_version: tosVersion }));
+    yield take([profileUpsert.success, profileUpsert.failure]);
   }
 }
