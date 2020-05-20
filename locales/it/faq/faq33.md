@@ -1,2 +1,2 @@
-Certo, se l'avviso supporta il pagamento tramite PagoPA puoi procedere ed effettuare la transazione direttamente dall'app IO.
+Certo, se l'avviso supporta il pagamento tramite pagoPA puoi procedere ed effettuare la transazione direttamente dall'app IO.
 Puoi verificare che il modello di pagamento sia adatto se è disponibile il codice QR, e/o il codice alfanumerico IUV. L'app IO, dalla sezione 'Pagamenti', permette sia la scansione del codice QR che l'inserimento manuale dello IUV, a seconda di come ti risulta più comodo.

@@ -111,7 +111,7 @@ platform :ios do
   desc "This will also make sure the profile is up to date"
   lane :beta do |options|
     # Ensure that your git status is not dirty
-    ensure_git_status_clean
+    #ensure_git_status_clean
 
     # Increment the build number
     build_number = increment_build_number
@@ -138,15 +138,15 @@ platform :ios do
       "ItaliaApp/Info.plist",
       "ItaliaAppTests/Info.plist"
     ]
-    git_add(path: versioning_paths)
-    git_commit(path: versioning_paths, message: "[fastlane] New iOS/HockeyApp build v#{version_number} (build #{build_number})")
+    #git_add(path: versioning_paths)
+    #git_commit(path: versioning_paths, message: "[fastlane] New iOS/HockeyApp build v#{version_number} (build #{build_number})")
 
     # Add a git tag for this build. This will automatically
     # use an appropriate git tag name
-    add_git_tag(tag: "ios/beta/#{version_number}/#{build_number}")
+    #add_git_tag(tag: "ios/beta/#{version_number}/#{build_number}")
 
     # Push the new commit and tag back to your git remote
-    push_to_git_remote
+    #push_to_git_remote
 
     # upload to HockeyApp
     hockey(
@@ -158,7 +158,7 @@ platform :ios do
   desc "Submit a new Beta Build to TestFlight"
   lane :beta_testflight do |options|
     # Ensure that your git status is not dirty
-    ensure_git_status_clean
+    #ensure_git_status_clean
 
     # Increment the build number
     build_number = increment_build_number

@@ -41,7 +41,10 @@ const CIE_IDP_ID = "xx_servizicie";
 // this value assignment tries to decrease the sleeping time of a script
 // sleeping is due to allow user to read page content until the content changes to an
 // automatic redirect
-const injectJs = "seconds = 0;";
+const injectJs = `
+  seconds = 0;
+  true;
+`;
 
 const iOSUserAgent =
   "Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36";
