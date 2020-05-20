@@ -30,6 +30,7 @@ export function formatDateAsReminder(
  * It provides the format of the date depending on the system locale (DD/MM or MM/DD as default)
  * @param date
  * @param includeYear: true if the year should be included (DD/MM/YY or MM/DD/YY)
+ * @param extendedYear
  */
 export function formatDateAsLocal(
   date: Date,
@@ -88,7 +89,7 @@ export function isExpired(expireMonth: number, expireYear: number): boolean {
  */
 export const getExpireStatus = (date: Date): ExpireStatus => {
   const remainingMilliseconds = date.getTime() - Date.now();
-  return remainingMilliseconds > 1000 * 60 * 60 * 24
+  return remainingMilliseconds > 1000 * 60 * 60 * 24 * 7
     ? "VALID"
     : remainingMilliseconds > 0
       ? "EXPIRING"
