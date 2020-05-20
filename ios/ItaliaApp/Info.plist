@@ -34,11 +34,13 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>59</string>
+	<string>60</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NFCReaderUsageDescription</key>
+	<string>The app needs NFCReaderUsageDescription permission</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
@@ -50,36 +52,36 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>The app needs NSAppleMusicUsageDescription permission</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>The app needs NSBluetoothAlwaysUsageDescription permission</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>IO needs access to the calendar to add event reminders</string>
 	<key>NSCameraUsageDescription</key>
 	<string>IO needs access to the camera to scan QR codes</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>The app needs NSLocationWhenInUseUsageDescription permission</string>
+	<key>NSContactsUsageDescription</key>
+	<string>IO needs access to your contacts to let you add them in calendar events</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Enable Face ID for a faster identification.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>The app needs NSLocationAlwaysUsageDescription permission</string>
 	<key>NSLocationUsageDescription</key>
 	<string>The app needs NSLocationUsageDescription permission</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The app needs NSLocationWhenInUseUsageDescription permission</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>IO needs access to the microphone in case you want to leave a voice note</string>
+	<key>NSMotionUsageDescription</key>
+	<string>The app needs NSMotionUsageDescription permission</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>The app needs NSPhotoLibraryAddUsageDescription permission</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>IO needs access to the Photos to scan QR codes</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>The app needs NSSpeechRecognitionUsageDescription permission</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>The app needs NSAppleMusicUsageDescription permission</string>
-	<key>NSMotionUsageDescription</key>
-	<string>The app needs NSMotionUsageDescription permission</string>
-	<key>NFCReaderUsageDescription</key>
-	<string>The app needs NFCReaderUsageDescription permission</string>
-	<key>NSContactsUsageDescription</key>
-	<string>IO needs access to your contacts to let you add them in calendar events</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Enable Face ID for a faster identification.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>TitilliumWeb-Black.ttf</string>
@@ -109,20 +111,19 @@
 		<string>armv7</string>
 		<string>nfc</string>
 	</array>
-	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
-  <array>
-    <string>A0000000308000000009816001</string>
-    <string>A00000000039</string>
-    <string>A0000002471001</string>
-    <string>00000000000000</string>
-  </array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>IO needs access to the microphone in case you want to leave a voice note</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+	<array>
+		<string>com.apple.developer.nfc.readersession.iso7816.select-identifiers</string>
+		<string>A0000000308000000009816001</string>
+		<string>A00000000039</string>
+		<string>A0000002471001</string>
+		<string>00000000000000</string>
+	</array>
 </dict>
 </plist>
