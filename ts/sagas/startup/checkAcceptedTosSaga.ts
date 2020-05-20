@@ -1,7 +1,9 @@
 import { Effect } from "redux-saga";
-import { put, take } from "redux-saga/effects";
+import { call, put, take } from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { tosVersion } from "../../config";
+import I18n from "../../i18n";
 import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccepted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
@@ -37,6 +39,15 @@ export function* checkAcceptedTosSaga(
    */
   if (userProfile.has_profile) {
     yield put(profileUpsert.request({ accepted_tos_version: tosVersion }));
-    yield take([profileUpsert.success, profileUpsert.failure]);
+    const action:
+      | ActionType<typeof profileUpsert["success"]>
+      | ActionType<typeof profileUpsert["failure"]> = yield take([
+      getType(profileUpsert.success),
+      getType(profileUpsert.failure)
+    ]);
+
+    if (action.type === getType(profileUpsert.failure)) {
+      yield call(checkAcceptedTosSaga, userProfile);
+    }
   }
 }
