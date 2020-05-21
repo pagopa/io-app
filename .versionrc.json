@@ -26,7 +26,7 @@
       "updater": "scripts/changelog/pbxproj_updater.js"
     },
     {
-      "filename": "android/build.gradle",
+      "filename": "android/app/build.gradle",
       "updater": "scripts/changelog/gradle_updater.js"
     }
   ]
