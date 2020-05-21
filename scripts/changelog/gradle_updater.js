@@ -7,10 +7,7 @@ const versionNameRegex = /(versionName ")(.+)(")/gm;
 
 module.exports.readVersion = function(contents) {
   // return the 2nd group of the regex (the version)
-  let m;
-  while ((m = versionNameRegex.exec(contents))) {
-    return m[2];
-  }
+  return versionNameRegex.exec(contents)[2];
 };
 
 function replaceVersion(match, version, p1, p2, p3, offset, string) {
