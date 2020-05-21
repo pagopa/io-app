@@ -26,8 +26,9 @@ module.exports.writeVersion = function(contents, version) {
     );
     throw "CFBundleShortVersionString not found";
   }
-  //TODO: rc
-  infoObj.CFBundleShortVersionString = version;
+  const regex = /([0-9.]+)(-rc.\d+)?/gm;
+
+  infoObj.CFBundleShortVersionString = version.replace(regex, "$1");
   infoObj.CFBundleVersion = parseInt(infoObj.CFBundleVersion, 10) + 1;
   return plist.build(infoObj);
 };
