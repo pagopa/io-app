@@ -154,7 +154,9 @@ class PrivacyMainScreen extends React.Component<Props, State> {
       ) {
         if (pot.isError(currentState)) {
           showToast(errorMessage);
-        } else if (
+        }
+        // if user ask for download/delete prompt an alert to get confirmation
+        else if (
           this.state.requestProcess &&
           pot.isNone(prevProps.userDataProcessing[choice])
         ) {
