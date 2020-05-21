@@ -1,3 +1,9 @@
+/**
+ * This is an updater for the utility "standard-version" that increase the CURRENT_PROJECT_VERSION value
+ * for pbxproj files. Instead of set a specific version, like an usual updater, this module increase only
+ * the value of CURRENT_PROJECT_VERSION by one.
+ */
+
 module.exports.readVersion = function(contents) {
   return "-";
 };

@@ -1,3 +1,9 @@
+/**
+ * This is an updater for the utility "standard-version" that increase the CFBundleShortVersionString value without
+ * the rc postfix.
+ * The CFBundleVersion is always increased by one.
+ */
+
 const plist = require("plist");
 
 module.exports.readVersion = function(contents) {
