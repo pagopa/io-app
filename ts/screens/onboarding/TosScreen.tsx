@@ -27,8 +27,8 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
+import { showToast } from "../../utils/showToast";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -41,6 +41,12 @@ type State = {
 };
 
 const brokenLinkImage = require("../../../img/broken-link.png");
+const AVOID_ZOOM_JS = `
+const meta = document.createElement('meta');
+meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);
+true;
+`;
 
 const styles = StyleSheet.create({
   alert: {
@@ -109,6 +115,12 @@ class TosScreen extends React.PureComponent<Props, State> {
     this.state = { isLoading: true, hasError: false };
   }
 
+  public componentDidUpdate() {
+    if (this.props.hasProfileError) {
+      showToast(I18n.t("global.genericError"));
+    }
+  }
+
   private handleLoadEnd = () => {
     this.setState({ isLoading: false });
   };
@@ -146,12 +158,7 @@ class TosScreen extends React.PureComponent<Props, State> {
 
   public render() {
     const { dispatch } = this.props;
-    const avoidZoomWebview = `
-      const meta = document.createElement('meta');
-      meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
-      meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);
-      true;
-      `;
+
 
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
@@ -178,7 +185,7 @@ class TosScreen extends React.PureComponent<Props, State> {
               onLoadEnd={this.handleLoadEnd}
               onError={this.handleError}
               source={{ uri: privacyUrl }}
-              injectedJavaScript={avoidZoomWebview}
+              injectedJavaScript={AVOID_ZOOM_JS}
             />
           </View>
         )}
@@ -204,7 +211,11 @@ class TosScreen extends React.PureComponent<Props, State> {
           )}
       </BaseScreenComponent>
     ));
-    return <ContainerComponent isLoading={this.state.isLoading} />;
+    return (
+      <ContainerComponent
+        isLoading={this.state.isLoading || this.props.isLoading}
+      />
+    );
   }
 
   private handleGoBack = () =>
@@ -228,8 +239,8 @@ class TosScreen extends React.PureComponent<Props, State> {
 function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
-    isLoading: pot.isLoading(userMetadataSelector(state)),
     isOnbardingCompleted: isOnboardingCompletedSelector(state),
+    isLoading: pot.isUpdating(potProfile),
     hasAcceptedOldTosVersion: pot.getOrElse(
       pot.map(
         potProfile,
@@ -239,7 +250,8 @@ function mapStateToProps(state: GlobalState) {
           p.accepted_tos_version < tosVersion
       ),
       false
-    )
+    ),
+    hasProfileError: pot.isError(potProfile)
   };
 }
 
