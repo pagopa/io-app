@@ -96,7 +96,7 @@ export function* watchUserDataProcessingSaga(
     typeof BackendClient
   >["postUserDataProcessingRequest"]
 ): SagaIterator {
-  yield takeLatest(
+  yield takeEvery(
     loadUserDataProcessing.request,
     loadUserDataProcessingSaga,
     getUserDataProcessingRequest

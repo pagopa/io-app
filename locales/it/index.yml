@@ -150,8 +150,12 @@ profile:
           confirmSubtitle: Al termine dell'elaborazione, riceverai una email di conferma dell\'avvenuta eliminazione.
         error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
       exportData:
+        cta: Richiedi copia dei tuoi dati
         title: Accedi ai tuoi dati
         description: Ricevi una copia dei dati associati al tuo profilo IO
+        info:
+          title: Puoi scaricare le informazioni relative al tuo profilo IO in qualsiasi momento.
+          body: !include profile/profile_download_data.md
         alert:
           requestTitle: Vuoi davvero esportare tutti i tuoi dati?
           oldRequest: Abbiamo già preso in carico una richiesta di esportazione dei dati.

@@ -28,6 +28,7 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -155,11 +156,11 @@ class TosScreen extends React.PureComponent<Props, State> {
 
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
-        goBack={isProfile || this.handleGoBack}
+        goBack={this.props.isOnbardingCompleted || this.handleGoBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["privacy"]}
         headerTitle={
-          isProfile
+          this.props.isOnbardingCompleted
             ? I18n.t("profile.main.privacy.privacyPolicy.title")
             : I18n.t("onboarding.tos.headerTitle")
         }
@@ -184,7 +185,7 @@ class TosScreen extends React.PureComponent<Props, State> {
         )}
         {this.state.hasError === false &&
           this.state.isLoading === false &&
-          isProfile === false && (
+          this.props.isOnbardingCompleted === false && (
             <FooterWithButtons
               type={"TwoButtonsInlineThird"}
               leftButton={{
@@ -229,6 +230,7 @@ function mapStateToProps(state: GlobalState) {
   const potProfile = profileSelector(state);
   return {
     isLoading: pot.isLoading(userMetadataSelector(state)),
+    isOnbardingCompleted: isOnboardingCompletedSelector(state),
     hasAcceptedOldTosVersion: pot.getOrElse(
       pot.map(
         potProfile,
