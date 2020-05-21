@@ -10,6 +10,10 @@
 ],
   "bumpFiles": [
     {
+      "filename": "package.json",
+      "type": "json"
+    },
+    {
       "filename": "ios/ItaliaApp/Info.plist",
       "updater": "scripts/changelog/plist_updater.js"
     },
