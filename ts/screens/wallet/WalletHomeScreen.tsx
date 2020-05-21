@@ -54,6 +54,7 @@ import variables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isUpdateNeeded } from "../../utils/appVersion";
 import { setStatusBarColorAndBackground } from "../../utils/statusBar";
+import { SUCCESS_ICON_HEIGHT } from '../../utils/constants';
 
 type NavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -372,7 +373,7 @@ class WalletHomeScreen extends React.PureComponent<Props> {
       />
       <IconFont
         name={"io-complete"}
-        size={120}
+        size={SUCCESS_ICON_HEIGHT}
         color={customVariables.brandHighlight}
         style={styles.center}
       />

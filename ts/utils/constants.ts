@@ -11,6 +11,7 @@ export const PIN_LENGTH_SIX = 6;
 
 export const HEADER_ICON_HEIGHT = 48;
 export const MESSAGE_ICON_HEIGHT = 40;
+export const SUCCESS_ICON_HEIGHT = 120;
 
 // A key to identify the Set of the listeners of the navigtion middleware.
 export const NAVIGATION_MIDDLEWARE_LISTENERS_KEY: string = "root";

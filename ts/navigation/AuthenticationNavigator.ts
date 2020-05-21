@@ -3,7 +3,6 @@ import {
   NavigationRouteConfigMap
 } from "react-navigation";
 import { environment } from "../config";
-import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
 import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
@@ -26,9 +25,6 @@ const productionRouteConfigMap: NavigationRouteConfigMap = {
   },
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: {
     screen: IdpSelectionScreen
-  },
-  [ROUTES.AUTHENTICATION_CIE]: {
-    screen: CardSelectionScreen
   },
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: {
     screen: IdpLoginScreen

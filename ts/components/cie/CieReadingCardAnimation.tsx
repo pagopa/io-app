@@ -6,7 +6,6 @@ import ProgressCircle from "react-native-progress-circle";
 import { ReadingState } from "../../screens/authentication/cie/CieCardReaderScreen";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";
-import IconFont from "../ui/IconFont";
 
 type Props = Readonly<{
   readingState: ReadingState;
@@ -50,10 +49,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     justifyContent: "center",
     alignItems: "center"
-  },
-  successIcon: {
-    position: "absolute",
-    alignSelf: "flex-start"
   },
   flexStart: {
     justifyContent: "flex-start"
@@ -206,14 +201,6 @@ export default class CieReadingCardAnimation extends React.PureComponent<
               style={styles.img}
             />
           </ProgressCircle>
-          {this.props.readingState === ReadingState.completed && (
-            <IconFont
-              name={"io-success"}
-              color={customVariables.textLinkColor}
-              size={50}
-              style={styles.successIcon}
-            />
-          )}
         </View>
       </View>
     );

@@ -88,7 +88,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
             }
           } // if the condition "!== undefined" is not specified, once dynamicHeight.value = 0, dynamicHeight is assumend as false
         >
-          {padded && <View spacer={true} />}
+          {padded && <View spacer={true}/>}
           <ScreenHeader
             heading={<H3 style={dark && styles.white}>{this.props.title}</H3>}
             icon={icon}

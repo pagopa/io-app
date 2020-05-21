@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
   },
   container: {
     justifyContent: "space-between",
-    paddingHorizontal: customVariables.contentPadding,
     minHeight: HEADER_ICON_HEIGHT
   },
   text: {

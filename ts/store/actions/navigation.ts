@@ -284,11 +284,3 @@ export const navigateToCiePinScreen = () =>
   NavigationActions.navigate({
     routeName: ROUTES.CIE_PIN_SCREEN
   });
-
-export const navigateToCieCardReaderScreen = (
-  params?: InferNavigationParams<typeof CieCardReaderScreen>
-) =>
-  NavigationActions.navigate({
-    routeName: ROUTES.CIE_CARD_READER_SCREEN,
-    params
-  });

@@ -6,7 +6,7 @@
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Millisecond } from "italia-ts-commons/lib/units";
-import { Content, Text } from "native-base";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, Vibration } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
@@ -22,6 +22,8 @@ import ROUTES from "../../../navigation/routes";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
+import StyledIconFont from '../../../components/ui/IconFont';
+import { SUCCESS_ICON_HEIGHT } from '../../../utils/constants';
 
 type NavigationParams = {
   ciePin: string;
@@ -170,6 +172,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   private updateContent = () => {
     switch (this.state.readingState) {
+      case ReadingState.completed:
       case ReadingState.reading:
         this.setState({
           title: I18n.t("authentication.cie.card.readerCardTitle"),
@@ -186,13 +189,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           content: this.state.errorMessage
         });
         break;
-      case ReadingState.completed:
-        this.setState({
-          title: I18n.t("global.buttons.ok2"),
-          subtitle: I18n.t("authentication.cie.card.cieCardValid"),
-          content: undefined
-        });
-        break;
+      
       // waiting_card state
       default:
         this.setState({
