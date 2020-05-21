@@ -14,11 +14,11 @@ module.exports.readVersion = function(contents) {
  * @param p1: the key CURRENT_PROJECT_VERSION
  * @param p2: the value
  * @param p3: the ";"
- * @param offset
- * @param string
+ * @param _
+ * @param _
  * @return {string}
  */
-function replacer(match, p1, p2, p3, offset, string) {
+function replacer(match, p1, p2, p3, _, _) {
   const currentProjectVersionValue = parseInt(p2, 10) + 1;
   return [p1, currentProjectVersionValue, p3].join("");
 }

@@ -27,7 +27,9 @@ module.exports.writeVersion = function(contents, version) {
     throw "CFBundleShortVersionString not found";
   }
   const regex = /([0-9.]+)(-rc.\d+)?/gm;
-
+  // For ios, if a new rc version is release, keep the same version.
+  // eg: current version 1.2.3, new version 1.3.0-rc.0, write in plist file: 1.3.0, when a new version
+  // 1.3.0-rc.1 is released, write: 1.3.0
   infoObj.CFBundleShortVersionString = version.replace(regex, "$1");
   infoObj.CFBundleVersion = parseInt(infoObj.CFBundleVersion, 10) + 1;
   return plist.build(infoObj);

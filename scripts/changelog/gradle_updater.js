@@ -10,7 +10,7 @@ module.exports.readVersion = function(contents) {
   return versionNameRegex.exec(contents)[2];
 };
 
-function replaceVersion(match, version, p1, p2, p3, offset, string) {
+function replaceVersion(match, version, p1, p2, p3, _, _) {
   return [p1, version, p3].join("");
 }
 
