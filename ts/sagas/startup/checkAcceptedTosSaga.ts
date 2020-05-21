@@ -44,7 +44,8 @@ export function* checkAcceptedTosSaga(
       getType(profileUpsert.success),
       getType(profileUpsert.failure)
     ]);
-
+    // call checkAcceptedTosSaga until we don't revice profileUpsert.success
+    // tos acceptance must be saved in IO backend
     if (action.type === getType(profileUpsert.failure)) {
       yield call(checkAcceptedTosSaga, userProfile);
     }
