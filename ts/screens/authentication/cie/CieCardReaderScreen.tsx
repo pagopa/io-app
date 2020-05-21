@@ -19,6 +19,8 @@ import { GlobalState } from "../../../store/reducers/types";
 import customVariables from "../../../theme/variables";
 import StyledIconFont from '../../../components/ui/IconFont';
 import { SUCCESS_ICON_HEIGHT } from '../../../utils/constants';
+import { withLightModalContext } from '../../../components/helpers/withLightModalContext';
+import { LightModalContextInterface } from '../../../components/ui/LightModal';
 
 type NavigationParams = {
   ciePin: string;
@@ -26,7 +28,7 @@ type NavigationParams = {
 };
 
 type Props = NavigationScreenProps<NavigationParams> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> & LightModalContextInterface;
 
 const styles = StyleSheet.create({
   padded: {
@@ -204,15 +206,31 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     });
   };
 
+  private modal = (
+    <TopScreenComponent customRightIcon={{iconName: 'io-close', onPress: this.props.hideModal}}>
+      <Content>
+            <View>
+              <StyledIconFont
+                name={"io-complete"}
+                color={customVariables.brandHighlight}
+                size={SUCCESS_ICON_HEIGHT}
+                style={{alignSelf: 'center'}}
+              />
+              <View spacer={true}/>
+              <Text alignCenter={true}>{I18n.t("global.buttons.ok2")}{I18n.t("global.symbols.exclamation")}</Text>
+              <Text bold={true} alignCenter={true}>{I18n.t("authentication.cie.card.cieCardValid")}</Text>
+            </View>
+          </Content>
+    </TopScreenComponent>
+  ); 
+
   private handleCieSuccess = (cieConsentUri: string) => {
-    this.setState({ readingState: ReadingState.completed }, () => {
-      this.updateContent();
-      setTimeout(async () => {
-        this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
-          cieConsentUri
-        });
-      }, WAIT_TIMEOUT_NAVIGATION);
-    });
+    this.props.showModal(this.modal);
+    setTimeout(async () => {
+      this.props.navigation.navigate(ROUTES.CIE_CONSENT_DATA_USAGE, {
+        cieConsentUri
+      });
+    }, WAIT_TIMEOUT_NAVIGATION);
   };
 
   public componentDidMount() {
@@ -238,24 +256,23 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         goBack={true}
         headerTitle={I18n.t("authentication.cie.card.headerTitle")}
       >
-        <ScreenContentHeader title={this.state.title} />
-        <Content bounces={false} noPadded={true}>
-          <Text style={styles.padded}>{this.state.subtitle}</Text>
-          <CieReadingCardAnimation readingState={this.state.readingState} />
-          {this.state.content && (
-            <Text style={styles.padded}>{this.state.content}</Text>
-          )}
+          <ScreenContentHeader title={this.state.title} />
+          <Content bounces={false} noPadded={true}>
+            <Text style={styles.padded}>{this.state.subtitle}</Text>
+            <CieReadingCardAnimation readingState={this.state.readingState} />
+            {this.state.content && (
+              <Text style={styles.padded}>{this.state.content}</Text>
+            )}
         </Content>
-        {this.state.readingState !== ReadingState.completed && ( // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={{
-              onPress: this.props.navigation.goBack,
-              cancel: true,
-              title: I18n.t("global.buttons.cancel")
-            }}
-          />
-        )}
+
+            <FooterWithButtons
+              type={"SingleButton"}
+              leftButton={{
+                onPress: this.props.navigation.goBack,
+                cancel: true,
+                title: I18n.t("global.buttons.cancel")
+              }}
+            />
       </TopScreenComponent>
     );
   }
@@ -270,7 +287,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 export default connect(mapStateToProps)(
   withConditionalView(
-    CieCardReaderScreen,
+    withLightModalContext(CieCardReaderScreen),
     (props: Props) => props.isNfcEnabled,
     CieNfcOverlay
   )

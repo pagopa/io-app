@@ -105,7 +105,8 @@ class CiePinpad extends React.PureComponent<Props> {
         <TextInput
           style={{
             ...styles.textInputStyle,
-            width: targetDimension
+            width: targetDimension,
+            height: variables.lineHeight1
           }}
           key={`textinput-${i}`}
           editable={true}
