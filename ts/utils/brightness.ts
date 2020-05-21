@@ -1,35 +1,30 @@
-import { Either } from "fp-ts/lib/Either";
-import { Task } from "fp-ts/lib/Task";
-import { tryCatch } from "fp-ts/lib/TaskEither";
+import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
 import { Platform } from "react-native";
 import ScreenBrightness from "react-native-screen-brightness";
 
-export const getBrightness = (): Promise<Either<Error, number>> => {
-  const getBrightnessTask = new Task(
-    () =>
-      Platform.OS === "ios"
-        ? ScreenBrightness.getBrightness()
-        : ScreenBrightness.getAppBrightness()
-  );
-  return tryCatch(
-    () =>
-      getBrightnessTask
-        .chain(brightness => {
-          return new Task(() => Promise.resolve(brightness));
-        })
-        .run(),
-    reason => new Error(String(reason))
-  )
-    .map(brightness => brightness)
-    .run();
+const getBrightnessPlatform: () => Promise<number> = () =>
+  Platform.select({
+    ios: ScreenBrightness.getBrightness,
+    default: ScreenBrightness.getAppBrightness
+  })();
+
+const setBrightnessPlatform = (brightness: number): Promise<number> =>
+  Platform.select({
+    ios: ScreenBrightness.setBrightness,
+    default: ScreenBrightness.setAppBrightness
+  })(brightness);
+
+// if right return the current brightness
+export const getBrightness = (): TaskEither<Error, number> => {
+  return tryCatch(getBrightnessPlatform, reason => new Error(String(reason)));
 };
 
-export const setBrightness = (val: number): void => {
-  if (Platform.OS === "ios") {
-    // tslint:disable-next-line: no-floating-promises
-    ScreenBrightness.setBrightness(val);
-  } else {
-    // tslint:disable-next-line: no-floating-promises
-    ScreenBrightness.setAppBrightness(val);
-  }
+// if right return the set brightness
+export const setBrightness = (
+  brightness: number
+): TaskEither<Error, number> => {
+  return tryCatch(
+    () => setBrightnessPlatform(brightness),
+    reason => new Error(String(reason))
+  );
 };

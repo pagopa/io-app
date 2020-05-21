@@ -1,3 +1,4 @@
+import { fromNullable } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -72,6 +73,8 @@ type State = {
   baseBrightnessValue?: number;
 };
 
+const SCREEN_BRIGHTNESS = 1.0;
+
 class FiscalCodeScreen extends React.PureComponent<Props, State> {
   private showModal(showBackSide: boolean = false) {
     if (this.props.profile) {
@@ -88,7 +91,7 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
   }
 
   public async componentDidMount() {
-    const screenBrightness = await getBrightness();
+    const screenBrightness = await getBrightness().run();
     screenBrightness.fold(
       _ => {
         this.setState({
@@ -96,10 +99,12 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
         });
       },
       brightness => {
-        this.setState({
-          baseBrightnessValue: brightness
-        });
-        setBrightness(0.9);
+        this.setState(
+          {
+            baseBrightnessValue: brightness
+          },
+          async () => await setBrightness(SCREEN_BRIGHTNESS).run()
+        );
       }
     );
 
@@ -114,23 +119,24 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
       }
     }
   }
-  public componentWillUnmount() {
+
+  public async componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
-    this.resetAppBrightness();
+    await this.resetAppBrightness();
   }
 
-  private resetAppBrightness = () => {
-    if (this.state.baseBrightnessValue !== undefined) {
-      setBrightness(this.state.baseBrightnessValue);
-    }
+  private resetAppBrightness = async () => {
+    fromNullable(this.state.baseBrightnessValue).map(
+      async v => await setBrightness(v).run()
+    );
   };
 
   private goBack = () => {
     this.props.navigation.goBack();
   };
 
-  private handleBackPress = () => {
-    this.resetAppBrightness();
+  private handleBackPress = async () => {
+    await this.resetAppBrightness();
     this.props.navigation.goBack();
     return true;
   };
@@ -139,8 +145,8 @@ class FiscalCodeScreen extends React.PureComponent<Props, State> {
     <IconFont
       name={"io-back"}
       style={{ color: customVariables.colorWhite }}
-      onPress={() => {
-        this.resetAppBrightness();
+      onPress={async () => {
+        await this.resetAppBrightness();
         this.goBack();
       }}
     />
