@@ -30,6 +30,7 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
+import Shortcut from "../../utils/shortcut";
 import { showToast } from "../../utils/showToast";
 
 type Props = NavigationInjectedProps &
@@ -109,6 +110,8 @@ class LandingScreen extends React.PureComponent<Props> {
         "top"
       );
       this.props.resetState();
+      // Remove the shortcuts
+      Shortcut.clearShortcutItems();
     }
 
     if (this.props.isSessionExpired) {
