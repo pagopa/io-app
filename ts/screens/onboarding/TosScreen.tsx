@@ -21,6 +21,7 @@ import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
+import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 import {
   isProfileFirstOnBoarding,
   profileSelector
@@ -28,7 +29,6 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
-import { isOnboardingCompletedSelector } from "../../store/reducers/navigationHistory";
 
 type OwnProps = {
   navigation: NavigationScreenProp<NavigationState>;
@@ -145,8 +145,7 @@ class TosScreen extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const { navigation, dispatch } = this.props;
-    const isProfile = navigation.getParam("isProfile", false);
+    const { dispatch } = this.props;
     const avoidZoomWebview = `
       const meta = document.createElement('meta');
       meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
