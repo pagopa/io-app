@@ -24,6 +24,10 @@
     {
       "filename": "ios/ItaliaApp.xcodeproj/project.pbxproj",
       "updater": "scripts/changelog/pbxproj_updater.js"
+    },
+    {
+      "filename": "android/build.gradle",
+      "updater": "scripts/changelog/gradle_updater.js"
     }
   ]
 }
